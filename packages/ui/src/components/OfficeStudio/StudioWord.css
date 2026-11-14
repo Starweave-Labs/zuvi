@@ -875,3 +875,94 @@
     display: none;
   }
 }
+
+/* 文字高亮：水滴按钮 + 当前色条；菜单内色板行 */
+.z-studio-word-highlight-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  flex-direction: column;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 4px 2px;
+  border: 0;
+  border-radius: var(--z-radius-sm);
+  background: transparent;
+  color: var(--z-color-fg);
+  cursor: pointer;
+}
+
+.z-studio-word-highlight-trigger[aria-expanded='true'],
+.z-studio-word-highlight-trigger:hover {
+  background: var(--z-color-bg-muted);
+}
+
+.z-studio-word-highlight-trigger[aria-pressed='true'] {
+  background: var(--z-color-primary-subtle);
+  color: var(--z-color-primary-subtle-fg);
+}
+
+.z-studio-word-highlight-trigger:focus-visible {
+  outline: 2px solid var(--z-color-focus-ring);
+  outline-offset: 1px;
+}
+
+.z-studio-word-highlight-trigger[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.z-studio-word-highlight-bar {
+  display: block;
+  width: 14px;
+  height: 4px;
+  border-radius: 1px;
+  border: 1px solid color-mix(in srgb, var(--z-color-fg) 24%, transparent);
+}
+
+.z-studio-word-highlight-menu {
+  min-width: 168px;
+}
+
+.z-studio-word-highlight-row {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--z-space-2);
+}
+
+.z-studio-word-highlight-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  border: 1px solid color-mix(in srgb, var(--z-color-fg) 24%, transparent);
+}
+
+.z-studio-word-case-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--z-radius-sm);
+  background: transparent;
+  color: var(--z-color-fg);
+  cursor: pointer;
+}
+
+.z-studio-word-case-trigger[aria-expanded='true'],
+.z-studio-word-case-trigger:hover {
+  background: var(--z-color-bg-muted);
+}
+
+.z-studio-word-case-trigger:focus-visible {
+  outline: 2px solid var(--z-color-focus-ring);
+  outline-offset: 1px;
+}
+
+.z-studio-word-case-trigger[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

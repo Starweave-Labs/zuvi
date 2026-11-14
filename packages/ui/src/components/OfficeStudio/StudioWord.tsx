@@ -30,7 +30,9 @@ import {
 import { StarterKit } from '@tiptap/starter-kit';
 import { TextAlign } from '@tiptap/extension-text-align';
 import { TextStyleKit, FontFamily } from '@tiptap/extension-text-style';
+import { DropdownMenu } from '../DropdownMenu';
 import { studioFontFamilyCss, studioFontFamilyInput } from './studio-font-input';
+import { Check, Droplet, Minus, Plus, Type as TypeIcon } from '@zui/icons';
 import { TableKit } from '@tiptap/extension-table';
 import { Button } from '../Button';
 import { Checkbox } from '../Checkbox';
@@ -42,15 +44,23 @@ import { Tabs } from '../Tabs';
 import { StudioRibbonTabs } from './StudioRibbon';
 import type { StudioEditorProps, StudioRichNode, StudioWordDocument } from './studio-types';
 import {
+  WORD_HIGHLIGHT_COLORS,
   WORD_SEARCH_LIMIT,
   WordImage,
   WordPageNumber,
   WordSubscript,
   WordSuperscript,
+  type WordCaseMode,
+  type WordFormatSnapshot,
+  wordApplyFormat,
+  wordCaptureFormat,
   wordFindMatches,
   wordHeadings,
   wordReadImage,
   wordReplaceMatches,
+  wordSetHighlight,
+  wordStepFontSize,
+  wordTransformSelectionCase,
 } from './studio-word-tools';
 import { StudioFontControl, type StudioFontCommitReason } from './StudioFontControl';
 import './StudioWord.css';
@@ -538,6 +548,7 @@ export function StudioWord({
         font: (style.fontFamily || 'Noto Sans SC') as string,
         fontSize: (style.fontSize || '12pt') as string,
         color: (style.color || '#000000') as string,
+        highlight: (style.backgroundColor || '') as string,
         style: current.isActive('heading')
           ? `heading-${current.getAttributes('heading').level}`
           : paragraph.lineHeight === 1 && paragraph.spaceBefore === 0 && paragraph.spaceAfter === 0
@@ -862,6 +873,52 @@ export function StudioWord({
       })
       .run();
   };
+  // ---- 本轮新增：字号步进 / 高亮 / 大小写 / 格式刷 ----
+  const [highlightOpen, setHighlightOpen] = React.useState(false);
+  const [caseMenuOpen, setCaseMenuOpen] = React.useState(false);
+  const [formatPainter, setFormatPainter] = React.useState<WordFormatSnapshot | null>(null);
+  const formatPainterRef = React.useRef<WordFormatSnapshot | null>(null);
+  formatPainterRef.current = formatPainter;
+  const stepFontSize = (delta: number) => {
+    if (!editor || !editable) return;
+    wordStepFontSize(editor, delta, 0.5, 300);
+  };
+  const setHighlight = (color: string | null) => {
+    if (!editor || !editable) return;
+    wordSetHighlight(editor, color);
+    setHighlightOpen(false);
+  };
+  const transformCase = (mode: WordCaseMode) => {
+    if (!editor || !editable) return;
+    if (wordTransformSelectionCase(editor, mode)) setCaseMenuOpen(false);
+  };
+  const armFormatPainter = () => {
+    if (!editor || !editable || !selection?.selectedText) return;
+    setFormatPainter(wordCaptureFormat(editor));
+  };
+  const disarmFormatPainter = () => setFormatPainter(null);
+  // armed 状态下选区变化：非空选区应用格式并解除
+  React.useEffect(() => {
+    const snapshot = formatPainterRef.current;
+    if (!snapshot || !editor || !editable) return;
+    if (editor.state.selection.empty) return;
+    if (wordApplyFormat(editor, snapshot)) {
+      setFormatPainter(null);
+      setNotice('已应用格式刷。');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editor?.state.selection.from, editor?.state.selection.to, editor, editable]);
+  React.useEffect(() => {
+    if (!formatPainter) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape' || event.defaultPrevented) return;
+      disarmFormatPainter();
+      setNotice('已取消格式刷。');
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [formatPainter]);
+
   const handleClipboard = async (action: 'copy' | 'cut' | 'paste') => {
     const target = editor;
     if (!target || clipboardOperationRef.current || (action !== 'copy' && !editable)) return;
@@ -1030,6 +1087,20 @@ export function StudioWord({
               </Button>
             </div>
           </RibbonGroup>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="z-studio-word-large-tool"
+            aria-label="格式刷"
+            title="格式刷：先选中带格式的文本单击取用，再选中目标文本应用；Esc 取消"
+            aria-pressed={formatPainter ? true : undefined}
+            disabled={toolsDisabled || !selection?.selectedText}
+            onMouseDown={keepSelection}
+            onClick={armFormatPainter}
+          >
+            <Droplet size={24} />
+            <span>格式刷</span>
+          </Button>
           <RibbonGroup label="历史" className="z-studio-word-history-group">
             <Button
               iconStart={<RotateCcw size={16} />}
@@ -1080,6 +1151,28 @@ export function StudioWord({
                 onCommit={(value, reason) => commitFont('size', value, reason)}
                 onCancel={() => editor?.commands.focus()}
               />
+              <Button
+                aria-label="增大字号"
+                title="增大字号"
+                variant="ghost"
+                size="sm"
+                disabled={toolsDisabled}
+                onMouseDown={keepSelection}
+                onClick={() => stepFontSize(1)}
+              >
+                <Plus size={14} />
+              </Button>
+              <Button
+                aria-label="减小字号"
+                title="减小字号"
+                variant="ghost"
+                size="sm"
+                disabled={toolsDisabled}
+                onMouseDown={keepSelection}
+                onClick={() => stepFontSize(-1)}
+              >
+                <Minus size={14} />
+              </Button>
             </RibbonRow>
             <RibbonRow>
               <Button
@@ -1171,6 +1264,86 @@ export function StudioWord({
                   A
                 </span>
               </Button>
+              <DropdownMenu
+                open={highlightOpen}
+                onOpenChange={(open) => {
+                  setHighlightOpen(open);
+                  if (!open && editor && !editor.isDestroyed) editor.commands.focus();
+                }}
+              >
+                <DropdownMenu.Trigger
+                  className="z-studio-word-highlight-trigger"
+                  onMouseDown={keepSelection}
+                  aria-label="文字高亮"
+                  title="文字高亮"
+                  aria-pressed={selection?.highlight ? true : undefined}
+                  disabled={toolsDisabled}
+                >
+                  <Droplet size={16} />
+                  <span
+                    aria-hidden="true"
+                    className="z-studio-word-highlight-bar"
+                    style={{ background: selection?.highlight || 'transparent' }}
+                  />
+                </DropdownMenu.Trigger>
+                <DropdownMenu.Content className="z-studio-word-highlight-menu">
+                  <DropdownMenu.Label>高亮颜色</DropdownMenu.Label>
+                  <DropdownMenu.Item
+                    onSelect={() => setHighlight(null)}
+                    disabled={!selection?.highlight}
+                  >
+                    <span className="z-studio-word-highlight-row">
+                      无颜色
+                      {!selection?.highlight ? <Check size={14} aria-hidden="true" /> : null}
+                    </span>
+                  </DropdownMenu.Item>
+                  <DropdownMenu.Separator />
+                  {WORD_HIGHLIGHT_COLORS.map((color) => (
+                    <DropdownMenu.Item key={color.value} onSelect={() => setHighlight(color.value)}>
+                      <span className="z-studio-word-highlight-row">
+                        <span
+                          aria-hidden="true"
+                          className="z-studio-word-highlight-swatch"
+                          style={{ background: color.value }}
+                        />
+                        {color.label}
+                        {selection?.highlight?.toLowerCase() === color.value ? (
+                          <Check size={14} aria-hidden="true" />
+                        ) : null}
+                      </span>
+                    </DropdownMenu.Item>
+                  ))}
+                </DropdownMenu.Content>
+              </DropdownMenu>
+              <DropdownMenu
+                open={caseMenuOpen}
+                onOpenChange={(open) => {
+                  setCaseMenuOpen(open);
+                  if (!open && editor && !editor.isDestroyed) editor.commands.focus();
+                }}
+              >
+                <DropdownMenu.Trigger
+                  className="z-studio-word-case-trigger"
+                  onMouseDown={keepSelection}
+                  aria-label="变更大小写"
+                  title="变更大小写"
+                  disabled={toolsDisabled}
+                >
+                  <TypeIcon size={16} />
+                </DropdownMenu.Trigger>
+                <DropdownMenu.Content className="z-studio-word-case-menu">
+                  <DropdownMenu.Label>变更大小写</DropdownMenu.Label>
+                  <DropdownMenu.Item onSelect={() => transformCase('upper')}>
+                    全部大写
+                  </DropdownMenu.Item>
+                  <DropdownMenu.Item onSelect={() => transformCase('lower')}>
+                    全部小写
+                  </DropdownMenu.Item>
+                  <DropdownMenu.Item onSelect={() => transformCase('toggle')}>
+                    切换大小写
+                  </DropdownMenu.Item>
+                </DropdownMenu.Content>
+              </DropdownMenu>
             </RibbonRow>
           </RibbonGroup>
           <RibbonGroup label="段落" className="z-studio-word-paragraph-group">

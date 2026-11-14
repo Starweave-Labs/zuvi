@@ -1464,6 +1464,18 @@ function importedDocument(
       const width = sheet.getColumn(col).width;
       if (width !== undefined) columnWidths[studioColumnLabel(col)] = width * 7 + 5;
     }
+    const hiddenColumns: string[] = [];
+    for (
+      let col = 1;
+      col <=
+      Math.min(
+        STUDIO_SHEET_LIMITS.columns,
+        Math.max(sheet.columnCount, sheet.columns?.length ?? 0)
+      );
+      col++
+    ) {
+      if (sheet.getColumn(col).hidden) hiddenColumns.push(studioColumnLabel(col));
+    }
     const ruleRanges = [
       ...(advanced?.conditionalFormats ?? []),
       ...(advanced?.dataValidations ?? []),
@@ -1494,6 +1506,7 @@ function importedDocument(
         linkColumns
       ),
       ...(Object.keys(columnWidths).length ? { columnWidths } : {}),
+      ...(hiddenColumns.length ? { hiddenColumns } : {}),
       defaultRowHeight:
         rowLayout?.defaultRowHeight ||
         sheet.properties.defaultRowHeight ||
@@ -2016,6 +2029,12 @@ export async function exportStudioExcel(
       const column = target.getColumn(position.col);
       const original = column.width === undefined ? undefined : column.width * 7 + 5;
       if (original !== width) column.width = (width - 5) / 7;
+    }
+    for (let col = 1; col <= target.columnCount; col++) target.getColumn(col).hidden = false;
+    for (const label of sheet.hiddenColumns ?? []) {
+      const position = studioParseAddress(`${label}1`);
+      if (!position || position.col > STUDIO_SHEET_LIMITS.columns) continue;
+      target.getColumn(position.col).hidden = true;
     }
     for (const merge of sheet.merges ?? []) {
       const range = studioParseRange(merge)!;

@@ -3,7 +3,7 @@ import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-li
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import StudioSheet from './StudioSheet';
-import { STUDIO_SHEET_CLIPBOARD_TYPE } from './studio-sheet-model';
+import { STUDIO_SHEET_CLIPBOARD_TYPE, studioSetColumnsHidden } from './studio-sheet-model';
 import type { StudioExcelDocument } from './studio-types';
 
 beforeEach(() => vi.stubGlobal('PointerEvent', MouseEvent));
@@ -1439,5 +1439,255 @@ describe('StudioSheet row sizes and font drafts', () => {
     await user.type(size, '99{Escape}');
     expect(size).toHaveValue('17.25');
     expect(state.changed).toHaveBeenCalledTimes(1);
+  });
+});
+
+/* ============================ 填充柄（拖拽智能填充） ============================ */
+
+function mockSheetGeometry(grid: HTMLElement, rows = 10, cols = 5) {
+  vi.spyOn(grid, 'getBoundingClientRect').mockReturnValue({
+    x: 0,
+    y: 0,
+    left: 0,
+    top: 0,
+    width: cols * 112,
+    height: rows * 24,
+    right: cols * 112,
+    bottom: rows * 24,
+    toJSON() {},
+  } as DOMRect);
+}
+
+function fillHandle(): HTMLButtonElement {
+  return screen.getByRole('button', { name: '填充柄' });
+}
+
+function dragFill(toX: number, toY: number) {
+  const handle = fillHandle();
+  fireEvent.pointerDown(handle, { button: 0, clientX: 100, clientY: 100, pointerId: 9 });
+  fireEvent.pointerMove(window, { clientX: toX, clientY: toY, pointerId: 9 });
+  fireEvent.pointerUp(window, { clientX: toX, clientY: toY, pointerId: 9 });
+}
+
+describe('StudioSheet 填充柄', () => {
+  beforeEach(() => {
+    vi.stubGlobal('PointerEvent', MouseEvent);
+  });
+
+  it('手柄仅在有选区且未禁用时渲染；数字拖拽向下自动 +1', () => {
+    const document = documentFixture();
+    document.sheets[0].cells = {
+      A1: { input: '1' },
+      A2: { input: '2' },
+      B1: { input: '文本' },
+    };
+    const state = setup({ document });
+    const grid = screen.getByRole('grid');
+    mockSheetGeometry(grid);
+    // 通过地址框选中 A1:A2
+    const address = screen.getByRole('textbox', { name: '单元格地址' });
+    fireEvent.change(address, { target: { value: 'A1:A2' } });
+    fireEvent.keyDown(address, { key: 'Enter' });
+    expect(fillHandle()).toBeInTheDocument();
+
+    // 拖到 A4（列 A 中心 x=56；行 4 中心 y = 24 + 4*24 - 12）
+    dragFill(56, 108);
+    expect(state.current().sheets[0].cells.A3.input).toBe('3');
+    expect(state.current().sheets[0].cells.A4.input).toBe('4');
+    // 手柄跟随新选区仍存在
+    expect(fillHandle()).toBeInTheDocument();
+  });
+
+  it('文本种子拖拽复制；Escape 取消不写入', () => {
+    const document = documentFixture();
+    document.sheets[0].cells = { A1: { input: '文本' } };
+    const state = setup({ document });
+    const grid = screen.getByRole('grid');
+    mockSheetGeometry(grid);
+    const address = screen.getByRole('textbox', { name: '单元格地址' });
+    fireEvent.change(address, { target: { value: 'A1' } });
+    fireEvent.keyDown(address, { key: 'Enter' });
+
+    dragFill(56, 84);
+    expect(state.current().sheets[0].cells.A2.input).toBe('文本');
+    expect(state.current().sheets[0].cells.A3.input).toBe('文本');
+
+    // Escape 取消
+    fireEvent.pointerDown(fillHandle(), { button: 0, clientX: 100, clientY: 100, pointerId: 9 });
+    fireEvent.pointerMove(window, { clientX: 56, clientY: 132, pointerId: 9 });
+    fireEvent.keyDown(window, { key: 'Escape' });
+    fireEvent.pointerUp(window, { clientX: 56, clientY: 132, pointerId: 9 });
+    expect(state.current().sheets[0].cells.A2.input).toBe('文本');
+    expect(state.current().sheets[0].cells.A3.input).toBe('文本');
+    expect(state.current().sheets[0].cells.A4).toBeUndefined();
+  });
+
+  it('日期种子按天递增', () => {
+    const document = documentFixture();
+    document.sheets[0].cells = { A1: { input: '2026-01-01' } };
+    const state = setup({ document });
+    const grid = screen.getByRole('grid');
+    mockSheetGeometry(grid);
+    const address = screen.getByRole('textbox', { name: '单元格地址' });
+    fireEvent.change(address, { target: { value: 'A1' } });
+    fireEvent.keyDown(address, { key: 'Enter' });
+    dragFill(56, 84);
+    expect(state.current().sheets[0].cells.A2.input).toBe('2026-01-02');
+    expect(state.current().sheets[0].cells.A3.input).toBe('2026-01-03');
+  });
+
+  it('拖拽经数据验证：warning 汇总、stop 原子取消', () => {
+    const document = documentFixture();
+    document.sheets[0].cells = { A1: { input: '1' } };
+    document.sheets[0].dataValidations = [
+      {
+        id: 'rule-a',
+        range: 'A2:A3',
+        type: 'whole',
+        operator: 'greaterThan',
+        formula1: '100',
+        errorStyle: 'warning',
+        showErrorMessage: true,
+        errorMessage: '超出范围',
+      },
+    ];
+    const state = setup({ document });
+    const grid = screen.getByRole('grid');
+    mockSheetGeometry(grid);
+    const address = screen.getByRole('textbox', { name: '单元格地址' });
+    fireEvent.change(address, { target: { value: 'A1' } });
+    fireEvent.keyDown(address, { key: 'Enter' });
+    dragFill(56, 84);
+    // warning 写入并汇总 2 个无效目标
+    expect(state.current().sheets[0].cells.A2.input).toBe('2');
+    expect(screen.getByRole('status')).toHaveTextContent('2 个单元格不符合数据验证');
+  });
+
+  it('拖拽经 stop 规则原子取消', () => {
+    const document = documentFixture();
+    document.sheets[0].cells = { A1: { input: '1' } };
+    document.sheets[0].dataValidations = [
+      {
+        id: 'rule-stop',
+        range: 'A2:A3',
+        type: 'whole',
+        operator: 'greaterThan',
+        formula1: '100',
+        errorStyle: 'stop',
+        showErrorMessage: true,
+        errorMessage: '超出范围',
+      },
+    ];
+    const state = setup({ document });
+    const grid = screen.getByRole('grid');
+    mockSheetGeometry(grid);
+    const address = screen.getByRole('textbox', { name: '单元格地址' });
+    fireEvent.change(address, { target: { value: 'A1' } });
+    fireEvent.keyDown(address, { key: 'Enter' });
+    dragFill(56, 84);
+    expect(screen.getByRole('status')).toHaveTextContent(/超出范围/);
+    expect(state.current().sheets[0].cells.A2).toBeUndefined();
+  });
+});
+
+/* ==================== Ctrl+方向键数据块导航 ==================== */
+
+describe('StudioSheet Ctrl+方向键数据块导航', () => {
+  function navSetup(cells: Record<string, { input: string }>) {
+    const doc = documentFixture();
+    doc.sheets[0].cells = cells;
+    const state = setup({ document: doc });
+    const grid = screen.getByRole('grid');
+    mockSheetGeometry(grid);
+    const address = screen.getByRole('textbox', { name: '单元格地址' });
+    const go = (target: string) => {
+      fireEvent.change(address, { target: { value: target } });
+      fireEvent.keyDown(address, { key: 'Enter' });
+    };
+    const press = (key: string) => {
+      fireEvent.keyDown(screen.getByRole('grid'), { key, ctrlKey: true });
+    };
+    return {
+      state,
+      go,
+      press,
+      active: () =>
+        document.querySelector('[data-active="true"]')?.getAttribute('aria-label')?.split(' ')[0],
+    };
+  }
+
+  it('有值块边缘：向下/向右跳到连续数据块末尾', () => {
+    const nav = navSetup({
+      A1: { input: '1' },
+      A2: { input: '2' },
+      A3: { input: '3' },
+      B1: { input: 'x' },
+    });
+    nav.go('A1');
+    nav.press('ArrowDown');
+    expect(nav.active()).toBe('A3');
+    // 数据块边缘再按同方向：落到声明列边界（行 3 右侧无数据 → Z3）
+    nav.press('ArrowRight');
+    expect(nav.active()).toBe('Z3');
+  });
+
+  it('空白段跳到下一个有值格', () => {
+    const nav = navSetup({
+      A1: { input: '1' },
+      A6: { input: '6' },
+    });
+    nav.go('A2');
+    nav.press('ArrowDown');
+    expect(nav.active()).toBe('A6');
+  });
+
+  it('无数据方向落到行/列边缘', () => {
+    const nav = navSetup({ A1: { input: '1' } });
+    nav.go('A1');
+    nav.press('ArrowDown');
+    expect(nav.active()).toBe('A10000');
+    nav.press('ArrowRight');
+    expect(nav.active()).toBe('Z10000');
+  });
+
+  it('从数据块下方空格向上跳回块尾', () => {
+    const nav = navSetup({
+      A1: { input: '1' },
+      A2: { input: '2' },
+    });
+    nav.go('A5');
+    nav.press('ArrowUp');
+    expect(nav.active()).toBe('A2');
+  });
+});
+
+/* ==================== 显示/隐藏列 ==================== */
+
+describe('StudioSheet 显示/隐藏列', () => {
+  it('隐藏列：全部隐藏被按钮守卫拒绝；模型整批拒绝', async () => {
+    const doc = documentFixture();
+    doc.sheets[0].cells = { A1: { input: 'a' }, B1: { input: 'b' }, C1: { input: 'c' } };
+    doc.sheets[0].columnCount = 3;
+    const state = setup({ document: doc });
+    const address = screen.getByRole('textbox', { name: '单元格地址' });
+    const go = (target: string) => {
+      fireEvent.change(address, { target: { value: target } });
+      fireEvent.keyDown(address, { key: 'Enter' });
+    };
+    // 隐藏 A、B 后仅剩 C：隐藏列按钮禁用（守卫基于隐藏计数 + 当前列）
+    go('A1');
+    fireEvent.click(screen.getByRole('button', { name: '隐藏列' }));
+    go('B1');
+    fireEvent.click(screen.getByRole('button', { name: '隐藏列' }));
+    expect(state.current().sheets[0].hiddenColumns).toEqual(['A', 'B']);
+    go('C1');
+    await waitFor(() => expect(screen.getByRole('button', { name: '隐藏列' })).toBeDisabled());
+    // 显示全部列恢复
+    fireEvent.click(screen.getByRole('button', { name: '显示全部列' }));
+    expect(state.current().sheets[0].hiddenColumns).toEqual([]);
+    // 模型级守卫：全部隐藏整批拒绝
+    expect(() =>
+      studioSetColumnsHidden(state.current(), state.current().sheets[0].id, ['A', 'B', 'C'])
+    ).toThrow(/至少保留一个可见字段/);
   });
 });

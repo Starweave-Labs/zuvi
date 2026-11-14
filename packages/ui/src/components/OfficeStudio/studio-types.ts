@@ -187,6 +187,8 @@ export interface StudioSheet {
   rowHeights?: Record<string, number>;
   /** Manual hides retain the last height; [] explicitly shows previously hidden source rows. */
   hiddenRows?: number[];
+  /** Column labels hidden manually; [] explicitly shows all columns. Hidden columns keep widths. */
+  hiddenColumns?: string[];
   merges?: string[];
   freeze?: { rows: number; columns: number };
   filter?: StudioSheetFilter;

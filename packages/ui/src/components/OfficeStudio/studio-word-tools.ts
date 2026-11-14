@@ -371,3 +371,123 @@ export async function wordReadImage(file: File, maxWidth: number) {
     alt: file.name.slice(0, 1000),
   };
 }
+
+/* ------------------------- 字号步进 / 大小写 / 格式刷 ------------------------ */
+
+const WORD_FONT_SIZE_MIN = 1;
+export const WORD_HIGHLIGHT_COLORS: { label: string; value: string }[] = [
+  { label: '黄色', value: '#ffff00' },
+  { label: '亮绿', value: '#00ff00' },
+  { label: '青色', value: '#00ffff' },
+  { label: '紫红', value: '#ff00ff' },
+  { label: '蓝色', value: '#0000ff' },
+  { label: '红色', value: '#ff0000' },
+  { label: '深蓝', value: '#000080' },
+  { label: '深青', value: '#008080' },
+  { label: '深绿', value: '#008000' },
+  { label: '深紫红', value: '#800080' },
+  { label: '深红', value: '#800000' },
+  { label: '深黄', value: '#808000' },
+  { label: '深灰', value: '#808080' },
+  { label: '浅灰', value: '#c0c0c0' },
+  { label: '黑色', value: '#000000' },
+  { label: '白色', value: '#ffffff' },
+];
+
+/** 按 sizeStep 步进选区字号；sizeStep 为 0（Excel/未配置）时按 1 磅步进。 */
+export function wordStepFontSize(editor: Editor, delta: number, sizeStep = 1, max = 300): boolean {
+  if (!editor || editor.isDestroyed) return false;
+  const current = Number.parseFloat(editor.getAttributes('textStyle').fontSize) || 12;
+  const step = sizeStep > 0 ? sizeStep : 1;
+  const next = Math.min(max, Math.max(WORD_FONT_SIZE_MIN, current + delta * step));
+  if (next === current) return false;
+  return editor.chain().focus().setFontSize(`${next}pt`).run();
+}
+
+export type WordCaseMode = 'upper' | 'lower' | 'toggle';
+
+function transformCase(text: string, mode: WordCaseMode): string {
+  if (mode === 'upper') return text.toLocaleUpperCase('zh-Hans-CN');
+  if (mode === 'lower') return text.toLocaleLowerCase('zh-Hans-CN');
+  return Array.from(text)
+    .map((char) => {
+      const upper = char.toLocaleUpperCase('zh-Hans-CN');
+      const lower = char.toLocaleLowerCase('zh-Hans-CN');
+      return char === upper ? lower : upper;
+    })
+    .join('');
+}
+
+/**
+ * 将选区文本转换为指定大小写；单事务提交（一次撤销），不改链接内文本。
+ * 转换完成后恢复原选区（Office 行为），便于连续调整。
+ */
+export function wordTransformSelectionCase(editor: Editor, mode: WordCaseMode): boolean {
+  if (!editor || editor.isDestroyed) return false;
+  const { from, to, empty } = editor.state.selection;
+  if (empty) return false;
+  const changes: { from: number; to: number; text: string }[] = [];
+  editor.state.doc.nodesBetween(from, to, (node, position) => {
+    // 容器节点必须继续下钻（返回 false 会连文本节点一起跳过）
+    if (!node.isText || !node.text) return true;
+    if (node.marks.some((mark) => mark.type.name === 'link')) return false;
+    // 文本节点 position 即首字符前界；选区边界裁剪到本节点文本范围
+    const start = Math.max(from, position);
+    const end = Math.min(to, position + node.nodeSize);
+    if (end <= start) return true;
+    const slice = node.text.slice(start - position, end - position);
+    const converted = transformCase(slice, mode);
+    if (converted !== slice) changes.push({ from: start, to: end, text: converted });
+    return true;
+  });
+  // eslint-disable-next-line no-console
+  console.log('CASE-DBG3', mode, from, to, empty, JSON.stringify(changes));
+  if (changes.length === 0) return false;
+  // 与 wordReplaceMatches 一致：直接派发事务（chain().command 在部分环境下不派发）
+  const transaction = editor.state.tr;
+  for (const change of [...changes].sort((a, b) => b.from - a.from))
+    transaction.insertText(change.text, change.from, change.to);
+  editor.view.dispatch(transaction);
+  return true;
+}
+
+export function wordSetHighlight(editor: Editor, color: string | null): boolean {
+  if (!editor || editor.isDestroyed) return false;
+  const chain = editor.chain().focus();
+  return (color == null ? chain.unsetBackgroundColor() : chain.setBackgroundColor(color)).run();
+}
+
+export interface WordFormatSnapshot {
+  marks: Record<string, unknown>;
+  textStyle: Record<string, string | null>;
+}
+
+const WORD_TEXT_STYLE_ATTRS = ['fontFamily', 'fontSize', 'color', 'backgroundColor'] as const;
+
+/** 捕获选区锚点的字符格式快照，供格式刷应用。 */
+export function wordCaptureFormat(editor: Editor): WordFormatSnapshot | null {
+  if (!editor || editor.isDestroyed) return null;
+  const marks: Record<string, unknown> = {};
+  for (const name of ['bold', 'italic', 'underline', 'strike', 'superscript', 'subscript'])
+    marks[name] = editor.isActive(name);
+  const style = editor.getAttributes('textStyle');
+  const textStyle: Record<string, string | null> = {};
+  for (const attr of WORD_TEXT_STYLE_ATTRS)
+    textStyle[attr] = typeof style[attr] === 'string' ? (style[attr] as string) : null;
+  return { marks, textStyle };
+}
+
+/** 将格式刷快照应用到当前选区；无快照或文档失配返回 false。 */
+export function wordApplyFormat(editor: Editor, snapshot: WordFormatSnapshot | null): boolean {
+  if (!editor || editor.isDestroyed || !snapshot) return false;
+  const chain = editor.chain().focus();
+  for (const [name, active] of Object.entries(snapshot.marks)) {
+    if (active) chain.toggleMark(name, undefined, { extendEmptyMarkRange: true });
+    else chain.unsetMark(name, { extendEmptyMarkRange: true });
+  }
+  for (const [attr, value] of Object.entries(snapshot.textStyle)) {
+    if (value == null) chain.unsetMark('textStyle', { extendEmptyMarkRange: true });
+    else chain.setMark('textStyle', { [attr]: value });
+  }
+  return chain.removeEmptyTextStyle().run();
+}

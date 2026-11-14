@@ -372,7 +372,9 @@ describe('StudioWord structured editing', () => {
             button.classList.contains('z-tab') ||
             button.classList.contains('z-select-trigger') ||
             button.classList.contains('z-combobox-toggle') ||
-            button.classList.contains('z-color-picker-swatch')
+            button.classList.contains('z-color-picker-swatch') ||
+            button.classList.contains('z-studio-word-highlight-trigger') ||
+            button.classList.contains('z-studio-word-case-trigger')
         )
       ).toBe(true);
     for (const name of ['开始', '插入', '布局', '引用', '审阅', '视图']) {
@@ -978,5 +980,112 @@ describe('StudioWord typed font details', () => {
     expect(size).toHaveAttribute('aria-invalid', 'true');
     fireEvent.keyDown(size, { key: 'Escape' });
     expect(size).toHaveValue('17.5');
+  });
+});
+
+/* ==================== 第一轮：字号步进 / 高亮 / 大小写 / 格式刷 ==================== */
+
+const twoParagraphDoc = (): StudioWordDocument => ({
+  version: 1,
+  id: 'word-ui-test',
+  name: '测试.docx',
+  kind: 'word',
+  page: { size: 'A4', orientation: 'portrait', margin: 20 },
+  content: {
+    type: 'doc',
+    content: [
+      { type: 'paragraph', content: [{ type: 'text', text: '项目评审内容' }] },
+      { type: 'paragraph', content: [{ type: 'text', text: '目标段落文本' }] },
+    ],
+  },
+});
+
+describe('StudioWord 第一轮编辑能力', () => {
+  it('字号步进：12pt 增大 → 12.5pt，减小回到 12pt', async () => {
+    const view = await mount();
+    const textbox = view.textbox;
+    selectNodeContents(textbox, textbox.querySelector('p')!);
+    fireEvent.click(screen.getByRole('button', { name: '增大字号' }));
+    expect(textbox.querySelector('p span')).toHaveStyle({ fontSize: '12.5pt' });
+    fireEvent.click(screen.getByRole('button', { name: '减小字号' }));
+    expect(textbox.querySelector('p span')).toHaveStyle({ fontSize: '12pt' });
+    view.unmount();
+  });
+
+  it('文字高亮：选色写入 backgroundColor，无颜色清除', async () => {
+    const view = await mount();
+    const textbox = view.textbox;
+    selectNodeContents(textbox, textbox.querySelector('p')!);
+    fireEvent.click(screen.getByRole('button', { name: '文字高亮' }));
+    fireEvent.click(screen.getByRole('menuitem', { name: /黄色/ }));
+    await waitFor(() =>
+      expect(textbox.querySelector('p span')).toHaveStyle({ backgroundColor: '#ffff00' })
+    );
+    const styleMark = view.onChange.mock.lastCall?.[0].content.content[0].content[0].marks.find(
+      (mark: { type: string }) => mark.type === 'textStyle'
+    );
+    expect(styleMark.attrs.backgroundColor).toBe('#ffff00');
+
+    selectNodeContents(textbox, textbox.querySelector('p')!);
+    fireEvent.click(screen.getByRole('button', { name: '文字高亮' }));
+    fireEvent.click(screen.getByRole('menuitem', { name: '无颜色' }));
+    await waitFor(() => expect(textbox.querySelector('p span')).toBeNull());
+    const clearedDoc = view.onChange.mock.lastCall?.[0].content.content[0];
+    expect(clearedDoc?.content?.[0].marks ?? []).toHaveLength(0);
+    view.unmount();
+  });
+
+  it('变更大小写：全部大写后撤销恢复原文', async () => {
+    const view = await mount({ document: documentModel('hello World') });
+    const textbox = view.textbox;
+    const paragraph = textbox.querySelector('p')!;
+
+    selectNodeContents(textbox, paragraph);
+    fireEvent.click(screen.getByRole('button', { name: '变更大小写' }));
+    await waitFor(() =>
+      expect(screen.getByRole('menuitem', { name: '全部大写' })).toBeInTheDocument()
+    );
+    fireEvent.click(screen.getByRole('menuitem', { name: '全部大写' }));
+    await waitFor(() => expect(textbox.textContent).toContain('HELLO WORLD'));
+
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(textbox.textContent).toContain('hello World'));
+    view.unmount();
+  });
+
+  it('格式刷：取用粗体格式应用到目标段落后自动解除', async () => {
+    const view = await mount({ document: twoParagraphDoc() });
+    const textbox = view.textbox;
+    selectNodeContents(textbox, textbox.querySelector('p')!);
+    fireEvent.click(screen.getByRole('button', { name: '粗体' }));
+    await waitFor(() => expect(textbox.querySelector('strong')).toBeInTheDocument());
+
+    fireEvent.click(screen.getByRole('button', { name: '格式刷' }));
+    expect(screen.getByRole('button', { name: '格式刷' })).toHaveAttribute('aria-pressed', 'true');
+
+    selectNodeContents(textbox, textbox.querySelectorAll('p')[1]);
+    await waitFor(() => {
+      const target = view.onChange.mock.lastCall?.[0].content.content[1];
+      expect(target?.content[0].marks?.some((mark: { type: string }) => mark.type === 'bold')).toBe(
+        true
+      );
+    });
+    expect(screen.getByRole('button', { name: '格式刷' })).not.toHaveAttribute('aria-pressed');
+    view.unmount();
+  });
+
+  it('格式刷：armed 后 Esc 解除，不改动文档', async () => {
+    const view = await mount();
+    const textbox = view.textbox;
+    selectNodeContents(textbox, textbox.querySelector('p')!);
+    fireEvent.click(screen.getByRole('button', { name: '粗体' }));
+    await waitFor(() => expect(textbox.querySelector('strong')).toBeInTheDocument());
+    const afterBold = view.onChange.mock.lastCall?.[0];
+
+    fireEvent.click(screen.getByRole('button', { name: '格式刷' }));
+    fireEvent.keyDown(window, { key: 'Escape' });
+    expect(screen.getByRole('button', { name: '格式刷' })).not.toHaveAttribute('aria-pressed');
+    expect(view.onChange.mock.lastCall?.[0]).toBe(afterBold);
+    view.unmount();
   });
 });

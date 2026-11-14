@@ -835,3 +835,29 @@
   padding: 0;
   border: 0;
 }
+
+/* 填充柄：选区右下角小方块 + 拖拽预览覆盖层 */
+.z-studio-sheet-fill-handle {
+  position: absolute;
+  z-index: 6;
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 1px solid var(--z-color-bg);
+  border-radius: 1px;
+  background: var(--z-color-primary);
+  cursor: crosshair;
+}
+
+.z-studio-sheet-fill-handle:focus-visible {
+  outline: 2px solid var(--z-color-focus-ring);
+  outline-offset: 1px;
+}
+
+.z-studio-sheet-fill-preview {
+  position: absolute;
+  z-index: 5;
+  pointer-events: none;
+  border: 1px dashed var(--z-color-primary);
+  background: color-mix(in srgb, var(--z-color-primary) 8%, transparent);
+}

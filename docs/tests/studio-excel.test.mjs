@@ -2861,3 +2861,41 @@ test('row point heights and manual hides survive source and independent XLSX exp
   assert.deepEqual([...hydrated.sheets[0].hiddenRows], [4]);
   assert.equal(legacy.sheets[0].rowHeights, undefined);
 });
+
+test('隐藏列往返：隐藏 B 后保存重开仍隐藏，结构编辑重映射', async () => {
+  const workbook = new ExcelJS.Workbook();
+  const ws = workbook.addWorksheet('隐藏列');
+  ws.getCell('A1').value = 'a';
+  ws.getCell('B1').value = 'b';
+  ws.getCell('C1').value = 'c';
+  ws.getColumn(2).hidden = true;
+  const source = new Blob([await workbook.xlsx.writeBuffer()], {
+    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  });
+  const imported = await codec.importStudioExcel(source, '隐藏列.xlsx');
+  assert.deepEqual([...imported.sheets[0].hiddenColumns], ['B']);
+
+  // 在 A 前插入一列：B→C 重映射
+  const inserted = structure.studioChangeSheetStructure(imported, imported.sheets[0].id, {
+    axis: 'column',
+    type: 'insert',
+    index: 1,
+    count: 1,
+  });
+  assert.deepEqual([...inserted.sheets[0].hiddenColumns], ['C']);
+
+  // 原文件保存：重开仍隐藏 C
+  const saved = await codec.exportStudioExcel(inserted, source);
+  const reopened = await codec.importStudioExcel(saved, '重开.xlsx');
+  assert.deepEqual([...reopened.sheets[0].hiddenColumns], ['C']);
+  const native = (await readWorkbook(saved)).worksheets[0];
+  assert.equal(native.getColumn(3).hidden, true);
+
+  // 显示全部列：原生 hidden 清除
+  const shown = {
+    ...inserted,
+    sheets: inserted.sheets.map((item) => ({ ...item, hiddenColumns: [] })),
+  };
+  const cleared = await codec.exportStudioExcel(shown, saved);
+  assert.equal((await readWorkbook(cleared)).worksheets[0].getColumn(3).hidden, false);
+});

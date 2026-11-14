@@ -75,7 +75,8 @@ import {
   studioSetConditionalFormat,
   studioSetDataValidation,
 } from './studio-sheet-rules';
-import { studioFillCells, studioFillSeries } from './studio-sheet-fill';
+import { studioFillCells, studioFillSeries, studioInferFillType } from './studio-sheet-fill';
+import { studioHiddenColumns, studioSetColumnsHidden } from './studio-sheet-model';
 import { StudioSheetRuleDialog } from './StudioSheetRuleDialog';
 import { StudioRibbonTabs } from './StudioRibbon';
 import { StudioSheetHyperlinkDialog } from './StudioSheetHyperlinkDialog';
@@ -320,23 +321,29 @@ export function StudioSheet({
   const freezeColumns = sheet?.freeze?.columns ?? 0;
   const bounds = studioSelectionBounds(selection);
   const count = (bounds.lastRow - bounds.firstRow + 1) * (bounds.lastCol - bounds.firstCol + 1);
+  const hiddenColumns = React.useMemo(
+    () => (sheet ? studioHiddenColumns(sheet) : new Set<string>()),
+    [sheet]
+  );
   const offsets = React.useMemo(() => {
     const values = [ROW_HEADER_WIDTH];
     for (let col = 1; col <= columnCount; col++)
       values.push(
         values[col - 1] +
-          Math.max(
-            12,
-            Math.min(
-              4000,
-              widthPreview?.sheetId === sheet?.id && widthPreview.col === col
-                ? widthPreview.width
-                : (sheet?.columnWidths?.[studioColumnLabel(col)] ?? 112)
-            )
-          )
+          (hiddenColumns.has(studioColumnLabel(col))
+            ? 0
+            : Math.max(
+                12,
+                Math.min(
+                  4000,
+                  widthPreview?.sheetId === sheet?.id && widthPreview.col === col
+                    ? widthPreview.width
+                    : (sheet?.columnWidths?.[studioColumnLabel(col)] ?? 112)
+                )
+              ))
       );
     return values;
-  }, [columnCount, sheet?.columnWidths, sheet?.id, widthPreview]);
+  }, [columnCount, hiddenColumns, sheet?.columnWidths, sheet?.id, widthPreview]);
   const visibleRows = studioViewportRows(
     rowLayout,
     viewport.top,
@@ -356,6 +363,7 @@ export function StudioSheet({
   }
   const visibleColumns: number[] = [];
   for (let col = 1; col <= columnCount; col++) {
+    if (hiddenColumns.has(studioColumnLabel(col))) continue;
     if (
       col <= freezeColumns ||
       (offsets[col] >= viewport.left - 120 &&
@@ -627,6 +635,57 @@ export function StudioSheet({
     }
   }
 
+  function dataBlockTarget(direction: 'up' | 'down' | 'left' | 'right'): SheetPosition | null {
+    if (!sheet) return null;
+    const start = { ...selection.focus };
+    // 数据块 = 输入非空的单元格（公式错误也算数据）
+    const has = (row: number, col: number) =>
+      (sheet.cells[studioCellAddress(row, col)]?.input ?? '') !== '';
+    const lastRow = sheet.rowCount;
+    const lastCol = sheet.columnCount;
+    const stepRow = direction === 'down' ? 1 : direction === 'up' ? -1 : 0;
+    const stepCol = direction === 'right' ? 1 : direction === 'left' ? -1 : 0;
+
+    // 沿方向逐格推进；遇到合并格按其范围越过
+    const advance = (row: number, col: number): { row: number; col: number } | null => {
+      let nextRow = row + stepRow;
+      let nextCol = col + stepCol;
+      if (nextRow < 1 || nextRow > lastRow || nextCol < 1 || nextCol > lastCol) return null;
+      const merge = studioMergedRange(sheet, { row: nextRow, col: nextCol });
+      if (merge) {
+        // 跳过整个合并格
+        nextRow = stepRow > 0 ? merge.lastRow : stepRow < 0 ? merge.firstRow : row;
+        nextCol = stepCol > 0 ? merge.lastCol : stepCol < 0 ? merge.firstCol : col;
+        if (nextRow === row && nextCol === col) return null;
+        if (nextRow < 1 || nextRow > lastRow || nextCol < 1 || nextCol > lastCol) return null;
+      }
+      return { row: nextRow, col: nextCol };
+    };
+
+    const startHasValue = has(start.row, start.col);
+    let current = start;
+    let lastWithValue: SheetPosition | null = startHasValue ? start : null;
+    // 连续推进：有值块走到底；空白段找第一个有值格；均无则落到边界
+    for (let guard = 0; guard < lastRow * lastCol + 1; guard += 1) {
+      const next = advance(current.row, current.col);
+      if (!next) break;
+      const nextHas = has(next.row, next.col);
+      if (startHasValue) {
+        if (!nextHas) break;
+        lastWithValue = next;
+      } else if (nextHas) {
+        return next;
+      }
+      current = next;
+    }
+    if (startHasValue && lastWithValue && lastWithValue !== start) return lastWithValue;
+    // 已在块边缘或空白起始：落到声明维度的边界（Office 行为）
+    return {
+      row: stepRow > 0 ? lastRow : stepRow < 0 ? 1 : start.row,
+      col: stepCol > 0 ? lastCol : stepCol < 0 ? 1 : start.col,
+    };
+  }
+
   function moveSelection(rowDelta: number, colDelta: number, extend = false) {
     const merge = sheet && studioMergedRange(sheet, selection.focus);
     const rowIndex =
@@ -637,6 +696,15 @@ export function StudioSheet({
         : selection.focus.row,
       col: Math.max(1, Math.min(columnCount, selection.focus.col + colDelta)),
     };
+    // 列步进跳过隐藏列（对齐行隐藏语义）
+    if (colDelta !== 0) {
+      const step = colDelta > 0 ? 1 : -1;
+      let cursor = position.col;
+      while (cursor >= 1 && cursor <= columnCount && hiddenColumns.has(studioColumnLabel(cursor)))
+        cursor += step;
+      if (cursor < 1 || cursor > columnCount) cursor = position.col;
+      position.col = cursor;
+    }
     if (colDelta > 0 && merge && !extend)
       position.col = Math.min(columnCount, merge.lastCol + colDelta);
     const destination = sheet && studioMergedRange(sheet, position);
@@ -879,6 +947,149 @@ export function StudioSheet({
     } finally {
       probe.remove();
     }
+  }
+
+  // ---- 填充柄：选区右下角拖拽延伸，按种子类型智能填充 ----
+  const [fillPreview, setFillPreview] = React.useState<{
+    sheetId: string;
+    firstRow: number;
+    lastRow: number;
+    firstCol: number;
+    lastCol: number;
+  } | null>(null);
+
+  function pointerToCell(clientX: number, clientY: number): SheetPosition | null {
+    const grid = gridRef.current;
+    if (!grid) return null;
+    const rect = grid.getBoundingClientRect();
+    const localX = clientX - rect.left;
+    const localY = clientY - rect.top;
+    if (
+      localX < ROW_HEADER_WIDTH ||
+      localY < HEADER_HEIGHT ||
+      localX > offsets[offsets.length - 1] + ROW_HEADER_WIDTH ||
+      localY > rowLayout.offsets[rowLayout.offsets.length - 1] + HEADER_HEIGHT
+    )
+      return null;
+    let col = shownRows.length ? 1 : 1;
+    for (let candidate = 1; candidate <= columnCount; candidate += 1) {
+      const start = ROW_HEADER_WIDTH + offsets[candidate - 1];
+      const end = ROW_HEADER_WIDTH + offsets[candidate];
+      if (localX >= start && localX <= end) {
+        col = candidate;
+        break;
+      }
+    }
+    let row = shownRows[0] ?? 1;
+    for (let index = 0; index < shownRows.length; index += 1) {
+      const start = HEADER_HEIGHT + rowLayout.offsets[index];
+      const end = HEADER_HEIGHT + rowLayout.offsets[index + 1];
+      if (localY >= start && localY <= end) {
+        row = shownRows[index];
+        break;
+      }
+    }
+    return { row, col };
+  }
+
+  function startFillDrag(event: React.PointerEvent<HTMLElement>) {
+    event.stopPropagation();
+    event.preventDefault();
+    if (blocked || event.button !== 0 || !sheet || !commitEditing()) return;
+    resizeCleanup.current?.();
+    const initial = latestRef.current;
+    const pointerId = event.pointerId;
+    const bounds = studioSelectionBounds(selection);
+    const move = (moveEvent: PointerEvent) => {
+      if (moveEvent.pointerId !== pointerId) return;
+      const target = pointerToCell(moveEvent.clientX, moveEvent.clientY);
+      if (!target) return;
+      setFillPreview({
+        sheetId: sheet.id,
+        firstRow: Math.min(bounds.firstRow, target.row),
+        lastRow: Math.max(bounds.lastRow, target.row),
+        firstCol: Math.min(bounds.firstCol, target.col),
+        lastCol: Math.max(bounds.lastCol, target.col),
+      });
+    };
+    const cleanup = () => {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', finish);
+      window.removeEventListener('pointercancel', cancel);
+      window.removeEventListener('keydown', escape);
+      window.removeEventListener('blur', cancel);
+      resizeCleanup.current = null;
+      setFillPreview(null);
+    };
+    const finish = (upEvent: PointerEvent) => {
+      if (upEvent.pointerId !== pointerId) return;
+      move(upEvent);
+      cleanup();
+      const target = pointerToCell(upEvent.clientX, upEvent.clientY);
+      if (!target) return;
+      const preview = {
+        sheetId: sheet.id,
+        firstRow: Math.min(bounds.firstRow, target.row),
+        lastRow: Math.max(bounds.lastRow, target.row),
+        firstCol: Math.min(bounds.firstCol, target.col),
+        lastCol: Math.max(bounds.lastCol, target.col),
+      };
+      if (preview.lastRow <= bounds.lastRow && preview.lastCol <= bounds.lastCol) return;
+      const goesDown = preview.lastRow > bounds.lastRow && preview.firstRow <= bounds.lastRow;
+      const goesRight = preview.lastCol > bounds.lastCol && preview.firstCol <= bounds.firstCol;
+      const direction = goesRight && preview.lastCol > bounds.lastCol ? 'right' : 'down';
+      if (!goesDown && !goesRight) return;
+      const seed = { row: bounds.firstRow, col: bounds.firstCol };
+      const options = studioInferFillType(sheet, seed);
+      const extended = {
+        anchor: { row: bounds.firstRow, col: bounds.firstCol },
+        focus:
+          direction === 'down'
+            ? { row: preview.lastRow, col: bounds.lastCol }
+            : { row: bounds.lastRow, col: preview.lastCol },
+      };
+      try {
+        const document =
+          options.type === 'text' && options.step === 0
+            ? studioFillCells(initial, sheet.id, extended, direction)
+            : studioFillSeries(initial, sheet.id, extended, {
+                direction,
+                type: options.type,
+                step: options.step,
+                seedCount: 1,
+              });
+        const validationAddresses = studioSelectionAddresses(extended).filter((address) => {
+          const position = studioParseAddress(address)!;
+          return direction === 'down'
+            ? position.row > bounds.lastRow
+            : position.col > bounds.lastCol;
+        });
+        replaceDocument(document);
+        setSelection(extended);
+        setNotice(
+          validationNotice(document, sheet.id, validationAddresses, '已按填充柄填充；可撤销。')
+        );
+        gridRef.current?.focus();
+      } catch (error) {
+        setNotice(error instanceof Error ? error.message : '填充失败。');
+      }
+    };
+    const cancel = () => {
+      cleanup();
+      setNotice('已取消填充。');
+    };
+    const escape = (keyEvent: KeyboardEvent) => {
+      if (keyEvent.key === 'Escape') {
+        keyEvent.preventDefault();
+        cancel();
+      }
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', finish);
+    window.addEventListener('pointercancel', cancel);
+    window.addEventListener('keydown', escape);
+    window.addEventListener('blur', cancel);
+    resizeCleanup.current = cleanup;
   }
 
   function startColumnResize(event: React.PointerEvent<HTMLElement>, col: number) {
@@ -1533,6 +1744,32 @@ export function StudioSheet({
       );
       return;
     }
+    const movement0: Record<string, [number, number]> = {
+      ArrowUp: [-1, 0],
+      ArrowDown: [1, 0],
+      ArrowLeft: [0, -1],
+      ArrowRight: [0, 1],
+    };
+    if (command && movement0[event.key] && !event.shiftKey) {
+      event.preventDefault();
+      const direction =
+        event.key === 'ArrowUp'
+          ? 'up'
+          : event.key === 'ArrowDown'
+            ? 'down'
+            : event.key === 'ArrowLeft'
+              ? 'left'
+              : 'right';
+      const target = dataBlockTarget(direction);
+      if (!target) return;
+      const destination = sheet && studioMergedRange(sheet, target);
+      const position = destination
+        ? { row: destination.firstRow, col: destination.firstCol }
+        : target;
+      setSelection({ anchor: position, focus: position });
+      ensureVisible(position);
+      return;
+    }
     const movement: Record<string, [number, number]> = {
       ArrowUp: [-1, 0],
       ArrowDown: [1, 0],
@@ -2130,6 +2367,46 @@ export function StudioSheet({
                   自动调整列宽
                 </Button>
               </div>
+              <Button
+                size="sm"
+                variant="ghost"
+                disabled={
+                  blocked ||
+                  (bounds.firstCol === bounds.lastCol &&
+                    new Set([...(sheet?.hiddenColumns ?? []), studioColumnLabel(bounds.firstCol)])
+                      .size === columnCount)
+                }
+                onClick={() => {
+                  if (!sheet || !commitEditing()) return;
+                  transform(
+                    (current) =>
+                      studioSetColumnsHidden(
+                        current,
+                        sheet.id,
+                        (
+                          current.sheets.find((item) => item.id === sheet.id)?.hiddenColumns ?? []
+                        ).concat(studioColumnLabel(bounds.firstCol))
+                      ),
+                    `已隐藏列 ${studioColumnLabel(bounds.firstCol)}；可撤销。`
+                  );
+                }}
+              >
+                隐藏列
+              </Button>
+              <Button
+                size="sm"
+                variant="ghost"
+                disabled={blocked || (sheet?.hiddenColumns ?? []).length === 0}
+                onClick={() => {
+                  if (!sheet || !commitEditing()) return;
+                  transform(
+                    (current) => studioSetColumnsHidden(current, sheet.id, []),
+                    '已显示全部隐藏列；可撤销。'
+                  );
+                }}
+              >
+                显示全部列
+              </Button>
               <Button
                 size="sm"
                 variant="ghost"
@@ -3079,6 +3356,39 @@ export function StudioSheet({
               </div>
             ))}
           </div>
+          {fillPreview && (
+            <div
+              aria-hidden="true"
+              className="z-studio-sheet-fill-preview"
+              style={{
+                left: ROW_HEADER_WIDTH + offsets[fillPreview.firstCol - 1],
+                top: HEADER_HEIGHT + studioRowTop(rowLayout, fillPreview.firstRow),
+                width: offsets[fillPreview.lastCol] - offsets[fillPreview.firstCol - 1],
+                height: studioRowSpanHeight(rowLayout, fillPreview.firstRow, fillPreview.lastRow),
+              }}
+            />
+          )}
+          {!disabled && !blocked && !fillPreview && !editingRef.current && (
+            <button
+              type="button"
+              aria-label="填充柄"
+              title="拖动填充：数字/日期自动递增，文本复制"
+              className="z-studio-sheet-fill-handle"
+              style={{
+                left:
+                  ROW_HEADER_WIDTH +
+                  offsets[bounds.lastCol] -
+                  4 +
+                  (bounds.lastCol <= freezeColumns ? viewport.left : 0),
+                top:
+                  HEADER_HEIGHT +
+                  studioRowTop(rowLayout, bounds.lastRow) +
+                  studioRowSpanHeight(rowLayout, bounds.lastRow) -
+                  4,
+              }}
+              onPointerDown={startFillDrag}
+            />
+          )}
         </div>
         {chartPanel && (
           <aside className="z-studio-sheet-chartpanel" aria-label="工作表图表">

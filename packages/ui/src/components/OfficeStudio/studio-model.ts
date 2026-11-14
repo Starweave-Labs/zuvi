@@ -688,6 +688,19 @@ function sheetFeatures(sheet: Record<string, unknown>, rows: number, columns: nu
       ))
   )
     return false;
+  if (
+    sheet.hiddenColumns !== undefined &&
+    (!Array.isArray(sheet.hiddenColumns) ||
+      sheet.hiddenColumns.length > columns ||
+      new Set(sheet.hiddenColumns).size !== sheet.hiddenColumns.length ||
+      !sheet.hiddenColumns.every((label) => {
+        if (typeof label !== 'string' || !/^[A-Z]+$/.test(label)) return false;
+        let index = 0;
+        for (const char of label) index = index * 26 + (char.charCodeAt(0) - 64);
+        return index >= 1 && index <= columns;
+      }))
+  )
+    return false;
   const ranges: NonNullable<ReturnType<typeof cellRange>>[] = [];
   if (sheet.merges !== undefined) {
     if (!Array.isArray(sheet.merges) || sheet.merges.length > 1000) return false;

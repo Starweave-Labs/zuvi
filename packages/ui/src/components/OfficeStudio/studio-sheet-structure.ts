@@ -487,6 +487,16 @@ function transformMetadata(sheet: StudioSheet, edit: StudioSheetStructureEdit): 
     });
     next.hiddenRows = hidden;
   }
+  if (sheet.hiddenColumns && edit.axis === 'column') {
+    const hidden = sheet.hiddenColumns.flatMap((label) => {
+      const position = studioParseAddress(`${label}1`);
+      if (!position) return [];
+      const moved = studioTransformSheetIndex(position.col, edit);
+      if (moved === undefined) return [];
+      return [studioColumnLabel(moved)];
+    });
+    next.hiddenColumns = hidden;
+  }
   if (sheet.merges) {
     const merges = sheet.merges.flatMap((range) => {
       const mapped = studioTransformSheetRange(range, edit);

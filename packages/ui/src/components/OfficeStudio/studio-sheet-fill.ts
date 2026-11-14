@@ -20,6 +20,24 @@ import type {
 
 export type StudioFillDirection = 'down' | 'right';
 
+/**
+ * 依据种子单元格推断填充序列类型：纯数字 → number(+1)；
+ * ISO 日期 → date(+1 天)；带尾数数字的文本 → text 尾数递增；
+ * 其余文本 → text 复制（step 0）。填充柄拖拽使用该推断。
+ */
+export function studioInferFillType(
+  sheet: StudioSheet,
+  seed: SheetPosition
+): { type: 'number' | 'date' | 'text'; step?: number } {
+  const cell = sheet.cells[studioCellAddress(seed.row, seed.col)];
+  const input = (cell?.input ?? '').trim();
+  if (input === '') return { type: 'text', step: 0 };
+  if (/^-?\d+(?:\.\d+)?$/.test(input)) return { type: 'number', step: 1 };
+  if (/^\d{4}-\d{2}-\d{2}$/.test(input)) return { type: 'date', step: 1 };
+  if (/^(?:.*?\d+)[^\d]*$/.test(input) && /\d/.test(input)) return { type: 'text' };
+  return { type: 'text', step: 0 };
+}
+
 export interface StudioFillSeriesOptions {
   direction: StudioFillDirection;
   type: 'number' | 'date' | 'text';

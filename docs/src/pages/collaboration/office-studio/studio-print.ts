@@ -12,6 +12,7 @@ import {
   studioColumnLabel,
   studioChartData,
   studioDisplayCell,
+  studioHiddenColumns,
   studioHiddenRows,
   studioMergedRange,
   studioParseAddress,
@@ -258,12 +259,14 @@ function sheetTable(
   if (rows * columns > 50000)
     throw new Error(`“${sheet.name}”的打印区域过大，请导出 XLSX 并在 Excel 中设置打印区域。`);
   const hidden = studioHiddenRows(sheet, calculation);
+  const hiddenCols = studioHiddenColumns(sheet);
   const body: string[] = [];
   for (let row = 1; row <= rows; row++) {
     if (hidden.has(row)) continue;
     const rowPoints = sheet.rowHeights?.[String(row)] ?? sheet.defaultRowHeight ?? 18;
     const cells: string[] = [];
     for (let col = 1; col <= columns; col++) {
+      if (hiddenCols.has(studioColumnLabel(col))) continue;
       const merge = studioMergedRange(sheet, { row, col });
       const mergeRows = merge
         ? Array.from(
@@ -338,10 +341,10 @@ function sheetTable(
     }
     body.push(`<tr style="height:${rowPoints}pt">${cells.join('')}</tr>`);
   }
-  const cols = Array.from(
-    { length: columns },
-    (_, index) =>
-      `<col style="width:${sheet.columnWidths?.[studioColumnLabel(index + 1)] ?? 112}px">`
+  const cols = Array.from({ length: columns }, (_, index) =>
+    hiddenCols.has(studioColumnLabel(index + 1))
+      ? ''
+      : `<col style="width:${sheet.columnWidths?.[studioColumnLabel(index + 1)] ?? 112}px">`
   ).join('');
   return `<section class="studio-print-sheet"><h1>${escape(sheet.name)}</h1><table><colgroup>${cols}</colgroup>${body.join('')}</table>${(sheet.charts ?? []).map((chart) => sheetChart(sheet, chart, calculation)).join('')}</section>`;
 }

@@ -1787,6 +1787,39 @@ export function studioHiddenRows(sheet: StudioSheet, calculation: SheetCalculati
   return hidden;
 }
 
+/** 手动隐藏的列标签集合（预留筛选语义扩展位）。 */
+export function studioHiddenColumns(sheet: StudioSheet): Set<string> {
+  return new Set(sheet.hiddenColumns ?? []);
+}
+
+/**
+ * 隐藏或显示列标签集合；[] 显式恢复全部。隐藏列保留原宽度。
+ * 若会隐藏全部列则整批拒绝。
+ */
+export function studioSetColumnsHidden(
+  document: StudioExcelDocument,
+  sheetId: string,
+  hidden: string[]
+): StudioExcelDocument {
+  const sheet = document.sheets.find((item) => item.id === sheetId);
+  if (!sheet) throw new Error('工作表不存在。');
+  const next = [...hidden].filter((label, index, all) => all.indexOf(label) === index);
+  const total = sheet.columnCount;
+  if (next.length > 0 && next.length >= total) throw new Error('至少保留一个可见字段。');
+  for (const label of next) {
+    if (!/^[A-Z]+$/.test(label)) throw new Error(`列标签无效：${label}`);
+    let index = 0;
+    for (const char of label) index = index * 26 + (char.charCodeAt(0) - 64);
+    if (index < 1 || index > total) throw new Error(`列超出支持范围：${label}`);
+  }
+  return {
+    ...document,
+    sheets: document.sheets.map((item) =>
+      item.id === sheetId ? { ...item, hiddenColumns: next } : item
+    ),
+  };
+}
+
 /** Only A1 references are translated; formula strings and absolute components are preserved. */
 export function studioTranslateFormula(input: string, rows: number, columns: number): string {
   if (!input.startsWith('=')) return input;
