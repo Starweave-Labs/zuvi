@@ -160,7 +160,7 @@ export function Steps({
           const status = deriveStatus(index, clampedCurrent, item.status);
           const isCurrent = index === clampedCurrent;
           const disabled = item.disabled === true;
-          const key = item.key ?? `z-steps-item-${index}`;
+          const key = item.key ?? `zuvi-steps-item-${index}`;
 
           const iconNode = (
             <span

@@ -204,10 +204,10 @@
   border: var(--zuvi-button-spinner-width) solid currentColor;
   border-right-color: color-mix(in srgb, currentColor 25%, transparent);
   border-radius: var(--zuvi-radius-full);
-  animation: z-button-spin calc(var(--zuvi-duration-slow) * 2) linear infinite;
+  animation: zuvi-button-spin calc(var(--zuvi-duration-slow) * 2) linear infinite;
 }
 
-@keyframes z-button-spin {
+@keyframes zuvi-button-spin {
   to {
     transform: rotate(360deg);
   }

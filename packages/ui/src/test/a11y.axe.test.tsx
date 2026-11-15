@@ -68,7 +68,7 @@ const AXE_RUN_OPTIONS: axe.RunOptions = {
 const hosts: HTMLElement[] = [];
 
 /**
- * 渲染进带 `z-reset` class 的容器（box-sizing 依赖，契约 §4 要求），
+ * 渲染进带 `zuvi-reset` class 的容器（box-sizing 依赖，契约 §4 要求），
  * 内容包一层 `<main>`：axe 的 region 规则要求页面内容落在 landmark 内，
  * 测试宿主 div 不是语义容器，用 main 包裹使扫描树结构合法，避免无意义豁免。
  */

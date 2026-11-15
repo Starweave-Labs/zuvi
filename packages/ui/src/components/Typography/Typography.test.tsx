@@ -34,7 +34,7 @@ describe('Typography.Title', () => {
       const heading = container.querySelector(`h${level}`);
       expect(heading).not.toBeNull();
       expect(heading).toHaveClass('zuvi-typography');
-      expect(heading).toHaveClass(`z-typography-h${level}`);
+      expect(heading).toHaveClass(`zuvi-typography-h${level}`);
       expect(heading).toHaveTextContent(texts[level - 1]);
       expect(heading).toHaveAttribute('data-part', 'root');
     }

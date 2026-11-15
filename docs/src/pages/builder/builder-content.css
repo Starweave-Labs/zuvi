@@ -204,7 +204,7 @@ h3.zuvi-builder-heading {
 }
 
 .zuvi-builder-canvas {
-  container: z-builder-page / inline-size;
+  container: zuvi-builder-page / inline-size;
 }
 .zuvi-builder-element {
   min-width: 0;
@@ -289,7 +289,7 @@ h3.zuvi-builder-heading {
   margin: 5px 0 0;
   accent-color: var(--zuvi-color-primary);
 }
-@container z-builder-page (max-width: 600px) {
+@container zuvi-builder-page (max-width: 600px) {
   .zuvi-builder-columns {
     grid-template-columns: 1fr !important;
   }
@@ -355,7 +355,7 @@ h3.zuvi-builder-heading {
 .zuvi-builder-splitter-panel {
   padding: 20px;
 }
-@container z-builder-page (max-width: 600px) {
+@container zuvi-builder-page (max-width: 600px) {
   .zuvi-builder-responsive-splitter[data-mobile-stack] {
     grid-template-columns: minmax(0, 1fr) !important;
     grid-template-rows: none !important;
@@ -1049,7 +1049,7 @@ h3.zuvi-builder-heading {
   white-space: pre-wrap;
   min-width: 20px;
 }
-@container z-builder-page (max-width: 1000px) {
+@container zuvi-builder-page (max-width: 1000px) {
   .zuvi-builder-app-body {
     padding: 22px;
   }
@@ -1060,7 +1060,7 @@ h3.zuvi-builder-heading {
     padding-inline: 10px;
   }
 }
-@container z-builder-page (max-width: 600px) {
+@container zuvi-builder-page (max-width: 600px) {
   .zuvi-builder-app-shell {
     grid-template-columns: minmax(0, 1fr);
     min-height: 680px;

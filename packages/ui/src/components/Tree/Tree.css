@@ -114,10 +114,10 @@
   border: var(--zuvi-tree-spinner-width) solid var(--zuvi-tree-spinner-track);
   border-top-color: var(--zuvi-tree-spinner-color);
   border-radius: var(--zuvi-radius-full);
-  animation: z-tree-spin calc(var(--zuvi-duration-slow) * 2) linear infinite;
+  animation: zuvi-tree-spin calc(var(--zuvi-duration-slow) * 2) linear infinite;
 }
 
-@keyframes z-tree-spin {
+@keyframes zuvi-tree-spin {
   to {
     transform: rotate(360deg);
   }

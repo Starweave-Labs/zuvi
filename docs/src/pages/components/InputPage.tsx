@@ -170,7 +170,7 @@ export default function InputPage(): React.ReactNode {
       <p className="doc-p">
         结构：
         <code className="doc-code-inline">
-          root（z-input）&gt; prefix + input（z-input-field）+ clear（z-input-clear）+ suffix
+          root（zuvi-input）&gt; prefix + input（zuvi-input-field）+ clear（zuvi-input-clear）+ suffix
         </code>
         ； 清除按钮为 <code className="doc-code-inline">type=&quot;button&quot;</code>、
         <code className="doc-code-inline">aria-label=&quot;清除&quot;</code>。

@@ -90,11 +90,11 @@
   border: 1px solid var(--zuvi-mentions-panel-border);
   border-radius: var(--zuvi-mentions-panel-radius);
   box-shadow: var(--zuvi-mentions-panel-shadow);
-  animation: z-mentions-panel-in var(--zuvi-mentions-animation-duration) var(--zuvi-ease-entrance);
+  animation: zuvi-mentions-panel-in var(--zuvi-mentions-animation-duration) var(--zuvi-ease-entrance);
   max-width: calc(100vw - 16px);
 }
 
-@keyframes z-mentions-panel-in {
+@keyframes zuvi-mentions-panel-in {
   from {
     opacity: 0;
     transform: translateY(-0.25rem);

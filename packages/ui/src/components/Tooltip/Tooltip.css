@@ -37,11 +37,11 @@
   text-align: start;
   overflow-wrap: break-word;
   pointer-events: none;
-  animation: z-tooltip-in var(--zuvi-tooltip-animation);
+  animation: zuvi-tooltip-in var(--zuvi-tooltip-animation);
   max-height: calc(100dvh - 16px);
 }
 
-@keyframes z-tooltip-in {
+@keyframes zuvi-tooltip-in {
   from {
     opacity: 0;
   }

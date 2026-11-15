@@ -162,7 +162,7 @@ describe('customRequest 引擎', () => {
     expect(info.file.name).toBe('hello.txt');
     expect(info.file.status).toBe('uploading');
     expect(info.file.percent).toBe(0);
-    expect(info.file.uid).toMatch(/^z-upload-/);
+    expect(info.file.uid).toMatch(/^zuvi-upload-/);
     expect(info.fileList).toHaveLength(1);
     expect(screen.getByText('hello.txt')).toBeInTheDocument();
   });

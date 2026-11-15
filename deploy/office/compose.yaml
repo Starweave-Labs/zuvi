@@ -14,7 +14,7 @@ services:
       - documentserver_logs:/var/log/onlyoffice
       - documentserver_lib:/var/lib/onlyoffice
       - documentserver_db:/var/lib/postgresql
-      - ./fonts.local:/var/www/onlyoffice/Data/custom-fonts/zui:ro
+      - ./fonts.local:/var/www/onlyoffice/Data/custom-fonts/zuvi:ro
     healthcheck:
       test: ['CMD', 'curl', '--fail', '--silent', '--max-time', '3', 'http://localhost/healthcheck']
       interval: 10s

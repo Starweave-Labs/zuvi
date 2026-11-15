@@ -98,11 +98,11 @@
 
 /* 进入：translateY(-8px)→0 滑入 */
 .zuvi-message-list[data-placement='top'] .zuvi-message[data-state='open'] {
-  animation: z-message-enter-top var(--zuvi-message-transition);
+  animation: zuvi-message-enter-top var(--zuvi-message-transition);
 }
 
 .zuvi-message-list[data-placement='bottom'] .zuvi-message[data-state='open'] {
-  animation: z-message-enter-bottom var(--zuvi-message-transition);
+  animation: zuvi-message-enter-bottom var(--zuvi-message-transition);
 }
 
 .zuvi-message[data-state='closing'] {
@@ -181,7 +181,7 @@
   height: var(--zuvi-space-3);
 }
 
-@keyframes z-message-enter-top {
+@keyframes zuvi-message-enter-top {
   from {
     opacity: 0;
     transform: translateY(calc(var(--zuvi-space-2) * -1));
@@ -192,7 +192,7 @@
   }
 }
 
-@keyframes z-message-enter-bottom {
+@keyframes zuvi-message-enter-bottom {
   from {
     opacity: 0;
     transform: translateY(var(--zuvi-space-2));

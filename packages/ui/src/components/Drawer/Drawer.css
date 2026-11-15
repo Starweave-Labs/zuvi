@@ -83,7 +83,7 @@
 
 /* -------------------------------- 进出场 -------------------------------- */
 
-@keyframes z-drawer-overlay-in {
+@keyframes zuvi-drawer-overlay-in {
   from {
     opacity: 0;
   }
@@ -92,7 +92,7 @@
   }
 }
 
-@keyframes z-drawer-overlay-out {
+@keyframes zuvi-drawer-overlay-out {
   from {
     opacity: 1;
   }
@@ -101,7 +101,7 @@
   }
 }
 
-@keyframes z-drawer-in-left {
+@keyframes zuvi-drawer-in-left {
   from {
     transform: translateX(-100%);
   }
@@ -110,7 +110,7 @@
   }
 }
 
-@keyframes z-drawer-out-left {
+@keyframes zuvi-drawer-out-left {
   from {
     transform: none;
   }
@@ -119,7 +119,7 @@
   }
 }
 
-@keyframes z-drawer-in-right {
+@keyframes zuvi-drawer-in-right {
   from {
     transform: translateX(100%);
   }
@@ -128,7 +128,7 @@
   }
 }
 
-@keyframes z-drawer-out-right {
+@keyframes zuvi-drawer-out-right {
   from {
     transform: none;
   }
@@ -137,7 +137,7 @@
   }
 }
 
-@keyframes z-drawer-in-top {
+@keyframes zuvi-drawer-in-top {
   from {
     transform: translateY(-100%);
   }
@@ -146,7 +146,7 @@
   }
 }
 
-@keyframes z-drawer-out-top {
+@keyframes zuvi-drawer-out-top {
   from {
     transform: none;
   }
@@ -155,7 +155,7 @@
   }
 }
 
-@keyframes z-drawer-in-bottom {
+@keyframes zuvi-drawer-in-bottom {
   from {
     transform: translateY(100%);
   }
@@ -164,7 +164,7 @@
   }
 }
 
-@keyframes z-drawer-out-bottom {
+@keyframes zuvi-drawer-out-bottom {
   from {
     transform: none;
   }
@@ -174,43 +174,43 @@
 }
 
 .zuvi-drawer-overlay[data-state='open'] {
-  animation: z-drawer-overlay-in var(--zuvi-drawer-animation-duration) var(--zuvi-ease-entrance);
+  animation: zuvi-drawer-overlay-in var(--zuvi-drawer-animation-duration) var(--zuvi-ease-entrance);
 }
 
 .zuvi-drawer-overlay[data-state='closed'] {
-  animation: z-drawer-overlay-out var(--zuvi-drawer-animation-duration) var(--zuvi-ease-exit);
+  animation: zuvi-drawer-overlay-out var(--zuvi-drawer-animation-duration) var(--zuvi-ease-exit);
 }
 
 .zuvi-drawer[data-placement='right'][data-state='open'] {
-  animation: z-drawer-in-right var(--zuvi-drawer-animation-duration) var(--zuvi-ease-entrance);
+  animation: zuvi-drawer-in-right var(--zuvi-drawer-animation-duration) var(--zuvi-ease-entrance);
 }
 
 .zuvi-drawer[data-placement='right'][data-state='closed'] {
-  animation: z-drawer-out-right var(--zuvi-drawer-animation-duration) var(--zuvi-ease-exit);
+  animation: zuvi-drawer-out-right var(--zuvi-drawer-animation-duration) var(--zuvi-ease-exit);
 }
 
 .zuvi-drawer[data-placement='left'][data-state='open'] {
-  animation: z-drawer-in-left var(--zuvi-drawer-animation-duration) var(--zuvi-ease-entrance);
+  animation: zuvi-drawer-in-left var(--zuvi-drawer-animation-duration) var(--zuvi-ease-entrance);
 }
 
 .zuvi-drawer[data-placement='left'][data-state='closed'] {
-  animation: z-drawer-out-left var(--zuvi-drawer-animation-duration) var(--zuvi-ease-exit);
+  animation: zuvi-drawer-out-left var(--zuvi-drawer-animation-duration) var(--zuvi-ease-exit);
 }
 
 .zuvi-drawer[data-placement='top'][data-state='open'] {
-  animation: z-drawer-in-top var(--zuvi-drawer-animation-duration) var(--zuvi-ease-entrance);
+  animation: zuvi-drawer-in-top var(--zuvi-drawer-animation-duration) var(--zuvi-ease-entrance);
 }
 
 .zuvi-drawer[data-placement='top'][data-state='closed'] {
-  animation: z-drawer-out-top var(--zuvi-drawer-animation-duration) var(--zuvi-ease-exit);
+  animation: zuvi-drawer-out-top var(--zuvi-drawer-animation-duration) var(--zuvi-ease-exit);
 }
 
 .zuvi-drawer[data-placement='bottom'][data-state='open'] {
-  animation: z-drawer-in-bottom var(--zuvi-drawer-animation-duration) var(--zuvi-ease-entrance);
+  animation: zuvi-drawer-in-bottom var(--zuvi-drawer-animation-duration) var(--zuvi-ease-entrance);
 }
 
 .zuvi-drawer[data-placement='bottom'][data-state='closed'] {
-  animation: z-drawer-out-bottom var(--zuvi-drawer-animation-duration) var(--zuvi-ease-exit);
+  animation: zuvi-drawer-out-bottom var(--zuvi-drawer-animation-duration) var(--zuvi-ease-exit);
 }
 
 @media (prefers-reduced-motion: reduce) {

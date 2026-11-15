@@ -178,10 +178,10 @@
 }
 
 .zuvi-select-listbox[data-open='true'] {
-  animation: z-select-listbox-in var(--zuvi-select-animation-duration) var(--zuvi-ease-entrance);
+  animation: zuvi-select-listbox-in var(--zuvi-select-animation-duration) var(--zuvi-ease-entrance);
 }
 
-@keyframes z-select-listbox-in {
+@keyframes zuvi-select-listbox-in {
   from {
     opacity: 0;
     transform: translateY(-0.25rem);

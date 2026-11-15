@@ -60,10 +60,10 @@
     color-mix(in oklch, var(--zuvi-progress-color) 60%, transparent) 100%
   );
   background-size: 200% 100%;
-  animation: z-progress-flow 1.2s linear infinite;
+  animation: zuvi-progress-flow 1.2s linear infinite;
 }
 
-@keyframes z-progress-flow {
+@keyframes zuvi-progress-flow {
   from {
     background-position: 200% 0;
   }

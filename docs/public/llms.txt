@@ -1,30 +1,30 @@
-# ZUI — React 19 Component Library (AI Quick Reference)
+# Zuvi — React 19 Component Library (AI Quick Reference)
 
-> ZUI is a token-driven, zero-runtime-style, accessibility-first React 19 component library.
-> This file is the LLM-facing cheat sheet: read it fully and you can generate correct ZUI code.
+> Zuvi is a token-driven, zero-runtime-style, accessibility-first React 19 component library.
+> This file is the LLM-facing cheat sheet: read it fully and you can generate correct Zuvi code.
 
 ## Install & Setup
 
 Version 0.5.0 is distributed through GitHub Packages, not npmjs. Configure
 @yeyouyuan:registry=https://npm.pkg.github.com in the project .npmrc and log in
 with a GitHub account that has package read access. Install aliases below keep
-source imports at @zui/*.
+source imports at @zuvi/*.
 
 This release includes OfficeEditor and OfficeStudio. OfficeEditor requires a
 separately deployed ONLYOFFICE Docs service and backend configuration. OfficeStudio
-uses ZUI controls and independent document models with host file codecs, printing
+uses Zuvi controls and independent document models with host file codecs, printing
 and persistence; it does not require an Office server. The published Registry has
 73 components and 16 blocks.
 
 ```
-pnpm add @zui/react@npm:@yeyouyuan/zui-react@0.5.0          # components + bundled styles
-pnpm add @zui/tokens@npm:@yeyouyuan/zui-tokens@0.5.0         # optional: TS constants + CSS variable references
-pnpm add @zui/blocks@npm:@yeyouyuan/zui-blocks@0.5.0         # optional: 16 page-level business blocks
+pnpm add @zuvi/react@npm:@yeyouyuan/zuvi-react@0.5.0          # components + bundled styles
+pnpm add @zuvi/tokens@npm:@yeyouyuan/zuvi-tokens@0.5.0         # optional: TS constants + CSS variable references
+pnpm add @zuvi/blocks@npm:@yeyouyuan/zuvi-blocks@0.5.0         # optional: 16 page-level business blocks
 ```
 
 ```tsx
-import '@zui/react/styles.css'; // once per app (includes tokens + reset + all component styles)
-import { Button, Input, Select, Modal, Tabs, Table, MessageProvider, useMessage } from '@zui/react';
+import '@zuvi/react/styles.css'; // once per app (includes tokens + reset + all component styles)
+import { Button, Input, Select, Modal, Tabs, Table, MessageProvider, useMessage } from '@zuvi/react';
 ```
 
 - React 19 native refs: components accept `ref` directly via `React.ComponentPropsWithRef<'x'>`. NEVER use `forwardRef`.
@@ -35,12 +35,12 @@ import { Button, Input, Select, Modal, Tabs, Table, MessageProvider, useMessage 
 
 ## Business Blocks
 
-- Package: `@zui/blocks`; docs route: `#/blocks`.
+- Package: `@zuvi/blocks`; docs route: `#/blocks`.
 - 16 blocks: Login, Dashboard, TablePage, FormPage, UserCenter, Permission,
   Settings, Wizard, ProfileEdit, OrderList, DataScreen, TimelineFeed, Kanban,
   ErrorPages, SearchResult, ListDetail.
-- Import from the package root or a named subpath such as `@zui/blocks/table-page`.
-- Blocks use `@zui/react` styles; import `@zui/react/styles.css` once in the app.
+- Import from the package root or a named subpath such as `@zuvi/blocks/table-page`.
+- Blocks use `@zuvi/react` styles; import `@zuvi/react/styles.css` once in the app.
 - Stateful blocks expose controlled values and callbacks. The docs route provides
   live interactions, reset behavior, and copyable integration examples.
 
@@ -246,7 +246,7 @@ Parts: root | panel | content | handle | handle-indicator
 
 ### OfficeEditor (embedded ONLYOFFICE native document editor; unreleased source addition)
 ```
-import { OfficeEditor } from '@zui/react';
+import { OfficeEditor } from '@zuvi/react';
 OfficeEditor: (props: OfficeEditorProps) => JSX.Element
   documentServerUrl: string                                            // REQUIRED, browser-accessible Docs server
   config: OfficeEditorConfig                                           // REQUIRED, backend-issued signed configuration
@@ -273,7 +273,7 @@ Parts: root | header | toolbar | title | brand | status | actions | stage | canv
 
 ### OfficeStudio (independent Word, Excel and PDF workspace; unreleased source addition)
 ```
-import { OfficeStudio, createOfficeStudioDocument } from '@zui/react';
+import { OfficeStudio, createOfficeStudioDocument } from '@zuvi/react';
 OfficeStudio: (props: OfficeStudioProps) => JSX.Element
   value?/defaultValue?: OfficeStudioDocument                            // version:1, id, name, kind:'word'|'excel'|'pdf'
   onChange?: (document: OfficeStudioDocument) => void
@@ -316,11 +316,11 @@ undo/redo and ordinary AcroForm fields. Search requires session.search(query,
 PDF supports 1-200 pages; no arbitrary original text editing/reflow/OCR. Handwritten
 signatures are vector ink, not certificate signatures. Encrypted files, XFA and
 unsupported native fields are rejected rather than silently discarded.
-The docs demo uses a separate zui-office-studio IndexedDB database with original
+The docs demo uses a separate zuvi-office-studio IndexedDB database with original
 Blobs, revision-checked commits, coalesced saves and conflict copy recovery. It
 keeps 20 prior committed versions per document; preview/export/print are read-only,
 and restoration creates a new document. The local workspace limit is 100 documents.
-Adapters: docs/src/pages/collaboration/office-studio/. UI: @zui/react/office-studio.
+Adapters: docs/src/pages/collaboration/office-studio/. UI: @zuvi/react/office-studio.
 Codecs, PDF worker/fonts, print support and local history storage are host adapters,
 not public UI-package exports or part of the CLI office-studio UI source item.
 Editors and PDF rendering resources load on demand. Saving/exporting/printing/
@@ -471,14 +471,14 @@ Example re-theme:
 - Do NOT expect `Select` to accept arbitrary DOM props (it takes a fixed prop set + aria-*); wrap it for layout (no `style` prop).
 - Do NOT skip keyboard/ARIA requirements when composing: focus visibility (`:focus-visible`), roles and `aria-*` are contractual.
 
-## AI Auto-Translate (useAutoTranslate) — @zui/i18n
+## AI Auto-Translate (useAutoTranslate) — @zuvi/i18n
 
 Automatic translation of built-in component copy (placeholder / 请选择 / 清除 / 关闭 /
 暂无数据 / 上一页 / 下一页 …) via OpenAI / DeepL / Youdao / custom endpoints, with a
 localStorage cache and graceful fallback to the source text on errors.
 
 ```
-import { useAutoTranslate, type TranslateConfig, type TranslateProvider } from '@zui/i18n';
+import { useAutoTranslate, type TranslateConfig, type TranslateProvider } from '@zuvi/i18n';
 
 type TranslateProvider = 'openai' | 'deepl' | 'youdao' | 'custom';
 
@@ -493,7 +493,7 @@ interface TranslateConfig {
   sourceLang?: string;             // default 'zh'
   targetLang: string;              // REQUIRED, e.g. 'en'
   cache?: boolean;                 // default true (localStorage)
-  cacheKey?: string;               // default 'zui-translate-cache'
+  cacheKey?: string;               // default 'zuvi-translate-cache'
 }
 
 function useAutoTranslate(config: TranslateConfig): {
@@ -525,7 +525,7 @@ function useAutoTranslate(config: TranslateConfig): {
 
 ## meta.json — per-component AI metadata (CONTRACTS-V3 §2)
 
-Path: `packages/ui/src/components/<Name>/meta.json` (all 73 source Registry components ship metadata). Consumed by `@zui/mcp` tools
+Path: `packages/ui/src/components/<Name>/meta.json` (all 73 source Registry components ship metadata). Consumed by `@zuvi/mcp` tools
 and the registry generator.
 
 ```json
@@ -555,23 +555,23 @@ Field meaning:
 ## Registry & CLI (packages/cli + registry/)
 
 The registry (`registry/registry.json`) contains 73 source components and 16 blocks, generated from sources +
-`meta.json`; `@zui/cli` copies component source into your project (free to edit) with an
+`meta.json`; `@zuvi/cli` copies component source into your project (free to edit) with an
 upstream update channel.
 
 ```bash
 node registry/scripts/generate.mjs          # rebuild registry.json
 node registry/scripts/generate.mjs --check  # CI: registry vs components
 
-pnpm dlx @yeyouyuan/zui-cli@0.5.0 init                 # interactive setup → writes .zurc.json
-pnpm dlx @yeyouyuan/zui-cli@0.5.0 add button           # copy Button.tsx + Button.css → src/components/ui/button/
-pnpm dlx @yeyouyuan/zui-cli@0.5.0 add button modal     # multiple components
-pnpm dlx @yeyouyuan/zui-cli@0.5.0 add --all            # everything in the registry
-pnpm dlx @yeyouyuan/zui-cli@0.5.0 diff button          # unified diff: local copy vs registry (update channel)
-pnpm dlx @yeyouyuan/zui-cli@0.5.0 list                 # list all components (--json for machine output)
+pnpm dlx @yeyouyuan/zuvi-cli@0.5.0 init                 # interactive setup → writes .zurc.json
+pnpm dlx @yeyouyuan/zuvi-cli@0.5.0 add button           # copy Button.tsx + Button.css → src/components/ui/button/
+pnpm dlx @yeyouyuan/zuvi-cli@0.5.0 add button modal     # multiple components
+pnpm dlx @yeyouyuan/zuvi-cli@0.5.0 add --all            # everything in the registry
+pnpm dlx @yeyouyuan/zuvi-cli@0.5.0 diff button          # unified diff: local copy vs registry (update channel)
+pnpm dlx @yeyouyuan/zuvi-cli@0.5.0 list                 # list all components (--json for machine output)
 ```
 
 - `add` copies components to `<components>/<kebab-name>/`, blocks to `<components>/blocks/<name>/`,
-  shared utils/config/styles to `<components>/_zui/`, resolves `registryDependencies` recursively,
+  shared utils/config/styles to `<components>/_zuvi/`, resolves `registryDependencies` recursively,
   rewrites imports and prints npm deps. Registry top-level `exports` maps public symbols to barrels.
 - Published CLI/MCP packages include their registry, source and metadata in `data/`.
 - `diff` outputs `--- a/... +++ b/...` patches (local = a, registry = b).
@@ -581,16 +581,16 @@ pnpm dlx @yeyouyuan/zui-cli@0.5.0 list                 # list all components (--
 
 ## MCP server (packages/mcp) — 3 tools
 
-`@zui/mcp` is a pure stdio JSON-RPC 2.0 server (no MCP SDK). Configure it in Claude
+`@zuvi/mcp` is a pure stdio JSON-RPC 2.0 server (no MCP SDK). Configure it in Claude
 Desktop / Cursor as a stdio MCP server (see `packages/mcp/README.md` for full config):
 
 ```json
 {
   "mcpServers": {
-    "zui": {
+    "zuvi": {
       "command": "node",
-      "args": ["/abs/path/to/zui/packages/mcp/dist/index.js"],
-      "env": { "ZUI_ROOT": "/abs/path/to/zui" }
+      "args": ["/abs/path/to/zuvi/packages/mcp/dist/index.js"],
+      "env": { "Zuvi_ROOT": "/abs/path/to/zuvi" }
     }
   }
 }
@@ -600,14 +600,14 @@ Tools (via `tools/call`):
 
 | tool | args | returns |
 |---|---|---|
-| `zui_search_components` | `query` (string, required), `limit` (number) | `{ query, count, results: [{ name, description, category }] }` |
-| `zui_get_component_api` | `name` (string, required) | markdown props signature + usage + a11y (from meta.json + CONTRACTS-V3) |
-| `zui_generate_code` | `component` (string, required), `props` (object), `children` (string) | import + usable JSX snippet; `props` values render literally, `"{expr}"` emits a JSX expression |
+| `zuvi_search_components` | `query` (string, required), `limit` (number) | `{ query, count, results: [{ name, description, category }] }` |
+| `zuvi_get_component_api` | `name` (string, required) | markdown props signature + usage + a11y (from meta.json + CONTRACTS-V3) |
+| `zuvi_generate_code` | `component` (string, required), `props` (object), `children` (string) | import + usable JSX snippet; `props` values render literally, `"{expr}"` emits a JSX expression |
 
 Example request line (one JSON per line on stdin):
 
 ```json
-{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"zui_search_components","arguments":{"query":"表单"}}}
+{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"zuvi_search_components","arguments":{"query":"表单"}}}
 ```
 
 Raw JSON-RPC methods supported: `initialize`, `notifications/initialized`, `ping`,
@@ -617,7 +617,7 @@ Raw JSON-RPC methods supported: `initialize`, `notifications/initialized`, `ping
 
 Design-token source of truth: `packages/tokens/src/tokens.json` (DTCG format;
 `$type` / `$value`; the semantic layer's `$value` is ALWAYS an alias chain like
-`{zui.primitives.brand.600}`, never a bare color). CSS layering:
+`{zuvi.primitives.brand.600}`, never a bare color). CSS layering:
 `base.css` (primitives `--z-neutral-*`, `--z-brand-*`, ...) → `semantic.css`
 (`--z-color-*`, light values) → `dark.css` (remaps ONLY `--z-color-*` under
 `[data-theme='dark']` + a `prefers-color-scheme` fallback; dimension tokens are
@@ -626,32 +626,32 @@ never remapped). Contrast is WCAG AA calibrated in both themes.
 - Figma: open Tokens Studio for Figma → Settings → Load from file → paste
   `tokens.json` → two token sets import automatically (primitives + semantic).
   Bind component styles to the SEMANTIC layer only.
-- Three token layers: primitive (`zui.primitives.brand.600` ↔ `--z-brand-600`,
-  the only place raw values live) → semantic (`zui.semantic.color.primary` ↔
+- Three token layers: primitive (`zuvi.primitives.brand.600` ↔ `--z-brand-600`,
+  the only place raw values live) → semantic (`zuvi.semantic.color.primary` ↔
   `--z-color-primary`, the only layer components consume) → component-level
   (`--z-<name>-*`, e.g. `--z-button-bg`, runtime-derived from semantic).
 - Re-branding (3 steps, semantic layer ONLY):
   1) create `brand-skin.css` overriding semantic `--z-color-*` vars, values must
      reference primitive scales (e.g. `--z-color-primary: var(--z-success-600)`,
      hover 700, active 800, subtle 50/700, link/focus 600);
-  2) import after `@zui/react/styles.css` and mount the class on a container or
+  2) import after `@zuvi/react/styles.css` and mount the class on a container or
      `:root`; `ConfigProvider` (locale/translate) is orthogonal to theming;
   3) add dark values under `[data-theme='dark'] .brand-spring` mirroring
      dark.css rules (600→500, fg inverted, subtle 900/300) plus a
      `:root:not([data-theme='light'])` media fallback.
-- CDN (no-build): `pnpm --filter @zui/react build:browser` →
-  `packages/ui/dist/browser/zui.global.js` + `zui.css` (+ LICENSE.txt), synced
+- CDN (no-build): `pnpm --filter @zuvi/react build:browser` →
+  `packages/ui/dist/browser/zuvi.global.js` + `zuvi.css` (+ LICENSE.txt), synced
   to `docs/dist/cdn/v<v>/` (version from package.json, currently v0.5.0).
   Public Pages serves `cdn/v0.5.0/` and the matching demo page after deployment.
-  Usage: `<link rel="stylesheet" href="cdn/v0.5.0/zui.css">` +
-  `<script src="cdn/v0.5.0/zui.global.js">`; the IIFE bundles React 19 under
-  the global namespace `ZUI` (`ZUI.React`, `ZUI.createRoot`, `ZUI.hydrateRoot`,
+  Usage: `<link rel="stylesheet" href="cdn/v0.5.0/zuvi.css">` +
+  `<script src="cdn/v0.5.0/zuvi.global.js">`; the IIFE bundles React 19 under
+  the global namespace `Zuvi` (`Zuvi.React`, `Zuvi.createRoot`, `Zuvi.hydrateRoot`,
   every component). Live example: `/cdn-demo.html`.
-- Naming map (Figma path ↔ CSS variable): `zui.primitives.brand.600` ↔
-  `--z-brand-600`; `zui.semantic.color.primary` ↔ `--z-color-primary`;
-  `zui.semantic.radius.lg` ↔ `--z-radius-lg` (single source `--z-radius`,
-  sm/md/lg/xl derive via calc); `zui.semantic.shadow.md` ↔ `--z-shadow-md`;
-  `zui.semantic.font.sans` ↔ `--z-font-sans`. Dimension tokens (`--z-radius`,
+- Naming map (Figma path ↔ CSS variable): `zuvi.primitives.brand.600` ↔
+  `--z-brand-600`; `zuvi.semantic.color.primary` ↔ `--z-color-primary`;
+  `zuvi.semantic.radius.lg` ↔ `--z-radius-lg` (single source `--z-radius`,
+  sm/md/lg/xl derive via calc); `zuvi.semantic.shadow.md` ↔ `--z-shadow-md`;
+  `zuvi.semantic.font.sans` ↔ `--z-font-sans`. Dimension tokens (`--z-radius`,
   `--z-space-1..12`, `--z-text-xs..2xl`, `--z-shadow-xs..lg`, `--z-duration-*`,
   `--z-z-*`) are theme-agnostic. Semantic color matrix (light/dark, per
   semantic.css/dark.css): bg 50/950, bg-subtle 100/900, bg-muted 200/800,

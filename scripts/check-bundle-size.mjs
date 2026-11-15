@@ -9,7 +9,9 @@ const directory = fileURLToPath(new URL('../packages/ui/dist/', import.meta.url)
 const entry = path.join(directory, 'index.js');
 // Includes the Office public API and document models. The editor implementations
 // remain asynchronous and are reported separately rather than hidden in this limit.
-const initialBudget = 112 * 1024;
+// 120 KiB: Table 数据模式（字段拖拽/排序/字段管理）随 v0.5.0 进入入口，
+// 排序交互不做异步分块以免首次点击卡顿；Async Studio* 分块继续单独上报。
+const initialBudget = 120 * 1024;
 const modules = new Map();
 
 function readModule(file) {

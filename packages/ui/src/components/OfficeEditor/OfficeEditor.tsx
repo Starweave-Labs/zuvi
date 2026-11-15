@@ -142,7 +142,7 @@ export function OfficeEditor({
   const activeRef = React.useRef({ active: false });
   const bindEventsRef = React.useRef<(() => void) | null>(null);
   const actions = React.useRef<Partial<Record<'save' | 'download', Promise<void>>>>({});
-  const prefix = `z-office-editor-${React.useId().replace(/[^a-zA-Z0-9_-]/g, '')}`;
+  const prefix = `zuvi-office-editor-${React.useId().replace(/[^a-zA-Z0-9_-]/g, '')}`;
   const latest = React.useRef({
     documentServerUrl,
     config: effectiveConfig,

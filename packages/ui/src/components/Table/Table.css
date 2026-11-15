@@ -530,10 +530,10 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   pointer-events: none;
-  animation: z-table-ghost-in var(--zuvi-duration-fast) var(--zuvi-ease-standard);
+  animation: zuvi-table-ghost-in var(--zuvi-duration-fast) var(--zuvi-ease-standard);
 }
 
-@keyframes z-table-ghost-in {
+@keyframes zuvi-table-ghost-in {
   from {
     opacity: 0;
     transform: scale(0.96);

@@ -153,7 +153,7 @@
 
 .zuvi-cascader-panel[data-open='true'] {
   display: block;
-  animation: z-cascader-panel-in var(--zuvi-cascader-animation-duration) var(--zuvi-ease-entrance);
+  animation: zuvi-cascader-panel-in var(--zuvi-cascader-animation-duration) var(--zuvi-ease-entrance);
 }
 
 /* 多列横排 */
@@ -162,7 +162,7 @@
   align-items: stretch;
 }
 
-@keyframes z-cascader-panel-in {
+@keyframes zuvi-cascader-panel-in {
   from {
     opacity: 0;
     transform: translateY(-0.25rem);

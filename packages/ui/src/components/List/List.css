@@ -146,10 +146,10 @@
   border: var(--zuvi-list-spinner-width) solid var(--zuvi-list-spinner-track);
   border-top-color: var(--zuvi-list-spinner-color);
   border-radius: var(--zuvi-radius-full);
-  animation: z-list-spin calc(var(--zuvi-duration-slow) * 2) linear infinite;
+  animation: zuvi-list-spin calc(var(--zuvi-duration-slow) * 2) linear infinite;
 }
 
-@keyframes z-list-spin {
+@keyframes zuvi-list-spin {
   to {
     transform: rotate(360deg);
   }

@@ -34,7 +34,7 @@
   line-height: var(--zuvi-leading-normal);
   overflow-wrap: break-word;
   outline: none;
-  animation: z-popover-in var(--zuvi-popover-transition);
+  animation: zuvi-popover-in var(--zuvi-popover-transition);
 }
 
 .zuvi-popover[data-state='open'] {
@@ -43,10 +43,10 @@
 
 .zuvi-popover[data-state='closed'] {
   opacity: 0;
-  animation: z-popover-out var(--zuvi-popover-transition);
+  animation: zuvi-popover-out var(--zuvi-popover-transition);
 }
 
-@keyframes z-popover-in {
+@keyframes zuvi-popover-in {
   from {
     opacity: 0;
   }
@@ -55,7 +55,7 @@
   }
 }
 
-@keyframes z-popover-out {
+@keyframes zuvi-popover-out {
   from {
     opacity: 1;
   }

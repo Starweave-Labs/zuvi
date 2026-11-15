@@ -138,10 +138,10 @@
 }
 
 .zuvi-time-picker-panel[data-open='true'] {
-  animation: z-time-picker-panel-in var(--zuvi-time-picker-animation-duration) var(--zuvi-ease-entrance);
+  animation: zuvi-time-picker-panel-in var(--zuvi-time-picker-animation-duration) var(--zuvi-ease-entrance);
 }
 
-@keyframes z-time-picker-panel-in {
+@keyframes zuvi-time-picker-panel-in {
   from {
     opacity: 0;
     transform: translateY(-0.25rem);

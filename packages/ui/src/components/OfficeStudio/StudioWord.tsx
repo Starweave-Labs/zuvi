@@ -206,7 +206,7 @@ function RibbonGroup({
 }) {
   return (
     <div
-      className={`z-studio-word-group ${className}`.trim()}
+      className={`zuvi-studio-word-group ${className}`.trim()}
       data-part="word-tool-group"
       role="group"
       aria-label={label}
@@ -241,7 +241,7 @@ function WordRuler({
   } as React.CSSProperties;
   return (
     <div
-      className={`z-studio-word-ruler zuvi-studio-word-ruler-${vertical ? 'vertical' : 'horizontal'}`}
+      className={`zuvi-studio-word-ruler zuvi-studio-word-ruler-${vertical ? 'vertical' : 'horizontal'}`}
       data-part="word-ruler"
       data-orientation={vertical ? 'vertical' : 'horizontal'}
       aria-hidden="true"

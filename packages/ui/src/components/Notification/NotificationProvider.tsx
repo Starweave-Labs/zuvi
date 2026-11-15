@@ -87,7 +87,7 @@ export function NotificationProvider({
   const create = React.useCallback(
     (variant: NotificationVariant, config: NotificationConfig): string => {
       idCounterRef.current += 1;
-      const id = `z-notification-${idCounterRef.current}`;
+      const id = `zuvi-notification-${idCounterRef.current}`;
       const item: NotificationItem = {
         id,
         variant,

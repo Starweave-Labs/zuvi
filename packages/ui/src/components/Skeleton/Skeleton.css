@@ -59,10 +59,10 @@
   );
   background-size: 200% 100%;
   background-repeat: no-repeat;
-  animation: z-skeleton-sweep var(--zuvi-skeleton-duration) var(--zuvi-skeleton-easing) infinite;
+  animation: zuvi-skeleton-sweep var(--zuvi-skeleton-duration) var(--zuvi-skeleton-easing) infinite;
 }
 
-@keyframes z-skeleton-sweep {
+@keyframes zuvi-skeleton-sweep {
   from {
     background-position: 200% 0;
   }

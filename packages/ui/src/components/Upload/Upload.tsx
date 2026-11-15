@@ -75,7 +75,7 @@ export interface UploadProps extends Omit<
 let uidCounter = 0;
 function genUid(): string {
   uidCounter += 1;
-  return `z-upload-${uidCounter}`;
+  return `zuvi-upload-${uidCounter}`;
 }
 
 function clampPercent(percent: number): number {

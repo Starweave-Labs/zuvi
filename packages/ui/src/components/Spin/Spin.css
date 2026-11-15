@@ -30,7 +30,7 @@
 .zuvi-spin-svg {
   width: 100%;
   height: 100%;
-  animation: z-spin-rotate 0.8s linear infinite;
+  animation: zuvi-spin-rotate 0.8s linear infinite;
 }
 
 .zuvi-spin-track {
@@ -45,7 +45,7 @@
   stroke-dasharray: 30 120;
 }
 
-@keyframes z-spin-rotate {
+@keyframes zuvi-spin-rotate {
   to {
     transform: rotate(360deg);
   }

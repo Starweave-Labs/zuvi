@@ -78,12 +78,12 @@
 
 .zuvi-notification-list[data-placement='topLeft'] .zuvi-notification[data-state='open'],
 .zuvi-notification-list[data-placement='topRight'] .zuvi-notification[data-state='open'] {
-  animation: z-notification-enter-top var(--zuvi-notification-transition);
+  animation: zuvi-notification-enter-top var(--zuvi-notification-transition);
 }
 
 .zuvi-notification-list[data-placement='bottomLeft'] .zuvi-notification[data-state='open'],
 .zuvi-notification-list[data-placement='bottomRight'] .zuvi-notification[data-state='open'] {
-  animation: z-notification-enter-bottom var(--zuvi-notification-transition);
+  animation: zuvi-notification-enter-bottom var(--zuvi-notification-transition);
 }
 
 .zuvi-notification-list[data-placement='topLeft'] .zuvi-notification[data-state='closing'],
@@ -173,7 +173,7 @@
   outline-offset: 1px;
 }
 
-@keyframes z-notification-enter-top {
+@keyframes zuvi-notification-enter-top {
   from {
     opacity: 0;
     transform: translateY(calc(var(--zuvi-space-2) * -1));
@@ -184,7 +184,7 @@
   }
 }
 
-@keyframes z-notification-enter-bottom {
+@keyframes zuvi-notification-enter-bottom {
   from {
     opacity: 0;
     transform: translateY(var(--zuvi-space-2));

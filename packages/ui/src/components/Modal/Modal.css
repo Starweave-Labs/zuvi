@@ -75,7 +75,7 @@
 
 /* -------------------------------- 进出场 -------------------------------- */
 
-@keyframes z-modal-overlay-in {
+@keyframes zuvi-modal-overlay-in {
   from {
     opacity: 0;
   }
@@ -84,7 +84,7 @@
   }
 }
 
-@keyframes z-modal-overlay-out {
+@keyframes zuvi-modal-overlay-out {
   from {
     opacity: 1;
   }
@@ -94,7 +94,7 @@
 }
 
 /* 打开：scale 0.96→1 + translateY 8px→0 */
-@keyframes z-modal-in {
+@keyframes zuvi-modal-in {
   from {
     opacity: 0;
     transform: translateY(0.5rem) scale(0.96);
@@ -105,7 +105,7 @@
   }
 }
 
-@keyframes z-modal-out {
+@keyframes zuvi-modal-out {
   from {
     opacity: 1;
     transform: none;
@@ -117,19 +117,19 @@
 }
 
 .zuvi-modal-overlay[data-state='open'] {
-  animation: z-modal-overlay-in var(--zuvi-modal-animation-duration) var(--zuvi-ease-entrance);
+  animation: zuvi-modal-overlay-in var(--zuvi-modal-animation-duration) var(--zuvi-ease-entrance);
 }
 
 .zuvi-modal-overlay[data-state='closed'] {
-  animation: z-modal-overlay-out var(--zuvi-modal-animation-duration) var(--zuvi-ease-exit);
+  animation: zuvi-modal-overlay-out var(--zuvi-modal-animation-duration) var(--zuvi-ease-exit);
 }
 
 .zuvi-modal[data-state='open'] {
-  animation: z-modal-in var(--zuvi-modal-animation-duration) var(--zuvi-ease-entrance);
+  animation: zuvi-modal-in var(--zuvi-modal-animation-duration) var(--zuvi-ease-entrance);
 }
 
 .zuvi-modal[data-state='closed'] {
-  animation: z-modal-out var(--zuvi-modal-animation-duration) var(--zuvi-ease-exit);
+  animation: zuvi-modal-out var(--zuvi-modal-animation-duration) var(--zuvi-ease-exit);
 }
 
 @media (prefers-reduced-motion: reduce) {

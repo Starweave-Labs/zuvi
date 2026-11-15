@@ -440,8 +440,6 @@ export function wordTransformSelectionCase(editor: Editor, mode: WordCaseMode): 
     if (converted !== slice) changes.push({ from: start, to: end, text: converted });
     return true;
   });
-  // eslint-disable-next-line no-console
-  console.log('CASE-DBG3', mode, from, to, empty, JSON.stringify(changes));
   if (changes.length === 0) return false;
   // 与 wordReplaceMatches 一致：直接派发事务（chain().command 在部分环境下不派发）
   const transaction = editor.state.tr;

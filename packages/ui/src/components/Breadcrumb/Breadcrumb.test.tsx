@@ -36,7 +36,7 @@ describe('Breadcrumb', () => {
     expect(container.querySelectorAll('li > *')).toHaveLength(3 + 2); // 3 项 + 2 分隔符
   });
 
-  it('分隔符默认 "/"：z-breadcrumb-separator + aria-hidden，末项后无分隔符', () => {
+  it('分隔符默认 "/"：zuvi-breadcrumb-separator + aria-hidden，末项后无分隔符', () => {
     renderBasic();
     const separators = getNav().querySelectorAll('[data-part="separator"]');
     expect(separators).toHaveLength(2);

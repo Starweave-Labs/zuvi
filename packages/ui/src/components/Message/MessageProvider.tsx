@@ -85,7 +85,7 @@ export function MessageProvider({
     (variant: MessageVariant, config: MessageConfig | string): string => {
       const cfg: MessageConfig = typeof config === 'string' ? { content: config } : config;
       idCounterRef.current += 1;
-      const id = `z-message-${idCounterRef.current}`;
+      const id = `zuvi-message-${idCounterRef.current}`;
       const item: MessageItem = {
         id,
         variant,

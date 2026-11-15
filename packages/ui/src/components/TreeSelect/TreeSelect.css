@@ -233,10 +233,10 @@
 }
 
 .zuvi-tree-select-panel[data-open='true'] {
-  animation: z-tree-select-panel-in var(--zuvi-duration-fast) var(--zuvi-ease-entrance);
+  animation: zuvi-tree-select-panel-in var(--zuvi-duration-fast) var(--zuvi-ease-entrance);
 }
 
-@keyframes z-tree-select-panel-in {
+@keyframes zuvi-tree-select-panel-in {
   from {
     opacity: 0;
     transform: translateY(-0.25rem);

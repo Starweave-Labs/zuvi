@@ -272,7 +272,7 @@
   border: 1px solid var(--zuvi-multicombobox-panel-border);
   border-radius: var(--zuvi-multicombobox-panel-radius);
   box-shadow: var(--zuvi-multicombobox-panel-shadow);
-  animation: z-multicombobox-panel-in var(--zuvi-multicombobox-animation-duration)
+  animation: zuvi-multicombobox-panel-in var(--zuvi-multicombobox-animation-duration)
     var(--zuvi-ease-entrance);
 }
 
@@ -372,7 +372,7 @@
   }
 }
 
-@keyframes z-multicombobox-panel-in {
+@keyframes zuvi-multicombobox-panel-in {
   from {
     opacity: 0;
     transform: translateY(-0.25rem);

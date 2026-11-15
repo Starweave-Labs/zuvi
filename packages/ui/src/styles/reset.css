@@ -4,10 +4,10 @@
  * 所有以 .zuvi- 命名的组件及其子元素均自动获得 box-sizing: border-box 保护，
  * 彻底防止外部宿主环境未重置 box-sizing 时产生的内边距/边框膨胀位移。 */
 
-:where(.zuvi-reset, [class^='zuvi-'], [class*=' z-']),
-:where(.zuvi-reset, [class^='zuvi-'], [class*=' z-']) *,
-:where(.zuvi-reset, [class^='zuvi-'], [class*=' z-']) *::before,
-:where(.zuvi-reset, [class^='zuvi-'], [class*=' z-']) *::after {
+:where(.zuvi-reset, [class^='zuvi-'], [class*=' zuvi-']),
+:where(.zuvi-reset, [class^='zuvi-'], [class*=' zuvi-']) *,
+:where(.zuvi-reset, [class^='zuvi-'], [class*=' zuvi-']) *::before,
+:where(.zuvi-reset, [class^='zuvi-'], [class*=' zuvi-']) *::after {
   box-sizing: border-box;
 }
 

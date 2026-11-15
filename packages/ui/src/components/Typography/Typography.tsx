@@ -204,7 +204,7 @@ export function TypographyTitle({
       data-part="root"
       data-type={type}
       data-delete={deleted ? 'true' : undefined}
-      className={cx('zuvi-typography', `z-typography-h${safeLevel}`, className, classNames?.root)}
+      className={cx('zuvi-typography', `zuvi-typography-h${safeLevel}`, className, classNames?.root)}
     >
       {children}
       {renderCopy(copyable, children, classNames?.copy)}

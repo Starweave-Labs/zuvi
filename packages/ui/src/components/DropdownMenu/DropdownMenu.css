@@ -44,7 +44,7 @@
   font-size: var(--zuvi-dropdown-menu-item-font-size);
   line-height: var(--zuvi-leading-normal);
   outline: none;
-  animation: z-dropdown-menu-in var(--zuvi-dropdown-menu-animation);
+  animation: zuvi-dropdown-menu-in var(--zuvi-dropdown-menu-animation);
   max-width: calc(100vw - var(--zuvi-space-4));
   max-height: calc(100dvh - 16px);
   overflow: auto;
@@ -119,7 +119,7 @@
   user-select: none;
 }
 
-@keyframes z-dropdown-menu-in {
+@keyframes zuvi-dropdown-menu-in {
   from {
     opacity: 0;
   }

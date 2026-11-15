@@ -183,7 +183,7 @@
   border: 1px solid var(--zuvi-combobox-panel-border);
   border-radius: var(--zuvi-combobox-panel-radius);
   box-shadow: var(--zuvi-combobox-panel-shadow);
-  animation: z-combobox-panel-in var(--zuvi-combobox-animation-duration) var(--zuvi-ease-entrance);
+  animation: zuvi-combobox-panel-in var(--zuvi-combobox-animation-duration) var(--zuvi-ease-entrance);
 }
 
 .zuvi-combobox-listbox {
@@ -282,7 +282,7 @@
   }
 }
 
-@keyframes z-combobox-panel-in {
+@keyframes zuvi-combobox-panel-in {
   from {
     opacity: 0;
     transform: translateY(-0.25rem);

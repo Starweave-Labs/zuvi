@@ -46,7 +46,7 @@ export function Timeline({
       className={cx('zuvi-timeline', className, classNames?.root)}
     >
       {items.map((item, index) => {
-        const key = item.key ?? `z-timeline-${index}`;
+        const key = item.key ?? `zuvi-timeline-${index}`;
         return (
           <div
             key={key}
