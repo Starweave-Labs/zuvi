@@ -455,7 +455,9 @@
         "packages/ui/src/components/Affix/Affix.tsx",
         "packages/ui/src/components/Affix/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-affix-z": "var(--zuvi-z-sticky)"
+      },
       "meta": "packages/ui/src/components/Affix/meta.json"
     },
     {
@@ -472,7 +474,28 @@
         "packages/ui/src/components/Alert/Alert.tsx",
         "packages/ui/src/components/Alert/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-alert-padding-x": "var(--zuvi-space-4)",
+        "--zuvi-alert-padding-y": "var(--zuvi-space-3)",
+        "--zuvi-alert-gap": "var(--zuvi-space-3)",
+        "--zuvi-alert-radius": "0.5rem",
+        "--zuvi-alert-border-width": "1px",
+        "--zuvi-alert-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-alert-line-height": "var(--zuvi-leading-normal)",
+        "--zuvi-alert-title-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-alert-title-font-weight": "var(--zuvi-weight-semibold)",
+        "--zuvi-alert-icon-size": "1.25rem",
+        "--zuvi-alert-close-size": "1.5rem",
+        "--zuvi-alert-close-icon-size": "1rem",
+        "--zuvi-alert-close-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-alert-bg": "var(--zuvi-color-info-subtle)",
+        "--zuvi-alert-fg": "var(--zuvi-color-info-subtle-fg)",
+        "--zuvi-alert-border": "color-mix(in srgb, var(--zuvi-color-info) 30%, transparent)",
+        "--zuvi-alert-icon-color": "var(--zuvi-color-info)",
+        "--zuvi-alert-close-hover-bg": "color-mix(in srgb, var(--zuvi-color-info) 12%, transparent)",
+        "--zuvi-alert-focus-ring": "var(--zuvi-color-focus-ring)",
+        "--zuvi-alert-transition": "var(--zuvi-duration-fast) var(--zuvi-ease-standard)"
+      },
       "meta": "packages/ui/src/components/Alert/meta.json"
     },
     {
@@ -487,7 +510,20 @@
         "packages/ui/src/components/Anchor/Anchor.tsx",
         "packages/ui/src/components/Anchor/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-anchor-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-anchor-link-color": "var(--zuvi-color-fg-muted)",
+        "--zuvi-anchor-link-hover-color": "var(--zuvi-color-fg)",
+        "--zuvi-anchor-link-active-color": "var(--zuvi-color-primary)",
+        "--zuvi-anchor-link-bg": "transparent",
+        "--zuvi-anchor-link-active-bg": "transparent",
+        "--zuvi-anchor-link-padding-x": "var(--zuvi-space-3)",
+        "--zuvi-anchor-link-padding-y": "var(--zuvi-space-1)",
+        "--zuvi-anchor-indicator-width": "2px",
+        "--zuvi-anchor-indicator-color": "var(--zuvi-color-primary)",
+        "--zuvi-anchor-sublist-indent": "var(--zuvi-space-6)",
+        "--zuvi-anchor-transition": "var(--zuvi-duration-fast) var(--zuvi-ease-standard)"
+      },
       "meta": "packages/ui/src/components/Anchor/meta.json"
     },
     {
@@ -506,7 +542,26 @@
         "packages/ui/src/components/App/index.ts",
         "packages/ui/src/components/App/useApp.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-app-modal-width": "22rem",
+        "--zuvi-app-modal-padding": "var(--zuvi-space-5)",
+        "--zuvi-app-modal-radius": "var(--zuvi-radius-lg)",
+        "--zuvi-app-modal-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-app-modal-fg": "var(--zuvi-color-fg)",
+        "--zuvi-app-modal-shadow": "var(--zuvi-shadow-lg)",
+        "--zuvi-app-modal-overlay-bg": "var(--zuvi-color-overlay)",
+        "--zuvi-app-modal-title-size": "var(--zuvi-text-lg)",
+        "--zuvi-app-modal-title-weight": "var(--zuvi-weight-semibold)",
+        "--zuvi-app-modal-desc-size": "var(--zuvi-text-sm)",
+        "--zuvi-app-modal-desc-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-app-modal-btn-height": "2.25rem",
+        "--zuvi-app-modal-btn-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-app-modal-ok-bg": "var(--zuvi-color-primary)",
+        "--zuvi-app-modal-ok-fg": "var(--zuvi-color-primary-fg)",
+        "--zuvi-app-modal-ok-hover-bg": "var(--zuvi-color-primary-hover)",
+        "--zuvi-app-modal-cancel-border": "var(--zuvi-color-border)",
+        "--zuvi-app-modal-z": "var(--zuvi-z-modal)"
+      },
       "meta": "packages/ui/src/components/App/meta.json"
     },
     {
@@ -521,7 +576,17 @@
         "packages/ui/src/components/Avatar/Avatar.tsx",
         "packages/ui/src/components/Avatar/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-avatar-size": "2rem",
+        "--zuvi-avatar-radius": "var(--zuvi-radius-full)",
+        "--zuvi-avatar-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-avatar-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-avatar-font-size": "calc(var(--zuvi-avatar-size) * 0.45)",
+        "--zuvi-avatar-font-weight": "var(--zuvi-weight-medium)",
+        "--zuvi-avatar-font-family": "var(--zuvi-font-sans)",
+        "--zuvi-avatar-icon-size": "calc(var(--zuvi-avatar-size) * 0.6)",
+        "--zuvi-avatar-border": "none"
+      },
       "meta": "packages/ui/src/components/Avatar/meta.json"
     },
     {
@@ -536,7 +601,19 @@
         "packages/ui/src/components/BackTop/BackTop.tsx",
         "packages/ui/src/components/BackTop/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-back-top-size": "2.5rem",
+        "--zuvi-back-top-radius": "var(--zuvi-radius-full)",
+        "--zuvi-back-top-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-back-top-fg": "var(--zuvi-color-fg)",
+        "--zuvi-back-top-border": "var(--zuvi-color-border-subtle)",
+        "--zuvi-back-top-hover-bg": "var(--zuvi-color-bg-subtle)",
+        "--zuvi-back-top-shadow": "var(--zuvi-shadow-md)",
+        "--zuvi-back-top-right": "var(--zuvi-space-6)",
+        "--zuvi-back-top-bottom": "var(--zuvi-space-6)",
+        "--zuvi-back-top-transition": "var(--zuvi-duration-normal) var(--zuvi-ease-standard)",
+        "--zuvi-back-top-icon-size": "1.125rem"
+      },
       "meta": "packages/ui/src/components/BackTop/meta.json"
     },
     {
@@ -551,7 +628,18 @@
         "packages/ui/src/components/Badge/Badge.tsx",
         "packages/ui/src/components/Badge/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-badge-size": "1rem",
+        "--zuvi-badge-padding-x": "var(--zuvi-space-1)",
+        "--zuvi-badge-font-size": "var(--zuvi-text-xs)",
+        "--zuvi-badge-font-weight": "var(--zuvi-weight-medium)",
+        "--zuvi-badge-radius": "var(--zuvi-radius-full)",
+        "--zuvi-badge-dot-size": "0.5rem",
+        "--zuvi-badge-border-width": "2px",
+        "--zuvi-badge-bg": "var(--zuvi-color-danger)",
+        "--zuvi-badge-fg": "var(--zuvi-color-danger-fg)",
+        "--zuvi-badge-border-color": "var(--zuvi-color-bg)"
+      },
       "meta": "packages/ui/src/components/Badge/meta.json"
     },
     {
@@ -566,7 +654,17 @@
         "packages/ui/src/components/Breadcrumb/Breadcrumb.tsx",
         "packages/ui/src/components/Breadcrumb/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-breadcrumb-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-breadcrumb-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-breadcrumb-hover-fg": "var(--zuvi-color-primary)",
+        "--zuvi-breadcrumb-current-fg": "var(--zuvi-color-fg)",
+        "--zuvi-breadcrumb-current-font-weight": "var(--zuvi-weight-medium)",
+        "--zuvi-breadcrumb-separator-fg": "var(--zuvi-color-fg-subtle)",
+        "--zuvi-breadcrumb-separator-margin-x": "var(--zuvi-space-2)",
+        "--zuvi-breadcrumb-focus-ring": "var(--zuvi-color-focus-ring)",
+        "--zuvi-breadcrumb-transition": "var(--zuvi-duration-fast) var(--zuvi-ease-standard)"
+      },
       "meta": "packages/ui/src/components/Breadcrumb/meta.json"
     },
     {
@@ -581,7 +679,28 @@
         "packages/ui/src/components/Button/Button.tsx",
         "packages/ui/src/components/Button/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-button-height": "2rem",
+        "--zuvi-button-padding-x": "var(--zuvi-space-4)",
+        "--zuvi-button-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-button-font-weight": "var(--zuvi-weight-medium)",
+        "--zuvi-button-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-button-gap": "var(--zuvi-space-2)",
+        "--zuvi-button-border-width": "1px",
+        "--zuvi-button-bg": "var(--zuvi-color-primary)",
+        "--zuvi-button-fg": "var(--zuvi-color-primary-fg)",
+        "--zuvi-button-border": "var(--zuvi-color-primary)",
+        "--zuvi-button-hover-bg": "var(--zuvi-color-primary-hover)",
+        "--zuvi-button-hover-fg": "var(--zuvi-color-primary-fg)",
+        "--zuvi-button-active-bg": "var(--zuvi-color-primary-active)",
+        "--zuvi-button-focus-ring": "var(--zuvi-color-focus-ring)",
+        "--zuvi-button-disabled-bg": "var(--zuvi-color-disabled-bg)",
+        "--zuvi-button-disabled-fg": "var(--zuvi-color-disabled-fg)",
+        "--zuvi-button-disabled-border": "var(--zuvi-color-disabled-border)",
+        "--zuvi-button-spinner-size": "1em",
+        "--zuvi-button-spinner-width": "2px",
+        "--zuvi-button-transition": "var(--zuvi-duration-fast) var(--zuvi-ease-standard)"
+      },
       "meta": "packages/ui/src/components/Button/meta.json"
     },
     {
@@ -598,7 +717,38 @@
         "packages/ui/src/components/Calendar/Calendar.tsx",
         "packages/ui/src/components/Calendar/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-calendar-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-calendar-fg": "var(--zuvi-color-fg)",
+        "--zuvi-calendar-border": "var(--zuvi-color-border-subtle)",
+        "--zuvi-calendar-radius": "var(--zuvi-radius-md)",
+        "--zuvi-calendar-padding": "var(--zuvi-space-4)",
+        "--zuvi-calendar-header-gap": "var(--zuvi-space-2)",
+        "--zuvi-calendar-label-font-size": "var(--zuvi-text-md)",
+        "--zuvi-calendar-label-font-weight": "var(--zuvi-weight-semibold)",
+        "--zuvi-calendar-label-fg": "var(--zuvi-color-fg)",
+        "--zuvi-calendar-nav-size": "2rem",
+        "--zuvi-calendar-nav-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-calendar-nav-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-calendar-nav-hover-bg": "var(--zuvi-color-bg-subtle)",
+        "--zuvi-calendar-nav-hover-fg": "var(--zuvi-color-fg)",
+        "--zuvi-calendar-grid-gap": "2px",
+        "--zuvi-calendar-weekday-font-size": "var(--zuvi-text-xs)",
+        "--zuvi-calendar-weekday-font-weight": "var(--zuvi-weight-medium)",
+        "--zuvi-calendar-weekday-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-calendar-day-size": "2.25rem",
+        "--zuvi-calendar-day-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-calendar-day-fg": "var(--zuvi-color-fg)",
+        "--zuvi-calendar-day-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-calendar-day-hover-bg": "var(--zuvi-color-bg-subtle)",
+        "--zuvi-calendar-day-selected-bg": "var(--zuvi-color-primary)",
+        "--zuvi-calendar-day-selected-fg": "var(--zuvi-color-primary-fg)",
+        "--zuvi-calendar-day-today-border": "var(--zuvi-color-primary)",
+        "--zuvi-calendar-day-today-fg": "var(--zuvi-color-primary)",
+        "--zuvi-calendar-day-out-fg": "var(--zuvi-color-fg-subtle)",
+        "--zuvi-calendar-focus-ring": "var(--zuvi-color-focus-ring)",
+        "--zuvi-calendar-transition": "var(--zuvi-duration-fast) var(--zuvi-ease-standard)"
+      },
       "meta": "packages/ui/src/components/Calendar/meta.json"
     },
     {
@@ -613,7 +763,24 @@
         "packages/ui/src/components/Card/Card.tsx",
         "packages/ui/src/components/Card/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-card-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-card-border": "var(--zuvi-color-border-subtle)",
+        "--zuvi-card-border-width": "1px",
+        "--zuvi-card-radius": "0.5rem",
+        "--zuvi-card-padding": "var(--zuvi-space-5)",
+        "--zuvi-card-header-height": "3rem",
+        "--zuvi-card-header-gap": "var(--zuvi-space-4)",
+        "--zuvi-card-title-font-size": "var(--zuvi-text-md)",
+        "--zuvi-card-title-font-weight": "var(--zuvi-weight-medium)",
+        "--zuvi-card-title-fg": "var(--zuvi-color-fg)",
+        "--zuvi-card-extra-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-card-extra-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-card-shadow": "none",
+        "--zuvi-card-hover-shadow": "var(--zuvi-shadow-md)",
+        "--zuvi-card-hover-translate-y": "-2px",
+        "--zuvi-card-transition": "var(--zuvi-duration-normal) var(--zuvi-ease-standard)"
+      },
       "meta": "packages/ui/src/components/Card/meta.json"
     },
     {
@@ -628,7 +795,39 @@
         "packages/ui/src/components/Cascader/Cascader.tsx",
         "packages/ui/src/components/Cascader/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-cascader-trigger-height": "2rem",
+        "--zuvi-cascader-trigger-padding-x": "var(--zuvi-space-3)",
+        "--zuvi-cascader-trigger-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-cascader-trigger-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-cascader-trigger-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-cascader-trigger-fg": "var(--zuvi-color-fg)",
+        "--zuvi-cascader-trigger-border": "var(--zuvi-color-border)",
+        "--zuvi-cascader-trigger-hover-border": "var(--zuvi-color-border-focus)",
+        "--zuvi-cascader-placeholder-fg": "var(--zuvi-color-fg-subtle)",
+        "--zuvi-cascader-value-separator-fg": "var(--zuvi-color-fg-subtle)",
+        "--zuvi-cascader-panel-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-cascader-panel-border": "var(--zuvi-color-border-subtle)",
+        "--zuvi-cascader-panel-radius": "0.5rem",
+        "--zuvi-cascader-panel-shadow": "var(--zuvi-shadow-lg)",
+        "--zuvi-cascader-panel-margin-top": "var(--zuvi-space-1)",
+        "--zuvi-cascader-panel-max-height": "16rem",
+        "--zuvi-cascader-menu-width": "10rem",
+        "--zuvi-cascader-menu-border": "var(--zuvi-color-border-subtle)",
+        "--zuvi-cascader-item-height": "2rem",
+        "--zuvi-cascader-item-padding-x": "var(--zuvi-space-3)",
+        "--zuvi-cascader-item-fg": "var(--zuvi-color-fg)",
+        "--zuvi-cascader-item-hover-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-cascader-item-active-bg": "var(--zuvi-color-primary-subtle)",
+        "--zuvi-cascader-item-active-fg": "var(--zuvi-color-primary-subtle-fg)",
+        "--zuvi-cascader-item-selected-font-weight": "var(--zuvi-weight-medium)",
+        "--zuvi-cascader-item-disabled-fg": "var(--zuvi-color-disabled-fg)",
+        "--zuvi-cascader-item-separator-fg": "var(--zuvi-color-fg-subtle)",
+        "--zuvi-cascader-search-padding": "var(--zuvi-space-2)",
+        "--zuvi-cascader-empty-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-cascader-focus-ring": "var(--zuvi-color-focus-ring)",
+        "--zuvi-cascader-animation-duration": "var(--zuvi-duration-fast)"
+      },
       "meta": "packages/ui/src/components/Cascader/meta.json"
     },
     {
@@ -643,7 +842,25 @@
         "packages/ui/src/components/Checkbox/Checkbox.tsx",
         "packages/ui/src/components/Checkbox/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-checkbox-size": "var(--zuvi-space-4)",
+        "--zuvi-checkbox-gap": "var(--zuvi-space-2)",
+        "--zuvi-checkbox-radius": "0.25rem",
+        "--zuvi-checkbox-border-width": "1px",
+        "--zuvi-checkbox-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-checkbox-border": "var(--zuvi-color-border-strong)",
+        "--zuvi-checkbox-hover-border": "var(--zuvi-color-primary)",
+        "--zuvi-checkbox-checked-bg": "var(--zuvi-color-primary)",
+        "--zuvi-checkbox-checked-border": "var(--zuvi-color-primary)",
+        "--zuvi-checkbox-check-color": "var(--zuvi-color-primary-fg)",
+        "--zuvi-checkbox-mixed-color": "var(--zuvi-color-primary-fg)",
+        "--zuvi-checkbox-disabled-bg": "var(--zuvi-color-disabled-bg)",
+        "--zuvi-checkbox-disabled-border": "var(--zuvi-color-disabled-border)",
+        "--zuvi-checkbox-disabled-fg": "var(--zuvi-color-disabled-fg)",
+        "--zuvi-checkbox-label-color": "var(--zuvi-color-fg)",
+        "--zuvi-checkbox-label-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-checkbox-transition": "150ms cubic-bezier(0.34, 1.56, 0.64, 1)"
+      },
       "meta": "packages/ui/src/components/Checkbox/meta.json"
     },
     {
@@ -660,7 +877,11 @@
         "packages/ui/src/components/Col/Col.tsx",
         "packages/ui/src/components/Col/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-col-span": "24",
+        "--zuvi-col-offset": "0",
+        "--zuvi-col-gutter-x": "0px"
+      },
       "meta": "packages/ui/src/components/Col/meta.json"
     },
     {
@@ -677,7 +898,26 @@
         "packages/ui/src/components/Collapse/Collapse.tsx",
         "packages/ui/src/components/Collapse/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-collapse-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-collapse-fg": "var(--zuvi-color-fg)",
+        "--zuvi-collapse-border": "var(--zuvi-color-border)",
+        "--zuvi-collapse-radius": "var(--zuvi-radius-md)",
+        "--zuvi-collapse-header-bg": "var(--zuvi-color-bg-subtle)",
+        "--zuvi-collapse-header-hover-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-collapse-header-padding-x": "var(--zuvi-space-4)",
+        "--zuvi-collapse-header-padding-y": "var(--zuvi-space-3)",
+        "--zuvi-collapse-header-font-weight": "var(--zuvi-weight-medium)",
+        "--zuvi-collapse-header-disabled-fg": "var(--zuvi-color-disabled-fg)",
+        "--zuvi-collapse-header-disabled-bg": "var(--zuvi-color-bg-subtle)",
+        "--zuvi-collapse-content-bg": "var(--zuvi-color-bg)",
+        "--zuvi-collapse-content-padding-x": "var(--zuvi-space-4)",
+        "--zuvi-collapse-content-padding-y": "var(--zuvi-space-3)",
+        "--zuvi-collapse-arrow-color": "var(--zuvi-color-fg-muted)",
+        "--zuvi-collapse-arrow-gap": "var(--zuvi-space-2)",
+        "--zuvi-collapse-focus-ring": "var(--zuvi-color-focus-ring)",
+        "--zuvi-collapse-animation-duration": "var(--zuvi-duration-normal)"
+      },
       "meta": "packages/ui/src/components/Collapse/meta.json"
     },
     {
@@ -692,7 +932,41 @@
         "packages/ui/src/components/ColorPicker/ColorPicker.tsx",
         "packages/ui/src/components/ColorPicker/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-color-picker-height": "2rem",
+        "--zuvi-color-picker-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-color-picker-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-color-picker-gap": "var(--zuvi-space-2)",
+        "--zuvi-color-picker-trigger-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-color-picker-trigger-fg": "var(--zuvi-color-fg)",
+        "--zuvi-color-picker-trigger-border": "var(--zuvi-color-border)",
+        "--zuvi-color-picker-trigger-hover-border": "var(--zuvi-color-border-focus)",
+        "--zuvi-color-picker-trigger-focus-ring": "var(--zuvi-color-focus-ring)",
+        "--zuvi-color-picker-swatch-size": "1.25rem",
+        "--zuvi-color-picker-swatch-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-color-picker-swatch-border": "var(--zuvi-color-border-subtle)",
+        "--zuvi-color-picker-panel-width": "15.5rem",
+        "--zuvi-color-picker-panel-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-color-picker-panel-border": "var(--zuvi-color-border-subtle)",
+        "--zuvi-color-picker-panel-padding": "var(--zuvi-space-3)",
+        "--zuvi-color-picker-panel-gap": "var(--zuvi-space-3)",
+        "--zuvi-color-picker-panel-radius": "var(--zuvi-radius-md)",
+        "--zuvi-color-picker-panel-shadow": "var(--zuvi-shadow-md)",
+        "--zuvi-color-picker-sv-height": "8.5rem",
+        "--zuvi-color-picker-sv-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-color-picker-hue-height": "0.75rem",
+        "--zuvi-color-picker-hue-radius": "var(--zuvi-radius-full)",
+        "--zuvi-color-picker-pointer-size": "0.875rem",
+        "--zuvi-color-picker-pointer-border": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-color-picker-hex-input-bg": "var(--zuvi-color-bg)",
+        "--zuvi-color-picker-hex-input-fg": "var(--zuvi-color-fg)",
+        "--zuvi-color-picker-hex-input-border": "var(--zuvi-color-border)",
+        "--zuvi-color-picker-hex-input-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-color-picker-disabled-bg": "var(--zuvi-color-disabled-bg)",
+        "--zuvi-color-picker-disabled-fg": "var(--zuvi-color-disabled-fg)",
+        "--zuvi-color-picker-disabled-border": "var(--zuvi-color-disabled-border)",
+        "--zuvi-color-picker-transition": "var(--zuvi-duration-fast) var(--zuvi-ease-standard)"
+      },
       "meta": "packages/ui/src/components/ColorPicker/meta.json"
     },
     {
@@ -709,7 +983,37 @@
         "packages/ui/src/components/Combobox/Combobox.tsx",
         "packages/ui/src/components/Combobox/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-combobox-control-height": "2rem",
+        "--zuvi-combobox-control-padding-x": "var(--zuvi-space-3)",
+        "--zuvi-combobox-control-gap": "var(--zuvi-space-1)",
+        "--zuvi-combobox-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-combobox-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-combobox-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-combobox-fg": "var(--zuvi-color-fg)",
+        "--zuvi-combobox-border": "var(--zuvi-color-border)",
+        "--zuvi-combobox-hover-border": "var(--zuvi-color-border-focus)",
+        "--zuvi-combobox-focus-ring": "var(--zuvi-color-focus-ring)",
+        "--zuvi-combobox-placeholder-fg": "var(--zuvi-color-fg-subtle)",
+        "--zuvi-combobox-icon-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-combobox-clear-hover-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-combobox-panel-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-combobox-panel-border": "var(--zuvi-color-border-subtle)",
+        "--zuvi-combobox-panel-radius": "0.5rem",
+        "--zuvi-combobox-panel-shadow": "var(--zuvi-shadow-lg)",
+        "--zuvi-combobox-panel-max-height": "16rem",
+        "--zuvi-combobox-panel-margin-top": "var(--zuvi-space-1)",
+        "--zuvi-combobox-panel-padding": "var(--zuvi-space-1)",
+        "--zuvi-combobox-option-height": "2rem",
+        "--zuvi-combobox-option-padding-x": "var(--zuvi-space-3)",
+        "--zuvi-combobox-option-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-combobox-option-fg": "var(--zuvi-color-fg)",
+        "--zuvi-combobox-option-active-bg": "var(--zuvi-color-primary-subtle)",
+        "--zuvi-combobox-option-active-fg": "var(--zuvi-color-primary-subtle-fg)",
+        "--zuvi-combobox-option-disabled-fg": "var(--zuvi-color-disabled-fg)",
+        "--zuvi-combobox-status-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-combobox-animation-duration": "var(--zuvi-duration-fast)"
+      },
       "meta": "packages/ui/src/components/Combobox/meta.json"
     },
     {
@@ -726,7 +1030,23 @@
         "packages/ui/src/components/CommandPalette/CommandPalette.tsx",
         "packages/ui/src/components/CommandPalette/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-command-palette-width": "42rem",
+        "--zuvi-command-palette-max-height": "min(70dvh, 42rem)",
+        "--zuvi-command-palette-input-height": "3.25rem",
+        "--zuvi-command-palette-option-height": "2.75rem",
+        "--zuvi-command-palette-gap": "var(--zuvi-space-2)",
+        "--zuvi-command-palette-padding": "var(--zuvi-space-2)",
+        "--zuvi-command-palette-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-command-palette-fg": "var(--zuvi-color-fg)",
+        "--zuvi-command-palette-muted-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-command-palette-hover-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-command-palette-active-bg": "var(--zuvi-color-primary-subtle)",
+        "--zuvi-command-palette-active-fg": "var(--zuvi-color-primary-subtle-fg)",
+        "--zuvi-command-palette-focus-ring": "var(--zuvi-color-focus-ring)",
+        "--zuvi-command-palette-border": "var(--zuvi-color-border-subtle)",
+        "--zuvi-command-palette-disabled-fg": "var(--zuvi-color-disabled-fg)"
+      },
       "meta": "packages/ui/src/components/CommandPalette/meta.json"
     },
     {
@@ -743,7 +1063,51 @@
         "packages/ui/src/components/DatePicker/DatePicker.tsx",
         "packages/ui/src/components/DatePicker/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-datepicker-trigger-height": "2rem",
+        "--zuvi-datepicker-trigger-padding-x": "var(--zuvi-space-3)",
+        "--zuvi-datepicker-trigger-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-datepicker-trigger-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-datepicker-trigger-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-datepicker-trigger-fg": "var(--zuvi-color-fg)",
+        "--zuvi-datepicker-trigger-border": "var(--zuvi-color-border)",
+        "--zuvi-datepicker-trigger-hover-border": "var(--zuvi-color-border-focus)",
+        "--zuvi-datepicker-trigger-focus-border": "var(--zuvi-color-border-focus)",
+        "--zuvi-datepicker-trigger-focus-ring": "var(--zuvi-color-focus-ring)",
+        "--zuvi-datepicker-placeholder-fg": "var(--zuvi-color-fg-subtle)",
+        "--zuvi-datepicker-icon-color": "var(--zuvi-color-fg-muted)",
+        "--zuvi-datepicker-disabled-bg": "var(--zuvi-color-disabled-bg)",
+        "--zuvi-datepicker-disabled-fg": "var(--zuvi-color-disabled-fg)",
+        "--zuvi-datepicker-disabled-border": "var(--zuvi-color-disabled-border)",
+        "--zuvi-datepicker-panel-width": "17.5rem",
+        "--zuvi-datepicker-panel-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-datepicker-panel-border": "var(--zuvi-color-border-subtle)",
+        "--zuvi-datepicker-panel-radius": "0.5rem",
+        "--zuvi-datepicker-panel-shadow": "var(--zuvi-shadow-lg)",
+        "--zuvi-datepicker-panel-padding": "var(--zuvi-space-3)",
+        "--zuvi-datepicker-panel-gap": "var(--zuvi-space-2)",
+        "--zuvi-datepicker-header-gap": "var(--zuvi-space-2)",
+        "--zuvi-datepicker-label-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-datepicker-label-font-weight": "var(--zuvi-weight-medium)",
+        "--zuvi-datepicker-label-fg": "var(--zuvi-color-fg)",
+        "--zuvi-datepicker-nav-size": "1.5rem",
+        "--zuvi-datepicker-nav-color": "var(--zuvi-color-fg-muted)",
+        "--zuvi-datepicker-nav-hover-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-datepicker-grid-gap": "2px",
+        "--zuvi-datepicker-day-size": "2rem",
+        "--zuvi-datepicker-day-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-datepicker-day-fg": "var(--zuvi-color-fg)",
+        "--zuvi-datepicker-day-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-datepicker-day-hover-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-datepicker-day-selected-bg": "var(--zuvi-color-primary)",
+        "--zuvi-datepicker-day-selected-fg": "var(--zuvi-color-primary-fg)",
+        "--zuvi-datepicker-day-today-border": "var(--zuvi-color-primary)",
+        "--zuvi-datepicker-day-out-fg": "var(--zuvi-color-fg-subtle)",
+        "--zuvi-datepicker-day-disabled-fg": "var(--zuvi-color-disabled-fg)",
+        "--zuvi-datepicker-weekday-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-datepicker-weekday-font-size": "var(--zuvi-text-xs)",
+        "--zuvi-datepicker-transition": "var(--zuvi-duration-fast) var(--zuvi-ease-standard)"
+      },
       "meta": "packages/ui/src/components/DatePicker/meta.json"
     },
     {
@@ -760,7 +1124,60 @@
         "packages/ui/src/components/DateRangePicker/DateRangePicker.tsx",
         "packages/ui/src/components/DateRangePicker/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-date-range-trigger-height": "2rem",
+        "--zuvi-date-range-trigger-padding-x": "var(--zuvi-space-3)",
+        "--zuvi-date-range-trigger-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-date-range-trigger-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-date-range-trigger-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-date-range-trigger-fg": "var(--zuvi-color-fg)",
+        "--zuvi-date-range-trigger-border": "var(--zuvi-color-border)",
+        "--zuvi-date-range-trigger-hover-border": "var(--zuvi-color-border-focus)",
+        "--zuvi-date-range-trigger-focus-border": "var(--zuvi-color-border-focus)",
+        "--zuvi-date-range-trigger-focus-ring": "var(--zuvi-color-focus-ring)",
+        "--zuvi-date-range-error-border": "var(--zuvi-color-danger)",
+        "--zuvi-date-range-success-border": "var(--zuvi-color-success)",
+        "--zuvi-date-range-placeholder-fg": "var(--zuvi-color-fg-subtle)",
+        "--zuvi-date-range-separator-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-date-range-icon-color": "var(--zuvi-color-fg-muted)",
+        "--zuvi-date-range-clear-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-date-range-clear-hover-fg": "var(--zuvi-color-fg)",
+        "--zuvi-date-range-clear-hover-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-date-range-disabled-bg": "var(--zuvi-color-disabled-bg)",
+        "--zuvi-date-range-disabled-fg": "var(--zuvi-color-disabled-fg)",
+        "--zuvi-date-range-disabled-border": "var(--zuvi-color-disabled-border)",
+        "--zuvi-date-range-panel-width": "33rem",
+        "--zuvi-date-range-panel-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-date-range-panel-border": "var(--zuvi-color-border-subtle)",
+        "--zuvi-date-range-panel-radius": "0.5rem",
+        "--zuvi-date-range-panel-shadow": "var(--zuvi-shadow-lg)",
+        "--zuvi-date-range-panel-padding": "var(--zuvi-space-3)",
+        "--zuvi-date-range-panel-gap": "var(--zuvi-space-2)",
+        "--zuvi-date-range-header-gap": "var(--zuvi-space-2)",
+        "--zuvi-date-range-label-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-date-range-label-font-weight": "var(--zuvi-weight-medium)",
+        "--zuvi-date-range-label-fg": "var(--zuvi-color-fg)",
+        "--zuvi-date-range-nav-size": "1.5rem",
+        "--zuvi-date-range-nav-color": "var(--zuvi-color-fg-muted)",
+        "--zuvi-date-range-nav-hover-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-date-range-months-gap": "var(--zuvi-space-3)",
+        "--zuvi-date-range-grid-gap": "2px",
+        "--zuvi-date-range-day-size": "2rem",
+        "--zuvi-date-range-day-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-date-range-day-fg": "var(--zuvi-color-fg)",
+        "--zuvi-date-range-day-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-date-range-day-hover-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-date-range-day-selected-bg": "var(--zuvi-color-primary)",
+        "--zuvi-date-range-day-selected-fg": "var(--zuvi-color-primary-fg)",
+        "--zuvi-date-range-day-in-range-bg": "var(--zuvi-color-primary-subtle)",
+        "--zuvi-date-range-day-in-range-fg": "var(--zuvi-color-primary-subtle-fg)",
+        "--zuvi-date-range-day-today-border": "var(--zuvi-color-primary)",
+        "--zuvi-date-range-day-out-fg": "var(--zuvi-color-fg-subtle)",
+        "--zuvi-date-range-day-disabled-fg": "var(--zuvi-color-disabled-fg)",
+        "--zuvi-date-range-weekday-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-date-range-weekday-font-size": "var(--zuvi-text-xs)",
+        "--zuvi-date-range-transition": "var(--zuvi-duration-fast) var(--zuvi-ease-standard)"
+      },
       "meta": "packages/ui/src/components/DateRangePicker/meta.json"
     },
     {
@@ -775,7 +1192,27 @@
         "packages/ui/src/components/Descriptions/Descriptions.tsx",
         "packages/ui/src/components/Descriptions/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-descriptions-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-descriptions-fg": "var(--zuvi-color-fg)",
+        "--zuvi-descriptions-font-family": "var(--zuvi-font-sans)",
+        "--zuvi-descriptions-title-font-size": "var(--zuvi-text-md)",
+        "--zuvi-descriptions-title-font-weight": "var(--zuvi-weight-semibold)",
+        "--zuvi-descriptions-title-fg": "var(--zuvi-color-fg)",
+        "--zuvi-descriptions-title-margin-bottom": "var(--zuvi-space-3)",
+        "--zuvi-descriptions-row-gap": "var(--zuvi-space-4)",
+        "--zuvi-descriptions-column-gap": "var(--zuvi-space-6)",
+        "--zuvi-descriptions-item-padding-x": "var(--zuvi-space-3)",
+        "--zuvi-descriptions-item-padding-y": "var(--zuvi-space-2)",
+        "--zuvi-descriptions-item-gap": "var(--zuvi-space-3)",
+        "--zuvi-descriptions-label-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-descriptions-label-min-width": "4rem",
+        "--zuvi-descriptions-label-bg": "var(--zuvi-color-bg-subtle)",
+        "--zuvi-descriptions-content-fg": "var(--zuvi-color-fg)",
+        "--zuvi-descriptions-border": "var(--zuvi-color-border)",
+        "--zuvi-descriptions-border-width": "1px",
+        "--zuvi-descriptions-columns": "3"
+      },
       "meta": "packages/ui/src/components/Descriptions/meta.json"
     },
     {
@@ -790,7 +1227,17 @@
         "packages/ui/src/components/Divider/Divider.tsx",
         "packages/ui/src/components/Divider/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-divider-line-color": "var(--zuvi-color-border-subtle)",
+        "--zuvi-divider-thickness": "1px",
+        "--zuvi-divider-margin-y": "var(--zuvi-space-4)",
+        "--zuvi-divider-margin-x": "var(--zuvi-space-2)",
+        "--zuvi-divider-text-gap": "var(--zuvi-space-3)",
+        "--zuvi-divider-text-color": "var(--zuvi-color-fg-muted)",
+        "--zuvi-divider-text-font-size": "var(--zuvi-text-xs)",
+        "--zuvi-divider-text-font-weight": "var(--zuvi-weight-regular)",
+        "--zuvi-divider-vertical-height": "0.9em"
+      },
       "meta": "packages/ui/src/components/Divider/meta.json"
     },
     {
@@ -807,7 +1254,23 @@
         "packages/ui/src/components/Drawer/Drawer.tsx",
         "packages/ui/src/components/Drawer/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-drawer-overlay-bg": "var(--zuvi-color-overlay)",
+        "--zuvi-drawer-size": "24rem",
+        "--zuvi-drawer-content-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-drawer-content-fg": "var(--zuvi-color-fg)",
+        "--zuvi-drawer-content-shadow": "var(--zuvi-shadow-lg)",
+        "--zuvi-drawer-content-padding": "var(--zuvi-space-6)",
+        "--zuvi-drawer-header-gap": "var(--zuvi-space-2)",
+        "--zuvi-drawer-title-font-size": "var(--zuvi-text-md)",
+        "--zuvi-drawer-body-padding": "var(--zuvi-space-4) 0",
+        "--zuvi-drawer-footer-gap": "var(--zuvi-space-3)",
+        "--zuvi-drawer-footer-padding-top": "var(--zuvi-space-4)",
+        "--zuvi-drawer-close-size": "2rem",
+        "--zuvi-drawer-close-fg": "var(--zuvi-color-fg-subtle)",
+        "--zuvi-drawer-close-hover-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-drawer-animation-duration": "var(--zuvi-duration-normal)"
+      },
       "meta": "packages/ui/src/components/Drawer/meta.json"
     },
     {
@@ -822,7 +1285,29 @@
         "packages/ui/src/components/DropdownMenu/DropdownMenu.tsx",
         "packages/ui/src/components/DropdownMenu/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-dropdown-menu-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-dropdown-menu-fg": "var(--zuvi-color-fg)",
+        "--zuvi-dropdown-menu-radius": "0.5rem",
+        "--zuvi-dropdown-menu-padding": "var(--zuvi-space-1)",
+        "--zuvi-dropdown-menu-shadow": "var(--zuvi-shadow-lg)",
+        "--zuvi-dropdown-menu-min-width": "10rem",
+        "--zuvi-dropdown-menu-z": "var(--zuvi-z-dropdown)",
+        "--zuvi-dropdown-menu-offset": "var(--zuvi-space-1)",
+        "--zuvi-dropdown-menu-item-height": "2rem",
+        "--zuvi-dropdown-menu-item-padding-x": "var(--zuvi-space-2)",
+        "--zuvi-dropdown-menu-item-gap": "var(--zuvi-space-2)",
+        "--zuvi-dropdown-menu-item-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-dropdown-menu-item-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-dropdown-menu-item-hover-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-dropdown-menu-item-fg": "var(--zuvi-dropdown-menu-fg)",
+        "--zuvi-dropdown-menu-item-danger-fg": "var(--zuvi-color-danger)",
+        "--zuvi-dropdown-menu-item-disabled-fg": "var(--zuvi-color-disabled-fg)",
+        "--zuvi-dropdown-menu-label-font-size": "var(--zuvi-text-xs)",
+        "--zuvi-dropdown-menu-label-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-dropdown-menu-separator-color": "var(--zuvi-color-border-subtle)",
+        "--zuvi-dropdown-menu-animation": "var(--zuvi-duration-fast) var(--zuvi-ease-entrance)"
+      },
       "meta": "packages/ui/src/components/DropdownMenu/meta.json"
     },
     {
@@ -837,7 +1322,15 @@
         "packages/ui/src/components/Empty/Empty.tsx",
         "packages/ui/src/components/Empty/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-empty-gap": "var(--zuvi-space-3)",
+        "--zuvi-empty-image-size": "4rem",
+        "--zuvi-empty-image-color": "var(--zuvi-color-fg-subtle)",
+        "--zuvi-empty-description-font-size": "0.8125rem",
+        "--zuvi-empty-description-color": "var(--zuvi-color-fg-muted)",
+        "--zuvi-empty-description-line-height": "var(--zuvi-leading-normal)",
+        "--zuvi-empty-actions-gap": "var(--zuvi-space-3)"
+      },
       "meta": "packages/ui/src/components/Empty/meta.json"
     },
     {
@@ -852,7 +1345,9 @@
         "packages/ui/src/components/Flex/Flex.tsx",
         "packages/ui/src/components/Flex/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-flex-gap": "0px"
+      },
       "meta": "packages/ui/src/components/Flex/meta.json"
     },
     {
@@ -867,7 +1362,26 @@
         "packages/ui/src/components/FloatButton/FloatButton.tsx",
         "packages/ui/src/components/FloatButton/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-float-button-size": "2.75rem",
+        "--zuvi-float-button-radius": "var(--zuvi-radius-full)",
+        "--zuvi-float-button-gap": "var(--zuvi-space-3)",
+        "--zuvi-float-button-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-float-button-fg": "var(--zuvi-color-fg)",
+        "--zuvi-float-button-border": "var(--zuvi-color-border-subtle)",
+        "--zuvi-float-button-hover-bg": "var(--zuvi-color-bg-subtle)",
+        "--zuvi-float-button-shadow": "var(--zuvi-shadow-md)",
+        "--zuvi-float-button-primary-bg": "var(--zuvi-color-primary)",
+        "--zuvi-float-button-primary-fg": "var(--zuvi-color-primary-fg)",
+        "--zuvi-float-button-primary-hover-bg": "var(--zuvi-color-primary-hover)",
+        "--zuvi-float-button-icon-size": "1.25rem",
+        "--zuvi-float-button-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-float-button-right": "var(--zuvi-space-6)",
+        "--zuvi-float-button-bottom": "var(--zuvi-space-6)",
+        "--zuvi-float-button-menu-gap": "var(--zuvi-space-2)",
+        "--zuvi-float-button-menu-item-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-float-button-transition": "var(--zuvi-duration-fast) var(--zuvi-ease-standard)"
+      },
       "meta": "packages/ui/src/components/FloatButton/meta.json"
     },
     {
@@ -882,7 +1396,17 @@
         "packages/ui/src/components/Form/Form.tsx",
         "packages/ui/src/components/Form/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-form-item-gap": "var(--zuvi-space-4)",
+        "--zuvi-form-label-color": "var(--zuvi-color-fg)",
+        "--zuvi-form-label-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-form-label-font-weight": "var(--zuvi-weight-medium)",
+        "--zuvi-form-label-margin-bottom": "var(--zuvi-space-1)",
+        "--zuvi-form-required-color": "var(--zuvi-color-danger)",
+        "--zuvi-form-error-color": "var(--zuvi-color-danger)",
+        "--zuvi-form-error-font-size": "var(--zuvi-text-xs)",
+        "--zuvi-form-error-margin-top": "var(--zuvi-space-1)"
+      },
       "meta": "packages/ui/src/components/Form/meta.json"
     },
     {
@@ -897,7 +1421,16 @@
         "packages/ui/src/components/Image/Image.tsx",
         "packages/ui/src/components/Image/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-image-radius": "var(--zuvi-radius-md)",
+        "--zuvi-image-object-fit": "cover",
+        "--zuvi-image-cursor": "zoom-in",
+        "--zuvi-image-preview-bg": "var(--zuvi-color-overlay)",
+        "--zuvi-image-preview-img-shadow": "var(--zuvi-shadow-lg)",
+        "--zuvi-image-preview-close-size": "2.25rem",
+        "--zuvi-image-preview-close-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-image-preview-close-fg": "var(--zuvi-color-fg)"
+      },
       "meta": "packages/ui/src/components/Image/meta.json"
     },
     {
@@ -914,7 +1447,32 @@
         "packages/ui/src/components/Input/Input.tsx",
         "packages/ui/src/components/Input/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-input-height": "2rem",
+        "--zuvi-input-padding-x": "var(--zuvi-space-3)",
+        "--zuvi-input-gap": "var(--zuvi-space-2)",
+        "--zuvi-input-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-input-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-input-border-width": "1px",
+        "--zuvi-input-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-input-fg": "var(--zuvi-color-fg)",
+        "--zuvi-input-border": "var(--zuvi-color-border)",
+        "--zuvi-input-hover-border": "var(--zuvi-color-border-focus)",
+        "--zuvi-input-focus-border": "var(--zuvi-color-border-focus)",
+        "--zuvi-input-focus-ring": "var(--zuvi-color-focus-ring)",
+        "--zuvi-input-placeholder-color": "var(--zuvi-color-fg-subtle)",
+        "--zuvi-input-affix-color": "var(--zuvi-color-fg-muted)",
+        "--zuvi-input-affix-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-input-clear-color": "var(--zuvi-color-fg-subtle)",
+        "--zuvi-input-clear-hover-color": "var(--zuvi-color-fg)",
+        "--zuvi-input-disabled-bg": "var(--zuvi-color-disabled-bg)",
+        "--zuvi-input-disabled-fg": "var(--zuvi-color-disabled-fg)",
+        "--zuvi-input-disabled-border": "var(--zuvi-color-disabled-border)",
+        "--zuvi-input-transition": "var(--zuvi-duration-fast) var(--zuvi-ease-standard)",
+        "--zuvi-input-textarea-min-height": "4.5rem",
+        "--zuvi-input-action-color": "var(--zuvi-input-clear-color)",
+        "--zuvi-input-action-hover-color": "var(--zuvi-input-clear-hover-color)"
+      },
       "meta": "packages/ui/src/components/Input/meta.json"
     },
     {
@@ -929,7 +1487,29 @@
         "packages/ui/src/components/InputNumber/InputNumber.tsx",
         "packages/ui/src/components/InputNumber/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-input-number-height": "2rem",
+        "--zuvi-input-number-padding-x": "var(--zuvi-space-3)",
+        "--zuvi-input-number-gap": "var(--zuvi-space-1)",
+        "--zuvi-input-number-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-input-number-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-input-number-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-input-number-fg": "var(--zuvi-color-fg)",
+        "--zuvi-input-number-border": "var(--zuvi-color-border)",
+        "--zuvi-input-number-hover-border": "var(--zuvi-color-border-focus)",
+        "--zuvi-input-number-focus-border": "var(--zuvi-color-border-focus)",
+        "--zuvi-input-number-focus-ring": "var(--zuvi-color-focus-ring)",
+        "--zuvi-input-number-control-width": "1.25rem",
+        "--zuvi-input-number-control-hit-size": "1.5rem",
+        "--zuvi-input-number-control-color": "var(--zuvi-color-fg-muted)",
+        "--zuvi-input-number-control-hover-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-input-number-control-hover-color": "var(--zuvi-color-fg)",
+        "--zuvi-input-number-control-active-bg": "var(--zuvi-color-bg-subtle)",
+        "--zuvi-input-number-disabled-bg": "var(--zuvi-color-disabled-bg)",
+        "--zuvi-input-number-disabled-fg": "var(--zuvi-color-disabled-fg)",
+        "--zuvi-input-number-disabled-border": "var(--zuvi-color-disabled-border)",
+        "--zuvi-input-number-transition": "var(--zuvi-duration-fast) var(--zuvi-ease-standard)"
+      },
       "meta": "packages/ui/src/components/InputNumber/meta.json"
     },
     {
@@ -944,7 +1524,33 @@
         "packages/ui/src/components/List/List.tsx",
         "packages/ui/src/components/List/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-list-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-list-fg": "var(--zuvi-color-fg)",
+        "--zuvi-list-bg": "var(--zuvi-color-bg)",
+        "--zuvi-list-border": "var(--zuvi-color-border)",
+        "--zuvi-list-radius": "var(--zuvi-radius-md)",
+        "--zuvi-list-item-padding-x": "var(--zuvi-space-4)",
+        "--zuvi-list-item-padding-y": "var(--zuvi-space-3)",
+        "--zuvi-list-item-gap": "var(--zuvi-space-3)",
+        "--zuvi-list-item-hover-bg": "var(--zuvi-color-bg-subtle)",
+        "--zuvi-list-item-border": "var(--zuvi-color-border-subtle)",
+        "--zuvi-list-title-font-weight": "var(--zuvi-weight-medium)",
+        "--zuvi-list-title-fg": "var(--zuvi-color-fg)",
+        "--zuvi-list-description-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-list-description-margin-top": "var(--zuvi-space-1)",
+        "--zuvi-list-avatar-size": "2.5rem",
+        "--zuvi-list-header-padding-x": "var(--zuvi-space-4)",
+        "--zuvi-list-header-padding-y": "var(--zuvi-space-3)",
+        "--zuvi-list-header-bg": "var(--zuvi-color-bg-subtle)",
+        "--zuvi-list-header-border": "var(--zuvi-color-border-subtle)",
+        "--zuvi-list-header-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-list-loading-padding": "var(--zuvi-space-8)",
+        "--zuvi-list-spinner-size": "1.25rem",
+        "--zuvi-list-spinner-width": "2px",
+        "--zuvi-list-spinner-color": "var(--zuvi-color-primary)",
+        "--zuvi-list-spinner-track": "var(--zuvi-color-border)"
+      },
       "meta": "packages/ui/src/components/List/meta.json"
     },
     {
@@ -959,7 +1565,31 @@
         "packages/ui/src/components/Mentions/Mentions.tsx",
         "packages/ui/src/components/Mentions/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-mentions-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-mentions-textarea-padding-x": "var(--zuvi-space-3)",
+        "--zuvi-mentions-textarea-padding-y": "var(--zuvi-space-2)",
+        "--zuvi-mentions-textarea-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-mentions-textarea-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-mentions-textarea-fg": "var(--zuvi-color-fg)",
+        "--zuvi-mentions-textarea-border": "var(--zuvi-color-border)",
+        "--zuvi-mentions-textarea-hover-border": "var(--zuvi-color-border-focus)",
+        "--zuvi-mentions-panel-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-mentions-panel-border": "var(--zuvi-color-border-subtle)",
+        "--zuvi-mentions-panel-radius": "0.5rem",
+        "--zuvi-mentions-panel-shadow": "var(--zuvi-shadow-lg)",
+        "--zuvi-mentions-panel-margin-top": "var(--zuvi-space-1)",
+        "--zuvi-mentions-panel-max-height": "12rem",
+        "--zuvi-mentions-item-height": "2rem",
+        "--zuvi-mentions-item-padding-x": "var(--zuvi-space-3)",
+        "--zuvi-mentions-item-fg": "var(--zuvi-color-fg)",
+        "--zuvi-mentions-item-hover-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-mentions-item-active-bg": "var(--zuvi-color-primary-subtle)",
+        "--zuvi-mentions-item-active-fg": "var(--zuvi-color-primary-subtle-fg)",
+        "--zuvi-mentions-empty-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-mentions-focus-ring": "var(--zuvi-color-focus-ring)",
+        "--zuvi-mentions-animation-duration": "var(--zuvi-duration-fast)"
+      },
       "meta": "packages/ui/src/components/Mentions/meta.json"
     },
     {
@@ -977,7 +1607,23 @@
         "packages/ui/src/components/Message/index.ts",
         "packages/ui/src/components/Message/useMessage.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-message-gap": "var(--zuvi-space-2)",
+        "--zuvi-message-width": "max-content",
+        "--zuvi-message-max-width": "24rem",
+        "--zuvi-message-padding-x": "var(--zuvi-space-4)",
+        "--zuvi-message-padding-y": "var(--zuvi-space-3)",
+        "--zuvi-message-radius": "0.5rem",
+        "--zuvi-message-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-message-fg": "var(--zuvi-color-fg)",
+        "--zuvi-message-border": "var(--zuvi-color-border-subtle)",
+        "--zuvi-message-shadow": "var(--zuvi-shadow-lg)",
+        "--zuvi-message-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-message-icon-size": "1.125rem",
+        "--zuvi-message-close-size": "var(--zuvi-space-5)",
+        "--zuvi-message-bar-width": "3px",
+        "--zuvi-message-transition": "var(--zuvi-duration-normal) var(--zuvi-ease-standard)"
+      },
       "meta": "packages/ui/src/components/Message/meta.json"
     },
     {
@@ -994,7 +1640,29 @@
         "packages/ui/src/components/Modal/Modal.tsx",
         "packages/ui/src/components/Modal/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-modal-overlay-bg": "var(--zuvi-color-overlay)",
+        "--zuvi-modal-content-width-sm": "24rem",
+        "--zuvi-modal-content-width-md": "32rem",
+        "--zuvi-modal-content-width-lg": "48rem",
+        "--zuvi-modal-content-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-modal-content-fg": "var(--zuvi-color-fg)",
+        "--zuvi-modal-content-radius": "var(--zuvi-radius-lg)",
+        "--zuvi-modal-content-shadow": "var(--zuvi-shadow-lg)",
+        "--zuvi-modal-content-padding": "var(--zuvi-space-6)",
+        "--zuvi-modal-content-max-height": "calc(100vh - var(--zuvi-space-8))",
+        "--zuvi-modal-header-gap": "var(--zuvi-space-2)",
+        "--zuvi-modal-title-font-size": "var(--zuvi-text-md)",
+        "--zuvi-modal-description-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-modal-description-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-modal-body-padding": "var(--zuvi-space-4) 0",
+        "--zuvi-modal-footer-gap": "var(--zuvi-space-3)",
+        "--zuvi-modal-footer-padding-top": "var(--zuvi-space-4)",
+        "--zuvi-modal-close-size": "2rem",
+        "--zuvi-modal-close-fg": "var(--zuvi-color-fg-subtle)",
+        "--zuvi-modal-close-hover-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-modal-animation-duration": "var(--zuvi-duration-normal)"
+      },
       "meta": "packages/ui/src/components/Modal/meta.json"
     },
     {
@@ -1013,7 +1681,46 @@
         "packages/ui/src/components/MultiCombobox/MultiCombobox.tsx",
         "packages/ui/src/components/MultiCombobox/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-multicombobox-control-min-height": "2rem",
+        "--zuvi-multicombobox-control-padding-x": "var(--zuvi-space-3)",
+        "--zuvi-multicombobox-control-gap": "var(--zuvi-space-1)",
+        "--zuvi-multicombobox-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-multicombobox-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-multicombobox-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-multicombobox-fg": "var(--zuvi-color-fg)",
+        "--zuvi-multicombobox-border": "var(--zuvi-color-border)",
+        "--zuvi-multicombobox-hover-border": "var(--zuvi-color-border-focus)",
+        "--zuvi-multicombobox-focus-ring": "var(--zuvi-color-focus-ring)",
+        "--zuvi-multicombobox-placeholder-fg": "var(--zuvi-color-fg-subtle)",
+        "--zuvi-multicombobox-icon-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-multicombobox-clear-hover-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-multicombobox-tag-height": "1.25rem",
+        "--zuvi-multicombobox-tag-padding-x": "var(--zuvi-space-2)",
+        "--zuvi-multicombobox-tag-gap": "var(--zuvi-space-1)",
+        "--zuvi-multicombobox-tag-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-multicombobox-tag-fg": "var(--zuvi-color-fg)",
+        "--zuvi-multicombobox-tag-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-multicombobox-tag-remove-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-multicombobox-tag-remove-hover-fg": "var(--zuvi-color-danger)",
+        "--zuvi-multicombobox-tag-remove-hit-size": "1.5rem",
+        "--zuvi-multicombobox-panel-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-multicombobox-panel-border": "var(--zuvi-color-border-subtle)",
+        "--zuvi-multicombobox-panel-radius": "0.5rem",
+        "--zuvi-multicombobox-panel-shadow": "var(--zuvi-shadow-lg)",
+        "--zuvi-multicombobox-panel-max-height": "16rem",
+        "--zuvi-multicombobox-panel-margin-top": "var(--zuvi-space-1)",
+        "--zuvi-multicombobox-panel-padding": "var(--zuvi-space-1)",
+        "--zuvi-multicombobox-option-height": "2rem",
+        "--zuvi-multicombobox-option-padding-x": "var(--zuvi-space-3)",
+        "--zuvi-multicombobox-option-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-multicombobox-option-fg": "var(--zuvi-color-fg)",
+        "--zuvi-multicombobox-option-active-bg": "var(--zuvi-color-primary-subtle)",
+        "--zuvi-multicombobox-option-active-fg": "var(--zuvi-color-primary-subtle-fg)",
+        "--zuvi-multicombobox-option-disabled-fg": "var(--zuvi-color-disabled-fg)",
+        "--zuvi-multicombobox-status-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-multicombobox-animation-duration": "var(--zuvi-duration-fast)"
+      },
       "meta": "packages/ui/src/components/MultiCombobox/meta.json"
     },
     {
@@ -1031,7 +1738,24 @@
         "packages/ui/src/components/Notification/index.ts",
         "packages/ui/src/components/Notification/useNotification.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-notification-gap": "var(--zuvi-space-3)",
+        "--zuvi-notification-width": "22rem",
+        "--zuvi-notification-padding": "var(--zuvi-space-4)",
+        "--zuvi-notification-radius": "var(--zuvi-radius-md)",
+        "--zuvi-notification-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-notification-fg": "var(--zuvi-color-fg)",
+        "--zuvi-notification-border": "var(--zuvi-color-border-subtle)",
+        "--zuvi-notification-shadow": "var(--zuvi-shadow-lg)",
+        "--zuvi-notification-title-size": "var(--zuvi-text-md)",
+        "--zuvi-notification-title-weight": "var(--zuvi-weight-medium)",
+        "--zuvi-notification-desc-size": "var(--zuvi-text-sm)",
+        "--zuvi-notification-desc-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-notification-icon-size": "1.25rem",
+        "--zuvi-notification-close-size": "var(--zuvi-space-5)",
+        "--zuvi-notification-inset": "var(--zuvi-space-6)",
+        "--zuvi-notification-transition": "var(--zuvi-duration-normal) var(--zuvi-ease-standard)"
+      },
       "meta": "packages/ui/src/components/Notification/meta.json"
     },
     {
@@ -1054,7 +1778,27 @@
         "packages/ui/src/components/OfficeEditor/office-script.ts",
         "packages/ui/src/components/OfficeEditor/office-types.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-office-editor-min-height": "22.5rem",
+        "--zuvi-office-editor-bg": "var(--zuvi-color-bg)",
+        "--zuvi-office-editor-stage-bg": "var(--zuvi-color-bg-subtle)",
+        "--zuvi-office-editor-border": "var(--zuvi-color-border)",
+        "--zuvi-office-editor-radius": "var(--zuvi-radius-lg)",
+        "--zuvi-office-editor-toolbar-height": "3.5rem",
+        "--zuvi-office-editor-fullscreen-z": "var(--zuvi-z-modal)",
+        "--zuvi-office-editor-accent": "var(--zuvi-color-fg-muted)",
+        "--zuvi-office-editor-header-bg": "var(--zuvi-office-editor-bg)",
+        "--zuvi-office-editor-header-fg": "var(--zuvi-color-primary-fg)",
+        "--zuvi-button-height": "24px",
+        "--zuvi-button-padding-x": "5px",
+        "--zuvi-button-radius": "2px",
+        "--zuvi-button-bg": "transparent",
+        "--zuvi-button-fg": "var(--zuvi-office-editor-header-fg)",
+        "--zuvi-button-border": "transparent",
+        "--zuvi-button-hover-bg": "color-mix(in srgb, var(--zuvi-office-editor-header-fg) 15%, transparent)",
+        "--zuvi-button-hover-fg": "var(--zuvi-office-editor-header-fg)",
+        "--zuvi-button-active-bg": "color-mix(in srgb, var(--zuvi-office-editor-header-fg) 25%, transparent)"
+      },
       "meta": "packages/ui/src/components/OfficeEditor/meta.json"
     },
     {
@@ -1117,7 +1861,68 @@
         "packages/ui/src/components/OfficeStudio/studio-types.ts",
         "packages/ui/src/components/OfficeStudio/studio-word-tools.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-office-studio-bg": "var(--zuvi-color-bg)",
+        "--zuvi-office-studio-canvas-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-office-studio-accent": "color-mix(in srgb, var(--zuvi-color-primary) 72%, var(--zuvi-color-fg))",
+        "--zuvi-office-studio-header-bg": "var(--zuvi-office-studio-accent)",
+        "--zuvi-office-studio-header-fg": "var(--zuvi-color-primary-fg)",
+        "--zuvi-office-studio-ribbon-bg": "var(--zuvi-color-bg-subtle)",
+        "--zuvi-office-studio-border": "var(--zuvi-color-border)",
+        "--zuvi-office-studio-radius": "3px",
+        "--zuvi-office-studio-header-padding": "3px 10px",
+        "--zuvi-input-height": "23px",
+        "--zuvi-input-bg": "var(--zuvi-studio-pdf-paper)",
+        "--zuvi-input-fg": "var(--zuvi-studio-pdf-ink)",
+        "--zuvi-input-border": "transparent",
+        "--zuvi-input-hover-border": "color-mix(in srgb, var(--zuvi-office-studio-header-fg) 40%, transparent)",
+        "--zuvi-input-focus-border": "var(--zuvi-input-hover-border)",
+        "--zuvi-input-disabled-bg": "var(--zuvi-studio-pdf-paper)",
+        "--zuvi-input-disabled-fg": "var(--zuvi-studio-pdf-muted-ink)",
+        "--zuvi-input-disabled-border": "transparent",
+        "--zuvi-input-radius": "1px",
+        "--zuvi-button-height": "52px",
+        "--zuvi-button-padding-x": "0",
+        "--zuvi-button-radius": "0",
+        "--zuvi-button-bg": "transparent",
+        "--zuvi-button-fg": "var(--zuvi-color-fg)",
+        "--zuvi-button-border": "transparent",
+        "--zuvi-button-hover-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-button-hover-fg": "var(--zuvi-color-fg)",
+        "--zuvi-button-active-bg": "color-mix(in srgb, var(--zuvi-color-primary) 12%, var(--zuvi-color-bg-muted))",
+        "--zuvi-studio-pdf-paper": "#fff",
+        "--zuvi-studio-pdf-ink": "#243044",
+        "--zuvi-studio-pdf-muted-ink": "#687589",
+        "--zuvi-studio-pdf-accent": "var(--zuvi-office-studio-accent, var(--zuvi-color-primary))",
+        "--zuvi-studio-pdf-ribbon-height": "84px",
+        "--zuvi-studio-pdf-sidebar-width": "260px",
+        "--zuvi-studio-ribbon-control-height": "24px",
+        "--zuvi-button-font-size": "var(--zuvi-studio-ribbon-font-size)",
+        "--zuvi-input-number-height": "24px",
+        "--zuvi-input-number-padding-x": "4px",
+        "--zuvi-input-number-radius": "2px",
+        "--zuvi-input-padding-x": "0",
+        "--zuvi-input-font-size": "12px",
+        "--zuvi-input-textarea-min-height": "0",
+        "--zuvi-select-trigger-height": "100%",
+        "--zuvi-select-trigger-font-size": "inherit",
+        "--zuvi-select-trigger-radius": "1px",
+        "--zuvi-select-trigger-bg": "var(--zuvi-studio-pdf-paper)",
+        "--zuvi-select-trigger-fg": "var(--zuvi-studio-pdf-ink)",
+        "--zuvi-checkbox-size": "100%",
+        "--zuvi-checkbox-gap": "0",
+        "--zuvi-radio-size": "100%",
+        "--zuvi-radio-gap": "0",
+        "--zuvi-studio-ribbon-icon-size": "16px",
+        "--zuvi-studio-ribbon-font-size": "12px",
+        "--zuvi-studio-sheet-accent": "var(--zuvi-office-studio-accent, var(--zuvi-color-success))",
+        "--zuvi-studio-sheet-rule-gap": "var(--zuvi-space-3)",
+        "--zuvi-studio-word-stage-bg": "var(--zuvi-office-studio-canvas-bg, var(--zuvi-color-bg-muted))",
+        "--zuvi-studio-word-border": "var(--zuvi-color-border)",
+        "--zuvi-studio-word-paper-shadow": "0 1px 4px rgb(0 0 0 / 14%)",
+        "--zuvi-studio-word-paper-bg": "white",
+        "--zuvi-studio-word-ink": "#000"
+      },
       "meta": "packages/ui/src/components/OfficeStudio/meta.json"
     },
     {
@@ -1134,7 +1939,37 @@
         "packages/ui/src/components/Pagination/Pagination.tsx",
         "packages/ui/src/components/Pagination/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-pagination-gap": "var(--zuvi-space-1)",
+        "--zuvi-pagination-item-size": "2rem",
+        "--zuvi-pagination-item-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-pagination-item-font-weight": "var(--zuvi-weight-regular)",
+        "--zuvi-pagination-item-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-pagination-item-bg": "transparent",
+        "--zuvi-pagination-item-fg": "var(--zuvi-color-fg)",
+        "--zuvi-pagination-item-hover-bg": "var(--zuvi-color-bg-subtle)",
+        "--zuvi-pagination-item-hover-fg": "var(--zuvi-color-fg)",
+        "--zuvi-pagination-item-active-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-pagination-current-bg": "var(--zuvi-color-primary)",
+        "--zuvi-pagination-current-fg": "var(--zuvi-color-primary-fg)",
+        "--zuvi-pagination-current-hover-bg": "var(--zuvi-color-primary-hover)",
+        "--zuvi-pagination-current-font-weight": "var(--zuvi-weight-medium)",
+        "--zuvi-pagination-disabled-bg": "transparent",
+        "--zuvi-pagination-disabled-fg": "var(--zuvi-color-disabled-fg)",
+        "--zuvi-pagination-focus-ring": "var(--zuvi-color-focus-ring)",
+        "--zuvi-pagination-jumper-gap": "var(--zuvi-space-2)",
+        "--zuvi-pagination-jumper-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-pagination-jumper-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-pagination-jumper-input-width": "3.25rem",
+        "--zuvi-pagination-jumper-input-height": "var(--zuvi-pagination-item-size)",
+        "--zuvi-pagination-jumper-input-padding-x": "var(--zuvi-space-2)",
+        "--zuvi-pagination-jumper-input-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-pagination-jumper-input-border": "var(--zuvi-color-border)",
+        "--zuvi-pagination-jumper-input-bg": "var(--zuvi-color-bg)",
+        "--zuvi-pagination-jumper-input-fg": "var(--zuvi-color-fg)",
+        "--zuvi-pagination-jumper-input-focus-border": "var(--zuvi-color-border-focus)",
+        "--zuvi-pagination-transition": "var(--zuvi-duration-fast) var(--zuvi-ease-standard)"
+      },
       "meta": "packages/ui/src/components/Pagination/meta.json"
     },
     {
@@ -1149,7 +1984,29 @@
         "packages/ui/src/components/Popconfirm/Popconfirm.tsx",
         "packages/ui/src/components/Popconfirm/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-popconfirm-gap": "var(--zuvi-space-3)",
+        "--zuvi-popconfirm-width": "15rem",
+        "--zuvi-popconfirm-padding": "var(--zuvi-space-4)",
+        "--zuvi-popconfirm-radius": "var(--zuvi-radius-md)",
+        "--zuvi-popconfirm-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-popconfirm-fg": "var(--zuvi-color-fg)",
+        "--zuvi-popconfirm-border": "var(--zuvi-color-border-subtle)",
+        "--zuvi-popconfirm-shadow": "var(--zuvi-shadow-md)",
+        "--zuvi-popconfirm-title-size": "var(--zuvi-text-md)",
+        "--zuvi-popconfirm-title-weight": "var(--zuvi-weight-medium)",
+        "--zuvi-popconfirm-desc-size": "var(--zuvi-text-sm)",
+        "--zuvi-popconfirm-desc-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-popconfirm-btn-height": "2rem",
+        "--zuvi-popconfirm-btn-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-popconfirm-ok-bg": "var(--zuvi-color-primary)",
+        "--zuvi-popconfirm-ok-fg": "var(--zuvi-color-primary-fg)",
+        "--zuvi-popconfirm-ok-hover-bg": "var(--zuvi-color-primary-hover)",
+        "--zuvi-popconfirm-cancel-bg": "var(--zuvi-color-bg)",
+        "--zuvi-popconfirm-cancel-fg": "var(--zuvi-color-fg)",
+        "--zuvi-popconfirm-cancel-border": "var(--zuvi-color-border)",
+        "--zuvi-popconfirm-z": "var(--zuvi-z-dropdown)"
+      },
       "meta": "packages/ui/src/components/Popconfirm/meta.json"
     },
     {
@@ -1164,7 +2021,18 @@
         "packages/ui/src/components/Popover/Popover.tsx",
         "packages/ui/src/components/Popover/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-popover-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-popover-fg": "var(--zuvi-color-fg)",
+        "--zuvi-popover-radius": "var(--zuvi-radius-md)",
+        "--zuvi-popover-padding": "var(--zuvi-space-3)",
+        "--zuvi-popover-shadow": "var(--zuvi-shadow-lg)",
+        "--zuvi-popover-offset": "var(--zuvi-space-2)",
+        "--zuvi-popover-max-width": "20rem",
+        "--zuvi-popover-z": "var(--zuvi-z-dropdown)",
+        "--zuvi-popover-animation-duration": "var(--zuvi-duration-fast)",
+        "--zuvi-popover-transition": "var(--zuvi-popover-animation-duration) var(--zuvi-ease-entrance)"
+      },
       "meta": "packages/ui/src/components/Popover/meta.json"
     },
     {
@@ -1179,7 +2047,16 @@
         "packages/ui/src/components/Progress/Progress.tsx",
         "packages/ui/src/components/Progress/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-progress-height": "8px",
+        "--zuvi-progress-radius": "var(--zuvi-radius-full)",
+        "--zuvi-progress-track-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-progress-color": "var(--zuvi-color-primary)",
+        "--zuvi-progress-info-gap": "var(--zuvi-space-3)",
+        "--zuvi-progress-info-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-progress-info-color": "var(--zuvi-color-fg-muted)",
+        "--zuvi-progress-transition": "width 300ms var(--zuvi-ease-standard)"
+      },
       "meta": "packages/ui/src/components/Progress/meta.json"
     },
     {
@@ -1195,7 +2072,10 @@
         "packages/ui/src/components/QRCode/index.ts",
         "packages/ui/src/components/QRCode/qrcode-encoder.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-qrcode-fg": "var(--zuvi-color-fg)",
+        "--zuvi-qrcode-bg": "var(--zuvi-color-bg)"
+      },
       "meta": "packages/ui/src/components/QRCode/meta.json"
     },
     {
@@ -1212,7 +2092,24 @@
         "packages/ui/src/components/Radio/RadioGroup.tsx",
         "packages/ui/src/components/Radio/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-radio-size": "var(--zuvi-space-4)",
+        "--zuvi-radio-gap": "var(--zuvi-space-2)",
+        "--zuvi-radio-border-width": "1px",
+        "--zuvi-radio-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-radio-border": "var(--zuvi-color-border-strong)",
+        "--zuvi-radio-hover-border": "var(--zuvi-color-primary)",
+        "--zuvi-radio-checked-border": "var(--zuvi-color-primary)",
+        "--zuvi-radio-dot-size": "calc(var(--zuvi-radio-size) * 0.5)",
+        "--zuvi-radio-dot-color": "var(--zuvi-color-primary)",
+        "--zuvi-radio-disabled-bg": "var(--zuvi-color-disabled-bg)",
+        "--zuvi-radio-disabled-border": "var(--zuvi-color-disabled-border)",
+        "--zuvi-radio-disabled-fg": "var(--zuvi-color-disabled-fg)",
+        "--zuvi-radio-label-color": "var(--zuvi-color-fg)",
+        "--zuvi-radio-label-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-radio-transition": "150ms cubic-bezier(0.34, 1.56, 0.64, 1)",
+        "--zuvi-radio-group-gap": "var(--zuvi-space-3)"
+      },
       "meta": "packages/ui/src/components/Radio/meta.json"
     },
     {
@@ -1227,7 +2124,17 @@
         "packages/ui/src/components/Rate/Rate.tsx",
         "packages/ui/src/components/Rate/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-rate-star-size": "1.25rem",
+        "--zuvi-rate-star-hit-size": "1.5rem",
+        "--zuvi-rate-gap": "var(--zuvi-space-1)",
+        "--zuvi-rate-star-empty-color": "var(--zuvi-color-border-strong)",
+        "--zuvi-rate-star-filled-color": "var(--zuvi-color-warning)",
+        "--zuvi-rate-star-hover-color": "var(--zuvi-color-warning-hover)",
+        "--zuvi-rate-focus-ring": "var(--zuvi-color-focus-ring)",
+        "--zuvi-rate-disabled-opacity": "0.5",
+        "--zuvi-rate-transition": "var(--zuvi-duration-fast) var(--zuvi-ease-standard)"
+      },
       "meta": "packages/ui/src/components/Rate/meta.json"
     },
     {
@@ -1242,7 +2149,17 @@
         "packages/ui/src/components/Result/Result.tsx",
         "packages/ui/src/components/Result/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-result-icon-size": "4.5rem",
+        "--zuvi-result-gap": "var(--zuvi-space-2)",
+        "--zuvi-result-title-size": "var(--zuvi-text-xl)",
+        "--zuvi-result-title-weight": "var(--zuvi-weight-semibold)",
+        "--zuvi-result-title-fg": "var(--zuvi-color-fg)",
+        "--zuvi-result-subtitle-size": "var(--zuvi-text-md)",
+        "--zuvi-result-subtitle-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-result-extra-gap": "var(--zuvi-space-3)",
+        "--zuvi-result-max-width": "32rem"
+      },
       "meta": "packages/ui/src/components/Result/meta.json"
     },
     {
@@ -1257,7 +2174,10 @@
         "packages/ui/src/components/Row/Row.tsx",
         "packages/ui/src/components/Row/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-row-gutter-x": "0px",
+        "--zuvi-row-gutter-y": "0px"
+      },
       "meta": "packages/ui/src/components/Row/meta.json"
     },
     {
@@ -1272,7 +2192,24 @@
         "packages/ui/src/components/Segmented/Segmented.tsx",
         "packages/ui/src/components/Segmented/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-segmented-gap": "2px",
+        "--zuvi-segmented-padding": "var(--zuvi-space-1)",
+        "--zuvi-segmented-radius": "var(--zuvi-radius-md)",
+        "--zuvi-segmented-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-segmented-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-segmented-hover-bg": "var(--zuvi-color-bg-subtle)",
+        "--zuvi-segmented-active-fg": "var(--zuvi-color-fg)",
+        "--zuvi-segmented-thumb-bg": "var(--zuvi-color-bg)",
+        "--zuvi-segmented-thumb-shadow": "var(--zuvi-shadow-xs)",
+        "--zuvi-segmented-thumb-radius": "calc(var(--zuvi-radius-md) - 1px)",
+        "--zuvi-segmented-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-segmented-font-weight": "var(--zuvi-weight-medium)",
+        "--zuvi-segmented-item-height": "2rem",
+        "--zuvi-segmented-item-padding-x": "var(--zuvi-space-3)",
+        "--zuvi-segmented-icon-size": "1rem",
+        "--zuvi-segmented-transition": "var(--zuvi-duration-fast) var(--zuvi-ease-standard)"
+      },
       "meta": "packages/ui/src/components/Segmented/meta.json"
     },
     {
@@ -1287,7 +2224,35 @@
         "packages/ui/src/components/Select/Select.tsx",
         "packages/ui/src/components/Select/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-select-trigger-height": "2rem",
+        "--zuvi-select-trigger-padding-x": "var(--zuvi-space-3)",
+        "--zuvi-select-trigger-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-select-trigger-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-select-trigger-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-select-trigger-fg": "var(--zuvi-color-fg)",
+        "--zuvi-select-trigger-border": "var(--zuvi-color-border)",
+        "--zuvi-select-trigger-hover-border": "var(--zuvi-color-border-focus)",
+        "--zuvi-select-placeholder-fg": "var(--zuvi-color-fg-subtle)",
+        "--zuvi-select-listbox-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-select-listbox-border": "var(--zuvi-color-border-subtle)",
+        "--zuvi-select-listbox-radius": "0.5rem",
+        "--zuvi-select-listbox-shadow": "var(--zuvi-shadow-lg)",
+        "--zuvi-select-listbox-padding": "var(--zuvi-space-1)",
+        "--zuvi-select-listbox-max-height": "16rem",
+        "--zuvi-select-listbox-margin-top": "var(--zuvi-space-1)",
+        "--zuvi-select-option-padding-x": "var(--zuvi-space-3)",
+        "--zuvi-select-option-height": "2rem",
+        "--zuvi-select-option-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-select-option-fg": "var(--zuvi-color-fg)",
+        "--zuvi-select-option-hover-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-select-option-active-bg": "var(--zuvi-color-primary-subtle)",
+        "--zuvi-select-option-active-fg": "var(--zuvi-color-primary-subtle-fg)",
+        "--zuvi-select-option-disabled-fg": "var(--zuvi-color-disabled-fg)",
+        "--zuvi-select-empty-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-select-empty-padding": "var(--zuvi-space-4)",
+        "--zuvi-select-animation-duration": "var(--zuvi-duration-fast)"
+      },
       "meta": "packages/ui/src/components/Select/meta.json"
     },
     {
@@ -1302,7 +2267,27 @@
         "packages/ui/src/components/SideNav/SideNav.tsx",
         "packages/ui/src/components/SideNav/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-sidenav-width": "15rem",
+        "--zuvi-sidenav-collapsed-width": "3.5rem",
+        "--zuvi-sidenav-padding": "var(--zuvi-space-2)",
+        "--zuvi-sidenav-gap": "var(--zuvi-space-1)",
+        "--zuvi-sidenav-item-height": "var(--zuvi-space-10)",
+        "--zuvi-sidenav-item-padding-x": "0.625rem",
+        "--zuvi-sidenav-child-indent": "var(--zuvi-space-7)",
+        "--zuvi-sidenav-radius": "var(--zuvi-radius-md)",
+        "--zuvi-sidenav-bg": "var(--zuvi-color-bg)",
+        "--zuvi-sidenav-fg": "var(--zuvi-color-fg)",
+        "--zuvi-sidenav-muted-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-sidenav-hover-bg": "var(--zuvi-color-bg-subtle)",
+        "--zuvi-sidenav-active-bg": "var(--zuvi-color-primary-subtle)",
+        "--zuvi-sidenav-active-fg": "var(--zuvi-color-primary-subtle-fg)",
+        "--zuvi-sidenav-indicator": "var(--zuvi-color-primary)",
+        "--zuvi-sidenav-focus-ring": "var(--zuvi-color-primary)",
+        "--zuvi-sidenav-flyout-width": "15rem",
+        "--zuvi-sidenav-flyout-max-height": "28rem",
+        "--zuvi-sidenav-animation-duration": "160ms"
+      },
       "meta": "packages/ui/src/components/SideNav/meta.json"
     },
     {
@@ -1317,7 +2302,17 @@
         "packages/ui/src/components/Skeleton/Skeleton.tsx",
         "packages/ui/src/components/Skeleton/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-skeleton-width": "100%",
+        "--zuvi-skeleton-height": "1rem",
+        "--zuvi-skeleton-line-gap": "var(--zuvi-space-2)",
+        "--zuvi-skeleton-last-line-width": "60%",
+        "--zuvi-skeleton-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-skeleton-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-skeleton-highlight": "color-mix(in srgb, var(--zuvi-color-bg-muted) 45%, var(--zuvi-color-bg))",
+        "--zuvi-skeleton-duration": "1.5s",
+        "--zuvi-skeleton-easing": "linear"
+      },
       "meta": "packages/ui/src/components/Skeleton/meta.json"
     },
     {
@@ -1332,7 +2327,29 @@
         "packages/ui/src/components/Slider/Slider.tsx",
         "packages/ui/src/components/Slider/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-slider-track-height": "6px",
+        "--zuvi-slider-track-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-slider-track-radius": "var(--zuvi-radius-full)",
+        "--zuvi-slider-fill-bg": "var(--zuvi-color-primary)",
+        "--zuvi-slider-thumb-size": "1rem",
+        "--zuvi-slider-thumb-hit-size": "24px",
+        "--zuvi-slider-thumb-bg": "var(--zuvi-color-bg)",
+        "--zuvi-slider-thumb-border": "2px solid var(--zuvi-color-primary)",
+        "--zuvi-slider-thumb-shadow": "var(--zuvi-shadow-sm)",
+        "--zuvi-slider-thumb-focus-ring": "var(--zuvi-color-focus-ring)",
+        "--zuvi-slider-tooltip-bg": "var(--zuvi-color-bg-inverse)",
+        "--zuvi-slider-tooltip-fg": "var(--zuvi-color-fg-inverse)",
+        "--zuvi-slider-tooltip-font-size": "var(--zuvi-text-xs)",
+        "--zuvi-slider-tooltip-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-slider-tooltip-padding-x": "var(--zuvi-space-2)",
+        "--zuvi-slider-tooltip-padding-y": "var(--zuvi-space-1)",
+        "--zuvi-slider-mark-color": "var(--zuvi-color-fg-muted)",
+        "--zuvi-slider-mark-active-color": "var(--zuvi-color-primary)",
+        "--zuvi-slider-mark-font-size": "var(--zuvi-text-xs)",
+        "--zuvi-slider-disabled-opacity": "0.5",
+        "--zuvi-slider-transition": "var(--zuvi-duration-fast) var(--zuvi-ease-standard)"
+      },
       "meta": "packages/ui/src/components/Slider/meta.json"
     },
     {
@@ -1347,7 +2364,9 @@
         "packages/ui/src/components/Space/Space.tsx",
         "packages/ui/src/components/Space/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-space-gap": "var(--zuvi-space-2)"
+      },
       "meta": "packages/ui/src/components/Space/meta.json"
     },
     {
@@ -1362,7 +2381,16 @@
         "packages/ui/src/components/Spin/Spin.tsx",
         "packages/ui/src/components/Spin/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-spin-size": "2rem",
+        "--zuvi-spin-ring-width": "3px",
+        "--zuvi-spin-color": "var(--zuvi-color-primary)",
+        "--zuvi-spin-track-color": "color-mix(in oklch, var(--zuvi-spin-color) 25%, transparent)",
+        "--zuvi-spin-tip-color": "var(--zuvi-color-fg-muted)",
+        "--zuvi-spin-tip-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-spin-gap": "var(--zuvi-space-2)",
+        "--zuvi-spin-mask-bg": "color-mix(in oklch, var(--zuvi-color-bg) 65%, transparent)"
+      },
       "meta": "packages/ui/src/components/Spin/meta.json"
     },
     {
@@ -1377,7 +2405,16 @@
         "packages/ui/src/components/Splitter/Splitter.tsx",
         "packages/ui/src/components/Splitter/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-splitter-handle-size": "0.5rem",
+        "--zuvi-splitter-handle-hit-size": "1.5rem",
+        "--zuvi-splitter-handle-bg": "var(--zuvi-color-border)",
+        "--zuvi-splitter-handle-hover-bg": "var(--zuvi-color-primary)",
+        "--zuvi-splitter-handle-active-bg": "var(--zuvi-color-primary)",
+        "--zuvi-splitter-handle-radius": "var(--zuvi-radius-full)",
+        "--zuvi-splitter-handle-fg": "var(--zuvi-color-fg-subtle)",
+        "--zuvi-splitter-animation-duration": "var(--zuvi-duration-fast)"
+      },
       "meta": "packages/ui/src/components/Splitter/meta.json"
     },
     {
@@ -1392,7 +2429,25 @@
         "packages/ui/src/components/Statistic/Statistic.tsx",
         "packages/ui/src/components/Statistic/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-statistic-font-family": "var(--zuvi-font-sans)",
+        "--zuvi-statistic-title-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-statistic-title-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-statistic-title-font-weight": "var(--zuvi-weight-regular)",
+        "--zuvi-statistic-title-margin-bottom": "var(--zuvi-space-1)",
+        "--zuvi-statistic-value-font-size": "var(--zuvi-text-2xl)",
+        "--zuvi-statistic-value-font-weight": "var(--zuvi-weight-semibold)",
+        "--zuvi-statistic-value-fg": "var(--zuvi-color-fg)",
+        "--zuvi-statistic-value-line-height": "var(--zuvi-leading-tight)",
+        "--zuvi-statistic-suffix-font-size": "var(--zuvi-text-md)",
+        "--zuvi-statistic-suffix-font-weight": "var(--zuvi-weight-regular)",
+        "--zuvi-statistic-suffix-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-statistic-suffix-margin-left": "var(--zuvi-space-1)",
+        "--zuvi-statistic-prefix-font-size": "var(--zuvi-text-md)",
+        "--zuvi-statistic-prefix-font-weight": "var(--zuvi-weight-regular)",
+        "--zuvi-statistic-prefix-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-statistic-prefix-margin-right": "var(--zuvi-space-1)"
+      },
       "meta": "packages/ui/src/components/Statistic/meta.json"
     },
     {
@@ -1409,7 +2464,26 @@
         "packages/ui/src/components/Steps/Steps.tsx",
         "packages/ui/src/components/Steps/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-steps-icon-size": "2rem",
+        "--zuvi-steps-icon-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-steps-icon-svg-size": "calc(var(--zuvi-steps-icon-size) * 0.5625)",
+        "--zuvi-steps-line-width": "2px",
+        "--zuvi-steps-line-color": "var(--zuvi-color-border)",
+        "--zuvi-steps-line-finish-color": "var(--zuvi-color-primary)",
+        "--zuvi-steps-item-gap": "var(--zuvi-space-4)",
+        "--zuvi-steps-gap": "var(--zuvi-space-3)",
+        "--zuvi-steps-vertical-line-gap": "var(--zuvi-space-2)",
+        "--zuvi-steps-title-font-size": "var(--zuvi-text-md)",
+        "--zuvi-steps-description-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-steps-title-fg": "var(--zuvi-color-fg)",
+        "--zuvi-steps-description-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-steps-icon-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-steps-icon-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-steps-icon-border": "transparent",
+        "--zuvi-steps-icon-border-width": "1px",
+        "--zuvi-steps-transition": "var(--zuvi-duration-fast) var(--zuvi-ease-standard)"
+      },
       "meta": "packages/ui/src/components/Steps/meta.json"
     },
     {
@@ -1424,7 +2498,23 @@
         "packages/ui/src/components/Switch/Switch.tsx",
         "packages/ui/src/components/Switch/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-switch-track-width": "2.25rem",
+        "--zuvi-switch-track-height": "1.25rem",
+        "--zuvi-switch-thumb-size": "1rem",
+        "--zuvi-switch-thumb-offset": "calc((var(--zuvi-switch-track-height) - var(--zuvi-switch-thumb-size)) / 2)",
+        "--zuvi-switch-thumb-travel": "calc(\n    var(--zuvi-switch-track-width) - var(--zuvi-switch-thumb-size) - 2 * var(--zuvi-switch-thumb-offset)\n  )",
+        "--zuvi-switch-gap": "var(--zuvi-space-2)",
+        "--zuvi-switch-track-bg": "var(--zuvi-color-border-strong)",
+        "--zuvi-switch-track-checked-bg": "var(--zuvi-color-primary)",
+        "--zuvi-switch-track-disabled-bg": "var(--zuvi-color-disabled-border)",
+        "--zuvi-switch-thumb-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-switch-thumb-shadow": "var(--zuvi-shadow-sm)",
+        "--zuvi-switch-thumb-disabled-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-switch-label-color": "var(--zuvi-color-fg)",
+        "--zuvi-switch-label-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-switch-transition": "var(--zuvi-duration-normal) var(--zuvi-ease-standard)"
+      },
       "meta": "packages/ui/src/components/Switch/meta.json"
     },
     {
@@ -1448,7 +2538,23 @@
         "packages/ui/src/components/Table/Table.tsx",
         "packages/ui/src/components/Table/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-table-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-table-header-font-size": "var(--zuvi-text-xs)",
+        "--zuvi-table-header-bg": "var(--zuvi-color-bg-subtle)",
+        "--zuvi-table-header-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-table-cell-padding-x": "var(--zuvi-space-4)",
+        "--zuvi-table-cell-padding-y": "0.875rem",
+        "--zuvi-table-border-color": "var(--zuvi-color-border)",
+        "--zuvi-table-border-color-subtle": "var(--zuvi-color-border-subtle)",
+        "--zuvi-table-row-hover-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-table-row-selected-bg": "var(--zuvi-color-primary-subtle)",
+        "--zuvi-table-row-selected-fg": "var(--zuvi-color-primary-subtle-fg)",
+        "--zuvi-table-striped-bg": "var(--zuvi-color-bg-subtle)",
+        "--zuvi-table-toolbar-height": "40px",
+        "--zuvi-table-handle-size": "28px",
+        "--zuvi-table-manager-width": "min(360px, calc(100vw - 24px))"
+      },
       "meta": "packages/ui/src/components/Table/meta.json"
     },
     {
@@ -1463,7 +2569,22 @@
         "packages/ui/src/components/Tabs/Tabs.tsx",
         "packages/ui/src/components/Tabs/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-tabs-gap": "var(--zuvi-space-1)",
+        "--zuvi-tabs-trigger-padding-x": "var(--zuvi-space-4)",
+        "--zuvi-tabs-trigger-padding-y": "var(--zuvi-space-2)",
+        "--zuvi-tabs-trigger-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-tabs-trigger-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-tabs-trigger-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-tabs-trigger-hover-bg": "transparent",
+        "--zuvi-tabs-trigger-hover-fg": "var(--zuvi-color-primary)",
+        "--zuvi-tabs-trigger-active-fg": "var(--zuvi-color-fg)",
+        "--zuvi-tabs-indicator-size": "2px",
+        "--zuvi-tabs-indicator-color": "var(--zuvi-color-primary)",
+        "--zuvi-tabs-panel-padding": "var(--zuvi-space-4)",
+        "--zuvi-tabs-panel-padding-top": "var(--zuvi-space-4)",
+        "--zuvi-tabs-transition": "var(--zuvi-duration-fast) var(--zuvi-ease-standard)"
+      },
       "meta": "packages/ui/src/components/Tabs/meta.json"
     },
     {
@@ -1480,7 +2601,23 @@
         "packages/ui/src/components/Tag/Tag.tsx",
         "packages/ui/src/components/Tag/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-tag-height": "1.5rem",
+        "--zuvi-tag-padding-x": "var(--zuvi-space-2)",
+        "--zuvi-tag-gap": "var(--zuvi-space-1)",
+        "--zuvi-tag-radius": "0.25rem",
+        "--zuvi-tag-font-size": "var(--zuvi-text-xs)",
+        "--zuvi-tag-line-height": "var(--zuvi-leading-tight)",
+        "--zuvi-tag-icon-size": "0.875rem",
+        "--zuvi-tag-close-size": "0.875rem",
+        "--zuvi-tag-close-gap": "var(--zuvi-space-1)",
+        "--zuvi-tag-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-tag-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-tag-border": "transparent",
+        "--zuvi-tag-hover-bg": "color-mix(in srgb, var(--zuvi-color-fg) 8%, var(--zuvi-tag-bg))",
+        "--zuvi-tag-focus-ring": "var(--zuvi-color-focus-ring)",
+        "--zuvi-tag-transition": "var(--zuvi-duration-fast) var(--zuvi-ease-standard)"
+      },
       "meta": "packages/ui/src/components/Tag/meta.json"
     },
     {
@@ -1495,7 +2632,24 @@
         "packages/ui/src/components/Timeline/Timeline.tsx",
         "packages/ui/src/components/Timeline/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-timeline-font-family": "var(--zuvi-font-sans)",
+        "--zuvi-timeline-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-timeline-fg": "var(--zuvi-color-fg)",
+        "--zuvi-timeline-line-color": "var(--zuvi-color-border)",
+        "--zuvi-timeline-line-width": "2px",
+        "--zuvi-timeline-dot-size": "0.75rem",
+        "--zuvi-timeline-dot-border-width": "2px",
+        "--zuvi-timeline-dot-bg": "var(--zuvi-color-bg)",
+        "--zuvi-timeline-item-gap": "var(--zuvi-space-6)",
+        "--zuvi-timeline-content-gap": "var(--zuvi-space-4)",
+        "--zuvi-timeline-label-color": "var(--zuvi-color-fg-muted)",
+        "--zuvi-timeline-label-width": "5.5rem",
+        "--zuvi-timeline-label-margin": "var(--zuvi-space-3)",
+        "--zuvi-timeline-dot-color": "var(--zuvi-color-primary)",
+        "--zuvi-timeline-dot-pending-color": "var(--zuvi-color-border-strong)",
+        "--zuvi-timeline-dot-offset-top": "0.35em"
+      },
       "meta": "packages/ui/src/components/Timeline/meta.json"
     },
     {
@@ -1510,7 +2664,33 @@
         "packages/ui/src/components/TimePicker/TimePicker.tsx",
         "packages/ui/src/components/TimePicker/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-time-picker-trigger-height": "2rem",
+        "--zuvi-time-picker-trigger-padding-x": "var(--zuvi-space-3)",
+        "--zuvi-time-picker-trigger-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-time-picker-trigger-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-time-picker-trigger-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-time-picker-trigger-fg": "var(--zuvi-color-fg)",
+        "--zuvi-time-picker-trigger-border": "var(--zuvi-color-border)",
+        "--zuvi-time-picker-trigger-hover-border": "var(--zuvi-color-border-focus)",
+        "--zuvi-time-picker-placeholder-fg": "var(--zuvi-color-fg-subtle)",
+        "--zuvi-time-picker-panel-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-time-picker-panel-border": "var(--zuvi-color-border-subtle)",
+        "--zuvi-time-picker-panel-radius": "0.5rem",
+        "--zuvi-time-picker-panel-shadow": "var(--zuvi-shadow-lg)",
+        "--zuvi-time-picker-panel-margin-top": "var(--zuvi-space-1)",
+        "--zuvi-time-picker-panel-height": "13.5rem",
+        "--zuvi-time-picker-column-width": "3.5rem",
+        "--zuvi-time-picker-column-border": "var(--zuvi-color-border-subtle)",
+        "--zuvi-time-picker-item-height": "2.25rem",
+        "--zuvi-time-picker-item-fg": "var(--zuvi-color-fg)",
+        "--zuvi-time-picker-item-hover-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-time-picker-item-active-bg": "var(--zuvi-color-primary-subtle)",
+        "--zuvi-time-picker-item-active-fg": "var(--zuvi-color-primary-subtle-fg)",
+        "--zuvi-time-picker-item-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-time-picker-focus-ring": "var(--zuvi-color-focus-ring)",
+        "--zuvi-time-picker-animation-duration": "var(--zuvi-duration-fast)"
+      },
       "meta": "packages/ui/src/components/TimePicker/meta.json"
     },
     {
@@ -1525,7 +2705,20 @@
         "packages/ui/src/components/Tooltip/Tooltip.tsx",
         "packages/ui/src/components/Tooltip/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-tooltip-max-width": "16rem",
+        "--zuvi-tooltip-bg": "var(--zuvi-color-bg-inverse)",
+        "--zuvi-tooltip-fg": "var(--zuvi-color-fg-inverse)",
+        "--zuvi-tooltip-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-tooltip-font-size": "var(--zuvi-text-xs)",
+        "--zuvi-tooltip-line-height": "var(--zuvi-leading-normal)",
+        "--zuvi-tooltip-padding-x": "var(--zuvi-space-2)",
+        "--zuvi-tooltip-padding-y": "var(--zuvi-space-1)",
+        "--zuvi-tooltip-shadow": "var(--zuvi-shadow-sm)",
+        "--zuvi-tooltip-offset": "var(--zuvi-space-1)",
+        "--zuvi-tooltip-z": "var(--zuvi-z-dropdown)",
+        "--zuvi-tooltip-animation": "var(--zuvi-duration-fast) var(--zuvi-ease-entrance)"
+      },
       "meta": "packages/ui/src/components/Tooltip/meta.json"
     },
     {
@@ -1540,7 +2733,34 @@
         "packages/ui/src/components/Tour/Tour.tsx",
         "packages/ui/src/components/Tour/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-tour-z": "var(--zuvi-z-modal)",
+        "--zuvi-tour-mask-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-tour-mask-color": "var(--zuvi-color-overlay)",
+        "--zuvi-tour-card-width": "20rem",
+        "--zuvi-tour-card-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-tour-card-fg": "var(--zuvi-color-fg)",
+        "--zuvi-tour-card-radius": "var(--zuvi-radius-lg)",
+        "--zuvi-tour-card-shadow": "var(--zuvi-shadow-lg)",
+        "--zuvi-tour-card-padding": "var(--zuvi-space-5)",
+        "--zuvi-tour-card-gap": "var(--zuvi-space-3)",
+        "--zuvi-tour-title-font-size": "var(--zuvi-text-md)",
+        "--zuvi-tour-title-font-weight": "var(--zuvi-weight-semibold)",
+        "--zuvi-tour-description-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-tour-description-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-tour-footer-gap": "var(--zuvi-space-3)",
+        "--zuvi-tour-progress-fg": "var(--zuvi-color-fg-subtle)",
+        "--zuvi-tour-button-height": "2rem",
+        "--zuvi-tour-button-padding-x": "var(--zuvi-space-3)",
+        "--zuvi-tour-button-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-tour-button-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-tour-button-fg": "var(--zuvi-color-fg)",
+        "--zuvi-tour-button-primary-bg": "var(--zuvi-color-primary)",
+        "--zuvi-tour-button-primary-fg": "var(--zuvi-color-primary-fg)",
+        "--zuvi-tour-button-disabled-bg": "var(--zuvi-color-disabled-bg)",
+        "--zuvi-tour-button-disabled-fg": "var(--zuvi-color-disabled-fg)",
+        "--zuvi-tour-focus-ring": "var(--zuvi-color-focus-ring)"
+      },
       "meta": "packages/ui/src/components/Tour/meta.json"
     },
     {
@@ -1555,7 +2775,43 @@
         "packages/ui/src/components/Transfer/Transfer.tsx",
         "packages/ui/src/components/Transfer/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-transfer-width": "12rem",
+        "--zuvi-transfer-height": "15rem",
+        "--zuvi-transfer-border": "var(--zuvi-color-border)",
+        "--zuvi-transfer-radius": "var(--zuvi-radius-md)",
+        "--zuvi-transfer-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-transfer-header-bg": "var(--zuvi-color-bg-subtle)",
+        "--zuvi-transfer-header-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-transfer-header-height": "2.25rem",
+        "--zuvi-transfer-header-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-transfer-search-padding": "var(--zuvi-space-2)",
+        "--zuvi-transfer-search-height": "2rem",
+        "--zuvi-transfer-item-height": "2.25rem",
+        "--zuvi-transfer-item-padding-x": "var(--zuvi-space-3)",
+        "--zuvi-transfer-item-fg": "var(--zuvi-color-fg)",
+        "--zuvi-transfer-item-hover-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-transfer-item-selected-bg": "var(--zuvi-color-primary-subtle)",
+        "--zuvi-transfer-item-selected-fg": "var(--zuvi-color-primary-subtle-fg)",
+        "--zuvi-transfer-item-disabled-fg": "var(--zuvi-color-disabled-fg)",
+        "--zuvi-transfer-empty-fg": "var(--zuvi-color-fg-subtle)",
+        "--zuvi-transfer-button-size": "2rem",
+        "--zuvi-transfer-button-gap": "var(--zuvi-space-2)",
+        "--zuvi-transfer-button-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-transfer-button-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-transfer-button-border": "var(--zuvi-color-border)",
+        "--zuvi-transfer-button-hover-bg": "var(--zuvi-color-primary-subtle)",
+        "--zuvi-transfer-button-hover-fg": "var(--zuvi-color-primary-subtle-fg)",
+        "--zuvi-transfer-checkbox-size": "1rem",
+        "--zuvi-transfer-checkbox-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-transfer-checkbox-border": "var(--zuvi-color-border-strong)",
+        "--zuvi-transfer-checkbox-checked-bg": "var(--zuvi-color-primary)",
+        "--zuvi-transfer-checkbox-check-color": "var(--zuvi-color-primary-fg)",
+        "--zuvi-transfer-checkbox-disabled-bg": "var(--zuvi-color-disabled-bg)",
+        "--zuvi-transfer-checkbox-disabled-border": "var(--zuvi-color-disabled-border)",
+        "--zuvi-transfer-gap": "var(--zuvi-space-3)",
+        "--zuvi-transfer-focus-ring": "var(--zuvi-color-focus-ring)"
+      },
       "meta": "packages/ui/src/components/Transfer/meta.json"
     },
     {
@@ -1572,7 +2828,35 @@
         "packages/ui/src/components/Tree/Tree.tsx",
         "packages/ui/src/components/Tree/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-tree-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-tree-line-height": "var(--zuvi-leading-normal)",
+        "--zuvi-tree-fg": "var(--zuvi-color-fg)",
+        "--zuvi-tree-node-height": "1.75rem",
+        "--zuvi-tree-node-gap": "var(--zuvi-space-2)",
+        "--zuvi-tree-node-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-tree-node-hover-bg": "var(--zuvi-color-bg-subtle)",
+        "--zuvi-tree-node-selected-bg": "var(--zuvi-color-primary-subtle)",
+        "--zuvi-tree-node-selected-fg": "var(--zuvi-color-primary-subtle-fg)",
+        "--zuvi-tree-node-disabled-fg": "var(--zuvi-color-disabled-fg)",
+        "--zuvi-tree-indent": "var(--zuvi-space-4)",
+        "--zuvi-tree-icon-size": "1rem",
+        "--zuvi-tree-icon-color": "var(--zuvi-color-fg-muted)",
+        "--zuvi-tree-checkbox-size": "1rem",
+        "--zuvi-tree-checkbox-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-tree-checkbox-bg": "var(--zuvi-color-bg)",
+        "--zuvi-tree-checkbox-border": "var(--zuvi-color-border-strong)",
+        "--zuvi-tree-checkbox-checked-bg": "var(--zuvi-color-primary)",
+        "--zuvi-tree-checkbox-checked-border": "var(--zuvi-color-primary)",
+        "--zuvi-tree-checkbox-fg": "var(--zuvi-color-primary-fg)",
+        "--zuvi-tree-checkbox-indeterminate-bg": "var(--zuvi-color-primary)",
+        "--zuvi-tree-focus-ring": "var(--zuvi-color-focus-ring)",
+        "--zuvi-tree-spinner-size": "0.875rem",
+        "--zuvi-tree-spinner-width": "2px",
+        "--zuvi-tree-spinner-color": "var(--zuvi-color-primary)",
+        "--zuvi-tree-spinner-track": "var(--zuvi-color-border)",
+        "--zuvi-tree-transition": "var(--zuvi-duration-fast) var(--zuvi-ease-standard)"
+      },
       "meta": "packages/ui/src/components/Tree/meta.json"
     },
     {
@@ -1587,7 +2871,56 @@
         "packages/ui/src/components/TreeSelect/TreeSelect.tsx",
         "packages/ui/src/components/TreeSelect/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-tree-select-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-tree-select-trigger-min-height": "2rem",
+        "--zuvi-tree-select-trigger-padding-x": "var(--zuvi-space-3)",
+        "--zuvi-tree-select-trigger-padding-y": "var(--zuvi-space-1)",
+        "--zuvi-tree-select-trigger-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-tree-select-trigger-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-tree-select-trigger-fg": "var(--zuvi-color-fg)",
+        "--zuvi-tree-select-trigger-border": "var(--zuvi-color-border)",
+        "--zuvi-tree-select-trigger-hover-border": "var(--zuvi-color-border-focus)",
+        "--zuvi-tree-select-placeholder-fg": "var(--zuvi-color-fg-subtle)",
+        "--zuvi-tree-select-tag-gap": "var(--zuvi-space-1)",
+        "--zuvi-tree-select-tag-height": "1.375rem",
+        "--zuvi-tree-select-tag-padding-x": "var(--zuvi-space-2)",
+        "--zuvi-tree-select-tag-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-tree-select-tag-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-tree-select-tag-fg": "var(--zuvi-color-fg)",
+        "--zuvi-tree-select-tag-remove-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-tree-select-tag-remove-hover-fg": "var(--zuvi-color-danger)",
+        "--zuvi-tree-select-tag-remove-hit-size": "1.5rem",
+        "--zuvi-tree-select-panel-bg": "var(--zuvi-color-bg-elevated)",
+        "--zuvi-tree-select-panel-border": "var(--zuvi-color-border-subtle)",
+        "--zuvi-tree-select-panel-radius": "0.5rem",
+        "--zuvi-tree-select-panel-shadow": "var(--zuvi-shadow-lg)",
+        "--zuvi-tree-select-panel-margin-top": "var(--zuvi-space-1)",
+        "--zuvi-tree-select-panel-padding": "var(--zuvi-space-1)",
+        "--zuvi-tree-select-panel-max-height": "16rem",
+        "--zuvi-tree-select-node-height": "1.75rem",
+        "--zuvi-tree-select-node-gap": "var(--zuvi-space-2)",
+        "--zuvi-tree-select-node-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-tree-select-node-hover-bg": "var(--zuvi-color-bg-subtle)",
+        "--zuvi-tree-select-node-selected-bg": "var(--zuvi-color-primary-subtle)",
+        "--zuvi-tree-select-node-selected-fg": "var(--zuvi-color-primary-subtle-fg)",
+        "--zuvi-tree-select-node-disabled-fg": "var(--zuvi-color-disabled-fg)",
+        "--zuvi-tree-select-indent": "var(--zuvi-space-4)",
+        "--zuvi-tree-select-icon-size": "1rem",
+        "--zuvi-tree-select-icon-color": "var(--zuvi-color-fg-muted)",
+        "--zuvi-tree-select-checkbox-size": "1rem",
+        "--zuvi-tree-select-checkbox-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-tree-select-checkbox-bg": "var(--zuvi-color-bg)",
+        "--zuvi-tree-select-checkbox-border": "var(--zuvi-color-border-strong)",
+        "--zuvi-tree-select-checkbox-checked-bg": "var(--zuvi-color-primary)",
+        "--zuvi-tree-select-checkbox-checked-border": "var(--zuvi-color-primary)",
+        "--zuvi-tree-select-checkbox-fg": "var(--zuvi-color-primary-fg)",
+        "--zuvi-tree-select-checkbox-indeterminate-bg": "var(--zuvi-color-primary)",
+        "--zuvi-tree-select-focus-ring": "var(--zuvi-color-focus-ring)",
+        "--zuvi-tree-select-empty-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-tree-select-empty-padding": "var(--zuvi-space-4)",
+        "--zuvi-tree-select-transition": "var(--zuvi-duration-fast) var(--zuvi-ease-standard)"
+      },
       "meta": "packages/ui/src/components/TreeSelect/meta.json"
     },
     {
@@ -1604,7 +2937,31 @@
         "packages/ui/src/components/Typography/Typography.tsx",
         "packages/ui/src/components/Typography/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-typography-margin": "0 0 var(--zuvi-space-3)",
+        "--zuvi-typography-color": "var(--zuvi-color-fg)",
+        "--zuvi-typography-code-bg": "var(--zuvi-color-bg-subtle)",
+        "--zuvi-typography-code-fg": "var(--zuvi-color-fg)",
+        "--zuvi-typography-code-border": "var(--zuvi-color-border)",
+        "--zuvi-typography-code-border-width": "1px",
+        "--zuvi-typography-code-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-typography-kbd-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-typography-kbd-border": "var(--zuvi-color-border-strong)",
+        "--zuvi-typography-mark-bg": "color-mix(in srgb, var(--zuvi-color-warning) 28%, transparent)",
+        "--zuvi-typography-mark-fg": "var(--zuvi-color-fg)",
+        "--zuvi-typography-copy-color": "var(--zuvi-color-fg-muted)",
+        "--zuvi-typography-copy-hover-color": "var(--zuvi-color-primary)",
+        "--zuvi-typography-copy-success-color": "var(--zuvi-color-success)",
+        "--zuvi-typography-copy-size": "1em",
+        "--zuvi-typography-copy-gap": "var(--zuvi-space-2)",
+        "--zuvi-typography-ellipsis-rows": "1",
+        "--zuvi-typography-h1-size": "var(--zuvi-text-2xl)",
+        "--zuvi-typography-h2-size": "var(--zuvi-text-xl)",
+        "--zuvi-typography-h3-size": "var(--zuvi-text-lg)",
+        "--zuvi-typography-h4-size": "var(--zuvi-text-md)",
+        "--zuvi-typography-h5-size": "var(--zuvi-text-sm)",
+        "--zuvi-typography-paragraph-size": "var(--zuvi-text-md)"
+      },
       "meta": "packages/ui/src/components/Typography/meta.json"
     },
     {
@@ -1621,7 +2978,40 @@
         "packages/ui/src/components/Upload/Upload.tsx",
         "packages/ui/src/components/Upload/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-upload-gap": "var(--zuvi-space-3)",
+        "--zuvi-upload-button-height": "2.25rem",
+        "--zuvi-upload-button-padding-x": "var(--zuvi-space-4)",
+        "--zuvi-upload-button-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-upload-button-radius": "var(--zuvi-radius)",
+        "--zuvi-upload-button-bg": "var(--zuvi-color-primary)",
+        "--zuvi-upload-button-fg": "var(--zuvi-color-primary-fg)",
+        "--zuvi-upload-button-hover-bg": "var(--zuvi-color-primary-hover)",
+        "--zuvi-upload-dragzone-padding": "var(--zuvi-space-6)",
+        "--zuvi-upload-dragzone-radius": "var(--zuvi-radius)",
+        "--zuvi-upload-dragzone-bg": "var(--zuvi-color-bg-subtle)",
+        "--zuvi-upload-dragzone-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-upload-dragzone-border": "var(--zuvi-color-border-strong)",
+        "--zuvi-upload-dragzone-border-hover": "var(--zuvi-color-primary)",
+        "--zuvi-upload-dragzone-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-upload-list-gap": "var(--zuvi-space-2)",
+        "--zuvi-upload-list-max-height": "min(320px, calc(100dvh - 16px))",
+        "--zuvi-upload-item-padding": "var(--zuvi-space-2)",
+        "--zuvi-upload-item-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-upload-item-bg": "var(--zuvi-color-bg-subtle)",
+        "--zuvi-upload-item-fg": "var(--zuvi-color-fg)",
+        "--zuvi-upload-item-gap": "var(--zuvi-space-2)",
+        "--zuvi-upload-icon-uploading": "var(--zuvi-color-primary)",
+        "--zuvi-upload-icon-success": "var(--zuvi-color-success)",
+        "--zuvi-upload-icon-error": "var(--zuvi-color-danger)",
+        "--zuvi-upload-size-color": "var(--zuvi-color-fg-muted)",
+        "--zuvi-upload-progress-height": "6px",
+        "--zuvi-upload-progress-bg": "var(--zuvi-color-bg-muted)",
+        "--zuvi-upload-progress-fill": "var(--zuvi-color-primary)",
+        "--zuvi-upload-remove-color": "var(--zuvi-color-fg-subtle)",
+        "--zuvi-upload-remove-hover-color": "var(--zuvi-color-danger)",
+        "--zuvi-upload-focus-ring": "var(--zuvi-color-focus-ring)"
+      },
       "meta": "packages/ui/src/components/Upload/meta.json"
     },
     {
@@ -1636,7 +3026,23 @@
         "packages/ui/src/components/VirtualTable/VirtualTable.tsx",
         "packages/ui/src/components/VirtualTable/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-virtual-table-font-size": "var(--zuvi-text-sm)",
+        "--zuvi-virtual-table-line-height": "var(--zuvi-leading-normal)",
+        "--zuvi-virtual-table-border": "var(--zuvi-color-border)",
+        "--zuvi-virtual-table-radius": "var(--zuvi-radius-sm)",
+        "--zuvi-virtual-table-header-height": "2.5rem",
+        "--zuvi-virtual-table-header-bg": "var(--zuvi-color-bg-subtle)",
+        "--zuvi-virtual-table-header-fg": "var(--zuvi-color-fg-muted)",
+        "--zuvi-virtual-table-header-font-weight": "var(--zuvi-weight-medium)",
+        "--zuvi-virtual-table-row-bg": "var(--zuvi-color-bg)",
+        "--zuvi-virtual-table-row-hover-bg": "var(--zuvi-color-bg-subtle)",
+        "--zuvi-virtual-table-row-border": "var(--zuvi-color-border-subtle)",
+        "--zuvi-virtual-table-cell-padding-x": "var(--zuvi-space-4)",
+        "--zuvi-virtual-table-sticky-bg": "var(--zuvi-color-bg)",
+        "--zuvi-virtual-table-sticky-header-bg": "var(--zuvi-color-bg-subtle)",
+        "--zuvi-virtual-table-focus-ring": "var(--zuvi-color-focus-ring)"
+      },
       "meta": "packages/ui/src/components/VirtualTable/meta.json"
     },
     {
@@ -1651,7 +3057,10 @@
         "packages/ui/src/components/Watermark/Watermark.tsx",
         "packages/ui/src/components/Watermark/index.ts"
       ],
-      "cssVars": {},
+      "cssVars": {
+        "--zuvi-watermark-overlay-bg-repeat": "repeat",
+        "--zuvi-watermark-overlay-z": "0"
+      },
       "meta": "packages/ui/src/components/Watermark/meta.json"
     },
     {

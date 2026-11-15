@@ -906,7 +906,6 @@ export function StudioWord({
       setFormatPainter(null);
       setNotice('已应用格式刷。');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editor?.state.selection.from, editor?.state.selection.to, editor, editable]);
   React.useEffect(() => {
     if (!formatPainter) return;

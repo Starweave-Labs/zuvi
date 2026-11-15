@@ -62,7 +62,7 @@ function docsFallback(componentDirName) {
 export function extractCssVars(cssText) {
   const vars = {};
   // 只取类选择器块（.zuvi-xxx { ... }）里的定义，跳过嵌套的尺寸/变体覆盖块
-  const rootBlockRe = /\.(z-[a-z0-9-]+)\s*\{([^{}]*)\}/g;
+  const rootBlockRe = /\.(zuvi-[a-z0-9-]+)\s*\{([^{}]*)\}/g;
   let m;
   while ((m = rootBlockRe.exec(cssText)) !== null) {
     const body = m[2];
