@@ -3,38 +3,38 @@
   "registry": "local tarballs through npm aliases",
   "packages": [
     {
-      "sourceName": "@zui/tokens",
-      "name": "@yeyouyuan/zui-tokens",
+      "sourceName": "@zuvi/tokens",
+      "name": "@yeyouyuan/zuvi-tokens",
       "version": "0.3.0"
     },
     {
-      "sourceName": "@zui/icons",
-      "name": "@yeyouyuan/zui-icons",
+      "sourceName": "@zuvi/icons",
+      "name": "@yeyouyuan/zuvi-icons",
       "version": "0.3.0"
     },
     {
-      "sourceName": "@zui/i18n",
-      "name": "@yeyouyuan/zui-i18n",
+      "sourceName": "@zuvi/i18n",
+      "name": "@yeyouyuan/zuvi-i18n",
       "version": "0.3.0"
     },
     {
-      "sourceName": "@zui/react",
-      "name": "@yeyouyuan/zui-react",
+      "sourceName": "@zuvi/react",
+      "name": "@yeyouyuan/zuvi-react",
       "version": "0.3.0"
     },
     {
-      "sourceName": "@zui/blocks",
-      "name": "@yeyouyuan/zui-blocks",
+      "sourceName": "@zuvi/blocks",
+      "name": "@yeyouyuan/zuvi-blocks",
       "version": "0.3.0"
     },
     {
-      "sourceName": "@zui/cli",
-      "name": "@yeyouyuan/zui-cli",
+      "sourceName": "@zuvi/cli",
+      "name": "@yeyouyuan/zuvi-cli",
       "version": "0.3.0"
     },
     {
-      "sourceName": "@zui/mcp",
-      "name": "@yeyouyuan/zui-mcp",
+      "sourceName": "@zuvi/mcp",
+      "name": "@yeyouyuan/zuvi-mcp",
       "version": "0.3.0"
     }
   ],

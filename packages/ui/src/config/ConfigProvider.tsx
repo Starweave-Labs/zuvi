@@ -1,15 +1,15 @@
 'use client';
 
 import * as React from 'react';
-import { useAutoTranslate, type TranslateConfig } from '@zui/i18n';
-import { mergeLocale, zhCN, type DeepPartial, type ZuiLocale } from './locale';
-import { ZuiConfigContext } from './useZuiConfig';
+import { useAutoTranslate, type TranslateConfig } from '@zuvi/i18n';
+import { mergeLocale, zhCN, type DeepPartial, type ZuviLocale } from './locale';
+import { ZuviConfigContext } from './useZuviConfig';
 
 // `code` 是语言标识（BCP 47）而非文案段：排除在 AI 翻译段之外，
 // 避免语言标签被翻译成非法 BCP 47 tag，导致 Intl 格式化抛 RangeError。
 const LOCALE_SECTIONS = Object.keys(zhCN).filter(
   (key) => key !== 'code'
-) as Array<keyof ZuiLocale>;
+) as Array<keyof ZuviLocale>;
 
 function translateLocaleValue(
   value: unknown,
@@ -41,7 +41,7 @@ function translateLocaleValue(
 
 export interface ConfigProviderProps {
   /** 与默认 zh-CN 深合并的文案覆盖（未提供的段/键保持默认） */
-  locale?: DeepPartial<ZuiLocale>;
+  locale?: DeepPartial<ZuviLocale>;
   /** AI 翻译配置：自动翻译组件内置文案。 */
   translate?: import('./translate').TranslateConfig;
   children?: React.ReactNode;
@@ -54,7 +54,7 @@ export interface ConfigProviderProps {
  * 多层嵌套时逐层深合并（内层覆盖外层）。
  */
 export function ConfigProvider({ locale, translate, children }: ConfigProviderProps) {
-  const parent = React.useContext(ZuiConfigContext);
+  const parent = React.useContext(ZuviConfigContext);
   const sourceLocale = React.useMemo(
     () => mergeLocale(parent.sourceLocale ?? parent.locale, locale),
     [parent.sourceLocale, parent.locale, locale]
@@ -82,9 +82,9 @@ export function ConfigProvider({ locale, translate, children }: ConfigProviderPr
     );
   }
   return (
-    <ZuiConfigContext.Provider value={{ locale: sourceLocale, sourceLocale, translate: config }}>
+    <ZuviConfigContext.Provider value={{ locale: sourceLocale, sourceLocale, translate: config }}>
       {children}
-    </ZuiConfigContext.Provider>
+    </ZuviConfigContext.Provider>
   );
 }
 
@@ -94,12 +94,12 @@ function TranslatedConfig({
   config,
   children,
 }: {
-  sourceLocale: ZuiLocale;
+  sourceLocale: ZuviLocale;
   config: TranslateConfig;
   children?: React.ReactNode;
 }) {
   const { tSync } = useAutoTranslate(config);
-  const locale = {} as ZuiLocale;
+  const locale = {} as ZuviLocale;
   for (const component of LOCALE_SECTIONS) {
     Object.defineProperty(locale, component, {
       enumerable: true,
@@ -107,8 +107,8 @@ function TranslatedConfig({
     });
   }
   return (
-    <ZuiConfigContext.Provider value={{ locale, sourceLocale, translate: config }}>
+    <ZuviConfigContext.Provider value={{ locale, sourceLocale, translate: config }}>
       {children}
-    </ZuiConfigContext.Provider>
+    </ZuviConfigContext.Provider>
   );
 }

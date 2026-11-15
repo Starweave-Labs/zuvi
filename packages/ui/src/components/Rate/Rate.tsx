@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useZuiConfig } from '../../config';
+import { useZuviConfig } from '../../config';
 import { cx, useControllableState } from '../../utils';
 import './Rate.css';
 
@@ -57,7 +57,7 @@ function snapStep(value: number, allowHalf: boolean): number {
 /* ----------------------------------- Rate --------------------------------- */
 
 export function Rate(props: RateProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const {
     value: valueProp,
     defaultValue,
@@ -136,7 +136,7 @@ export function Rate(props: RateProps) {
       aria-readonly={readonly}
       data-disabled={disabled ? '' : undefined}
       data-readonly={readonly ? '' : undefined}
-      className={cx('z-rate', className, classNames?.root)}
+      className={cx('zuvi-rate', className, classNames?.root)}
       style={style}
       onKeyDown={handleKeyDown}
     >
@@ -150,7 +150,7 @@ export function Rate(props: RateProps) {
             data-part="star"
             data-index={index}
             data-filled={fraction >= 1 ? 'full' : fraction >= 0.5 ? 'half' : 'none'}
-            className={cx('z-rate-star', classNames?.star)}
+            className={cx('zuvi-rate-star', classNames?.star)}
             // 选中星 = 最后一颗满星（display 为 x.5 时落在第 x 颗），
             // 半星档不置 checked，保证 aria 与视觉填充一致
             aria-checked={Math.floor(display) === index}
@@ -162,14 +162,14 @@ export function Rate(props: RateProps) {
             <span
               data-part="half"
               data-half="0.5"
-              className={cx('z-rate-star-half', classNames?.half)}
+              className={cx('zuvi-rate-star-half', classNames?.half)}
             >
               <StarIcon />
             </span>
             <span
               data-part="half"
               data-half="1"
-              className={cx('z-rate-star-half', classNames?.half)}
+              className={cx('zuvi-rate-star-half', classNames?.half)}
             >
               <StarIcon />
             </span>

@@ -1,4 +1,4 @@
-# ZUI 后续组件路线图
+# ZUVI 后续组件路线图
 
 状态：2026-11-09 实施后复核。Combobox、MultiCombobox、SideNav、Splitter、CommandPalette 均已实现并进入 Registry（71 个组件 + 16 个业务块，共 87 个条目），已随 v0.3.0 发布。DataGrid 立项前置已完成：性能原型已复测（10k 行：排序 30.9ms / 全选 21.8ms / 列宽更新到下一帧 34.3ms；列宽测量已排除指针输入间隔），独立大型 RFC 已起草（rfcs/datagrid.md），待评审后分期实现。
 
@@ -12,11 +12,11 @@
 
 优先验证文件工作台/版本对比与既有内容协作原型的组合；条件构建器验证受控规则和服务端查询契约；任务看板和指标卡优先作为业务块深化。其余候选在两个真实消费场景验证后再确定正式化次序。
 
-ZUI v0.2.0 已有 66 个 UI 组件，基础表单、日期、浮层、反馈和常见数据展示已经完整。后续组件不再按“别的组件库有就补”的方式扩张，而按以下标准进入路线图：
+ZUVI v0.2.0 已有 66 个 UI 组件，基础表单、日期、浮层、反馈和常见数据展示已经完整。后续组件不再按“别的组件库有就补”的方式扩张，而按以下标准进入路线图：
 
 1. 在两个以上业务页面中存在稳定复用需求。
 2. 不能用现有组件少量组合获得同等语义、键盘体验和状态管理。
-3. 能复用 ZUI 的令牌、`FloatingPanel`、`useControllableState`、Portal、locale 与 Registry 基础设施。
+3. 能复用 ZUVI 的令牌、`FloatingPanel`、`useControllableState`、Portal、locale 与 Registry 基础设施。
 4. 有明确的 WAI-ARIA 模式或原生语义，自动化与人工验收边界可以定义。
 5. API 能在首版保持克制，不用大量布尔参数预埋未来能力。
 
@@ -50,7 +50,7 @@ ZUI v0.2.0 已有 66 个 UI 组件，基础表单、日期、浮层、反馈和�
 
 - 根结构优先为 `<nav><ul><li><a>`，当前页用 `aria-current="page"`。
 - 支持受控 `currentKey`、`expandedKeys`、分组、图标、徽标、折叠和 `renderLink`。
-- 路由跳转由链接或调用方路由组件负责，ZUI 不绑定具体 Router。
+- 路由跳转由链接或调用方路由组件负责，ZUVI 不绑定具体 Router。
 - 桌面折叠与移动端抽屉是不同布局职责；首版只提供导航本体，不内置 Drawer。
 - `DropdownMenu` 继续负责按钮触发的动作菜单，两者不合并。
 - 正式化前已用文档站侧栏与真实路由型 `AdminShell` 完成双迁移原型并通过 8 条 E2E；同页按钮切换的 `SettingsBlock` 不作为导航组件成立的证据。
@@ -110,6 +110,6 @@ DataGrid 价值高，但不能把功能继续堆入 `Table`：
 
 2026-11-12 工作台新增 [Word、Excel、PDF 页面内完整编辑器](office-full-editor.md)，使用本机部署的 ONLYOFFICE Docs 10.0：DOCX 正文与排版、XLSX 工作表与公式/图表、PDF 已有可识别文字直接在文档画布中编辑，桥接服务持久保存原格式结果并回写工作区。原生画布已提炼为公共 `OfficeEditor` 组件，加入 UI 导出与 Registry，并用于工作台和 `#/components/office-editor` 的组件示例；该组件随 v0.4.0 发布。部署、保存与恢复链路、Community 能力与商用授权边界在实施说明中列明。[首版浏览器实现](office-preview-2026-11-12.md)保留为旧草稿迁移与历史验证记录。
 
-同日按用户选择新增并深化 [OfficeStudio 独立文档工作台](office-studio.md)：直接使用 ZUI 控件，Word 提供本地图片、默认页眉页脚、原生页码域、查找替换与大纲；Excel 提供公式、工作表与行列增删、合并拆分、冻结、筛选排序和原生柱状/折线图；PDF 提供缩略图、全文查找、文字/高亮/矩形/手写笔迹及普通表单。三种编辑器都支持撤销重做，示例提供真实文件导入导出、打印、本地恢复、最近 20 次历史版本及恢复为新文件。`#/components/office-studio` 无需 ONLYOFFICE 服务。
+同日按用户选择新增并深化 [OfficeStudio 独立文档工作台](office-studio.md)：直接使用 ZUVI 控件，Word 提供本地图片、默认页眉页脚、原生页码域、查找替换与大纲；Excel 提供公式、工作表与行列增删、合并拆分、冻结、筛选排序和原生柱状/折线图；PDF 提供缩略图、全文查找、文字/高亮/矩形/手写笔迹及普通表单。三种编辑器都支持撤销重做，示例提供真实文件导入导出、打印、本地恢复、最近 20 次历史版本及恢复为新文件。`#/components/office-studio` 无需 ONLYOFFICE 服务。
 
 这些能力仍有明确格式边界：Word 不具备完整自动分页或多节版式兼容，Excel 拒绝透视和不支持的复杂对象，PDF 不提供任意原文修改与 OCR；PDF 查找依赖可提取文字和宿主 renderer。`OfficeStudio` 是公共 UI 组件，文件 codec、worker/字体、打印和历史版本存储由宿主适配。当前正式组件数为 73，OfficeStudio 随 v0.4.0 发布；本轮 Node 验证及浏览器验收边界见 [验证记录](office-verification-2026-11-12.md)。

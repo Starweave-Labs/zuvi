@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
-import { Button, Modal } from '@zui/react';
+import { Button, Modal } from '@zuvi/react';
 import {
   evaluateCondition,
   resolveLogicValue,
@@ -114,7 +114,7 @@ export function BuilderLogicProvider({
             'text/plain;charset=utf-8'
           );
         else if (action.type === 'refresh')
-          document.dispatchEvent(new CustomEvent('zui-builder-refresh', { detail: action.source }));
+          document.dispatchEvent(new CustomEvent('zuvi-builder-refresh', { detail: action.source }));
       }
     };
     try {
@@ -135,7 +135,7 @@ export function BuilderLogicProvider({
       {children}
       {notice && (
         <div
-          className="z-builder-prototype-notice"
+          className="zuvi-builder-prototype-notice"
           role={notice.tone === 'error' ? 'alert' : 'status'}
           data-tone={notice.tone}
         >
@@ -168,7 +168,7 @@ export function BuilderLogicProvider({
         </Modal.Content>
       </Modal>
       {busy && !confirmation && (
-        <span className="z-builder-logic-status" role="status" aria-live="polite">
+        <span className="zuvi-builder-logic-status" role="status" aria-live="polite">
           正在执行交互
         </span>
       )}

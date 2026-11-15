@@ -100,7 +100,7 @@
     "version": "1.65.0",
     "workers": 1,
     "webServer": {
-      "command": "pnpm --filter @zui/docs dev --port 5190 --strictPort",
+      "command": "pnpm --filter @zuvi/docs dev --port 5190 --strictPort",
       "url": "http://localhost:5190",
       "reuseExistingServer": true,
       "timeout": 120000
@@ -496,7 +496,7 @@
       "line": 0,
       "specs": [
         {
-          "title": "完整 ZUI 组件目录：公开组件全部能配置、保存、画布渲染和离线渲染",
+          "title": "完整 ZUVI 组件目录：公开组件全部能配置、保存、画布渲染和离线渲染",
           "ok": true,
           "tags": [],
           "tests": [

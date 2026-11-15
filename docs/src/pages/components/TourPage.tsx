@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Tour } from '@zui/react';
+import { Button, Tour } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -85,9 +85,9 @@ export default function TourPage(): React.ReactNode {
           <div
             id="tour-anchor-1"
             style={{
-              padding: 'var(--z-space-3) var(--z-space-4)',
-              border: '1px dashed var(--z-color-border)',
-              borderRadius: 'var(--z-radius-sm)',
+              padding: 'var(--zuvi-space-3) var(--zuvi-space-4)',
+              border: '1px dashed var(--zuvi-color-border)',
+              borderRadius: 'var(--zuvi-radius-sm)',
             }}
           >
             目标元素 A
@@ -95,9 +95,9 @@ export default function TourPage(): React.ReactNode {
           <div
             id="tour-anchor-2"
             style={{
-              padding: 'var(--z-space-3) var(--z-space-4)',
-              border: '1px dashed var(--z-color-border)',
-              borderRadius: 'var(--z-radius-sm)',
+              padding: 'var(--zuvi-space-3) var(--zuvi-space-4)',
+              border: '1px dashed var(--zuvi-color-border)',
+              borderRadius: 'var(--zuvi-radius-sm)',
             }}
           >
             目标元素 B
@@ -140,9 +140,9 @@ export default function TourPage(): React.ReactNode {
           <div
             id="tour-anchor-3"
             style={{
-              padding: 'var(--z-space-3) var(--z-space-4)',
-              border: '1px dashed var(--z-color-border)',
-              borderRadius: 'var(--z-radius-sm)',
+              padding: 'var(--zuvi-space-3) var(--zuvi-space-4)',
+              border: '1px dashed var(--zuvi-color-border)',
+              borderRadius: 'var(--zuvi-radius-sm)',
             }}
           >
             受控目标 A
@@ -150,9 +150,9 @@ export default function TourPage(): React.ReactNode {
           <div
             id="tour-anchor-4"
             style={{
-              padding: 'var(--z-space-3) var(--z-space-4)',
-              border: '1px dashed var(--z-color-border)',
-              borderRadius: 'var(--z-radius-sm)',
+              padding: 'var(--zuvi-space-3) var(--zuvi-space-4)',
+              border: '1px dashed var(--zuvi-color-border)',
+              borderRadius: 'var(--zuvi-radius-sm)',
             }}
           >
             受控目标 B
@@ -251,25 +251,25 @@ export default function TourPage(): React.ReactNode {
         name="Tour"
         parts={['root', 'mask', 'card', 'title', 'description', 'footer']}
         vars={[
-          '--z-tour-z',
-          '--z-tour-mask-radius',
-          '--z-tour-mask-color',
-          '--z-tour-card-width',
-          '--z-tour-card-bg',
-          '--z-tour-card-fg',
-          '--z-tour-card-radius',
-          '--z-tour-card-shadow',
-          '--z-tour-card-padding',
-          '--z-tour-title-font-size',
-          '--z-tour-title-font-weight',
-          '--z-tour-description-font-size',
-          '--z-tour-description-fg',
-          '--z-tour-button-height',
-          '--z-tour-button-padding-x',
-          '--z-tour-button-bg',
-          '--z-tour-button-fg',
-          '--z-tour-button-primary-bg',
-          '--z-tour-button-primary-fg',
+          '--zuvi-tour-z',
+          '--zuvi-tour-mask-radius',
+          '--zuvi-tour-mask-color',
+          '--zuvi-tour-card-width',
+          '--zuvi-tour-card-bg',
+          '--zuvi-tour-card-fg',
+          '--zuvi-tour-card-radius',
+          '--zuvi-tour-card-shadow',
+          '--zuvi-tour-card-padding',
+          '--zuvi-tour-title-font-size',
+          '--zuvi-tour-title-font-weight',
+          '--zuvi-tour-description-font-size',
+          '--zuvi-tour-description-fg',
+          '--zuvi-tour-button-height',
+          '--zuvi-tour-button-padding-x',
+          '--zuvi-tour-button-bg',
+          '--zuvi-tour-button-fg',
+          '--zuvi-tour-button-primary-bg',
+          '--zuvi-tour-button-primary-fg',
         ]}
       />
     </div>

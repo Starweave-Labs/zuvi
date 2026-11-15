@@ -1,4 +1,4 @@
-// @zui/icons 最小测试（CONTRACTS-V6.md §1）：
+// @zuvi/icons 最小测试（CONTRACTS-V6.md §1）：
 // 1) 导出总数 = 142（既有 24 + 契约 §1 精确清单 118；契约正文「76/100」与清单 118 矛盾，
 //    经确认按清单全量实现，见 scripts/generate-icons.mjs 头注）；
 // 2) 关键 SVG 属性断言（24 视窗 / stroke=currentColor / stroke-width 2 / fill none / 圆角线帽 / aria-hidden）。
@@ -6,7 +6,7 @@
 import { describe, expect, it } from 'vitest';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import * as ZUIIcons from '../src/index.ts';
+import * as ZUVIIcons from '../src/index.ts';
 
 const NAMES = [
   // 既有 24
@@ -37,23 +37,23 @@ const NAMES = [
   'CloudRain',
 ];
 
-describe('@zui/icons 导出', () => {
+describe('@zuvi/icons 导出', () => {
   it('导出总数 = 142（24 既有 + 118 新增），且与契约名单一一对应', () => {
-    const keys = Object.keys(ZUIIcons).sort();
+    const keys = Object.keys(ZUVIIcons).sort();
     expect(keys).toHaveLength(142);
     expect(keys).toEqual([...NAMES].sort());
   });
 
   it('每枚图标都是函数组件', () => {
     for (const name of NAMES) {
-      expect(typeof ZUIIcons[name]).toBe('function');
+      expect(typeof ZUVIIcons[name]).toBe('function');
     }
   });
 });
 
-describe('@zui/icons 关键 SVG 属性', () => {
+describe('@zuvi/icons 关键 SVG 属性', () => {
   const htmlOf = (name, props) =>
-    renderToStaticMarkup(createElement(ZUIIcons[name], props));
+    renderToStaticMarkup(createElement(ZUVIIcons[name], props));
 
   it('全部 142 枚渲染出统一骨架：24 视窗 / currentColor / stroke-width 2 / fill none / 圆角线帽 / aria-hidden', () => {
     for (const name of NAMES) {

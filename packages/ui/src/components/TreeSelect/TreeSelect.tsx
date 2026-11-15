@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useZuiConfig } from '../../config';
+import { useZuviConfig } from '../../config';
 import { FloatingPanel, cx, useControllableState, useOnClickOutside } from '../../utils';
 import './TreeSelect.css';
 
@@ -124,7 +124,7 @@ function titleText(title: React.ReactNode, key: string): string {
 function ChevronIcon(): React.ReactNode {
   return (
     <svg
-      className="z-tree-select-node-chevron"
+      className="zuvi-tree-select-node-chevron"
       viewBox="0 0 16 16"
       width="12"
       height="12"
@@ -224,7 +224,7 @@ export function TreeSelect({
   className,
   classNames,
 }: TreeSelectProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const placeholderText = placeholder === undefined ? locale.select.placeholder : placeholder;
 
   const panelRef = React.useRef<HTMLDivElement>(null);
@@ -418,7 +418,7 @@ export function TreeSelect({
         }}
         role="treeitem"
         data-part="node"
-        className="z-tree-select-node"
+        className="zuvi-tree-select-node"
         aria-expanded={hasChildren ? isExpanded : undefined}
         aria-checked={multiple ? (isChecked ? 'true' : isHalf ? 'mixed' : 'false') : undefined}
         aria-selected={multiple ? undefined : isSelected}
@@ -431,10 +431,10 @@ export function TreeSelect({
           if (event.currentTarget === event.target) setFocusedKey(node.key);
         }}
       >
-        <div className="z-tree-select-node-row">
+        <div className="zuvi-tree-select-node-row">
           <span
             data-part="icon"
-            className="z-tree-select-node-icon"
+            className="zuvi-tree-select-node-icon"
             aria-hidden="true"
             data-expanded={hasChildren ? (isExpanded ? 'true' : 'false') : undefined}
             onClick={(event) => {
@@ -454,7 +454,7 @@ export function TreeSelect({
           {multiple ? (
             <span
               data-part="checkbox"
-              className="z-tree-select-node-checkbox"
+              className="zuvi-tree-select-node-checkbox"
               aria-hidden="true"
               data-checked={isChecked ? 'true' : 'false'}
               data-indeterminate={isHalf ? 'true' : undefined}
@@ -470,7 +470,7 @@ export function TreeSelect({
 
           <span
             data-part="label"
-            className="z-tree-select-node-label"
+            className="zuvi-tree-select-node-label"
             onClick={() => {
               focusNode(node.key);
               if (multiple) toggleCheck(node);
@@ -482,7 +482,7 @@ export function TreeSelect({
         </div>
 
         {hasChildren && isExpanded ? (
-          <ul role="group" data-part="group" className="z-tree-select-node-children">
+          <ul role="group" data-part="group" className="zuvi-tree-select-node-children">
             {node.children!.map((child) => renderNode(child, depth + 1))}
           </ul>
         ) : null}
@@ -499,7 +499,7 @@ export function TreeSelect({
     <div
       ref={rootRef}
       data-part="root"
-      className={cx('z-tree-select', className, classNames?.root)}
+      className={cx('zuvi-tree-select', className, classNames?.root)}
       data-open={open ? 'true' : 'false'}
       data-size={size}
       data-disabled={disabled ? true : undefined}
@@ -508,7 +508,7 @@ export function TreeSelect({
       <div
         ref={triggerRef}
         data-part="trigger"
-        className={cx('z-tree-select-trigger', classNames?.trigger)}
+        className={cx('zuvi-tree-select-trigger', classNames?.trigger)}
         role="combobox"
         tabIndex={disabled ? -1 : 0}
         aria-label={ariaLabel ?? placeholderText}
@@ -524,14 +524,14 @@ export function TreeSelect({
         onKeyDown={onTriggerKeyDown}
       >
         {multiple ? (
-          <span data-part="tags" className={cx('z-tree-select-tags', classNames?.tags)}>
+          <span data-part="tags" className={cx('zuvi-tree-select-tags', classNames?.tags)}>
             {selectedNodes.map((node) => (
-              <span key={node.key} data-part="tag" className="z-tree-select-tag">
-                <span className="z-tree-select-tag-label">{node.title}</span>
+              <span key={node.key} data-part="tag" className="zuvi-tree-select-tag">
+                <span className="zuvi-tree-select-tag-label">{node.title}</span>
                 <button
                   type="button"
                   data-part="remove"
-                  className="z-tree-select-tag-remove"
+                  className="zuvi-tree-select-tag-remove"
                   aria-label={locale.accessibility.removeItem.replace(
                     '{item}',
                     titleText(node.title, node.key)
@@ -547,22 +547,22 @@ export function TreeSelect({
               </span>
             ))}
             {selectedNodes.length === 0 ? (
-              <span data-part="placeholder" className="z-tree-select-placeholder">
+              <span data-part="placeholder" className="zuvi-tree-select-placeholder">
                 {placeholderText}
               </span>
             ) : null}
           </span>
         ) : singleNode ? (
-          <span data-part="value" className="z-tree-select-value">
+          <span data-part="value" className="zuvi-tree-select-value">
             {singleNode.title}
           </span>
         ) : (
-          <span data-part="placeholder" className="z-tree-select-placeholder">
+          <span data-part="placeholder" className="zuvi-tree-select-placeholder">
             {placeholderText}
           </span>
         )}
 
-        <span data-part="arrow" className="z-tree-select-arrow" aria-hidden="true">
+        <span data-part="arrow" className="zuvi-tree-select-arrow" aria-hidden="true">
           <ArrowDownIcon />
         </span>
       </div>
@@ -571,21 +571,21 @@ export function TreeSelect({
         open={open}
         anchorRef={rootRef}
         matchWidth
-        offsetVariable="--z-tree-select-panel-margin-top"
+        offsetVariable="--zuvi-tree-select-panel-margin-top"
       >
         <div
           ref={panelRef}
           id={panelId}
           data-part="panel"
-          className={cx('z-tree-select-panel', classNames?.panel)}
+          className={cx('zuvi-tree-select-panel', classNames?.panel)}
           data-open={open ? 'true' : 'false'}
         >
           {data.length === 0 ? (
-            <div data-part="empty" className="z-tree-select-empty">
+            <div data-part="empty" className="zuvi-tree-select-empty">
               {locale.empty.description}
             </div>
           ) : (
-            <ul role="tree" className="z-tree-select-tree" onKeyDown={onTreeKeyDown}>
+            <ul role="tree" className="zuvi-tree-select-tree" onKeyDown={onTreeKeyDown}>
               {data.map((node) => renderNode(node, 1))}
             </ul>
           )}

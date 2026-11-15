@@ -24,7 +24,7 @@ describe('BackTop 渲染与可见性', () => {
     const scroller = makeScroller();
     render(<BackTop target={() => scroller} />);
     const root = screen.getByRole('button', { hidden: true });
-    expect(root).toHaveClass('z-back-top');
+    expect(root).toHaveClass('zuvi-back-top');
     expect(root).toHaveAttribute('data-part', 'root');
     expect(root).toHaveAttribute('data-visible', 'false');
     expect(root).toHaveAttribute('aria-hidden', 'true');
@@ -102,7 +102,7 @@ describe('BackTop 定制', () => {
   it('classNames / className 透传', () => {
     render(<BackTop visibilityHeight={0} className="page-top" classNames={{ root: 'my-root' }} />);
     const root = screen.getByRole('button', { hidden: true });
-    expect(root).toHaveClass('z-back-top', 'my-root', 'page-top');
+    expect(root).toHaveClass('zuvi-back-top', 'my-root', 'page-top');
     expect(root.getAttribute('data-part')).toBe('root');
   });
 

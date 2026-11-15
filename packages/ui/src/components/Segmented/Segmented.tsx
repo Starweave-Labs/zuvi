@@ -130,7 +130,7 @@ export function Segmented(props: SegmentedProps) {
       {...rest}
       ref={rootRef}
       data-part="root"
-      className={cx('z-segmented', classNames?.root, className)}
+      className={cx('zuvi-segmented', classNames?.root, className)}
       data-size={size}
       data-block={block ? 'true' : undefined}
       role="radiogroup"
@@ -140,7 +140,7 @@ export function Segmented(props: SegmentedProps) {
     >
       <div
         data-part="thumb"
-        className={cx('z-segmented-thumb', classNames?.thumb)}
+        className={cx('zuvi-segmented-thumb', classNames?.thumb)}
         data-hidden={!thumb ? 'true' : undefined}
         aria-hidden="true"
         style={
@@ -154,7 +154,7 @@ export function Segmented(props: SegmentedProps) {
           key={option.value}
           type="button"
           data-part="item"
-          className={cx('z-segmented-item', classNames?.item)}
+          className={cx('zuvi-segmented-item', classNames?.item)}
           role="radio"
           aria-checked={option.value === current}
           aria-disabled={option.disabled || undefined}
@@ -172,7 +172,7 @@ export function Segmented(props: SegmentedProps) {
           }}
         >
           {option.icon ? (
-            <span className="z-segmented-icon" aria-hidden="true">
+            <span className="zuvi-segmented-icon" aria-hidden="true">
               {option.icon}
             </span>
           ) : null}

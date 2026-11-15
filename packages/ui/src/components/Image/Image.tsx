@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useZuiConfig } from '../../config';
+import { useZuviConfig } from '../../config';
 import { cx, Portal, useFocusTrap, useScrollLock } from '../../utils';
 import './Image.css';
 
@@ -18,7 +18,7 @@ export interface ImageProps extends Omit<React.ComponentPropsWithRef<'img'>, 'on
 }
 
 export function Image(props: ImageProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const {
     width,
     height,
@@ -104,7 +104,7 @@ export function Image(props: ImageProps) {
       <div
         ref={rootRef}
         data-part="root"
-        className={cx('z-image', classNames?.root, className)}
+        className={cx('zuvi-image', classNames?.root, className)}
         data-preview={preview ? 'true' : 'false'}
         style={width !== undefined || height !== undefined ? { width, height } : undefined}
       >
@@ -112,7 +112,7 @@ export function Image(props: ImageProps) {
           {...rest}
           ref={setImageNode}
           data-part="image"
-          className={cx('z-image-img', classNames?.image)}
+          className={cx('zuvi-image-img', classNames?.image)}
           src={currentSrc}
           alt={alt}
           width={width}
@@ -141,7 +141,7 @@ export function Image(props: ImageProps) {
         <Portal inheritFrom={rootRef}>
           <div
             data-part="preview"
-            className={cx('z-image-preview', classNames?.preview)}
+            className={cx('zuvi-image-preview', classNames?.preview)}
             role="dialog"
             aria-modal="true"
             aria-label={alt || locale.accessibility.imagePreview}
@@ -156,10 +156,10 @@ export function Image(props: ImageProps) {
               }
             }}
           >
-            <img className="z-image-preview-img" src={currentSrc} alt={alt} />
+            <img className="zuvi-image-preview-img" src={currentSrc} alt={alt} />
             <button
               type="button"
-              className="z-image-preview-close"
+              className="zuvi-image-preview-close"
               aria-label={locale.accessibility.closePreview}
               onClick={(event) => {
                 event.stopPropagation();

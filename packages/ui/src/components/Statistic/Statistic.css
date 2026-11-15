@@ -1,70 +1,70 @@
 /* Statistic —— 统计数值（标题 + 千分位数字 + 前后缀）。
    组件级变量定义在根选择器上，可被用户任意覆盖。 */
 
-.z-statistic {
-  --z-statistic-font-family: var(--z-font-sans);
-  --z-statistic-title-font-size: var(--z-text-sm);
-  --z-statistic-title-fg: var(--z-color-fg-muted);
-  --z-statistic-title-font-weight: var(--z-weight-regular);
-  --z-statistic-title-margin-bottom: var(--z-space-1);
-  --z-statistic-value-font-size: var(--z-text-2xl);
-  --z-statistic-value-font-weight: var(--z-weight-semibold); /* 大数字字重 600 */
-  --z-statistic-value-fg: var(--z-color-fg);
-  --z-statistic-value-line-height: var(--z-leading-tight);
-  --z-statistic-suffix-font-size: var(--z-text-md);
-  --z-statistic-suffix-font-weight: var(--z-weight-regular);
-  --z-statistic-suffix-fg: var(--z-color-fg-muted);
-  --z-statistic-suffix-margin-left: var(--z-space-1);
-  --z-statistic-prefix-font-size: var(--z-text-md);
-  --z-statistic-prefix-font-weight: var(--z-weight-regular);
-  --z-statistic-prefix-fg: var(--z-color-fg-muted);
-  --z-statistic-prefix-margin-right: var(--z-space-1);
+.zuvi-statistic {
+  --zuvi-statistic-font-family: var(--zuvi-font-sans);
+  --zuvi-statistic-title-font-size: var(--zuvi-text-sm);
+  --zuvi-statistic-title-fg: var(--zuvi-color-fg-muted);
+  --zuvi-statistic-title-font-weight: var(--zuvi-weight-regular);
+  --zuvi-statistic-title-margin-bottom: var(--zuvi-space-1);
+  --zuvi-statistic-value-font-size: var(--zuvi-text-2xl);
+  --zuvi-statistic-value-font-weight: var(--zuvi-weight-semibold); /* 大数字字重 600 */
+  --zuvi-statistic-value-fg: var(--zuvi-color-fg);
+  --zuvi-statistic-value-line-height: var(--zuvi-leading-tight);
+  --zuvi-statistic-suffix-font-size: var(--zuvi-text-md);
+  --zuvi-statistic-suffix-font-weight: var(--zuvi-weight-regular);
+  --zuvi-statistic-suffix-fg: var(--zuvi-color-fg-muted);
+  --zuvi-statistic-suffix-margin-left: var(--zuvi-space-1);
+  --zuvi-statistic-prefix-font-size: var(--zuvi-text-md);
+  --zuvi-statistic-prefix-font-weight: var(--zuvi-weight-regular);
+  --zuvi-statistic-prefix-fg: var(--zuvi-color-fg-muted);
+  --zuvi-statistic-prefix-margin-right: var(--zuvi-space-1);
 }
 
-.z-statistic {
+.zuvi-statistic {
   box-sizing: border-box;
   display: inline-flex;
   flex-direction: column;
-  font-family: var(--z-statistic-font-family);
+  font-family: var(--zuvi-statistic-font-family);
 }
 
-.z-statistic-title {
-  margin-bottom: var(--z-statistic-title-margin-bottom);
-  color: var(--z-statistic-title-fg);
-  font-size: var(--z-statistic-title-font-size);
-  font-weight: var(--z-statistic-title-font-weight);
-  line-height: var(--z-leading-normal);
+.zuvi-statistic-title {
+  margin-bottom: var(--zuvi-statistic-title-margin-bottom);
+  color: var(--zuvi-statistic-title-fg);
+  font-size: var(--zuvi-statistic-title-font-size);
+  font-weight: var(--zuvi-statistic-title-font-weight);
+  line-height: var(--zuvi-leading-normal);
 }
 
-.z-statistic-value {
+.zuvi-statistic-value {
   display: inline-flex;
   align-items: baseline;
-  color: var(--z-statistic-value-fg);
-  font-size: var(--z-statistic-value-font-size);
-  font-weight: var(--z-statistic-value-font-weight);
-  line-height: var(--z-statistic-value-line-height);
+  color: var(--zuvi-statistic-value-fg);
+  font-size: var(--zuvi-statistic-value-font-size);
+  font-weight: var(--zuvi-statistic-value-font-weight);
+  line-height: var(--zuvi-statistic-value-line-height);
 }
 
-.z-statistic-number {
+.zuvi-statistic-number {
   font-variant-numeric: tabular-nums;
 }
 
-.z-statistic-prefix {
-  margin-inline-end: var(--z-statistic-prefix-margin-right);
-  color: var(--z-statistic-prefix-fg);
-  font-size: var(--z-statistic-prefix-font-size);
-  font-weight: var(--z-statistic-prefix-font-weight);
+.zuvi-statistic-prefix {
+  margin-inline-end: var(--zuvi-statistic-prefix-margin-right);
+  color: var(--zuvi-statistic-prefix-fg);
+  font-size: var(--zuvi-statistic-prefix-font-size);
+  font-weight: var(--zuvi-statistic-prefix-font-weight);
 }
 
-.z-statistic-suffix {
-  margin-inline-start: var(--z-statistic-suffix-margin-left);
-  color: var(--z-statistic-suffix-fg);
-  font-size: var(--z-statistic-suffix-font-size);
-  font-weight: var(--z-statistic-suffix-font-weight);
+.zuvi-statistic-suffix {
+  margin-inline-start: var(--zuvi-statistic-suffix-margin-left);
+  color: var(--zuvi-statistic-suffix-fg);
+  font-size: var(--zuvi-statistic-suffix-font-size);
+  font-weight: var(--zuvi-statistic-suffix-font-weight);
 }
 
-.z-statistic-prefix svg,
-.z-statistic-suffix svg {
+.zuvi-statistic-prefix svg,
+.zuvi-statistic-suffix svg {
   display: inline-block;
   vertical-align: -0.125em;
 }

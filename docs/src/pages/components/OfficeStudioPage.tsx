@@ -12,7 +12,7 @@ import {
   type OfficeStudioHandle,
   type OfficeStudioKind,
   type StudioPdfRenderer,
-} from '@zui/react';
+} from '@zuvi/react';
 import ApiTable from '../../components/ApiTable';
 import Demo from '../../components/Demo';
 import { usePageTitle } from '../../components/usePageTitle';
@@ -59,8 +59,8 @@ const kinds = [
   { kind: 'pdf', label: 'PDF', detail: '全文查找 · 批注与手写' },
 ] as const;
 
-const BASIC_CODE = `import { OfficeStudio } from '@zui/react';
-import '@zui/react/styles.css';
+const BASIC_CODE = `import { OfficeStudio } from '@zuvi/react';
+import '@zuvi/react/styles.css';
 
 <OfficeStudio
   value={document}
@@ -205,11 +205,11 @@ export default function OfficeStudioPage(): React.ReactNode {
     <div className="doc-page office-studio-page">
       <h1 className="doc-h1">OfficeStudio 独立文档工作台</h1>
       <p className="doc-lead">
-        使用 ZUI 的工具栏、菜单和表单，在页面内直接编辑文档。Word、Excel、PDF
+        使用 ZUVI 的工具栏、菜单和表单，在页面内直接编辑文档。Word、Excel、PDF
         共用文件操作与保存状态，编辑内容保存在当前浏览器，也可以导出为实际文件。
       </p>
       <div className="office-studio-page-tags">
-        <Tag color="primary">ZUI 界面</Tag>
+        <Tag color="primary">ZUVI 界面</Tag>
         <Tag>页面内编辑</Tag>
         <Tag>本地恢复</Tag>
         <Tag>DOCX / XLSX / PDF</Tag>
@@ -479,7 +479,7 @@ export default function OfficeStudioPage(): React.ReactNode {
         <code className="office-studio-inline-path">
           docs/src/pages/collaboration/office-studio/
         </code>
-        。组件自 v0.4.0 起随 <code>@zui/react</code> 和 Registry 发布。
+        。组件自 v0.4.0 起随 <code>@zuvi/react</code> 和 Registry 发布。
       </p>
       <ApiTable
         rows={[

@@ -23,7 +23,7 @@ export function officePdfAssetsPlugin(): Plugin {
     }
   }
   return {
-    name: 'zui-office-pdf-assets',
+    name: 'zuvi-office-pdf-assets',
     configureServer(server) {
       const base = server.config.base.replace(/\/$/, '');
       server.middlewares.use(`${base}/office-pdf-assets/`, (request, response, next) => {

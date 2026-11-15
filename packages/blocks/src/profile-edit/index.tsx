@@ -11,8 +11,8 @@ import {
   Row,
   Upload,
   useControllableState,
-} from '@zui/react';
-import type { UploadChangeInfo, UploadFile } from '@zui/react';
+} from '@zuvi/react';
+import type { UploadChangeInfo, UploadFile } from '@zuvi/react';
 
 /* ---------------------------------- 类型 ---------------------------------- */
 
@@ -59,7 +59,7 @@ export const DEMO_PROFILE: ProfileEditValues = {
   email: 'xiaoman.lin@example.com',
   phone: '+86 138 0000 0000',
   position: '前端工程师',
-  bio: '负责 ZUI 组件库与设计系统工程化建设。',
+  bio: '负责 ZUVI 组件库与设计系统工程化建设。',
 };
 
 export const DEMO_TENURE: [string, string] = ['2023-06-12', '2026-06-12'];
@@ -90,10 +90,10 @@ function CalendarIcon() {
 
 const fieldLabelStyle: React.CSSProperties = {
   display: 'block',
-  fontSize: 'var(--z-text-sm)',
-  fontWeight: 'var(--z-weight-medium)',
-  color: 'var(--z-color-fg)',
-  marginBottom: 'var(--z-space-2)',
+  fontSize: 'var(--zuvi-text-sm)',
+  fontWeight: 'var(--zuvi-weight-medium)',
+  color: 'var(--zuvi-color-fg)',
+  marginBottom: 'var(--zuvi-space-2)',
 };
 
 function isSupportedAvatarFile(file: File): boolean {
@@ -144,7 +144,7 @@ export function ProfileEditBlock({
     <Col
       span={span}
       flex={span === 24 ? '1 1 100%' : '1 1 200px'}
-      style={{ minWidth: 0, marginBottom: 'var(--z-space-4)' }}
+      style={{ minWidth: 0, marginBottom: 'var(--zuvi-space-4)' }}
     >
       <label htmlFor={fieldId(name)} style={fieldLabelStyle}>
         {label}
@@ -166,17 +166,17 @@ export function ProfileEditBlock({
       style={{
         maxWidth: 880,
         margin: '0 auto',
-        padding: 'var(--z-space-6) var(--z-space-4)',
+        padding: 'var(--zuvi-space-6) var(--zuvi-space-4)',
         ...style,
       }}
     >
       <Card>
         <h2
           style={{
-            margin: '0 0 var(--z-space-5)',
-            fontSize: 'var(--z-text-lg)',
-            fontWeight: 'var(--z-weight-semibold)',
-            color: 'var(--z-color-fg)',
+            margin: '0 0 var(--zuvi-space-5)',
+            fontSize: 'var(--zuvi-text-lg)',
+            fontWeight: 'var(--zuvi-weight-semibold)',
+            color: 'var(--zuvi-color-fg)',
           }}
         >
           编辑个人资料
@@ -199,14 +199,14 @@ export function ProfileEditBlock({
                   style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: 'var(--z-space-2)',
-                    marginBottom: 'var(--z-space-2)',
-                    fontSize: 'var(--z-text-sm)',
-                    fontWeight: 'var(--z-weight-medium)',
-                    color: 'var(--z-color-fg)',
+                    gap: 'var(--zuvi-space-2)',
+                    marginBottom: 'var(--zuvi-space-2)',
+                    fontSize: 'var(--zuvi-text-sm)',
+                    fontWeight: 'var(--zuvi-weight-medium)',
+                    color: 'var(--zuvi-color-fg)',
                   }}
                 >
-                  <span style={{ display: 'inline-flex', color: 'var(--z-color-fg-muted)' }}>
+                  <span style={{ display: 'inline-flex', color: 'var(--zuvi-color-fg-muted)' }}>
                     <CalendarIcon />
                   </span>
                   任职时间
@@ -226,25 +226,25 @@ export function ProfileEditBlock({
             span={7}
             flex="1 1 200px"
             className={classNames?.aside}
-            style={{ minWidth: 0, marginTop: 'var(--z-space-4)' }}
+            style={{ minWidth: 0, marginTop: 'var(--zuvi-space-4)' }}
           >
             <div
               style={{
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                gap: 'var(--z-space-4)',
-                padding: 'var(--z-space-4)',
-                borderRadius: 'var(--z-radius-lg)',
-                border: '1px dashed var(--z-color-border)',
-                background: 'var(--z-color-bg-subtle)',
+                gap: 'var(--zuvi-space-4)',
+                padding: 'var(--zuvi-space-4)',
+                borderRadius: 'var(--zuvi-radius-lg)',
+                border: '1px dashed var(--zuvi-color-border)',
+                background: 'var(--zuvi-color-bg-subtle)',
               }}
             >
               <Avatar src={avatarSrc} name={values.name} size={80} alt={values.name} />
               <div
                 style={{
-                  fontSize: 'var(--z-text-xs)',
-                  color: 'var(--z-color-fg-muted)',
+                  fontSize: 'var(--zuvi-text-xs)',
+                  color: 'var(--zuvi-color-fg-muted)',
                   textAlign: 'center',
                 }}
               >
@@ -272,7 +272,7 @@ export function ProfileEditBlock({
               {avatarError ? (
                 <span
                   role="alert"
-                  style={{ fontSize: 'var(--z-text-xs)', color: 'var(--z-color-danger)' }}
+                  style={{ fontSize: 'var(--zuvi-text-xs)', color: 'var(--zuvi-color-danger)' }}
                 >
                   {avatarError}
                 </span>
@@ -285,9 +285,9 @@ export function ProfileEditBlock({
           style={{
             display: 'flex',
             justifyContent: 'flex-end',
-            paddingTop: 'var(--z-space-4)',
-            borderTop: '1px solid var(--z-color-border-subtle)',
-            marginTop: 'var(--z-space-2)',
+            paddingTop: 'var(--zuvi-space-4)',
+            borderTop: '1px solid var(--zuvi-color-border-subtle)',
+            marginTop: 'var(--zuvi-space-2)',
           }}
         >
           <Button type="button" loading={saving} onClick={() => onSave?.(values)}>

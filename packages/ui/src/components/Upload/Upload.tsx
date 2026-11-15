@@ -1,8 +1,8 @@
 'use client';
 
 import * as React from 'react';
-import { CheckCircle, Loading, Trash, XCircle } from '@zui/icons';
-import { useZuiConfig } from '../../config';
+import { CheckCircle, Loading, Trash, XCircle } from '@zuvi/icons';
+import { useZuviConfig } from '../../config';
 import { cx, useControllableState } from '../../utils';
 import './Upload.css';
 
@@ -116,7 +116,7 @@ export function Upload(props: UploadProps) {
     ...rest
   } = props;
 
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
 
   /* ------------------------------ 列表状态 ------------------------------- */
 
@@ -327,7 +327,7 @@ export function Upload(props: UploadProps) {
       ref={inputRef}
       type="file"
       data-part="input"
-      className="z-upload-input"
+      className="zuvi-upload-input"
       tabIndex={-1}
       aria-hidden="true"
       accept={accept}
@@ -342,13 +342,13 @@ export function Upload(props: UploadProps) {
       {...rest}
       ref={ref}
       data-part="root"
-      className={cx('z-upload', classNames?.root, className)}
+      className={cx('zuvi-upload', classNames?.root, className)}
       data-disabled={disabled || undefined}
     >
       {draggable ? (
         <div
           data-part="dragzone"
-          className={cx('z-upload-dragzone', classNames?.dragzone)}
+          className={cx('zuvi-upload-dragzone', classNames?.dragzone)}
           data-dragover={dragOver || undefined}
           data-disabled={disabled || undefined}
           role="button"
@@ -367,14 +367,14 @@ export function Upload(props: UploadProps) {
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
         >
-          <span className="z-upload-dragzone-text">{locale.upload.dragText}</span>
+          <span className="zuvi-upload-dragzone-text">{locale.upload.dragText}</span>
           {hiddenInput}
         </div>
       ) : (
-        <span data-part="trigger" className={cx('z-upload-trigger', classNames?.trigger)}>
+        <span data-part="trigger" className={cx('zuvi-upload-trigger', classNames?.trigger)}>
           <button
             type="button"
-            className="z-upload-button"
+            className="zuvi-upload-button"
             aria-label={locale.upload.text}
             disabled={disabled}
             onClick={openDialog}
@@ -386,30 +386,30 @@ export function Upload(props: UploadProps) {
       )}
 
       {fileList.length > 0 && (
-        <ul data-part="list" role="list" className={cx('z-upload-list', classNames?.list)}>
+        <ul data-part="list" role="list" className={cx('zuvi-upload-list', classNames?.list)}>
           {fileList.map((file) => (
             <li
               key={file.uid}
               role="listitem"
               data-part="item"
               data-status={file.status}
-              className={cx('z-upload-item', classNames?.item)}
+              className={cx('zuvi-upload-item', classNames?.item)}
             >
-              <div className="z-upload-item-main">
-                <span className="z-upload-item-icon" aria-hidden="true">
+              <div className="zuvi-upload-item-main">
+                <span className="zuvi-upload-item-icon" aria-hidden="true">
                   {file.status === 'uploading' && <Loading size={16} />}
                   {file.status === 'success' && <CheckCircle size={16} />}
                   {file.status === 'error' && <XCircle size={16} />}
                 </span>
-                <span className="z-upload-item-name" title={file.name}>
+                <span className="zuvi-upload-item-name" title={file.name}>
                   {file.name}
                 </span>
                 {typeof file.size === 'number' && (
-                  <span className="z-upload-item-size">{formatSize(file.size)}</span>
+                  <span className="zuvi-upload-item-size">{formatSize(file.size)}</span>
                 )}
                 <button
                   type="button"
-                  className="z-upload-item-remove"
+                  className="zuvi-upload-item-remove"
                   aria-label={locale.upload.remove}
                   disabled={disabled}
                   onClick={() => void handleRemove(file)}
@@ -418,9 +418,9 @@ export function Upload(props: UploadProps) {
                 </button>
               </div>
               {file.status === 'uploading' && (
-                <span className="z-upload-item-progress" data-part="progress">
+                <span className="zuvi-upload-item-progress" data-part="progress">
                   <span
-                    className="z-upload-item-progress-fill"
+                    className="zuvi-upload-item-progress-fill"
                     role="progressbar"
                     aria-label={file.name}
                     aria-valuemin={0}

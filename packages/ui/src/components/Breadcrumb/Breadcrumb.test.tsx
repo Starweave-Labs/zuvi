@@ -26,7 +26,7 @@ describe('Breadcrumb', () => {
     const nav = getNav();
     expect(nav.tagName).toBe('NAV');
     expect(nav).toHaveAttribute('data-part', 'root');
-    expect(nav).toHaveClass('z-breadcrumb');
+    expect(nav).toHaveClass('zuvi-breadcrumb');
 
     const ol = nav.querySelector('ol');
     expect(ol).not.toBeNull();
@@ -41,7 +41,7 @@ describe('Breadcrumb', () => {
     const separators = getNav().querySelectorAll('[data-part="separator"]');
     expect(separators).toHaveLength(2);
     for (const separator of separators) {
-      expect(separator).toHaveClass('z-breadcrumb-separator');
+      expect(separator).toHaveClass('zuvi-breadcrumb-separator');
       expect(separator).toHaveAttribute('aria-hidden', 'true');
       expect(separator.textContent).toBe('/');
     }
@@ -68,7 +68,7 @@ describe('Breadcrumb', () => {
 
     for (const item of [home, components, current]) {
       expect(item).toHaveAttribute('data-part', 'item');
-      expect(item).toHaveClass('z-breadcrumb-item');
+      expect(item).toHaveClass('zuvi-breadcrumb-item');
     }
   });
 
@@ -107,11 +107,11 @@ describe('Breadcrumb', () => {
       </Breadcrumb>
     );
     const nav = getNav();
-    expect(nav).toHaveClass('z-breadcrumb', 'my-root', 'cls-root');
-    expect(screen.getByText('首页')).toHaveClass('z-breadcrumb-item', 'my-item', 'cls-item');
-    expect(screen.getByText('当前')).toHaveClass('z-breadcrumb-item', 'cls-item');
+    expect(nav).toHaveClass('zuvi-breadcrumb', 'my-root', 'cls-root');
+    expect(screen.getByText('首页')).toHaveClass('zuvi-breadcrumb-item', 'my-item', 'cls-item');
+    expect(screen.getByText('当前')).toHaveClass('zuvi-breadcrumb-item', 'cls-item');
     expect(nav.querySelector('[data-part="separator"]')).toHaveClass(
-      'z-breadcrumb-separator',
+      'zuvi-breadcrumb-separator',
       'cls-sep'
     );
   });

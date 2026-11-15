@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useZuiConfig } from '../../config';
+import { useZuviConfig } from '../../config';
 import { cx } from '../../utils';
 import './Form.css';
 
@@ -92,7 +92,7 @@ function validateFormValue(
   rules: FormRule[],
   value: unknown,
   required: boolean,
-  messages: import('../../config').ZuiLocale['form']
+  messages: import('../../config').ZuviLocale['form']
 ): string {
   const must = required || rules.some((rule) => rule.required);
   if (must && isEmptyValue(value)) {
@@ -192,7 +192,7 @@ export function useForm(): FormInstance {
 /* ---------------------------------- Form ---------------------------------- */
 
 function Form(props: FormProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const {
     initialValues,
     onFinish,
@@ -350,7 +350,7 @@ function Form(props: FormProps) {
         {...rest}
         ref={rootRef}
         data-part="root"
-        className={cx('z-form', className, classNames?.root)}
+        className={cx('zuvi-form', className, classNames?.root)}
         onSubmit={handleSubmit}
         noValidate
       >
@@ -376,7 +376,7 @@ function FormItem(props: FormItemProps) {
   }, [ctx, name, rules, required]);
 
   if (!ctx) {
-    throw new Error('[ZUI] Form.Item 必须作为 <Form> 的后代使用');
+    throw new Error('[ZUVI] Form.Item 必须作为 <Form> 的后代使用');
   }
 
   const error = ctx.errors[name];
@@ -434,29 +434,29 @@ function FormItem(props: FormItemProps) {
     <div
       data-part="item"
       data-field={name}
-      className={cx('z-form-item', className, classNames?.item)}
+      className={cx('zuvi-form-item', className, classNames?.item)}
     >
       {label != null ? (
         <label
           data-part="label"
-          className={cx('z-form-item-label', classNames?.label)}
+          className={cx('zuvi-form-item-label', classNames?.label)}
           htmlFor={controlId}
         >
           {isRequired ? (
-            <span className="z-form-item-required" aria-hidden="true">
+            <span className="zuvi-form-item-required" aria-hidden="true">
               *
             </span>
           ) : null}
           {label}
         </label>
       ) : null}
-      <div data-part="control" className={cx('z-form-item-control', classNames?.control)}>
+      <div data-part="control" className={cx('zuvi-form-item-control', classNames?.control)}>
         {React.cloneElement(child, injected)}
         {error ? (
           <div
             data-part="error"
             id={errorId}
-            className={cx('z-form-item-error', classNames?.error)}
+            className={cx('zuvi-form-item-error', classNames?.error)}
           >
             {error}
           </div>

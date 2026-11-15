@@ -24,7 +24,7 @@ describe('permission block', () => {
     // 成员表格与角色 Tag
     expect(screen.getByText('陈默')).toBeInTheDocument();
     expect(screen.getByText('超级管理员')).toBeInTheDocument();
-    expect(container.querySelector('.z-table')).toBeInTheDocument();
+    expect(container.querySelector('.zuvi-table')).toBeInTheDocument();
   });
 
   it('reports checked keys when a tree node is checked', () => {

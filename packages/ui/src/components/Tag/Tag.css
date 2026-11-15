@@ -1,83 +1,83 @@
 /* Tag —— 组件级变量定义在根选择器上，可被用户任意覆盖 */
 
-.z-tag {
-  --z-tag-height: 1.5rem; /* 24px */
-  --z-tag-padding-x: var(--z-space-2);
-  --z-tag-gap: var(--z-space-1);
-  --z-tag-radius: 0.25rem; /* 4px */
-  --z-tag-font-size: var(--z-text-xs); /* 12px */
-  --z-tag-line-height: var(--z-leading-tight);
-  --z-tag-icon-size: 0.875rem; /* 14px */
-  --z-tag-close-size: 0.875rem;
-  --z-tag-close-gap: var(--z-space-1);
-  --z-tag-bg: var(--z-color-bg-muted);
-  --z-tag-fg: var(--z-color-fg-muted);
-  --z-tag-border: transparent;
-  --z-tag-hover-bg: color-mix(in srgb, var(--z-color-fg) 8%, var(--z-tag-bg));
-  --z-tag-focus-ring: var(--z-color-focus-ring);
-  --z-tag-transition: var(--z-duration-fast) var(--z-ease-standard);
+.zuvi-tag {
+  --zuvi-tag-height: 1.5rem; /* 24px */
+  --zuvi-tag-padding-x: var(--zuvi-space-2);
+  --zuvi-tag-gap: var(--zuvi-space-1);
+  --zuvi-tag-radius: 0.25rem; /* 4px */
+  --zuvi-tag-font-size: var(--zuvi-text-xs); /* 12px */
+  --zuvi-tag-line-height: var(--zuvi-leading-tight);
+  --zuvi-tag-icon-size: 0.875rem; /* 14px */
+  --zuvi-tag-close-size: 0.875rem;
+  --zuvi-tag-close-gap: var(--zuvi-space-1);
+  --zuvi-tag-bg: var(--zuvi-color-bg-muted);
+  --zuvi-tag-fg: var(--zuvi-color-fg-muted);
+  --zuvi-tag-border: transparent;
+  --zuvi-tag-hover-bg: color-mix(in srgb, var(--zuvi-color-fg) 8%, var(--zuvi-tag-bg));
+  --zuvi-tag-focus-ring: var(--zuvi-color-focus-ring);
+  --zuvi-tag-transition: var(--zuvi-duration-fast) var(--zuvi-ease-standard);
 }
 
 /* 状态：浅底 + 状态字色（subtle 对），error 收口到 danger 令牌 */
-.z-tag[data-color='primary'] {
-  --z-tag-bg: var(--z-color-primary-subtle);
-  --z-tag-fg: var(--z-color-primary-subtle-fg);
+.zuvi-tag[data-color='primary'] {
+  --zuvi-tag-bg: var(--zuvi-color-primary-subtle);
+  --zuvi-tag-fg: var(--zuvi-color-primary-subtle-fg);
 }
 
-.z-tag[data-color='success'] {
-  --z-tag-bg: var(--z-color-success-subtle);
-  --z-tag-fg: var(--z-color-success-subtle-fg);
+.zuvi-tag[data-color='success'] {
+  --zuvi-tag-bg: var(--zuvi-color-success-subtle);
+  --zuvi-tag-fg: var(--zuvi-color-success-subtle-fg);
 }
 
-.z-tag[data-color='warning'] {
-  --z-tag-bg: var(--z-color-warning-subtle);
-  --z-tag-fg: var(--z-color-warning-subtle-fg);
+.zuvi-tag[data-color='warning'] {
+  --zuvi-tag-bg: var(--zuvi-color-warning-subtle);
+  --zuvi-tag-fg: var(--zuvi-color-warning-subtle-fg);
 }
 
-.z-tag[data-color='error'] {
-  --z-tag-bg: var(--z-color-danger-subtle);
-  --z-tag-fg: var(--z-color-danger-subtle-fg);
+.zuvi-tag[data-color='error'] {
+  --zuvi-tag-bg: var(--zuvi-color-danger-subtle);
+  --zuvi-tag-fg: var(--zuvi-color-danger-subtle-fg);
 }
 
-.z-tag[data-color='neutral'] {
-  --z-tag-bg: var(--z-color-bg-muted);
-  --z-tag-fg: var(--z-color-fg-muted);
+.zuvi-tag[data-color='neutral'] {
+  --zuvi-tag-bg: var(--zuvi-color-bg-muted);
+  --zuvi-tag-fg: var(--zuvi-color-fg-muted);
 }
 
 /* 布局与视觉：圆角 4px 小块、24px 高 */
-.z-tag {
+.zuvi-tag {
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
-  gap: var(--z-tag-gap);
-  height: var(--z-tag-height);
-  padding: 0 var(--z-tag-padding-x);
-  border: 1px solid var(--z-tag-border);
-  border-radius: var(--z-tag-radius);
-  background: var(--z-tag-bg);
-  color: var(--z-tag-fg);
-  font-family: var(--z-font-sans);
-  font-size: var(--z-tag-font-size);
-  line-height: var(--z-tag-line-height);
+  gap: var(--zuvi-tag-gap);
+  height: var(--zuvi-tag-height);
+  padding: 0 var(--zuvi-tag-padding-x);
+  border: 1px solid var(--zuvi-tag-border);
+  border-radius: var(--zuvi-tag-radius);
+  background: var(--zuvi-tag-bg);
+  color: var(--zuvi-tag-fg);
+  font-family: var(--zuvi-font-sans);
+  font-size: var(--zuvi-tag-font-size);
+  line-height: var(--zuvi-tag-line-height);
   white-space: nowrap;
   vertical-align: middle;
 }
 
-.z-tag-icon {
+.zuvi-tag-icon {
   display: inline-flex;
   flex: none;
   align-items: center;
   justify-content: center;
-  width: var(--z-tag-icon-size);
-  height: var(--z-tag-icon-size);
+  width: var(--zuvi-tag-icon-size);
+  height: var(--zuvi-tag-icon-size);
 }
 
-.z-tag-icon > svg {
+.zuvi-tag-icon > svg {
   width: 100%;
   height: 100%;
 }
 
-.z-tag-label {
+.zuvi-tag-label {
   display: inline-block;
   min-width: 0;
   overflow: hidden;
@@ -86,14 +86,14 @@
 }
 
 /* 关闭钮 × */
-.z-tag-close {
+.zuvi-tag-close {
   box-sizing: border-box;
   display: inline-flex;
   flex: none;
   align-items: center;
   justify-content: center;
-  width: var(--z-tag-close-size);
-  height: var(--z-tag-close-size);
+  width: var(--zuvi-tag-close-size);
+  height: var(--zuvi-tag-close-size);
   margin: 0;
   padding: 0;
   border: none;
@@ -103,46 +103,46 @@
   cursor: pointer;
   opacity: 0.7;
   transition:
-    opacity var(--z-tag-transition),
-    background-color var(--z-tag-transition);
+    opacity var(--zuvi-tag-transition),
+    background-color var(--zuvi-tag-transition);
 }
 
-.z-tag-close:hover {
+.zuvi-tag-close:hover {
   opacity: 1;
-  background: var(--z-tag-hover-bg);
+  background: var(--zuvi-tag-hover-bg);
 }
 
-.z-tag-close:focus-visible {
+.zuvi-tag-close:focus-visible {
   outline: none;
   opacity: 1;
   box-shadow:
-    0 0 0 2px var(--z-tag-bg),
-    0 0 0 4px color-mix(in srgb, var(--z-tag-focus-ring) 35%, transparent);
+    0 0 0 2px var(--zuvi-tag-bg),
+    0 0 0 4px color-mix(in srgb, var(--zuvi-tag-focus-ring) 35%, transparent);
 }
 
-.z-tag-close > svg {
+.zuvi-tag-close > svg {
   width: 100%;
   height: 100%;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .z-tag-close {
+  .zuvi-tag-close {
     transition: none;
   }
 }
 
 @media (forced-colors: active) {
-  .z-tag {
+  .zuvi-tag {
     color: CanvasText;
     background: Canvas;
     border-color: CanvasText;
   }
 
-  .z-tag-close {
+  .zuvi-tag-close {
     color: ButtonText;
   }
 
-  .z-tag-close:focus-visible {
+  .zuvi-tag-close:focus-visible {
     outline: 2px solid Highlight;
     outline-offset: 2px;
     box-shadow: none;

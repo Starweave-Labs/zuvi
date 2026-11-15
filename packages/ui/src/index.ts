@@ -1,5 +1,5 @@
-// @zui/react 公共导出 —— 组件导出由集成者在汇总阶段统一追加
-// 使用者：import '@zui/react/styles.css' 引入样式（构建产物 style.css）
+// @zuvi/react 公共导出 —— 组件导出由集成者在汇总阶段统一追加
+// 使用者：import '@zuvi/react/styles.css' 引入样式（构建产物 style.css）
 
 import './styles/tokens.css';
 import './styles/reset.css';

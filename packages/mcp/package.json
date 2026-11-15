@@ -1,10 +1,10 @@
 {
-  "name": "@zui/mcp",
-  "version": "0.5.0",
-  "description": "ZUI MCP server — pure stdio JSON-RPC 2.0 tool server for ZUI components (no MCP SDK)",
+  "name": "@zuvi/mcp",
+  "version": "1.0.0",
+  "description": "ZUVI MCP server — pure stdio JSON-RPC 2.0 tool server for ZUVI components (no MCP SDK)",
   "type": "module",
   "bin": {
-    "zui-mcp": "./dist/index.js"
+    "zuvi-mcp": "./dist/index.js"
   },
   "main": "./dist/index.js",
   "exports": {

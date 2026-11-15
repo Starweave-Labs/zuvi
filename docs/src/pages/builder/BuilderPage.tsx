@@ -1,7 +1,7 @@
 'use client';
 
-import { Button, Input, Modal, MessageProvider } from '@zui/react';
-import { Clock } from '@zui/icons';
+import { Button, Input, Modal, MessageProvider } from '@zuvi/react';
+import { Clock } from '@zuvi/icons';
 import { Puck } from '@puckeditor/core';
 import '@puckeditor/core/puck.css';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
@@ -465,7 +465,7 @@ export default function BuilderPage(): React.ReactNode {
     saveDownload(
       JSON.stringify(
         {
-          format: 'zui-page',
+          format: 'zuvi-page',
           version: 1,
           pageId: current.id,
           name: current.name,
@@ -480,7 +480,7 @@ export default function BuilderPage(): React.ReactNode {
     setNotice('页面 JSON 已导出，可重新导入继续编辑。');
   };
   const exportWorkspace = () => {
-    saveDownload(JSON.stringify(workspace, null, 2), 'ZUI-页面工作区.json');
+    saveDownload(JSON.stringify(workspace, null, 2), 'ZUVI-页面工作区.json');
     setNotice('工作区已备份，包含所有页面和最近保存版本。');
   };
   const generateHtml = async (
@@ -492,7 +492,7 @@ export default function BuilderPage(): React.ReactNode {
       const isPrototype = mode.startsWith('prototype');
       const html = isPrototype
         ? exportBuilderPrototypeHtml({
-            format: 'zui-prototype',
+            format: 'zuvi-prototype',
             version: 1,
             startId: current.id,
             pages: workspace.pages.map(({ id, name, data }) => ({ id, name, data })),
@@ -504,7 +504,7 @@ export default function BuilderPage(): React.ReactNode {
       } else {
         saveDownload(
           html,
-          isPrototype ? 'ZUI-多页面交互原型.html' : `${current.name}.html`,
+          isPrototype ? 'ZUVI-多页面交互原型.html' : `${current.name}.html`,
           'text/html;charset=utf-8'
         );
         setNotice(
@@ -551,7 +551,7 @@ export default function BuilderPage(): React.ReactNode {
               <Button
                 size="sm"
                 variant="outline"
-                onClick={() => saveDownload(rawBackup, 'ZUI-原始存档.txt', 'text/plain')}
+                onClick={() => saveDownload(rawBackup, 'ZUVI-原始存档.txt', 'text/plain')}
               >
                 下载原始存档
               </Button>

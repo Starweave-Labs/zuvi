@@ -91,7 +91,7 @@ export function StudioSheetHyperlinkDialog({
         if (!open) onClose();
       }}
     >
-      <Modal.Content size="sm" className="z-studio-sheet-link-dialog">
+      <Modal.Content size="sm" className="zuvi-studio-sheet-link-dialog">
         <Modal.Header>
           <Modal.Title>{state.isNew ? '插入超链接' : '编辑超链接'}</Modal.Title>
           <Modal.Close />
@@ -169,7 +169,7 @@ export function StudioSheetHyperlinkDialog({
             disabled={blocked}
           />
           {error && (
-            <p role="alert" className="z-studio-sheet-rule-error">
+            <p role="alert" className="zuvi-studio-sheet-rule-error">
               {error}
             </p>
           )}

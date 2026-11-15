@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Folder, Home, Users } from '@zui/icons';
-import { SideNav, type SideNavSection } from '@zui/react';
+import { Folder, Home, Users } from '@zuvi/icons';
+import { SideNav, type SideNavSection } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CodeBlock from '../../components/CodeBlock';
@@ -27,7 +27,7 @@ const GROUP_CODE = `<SideNav
 />`;
 
 const REACT_ROUTER_CODE = `import { Link } from 'react-router-dom';
-import type { SideNavProps } from '@zui/react';
+import type { SideNavProps } from '@zuvi/react';
 
 const renderReactRouterLink: NonNullable<SideNavProps['renderLink']> = (
   _item,
@@ -217,25 +217,25 @@ export default function SideNavPage(): React.ReactNode {
           'collapse-toggle',
         ]}
         vars={[
-          '--z-sidenav-width',
-          '--z-sidenav-collapsed-width',
-          '--z-sidenav-padding',
-          '--z-sidenav-gap',
-          '--z-sidenav-item-height',
-          '--z-sidenav-item-padding-x',
-          '--z-sidenav-child-indent',
-          '--z-sidenav-radius',
-          '--z-sidenav-bg',
-          '--z-sidenav-fg',
-          '--z-sidenav-muted-fg',
-          '--z-sidenav-hover-bg',
-          '--z-sidenav-active-bg',
-          '--z-sidenav-active-fg',
-          '--z-sidenav-indicator',
-          '--z-sidenav-focus-ring',
-          '--z-sidenav-flyout-width',
-          '--z-sidenav-flyout-max-height',
-          '--z-sidenav-animation-duration',
+          '--zuvi-sidenav-width',
+          '--zuvi-sidenav-collapsed-width',
+          '--zuvi-sidenav-padding',
+          '--zuvi-sidenav-gap',
+          '--zuvi-sidenav-item-height',
+          '--zuvi-sidenav-item-padding-x',
+          '--zuvi-sidenav-child-indent',
+          '--zuvi-sidenav-radius',
+          '--zuvi-sidenav-bg',
+          '--zuvi-sidenav-fg',
+          '--zuvi-sidenav-muted-fg',
+          '--zuvi-sidenav-hover-bg',
+          '--zuvi-sidenav-active-bg',
+          '--zuvi-sidenav-active-fg',
+          '--zuvi-sidenav-indicator',
+          '--zuvi-sidenav-focus-ring',
+          '--zuvi-sidenav-flyout-width',
+          '--zuvi-sidenav-flyout-max-height',
+          '--zuvi-sidenav-animation-duration',
         ]}
       />
     </div>

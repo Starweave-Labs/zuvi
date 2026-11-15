@@ -1,7 +1,7 @@
 /**
- * zui add —— 从 registry 复制组件源码到目标目录
+ * zuvi add —— 从 registry 复制组件源码到目标目录
  *
- * - 支持多组件（zui add button modal）与 --all
+ * - 支持多组件（zuvi add button modal）与 --all
  * - 自动补齐 registryDependencies（组件间依赖，递归去重）
  * - 文件复制到 <components>/<组件名>/<原文件名>，输出 import 提示与依赖安装提示
  */

@@ -1,7 +1,7 @@
 'use client';
 
 /**
- * useAutoTranslate —— ZUI 组件内置文案自动翻译（CONTRACTS-V3 §2）。
+ * useAutoTranslate —— ZUVI 组件内置文案自动翻译（CONTRACTS-V3 §2）。
  *
  * - t(text, context)：异步翻译，context 注入组件上下文提示词（'这是 Select 组件的 placeholder'）
  * - tSync(text)：命中缓存同步返回译文；未命中返回原文并异步回填（回填后自动重渲染）
@@ -50,7 +50,7 @@ export interface TranslateConfig {
   targetLang: string;
   /** 默认 true，localStorage */
   cache?: boolean;
-  /** 默认 'zui-translate-cache' */
+  /** 默认 'zuvi-translate-cache' */
   cacheKey?: string;
   /** 测试注入：替换底层缓存存储（缺省 localStorage / 内存降级） */
   cacheStorage?: TranslationCacheStorage;

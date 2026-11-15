@@ -1,7 +1,7 @@
 'use client';
 
 /**
- * @zui/i18n —— ZUI 组件内置文案自动翻译（CONTRACTS-V3 §2）。
+ * @zuvi/i18n —— ZUVI 组件内置文案自动翻译（CONTRACTS-V3 §2）。
  *
  * 核心：useAutoTranslate（t / tSync / isLoading / error / clearCache）
  * provider 适配：openai / deepl / youdao / custom（fetch 实现，零重依赖）

@@ -1627,7 +1627,7 @@ function hydrateHyperlinksFromMetadata(
   const renames = matched
     .filter(({ sheet, native }) => sheet.name !== native.name)
     .map(({ sheet, native, id }) => {
-      let temporary = `_zui_link_${id}`;
+      let temporary = `_zuvi_link_${id}`;
       while (occupiedNames.has(temporary.toLowerCase())) temporary += '_';
       occupiedNames.add(temporary.toLowerCase());
       return { oldName: native.name, name: sheet.name, temporary };
@@ -1933,7 +1933,7 @@ export async function exportStudioExcel(
     validateDocument(document);
   }
   const workbook = loaded?.workbook ?? new ExcelJS.Workbook();
-  if (!source) workbook.creator = 'ZUI Office Studio';
+  if (!source) workbook.creator = 'ZUVI Office Studio';
   const matched = new Map<string, ExcelJS.Worksheet>();
   for (const sheet of document.sheets) {
     const originalId = /^xlsx-sheet-(\d+)$/.exec(sheet.id);
@@ -1944,7 +1944,7 @@ export async function exportStudioExcel(
     if (existing) matched.set(sheet.id, existing);
   }
   // Temporary names allow host-controlled renames without intermediate collisions.
-  for (const [id, sheet] of matched) sheet.name = `_zui_${id.replace(/[^\da-z]/gi, '').slice(-20)}`;
+  for (const [id, sheet] of matched) sheet.name = `_zuvi_${id.replace(/[^\da-z]/gi, '').slice(-20)}`;
   const retainedIds = new Set([...matched.values()].map((sheet) => sheet.id));
   const pageBreaks = new Map(
     [...matched].map(([id, target]) => [id, loaded!.metadata.get(target.id)!.pageBreaks])
@@ -2408,8 +2408,8 @@ function hyperlinkParts(sheet: StudioSheet, worksheet: string, relationshipsXml:
   const links = (sheet.hyperlinks ?? []).map((link) => {
     let attributes = ruleAttribute('ref', link.ref);
     if (link.target !== undefined) {
-      let id = `rIdZuiHyperlink${nextId++}`;
-      while (usedIds.has(id)) id = `rIdZuiHyperlink${nextId++}`;
+      let id = `rIdZuviHyperlink${nextId++}`;
+      while (usedIds.has(id)) id = `rIdZuviHyperlink${nextId++}`;
       usedIds.add(id);
       attributes += ruleAttribute('r:id', id);
       additions.push(
@@ -2513,14 +2513,14 @@ async function writeAdvancedParts(
     worksheet = linkedParts.worksheet;
     rels = linkedParts.relationships;
     if (sheet.charts?.length) {
-      const drawingName = `zuiDrawing${workbook.getWorksheet(sheet.name)!.id}`;
+      const drawingName = `zuviDrawing${workbook.getWorksheet(sheet.name)!.id}`;
       const drawingPath = `xl/drawings/${drawingName}.xml`;
       const anchors: string[] = [];
       const chartRels: string[] = [];
       for (let index = 0; index < sheet.charts.length; index++) {
         const chart = sheet.charts[index];
         const nativeIndex = ++chartIndex;
-        const chartName = `zuiChart${nativeIndex}.xml`;
+        const chartName = `zuviChart${nativeIndex}.xml`;
         const relation = `rIdChart${index + 1}`;
         zip.file(`xl/charts/${chartName}`, chartXml(sheet, chart, calculation));
         contentTypes = contentTypes.replace(
@@ -2552,11 +2552,11 @@ async function writeAdvancedParts(
       );
       rels = rels.replace(
         '</Relationships>',
-        `<Relationship Id="rIdZuiDrawing" Type="${R}/drawing" Target="../drawings/${drawingName}.xml"/></Relationships>`
+        `<Relationship Id="rIdZuviDrawing" Type="${R}/drawing" Target="../drawings/${drawingName}.xml"/></Relationships>`
       );
       worksheet = worksheet.replace(
         /(?=<(?:legacyDrawing|legacyDrawingHF|picture|oleObjects|controls|webPublishItems|tableParts|extLst)\b|<\/worksheet>)/,
-        '<drawing r:id="rIdZuiDrawing"/>'
+        '<drawing r:id="rIdZuviDrawing"/>'
       );
     }
     zip.file(path, worksheet);

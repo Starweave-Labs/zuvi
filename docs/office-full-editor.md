@@ -1,6 +1,6 @@
 # Word、Excel、PDF 页面内完整编辑器
 
-实施日期：2026-11-12。文档站 `#/collaboration` 集成自部署的 ONLYOFFICE Docs 10.0，在文档画布中直接预览和修改 DOCX、XLSX、PDF。外层工作台负责文件、保存状态、讨论和备份，文档排版、表格计算及 PDF 编辑由专业引擎提供。原生画布现已提炼为 `@zui/react` 的 `OfficeEditor` 组件，工作台和组件示例共用它，并自 v0.4.0 起正式发布。
+实施日期：2026-11-12。文档站 `#/collaboration` 集成自部署的 ONLYOFFICE Docs 10.0，在文档画布中直接预览和修改 DOCX、XLSX、PDF。外层工作台负责文件、保存状态、讨论和备份，文档排版、表格计算及 PDF 编辑由专业引擎提供。原生画布现已提炼为 `@zuvi/react` 的 `OfficeEditor` 组件，工作台和组件示例共用它，并自 v0.4.0 起正式发布。
 
 ## 发布站的免费在线 Demo
 
@@ -20,7 +20,7 @@ ONLYOFFICE Docs，将 JWT 私钥和保存回调保留在服务端。开发时可
 文档站 `#/components/office-editor` 提供组件说明、签名配置接入示例及 Word、Excel、PDF 的页面内试用。GitHub Pages 模式自动打开官方在线样例且不持久化；本地完整模式在点击后创建新文件副本，保存到同一浏览器工作区，可以在文件工作区继续编辑、下载、备份或删除。
 
 ```tsx
-import { OfficeEditor, type OfficeEditorConfig } from '@zui/react';
+import { OfficeEditor, type OfficeEditorConfig } from '@zuvi/react';
 
 interface FileEditorProps {
   session: { id: string; documentServerUrl: string; config: OfficeEditorConfig };
@@ -55,7 +55,7 @@ export function FileEditor({ session, saveSession, downloadSession }: FileEditor
 
 ```sh
 node scripts/office-runtime.mjs start
-pnpm --filter @zui/docs dev
+pnpm --filter @zuvi/docs dev
 ```
 
 打开本地文档站的“内容协作实验室”，点击“Word 示例”“Excel 示例”“PDF 示例”，或导入自己的 `.docx`、`.xlsx`、`.pdf` 文件。导入会建立工作区副本。编辑器默认展开为大画布，“返回工作台”和“展开编辑器”调整显示范围，保留当前编辑会话。
@@ -84,7 +84,7 @@ PDF 配置明确使用 `documentType: 'pdf'`、`document.isForm: false` 和 `edi
 
 对外提供闭源产品或 SaaS 编辑能力，可选择 [Docs Developer](https://www.onlyoffice.com/for-developers)。官方 [当前授权 FAQ](https://www.onlyoffice.com/pricing) 明确该版本支持 SaaS 内嵌并保持自己的代码私有；Enterprise 面向企业部署与支持，授权用途不同。完整白标是 Developer 的额外付费选项，Enterprise 不提供这一选项。
 
-ZUI 组件通过官方 API 连接独立文档服务，未复制引擎源码。本机示例继续使用 Community 并保留官方品牌；购买及部署商业许可不在本次实施范围内。当前安装的版本对应 [v10.0.0 LICENSE](https://github.com/ONLYOFFICE/DocumentServer/blob/v10.0.0/LICENSE)。
+ZUVI 组件通过官方 API 连接独立文档服务，未复制引擎源码。本机示例继续使用 Community 并保留官方品牌；购买及部署商业许可不在本次实施范围内。当前安装的版本对应 [v10.0.0 LICENSE](https://github.com/ONLYOFFICE/DocumentServer/blob/v10.0.0/LICENSE)。
 
 ## 文件保存与会话
 
@@ -98,13 +98,13 @@ ZUI 组件通过官方 API 连接独立文档服务，未复制引擎源码。�
 
 ## 界面与操作契合（2026-11-13）
 
-工作台与 `OfficeEditor` 外层 chrome 已对齐 `OfficeStudio` 的界面语言：文件栏按文档族使用主题色标题栏（Word 蓝、Excel 绿、PDF 红），状态以圆点加文字呈现（已保存 / 正在保存 / 编辑中 / 需要处理），错误条使用 danger-subtle 配色；样式全部使用 ZUI 设计令牌，展开态的层级取 `--z-z-modal`。
+工作台与 `OfficeEditor` 外层 chrome 已对齐 `OfficeStudio` 的界面语言：文件栏按文档族使用主题色标题栏（Word 蓝、Excel 绿、PDF 红），状态以圆点加文字呈现（已保存 / 正在保存 / 编辑中 / 需要处理），错误条使用 danger-subtle 配色；样式全部使用 ZUVI 设计令牌，展开态的层级取 `--zuvi-z-modal`。
 
 文件操作收进「文件」下拉菜单（保存到工作台、下载文件、展开/返回工作台），主栏保留主保存按钮与「自动保存」开关。菜单没有打印项：原生打印由 ONLYOFFICE 画布自己提供，父层 `window.print()` 无法贯通 iframe。保存状态文案与按钮的可访问名与既有测试契约保持一致。
 
 快捷键有两个路径：外层 chrome 聚焦时 Ctrl/Cmd+S 由工作台接管并触发保存到工作台；焦点在原生画布内时，键盘事件不会冒泡出 iframe，由 ONLYOFFICE 自己的 Ctrl+S 走引擎保存回调，最终汇入同一套桥接回写。两条路径都会在保存完成后把状态置为「已保存到工作台」。
 
-自动保存默认开启：会话有未保存修改且空闲 5 秒后，由既有轮询器回写工作区；开关关闭时不自动回写，手动保存与切换前的排空保存不受影响。开关状态持久化在 `zui-office-autosave-v1`。
+自动保存默认开启：会话有未保存修改且空闲 5 秒后，由既有轮询器回写工作区；开关关闭时不自动回写，手动保存与切换前的排空保存不受影响。开关状态持久化在 `zuvi-office-autosave-v1`。
 
 `OfficeEditor` 组件新增两个可选 props：`kind` 设置外层主题色；`customization` 以逐键填充方式补全 `editorConfig.customization`（后端已有值优先，token 契约不变），本机工作台默认传入 `compactHeader: true` 与 `hideRightMenu: true`，让原生界面更贴合外层；修改 `customization` 会重建实例。
 
@@ -117,7 +117,7 @@ ZUI 组件通过官方 API 连接独立文档服务，未复制引擎源码。�
 | ONLYOFFICE DocumentServer | `http://127.0.0.1:8082` | 引擎数据、日志和数据库                   |
 | 文件桥接                  | `http://127.0.0.1:8790` | 上传源文件、生成结果、会话清单和保存确认 |
 
-两端口均只绑定本机。macOS 通过 Docker CLI、Compose 和 Colima 运行，专用 profile 为 `zui-office`、context 为 `colima-zui-office`，Compose 项目固定为 `zui-office`。脚本复用现有专用运行环境，独立 Compose 命令不会切换用户的默认 Docker context。
+两端口均只绑定本机。macOS 通过 Docker CLI、Compose 和 Colima 运行，专用 profile 为 `zuvi-office`、context 为 `colima-zuvi-office`，Compose 项目固定为 `zuvi-office`。脚本复用现有专用运行环境，独立 Compose 命令不会切换用户的默认 Docker context。
 
 首次 `start` 生成随机 JWT 密钥，写入权限为 `0600`、被 Git 忽略的 `deploy/office/.env.local`。DocumentServer 和桥接服务使用同一密钥，JWT 保持开启。私有地址取件仅用于两个容器之间的文件传递。桥接代码只读挂载，保存内容写入专用数据卷。
 
@@ -143,8 +143,8 @@ node scripts/office-runtime.mjs stop
 类型、构建和服务配置可按以下命令检查：
 
 ```sh
-pnpm --filter @zui/docs typecheck
-pnpm --filter @zui/docs build
+pnpm --filter @zuvi/docs typecheck
+pnpm --filter @zuvi/docs build
 node --test docs/tests/office-bridge.test.mjs
 node --check services/office-bridge/server.mjs
 node --check scripts/office-runtime.mjs
@@ -154,8 +154,8 @@ git diff --check
 本次代码与本机服务检查结果见 [2026-11-12 验证记录](office-verification-2026-11-12.md)。运行构建后的页面可使用：
 
 ```sh
-pnpm --filter @zui/docs build
-pnpm --filter @zui/docs preview --host 127.0.0.1 --port 5174 --strictPort
+pnpm --filter @zuvi/docs build
+pnpm --filter @zuvi/docs preview --host 127.0.0.1 --port 5174 --strictPort
 ```
 
 打开 `http://127.0.0.1:5174/#/collaboration`。预览服务器与开发服务器均配置文件桥接代理。

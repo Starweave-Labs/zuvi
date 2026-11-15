@@ -9,7 +9,7 @@ import {
   type Workspace,
 } from './workspace-model';
 
-const DATABASE = 'zui-content-workspace';
+const DATABASE = 'zuvi-content-workspace';
 interface StoredWorkspace {
   token: string;
   data: Workspace;

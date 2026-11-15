@@ -3,7 +3,7 @@
 import { getDocument, GlobalWorkerOptions, type RenderTask } from 'pdfjs-dist';
 import type { TextItem } from 'pdfjs-dist/types/src/display/api';
 import workerUrl from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
-import type { StudioPdfRenderer, StudioPdfSearchResult, StudioPdfSession } from '@zui/react';
+import type { StudioPdfRenderer, StudioPdfSearchResult, StudioPdfSession } from '@zuvi/react';
 
 GlobalWorkerOptions.workerSrc = workerUrl;
 

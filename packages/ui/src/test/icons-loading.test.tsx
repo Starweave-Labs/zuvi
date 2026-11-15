@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, cleanup, render } from '@testing-library/react';
 import { createRef } from 'react';
-import { Loading } from '@zui/icons';
+import { Loading } from '@zuvi/icons';
 
 const originalAnimate = Object.getOwnPropertyDescriptor(SVGElement.prototype, 'animate');
 let reducedMotion = false;

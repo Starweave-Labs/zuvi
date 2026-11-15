@@ -66,17 +66,17 @@ function Descriptions({
       data-part="root"
       data-size={size}
       data-bordered={bordered ? 'true' : 'false'}
-      className={cx('z-descriptions', className, classNames?.root)}
+      className={cx('zuvi-descriptions', className, classNames?.root)}
     >
       {title != null ? (
-        <div data-part="title" className={cx('z-descriptions-title', classNames?.title)}>
+        <div data-part="title" className={cx('zuvi-descriptions-title', classNames?.title)}>
           {title}
         </div>
       ) : null}
       <dl
         data-part="body"
-        className={cx('z-descriptions-body', classNames?.body)}
-        style={{ '--z-descriptions-columns': String(safeColumn) } as React.CSSProperties}
+        className={cx('zuvi-descriptions-body', classNames?.body)}
+        style={{ '--zuvi-descriptions-columns': String(safeColumn) } as React.CSSProperties}
       >
         <DescriptionsContext.Provider value={context}>{children}</DescriptionsContext.Provider>
       </dl>
@@ -106,18 +106,18 @@ function DescriptionsItem({
       {...rest}
       data-part="item"
       data-span={String(spanValue)}
-      className={cx('z-descriptions-item', className, context?.classNames?.item)}
+      className={cx('zuvi-descriptions-item', className, context?.classNames?.item)}
       style={
         {
-          '--z-descriptions-item-span': String(spanValue),
+          '--zuvi-descriptions-item-span': String(spanValue),
           ...style,
         } as React.CSSProperties
       }
     >
-      <dt data-part="label" className={cx('z-descriptions-label', context?.classNames?.label)}>
+      <dt data-part="label" className={cx('zuvi-descriptions-label', context?.classNames?.label)}>
         {label}
       </dt>
-      <dd data-part="content" className={cx('z-descriptions-content', context?.classNames?.content)}>
+      <dd data-part="content" className={cx('zuvi-descriptions-content', context?.classNames?.content)}>
         {children}
       </dd>
     </div>

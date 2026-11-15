@@ -92,7 +92,7 @@ export function Row({
         data-justify={justify}
         data-align={align}
         data-wrap={wrap ? 'true' : 'false'}
-        className={cx('z-row', className, classNames?.root)}
+        className={cx('zuvi-row', className, classNames?.root)}
         style={{ ...gutterStyle, ...style }}
       >
         {children}

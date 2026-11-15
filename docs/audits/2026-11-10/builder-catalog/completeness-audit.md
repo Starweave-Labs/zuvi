@@ -1,6 +1,6 @@
 # 全组件页面编辑器验证 · 2026-11-10
 
-本轮在 `#/builder` 接入全部 71 个公开 ZUI 组件，共 82 个可搭建节点。组件清单与 `packages/ui/src/index.ts` 对照，通过实际渲染、保存刷新和离线 HTML 验证。此处记录本轮编辑器范围的结果；此前全站审计保留在 `../builder-studio/`。
+本轮在 `#/builder` 接入全部 71 个公开 ZUVI 组件，共 82 个可搭建节点。组件清单与 `packages/ui/src/index.ts` 对照，通过实际渲染、保存刷新和离线 HTML 验证。此处记录本轮编辑器范围的结果；此前全站审计保留在 `../builder-studio/`。
 
 ## 已完成
 
@@ -14,7 +14,7 @@
 | 响应式分栏           | “小屏自动堆叠”可配置；手机完整显示面板，桌面可用键盘调整尺寸。切换尺寸不重新创建字段，已填开关、复选、分段、日期和树选择值仍可提交。                               |
 | 实际交互             | 真实表单必填校验、复杂控件绑定、下载提交 JSON；本地文件下载保留原始字节。按钮支持链接、提交、剪贴板复制、文本下载、消息和区域显隐。                                |
 | 图层信息             | HTML ID、悬停说明、辅助名称；复制时重建 HTML ID，并重写副本内部锚点和动作目标，已验证不会操作原组件。                                                              |
-| 同一预览及导出运行时 | 内联 React/ZUI、样式与 JSON，不依赖 CDN；独立交互 iframe 隔离 Portal 浮层。编辑态 Puck iframe 持续保留，切换预览不接管其 ID。                                      |
+| 同一预览及导出运行时 | 内联 React/ZUVI、样式与 JSON，不依赖 CDN；独立交互 iframe 隔离 Portal 浮层。编辑态 Puck iframe 持续保留，切换预览不接管其 ID。                                      |
 | 起步模板             | “交互工作台”组合统计卡片、可搜索排序的表格、自定义标签内容、分栏、时间线和弹窗表单。                                                                               |
 
 ## 检查结果
@@ -22,7 +22,7 @@
 - 编辑器浏览器回归 **35 / 35** 通过，约 **1.1 分钟**：[完整日志](editor-e2e.log)。
 - 文档站单元测试 **8 / 8** 通过：[日志](docs-unit.log)。
 - 文档类型检查、范围 ESLint、Prettier、Git diff 空白检查均通过。
-- GitHub Pages 构建通过，约 **4.39 秒**：[构建日志](pages-build.log)。编辑器、独立导出及 ZUI 分块高于 Vite 的 500 kB 建议阈值；编辑器与导出仍按需加载。
+- GitHub Pages 构建通过，约 **4.39 秒**：[构建日志](pages-build.log)。编辑器、独立导出及 ZUVI 分块高于 Vite 的 500 kB 建议阈值；编辑器与导出仍按需加载。
 - 明暗主题执行 axe 检查；截图已实际查看：[浅色编辑器](catalog-light.png)、[深色编辑器](catalog-dark.png)、[手机编辑器](catalog-mobile.png)、[桌面导出页](catalog-preview-desktop.png)、[手机导出页](catalog-preview-mobile.png)。
 - 汇总信息见 [verification.json](verification.json)。
 

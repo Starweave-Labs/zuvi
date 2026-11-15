@@ -29,8 +29,8 @@ import {
   DEMO_SETTINGS_VALUES,
   DEMO_USER,
   DEMO_WIZARD_VALUES,
-} from '@zui/blocks';
-import { Button, Drawer, Input, Tabs, Tag } from '@zui/react';
+} from '@zuvi/blocks';
+import { Button, Drawer, Input, Tabs, Tag } from '@zuvi/react';
 import {
   Archive,
   CheckCircle,
@@ -53,7 +53,7 @@ import {
   Smartphone,
   User,
   Users,
-} from '@zui/icons';
+} from '@zuvi/icons';
 
 import CodeBlock from '../../components/CodeBlock';
 import { usePageTitle } from '../../components/usePageTitle';
@@ -197,7 +197,7 @@ const BLOCK_ICONS = {
 const PREVIEW_STYLE: CSSProperties = { minHeight: 0, width: '100%', maxWidth: '100%' };
 
 function exampleCode(block: (typeof BLOCKS)[number]): string {
-  const common = `import '@zui/react/styles.css';`;
+  const common = `import '@zuvi/react/styles.css';`;
   if (block.key === 'settings' || block.key === 'wizard' || block.key === 'profile-edit') {
     const initial = {
       settings: 'DEMO_SETTINGS_VALUES',
@@ -208,7 +208,7 @@ function exampleCode(block: (typeof BLOCKS)[number]): string {
       block.key === 'settings'
         ? 'onChange={(key, value) => setValues((previous) => ({ ...previous, [key]: value }))}'
         : `${block.key === 'wizard' ? 'onValuesChange' : 'onChange'}={(patch) => setValues((previous) => ({ ...previous, ...patch }))}`;
-    return `import { useState } from 'react';\n${common}\nimport { ${block.component}, ${initial} } from '@zui/blocks';\n\nexport default function Example() {\n  const [values, setValues] = useState({ ...${initial} });\n  return (\n    <${block.component}\n      values={values}\n      ${change}\n    />\n  );\n}`;
+    return `import { useState } from 'react';\n${common}\nimport { ${block.component}, ${initial} } from '@zuvi/blocks';\n\nexport default function Example() {\n  const [values, setValues] = useState({ ...${initial} });\n  return (\n    <${block.component}\n      values={values}\n      ${change}\n    />\n  );\n}`;
   }
   const data: Partial<Record<BlockKey, { imports: string; props: string }>> = {
     'table-page': {
@@ -228,7 +228,7 @@ function exampleCode(block: (typeof BLOCKS)[number]): string {
     'error-pages': { imports: '', props: ' status="404"' },
   };
   const sample = data[block.key];
-  return `${common}\nimport { ${block.component}${sample?.imports ?? ''} } from '@zui/blocks';\n\nexport default function Example() {\n  return <${block.component}${sample?.props ?? ''} />;\n}`;
+  return `${common}\nimport { ${block.component}${sample?.imports ?? ''} } from '@zuvi/blocks';\n\nexport default function Example() {\n  return <${block.component}${sample?.props ?? ''} />;\n}`;
 }
 
 function BlockPreview({
@@ -375,7 +375,7 @@ function BlockPreview({
       return (
         <LoginBlock
           style={{ ...PREVIEW_STYLE, minHeight: 480 }}
-          productName="ZUI 工作台"
+          productName="ZUVI 工作台"
           onSubmit={({ username }) => onFeedback(`已提交 ${username} 的登录信息（演示）。`)}
           onForgotPassword={() => onFeedback('已打开找回密码入口（演示）。')}
           onRegister={() => onFeedback('已打开注册入口（演示）。')}
@@ -562,7 +562,7 @@ export default function BlocksPage(): React.ReactNode {
       <header className="doc-blocks-intro">
         <div>
           <div className="doc-blocks-eyebrow">
-            <Layers aria-hidden="true" /> ZUI / PAGE BLOCKS
+            <Layers aria-hidden="true" /> ZUVI / PAGE BLOCKS
           </div>
           <h1 className="doc-h1">业务区块</h1>
           <p className="doc-lead">
@@ -733,7 +733,7 @@ export default function BlocksPage(): React.ReactNode {
               </div>
               <CodeBlock key={selected} language="tsx" code={exampleCode(current)} />
               <p className="doc-blocks-code-note">
-                支持按需引入：<code>@zui/blocks/{current.key}</code>
+                支持按需引入：<code>@zuvi/blocks/{current.key}</code>
               </p>
             </Tabs.Panel>
           </Tabs>
@@ -754,9 +754,9 @@ export default function BlocksPage(): React.ReactNode {
           <p>安装一次，组合使用。数据与样式由你掌控。</p>
         </div>
         <div className="doc-blocks-integration-content">
-          <CodeBlock language="bash" code="pnpm add @zui/blocks @zui/react react react-dom" />
+          <CodeBlock language="bash" code="pnpm add @zuvi/blocks @zuvi/react react react-dom" />
           <p>
-            入口引入 <code>@zui/react/styles.css</code>。通过 <code>style</code>、
+            入口引入 <code>@zuvi/react/styles.css</code>。通过 <code>style</code>、
             <code>classNames</code> 与 <code>data-part</code>{' '}
             定制布局，随全局主题切换；数据大屏保留深色展示。
           </p>

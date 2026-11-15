@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Popconfirm } from '@zui/react';
+import { Button, Popconfirm } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -143,27 +143,27 @@ export default function PopconfirmPage(): React.ReactNode {
         name="Popconfirm"
         parts={['root', 'content', 'title', 'description', 'actions', 'ok', 'cancel']}
         vars={[
-          '--z-popconfirm-width',
-          '--z-popconfirm-bg',
-          '--z-popconfirm-fg',
-          '--z-popconfirm-border',
-          '--z-popconfirm-radius',
-          '--z-popconfirm-shadow',
-          '--z-popconfirm-padding',
-          '--z-popconfirm-gap',
-          '--z-popconfirm-title-size',
-          '--z-popconfirm-title-weight',
-          '--z-popconfirm-desc-size',
-          '--z-popconfirm-desc-fg',
-          '--z-popconfirm-btn-height',
-          '--z-popconfirm-btn-radius',
-          '--z-popconfirm-ok-bg',
-          '--z-popconfirm-ok-fg',
-          '--z-popconfirm-ok-hover-bg',
-          '--z-popconfirm-cancel-bg',
-          '--z-popconfirm-cancel-fg',
-          '--z-popconfirm-cancel-border',
-          '--z-popconfirm-z',
+          '--zuvi-popconfirm-width',
+          '--zuvi-popconfirm-bg',
+          '--zuvi-popconfirm-fg',
+          '--zuvi-popconfirm-border',
+          '--zuvi-popconfirm-radius',
+          '--zuvi-popconfirm-shadow',
+          '--zuvi-popconfirm-padding',
+          '--zuvi-popconfirm-gap',
+          '--zuvi-popconfirm-title-size',
+          '--zuvi-popconfirm-title-weight',
+          '--zuvi-popconfirm-desc-size',
+          '--zuvi-popconfirm-desc-fg',
+          '--zuvi-popconfirm-btn-height',
+          '--zuvi-popconfirm-btn-radius',
+          '--zuvi-popconfirm-ok-bg',
+          '--zuvi-popconfirm-ok-fg',
+          '--zuvi-popconfirm-ok-hover-bg',
+          '--zuvi-popconfirm-cancel-bg',
+          '--zuvi-popconfirm-cancel-fg',
+          '--zuvi-popconfirm-cancel-border',
+          '--zuvi-popconfirm-z',
         ]}
       />
     </div>

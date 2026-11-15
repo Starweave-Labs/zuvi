@@ -1,4 +1,4 @@
-# ZUI 组件缺口与设计建议
+# ZUVI 组件缺口与设计建议
 
 检索日期：2026-11-12。基于当前 Registry、公共导出、组件源码、业务区块、Builder、内容协作工作台与 RFC，并查看外部官方产品文档。本次为需求和设计研究，未新增组件实现，也未重跑项目测试。
 
@@ -10,7 +10,7 @@
 
 建议先做 **FilterBar / SavedViews、ImportWizard、AIComposer / ToolTrace** 三组。DataGrid 同属高优先级，但工程量明显更大，应沿现有 RFC 分期推进。版本对比、看板、预约和文件协作已有探索，重点是补齐通用接口与真实业务状态。
 
-下表中的“创新”指相对当前 ZUI 增加新的任务能力与交互组合，不主张这些概念为行业首创。“好看”是建议的设计方向，需在后续原型中验证。
+下表中的“创新”指相对当前 ZUVI 增加新的任务能力与交互组合，不主张这些概念为行业首创。“好看”是建议的设计方向，需在后续原型中验证。
 
 ## 已有能力与真实空缺
 
@@ -84,7 +84,7 @@ AIComposer 优先复用 Input.Textarea、Upload、Tag、DropdownMenu、Button。
 
 ## 视觉与体验要求
 
-以 ZUI 现有语义令牌为基线：中性画布、细边框、清楚的标题与留白，主色用于当前选择和主要动作。状态同时使用文字/图标，数字采用统一对齐；避免用多种强调色争夺注意。
+以 ZUVI 现有语义令牌为基线：中性画布、细边框、清楚的标题与留白，主色用于当前选择和主要动作。状态同时使用文字/图标，数字采用统一对齐；避免用多种强调色争夺注意。
 
 每项至少设计默认、空态、加载、失败与完成画面。紧凑和舒适密度应兼顾触控目标；320px 下条件标签换行、向导纵向排列、复杂画布提供可用的列表路径。动画只解释位置或状态变化，并响应 reduced-motion。明暗主题、键盘焦点和实际业务数据下的长文本，均纳入原型验收。
 
@@ -103,10 +103,10 @@ AIComposer 优先复用 Input.Textarea、Upload、Tag、DropdownMenu、Button。
 | 官方来源                                                                         | 看到的实际能力                                                   | 可借鉴的部分                                                                |
 | -------------------------------------------------------------------------------- | ---------------------------------------------------------------- | --------------------------------------------------------------------------- |
 | [shadcn/ui AI Elements](https://ui.shadcn.com/docs/ai-elements)                  | Chat、Prompt Input、Tool、Plan、Sources、Confirmation 等组合模式 | 按用户任务拆分输入、执行事件与来源；优先组合基础控件                        |
-| [Prompt Input](https://ui.shadcn.com/docs/ai-elements/base/prompt-input)         | 一体式多行输入、附件标签、模型菜单与发送操作；已查看实际示例画面 | 输入与上下文的视觉层级；ZUI 自行保留 IME、受控状态及本地化契约              |
-| [MUI X Data Grid](https://mui.com/x/react-data-grid/)                            | 排序、筛选、选择、编辑、虚拟化及高级功能分层                     | 交互网格职责与分期；不据此扩张 ZUI 的首版范围                               |
+| [Prompt Input](https://ui.shadcn.com/docs/ai-elements/base/prompt-input)         | 一体式多行输入、附件标签、模型菜单与发送操作；已查看实际示例画面 | 输入与上下文的视觉层级；ZUVI 自行保留 IME、受控状态及本地化契约              |
+| [MUI X Data Grid](https://mui.com/x/react-data-grid/)                            | 排序、筛选、选择、编辑、虚拟化及高级功能分层                     | 交互网格职责与分期；不据此扩张 ZUVI 的首版范围                               |
 | [UseCSV](https://usecsv.com/)                                                    | 列名自动匹配、校验规则、导入中逐项修正、主题与回调               | 字段匹配与校验修正的完整导入流程；作为设计参考，不引入其服务                |
-| [React Flow](https://reactflow.dev/) / [React Flow UI](https://reactflow.dev/ui) | 节点拖动、缩放、多选、控件、节点状态及编辑器模板                 | 流程画布用成熟引擎做可选集成，节点外观映射 ZUI 令牌；模板与核心许可分别核对 |
+| [React Flow](https://reactflow.dev/) / [React Flow UI](https://reactflow.dev/ui) | 节点拖动、缩放、多选、控件、节点状态及编辑器模板                 | 流程画布用成熟引擎做可选集成，节点外观映射 ZUVI 令牌；模板与核心许可分别核对 |
 
 本次访问时，旧 [AI SDK Elements](https://elements.ai-sdk.dev/) 首页已提示迁往 shadcn/ui，并计划在 2026 年 11 月末弃用。因此新设计参考当前 shadcn/ui 文档，不以旧组件列表作为长期依赖计划。
 

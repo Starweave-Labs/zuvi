@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Pagination } from '@zui/react';
+import { Pagination } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -152,35 +152,35 @@ export default function PaginationPage(): React.ReactNode {
         name="Pagination"
         parts={['root', 'item', 'jumper']}
         vars={[
-          '--z-pagination-gap',
-          '--z-pagination-item-size',
-          '--z-pagination-item-font-size',
-          '--z-pagination-item-font-weight',
-          '--z-pagination-item-radius',
-          '--z-pagination-item-bg',
-          '--z-pagination-item-fg',
-          '--z-pagination-item-hover-bg',
-          '--z-pagination-item-hover-fg',
-          '--z-pagination-item-active-bg',
-          '--z-pagination-current-bg',
-          '--z-pagination-current-fg',
-          '--z-pagination-current-hover-bg',
-          '--z-pagination-current-font-weight',
-          '--z-pagination-disabled-bg',
-          '--z-pagination-disabled-fg',
-          '--z-pagination-focus-ring',
-          '--z-pagination-jumper-gap',
-          '--z-pagination-jumper-font-size',
-          '--z-pagination-jumper-fg',
-          '--z-pagination-jumper-input-width',
-          '--z-pagination-jumper-input-height',
-          '--z-pagination-jumper-input-padding-x',
-          '--z-pagination-jumper-input-radius',
-          '--z-pagination-jumper-input-border',
-          '--z-pagination-jumper-input-bg',
-          '--z-pagination-jumper-input-fg',
-          '--z-pagination-jumper-input-focus-border',
-          '--z-pagination-transition',
+          '--zuvi-pagination-gap',
+          '--zuvi-pagination-item-size',
+          '--zuvi-pagination-item-font-size',
+          '--zuvi-pagination-item-font-weight',
+          '--zuvi-pagination-item-radius',
+          '--zuvi-pagination-item-bg',
+          '--zuvi-pagination-item-fg',
+          '--zuvi-pagination-item-hover-bg',
+          '--zuvi-pagination-item-hover-fg',
+          '--zuvi-pagination-item-active-bg',
+          '--zuvi-pagination-current-bg',
+          '--zuvi-pagination-current-fg',
+          '--zuvi-pagination-current-hover-bg',
+          '--zuvi-pagination-current-font-weight',
+          '--zuvi-pagination-disabled-bg',
+          '--zuvi-pagination-disabled-fg',
+          '--zuvi-pagination-focus-ring',
+          '--zuvi-pagination-jumper-gap',
+          '--zuvi-pagination-jumper-font-size',
+          '--zuvi-pagination-jumper-fg',
+          '--zuvi-pagination-jumper-input-width',
+          '--zuvi-pagination-jumper-input-height',
+          '--zuvi-pagination-jumper-input-padding-x',
+          '--zuvi-pagination-jumper-input-radius',
+          '--zuvi-pagination-jumper-input-border',
+          '--zuvi-pagination-jumper-input-bg',
+          '--zuvi-pagination-jumper-input-fg',
+          '--zuvi-pagination-jumper-input-focus-border',
+          '--zuvi-pagination-transition',
         ]}
       />
     </div>

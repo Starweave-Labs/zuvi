@@ -12,7 +12,7 @@ const outDir = 'dist/browser';
 const docsDir = `../../docs/dist/cdn/v${version}`;
 
 const licensePlugin: Plugin = {
-  name: 'zui-browser-license',
+  name: 'zuvi-browser-license',
   generateBundle(_options, bundle) {
     const root = new URL('../../', import.meta.url);
     const license = readFileSync(new URL('LICENSE', root), 'utf8');
@@ -32,7 +32,7 @@ const licensePlugin: Plugin = {
             version?: string;
           };
           if (manifest.name) {
-            const result = manifest.name.startsWith('@zui/') ? null : directory;
+            const result = manifest.name.startsWith('@zuvi/') ? null : directory;
             roots.set(start, result);
             if (result)
               dependencies.set(`${manifest.name}@${manifest.version ?? ''}`, {
@@ -75,12 +75,12 @@ const licensePlugin: Plugin = {
     this.emitFile({
       type: 'asset',
       fileName: 'LICENSE.txt',
-      source: ['ZUI', license, ...notices].join('\n\n'),
+      source: ['ZUVI', license, ...notices].join('\n\n'),
     });
   },
   closeBundle() {
     mkdirSync(docsDir, { recursive: true });
-    for (const name of ['zui.global.js', 'zui.css', 'LICENSE.txt']) {
+    for (const name of ['zuvi.global.js', 'zuvi.css', 'LICENSE.txt']) {
       copyFileSync(join(outDir, name), join(docsDir, name));
     }
   },
@@ -96,10 +96,10 @@ export default defineConfig({
     emptyOutDir: true,
     lib: {
       entry: 'src/browser.ts',
-      name: 'ZUI',
+      name: 'ZUVI',
       formats: ['iife'],
-      fileName: () => 'zui.global.js',
-      cssFileName: 'zui',
+      fileName: () => 'zuvi.global.js',
+      cssFileName: 'zuvi',
     },
     cssCodeSplit: false,
     rollupOptions: { output: { inlineDynamicImports: true } },

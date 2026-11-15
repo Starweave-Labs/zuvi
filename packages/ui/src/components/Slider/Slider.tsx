@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useZuiConfig } from '../../config';
+import { useZuviConfig } from '../../config';
 import { cx, useControllableState } from '../../utils';
 import './Slider.css';
 
@@ -59,7 +59,7 @@ function snapValue(value: number, min: number, max: number, step: number): numbe
 /* ---------------------------------- Slider -------------------------------- */
 
 export function Slider(props: SliderProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const {
     value: valueProp,
     defaultValue,
@@ -190,18 +190,18 @@ export function Slider(props: SliderProps) {
       {...rest}
       data-part="root"
       data-disabled={disabled ? '' : undefined}
-      className={cx('z-slider', className, classNames?.root)}
+      className={cx('zuvi-slider', className, classNames?.root)}
       style={style}
     >
       <div
         data-part="track"
         ref={trackRef}
-        className={cx('z-slider-track', classNames?.track)}
+        className={cx('zuvi-slider-track', classNames?.track)}
         onPointerDown={handleTrackPointerDown}
       >
         <div
           data-part="fill"
-          className={cx('z-slider-fill', classNames?.fill)}
+          className={cx('zuvi-slider-fill', classNames?.fill)}
           style={{ width: `${percent}%` }}
         />
         <div
@@ -209,7 +209,7 @@ export function Slider(props: SliderProps) {
           data-part="thumb"
           role="slider"
           tabIndex={disabled ? -1 : 0}
-          className={cx('z-slider-thumb', classNames?.thumb)}
+          className={cx('zuvi-slider-thumb', classNames?.thumb)}
           style={{ left: `${percent}%` }}
           aria-valuemin={min}
           aria-valuemax={max}
@@ -225,20 +225,20 @@ export function Slider(props: SliderProps) {
           onBlur={() => setFocused(false)}
         >
           {showTooltip ? (
-            <span data-part="tooltip" className="z-slider-tooltip" aria-hidden="true">
+            <span data-part="tooltip" className="zuvi-slider-tooltip" aria-hidden="true">
               {valuetext}
             </span>
           ) : null}
         </div>
       </div>
       {markEntries.length > 0 ? (
-        <div className="z-slider-marks">
+        <div className="zuvi-slider-marks">
           {markEntries.map((entry) => (
             <span
               key={entry.pos}
               data-part="mark"
               data-active={display >= entry.pos ? '' : undefined}
-              className={cx('z-slider-mark', classNames?.mark)}
+              className={cx('zuvi-slider-mark', classNames?.mark)}
               style={{ left: `${max === min ? 0 : ((entry.pos - min) / (max - min)) * 100}%` }}
             >
               {entry.content}

@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { Avatar, Button, Input, Progress, Segmented, Switch, Tag } from '@zui/react';
+import { Avatar, Button, Input, Progress, Segmented, Switch, Tag } from '@zuvi/react';
 
 import CodeBlock from '../components/CodeBlock';
 import { usePageTitle } from '../components/usePageTitle';
 import { hrefFor } from '../router';
 import { catalog } from '../site';
 
-const USAGE_CODE = `import '@zui/react/styles.css';
-import { Button } from '@zui/react';
+const USAGE_CODE = `import '@zuvi/react/styles.css';
+import { Button } from '@zuvi/react';
 
 export function App() {
   return <Button variant="primary">开始使用</Button>;
@@ -67,7 +67,7 @@ function ComponentPreview(): React.ReactNode {
             <p className="doc-eyebrow">WORKSPACE</p>
             <div className="doc-preview-title">项目概览</div>
           </div>
-          <Avatar name="ZUI" size="sm" />
+          <Avatar name="ZUVI" size="sm" />
         </div>
         <Segmented
           aria-label="预览统计周期"
@@ -145,7 +145,7 @@ export default function Overview(): React.ReactNode {
     <div className="doc-page doc-overview">
       <section className="doc-hero">
         <p className="doc-eyebrow">DESIGNED FOR YOUR NEXT IDEA</p>
-        <h1 className="doc-hero-title">ZUI 组件库</h1>
+        <h1 className="doc-hero-title">ZUVI 组件库</h1>
         <p className="doc-hero-sub">
           从一个组件，
           <br />
@@ -165,7 +165,7 @@ export default function Overview(): React.ReactNode {
         </div>
         <div className="doc-hero-install">
           <CodeBlock
-            code={`pnpm add @zui/react@npm:@yeyouyuan/zui-react@${catalog.version}`}
+            code={`pnpm add @zuvi/react@npm:@yeyouyuan/zuvi-react@${catalog.version}`}
             language="shell"
           />
         </div>
@@ -239,7 +239,7 @@ export default function Overview(): React.ReactNode {
               language="shell"
             />
             <CodeBlock
-              code={`pnpm add @zui/react@npm:@yeyouyuan/zui-react@${catalog.version}`}
+              code={`pnpm add @zuvi/react@npm:@yeyouyuan/zuvi-react@${catalog.version}`}
               language="shell"
             />
           </div>
@@ -270,7 +270,7 @@ export default function Overview(): React.ReactNode {
             <h3>设计令牌</h3>
             <p>基础色阶 → 语义变量 → 暗色映射，以 CSS 变量作为统一入口。</p>
           </div>
-          <code>@zui/tokens</code>
+          <code>@zuvi/tokens</code>
         </li>
         <li>
           <span>02</span>
@@ -278,7 +278,7 @@ export default function Overview(): React.ReactNode {
             <h3>组件与区块</h3>
             <p>以组合式 API、键盘交互和语义化定制出口提供稳定契约。</p>
           </div>
-          <code>@zui/react</code>
+          <code>@zuvi/react</code>
         </li>
         <li>
           <span>03</span>
@@ -324,7 +324,7 @@ export default function Overview(): React.ReactNode {
         </a>
       </div>
       <footer className="doc-overview-footer">
-        <span>ZUI · 以一致性连接设计与代码</span>
+        <span>ZUVI · 以一致性连接设计与代码</span>
         <span>源码 v{catalog.version}</span>
       </footer>
     </div>

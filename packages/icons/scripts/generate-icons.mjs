@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * @zui/icons 一次性生成脚本（CONTRACTS-V6.md §1 第三批 118 枚新图标）。
+ * @zuvi/icons 一次性生成脚本（CONTRACTS-V6.md §1 第三批 118 枚新图标）。
  *
  * 用法：
  *   node scripts/generate-icons.mjs           # 写出 src/icons/<Name>.tsx（已存在则跳过）

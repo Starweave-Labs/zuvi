@@ -12,7 +12,7 @@ describe('Alert', () => {
     const root = screen.getByRole('status');
     expect(root).toHaveAttribute('data-part', 'root');
     expect(root).toHaveAttribute('data-type', 'info');
-    expect(root).toHaveClass('z-alert');
+    expect(root).toHaveClass('zuvi-alert');
     expect(screen.getByText('提示标题')).toBeInTheDocument();
     expect(screen.getByText('辅助描述')).toBeInTheDocument();
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
@@ -39,10 +39,10 @@ describe('Alert', () => {
       </Alert>
     );
     const title = container.querySelector('[data-part="title"]');
-    expect(title).toHaveClass('z-alert-title', 'cls-title');
+    expect(title).toHaveClass('zuvi-alert-title', 'cls-title');
     expect(title).toHaveTextContent('标题');
     const description = container.querySelector('[data-part="description"]');
-    expect(description).toHaveClass('z-alert-description', 'cls-desc');
+    expect(description).toHaveClass('zuvi-alert-description', 'cls-desc');
     expect(description).toHaveTextContent('描述');
   });
 
@@ -50,7 +50,7 @@ describe('Alert', () => {
     const { container, unmount } = render(<Alert title="带图标">内容</Alert>);
     const icon = container.querySelector('[data-part="icon"]');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveClass('z-alert-icon');
+    expect(icon).toHaveClass('zuvi-alert-icon');
     expect(icon).toHaveAttribute('aria-hidden', 'true');
     unmount();
 
@@ -77,7 +77,7 @@ describe('Alert', () => {
     );
     const close = screen.getByRole('button', { name: '关闭' });
     expect(close).toHaveAttribute('data-part', 'close');
-    expect(close).toHaveClass('z-alert-close');
+    expect(close).toHaveClass('zuvi-alert-close');
 
     await user.click(close);
     expect(onClose).toHaveBeenCalledTimes(1);
@@ -96,9 +96,9 @@ describe('Alert', () => {
       </Alert>
     );
     const root = container.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-alert', 'my-root', 'cls-root');
-    expect(root.querySelector('[data-part="icon"]')).toHaveClass('z-alert-icon', 'cls-icon');
-    expect(root.querySelector('[data-part="close"]')).toHaveClass('z-alert-close', 'cls-close');
+    expect(root).toHaveClass('zuvi-alert', 'my-root', 'cls-root');
+    expect(root.querySelector('[data-part="icon"]')).toHaveClass('zuvi-alert-icon', 'cls-icon');
+    expect(root.querySelector('[data-part="close"]')).toHaveClass('zuvi-alert-close', 'cls-close');
   });
 
   it('forwards ref to the root element', () => {

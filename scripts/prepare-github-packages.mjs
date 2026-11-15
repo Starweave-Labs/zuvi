@@ -13,7 +13,7 @@ const { values } = parseArgs({
 const owner = (values.owner || process.env.GITHUB_REPOSITORY_OWNER || '').toLowerCase();
 assert.match(owner, /^[a-z\d](?:[a-z\d-]{0,37}[a-z\d])?$/, 'Provide a GitHub owner with --owner');
 const output = path.resolve(root, values.out || '.release/github-packages');
-const repository = process.env.GITHUB_REPOSITORY || owner + '/zui';
+const repository = process.env.GITHUB_REPOSITORY || owner + '/zuvi';
 assert.equal(repository.split('/')[0].toLowerCase(), owner);
 const folders = ['tokens', 'icons', 'i18n', 'ui', 'blocks', 'cli', 'mcp'];
 const packages = folders.map((folder) => ({
@@ -26,7 +26,7 @@ const packages = folders.map((folder) => ({
 const names = new Map(
   packages.map(({ manifest }) => [
     manifest.name,
-    '@' + owner + '/zui-' + manifest.name.split('/')[1],
+    '@' + owner + '/zuvi-' + manifest.name.split('/')[1],
   ])
 );
 const version = packages[0].manifest.version;
@@ -43,7 +43,7 @@ if (process.env.GITHUB_EVENT_NAME === 'release') {
   );
 }
 fs.mkdirSync(output, { recursive: true });
-const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'zui-github-pack-'));
+const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'zuvi-github-pack-'));
 const entries = [];
 const npm = (args, cwd) =>
   JSON.parse(
@@ -102,7 +102,7 @@ try {
     if (folder === 'cli' || folder === 'mcp')
       assert.ok(files.includes('data/registry/registry.json'));
     if (folder === 'ui') {
-      for (const name of ['zui.global.js', 'zui.css', 'LICENSE.txt'])
+      for (const name of ['zuvi.global.js', 'zuvi.css', 'LICENSE.txt'])
         assert.ok(files.includes('dist/browser/' + name));
     }
     entries.push({

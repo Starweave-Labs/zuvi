@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useZuiConfig } from '../../config';
+import { useZuviConfig } from '../../config';
 import { cx, useControllableState } from '../../utils';
 import './InputNumber.css';
 
@@ -100,7 +100,7 @@ export function InputNumber({
   onKeyDown,
   ...rest
 }: InputNumberProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const [value, setValue] = useControllableState<number | null>({
     value: valueProp,
     defaultValue,
@@ -183,7 +183,7 @@ export function InputNumber({
       data-part="root"
       data-size={size}
       data-disabled={disabled ? '' : undefined}
-      className={cx('z-input-number', className, classNames?.root)}
+      className={cx('zuvi-input-number', className, classNames?.root)}
       style={style}
     >
       <input
@@ -191,7 +191,7 @@ export function InputNumber({
         data-part="input"
         ref={setInputRef}
         type="number"
-        className={cx('z-input-number-input', classNames?.input)}
+        className={cx('zuvi-input-number-input', classNames?.input)}
         value={draft}
         min={Number.isFinite(min) ? min : undefined}
         max={Number.isFinite(max) ? max : undefined}
@@ -202,11 +202,11 @@ export function InputNumber({
         onKeyDown={handleKeyDown}
       />
       {controls ? (
-        <span data-part="controls" className="z-input-number-controls">
+        <span data-part="controls" className="zuvi-input-number-controls">
           <button
             type="button"
             data-part="increase"
-            className={cx('z-input-number-btn', 'z-input-number-increase', classNames?.increase)}
+            className={cx('zuvi-input-number-btn', 'zuvi-input-number-increase', classNames?.increase)}
             aria-label={locale.accessibility.increase}
             disabled={disabled || atMax}
             onClick={() => stepValue(1)}
@@ -216,7 +216,7 @@ export function InputNumber({
           <button
             type="button"
             data-part="decrease"
-            className={cx('z-input-number-btn', 'z-input-number-decrease', classNames?.decrease)}
+            className={cx('zuvi-input-number-btn', 'zuvi-input-number-decrease', classNames?.decrease)}
             aria-label={locale.accessibility.decrease}
             disabled={disabled || atMin}
             onClick={() => stepValue(-1)}

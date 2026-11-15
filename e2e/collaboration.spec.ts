@@ -503,7 +503,7 @@ test('工作区备份可在新浏览器会话恢复文件、附件、评论、�
     await open(restored);
     await restored
       .getByLabel('导入工作区备份文件', { exact: true })
-      .setInputFiles({ name: 'workspace.zui.json', mimeType: 'application/json', buffer: backup });
+      .setInputFiles({ name: 'workspace.zuvi.json', mimeType: 'application/json', buffer: backup });
     const files = restored.getByRole('navigation', { name: '协作文件', exact: true });
     await expect(files.getByRole('button')).toHaveCount(7); // Original 3 + 4 restored copies.
     await files.getByRole('button', { name: /^备份验证\.txt/ }).click();

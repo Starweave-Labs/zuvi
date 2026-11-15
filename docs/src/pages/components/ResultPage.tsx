@@ -1,4 +1,4 @@
-import { Button, Result } from '@zui/react';
+import { Button, Result } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -93,15 +93,15 @@ export default function ResultPage(): React.ReactNode {
         name="Result"
         parts={['root', 'icon', 'title', 'subtitle', 'extra']}
         vars={[
-          '--z-result-max-width',
-          '--z-result-gap',
-          '--z-result-icon-size',
-          '--z-result-title-size',
-          '--z-result-title-weight',
-          '--z-result-title-fg',
-          '--z-result-subtitle-size',
-          '--z-result-subtitle-fg',
-          '--z-result-extra-gap',
+          '--zuvi-result-max-width',
+          '--zuvi-result-gap',
+          '--zuvi-result-icon-size',
+          '--zuvi-result-title-size',
+          '--zuvi-result-title-weight',
+          '--zuvi-result-title-fg',
+          '--zuvi-result-subtitle-size',
+          '--zuvi-result-subtitle-fg',
+          '--zuvi-result-extra-gap',
         ]}
       />
     </div>

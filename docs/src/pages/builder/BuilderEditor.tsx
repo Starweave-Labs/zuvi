@@ -7,7 +7,7 @@ import {
   type ReactNode,
 } from 'react';
 import { Drawer, Puck } from '@puckeditor/core';
-import { Modal } from '@zui/react';
+import { Modal } from '@zuvi/react';
 import {
   ArrowLeft,
   CheckCircle,
@@ -41,7 +41,7 @@ import {
   Moon,
   Database,
   Close as X,
-} from '@zui/icons';
+} from '@zuvi/icons';
 import { builderConfig } from './builder-config';
 import { historyHasCurrentData, useBuilderEditor } from './builder-editor-context';
 import { BuilderInspector } from './BuilderInspector';
@@ -767,7 +767,7 @@ export function BuilderEditor(props: BuilderEditorProps) {
                 aria-pressed={selectionIds.includes(id)}
                 title={label}
                 onDragStart={(event) => {
-                  event.dataTransfer.setData('text/plain', `zui-layer:${id}`);
+                  event.dataTransfer.setData('text/plain', `zuvi-layer:${id}`);
                   event.dataTransfer.effectAllowed = 'move';
                   setDragging(id);
                 }}
@@ -908,7 +908,7 @@ export function BuilderEditor(props: BuilderEditorProps) {
               type="button"
               disabled={!savedBlocks.length}
               onClick={() =>
-                saveDownload(JSON.stringify(savedBlocks, null, 2), 'ZUI-我的区块.json')
+                saveDownload(JSON.stringify(savedBlocks, null, 2), 'ZUVI-我的区块.json')
               }
             >
               导出区块库

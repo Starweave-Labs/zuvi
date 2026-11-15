@@ -28,7 +28,7 @@ export function Portal({ children, container, inheritFrom }: PortalProps) {
       const next = new Set<string>();
       for (let index = 0; index < computed.length; index += 1) {
         const property = computed.item(index);
-        if (!property.startsWith('--z-')) continue;
+        if (!property.startsWith('--zuvi-')) continue;
         next.add(property);
         host.style.setProperty(property, computed.getPropertyValue(property));
       }
@@ -58,10 +58,10 @@ export function Portal({ children, container, inheritFrom }: PortalProps) {
   }, [mounted, inheritFrom]);
 
   return React.createElement(React.Fragment, null,
-    React.createElement('span', { ref: sourceRef, hidden: true, 'data-zui-portal-source': '' }),
+    React.createElement('span', { ref: sourceRef, hidden: true, 'data-zuvi-portal-source': '' }),
     mounted && typeof document !== 'undefined'
       ? createPortal(React.createElement('div', {
-        ref: hostRef, 'data-zui-portal': '', style: { display: 'contents' },
+        ref: hostRef, 'data-zuvi-portal': '', style: { display: 'contents' },
       }, children), container ?? document.body)
       : null
   );

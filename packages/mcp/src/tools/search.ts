@@ -1,5 +1,5 @@
 /**
- * zui_search_components —— 组件目录数据层 + 名称/描述检索。
+ * zuvi_search_components —— 组件目录数据层 + 名称/描述检索。
  *
  * 数据源（运行时用 fs 读取）：
  *   1. packages/ui/src/components/<Name>/meta.json   （CONTRACTS-V3 §2 结构，AI 翻译组产出）
@@ -54,7 +54,7 @@ export interface CatalogEntry {
 /** 组件目录，key 为小写组件名。 */
 export type Catalog = Map<string, CatalogEntry>;
 
-/** zui_search_components 的返回条目。 */
+/** zuvi_search_components 的返回条目。 */
 export interface SearchHit {
   name: string;
   description: string;
@@ -65,11 +65,11 @@ export interface SearchHit {
 
 /**
  * 解析仓库根目录。
- * 优先级：ZUI_COMPONENTS_DIR/ZUI_ROOT 环境变量 → 从本文件位置向上找
+ * 优先级：ZUVI_COMPONENTS_DIR/ZUVI_ROOT 环境变量 → 从本文件位置向上找
  * CONTRACTS-V3.md 或 pnpm-workspace.yaml → process.cwd()。
  */
 export function resolveRepoRoot(): string {
-  if (process.env.ZUI_ROOT) return resolve(process.env.ZUI_ROOT);
+  if (process.env.ZUVI_ROOT) return resolve(process.env.ZUVI_ROOT);
   const bundled = resolve(dirname(fileURLToPath(import.meta.url)), '../../data');
   if (existsSync(join(bundled, 'CONTRACTS-V3.md'))) return bundled;
   let dir = dirname(fileURLToPath(import.meta.url));
@@ -85,8 +85,8 @@ export function resolveRepoRoot(): string {
 }
 
 function componentsDir(root: string): string {
-  return process.env.ZUI_COMPONENTS_DIR
-    ? resolve(process.env.ZUI_COMPONENTS_DIR)
+  return process.env.ZUVI_COMPONENTS_DIR
+    ? resolve(process.env.ZUVI_COMPONENTS_DIR)
     : join(root, 'packages', 'ui', 'src', 'components');
 }
 
@@ -230,7 +230,7 @@ function scoreEntry(entry: CatalogEntry, query: string): number {
 }
 
 /**
- * zui_search_components：query 匹配组件名/描述（含分类、适用场景）。
+ * zuvi_search_components：query 匹配组件名/描述（含分类、适用场景）。
  * 空 query 返回全部组件；多词 query 要求每个词都命中。
  */
 export function searchComponents(

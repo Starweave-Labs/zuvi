@@ -79,11 +79,11 @@ describe('Switch', () => {
     );
     const sw = screen.getByRole('switch', { name: '通知' });
     expect(sw).toHaveAttribute('data-part', 'root');
-    expect(sw).toHaveClass('z-switch', 'my-root', 'cls-root');
+    expect(sw).toHaveClass('zuvi-switch', 'my-root', 'cls-root');
     const track = sw.querySelector('[data-part="track"]');
-    expect(track).toHaveClass('z-switch-track', 'cls-track');
-    expect(track?.querySelector('.z-switch-thumb')).toHaveClass('z-switch-thumb', 'cls-thumb');
-    expect(sw.querySelector('[data-part="label"]')).toHaveClass('z-switch-label', 'cls-label');
+    expect(track).toHaveClass('zuvi-switch-track', 'cls-track');
+    expect(track?.querySelector('.zuvi-switch-thumb')).toHaveClass('zuvi-switch-thumb', 'cls-thumb');
+    expect(sw.querySelector('[data-part="label"]')).toHaveClass('zuvi-switch-label', 'cls-label');
   });
 
   it('exposes size via data-size', () => {

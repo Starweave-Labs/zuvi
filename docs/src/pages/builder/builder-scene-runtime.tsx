@@ -8,7 +8,7 @@ import {
   type CSSProperties,
   type ReactNode,
 } from 'react';
-import { Button, Input, Modal, Table, Tag } from '@zui/react';
+import { Button, Input, Modal, Table, Tag } from '@zuvi/react';
 import {
   Search,
   Plus,
@@ -23,7 +23,7 @@ import {
   Settings,
   Menu,
   Close,
-} from '@zui/icons';
+} from '@zuvi/icons';
 import type { SlotComponent } from '@puckeditor/core';
 import {
   normalizeRows,
@@ -71,7 +71,7 @@ export function BuilderDataProvider({
   const requests = useRef(new Map<string, AbortController>());
   const signature = JSON.stringify(sources);
   const keyFor = (source: BuilderDataSource) =>
-    `zui-builder-data:${dataKey || 'page'}:${source.id}:${fingerprint(JSON.stringify([source.fields, source.rows]))}`;
+    `zuvi-builder-data:${dataKey || 'page'}:${source.id}:${fingerprint(JSON.stringify([source.fields, source.rows]))}`;
   const load = async (source: BuilderDataSource) => {
     requests.current.get(source.id)?.abort();
     const controller = new AbortController();
@@ -163,8 +163,8 @@ export function BuilderDataProvider({
       );
       if (!context.editing && source?.mode === 'rest') void context.load(source);
     };
-    document.addEventListener('zui-builder-refresh', refresh);
-    return () => document.removeEventListener('zui-builder-refresh', refresh);
+    document.addEventListener('zuvi-builder-refresh', refresh);
+    return () => document.removeEventListener('zuvi-builder-refresh', refresh);
   }, []);
   return (
     <DataContext.Provider
@@ -180,7 +180,7 @@ export function BuilderDataProvider({
     >
       {children}
       {storageNotice && (
-        <p className="z-builder-data-notice" role="status">
+        <p className="zuvi-builder-data-notice" role="status">
           {storageNotice}
         </p>
       )}
@@ -207,7 +207,7 @@ function DataState({
 }) {
   if (!source)
     return (
-      <div className="z-builder-data-empty">
+      <div className="zuvi-builder-data-empty">
         <Layers />
         <strong>连接一个数据源</strong>
         <span>在“数据”面板定义字段和记录，再在组件属性中选择。</span>
@@ -215,13 +215,13 @@ function DataState({
     );
   if (loading)
     return (
-      <div className="z-builder-data-empty" role="status">
+      <div className="zuvi-builder-data-empty" role="status">
         正在载入 {source.name}…
       </div>
     );
   if (error)
     return (
-      <div className="z-builder-data-empty" role="alert">
+      <div className="zuvi-builder-data-empty" role="alert">
         <strong>数据载入失败</strong>
         <span>{error}</span>
         <Button size="sm" variant="outline" onClick={retry}>
@@ -263,7 +263,7 @@ function FieldInput({
   onChange: (value: string | number) => void;
 }) {
   return (
-    <label className="z-builder-record-field">
+    <label className="zuvi-builder-record-field">
       <span>
         {field.label}
         {field.required && <em aria-hidden="true"> *</em>}
@@ -413,15 +413,15 @@ export function SceneDataTable({
     setDetail(null);
   }, [id]);
   return (
-    <section className="z-builder-surface z-builder-record-table">
-      <div className="z-builder-section-head">
+    <section className="zuvi-builder-surface zuvi-builder-record-table">
+      <div className="zuvi-builder-section-head">
         <div>
           <h2>{title}</h2>
           <p>
             {source?.name || '未绑定数据'} · {rows.length} 条记录
           </p>
         </div>
-        <div className="z-builder-inline-actions">
+        <div className="zuvi-builder-inline-actions">
           {downloadable && (
             <Button
               size="sm"
@@ -449,9 +449,9 @@ export function SceneDataTable({
         </div>
       </div>
       {(searchable || filterColumn) && (
-        <div className="z-builder-table-toolbar">
+        <div className="zuvi-builder-table-toolbar">
           {searchable && (
-            <label className="z-builder-search">
+            <label className="zuvi-builder-search">
               <Search />
               <input
                 aria-label={`搜索${title}`}
@@ -498,7 +498,7 @@ export function SceneDataTable({
       <DataState {...data} retry={() => data.refresh(id)} />
       {source && !data.loading && !data.error && (
         <>
-          <div className="z-builder-record-scroll">
+          <div className="zuvi-builder-record-scroll">
             <Table density={density} striped={false}>
               <Table.Head>
                 <Table.Row>
@@ -547,7 +547,7 @@ export function SceneDataTable({
                             <ArrowDown />
                           )
                         ) : (
-                          <span className="z-builder-sort-idle">↕</span>
+                          <span className="zuvi-builder-sort-idle">↕</span>
                         )}
                       </button>
                     </Table.HeaderCell>
@@ -577,13 +577,13 @@ export function SceneDataTable({
                     )}
                     {fields.map((field, index) => (
                       <Table.Cell key={field.key}>
-                        <span className={index === 0 ? 'z-builder-primary-cell' : ''}>
+                        <span className={index === 0 ? 'zuvi-builder-primary-cell' : ''}>
                           <CellValue value={row[field.key]} field={field} />
                         </span>
                       </Table.Cell>
                     ))}
                     <Table.Cell>
-                      <div className="z-builder-row-actions">
+                      <div className="zuvi-builder-row-actions">
                         <button type="button" disabled={editing} onClick={() => setDetail(row)}>
                           详情
                         </button>
@@ -607,7 +607,7 @@ export function SceneDataTable({
             </Table>
           </div>
           {!visible.length && (
-            <div className="z-builder-data-empty">
+            <div className="zuvi-builder-data-empty">
               没有匹配的记录。
               {(query || filter) && (
                 <button
@@ -622,7 +622,7 @@ export function SceneDataTable({
               )}
             </div>
           )}
-          <div className="z-builder-table-footer">
+          <div className="zuvi-builder-table-footer">
             <span>
               共 {filtered.length} 条{selected.length ? ` · 已选 ${selected.length} 条` : ''}
             </span>
@@ -653,7 +653,7 @@ export function SceneDataTable({
         </>
       )}
       {message && (
-        <p className="z-builder-data-message" role="status">
+        <p className="zuvi-builder-data-message" role="status">
           {message}
         </p>
       )}
@@ -673,7 +673,7 @@ export function SceneDataTable({
           <Modal.Body>
             {record && source && (
               <form
-                className="z-builder-record-form"
+                className="zuvi-builder-record-form"
                 onSubmit={(event) => {
                   event.preventDefault();
                   const error = mutate(id, (previous) =>
@@ -696,7 +696,7 @@ export function SceneDataTable({
                     onChange={(value) => setRecord({ ...record, [field.key]: value })}
                   />
                 ))}
-                <div className="z-builder-inline-actions">
+                <div className="zuvi-builder-inline-actions">
                   <Button type="button" variant="outline" onClick={() => setRecord(null)}>
                     取消
                   </Button>
@@ -719,7 +719,7 @@ export function SceneDataTable({
             <Modal.Close />
           </Modal.Header>
           <Modal.Body>
-            <dl className="z-builder-record-details">
+            <dl className="zuvi-builder-record-details">
               {source?.fields.map((field) => (
                 <div key={field.key}>
                   <dt>{field.label}</dt>
@@ -814,7 +814,7 @@ export function SceneMetric({
           : 0
         : numbers.reduce((a, b) => a + b, 0);
   return (
-    <article className="z-builder-surface z-builder-metric">
+    <article className="zuvi-builder-surface zuvi-builder-metric">
       <span>{title}</span>
       <strong>
         {data.loading
@@ -824,7 +824,7 @@ export function SceneMetric({
             : `${prefix}${numberText(value)}${suffix}`}
       </strong>
       <p>{data.error || caption || (data.source ? data.source.name : '请绑定数据源')}</p>
-      <span className="z-builder-metric-mark">
+      <span className="zuvi-builder-metric-mark">
         <Database />
       </span>
     </article>
@@ -881,7 +881,7 @@ export function SceneChart({
   const max = Math.max(1, ...groups.map(([, value]) => value)),
     min = Math.min(0, ...groups.map(([, value]) => value)),
     span = max - min;
-  const colors = ['var(--z-color-primary)', '#5db8a7', '#e8ac58', '#95a5d9', '#cf8fba', '#79939e'];
+  const colors = ['var(--zuvi-color-primary)', '#5db8a7', '#e8ac58', '#95a5d9', '#cf8fba', '#79939e'];
   const axisText = (value: number) =>
     new Intl.NumberFormat('zh-CN', { notation: 'compact', maximumFractionDigits: 1 }).format(value);
   const plotLeft = Math.max(
@@ -900,8 +900,8 @@ export function SceneChart({
   const points = groups.map(([, value], index) => `${plotX(index)},${plotY(value)}`).join(' ');
   let offset = 0;
   return (
-    <section className="z-builder-surface z-builder-chart">
-      <div className="z-builder-section-head">
+    <section className="zuvi-builder-surface zuvi-builder-chart">
+      <div className="zuvi-builder-section-head">
         <div>
           <h2>{title}</h2>
           <p>
@@ -910,7 +910,7 @@ export function SceneChart({
         </div>
         <button
           type="button"
-          className="z-builder-quiet-button"
+          className="zuvi-builder-quiet-button"
           aria-pressed={showData}
           onClick={() => setShowData(!showData)}
         >
@@ -939,9 +939,9 @@ export function SceneChart({
             </Table.Body>
           </Table>
         ) : !groups.length ? (
-          <div className="z-builder-data-empty">暂无数据</div>
+          <div className="zuvi-builder-data-empty">暂无数据</div>
         ) : chart === 'donut' ? (
-          <div className="z-builder-donut-layout" style={{ minHeight: height }}>
+          <div className="zuvi-builder-donut-layout" style={{ minHeight: height }}>
             <svg
               viewBox="0 0 200 200"
               role="img"
@@ -952,7 +952,7 @@ export function SceneChart({
                 cy="100"
                 r="72"
                 fill="none"
-                stroke="var(--z-color-bg-muted)"
+                stroke="var(--zuvi-color-bg-muted)"
                 strokeWidth="22"
               />
               {groups.map(([key, value], index) => {
@@ -974,14 +974,14 @@ export function SceneChart({
                   />
                 );
               })}
-              <text x="100" y="99" textAnchor="middle" className="z-builder-donut-total">
+              <text x="100" y="99" textAnchor="middle" className="zuvi-builder-donut-total">
                 {numberText(total)}
               </text>
-              <text x="100" y="121" textAnchor="middle" className="z-builder-chart-label">
+              <text x="100" y="121" textAnchor="middle" className="zuvi-builder-chart-label">
                 合计
               </text>
             </svg>
-            <div className="z-builder-chart-legend">
+            <div className="zuvi-builder-chart-legend">
               {groups.map(([key, value], index) => (
                 <div key={key}>
                   <i style={{ background: colors[index % colors.length] }} />
@@ -992,7 +992,7 @@ export function SceneChart({
             </div>
           </div>
         ) : (
-          <div ref={plotRef} className="z-builder-cartesian" style={{ height }}>
+          <div ref={plotRef} className="zuvi-builder-cartesian" style={{ height }}>
             <svg
               viewBox={`0 0 ${plotWidth} ${height}`}
               role="img"
@@ -1005,14 +1005,14 @@ export function SceneChart({
                     x2={plotRight}
                     y1={plotTop + (line / 4) * (plotBottom - plotTop)}
                     y2={plotTop + (line / 4) * (plotBottom - plotTop)}
-                    stroke="var(--z-color-border)"
+                    stroke="var(--zuvi-color-border)"
                     strokeDasharray="3 5"
                   />
                   <text
                     x={plotLeft - 8}
                     y={plotTop + (line / 4) * (plotBottom - plotTop) + 4}
                     textAnchor="end"
-                    className="z-builder-chart-label"
+                    className="zuvi-builder-chart-label"
                   >
                     {axisText(max - (line / 4) * span)}
                   </text>
@@ -1022,7 +1022,7 @@ export function SceneChart({
                 <>
                   <polyline
                     fill="none"
-                    stroke="var(--z-color-primary)"
+                    stroke="var(--zuvi-color-primary)"
                     strokeWidth="3"
                     points={points}
                     vectorEffect="non-scaling-stroke"
@@ -1033,7 +1033,7 @@ export function SceneChart({
                       cx={plotX(index)}
                       cy={plotY(value)}
                       r="4"
-                      fill="var(--z-color-primary)"
+                      fill="var(--zuvi-color-primary)"
                     >
                       <title>
                         {key}：{numberText(value)}
@@ -1074,7 +1074,7 @@ export function SceneChart({
                       }
                       y={height - 12}
                       textAnchor="middle"
-                      className="z-builder-chart-label"
+                      className="zuvi-builder-chart-label"
                     >
                       {key.slice(0, 6)}
                     </text>
@@ -1111,8 +1111,8 @@ export function SceneRecordForm({
     setMessage('');
   }, [id]);
   return (
-    <section className="z-builder-surface">
-      <div className="z-builder-section-head">
+    <section className="zuvi-builder-surface">
+      <div className="zuvi-builder-section-head">
         <div>
           <h2>{title}</h2>
           <p>{data.source?.name || '请先绑定数据源'}</p>
@@ -1121,7 +1121,7 @@ export function SceneRecordForm({
       <DataState {...data} retry={() => data.refresh(id)} />
       {data.source && (
         <form
-          className="z-builder-record-form"
+          className="zuvi-builder-record-form"
           onSubmit={(event) => {
             event.preventDefault();
             const error = data.mutate(id, (rows) => [{ ...values, _id: rowId() }, ...rows]);
@@ -1130,7 +1130,7 @@ export function SceneRecordForm({
           }}
         >
           <div
-            className="z-builder-record-fields"
+            className="zuvi-builder-record-fields"
             style={{ '--record-columns': columns } as CSSProperties}
           >
             {data.source.fields.map((field) => (
@@ -1149,7 +1149,7 @@ export function SceneRecordForm({
         </form>
       )}
       {message && (
-        <p className="z-builder-data-message" role="status">
+        <p className="zuvi-builder-data-message" role="status">
           {message}
         </p>
       )}
@@ -1185,8 +1185,8 @@ export function SceneRecordList({
       .includes(query.toLowerCase())
   );
   return (
-    <section className="z-builder-record-collection">
-      <div className="z-builder-section-head">
+    <section className="zuvi-builder-record-collection">
+      <div className="zuvi-builder-section-head">
         <div>
           <h2>{title}</h2>
           <p>{data.source?.name || '绑定数据源，将内容组成列表或卡片。'}</p>
@@ -1203,7 +1203,7 @@ export function SceneRecordList({
       <DataState {...data} retry={() => data.refresh(id)} />
       {data.source && !data.loading && !data.error && (
         <div
-          className="z-builder-collection-grid"
+          className="zuvi-builder-collection-grid"
           data-layout={layout}
           style={
             {
@@ -1214,11 +1214,11 @@ export function SceneRecordList({
           {rows.map((row) => (
             <button
               type="button"
-              className="z-builder-surface z-builder-record-card"
+              className="zuvi-builder-surface zuvi-builder-record-card"
               key={String(row._id)}
               onClick={() => setDetail(row)}
             >
-              <span className="z-builder-record-icon">
+              <span className="zuvi-builder-record-icon">
                 <FileText />
               </span>
               <span>
@@ -1234,7 +1234,7 @@ export function SceneRecordList({
         </div>
       )}
       {data.source && !data.loading && !data.error && !rows.length && (
-        <div className="z-builder-data-empty">没有匹配的内容</div>
+        <div className="zuvi-builder-data-empty">没有匹配的内容</div>
       )}
       <Modal
         open={detail !== null}
@@ -1248,7 +1248,7 @@ export function SceneRecordList({
             <Modal.Close />
           </Modal.Header>
           <Modal.Body>
-            <dl className="z-builder-record-details">
+            <dl className="zuvi-builder-record-details">
               {data.source?.fields.map((field) => (
                 <div key={field.key}>
                   <dt>{field.label}</dt>
@@ -1300,20 +1300,20 @@ export function SceneAppShell({
   return (
     <ViewContext.Provider value={{ active, setActive }}>
       <div
-        className="z-builder-app-shell"
+        className="zuvi-builder-app-shell"
         data-layout={layout}
         data-menu-open={menu || undefined}
         style={{ '--app-sidebar-width': `${sidebarWidth}px` } as CSSProperties}
       >
-        <aside className="z-builder-app-sidebar">
-          <div className="z-builder-app-brand">
+        <aside className="zuvi-builder-app-sidebar">
+          <div className="zuvi-builder-app-brand">
             <span>{brand.slice(0, 1)}</span>
             <div>
               <strong>{brand}</strong>
               <small>{subtitle}</small>
             </div>
           </div>
-          <div className="z-builder-app-space">
+          <div className="zuvi-builder-app-space">
             页面导航 <span>工作空间</span>
           </div>
           <nav aria-label={`${brand}页面导航`}>
@@ -1336,20 +1336,20 @@ export function SceneAppShell({
               );
             })}
           </nav>
-          <div className="z-builder-app-sidebar-bottom">
-            <span className="z-builder-app-avatar">U</span>
+          <div className="zuvi-builder-app-sidebar-bottom">
+            <span className="zuvi-builder-app-avatar">U</span>
             <div>
               <strong>我的工作空间</strong>
               <small>本地应用 · 自由设计</small>
             </div>
           </div>
         </aside>
-        <div className="z-builder-app-main">
-          <header className="z-builder-app-topbar">
+        <div className="zuvi-builder-app-main">
+          <header className="zuvi-builder-app-topbar">
             <div>
               <button
                 type="button"
-                className="z-builder-app-menu"
+                className="zuvi-builder-app-menu"
                 aria-label={menu ? '关闭应用菜单' : '展开应用菜单'}
                 onClick={() => setMenu(!menu)}
               >
@@ -1360,21 +1360,21 @@ export function SceneAppShell({
               <strong>{items.find((item) => item.value === active)?.label || '工作空间'}</strong>
             </div>
             <div>
-              <span className="z-builder-app-status">
+              <span className="zuvi-builder-app-status">
                 <i />
                 {editing ? '设计预览' : '工作空间'}
               </span>
-              <span className="z-builder-app-avatar">U</span>
+              <span className="zuvi-builder-app-avatar">U</span>
             </div>
           </header>
-          <div className="z-builder-app-body">
-            <Content className="z-builder-app-views" minEmptyHeight={360} />
+          <div className="zuvi-builder-app-body">
+            <Content className="zuvi-builder-app-views" minEmptyHeight={360} />
           </div>
-          <footer className="z-builder-app-footer">
+          <footer className="zuvi-builder-app-footer">
             <span>
               {brand} / {subtitle}
             </span>
-            <span>Built with ZUI</span>
+            <span>Built with ZUVI</span>
           </footer>
         </div>
       </div>
@@ -1402,12 +1402,12 @@ export function SceneAppView({
   }, [editing, selected, value, setActive]);
   return (
     <section
-      className="z-builder-app-view"
+      className="zuvi-builder-app-view"
       data-view={value}
       aria-label={title}
       hidden={!!active && active !== value}
     >
-      <Content className="z-builder-stack" minEmptyHeight={200} />
+      <Content className="zuvi-builder-stack" minEmptyHeight={200} />
     </section>
   );
 }

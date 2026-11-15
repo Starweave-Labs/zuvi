@@ -76,7 +76,7 @@ describe('DropdownMenu 渲染与结构', () => {
     const items = screen.getAllByRole('menuitem');
     expect(items).toHaveLength(4);
     expect(screen.getByRole('separator')).toHaveAttribute('data-part', 'separator');
-    expect(screen.getByTestId('label')).toHaveClass('z-dropdown-menu-label');
+    expect(screen.getByTestId('label')).toHaveClass('zuvi-dropdown-menu-label');
     expect(screen.getByTestId('label')).toHaveAttribute('data-part', 'label');
   });
 
@@ -85,7 +85,7 @@ describe('DropdownMenu 渲染与结构', () => {
     await openMenu();
 
     expect(screen.getByTestId('item-delete')).toHaveAttribute('data-danger', 'true');
-    expect(screen.getByTestId('item-delete')).toHaveClass('z-dropdown-menu-item');
+    expect(screen.getByTestId('item-delete')).toHaveClass('zuvi-dropdown-menu-item');
     expect(screen.getByTestId('item-open')).toHaveAttribute('aria-disabled', 'true');
   });
 
@@ -396,12 +396,12 @@ describe('DropdownMenu 指针交互与定制出口', () => {
     await user.click(screen.getByTestId('trigger'));
 
     const content = getContent();
-    expect(content).toHaveClass('z-dropdown-menu', 'my-menu', 'slot-content');
+    expect(content).toHaveClass('zuvi-dropdown-menu', 'my-menu', 'slot-content');
 
     const item = screen.getByTestId('item');
-    expect(item).toHaveClass('z-dropdown-menu-item', 'my-item', 'slot-item');
+    expect(item).toHaveClass('zuvi-dropdown-menu-item', 'my-item', 'slot-item');
     expect(item.querySelector('[data-part="icon"]')).toHaveClass(
-      'z-dropdown-menu-item-icon',
+      'zuvi-dropdown-menu-item-icon',
       'slot-icon'
     );
     expect(item).toHaveAttribute('data-part', 'item');

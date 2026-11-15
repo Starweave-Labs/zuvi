@@ -45,8 +45,8 @@ async function open(
     ],
   };
   await page.addInitScript((value) => {
-    if (!localStorage.getItem('zui-page-builder-v1'))
-      localStorage.setItem('zui-page-builder-v1', value);
+    if (!localStorage.getItem('zuvi-page-builder-v1'))
+      localStorage.setItem('zuvi-page-builder-v1', value);
   }, JSON.stringify(workspace));
   await page.goto('/#/builder');
   await expect(page.locator('#preview-frame')).toBeVisible();
@@ -80,7 +80,7 @@ async function offline(context: BrowserContext, content: string, suffix: string)
       : route.abort()
   );
   await runtime.goto(`http://localhost:5190/enterprise-${suffix}.html`);
-  await expect(runtime.locator('.z-builder-canvas')).toBeVisible();
+  await expect(runtime.locator('.zuvi-builder-canvas')).toBeVisible();
   return runtime;
 }
 
@@ -564,7 +564,7 @@ test('工作区备份往返：导入重写页面与主组件引用，保留原�
   await page.getByRole('button', { name: '保存版本', exact: true }).click();
   await expect(page.locator('.doc-builder-save-state')).toContainText('已保存到本机');
   const before = await page.evaluate(() =>
-    JSON.parse(localStorage.getItem('zui-page-builder-v1')!)
+    JSON.parse(localStorage.getItem('zuvi-page-builder-v1')!)
   );
   await page.locator('.studio-file-menu > summary').click();
   const download = page.waitForEvent('download');
@@ -577,7 +577,7 @@ test('工作区备份往返：导入重写页面与主组件引用，保留原�
   });
   await expect(page.locator('.doc-builder-notice')).toContainText('已导入 2 个页面');
   await expect(page.locator('.doc-builder-save-state')).toContainText('已保存到本机');
-  const after = await page.evaluate(() => JSON.parse(localStorage.getItem('zui-page-builder-v1')!));
+  const after = await page.evaluate(() => JSON.parse(localStorage.getItem('zuvi-page-builder-v1')!));
   expect(after.pages).toHaveLength(4);
   expect(after.symbols).toHaveLength(2);
   expect(after.symbols[0]).toEqual(before.symbols[0]);

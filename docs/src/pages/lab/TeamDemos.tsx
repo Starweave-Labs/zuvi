@@ -1,6 +1,6 @@
 import { useId, useLayoutEffect, useRef, useState } from 'react';
-import { Button } from '@zui/react';
-import { Bell, Check, CheckCircle, Clipboard, Plus, ShieldCheck, Star, Users } from '@zui/icons';
+import { Button } from '@zuvi/react';
+import { Bell, Check, CheckCircle, Clipboard, Plus, ShieldCheck, Star, Users } from '@zuvi/icons';
 import { Choices, LabCard, Notice, Person } from './shared';
 
 const STAGES = ['待开始', '进行中', '已完成'] as const;

@@ -1,4 +1,4 @@
-import { Button, Modal } from '@zui/react';
+import { Button, Modal } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -90,7 +90,7 @@ export default function ModalPage(): React.ReactNode {
             <Modal.Header>
               <Modal.Title>小尺寸</Modal.Title>
             </Modal.Header>
-            <Modal.Body>宽度由 --z-modal-content-width-sm 控制。</Modal.Body>
+            <Modal.Body>宽度由 --zuvi-modal-content-width-sm 控制。</Modal.Body>
           </Modal.Content>
         </Modal>
         <Modal>
@@ -99,7 +99,7 @@ export default function ModalPage(): React.ReactNode {
             <Modal.Header>
               <Modal.Title>中尺寸</Modal.Title>
             </Modal.Header>
-            <Modal.Body>宽度由 --z-modal-content-width-md 控制。</Modal.Body>
+            <Modal.Body>宽度由 --zuvi-modal-content-width-md 控制。</Modal.Body>
           </Modal.Content>
         </Modal>
         <Modal>
@@ -108,7 +108,7 @@ export default function ModalPage(): React.ReactNode {
             <Modal.Header>
               <Modal.Title>大尺寸</Modal.Title>
             </Modal.Header>
-            <Modal.Body>宽度由 --z-modal-content-width-lg 控制。</Modal.Body>
+            <Modal.Body>宽度由 --zuvi-modal-content-width-lg 控制。</Modal.Body>
           </Modal.Content>
         </Modal>
       </Demo>
@@ -260,27 +260,27 @@ export default function ModalPage(): React.ReactNode {
           'close',
         ]}
         vars={[
-          '--z-modal-content-width-sm',
-          '--z-modal-content-width-md',
-          '--z-modal-content-width-lg',
-          '--z-modal-content-max-height',
-          '--z-modal-content-padding',
-          '--z-modal-content-radius',
-          '--z-modal-content-bg',
-          '--z-modal-content-fg',
-          '--z-modal-content-shadow',
-          '--z-modal-overlay-bg',
-          '--z-modal-header-gap',
-          '--z-modal-title-font-size',
-          '--z-modal-description-font-size',
-          '--z-modal-description-fg',
-          '--z-modal-body-padding',
-          '--z-modal-footer-gap',
-          '--z-modal-footer-padding-top',
-          '--z-modal-close-size',
-          '--z-modal-close-fg',
-          '--z-modal-close-hover-bg',
-          '--z-modal-animation-duration',
+          '--zuvi-modal-content-width-sm',
+          '--zuvi-modal-content-width-md',
+          '--zuvi-modal-content-width-lg',
+          '--zuvi-modal-content-max-height',
+          '--zuvi-modal-content-padding',
+          '--zuvi-modal-content-radius',
+          '--zuvi-modal-content-bg',
+          '--zuvi-modal-content-fg',
+          '--zuvi-modal-content-shadow',
+          '--zuvi-modal-overlay-bg',
+          '--zuvi-modal-header-gap',
+          '--zuvi-modal-title-font-size',
+          '--zuvi-modal-description-font-size',
+          '--zuvi-modal-description-fg',
+          '--zuvi-modal-body-padding',
+          '--zuvi-modal-footer-gap',
+          '--zuvi-modal-footer-padding-top',
+          '--zuvi-modal-close-size',
+          '--zuvi-modal-close-fg',
+          '--zuvi-modal-close-hover-bg',
+          '--zuvi-modal-animation-duration',
         ]}
       />
     </div>

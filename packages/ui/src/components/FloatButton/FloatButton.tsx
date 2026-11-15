@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useZuiConfig } from '../../config';
+import { useZuviConfig } from '../../config';
 import { cx, useOnClickOutside } from '../../utils';
 import './FloatButton.css';
 
@@ -27,7 +27,7 @@ export interface FloatButtonProps {
 }
 
 export function FloatButton(props: FloatButtonProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const {
     icon,
     description,
@@ -76,7 +76,7 @@ export function FloatButton(props: FloatButtonProps) {
       {...rest}
       ref={rootRef}
       data-part="root"
-      className={cx('z-float-button', classNames?.root, className)}
+      className={cx('zuvi-float-button', classNames?.root, className)}
       data-shape={shape}
       data-type={type}
       data-open={open ? 'true' : 'false'}
@@ -88,28 +88,28 @@ export function FloatButton(props: FloatButtonProps) {
         <ul
           data-part="menu"
           role="menu"
-          className={cx('z-float-button-menu', classNames?.menu)}
+          className={cx('zuvi-float-button-menu', classNames?.menu)}
           data-open={open ? 'true' : 'false'}
         >
           {menu?.map((item, index) => (
-            <li key={index} data-part="item" className={cx('z-float-button-item', classNames?.item)}>
+            <li key={index} data-part="item" className={cx('zuvi-float-button-item', classNames?.item)}>
               <button
                 type="button"
                 role="menuitem"
                 tabIndex={open ? 0 : -1}
-                className="z-float-button-item-button"
+                className="zuvi-float-button-item-button"
                 onClick={() => {
                   item.onClick?.();
                   closeMenu(false);
                 }}
               >
                 {item.icon ? (
-                  <span className="z-float-button-icon" aria-hidden="true">
+                  <span className="zuvi-float-button-icon" aria-hidden="true">
                     {item.icon}
                   </span>
                 ) : null}
                 {item.description ? (
-                  <span className="z-float-button-desc">{item.description}</span>
+                  <span className="zuvi-float-button-desc">{item.description}</span>
                 ) : null}
               </button>
             </li>
@@ -121,7 +121,7 @@ export function FloatButton(props: FloatButtonProps) {
         type="button"
         ref={triggerRef}
         data-part="trigger"
-        className="z-float-button-trigger"
+        className="zuvi-float-button-trigger"
         aria-label={ariaLabel ?? locale.accessibility.floatAction}
         aria-haspopup={hasMenu ? 'menu' : undefined}
         aria-expanded={hasMenu ? open : undefined}
@@ -139,7 +139,7 @@ export function FloatButton(props: FloatButtonProps) {
           </svg>
         )}
         {description ? (
-          <span className="z-float-button-desc">{description}</span>
+          <span className="zuvi-float-button-desc">{description}</span>
         ) : null}
       </button>
     </div>

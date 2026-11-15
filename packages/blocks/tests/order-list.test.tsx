@@ -10,7 +10,7 @@ describe('order-list block', () => {
   it('renders the order table with status tags and pagination', () => {
     const { container } = render(<OrderListBlock orders={DEMO_ORDERS} />);
     expect(screen.getByText('订单列表')).toBeInTheDocument();
-    expect(container.querySelector('.z-table')).toBeInTheDocument();
+    expect(container.querySelector('.zuvi-table')).toBeInTheDocument();
     expect(screen.getByText('SO-2025-1001')).toBeInTheDocument();
     expect(screen.getByText('SO-2025-1005')).toBeInTheDocument();
     // 状态 Tag（同文案也会出现在未展开的 Select 选项里，取至少一处）
@@ -18,7 +18,7 @@ describe('order-list block', () => {
     expect(screen.getAllByText('已完成').length).toBeGreaterThanOrEqual(1);
     // 金额与分页（两条 1299 订单同页）
     expect(screen.getAllByText('¥1,299.00')).toHaveLength(2);
-    expect(container.querySelector('.z-pagination')).toBeInTheDocument();
+    expect(container.querySelector('.zuvi-pagination')).toBeInTheDocument();
     expect(screen.getByText('共 6 条订单')).toBeInTheDocument();
   });
 

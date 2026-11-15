@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Modal } from '@zui/react';
-import { Eye, Plus } from '@zui/icons';
+import { Modal } from '@zuvi/react';
+import { Eye, Plus } from '@zuvi/icons';
 import { builderTemplates } from './builder-templates';
 import { templateCategory } from './builder-scene-templates';
 import { BuilderDocument } from './BuilderDocument';

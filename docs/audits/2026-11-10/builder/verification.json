@@ -31,9 +31,9 @@
   "eslint": "passed",
   "pagesBuild": {
     "status": "passed",
-    "base": "/zui/",
+    "base": "/zuvi/",
     "warnings": [
-      "BuilderPage and zui-components chunks exceed the Vite 500 kB advisory threshold."
+      "BuilderPage and zuvi-components chunks exceed the Vite 500 kB advisory threshold."
     ]
   },
   "coverage": {

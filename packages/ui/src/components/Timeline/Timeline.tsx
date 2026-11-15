@@ -43,7 +43,7 @@ export function Timeline({
       role="list"
       data-part="root"
       data-mode={mode}
-      className={cx('z-timeline', className, classNames?.root)}
+      className={cx('zuvi-timeline', className, classNames?.root)}
     >
       {items.map((item, index) => {
         const key = item.key ?? `z-timeline-${index}`;
@@ -54,23 +54,23 @@ export function Timeline({
             data-part="item"
             data-color={item.color ?? 'neutral'}
             data-side={index % 2 === 1 ? 'right' : 'left'}
-            className={cx('z-timeline-item', classNames?.item)}
+            className={cx('zuvi-timeline-item', classNames?.item)}
           >
-            <div data-part="dot" className={cx('z-timeline-dot', classNames?.dot)}>
+            <div data-part="dot" className={cx('zuvi-timeline-dot', classNames?.dot)}>
               {item.dot != null ? (
-                <span data-part="dot-custom" className="z-timeline-dot-custom">
+                <span data-part="dot-custom" className="zuvi-timeline-dot-custom">
                   {item.dot}
                 </span>
               ) : (
-                <span data-part="dot-default" className="z-timeline-dot-default" aria-hidden="true" />
+                <span data-part="dot-default" className="zuvi-timeline-dot-default" aria-hidden="true" />
               )}
             </div>
             {item.label != null ? (
-              <div data-part="label" className={cx('z-timeline-label', classNames?.label)}>
+              <div data-part="label" className={cx('zuvi-timeline-label', classNames?.label)}>
                 {item.label}
               </div>
             ) : null}
-            <div data-part="content" className={cx('z-timeline-content', classNames?.content)}>
+            <div data-part="content" className={cx('zuvi-timeline-content', classNames?.content)}>
               {item.children}
             </div>
           </div>
@@ -82,12 +82,12 @@ export function Timeline({
           role="listitem"
           data-part="pending"
           data-pending="true"
-          className={cx('z-timeline-item', classNames?.item)}
+          className={cx('zuvi-timeline-item', classNames?.item)}
         >
-          <div data-part="dot" className={cx('z-timeline-dot', classNames?.dot)}>
-            <span data-part="dot-pending" className="z-timeline-dot-pending" aria-hidden="true" />
+          <div data-part="dot" className={cx('zuvi-timeline-dot', classNames?.dot)}>
+            <span data-part="dot-pending" className="zuvi-timeline-dot-pending" aria-hidden="true" />
           </div>
-          <div data-part="content" className={cx('z-timeline-content', classNames?.content)}>
+          <div data-part="content" className={cx('zuvi-timeline-content', classNames?.content)}>
             {pending}
           </div>
         </div>

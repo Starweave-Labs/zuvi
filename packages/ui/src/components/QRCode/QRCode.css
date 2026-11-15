@@ -1,18 +1,18 @@
 /* QRCode —— 自研 QR 编码器渲染 SVG 矩阵（语义令牌 + 组件级变量） */
 
-.z-qrcode {
-  --z-qrcode-fg: var(--z-color-fg);
-  --z-qrcode-bg: var(--z-color-bg);
+.zuvi-qrcode {
+  --zuvi-qrcode-fg: var(--zuvi-color-fg);
+  --zuvi-qrcode-bg: var(--zuvi-color-bg);
 
   box-sizing: border-box;
   display: block;
   flex: none;
 }
 
-.z-qrcode-bg {
-  fill: var(--z-qrcode-bg);
+.zuvi-qrcode-bg {
+  fill: var(--zuvi-qrcode-bg);
 }
 
-.z-qrcode-modules {
-  fill: var(--z-qrcode-fg);
+.zuvi-qrcode-modules {
+  fill: var(--zuvi-qrcode-fg);
 }

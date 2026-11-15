@@ -8,13 +8,13 @@ afterEach(cleanup);
 describe('data-screen block', () => {
   it('renders Statistic cards, CSS bar chart and Progress gauges', () => {
     const { container } = render(<DataScreenBlock />);
-    expect(container.querySelector('.z-statistic')).toBeInTheDocument();
+    expect(container.querySelector('.zuvi-statistic')).toBeInTheDocument();
     expect(screen.getByText('实时在线')).toBeInTheDocument();
     // CSS 柱状图：role="img" + 柱条悬浮提示
     expect(screen.getByRole('img', { name: /分时访问量/ })).toBeInTheDocument();
     expect(screen.getByTitle('12,840')).toBeInTheDocument();
     // Progress 资源指标
-    const progress = container.querySelectorAll('.z-progress');
+    const progress = container.querySelectorAll('.zuvi-progress');
     expect(progress.length).toBeGreaterThanOrEqual(4);
     expect(screen.getByText('CPU 使用率')).toBeInTheDocument();
     expect(screen.getByRole('progressbar', { name: 'CPU 使用率' })).toHaveAttribute(

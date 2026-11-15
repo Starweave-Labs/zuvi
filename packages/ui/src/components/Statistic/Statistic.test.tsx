@@ -31,11 +31,11 @@ describe('Statistic', () => {
   it('renders title and value with parts', () => {
     render(<Statistic title="总销售额" value={12345} />);
     const root = document.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-statistic');
+    expect(root).toHaveClass('zuvi-statistic');
     expect(screen.getByText('总销售额')).toHaveAttribute('data-part', 'title');
     const value = document.querySelector('[data-part="value"]') as HTMLElement;
     expect(value).toHaveTextContent('12,345');
-    expect(value.querySelector('.z-statistic-number')).toHaveTextContent('12,345');
+    expect(value.querySelector('.zuvi-statistic-number')).toHaveTextContent('12,345');
   });
 
   it('formats numbers with thousand separators', () => {
@@ -121,10 +121,10 @@ describe('Statistic', () => {
       />
     );
     const root = document.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-statistic', 'my-stat', 'r');
-    expect(document.querySelector('[data-part="title"]')).toHaveClass('z-statistic-title', 't');
-    expect(document.querySelector('[data-part="value"]')).toHaveClass('z-statistic-value', 'v');
-    expect(document.querySelector('[data-part="suffix"]')).toHaveClass('z-statistic-suffix', 's');
+    expect(root).toHaveClass('zuvi-statistic', 'my-stat', 'r');
+    expect(document.querySelector('[data-part="title"]')).toHaveClass('zuvi-statistic-title', 't');
+    expect(document.querySelector('[data-part="value"]')).toHaveClass('zuvi-statistic-value', 'v');
+    expect(document.querySelector('[data-part="suffix"]')).toHaveClass('zuvi-statistic-suffix', 's');
   });
 
   it('string value: numeric strings get formatted, others pass through', () => {
@@ -136,11 +136,11 @@ describe('Statistic', () => {
   });
 
   it('large value uses semibold 600 weight token (CSS var defined)', () => {
-    // 字重通过组件级变量 --z-statistic-value-font-weight 控制（--z-weight-semibold = 600），
+    // 字重通过组件级变量 --zuvi-statistic-value-font-weight 控制（--zuvi-weight-semibold = 600），
     // 这里断言 value part 结构与 CSS 变量挂在根选择器上的契约（样式由 CSS 提供）。
     render(<Statistic value={999999} />);
     const value = document.querySelector('[data-part="value"]') as HTMLElement;
-    expect(value.querySelector('.z-statistic-number')).toBeTruthy();
+    expect(value.querySelector('.zuvi-statistic-number')).toBeTruthy();
   });
 
   it('formatStatisticValue handles non-finite and empty input', () => {
@@ -224,7 +224,7 @@ describe('Statistic.CountDown', () => {
     expect(root).toHaveAttribute('role', 'timer');
     expect(root).toHaveAttribute('aria-label', '倒计时');
     expect(screen.getByText('活动结束')).toHaveAttribute('data-part', 'title');
-    expect(container.querySelector('.z-statistic-number')).toHaveTextContent('01:02:03');
+    expect(container.querySelector('.zuvi-statistic-number')).toHaveTextContent('01:02:03');
   });
 
   it('explicit aria-label overrides the locale default', () => {
@@ -236,7 +236,7 @@ describe('Statistic.CountDown', () => {
   it('ticks down each second', async () => {
     vi.useFakeTimers();
     render(<StatisticCountDown value={Date.now() + 5_000} />);
-    const number = document.querySelector('.z-statistic-number') as HTMLElement;
+    const number = document.querySelector('.zuvi-statistic-number') as HTMLElement;
     expect(number).toHaveTextContent('00:00:05');
     act(() => {
       vi.advanceTimersByTime(2_000);
@@ -266,7 +266,7 @@ describe('Statistic.CountDown', () => {
     vi.useFakeTimers();
     const onFinish = vi.fn();
     render(<StatisticCountDown value={Date.now() - 1_000} onFinish={onFinish} />);
-    expect(document.querySelector('.z-statistic-number')).toHaveTextContent('00:00:00');
+    expect(document.querySelector('.zuvi-statistic-number')).toHaveTextContent('00:00:00');
     expect(onFinish).toHaveBeenCalledTimes(1);
   });
 
@@ -319,7 +319,7 @@ describe('Statistic.CountDown', () => {
     });
 
     expect(error.mock.calls.flat().join(' ')).not.toMatch(/hydration|did not match/i);
-    expect(container.querySelector('.z-statistic-number')).toHaveTextContent('00:00:01');
+    expect(container.querySelector('.zuvi-statistic-number')).toHaveTextContent('00:00:01');
     act(() => root?.unmount());
     container.remove();
     error.mockRestore();
@@ -329,21 +329,21 @@ describe('Statistic.CountDown', () => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date('2026-01-01T00:00:00Z'));
     const { unmount } = render(<StatisticCountDown value={new Date('2026-01-01T00:01:00Z')} />);
-    expect(document.querySelector('.z-statistic-number')).toHaveTextContent('00:01:00');
+    expect(document.querySelector('.zuvi-statistic-number')).toHaveTextContent('00:01:00');
     unmount();
     render(<StatisticCountDown value="2026-01-01T00:02:00Z" />);
-    expect(document.querySelector('.z-statistic-number')).toHaveTextContent('00:02:00');
+    expect(document.querySelector('.zuvi-statistic-number')).toHaveTextContent('00:02:00');
   });
 
   it('unparseable target renders 00:00:00 without throwing', () => {
     vi.useFakeTimers();
     render(<StatisticCountDown value="not-a-date" />);
-    expect(document.querySelector('.z-statistic-number')).toHaveTextContent('00:00:00');
+    expect(document.querySelector('.zuvi-statistic-number')).toHaveTextContent('00:00:00');
   });
 
   it('is mounted as Statistic.CountDown with same behavior', () => {
     vi.useFakeTimers();
     render(<Statistic.CountDown value={Date.now() + 1_000} />);
-    expect(document.querySelector('.z-statistic-number')).toHaveTextContent('00:00:01');
+    expect(document.querySelector('.zuvi-statistic-number')).toHaveTextContent('00:00:01');
   });
 });

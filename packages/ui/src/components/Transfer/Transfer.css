@@ -1,91 +1,91 @@
-/* ZUI Transfer —— 双列穿梭框：组件级变量定义在根选择器上，可被用户任意覆盖 */
+/* ZUVI Transfer —— 双列穿梭框：组件级变量定义在根选择器上，可被用户任意覆盖 */
 
-.z-transfer {
-  --z-transfer-width: 12rem; /* 单列宽度 */
-  --z-transfer-height: 15rem; /* 列表体高度 */
-  --z-transfer-border: var(--z-color-border);
-  --z-transfer-radius: var(--z-radius-md);
-  --z-transfer-bg: var(--z-color-bg-elevated);
-  --z-transfer-header-bg: var(--z-color-bg-subtle);
-  --z-transfer-header-fg: var(--z-color-fg-muted);
-  --z-transfer-header-height: 2.25rem;
-  --z-transfer-header-font-size: var(--z-text-sm);
-  --z-transfer-search-padding: var(--z-space-2);
-  --z-transfer-search-height: 2rem;
-  --z-transfer-item-height: 2.25rem;
-  --z-transfer-item-padding-x: var(--z-space-3);
-  --z-transfer-item-fg: var(--z-color-fg);
-  --z-transfer-item-hover-bg: var(--z-color-bg-muted);
-  --z-transfer-item-selected-bg: var(--z-color-primary-subtle);
-  --z-transfer-item-selected-fg: var(--z-color-primary-subtle-fg);
-  --z-transfer-item-disabled-fg: var(--z-color-disabled-fg);
-  --z-transfer-empty-fg: var(--z-color-fg-subtle);
-  --z-transfer-button-size: 2rem;
-  --z-transfer-button-gap: var(--z-space-2);
-  --z-transfer-button-bg: var(--z-color-bg-elevated);
-  --z-transfer-button-fg: var(--z-color-fg-muted);
-  --z-transfer-button-border: var(--z-color-border);
-  --z-transfer-button-hover-bg: var(--z-color-primary-subtle);
-  --z-transfer-button-hover-fg: var(--z-color-primary-subtle-fg);
-  --z-transfer-checkbox-size: 1rem;
-  --z-transfer-checkbox-bg: var(--z-color-bg-elevated);
-  --z-transfer-checkbox-border: var(--z-color-border-strong);
-  --z-transfer-checkbox-checked-bg: var(--z-color-primary);
-  --z-transfer-checkbox-check-color: var(--z-color-primary-fg);
-  --z-transfer-checkbox-disabled-bg: var(--z-color-disabled-bg);
-  --z-transfer-checkbox-disabled-border: var(--z-color-disabled-border);
-  --z-transfer-gap: var(--z-space-3);
-  --z-transfer-focus-ring: var(--z-color-focus-ring);
+.zuvi-transfer {
+  --zuvi-transfer-width: 12rem; /* 单列宽度 */
+  --zuvi-transfer-height: 15rem; /* 列表体高度 */
+  --zuvi-transfer-border: var(--zuvi-color-border);
+  --zuvi-transfer-radius: var(--zuvi-radius-md);
+  --zuvi-transfer-bg: var(--zuvi-color-bg-elevated);
+  --zuvi-transfer-header-bg: var(--zuvi-color-bg-subtle);
+  --zuvi-transfer-header-fg: var(--zuvi-color-fg-muted);
+  --zuvi-transfer-header-height: 2.25rem;
+  --zuvi-transfer-header-font-size: var(--zuvi-text-sm);
+  --zuvi-transfer-search-padding: var(--zuvi-space-2);
+  --zuvi-transfer-search-height: 2rem;
+  --zuvi-transfer-item-height: 2.25rem;
+  --zuvi-transfer-item-padding-x: var(--zuvi-space-3);
+  --zuvi-transfer-item-fg: var(--zuvi-color-fg);
+  --zuvi-transfer-item-hover-bg: var(--zuvi-color-bg-muted);
+  --zuvi-transfer-item-selected-bg: var(--zuvi-color-primary-subtle);
+  --zuvi-transfer-item-selected-fg: var(--zuvi-color-primary-subtle-fg);
+  --zuvi-transfer-item-disabled-fg: var(--zuvi-color-disabled-fg);
+  --zuvi-transfer-empty-fg: var(--zuvi-color-fg-subtle);
+  --zuvi-transfer-button-size: 2rem;
+  --zuvi-transfer-button-gap: var(--zuvi-space-2);
+  --zuvi-transfer-button-bg: var(--zuvi-color-bg-elevated);
+  --zuvi-transfer-button-fg: var(--zuvi-color-fg-muted);
+  --zuvi-transfer-button-border: var(--zuvi-color-border);
+  --zuvi-transfer-button-hover-bg: var(--zuvi-color-primary-subtle);
+  --zuvi-transfer-button-hover-fg: var(--zuvi-color-primary-subtle-fg);
+  --zuvi-transfer-checkbox-size: 1rem;
+  --zuvi-transfer-checkbox-bg: var(--zuvi-color-bg-elevated);
+  --zuvi-transfer-checkbox-border: var(--zuvi-color-border-strong);
+  --zuvi-transfer-checkbox-checked-bg: var(--zuvi-color-primary);
+  --zuvi-transfer-checkbox-check-color: var(--zuvi-color-primary-fg);
+  --zuvi-transfer-checkbox-disabled-bg: var(--zuvi-color-disabled-bg);
+  --zuvi-transfer-checkbox-disabled-border: var(--zuvi-color-disabled-border);
+  --zuvi-transfer-gap: var(--zuvi-space-3);
+  --zuvi-transfer-focus-ring: var(--zuvi-color-focus-ring);
 
   display: inline-flex;
   align-items: stretch;
-  gap: var(--z-transfer-gap);
-  font-family: var(--z-font-sans);
-  font-size: var(--z-text-sm);
-  color: var(--z-transfer-item-fg);
+  gap: var(--zuvi-transfer-gap);
+  font-family: var(--zuvi-font-sans);
+  font-size: var(--zuvi-text-sm);
+  color: var(--zuvi-transfer-item-fg);
   max-width: 100%;
 }
 
 /* --------------------------------- 列表 --------------------------------- */
 
-.z-transfer-list {
+.zuvi-transfer-list {
   display: flex;
   flex-direction: column;
-  width: var(--z-transfer-width);
+  width: var(--zuvi-transfer-width);
   min-width: 0;
   box-sizing: border-box;
-  background: var(--z-transfer-bg);
-  border: 1px solid var(--z-transfer-border);
-  border-radius: var(--z-transfer-radius);
+  background: var(--zuvi-transfer-bg);
+  border: 1px solid var(--zuvi-transfer-border);
+  border-radius: var(--zuvi-transfer-radius);
   overflow: hidden;
 }
 
 @media (max-width: 32rem) {
-  .z-transfer {
+  .zuvi-transfer {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     width: 100%;
   }
 
-  .z-transfer-list {
+  .zuvi-transfer-list {
     width: 100%;
   }
 }
 
-.z-transfer-list-header {
+.zuvi-transfer-list-header {
   display: flex;
   align-items: center;
-  gap: var(--z-space-2);
-  height: var(--z-transfer-header-height);
-  padding: 0 var(--z-transfer-item-padding-x);
-  font-size: var(--z-transfer-header-font-size);
-  color: var(--z-transfer-header-fg);
-  background: var(--z-transfer-header-bg);
-  border-bottom: 1px solid var(--z-transfer-border);
+  gap: var(--zuvi-space-2);
+  height: var(--zuvi-transfer-header-height);
+  padding: 0 var(--zuvi-transfer-item-padding-x);
+  font-size: var(--zuvi-transfer-header-font-size);
+  color: var(--zuvi-transfer-header-fg);
+  background: var(--zuvi-transfer-header-bg);
+  border-bottom: 1px solid var(--zuvi-transfer-border);
   user-select: none;
 }
 
-.z-transfer-list-title {
+.zuvi-transfer-list-title {
   flex: 1;
   min-width: 0;
   overflow: hidden;
@@ -93,110 +93,110 @@
   text-overflow: ellipsis;
 }
 
-.z-transfer-list-count {
-  font-size: var(--z-text-xs);
-  color: var(--z-transfer-header-fg);
+.zuvi-transfer-list-count {
+  font-size: var(--zuvi-text-xs);
+  color: var(--zuvi-transfer-header-fg);
   font-variant-numeric: tabular-nums;
 }
 
 /* --------------------------------- 搜索 --------------------------------- */
 
-.z-transfer-search {
+.zuvi-transfer-search {
   position: relative;
   display: flex;
   align-items: center;
   box-sizing: border-box;
-  padding: var(--z-transfer-search-padding);
-  border-bottom: 1px solid var(--z-transfer-border);
+  padding: var(--zuvi-transfer-search-padding);
+  border-bottom: 1px solid var(--zuvi-transfer-border);
 }
 
-.z-transfer-search-icon {
+.zuvi-transfer-search-icon {
   position: absolute;
-  inset-inline-start: calc(var(--z-transfer-search-padding) + var(--z-space-2));
-  color: var(--z-color-fg-subtle);
+  inset-inline-start: calc(var(--zuvi-transfer-search-padding) + var(--zuvi-space-2));
+  color: var(--zuvi-color-fg-subtle);
   pointer-events: none;
   flex: none;
 }
 
-.z-transfer-search-input {
+.zuvi-transfer-search-input {
   box-sizing: border-box;
   width: 100%;
-  height: var(--z-transfer-search-height);
+  height: var(--zuvi-transfer-search-height);
   padding-block: 0;
-  padding-inline: 1.75rem var(--z-space-2);
+  padding-inline: 1.75rem var(--zuvi-space-2);
   font-family: inherit;
-  font-size: var(--z-text-sm);
-  line-height: var(--z-transfer-search-height);
-  color: var(--z-transfer-item-fg);
-  background: var(--z-color-bg);
-  border: 1px solid var(--z-transfer-border);
-  border-radius: var(--z-radius-sm);
+  font-size: var(--zuvi-text-sm);
+  line-height: var(--zuvi-transfer-search-height);
+  color: var(--zuvi-transfer-item-fg);
+  background: var(--zuvi-color-bg);
+  border: 1px solid var(--zuvi-transfer-border);
+  border-radius: var(--zuvi-radius-sm);
   appearance: none;
   -webkit-appearance: none;
   transition:
-    border-color var(--z-duration-fast) var(--z-ease-standard),
-    box-shadow var(--z-duration-fast) var(--z-ease-standard);
+    border-color var(--zuvi-duration-fast) var(--zuvi-ease-standard),
+    box-shadow var(--zuvi-duration-fast) var(--zuvi-ease-standard);
 }
 
-.z-transfer-search-input:focus-visible {
+.zuvi-transfer-search-input:focus-visible {
   outline: none;
-  border-color: var(--z-color-border-focus);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--z-transfer-focus-ring) 15%, transparent);
+  border-color: var(--zuvi-color-border-focus);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--zuvi-transfer-focus-ring) 15%, transparent);
 }
 
 /* -------------------------------- 列表体 -------------------------------- */
 
-.z-transfer-list-body {
+.zuvi-transfer-list-body {
   box-sizing: border-box;
   flex: 1;
   margin: 0;
-  padding: var(--z-space-1);
+  padding: var(--zuvi-space-1);
   list-style: none;
-  height: var(--z-transfer-height);
+  height: var(--zuvi-transfer-height);
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: thin;
-  scrollbar-color: var(--z-color-border) transparent;
+  scrollbar-color: var(--zuvi-color-border) transparent;
 }
 
-.z-transfer-empty {
-  padding: var(--z-space-4);
-  font-size: var(--z-text-xs);
-  color: var(--z-transfer-empty-fg);
+.zuvi-transfer-empty {
+  padding: var(--zuvi-space-4);
+  font-size: var(--zuvi-text-xs);
+  color: var(--zuvi-transfer-empty-fg);
   text-align: center;
 }
 
-.z-transfer-item {
-  border-radius: var(--z-radius-sm);
+.zuvi-transfer-item {
+  border-radius: var(--zuvi-radius-sm);
 }
 
-.z-transfer-item-label {
+.zuvi-transfer-item-label {
   position: relative;
   display: flex;
   align-items: center;
-  gap: var(--z-space-2);
-  min-height: var(--z-transfer-item-height);
-  padding: 0 var(--z-transfer-item-padding-x);
+  gap: var(--zuvi-space-2);
+  min-height: var(--zuvi-transfer-item-height);
+  padding: 0 var(--zuvi-transfer-item-padding-x);
   cursor: pointer;
   user-select: none;
-  transition: background-color var(--z-duration-fast) var(--z-ease-standard);
+  transition: background-color var(--zuvi-duration-fast) var(--zuvi-ease-standard);
 }
 
-.z-transfer-item:hover:not([data-disabled='true']) .z-transfer-item-label {
-  background: var(--z-transfer-item-hover-bg);
+.zuvi-transfer-item:hover:not([data-disabled='true']) .zuvi-transfer-item-label {
+  background: var(--zuvi-transfer-item-hover-bg);
 }
 
-.z-transfer-item[data-checked='true'] .z-transfer-item-label {
-  color: var(--z-transfer-item-selected-fg);
-  background: var(--z-transfer-item-selected-bg);
+.zuvi-transfer-item[data-checked='true'] .zuvi-transfer-item-label {
+  color: var(--zuvi-transfer-item-selected-fg);
+  background: var(--zuvi-transfer-item-selected-bg);
 }
 
-.z-transfer-item[data-disabled='true'] .z-transfer-item-label {
-  color: var(--z-transfer-item-disabled-fg);
+.zuvi-transfer-item[data-disabled='true'] .zuvi-transfer-item-label {
+  color: var(--zuvi-transfer-item-disabled-fg);
   cursor: not-allowed;
 }
 
-.z-transfer-item-title {
+.zuvi-transfer-item-title {
   flex: 1;
   min-width: 0;
   overflow: hidden;
@@ -206,7 +206,7 @@
 
 /* -------------------------------- 复选框 -------------------------------- */
 
-.z-transfer-checkbox {
+.zuvi-transfer-checkbox {
   position: relative;
   display: inline-flex;
   flex: none;
@@ -214,11 +214,11 @@
   cursor: pointer;
 }
 
-.z-transfer-item[data-disabled='true'] .z-transfer-checkbox {
+.zuvi-transfer-item[data-disabled='true'] .zuvi-transfer-checkbox {
   cursor: not-allowed;
 }
 
-:is(.z-transfer-checkbox, .z-transfer-item-label) input {
+:is(.zuvi-transfer-checkbox, .zuvi-transfer-item-label) input {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -228,151 +228,151 @@
   cursor: inherit;
 }
 
-.z-transfer-checkbox-box {
+.zuvi-transfer-checkbox-box {
   flex-shrink: 0;
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--z-transfer-checkbox-size);
-  height: var(--z-transfer-checkbox-size);
-  border: 1px solid var(--z-transfer-checkbox-border);
+  width: var(--zuvi-transfer-checkbox-size);
+  height: var(--zuvi-transfer-checkbox-size);
+  border: 1px solid var(--zuvi-transfer-checkbox-border);
   border-radius: 0.25rem;
-  background: var(--z-transfer-checkbox-bg);
+  background: var(--zuvi-transfer-checkbox-bg);
   transition:
-    background-color var(--z-duration-fast) var(--z-ease-standard),
-    border-color var(--z-duration-fast) var(--z-ease-standard);
+    background-color var(--zuvi-duration-fast) var(--zuvi-ease-standard),
+    border-color var(--zuvi-duration-fast) var(--zuvi-ease-standard);
 }
 
-:is(.z-transfer-checkbox, .z-transfer-item-label) input:checked ~ .z-transfer-checkbox-box,
-:is(.z-transfer-checkbox, .z-transfer-item-label) input:indeterminate ~ .z-transfer-checkbox-box {
-  background: var(--z-transfer-checkbox-checked-bg);
-  border-color: var(--z-transfer-checkbox-checked-bg);
+:is(.zuvi-transfer-checkbox, .zuvi-transfer-item-label) input:checked ~ .zuvi-transfer-checkbox-box,
+:is(.zuvi-transfer-checkbox, .zuvi-transfer-item-label) input:indeterminate ~ .zuvi-transfer-checkbox-box {
+  background: var(--zuvi-transfer-checkbox-checked-bg);
+  border-color: var(--zuvi-transfer-checkbox-checked-bg);
 }
 
-:is(.z-transfer-checkbox, .z-transfer-item-label) input:checked ~ .z-transfer-checkbox-box::after {
+:is(.zuvi-transfer-checkbox, .zuvi-transfer-item-label) input:checked ~ .zuvi-transfer-checkbox-box::after {
   content: '';
   display: block;
-  width: calc(var(--z-transfer-checkbox-size) * 0.45);
-  height: calc(var(--z-transfer-checkbox-size) * 0.25);
-  border-left: 2px solid var(--z-transfer-checkbox-check-color);
-  border-bottom: 2px solid var(--z-transfer-checkbox-check-color);
+  width: calc(var(--zuvi-transfer-checkbox-size) * 0.45);
+  height: calc(var(--zuvi-transfer-checkbox-size) * 0.25);
+  border-left: 2px solid var(--zuvi-transfer-checkbox-check-color);
+  border-bottom: 2px solid var(--zuvi-transfer-checkbox-check-color);
   transform: rotate(-45deg) translate(1px, -1px);
 }
 
-:is(.z-transfer-checkbox, .z-transfer-item-label)
+:is(.zuvi-transfer-checkbox, .zuvi-transfer-item-label)
   input:indeterminate
-  ~ .z-transfer-checkbox-box::after {
+  ~ .zuvi-transfer-checkbox-box::after {
   content: '';
   display: block;
-  width: calc(var(--z-transfer-checkbox-size) * 0.5);
+  width: calc(var(--zuvi-transfer-checkbox-size) * 0.5);
   height: 2px;
-  background: var(--z-transfer-checkbox-check-color);
+  background: var(--zuvi-transfer-checkbox-check-color);
 }
 
-:is(.z-transfer-checkbox, .z-transfer-item-label) input:disabled ~ .z-transfer-checkbox-box {
-  background: var(--z-transfer-checkbox-disabled-bg);
-  border-color: var(--z-transfer-checkbox-disabled-border);
+:is(.zuvi-transfer-checkbox, .zuvi-transfer-item-label) input:disabled ~ .zuvi-transfer-checkbox-box {
+  background: var(--zuvi-transfer-checkbox-disabled-bg);
+  border-color: var(--zuvi-transfer-checkbox-disabled-border);
 }
 
-:is(.z-transfer-checkbox, .z-transfer-item-label) input:focus-visible ~ .z-transfer-checkbox-box {
+:is(.zuvi-transfer-checkbox, .zuvi-transfer-item-label) input:focus-visible ~ .zuvi-transfer-checkbox-box {
   outline: none;
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--z-transfer-focus-ring) 35%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--zuvi-transfer-focus-ring) 35%, transparent);
 }
 
 /* -------------------------------- 移动钮 -------------------------------- */
 
-.z-transfer-buttons {
+.zuvi-transfer-buttons {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--z-transfer-button-gap);
+  gap: var(--zuvi-transfer-button-gap);
 }
 
-.z-transfer-button {
+.zuvi-transfer-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--z-transfer-button-size);
-  height: var(--z-transfer-button-size);
+  width: var(--zuvi-transfer-button-size);
+  height: var(--zuvi-transfer-button-size);
   padding: 0;
-  color: var(--z-transfer-button-fg);
-  background: var(--z-transfer-button-bg);
-  border: 1px solid var(--z-transfer-button-border);
-  border-radius: var(--z-radius-sm);
+  color: var(--zuvi-transfer-button-fg);
+  background: var(--zuvi-transfer-button-bg);
+  border: 1px solid var(--zuvi-transfer-button-border);
+  border-radius: var(--zuvi-radius-sm);
   cursor: pointer;
   transition:
-    color var(--z-duration-fast) var(--z-ease-standard),
-    background-color var(--z-duration-fast) var(--z-ease-standard),
-    border-color var(--z-duration-fast) var(--z-ease-standard);
+    color var(--zuvi-duration-fast) var(--zuvi-ease-standard),
+    background-color var(--zuvi-duration-fast) var(--zuvi-ease-standard),
+    border-color var(--zuvi-duration-fast) var(--zuvi-ease-standard);
 }
 
-.z-transfer-button:hover:not(:disabled) {
-  color: var(--z-transfer-button-hover-fg);
-  background: var(--z-transfer-button-hover-bg);
-  border-color: var(--z-color-primary);
+.zuvi-transfer-button:hover:not(:disabled) {
+  color: var(--zuvi-transfer-button-hover-fg);
+  background: var(--zuvi-transfer-button-hover-bg);
+  border-color: var(--zuvi-color-primary);
 }
 
-.z-transfer-button:focus-visible {
+.zuvi-transfer-button:focus-visible {
   outline: none;
-  border-color: var(--z-color-border-focus);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--z-transfer-focus-ring) 15%, transparent);
+  border-color: var(--zuvi-color-border-focus);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--zuvi-transfer-focus-ring) 15%, transparent);
 }
 
-.z-transfer-button:disabled {
-  color: var(--z-color-disabled-fg);
-  background: var(--z-color-disabled-bg);
-  border-color: var(--z-color-disabled-border);
+.zuvi-transfer-button:disabled {
+  color: var(--zuvi-color-disabled-fg);
+  background: var(--zuvi-color-disabled-bg);
+  border-color: var(--zuvi-color-disabled-border);
   cursor: not-allowed;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .z-transfer-search-input,
-  .z-transfer-item-label,
-  .z-transfer-checkbox-box,
-  .z-transfer-button {
+  .zuvi-transfer-search-input,
+  .zuvi-transfer-item-label,
+  .zuvi-transfer-checkbox-box,
+  .zuvi-transfer-button {
     transition: none;
   }
 }
 
 @media (forced-colors: active) {
-  .z-transfer-list,
-  .z-transfer-list-header,
-  .z-transfer-search,
-  .z-transfer-search-input,
-  .z-transfer-checkbox-box,
-  .z-transfer-button {
+  .zuvi-transfer-list,
+  .zuvi-transfer-list-header,
+  .zuvi-transfer-search,
+  .zuvi-transfer-search-input,
+  .zuvi-transfer-checkbox-box,
+  .zuvi-transfer-button {
     border-color: CanvasText;
   }
 
-  .z-transfer-item[data-checked='true'] .z-transfer-item-label {
+  .zuvi-transfer-item[data-checked='true'] .zuvi-transfer-item-label {
     color: HighlightText;
     background: Highlight;
     outline: 1px solid Highlight;
   }
 
-  :is(.z-transfer-checkbox, .z-transfer-item-label) input:checked ~ .z-transfer-checkbox-box,
-  :is(.z-transfer-checkbox, .z-transfer-item-label) input:indeterminate ~ .z-transfer-checkbox-box {
+  :is(.zuvi-transfer-checkbox, .zuvi-transfer-item-label) input:checked ~ .zuvi-transfer-checkbox-box,
+  :is(.zuvi-transfer-checkbox, .zuvi-transfer-item-label) input:indeterminate ~ .zuvi-transfer-checkbox-box {
     background: Highlight;
     border-color: Highlight;
   }
 
-  :is(.z-transfer-checkbox, .z-transfer-item-label)
+  :is(.zuvi-transfer-checkbox, .zuvi-transfer-item-label)
     input:checked
-    ~ .z-transfer-checkbox-box::after {
+    ~ .zuvi-transfer-checkbox-box::after {
     border-color: HighlightText;
   }
 
-  :is(.z-transfer-checkbox, .z-transfer-item-label)
+  :is(.zuvi-transfer-checkbox, .zuvi-transfer-item-label)
     input:indeterminate
-    ~ .z-transfer-checkbox-box::after {
+    ~ .zuvi-transfer-checkbox-box::after {
     background: HighlightText;
   }
 
-  .z-transfer-search-input:focus-visible,
-  :is(.z-transfer-checkbox, .z-transfer-item-label) input:focus-visible ~ .z-transfer-checkbox-box,
-  .z-transfer-button:focus-visible {
+  .zuvi-transfer-search-input:focus-visible,
+  :is(.zuvi-transfer-checkbox, .zuvi-transfer-item-label) input:focus-visible ~ .zuvi-transfer-checkbox-box,
+  .zuvi-transfer-button:focus-visible {
     outline: 2px solid Highlight;
     outline-offset: 2px;
     box-shadow: none;

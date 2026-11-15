@@ -1,4 +1,4 @@
-# ZUI 契约 V6 —— 第三批：生态扩展（图标 100 / blocks 15 / 语言包 10）
+# ZUVI 契约 V6 —— 第三批：生态扩展（图标 100 / blocks 15 / 语言包 10）
 
 > 延续 V1-V5 全部约定。基线：v0.2.0（已固化）、66 组件、4 blocks、5 语言包、24 图标。
 
@@ -16,10 +16,10 @@
 - 区块智能体**只写自己的 src/<name>/ 目录 + 自己的测试文件 tests/<name>.test.tsx**；
   `packages/blocks/src/index.ts` 与 `package.json` exports 由集成者汇总（现文件禁改）。
 - 区块可用组件：全部 66 个（Upload/Steps/DateRangePicker/Typography/Row/Col/Flex/Space 均已导出）；
-  **图标仅可用 @zui/icons 现有 24 枚**（新图标并行开发中，需新图标处用内联 SVG）。
+  **图标仅可用 @zuvi/icons 现有 24 枚**（新图标并行开发中，需新图标处用内联 SVG）。
 - 并行期间只跑自己的测试；tsc 用 `| grep` 过滤。
 
-## 1. @zui/icons 扩充：24 → 100（图标智能体）
+## 1. @zuvi/icons 扩充：24 → 100（图标智能体）
 
 - 现有 24 枚保留，**新增 76 枚**（Lucide/Feather 风格，24 视窗、stroke=currentColor、stroke-width 2、fill none、圆角线帽），沿用 `SvgIcon` 骨架与 `IconProps`（size/color/spin）。
 - 命名精确按此清单（PascalCase 组件 = 同名文件）：
@@ -63,7 +63,7 @@
 
 ## 4. 设计资源对接文档（设计资源智能体）
 
-- 新建 `docs/src/pages/design/DesignAssetsPage.tsx`：Figma Tokens Studio 导入流程（粘贴 `packages/tokens/src/tokens.json` 的 DTCG 格式：Primitives → Semantic → 别名链）、品牌换肤三步法（改 semantic 层）、`build:browser` CDN 接入（`<script src=".../zui.global.js">` + `ZUI.createRoot`，附 cdn-demo.html 链接）、设计侧令牌命名对照表。
+- 新建 `docs/src/pages/design/DesignAssetsPage.tsx`：Figma Tokens Studio 导入流程（粘贴 `packages/tokens/src/tokens.json` 的 DTCG 格式：Primitives → Semantic → 别名链）、品牌换肤三步法（改 semantic 层）、`build:browser` CDN 接入（`<script src=".../zuvi.global.js">` + `ZUVI.createRoot`，附 cdn-demo.html 链接）、设计侧令牌命名对照表。
 - 页面结构照抄 ButtonPage 模式（usePageTitle + Demo/代码块 + 表格）；`public/llms.txt` 追加「设计资源」一节。
 - **验证**：`cd docs && npx tsc --noEmit` 过滤自身 0 错误；`npx vite build` 通过。
 

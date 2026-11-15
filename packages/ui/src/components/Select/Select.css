@@ -1,149 +1,149 @@
-/* ZUI Select —— select-only combobox（APG 模式，焦点保持触发器 + aria-activedescendant） */
+/* ZUVI Select —— select-only combobox（APG 模式，焦点保持触发器 + aria-activedescendant） */
 
-.z-select {
+.zuvi-select {
   /* 组件级变量（用户可覆盖） */
-  --z-select-trigger-height: 2rem; /* 32px，与 Input 同高 */
-  --z-select-trigger-padding-x: var(--z-space-3);
-  --z-select-trigger-font-size: var(--z-text-sm);
-  --z-select-trigger-radius: var(--z-radius-sm); /* 6px，与 Input 同圆角 */
-  --z-select-trigger-bg: var(--z-color-bg-elevated);
-  --z-select-trigger-fg: var(--z-color-fg);
-  --z-select-trigger-border: var(--z-color-border);
-  --z-select-trigger-hover-border: var(--z-color-border-focus);
-  --z-select-placeholder-fg: var(--z-color-fg-subtle);
-  --z-select-listbox-bg: var(--z-color-bg-elevated);
-  --z-select-listbox-border: var(--z-color-border-subtle);
-  --z-select-listbox-radius: 0.5rem; /* 8px 浮层圆角 */
-  --z-select-listbox-shadow: var(--z-shadow-lg);
-  --z-select-listbox-padding: var(--z-space-1);
-  --z-select-listbox-max-height: 16rem;
-  --z-select-listbox-margin-top: var(--z-space-1);
-  --z-select-option-padding-x: var(--z-space-3);
-  --z-select-option-height: 2rem; /* 32px 行高 */
-  --z-select-option-radius: var(--z-radius-sm);
-  --z-select-option-fg: var(--z-color-fg);
-  --z-select-option-hover-bg: var(--z-color-bg-muted);
-  --z-select-option-active-bg: var(--z-color-primary-subtle);
-  --z-select-option-active-fg: var(--z-color-primary-subtle-fg);
-  --z-select-option-disabled-fg: var(--z-color-disabled-fg);
-  --z-select-empty-fg: var(--z-color-fg-muted);
-  --z-select-empty-padding: var(--z-space-4);
-  --z-select-animation-duration: var(--z-duration-fast);
+  --zuvi-select-trigger-height: 2rem; /* 32px，与 Input 同高 */
+  --zuvi-select-trigger-padding-x: var(--zuvi-space-3);
+  --zuvi-select-trigger-font-size: var(--zuvi-text-sm);
+  --zuvi-select-trigger-radius: var(--zuvi-radius-sm); /* 6px，与 Input 同圆角 */
+  --zuvi-select-trigger-bg: var(--zuvi-color-bg-elevated);
+  --zuvi-select-trigger-fg: var(--zuvi-color-fg);
+  --zuvi-select-trigger-border: var(--zuvi-color-border);
+  --zuvi-select-trigger-hover-border: var(--zuvi-color-border-focus);
+  --zuvi-select-placeholder-fg: var(--zuvi-color-fg-subtle);
+  --zuvi-select-listbox-bg: var(--zuvi-color-bg-elevated);
+  --zuvi-select-listbox-border: var(--zuvi-color-border-subtle);
+  --zuvi-select-listbox-radius: 0.5rem; /* 8px 浮层圆角 */
+  --zuvi-select-listbox-shadow: var(--zuvi-shadow-lg);
+  --zuvi-select-listbox-padding: var(--zuvi-space-1);
+  --zuvi-select-listbox-max-height: 16rem;
+  --zuvi-select-listbox-margin-top: var(--zuvi-space-1);
+  --zuvi-select-option-padding-x: var(--zuvi-space-3);
+  --zuvi-select-option-height: 2rem; /* 32px 行高 */
+  --zuvi-select-option-radius: var(--zuvi-radius-sm);
+  --zuvi-select-option-fg: var(--zuvi-color-fg);
+  --zuvi-select-option-hover-bg: var(--zuvi-color-bg-muted);
+  --zuvi-select-option-active-bg: var(--zuvi-color-primary-subtle);
+  --zuvi-select-option-active-fg: var(--zuvi-color-primary-subtle-fg);
+  --zuvi-select-option-disabled-fg: var(--zuvi-color-disabled-fg);
+  --zuvi-select-empty-fg: var(--zuvi-color-fg-muted);
+  --zuvi-select-empty-padding: var(--zuvi-space-4);
+  --zuvi-select-animation-duration: var(--zuvi-duration-fast);
 
   position: relative;
   display: inline-flex;
   flex-direction: column;
   min-width: 0;
-  font-family: var(--z-font-sans);
-  font-size: var(--z-select-trigger-font-size);
-  color: var(--z-select-trigger-fg);
+  font-family: var(--zuvi-font-sans);
+  font-size: var(--zuvi-select-trigger-font-size);
+  color: var(--zuvi-select-trigger-fg);
 }
 
 /* --------------------------------- 尺寸 --------------------------------- */
 
-.z-select[data-size='sm'] {
-  --z-select-trigger-height: 1.5rem; /* 24px */
-  --z-select-trigger-font-size: var(--z-text-xs);
-  --z-select-trigger-padding-x: var(--z-space-2);
-  --z-select-option-height: 1.75rem;
+.zuvi-select[data-size='sm'] {
+  --zuvi-select-trigger-height: 1.5rem; /* 24px */
+  --zuvi-select-trigger-font-size: var(--zuvi-text-xs);
+  --zuvi-select-trigger-padding-x: var(--zuvi-space-2);
+  --zuvi-select-option-height: 1.75rem;
 }
 
-.z-select[data-size='lg'] {
-  --z-select-trigger-height: 2.5rem; /* 40px */
-  --z-select-trigger-font-size: var(--z-text-md);
-  --z-select-trigger-padding-x: var(--z-space-4);
-  --z-select-option-height: 2.25rem;
+.zuvi-select[data-size='lg'] {
+  --zuvi-select-trigger-height: 2.5rem; /* 40px */
+  --zuvi-select-trigger-font-size: var(--zuvi-text-md);
+  --zuvi-select-trigger-padding-x: var(--zuvi-space-4);
+  --zuvi-select-option-height: 2.25rem;
 }
 
 /* -------------------------------- 触发器 -------------------------------- */
 
-.z-select-trigger {
+.zuvi-select-trigger {
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: var(--z-select-trigger-height);
-  padding: 0 var(--z-select-trigger-padding-x);
+  height: var(--zuvi-select-trigger-height);
+  padding: 0 var(--zuvi-select-trigger-padding-x);
   font-family: inherit;
-  font-size: var(--z-select-trigger-font-size);
-  color: var(--z-select-trigger-fg);
+  font-size: var(--zuvi-select-trigger-font-size);
+  color: var(--zuvi-select-trigger-fg);
   text-align: start;
-  background: var(--z-select-trigger-bg);
-  border: 1px solid var(--z-select-trigger-border);
-  border-radius: var(--z-select-trigger-radius);
+  background: var(--zuvi-select-trigger-bg);
+  border: 1px solid var(--zuvi-select-trigger-border);
+  border-radius: var(--zuvi-select-trigger-radius);
   cursor: pointer;
   transition:
-    border-color var(--z-duration-fast) var(--z-ease-standard),
-    background-color var(--z-duration-fast) var(--z-ease-standard),
-    box-shadow var(--z-duration-fast) var(--z-ease-standard);
+    border-color var(--zuvi-duration-fast) var(--zuvi-ease-standard),
+    background-color var(--zuvi-duration-fast) var(--zuvi-ease-standard),
+    box-shadow var(--zuvi-duration-fast) var(--zuvi-ease-standard);
 }
 
-.z-select-trigger::after {
+.zuvi-select-trigger::after {
   content: '';
   flex: none;
   width: 0.4375rem;
   height: 0.4375rem;
-  margin-left: var(--z-space-2);
-  border-right: 1.5px solid var(--z-color-fg-subtle);
-  border-bottom: 1.5px solid var(--z-color-fg-subtle);
+  margin-left: var(--zuvi-space-2);
+  border-right: 1.5px solid var(--zuvi-color-fg-subtle);
+  border-bottom: 1.5px solid var(--zuvi-color-fg-subtle);
   transform: translateY(-25%) rotate(45deg);
-  transition: transform var(--z-duration-fast) var(--z-ease-standard);
+  transition: transform var(--zuvi-duration-fast) var(--zuvi-ease-standard);
   pointer-events: none;
 }
 
-.z-select[data-open='true'] .z-select-trigger::after {
+.zuvi-select[data-open='true'] .zuvi-select-trigger::after {
   transform: translateY(25%) rotate(-135deg);
 }
 
 /* hover：边框转 primary（antd 式，与 Input 一致） */
-.z-select-trigger:hover:not(:disabled) {
-  border-color: var(--z-select-trigger-hover-border);
+.zuvi-select-trigger:hover:not(:disabled) {
+  border-color: var(--zuvi-select-trigger-hover-border);
 }
 
 /* focus：柔光圈（与 Input 一致） */
-.z-select-trigger:focus-visible {
+.zuvi-select-trigger:focus-visible {
   outline: none;
-  border-color: var(--z-color-border-focus);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--z-color-focus-ring) 15%, transparent);
+  border-color: var(--zuvi-color-border-focus);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--zuvi-color-focus-ring) 15%, transparent);
 }
 
-.z-select[data-status='error'] .z-select-trigger {
-  --z-select-trigger-border: var(--z-color-danger);
+.zuvi-select[data-status='error'] .zuvi-select-trigger {
+  --zuvi-select-trigger-border: var(--zuvi-color-danger);
 }
 
-.z-select[data-status='error'] .z-select-trigger:hover:not(:disabled),
-.z-select[data-status='error'] .z-select-trigger:focus-visible {
-  border-color: var(--z-color-danger);
+.zuvi-select[data-status='error'] .zuvi-select-trigger:hover:not(:disabled),
+.zuvi-select[data-status='error'] .zuvi-select-trigger:focus-visible {
+  border-color: var(--zuvi-color-danger);
 }
 
-.z-select[data-status='error'] .z-select-trigger:focus-visible {
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--z-color-danger) 15%, transparent);
+.zuvi-select[data-status='error'] .zuvi-select-trigger:focus-visible {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--zuvi-color-danger) 15%, transparent);
 }
 
-.z-select[data-status='success'] .z-select-trigger {
-  --z-select-trigger-border: var(--z-color-success);
+.zuvi-select[data-status='success'] .zuvi-select-trigger {
+  --zuvi-select-trigger-border: var(--zuvi-color-success);
 }
 
-.z-select[data-status='success'] .z-select-trigger:hover:not(:disabled),
-.z-select[data-status='success'] .z-select-trigger:focus-visible {
-  border-color: var(--z-color-success);
+.zuvi-select[data-status='success'] .zuvi-select-trigger:hover:not(:disabled),
+.zuvi-select[data-status='success'] .zuvi-select-trigger:focus-visible {
+  border-color: var(--zuvi-color-success);
 }
 
-.z-select[data-status='success'] .z-select-trigger:focus-visible {
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--z-color-success) 15%, transparent);
+.zuvi-select[data-status='success'] .zuvi-select-trigger:focus-visible {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--zuvi-color-success) 15%, transparent);
 }
 
-.z-select-trigger:disabled {
-  color: var(--z-color-disabled-fg);
-  background: var(--z-color-disabled-bg);
-  border-color: var(--z-color-disabled-border);
+.zuvi-select-trigger:disabled {
+  color: var(--zuvi-color-disabled-fg);
+  background: var(--zuvi-color-disabled-bg);
+  border-color: var(--zuvi-color-disabled-border);
   cursor: not-allowed;
 }
 
 /* --------------------------------- 值 ---------------------------------- */
 
-.z-select-value {
+.zuvi-select-value {
   flex: 1;
   min-width: 0;
   overflow: hidden;
@@ -151,34 +151,34 @@
   text-overflow: ellipsis;
 }
 
-.z-select-value[data-placeholder] {
-  color: var(--z-select-placeholder-fg);
+.zuvi-select-value[data-placeholder] {
+  color: var(--zuvi-select-placeholder-fg);
 }
 
 /* -------------------------------- 弹层 --------------------------------- */
 
-.z-select-listbox {
+.zuvi-select-listbox {
   position: fixed;
   top: 100%;
   inset-inline: 0;
-  z-index: var(--z-z-dropdown);
-  margin-top: var(--z-select-listbox-margin-top);
-  padding: var(--z-select-listbox-padding);
-  max-height: min(var(--z-select-listbox-max-height), calc(100dvh - 16px));
+  z-index: var(--zuvi-z-dropdown);
+  margin-top: var(--zuvi-select-listbox-margin-top);
+  padding: var(--zuvi-select-listbox-padding);
+  max-height: min(var(--zuvi-select-listbox-max-height), calc(100dvh - 16px));
   overflow-y: auto;
-  background: var(--z-select-listbox-bg);
-  border: 1px solid var(--z-select-listbox-border);
-  border-radius: var(--z-select-listbox-radius);
-  box-shadow: var(--z-select-listbox-shadow);
+  background: var(--zuvi-select-listbox-bg);
+  border: 1px solid var(--zuvi-select-listbox-border);
+  border-radius: var(--zuvi-select-listbox-radius);
+  box-shadow: var(--zuvi-select-listbox-shadow);
   max-width: calc(100vw - 16px);
 }
 
-.z-select-listbox[data-open='false'] {
+.zuvi-select-listbox[data-open='false'] {
   display: none;
 }
 
-.z-select-listbox[data-open='true'] {
-  animation: z-select-listbox-in var(--z-select-animation-duration) var(--z-ease-entrance);
+.zuvi-select-listbox[data-open='true'] {
+  animation: z-select-listbox-in var(--zuvi-select-animation-duration) var(--zuvi-ease-entrance);
 }
 
 @keyframes z-select-listbox-in {
@@ -193,79 +193,79 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .z-select-listbox {
+  .zuvi-select-listbox {
     animation-duration: 0.01ms !important;
   }
 }
 
 /* -------------------------------- 选项 --------------------------------- */
 
-.z-select-option {
+.zuvi-select-option {
   display: flex;
   align-items: center;
-  gap: var(--z-space-2);
-  min-height: var(--z-select-option-height);
-  padding: 0 var(--z-select-option-padding-x);
-  font-size: var(--z-select-trigger-font-size);
-  color: var(--z-select-option-fg);
-  border-radius: var(--z-select-option-radius);
+  gap: var(--zuvi-space-2);
+  min-height: var(--zuvi-select-option-height);
+  padding: 0 var(--zuvi-select-option-padding-x);
+  font-size: var(--zuvi-select-trigger-font-size);
+  color: var(--zuvi-select-option-fg);
+  border-radius: var(--zuvi-select-option-radius);
   cursor: pointer;
   user-select: none;
-  transition: background-color var(--z-duration-fast) var(--z-ease-standard);
+  transition: background-color var(--zuvi-duration-fast) var(--zuvi-ease-standard);
 }
 
-.z-select-option[data-active='true'] {
-  color: var(--z-select-option-active-fg);
-  background: var(--z-select-option-active-bg);
+.zuvi-select-option[data-active='true'] {
+  color: var(--zuvi-select-option-active-fg);
+  background: var(--zuvi-select-option-active-bg);
 }
 
-.z-select-option:hover:not([aria-disabled='true']):not([data-active='true']) {
-  background: var(--z-select-option-hover-bg);
+.zuvi-select-option:hover:not([aria-disabled='true']):not([data-active='true']) {
+  background: var(--zuvi-select-option-hover-bg);
 }
 
-.z-select-option[aria-selected='true'] {
-  font-weight: var(--z-weight-medium);
+.zuvi-select-option[aria-selected='true'] {
+  font-weight: var(--zuvi-weight-medium);
 }
 
-.z-select-option[aria-selected='true']::after {
+.zuvi-select-option[aria-selected='true']::after {
   content: '✓';
   margin-inline-start: auto;
-  color: var(--z-color-primary);
+  color: var(--zuvi-color-primary);
 }
 
-.z-select-option[aria-disabled='true'] {
-  color: var(--z-select-option-disabled-fg);
+.zuvi-select-option[aria-disabled='true'] {
+  color: var(--zuvi-select-option-disabled-fg);
   cursor: not-allowed;
 }
 
 /* -------------------------------- 空态 --------------------------------- */
 
-.z-select-empty {
-  padding: var(--z-select-empty-padding);
-  font-size: var(--z-text-sm);
-  color: var(--z-select-empty-fg);
+.zuvi-select-empty {
+  padding: var(--zuvi-select-empty-padding);
+  font-size: var(--zuvi-text-sm);
+  color: var(--zuvi-select-empty-fg);
   text-align: center;
 }
 
 @media (forced-colors: active) {
-  .z-select-trigger,
-  .z-select-listbox {
+  .zuvi-select-trigger,
+  .zuvi-select-listbox {
     border-color: CanvasText;
   }
 
-  .z-select-option[data-active='true'],
-  .z-select-option[aria-selected='true'] {
+  .zuvi-select-option[data-active='true'],
+  .zuvi-select-option[aria-selected='true'] {
     color: HighlightText;
     background: Highlight;
     outline: 1px solid Highlight;
     outline-offset: -1px;
   }
 
-  .z-select-option[aria-selected='true']::after {
+  .zuvi-select-option[aria-selected='true']::after {
     color: HighlightText;
   }
 
-  .z-select-trigger:focus-visible {
+  .zuvi-select-trigger:focus-visible {
     outline: 2px solid Highlight;
     outline-offset: 2px;
     box-shadow: none;

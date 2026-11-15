@@ -1,4 +1,4 @@
-import { Button, NotificationProvider, useNotification } from '@zui/react';
+import { Button, NotificationProvider, useNotification } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -187,22 +187,22 @@ export default function NotificationPage(): React.ReactNode {
         name="Notification"
         parts={['root', 'item', 'icon', 'title', 'description', 'body', 'close']}
         vars={[
-          '--z-notification-width',
-          '--z-notification-bg',
-          '--z-notification-fg',
-          '--z-notification-border',
-          '--z-notification-radius',
-          '--z-notification-shadow',
-          '--z-notification-padding',
-          '--z-notification-gap',
-          '--z-notification-inset',
-          '--z-notification-title-size',
-          '--z-notification-title-weight',
-          '--z-notification-desc-size',
-          '--z-notification-desc-fg',
-          '--z-notification-icon-size',
-          '--z-notification-close-size',
-          '--z-notification-transition',
+          '--zuvi-notification-width',
+          '--zuvi-notification-bg',
+          '--zuvi-notification-fg',
+          '--zuvi-notification-border',
+          '--zuvi-notification-radius',
+          '--zuvi-notification-shadow',
+          '--zuvi-notification-padding',
+          '--zuvi-notification-gap',
+          '--zuvi-notification-inset',
+          '--zuvi-notification-title-size',
+          '--zuvi-notification-title-weight',
+          '--zuvi-notification-desc-size',
+          '--zuvi-notification-desc-fg',
+          '--zuvi-notification-icon-size',
+          '--zuvi-notification-close-size',
+          '--zuvi-notification-transition',
         ]}
       />
     </div>

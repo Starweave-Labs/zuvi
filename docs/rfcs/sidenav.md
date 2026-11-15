@@ -235,8 +235,8 @@ API 约束：
 
 ## 7. 桌面收窄与响应式边界
 
-- 宽导航默认宽度 `--z-sidenav-width: 15rem`，收窄宽度 `--z-sidenav-collapsed-width: 3.5rem`。
-- root 使用逻辑尺寸，宽态为 `inline-size: min(100%, var(--z-sidenav-width))`，收窄态为 `inline-size: min(100%, var(--z-sidenav-collapsed-width))`，不得把父容器或 320px 视口撑宽。
+- 宽导航默认宽度 `--zuvi-sidenav-width: 15rem`，收窄宽度 `--zuvi-sidenav-collapsed-width: 3.5rem`。
+- root 使用逻辑尺寸，宽态为 `inline-size: min(100%, var(--zuvi-sidenav-width))`，收窄态为 `inline-size: min(100%, var(--zuvi-sidenav-collapsed-width))`，不得把父容器或 320px 视口撑宽。
 - `viewport` 承担纵向滚动并设置 `min-block-size: 0`；收窄按钮位于滚动区之外，长导航滚动时仍可操作。flyout 限制到可视区域内，使用 `max-block-size` + `overflow-y: auto`，并提供 `100dvh` 与 `100vh` 回退。
 - 收窄态只显示顶层图标、徽标提示与收窄按钮；section label 和文字视觉隐藏但仍保留可访问名称。
 - 可收窄实例的顶层项应提供 `icon`；缺失图标时开发环境警告，运行时显示稳定占位而不是截取 label 首字符。
@@ -274,7 +274,7 @@ RTL 规则：
 
 ## 8. Locale
 
-`ZuiLocale` 实现阶段新增：
+`ZuviLocale` 实现阶段新增：
 
 ```ts
 sideNav: {
@@ -323,25 +323,25 @@ collapse-toggle
 首版 CSS 变量：
 
 ```css
---z-sidenav-width
---z-sidenav-collapsed-width
---z-sidenav-padding
---z-sidenav-gap
---z-sidenav-item-height
---z-sidenav-item-padding-x
---z-sidenav-child-indent
---z-sidenav-radius
---z-sidenav-bg
---z-sidenav-fg
---z-sidenav-muted-fg
---z-sidenav-hover-bg
---z-sidenav-active-bg
---z-sidenav-active-fg
---z-sidenav-indicator
---z-sidenav-focus-ring
---z-sidenav-flyout-width
---z-sidenav-flyout-max-height
---z-sidenav-animation-duration
+--zuvi-sidenav-width
+--zuvi-sidenav-collapsed-width
+--zuvi-sidenav-padding
+--zuvi-sidenav-gap
+--zuvi-sidenav-item-height
+--zuvi-sidenav-item-padding-x
+--zuvi-sidenav-child-indent
+--zuvi-sidenav-radius
+--zuvi-sidenav-bg
+--zuvi-sidenav-fg
+--zuvi-sidenav-muted-fg
+--zuvi-sidenav-hover-bg
+--zuvi-sidenav-active-bg
+--zuvi-sidenav-active-fg
+--zuvi-sidenav-indicator
+--zuvi-sidenav-focus-ring
+--zuvi-sidenav-flyout-width
+--zuvi-sidenav-flyout-max-height
+--zuvi-sidenav-animation-duration
 ```
 
 ## 10. 测试矩阵

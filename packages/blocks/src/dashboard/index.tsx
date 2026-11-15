@@ -16,7 +16,7 @@ import {
   TabsPanel,
   TabsTrigger,
   Tag,
-} from '@zui/react';
+} from '@zuvi/react';
 
 /* ---------------------------------- 类型 ---------------------------------- */
 
@@ -124,30 +124,30 @@ function StatCard({ stat }: { stat: DashboardStat }) {
         <Statistic title={stat.label} value={stat.value} suffix={stat.suffix} />
       ) : (
         <>
-          <div style={{ fontSize: 'var(--z-text-sm)', color: 'var(--z-color-fg-muted)' }}>{stat.label}</div>
-          <div style={{ margin: 'var(--z-space-2) 0 var(--z-space-3)', fontSize: 'var(--z-text-2xl)', fontWeight: 'var(--z-weight-semibold)', color: 'var(--z-color-fg)', lineHeight: 'var(--z-leading-tight)' }}>
-            {stat.value}{stat.suffix != null ? <span style={{ marginLeft: 'var(--z-space-1)', fontSize: 'var(--z-text-md)', fontWeight: 'var(--z-weight-regular)' }}>{stat.suffix}</span> : null}
+          <div style={{ fontSize: 'var(--zuvi-text-sm)', color: 'var(--zuvi-color-fg-muted)' }}>{stat.label}</div>
+          <div style={{ margin: 'var(--zuvi-space-2) 0 var(--zuvi-space-3)', fontSize: 'var(--zuvi-text-2xl)', fontWeight: 'var(--zuvi-weight-semibold)', color: 'var(--zuvi-color-fg)', lineHeight: 'var(--zuvi-leading-tight)' }}>
+            {stat.value}{stat.suffix != null ? <span style={{ marginLeft: 'var(--zuvi-space-1)', fontSize: 'var(--zuvi-text-md)', fontWeight: 'var(--zuvi-weight-regular)' }}>{stat.suffix}</span> : null}
           </div>
         </>
       )}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--z-space-2)', minHeight: 22 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--zuvi-space-2)', minHeight: 22 }}>
         {stat.trend != null ? (
           <Tag color={TREND_TAG_COLOR[direction]}>
             <span aria-hidden="true">{arrow}</span> {stat.trend}
           </Tag>
         ) : null}
         {stat.hint != null ? (
-          <span style={{ fontSize: 'var(--z-text-xs)', color: 'var(--z-color-fg-subtle)' }}>{stat.hint}</span>
+          <span style={{ fontSize: 'var(--zuvi-text-xs)', color: 'var(--zuvi-color-fg-subtle)' }}>{stat.hint}</span>
         ) : null}
       </div>
     </Card>
   );
 }
 
-function ShareBar({ share, color = 'var(--z-color-primary)' }: { share: number; color?: string }) {
+function ShareBar({ share, color = 'var(--zuvi-color-primary)' }: { share: number; color?: string }) {
   const percentage = Number.isFinite(share) ? Math.min(100, Math.max(0, share)) : 0;
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--z-space-2)', minWidth: 120 }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--zuvi-space-2)', minWidth: 120 }}>
       <div
         role="progressbar"
         aria-label="流量占比"
@@ -157,14 +157,14 @@ function ShareBar({ share, color = 'var(--z-color-primary)' }: { share: number; 
         style={{
           flex: 1,
           height: 6,
-          borderRadius: 'var(--z-radius-full)',
-          background: 'var(--z-color-bg-subtle)',
+          borderRadius: 'var(--zuvi-radius-full)',
+          background: 'var(--zuvi-color-bg-subtle)',
           overflow: 'hidden',
         }}
       >
-        <div style={{ width: `${percentage}%`, height: '100%', borderRadius: 'var(--z-radius-full)', background: color }} />
+        <div style={{ width: `${percentage}%`, height: '100%', borderRadius: 'var(--zuvi-radius-full)', background: color }} />
       </div>
-      <span style={{ fontSize: 'var(--z-text-xs)', color: 'var(--z-color-fg-muted)', fontVariantNumeric: 'tabular-nums' }}>
+      <span style={{ fontSize: 'var(--zuvi-text-xs)', color: 'var(--zuvi-color-fg-muted)', fontVariantNumeric: 'tabular-nums' }}>
         {percentage}%
       </span>
     </div>
@@ -194,24 +194,24 @@ export function DashboardBlock({
       data-part="root"
       className={[className, classNames?.root].filter(Boolean).join(' ') || undefined}
       style={{
-        padding: 'clamp(var(--z-space-3), 3vw, var(--z-space-6))',
-        background: 'var(--z-color-bg-muted)',
+        padding: 'clamp(var(--zuvi-space-3), 3vw, var(--zuvi-space-6))',
+        background: 'var(--zuvi-color-bg-muted)',
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
-        gap: 'var(--z-space-5)',
+        gap: 'var(--zuvi-space-5)',
         ...style,
       }}
     >
       {/* 页头 */}
-      <header style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 'var(--z-space-4)', flexWrap: 'wrap' }}>
+      <header style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 'var(--zuvi-space-4)', flexWrap: 'wrap' }}>
         <div>
-          <h1 style={{ margin: 0, fontSize: 'var(--z-text-xl)', fontWeight: 'var(--z-weight-semibold)', color: 'var(--z-color-fg)' }}>
+          <h1 style={{ margin: 0, fontSize: 'var(--zuvi-text-xl)', fontWeight: 'var(--zuvi-weight-semibold)', color: 'var(--zuvi-color-fg)' }}>
             {title}
           </h1>
-          <p style={{ margin: 'var(--z-space-1) 0 0', fontSize: 'var(--z-text-sm)', color: 'var(--z-color-fg-muted)' }}>{subtitle}</p>
+          <p style={{ margin: 'var(--zuvi-space-1) 0 0', fontSize: 'var(--zuvi-text-sm)', color: 'var(--zuvi-color-fg-muted)' }}>{subtitle}</p>
         </div>
-        <div style={{ display: 'flex', gap: 'var(--z-space-3)' }}>
+        <div style={{ display: 'flex', gap: 'var(--zuvi-space-3)' }}>
           {actions ?? (
             <>
               <Button variant="outline" iconStart={<span aria-hidden="true">⤓</span>}>
@@ -230,7 +230,7 @@ export function DashboardBlock({
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(min(220px, 100%), 1fr))',
-          gap: 'var(--z-space-4)',
+          gap: 'var(--zuvi-space-4)',
         }}
       >
         {stats.map((stat) => (
@@ -240,7 +240,7 @@ export function DashboardBlock({
 
       {/* 趋势 Tabs */}
       <Tabs defaultValue="overview" onValueChange={onTabChange}>
-        <TabsList style={{ marginBottom: 'var(--z-space-4)' }}>
+        <TabsList style={{ marginBottom: 'var(--zuvi-space-4)' }}>
           <TabsTrigger value="overview">流量概览</TabsTrigger>
           <TabsTrigger value="channels">渠道分析</TabsTrigger>
           <TabsTrigger value="funnel">转化漏斗</TabsTrigger>
@@ -249,43 +249,43 @@ export function DashboardBlock({
         <TabsPanel value="overview">
           <div
             className={classNames?.chart}
-            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: 'var(--z-space-4)' }}
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: 'var(--zuvi-space-4)' }}
           >
             <Card title="访问量趋势" extra={<Tag color="primary">近 12 日</Tag>}>
               <div
                 style={{
                   display: 'flex',
                   alignItems: 'flex-end',
-                  gap: 'var(--z-space-3)',
+                  gap: 'var(--zuvi-space-3)',
                   height: 220,
-                  paddingTop: 'var(--z-space-2)',
+                  paddingTop: 'var(--zuvi-space-2)',
                 }}
               >
                 {trendData.map((d, i) => (
-                  <div key={`${d.label}-${i}`} style={{ flex: 1, minWidth: 0, display: 'grid', gridTemplateRows: 'minmax(0, 1fr) auto', alignItems: 'end', justifyItems: 'center', gap: 'var(--z-space-2)', height: '100%' }}>
+                  <div key={`${d.label}-${i}`} style={{ flex: 1, minWidth: 0, display: 'grid', gridTemplateRows: 'minmax(0, 1fr) auto', alignItems: 'end', justifyItems: 'center', gap: 'var(--zuvi-space-2)', height: '100%' }}>
                     <div
                       title={`${d.label}: ${d.value}`}
                       style={{
                         width: '100%',
                         maxWidth: 36,
                         height: `${Number.isFinite(d.value) ? Math.round((Math.max(0, d.value) / maxTrend) * 100) : 0}%`,
-                        borderRadius: 'var(--z-radius-sm) var(--z-radius-sm) 0 0',
-                        background: i === trendData.length - 1 ? 'var(--z-color-primary)' : 'var(--z-color-primary-subtle)',
+                        borderRadius: 'var(--zuvi-radius-sm) var(--zuvi-radius-sm) 0 0',
+                        background: i === trendData.length - 1 ? 'var(--zuvi-color-primary)' : 'var(--zuvi-color-primary-subtle)',
                       }}
                     />
-                    <span style={{ maxWidth: '100%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 'var(--z-text-xs)', color: 'var(--z-color-fg-subtle)' }}>{d.label}</span>
+                    <span style={{ maxWidth: '100%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 'var(--zuvi-text-xs)', color: 'var(--zuvi-color-fg-subtle)' }}>{d.label}</span>
                   </div>
                 ))}
               </div>
             </Card>
 
             <Card title="流量来源">
-              <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 'var(--z-space-5)' }}>
+              <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 'var(--zuvi-space-5)' }}>
                 {channels.map((row) => (
                   <li key={row.key}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'var(--z-space-2)', fontSize: 'var(--z-text-sm)' }}>
-                      <span style={{ color: 'var(--z-color-fg)' }}>{row.name}</span>
-                      <span style={{ color: 'var(--z-color-fg-muted)', fontVariantNumeric: 'tabular-nums' }}>{row.visits}</span>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'var(--zuvi-space-2)', fontSize: 'var(--zuvi-text-sm)' }}>
+                      <span style={{ color: 'var(--zuvi-color-fg)' }}>{row.name}</span>
+                      <span style={{ color: 'var(--zuvi-color-fg-muted)', fontVariantNumeric: 'tabular-nums' }}>{row.visits}</span>
                     </div>
                     <ShareBar share={row.share} />
                   </li>
@@ -324,7 +324,7 @@ export function DashboardBlock({
 
         <TabsPanel value="funnel">
           <Card title="转化漏斗">
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--z-space-3)', alignItems: 'center', padding: 'var(--z-space-4) 0' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--zuvi-space-3)', alignItems: 'center', padding: 'var(--zuvi-space-4) 0' }}>
               {[
                 { label: '访问', value: '48,210', width: 100 },
                 { label: '加购', value: '12,480', width: 72 },
@@ -337,14 +337,14 @@ export function DashboardBlock({
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
-                      padding: 'var(--z-space-3) var(--z-space-4)',
-                      borderRadius: 'var(--z-radius-md)',
-                      background: 'var(--z-color-primary-subtle)',
-                      color: 'var(--z-color-primary-subtle-fg)',
+                      padding: 'var(--zuvi-space-3) var(--zuvi-space-4)',
+                      borderRadius: 'var(--zuvi-radius-md)',
+                      background: 'var(--zuvi-color-primary-subtle)',
+                      color: 'var(--zuvi-color-primary-subtle-fg)',
                     }}
                   >
-                    <span style={{ fontSize: 'var(--z-text-sm)', fontWeight: 'var(--z-weight-medium)' }}>{step.label}</span>
-                    <span style={{ fontSize: 'var(--z-text-sm)', fontVariantNumeric: 'tabular-nums' }}>{step.value}</span>
+                    <span style={{ fontSize: 'var(--zuvi-text-sm)', fontWeight: 'var(--zuvi-weight-medium)' }}>{step.label}</span>
+                    <span style={{ fontSize: 'var(--zuvi-text-sm)', fontVariantNumeric: 'tabular-nums' }}>{step.value}</span>
                   </div>
                 </div>
               ))}
@@ -367,9 +367,9 @@ export function DashboardBlock({
           <TableBody>
             {activities.map((row) => (
               <TableRow key={row.key}>
-                <TableCell style={{ color: 'var(--z-color-fg-muted)', fontVariantNumeric: 'tabular-nums' }}>{row.time}</TableCell>
+                <TableCell style={{ color: 'var(--zuvi-color-fg-muted)', fontVariantNumeric: 'tabular-nums' }}>{row.time}</TableCell>
                 <TableCell>{row.event}</TableCell>
-                <TableCell style={{ color: 'var(--z-color-fg-muted)' }}>{row.operator ?? '—'}</TableCell>
+                <TableCell style={{ color: 'var(--zuvi-color-fg-muted)' }}>{row.operator ?? '—'}</TableCell>
                 <TableCell>
                   <Tag color={row.status === 'info' ? 'primary' : row.status}>{row.statusText}</Tag>
                 </TableCell>

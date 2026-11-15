@@ -11,7 +11,7 @@ const bundler = require(require.resolve('esbuild', { paths: [require.resolve('vi
 // chevrotain 的主入口再导出 diagrams 工具，其源码模板内嵌 <script src=…> 外链；
 // CJS 命名空间引入让摇树失效，离线导出禁止任何外链，因此在打包层替换该模块。
 const chevrotainDiagramsStub = {
-  name: 'zui-builder-chevrotain-diagrams-stub',
+  name: 'zuvi-builder-chevrotain-diagrams-stub',
   setup(build: { onLoad(options: unknown, callback: (args: unknown) => unknown): void }) {
     build.onLoad(
       { filter: /chevrotain[\\/]lib(?:_esm)?[\\/]src[\\/]diagrams[\\/]render_public\.js$/ },
@@ -25,11 +25,11 @@ const chevrotainDiagramsStub = {
 };
 
 export function builderRuntimePlugin(): Plugin {
-  const publicId = 'virtual:zui-builder-runtime';
+  const publicId = 'virtual:zuvi-builder-runtime';
   const resolvedId = `\0${publicId}`;
   let cached: Promise<string> | undefined;
   return {
-    name: 'zui-standalone-page-runtime',
+    name: 'zuvi-standalone-page-runtime',
     resolveId(id) {
       if (id === publicId) return resolvedId;
     },

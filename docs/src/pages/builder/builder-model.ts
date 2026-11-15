@@ -39,7 +39,7 @@ export type BuilderData = PuckData<
 >;
 type Data = BuilderData;
 
-export const BUILDER_STORAGE_KEY = 'zui-page-builder-v1';
+export const BUILDER_STORAGE_KEY = 'zuvi-page-builder-v1';
 export const MAX_IMPORT_BYTES = 32 * 1024 * 1024;
 
 export interface BuilderSnapshot {
@@ -423,14 +423,14 @@ export function parseBuilderImport(raw: string): {
     const workspace = parseBuilderWorkspace(raw);
     return { pages: workspace.pages, symbols: workspace.symbols, workspace: true };
   }
-  if (value.format === 'zui-page' && value.version !== 1) throw new Error('不支持此页面文件版本。');
-  const data = validateBuilderData(value.format === 'zui-page' ? value.data : value);
+  if (value.format === 'zuvi-page' && value.version !== 1) throw new Error('不支持此页面文件版本。');
+  const data = validateBuilderData(value.format === 'zuvi-page' ? value.data : value);
   const name =
-    value.format === 'zui-page'
+    value.format === 'zuvi-page'
       ? shortText(value.name, '页面名称', 80)
       : String(data.root.props?.title || '导入的页面');
   const page = createBuilderPage(name, data, true);
-  if (value.format === 'zui-page' && value.pageId !== undefined)
+  if (value.format === 'zuvi-page' && value.pageId !== undefined)
     page.id = shortText(value.pageId, '页面 ID', 150);
   return {
     pages: [page],

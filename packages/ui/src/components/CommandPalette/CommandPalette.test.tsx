@@ -377,7 +377,7 @@ describe('CommandPalette 导航与选择契约', () => {
     rerender(
       <CommandPalette open commands={commands} onOpenChange={onOpenChange} aria-label="命令面板" />
     );
-    fireEvent.mouseDown(document.querySelector('.z-modal-overlay') as HTMLElement);
+    fireEvent.mouseDown(document.querySelector('.zuvi-modal-overlay') as HTMLElement);
     expect(onOpenChange).toHaveBeenLastCalledWith(
       false,
       expect.objectContaining({ reason: 'overlay' })

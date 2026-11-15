@@ -5,8 +5,8 @@
   min-height: 0;
   flex-direction: column;
   overflow: hidden;
-  color: var(--z-color-fg);
-  background: var(--z-color-bg);
+  color: var(--zuvi-color-fg);
+  background: var(--zuvi-color-bg);
 }
 
 .splitter-prototype button,
@@ -29,8 +29,8 @@
   gap: 16px;
   min-width: 0;
   padding: 12px 20px;
-  border-block-end: 1px solid var(--z-color-border);
-  background: var(--z-color-bg-elevated);
+  border-block-end: 1px solid var(--zuvi-color-border);
+  background: var(--zuvi-color-bg-elevated);
 }
 
 .splitter-prototype-header h1 {
@@ -52,17 +52,17 @@
   align-items: center;
   min-height: 22px;
   padding: 2px 8px;
-  color: var(--z-color-warning-subtle-fg);
-  border: 1px solid color-mix(in srgb, var(--z-color-warning) 45%, transparent);
-  border-radius: var(--z-radius-full);
-  background: var(--z-color-warning-subtle);
+  color: var(--zuvi-color-warning-subtle-fg);
+  border: 1px solid color-mix(in srgb, var(--zuvi-color-warning) 45%, transparent);
+  border-radius: var(--zuvi-radius-full);
+  background: var(--zuvi-color-warning-subtle);
   font-size: 11px;
-  font-weight: var(--z-weight-semibold);
+  font-weight: var(--zuvi-weight-semibold);
 }
 
 .splitter-prototype-eyebrow {
   margin: 0;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 11px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -87,37 +87,37 @@
 .splitter-prototype-toolbar button {
   min-height: 32px;
   padding: 6px 10px;
-  border: 1px solid var(--z-color-border);
-  border-radius: var(--z-radius-md);
-  background: var(--z-color-bg);
+  border: 1px solid var(--zuvi-color-border);
+  border-radius: var(--zuvi-radius-md);
+  background: var(--zuvi-color-bg);
   cursor: pointer;
   text-decoration: none;
 }
 
 .splitter-prototype-header-actions .splitter-prototype-back {
-  color: var(--z-color-primary);
-  border-color: color-mix(in srgb, var(--z-color-primary) 45%, var(--z-color-border));
-  font-weight: var(--z-weight-medium);
+  color: var(--zuvi-color-primary);
+  border-color: color-mix(in srgb, var(--zuvi-color-primary) 45%, var(--zuvi-color-border));
+  font-weight: var(--zuvi-weight-medium);
 }
 
 .splitter-prototype-header-actions a:hover,
 .splitter-prototype-header-actions button:hover,
 .splitter-prototype-toolbar button:hover {
-  border-color: var(--z-color-border-strong);
+  border-color: var(--zuvi-color-border-strong);
 }
 
 .splitter-prototype-header-actions a:focus-visible,
 .splitter-prototype-header-actions button:focus-visible,
 .splitter-prototype-toolbar button:focus-visible {
-  outline: 2px solid var(--z-color-focus-ring);
+  outline: 2px solid var(--zuvi-color-focus-ring);
   outline-offset: 2px;
 }
 
 .splitter-prototype-header-actions a[aria-current='page'],
 .splitter-prototype-header-actions button[aria-pressed='true'] {
-  color: var(--z-color-primary-subtle-fg);
-  border-color: var(--z-color-primary);
-  background: var(--z-color-primary-subtle);
+  color: var(--zuvi-color-primary-subtle-fg);
+  border-color: var(--zuvi-color-primary);
+  background: var(--zuvi-color-primary-subtle);
 }
 
 .splitter-prototype-main {
@@ -133,9 +133,9 @@
   flex: 0 0 auto;
   flex-wrap: wrap;
   padding: 10px 20px;
-  color: var(--z-color-fg-muted);
-  border-block-end: 1px solid var(--z-color-border);
-  background: color-mix(in srgb, var(--z-color-bg-elevated) 92%, var(--z-color-primary) 8%);
+  color: var(--zuvi-color-fg-muted);
+  border-block-end: 1px solid var(--zuvi-color-border);
+  background: color-mix(in srgb, var(--zuvi-color-bg-elevated) 92%, var(--zuvi-color-primary) 8%);
   font-size: 12px;
 }
 
@@ -160,7 +160,7 @@
 .splitter-prototype-event {
   min-width: 0;
   overflow-wrap: anywhere;
-  color: var(--z-color-fg);
+  color: var(--zuvi-color-fg);
 }
 
 .splitter-prototype-stage {
@@ -169,7 +169,7 @@
   min-height: 0;
   flex: 1 1 auto;
   overflow: hidden;
-  transition: width var(--z-duration-fast) var(--z-ease-standard);
+  transition: width var(--zuvi-duration-fast) var(--zuvi-ease-standard);
 }
 
 .splitter-prototype-stage[data-zero-measure='true'] {
@@ -177,8 +177,8 @@
   flex: 0 0 16px;
 }
 
-.splitter-prototype-stage .z-splitter {
-  background: var(--z-color-bg);
+.splitter-prototype-stage .zuvi-splitter {
+  background: var(--zuvi-color-bg);
 }
 
 .splitter-prototype-pane {
@@ -202,12 +202,12 @@
   flex-direction: column;
   gap: 4px;
   padding: 14px 10px;
-  background: color-mix(in srgb, var(--z-color-bg) 94%, var(--z-color-fg) 6%);
+  background: color-mix(in srgb, var(--zuvi-color-bg) 94%, var(--zuvi-color-fg) 6%);
 }
 
 .splitter-prototype-files h2 {
   padding: 0 8px 10px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 11px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -219,7 +219,7 @@
   padding: 8px;
   overflow: hidden;
   border: 0;
-  border-radius: var(--z-radius-sm);
+  border-radius: var(--zuvi-radius-sm);
   background: transparent;
   cursor: pointer;
   text-align: start;
@@ -231,19 +231,19 @@
 .splitter-prototype-files button.is-active,
 .splitter-prototype-master > button:hover,
 .splitter-prototype-master > button.is-active {
-  color: var(--z-color-primary-subtle-fg);
-  background: var(--z-color-primary-subtle);
+  color: var(--zuvi-color-primary-subtle-fg);
+  background: var(--zuvi-color-primary-subtle);
 }
 
 .splitter-prototype-editor {
   display: grid;
   grid-template-rows: auto 1fr auto;
-  background: color-mix(in srgb, var(--z-color-bg) 98%, var(--z-color-fg) 2%);
+  background: color-mix(in srgb, var(--zuvi-color-bg) 98%, var(--zuvi-color-fg) 2%);
 }
 
 .splitter-prototype-tab {
   padding: 10px 14px;
-  border-block-end: 1px solid var(--z-color-border);
+  border-block-end: 1px solid var(--zuvi-color-border);
   font-size: 12px;
 }
 
@@ -252,8 +252,8 @@
   margin: 0;
   padding: 24px;
   overflow: auto;
-  color: var(--z-color-fg);
-  font-family: var(--z-font-mono);
+  color: var(--zuvi-color-fg);
+  font-family: var(--zuvi-font-mono);
   font-size: 13px;
   line-height: 1.8;
 }
@@ -263,7 +263,7 @@
 .splitter-prototype-detail-grid label {
   display: grid;
   gap: 6px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 12px;
 }
 
@@ -271,7 +271,7 @@
   grid-template-columns: auto minmax(72px, 120px);
   align-items: center;
   padding: 10px 14px;
-  border-block-start: 1px solid var(--z-color-border);
+  border-block-start: 1px solid var(--zuvi-color-border);
 }
 
 .splitter-prototype input,
@@ -281,10 +281,10 @@
   width: 100%;
   min-width: 0;
   padding: 8px 10px;
-  color: var(--z-color-fg);
-  border: 1px solid var(--z-color-border);
-  border-radius: var(--z-radius-md);
-  background: var(--z-color-bg);
+  color: var(--zuvi-color-fg);
+  border: 1px solid var(--zuvi-color-border);
+  border-radius: var(--zuvi-radius-md);
+  background: var(--zuvi-color-bg);
 }
 
 .splitter-prototype-preview {
@@ -292,7 +292,7 @@
   flex-direction: column;
   gap: 16px;
   padding: 18px;
-  background: color-mix(in srgb, var(--z-color-primary) 3%, var(--z-color-bg));
+  background: color-mix(in srgb, var(--zuvi-color-primary) 3%, var(--zuvi-color-bg));
 }
 
 .splitter-prototype-preview article {
@@ -300,9 +300,9 @@
   gap: 10px;
   min-width: 0;
   padding: 18px;
-  border: 1px solid var(--z-color-border);
-  border-radius: var(--z-radius-lg);
-  background: var(--z-color-bg-elevated);
+  border: 1px solid var(--zuvi-color-border);
+  border-radius: var(--zuvi-radius-lg);
+  background: var(--zuvi-color-bg-elevated);
 }
 
 .splitter-prototype-preview article span {
@@ -312,17 +312,17 @@
 }
 
 .splitter-prototype-preview article small {
-  color: var(--z-color-success);
+  color: var(--zuvi-color-success);
 }
 
 .splitter-prototype-preview > button,
 .splitter-prototype-detail-actions button {
   min-height: 36px;
   padding: 8px 12px;
-  color: var(--z-color-primary-subtle-fg);
-  border: 1px solid var(--z-color-primary);
-  border-radius: var(--z-radius-md);
-  background: var(--z-color-primary-subtle);
+  color: var(--zuvi-color-primary-subtle-fg);
+  border: 1px solid var(--zuvi-color-primary);
+  border-radius: var(--zuvi-radius-md);
+  background: var(--zuvi-color-primary-subtle);
   cursor: pointer;
 }
 
@@ -350,7 +350,7 @@
 }
 
 .splitter-prototype-master > button span {
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 12px;
 }
 

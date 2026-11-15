@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useAutoTranslate, type TranslateProvider } from '@zui/i18n';
+import { useAutoTranslate, type TranslateProvider } from '@zuvi/i18n';
 import {
   Alert,
   Button,
@@ -25,8 +25,8 @@ import {
   zhCN,
   zhTW,
   mergeLocale,
-  type ZuiLocale,
-} from '@zui/react';
+  type ZuviLocale,
+} from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CodeBlock from '../../components/CodeBlock';
@@ -35,7 +35,7 @@ import { usePageTitle } from '../../components/usePageTitle';
 
 /* --------------------------------- 常量 --------------------------------- */
 
-const LOCALES: Array<{ value: string; label: string; locale: ZuiLocale }> = [
+const LOCALES: Array<{ value: string; label: string; locale: ZuviLocale }> = [
   { value: 'zhCN', label: '🇨🇳 简体中文 (zh-CN)', locale: zhCN },
   { value: 'enUS', label: '🇺🇸 English (en-US)', locale: enUS },
   { value: 'zhTW', label: '🇭🇰 繁體中文 (zh-TW)', locale: zhTW },
@@ -48,7 +48,7 @@ const LOCALES: Array<{ value: string; label: string; locale: ZuiLocale }> = [
   { value: 'ptBR', label: '🇧🇷 Português (pt-BR)', locale: ptBR },
 ];
 
-const LOCALE_USAGE_CODE = `import { ConfigProvider, enUS } from '@zui/react';
+const LOCALE_USAGE_CODE = `import { ConfigProvider, enUS } from '@zuvi/react';
 
 export default function App() {
   return (
@@ -59,7 +59,7 @@ export default function App() {
   );
 }`;
 
-const MERGE_LOCALE_CODE = `import { ConfigProvider, enUS, mergeLocale } from '@zui/react';
+const MERGE_LOCALE_CODE = `import { ConfigProvider, enUS, mergeLocale } from '@zuvi/react';
 
 // 基于 enUS 深度覆盖特定组件文案
 const customLocale = mergeLocale(enUS, {
@@ -91,7 +91,7 @@ const PROVIDER_OPTIONS: Array<{ value: TranslateProvider; label: string }> = [
   { value: 'custom', label: 'Custom (POST)' },
 ];
 
-const AI_CONFIG_CODE = `import { useAutoTranslate } from '@zui/i18n';
+const AI_CONFIG_CODE = `import { useAutoTranslate } from '@zuvi/i18n';
 
 const { tSync, isLoading, clearCache } = useAutoTranslate({
   provider: 'openai',
@@ -122,7 +122,7 @@ tSync('请选择', { component: 'Select', role: 'placeholder' });`;
 const PROXY_VITE_CODE = `// docs/vite.config.ts 已配置开发环境转发
 proxy: { '/api/translate': 'http://127.0.0.1:8787' }`;
 
-function readCacheSnapshot(cacheKey = 'zui-translate-cache'): Record<string, string> {
+function readCacheSnapshot(cacheKey = 'zuvi-translate-cache'): Record<string, string> {
   try {
     const raw = window.localStorage.getItem(cacheKey);
     return raw ? (JSON.parse(raw) as Record<string, string>) : {};
@@ -196,8 +196,8 @@ function I18nPageBody(): React.ReactNode {
     <div className="doc-page">
       <h1 className="doc-h1">国际化 i18n 与 AI 翻译</h1>
       <p className="doc-lead">
-        ZUI 采用双层国际化方案：底层提供 <strong>10 套官方内置标准语言包</strong>
-        （开箱即用、无网络依赖）， 同时集成 <strong>@zui/i18n 智能翻译管道</strong>
+        ZUVI 采用双层国际化方案：底层提供 <strong>10 套官方内置标准语言包</strong>
+        （开箱即用、无网络依赖）， 同时集成 <strong>@zuvi/i18n 智能翻译管道</strong>
         ，支持任意大模型驱动未翻译文案的自动回填与持久化缓存。
       </p>
 
@@ -234,28 +234,28 @@ function I18nPageBody(): React.ReactNode {
             <div className="doc-locale-panel">
               <div className="doc-locale-controls">
                 <div>
-                  <span style={{ fontSize: 'var(--z-text-xs)', color: 'var(--z-color-fg-muted)' }}>
+                  <span style={{ fontSize: 'var(--zuvi-text-xs)', color: 'var(--zuvi-color-fg-muted)' }}>
                     选择器占位符
                   </span>
                   <Select options={[]} style={{ minWidth: 160 }} />
                 </div>
 
                 <div>
-                  <span style={{ fontSize: 'var(--z-text-xs)', color: 'var(--z-color-fg-muted)' }}>
+                  <span style={{ fontSize: 'var(--zuvi-text-xs)', color: 'var(--zuvi-color-fg-muted)' }}>
                     日期选择面板
                   </span>
                   <DatePicker defaultValue="2026-11-05" />
                 </div>
 
                 <div>
-                  <span style={{ fontSize: 'var(--z-text-xs)', color: 'var(--z-color-fg-muted)' }}>
+                  <span style={{ fontSize: 'var(--zuvi-text-xs)', color: 'var(--zuvi-color-fg-muted)' }}>
                     时间选择
                   </span>
                   <TimePicker />
                 </div>
 
                 <div>
-                  <span style={{ fontSize: 'var(--z-text-xs)', color: 'var(--z-color-fg-muted)' }}>
+                  <span style={{ fontSize: 'var(--zuvi-text-xs)', color: 'var(--zuvi-color-fg-muted)' }}>
                     气泡确认框
                   </span>
                   <Popconfirm title="Are you sure / 确定吗？">
@@ -265,22 +265,22 @@ function I18nPageBody(): React.ReactNode {
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                <span style={{ fontSize: 'var(--z-text-xs)', color: 'var(--z-color-fg-muted)' }}>
+                <span style={{ fontSize: 'var(--zuvi-text-xs)', color: 'var(--zuvi-color-fg-muted)' }}>
                   分页控件（包含上一页、下一页、跳页文案）
                 </span>
                 <Pagination total={100} defaultPage={1} showJumper />
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                <span style={{ fontSize: 'var(--z-text-xs)', color: 'var(--z-color-fg-muted)' }}>
+                <span style={{ fontSize: 'var(--zuvi-text-xs)', color: 'var(--zuvi-color-fg-muted)' }}>
                   空状态
                 </span>
                 <div
                   style={{
                     padding: 12,
-                    background: 'var(--z-color-bg)',
-                    borderRadius: 'var(--z-radius-sm)',
-                    border: '1px dashed var(--z-color-border)',
+                    background: 'var(--zuvi-color-bg)',
+                    borderRadius: 'var(--zuvi-radius-sm)',
+                    border: '1px dashed var(--zuvi-color-border)',
                   }}
                 >
                   <Empty />
@@ -304,9 +304,9 @@ function I18nPageBody(): React.ReactNode {
       </Demo>
 
       {/* ---------------- 第二部分：AI 动态翻译 ---------------- */}
-      <h2 className="doc-h2">2. AI 动态智能翻译 (@zui/i18n)</h2>
+      <h2 className="doc-h2">2. AI 动态智能翻译 (@zuvi/i18n)</h2>
       <p className="doc-p">
-        除了标准预设语言包，ZUI 还提供了<code>@zui/i18n</code> 运行时工具。
+        除了标准预设语言包，ZUVI 还提供了<code>@zuvi/i18n</code> 运行时工具。
         当系统包含动态业务文案或冷门语种时，可将文本与组件上下文提交给 LLM
         进行精准翻译并自动缓存在浏览器中。兼容 OpenAI Chat Completions 协议的模型可填写 API
         根地址、密钥和模型名。 正式接入建议通过服务端代理保管密钥；本页直连服务商仅用于临时调试。
@@ -423,16 +423,16 @@ function I18nPageBody(): React.ReactNode {
           <div
             style={{
               padding: 16,
-              background: 'var(--z-color-bg)',
-              border: '1px solid var(--z-color-border-subtle)',
-              borderRadius: 'var(--z-radius-sm)',
+              background: 'var(--zuvi-color-bg)',
+              border: '1px solid var(--zuvi-color-border-subtle)',
+              borderRadius: 'var(--zuvi-radius-sm)',
             }}
           >
             <ul style={{ margin: 0, paddingLeft: 20, display: 'grid', gap: 8 }}>
               {DEMO_TEXTS.map(({ text, context }) => (
                 <li key={text}>
                   <code className="doc-code-inline">{text}</code>
-                  <span aria-hidden="true" style={{ color: 'var(--z-color-fg-muted)' }}>
+                  <span aria-hidden="true" style={{ color: 'var(--zuvi-color-fg-muted)' }}>
                     {' '}
                     [上下文: {context.component} / {context.role}] →{' '}
                   </span>
@@ -456,7 +456,7 @@ function I18nPageBody(): React.ReactNode {
               </Button>
               {isLoading ? <Tag color="primary">AI 翻译中…</Tag> : null}
               {error ? <Tag color="error">{error.message}</Tag> : null}
-              <span style={{ fontSize: 'var(--z-text-xs)', color: 'var(--z-color-fg-muted)' }}>
+              <span style={{ fontSize: 'var(--zuvi-text-xs)', color: 'var(--zuvi-color-fg-muted)' }}>
                 浏览器全部翻译缓存条目：<strong>{cacheSize}</strong>
               </span>
             </div>
@@ -494,19 +494,19 @@ function I18nPageBody(): React.ReactNode {
         rows={[
           {
             name: 'locale',
-            type: 'ZuiLocale',
+            type: 'ZuviLocale',
             defaultValue: 'zhCN',
             description: 'ConfigProvider 接受的语言包对象，包含所有组件文案配置。',
           },
           {
             name: 'mergeLocale',
-            type: '(base: ZuiLocale, override: DeepPartial<ZuiLocale>) => ZuiLocale',
+            type: '(base: ZuviLocale, override: DeepPartial<ZuviLocale>) => ZuviLocale',
             defaultValue: '—',
             description: '用于在现有语言包基础上安全局部覆盖字段。',
           },
           {
-            name: 'useZuiConfig',
-            type: '() => { locale: ZuiLocale }',
+            name: 'useZuviConfig',
+            type: '() => { locale: ZuviLocale }',
             defaultValue: '—',
             description: '自定义业务组件获取当前全局生效语言包的 Hook。',
           },
@@ -514,7 +514,7 @@ function I18nPageBody(): React.ReactNode {
             name: 'useAutoTranslate',
             type: '(config: TranslateConfig) => AutoTranslateReturn',
             defaultValue: '—',
-            description: '@zui/i18n 提供的 AI 动态翻译 Hook，提供 t 与 tSync 方法。',
+            description: '@zuvi/i18n 提供的 AI 动态翻译 Hook，提供 t 与 tSync 方法。',
           },
         ]}
       />

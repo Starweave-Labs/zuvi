@@ -18,7 +18,7 @@
 
 DocumentServer 的 web-apps/sdkjs Git 子模块提交与本次保留的研究快照不同；core/server 一致。因此这五个提交是分别固定的参考快照，**没有组成并验证一个统一发布版本**。字体、词典、模板、插件仓库属于独立依赖，本次没有声称读完这些仓库或 ONLYOFFICE 全公司的其他产品。
 
-机器记录见 [源码索引](onlyoffice-source-inventory-2026-11-13.json)。本机完整参考位于 `/tmp/zui-onlyoffice-reference-20261112/`；可通过 `python3 scripts/inventory-onlyoffice-source.py SOURCE_ROOT OUTPUT_JSON` 重建扫描。固定提交和定位信息保存在仓库文档中，临时目录不作为长期交付依赖。
+机器记录见 [源码索引](onlyoffice-source-inventory-2026-11-13.json)。本机完整参考位于 `/tmp/zuvi-onlyoffice-reference-20261112/`；可通过 `python3 scripts/inventory-onlyoffice-source.py SOURCE_ROOT OUTPUT_JSON` 重建扫描。固定提交和定位信息保存在仓库文档中，临时目录不作为长期交付依赖。
 
 ## 架构与关键链路
 
@@ -74,4 +74,4 @@ flowchart TD
 
 公式单独从构造器索引进一步建立“函数名—参数—类型转换—数组—错误—精度—文件缓存”的测试清单，按函数验收，不能用第三方计算库提供了相同名字作为完成证据。
 
-每个功能的完成记录包含：源码行为摘要、实际 ZUI 入口、数据与格式结果、选择/焦点/IME/取消、一次撤销与重做、只读与异常、原生保存重开、针对性测试和浏览器验收。只完成一部分时保留“部分”，明确尚未支持的对象或边界。当前台账没有把待做项标成已对齐。
+每个功能的完成记录包含：源码行为摘要、实际 ZUVI 入口、数据与格式结果、选择/焦点/IME/取消、一次撤销与重做、只读与异常、原生保存重开、针对性测试和浏览器验收。只完成一部分时保留“部分”，明确尚未支持的对象或边界。当前台账没有把待做项标成已对齐。

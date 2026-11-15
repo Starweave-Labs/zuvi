@@ -16,7 +16,7 @@ describe('settings block', () => {
     expect(screen.getByRole('button', { name: '安全设置' })).toBeInTheDocument();
     // 基本设置表单受控值
     const nameInput = screen.getByLabelText('站点名称') as HTMLInputElement;
-    expect(nameInput.value).toBe('ZUI 管理平台');
+    expect(nameInput.value).toBe('ZUVI 管理平台');
     expect(screen.getByLabelText('站点描述')).toHaveValue('企业级中后台统一工作台');
   });
 

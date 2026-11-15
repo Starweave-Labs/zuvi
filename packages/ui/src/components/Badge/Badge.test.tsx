@@ -9,11 +9,11 @@ describe('Badge', () => {
     it('renders root wrapper with children and indicator', () => {
       const { container } = render(<Badge count={5}>消息</Badge>);
       const root = container.querySelector('[data-part="root"]') as HTMLElement;
-      expect(root).toHaveClass('z-badge');
+      expect(root).toHaveClass('zuvi-badge');
       expect(root).toHaveAttribute('data-color', 'error');
       expect(screen.getByText('消息')).toBeInTheDocument();
       const indicator = root.querySelector('[data-part="indicator"]');
-      expect(indicator).toHaveClass('z-badge-indicator');
+      expect(indicator).toHaveClass('zuvi-badge-indicator');
       expect(indicator).toHaveTextContent('5');
     });
 
@@ -62,7 +62,7 @@ describe('Badge', () => {
       render(<Badge count={8} />);
       const indicator = screen.getByText('8');
       expect(indicator).toHaveAttribute('data-part', 'indicator');
-      expect(indicator).toHaveClass('z-badge-indicator');
+      expect(indicator).toHaveClass('zuvi-badge-indicator');
       expect(indicator).toHaveAttribute('data-color', 'error');
       expect(screen.queryByText('消息')).not.toBeInTheDocument();
     });
@@ -109,9 +109,9 @@ describe('Badge', () => {
       </Badge>
     );
     const root = container.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-badge', 'my-root', 'cls-root');
+    expect(root).toHaveClass('zuvi-badge', 'my-root', 'cls-root');
     expect(root.querySelector('[data-part="indicator"]')).toHaveClass(
-      'z-badge-indicator',
+      'zuvi-badge-indicator',
       'cls-indicator'
     );
   });
@@ -119,6 +119,6 @@ describe('Badge', () => {
   it('passes className to standalone indicator', () => {
     render(<Badge count={2} className="my-badge" classNames={{ indicator: 'cls-indicator' }} />);
     const indicator = screen.getByText('2');
-    expect(indicator).toHaveClass('z-badge-indicator', 'my-badge', 'cls-indicator');
+    expect(indicator).toHaveClass('zuvi-badge-indicator', 'my-badge', 'cls-indicator');
   });
 });

@@ -18,7 +18,7 @@ import {
   RotateCcw,
   Scissors,
   Search,
-} from '@zui/icons';
+} from '@zuvi/icons';
 import {
   EditorContent,
   Extension,
@@ -32,7 +32,7 @@ import { TextAlign } from '@tiptap/extension-text-align';
 import { TextStyleKit, FontFamily } from '@tiptap/extension-text-style';
 import { DropdownMenu } from '../DropdownMenu';
 import { studioFontFamilyCss, studioFontFamilyInput } from './studio-font-input';
-import { Check, Droplet, Minus, Plus, Type as TypeIcon } from '@zui/icons';
+import { Check, Droplet, Minus, Plus, Type as TypeIcon } from '@zuvi/icons';
 import { TableKit } from '@tiptap/extension-table';
 import { Button } from '../Button';
 import { Checkbox } from '../Checkbox';
@@ -73,7 +73,7 @@ const PageBreak = Node.create({
   parseHTML: () => [{ tag: 'div[data-word-page-break]' }],
   renderHTML: () => [
     'div',
-    { 'data-word-page-break': '', class: 'z-studio-word-page-break', 'aria-label': '分页符' },
+    { 'data-word-page-break': '', class: 'zuvi-studio-word-page-break', 'aria-label': '分页符' },
   ],
 });
 
@@ -211,14 +211,14 @@ function RibbonGroup({
       role="group"
       aria-label={label}
     >
-      <div className="z-studio-word-controls">{children}</div>
-      <span className="z-studio-word-group-label">{label}</span>
+      <div className="zuvi-studio-word-controls">{children}</div>
+      <span className="zuvi-studio-word-group-label">{label}</span>
     </div>
   );
 }
 
 function RibbonRow({ children }: { children: React.ReactNode }) {
-  return <div className="z-studio-word-control-row">{children}</div>;
+  return <div className="zuvi-studio-word-control-row">{children}</div>;
 }
 
 function WordRuler({
@@ -235,23 +235,23 @@ function WordRuler({
   const unit = MM_TO_PX * 10;
   const count = Math.floor((length - margin * 2) / unit);
   const rulerStyle = {
-    '--z-studio-word-ruler-unit': `${unit * scale}px`,
-    '--z-studio-word-ruler-margin': `${margin * scale}px`,
+    '--zuvi-studio-word-ruler-unit': `${unit * scale}px`,
+    '--zuvi-studio-word-ruler-margin': `${margin * scale}px`,
     [vertical ? 'height' : 'width']: length * scale,
   } as React.CSSProperties;
   return (
     <div
-      className={`z-studio-word-ruler z-studio-word-ruler-${vertical ? 'vertical' : 'horizontal'}`}
+      className={`z-studio-word-ruler zuvi-studio-word-ruler-${vertical ? 'vertical' : 'horizontal'}`}
       data-part="word-ruler"
       data-orientation={vertical ? 'vertical' : 'horizontal'}
       aria-hidden="true"
       style={rulerStyle}
     >
-      <span className="z-studio-word-ruler-text-area" />
+      <span className="zuvi-studio-word-ruler-text-area" />
       {Array.from({ length: Math.max(0, count) + 1 }, (_, index) => (
         <span
           key={index}
-          className="z-studio-word-ruler-number"
+          className="zuvi-studio-word-ruler-number"
           style={{ [vertical ? 'top' : 'left']: (margin + index * unit) * scale }}
         >
           {index}
@@ -358,7 +358,7 @@ function RegionEditor({
       editor.commands.setContent(content, { emitUpdate: false });
   }, [editor, content, request]);
   return (
-    <EditorContent editor={editor} className="z-studio-word-content z-studio-word-region-content" />
+    <EditorContent editor={editor} className="zuvi-studio-word-content zuvi-studio-word-region-content" />
   );
 }
 
@@ -991,7 +991,7 @@ export function StudioWord({
 
   return (
     <div
-      className="z-studio-word"
+      className="zuvi-studio-word"
       data-part="word"
       data-readonly={!editable || undefined}
       onClick={(event) => {
@@ -1032,7 +1032,7 @@ export function StudioWord({
         }
       }}
     >
-      <Tabs value={tab} onValueChange={changeTab} className="z-studio-word-ribbon z-studio-ribbon">
+      <Tabs value={tab} onValueChange={changeTab} className="zuvi-studio-word-ribbon zuvi-studio-ribbon">
         <StudioRibbonTabs>
           <Tabs.List aria-label="Word 工具">
             <Tabs.Trigger value="home">开始</Tabs.Trigger>
@@ -1042,18 +1042,18 @@ export function StudioWord({
             <Tabs.Trigger value="review">审阅</Tabs.Trigger>
             <Tabs.Trigger value="view">视图</Tabs.Trigger>
             {region !== 'content' && (
-              <Tabs.Trigger value="header-footer" className="z-studio-word-context-tab">
+              <Tabs.Trigger value="header-footer" className="zuvi-studio-word-context-tab">
                 页眉和页脚
               </Tabs.Trigger>
             )}
           </Tabs.List>
         </StudioRibbonTabs>
-        <Tabs.Panel value="home" className="z-studio-word-tool-row">
-          <RibbonGroup label="剪贴板" className="z-studio-word-clipboard-group">
+        <Tabs.Panel value="home" className="zuvi-studio-word-tool-row">
+          <RibbonGroup label="剪贴板" className="zuvi-studio-word-clipboard-group">
             <Button
               variant="ghost"
               size="sm"
-              className="z-studio-word-large-tool"
+              className="zuvi-studio-word-large-tool"
               title="粘贴剪贴板文本 (Ctrl/⌘+V)"
               disabled={toolsDisabled || clipboardBusy}
               onMouseDown={keepSelection}
@@ -1062,7 +1062,7 @@ export function StudioWord({
               <Clipboard size={24} />
               <span>粘贴</span>
             </Button>
-            <div className="z-studio-word-tool-stack">
+            <div className="zuvi-studio-word-tool-stack">
               <Button
                 variant="ghost"
                 size="sm"
@@ -1090,7 +1090,7 @@ export function StudioWord({
           <Button
             variant="ghost"
             size="sm"
-            className="z-studio-word-large-tool"
+            className="zuvi-studio-word-large-tool"
             aria-label="格式刷"
             title="格式刷：先选中带格式的文本单击取用，再选中目标文本应用；Esc 取消"
             aria-pressed={formatPainter ? true : undefined}
@@ -1101,7 +1101,7 @@ export function StudioWord({
             <Droplet size={24} />
             <span>格式刷</span>
           </Button>
-          <RibbonGroup label="历史" className="z-studio-word-history-group">
+          <RibbonGroup label="历史" className="zuvi-studio-word-history-group">
             <Button
               iconStart={<RotateCcw size={16} />}
               variant="ghost"
@@ -1123,7 +1123,7 @@ export function StudioWord({
               重做
             </Button>
           </RibbonGroup>
-          <RibbonGroup label="字体" className="z-studio-word-font-group">
+          <RibbonGroup label="字体" className="zuvi-studio-word-font-group">
             <RibbonRow>
               <StudioFontControl
                 label="字体"
@@ -1132,7 +1132,7 @@ export function StudioWord({
                 value={selection?.font || 'Noto Sans SC'}
                 disabled={toolsDisabled}
                 contextKey={fontContextKey}
-                className="z-studio-word-font"
+                className="zuvi-studio-word-font"
                 onEditStart={rememberFontSelection}
                 onCommit={(value, reason) => commitFont('family', value, reason)}
                 onCancel={() => editor?.commands.focus()}
@@ -1146,7 +1146,7 @@ export function StudioWord({
                 value={(selection?.fontSize || '12pt').replace(/pt$/i, '')}
                 disabled={toolsDisabled}
                 contextKey={fontContextKey}
-                className="z-studio-word-size"
+                className="zuvi-studio-word-size"
                 onEditStart={rememberFontSelection}
                 onCommit={(value, reason) => commitFont('size', value, reason)}
                 onCancel={() => editor?.commands.focus()}
@@ -1208,7 +1208,7 @@ export function StudioWord({
                 onMouseDown={keepSelection}
                 onClick={() => editor?.chain().focus().toggleUnderline().run()}
               >
-                <span className="z-studio-word-underline">U</span>
+                <span className="zuvi-studio-word-underline">U</span>
               </Button>
               <Button
                 aria-label="删除线"
@@ -1260,7 +1260,7 @@ export function StudioWord({
                 onMouseDown={keepSelection}
                 onClick={() => editor?.chain().focus().unsetAllMarks().clearNodes().run()}
               >
-                <span aria-hidden="true" className="z-studio-word-clear-format">
+                <span aria-hidden="true" className="zuvi-studio-word-clear-format">
                   A
                 </span>
               </Button>
@@ -1272,7 +1272,7 @@ export function StudioWord({
                 }}
               >
                 <DropdownMenu.Trigger
-                  className="z-studio-word-highlight-trigger"
+                  className="zuvi-studio-word-highlight-trigger"
                   onMouseDown={keepSelection}
                   aria-label="文字高亮"
                   title="文字高亮"
@@ -1282,17 +1282,17 @@ export function StudioWord({
                   <Droplet size={16} />
                   <span
                     aria-hidden="true"
-                    className="z-studio-word-highlight-bar"
+                    className="zuvi-studio-word-highlight-bar"
                     style={{ background: selection?.highlight || 'transparent' }}
                   />
                 </DropdownMenu.Trigger>
-                <DropdownMenu.Content className="z-studio-word-highlight-menu">
+                <DropdownMenu.Content className="zuvi-studio-word-highlight-menu">
                   <DropdownMenu.Label>高亮颜色</DropdownMenu.Label>
                   <DropdownMenu.Item
                     onSelect={() => setHighlight(null)}
                     disabled={!selection?.highlight}
                   >
-                    <span className="z-studio-word-highlight-row">
+                    <span className="zuvi-studio-word-highlight-row">
                       无颜色
                       {!selection?.highlight ? <Check size={14} aria-hidden="true" /> : null}
                     </span>
@@ -1300,10 +1300,10 @@ export function StudioWord({
                   <DropdownMenu.Separator />
                   {WORD_HIGHLIGHT_COLORS.map((color) => (
                     <DropdownMenu.Item key={color.value} onSelect={() => setHighlight(color.value)}>
-                      <span className="z-studio-word-highlight-row">
+                      <span className="zuvi-studio-word-highlight-row">
                         <span
                           aria-hidden="true"
-                          className="z-studio-word-highlight-swatch"
+                          className="zuvi-studio-word-highlight-swatch"
                           style={{ background: color.value }}
                         />
                         {color.label}
@@ -1323,7 +1323,7 @@ export function StudioWord({
                 }}
               >
                 <DropdownMenu.Trigger
-                  className="z-studio-word-case-trigger"
+                  className="zuvi-studio-word-case-trigger"
                   onMouseDown={keepSelection}
                   aria-label="变更大小写"
                   title="变更大小写"
@@ -1331,7 +1331,7 @@ export function StudioWord({
                 >
                   <TypeIcon size={16} />
                 </DropdownMenu.Trigger>
-                <DropdownMenu.Content className="z-studio-word-case-menu">
+                <DropdownMenu.Content className="zuvi-studio-word-case-menu">
                   <DropdownMenu.Label>变更大小写</DropdownMenu.Label>
                   <DropdownMenu.Item onSelect={() => transformCase('upper')}>
                     全部大写
@@ -1346,7 +1346,7 @@ export function StudioWord({
               </DropdownMenu>
             </RibbonRow>
           </RibbonGroup>
-          <RibbonGroup label="段落" className="z-studio-word-paragraph-group">
+          <RibbonGroup label="段落" className="zuvi-studio-word-paragraph-group">
             <RibbonRow>
               <Button
                 aria-label="项目符号"
@@ -1439,14 +1439,14 @@ export function StudioWord({
               ))}
             </RibbonRow>
           </RibbonGroup>
-          <RibbonGroup label="样式" className="z-studio-word-styles-group">
-            <div className="z-studio-word-style-gallery" data-part="word-style-gallery">
+          <RibbonGroup label="样式" className="zuvi-studio-word-styles-group">
+            <div className="zuvi-studio-word-style-gallery" data-part="word-style-gallery">
               {STYLE_PREVIEWS.map(({ value, label }) => (
                 <Button
                   key={value}
                   variant="ghost"
                   size="sm"
-                  className="z-studio-word-style-preview"
+                  className="zuvi-studio-word-style-preview"
                   data-style={value}
                   aria-label={`${label}样式`}
                   aria-pressed={selection?.style === value}
@@ -1455,7 +1455,7 @@ export function StudioWord({
                   onMouseDown={keepSelection}
                   onClick={() => applyParagraphStyle(value)}
                 >
-                  <span className="z-studio-word-style-sample" aria-hidden="true">
+                  <span className="zuvi-studio-word-style-sample" aria-hidden="true">
                     AaBbCc
                   </span>
                   <span>{label}</span>
@@ -1464,7 +1464,7 @@ export function StudioWord({
             </div>
             <Select
               aria-label="段落样式"
-              className="z-studio-word-style-list"
+              className="zuvi-studio-word-style-list"
               options={STYLE_OPTIONS}
               value={selection?.style || 'paragraph'}
               disabled={toolsDisabled}
@@ -1472,7 +1472,7 @@ export function StudioWord({
               onChange={applyParagraphStyle}
             />
           </RibbonGroup>
-          <RibbonGroup label="编辑" className="z-studio-word-navigation-group">
+          <RibbonGroup label="编辑" className="zuvi-studio-word-navigation-group">
             <Button
               aria-label="查找与替换"
               title="查找与替换 (Ctrl/⌘+F)"
@@ -1497,12 +1497,12 @@ export function StudioWord({
             </Button>
           </RibbonGroup>
         </Tabs.Panel>
-        <Tabs.Panel value="insert" className="z-studio-word-tool-row">
+        <Tabs.Panel value="insert" className="zuvi-studio-word-tool-row">
           <RibbonGroup label="页面">
             <Button
               variant="ghost"
               size="sm"
-              className="z-studio-word-large-tool"
+              className="zuvi-studio-word-large-tool"
               title="插入分页符"
               disabled={toolsDisabled}
               onMouseDown={keepSelection}
@@ -1512,7 +1512,7 @@ export function StudioWord({
               <span>分页符</span>
             </Button>
           </RibbonGroup>
-          <RibbonGroup label="表格" className="z-studio-word-table-group">
+          <RibbonGroup label="表格" className="zuvi-studio-word-table-group">
             <Select
               aria-label="表格行数"
               size="sm"
@@ -1567,7 +1567,7 @@ export function StudioWord({
               accept="image/png,image/jpeg"
               aria-label="选择 Word 图片"
               ref={imageInputRef}
-              className="z-studio-word-file-input"
+              className="zuvi-studio-word-file-input"
               tabIndex={-1}
               disabled={toolsDisabled || imageBusy}
               onChange={(event) => {
@@ -1579,7 +1579,7 @@ export function StudioWord({
             <Button
               variant="ghost"
               size="sm"
-              className="z-studio-word-large-tool"
+              className="zuvi-studio-word-large-tool"
               disabled={toolsDisabled || imageBusy}
               onMouseDown={keepSelection}
               onClick={() => imageInputRef.current?.click()}
@@ -1597,7 +1597,7 @@ export function StudioWord({
                   aria-label="图片宽度"
                   value={String(selection.image.width)}
                   disabled={toolsDisabled}
-                  className="z-studio-word-image-size"
+                  className="zuvi-studio-word-image-size"
                   onChange={(event) => resizeImage('width', event.target.value)}
                 />
                 <span>×</span>
@@ -1609,7 +1609,7 @@ export function StudioWord({
                   aria-label="图片高度"
                   value={String(selection.image.height)}
                   disabled={toolsDisabled}
-                  className="z-studio-word-image-size"
+                  className="zuvi-studio-word-image-size"
                   onChange={(event) => resizeImage('height', event.target.value)}
                 />
                 <Checkbox
@@ -1657,7 +1657,7 @@ export function StudioWord({
               链接
             </Button>
           </RibbonGroup>
-          <RibbonGroup label="页眉页脚" className="z-studio-word-header-group">
+          <RibbonGroup label="页眉页脚" className="zuvi-studio-word-header-group">
             <Button
               variant="ghost"
               size="sm"
@@ -1735,7 +1735,7 @@ export function StudioWord({
               分隔线
             </Button>
           </RibbonGroup>
-          <RibbonGroup label="表格工具" className="z-studio-word-table-tools-group">
+          <RibbonGroup label="表格工具" className="zuvi-studio-word-table-tools-group">
             <Button
               variant="ghost"
               size="sm"
@@ -1810,8 +1810,8 @@ export function StudioWord({
             </Button>
           </RibbonGroup>
         </Tabs.Panel>
-        <Tabs.Panel value="layout" className="z-studio-word-tool-row">
-          <RibbonGroup label="页面设置" className="z-studio-word-page-group">
+        <Tabs.Panel value="layout" className="zuvi-studio-word-tool-row">
+          <RibbonGroup label="页面设置" className="zuvi-studio-word-page-group">
             <Select
               aria-label="纸张尺寸"
               size="sm"
@@ -1854,7 +1854,7 @@ export function StudioWord({
               onChange={(value) => updatePage({ margin: Number(value) })}
             />
           </RibbonGroup>
-          <RibbonGroup label="段落" className="z-studio-word-layout-group">
+          <RibbonGroup label="段落" className="zuvi-studio-word-layout-group">
             <Button
               variant="ghost"
               size="sm"
@@ -1899,8 +1899,8 @@ export function StudioWord({
               }}
             />
           </RibbonGroup>
-          <RibbonGroup label="页眉页脚" className="z-studio-word-distance-group">
-            <label className="z-studio-word-distance-label">
+          <RibbonGroup label="页眉页脚" className="zuvi-studio-word-distance-group">
+            <label className="zuvi-studio-word-distance-label">
               页眉
               <Input
                 type="number"
@@ -1918,7 +1918,7 @@ export function StudioWord({
                 }}
               />
             </label>
-            <label className="z-studio-word-distance-label">
+            <label className="zuvi-studio-word-distance-label">
               页脚
               <Input
                 type="number"
@@ -1938,12 +1938,12 @@ export function StudioWord({
             </label>
           </RibbonGroup>
         </Tabs.Panel>
-        <Tabs.Panel value="references" className="z-studio-word-tool-row">
+        <Tabs.Panel value="references" className="zuvi-studio-word-tool-row">
           <RibbonGroup label="目录">
             <Button
               variant="ghost"
               size="sm"
-              className="z-studio-word-large-tool"
+              className="zuvi-studio-word-large-tool"
               iconStart={<Book size={24} />}
               disabled={!bodyEditor}
               title="按文档标题导航"
@@ -1965,7 +1965,7 @@ export function StudioWord({
           <RibbonGroup label="链接">
             <Button
               iconStart={<Link size={24} />}
-              className="z-studio-word-large-tool"
+              className="zuvi-studio-word-large-tool"
               variant="ghost"
               size="sm"
               disabled={toolsDisabled}
@@ -1980,11 +1980,11 @@ export function StudioWord({
             </Button>
           </RibbonGroup>
         </Tabs.Panel>
-        <Tabs.Panel value="review" className="z-studio-word-tool-row">
+        <Tabs.Panel value="review" className="zuvi-studio-word-tool-row">
           <RibbonGroup label="校对">
             <Button
               iconStart={<FileText size={24} />}
-              className="z-studio-word-large-tool"
+              className="zuvi-studio-word-large-tool"
               variant="ghost"
               size="sm"
               disabled={!bodyEditor}
@@ -1996,7 +1996,7 @@ export function StudioWord({
           <RibbonGroup label="查找">
             <Button
               iconStart={<Search size={24} />}
-              className="z-studio-word-large-tool"
+              className="zuvi-studio-word-large-tool"
               variant="ghost"
               size="sm"
               disabled={!editor}
@@ -2006,8 +2006,8 @@ export function StudioWord({
             </Button>
           </RibbonGroup>
         </Tabs.Panel>
-        <Tabs.Panel value="view" className="z-studio-word-tool-row">
-          <RibbonGroup label="显示" className="z-studio-word-view-group">
+        <Tabs.Panel value="view" className="zuvi-studio-word-tool-row">
+          <RibbonGroup label="显示" className="zuvi-studio-word-view-group">
             <Checkbox label="标尺" checked={showRuler} onChange={setShowRuler} />
             <Checkbox
               label="导航窗格"
@@ -2019,17 +2019,17 @@ export function StudioWord({
             <Button
               variant="ghost"
               size="sm"
-              className="z-studio-word-large-tool"
+              className="zuvi-studio-word-large-tool"
               onClick={() => setZoom('1')}
               aria-pressed={zoom === '1'}
             >
-              <span className="z-studio-word-zoom-sample">100%</span>
+              <span className="zuvi-studio-word-zoom-sample">100%</span>
               <span>实际大小</span>
             </Button>
             <Button
               variant="ghost"
               size="sm"
-              className="z-studio-word-large-tool"
+              className="zuvi-studio-word-large-tool"
               onClick={() => setZoom('fit')}
               aria-pressed={zoom === 'fit'}
             >
@@ -2039,8 +2039,8 @@ export function StudioWord({
           </RibbonGroup>
         </Tabs.Panel>
         {region !== 'content' && (
-          <Tabs.Panel value="header-footer" className="z-studio-word-tool-row">
-            <RibbonGroup label="导航" className="z-studio-word-header-group">
+          <Tabs.Panel value="header-footer" className="zuvi-studio-word-tool-row">
+            <RibbonGroup label="导航" className="zuvi-studio-word-header-group">
               <Button
                 variant="ghost"
                 size="sm"
@@ -2092,8 +2092,8 @@ export function StudioWord({
                 插入总页数
               </Button>
             </RibbonGroup>
-            <RibbonGroup label="位置" className="z-studio-word-distance-group">
-              <label className="z-studio-word-distance-label">
+            <RibbonGroup label="位置" className="zuvi-studio-word-distance-group">
+              <label className="zuvi-studio-word-distance-label">
                 页眉距顶端
                 <Input
                   type="number"
@@ -2111,7 +2111,7 @@ export function StudioWord({
                   }}
                 />
               </label>
-              <label className="z-studio-word-distance-label">
+              <label className="zuvi-studio-word-distance-label">
                 页脚距底端
                 <Input
                   type="number"
@@ -2134,7 +2134,7 @@ export function StudioWord({
               <Button
                 variant="ghost"
                 size="sm"
-                className="z-studio-word-large-tool"
+                className="zuvi-studio-word-large-tool"
                 iconStart={<Close size={22} />}
                 onClick={closeRegion}
               >
@@ -2144,8 +2144,8 @@ export function StudioWord({
           </Tabs.Panel>
         )}
       </Tabs>
-      <div className="z-studio-word-workspace" data-part="word-workspace">
-        <div className="z-studio-word-navigation-rail" role="toolbar" aria-label="Word 文档工具">
+      <div className="zuvi-studio-word-workspace" data-part="word-workspace">
+        <div className="zuvi-studio-word-navigation-rail" role="toolbar" aria-label="Word 文档工具">
           <Button
             variant="ghost"
             size="sm"
@@ -2181,11 +2181,11 @@ export function StudioWord({
         </div>
         {sidePanel && (
           <aside
-            className="z-studio-word-sidebar"
+            className="zuvi-studio-word-sidebar"
             data-part="word-navigation"
             aria-label={sidePanel === 'search' ? 'Word 查找与替换' : 'Word 文档大纲'}
           >
-            <div className="z-studio-word-sidebar-heading">
+            <div className="zuvi-studio-word-sidebar-heading">
               <strong>{sidePanel === 'search' ? '查找与替换' : '文档大纲'}</strong>
               <Button
                 size="sm"
@@ -2198,7 +2198,7 @@ export function StudioWord({
             </div>
             {sidePanel === 'search' ? (
               <>
-                <span className="z-studio-word-sidebar-note">
+                <span className="zuvi-studio-word-sidebar-note">
                   {region === 'content' ? '正文' : region === 'header' ? '页眉' : '页脚'}中查找
                 </span>
                 <Input
@@ -2216,7 +2216,7 @@ export function StudioWord({
                   }}
                 />
                 <Checkbox label="区分大小写" checked={matchCase} onChange={setMatchCase} />
-                <div className="z-studio-word-search-actions">
+                <div className="zuvi-studio-word-search-actions">
                   <span role="status">
                     {(selection?.matches.length || 0) > WORD_SEARCH_LIMIT
                       ? `超过 ${WORD_SEARCH_LIMIT} 处匹配`
@@ -2247,7 +2247,7 @@ export function StudioWord({
                   disabled={!editable}
                   onChange={(event) => setReplacement(event.target.value)}
                 />
-                <div className="z-studio-word-search-actions">
+                <div className="zuvi-studio-word-search-actions">
                   <Button
                     variant="secondary"
                     size="sm"
@@ -2298,11 +2298,11 @@ export function StudioWord({
                   </Button>
                 </div>
                 {(selection?.matches.length || 0) > WORD_SEARCH_LIMIT && (
-                  <p className="z-studio-word-sidebar-note">
+                  <p className="zuvi-studio-word-sidebar-note">
                     匹配超过上限，请缩小查找范围后再全部替换。
                   </p>
                 )}
-                <div className="z-studio-word-navigation-list">
+                <div className="zuvi-studio-word-navigation-list">
                   {(selection?.matches || []).slice(0, 200).map((match, index) => (
                     <Button
                       key={`${match.from}-${match.to}`}
@@ -2318,9 +2318,9 @@ export function StudioWord({
                 </div>
               </>
             ) : (
-              <div className="z-studio-word-navigation-list">
+              <div className="zuvi-studio-word-navigation-list">
                 {!outline.length && (
-                  <p className="z-studio-word-sidebar-note">应用标题样式后，可在这里快速跳转。</p>
+                  <p className="zuvi-studio-word-sidebar-note">应用标题样式后，可在这里快速跳转。</p>
                 )}
                 {outline.map((heading, index) => (
                   <Button
@@ -2345,10 +2345,10 @@ export function StudioWord({
             )}
           </aside>
         )}
-        <div className="z-studio-word-stage" data-part="word-stage" ref={stageRef}>
+        <div className="zuvi-studio-word-stage" data-part="word-stage" ref={stageRef}>
           {showRuler && <WordRuler length={pageWidth} margin={margin} scale={scale} />}
           <div
-            className="z-studio-word-paper-space"
+            className="zuvi-studio-word-paper-space"
             style={{
               width: pageWidth * scale,
               minHeight: Math.max(pageHeight, paperHeight) * scale,
@@ -2357,7 +2357,7 @@ export function StudioWord({
             {showRuler && <WordRuler length={pageHeight} margin={margin} scale={scale} vertical />}
             <article
               ref={paperRef}
-              className="z-studio-word-paper"
+              className="zuvi-studio-word-paper"
               data-part="word-paper"
               aria-label="文档纸张"
               style={
@@ -2366,9 +2366,9 @@ export function StudioWord({
                   minHeight: pageHeight,
                   paddingInline: margin,
                   transform: `scale(${scale})`,
-                  '--z-studio-word-page-margin': `${margin}px`,
-                  '--z-studio-word-header-distance': `${headerDistance * MM_TO_PX}px`,
-                  '--z-studio-word-footer-distance': `${footerDistance * MM_TO_PX}px`,
+                  '--zuvi-studio-word-page-margin': `${margin}px`,
+                  '--zuvi-studio-word-header-distance': `${headerDistance * MM_TO_PX}px`,
+                  '--zuvi-studio-word-footer-distance': `${footerDistance * MM_TO_PX}px`,
                 } as React.CSSProperties
               }
               data-editing-region={region !== 'content' ? region : undefined}
@@ -2391,13 +2391,13 @@ export function StudioWord({
               }}
             >
               <section
-                className="z-studio-word-region"
+                className="zuvi-studio-word-region"
                 data-region="header"
                 data-active={region === 'header' || undefined}
                 data-empty={!document.header || undefined}
                 aria-label="页眉区域"
               >
-                <span className="z-studio-word-region-label">页眉</span>
+                <span className="zuvi-studio-word-region-label">页眉</span>
                 {document.header && (
                   <RegionEditor
                     region="header"
@@ -2415,16 +2415,16 @@ export function StudioWord({
               </section>
               <EditorContent
                 editor={bodyEditor}
-                className="z-studio-word-content z-studio-word-body"
+                className="zuvi-studio-word-content zuvi-studio-word-body"
               />
               <section
-                className="z-studio-word-region"
+                className="zuvi-studio-word-region"
                 data-region="footer"
                 data-active={region === 'footer' || undefined}
                 data-empty={!document.footer || undefined}
                 aria-label="页脚区域"
               >
-                <span className="z-studio-word-region-label">页脚</span>
+                <span className="zuvi-studio-word-region-label">页脚</span>
                 {document.footer && (
                   <RegionEditor
                     region="footer"
@@ -2444,7 +2444,7 @@ export function StudioWord({
           </div>
         </div>
       </div>
-      <div className="z-studio-word-status" data-part="word-status">
+      <div className="zuvi-studio-word-status" data-part="word-status">
         <span>
           {bodySummary?.nonWhitespaceCharacters || 0} 字 · {document.page.size} ·{' '}
           {landscape ? '横向' : '纵向'}
@@ -2452,11 +2452,11 @@ export function StudioWord({
           {region !== 'content' ? ` · 正在${region === 'header' ? '编辑页眉' : '编辑页脚'}` : ''}
         </span>
         {notice && (
-          <span role="status" className="z-studio-word-notice">
+          <span role="status" className="zuvi-studio-word-notice">
             {notice}
           </span>
         )}
-        <div className="z-studio-word-zoom">
+        <div className="zuvi-studio-word-zoom">
           <span>缩放</span>
           <Select
             aria-label="Word 缩放"
@@ -2480,7 +2480,7 @@ export function StudioWord({
             <Modal.Close />
           </Modal.Header>
           <Modal.Body>
-            <dl className="z-studio-word-statistics">
+            <dl className="zuvi-studio-word-statistics">
               <div>
                 <dt>字符数（含空白）</dt>
                 <dd>{bodySummary?.characters || 0}</dd>
@@ -2509,7 +2509,7 @@ export function StudioWord({
             <Modal.Close />
           </Modal.Header>
           <Modal.Body>
-            <label className="z-studio-word-link-label">
+            <label className="zuvi-studio-word-link-label">
               链接地址
               <Input
                 aria-label="链接地址"
@@ -2524,9 +2524,9 @@ export function StudioWord({
                 }}
               />
             </label>
-            <p className="z-studio-word-link-note">选择正文后添加链接；留空会移除当前链接。</p>
+            <p className="zuvi-studio-word-link-note">选择正文后添加链接；留空会移除当前链接。</p>
             {linkError ? (
-              <p role="alert" className="z-studio-word-link-error">
+              <p role="alert" className="zuvi-studio-word-link-error">
                 {linkError}
               </p>
             ) : null}

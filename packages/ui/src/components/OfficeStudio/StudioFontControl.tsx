@@ -27,7 +27,7 @@ interface StudioFontControlProps {
   onCancel?: () => void;
 }
 
-/** Internal editable ribbon control composed from the public ZUI Combobox. */
+/** Internal editable ribbon control composed from the public ZUVI Combobox. */
 export function StudioFontControl({
   label,
   kind,
@@ -114,7 +114,7 @@ export function StudioFontControl({
   };
 
   return (
-    <span className={cx('z-studio-font-control', className)} data-part="font-control">
+    <span className={cx('zuvi-studio-font-control', className)} data-part="font-control">
       <Combobox
         aria-label={label}
         aria-invalid={error ? true : undefined}
@@ -179,7 +179,7 @@ export function StudioFontControl({
         }}
       />
       {error && (
-        <span id={errorId} className="z-studio-font-control-error" role="alert">
+        <span id={errorId} className="zuvi-studio-font-control-error" role="alert">
           {error}
         </span>
       )}

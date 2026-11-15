@@ -1,4 +1,4 @@
-import * as Z from '@zui/react';
+import * as Z from '@zuvi/react';
 import type { Config, SlotComponent } from '@puckeditor/core';
 import { useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
 import { BuilderFormContext, BuilderTabsContext } from './builder-form-context';
@@ -40,7 +40,7 @@ const linkTo = (href: unknown, document: Document = window.document) => {
 
 function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <div className="z-builder-native-field">
+    <div className="zuvi-builder-native-field">
       <span>{label}</span>
       {children}
     </div>
@@ -56,7 +56,7 @@ function CatalogSplitter({ p }: { p: Props }) {
       setStacked(false);
       return;
     }
-    const area = rootRef.current?.closest<HTMLElement>('.z-builder-canvas');
+    const area = rootRef.current?.closest<HTMLElement>('.zuvi-builder-canvas');
     if (!area) return;
     const update = () => setStacked(area.clientWidth <= 600);
     update();
@@ -69,7 +69,7 @@ function CatalogSplitter({ p }: { p: Props }) {
   return (
     <Z.Splitter
       ref={rootRef}
-      className="z-builder-responsive-splitter"
+      className="zuvi-builder-responsive-splitter"
       data-mobile-stack={stackOnMobile || undefined}
       orientation={pick(p, 'orientation', ['horizontal', 'vertical'])}
       style={{ height: n(p, 'height', 280) }}
@@ -84,7 +84,7 @@ function CatalogSplitter({ p }: { p: Props }) {
             collapsed={stacked ? false : undefined}
             minSize={10}
           >
-            <div className="z-builder-splitter-panel">
+            <div className="zuvi-builder-splitter-panel">
               {panels.length ? (
                 (panel as ReactNode)
               ) : (
@@ -145,7 +145,7 @@ function CatalogInput({ type, p }: { type: string; p: Props }) {
       break;
     case 'Select':
       control = (
-        <div className="z-builder-select-control">
+        <div className="zuvi-builder-select-control">
           <Z.Select
             {...common}
             options={options}
@@ -414,7 +414,7 @@ function CatalogTable({ p }: { p: Props }) {
         }) * sort.direction
     );
   return (
-    <div className="z-builder-data-table">
+    <div className="zuvi-builder-data-table">
       {b(p, 'searchable') && (
         <Z.Input
           aria-label={`搜索${s(p, 'caption') || '表格'}`}
@@ -424,7 +424,7 @@ function CatalogTable({ p }: { p: Props }) {
           clearable
         />
       )}
-      <div className="z-builder-table-scroll">
+      <div className="zuvi-builder-table-scroll">
         <Z.Table
           striped={b(p, 'striped')}
           density={s(p, 'size') === 'sm' ? 'compact' : 'comfortable'}
@@ -484,7 +484,7 @@ function CatalogUpload({ p, editing }: { p: Props; editing: boolean }) {
   const server = s(p, 'mode') === 'server';
   const action = /^https?:\/\//i.test(s(p, 'action')) ? safeLink(p.action) : undefined;
   return (
-    <div className="z-builder-upload">
+    <div className="zuvi-builder-upload">
       <Z.Upload
         name={s(p, 'name')}
         accept={s(p, 'accept')}
@@ -517,7 +517,7 @@ function CatalogUpload({ p, editing }: { p: Props; editing: boolean }) {
       >
         <span>{s(p, 'label') || '选择文件'}</span>
       </Z.Upload>
-      <p className="z-builder-control-note">
+      <p className="zuvi-builder-control-note">
         {server
           ? action
             ? '文件将发送至配置的上传服务。'
@@ -655,12 +655,12 @@ function Overlay({ type, p, editing }: { type: string; p: Props; editing: boolea
   const contents = (
     <>
       {s(p, 'text') && <p>{s(p, 'text')}</p>}
-      <Content className="z-builder-stack" minEmptyHeight={100} />
+      <Content className="zuvi-builder-stack" minEmptyHeight={100} />
     </>
   );
   if (editing)
     return (
-      <section className="z-builder-overlay-editor">
+      <section className="zuvi-builder-overlay-editor">
         <small>
           {type} · {s(p, 'label')}
         </small>
@@ -751,7 +751,7 @@ function CatalogTabs({ p, editing }: { p: Props; editing: boolean }) {
           </Z.Tabs.Panel>
         ))}
       <BuilderTabsContext.Provider value={{ register }}>
-        <Content className="z-builder-tab-slots" minEmptyHeight={editing ? 100 : 0} />
+        <Content className="zuvi-builder-tab-slots" minEmptyHeight={editing ? 100 : 0} />
       </BuilderTabsContext.Provider>
     </Z.Tabs>
   );
@@ -766,17 +766,17 @@ function CatalogTabPanel({ p, editing }: { p: Props; editing: boolean }) {
   if (!editing && tabs)
     return (
       <Z.Tabs.Panel value={value}>
-        <Content className="z-builder-stack" />
+        <Content className="zuvi-builder-stack" />
       </Z.Tabs.Panel>
     );
   return (
-    <section className="z-builder-overlay-editor">
+    <section className="zuvi-builder-overlay-editor">
       <small>
         标签面板 · {value}
         {!tabs ? ' · 请将此面板放入 Tabs 容器' : ''}
       </small>
       <h3>{s(p, 'title')}</h3>
-      <Content className="z-builder-stack" minEmptyHeight={100} />
+      <Content className="zuvi-builder-stack" minEmptyHeight={100} />
     </section>
   );
 }
@@ -869,7 +869,7 @@ export function CatalogRender({
       return (
         <Content
           as={Z.Col}
-          className="z-builder-col-content"
+          className="zuvi-builder-col-content"
           span={n(p, 'span', 12)}
           offset={0}
           minEmptyHeight={100}
@@ -901,22 +901,22 @@ export function CatalogRender({
     case 'Splitter':
       if (editing)
         return (
-          <section className="z-builder-overlay-editor">
+          <section className="zuvi-builder-overlay-editor">
             <small>可调分栏 · 每个直接子组件对应一个面板，未放入组件时使用面板数据</small>
-            <Content className="z-builder-splitter-slots" minEmptyHeight={120} />
+            <Content className="zuvi-builder-splitter-slots" minEmptyHeight={120} />
           </section>
         );
       return <CatalogSplitter p={p} />;
     case 'ConfigProvider':
       return (
         <Z.ConfigProvider locale={s(p, 'locale') === 'en-US' ? Z.enUS : Z.zhCN}>
-          <Content className="z-builder-stack" minEmptyHeight={100} />
+          <Content className="zuvi-builder-stack" minEmptyHeight={100} />
         </Z.ConfigProvider>
       );
     case 'App':
       return (
         <Z.App>
-          <Content className="z-builder-stack" minEmptyHeight={100} />
+          <Content className="zuvi-builder-stack" minEmptyHeight={100} />
         </Z.App>
       );
     case 'Watermark':
@@ -926,17 +926,17 @@ export function CatalogRender({
           rotate={n(p, 'rotate', -22)}
           gap={[n(p, 'gap', 100), n(p, 'gap', 100)]}
         >
-          <Content className="z-builder-stack" minEmptyHeight={160} />
+          <Content className="zuvi-builder-stack" minEmptyHeight={160} />
         </Z.Watermark>
       );
     case 'Affix':
       return editing ? (
-        <div className="z-builder-affix-editor">
-          <Content className="z-builder-stack" minEmptyHeight={80} />
+        <div className="zuvi-builder-affix-editor">
+          <Content className="zuvi-builder-stack" minEmptyHeight={80} />
         </div>
       ) : (
         <Z.Affix offsetTop={n(p, 'offsetTop')}>
-          <Content className="z-builder-stack" />
+          <Content className="zuvi-builder-stack" />
         </Z.Affix>
       );
     case 'Tabs':
@@ -1210,7 +1210,7 @@ export function CatalogRender({
     case 'Spin':
       return (
         <Z.Spin spinning={b(p, 'spinning')} tip={s(p, 'tip')} size={size(p)}>
-          <Content className="z-builder-stack" minEmptyHeight={100} />
+          <Content className="zuvi-builder-stack" minEmptyHeight={100} />
         </Z.Spin>
       );
     case 'Result':
@@ -1219,7 +1219,7 @@ export function CatalogRender({
           status={pick(p, 'status', ['success', 'error', 'info', 'warning', '403', '404', '500'])}
           title={s(p, 'title')}
           subTitle={s(p, 'subTitle')}
-          extra={<Content className="z-builder-stack" minEmptyHeight={editing ? 100 : 0} />}
+          extra={<Content className="zuvi-builder-stack" minEmptyHeight={editing ? 100 : 0} />}
         />
       );
     case 'BackTop':

@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useZuiConfig } from '../../config';
+import { useZuviConfig } from '../../config';
 import { cx } from '../../utils';
 import './List.css';
 
@@ -39,49 +39,49 @@ export function List({
   className,
   classNames,
 }: ListProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   return (
     <div
       data-part="root"
-      className={cx('z-list', className, classNames?.root)}
+      className={cx('zuvi-list', className, classNames?.root)}
       data-bordered={bordered ? 'true' : 'false'}
       data-size={size}
       data-loading={loading ? 'true' : undefined}
       aria-busy={loading ? true : undefined}
     >
       {header != null ? (
-        <div data-part="header" className="z-list-header">
+        <div data-part="header" className="zuvi-list-header">
           {header}
         </div>
       ) : null}
 
       {loading ? (
-        <div data-part="loading" className="z-list-loading" role="status" aria-label={locale.accessibility.loading}>
-          <span className="z-list-spinner" aria-hidden="true" />
+        <div data-part="loading" className="zuvi-list-loading" role="status" aria-label={locale.accessibility.loading}>
+          <span className="zuvi-list-spinner" aria-hidden="true" />
         </div>
       ) : (
-        <ul data-part="body" className="z-list-body">
+        <ul data-part="body" className="zuvi-list-body">
           {items.map((item) => (
-            <li key={item.key} data-part="item" className={cx('z-list-item', classNames?.item)}>
+            <li key={item.key} data-part="item" className={cx('zuvi-list-item', classNames?.item)}>
               {item.avatar != null ? (
-                <div data-part="avatar" className="z-list-item-avatar">
+                <div data-part="avatar" className="zuvi-list-item-avatar">
                   {item.avatar}
                 </div>
               ) : null}
 
-              <div data-part="meta" className={cx('z-list-item-meta', classNames?.meta)}>
-                <div data-part="title" className="z-list-item-title">
+              <div data-part="meta" className={cx('zuvi-list-item-meta', classNames?.meta)}>
+                <div data-part="title" className="zuvi-list-item-title">
                   {item.title}
                 </div>
                 {item.description != null ? (
-                  <div data-part="description" className="z-list-item-description">
+                  <div data-part="description" className="zuvi-list-item-description">
                     {item.description}
                   </div>
                 ) : null}
               </div>
 
               {item.extra != null ? (
-                <div data-part="extra" className={cx('z-list-item-extra', classNames?.extra)}>
+                <div data-part="extra" className={cx('zuvi-list-item-extra', classNames?.extra)}>
                   {item.extra}
                 </div>
               ) : null}
@@ -91,7 +91,7 @@ export function List({
       )}
 
       {footer != null ? (
-        <div data-part="footer" className="z-list-footer">
+        <div data-part="footer" className="zuvi-list-footer">
           {footer}
         </div>
       ) : null}

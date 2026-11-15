@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Anchor } from '@zui/react';
+import { Anchor } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -46,9 +46,9 @@ const ON_CLICK_CODE = `const [clicked, setClicked] = useState('');
 
 function DemoSection(props: { id: string; title: string; text: string }): React.ReactNode {
   return (
-    <section id={props.id} style={{ minHeight: 140, padding: 'var(--z-space-2) 0' }}>
-      <p style={{ fontWeight: 'var(--z-weight-semibold)' }}>{props.title}</p>
-      <p style={{ color: 'var(--z-color-fg-muted)' }}>{props.text}</p>
+    <section id={props.id} style={{ minHeight: 140, padding: 'var(--zuvi-space-2) 0' }}>
+      <p style={{ fontWeight: 'var(--zuvi-weight-semibold)' }}>{props.title}</p>
+      <p style={{ color: 'var(--zuvi-color-fg-muted)' }}>{props.text}</p>
     </section>
   );
 }
@@ -217,18 +217,18 @@ export default function AnchorPage(): React.ReactNode {
         name="Anchor"
         parts={['root', 'list', 'item', 'link', 'sublist']}
         vars={[
-          '--z-anchor-font-size',
-          '--z-anchor-link-color',
-          '--z-anchor-link-hover-color',
-          '--z-anchor-link-active-color',
-          '--z-anchor-link-bg',
-          '--z-anchor-link-active-bg',
-          '--z-anchor-link-padding-x',
-          '--z-anchor-link-padding-y',
-          '--z-anchor-indicator-width',
-          '--z-anchor-indicator-color',
-          '--z-anchor-sublist-indent',
-          '--z-anchor-transition',
+          '--zuvi-anchor-font-size',
+          '--zuvi-anchor-link-color',
+          '--zuvi-anchor-link-hover-color',
+          '--zuvi-anchor-link-active-color',
+          '--zuvi-anchor-link-bg',
+          '--zuvi-anchor-link-active-bg',
+          '--zuvi-anchor-link-padding-x',
+          '--zuvi-anchor-link-padding-y',
+          '--zuvi-anchor-indicator-width',
+          '--zuvi-anchor-indicator-color',
+          '--zuvi-anchor-sublist-indent',
+          '--zuvi-anchor-transition',
         ]}
       />
     </div>

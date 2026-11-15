@@ -53,7 +53,7 @@ export const WordImage = Node.create({
       height: Math.max(1, Math.min(2000, Number(node.attrs.height) || 180)),
       style: `aspect-ratio: ${Math.max(1, Math.min(2000, Number(node.attrs.width) || 320))} / ${Math.max(1, Math.min(2000, Number(node.attrs.height) || 180))}`,
       alt: String(node.attrs.alt || '').slice(0, 1000),
-      class: 'z-studio-word-image',
+      class: 'zuvi-studio-word-image',
       'data-word-image': '',
     },
   ],
@@ -65,14 +65,14 @@ export const WordImage = Node.create({
       let current = node;
       let dragCleanup: (() => void) | null = null;
 
-      dom.className = 'z-studio-word-image-node';
+      dom.className = 'zuvi-studio-word-image-node';
       dom.dataset.wordImageNode = '';
       dom.contentEditable = 'false';
       dom.draggable = true;
-      image.className = 'z-studio-word-image';
+      image.className = 'zuvi-studio-word-image';
       image.dataset.wordImage = '';
       image.draggable = false;
-      handle.className = 'z-studio-word-image-resize';
+      handle.className = 'zuvi-studio-word-image-resize';
       handle.dataset.wordImageResize = '';
       handle.title = '拖动调整图片大小';
       handle.setAttribute('aria-hidden', 'true');
@@ -220,7 +220,7 @@ export const WordPageNumber = Node.create({
       'data-word-page-number': node.attrs.kind === 'total' ? 'total' : 'current',
       'aria-label': node.attrs.kind === 'total' ? '总页数（导出时计算）' : '页码（导出时计算）',
       contenteditable: 'false',
-      class: 'z-studio-word-page-number',
+      class: 'zuvi-studio-word-page-number',
     },
     '1',
   ],

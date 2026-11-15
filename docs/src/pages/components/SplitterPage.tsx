@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Splitter } from '@zui/react';
+import { Splitter } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -197,14 +197,14 @@ export default function SplitterPage(): React.ReactNode {
         name="Splitter"
         parts={['root', 'panel', 'content', 'handle', 'handle-indicator']}
         vars={[
-          '--z-splitter-handle-size',
-          '--z-splitter-handle-hit-size',
-          '--z-splitter-handle-bg',
-          '--z-splitter-handle-hover-bg',
-          '--z-splitter-handle-active-bg',
-          '--z-splitter-handle-radius',
-          '--z-splitter-handle-fg',
-          '--z-splitter-animation-duration',
+          '--zuvi-splitter-handle-size',
+          '--zuvi-splitter-handle-hit-size',
+          '--zuvi-splitter-handle-bg',
+          '--zuvi-splitter-handle-hover-bg',
+          '--zuvi-splitter-handle-active-bg',
+          '--zuvi-splitter-handle-radius',
+          '--zuvi-splitter-handle-fg',
+          '--zuvi-splitter-animation-duration',
         ]}
       />
     </div>

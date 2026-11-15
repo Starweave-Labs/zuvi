@@ -1,80 +1,80 @@
 /* Avatar —— 组件级变量定义在根选择器上，可被用户任意覆盖 */
 
-.z-avatar {
-  --z-avatar-size: 2rem; /* md 32px */
-  --z-avatar-radius: var(--z-radius-full);
-  --z-avatar-bg: var(--z-color-bg-muted);
-  --z-avatar-fg: var(--z-color-fg-muted);
-  --z-avatar-font-size: calc(var(--z-avatar-size) * 0.45);
-  --z-avatar-font-weight: var(--z-weight-medium);
-  --z-avatar-font-family: var(--z-font-sans);
-  --z-avatar-icon-size: calc(var(--z-avatar-size) * 0.6);
-  --z-avatar-border: none;
+.zuvi-avatar {
+  --zuvi-avatar-size: 2rem; /* md 32px */
+  --zuvi-avatar-radius: var(--zuvi-radius-full);
+  --zuvi-avatar-bg: var(--zuvi-color-bg-muted);
+  --zuvi-avatar-fg: var(--zuvi-color-fg-muted);
+  --zuvi-avatar-font-size: calc(var(--zuvi-avatar-size) * 0.45);
+  --zuvi-avatar-font-weight: var(--zuvi-weight-medium);
+  --zuvi-avatar-font-family: var(--zuvi-font-sans);
+  --zuvi-avatar-icon-size: calc(var(--zuvi-avatar-size) * 0.6);
+  --zuvi-avatar-border: none;
 }
 
-/* 尺寸：sm 24px / md 32px / lg 40px；number 尺寸经内联 --z-avatar-size 覆盖 */
-.z-avatar[data-size='sm'] {
-  --z-avatar-size: 1.5rem; /* 24px */
+/* 尺寸：sm 24px / md 32px / lg 40px；number 尺寸经内联 --zuvi-avatar-size 覆盖 */
+.zuvi-avatar[data-size='sm'] {
+  --zuvi-avatar-size: 1.5rem; /* 24px */
 }
 
-.z-avatar[data-size='lg'] {
-  --z-avatar-size: 2.5rem; /* 40px */
+.zuvi-avatar[data-size='lg'] {
+  --zuvi-avatar-size: 2.5rem; /* 40px */
 }
 
-.z-avatar[data-shape='square'] {
-  --z-avatar-radius: var(--z-radius-sm);
+.zuvi-avatar[data-shape='square'] {
+  --zuvi-avatar-radius: var(--zuvi-radius-sm);
 }
 
 /* 名字哈希 5 色浅底：语义 subtle 对 */
-.z-avatar[data-color='primary'] {
-  --z-avatar-bg: var(--z-color-primary-subtle);
-  --z-avatar-fg: var(--z-color-primary-subtle-fg);
+.zuvi-avatar[data-color='primary'] {
+  --zuvi-avatar-bg: var(--zuvi-color-primary-subtle);
+  --zuvi-avatar-fg: var(--zuvi-color-primary-subtle-fg);
 }
 
-.z-avatar[data-color='success'] {
-  --z-avatar-bg: var(--z-color-success-subtle);
-  --z-avatar-fg: var(--z-color-success-subtle-fg);
+.zuvi-avatar[data-color='success'] {
+  --zuvi-avatar-bg: var(--zuvi-color-success-subtle);
+  --zuvi-avatar-fg: var(--zuvi-color-success-subtle-fg);
 }
 
-.z-avatar[data-color='warning'] {
-  --z-avatar-bg: var(--z-color-warning-subtle);
-  --z-avatar-fg: var(--z-color-warning-subtle-fg);
+.zuvi-avatar[data-color='warning'] {
+  --zuvi-avatar-bg: var(--zuvi-color-warning-subtle);
+  --zuvi-avatar-fg: var(--zuvi-color-warning-subtle-fg);
 }
 
-.z-avatar[data-color='info'] {
-  --z-avatar-bg: var(--z-color-info-subtle);
-  --z-avatar-fg: var(--z-color-info-subtle-fg);
+.zuvi-avatar[data-color='info'] {
+  --zuvi-avatar-bg: var(--zuvi-color-info-subtle);
+  --zuvi-avatar-fg: var(--zuvi-color-info-subtle-fg);
 }
 
-.z-avatar[data-color='danger'] {
-  --z-avatar-bg: var(--z-color-danger-subtle);
-  --z-avatar-fg: var(--z-color-danger-subtle-fg);
+.zuvi-avatar[data-color='danger'] {
+  --zuvi-avatar-bg: var(--zuvi-color-danger-subtle);
+  --zuvi-avatar-fg: var(--zuvi-color-danger-subtle-fg);
 }
 
 /* 布局与视觉 */
-.z-avatar {
+.zuvi-avatar {
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--z-avatar-size);
-  height: var(--z-avatar-size);
+  width: var(--zuvi-avatar-size);
+  height: var(--zuvi-avatar-size);
   flex-shrink: 0;
   aspect-ratio: 1 / 1;
-  border: var(--z-avatar-border);
-  border-radius: var(--z-avatar-radius);
-  background: var(--z-avatar-bg);
-  color: var(--z-avatar-fg);
-  font-family: var(--z-avatar-font-family);
-  font-size: var(--z-avatar-font-size);
-  font-weight: var(--z-avatar-font-weight);
+  border: var(--zuvi-avatar-border);
+  border-radius: var(--zuvi-avatar-radius);
+  background: var(--zuvi-avatar-bg);
+  color: var(--zuvi-avatar-fg);
+  font-family: var(--zuvi-avatar-font-family);
+  font-size: var(--zuvi-avatar-font-size);
+  font-weight: var(--zuvi-avatar-font-weight);
   line-height: 1;
   overflow: hidden;
   user-select: none;
   vertical-align: middle;
 }
 
-.z-avatar-image {
+.zuvi-avatar-image {
   display: block;
   width: 100%;
   height: 100%;
@@ -82,7 +82,7 @@
   object-fit: cover;
 }
 
-.z-avatar-fallback {
+.zuvi-avatar-fallback {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -92,8 +92,8 @@
   text-align: center;
 }
 
-.z-avatar-fallback > svg {
-  width: var(--z-avatar-icon-size);
-  height: var(--z-avatar-icon-size);
+.zuvi-avatar-fallback > svg {
+  width: var(--zuvi-avatar-icon-size);
+  height: var(--zuvi-avatar-icon-size);
   flex-shrink: 0;
 }

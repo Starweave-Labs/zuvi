@@ -1,6 +1,6 @@
 {
-  "name": "zui",
-  "homepage": "https://zui.dev",
+  "name": "zuvi",
+  "homepage": "https://zuvi.dev",
   "sharedFiles": [
     "packages/ui/src/utils/FloatingPanel.tsx",
     "packages/ui/src/utils/cx.ts",
@@ -16,13 +16,13 @@
     "packages/ui/src/config/index.ts",
     "packages/ui/src/config/locale.ts",
     "packages/ui/src/config/translate.ts",
-    "packages/ui/src/config/useZuiConfig.ts",
+    "packages/ui/src/config/useZuviConfig.ts",
     "packages/ui/src/styles/reset.css",
     "packages/ui/src/styles/tokens.css"
   ],
   "dependencies": [
-    "@zui/i18n",
-    "@zui/tokens"
+    "@zuvi/i18n",
+    "@zuvi/tokens"
   ],
   "exports": {
     "Affix": "packages/ui/src/components/Affix/index.ts",
@@ -423,9 +423,9 @@
     "isImeComposing": "packages/ui/src/utils/modalLayer.ts",
     "ConfigProvider": "packages/ui/src/config/ConfigProvider.tsx",
     "ConfigProviderProps": "packages/ui/src/config/ConfigProvider.tsx",
-    "useZuiConfig": "packages/ui/src/config/useZuiConfig.ts",
-    "ZuiConfigContext": "packages/ui/src/config/useZuiConfig.ts",
-    "ZuiConfig": "packages/ui/src/config/useZuiConfig.ts",
+    "useZuviConfig": "packages/ui/src/config/useZuviConfig.ts",
+    "ZuviConfigContext": "packages/ui/src/config/useZuviConfig.ts",
+    "ZuviConfig": "packages/ui/src/config/useZuviConfig.ts",
     "zhCN": "packages/ui/src/config/locale.ts",
     "enUS": "packages/ui/src/config/locale.ts",
     "zhTW": "packages/ui/src/config/locale.ts",
@@ -438,7 +438,7 @@
     "ptBR": "packages/ui/src/config/locale.ts",
     "mergeLocale": "packages/ui/src/config/locale.ts",
     "DeepPartial": "packages/ui/src/config/locale.ts",
-    "ZuiLocale": "packages/ui/src/config/locale.ts",
+    "ZuviLocale": "packages/ui/src/config/locale.ts",
     "TranslateConfig": "packages/ui/src/config/translate.ts",
     "TranslateProvider": "packages/ui/src/config/translate.ts"
   },
@@ -455,9 +455,7 @@
         "packages/ui/src/components/Affix/Affix.tsx",
         "packages/ui/src/components/Affix/index.ts"
       ],
-      "cssVars": {
-        "--z-affix-z": "var(--z-z-sticky)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Affix/meta.json"
     },
     {
@@ -466,7 +464,7 @@
       "title": "Alert 警告提示",
       "description": "警告提示：页面内的常驻状态提示条（info/success/warning/error）",
       "dependencies": [
-        "@zui/icons"
+        "@zuvi/icons"
       ],
       "registryDependencies": [],
       "files": [
@@ -474,28 +472,7 @@
         "packages/ui/src/components/Alert/Alert.tsx",
         "packages/ui/src/components/Alert/index.ts"
       ],
-      "cssVars": {
-        "--z-alert-padding-x": "var(--z-space-4)",
-        "--z-alert-padding-y": "var(--z-space-3)",
-        "--z-alert-gap": "var(--z-space-3)",
-        "--z-alert-radius": "0.5rem",
-        "--z-alert-border-width": "1px",
-        "--z-alert-font-size": "var(--z-text-sm)",
-        "--z-alert-line-height": "var(--z-leading-normal)",
-        "--z-alert-title-font-size": "var(--z-text-sm)",
-        "--z-alert-title-font-weight": "var(--z-weight-semibold)",
-        "--z-alert-icon-size": "1.25rem",
-        "--z-alert-close-size": "1.5rem",
-        "--z-alert-close-icon-size": "1rem",
-        "--z-alert-close-radius": "var(--z-radius-sm)",
-        "--z-alert-bg": "var(--z-color-info-subtle)",
-        "--z-alert-fg": "var(--z-color-info-subtle-fg)",
-        "--z-alert-border": "color-mix(in srgb, var(--z-color-info) 30%, transparent)",
-        "--z-alert-icon-color": "var(--z-color-info)",
-        "--z-alert-close-hover-bg": "color-mix(in srgb, var(--z-color-info) 12%, transparent)",
-        "--z-alert-focus-ring": "var(--z-color-focus-ring)",
-        "--z-alert-transition": "var(--z-duration-fast) var(--z-ease-standard)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Alert/meta.json"
     },
     {
@@ -510,20 +487,7 @@
         "packages/ui/src/components/Anchor/Anchor.tsx",
         "packages/ui/src/components/Anchor/index.ts"
       ],
-      "cssVars": {
-        "--z-anchor-font-size": "var(--z-text-sm)",
-        "--z-anchor-link-color": "var(--z-color-fg-muted)",
-        "--z-anchor-link-hover-color": "var(--z-color-fg)",
-        "--z-anchor-link-active-color": "var(--z-color-primary)",
-        "--z-anchor-link-bg": "transparent",
-        "--z-anchor-link-active-bg": "transparent",
-        "--z-anchor-link-padding-x": "var(--z-space-3)",
-        "--z-anchor-link-padding-y": "var(--z-space-1)",
-        "--z-anchor-indicator-width": "2px",
-        "--z-anchor-indicator-color": "var(--z-color-primary)",
-        "--z-anchor-sublist-indent": "var(--z-space-6)",
-        "--z-anchor-transition": "var(--z-duration-fast) var(--z-ease-standard)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Anchor/meta.json"
     },
     {
@@ -542,26 +506,7 @@
         "packages/ui/src/components/App/index.ts",
         "packages/ui/src/components/App/useApp.ts"
       ],
-      "cssVars": {
-        "--z-app-modal-width": "22rem",
-        "--z-app-modal-padding": "var(--z-space-5)",
-        "--z-app-modal-radius": "var(--z-radius-lg)",
-        "--z-app-modal-bg": "var(--z-color-bg-elevated)",
-        "--z-app-modal-fg": "var(--z-color-fg)",
-        "--z-app-modal-shadow": "var(--z-shadow-lg)",
-        "--z-app-modal-overlay-bg": "var(--z-color-overlay)",
-        "--z-app-modal-title-size": "var(--z-text-lg)",
-        "--z-app-modal-title-weight": "var(--z-weight-semibold)",
-        "--z-app-modal-desc-size": "var(--z-text-sm)",
-        "--z-app-modal-desc-fg": "var(--z-color-fg-muted)",
-        "--z-app-modal-btn-height": "2.25rem",
-        "--z-app-modal-btn-radius": "var(--z-radius-sm)",
-        "--z-app-modal-ok-bg": "var(--z-color-primary)",
-        "--z-app-modal-ok-fg": "var(--z-color-primary-fg)",
-        "--z-app-modal-ok-hover-bg": "var(--z-color-primary-hover)",
-        "--z-app-modal-cancel-border": "var(--z-color-border)",
-        "--z-app-modal-z": "var(--z-z-modal)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/App/meta.json"
     },
     {
@@ -576,17 +521,7 @@
         "packages/ui/src/components/Avatar/Avatar.tsx",
         "packages/ui/src/components/Avatar/index.ts"
       ],
-      "cssVars": {
-        "--z-avatar-size": "2rem",
-        "--z-avatar-radius": "var(--z-radius-full)",
-        "--z-avatar-bg": "var(--z-color-bg-muted)",
-        "--z-avatar-fg": "var(--z-color-fg-muted)",
-        "--z-avatar-font-size": "calc(var(--z-avatar-size) * 0.45)",
-        "--z-avatar-font-weight": "var(--z-weight-medium)",
-        "--z-avatar-font-family": "var(--z-font-sans)",
-        "--z-avatar-icon-size": "calc(var(--z-avatar-size) * 0.6)",
-        "--z-avatar-border": "none"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Avatar/meta.json"
     },
     {
@@ -601,19 +536,7 @@
         "packages/ui/src/components/BackTop/BackTop.tsx",
         "packages/ui/src/components/BackTop/index.ts"
       ],
-      "cssVars": {
-        "--z-back-top-size": "2.5rem",
-        "--z-back-top-radius": "var(--z-radius-full)",
-        "--z-back-top-bg": "var(--z-color-bg-elevated)",
-        "--z-back-top-fg": "var(--z-color-fg)",
-        "--z-back-top-border": "var(--z-color-border-subtle)",
-        "--z-back-top-hover-bg": "var(--z-color-bg-subtle)",
-        "--z-back-top-shadow": "var(--z-shadow-md)",
-        "--z-back-top-right": "var(--z-space-6)",
-        "--z-back-top-bottom": "var(--z-space-6)",
-        "--z-back-top-transition": "var(--z-duration-normal) var(--z-ease-standard)",
-        "--z-back-top-icon-size": "1.125rem"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/BackTop/meta.json"
     },
     {
@@ -628,18 +551,7 @@
         "packages/ui/src/components/Badge/Badge.tsx",
         "packages/ui/src/components/Badge/index.ts"
       ],
-      "cssVars": {
-        "--z-badge-size": "1rem",
-        "--z-badge-padding-x": "var(--z-space-1)",
-        "--z-badge-font-size": "var(--z-text-xs)",
-        "--z-badge-font-weight": "var(--z-weight-medium)",
-        "--z-badge-radius": "var(--z-radius-full)",
-        "--z-badge-dot-size": "0.5rem",
-        "--z-badge-border-width": "2px",
-        "--z-badge-bg": "var(--z-color-danger)",
-        "--z-badge-fg": "var(--z-color-danger-fg)",
-        "--z-badge-border-color": "var(--z-color-bg)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Badge/meta.json"
     },
     {
@@ -654,17 +566,7 @@
         "packages/ui/src/components/Breadcrumb/Breadcrumb.tsx",
         "packages/ui/src/components/Breadcrumb/index.ts"
       ],
-      "cssVars": {
-        "--z-breadcrumb-font-size": "var(--z-text-sm)",
-        "--z-breadcrumb-fg": "var(--z-color-fg-muted)",
-        "--z-breadcrumb-hover-fg": "var(--z-color-primary)",
-        "--z-breadcrumb-current-fg": "var(--z-color-fg)",
-        "--z-breadcrumb-current-font-weight": "var(--z-weight-medium)",
-        "--z-breadcrumb-separator-fg": "var(--z-color-fg-subtle)",
-        "--z-breadcrumb-separator-margin-x": "var(--z-space-2)",
-        "--z-breadcrumb-focus-ring": "var(--z-color-focus-ring)",
-        "--z-breadcrumb-transition": "var(--z-duration-fast) var(--z-ease-standard)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Breadcrumb/meta.json"
     },
     {
@@ -679,28 +581,7 @@
         "packages/ui/src/components/Button/Button.tsx",
         "packages/ui/src/components/Button/index.ts"
       ],
-      "cssVars": {
-        "--z-button-height": "2rem",
-        "--z-button-padding-x": "var(--z-space-4)",
-        "--z-button-font-size": "var(--z-text-sm)",
-        "--z-button-font-weight": "var(--z-weight-medium)",
-        "--z-button-radius": "var(--z-radius-sm)",
-        "--z-button-gap": "var(--z-space-2)",
-        "--z-button-border-width": "1px",
-        "--z-button-bg": "var(--z-color-primary)",
-        "--z-button-fg": "var(--z-color-primary-fg)",
-        "--z-button-border": "var(--z-color-primary)",
-        "--z-button-hover-bg": "var(--z-color-primary-hover)",
-        "--z-button-hover-fg": "var(--z-color-primary-fg)",
-        "--z-button-active-bg": "var(--z-color-primary-active)",
-        "--z-button-focus-ring": "var(--z-color-focus-ring)",
-        "--z-button-disabled-bg": "var(--z-color-disabled-bg)",
-        "--z-button-disabled-fg": "var(--z-color-disabled-fg)",
-        "--z-button-disabled-border": "var(--z-color-disabled-border)",
-        "--z-button-spinner-size": "1em",
-        "--z-button-spinner-width": "2px",
-        "--z-button-transition": "var(--z-duration-fast) var(--z-ease-standard)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Button/meta.json"
     },
     {
@@ -709,7 +590,7 @@
       "title": "Calendar 日历",
       "description": "静态日历展示组件，按月浏览并选中单个日期（ISO YYYY-MM-DD），与 DatePicker 独立",
       "dependencies": [
-        "@zui/icons"
+        "@zuvi/icons"
       ],
       "registryDependencies": [],
       "files": [
@@ -717,38 +598,7 @@
         "packages/ui/src/components/Calendar/Calendar.tsx",
         "packages/ui/src/components/Calendar/index.ts"
       ],
-      "cssVars": {
-        "--z-calendar-bg": "var(--z-color-bg-elevated)",
-        "--z-calendar-fg": "var(--z-color-fg)",
-        "--z-calendar-border": "var(--z-color-border-subtle)",
-        "--z-calendar-radius": "var(--z-radius-md)",
-        "--z-calendar-padding": "var(--z-space-4)",
-        "--z-calendar-header-gap": "var(--z-space-2)",
-        "--z-calendar-label-font-size": "var(--z-text-md)",
-        "--z-calendar-label-font-weight": "var(--z-weight-semibold)",
-        "--z-calendar-label-fg": "var(--z-color-fg)",
-        "--z-calendar-nav-size": "2rem",
-        "--z-calendar-nav-radius": "var(--z-radius-sm)",
-        "--z-calendar-nav-fg": "var(--z-color-fg-muted)",
-        "--z-calendar-nav-hover-bg": "var(--z-color-bg-subtle)",
-        "--z-calendar-nav-hover-fg": "var(--z-color-fg)",
-        "--z-calendar-grid-gap": "2px",
-        "--z-calendar-weekday-font-size": "var(--z-text-xs)",
-        "--z-calendar-weekday-font-weight": "var(--z-weight-medium)",
-        "--z-calendar-weekday-fg": "var(--z-color-fg-muted)",
-        "--z-calendar-day-size": "2.25rem",
-        "--z-calendar-day-font-size": "var(--z-text-sm)",
-        "--z-calendar-day-fg": "var(--z-color-fg)",
-        "--z-calendar-day-radius": "var(--z-radius-sm)",
-        "--z-calendar-day-hover-bg": "var(--z-color-bg-subtle)",
-        "--z-calendar-day-selected-bg": "var(--z-color-primary)",
-        "--z-calendar-day-selected-fg": "var(--z-color-primary-fg)",
-        "--z-calendar-day-today-border": "var(--z-color-primary)",
-        "--z-calendar-day-today-fg": "var(--z-color-primary)",
-        "--z-calendar-day-out-fg": "var(--z-color-fg-subtle)",
-        "--z-calendar-focus-ring": "var(--z-color-focus-ring)",
-        "--z-calendar-transition": "var(--z-duration-fast) var(--z-ease-standard)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Calendar/meta.json"
     },
     {
@@ -763,24 +613,7 @@
         "packages/ui/src/components/Card/Card.tsx",
         "packages/ui/src/components/Card/index.ts"
       ],
-      "cssVars": {
-        "--z-card-bg": "var(--z-color-bg-elevated)",
-        "--z-card-border": "var(--z-color-border-subtle)",
-        "--z-card-border-width": "1px",
-        "--z-card-radius": "0.5rem",
-        "--z-card-padding": "var(--z-space-5)",
-        "--z-card-header-height": "3rem",
-        "--z-card-header-gap": "var(--z-space-4)",
-        "--z-card-title-font-size": "var(--z-text-md)",
-        "--z-card-title-font-weight": "var(--z-weight-medium)",
-        "--z-card-title-fg": "var(--z-color-fg)",
-        "--z-card-extra-font-size": "var(--z-text-sm)",
-        "--z-card-extra-fg": "var(--z-color-fg-muted)",
-        "--z-card-shadow": "none",
-        "--z-card-hover-shadow": "var(--z-shadow-md)",
-        "--z-card-hover-translate-y": "-2px",
-        "--z-card-transition": "var(--z-duration-normal) var(--z-ease-standard)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Card/meta.json"
     },
     {
@@ -795,39 +628,7 @@
         "packages/ui/src/components/Cascader/Cascader.tsx",
         "packages/ui/src/components/Cascader/index.ts"
       ],
-      "cssVars": {
-        "--z-cascader-trigger-height": "2rem",
-        "--z-cascader-trigger-padding-x": "var(--z-space-3)",
-        "--z-cascader-trigger-font-size": "var(--z-text-sm)",
-        "--z-cascader-trigger-radius": "var(--z-radius-sm)",
-        "--z-cascader-trigger-bg": "var(--z-color-bg-elevated)",
-        "--z-cascader-trigger-fg": "var(--z-color-fg)",
-        "--z-cascader-trigger-border": "var(--z-color-border)",
-        "--z-cascader-trigger-hover-border": "var(--z-color-border-focus)",
-        "--z-cascader-placeholder-fg": "var(--z-color-fg-subtle)",
-        "--z-cascader-value-separator-fg": "var(--z-color-fg-subtle)",
-        "--z-cascader-panel-bg": "var(--z-color-bg-elevated)",
-        "--z-cascader-panel-border": "var(--z-color-border-subtle)",
-        "--z-cascader-panel-radius": "0.5rem",
-        "--z-cascader-panel-shadow": "var(--z-shadow-lg)",
-        "--z-cascader-panel-margin-top": "var(--z-space-1)",
-        "--z-cascader-panel-max-height": "16rem",
-        "--z-cascader-menu-width": "10rem",
-        "--z-cascader-menu-border": "var(--z-color-border-subtle)",
-        "--z-cascader-item-height": "2rem",
-        "--z-cascader-item-padding-x": "var(--z-space-3)",
-        "--z-cascader-item-fg": "var(--z-color-fg)",
-        "--z-cascader-item-hover-bg": "var(--z-color-bg-muted)",
-        "--z-cascader-item-active-bg": "var(--z-color-primary-subtle)",
-        "--z-cascader-item-active-fg": "var(--z-color-primary-subtle-fg)",
-        "--z-cascader-item-selected-font-weight": "var(--z-weight-medium)",
-        "--z-cascader-item-disabled-fg": "var(--z-color-disabled-fg)",
-        "--z-cascader-item-separator-fg": "var(--z-color-fg-subtle)",
-        "--z-cascader-search-padding": "var(--z-space-2)",
-        "--z-cascader-empty-fg": "var(--z-color-fg-muted)",
-        "--z-cascader-focus-ring": "var(--z-color-focus-ring)",
-        "--z-cascader-animation-duration": "var(--z-duration-fast)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Cascader/meta.json"
     },
     {
@@ -842,25 +643,7 @@
         "packages/ui/src/components/Checkbox/Checkbox.tsx",
         "packages/ui/src/components/Checkbox/index.ts"
       ],
-      "cssVars": {
-        "--z-checkbox-size": "var(--z-space-4)",
-        "--z-checkbox-gap": "var(--z-space-2)",
-        "--z-checkbox-radius": "0.25rem",
-        "--z-checkbox-border-width": "1px",
-        "--z-checkbox-bg": "var(--z-color-bg-elevated)",
-        "--z-checkbox-border": "var(--z-color-border-strong)",
-        "--z-checkbox-hover-border": "var(--z-color-primary)",
-        "--z-checkbox-checked-bg": "var(--z-color-primary)",
-        "--z-checkbox-checked-border": "var(--z-color-primary)",
-        "--z-checkbox-check-color": "var(--z-color-primary-fg)",
-        "--z-checkbox-mixed-color": "var(--z-color-primary-fg)",
-        "--z-checkbox-disabled-bg": "var(--z-color-disabled-bg)",
-        "--z-checkbox-disabled-border": "var(--z-color-disabled-border)",
-        "--z-checkbox-disabled-fg": "var(--z-color-disabled-fg)",
-        "--z-checkbox-label-color": "var(--z-color-fg)",
-        "--z-checkbox-label-font-size": "var(--z-text-sm)",
-        "--z-checkbox-transition": "150ms cubic-bezier(0.34, 1.56, 0.64, 1)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Checkbox/meta.json"
     },
     {
@@ -877,11 +660,7 @@
         "packages/ui/src/components/Col/Col.tsx",
         "packages/ui/src/components/Col/index.ts"
       ],
-      "cssVars": {
-        "--z-col-span": "24",
-        "--z-col-offset": "0",
-        "--z-col-gutter-x": "0px"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Col/meta.json"
     },
     {
@@ -890,7 +669,7 @@
       "title": "Collapse 折叠面板",
       "description": "折叠面板：分组内容收纳展示，支持手风琴单开模式与展开高度动画",
       "dependencies": [
-        "@zui/icons"
+        "@zuvi/icons"
       ],
       "registryDependencies": [],
       "files": [
@@ -898,26 +677,7 @@
         "packages/ui/src/components/Collapse/Collapse.tsx",
         "packages/ui/src/components/Collapse/index.ts"
       ],
-      "cssVars": {
-        "--z-collapse-font-size": "var(--z-text-sm)",
-        "--z-collapse-fg": "var(--z-color-fg)",
-        "--z-collapse-border": "var(--z-color-border)",
-        "--z-collapse-radius": "var(--z-radius-md)",
-        "--z-collapse-header-bg": "var(--z-color-bg-subtle)",
-        "--z-collapse-header-hover-bg": "var(--z-color-bg-muted)",
-        "--z-collapse-header-padding-x": "var(--z-space-4)",
-        "--z-collapse-header-padding-y": "var(--z-space-3)",
-        "--z-collapse-header-font-weight": "var(--z-weight-medium)",
-        "--z-collapse-header-disabled-fg": "var(--z-color-disabled-fg)",
-        "--z-collapse-header-disabled-bg": "var(--z-color-bg-subtle)",
-        "--z-collapse-content-bg": "var(--z-color-bg)",
-        "--z-collapse-content-padding-x": "var(--z-space-4)",
-        "--z-collapse-content-padding-y": "var(--z-space-3)",
-        "--z-collapse-arrow-color": "var(--z-color-fg-muted)",
-        "--z-collapse-arrow-gap": "var(--z-space-2)",
-        "--z-collapse-focus-ring": "var(--z-color-focus-ring)",
-        "--z-collapse-animation-duration": "var(--z-duration-normal)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Collapse/meta.json"
     },
     {
@@ -932,41 +692,7 @@
         "packages/ui/src/components/ColorPicker/ColorPicker.tsx",
         "packages/ui/src/components/ColorPicker/index.ts"
       ],
-      "cssVars": {
-        "--z-color-picker-height": "2rem",
-        "--z-color-picker-font-size": "var(--z-text-sm)",
-        "--z-color-picker-radius": "var(--z-radius-sm)",
-        "--z-color-picker-gap": "var(--z-space-2)",
-        "--z-color-picker-trigger-bg": "var(--z-color-bg-elevated)",
-        "--z-color-picker-trigger-fg": "var(--z-color-fg)",
-        "--z-color-picker-trigger-border": "var(--z-color-border)",
-        "--z-color-picker-trigger-hover-border": "var(--z-color-border-focus)",
-        "--z-color-picker-trigger-focus-ring": "var(--z-color-focus-ring)",
-        "--z-color-picker-swatch-size": "1.25rem",
-        "--z-color-picker-swatch-radius": "var(--z-radius-sm)",
-        "--z-color-picker-swatch-border": "var(--z-color-border-subtle)",
-        "--z-color-picker-panel-width": "15.5rem",
-        "--z-color-picker-panel-bg": "var(--z-color-bg-elevated)",
-        "--z-color-picker-panel-border": "var(--z-color-border-subtle)",
-        "--z-color-picker-panel-padding": "var(--z-space-3)",
-        "--z-color-picker-panel-gap": "var(--z-space-3)",
-        "--z-color-picker-panel-radius": "var(--z-radius-md)",
-        "--z-color-picker-panel-shadow": "var(--z-shadow-md)",
-        "--z-color-picker-sv-height": "8.5rem",
-        "--z-color-picker-sv-radius": "var(--z-radius-sm)",
-        "--z-color-picker-hue-height": "0.75rem",
-        "--z-color-picker-hue-radius": "var(--z-radius-full)",
-        "--z-color-picker-pointer-size": "0.875rem",
-        "--z-color-picker-pointer-border": "var(--z-color-bg-elevated)",
-        "--z-color-picker-hex-input-bg": "var(--z-color-bg)",
-        "--z-color-picker-hex-input-fg": "var(--z-color-fg)",
-        "--z-color-picker-hex-input-border": "var(--z-color-border)",
-        "--z-color-picker-hex-input-radius": "var(--z-radius-sm)",
-        "--z-color-picker-disabled-bg": "var(--z-color-disabled-bg)",
-        "--z-color-picker-disabled-fg": "var(--z-color-disabled-fg)",
-        "--z-color-picker-disabled-border": "var(--z-color-disabled-border)",
-        "--z-color-picker-transition": "var(--z-duration-fast) var(--z-ease-standard)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/ColorPicker/meta.json"
     },
     {
@@ -975,7 +701,7 @@
       "title": "Combobox 自动完成",
       "description": "自动完成：可编辑单选、严格选项、外部异步结果与完整 IME/键盘支持",
       "dependencies": [
-        "@zui/icons"
+        "@zuvi/icons"
       ],
       "registryDependencies": [],
       "files": [
@@ -983,37 +709,7 @@
         "packages/ui/src/components/Combobox/Combobox.tsx",
         "packages/ui/src/components/Combobox/index.ts"
       ],
-      "cssVars": {
-        "--z-combobox-control-height": "2rem",
-        "--z-combobox-control-padding-x": "var(--z-space-3)",
-        "--z-combobox-control-gap": "var(--z-space-1)",
-        "--z-combobox-font-size": "var(--z-text-sm)",
-        "--z-combobox-radius": "var(--z-radius-sm)",
-        "--z-combobox-bg": "var(--z-color-bg-elevated)",
-        "--z-combobox-fg": "var(--z-color-fg)",
-        "--z-combobox-border": "var(--z-color-border)",
-        "--z-combobox-hover-border": "var(--z-color-border-focus)",
-        "--z-combobox-focus-ring": "var(--z-color-focus-ring)",
-        "--z-combobox-placeholder-fg": "var(--z-color-fg-subtle)",
-        "--z-combobox-icon-fg": "var(--z-color-fg-muted)",
-        "--z-combobox-clear-hover-bg": "var(--z-color-bg-muted)",
-        "--z-combobox-panel-bg": "var(--z-color-bg-elevated)",
-        "--z-combobox-panel-border": "var(--z-color-border-subtle)",
-        "--z-combobox-panel-radius": "0.5rem",
-        "--z-combobox-panel-shadow": "var(--z-shadow-lg)",
-        "--z-combobox-panel-max-height": "16rem",
-        "--z-combobox-panel-margin-top": "var(--z-space-1)",
-        "--z-combobox-panel-padding": "var(--z-space-1)",
-        "--z-combobox-option-height": "2rem",
-        "--z-combobox-option-padding-x": "var(--z-space-3)",
-        "--z-combobox-option-radius": "var(--z-radius-sm)",
-        "--z-combobox-option-fg": "var(--z-color-fg)",
-        "--z-combobox-option-active-bg": "var(--z-color-primary-subtle)",
-        "--z-combobox-option-active-fg": "var(--z-color-primary-subtle-fg)",
-        "--z-combobox-option-disabled-fg": "var(--z-color-disabled-fg)",
-        "--z-combobox-status-fg": "var(--z-color-fg-muted)",
-        "--z-combobox-animation-duration": "var(--z-duration-fast)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Combobox/meta.json"
     },
     {
@@ -1030,23 +726,7 @@
         "packages/ui/src/components/CommandPalette/CommandPalette.tsx",
         "packages/ui/src/components/CommandPalette/index.ts"
       ],
-      "cssVars": {
-        "--z-command-palette-width": "42rem",
-        "--z-command-palette-max-height": "min(70dvh, 42rem)",
-        "--z-command-palette-input-height": "3.25rem",
-        "--z-command-palette-option-height": "2.75rem",
-        "--z-command-palette-gap": "var(--z-space-2)",
-        "--z-command-palette-padding": "var(--z-space-2)",
-        "--z-command-palette-bg": "var(--z-color-bg-elevated)",
-        "--z-command-palette-fg": "var(--z-color-fg)",
-        "--z-command-palette-muted-fg": "var(--z-color-fg-muted)",
-        "--z-command-palette-hover-bg": "var(--z-color-bg-muted)",
-        "--z-command-palette-active-bg": "var(--z-color-primary-subtle)",
-        "--z-command-palette-active-fg": "var(--z-color-primary-subtle-fg)",
-        "--z-command-palette-focus-ring": "var(--z-color-focus-ring)",
-        "--z-command-palette-border": "var(--z-color-border-subtle)",
-        "--z-command-palette-disabled-fg": "var(--z-color-disabled-fg)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/CommandPalette/meta.json"
     },
     {
@@ -1055,7 +735,7 @@
       "title": "DatePicker 日期选择器",
       "description": "日期选择器，弹出日历面板选择单个日期（ISO YYYY-MM-DD）",
       "dependencies": [
-        "@zui/icons"
+        "@zuvi/icons"
       ],
       "registryDependencies": [],
       "files": [
@@ -1063,51 +743,7 @@
         "packages/ui/src/components/DatePicker/DatePicker.tsx",
         "packages/ui/src/components/DatePicker/index.ts"
       ],
-      "cssVars": {
-        "--z-datepicker-trigger-height": "2rem",
-        "--z-datepicker-trigger-padding-x": "var(--z-space-3)",
-        "--z-datepicker-trigger-font-size": "var(--z-text-sm)",
-        "--z-datepicker-trigger-radius": "var(--z-radius-sm)",
-        "--z-datepicker-trigger-bg": "var(--z-color-bg-elevated)",
-        "--z-datepicker-trigger-fg": "var(--z-color-fg)",
-        "--z-datepicker-trigger-border": "var(--z-color-border)",
-        "--z-datepicker-trigger-hover-border": "var(--z-color-border-focus)",
-        "--z-datepicker-trigger-focus-border": "var(--z-color-border-focus)",
-        "--z-datepicker-trigger-focus-ring": "var(--z-color-focus-ring)",
-        "--z-datepicker-placeholder-fg": "var(--z-color-fg-subtle)",
-        "--z-datepicker-icon-color": "var(--z-color-fg-muted)",
-        "--z-datepicker-disabled-bg": "var(--z-color-disabled-bg)",
-        "--z-datepicker-disabled-fg": "var(--z-color-disabled-fg)",
-        "--z-datepicker-disabled-border": "var(--z-color-disabled-border)",
-        "--z-datepicker-panel-width": "17.5rem",
-        "--z-datepicker-panel-bg": "var(--z-color-bg-elevated)",
-        "--z-datepicker-panel-border": "var(--z-color-border-subtle)",
-        "--z-datepicker-panel-radius": "0.5rem",
-        "--z-datepicker-panel-shadow": "var(--z-shadow-lg)",
-        "--z-datepicker-panel-padding": "var(--z-space-3)",
-        "--z-datepicker-panel-gap": "var(--z-space-2)",
-        "--z-datepicker-header-gap": "var(--z-space-2)",
-        "--z-datepicker-label-font-size": "var(--z-text-sm)",
-        "--z-datepicker-label-font-weight": "var(--z-weight-medium)",
-        "--z-datepicker-label-fg": "var(--z-color-fg)",
-        "--z-datepicker-nav-size": "1.5rem",
-        "--z-datepicker-nav-color": "var(--z-color-fg-muted)",
-        "--z-datepicker-nav-hover-bg": "var(--z-color-bg-muted)",
-        "--z-datepicker-grid-gap": "2px",
-        "--z-datepicker-day-size": "2rem",
-        "--z-datepicker-day-font-size": "var(--z-text-sm)",
-        "--z-datepicker-day-fg": "var(--z-color-fg)",
-        "--z-datepicker-day-radius": "var(--z-radius-sm)",
-        "--z-datepicker-day-hover-bg": "var(--z-color-bg-muted)",
-        "--z-datepicker-day-selected-bg": "var(--z-color-primary)",
-        "--z-datepicker-day-selected-fg": "var(--z-color-primary-fg)",
-        "--z-datepicker-day-today-border": "var(--z-color-primary)",
-        "--z-datepicker-day-out-fg": "var(--z-color-fg-subtle)",
-        "--z-datepicker-day-disabled-fg": "var(--z-color-disabled-fg)",
-        "--z-datepicker-weekday-fg": "var(--z-color-fg-muted)",
-        "--z-datepicker-weekday-font-size": "var(--z-text-xs)",
-        "--z-datepicker-transition": "var(--z-duration-fast) var(--z-ease-standard)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/DatePicker/meta.json"
     },
     {
@@ -1116,7 +752,7 @@
       "title": "DateRangePicker 日期范围选择器",
       "description": "日期范围选择器，双月并排日历面板选择 [start, end] 区间（ISO YYYY-MM-DD 二元组）。区间版；月份选择器粒度留待后续",
       "dependencies": [
-        "@zui/icons"
+        "@zuvi/icons"
       ],
       "registryDependencies": [],
       "files": [
@@ -1124,60 +760,7 @@
         "packages/ui/src/components/DateRangePicker/DateRangePicker.tsx",
         "packages/ui/src/components/DateRangePicker/index.ts"
       ],
-      "cssVars": {
-        "--z-date-range-trigger-height": "2rem",
-        "--z-date-range-trigger-padding-x": "var(--z-space-3)",
-        "--z-date-range-trigger-font-size": "var(--z-text-sm)",
-        "--z-date-range-trigger-radius": "var(--z-radius-sm)",
-        "--z-date-range-trigger-bg": "var(--z-color-bg-elevated)",
-        "--z-date-range-trigger-fg": "var(--z-color-fg)",
-        "--z-date-range-trigger-border": "var(--z-color-border)",
-        "--z-date-range-trigger-hover-border": "var(--z-color-border-focus)",
-        "--z-date-range-trigger-focus-border": "var(--z-color-border-focus)",
-        "--z-date-range-trigger-focus-ring": "var(--z-color-focus-ring)",
-        "--z-date-range-error-border": "var(--z-color-danger)",
-        "--z-date-range-success-border": "var(--z-color-success)",
-        "--z-date-range-placeholder-fg": "var(--z-color-fg-subtle)",
-        "--z-date-range-separator-fg": "var(--z-color-fg-muted)",
-        "--z-date-range-icon-color": "var(--z-color-fg-muted)",
-        "--z-date-range-clear-fg": "var(--z-color-fg-muted)",
-        "--z-date-range-clear-hover-fg": "var(--z-color-fg)",
-        "--z-date-range-clear-hover-bg": "var(--z-color-bg-muted)",
-        "--z-date-range-disabled-bg": "var(--z-color-disabled-bg)",
-        "--z-date-range-disabled-fg": "var(--z-color-disabled-fg)",
-        "--z-date-range-disabled-border": "var(--z-color-disabled-border)",
-        "--z-date-range-panel-width": "33rem",
-        "--z-date-range-panel-bg": "var(--z-color-bg-elevated)",
-        "--z-date-range-panel-border": "var(--z-color-border-subtle)",
-        "--z-date-range-panel-radius": "0.5rem",
-        "--z-date-range-panel-shadow": "var(--z-shadow-lg)",
-        "--z-date-range-panel-padding": "var(--z-space-3)",
-        "--z-date-range-panel-gap": "var(--z-space-2)",
-        "--z-date-range-header-gap": "var(--z-space-2)",
-        "--z-date-range-label-font-size": "var(--z-text-sm)",
-        "--z-date-range-label-font-weight": "var(--z-weight-medium)",
-        "--z-date-range-label-fg": "var(--z-color-fg)",
-        "--z-date-range-nav-size": "1.5rem",
-        "--z-date-range-nav-color": "var(--z-color-fg-muted)",
-        "--z-date-range-nav-hover-bg": "var(--z-color-bg-muted)",
-        "--z-date-range-months-gap": "var(--z-space-3)",
-        "--z-date-range-grid-gap": "2px",
-        "--z-date-range-day-size": "2rem",
-        "--z-date-range-day-font-size": "var(--z-text-sm)",
-        "--z-date-range-day-fg": "var(--z-color-fg)",
-        "--z-date-range-day-radius": "var(--z-radius-sm)",
-        "--z-date-range-day-hover-bg": "var(--z-color-bg-muted)",
-        "--z-date-range-day-selected-bg": "var(--z-color-primary)",
-        "--z-date-range-day-selected-fg": "var(--z-color-primary-fg)",
-        "--z-date-range-day-in-range-bg": "var(--z-color-primary-subtle)",
-        "--z-date-range-day-in-range-fg": "var(--z-color-primary-subtle-fg)",
-        "--z-date-range-day-today-border": "var(--z-color-primary)",
-        "--z-date-range-day-out-fg": "var(--z-color-fg-subtle)",
-        "--z-date-range-day-disabled-fg": "var(--z-color-disabled-fg)",
-        "--z-date-range-weekday-fg": "var(--z-color-fg-muted)",
-        "--z-date-range-weekday-font-size": "var(--z-text-xs)",
-        "--z-date-range-transition": "var(--z-duration-fast) var(--z-ease-standard)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/DateRangePicker/meta.json"
     },
     {
@@ -1192,27 +775,7 @@
         "packages/ui/src/components/Descriptions/Descriptions.tsx",
         "packages/ui/src/components/Descriptions/index.ts"
       ],
-      "cssVars": {
-        "--z-descriptions-font-size": "var(--z-text-sm)",
-        "--z-descriptions-fg": "var(--z-color-fg)",
-        "--z-descriptions-font-family": "var(--z-font-sans)",
-        "--z-descriptions-title-font-size": "var(--z-text-md)",
-        "--z-descriptions-title-font-weight": "var(--z-weight-semibold)",
-        "--z-descriptions-title-fg": "var(--z-color-fg)",
-        "--z-descriptions-title-margin-bottom": "var(--z-space-3)",
-        "--z-descriptions-row-gap": "var(--z-space-4)",
-        "--z-descriptions-column-gap": "var(--z-space-6)",
-        "--z-descriptions-item-padding-x": "var(--z-space-3)",
-        "--z-descriptions-item-padding-y": "var(--z-space-2)",
-        "--z-descriptions-item-gap": "var(--z-space-3)",
-        "--z-descriptions-label-fg": "var(--z-color-fg-muted)",
-        "--z-descriptions-label-min-width": "4rem",
-        "--z-descriptions-label-bg": "var(--z-color-bg-subtle)",
-        "--z-descriptions-content-fg": "var(--z-color-fg)",
-        "--z-descriptions-border": "var(--z-color-border)",
-        "--z-descriptions-border-width": "1px",
-        "--z-descriptions-columns": "3"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Descriptions/meta.json"
     },
     {
@@ -1227,17 +790,7 @@
         "packages/ui/src/components/Divider/Divider.tsx",
         "packages/ui/src/components/Divider/index.ts"
       ],
-      "cssVars": {
-        "--z-divider-line-color": "var(--z-color-border-subtle)",
-        "--z-divider-thickness": "1px",
-        "--z-divider-margin-y": "var(--z-space-4)",
-        "--z-divider-margin-x": "var(--z-space-2)",
-        "--z-divider-text-gap": "var(--z-space-3)",
-        "--z-divider-text-color": "var(--z-color-fg-muted)",
-        "--z-divider-text-font-size": "var(--z-text-xs)",
-        "--z-divider-text-font-weight": "var(--z-weight-regular)",
-        "--z-divider-vertical-height": "0.9em"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Divider/meta.json"
     },
     {
@@ -1246,7 +799,7 @@
       "title": "Drawer 抽屉",
       "description": "抽屉：从边缘滑出的面板（复合组件），承载表单/筛选/详情",
       "dependencies": [
-        "@zui/icons"
+        "@zuvi/icons"
       ],
       "registryDependencies": [],
       "files": [
@@ -1254,23 +807,7 @@
         "packages/ui/src/components/Drawer/Drawer.tsx",
         "packages/ui/src/components/Drawer/index.ts"
       ],
-      "cssVars": {
-        "--z-drawer-overlay-bg": "var(--z-color-overlay)",
-        "--z-drawer-size": "24rem",
-        "--z-drawer-content-bg": "var(--z-color-bg-elevated)",
-        "--z-drawer-content-fg": "var(--z-color-fg)",
-        "--z-drawer-content-shadow": "var(--z-shadow-lg)",
-        "--z-drawer-content-padding": "var(--z-space-6)",
-        "--z-drawer-header-gap": "var(--z-space-2)",
-        "--z-drawer-title-font-size": "var(--z-text-md)",
-        "--z-drawer-body-padding": "var(--z-space-4) 0",
-        "--z-drawer-footer-gap": "var(--z-space-3)",
-        "--z-drawer-footer-padding-top": "var(--z-space-4)",
-        "--z-drawer-close-size": "2rem",
-        "--z-drawer-close-fg": "var(--z-color-fg-subtle)",
-        "--z-drawer-close-hover-bg": "var(--z-color-bg-muted)",
-        "--z-drawer-animation-duration": "var(--z-duration-normal)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Drawer/meta.json"
     },
     {
@@ -1285,29 +822,7 @@
         "packages/ui/src/components/DropdownMenu/DropdownMenu.tsx",
         "packages/ui/src/components/DropdownMenu/index.ts"
       ],
-      "cssVars": {
-        "--z-dropdown-menu-bg": "var(--z-color-bg-elevated)",
-        "--z-dropdown-menu-fg": "var(--z-color-fg)",
-        "--z-dropdown-menu-radius": "0.5rem",
-        "--z-dropdown-menu-padding": "var(--z-space-1)",
-        "--z-dropdown-menu-shadow": "var(--z-shadow-lg)",
-        "--z-dropdown-menu-min-width": "10rem",
-        "--z-dropdown-menu-z": "var(--z-z-dropdown)",
-        "--z-dropdown-menu-offset": "var(--z-space-1)",
-        "--z-dropdown-menu-item-height": "2rem",
-        "--z-dropdown-menu-item-padding-x": "var(--z-space-2)",
-        "--z-dropdown-menu-item-gap": "var(--z-space-2)",
-        "--z-dropdown-menu-item-radius": "var(--z-radius-sm)",
-        "--z-dropdown-menu-item-font-size": "var(--z-text-sm)",
-        "--z-dropdown-menu-item-hover-bg": "var(--z-color-bg-muted)",
-        "--z-dropdown-menu-item-fg": "var(--z-dropdown-menu-fg)",
-        "--z-dropdown-menu-item-danger-fg": "var(--z-color-danger)",
-        "--z-dropdown-menu-item-disabled-fg": "var(--z-color-disabled-fg)",
-        "--z-dropdown-menu-label-font-size": "var(--z-text-xs)",
-        "--z-dropdown-menu-label-fg": "var(--z-color-fg-muted)",
-        "--z-dropdown-menu-separator-color": "var(--z-color-border-subtle)",
-        "--z-dropdown-menu-animation": "var(--z-duration-fast) var(--z-ease-entrance)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/DropdownMenu/meta.json"
     },
     {
@@ -1322,15 +837,7 @@
         "packages/ui/src/components/Empty/Empty.tsx",
         "packages/ui/src/components/Empty/index.ts"
       ],
-      "cssVars": {
-        "--z-empty-gap": "var(--z-space-3)",
-        "--z-empty-image-size": "4rem",
-        "--z-empty-image-color": "var(--z-color-fg-subtle)",
-        "--z-empty-description-font-size": "0.8125rem",
-        "--z-empty-description-color": "var(--z-color-fg-muted)",
-        "--z-empty-description-line-height": "var(--z-leading-normal)",
-        "--z-empty-actions-gap": "var(--z-space-3)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Empty/meta.json"
     },
     {
@@ -1345,9 +852,7 @@
         "packages/ui/src/components/Flex/Flex.tsx",
         "packages/ui/src/components/Flex/index.ts"
       ],
-      "cssVars": {
-        "--z-flex-gap": "0px"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Flex/meta.json"
     },
     {
@@ -1362,26 +867,7 @@
         "packages/ui/src/components/FloatButton/FloatButton.tsx",
         "packages/ui/src/components/FloatButton/index.ts"
       ],
-      "cssVars": {
-        "--z-float-button-size": "2.75rem",
-        "--z-float-button-radius": "var(--z-radius-full)",
-        "--z-float-button-gap": "var(--z-space-3)",
-        "--z-float-button-bg": "var(--z-color-bg-elevated)",
-        "--z-float-button-fg": "var(--z-color-fg)",
-        "--z-float-button-border": "var(--z-color-border-subtle)",
-        "--z-float-button-hover-bg": "var(--z-color-bg-subtle)",
-        "--z-float-button-shadow": "var(--z-shadow-md)",
-        "--z-float-button-primary-bg": "var(--z-color-primary)",
-        "--z-float-button-primary-fg": "var(--z-color-primary-fg)",
-        "--z-float-button-primary-hover-bg": "var(--z-color-primary-hover)",
-        "--z-float-button-icon-size": "1.25rem",
-        "--z-float-button-font-size": "var(--z-text-sm)",
-        "--z-float-button-right": "var(--z-space-6)",
-        "--z-float-button-bottom": "var(--z-space-6)",
-        "--z-float-button-menu-gap": "var(--z-space-2)",
-        "--z-float-button-menu-item-bg": "var(--z-color-bg-elevated)",
-        "--z-float-button-transition": "var(--z-duration-fast) var(--z-ease-standard)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/FloatButton/meta.json"
     },
     {
@@ -1396,17 +882,7 @@
         "packages/ui/src/components/Form/Form.tsx",
         "packages/ui/src/components/Form/index.ts"
       ],
-      "cssVars": {
-        "--z-form-item-gap": "var(--z-space-4)",
-        "--z-form-label-color": "var(--z-color-fg)",
-        "--z-form-label-font-size": "var(--z-text-sm)",
-        "--z-form-label-font-weight": "var(--z-weight-medium)",
-        "--z-form-label-margin-bottom": "var(--z-space-1)",
-        "--z-form-required-color": "var(--z-color-danger)",
-        "--z-form-error-color": "var(--z-color-danger)",
-        "--z-form-error-font-size": "var(--z-text-xs)",
-        "--z-form-error-margin-top": "var(--z-space-1)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Form/meta.json"
     },
     {
@@ -1421,16 +897,7 @@
         "packages/ui/src/components/Image/Image.tsx",
         "packages/ui/src/components/Image/index.ts"
       ],
-      "cssVars": {
-        "--z-image-radius": "var(--z-radius-md)",
-        "--z-image-object-fit": "cover",
-        "--z-image-cursor": "zoom-in",
-        "--z-image-preview-bg": "var(--z-color-overlay)",
-        "--z-image-preview-img-shadow": "var(--z-shadow-lg)",
-        "--z-image-preview-close-size": "2.25rem",
-        "--z-image-preview-close-bg": "var(--z-color-bg-elevated)",
-        "--z-image-preview-close-fg": "var(--z-color-fg)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Image/meta.json"
     },
     {
@@ -1439,7 +906,7 @@
       "title": "Input 输入框",
       "description": "文本输入框：单行输入与 Textarea/Password/Search 子组件，支持前后缀插槽、清除按钮与校验状态",
       "dependencies": [
-        "@zui/icons"
+        "@zuvi/icons"
       ],
       "registryDependencies": [],
       "files": [
@@ -1447,32 +914,7 @@
         "packages/ui/src/components/Input/Input.tsx",
         "packages/ui/src/components/Input/index.ts"
       ],
-      "cssVars": {
-        "--z-input-height": "2rem",
-        "--z-input-padding-x": "var(--z-space-3)",
-        "--z-input-gap": "var(--z-space-2)",
-        "--z-input-font-size": "var(--z-text-sm)",
-        "--z-input-radius": "var(--z-radius-sm)",
-        "--z-input-border-width": "1px",
-        "--z-input-bg": "var(--z-color-bg-elevated)",
-        "--z-input-fg": "var(--z-color-fg)",
-        "--z-input-border": "var(--z-color-border)",
-        "--z-input-hover-border": "var(--z-color-border-focus)",
-        "--z-input-focus-border": "var(--z-color-border-focus)",
-        "--z-input-focus-ring": "var(--z-color-focus-ring)",
-        "--z-input-placeholder-color": "var(--z-color-fg-subtle)",
-        "--z-input-affix-color": "var(--z-color-fg-muted)",
-        "--z-input-affix-font-size": "var(--z-text-sm)",
-        "--z-input-clear-color": "var(--z-color-fg-subtle)",
-        "--z-input-clear-hover-color": "var(--z-color-fg)",
-        "--z-input-disabled-bg": "var(--z-color-disabled-bg)",
-        "--z-input-disabled-fg": "var(--z-color-disabled-fg)",
-        "--z-input-disabled-border": "var(--z-color-disabled-border)",
-        "--z-input-transition": "var(--z-duration-fast) var(--z-ease-standard)",
-        "--z-input-textarea-min-height": "4.5rem",
-        "--z-input-action-color": "var(--z-input-clear-color)",
-        "--z-input-action-hover-color": "var(--z-input-clear-hover-color)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Input/meta.json"
     },
     {
@@ -1487,29 +929,7 @@
         "packages/ui/src/components/InputNumber/InputNumber.tsx",
         "packages/ui/src/components/InputNumber/index.ts"
       ],
-      "cssVars": {
-        "--z-input-number-height": "2rem",
-        "--z-input-number-padding-x": "var(--z-space-3)",
-        "--z-input-number-gap": "var(--z-space-1)",
-        "--z-input-number-font-size": "var(--z-text-sm)",
-        "--z-input-number-radius": "var(--z-radius-sm)",
-        "--z-input-number-bg": "var(--z-color-bg-elevated)",
-        "--z-input-number-fg": "var(--z-color-fg)",
-        "--z-input-number-border": "var(--z-color-border)",
-        "--z-input-number-hover-border": "var(--z-color-border-focus)",
-        "--z-input-number-focus-border": "var(--z-color-border-focus)",
-        "--z-input-number-focus-ring": "var(--z-color-focus-ring)",
-        "--z-input-number-control-width": "1.25rem",
-        "--z-input-number-control-hit-size": "1.5rem",
-        "--z-input-number-control-color": "var(--z-color-fg-muted)",
-        "--z-input-number-control-hover-bg": "var(--z-color-bg-muted)",
-        "--z-input-number-control-hover-color": "var(--z-color-fg)",
-        "--z-input-number-control-active-bg": "var(--z-color-bg-subtle)",
-        "--z-input-number-disabled-bg": "var(--z-color-disabled-bg)",
-        "--z-input-number-disabled-fg": "var(--z-color-disabled-fg)",
-        "--z-input-number-disabled-border": "var(--z-color-disabled-border)",
-        "--z-input-number-transition": "var(--z-duration-fast) var(--z-ease-standard)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/InputNumber/meta.json"
     },
     {
@@ -1524,33 +944,7 @@
         "packages/ui/src/components/List/List.tsx",
         "packages/ui/src/components/List/index.ts"
       ],
-      "cssVars": {
-        "--z-list-font-size": "var(--z-text-sm)",
-        "--z-list-fg": "var(--z-color-fg)",
-        "--z-list-bg": "var(--z-color-bg)",
-        "--z-list-border": "var(--z-color-border)",
-        "--z-list-radius": "var(--z-radius-md)",
-        "--z-list-item-padding-x": "var(--z-space-4)",
-        "--z-list-item-padding-y": "var(--z-space-3)",
-        "--z-list-item-gap": "var(--z-space-3)",
-        "--z-list-item-hover-bg": "var(--z-color-bg-subtle)",
-        "--z-list-item-border": "var(--z-color-border-subtle)",
-        "--z-list-title-font-weight": "var(--z-weight-medium)",
-        "--z-list-title-fg": "var(--z-color-fg)",
-        "--z-list-description-fg": "var(--z-color-fg-muted)",
-        "--z-list-description-margin-top": "var(--z-space-1)",
-        "--z-list-avatar-size": "2.5rem",
-        "--z-list-header-padding-x": "var(--z-space-4)",
-        "--z-list-header-padding-y": "var(--z-space-3)",
-        "--z-list-header-bg": "var(--z-color-bg-subtle)",
-        "--z-list-header-border": "var(--z-color-border-subtle)",
-        "--z-list-header-fg": "var(--z-color-fg-muted)",
-        "--z-list-loading-padding": "var(--z-space-8)",
-        "--z-list-spinner-size": "1.25rem",
-        "--z-list-spinner-width": "2px",
-        "--z-list-spinner-color": "var(--z-color-primary)",
-        "--z-list-spinner-track": "var(--z-color-border)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/List/meta.json"
     },
     {
@@ -1565,31 +959,7 @@
         "packages/ui/src/components/Mentions/Mentions.tsx",
         "packages/ui/src/components/Mentions/index.ts"
       ],
-      "cssVars": {
-        "--z-mentions-font-size": "var(--z-text-sm)",
-        "--z-mentions-textarea-padding-x": "var(--z-space-3)",
-        "--z-mentions-textarea-padding-y": "var(--z-space-2)",
-        "--z-mentions-textarea-radius": "var(--z-radius-sm)",
-        "--z-mentions-textarea-bg": "var(--z-color-bg-elevated)",
-        "--z-mentions-textarea-fg": "var(--z-color-fg)",
-        "--z-mentions-textarea-border": "var(--z-color-border)",
-        "--z-mentions-textarea-hover-border": "var(--z-color-border-focus)",
-        "--z-mentions-panel-bg": "var(--z-color-bg-elevated)",
-        "--z-mentions-panel-border": "var(--z-color-border-subtle)",
-        "--z-mentions-panel-radius": "0.5rem",
-        "--z-mentions-panel-shadow": "var(--z-shadow-lg)",
-        "--z-mentions-panel-margin-top": "var(--z-space-1)",
-        "--z-mentions-panel-max-height": "12rem",
-        "--z-mentions-item-height": "2rem",
-        "--z-mentions-item-padding-x": "var(--z-space-3)",
-        "--z-mentions-item-fg": "var(--z-color-fg)",
-        "--z-mentions-item-hover-bg": "var(--z-color-bg-muted)",
-        "--z-mentions-item-active-bg": "var(--z-color-primary-subtle)",
-        "--z-mentions-item-active-fg": "var(--z-color-primary-subtle-fg)",
-        "--z-mentions-empty-fg": "var(--z-color-fg-muted)",
-        "--z-mentions-focus-ring": "var(--z-color-focus-ring)",
-        "--z-mentions-animation-duration": "var(--z-duration-fast)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Mentions/meta.json"
     },
     {
@@ -1598,7 +968,7 @@
       "title": "Message 全局提示",
       "description": "全局轻提示：hooks 风格 API（useMessage），自动消失的反馈条",
       "dependencies": [
-        "@zui/icons"
+        "@zuvi/icons"
       ],
       "registryDependencies": [],
       "files": [
@@ -1607,23 +977,7 @@
         "packages/ui/src/components/Message/index.ts",
         "packages/ui/src/components/Message/useMessage.ts"
       ],
-      "cssVars": {
-        "--z-message-gap": "var(--z-space-2)",
-        "--z-message-width": "max-content",
-        "--z-message-max-width": "24rem",
-        "--z-message-padding-x": "var(--z-space-4)",
-        "--z-message-padding-y": "var(--z-space-3)",
-        "--z-message-radius": "0.5rem",
-        "--z-message-bg": "var(--z-color-bg-elevated)",
-        "--z-message-fg": "var(--z-color-fg)",
-        "--z-message-border": "var(--z-color-border-subtle)",
-        "--z-message-shadow": "var(--z-shadow-lg)",
-        "--z-message-font-size": "var(--z-text-sm)",
-        "--z-message-icon-size": "1.125rem",
-        "--z-message-close-size": "var(--z-space-5)",
-        "--z-message-bar-width": "3px",
-        "--z-message-transition": "var(--z-duration-normal) var(--z-ease-standard)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Message/meta.json"
     },
     {
@@ -1632,7 +986,7 @@
       "title": "Modal 对话框",
       "description": "模态对话框：Portal 渲染 + 焦点陷阱 + 确认/取消等交互",
       "dependencies": [
-        "@zui/icons"
+        "@zuvi/icons"
       ],
       "registryDependencies": [],
       "files": [
@@ -1640,29 +994,7 @@
         "packages/ui/src/components/Modal/Modal.tsx",
         "packages/ui/src/components/Modal/index.ts"
       ],
-      "cssVars": {
-        "--z-modal-overlay-bg": "var(--z-color-overlay)",
-        "--z-modal-content-width-sm": "24rem",
-        "--z-modal-content-width-md": "32rem",
-        "--z-modal-content-width-lg": "48rem",
-        "--z-modal-content-bg": "var(--z-color-bg-elevated)",
-        "--z-modal-content-fg": "var(--z-color-fg)",
-        "--z-modal-content-radius": "var(--z-radius-lg)",
-        "--z-modal-content-shadow": "var(--z-shadow-lg)",
-        "--z-modal-content-padding": "var(--z-space-6)",
-        "--z-modal-content-max-height": "calc(100vh - var(--z-space-8))",
-        "--z-modal-header-gap": "var(--z-space-2)",
-        "--z-modal-title-font-size": "var(--z-text-md)",
-        "--z-modal-description-font-size": "var(--z-text-sm)",
-        "--z-modal-description-fg": "var(--z-color-fg-muted)",
-        "--z-modal-body-padding": "var(--z-space-4) 0",
-        "--z-modal-footer-gap": "var(--z-space-3)",
-        "--z-modal-footer-padding-top": "var(--z-space-4)",
-        "--z-modal-close-size": "2rem",
-        "--z-modal-close-fg": "var(--z-color-fg-subtle)",
-        "--z-modal-close-hover-bg": "var(--z-color-bg-muted)",
-        "--z-modal-animation-duration": "var(--z-duration-normal)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Modal/meta.json"
     },
     {
@@ -1671,7 +1003,7 @@
       "title": "MultiCombobox",
       "description": "多选自动完成：可编辑搜索 + 多个严格选项标签，支持外部异步结果与完整 IME/键盘支持",
       "dependencies": [
-        "@zui/icons"
+        "@zuvi/icons"
       ],
       "registryDependencies": [
         "combobox"
@@ -1681,46 +1013,7 @@
         "packages/ui/src/components/MultiCombobox/MultiCombobox.tsx",
         "packages/ui/src/components/MultiCombobox/index.ts"
       ],
-      "cssVars": {
-        "--z-multicombobox-control-min-height": "2rem",
-        "--z-multicombobox-control-padding-x": "var(--z-space-3)",
-        "--z-multicombobox-control-gap": "var(--z-space-1)",
-        "--z-multicombobox-font-size": "var(--z-text-sm)",
-        "--z-multicombobox-radius": "var(--z-radius-sm)",
-        "--z-multicombobox-bg": "var(--z-color-bg-elevated)",
-        "--z-multicombobox-fg": "var(--z-color-fg)",
-        "--z-multicombobox-border": "var(--z-color-border)",
-        "--z-multicombobox-hover-border": "var(--z-color-border-focus)",
-        "--z-multicombobox-focus-ring": "var(--z-color-focus-ring)",
-        "--z-multicombobox-placeholder-fg": "var(--z-color-fg-subtle)",
-        "--z-multicombobox-icon-fg": "var(--z-color-fg-muted)",
-        "--z-multicombobox-clear-hover-bg": "var(--z-color-bg-muted)",
-        "--z-multicombobox-tag-height": "1.25rem",
-        "--z-multicombobox-tag-padding-x": "var(--z-space-2)",
-        "--z-multicombobox-tag-gap": "var(--z-space-1)",
-        "--z-multicombobox-tag-bg": "var(--z-color-bg-muted)",
-        "--z-multicombobox-tag-fg": "var(--z-color-fg)",
-        "--z-multicombobox-tag-radius": "var(--z-radius-sm)",
-        "--z-multicombobox-tag-remove-fg": "var(--z-color-fg-muted)",
-        "--z-multicombobox-tag-remove-hover-fg": "var(--z-color-danger)",
-        "--z-multicombobox-tag-remove-hit-size": "1.5rem",
-        "--z-multicombobox-panel-bg": "var(--z-color-bg-elevated)",
-        "--z-multicombobox-panel-border": "var(--z-color-border-subtle)",
-        "--z-multicombobox-panel-radius": "0.5rem",
-        "--z-multicombobox-panel-shadow": "var(--z-shadow-lg)",
-        "--z-multicombobox-panel-max-height": "16rem",
-        "--z-multicombobox-panel-margin-top": "var(--z-space-1)",
-        "--z-multicombobox-panel-padding": "var(--z-space-1)",
-        "--z-multicombobox-option-height": "2rem",
-        "--z-multicombobox-option-padding-x": "var(--z-space-3)",
-        "--z-multicombobox-option-radius": "var(--z-radius-sm)",
-        "--z-multicombobox-option-fg": "var(--z-color-fg)",
-        "--z-multicombobox-option-active-bg": "var(--z-color-primary-subtle)",
-        "--z-multicombobox-option-active-fg": "var(--z-color-primary-subtle-fg)",
-        "--z-multicombobox-option-disabled-fg": "var(--z-color-disabled-fg)",
-        "--z-multicombobox-status-fg": "var(--z-color-fg-muted)",
-        "--z-multicombobox-animation-duration": "var(--z-duration-fast)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/MultiCombobox/meta.json"
     },
     {
@@ -1729,7 +1022,7 @@
       "title": "Notification 通知卡片",
       "description": "通知卡片，全局右上角（四角可配）的可交互消息提醒",
       "dependencies": [
-        "@zui/icons"
+        "@zuvi/icons"
       ],
       "registryDependencies": [],
       "files": [
@@ -1738,24 +1031,7 @@
         "packages/ui/src/components/Notification/index.ts",
         "packages/ui/src/components/Notification/useNotification.ts"
       ],
-      "cssVars": {
-        "--z-notification-gap": "var(--z-space-3)",
-        "--z-notification-width": "22rem",
-        "--z-notification-padding": "var(--z-space-4)",
-        "--z-notification-radius": "var(--z-radius-md)",
-        "--z-notification-bg": "var(--z-color-bg-elevated)",
-        "--z-notification-fg": "var(--z-color-fg)",
-        "--z-notification-border": "var(--z-color-border-subtle)",
-        "--z-notification-shadow": "var(--z-shadow-lg)",
-        "--z-notification-title-size": "var(--z-text-md)",
-        "--z-notification-title-weight": "var(--z-weight-medium)",
-        "--z-notification-desc-size": "var(--z-text-sm)",
-        "--z-notification-desc-fg": "var(--z-color-fg-muted)",
-        "--z-notification-icon-size": "1.25rem",
-        "--z-notification-close-size": "var(--z-space-5)",
-        "--z-notification-inset": "var(--z-space-6)",
-        "--z-notification-transition": "var(--z-duration-normal) var(--z-ease-standard)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Notification/meta.json"
     },
     {
@@ -1764,7 +1040,7 @@
       "title": "OfficeEditor 文档编辑器",
       "description": "ONLYOFFICE 原生在线编辑器的 React 内嵌容器，支持 Word、Excel、PDF 等文档，提供脚本共享、生命周期管理、状态反馈、业务工具栏与全屏布局",
       "dependencies": [
-        "@zui/icons"
+        "@zuvi/icons"
       ],
       "registryDependencies": [
         "button",
@@ -1778,41 +1054,21 @@
         "packages/ui/src/components/OfficeEditor/office-script.ts",
         "packages/ui/src/components/OfficeEditor/office-types.ts"
       ],
-      "cssVars": {
-        "--z-office-editor-min-height": "22.5rem",
-        "--z-office-editor-bg": "var(--z-color-bg)",
-        "--z-office-editor-stage-bg": "var(--z-color-bg-subtle)",
-        "--z-office-editor-border": "var(--z-color-border)",
-        "--z-office-editor-radius": "var(--z-radius-lg)",
-        "--z-office-editor-toolbar-height": "3.5rem",
-        "--z-office-editor-fullscreen-z": "var(--z-z-modal)",
-        "--z-office-editor-accent": "var(--z-color-fg-muted)",
-        "--z-office-editor-header-bg": "var(--z-office-editor-bg)",
-        "--z-office-editor-header-fg": "var(--z-color-primary-fg)",
-        "--z-button-height": "24px",
-        "--z-button-padding-x": "5px",
-        "--z-button-radius": "2px",
-        "--z-button-bg": "transparent",
-        "--z-button-fg": "var(--z-office-editor-header-fg)",
-        "--z-button-border": "transparent",
-        "--z-button-hover-bg": "color-mix(in srgb, var(--z-office-editor-header-fg) 15%, transparent)",
-        "--z-button-hover-fg": "var(--z-office-editor-header-fg)",
-        "--z-button-active-bg": "color-mix(in srgb, var(--z-office-editor-header-fg) 25%, transparent)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/OfficeEditor/meta.json"
     },
     {
       "name": "office-studio",
       "type": "registry:component",
       "title": "OfficeStudio 独立文档工作台",
-      "description": "以 ZUI 控件构建的独立文档工作台：Word 富文本页面、Excel 单元格和公式、PDF 分页批注与表单，支持文件适配、保存反馈、只读预览和全屏，不依赖 ONLYOFFICE 服务",
+      "description": "以 ZUVI 控件构建的独立文档工作台：Word 富文本页面、Excel 单元格和公式、PDF 分页批注与表单，支持文件适配、保存反馈、只读预览和全屏，不依赖 ONLYOFFICE 服务",
       "dependencies": [
         "@tiptap/extension-table",
         "@tiptap/extension-text-align",
         "@tiptap/extension-text-style",
         "@tiptap/react",
         "@tiptap/starter-kit",
-        "@zui/icons",
+        "@zuvi/icons",
         "fast-formula-parser"
       ],
       "registryDependencies": [
@@ -1861,68 +1117,7 @@
         "packages/ui/src/components/OfficeStudio/studio-types.ts",
         "packages/ui/src/components/OfficeStudio/studio-word-tools.ts"
       ],
-      "cssVars": {
-        "--z-office-studio-bg": "var(--z-color-bg)",
-        "--z-office-studio-canvas-bg": "var(--z-color-bg-muted)",
-        "--z-office-studio-accent": "color-mix(in srgb, var(--z-color-primary) 72%, var(--z-color-fg))",
-        "--z-office-studio-header-bg": "var(--z-office-studio-accent)",
-        "--z-office-studio-header-fg": "var(--z-color-primary-fg)",
-        "--z-office-studio-ribbon-bg": "var(--z-color-bg-subtle)",
-        "--z-office-studio-border": "var(--z-color-border)",
-        "--z-office-studio-radius": "3px",
-        "--z-office-studio-header-padding": "3px 10px",
-        "--z-input-height": "23px",
-        "--z-input-bg": "var(--z-studio-pdf-paper)",
-        "--z-input-fg": "var(--z-studio-pdf-ink)",
-        "--z-input-border": "transparent",
-        "--z-input-hover-border": "color-mix(in srgb, var(--z-office-studio-header-fg) 40%, transparent)",
-        "--z-input-focus-border": "var(--z-input-hover-border)",
-        "--z-input-disabled-bg": "var(--z-studio-pdf-paper)",
-        "--z-input-disabled-fg": "var(--z-studio-pdf-muted-ink)",
-        "--z-input-disabled-border": "transparent",
-        "--z-input-radius": "1px",
-        "--z-button-height": "52px",
-        "--z-button-padding-x": "0",
-        "--z-button-radius": "0",
-        "--z-button-bg": "transparent",
-        "--z-button-fg": "var(--z-color-fg)",
-        "--z-button-border": "transparent",
-        "--z-button-hover-bg": "var(--z-color-bg-muted)",
-        "--z-button-hover-fg": "var(--z-color-fg)",
-        "--z-button-active-bg": "color-mix(in srgb, var(--z-color-primary) 12%, var(--z-color-bg-muted))",
-        "--z-studio-pdf-paper": "#fff",
-        "--z-studio-pdf-ink": "#243044",
-        "--z-studio-pdf-muted-ink": "#687589",
-        "--z-studio-pdf-accent": "var(--z-office-studio-accent, var(--z-color-primary))",
-        "--z-studio-pdf-ribbon-height": "84px",
-        "--z-studio-pdf-sidebar-width": "260px",
-        "--z-studio-ribbon-control-height": "24px",
-        "--z-button-font-size": "var(--z-studio-ribbon-font-size)",
-        "--z-input-number-height": "24px",
-        "--z-input-number-padding-x": "4px",
-        "--z-input-number-radius": "2px",
-        "--z-input-padding-x": "0",
-        "--z-input-font-size": "12px",
-        "--z-input-textarea-min-height": "0",
-        "--z-select-trigger-height": "100%",
-        "--z-select-trigger-font-size": "inherit",
-        "--z-select-trigger-radius": "1px",
-        "--z-select-trigger-bg": "var(--z-studio-pdf-paper)",
-        "--z-select-trigger-fg": "var(--z-studio-pdf-ink)",
-        "--z-checkbox-size": "100%",
-        "--z-checkbox-gap": "0",
-        "--z-radio-size": "100%",
-        "--z-radio-gap": "0",
-        "--z-studio-ribbon-icon-size": "16px",
-        "--z-studio-ribbon-font-size": "12px",
-        "--z-studio-sheet-accent": "var(--z-office-studio-accent, var(--z-color-success))",
-        "--z-studio-sheet-rule-gap": "var(--z-space-3)",
-        "--z-studio-word-stage-bg": "var(--z-office-studio-canvas-bg, var(--z-color-bg-muted))",
-        "--z-studio-word-border": "var(--z-color-border)",
-        "--z-studio-word-paper-shadow": "0 1px 4px rgb(0 0 0 / 14%)",
-        "--z-studio-word-paper-bg": "white",
-        "--z-studio-word-ink": "#000"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/OfficeStudio/meta.json"
     },
     {
@@ -1931,7 +1126,7 @@
       "title": "Pagination 分页",
       "description": "分页器：页码导航 + 可选跳页输入（nav 语义）",
       "dependencies": [
-        "@zui/icons"
+        "@zuvi/icons"
       ],
       "registryDependencies": [],
       "files": [
@@ -1939,37 +1134,7 @@
         "packages/ui/src/components/Pagination/Pagination.tsx",
         "packages/ui/src/components/Pagination/index.ts"
       ],
-      "cssVars": {
-        "--z-pagination-gap": "var(--z-space-1)",
-        "--z-pagination-item-size": "2rem",
-        "--z-pagination-item-font-size": "var(--z-text-sm)",
-        "--z-pagination-item-font-weight": "var(--z-weight-regular)",
-        "--z-pagination-item-radius": "var(--z-radius-sm)",
-        "--z-pagination-item-bg": "transparent",
-        "--z-pagination-item-fg": "var(--z-color-fg)",
-        "--z-pagination-item-hover-bg": "var(--z-color-bg-subtle)",
-        "--z-pagination-item-hover-fg": "var(--z-color-fg)",
-        "--z-pagination-item-active-bg": "var(--z-color-bg-muted)",
-        "--z-pagination-current-bg": "var(--z-color-primary)",
-        "--z-pagination-current-fg": "var(--z-color-primary-fg)",
-        "--z-pagination-current-hover-bg": "var(--z-color-primary-hover)",
-        "--z-pagination-current-font-weight": "var(--z-weight-medium)",
-        "--z-pagination-disabled-bg": "transparent",
-        "--z-pagination-disabled-fg": "var(--z-color-disabled-fg)",
-        "--z-pagination-focus-ring": "var(--z-color-focus-ring)",
-        "--z-pagination-jumper-gap": "var(--z-space-2)",
-        "--z-pagination-jumper-font-size": "var(--z-text-sm)",
-        "--z-pagination-jumper-fg": "var(--z-color-fg-muted)",
-        "--z-pagination-jumper-input-width": "3.25rem",
-        "--z-pagination-jumper-input-height": "var(--z-pagination-item-size)",
-        "--z-pagination-jumper-input-padding-x": "var(--z-space-2)",
-        "--z-pagination-jumper-input-radius": "var(--z-radius-sm)",
-        "--z-pagination-jumper-input-border": "var(--z-color-border)",
-        "--z-pagination-jumper-input-bg": "var(--z-color-bg)",
-        "--z-pagination-jumper-input-fg": "var(--z-color-fg)",
-        "--z-pagination-jumper-input-focus-border": "var(--z-color-border-focus)",
-        "--z-pagination-transition": "var(--z-duration-fast) var(--z-ease-standard)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Pagination/meta.json"
     },
     {
@@ -1984,29 +1149,7 @@
         "packages/ui/src/components/Popconfirm/Popconfirm.tsx",
         "packages/ui/src/components/Popconfirm/index.ts"
       ],
-      "cssVars": {
-        "--z-popconfirm-gap": "var(--z-space-3)",
-        "--z-popconfirm-width": "15rem",
-        "--z-popconfirm-padding": "var(--z-space-4)",
-        "--z-popconfirm-radius": "var(--z-radius-md)",
-        "--z-popconfirm-bg": "var(--z-color-bg-elevated)",
-        "--z-popconfirm-fg": "var(--z-color-fg)",
-        "--z-popconfirm-border": "var(--z-color-border-subtle)",
-        "--z-popconfirm-shadow": "var(--z-shadow-md)",
-        "--z-popconfirm-title-size": "var(--z-text-md)",
-        "--z-popconfirm-title-weight": "var(--z-weight-medium)",
-        "--z-popconfirm-desc-size": "var(--z-text-sm)",
-        "--z-popconfirm-desc-fg": "var(--z-color-fg-muted)",
-        "--z-popconfirm-btn-height": "2rem",
-        "--z-popconfirm-btn-radius": "var(--z-radius-sm)",
-        "--z-popconfirm-ok-bg": "var(--z-color-primary)",
-        "--z-popconfirm-ok-fg": "var(--z-color-primary-fg)",
-        "--z-popconfirm-ok-hover-bg": "var(--z-color-primary-hover)",
-        "--z-popconfirm-cancel-bg": "var(--z-color-bg)",
-        "--z-popconfirm-cancel-fg": "var(--z-color-fg)",
-        "--z-popconfirm-cancel-border": "var(--z-color-border)",
-        "--z-popconfirm-z": "var(--z-z-dropdown)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Popconfirm/meta.json"
     },
     {
@@ -2021,18 +1164,7 @@
         "packages/ui/src/components/Popover/Popover.tsx",
         "packages/ui/src/components/Popover/index.ts"
       ],
-      "cssVars": {
-        "--z-popover-bg": "var(--z-color-bg-elevated)",
-        "--z-popover-fg": "var(--z-color-fg)",
-        "--z-popover-radius": "var(--z-radius-md)",
-        "--z-popover-padding": "var(--z-space-3)",
-        "--z-popover-shadow": "var(--z-shadow-lg)",
-        "--z-popover-offset": "var(--z-space-2)",
-        "--z-popover-max-width": "20rem",
-        "--z-popover-z": "var(--z-z-dropdown)",
-        "--z-popover-animation-duration": "var(--z-duration-fast)",
-        "--z-popover-transition": "var(--z-popover-animation-duration) var(--z-ease-entrance)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Popover/meta.json"
     },
     {
@@ -2047,16 +1179,7 @@
         "packages/ui/src/components/Progress/Progress.tsx",
         "packages/ui/src/components/Progress/index.ts"
       ],
-      "cssVars": {
-        "--z-progress-height": "8px",
-        "--z-progress-radius": "var(--z-radius-full)",
-        "--z-progress-track-bg": "var(--z-color-bg-muted)",
-        "--z-progress-color": "var(--z-color-primary)",
-        "--z-progress-info-gap": "var(--z-space-3)",
-        "--z-progress-info-font-size": "var(--z-text-sm)",
-        "--z-progress-info-color": "var(--z-color-fg-muted)",
-        "--z-progress-transition": "width 300ms var(--z-ease-standard)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Progress/meta.json"
     },
     {
@@ -2072,10 +1195,7 @@
         "packages/ui/src/components/QRCode/index.ts",
         "packages/ui/src/components/QRCode/qrcode-encoder.ts"
       ],
-      "cssVars": {
-        "--z-qrcode-fg": "var(--z-color-fg)",
-        "--z-qrcode-bg": "var(--z-color-bg)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/QRCode/meta.json"
     },
     {
@@ -2092,24 +1212,7 @@
         "packages/ui/src/components/Radio/RadioGroup.tsx",
         "packages/ui/src/components/Radio/index.ts"
       ],
-      "cssVars": {
-        "--z-radio-size": "var(--z-space-4)",
-        "--z-radio-gap": "var(--z-space-2)",
-        "--z-radio-border-width": "1px",
-        "--z-radio-bg": "var(--z-color-bg-elevated)",
-        "--z-radio-border": "var(--z-color-border-strong)",
-        "--z-radio-hover-border": "var(--z-color-primary)",
-        "--z-radio-checked-border": "var(--z-color-primary)",
-        "--z-radio-dot-size": "calc(var(--z-radio-size) * 0.5)",
-        "--z-radio-dot-color": "var(--z-color-primary)",
-        "--z-radio-disabled-bg": "var(--z-color-disabled-bg)",
-        "--z-radio-disabled-border": "var(--z-color-disabled-border)",
-        "--z-radio-disabled-fg": "var(--z-color-disabled-fg)",
-        "--z-radio-label-color": "var(--z-color-fg)",
-        "--z-radio-label-font-size": "var(--z-text-sm)",
-        "--z-radio-transition": "150ms cubic-bezier(0.34, 1.56, 0.64, 1)",
-        "--z-radio-group-gap": "var(--z-space-3)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Radio/meta.json"
     },
     {
@@ -2124,17 +1227,7 @@
         "packages/ui/src/components/Rate/Rate.tsx",
         "packages/ui/src/components/Rate/index.ts"
       ],
-      "cssVars": {
-        "--z-rate-star-size": "1.25rem",
-        "--z-rate-star-hit-size": "1.5rem",
-        "--z-rate-gap": "var(--z-space-1)",
-        "--z-rate-star-empty-color": "var(--z-color-border-strong)",
-        "--z-rate-star-filled-color": "var(--z-color-warning)",
-        "--z-rate-star-hover-color": "var(--z-color-warning-hover)",
-        "--z-rate-focus-ring": "var(--z-color-focus-ring)",
-        "--z-rate-disabled-opacity": "0.5",
-        "--z-rate-transition": "var(--z-duration-fast) var(--z-ease-standard)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Rate/meta.json"
     },
     {
@@ -2149,17 +1242,7 @@
         "packages/ui/src/components/Result/Result.tsx",
         "packages/ui/src/components/Result/index.ts"
       ],
-      "cssVars": {
-        "--z-result-icon-size": "4.5rem",
-        "--z-result-gap": "var(--z-space-2)",
-        "--z-result-title-size": "var(--z-text-xl)",
-        "--z-result-title-weight": "var(--z-weight-semibold)",
-        "--z-result-title-fg": "var(--z-color-fg)",
-        "--z-result-subtitle-size": "var(--z-text-md)",
-        "--z-result-subtitle-fg": "var(--z-color-fg-muted)",
-        "--z-result-extra-gap": "var(--z-space-3)",
-        "--z-result-max-width": "32rem"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Result/meta.json"
     },
     {
@@ -2174,10 +1257,7 @@
         "packages/ui/src/components/Row/Row.tsx",
         "packages/ui/src/components/Row/index.ts"
       ],
-      "cssVars": {
-        "--z-row-gutter-x": "0px",
-        "--z-row-gutter-y": "0px"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Row/meta.json"
     },
     {
@@ -2192,24 +1272,7 @@
         "packages/ui/src/components/Segmented/Segmented.tsx",
         "packages/ui/src/components/Segmented/index.ts"
       ],
-      "cssVars": {
-        "--z-segmented-gap": "2px",
-        "--z-segmented-padding": "var(--z-space-1)",
-        "--z-segmented-radius": "var(--z-radius-md)",
-        "--z-segmented-bg": "var(--z-color-bg-muted)",
-        "--z-segmented-fg": "var(--z-color-fg-muted)",
-        "--z-segmented-hover-bg": "var(--z-color-bg-subtle)",
-        "--z-segmented-active-fg": "var(--z-color-fg)",
-        "--z-segmented-thumb-bg": "var(--z-color-bg)",
-        "--z-segmented-thumb-shadow": "var(--z-shadow-xs)",
-        "--z-segmented-thumb-radius": "calc(var(--z-radius-md) - 1px)",
-        "--z-segmented-font-size": "var(--z-text-sm)",
-        "--z-segmented-font-weight": "var(--z-weight-medium)",
-        "--z-segmented-item-height": "2rem",
-        "--z-segmented-item-padding-x": "var(--z-space-3)",
-        "--z-segmented-icon-size": "1rem",
-        "--z-segmented-transition": "var(--z-duration-fast) var(--z-ease-standard)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Segmented/meta.json"
     },
     {
@@ -2224,35 +1287,7 @@
         "packages/ui/src/components/Select/Select.tsx",
         "packages/ui/src/components/Select/index.ts"
       ],
-      "cssVars": {
-        "--z-select-trigger-height": "2rem",
-        "--z-select-trigger-padding-x": "var(--z-space-3)",
-        "--z-select-trigger-font-size": "var(--z-text-sm)",
-        "--z-select-trigger-radius": "var(--z-radius-sm)",
-        "--z-select-trigger-bg": "var(--z-color-bg-elevated)",
-        "--z-select-trigger-fg": "var(--z-color-fg)",
-        "--z-select-trigger-border": "var(--z-color-border)",
-        "--z-select-trigger-hover-border": "var(--z-color-border-focus)",
-        "--z-select-placeholder-fg": "var(--z-color-fg-subtle)",
-        "--z-select-listbox-bg": "var(--z-color-bg-elevated)",
-        "--z-select-listbox-border": "var(--z-color-border-subtle)",
-        "--z-select-listbox-radius": "0.5rem",
-        "--z-select-listbox-shadow": "var(--z-shadow-lg)",
-        "--z-select-listbox-padding": "var(--z-space-1)",
-        "--z-select-listbox-max-height": "16rem",
-        "--z-select-listbox-margin-top": "var(--z-space-1)",
-        "--z-select-option-padding-x": "var(--z-space-3)",
-        "--z-select-option-height": "2rem",
-        "--z-select-option-radius": "var(--z-radius-sm)",
-        "--z-select-option-fg": "var(--z-color-fg)",
-        "--z-select-option-hover-bg": "var(--z-color-bg-muted)",
-        "--z-select-option-active-bg": "var(--z-color-primary-subtle)",
-        "--z-select-option-active-fg": "var(--z-color-primary-subtle-fg)",
-        "--z-select-option-disabled-fg": "var(--z-color-disabled-fg)",
-        "--z-select-empty-fg": "var(--z-color-fg-muted)",
-        "--z-select-empty-padding": "var(--z-space-4)",
-        "--z-select-animation-duration": "var(--z-duration-fast)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Select/meta.json"
     },
     {
@@ -2267,27 +1302,7 @@
         "packages/ui/src/components/SideNav/SideNav.tsx",
         "packages/ui/src/components/SideNav/index.ts"
       ],
-      "cssVars": {
-        "--z-sidenav-width": "15rem",
-        "--z-sidenav-collapsed-width": "3.5rem",
-        "--z-sidenav-padding": "var(--z-space-2)",
-        "--z-sidenav-gap": "var(--z-space-1)",
-        "--z-sidenav-item-height": "var(--z-space-10)",
-        "--z-sidenav-item-padding-x": "0.625rem",
-        "--z-sidenav-child-indent": "var(--z-space-7)",
-        "--z-sidenav-radius": "var(--z-radius-md)",
-        "--z-sidenav-bg": "var(--z-color-bg)",
-        "--z-sidenav-fg": "var(--z-color-fg)",
-        "--z-sidenav-muted-fg": "var(--z-color-fg-muted)",
-        "--z-sidenav-hover-bg": "var(--z-color-bg-subtle)",
-        "--z-sidenav-active-bg": "var(--z-color-primary-subtle)",
-        "--z-sidenav-active-fg": "var(--z-color-primary-subtle-fg)",
-        "--z-sidenav-indicator": "var(--z-color-primary)",
-        "--z-sidenav-focus-ring": "var(--z-color-primary)",
-        "--z-sidenav-flyout-width": "15rem",
-        "--z-sidenav-flyout-max-height": "28rem",
-        "--z-sidenav-animation-duration": "160ms"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/SideNav/meta.json"
     },
     {
@@ -2302,17 +1317,7 @@
         "packages/ui/src/components/Skeleton/Skeleton.tsx",
         "packages/ui/src/components/Skeleton/index.ts"
       ],
-      "cssVars": {
-        "--z-skeleton-width": "100%",
-        "--z-skeleton-height": "1rem",
-        "--z-skeleton-line-gap": "var(--z-space-2)",
-        "--z-skeleton-last-line-width": "60%",
-        "--z-skeleton-radius": "var(--z-radius-sm)",
-        "--z-skeleton-bg": "var(--z-color-bg-muted)",
-        "--z-skeleton-highlight": "color-mix(in srgb, var(--z-color-bg-muted) 45%, var(--z-color-bg))",
-        "--z-skeleton-duration": "1.5s",
-        "--z-skeleton-easing": "linear"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Skeleton/meta.json"
     },
     {
@@ -2327,29 +1332,7 @@
         "packages/ui/src/components/Slider/Slider.tsx",
         "packages/ui/src/components/Slider/index.ts"
       ],
-      "cssVars": {
-        "--z-slider-track-height": "6px",
-        "--z-slider-track-bg": "var(--z-color-bg-muted)",
-        "--z-slider-track-radius": "var(--z-radius-full)",
-        "--z-slider-fill-bg": "var(--z-color-primary)",
-        "--z-slider-thumb-size": "1rem",
-        "--z-slider-thumb-hit-size": "24px",
-        "--z-slider-thumb-bg": "var(--z-color-bg)",
-        "--z-slider-thumb-border": "2px solid var(--z-color-primary)",
-        "--z-slider-thumb-shadow": "var(--z-shadow-sm)",
-        "--z-slider-thumb-focus-ring": "var(--z-color-focus-ring)",
-        "--z-slider-tooltip-bg": "var(--z-color-bg-inverse)",
-        "--z-slider-tooltip-fg": "var(--z-color-fg-inverse)",
-        "--z-slider-tooltip-font-size": "var(--z-text-xs)",
-        "--z-slider-tooltip-radius": "var(--z-radius-sm)",
-        "--z-slider-tooltip-padding-x": "var(--z-space-2)",
-        "--z-slider-tooltip-padding-y": "var(--z-space-1)",
-        "--z-slider-mark-color": "var(--z-color-fg-muted)",
-        "--z-slider-mark-active-color": "var(--z-color-primary)",
-        "--z-slider-mark-font-size": "var(--z-text-xs)",
-        "--z-slider-disabled-opacity": "0.5",
-        "--z-slider-transition": "var(--z-duration-fast) var(--z-ease-standard)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Slider/meta.json"
     },
     {
@@ -2364,9 +1347,7 @@
         "packages/ui/src/components/Space/Space.tsx",
         "packages/ui/src/components/Space/index.ts"
       ],
-      "cssVars": {
-        "--z-space-gap": "var(--z-space-2)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Space/meta.json"
     },
     {
@@ -2381,16 +1362,7 @@
         "packages/ui/src/components/Spin/Spin.tsx",
         "packages/ui/src/components/Spin/index.ts"
       ],
-      "cssVars": {
-        "--z-spin-size": "2rem",
-        "--z-spin-ring-width": "3px",
-        "--z-spin-color": "var(--z-color-primary)",
-        "--z-spin-track-color": "color-mix(in oklch, var(--z-spin-color) 25%, transparent)",
-        "--z-spin-tip-color": "var(--z-color-fg-muted)",
-        "--z-spin-tip-font-size": "var(--z-text-sm)",
-        "--z-spin-gap": "var(--z-space-2)",
-        "--z-spin-mask-bg": "color-mix(in oklch, var(--z-color-bg) 65%, transparent)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Spin/meta.json"
     },
     {
@@ -2405,16 +1377,7 @@
         "packages/ui/src/components/Splitter/Splitter.tsx",
         "packages/ui/src/components/Splitter/index.ts"
       ],
-      "cssVars": {
-        "--z-splitter-handle-size": "0.5rem",
-        "--z-splitter-handle-hit-size": "1.5rem",
-        "--z-splitter-handle-bg": "var(--z-color-border)",
-        "--z-splitter-handle-hover-bg": "var(--z-color-primary)",
-        "--z-splitter-handle-active-bg": "var(--z-color-primary)",
-        "--z-splitter-handle-radius": "var(--z-radius-full)",
-        "--z-splitter-handle-fg": "var(--z-color-fg-subtle)",
-        "--z-splitter-animation-duration": "var(--z-duration-fast)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Splitter/meta.json"
     },
     {
@@ -2429,25 +1392,7 @@
         "packages/ui/src/components/Statistic/Statistic.tsx",
         "packages/ui/src/components/Statistic/index.ts"
       ],
-      "cssVars": {
-        "--z-statistic-font-family": "var(--z-font-sans)",
-        "--z-statistic-title-font-size": "var(--z-text-sm)",
-        "--z-statistic-title-fg": "var(--z-color-fg-muted)",
-        "--z-statistic-title-font-weight": "var(--z-weight-regular)",
-        "--z-statistic-title-margin-bottom": "var(--z-space-1)",
-        "--z-statistic-value-font-size": "var(--z-text-2xl)",
-        "--z-statistic-value-font-weight": "var(--z-weight-semibold)",
-        "--z-statistic-value-fg": "var(--z-color-fg)",
-        "--z-statistic-value-line-height": "var(--z-leading-tight)",
-        "--z-statistic-suffix-font-size": "var(--z-text-md)",
-        "--z-statistic-suffix-font-weight": "var(--z-weight-regular)",
-        "--z-statistic-suffix-fg": "var(--z-color-fg-muted)",
-        "--z-statistic-suffix-margin-left": "var(--z-space-1)",
-        "--z-statistic-prefix-font-size": "var(--z-text-md)",
-        "--z-statistic-prefix-font-weight": "var(--z-weight-regular)",
-        "--z-statistic-prefix-fg": "var(--z-color-fg-muted)",
-        "--z-statistic-prefix-margin-right": "var(--z-space-1)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Statistic/meta.json"
     },
     {
@@ -2456,7 +1401,7 @@
       "title": "Steps 步骤条",
       "description": "步骤条：引导用户按顺序完成多步流程，支持派生状态与显式 error 覆盖",
       "dependencies": [
-        "@zui/icons"
+        "@zuvi/icons"
       ],
       "registryDependencies": [],
       "files": [
@@ -2464,26 +1409,7 @@
         "packages/ui/src/components/Steps/Steps.tsx",
         "packages/ui/src/components/Steps/index.ts"
       ],
-      "cssVars": {
-        "--z-steps-icon-size": "2rem",
-        "--z-steps-icon-font-size": "var(--z-text-sm)",
-        "--z-steps-icon-svg-size": "calc(var(--z-steps-icon-size) * 0.5625)",
-        "--z-steps-line-width": "2px",
-        "--z-steps-line-color": "var(--z-color-border)",
-        "--z-steps-line-finish-color": "var(--z-color-primary)",
-        "--z-steps-item-gap": "var(--z-space-4)",
-        "--z-steps-gap": "var(--z-space-3)",
-        "--z-steps-vertical-line-gap": "var(--z-space-2)",
-        "--z-steps-title-font-size": "var(--z-text-md)",
-        "--z-steps-description-font-size": "var(--z-text-sm)",
-        "--z-steps-title-fg": "var(--z-color-fg)",
-        "--z-steps-description-fg": "var(--z-color-fg-muted)",
-        "--z-steps-icon-bg": "var(--z-color-bg-muted)",
-        "--z-steps-icon-fg": "var(--z-color-fg-muted)",
-        "--z-steps-icon-border": "transparent",
-        "--z-steps-icon-border-width": "1px",
-        "--z-steps-transition": "var(--z-duration-fast) var(--z-ease-standard)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Steps/meta.json"
     },
     {
@@ -2498,23 +1424,7 @@
         "packages/ui/src/components/Switch/Switch.tsx",
         "packages/ui/src/components/Switch/index.ts"
       ],
-      "cssVars": {
-        "--z-switch-track-width": "2.25rem",
-        "--z-switch-track-height": "1.25rem",
-        "--z-switch-thumb-size": "1rem",
-        "--z-switch-thumb-offset": "calc((var(--z-switch-track-height) - var(--z-switch-thumb-size)) / 2)",
-        "--z-switch-thumb-travel": "calc(\n    var(--z-switch-track-width) - var(--z-switch-thumb-size) - 2 * var(--z-switch-thumb-offset)\n  )",
-        "--z-switch-gap": "var(--z-space-2)",
-        "--z-switch-track-bg": "var(--z-color-border-strong)",
-        "--z-switch-track-checked-bg": "var(--z-color-primary)",
-        "--z-switch-track-disabled-bg": "var(--z-color-disabled-border)",
-        "--z-switch-thumb-bg": "var(--z-color-bg-elevated)",
-        "--z-switch-thumb-shadow": "var(--z-shadow-sm)",
-        "--z-switch-thumb-disabled-bg": "var(--z-color-bg-elevated)",
-        "--z-switch-label-color": "var(--z-color-fg)",
-        "--z-switch-label-font-size": "var(--z-text-sm)",
-        "--z-switch-transition": "var(--z-duration-normal) var(--z-ease-standard)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Switch/meta.json"
     },
     {
@@ -2523,7 +1433,7 @@
       "title": "Table 表格",
       "description": "表格：语义化组合用法与专业数据模式；数据模式支持显式排序菜单、专用手柄列移动、受控排序、字段搜索/显隐/重排",
       "dependencies": [
-        "@zui/icons"
+        "@zuvi/icons"
       ],
       "registryDependencies": [
         "button",
@@ -2538,23 +1448,7 @@
         "packages/ui/src/components/Table/Table.tsx",
         "packages/ui/src/components/Table/index.ts"
       ],
-      "cssVars": {
-        "--z-table-font-size": "var(--z-text-sm)",
-        "--z-table-header-font-size": "var(--z-text-xs)",
-        "--z-table-header-bg": "var(--z-color-bg-subtle)",
-        "--z-table-header-fg": "var(--z-color-fg-muted)",
-        "--z-table-cell-padding-x": "var(--z-space-4)",
-        "--z-table-cell-padding-y": "0.875rem",
-        "--z-table-border-color": "var(--z-color-border)",
-        "--z-table-border-color-subtle": "var(--z-color-border-subtle)",
-        "--z-table-row-hover-bg": "var(--z-color-bg-muted)",
-        "--z-table-row-selected-bg": "var(--z-color-primary-subtle)",
-        "--z-table-row-selected-fg": "var(--z-color-primary-subtle-fg)",
-        "--z-table-striped-bg": "var(--z-color-bg-subtle)",
-        "--z-table-toolbar-height": "40px",
-        "--z-table-handle-size": "28px",
-        "--z-table-manager-width": "min(360px, calc(100vw - 24px))"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Table/meta.json"
     },
     {
@@ -2569,22 +1463,7 @@
         "packages/ui/src/components/Tabs/Tabs.tsx",
         "packages/ui/src/components/Tabs/index.ts"
       ],
-      "cssVars": {
-        "--z-tabs-gap": "var(--z-space-1)",
-        "--z-tabs-trigger-padding-x": "var(--z-space-4)",
-        "--z-tabs-trigger-padding-y": "var(--z-space-2)",
-        "--z-tabs-trigger-font-size": "var(--z-text-sm)",
-        "--z-tabs-trigger-radius": "var(--z-radius-sm)",
-        "--z-tabs-trigger-fg": "var(--z-color-fg-muted)",
-        "--z-tabs-trigger-hover-bg": "transparent",
-        "--z-tabs-trigger-hover-fg": "var(--z-color-primary)",
-        "--z-tabs-trigger-active-fg": "var(--z-color-fg)",
-        "--z-tabs-indicator-size": "2px",
-        "--z-tabs-indicator-color": "var(--z-color-primary)",
-        "--z-tabs-panel-padding": "var(--z-space-4)",
-        "--z-tabs-panel-padding-top": "var(--z-space-4)",
-        "--z-tabs-transition": "var(--z-duration-fast) var(--z-ease-standard)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Tabs/meta.json"
     },
     {
@@ -2593,7 +1472,7 @@
       "title": "Tag 标签",
       "description": "标签：小块语义色标签，可关闭、可带图标",
       "dependencies": [
-        "@zui/icons"
+        "@zuvi/icons"
       ],
       "registryDependencies": [],
       "files": [
@@ -2601,23 +1480,7 @@
         "packages/ui/src/components/Tag/Tag.tsx",
         "packages/ui/src/components/Tag/index.ts"
       ],
-      "cssVars": {
-        "--z-tag-height": "1.5rem",
-        "--z-tag-padding-x": "var(--z-space-2)",
-        "--z-tag-gap": "var(--z-space-1)",
-        "--z-tag-radius": "0.25rem",
-        "--z-tag-font-size": "var(--z-text-xs)",
-        "--z-tag-line-height": "var(--z-leading-tight)",
-        "--z-tag-icon-size": "0.875rem",
-        "--z-tag-close-size": "0.875rem",
-        "--z-tag-close-gap": "var(--z-space-1)",
-        "--z-tag-bg": "var(--z-color-bg-muted)",
-        "--z-tag-fg": "var(--z-color-fg-muted)",
-        "--z-tag-border": "transparent",
-        "--z-tag-hover-bg": "color-mix(in srgb, var(--z-color-fg) 8%, var(--z-tag-bg))",
-        "--z-tag-focus-ring": "var(--z-color-focus-ring)",
-        "--z-tag-transition": "var(--z-duration-fast) var(--z-ease-standard)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Tag/meta.json"
     },
     {
@@ -2632,24 +1495,7 @@
         "packages/ui/src/components/Timeline/Timeline.tsx",
         "packages/ui/src/components/Timeline/index.ts"
       ],
-      "cssVars": {
-        "--z-timeline-font-family": "var(--z-font-sans)",
-        "--z-timeline-font-size": "var(--z-text-sm)",
-        "--z-timeline-fg": "var(--z-color-fg)",
-        "--z-timeline-line-color": "var(--z-color-border)",
-        "--z-timeline-line-width": "2px",
-        "--z-timeline-dot-size": "0.75rem",
-        "--z-timeline-dot-border-width": "2px",
-        "--z-timeline-dot-bg": "var(--z-color-bg)",
-        "--z-timeline-item-gap": "var(--z-space-6)",
-        "--z-timeline-content-gap": "var(--z-space-4)",
-        "--z-timeline-label-color": "var(--z-color-fg-muted)",
-        "--z-timeline-label-width": "5.5rem",
-        "--z-timeline-label-margin": "var(--z-space-3)",
-        "--z-timeline-dot-color": "var(--z-color-primary)",
-        "--z-timeline-dot-pending-color": "var(--z-color-border-strong)",
-        "--z-timeline-dot-offset-top": "0.35em"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Timeline/meta.json"
     },
     {
@@ -2664,33 +1510,7 @@
         "packages/ui/src/components/TimePicker/TimePicker.tsx",
         "packages/ui/src/components/TimePicker/index.ts"
       ],
-      "cssVars": {
-        "--z-time-picker-trigger-height": "2rem",
-        "--z-time-picker-trigger-padding-x": "var(--z-space-3)",
-        "--z-time-picker-trigger-font-size": "var(--z-text-sm)",
-        "--z-time-picker-trigger-radius": "var(--z-radius-sm)",
-        "--z-time-picker-trigger-bg": "var(--z-color-bg-elevated)",
-        "--z-time-picker-trigger-fg": "var(--z-color-fg)",
-        "--z-time-picker-trigger-border": "var(--z-color-border)",
-        "--z-time-picker-trigger-hover-border": "var(--z-color-border-focus)",
-        "--z-time-picker-placeholder-fg": "var(--z-color-fg-subtle)",
-        "--z-time-picker-panel-bg": "var(--z-color-bg-elevated)",
-        "--z-time-picker-panel-border": "var(--z-color-border-subtle)",
-        "--z-time-picker-panel-radius": "0.5rem",
-        "--z-time-picker-panel-shadow": "var(--z-shadow-lg)",
-        "--z-time-picker-panel-margin-top": "var(--z-space-1)",
-        "--z-time-picker-panel-height": "13.5rem",
-        "--z-time-picker-column-width": "3.5rem",
-        "--z-time-picker-column-border": "var(--z-color-border-subtle)",
-        "--z-time-picker-item-height": "2.25rem",
-        "--z-time-picker-item-fg": "var(--z-color-fg)",
-        "--z-time-picker-item-hover-bg": "var(--z-color-bg-muted)",
-        "--z-time-picker-item-active-bg": "var(--z-color-primary-subtle)",
-        "--z-time-picker-item-active-fg": "var(--z-color-primary-subtle-fg)",
-        "--z-time-picker-item-font-size": "var(--z-text-sm)",
-        "--z-time-picker-focus-ring": "var(--z-color-focus-ring)",
-        "--z-time-picker-animation-duration": "var(--z-duration-fast)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/TimePicker/meta.json"
     },
     {
@@ -2705,20 +1525,7 @@
         "packages/ui/src/components/Tooltip/Tooltip.tsx",
         "packages/ui/src/components/Tooltip/index.ts"
       ],
-      "cssVars": {
-        "--z-tooltip-max-width": "16rem",
-        "--z-tooltip-bg": "var(--z-color-bg-inverse)",
-        "--z-tooltip-fg": "var(--z-color-fg-inverse)",
-        "--z-tooltip-radius": "var(--z-radius-sm)",
-        "--z-tooltip-font-size": "var(--z-text-xs)",
-        "--z-tooltip-line-height": "var(--z-leading-normal)",
-        "--z-tooltip-padding-x": "var(--z-space-2)",
-        "--z-tooltip-padding-y": "var(--z-space-1)",
-        "--z-tooltip-shadow": "var(--z-shadow-sm)",
-        "--z-tooltip-offset": "var(--z-space-1)",
-        "--z-tooltip-z": "var(--z-z-dropdown)",
-        "--z-tooltip-animation": "var(--z-duration-fast) var(--z-ease-entrance)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Tooltip/meta.json"
     },
     {
@@ -2733,34 +1540,7 @@
         "packages/ui/src/components/Tour/Tour.tsx",
         "packages/ui/src/components/Tour/index.ts"
       ],
-      "cssVars": {
-        "--z-tour-z": "var(--z-z-modal)",
-        "--z-tour-mask-radius": "var(--z-radius-sm)",
-        "--z-tour-mask-color": "var(--z-color-overlay)",
-        "--z-tour-card-width": "20rem",
-        "--z-tour-card-bg": "var(--z-color-bg-elevated)",
-        "--z-tour-card-fg": "var(--z-color-fg)",
-        "--z-tour-card-radius": "var(--z-radius-lg)",
-        "--z-tour-card-shadow": "var(--z-shadow-lg)",
-        "--z-tour-card-padding": "var(--z-space-5)",
-        "--z-tour-card-gap": "var(--z-space-3)",
-        "--z-tour-title-font-size": "var(--z-text-md)",
-        "--z-tour-title-font-weight": "var(--z-weight-semibold)",
-        "--z-tour-description-font-size": "var(--z-text-sm)",
-        "--z-tour-description-fg": "var(--z-color-fg-muted)",
-        "--z-tour-footer-gap": "var(--z-space-3)",
-        "--z-tour-progress-fg": "var(--z-color-fg-subtle)",
-        "--z-tour-button-height": "2rem",
-        "--z-tour-button-padding-x": "var(--z-space-3)",
-        "--z-tour-button-radius": "var(--z-radius-sm)",
-        "--z-tour-button-bg": "var(--z-color-bg-muted)",
-        "--z-tour-button-fg": "var(--z-color-fg)",
-        "--z-tour-button-primary-bg": "var(--z-color-primary)",
-        "--z-tour-button-primary-fg": "var(--z-color-primary-fg)",
-        "--z-tour-button-disabled-bg": "var(--z-color-disabled-bg)",
-        "--z-tour-button-disabled-fg": "var(--z-color-disabled-fg)",
-        "--z-tour-focus-ring": "var(--z-color-focus-ring)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Tour/meta.json"
     },
     {
@@ -2775,43 +1555,7 @@
         "packages/ui/src/components/Transfer/Transfer.tsx",
         "packages/ui/src/components/Transfer/index.ts"
       ],
-      "cssVars": {
-        "--z-transfer-width": "12rem",
-        "--z-transfer-height": "15rem",
-        "--z-transfer-border": "var(--z-color-border)",
-        "--z-transfer-radius": "var(--z-radius-md)",
-        "--z-transfer-bg": "var(--z-color-bg-elevated)",
-        "--z-transfer-header-bg": "var(--z-color-bg-subtle)",
-        "--z-transfer-header-fg": "var(--z-color-fg-muted)",
-        "--z-transfer-header-height": "2.25rem",
-        "--z-transfer-header-font-size": "var(--z-text-sm)",
-        "--z-transfer-search-padding": "var(--z-space-2)",
-        "--z-transfer-search-height": "2rem",
-        "--z-transfer-item-height": "2.25rem",
-        "--z-transfer-item-padding-x": "var(--z-space-3)",
-        "--z-transfer-item-fg": "var(--z-color-fg)",
-        "--z-transfer-item-hover-bg": "var(--z-color-bg-muted)",
-        "--z-transfer-item-selected-bg": "var(--z-color-primary-subtle)",
-        "--z-transfer-item-selected-fg": "var(--z-color-primary-subtle-fg)",
-        "--z-transfer-item-disabled-fg": "var(--z-color-disabled-fg)",
-        "--z-transfer-empty-fg": "var(--z-color-fg-subtle)",
-        "--z-transfer-button-size": "2rem",
-        "--z-transfer-button-gap": "var(--z-space-2)",
-        "--z-transfer-button-bg": "var(--z-color-bg-elevated)",
-        "--z-transfer-button-fg": "var(--z-color-fg-muted)",
-        "--z-transfer-button-border": "var(--z-color-border)",
-        "--z-transfer-button-hover-bg": "var(--z-color-primary-subtle)",
-        "--z-transfer-button-hover-fg": "var(--z-color-primary-subtle-fg)",
-        "--z-transfer-checkbox-size": "1rem",
-        "--z-transfer-checkbox-bg": "var(--z-color-bg-elevated)",
-        "--z-transfer-checkbox-border": "var(--z-color-border-strong)",
-        "--z-transfer-checkbox-checked-bg": "var(--z-color-primary)",
-        "--z-transfer-checkbox-check-color": "var(--z-color-primary-fg)",
-        "--z-transfer-checkbox-disabled-bg": "var(--z-color-disabled-bg)",
-        "--z-transfer-checkbox-disabled-border": "var(--z-color-disabled-border)",
-        "--z-transfer-gap": "var(--z-space-3)",
-        "--z-transfer-focus-ring": "var(--z-color-focus-ring)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Transfer/meta.json"
     },
     {
@@ -2820,7 +1564,7 @@
       "title": "Tree 树",
       "description": "树形控件：勾选传播（父子联动 + 半选）、异步加载子节点、完整键盘导航",
       "dependencies": [
-        "@zui/icons"
+        "@zuvi/icons"
       ],
       "registryDependencies": [],
       "files": [
@@ -2828,35 +1572,7 @@
         "packages/ui/src/components/Tree/Tree.tsx",
         "packages/ui/src/components/Tree/index.ts"
       ],
-      "cssVars": {
-        "--z-tree-font-size": "var(--z-text-sm)",
-        "--z-tree-line-height": "var(--z-leading-normal)",
-        "--z-tree-fg": "var(--z-color-fg)",
-        "--z-tree-node-height": "1.75rem",
-        "--z-tree-node-gap": "var(--z-space-2)",
-        "--z-tree-node-radius": "var(--z-radius-sm)",
-        "--z-tree-node-hover-bg": "var(--z-color-bg-subtle)",
-        "--z-tree-node-selected-bg": "var(--z-color-primary-subtle)",
-        "--z-tree-node-selected-fg": "var(--z-color-primary-subtle-fg)",
-        "--z-tree-node-disabled-fg": "var(--z-color-disabled-fg)",
-        "--z-tree-indent": "var(--z-space-4)",
-        "--z-tree-icon-size": "1rem",
-        "--z-tree-icon-color": "var(--z-color-fg-muted)",
-        "--z-tree-checkbox-size": "1rem",
-        "--z-tree-checkbox-radius": "var(--z-radius-sm)",
-        "--z-tree-checkbox-bg": "var(--z-color-bg)",
-        "--z-tree-checkbox-border": "var(--z-color-border-strong)",
-        "--z-tree-checkbox-checked-bg": "var(--z-color-primary)",
-        "--z-tree-checkbox-checked-border": "var(--z-color-primary)",
-        "--z-tree-checkbox-fg": "var(--z-color-primary-fg)",
-        "--z-tree-checkbox-indeterminate-bg": "var(--z-color-primary)",
-        "--z-tree-focus-ring": "var(--z-color-focus-ring)",
-        "--z-tree-spinner-size": "0.875rem",
-        "--z-tree-spinner-width": "2px",
-        "--z-tree-spinner-color": "var(--z-color-primary)",
-        "--z-tree-spinner-track": "var(--z-color-border)",
-        "--z-tree-transition": "var(--z-duration-fast) var(--z-ease-standard)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Tree/meta.json"
     },
     {
@@ -2871,56 +1587,7 @@
         "packages/ui/src/components/TreeSelect/TreeSelect.tsx",
         "packages/ui/src/components/TreeSelect/index.ts"
       ],
-      "cssVars": {
-        "--z-tree-select-font-size": "var(--z-text-sm)",
-        "--z-tree-select-trigger-min-height": "2rem",
-        "--z-tree-select-trigger-padding-x": "var(--z-space-3)",
-        "--z-tree-select-trigger-padding-y": "var(--z-space-1)",
-        "--z-tree-select-trigger-radius": "var(--z-radius-sm)",
-        "--z-tree-select-trigger-bg": "var(--z-color-bg-elevated)",
-        "--z-tree-select-trigger-fg": "var(--z-color-fg)",
-        "--z-tree-select-trigger-border": "var(--z-color-border)",
-        "--z-tree-select-trigger-hover-border": "var(--z-color-border-focus)",
-        "--z-tree-select-placeholder-fg": "var(--z-color-fg-subtle)",
-        "--z-tree-select-tag-gap": "var(--z-space-1)",
-        "--z-tree-select-tag-height": "1.375rem",
-        "--z-tree-select-tag-padding-x": "var(--z-space-2)",
-        "--z-tree-select-tag-radius": "var(--z-radius-sm)",
-        "--z-tree-select-tag-bg": "var(--z-color-bg-muted)",
-        "--z-tree-select-tag-fg": "var(--z-color-fg)",
-        "--z-tree-select-tag-remove-fg": "var(--z-color-fg-muted)",
-        "--z-tree-select-tag-remove-hover-fg": "var(--z-color-danger)",
-        "--z-tree-select-tag-remove-hit-size": "1.5rem",
-        "--z-tree-select-panel-bg": "var(--z-color-bg-elevated)",
-        "--z-tree-select-panel-border": "var(--z-color-border-subtle)",
-        "--z-tree-select-panel-radius": "0.5rem",
-        "--z-tree-select-panel-shadow": "var(--z-shadow-lg)",
-        "--z-tree-select-panel-margin-top": "var(--z-space-1)",
-        "--z-tree-select-panel-padding": "var(--z-space-1)",
-        "--z-tree-select-panel-max-height": "16rem",
-        "--z-tree-select-node-height": "1.75rem",
-        "--z-tree-select-node-gap": "var(--z-space-2)",
-        "--z-tree-select-node-radius": "var(--z-radius-sm)",
-        "--z-tree-select-node-hover-bg": "var(--z-color-bg-subtle)",
-        "--z-tree-select-node-selected-bg": "var(--z-color-primary-subtle)",
-        "--z-tree-select-node-selected-fg": "var(--z-color-primary-subtle-fg)",
-        "--z-tree-select-node-disabled-fg": "var(--z-color-disabled-fg)",
-        "--z-tree-select-indent": "var(--z-space-4)",
-        "--z-tree-select-icon-size": "1rem",
-        "--z-tree-select-icon-color": "var(--z-color-fg-muted)",
-        "--z-tree-select-checkbox-size": "1rem",
-        "--z-tree-select-checkbox-radius": "var(--z-radius-sm)",
-        "--z-tree-select-checkbox-bg": "var(--z-color-bg)",
-        "--z-tree-select-checkbox-border": "var(--z-color-border-strong)",
-        "--z-tree-select-checkbox-checked-bg": "var(--z-color-primary)",
-        "--z-tree-select-checkbox-checked-border": "var(--z-color-primary)",
-        "--z-tree-select-checkbox-fg": "var(--z-color-primary-fg)",
-        "--z-tree-select-checkbox-indeterminate-bg": "var(--z-color-primary)",
-        "--z-tree-select-focus-ring": "var(--z-color-focus-ring)",
-        "--z-tree-select-empty-fg": "var(--z-color-fg-muted)",
-        "--z-tree-select-empty-padding": "var(--z-space-4)",
-        "--z-tree-select-transition": "var(--z-duration-fast) var(--z-ease-standard)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/TreeSelect/meta.json"
     },
     {
@@ -2929,7 +1596,7 @@
       "title": "Typography 排版",
       "description": "排版组件：标题、段落与文本的语义化呈现，支持语义标签切换、四色调色、多行省略与一键复制",
       "dependencies": [
-        "@zui/icons"
+        "@zuvi/icons"
       ],
       "registryDependencies": [],
       "files": [
@@ -2937,31 +1604,7 @@
         "packages/ui/src/components/Typography/Typography.tsx",
         "packages/ui/src/components/Typography/index.ts"
       ],
-      "cssVars": {
-        "--z-typography-margin": "0 0 var(--z-space-3)",
-        "--z-typography-color": "var(--z-color-fg)",
-        "--z-typography-code-bg": "var(--z-color-bg-subtle)",
-        "--z-typography-code-fg": "var(--z-color-fg)",
-        "--z-typography-code-border": "var(--z-color-border)",
-        "--z-typography-code-border-width": "1px",
-        "--z-typography-code-radius": "var(--z-radius-sm)",
-        "--z-typography-kbd-bg": "var(--z-color-bg-muted)",
-        "--z-typography-kbd-border": "var(--z-color-border-strong)",
-        "--z-typography-mark-bg": "color-mix(in srgb, var(--z-color-warning) 28%, transparent)",
-        "--z-typography-mark-fg": "var(--z-color-fg)",
-        "--z-typography-copy-color": "var(--z-color-fg-muted)",
-        "--z-typography-copy-hover-color": "var(--z-color-primary)",
-        "--z-typography-copy-success-color": "var(--z-color-success)",
-        "--z-typography-copy-size": "1em",
-        "--z-typography-copy-gap": "var(--z-space-2)",
-        "--z-typography-ellipsis-rows": "1",
-        "--z-typography-h1-size": "var(--z-text-2xl)",
-        "--z-typography-h2-size": "var(--z-text-xl)",
-        "--z-typography-h3-size": "var(--z-text-lg)",
-        "--z-typography-h4-size": "var(--z-text-md)",
-        "--z-typography-h5-size": "var(--z-text-sm)",
-        "--z-typography-paragraph-size": "var(--z-text-md)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Typography/meta.json"
     },
     {
@@ -2970,7 +1613,7 @@
       "title": "Upload 上传",
       "description": "文件上传：隐藏 file input + 可见按钮/拖拽区，customRequest 或 XHR 引擎（进度/成功/失败/中止），带状态流转的文件列表",
       "dependencies": [
-        "@zui/icons"
+        "@zuvi/icons"
       ],
       "registryDependencies": [],
       "files": [
@@ -2978,40 +1621,7 @@
         "packages/ui/src/components/Upload/Upload.tsx",
         "packages/ui/src/components/Upload/index.ts"
       ],
-      "cssVars": {
-        "--z-upload-gap": "var(--z-space-3)",
-        "--z-upload-button-height": "2.25rem",
-        "--z-upload-button-padding-x": "var(--z-space-4)",
-        "--z-upload-button-font-size": "var(--z-text-sm)",
-        "--z-upload-button-radius": "var(--z-radius)",
-        "--z-upload-button-bg": "var(--z-color-primary)",
-        "--z-upload-button-fg": "var(--z-color-primary-fg)",
-        "--z-upload-button-hover-bg": "var(--z-color-primary-hover)",
-        "--z-upload-dragzone-padding": "var(--z-space-6)",
-        "--z-upload-dragzone-radius": "var(--z-radius)",
-        "--z-upload-dragzone-bg": "var(--z-color-bg-subtle)",
-        "--z-upload-dragzone-fg": "var(--z-color-fg-muted)",
-        "--z-upload-dragzone-border": "var(--z-color-border-strong)",
-        "--z-upload-dragzone-border-hover": "var(--z-color-primary)",
-        "--z-upload-dragzone-font-size": "var(--z-text-sm)",
-        "--z-upload-list-gap": "var(--z-space-2)",
-        "--z-upload-list-max-height": "min(320px, calc(100dvh - 16px))",
-        "--z-upload-item-padding": "var(--z-space-2)",
-        "--z-upload-item-radius": "var(--z-radius-sm)",
-        "--z-upload-item-bg": "var(--z-color-bg-subtle)",
-        "--z-upload-item-fg": "var(--z-color-fg)",
-        "--z-upload-item-gap": "var(--z-space-2)",
-        "--z-upload-icon-uploading": "var(--z-color-primary)",
-        "--z-upload-icon-success": "var(--z-color-success)",
-        "--z-upload-icon-error": "var(--z-color-danger)",
-        "--z-upload-size-color": "var(--z-color-fg-muted)",
-        "--z-upload-progress-height": "6px",
-        "--z-upload-progress-bg": "var(--z-color-bg-muted)",
-        "--z-upload-progress-fill": "var(--z-color-primary)",
-        "--z-upload-remove-color": "var(--z-color-fg-subtle)",
-        "--z-upload-remove-hover-color": "var(--z-color-danger)",
-        "--z-upload-focus-ring": "var(--z-color-focus-ring)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Upload/meta.json"
     },
     {
@@ -3026,23 +1636,7 @@
         "packages/ui/src/components/VirtualTable/VirtualTable.tsx",
         "packages/ui/src/components/VirtualTable/index.ts"
       ],
-      "cssVars": {
-        "--z-virtual-table-font-size": "var(--z-text-sm)",
-        "--z-virtual-table-line-height": "var(--z-leading-normal)",
-        "--z-virtual-table-border": "var(--z-color-border)",
-        "--z-virtual-table-radius": "var(--z-radius-sm)",
-        "--z-virtual-table-header-height": "2.5rem",
-        "--z-virtual-table-header-bg": "var(--z-color-bg-subtle)",
-        "--z-virtual-table-header-fg": "var(--z-color-fg-muted)",
-        "--z-virtual-table-header-font-weight": "var(--z-weight-medium)",
-        "--z-virtual-table-row-bg": "var(--z-color-bg)",
-        "--z-virtual-table-row-hover-bg": "var(--z-color-bg-subtle)",
-        "--z-virtual-table-row-border": "var(--z-color-border-subtle)",
-        "--z-virtual-table-cell-padding-x": "var(--z-space-4)",
-        "--z-virtual-table-sticky-bg": "var(--z-color-bg)",
-        "--z-virtual-table-sticky-header-bg": "var(--z-color-bg-subtle)",
-        "--z-virtual-table-focus-ring": "var(--z-color-focus-ring)"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/VirtualTable/meta.json"
     },
     {
@@ -3057,10 +1651,7 @@
         "packages/ui/src/components/Watermark/Watermark.tsx",
         "packages/ui/src/components/Watermark/index.ts"
       ],
-      "cssVars": {
-        "--z-watermark-overlay-bg-repeat": "repeat",
-        "--z-watermark-overlay-z": "0"
-      },
+      "cssVars": {},
       "meta": "packages/ui/src/components/Watermark/meta.json"
     },
     {

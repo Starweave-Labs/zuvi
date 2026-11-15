@@ -2,7 +2,7 @@ import {
   createOfficeStudioDocument,
   type OfficeStudioDocument,
   type OfficeStudioKind,
-} from '@zui/react';
+} from '@zuvi/react';
 
 export const STUDIO_FILE_LIMIT = 20 * 1024 * 1024;
 

@@ -253,9 +253,9 @@ describe('Cascader 定制出口', () => {
         classNames={{ root: 'r', trigger: 't', panel: 'p', menu: 'm', item: 'i' }}
       />
     );
-    expect(document.querySelector('[data-part="root"]')).toHaveClass('z-cascader', 'r', 'my-cascader');
-    expect(document.querySelector('[data-part="trigger"]')).toHaveClass('z-cascader-trigger', 't');
-    expect(document.querySelector('[data-part="panel"]')).toHaveClass('z-cascader-panel', 'p');
+    expect(document.querySelector('[data-part="root"]')).toHaveClass('zuvi-cascader', 'r', 'my-cascader');
+    expect(document.querySelector('[data-part="trigger"]')).toHaveClass('zuvi-cascader-trigger', 't');
+    expect(document.querySelector('[data-part="panel"]')).toHaveClass('zuvi-cascader-panel', 'p');
   });
 
   it('data-part 与 data-size 完整', async () => {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { VirtualTable, type VirtualTableColumn } from '@zui/react';
+import { VirtualTable, type VirtualTableColumn } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -155,21 +155,21 @@ export default function VirtualTablePage(): React.ReactNode {
         name="VirtualTable"
         parts={['root', 'header', 'body', 'row', 'cell']}
         vars={[
-          '--z-virtual-table-font-size',
-          '--z-virtual-table-line-height',
-          '--z-virtual-table-radius',
-          '--z-virtual-table-border',
-          '--z-virtual-table-header-bg',
-          '--z-virtual-table-header-fg',
-          '--z-virtual-table-header-font-weight',
-          '--z-virtual-table-header-height',
-          '--z-virtual-table-row-bg',
-          '--z-virtual-table-row-border',
-          '--z-virtual-table-row-hover-bg',
-          '--z-virtual-table-cell-padding-x',
-          '--z-virtual-table-sticky-bg',
-          '--z-virtual-table-sticky-header-bg',
-          '--z-virtual-table-focus-ring',
+          '--zuvi-virtual-table-font-size',
+          '--zuvi-virtual-table-line-height',
+          '--zuvi-virtual-table-radius',
+          '--zuvi-virtual-table-border',
+          '--zuvi-virtual-table-header-bg',
+          '--zuvi-virtual-table-header-fg',
+          '--zuvi-virtual-table-header-font-weight',
+          '--zuvi-virtual-table-header-height',
+          '--zuvi-virtual-table-row-bg',
+          '--zuvi-virtual-table-row-border',
+          '--zuvi-virtual-table-row-hover-bg',
+          '--zuvi-virtual-table-cell-padding-x',
+          '--zuvi-virtual-table-sticky-bg',
+          '--zuvi-virtual-table-sticky-header-bg',
+          '--zuvi-virtual-table-focus-ring',
         ]}
         note="与现有 Table 组件相互独立，专为大数据量滚动场景设计；可访问性使用 role=table / row / cell，行带 aria-rowindex。"
       />

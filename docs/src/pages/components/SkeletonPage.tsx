@@ -1,4 +1,4 @@
-import { Skeleton } from '@zui/react';
+import { Skeleton } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -115,22 +115,22 @@ export default function SkeletonPage(): React.ReactNode {
         <code className="doc-code-inline">data-part="line"</code>，末行{' '}
         <code className="doc-code-inline">data-last="true"</code>。组件默认{' '}
         <code className="doc-code-inline">aria-hidden="true"</code>（装饰性占位）。宽高经内联{' '}
-        <code className="doc-code-inline">--z-skeleton-width / --z-skeleton-height</code> 注入。
+        <code className="doc-code-inline">--zuvi-skeleton-width / --zuvi-skeleton-height</code> 注入。
       </p>
 
       <CustomizeOutlet
         name="Skeleton"
         parts={['root', 'line']}
         vars={[
-          '--z-skeleton-width',
-          '--z-skeleton-height',
-          '--z-skeleton-line-gap',
-          '--z-skeleton-last-line-width',
-          '--z-skeleton-radius',
-          '--z-skeleton-bg',
-          '--z-skeleton-highlight',
-          '--z-skeleton-duration',
-          '--z-skeleton-easing',
+          '--zuvi-skeleton-width',
+          '--zuvi-skeleton-height',
+          '--zuvi-skeleton-line-gap',
+          '--zuvi-skeleton-last-line-width',
+          '--zuvi-skeleton-radius',
+          '--zuvi-skeleton-bg',
+          '--zuvi-skeleton-highlight',
+          '--zuvi-skeleton-duration',
+          '--zuvi-skeleton-easing',
         ]}
       />
     </div>

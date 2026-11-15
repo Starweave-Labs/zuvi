@@ -1,4 +1,4 @@
-import { Progress } from '@zui/react';
+import { Progress } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -103,7 +103,7 @@ export default function ProgressPage(): React.ReactNode {
           {
             name: 'color',
             type: 'string',
-            description: '自定义填充色（覆盖 --z-progress-color）。',
+            description: '自定义填充色（覆盖 --zuvi-progress-color）。',
           },
           {
             name: 'aria-label',
@@ -134,14 +134,14 @@ export default function ProgressPage(): React.ReactNode {
         name="Progress"
         parts={['root', 'track', 'fill', 'info']}
         vars={[
-          '--z-progress-height',
-          '--z-progress-radius',
-          '--z-progress-track-bg',
-          '--z-progress-color',
-          '--z-progress-info-gap',
-          '--z-progress-info-font-size',
-          '--z-progress-info-color',
-          '--z-progress-transition',
+          '--zuvi-progress-height',
+          '--zuvi-progress-radius',
+          '--zuvi-progress-track-bg',
+          '--zuvi-progress-color',
+          '--zuvi-progress-info-gap',
+          '--zuvi-progress-info-font-size',
+          '--zuvi-progress-info-color',
+          '--zuvi-progress-transition',
         ]}
       />
     </div>

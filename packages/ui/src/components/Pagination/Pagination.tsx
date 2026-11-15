@@ -1,8 +1,8 @@
 'use client';
 
 import * as React from 'react';
-import { ChevronLeft, ChevronRight } from '@zui/icons';
-import { useZuiConfig } from '../../config';
+import { ChevronLeft, ChevronRight } from '@zuvi/icons';
+import { useZuviConfig } from '../../config';
 import { cx, useControllableState } from '../../utils';
 import './Pagination.css';
 
@@ -72,7 +72,7 @@ export function Pagination({
   ref,
   ...rest
 }: PaginationProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const safePageSize = Math.max(1, Math.trunc(pageSize) || 1);
   const pageCount = Math.max(1, Math.ceil(Math.max(0, total) / safePageSize));
   const safeSiblings = Math.max(0, Math.trunc(siblings) || 0);
@@ -117,12 +117,12 @@ export function Pagination({
       aria-label={locale.pagination.label}
       data-part="root"
       data-disabled={disabled ? 'true' : undefined}
-      className={cx('z-pagination', className, classNames?.root)}
+      className={cx('zuvi-pagination', className, classNames?.root)}
     >
       <button
         type="button"
         data-part="item"
-        className={cx('z-pagination-item', classNames?.item)}
+        className={cx('zuvi-pagination-item', classNames?.item)}
         aria-label={locale.pagination.prev}
         disabled={disabled || current <= 1}
         onClick={() => changePage(current - 1)}
@@ -136,7 +136,7 @@ export function Pagination({
             key={token.page}
             type="button"
             data-part="item"
-            className={cx('z-pagination-item', classNames?.item)}
+            className={cx('zuvi-pagination-item', classNames?.item)}
             aria-current={token.page === current ? 'page' : undefined}
             disabled={disabled}
             onClick={() => changePage(token.page)}
@@ -148,7 +148,7 @@ export function Pagination({
             key={`+${token.gap}`}
             data-part="item"
             aria-hidden="true"
-            className={cx('z-pagination-item', 'z-pagination-ellipsis', classNames?.item)}
+            className={cx('zuvi-pagination-item', 'zuvi-pagination-ellipsis', classNames?.item)}
           >
             …
           </span>
@@ -158,7 +158,7 @@ export function Pagination({
       <button
         type="button"
         data-part="item"
-        className={cx('z-pagination-item', classNames?.item)}
+        className={cx('zuvi-pagination-item', classNames?.item)}
         aria-label={locale.pagination.next}
         disabled={disabled || current >= pageCount}
         onClick={() => changePage(current + 1)}
@@ -167,7 +167,7 @@ export function Pagination({
       </button>
 
       {showJumper ? (
-        <div data-part="jumper" className={cx('z-pagination-jumper', classNames?.jumper)}>
+        <div data-part="jumper" className={cx('zuvi-pagination-jumper', classNames?.jumper)}>
           <span>{locale.pagination.jumper}</span>
           <input
             type="number"

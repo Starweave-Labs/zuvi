@@ -1,4 +1,4 @@
-import { Mentions } from '@zui/react';
+import { Mentions } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -137,24 +137,24 @@ export default function MentionsPage(): React.ReactNode {
         name="Mentions"
         parts={['root', 'textarea', 'panel', 'item']}
         vars={[
-          '--z-mentions-font-size',
-          '--z-mentions-textarea-padding-x',
-          '--z-mentions-textarea-padding-y',
-          '--z-mentions-textarea-radius',
-          '--z-mentions-textarea-bg',
-          '--z-mentions-textarea-fg',
-          '--z-mentions-textarea-border',
-          '--z-mentions-panel-bg',
-          '--z-mentions-panel-border',
-          '--z-mentions-panel-radius',
-          '--z-mentions-panel-shadow',
-          '--z-mentions-panel-max-height',
-          '--z-mentions-item-height',
-          '--z-mentions-item-padding-x',
-          '--z-mentions-item-fg',
-          '--z-mentions-item-hover-bg',
-          '--z-mentions-item-active-bg',
-          '--z-mentions-item-active-fg',
+          '--zuvi-mentions-font-size',
+          '--zuvi-mentions-textarea-padding-x',
+          '--zuvi-mentions-textarea-padding-y',
+          '--zuvi-mentions-textarea-radius',
+          '--zuvi-mentions-textarea-bg',
+          '--zuvi-mentions-textarea-fg',
+          '--zuvi-mentions-textarea-border',
+          '--zuvi-mentions-panel-bg',
+          '--zuvi-mentions-panel-border',
+          '--zuvi-mentions-panel-radius',
+          '--zuvi-mentions-panel-shadow',
+          '--zuvi-mentions-panel-max-height',
+          '--zuvi-mentions-item-height',
+          '--zuvi-mentions-item-padding-x',
+          '--zuvi-mentions-item-fg',
+          '--zuvi-mentions-item-hover-bg',
+          '--zuvi-mentions-item-active-bg',
+          '--zuvi-mentions-item-active-fg',
         ]}
       />
     </div>

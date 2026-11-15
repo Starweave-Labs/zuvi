@@ -1,4 +1,4 @@
-import { Button, Tag } from '@zui/react';
+import { Button, Tag } from '@zuvi/react';
 import { useState } from 'react';
 
 import ApiTable from '../../components/ApiTable';
@@ -136,21 +136,21 @@ export default function TagPage(): React.ReactNode {
         name="Tag"
         parts={['root', 'icon', 'close']}
         vars={[
-          '--z-tag-height',
-          '--z-tag-padding-x',
-          '--z-tag-gap',
-          '--z-tag-radius',
-          '--z-tag-font-size',
-          '--z-tag-line-height',
-          '--z-tag-icon-size',
-          '--z-tag-close-size',
-          '--z-tag-close-gap',
-          '--z-tag-bg',
-          '--z-tag-fg',
-          '--z-tag-border',
-          '--z-tag-hover-bg',
-          '--z-tag-focus-ring',
-          '--z-tag-transition',
+          '--zuvi-tag-height',
+          '--zuvi-tag-padding-x',
+          '--zuvi-tag-gap',
+          '--zuvi-tag-radius',
+          '--zuvi-tag-font-size',
+          '--zuvi-tag-line-height',
+          '--zuvi-tag-icon-size',
+          '--zuvi-tag-close-size',
+          '--zuvi-tag-close-gap',
+          '--zuvi-tag-bg',
+          '--zuvi-tag-fg',
+          '--zuvi-tag-border',
+          '--zuvi-tag-hover-bg',
+          '--zuvi-tag-focus-ring',
+          '--zuvi-tag-transition',
         ]}
       />
     </div>

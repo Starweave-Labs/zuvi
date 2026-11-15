@@ -212,7 +212,7 @@ test('浅色与暗色原型 axe 均无违规，隐藏路由不进入公开导航
   await expectAxeClean(page, 'IDE 暗色');
 
   await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1, name: 'ZUI 组件库' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: 'ZUVI 组件库' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'IDE 三栏工作区' })).toHaveCount(0);
   await expect(page.getByRole('link', { name: '客户主从详情' })).toHaveCount(0);
 });

@@ -39,15 +39,15 @@ describe('Form', () => {
       </Form>
     );
     const root = container.querySelector('[data-part="root"]');
-    expect(root).toHaveClass('z-form');
+    expect(root).toHaveClass('zuvi-form');
     expect(root?.tagName).toBe('FORM');
     const item = container.querySelector('[data-part="item"]');
-    expect(item).toHaveClass('z-form-item');
+    expect(item).toHaveClass('zuvi-form-item');
     expect(item).toHaveAttribute('data-field', 'user');
     const label = container.querySelector('[data-part="label"]');
-    expect(label).toHaveClass('z-form-item-label');
+    expect(label).toHaveClass('zuvi-form-item-label');
     const control = container.querySelector('[data-part="control"]');
-    expect(control).toHaveClass('z-form-item-control');
+    expect(control).toHaveClass('zuvi-form-item-control');
   });
 
   it('label 通过 htmlFor 关联注入的控件 id', () => {
@@ -87,7 +87,7 @@ describe('Form', () => {
         </Form.Item>
       </Form>
     );
-    expect(container.querySelector('.z-form-item-required')).toHaveTextContent('*');
+    expect(container.querySelector('.zuvi-form-item-required')).toHaveTextContent('*');
     expect(screen.getByRole('textbox')).toHaveAttribute('aria-required', 'true');
   });
 
@@ -108,7 +108,7 @@ describe('Form', () => {
     const input = screen.getByRole('textbox');
     const error = container.querySelector('[data-part="error"]') as HTMLElement;
     expect(error).toHaveTextContent('该项为必填');
-    expect(error).toHaveClass('z-form-item-error');
+    expect(error).toHaveClass('zuvi-form-item-error');
     expect(input).toHaveAttribute('aria-invalid', 'true');
     expect(input.getAttribute('aria-describedby')).toBe(error.id);
   });

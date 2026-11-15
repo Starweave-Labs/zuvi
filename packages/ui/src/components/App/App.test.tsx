@@ -264,14 +264,14 @@ describe('App 内置确认框', () => {
 });
 
 describe('App 定制', () => {
-  it('className / classNames.root 应用到 z-app 根', () => {
+  it('className / classNames.root 应用到 zuvi-app 根', () => {
     render(
       <App className="page-app" classNames={{ root: 'my-root' }}>
         <Harness />
       </App>
     );
     const root = document.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-app', 'my-root', 'page-app');
+    expect(root).toHaveClass('zuvi-app', 'my-root', 'page-app');
     expect(root).toHaveTextContent('内容');
   });
 
@@ -285,7 +285,7 @@ describe('App 定制', () => {
       api.modal.confirm({ title: 'T' });
     });
     const dialog = screen.getByRole('dialog');
-    expect(dialog).toHaveClass('z-app-modal', 'my-modal');
+    expect(dialog).toHaveClass('zuvi-app-modal', 'my-modal');
     expect(document.querySelector('[data-part="modal-title"]')).toHaveTextContent('T');
     expect(document.querySelector('[data-part="modal-actions"]')).toBeInTheDocument();
   });

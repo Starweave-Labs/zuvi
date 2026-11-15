@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useZuiConfig } from '../../config';
+import { useZuviConfig } from '../../config';
 import { cx } from '../../utils';
 import './Anchor.css';
 
@@ -63,7 +63,7 @@ function useAnchorContext(component: string): AnchorContextValue {
 /* ---------------------------------- Root ---------------------------------- */
 
 function Anchor(props: AnchorProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const {
     offsetTop = 0,
     target,
@@ -247,9 +247,9 @@ function Anchor(props: AnchorProps) {
         ref={setNavRef}
         data-part="root"
         aria-label={ariaLabel ?? locale.accessibility.anchor}
-        className={cx('z-anchor', classNames?.root, className)}
+        className={cx('zuvi-anchor', classNames?.root, className)}
       >
-        <ul className="z-anchor-list" data-part="list">
+        <ul className="zuvi-anchor-list" data-part="list">
           {children}
         </ul>
       </nav>
@@ -265,20 +265,20 @@ function AnchorLink(props: AnchorLinkProps) {
   const active = activeHref === href;
 
   return (
-    <li className="z-anchor-item" data-part="item">
+    <li className="zuvi-anchor-item" data-part="item">
       <a
         {...rest}
         href={href}
         data-part="link"
         data-active={active ? 'true' : 'false'}
         aria-current={active ? 'true' : undefined}
-        className={cx('z-anchor-link', classNames?.link, className)}
+        className={cx('zuvi-anchor-link', classNames?.link, className)}
         onClick={(event) => onLinkClick(event, { href, title })}
       >
         {title}
       </a>
       {children != null ? (
-        <ul className="z-anchor-sublist" data-part="sublist">
+        <ul className="zuvi-anchor-sublist" data-part="sublist">
           {children}
         </ul>
       ) : null}

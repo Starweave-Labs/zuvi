@@ -40,9 +40,9 @@ PDF 新增中文使用本地 Noto Sans SC 字体，构建时将 WOFF 恢复为 T
 ## 首版验证记录
 
 ```sh
-pnpm --filter @zui/docs typecheck
+pnpm --filter @zuvi/docs typecheck
 pnpm exec playwright test --config e2e/playwright.config.ts e2e/office-workbench.spec.ts e2e/collaboration.spec.ts --workers=1
-pnpm --filter @zui/docs build
+pnpm --filter @zuvi/docs build
 git diff --check
 ```
 

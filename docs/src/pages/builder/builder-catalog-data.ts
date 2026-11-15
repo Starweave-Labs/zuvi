@@ -84,7 +84,7 @@ export const catalogDefinitions: Record<string, CatalogDefinition> = {
     orientation: choice('排列方向', ['horizontal', 'vertical']),
     disabled,
   }),
-  Select: entry('Select 选择器', 'form', '支持键盘导航与浮层的 ZUI 选择器。', {
+  Select: entry('Select 选择器', 'form', '支持键盘导航与浮层的 ZUVI 选择器。', {
     ...picker,
     options: itemField,
     defaultValue: text('默认值'),
@@ -200,7 +200,7 @@ export const catalogDefinitions: Record<string, CatalogDefinition> = {
     action: text('上传服务地址（http/https）'),
     disabled,
   }),
-  FormItem: entry('Form.Item 表单字段', 'form', '为单个 ZUI 控件添加标签、必填校验与受控绑定。', {
+  FormItem: entry('Form.Item 表单字段', 'form', '为单个 ZUVI 控件添加标签、必填校验与受控绑定。', {
     label: text('字段标签', '字段'),
     name,
     required: flag('必填'),
@@ -217,7 +217,7 @@ export const catalogDefinitions: Record<string, CatalogDefinition> = {
     options: itemField,
   }),
 
-  Row: entry('Row 栅格行', 'layout', 'ZUI 的 24 栅格行；拖入 Col 组成布局。', {
+  Row: entry('Row 栅格行', 'layout', 'ZUVI 的 24 栅格行；拖入 Col 组成布局。', {
     gutter: number('栅格间距', 24, 0, 160),
     justify: choice('水平对齐', ['start', 'center', 'end', 'space-between', 'space-around']),
     align: choice('垂直对齐', ['top', 'middle', 'bottom']),
@@ -229,7 +229,7 @@ export const catalogDefinitions: Record<string, CatalogDefinition> = {
     offset: number('偏移栅格', 0, 0, 23),
     content: slot,
   }),
-  Flex: entry('Flex 弹性布局', 'layout', '横纵排列、换行与对齐的 ZUI 容器。', {
+  Flex: entry('Flex 弹性布局', 'layout', '横纵排列、换行与对齐的 ZUVI 容器。', {
     vertical: flag('纵向排列'),
     gap: number('间距', 16, 0, 160),
     justify: choice('主轴对齐', ['start', 'center', 'end', 'space-between', 'space-around']),
@@ -256,7 +256,7 @@ export const catalogDefinitions: Record<string, CatalogDefinition> = {
     content: slot,
   }),
   Watermark: entry('Watermark 水印', 'layout', '为任意子组件叠加可配置水印。', {
-    text: text('水印内容', 'ZUI / 内部资料'),
+    text: text('水印内容', 'ZUVI / 内部资料'),
     rotate: number('旋转角度', -22, -180, 180),
     gap: number('水印间距', 100, 20, 400),
     content: slot,
@@ -362,7 +362,7 @@ export const catalogDefinitions: Record<string, CatalogDefinition> = {
     }
   ),
 
-  Typography: entry('Typography 排版', 'content', '标题、段落和文本的完整 ZUI 排版选项。', {
+  Typography: entry('Typography 排版', 'content', '标题、段落和文本的完整 ZUVI 排版选项。', {
     text: area('文字内容', '每个想法，都值得一个好页面。'),
     variant: choice('排版类型', ['title', 'paragraph', 'text'], 'paragraph'),
     level: number('标题等级', 2, 1, 5),
@@ -525,7 +525,7 @@ export const catalogDefinitions: Record<string, CatalogDefinition> = {
     successMessage: text('完成提示', '操作已确认'),
     href: text('确认后跳转（可选）'),
   }),
-  Message: entry('Message 全局提示', 'feedback', '点击触发真实 ZUI 消息。', {
+  Message: entry('Message 全局提示', 'feedback', '点击触发真实 ZUVI 消息。', {
     label: text('触发按钮', '显示提示'),
     text: text('提示内容', '操作成功，所有更改已保存。'),
     variant: choice('类型', ['success', 'info', 'warning', 'error']),

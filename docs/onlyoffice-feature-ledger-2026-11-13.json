@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "date": "2026-11-13",
-  "target": "独立自研 OfficeStudio，继续使用 ZUI 控件",
+  "target": "独立自研 OfficeStudio，继续使用 ZUVI 控件",
   "referenceScope": "ONLYOFFICE Docs 的主要编辑器、转换与服务源码；不是整个厂商所有产品仓库",
   "referenceSnapshots": {
     "web-apps": "f79972a400c3a696490094961772d1f86fac1b82",
@@ -3351,7 +3351,7 @@
           "symbol": null
         }
       ],
-      "reviewLevel": "模型、ZUI 入口和专项测试已完成",
+      "reviewLevel": "模型、ZUVI 入口和专项测试已完成",
       "targetFiles": [
         "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
         "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
@@ -3416,7 +3416,7 @@
           "symbol": null
         }
       ],
-      "reviewLevel": "模型、ZUI 入口和专项测试已完成",
+      "reviewLevel": "模型、ZUVI 入口和专项测试已完成",
       "targetFiles": [
         "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
         "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
@@ -3481,7 +3481,7 @@
           "symbol": null
         }
       ],
-      "reviewLevel": "模型、ZUI 入口和专项测试已完成",
+      "reviewLevel": "模型、ZUVI 入口和专项测试已完成",
       "targetFiles": [
         "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
         "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
@@ -3546,7 +3546,7 @@
           "symbol": null
         }
       ],
-      "reviewLevel": "模型、ZUI 入口和专项测试已完成",
+      "reviewLevel": "模型、ZUVI 入口和专项测试已完成",
       "targetFiles": [
         "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
         "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
@@ -3611,7 +3611,7 @@
           "symbol": null
         }
       ],
-      "reviewLevel": "模型、ZUI 入口和专项测试已完成",
+      "reviewLevel": "模型、ZUVI 入口和专项测试已完成",
       "targetFiles": [
         "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
         "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
@@ -3676,7 +3676,7 @@
           "symbol": null
         }
       ],
-      "reviewLevel": "模型、ZUI 入口和专项测试已完成",
+      "reviewLevel": "模型、ZUVI 入口和专项测试已完成",
       "targetFiles": [
         "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
         "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
@@ -3741,7 +3741,7 @@
           "symbol": null
         }
       ],
-      "reviewLevel": "模型、ZUI 入口和专项测试已完成",
+      "reviewLevel": "模型、ZUVI 入口和专项测试已完成",
       "targetFiles": [
         "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
         "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
@@ -3806,7 +3806,7 @@
           "symbol": null
         }
       ],
-      "reviewLevel": "模型、ZUI 入口和专项测试已完成",
+      "reviewLevel": "模型、ZUVI 入口和专项测试已完成",
       "targetFiles": [
         "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
         "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",

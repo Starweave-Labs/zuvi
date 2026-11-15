@@ -1,6 +1,6 @@
-# ZUI 0.3.0 本地发布验收
+# ZUVI 0.3.0 本地发布验收
 
-验收开始于 2026-11-10，完成于 2026-11-11（Asia/Shanghai）。发布目标为 yeyouyuan/zui、GitHub Pages 和 GitHub Packages；npmjs 暂缓。
+验收开始于 2026-11-10，完成于 2026-11-11（Asia/Shanghai）。发布目标为 yeyouyuan/zuvi、GitHub Pages 和 GitHub Packages；npmjs 暂缓。
 
 ## 已完成
 
@@ -12,9 +12,9 @@
 - 本地协作覆盖真实文件导入、编辑、评论、版本、备份恢复、下载和存储异常。
 - 87 个 registry 条目、251 个生成文件和 71 个 MCP 示例通过消费检查。
 - ESM/CommonJS、客户端边界、七个包的打包内容、许可证与 registry 数据检查通过。
-- 临时 registry 真实安装七个 GitHub 发布名称，保留 @zui/* 别名；运行 ESM、CommonJS、React 19 SSR、CSS、CLI、MCP stdio 和严格 TypeScript 声明检查。
+- 临时 registry 真实安装七个 GitHub 发布名称，保留 @zuvi/* 别名；运行 ESM、CommonJS、React 19 SSR、CSS、CLI、MCP stdio 和严格 TypeScript 声明检查。
 - 组件 ESM gzip 为 88,153 字节，小于 98,304 字节预算。
-- 保留线上 v0.2.0 的 JS、CSS、LICENSE，防止文档站升级破坏旧版 CDN 引用；修复设计资源页在 /zui/ 部署路径下的演示链接。
+- 保留线上 v0.2.0 的 JS、CSS、LICENSE，防止文档站升级破坏旧版 CDN 引用；修复设计资源页在 /zuvi/ 部署路径下的演示链接。
 
 ## 本次复核处理
 

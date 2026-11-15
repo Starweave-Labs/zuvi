@@ -126,7 +126,7 @@ describe('Table', () => {
   it('classNames.root 追加到根元素', () => {
     render(<BasicTable classNames={{ root: 'my-table' }} />);
     const table = screen.getByRole('table');
-    expect(table).toHaveClass('z-table');
+    expect(table).toHaveClass('zuvi-table');
     expect(table).toHaveClass('my-table');
     expect(table).toHaveAttribute('data-part', 'root');
   });
@@ -139,11 +139,11 @@ describe('Table', () => {
     const cells = screen.getAllByRole('cell');
     const headers = screen.getAllByRole('columnheader');
 
-    expect(head).toHaveClass('z-table-head');
-    expect(body).toHaveClass('z-table-body');
-    for (const row of rows) expect(row).toHaveClass('z-table-row');
-    for (const cell of cells) expect(cell).toHaveClass('z-table-cell');
-    for (const th of headers) expect(th).toHaveClass('z-table-header-cell');
+    expect(head).toHaveClass('zuvi-table-head');
+    expect(body).toHaveClass('zuvi-table-body');
+    for (const row of rows) expect(row).toHaveClass('zuvi-table-row');
+    for (const cell of cells) expect(cell).toHaveClass('zuvi-table-cell');
+    for (const th of headers) expect(th).toHaveClass('zuvi-table-header-cell');
     // 单元格带 data-part
     expect(cells[0]).toHaveAttribute('data-part', 'cell');
     expect(headers[0]).toHaveAttribute('data-part', 'header-cell');
@@ -160,8 +160,8 @@ describe('Table', () => {
       </Table>
     );
     const row = container.querySelector('tr') as HTMLElement;
-    expect(row).toHaveClass('z-table-row', 'row-x');
-    expect(container.querySelector('td')).toHaveClass('z-table-cell', 'cell-x');
+    expect(row).toHaveClass('zuvi-table-row', 'row-x');
+    expect(container.querySelector('td')).toHaveClass('zuvi-table-cell', 'cell-x');
   });
 });
 
@@ -250,7 +250,7 @@ function setColumnRects(table: HTMLElement, top = 0) {
 }
 
 function setPanelRects() {
-  const items = Array.from(document.querySelectorAll<HTMLElement>('.z-table-column-item'));
+  const items = Array.from(document.querySelectorAll<HTMLElement>('.zuvi-table-column-item'));
   items.forEach((item, index) => {
     vi.spyOn(item, 'getBoundingClientRect').mockReturnValue(rect(0, index * 44, 320, 40));
   });
@@ -468,7 +468,7 @@ describe('Table 数据驱动模式', () => {
     const second = tableByLabel('第二个表格');
     setColumnRects(first, 0);
     setColumnRects(second, 100);
-    const handle = within(first.closest('.z-table-data-wrap')!).getByRole('button', {
+    const handle = within(first.closest('.zuvi-table-data-wrap')!).getByRole('button', {
       name: '移动 姓名 列',
     });
     pointer(handle, 'pointerdown', { clientX: 20, clientY: 20 });

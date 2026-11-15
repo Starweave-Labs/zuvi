@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Select } from '@zui/react';
+import { Select } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -202,33 +202,33 @@ export default function SelectPage(): React.ReactNode {
         name="Select"
         parts={['root', 'trigger', 'value', 'listbox', 'option', 'empty']}
         vars={[
-          '--z-select-trigger-height',
-          '--z-select-trigger-padding-x',
-          '--z-select-trigger-font-size',
-          '--z-select-trigger-radius',
-          '--z-select-trigger-bg',
-          '--z-select-trigger-fg',
-          '--z-select-trigger-border',
-          '--z-select-trigger-hover-border',
-          '--z-select-placeholder-fg',
-          '--z-select-listbox-bg',
-          '--z-select-listbox-border',
-          '--z-select-listbox-radius',
-          '--z-select-listbox-shadow',
-          '--z-select-listbox-padding',
-          '--z-select-listbox-margin-top',
-          '--z-select-listbox-max-height',
-          '--z-select-option-padding-x',
-          '--z-select-option-padding-y',
-          '--z-select-option-radius',
-          '--z-select-option-fg',
-          '--z-select-option-hover-bg',
-          '--z-select-option-active-bg',
-          '--z-select-option-active-fg',
-          '--z-select-option-disabled-fg',
-          '--z-select-empty-fg',
-          '--z-select-empty-padding',
-          '--z-select-animation-duration',
+          '--zuvi-select-trigger-height',
+          '--zuvi-select-trigger-padding-x',
+          '--zuvi-select-trigger-font-size',
+          '--zuvi-select-trigger-radius',
+          '--zuvi-select-trigger-bg',
+          '--zuvi-select-trigger-fg',
+          '--zuvi-select-trigger-border',
+          '--zuvi-select-trigger-hover-border',
+          '--zuvi-select-placeholder-fg',
+          '--zuvi-select-listbox-bg',
+          '--zuvi-select-listbox-border',
+          '--zuvi-select-listbox-radius',
+          '--zuvi-select-listbox-shadow',
+          '--zuvi-select-listbox-padding',
+          '--zuvi-select-listbox-margin-top',
+          '--zuvi-select-listbox-max-height',
+          '--zuvi-select-option-padding-x',
+          '--zuvi-select-option-padding-y',
+          '--zuvi-select-option-radius',
+          '--zuvi-select-option-fg',
+          '--zuvi-select-option-hover-bg',
+          '--zuvi-select-option-active-bg',
+          '--zuvi-select-option-active-fg',
+          '--zuvi-select-option-disabled-fg',
+          '--zuvi-select-empty-fg',
+          '--zuvi-select-empty-padding',
+          '--zuvi-select-animation-duration',
         ]}
       />
     </div>

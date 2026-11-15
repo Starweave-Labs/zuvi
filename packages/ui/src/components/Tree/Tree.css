@@ -1,120 +1,120 @@
 /* Tree —— 树形控件（勾选传播 / 异步加载 / 键盘导航）。
    组件级变量定义在根选择器上，可被用户任意覆盖。 */
 
-.z-tree {
-  --z-tree-font-size: var(--z-text-sm);
-  --z-tree-line-height: var(--z-leading-normal);
-  --z-tree-fg: var(--z-color-fg);
-  --z-tree-node-height: 1.75rem;
-  --z-tree-node-gap: var(--z-space-2);
-  --z-tree-node-radius: var(--z-radius-sm);
-  --z-tree-node-hover-bg: var(--z-color-bg-subtle);
-  --z-tree-node-selected-bg: var(--z-color-primary-subtle);
-  --z-tree-node-selected-fg: var(--z-color-primary-subtle-fg);
-  --z-tree-node-disabled-fg: var(--z-color-disabled-fg);
-  --z-tree-indent: var(--z-space-4);
-  --z-tree-icon-size: 1rem;
-  --z-tree-icon-color: var(--z-color-fg-muted);
-  --z-tree-checkbox-size: 1rem;
-  --z-tree-checkbox-radius: var(--z-radius-sm);
-  --z-tree-checkbox-bg: var(--z-color-bg);
-  --z-tree-checkbox-border: var(--z-color-border-strong);
-  --z-tree-checkbox-checked-bg: var(--z-color-primary);
-  --z-tree-checkbox-checked-border: var(--z-color-primary);
-  --z-tree-checkbox-fg: var(--z-color-primary-fg);
-  --z-tree-checkbox-indeterminate-bg: var(--z-color-primary);
-  --z-tree-focus-ring: var(--z-color-focus-ring);
-  --z-tree-spinner-size: 0.875rem;
-  --z-tree-spinner-width: 2px;
-  --z-tree-spinner-color: var(--z-color-primary);
-  --z-tree-spinner-track: var(--z-color-border);
-  --z-tree-transition: var(--z-duration-fast) var(--z-ease-standard);
+.zuvi-tree {
+  --zuvi-tree-font-size: var(--zuvi-text-sm);
+  --zuvi-tree-line-height: var(--zuvi-leading-normal);
+  --zuvi-tree-fg: var(--zuvi-color-fg);
+  --zuvi-tree-node-height: 1.75rem;
+  --zuvi-tree-node-gap: var(--zuvi-space-2);
+  --zuvi-tree-node-radius: var(--zuvi-radius-sm);
+  --zuvi-tree-node-hover-bg: var(--zuvi-color-bg-subtle);
+  --zuvi-tree-node-selected-bg: var(--zuvi-color-primary-subtle);
+  --zuvi-tree-node-selected-fg: var(--zuvi-color-primary-subtle-fg);
+  --zuvi-tree-node-disabled-fg: var(--zuvi-color-disabled-fg);
+  --zuvi-tree-indent: var(--zuvi-space-4);
+  --zuvi-tree-icon-size: 1rem;
+  --zuvi-tree-icon-color: var(--zuvi-color-fg-muted);
+  --zuvi-tree-checkbox-size: 1rem;
+  --zuvi-tree-checkbox-radius: var(--zuvi-radius-sm);
+  --zuvi-tree-checkbox-bg: var(--zuvi-color-bg);
+  --zuvi-tree-checkbox-border: var(--zuvi-color-border-strong);
+  --zuvi-tree-checkbox-checked-bg: var(--zuvi-color-primary);
+  --zuvi-tree-checkbox-checked-border: var(--zuvi-color-primary);
+  --zuvi-tree-checkbox-fg: var(--zuvi-color-primary-fg);
+  --zuvi-tree-checkbox-indeterminate-bg: var(--zuvi-color-primary);
+  --zuvi-tree-focus-ring: var(--zuvi-color-focus-ring);
+  --zuvi-tree-spinner-size: 0.875rem;
+  --zuvi-tree-spinner-width: 2px;
+  --zuvi-tree-spinner-color: var(--zuvi-color-primary);
+  --zuvi-tree-spinner-track: var(--zuvi-color-border);
+  --zuvi-tree-transition: var(--zuvi-duration-fast) var(--zuvi-ease-standard);
 }
 
-.z-tree {
+.zuvi-tree {
   margin: 0;
   padding: 0;
   list-style: none;
-  color: var(--z-tree-fg);
-  font-family: var(--z-font-sans);
-  font-size: var(--z-tree-font-size);
-  line-height: var(--z-tree-line-height);
+  color: var(--zuvi-tree-fg);
+  font-family: var(--zuvi-font-sans);
+  font-size: var(--zuvi-tree-font-size);
+  line-height: var(--zuvi-tree-line-height);
 }
 
 /* 子级缩进 */
-.z-tree-node-children {
+.zuvi-tree-node-children {
   margin: 0;
-  padding: 0 0 0 var(--z-tree-indent);
+  padding: 0 0 0 var(--zuvi-tree-indent);
   list-style: none;
 }
 
-.z-tree-node {
+.zuvi-tree-node {
   display: block;
 }
 
-.z-tree-node-row {
+.zuvi-tree-node-row {
   display: flex;
   align-items: center;
-  gap: var(--z-tree-node-gap);
-  min-height: var(--z-tree-node-height);
-  padding: 0 var(--z-space-2) 0 var(--z-space-1);
-  border-radius: var(--z-tree-node-radius);
+  gap: var(--zuvi-tree-node-gap);
+  min-height: var(--zuvi-tree-node-height);
+  padding: 0 var(--zuvi-space-2) 0 var(--zuvi-space-1);
+  border-radius: var(--zuvi-tree-node-radius);
   cursor: pointer;
-  transition: background-color var(--z-tree-transition);
+  transition: background-color var(--zuvi-tree-transition);
 }
 
-.z-tree-node-row:hover {
-  background: var(--z-tree-node-hover-bg);
+.zuvi-tree-node-row:hover {
+  background: var(--zuvi-tree-node-hover-bg);
 }
 
-.z-tree-node[data-selected='true'] > .z-tree-node-row {
-  background: var(--z-tree-node-selected-bg);
-  color: var(--z-tree-node-selected-fg);
-  font-weight: var(--z-weight-medium);
+.zuvi-tree-node[data-selected='true'] > .zuvi-tree-node-row {
+  background: var(--zuvi-tree-node-selected-bg);
+  color: var(--zuvi-tree-node-selected-fg);
+  font-weight: var(--zuvi-weight-medium);
 }
 
-.z-tree-node[data-disabled='true'] > .z-tree-node-row {
-  color: var(--z-tree-node-disabled-fg);
+.zuvi-tree-node[data-disabled='true'] > .zuvi-tree-node-row {
+  color: var(--zuvi-tree-node-disabled-fg);
   cursor: not-allowed;
 }
 
-.z-tree-node:focus-visible {
+.zuvi-tree-node:focus-visible {
   outline: none;
 }
 
-.z-tree-node:focus-visible > .z-tree-node-row {
-  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--z-tree-focus-ring) 45%, transparent);
+.zuvi-tree-node:focus-visible > .zuvi-tree-node-row {
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--zuvi-tree-focus-ring) 45%, transparent);
 }
 
 /* 展开图标：固定占位防标签抖动；chevron 旋转表示展开 */
-.z-tree-node-icon {
+.zuvi-tree-node-icon {
   display: inline-flex;
   flex: 0 0 auto;
   align-items: center;
   justify-content: center;
-  width: var(--z-tree-icon-size);
-  height: var(--z-tree-icon-size);
-  color: var(--z-tree-icon-color);
+  width: var(--zuvi-tree-icon-size);
+  height: var(--zuvi-tree-icon-size);
+  color: var(--zuvi-tree-icon-color);
 }
 
-.z-tree-node-chevron {
+.zuvi-tree-node-chevron {
   transform-origin: center;
-  transition: transform var(--z-tree-transition);
+  transition: transform var(--zuvi-tree-transition);
 }
 
-.z-tree-node-icon[data-expanded='true'] .z-tree-node-chevron {
+.zuvi-tree-node-icon[data-expanded='true'] .zuvi-tree-node-chevron {
   transform: rotate(90deg);
 }
 
 /* 加载 spinner */
-.z-tree-node-spinner {
+.zuvi-tree-node-spinner {
   box-sizing: border-box;
-  width: var(--z-tree-spinner-size);
-  height: var(--z-tree-spinner-size);
-  border: var(--z-tree-spinner-width) solid var(--z-tree-spinner-track);
-  border-top-color: var(--z-tree-spinner-color);
-  border-radius: var(--z-radius-full);
-  animation: z-tree-spin calc(var(--z-duration-slow) * 2) linear infinite;
+  width: var(--zuvi-tree-spinner-size);
+  height: var(--zuvi-tree-spinner-size);
+  border: var(--zuvi-tree-spinner-width) solid var(--zuvi-tree-spinner-track);
+  border-top-color: var(--zuvi-tree-spinner-color);
+  border-radius: var(--zuvi-radius-full);
+  animation: z-tree-spin calc(var(--zuvi-duration-slow) * 2) linear infinite;
 }
 
 @keyframes z-tree-spin {
@@ -124,37 +124,37 @@
 }
 
 /* 勾选框：treeitem 承担 aria-checked，此处纯视觉 */
-.z-tree-node-checkbox {
+.zuvi-tree-node-checkbox {
   display: inline-flex;
   flex: 0 0 auto;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  width: var(--z-tree-checkbox-size);
-  height: var(--z-tree-checkbox-size);
-  border: 1px solid var(--z-tree-checkbox-border);
-  border-radius: var(--z-tree-checkbox-radius);
-  background: var(--z-tree-checkbox-bg);
-  color: var(--z-tree-checkbox-fg);
+  width: var(--zuvi-tree-checkbox-size);
+  height: var(--zuvi-tree-checkbox-size);
+  border: 1px solid var(--zuvi-tree-checkbox-border);
+  border-radius: var(--zuvi-tree-checkbox-radius);
+  background: var(--zuvi-tree-checkbox-bg);
+  color: var(--zuvi-tree-checkbox-fg);
   transition:
-    background-color var(--z-tree-transition),
-    border-color var(--z-tree-transition);
+    background-color var(--zuvi-tree-transition),
+    border-color var(--zuvi-tree-transition);
 }
 
-.z-tree-node-checkbox[data-checked='true'],
-.z-tree-node-checkbox[data-indeterminate='true'] {
-  border-color: var(--z-tree-checkbox-checked-border);
+.zuvi-tree-node-checkbox[data-checked='true'],
+.zuvi-tree-node-checkbox[data-indeterminate='true'] {
+  border-color: var(--zuvi-tree-checkbox-checked-border);
 }
 
-.z-tree-node-checkbox[data-checked='true'] {
-  background: var(--z-tree-checkbox-checked-bg);
+.zuvi-tree-node-checkbox[data-checked='true'] {
+  background: var(--zuvi-tree-checkbox-checked-bg);
 }
 
-.z-tree-node-checkbox[data-indeterminate='true'] {
-  background: var(--z-tree-checkbox-indeterminate-bg);
+.zuvi-tree-node-checkbox[data-indeterminate='true'] {
+  background: var(--zuvi-tree-checkbox-indeterminate-bg);
 }
 
-.z-tree-node-label {
+.zuvi-tree-node-label {
   flex: 1 1 auto;
   overflow: hidden;
   white-space: nowrap;
@@ -162,34 +162,34 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .z-tree-node-chevron,
-  .z-tree-node-row,
-  .z-tree-node-checkbox {
+  .zuvi-tree-node-chevron,
+  .zuvi-tree-node-row,
+  .zuvi-tree-node-checkbox {
     transition: none;
   }
 }
 
 @media (forced-colors: active) {
-  .z-tree-node[data-selected='true'] > .z-tree-node-row {
+  .zuvi-tree-node[data-selected='true'] > .zuvi-tree-node-row {
     color: HighlightText;
     background: Highlight;
     outline: 1px solid Highlight;
   }
 
-  .z-tree-node:focus-visible > .z-tree-node-row {
+  .zuvi-tree-node:focus-visible > .zuvi-tree-node-row {
     outline: 2px solid Highlight;
     outline-offset: 2px;
     box-shadow: none;
   }
 
-  .z-tree-node-checkbox {
+  .zuvi-tree-node-checkbox {
     color: CanvasText;
     background: Canvas;
     border-color: CanvasText;
   }
 
-  .z-tree-node-checkbox[data-checked='true'],
-  .z-tree-node-checkbox[data-indeterminate='true'] {
+  .zuvi-tree-node-checkbox[data-checked='true'],
+  .zuvi-tree-node-checkbox[data-indeterminate='true'] {
     color: HighlightText;
     background: Highlight;
     border-color: Highlight;

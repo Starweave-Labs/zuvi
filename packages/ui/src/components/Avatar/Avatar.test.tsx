@@ -15,7 +15,7 @@ describe('Avatar', () => {
   it('renders root with data-part/data-size/data-shape defaults', () => {
     const { container } = render(<Avatar name="张三" />);
     const root = container.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-avatar');
+    expect(root).toHaveClass('zuvi-avatar');
     expect(root).toHaveAttribute('data-size', 'md');
     expect(root).toHaveAttribute('data-shape', 'circle');
   });
@@ -43,7 +43,7 @@ describe('Avatar', () => {
     const { container } = render(<Avatar src="/a.png" alt="头像" name="张三" />);
     const img = screen.getByRole('img', { name: '头像' });
     expect(img).toHaveAttribute('src', '/a.png');
-    expect(img).toHaveClass('z-avatar-image');
+    expect(img).toHaveClass('zuvi-avatar-image');
     expect(img).toHaveAttribute('data-part', 'image');
     // 名字哈希色仍然记录在根上（回退时生效）
     expect(container.querySelector('[data-part="root"]')).toHaveAttribute(
@@ -102,11 +102,11 @@ describe('Avatar', () => {
     }
   });
 
-  it('supports custom numeric size via --z-avatar-size', () => {
+  it('supports custom numeric size via --zuvi-avatar-size', () => {
     const { container } = render(<Avatar size={48} name="A" />);
     const root = container.querySelector('[data-part="root"]') as HTMLElement;
     expect(root).toHaveAttribute('data-size', 'custom');
-    expect(root.style.getPropertyValue('--z-avatar-size')).toBe('48px');
+    expect(root.style.getPropertyValue('--zuvi-avatar-size')).toBe('48px');
   });
 
   it('exposes shape via data-shape', () => {
@@ -124,23 +124,23 @@ describe('Avatar', () => {
       />
     );
     const root = container.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-avatar', 'my-root', 'cls-root');
+    expect(root).toHaveClass('zuvi-avatar', 'my-root', 'cls-root');
     const img = container.querySelector('[data-part="image"]');
-    expect(img).toHaveClass('z-avatar-image', 'cls-image');
+    expect(img).toHaveClass('zuvi-avatar-image', 'cls-image');
 
     cleanup();
     render(
       <Avatar name="B" classNames={{ root: 'cls-root', image: 'cls-image', fallback: 'cls-fallback' }} />
     );
     const fallback = document.querySelector('[data-part="fallback"]');
-    expect(fallback).toHaveClass('z-avatar-fallback', 'cls-fallback');
+    expect(fallback).toHaveClass('zuvi-avatar-fallback', 'cls-fallback');
   });
 
   it('forwards ref to the span element', () => {
     const ref = React.createRef<HTMLSpanElement>();
     render(<Avatar ref={ref} name="A" />);
     expect(ref.current).toBeInstanceOf(HTMLSpanElement);
-    expect(ref.current).toHaveClass('z-avatar');
+    expect(ref.current).toHaveClass('zuvi-avatar');
   });
 
   it('passes native props through to the span element', () => {

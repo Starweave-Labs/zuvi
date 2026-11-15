@@ -57,7 +57,7 @@ function load(relative, overrides = {}) {
 const models = load('../../packages/ui/src/components/OfficeStudio/studio-model.ts');
 const { createStudioStorage, StudioStorageConflict } = load(
   '../src/pages/collaboration/office-studio/studio-storage.ts',
-  { '@zui/react': models }
+  { '@zuvi/react': models }
 );
 const { StudioWorkspace } = load('../src/pages/collaboration/office-studio/studio-workspace.ts');
 const document = () => structuredClone(models.createOfficeStudioDocument('word'));
@@ -628,7 +628,7 @@ test('upgrading the original database preserves existing files and starts an emp
   const factory = new IDBFactory();
   const first = record(document());
   await new Promise((resolve, reject) => {
-    const request = factory.open('zui-office-studio', 1);
+    const request = factory.open('zuvi-office-studio', 1);
     request.onupgradeneeded = () => {
       request.result.createObjectStore('files', { keyPath: 'id' });
       request.result.createObjectStore('preferences');

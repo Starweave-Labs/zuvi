@@ -291,7 +291,7 @@ test('完整编辑器：所有预设区块可组合、备份、导出并保留�
   await offline.setViewportSize({ width: 390, height: 900 });
   await offline.setContent(html);
   await expect(offline.getByRole('heading', { name: '你可能还想了解' })).toHaveCount(0);
-  await expect(offline.locator('.z-builder-section').first()).toHaveCSS('padding-top', '16px');
+  await expect(offline.locator('.zuvi-builder-section').first()).toHaveCSS('padding-top', '16px');
   await expect(offline.getByRole('heading', { name: /让好想法/ })).toBeVisible();
   await page.getByRole('button', { name: '切换到桌面画布' }).click();
   await page.getByRole('button', { name: '图层结构', exact: true }).click();

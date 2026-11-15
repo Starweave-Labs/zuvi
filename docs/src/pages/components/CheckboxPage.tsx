@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Checkbox } from '@zui/react';
+import { Checkbox } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -110,22 +110,22 @@ export default function CheckboxPage(): React.ReactNode {
         name="Checkbox"
         parts={['root', 'control', 'label']}
         vars={[
-          '--z-checkbox-size',
-          '--z-checkbox-radius',
-          '--z-checkbox-gap',
-          '--z-checkbox-bg',
-          '--z-checkbox-border',
-          '--z-checkbox-border-width',
-          '--z-checkbox-checked-bg',
-          '--z-checkbox-checked-border',
-          '--z-checkbox-check-color',
-          '--z-checkbox-mixed-color',
-          '--z-checkbox-label-color',
-          '--z-checkbox-label-font-size',
-          '--z-checkbox-disabled-bg',
-          '--z-checkbox-disabled-fg',
-          '--z-checkbox-disabled-border',
-          '--z-checkbox-transition',
+          '--zuvi-checkbox-size',
+          '--zuvi-checkbox-radius',
+          '--zuvi-checkbox-gap',
+          '--zuvi-checkbox-bg',
+          '--zuvi-checkbox-border',
+          '--zuvi-checkbox-border-width',
+          '--zuvi-checkbox-checked-bg',
+          '--zuvi-checkbox-checked-border',
+          '--zuvi-checkbox-check-color',
+          '--zuvi-checkbox-mixed-color',
+          '--zuvi-checkbox-label-color',
+          '--zuvi-checkbox-label-font-size',
+          '--zuvi-checkbox-disabled-bg',
+          '--zuvi-checkbox-disabled-fg',
+          '--zuvi-checkbox-disabled-border',
+          '--zuvi-checkbox-transition',
         ]}
       />
     </div>

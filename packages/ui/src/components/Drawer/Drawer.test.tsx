@@ -369,31 +369,31 @@ describe('Drawer 透传与定制出口', () => {
     );
 
     const overlay = document.querySelector('[data-part="overlay"]');
-    expect(overlay).toHaveClass('z-drawer-overlay', 'c-overlay');
+    expect(overlay).toHaveClass('zuvi-drawer-overlay', 'c-overlay');
     expect(overlay).toHaveAttribute('data-placement', 'left');
 
     const dialog = screen.getByRole('dialog');
     expect(dialog).toHaveAttribute('data-part', 'content');
     expect(dialog).toHaveAttribute('data-placement', 'left');
-    expect(dialog).toHaveClass('z-drawer', 'c-content');
-    expect(dialog.style.getPropertyValue('--z-drawer-size')).toBe('240px');
+    expect(dialog).toHaveClass('zuvi-drawer', 'c-content');
+    expect(dialog.style.getPropertyValue('--zuvi-drawer-size')).toBe('240px');
 
     expect(screen.getByText('抽屉标题')).toHaveAttribute('data-part', 'title');
 
     const header = document.querySelector('[data-part="header"]');
-    expect(header).toHaveClass('z-drawer-header');
+    expect(header).toHaveClass('zuvi-drawer-header');
     const body = document.querySelector('[data-part="body"]');
-    expect(body).toHaveClass('z-drawer-body');
+    expect(body).toHaveClass('zuvi-drawer-body');
     const footer = document.querySelector('[data-part="footer"]');
-    expect(footer).toHaveClass('z-drawer-footer');
+    expect(footer).toHaveClass('zuvi-drawer-footer');
     const close = document.querySelector('[data-part="close"]');
-    expect(close).toHaveClass('z-drawer-close');
+    expect(close).toHaveClass('zuvi-drawer-close');
   });
 
   it('size 支持字符串（如 50%）', () => {
     render(<TestDrawer defaultOpen size="50%" />);
     const dialog = screen.getByRole('dialog');
-    expect(dialog.style.getPropertyValue('--z-drawer-size')).toBe('50%');
+    expect(dialog.style.getPropertyValue('--zuvi-drawer-size')).toBe('50%');
   });
 
   it('Trigger 透传 props 与 className', async () => {
@@ -412,7 +412,7 @@ describe('Drawer 透传与定制出口', () => {
     const trigger = screen.getByTestId('trigger');
     expect(trigger).toHaveAttribute('data-part', 'trigger');
     expect(trigger).toHaveAttribute('data-foo', 'bar');
-    expect(trigger).toHaveClass('z-drawer-trigger', 'c-trigger');
+    expect(trigger).toHaveClass('zuvi-drawer-trigger', 'c-trigger');
     expect(trigger).toHaveAttribute('aria-haspopup', 'dialog');
 
     // 触发器仍可切换

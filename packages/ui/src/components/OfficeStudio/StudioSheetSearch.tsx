@@ -114,7 +114,7 @@ export function StudioSheetSearch({
   }
   return (
     <section
-      className="z-studio-sheet-search"
+      className="zuvi-studio-sheet-search"
       aria-label="表格查找与替换"
       onKeyDown={(event) => {
         if (event.nativeEvent.isComposing) return;
@@ -125,7 +125,7 @@ export function StudioSheetSearch({
         }
       }}
     >
-      <div className="z-studio-sheet-search-row">
+      <div className="zuvi-studio-sheet-search-row">
         <strong>查找与替换</strong>
         <Button
           size="sm"
@@ -150,7 +150,7 @@ export function StudioSheetSearch({
         </Button>
       </div>
       <form
-        className="z-studio-sheet-search-row"
+        className="zuvi-studio-sheet-search-row"
         onSubmit={(event) => {
           event.preventDefault();
           navigate(1);
@@ -215,7 +215,7 @@ export function StudioSheetSearch({
           </>
         )}
       </form>
-      <div className="z-studio-sheet-search-row">
+      <div className="zuvi-studio-sheet-search-row">
         <Select
           size="sm"
           aria-label="表格查找范围"
@@ -269,14 +269,14 @@ export function StudioSheetSearch({
           onChange={setWholeCell}
         />
       </div>
-      <p role="status" className="z-studio-sheet-search-status">
+      <p role="status" className="zuvi-studio-sheet-search-status">
         {result.error ||
           (query
             ? `找到 ${result.matches.length} 个单元格${currentIndex >= 0 ? `，当前第 ${currentIndex + 1} 项` : ''}。`
             : '输入内容开始查找。')}{' '}
         {message}
       </p>
-      <p className="z-studio-sheet-search-hint">
+      <p className="zuvi-studio-sheet-search-hint">
         支持 *、? 通配符，~ 转义；Enter 查找下一项，Esc
         关闭。显示值中的公式及无法对应原始内容的格式化数值会跳过替换。
       </p>

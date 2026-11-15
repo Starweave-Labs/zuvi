@@ -153,10 +153,10 @@ describe('Tour 渲染', () => {
     renderTour({ defaultOpen: true });
     const mask = document.querySelector('[data-part="mask"]');
     expect(mask).toBeInTheDocument();
-    expect(mask).toHaveClass('z-tour-mask');
+    expect(mask).toHaveClass('zuvi-tour-mask');
     expect(mask).toHaveAttribute('aria-hidden', 'true');
     // 目标存在时用挖洞遮罩而非全屏遮罩
-    expect(mask).not.toHaveClass('z-tour-mask--full');
+    expect(mask).not.toHaveClass('zuvi-tour-mask--full');
   });
 
   it('目标缺失时退化为全屏遮罩', () => {
@@ -166,14 +166,14 @@ describe('Tour 渲染', () => {
         defaultOpen
       />
     );
-    expect(document.querySelector('[data-part="mask"]')).toHaveClass('z-tour-mask--full');
+    expect(document.querySelector('[data-part="mask"]')).toHaveClass('zuvi-tour-mask--full');
     expect(screen.getByRole('dialog', { name: '孤立步骤' })).toBeInTheDocument();
   });
 
   it('target 支持取元素函数', () => {
     renderTour({ defaultOpen: true, current: 2 });
     expect(screen.getByRole('dialog', { name: '第三步' })).toBeInTheDocument();
-    expect(document.querySelector('[data-part="mask"]')).not.toHaveClass('z-tour-mask--full');
+    expect(document.querySelector('[data-part="mask"]')).not.toHaveClass('zuvi-tour-mask--full');
   });
 
   it('placement 记录在卡片 data-placement 上', () => {
@@ -275,11 +275,11 @@ describe('Tour 定制出口', () => {
       defaultOpen: true,
       classNames: { root: 'r', mask: 'm', card: 'c', title: 'ti', description: 'd', footer: 'f' },
     });
-    expect(document.querySelector('[data-part="root"]')).toHaveClass('z-tour', 'r');
-    expect(document.querySelector('[data-part="mask"]')).toHaveClass('z-tour-mask', 'm');
-    expect(document.querySelector('[data-part="card"]')).toHaveClass('z-tour-card', 'c');
-    expect(document.querySelector('[data-part="title"]')).toHaveClass('z-tour-title', 'ti');
-    expect(document.querySelector('[data-part="description"]')).toHaveClass('z-tour-description', 'd');
-    expect(document.querySelector('[data-part="footer"]')).toHaveClass('z-tour-footer', 'f');
+    expect(document.querySelector('[data-part="root"]')).toHaveClass('zuvi-tour', 'r');
+    expect(document.querySelector('[data-part="mask"]')).toHaveClass('zuvi-tour-mask', 'm');
+    expect(document.querySelector('[data-part="card"]')).toHaveClass('zuvi-tour-card', 'c');
+    expect(document.querySelector('[data-part="title"]')).toHaveClass('zuvi-tour-title', 'ti');
+    expect(document.querySelector('[data-part="description"]')).toHaveClass('zuvi-tour-description', 'd');
+    expect(document.querySelector('[data-part="footer"]')).toHaveClass('zuvi-tour-footer', 'f');
   });
 });

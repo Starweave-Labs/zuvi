@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Progress, Segmented, Statistic, useControllableState } from '@zui/react';
+import { Progress, Segmented, Statistic, useControllableState } from '@zuvi/react';
 
 /* ---------------------------------- 类型 ---------------------------------- */
 
@@ -125,22 +125,22 @@ export function DataScreenBlock({
 
   /* 深色底自适应：直接落在中性色阶 primitive 上，不随页面主题翻转 */
   const dark = {
-    bg: 'var(--z-neutral-950)',
-    panel: 'var(--z-neutral-900)',
-    border: 'var(--z-neutral-800)',
-    fg: 'var(--z-neutral-100)',
-    fgMuted: 'var(--z-neutral-400)',
-    fgSubtle: 'var(--z-neutral-400)',
+    bg: 'var(--zuvi-neutral-950)',
+    panel: 'var(--zuvi-neutral-900)',
+    border: 'var(--zuvi-neutral-800)',
+    fg: 'var(--zuvi-neutral-100)',
+    fgMuted: 'var(--zuvi-neutral-400)',
+    fgSubtle: 'var(--zuvi-neutral-400)',
   };
   const darkTokens = {
-    '--z-color-fg': dark.fg,
-    '--z-color-fg-muted': dark.fgMuted,
-    '--z-color-fg-subtle': dark.fgSubtle,
-    '--z-color-bg': dark.bg,
-    '--z-color-bg-muted': dark.panel,
-    '--z-color-bg-subtle': dark.panel,
-    '--z-color-border': dark.border,
-    '--z-color-border-subtle': dark.border,
+    '--zuvi-color-fg': dark.fg,
+    '--zuvi-color-fg-muted': dark.fgMuted,
+    '--zuvi-color-fg-subtle': dark.fgSubtle,
+    '--zuvi-color-bg': dark.bg,
+    '--zuvi-color-bg-muted': dark.panel,
+    '--zuvi-color-bg-subtle': dark.panel,
+    '--zuvi-color-border': dark.border,
+    '--zuvi-color-border-subtle': dark.border,
   } as React.CSSProperties;
 
   return (
@@ -149,13 +149,13 @@ export function DataScreenBlock({
       className={[className, classNames?.root].filter(Boolean).join(' ') || undefined}
       style={{
         ...darkTokens,
-        padding: 'clamp(var(--z-space-4), 3vw, var(--z-space-8))',
+        padding: 'clamp(var(--zuvi-space-4), 3vw, var(--zuvi-space-8))',
         background: dark.bg,
         color: dark.fg,
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
-        gap: 'var(--z-space-5)',
+        gap: 'var(--zuvi-space-5)',
         ...style,
       }}
     >
@@ -167,7 +167,7 @@ export function DataScreenBlock({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          gap: 'var(--z-space-4)',
+          gap: 'var(--zuvi-space-4)',
           flexWrap: 'wrap',
         }}
       >
@@ -175,8 +175,8 @@ export function DataScreenBlock({
           <h1
             style={{
               margin: 0,
-              fontSize: 'var(--z-text-xl)',
-              fontWeight: 'var(--z-weight-semibold)',
+              fontSize: 'var(--zuvi-text-xl)',
+              fontWeight: 'var(--zuvi-weight-semibold)',
               color: dark.fg,
               letterSpacing: '0.04em',
             }}
@@ -185,8 +185,8 @@ export function DataScreenBlock({
           </h1>
           <p
             style={{
-              margin: 'var(--z-space-1) 0 0',
-              fontSize: 'var(--z-text-sm)',
+              margin: 'var(--zuvi-space-1) 0 0',
+              fontSize: 'var(--zuvi-text-sm)',
               color: dark.fgMuted,
             }}
           >
@@ -197,7 +197,7 @@ export function DataScreenBlock({
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: 'var(--z-space-3)',
+            gap: 'var(--zuvi-space-3)',
             flexWrap: 'wrap',
           }}
         >
@@ -215,13 +215,13 @@ export function DataScreenBlock({
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: 'var(--z-space-2)',
-                  padding: 'var(--z-space-2) var(--z-space-4)',
-                  borderRadius: 'var(--z-radius-md)',
+                  gap: 'var(--zuvi-space-2)',
+                  padding: 'var(--zuvi-space-2) var(--zuvi-space-4)',
+                  borderRadius: 'var(--zuvi-radius-md)',
                   border: `1px solid ${dark.border}`,
                   background: dark.panel,
                   color: dark.fg,
-                  fontSize: 'var(--z-text-sm)',
+                  fontSize: 'var(--zuvi-text-sm)',
                   cursor: 'pointer',
                 }}
               >
@@ -253,7 +253,7 @@ export function DataScreenBlock({
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(min(220px, 100%), 1fr))',
-          gap: 'var(--z-space-4)',
+          gap: 'var(--zuvi-space-4)',
         }}
       >
         {stats.map((stat) => (
@@ -262,8 +262,8 @@ export function DataScreenBlock({
             style={{
               background: dark.panel,
               border: `1px solid ${dark.border}`,
-              borderRadius: 'var(--z-radius-lg)',
-              padding: 'var(--z-space-5)',
+              borderRadius: 'var(--zuvi-radius-lg)',
+              padding: 'var(--zuvi-space-5)',
               minWidth: 0,
             }}
           >
@@ -271,13 +271,13 @@ export function DataScreenBlock({
               title={stat.label}
               value={stat.value}
               suffix={stat.suffix}
-              valueStyle={{ color: 'var(--z-brand-400)', fontSize: 'var(--z-text-2xl)' }}
+              valueStyle={{ color: 'var(--zuvi-brand-400)', fontSize: 'var(--zuvi-text-2xl)' }}
             />
             {stat.trend != null ? (
               <div
                 style={{
-                  marginTop: 'var(--z-space-2)',
-                  fontSize: 'var(--z-text-xs)',
+                  marginTop: 'var(--zuvi-space-2)',
+                  fontSize: 'var(--zuvi-text-xs)',
                   color: dark.fgSubtle,
                 }}
               >
@@ -294,7 +294,7 @@ export function DataScreenBlock({
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(min(360px, 100%), 1fr))',
-          gap: 'var(--z-space-4)',
+          gap: 'var(--zuvi-space-4)',
         }}
       >
         {/* CSS 柱状图 */}
@@ -303,15 +303,15 @@ export function DataScreenBlock({
           style={{
             background: dark.panel,
             border: `1px solid ${dark.border}`,
-            borderRadius: 'var(--z-radius-lg)',
-            padding: 'var(--z-space-5)',
+            borderRadius: 'var(--zuvi-radius-lg)',
+            padding: 'var(--zuvi-space-5)',
           }}
         >
           <h2
             style={{
-              margin: '0 0 var(--z-space-4)',
-              fontSize: 'var(--z-text-md)',
-              fontWeight: 'var(--z-weight-medium)',
+              margin: '0 0 var(--zuvi-space-4)',
+              fontSize: 'var(--zuvi-text-md)',
+              fontWeight: 'var(--zuvi-weight-medium)',
               color: dark.fg,
             }}
           >
@@ -323,7 +323,7 @@ export function DataScreenBlock({
             style={{
               display: 'flex',
               alignItems: 'flex-end',
-              gap: 'var(--z-space-3)',
+              gap: 'var(--zuvi-space-3)',
               height: 200,
             }}
           >
@@ -341,7 +341,7 @@ export function DataScreenBlock({
                     gridTemplateRows: 'minmax(0, 1fr) auto',
                     alignItems: 'end',
                     justifyItems: 'center',
-                    gap: 'var(--z-space-2)',
+                    gap: 'var(--zuvi-space-2)',
                     height: '100%',
                   }}
                 >
@@ -351,8 +351,8 @@ export function DataScreenBlock({
                       width: '100%',
                       maxWidth: 32,
                       height: `${heightPercent}%`,
-                      borderRadius: 'var(--z-radius-sm) var(--z-radius-sm) 0 0',
-                      background: `linear-gradient(to top, var(--z-brand-600), var(--z-brand-400))`,
+                      borderRadius: 'var(--zuvi-radius-sm) var(--zuvi-radius-sm) 0 0',
+                      background: `linear-gradient(to top, var(--zuvi-brand-600), var(--zuvi-brand-400))`,
                     }}
                   />
                   <span
@@ -361,7 +361,7 @@ export function DataScreenBlock({
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
                       whiteSpace: 'nowrap',
-                      fontSize: 'var(--z-text-xs)',
+                      fontSize: 'var(--zuvi-text-xs)',
                       color: dark.fgSubtle,
                     }}
                   >
@@ -379,15 +379,15 @@ export function DataScreenBlock({
           style={{
             background: dark.panel,
             border: `1px solid ${dark.border}`,
-            borderRadius: 'var(--z-radius-lg)',
-            padding: 'var(--z-space-5)',
+            borderRadius: 'var(--zuvi-radius-lg)',
+            padding: 'var(--zuvi-space-5)',
           }}
         >
           <h2
             style={{
-              margin: '0 0 var(--z-space-4)',
-              fontSize: 'var(--z-text-md)',
-              fontWeight: 'var(--z-weight-medium)',
+              margin: '0 0 var(--zuvi-space-4)',
+              fontSize: 'var(--zuvi-text-md)',
+              fontWeight: 'var(--zuvi-weight-medium)',
               color: dark.fg,
             }}
           >
@@ -400,7 +400,7 @@ export function DataScreenBlock({
               padding: 0,
               display: 'flex',
               flexDirection: 'column',
-              gap: 'var(--z-space-5)',
+              gap: 'var(--zuvi-space-5)',
             }}
           >
             {gauges.map((gauge) => (
@@ -409,8 +409,8 @@ export function DataScreenBlock({
                   style={{
                     display: 'flex',
                     justifyContent: 'space-between',
-                    marginBottom: 'var(--z-space-2)',
-                    fontSize: 'var(--z-text-sm)',
+                    marginBottom: 'var(--zuvi-space-2)',
+                    fontSize: 'var(--zuvi-text-sm)',
                   }}
                 >
                   <span style={{ color: dark.fg }}>{gauge.label}</span>

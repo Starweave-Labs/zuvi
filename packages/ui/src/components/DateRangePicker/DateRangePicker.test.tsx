@@ -56,7 +56,7 @@ describe('DateRangePicker 渲染与受控', () => {
     expect(document.querySelector('[data-part="icon"]')).toBeInTheDocument();
 
     const root = document.querySelector('[data-part="root"]');
-    expect(root).toHaveClass('z-daterange');
+    expect(root).toHaveClass('zuvi-daterange');
     expect(document.querySelector('[data-part="trigger"]')).toBeInTheDocument();
     expect(document.querySelector('[data-part="input-start"]')).toBe(start);
     expect(document.querySelector('[data-part="input-end"]')).toBe(end);

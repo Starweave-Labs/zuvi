@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type RefObject } from 'react';
 import { createPortal } from 'react-dom';
-import { Type, Layers, Copy } from '@zui/icons';
+import { Type, Layers, Copy } from '@zuvi/icons';
 import { historyHasCurrentData, useBuilderEditor } from './builder-editor-context';
 import { builderConfig } from './builder-config';
 import { builderId, type BuilderData } from './builder-model';
@@ -14,11 +14,11 @@ import {
 import { checkedStructure, childNodes, flattenNodes, updateZone } from './builder-tree';
 
 const textTargets: Record<string, [string, string]> = {
-  Heading: ['text', '.z-builder-heading'],
-  Typography_Text: ['children', '.z-typography-text'],
-  Button: ['children', '.z-button,.z-builder-link-button'],
-  Tag: ['children', '.z-tag'],
-  Card: ['title', '.z-card-title'],
+  Heading: ['text', '.zuvi-builder-heading'],
+  Typography_Text: ['children', '.zuvi-typography-text'],
+  Button: ['children', '.zuvi-button,.zuvi-builder-link-button'],
+  Tag: ['children', '.zuvi-tag'],
+  Card: ['title', '.zuvi-card-title'],
 };
 export const layoutPresets: { name: string; styles: BuilderStyles }[] = [
   {
@@ -170,7 +170,7 @@ export function BuilderCanvasTools({
       element.removeAttribute('contenteditable');
       element.removeAttribute('data-builder-inline-edit');
       element.style.removeProperty('pointer-events');
-      element.style.removeProperty('z-index');
+      element.style.removeProperty('zuvi-index');
       element.style.removeProperty('position');
       stopEditing.current = null;
       setInline(false);

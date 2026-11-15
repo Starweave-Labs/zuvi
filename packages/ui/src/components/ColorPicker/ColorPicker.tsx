@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useZuiConfig } from '../../config';
+import { useZuviConfig } from '../../config';
 import { FloatingPanel, cx, useControllableState, useOnClickOutside } from '../../utils';
 import './ColorPicker.css';
 
@@ -141,7 +141,7 @@ export function ColorPicker({
   onKeyDown,
   ...rest
 }: ColorPickerProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const [value, setValue] = useControllableState<string>({
     value: valueProp,
     defaultValue,
@@ -362,7 +362,7 @@ export function ColorPicker({
       data-size={size}
       data-open={open ? '' : undefined}
       data-disabled={disabled ? '' : undefined}
-      className={cx('z-color-picker', className, classNames?.root)}
+      className={cx('zuvi-color-picker', className, classNames?.root)}
       style={style}
       onKeyDown={handleRootKeyDown}
     >
@@ -370,7 +370,7 @@ export function ColorPicker({
         type="button"
         ref={triggerRef}
         data-part="swatch"
-        className={cx('z-color-picker-swatch', classNames?.swatch)}
+        className={cx('zuvi-color-picker-swatch', classNames?.swatch)}
         aria-haspopup="dialog"
         aria-expanded={open}
         aria-controls={open ? panelId : undefined}
@@ -380,10 +380,10 @@ export function ColorPicker({
       >
         <span
           data-part="swatch-color"
-          className="z-color-picker-swatch-color"
+          className="zuvi-color-picker-swatch-color"
           style={{ background: normalized }}
         />
-        <span data-part="swatch-hex" className="z-color-picker-swatch-hex">
+        <span data-part="swatch-hex" className="zuvi-color-picker-swatch-hex">
           {normalized}
         </span>
       </button>
@@ -401,13 +401,13 @@ export function ColorPicker({
             role="dialog"
             aria-label={locale.accessibility.colorPanel}
             tabIndex={-1}
-            className={cx('z-color-picker-panel', classNames?.panel)}
+            className={cx('zuvi-color-picker-panel', classNames?.panel)}
             onKeyDown={handleFloatingPanelKeyDown}
           >
             <div
               ref={svRef}
               data-part="sv"
-              className="z-color-picker-sv"
+              className="zuvi-color-picker-sv"
               role="slider"
               tabIndex={0}
               aria-label={locale.accessibility.saturationBrightness}
@@ -422,17 +422,17 @@ export function ColorPicker({
             >
               <span
                 data-part="sv-white"
-                className="z-color-picker-sv-overlay"
+                className="zuvi-color-picker-sv-overlay"
                 style={{ background: SV_WHITE_OVERLAY }}
               />
               <span
                 data-part="sv-black"
-                className="z-color-picker-sv-overlay"
+                className="zuvi-color-picker-sv-overlay"
                 style={{ background: SV_BLACK_OVERLAY }}
               />
               <span
                 data-part="sv-pointer"
-                className="z-color-picker-pointer"
+                className="zuvi-color-picker-pointer"
                 style={{
                   left: `${activeHsv.s}%`,
                   top: `${100 - activeHsv.v}%`,
@@ -443,7 +443,7 @@ export function ColorPicker({
             <div
               ref={hueRef}
               data-part="hue"
-              className={cx('z-color-picker-hue', classNames?.hue)}
+              className={cx('zuvi-color-picker-hue', classNames?.hue)}
               role="slider"
               tabIndex={0}
               aria-label={locale.accessibility.hue}
@@ -456,14 +456,14 @@ export function ColorPicker({
             >
               <span
                 data-part="hue-pointer"
-                className="z-color-picker-pointer"
+                className="zuvi-color-picker-pointer"
                 style={{ left: `${(activeHsv.h / 360) * 100}%` }}
               />
             </div>
-            <div className="z-color-picker-hex-row">
+            <div className="zuvi-color-picker-hex-row">
               <input
                 data-part="hex"
-                className="z-color-picker-hex-input"
+                className="zuvi-color-picker-hex-input"
                 value={hexDraft}
                 aria-label={locale.accessibility.hex}
                 spellCheck={false}

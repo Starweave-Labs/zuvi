@@ -16,10 +16,10 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const sourceRegistry = JSON.parse(
   fs.readFileSync(path.join(root, 'registry/registry.json'), 'utf8')
 );
-const cwd = fs.mkdtempSync(path.join(os.tmpdir(), 'zui-consumer-'));
+const cwd = fs.mkdtempSync(path.join(os.tmpdir(), 'zuvi-consumer-'));
 try {
   const ctx = createContext({ cwd, log: () => {} });
-  assert.deepEqual(ctx.registry, sourceRegistry, 'CLI bundled registry is stale; rebuild @zui/cli');
+  assert.deepEqual(ctx.registry, sourceRegistry, 'CLI bundled registry is stale; rebuild @zuvi/cli');
   const sourceFiles = new Set([
     ...sourceRegistry.sharedFiles,
     ...sourceRegistry.items.flatMap((item) => [...item.files, item.meta]),
@@ -28,7 +28,7 @@ try {
     assert.deepEqual(
       fs.readFileSync(path.join(ctx.registryRoot, file)),
       fs.readFileSync(path.join(root, file)),
-      `CLI bundled source is stale: ${file}; rebuild @zui/cli`
+      `CLI bundled source is stale: ${file}; rebuild @zuvi/cli`
     );
   }
   const added = await add({ ctx, names: [], all: true });
@@ -43,7 +43,7 @@ try {
   assert.deepEqual(
     [...catalog.values()],
     [...loadCatalog(root).values()],
-    'MCP bundled component metadata is stale; rebuild @zui/mcp'
+    'MCP bundled component metadata is stale; rebuild @zuvi/mcp'
   );
   assert.equal(
     catalog.size,
@@ -57,8 +57,8 @@ try {
   fs.writeFileSync(
     path.join(examples, 'office-subpaths.tsx'),
     [
-      "import { OfficeStudio, createOfficeStudioDocument, type OfficeStudioHandle, type StudioPdfSearchResult, type StudioSheetChart, type StudioSheetStructureEdit } from '@zui/react/office-studio';",
-      "import { OfficeEditor, type OfficeEditorConfig } from '@zui/react/office-editor';",
+      "import { OfficeStudio, createOfficeStudioDocument, type OfficeStudioHandle, type StudioPdfSearchResult, type StudioSheetChart, type StudioSheetStructureEdit } from '@zuvi/react/office-studio';",
+      "import { OfficeEditor, type OfficeEditorConfig } from '@zuvi/react/office-editor';",
       'export function OfficeSubpathsExample({ config, documentServerUrl }: { config: OfficeEditorConfig; documentServerUrl: string }) {',
       "  return <><OfficeEditor config={config} documentServerUrl={documentServerUrl} /><OfficeStudio defaultValue={createOfficeStudioDocument('word')} onPrint={async (document) => { void document; }} /></>;",
       '}',
@@ -71,17 +71,17 @@ try {
   );
   fs.writeFileSync(path.join(cwd, 'src/styles.d.ts'), "declare module '*.css';\n");
   const workspacePackages = new Map([
-    ['@zui/react', 'ui'],
-    ['@zui/tokens', 'tokens'],
-    ['@zui/icons', 'icons'],
-    ['@zui/i18n', 'i18n'],
+    ['@zuvi/react', 'ui'],
+    ['@zuvi/tokens', 'tokens'],
+    ['@zuvi/icons', 'icons'],
+    ['@zuvi/i18n', 'i18n'],
   ]);
   const dependencies = new Set([
     'react',
     'react-dom',
     '@types/react',
     '@types/react-dom',
-    '@zui/react',
+    '@zuvi/react',
     ...added.dependencies,
   ]);
   for (const name of dependencies) {

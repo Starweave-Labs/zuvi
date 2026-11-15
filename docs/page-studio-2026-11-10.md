@@ -7,7 +7,7 @@
 ## 从空白到可使用页面
 
 1. 新建空白页面，或选用产品介绍、联系收集、项目概览、交互工作台模板。
-2. 拖拽 ZUI 组件进入画布，或点击组件卡片上的加号。选中容器时插入子组件，选中普通组件时插入到其后。
+2. 拖拽 ZUVI 组件进入画布，或点击组件卡片上的加号。选中容器时插入子组件，选中普通组件时插入到其后。
 3. 在右侧「内容」中修改文字、图片、按钮、表单字段；在「样式」中调整布局与外观。
 4. 切换桌面、平板、手机，为小屏设置独立覆盖；缩放用于调整工作区显示比例。
 5. 在「图层」中命名、排序、移动、隐藏和锁定；通过底部路径选择父级。
@@ -18,7 +18,7 @@
 | 区域       | 已实现                                                                                                              |
 | ---------- | ------------------------------------------------------------------------------------------------------------------- |
 | 顶部工具条 | 多页面切换、新建、重命名、复制、删除、撤销重做、保存状态、保存版本、预览、导入导出                                  |
-| 组件库     | 全部 71 个公开 ZUI 组件，共 82 个搭建节点；布局、表单、内容、导航、反馈五组；搜索、拖拽、一键插入                   |
+| 组件库     | 全部 71 个公开 ZUVI 组件，共 82 个搭建节点；布局、表单、内容、导航、反馈五组；搜索、拖拽、一键插入                   |
 | 预设区块   | 品牌首屏、功能亮点、行动号召、完整联系表单、常见问题、数据概览，可混合组成整页                                      |
 | 图层结构   | 展开收起、命名、选中、原生拖动、跨容器移动、上移下移、复制、剪切、粘贴、删除                                        |
 | 图层状态   | 隐藏组件在编辑态保留占位、导出时移除；锁定保护内容和子组件，限制向锁定容器拖入组件                                  |
@@ -32,7 +32,7 @@
 
 ### 全组件与组合
 
-组件目录与 `packages/ui/src/index.ts` 对照，覆盖全部 71 个公开组件，并包含 ConfigProvider、FormItem、自定义 TabPanel、自由容器等节点。每个节点使用实际 ZUI 渲染器；导入、保存、编辑、预览与导出共享配置和校验规则。
+组件目录与 `packages/ui/src/index.ts` 对照，覆盖全部 71 个公开组件，并包含 ConfigProvider、FormItem、自定义 TabPanel、自由容器等节点。每个节点使用实际 ZUVI 渲染器；导入、保存、编辑、预览与导出共享配置和校验规则。
 
 - Card、Tabs / TabPanel、Splitter、Modal、Drawer、Popover 等容器可嵌套组件。Splitter 的每个直接子组件对应一个可调整的面板，可配置「小屏自动堆叠」，切换布局保留字段值；Tabs 的面板值与标签项对应。
 - 表格支持自定义列、真实数据、搜索和排序。选项、菜单、步骤、树数据可视编辑，也可校验后应用 JSON；无效输入保留原有数据。
@@ -54,7 +54,7 @@
 - JSON 导入最多 32 MB；字段、样式与链接进行白名单校验。无效导入保留当前页面。
 - 原有损坏存档备份、配额失败重试、多标签页冲突保护保持可用。
 - 响应式样式通过容器查询生成，编辑画布与独立 HTML 使用同一套规则。
-- HTML 内联 React / ZUI 运行时、组件样式和页面数据，不依赖 CDN；外链图片仍需网络。交互预览和独立 HTML 使用同一渲染器，浮层隔离在自己的 iframe 内。表单数据在浏览器处理，文件上传服务模式需要配置真实 HTTP 后端。
+- HTML 内联 React / ZUVI 运行时、组件样式和页面数据，不依赖 CDN；外链图片仍需网络。交互预览和独立 HTML 使用同一渲染器，浮层隔离在自己的 iframe 内。表单数据在浏览器处理，文件上传服务模式需要配置真实 HTTP 后端。
 
 ## 快捷键
 
@@ -77,10 +77,10 @@
 
 ```sh
 pnpm exec playwright test --config e2e/playwright.config.ts e2e/builder.spec.ts e2e/builder-studio.spec.ts e2e/builder-layout.spec.ts e2e/builder-catalog.spec.ts --workers=2
-pnpm --filter @zui/docs typecheck
-pnpm --filter @zui/docs test
+pnpm --filter @zuvi/docs typecheck
+pnpm --filter @zuvi/docs test
 pnpm exec eslint docs/src/pages/builder docs/builder-runtime-plugin.ts docs/vite.config.ts e2e/builder-catalog.spec.ts e2e/builder-layout.spec.ts
-GITHUB_PAGES_BUILD=true pnpm --filter @zui/docs build
+GITHUB_PAGES_BUILD=true pnpm --filter @zuvi/docs build
 git diff --check
 ```
 
@@ -111,10 +111,10 @@ git diff --check
 
 ```sh
 pnpm exec playwright test --config e2e/playwright.config.ts --workers=2
-pnpm --filter @zui/docs typecheck
-pnpm --filter @zui/docs test
+pnpm --filter @zuvi/docs typecheck
+pnpm --filter @zuvi/docs test
 pnpm exec eslint docs/src/pages/builder e2e/builder.spec.ts e2e/builder-studio.spec.ts e2e/builder-layout.spec.ts e2e/docs-smoke.spec.ts e2e/collaboration.spec.ts
-GITHUB_PAGES_BUILD=true pnpm --filter @zui/docs build
+GITHUB_PAGES_BUILD=true pnpm --filter @zuvi/docs build
 git diff --check
 ```
 

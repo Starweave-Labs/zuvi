@@ -10,16 +10,16 @@ function getRoot(container: HTMLElement): HTMLElement {
 }
 
 describe('Flex', () => {
-  it('renders a div with z-flex class and default data attributes', () => {
+  it('renders a div with zuvi-flex class and default data attributes', () => {
     const { container } = render(<Flex>内容</Flex>);
     const root = getRoot(container);
     expect(root.tagName).toBe('DIV');
-    expect(root).toHaveClass('z-flex');
+    expect(root).toHaveClass('zuvi-flex');
     expect(root).toHaveAttribute('data-vertical', 'false');
     expect(root).toHaveAttribute('data-justify', 'start');
     expect(root).toHaveAttribute('data-align', 'start');
     expect(root).toHaveAttribute('data-wrap', 'false');
-    // 未给 gap 时不产生内联 gap（走 CSS 默认 --z-flex-gap）
+    // 未给 gap 时不产生内联 gap（走 CSS 默认 --zuvi-flex-gap）
     expect(root.style.gap).toBe('');
   });
 
@@ -28,13 +28,13 @@ describe('Flex', () => {
     expect(getRoot(container)).toHaveAttribute('data-vertical', 'true');
   });
 
-  it('maps gap sm/md/lg to --z-space-2/3/4', () => {
+  it('maps gap sm/md/lg to --zuvi-space-2/3/4', () => {
     const { container } = render(<Flex gap="sm" />);
-    expect(getRoot(container).style.gap).toBe('var(--z-space-2)');
+    expect(getRoot(container).style.gap).toBe('var(--zuvi-space-2)');
     const { container: c2 } = render(<Flex gap="md" />);
-    expect(getRoot(c2).style.gap).toBe('var(--z-space-3)');
+    expect(getRoot(c2).style.gap).toBe('var(--zuvi-space-3)');
     const { container: c3 } = render(<Flex gap="lg" />);
-    expect(getRoot(c3).style.gap).toBe('var(--z-space-4)');
+    expect(getRoot(c3).style.gap).toBe('var(--zuvi-space-4)');
   });
 
   it('supports numeric gap as px and string gap verbatim', () => {
@@ -70,25 +70,25 @@ describe('Flex', () => {
     );
     const list = screen.getByRole('list');
     expect(list.tagName).toBe('UL');
-    expect(list).toHaveClass('z-flex');
-    expect(container.querySelector('ul.z-flex')).not.toBeNull();
+    expect(list).toHaveClass('zuvi-flex');
+    expect(container.querySelector('ul.zuvi-flex')).not.toBeNull();
 
     const { container: c2 } = render(
       <Flex component="ol">
         <li>一</li>
       </Flex>,
     );
-    expect(c2.querySelector('ol.z-flex')).not.toBeNull();
+    expect(c2.querySelector('ol.zuvi-flex')).not.toBeNull();
 
     const { container: c3 } = render(<Flex component="span">行内</Flex>);
-    expect(c3.querySelector('span.z-flex')).not.toBeNull();
+    expect(c3.querySelector('span.zuvi-flex')).not.toBeNull();
   });
 
   it('appends className and classNames.root on the root element', () => {
     const { container } = render(
       <Flex className="my-flex" classNames={{ root: 'extra-flex' }} />,
     );
-    expect(getRoot(container)).toHaveClass('z-flex', 'my-flex', 'extra-flex');
+    expect(getRoot(container)).toHaveClass('zuvi-flex', 'my-flex', 'extra-flex');
   });
 
   it('forwards ref and passes native props through to the root element', () => {
@@ -105,12 +105,12 @@ describe('Flex', () => {
       />,
     );
     expect(ref.current).toBeInstanceOf(HTMLDivElement);
-    expect(ref.current).toHaveClass('z-flex');
+    expect(ref.current).toHaveClass('zuvi-flex');
     expect(getRoot(container)).toHaveAttribute('id', 'my-flex');
     expect(getRoot(container)).toHaveAttribute('aria-label', '工具栏');
     // 用户 style 与 gap/方向内联样式合并（用户值后展开）
     expect(getRoot(container).style.padding).toBe('4px');
-    expect(getRoot(container).style.gap).toBe('var(--z-space-3)');
+    expect(getRoot(container).style.gap).toBe('var(--zuvi-space-3)');
     expect(getRoot(container)).toHaveAttribute('data-vertical', 'true');
   });
 });

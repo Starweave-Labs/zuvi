@@ -21,7 +21,7 @@ describe('Image 渲染', () => {
   it('渲染 img 与 root，data-part 齐全', () => {
     render(<Image src="/a.png" alt="A" />);
     const root = document.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-image');
+    expect(root).toHaveClass('zuvi-image');
     expect(root).toHaveAttribute('data-preview', 'true');
     const img = getImg();
     expect(img).toHaveAttribute('src', '/a.png');
@@ -197,7 +197,7 @@ describe('Image 定制', () => {
       />
     );
     const root = document.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-image', 'my-root', 'page-img');
-    expect(getImg()).toHaveClass('z-image-img', 'my-image');
+    expect(root).toHaveClass('zuvi-image', 'my-root', 'page-img');
+    expect(getImg()).toHaveClass('zuvi-image-img', 'my-image');
   });
 });

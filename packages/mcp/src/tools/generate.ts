@@ -1,5 +1,5 @@
 /**
- * zui_generate_code —— 组件名 + props → 可用 JSX 代码片段。
+ * zuvi_generate_code —— 组件名 + props → 可用 JSX 代码片段。
  */
 
 import type { Catalog, CatalogEntry } from './search.js';
@@ -73,7 +73,7 @@ export function generateCode(
   if (!entry) {
     return {
       ok: false,
-      error: `未找到组件 "${component}"。可用组件见 zui_search_components。`,
+      error: `未找到组件 "${component}"。可用组件见 zuvi_search_components。`,
       suggestions: suggestComponents(catalog, component),
     };
   }
@@ -97,7 +97,7 @@ export function generateCode(
   const imports = example.imports ?? entry.name;
   const helper = example.helper ?? '';
   const parameters = example.parameters ?? '';
-  const code = `import { ${imports} } from '@zui/react';\nimport '@zui/react/styles.css';\n\n${helper}export function ${entry.name}Example(${parameters}) {\n  return (\n    ${indent(jsx, 4)}\n  );\n}\n`;
+  const code = `import { ${imports} } from '@zuvi/react';\nimport '@zuvi/react/styles.css';\n\n${helper}export function ${entry.name}Example(${parameters}) {\n  return (\n    ${indent(jsx, 4)}\n  );\n}\n`;
 
   return { ok: true, name: entry.name, code, warnings };
 }

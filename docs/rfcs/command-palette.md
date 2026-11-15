@@ -336,24 +336,24 @@ dialog 打开后立即聚焦输入框。
 公开组件变量至少包括：
 
 ```css
---z-command-palette-width
---z-command-palette-max-height
---z-command-palette-input-height
---z-command-palette-option-height
---z-command-palette-gap
---z-command-palette-padding
---z-command-palette-bg
---z-command-palette-fg
---z-command-palette-muted-fg
---z-command-palette-hover-bg
---z-command-palette-active-bg
---z-command-palette-active-fg
---z-command-palette-focus-ring
+--zuvi-command-palette-width
+--zuvi-command-palette-max-height
+--zuvi-command-palette-input-height
+--zuvi-command-palette-option-height
+--zuvi-command-palette-gap
+--zuvi-command-palette-padding
+--zuvi-command-palette-bg
+--zuvi-command-palette-fg
+--zuvi-command-palette-muted-fg
+--zuvi-command-palette-hover-bg
+--zuvi-command-palette-active-bg
+--zuvi-command-palette-active-fg
+--zuvi-command-palette-focus-ring
 ```
 
 ## 12. Locale
 
-`ZuiLocale` 增加：
+`ZuviLocale` 增加：
 
 ```ts
 commandPalette: {
@@ -378,7 +378,7 @@ commandPalette: {
 - option / group id 使用 `useId()`，同一树多实例不得冲突。
 - 过滤只依赖 `commands + query + filter`；active 移动不重新过滤。默认过滤对单次渲染只规范化 query 一次。
 - 首版目标为数百条命令。超过合理规模时应用使用异步过滤；组件不悄悄启用行为不同的虚拟化。
-- 文档站页面继续路由级懒加载；组件公开后不得因为 docs chrome 同步导入整个 `@zui/react` barrel 而让主 chunk 跨越预算。
+- 文档站页面继续路由级懒加载；组件公开后不得因为 docs chrome 同步导入整个 `@zuvi/react` barrel 而让主 chunk 跨越预算。
 
 ## 14. 测试矩阵
 

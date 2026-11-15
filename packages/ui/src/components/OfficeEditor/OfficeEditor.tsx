@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Download, Maximize, Minimize, RefreshCw, Save } from '@zui/icons';
+import { Download, Maximize, Minimize, RefreshCw, Save } from '@zuvi/icons';
 import {
   cx,
   isImeComposing,
@@ -192,7 +192,7 @@ export function OfficeEditor({
     try {
       latest.current.onStatusChange?.(value);
     } catch (cause) {
-      console.error('[ZUI OfficeEditor] onStatusChange failed.', cause);
+      console.error('[ZUVI OfficeEditor] onStatusChange failed.', cause);
     }
   }, []);
 
@@ -203,7 +203,7 @@ export function OfficeEditor({
       try {
         latest.current.onError?.(failure);
       } catch (cause) {
-        console.error('[ZUI OfficeEditor] onError failed.', cause);
+        console.error('[ZUVI OfficeEditor] onError failed.', cause);
       }
     },
     [changeStatus]
@@ -369,7 +369,7 @@ export function OfficeEditor({
       try {
         instance?.destroyEditor();
       } catch (cause) {
-        console.error('[ZUI OfficeEditor] destroyEditor failed.', cause);
+        console.error('[ZUVI OfficeEditor] destroyEditor failed.', cause);
       } finally {
         canvas?.replaceChildren();
       }
@@ -444,24 +444,24 @@ export function OfficeEditor({
   const customToolbar = typeof toolbar === 'function' ? toolbar(context) : toolbar;
   const defaultToolbar = (
     <>
-      <div data-part="heading" className={cx('z-office-editor-heading', classNames?.heading)}>
-        <span data-part="brand" className={cx('z-office-editor-brand', classNames?.brand)}>
+      <div data-part="heading" className={cx('zuvi-office-editor-heading', classNames?.heading)}>
+        <span data-part="brand" className={cx('zuvi-office-editor-brand', classNames?.brand)}>
           ONLYOFFICE
         </span>
-        <strong data-part="title" className={cx('z-office-editor-title', classNames?.title)}>
+        <strong data-part="title" className={cx('zuvi-office-editor-title', classNames?.title)}>
           {displayTitle}
         </strong>
         <span
           data-part="status"
-          className={cx('z-office-editor-status', classNames?.status)}
+          className={cx('zuvi-office-editor-status', classNames?.status)}
           role="status"
           data-save-state={status}
         >
-          <span className="z-office-editor-status-dot" aria-hidden="true" />
-          <span className="z-office-editor-status-label">{statusText}</span>
+          <span className="zuvi-office-editor-status-dot" aria-hidden="true" />
+          <span className="zuvi-office-editor-status-label">{statusText}</span>
         </span>
       </div>
-      <div data-part="actions" className={cx('z-office-editor-actions', classNames?.actions)}>
+      <div data-part="actions" className={cx('zuvi-office-editor-actions', classNames?.actions)}>
         {onDownload && (
           <Button
             size="sm"
@@ -525,7 +525,7 @@ export function OfficeEditor({
     (renderError ? (
       renderError(error, retry)
     ) : (
-      <div data-part="error" className={cx('z-office-editor-error', classNames?.error)}>
+      <div data-part="error" className={cx('zuvi-office-editor-error', classNames?.error)}>
         <p>{error.message}</p>
         <Button
           size="sm"
@@ -554,16 +554,16 @@ export function OfficeEditor({
       data-status={status}
       data-disabled={disabled ? 'true' : undefined}
       data-fullscreen={fullscreen ? 'true' : undefined}
-      className={cx('z-office-editor', className, classNames?.root)}
+      className={cx('zuvi-office-editor', className, classNames?.root)}
       style={{ height, ...style }}
     >
       {customHeader != null && customHeader !== false && (
-        <div data-part="header" className={cx('z-office-editor-header', classNames?.header)}>
+        <div data-part="header" className={cx('zuvi-office-editor-header', classNames?.header)}>
           {customHeader}
         </div>
       )}
       {toolbar !== false && (
-        <div data-part="toolbar" className={cx('z-office-editor-toolbar', classNames?.toolbar)}>
+        <div data-part="toolbar" className={cx('zuvi-office-editor-toolbar', classNames?.toolbar)}>
           {toolbar === undefined ? defaultToolbar : customToolbar}
         </div>
       )}
@@ -571,7 +571,7 @@ export function OfficeEditor({
         <div
           role="alert"
           data-part="notice"
-          className={cx('z-office-editor-notice', classNames?.notice)}
+          className={cx('zuvi-office-editor-notice', classNames?.notice)}
         >
           {errorContent}
         </div>
@@ -579,17 +579,17 @@ export function OfficeEditor({
       <div
         data-part="stage"
         inert={disabled || undefined}
-        className={cx('z-office-editor-stage', classNames?.stage)}
+        className={cx('zuvi-office-editor-stage', classNames?.stage)}
       >
         <div
           data-part="canvas"
           ref={canvasRef}
-          className={cx('z-office-editor-canvas', classNames?.canvas)}
+          className={cx('zuvi-office-editor-canvas', classNames?.canvas)}
         />
         {!initialized && (
           <div
             data-part="overlay"
-            className={cx('z-office-editor-overlay', classNames?.overlay)}
+            className={cx('zuvi-office-editor-overlay', classNames?.overlay)}
             role={error ? 'alert' : 'status'}
           >
             {error ? errorContent : loading === undefined ? <Spin tip={labels.loading} /> : loading}

@@ -1,13 +1,13 @@
 {
   "date": "2026-11-10",
   "route": "#/builder",
-  "feature": "All public ZUI components and responsive custom page editor",
+  "feature": "All public ZUVI components and responsive custom page editor",
   "coverage": {
     "publicComponentExports": 71,
     "builderNodeTypes": 82,
     "missingPublicComponents": [],
     "groups": ["layout", "form", "content", "navigation", "feedback"],
-    "renderer": "Actual @zui/react components in editor, preview and standalone HTML"
+    "renderer": "Actual @zuvi/react components in editor, preview and standalone HTML"
   },
   "e2e": {
     "passed": 35,
@@ -60,7 +60,7 @@
     "duration": "4.39s",
     "editorChunkKB": 643.31,
     "standaloneExportChunkKB": 607.12,
-    "zuiComponentsChunkKB": 573.21,
+    "zuviComponentsChunkKB": 573.21,
     "warning": "Vite reports chunks above its 500 kB recommendation. The editor and standalone exporter remain lazy-loaded."
   },
   "screenshots": {
@@ -80,7 +80,7 @@
     "importBytes": 33554432,
     "storage": "Current browser on this device. No shared backend or multi-user synchronization.",
     "uploads": "Local files live in the current session. Upload service mode requires a real HTTP endpoint.",
-    "offline": "React, ZUI, styles and page JSON are inlined; externally linked images require a connection.",
+    "offline": "React, ZUVI, styles and page JSON are inlined; externally linked images require a connection.",
     "css": "Validated CSS declarations, scoped to the selected component; no arbitrary JavaScript."
   },
   "published": false

@@ -176,7 +176,7 @@ function Tabs(props: TabsProps) {
     <TabsContext.Provider value={contextValue}>
       <div
         data-part="root"
-        className={cx('z-tabs', classNames?.root, className)}
+        className={cx('zuvi-tabs', classNames?.root, className)}
         data-orientation={orientation}
       >
         {children}
@@ -196,7 +196,7 @@ function TabsList(props: TabsListProps) {
       role="tablist"
       aria-orientation={orientation}
       data-part="list"
-      className={cx('z-tabs-list', classNames?.list, className)}
+      className={cx('zuvi-tabs-list', classNames?.list, className)}
       {...rest}
     >
       {children}
@@ -345,7 +345,7 @@ function TabsTrigger(props: TabsTriggerProps) {
       tabIndex={selected ? 0 : -1}
       disabled={disabled}
       data-part="trigger"
-      className={cx('z-tab', classNames?.trigger, className)}
+      className={cx('zuvi-tab', classNames?.trigger, className)}
       ref={setRef}
       onClick={(event) => {
         onClick?.(event);
@@ -363,7 +363,7 @@ function TabsTrigger(props: TabsTriggerProps) {
       {...rest}
     >
       {icon ? (
-        <span className="z-tab-icon" data-part="icon" aria-hidden="true">
+        <span className="zuvi-tab-icon" data-part="icon" aria-hidden="true">
           {icon}
         </span>
       ) : null}
@@ -394,7 +394,7 @@ function TabsPanel(props: TabsPanelProps) {
       hidden={!active}
       tabIndex={0}
       data-part="panel"
-      className={cx('z-tabs-panel', classNames?.panel, className)}
+      className={cx('zuvi-tabs-panel', classNames?.panel, className)}
       {...rest}
     >
       {children}

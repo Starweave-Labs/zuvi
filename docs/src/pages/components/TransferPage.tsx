@@ -1,4 +1,4 @@
-import { Transfer } from '@zui/react';
+import { Transfer } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -125,28 +125,28 @@ export default function TransferPage(): React.ReactNode {
         name="Transfer"
         parts={['root', 'list', 'header', 'search', 'item', 'checkbox', 'buttons']}
         vars={[
-          '--z-transfer-width',
-          '--z-transfer-height',
-          '--z-transfer-border',
-          '--z-transfer-radius',
-          '--z-transfer-bg',
-          '--z-transfer-header-bg',
-          '--z-transfer-header-fg',
-          '--z-transfer-header-height',
-          '--z-transfer-item-height',
-          '--z-transfer-item-padding-x',
-          '--z-transfer-item-fg',
-          '--z-transfer-item-hover-bg',
-          '--z-transfer-item-selected-bg',
-          '--z-transfer-item-selected-fg',
-          '--z-transfer-button-size',
-          '--z-transfer-button-bg',
-          '--z-transfer-button-fg',
-          '--z-transfer-button-border',
-          '--z-transfer-button-hover-bg',
-          '--z-transfer-checkbox-size',
-          '--z-transfer-checkbox-checked-bg',
-          '--z-transfer-gap',
+          '--zuvi-transfer-width',
+          '--zuvi-transfer-height',
+          '--zuvi-transfer-border',
+          '--zuvi-transfer-radius',
+          '--zuvi-transfer-bg',
+          '--zuvi-transfer-header-bg',
+          '--zuvi-transfer-header-fg',
+          '--zuvi-transfer-header-height',
+          '--zuvi-transfer-item-height',
+          '--zuvi-transfer-item-padding-x',
+          '--zuvi-transfer-item-fg',
+          '--zuvi-transfer-item-hover-bg',
+          '--zuvi-transfer-item-selected-bg',
+          '--zuvi-transfer-item-selected-fg',
+          '--zuvi-transfer-button-size',
+          '--zuvi-transfer-button-bg',
+          '--zuvi-transfer-button-fg',
+          '--zuvi-transfer-button-border',
+          '--zuvi-transfer-button-hover-bg',
+          '--zuvi-transfer-checkbox-size',
+          '--zuvi-transfer-checkbox-checked-bg',
+          '--zuvi-transfer-gap',
         ]}
       />
     </div>

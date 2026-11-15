@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import * as ZuiIcons from '@zui/icons';
-import { Button, Input, Tag, Typography } from '@zui/react';
+import * as ZuviIcons from '@zuvi/icons';
+import { Button, Input, Tag, Typography } from '@zuvi/react';
 
 import CodeBlock, { copyCodeText } from '../../components/CodeBlock';
 import { usePageTitle } from '../../components/usePageTitle';
@@ -173,7 +173,7 @@ interface IconEntry {
   category: string;
 }
 
-const ALL_ICONS: IconEntry[] = Object.entries(ZuiIcons)
+const ALL_ICONS: IconEntry[] = Object.entries(ZuviIcons)
   .filter(([name, value]) => name !== 'IconProps' && typeof value === 'function')
   .map(([name, Component]) => ({
     name,
@@ -188,21 +188,21 @@ const ALL_ICONS: IconEntry[] = Object.entries(ZuiIcons)
   });
 
 const COLOR_OPTIONS: Array<{ label: string; value: string }> = [
-  { label: '默认', value: 'var(--z-color-fg)' },
-  { label: '主色', value: 'var(--z-color-primary)' },
-  { label: '成功', value: 'var(--z-color-success)' },
-  { label: '警告', value: 'var(--z-color-warning)' },
-  { label: '危险', value: 'var(--z-color-danger)' },
+  { label: '默认', value: 'var(--zuvi-color-fg)' },
+  { label: '主色', value: 'var(--zuvi-color-primary)' },
+  { label: '成功', value: 'var(--zuvi-color-success)' },
+  { label: '警告', value: 'var(--zuvi-color-warning)' },
+  { label: '危险', value: 'var(--zuvi-color-danger)' },
 ];
 
 const SIZE_PRESETS = [16, 20, 24, 32, 48];
 const STROKE_OPTIONS = [1, 1.5, 2, 2.5];
 
-const USAGE_CODE = `import { Calendar, Search, Loading } from '@zui/icons';
+const USAGE_CODE = `import { Calendar, Search, Loading } from '@zuvi/icons';
 
 // 尺寸（默认 1em，随字号缩放）、颜色（默认 currentColor，随文字变色）
 <Calendar size={16} />
-<Search size={24} color="var(--z-color-primary)" />
+<Search size={24} color="var(--zuvi-color-primary)" />
 <Loading spin={false} />
 
 // 唯一带旋转动画的图标：<Loading />（默认转圈，传 spin={false} 静态展示）`;
@@ -322,10 +322,10 @@ export default function IconGalleryPage(): React.ReactNode {
     if (selected?.name === 'Loading' && spinPreview) {
       const group = svg.querySelector('g');
       if (group) {
-        group.setAttribute('data-zui-loading', '');
+        group.setAttribute('data-zuvi-loading', '');
         const style = document.createElementNS('http://www.w3.org/2000/svg', 'style');
         style.textContent =
-          '@media(prefers-reduced-motion:no-preference){[data-zui-loading]{transform-box:view-box;transform-origin:center;animation:zui-loading-spin 1s linear infinite}@keyframes zui-loading-spin{to{transform:rotate(360deg)}}}';
+          '@media(prefers-reduced-motion:no-preference){[data-zuvi-loading]{transform-box:view-box;transform-origin:center;animation:zuvi-loading-spin 1s linear infinite}@keyframes zuvi-loading-spin{to{transform:rotate(360deg)}}}';
         svg.prepend(style);
       }
     }
@@ -359,7 +359,7 @@ export default function IconGalleryPage(): React.ReactNode {
           aria-label="关闭图标详情"
           onClick={closeDetail}
         >
-          <ZuiIcons.Close size={16} />
+          <ZuviIcons.Close size={16} />
         </Button>
       </div>
       <div className="doc-icon-detail-preview">
@@ -427,7 +427,7 @@ export default function IconGalleryPage(): React.ReactNode {
                 display: 'inline-block',
                 width: 10,
                 height: 10,
-                borderRadius: 'var(--z-radius-full)',
+                borderRadius: 'var(--zuvi-radius-full)',
                 background: opt.value,
                 marginRight: 4,
               }}
@@ -440,7 +440,7 @@ export default function IconGalleryPage(): React.ReactNode {
       <div style={{ display: 'grid', gap: 8, marginTop: 16 }}>
         <CodeChip
           label={copied === 'import' ? '已复制 ✓' : '复制 import'}
-          onClick={() => void copy(`import { ${selected.name} } from '@zui/icons';`, 'import')}
+          onClick={() => void copy(`import { ${selected.name} } from '@zuvi/icons';`, 'import')}
         />
         <CodeChip
           label={copied === 'jsx' ? '已复制 ✓' : '复制 JSX'}
@@ -461,7 +461,7 @@ export default function IconGalleryPage(): React.ReactNode {
     <div className="doc-page doc-icon-page">
       <h1 className="doc-h1">图标库</h1>
       <p className="doc-lead">
-        @zui/icons 内置 {ALL_ICONS.length} 枚线性图标（24 视窗、stroke=currentColor、圆角线帽，
+        @zuvi/icons 内置 {ALL_ICONS.length} 枚线性图标（24 视窗、stroke=currentColor、圆角线帽，
         Feather/Lucide 风格）。点击图标查看详情并复制引用代码；支持按名称 / 分类过滤、 实时调节尺寸
         / 线条粗细 / 颜色。
       </p>
@@ -518,7 +518,7 @@ export default function IconGalleryPage(): React.ReactNode {
         <div style={{ flex: 1, minWidth: 0 }}>
           {grouped.length === 0 ? (
             <div className="doc-icon-empty" role="status">
-              <ZuiIcons.Search size={28} />
+              <ZuviIcons.Search size={28} />
               <p className="doc-p">没有匹配「{keyword.trim()}」的图标。</p>
               <Button
                 size="sm"
@@ -539,8 +539,8 @@ export default function IconGalleryPage(): React.ReactNode {
                   <span
                     style={{
                       fontWeight: 400,
-                      fontSize: 'var(--z-text-xs)',
-                      color: 'var(--z-color-fg-muted)',
+                      fontSize: 'var(--zuvi-text-xs)',
+                      color: 'var(--zuvi-color-fg-muted)',
                     }}
                   >
                     ({items.length})
@@ -571,18 +571,18 @@ export default function IconGalleryPage(): React.ReactNode {
                         padding: '14px 8px 10px',
                         border: `1px solid ${
                           selected?.name === name
-                            ? 'var(--z-color-primary)'
-                            : 'var(--z-color-border-subtle)'
+                            ? 'var(--zuvi-color-primary)'
+                            : 'var(--zuvi-color-border-subtle)'
                         }`,
-                        borderRadius: 'var(--z-radius-md)',
+                        borderRadius: 'var(--zuvi-radius-md)',
                         background:
                           selected?.name === name
-                            ? 'var(--z-color-primary-subtle)'
-                            : 'var(--z-color-bg)',
-                        color: 'var(--z-color-fg)',
+                            ? 'var(--zuvi-color-primary-subtle)'
+                            : 'var(--zuvi-color-bg)',
+                        color: 'var(--zuvi-color-fg)',
                         cursor: 'pointer',
                         transition:
-                          'background-color var(--z-duration-fast) var(--z-ease-standard), border-color var(--z-duration-fast) var(--z-ease-standard)',
+                          'background-color var(--zuvi-duration-fast) var(--zuvi-ease-standard), border-color var(--zuvi-duration-fast) var(--zuvi-ease-standard)',
                       }}
                     >
                       <Component
@@ -593,8 +593,8 @@ export default function IconGalleryPage(): React.ReactNode {
                       />
                       <span
                         style={{
-                          fontSize: 'var(--z-text-xs)',
-                          color: 'var(--z-color-fg-muted)',
+                          fontSize: 'var(--zuvi-text-xs)',
+                          color: 'var(--zuvi-color-fg-muted)',
                           wordBreak: 'break-all',
                           lineHeight: 1.2,
                         }}
@@ -621,8 +621,8 @@ function Group({ label, children }: { label: string; children: React.ReactNode }
     <div role="group" aria-label={label} style={{ marginBottom: 12 }}>
       <div
         style={{
-          fontSize: 'var(--z-text-xs)',
-          color: 'var(--z-color-fg-muted)',
+          fontSize: 'var(--zuvi-text-xs)',
+          color: 'var(--zuvi-color-fg-muted)',
           marginBottom: 6,
         }}
       >
@@ -652,15 +652,15 @@ function Chip({
         display: 'inline-flex',
         alignItems: 'center',
         padding: '4px 10px',
-        fontSize: 'var(--z-text-xs)',
+        fontSize: 'var(--zuvi-text-xs)',
         fontFamily: 'inherit',
-        border: `1px solid ${active ? 'var(--z-color-primary)' : 'var(--z-color-border-subtle)'}`,
-        borderRadius: 'var(--z-radius-full)',
-        background: active ? 'var(--z-color-primary-subtle)' : 'var(--z-color-bg)',
-        color: active ? 'var(--z-color-primary-subtle-fg)' : 'var(--z-color-fg-muted)',
+        border: `1px solid ${active ? 'var(--zuvi-color-primary)' : 'var(--zuvi-color-border-subtle)'}`,
+        borderRadius: 'var(--zuvi-radius-full)',
+        background: active ? 'var(--zuvi-color-primary-subtle)' : 'var(--zuvi-color-bg)',
+        color: active ? 'var(--zuvi-color-primary-subtle-fg)' : 'var(--zuvi-color-fg-muted)',
         cursor: 'pointer',
         transition:
-          'background-color var(--z-duration-fast) var(--z-ease-standard), border-color var(--z-duration-fast) var(--z-ease-standard)',
+          'background-color var(--zuvi-duration-fast) var(--zuvi-ease-standard), border-color var(--zuvi-duration-fast) var(--zuvi-ease-standard)',
       }}
     >
       {children}
@@ -680,20 +680,20 @@ function CodeChip({ label, code, onClick }: { label: string; code?: string; onCl
         justifyContent: 'space-between',
         gap: 8,
         padding: '6px 10px',
-        fontSize: 'var(--z-text-xs)',
-        fontFamily: 'var(--z-font-mono)',
+        fontSize: 'var(--zuvi-text-xs)',
+        fontFamily: 'var(--zuvi-font-mono)',
         textAlign: 'left',
-        border: '1px solid var(--z-color-border-subtle)',
-        borderRadius: 'var(--z-radius-sm)',
-        background: 'var(--z-color-bg-subtle)',
-        color: 'var(--z-color-fg)',
+        border: '1px solid var(--zuvi-color-border-subtle)',
+        borderRadius: 'var(--zuvi-radius-sm)',
+        background: 'var(--zuvi-color-bg-subtle)',
+        color: 'var(--zuvi-color-fg)',
         cursor: 'pointer',
       }}
     >
       <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
         {code ?? label}
       </span>
-      <span style={{ color: 'var(--z-color-fg-muted)', flex: 'none' }}>{code ? label : '📋'}</span>
+      <span style={{ color: 'var(--zuvi-color-fg-muted)', flex: 'none' }}>{code ? label : '📋'}</span>
     </button>
   );
 }

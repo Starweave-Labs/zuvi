@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { InputNumber } from '@zui/react';
+import { InputNumber } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -146,26 +146,26 @@ export default function InputNumberPage(): React.ReactNode {
         name="InputNumber"
         parts={['root', 'input', 'controls', 'increase', 'decrease']}
         vars={[
-          '--z-input-number-height',
-          '--z-input-number-padding-x',
-          '--z-input-number-gap',
-          '--z-input-number-font-size',
-          '--z-input-number-radius',
-          '--z-input-number-bg',
-          '--z-input-number-fg',
-          '--z-input-number-border',
-          '--z-input-number-hover-border',
-          '--z-input-number-focus-border',
-          '--z-input-number-focus-ring',
-          '--z-input-number-control-width',
-          '--z-input-number-control-color',
-          '--z-input-number-control-hover-bg',
-          '--z-input-number-control-hover-color',
-          '--z-input-number-control-active-bg',
-          '--z-input-number-disabled-bg',
-          '--z-input-number-disabled-fg',
-          '--z-input-number-disabled-border',
-          '--z-input-number-transition',
+          '--zuvi-input-number-height',
+          '--zuvi-input-number-padding-x',
+          '--zuvi-input-number-gap',
+          '--zuvi-input-number-font-size',
+          '--zuvi-input-number-radius',
+          '--zuvi-input-number-bg',
+          '--zuvi-input-number-fg',
+          '--zuvi-input-number-border',
+          '--zuvi-input-number-hover-border',
+          '--zuvi-input-number-focus-border',
+          '--zuvi-input-number-focus-ring',
+          '--zuvi-input-number-control-width',
+          '--zuvi-input-number-control-color',
+          '--zuvi-input-number-control-hover-bg',
+          '--zuvi-input-number-control-hover-color',
+          '--zuvi-input-number-control-active-bg',
+          '--zuvi-input-number-disabled-bg',
+          '--zuvi-input-number-disabled-fg',
+          '--zuvi-input-number-disabled-border',
+          '--zuvi-input-number-transition',
         ]}
       />
     </div>

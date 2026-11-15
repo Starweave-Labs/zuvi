@@ -2,7 +2,7 @@
 
 状态：2026-11-08 已实现并完成自动化验收，作为下一版本候选；不属于 v0.2.0 的 66 组件发布基线，待下一版本发布评审。
 
-- 目标包：`@zui/react`
+- 目标包：`@zuvi/react`
 - 优先级：P1，不阻塞 v0.2.0 发布
 - 依赖：`FloatingPanel`、`Portal`、`useControllableState`、ConfigProvider locale
 
@@ -146,7 +146,7 @@ API 约束：
 
 ## 4. Locale
 
-`ZuiLocale` 新增：
+`ZuviLocale` 新增：
 
 ```ts
 combobox: {
@@ -373,35 +373,35 @@ status
 首版 CSS 变量：
 
 ```css
---z-combobox-control-height
---z-combobox-control-padding-x
---z-combobox-control-gap
---z-combobox-font-size
---z-combobox-radius
---z-combobox-bg
---z-combobox-fg
---z-combobox-border
---z-combobox-hover-border
---z-combobox-focus-ring
---z-combobox-placeholder-fg
---z-combobox-icon-fg
---z-combobox-clear-hover-bg
---z-combobox-panel-bg
---z-combobox-panel-border
---z-combobox-panel-radius
---z-combobox-panel-shadow
---z-combobox-panel-max-height
---z-combobox-panel-margin-top
---z-combobox-panel-padding
---z-combobox-option-height
---z-combobox-option-padding-x
---z-combobox-option-radius
---z-combobox-option-fg
---z-combobox-option-active-bg
---z-combobox-option-active-fg
---z-combobox-option-disabled-fg
---z-combobox-status-fg
---z-combobox-animation-duration
+--zuvi-combobox-control-height
+--zuvi-combobox-control-padding-x
+--zuvi-combobox-control-gap
+--zuvi-combobox-font-size
+--zuvi-combobox-radius
+--zuvi-combobox-bg
+--zuvi-combobox-fg
+--zuvi-combobox-border
+--zuvi-combobox-hover-border
+--zuvi-combobox-focus-ring
+--zuvi-combobox-placeholder-fg
+--zuvi-combobox-icon-fg
+--zuvi-combobox-clear-hover-bg
+--zuvi-combobox-panel-bg
+--zuvi-combobox-panel-border
+--zuvi-combobox-panel-radius
+--zuvi-combobox-panel-shadow
+--zuvi-combobox-panel-max-height
+--zuvi-combobox-panel-margin-top
+--zuvi-combobox-panel-padding
+--zuvi-combobox-option-height
+--zuvi-combobox-option-padding-x
+--zuvi-combobox-option-radius
+--zuvi-combobox-option-fg
+--zuvi-combobox-option-active-bg
+--zuvi-combobox-option-active-fg
+--zuvi-combobox-option-disabled-fg
+--zuvi-combobox-status-fg
+--zuvi-combobox-animation-duration
 ```
 
 CSS 必须覆盖 `data-size`、`data-status`、disabled、readOnly、loading、open、320px、动态视口、暗色、reduced-motion、forced-colors 和 `:focus-visible`。
@@ -518,4 +518,4 @@ docs/src/pages/components/ComboboxPage.tsx
 
 ### 实现说明
 
-- 首版**不重构 Combobox 抽取共享 hooks**（其 API 尚在发布评审期）；MultiCombobox 复用 `useControllableState`、`FloatingPanel`、`useOnClickOutside`、`useZuiConfig` 基础设施，过滤/浮层/IME 处理按 Combobox 模式实现。待 Combobox 发布稳定后再评估抽取共享选项控制器。
+- 首版**不重构 Combobox 抽取共享 hooks**（其 API 尚在发布评审期）；MultiCombobox 复用 `useControllableState`、`FloatingPanel`、`useOnClickOutside`、`useZuviConfig` 基础设施，过滤/浮层/IME 处理按 Combobox 模式实现。待 Combobox 发布稳定后再评估抽取共享选项控制器。

@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useZuiConfig } from '../../config';
+import { useZuviConfig } from '../../config';
 import { cx } from '../../utils';
 import { encodeQR, qrMatrixToPathData, type ErrorCorrectionLevel } from './qrcode-encoder';
 import './QRCode.css';
@@ -18,9 +18,9 @@ export interface QRCodeProps
   size?: number;
   /** 纠错级别（默认 'M'） */
   level?: QRCodeLevel;
-  /** 前景色（默认 --z-color-fg，经 --z-qrcode-fg） */
+  /** 前景色（默认 --zuvi-color-fg，经 --zuvi-qrcode-fg） */
   color?: string;
-  /** 背景色（默认 --z-color-bg，经 --z-qrcode-bg） */
+  /** 背景色（默认 --zuvi-color-bg，经 --zuvi-qrcode-bg） */
   bgColor?: string;
   className?: string;
   classNames?: { root?: string; bg?: string; modules?: string };
@@ -32,7 +32,7 @@ const QUIET_ZONE = 4;
 /* --------------------------------- QRCode --------------------------------- */
 
 export function QRCode(props: QRCodeProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const {
     value,
     size = 160,
@@ -63,7 +63,7 @@ export function QRCode(props: QRCodeProps) {
       {...rest}
       ref={ref}
       data-part="root"
-      className={cx('z-qrcode', classNames?.root, className)}
+      className={cx('zuvi-qrcode', classNames?.root, className)}
       role="img"
       aria-label={ariaLabel ?? locale.accessibility.qrCode.replace('{value}', value)}
       data-level={level}
@@ -74,7 +74,7 @@ export function QRCode(props: QRCodeProps) {
     >
       <rect
         data-part="bg"
-        className={cx('z-qrcode-bg', classNames?.bg)}
+        className={cx('zuvi-qrcode-bg', classNames?.bg)}
         x={0}
         y={0}
         width={total}
@@ -84,7 +84,7 @@ export function QRCode(props: QRCodeProps) {
       {encoded ? (
         <path
           data-part="modules"
-          className={cx('z-qrcode-modules', classNames?.modules)}
+          className={cx('zuvi-qrcode-modules', classNames?.modules)}
           d={qrMatrixToPathData(encoded.modules, QUIET_ZONE)}
           style={color ? { fill: color } : undefined}
         />

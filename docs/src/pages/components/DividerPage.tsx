@@ -1,4 +1,4 @@
-import { Divider } from '@zui/react';
+import { Divider } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -102,15 +102,15 @@ export default function DividerPage(): React.ReactNode {
         name="Divider"
         parts={['root', 'line', 'text']}
         vars={[
-          '--z-divider-line-color',
-          '--z-divider-thickness',
-          '--z-divider-margin-y',
-          '--z-divider-margin-x',
-          '--z-divider-text-gap',
-          '--z-divider-text-color',
-          '--z-divider-text-font-size',
-          '--z-divider-text-font-weight',
-          '--z-divider-vertical-height',
+          '--zuvi-divider-line-color',
+          '--zuvi-divider-thickness',
+          '--zuvi-divider-margin-y',
+          '--zuvi-divider-margin-x',
+          '--zuvi-divider-text-gap',
+          '--zuvi-divider-text-color',
+          '--zuvi-divider-text-font-size',
+          '--zuvi-divider-text-font-weight',
+          '--zuvi-divider-vertical-height',
         ]}
       />
     </div>

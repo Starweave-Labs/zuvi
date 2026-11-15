@@ -1,113 +1,113 @@
-/* ZUI DateRangePicker —— 双输入位触发器 + Portal 双月日历面板（role=grid × 2） */
+/* ZUVI DateRangePicker —— 双输入位触发器 + Portal 双月日历面板（role=grid × 2） */
 
-.z-daterange {
+.zuvi-daterange {
   /* 组件级变量（用户可覆盖） */
-  --z-date-range-trigger-height: 2rem; /* 32px，与 Input 同高 */
-  --z-date-range-trigger-padding-x: var(--z-space-3);
-  --z-date-range-trigger-font-size: var(--z-text-sm);
-  --z-date-range-trigger-radius: var(--z-radius-sm);
-  --z-date-range-trigger-bg: var(--z-color-bg-elevated);
-  --z-date-range-trigger-fg: var(--z-color-fg);
-  --z-date-range-trigger-border: var(--z-color-border);
-  --z-date-range-trigger-hover-border: var(--z-color-border-focus);
-  --z-date-range-trigger-focus-border: var(--z-color-border-focus);
-  --z-date-range-trigger-focus-ring: var(--z-color-focus-ring);
-  --z-date-range-error-border: var(--z-color-danger);
-  --z-date-range-success-border: var(--z-color-success);
-  --z-date-range-placeholder-fg: var(--z-color-fg-subtle);
-  --z-date-range-separator-fg: var(--z-color-fg-muted);
-  --z-date-range-icon-color: var(--z-color-fg-muted);
-  --z-date-range-clear-fg: var(--z-color-fg-muted);
-  --z-date-range-clear-hover-fg: var(--z-color-fg);
-  --z-date-range-clear-hover-bg: var(--z-color-bg-muted);
-  --z-date-range-disabled-bg: var(--z-color-disabled-bg);
-  --z-date-range-disabled-fg: var(--z-color-disabled-fg);
-  --z-date-range-disabled-border: var(--z-color-disabled-border);
-  --z-date-range-panel-width: 33rem;
-  --z-date-range-panel-bg: var(--z-color-bg-elevated);
-  --z-date-range-panel-border: var(--z-color-border-subtle);
-  --z-date-range-panel-radius: 0.5rem;
-  --z-date-range-panel-shadow: var(--z-shadow-lg);
-  --z-date-range-panel-padding: var(--z-space-3);
-  --z-date-range-panel-gap: var(--z-space-2);
-  --z-date-range-header-gap: var(--z-space-2);
-  --z-date-range-label-font-size: var(--z-text-sm);
-  --z-date-range-label-font-weight: var(--z-weight-medium);
-  --z-date-range-label-fg: var(--z-color-fg);
-  --z-date-range-nav-size: 1.5rem;
-  --z-date-range-nav-color: var(--z-color-fg-muted);
-  --z-date-range-nav-hover-bg: var(--z-color-bg-muted);
-  --z-date-range-months-gap: var(--z-space-3);
-  --z-date-range-grid-gap: 2px;
-  --z-date-range-day-size: 2rem;
-  --z-date-range-day-font-size: var(--z-text-sm);
-  --z-date-range-day-fg: var(--z-color-fg);
-  --z-date-range-day-radius: var(--z-radius-sm);
-  --z-date-range-day-hover-bg: var(--z-color-bg-muted);
-  --z-date-range-day-selected-bg: var(--z-color-primary);
-  --z-date-range-day-selected-fg: var(--z-color-primary-fg);
-  --z-date-range-day-in-range-bg: var(--z-color-primary-subtle);
-  --z-date-range-day-in-range-fg: var(--z-color-primary-subtle-fg);
-  --z-date-range-day-today-border: var(--z-color-primary);
-  --z-date-range-day-out-fg: var(--z-color-fg-subtle);
-  --z-date-range-day-disabled-fg: var(--z-color-disabled-fg);
-  --z-date-range-weekday-fg: var(--z-color-fg-muted);
-  --z-date-range-weekday-font-size: var(--z-text-xs);
-  --z-date-range-transition: var(--z-duration-fast) var(--z-ease-standard);
+  --zuvi-date-range-trigger-height: 2rem; /* 32px，与 Input 同高 */
+  --zuvi-date-range-trigger-padding-x: var(--zuvi-space-3);
+  --zuvi-date-range-trigger-font-size: var(--zuvi-text-sm);
+  --zuvi-date-range-trigger-radius: var(--zuvi-radius-sm);
+  --zuvi-date-range-trigger-bg: var(--zuvi-color-bg-elevated);
+  --zuvi-date-range-trigger-fg: var(--zuvi-color-fg);
+  --zuvi-date-range-trigger-border: var(--zuvi-color-border);
+  --zuvi-date-range-trigger-hover-border: var(--zuvi-color-border-focus);
+  --zuvi-date-range-trigger-focus-border: var(--zuvi-color-border-focus);
+  --zuvi-date-range-trigger-focus-ring: var(--zuvi-color-focus-ring);
+  --zuvi-date-range-error-border: var(--zuvi-color-danger);
+  --zuvi-date-range-success-border: var(--zuvi-color-success);
+  --zuvi-date-range-placeholder-fg: var(--zuvi-color-fg-subtle);
+  --zuvi-date-range-separator-fg: var(--zuvi-color-fg-muted);
+  --zuvi-date-range-icon-color: var(--zuvi-color-fg-muted);
+  --zuvi-date-range-clear-fg: var(--zuvi-color-fg-muted);
+  --zuvi-date-range-clear-hover-fg: var(--zuvi-color-fg);
+  --zuvi-date-range-clear-hover-bg: var(--zuvi-color-bg-muted);
+  --zuvi-date-range-disabled-bg: var(--zuvi-color-disabled-bg);
+  --zuvi-date-range-disabled-fg: var(--zuvi-color-disabled-fg);
+  --zuvi-date-range-disabled-border: var(--zuvi-color-disabled-border);
+  --zuvi-date-range-panel-width: 33rem;
+  --zuvi-date-range-panel-bg: var(--zuvi-color-bg-elevated);
+  --zuvi-date-range-panel-border: var(--zuvi-color-border-subtle);
+  --zuvi-date-range-panel-radius: 0.5rem;
+  --zuvi-date-range-panel-shadow: var(--zuvi-shadow-lg);
+  --zuvi-date-range-panel-padding: var(--zuvi-space-3);
+  --zuvi-date-range-panel-gap: var(--zuvi-space-2);
+  --zuvi-date-range-header-gap: var(--zuvi-space-2);
+  --zuvi-date-range-label-font-size: var(--zuvi-text-sm);
+  --zuvi-date-range-label-font-weight: var(--zuvi-weight-medium);
+  --zuvi-date-range-label-fg: var(--zuvi-color-fg);
+  --zuvi-date-range-nav-size: 1.5rem;
+  --zuvi-date-range-nav-color: var(--zuvi-color-fg-muted);
+  --zuvi-date-range-nav-hover-bg: var(--zuvi-color-bg-muted);
+  --zuvi-date-range-months-gap: var(--zuvi-space-3);
+  --zuvi-date-range-grid-gap: 2px;
+  --zuvi-date-range-day-size: 2rem;
+  --zuvi-date-range-day-font-size: var(--zuvi-text-sm);
+  --zuvi-date-range-day-fg: var(--zuvi-color-fg);
+  --zuvi-date-range-day-radius: var(--zuvi-radius-sm);
+  --zuvi-date-range-day-hover-bg: var(--zuvi-color-bg-muted);
+  --zuvi-date-range-day-selected-bg: var(--zuvi-color-primary);
+  --zuvi-date-range-day-selected-fg: var(--zuvi-color-primary-fg);
+  --zuvi-date-range-day-in-range-bg: var(--zuvi-color-primary-subtle);
+  --zuvi-date-range-day-in-range-fg: var(--zuvi-color-primary-subtle-fg);
+  --zuvi-date-range-day-today-border: var(--zuvi-color-primary);
+  --zuvi-date-range-day-out-fg: var(--zuvi-color-fg-subtle);
+  --zuvi-date-range-day-disabled-fg: var(--zuvi-color-disabled-fg);
+  --zuvi-date-range-weekday-fg: var(--zuvi-color-fg-muted);
+  --zuvi-date-range-weekday-font-size: var(--zuvi-text-xs);
+  --zuvi-date-range-transition: var(--zuvi-duration-fast) var(--zuvi-ease-standard);
 
   display: inline-flex;
   flex-direction: column;
   min-width: 0;
-  font-family: var(--z-font-sans);
-  font-size: var(--z-date-range-trigger-font-size);
-  color: var(--z-date-range-trigger-fg);
+  font-family: var(--zuvi-font-sans);
+  font-size: var(--zuvi-date-range-trigger-font-size);
+  color: var(--zuvi-date-range-trigger-fg);
 }
 
 /* --------------------------------- 尺寸 --------------------------------- */
 
-.z-daterange[data-size='sm'] {
-  --z-date-range-trigger-height: 1.5rem; /* 24px */
-  --z-date-range-trigger-font-size: var(--z-text-xs);
-  --z-date-range-trigger-padding-x: var(--z-space-2);
-  --z-date-range-day-size: 1.75rem;
-  --z-date-range-panel-width: 30rem;
+.zuvi-daterange[data-size='sm'] {
+  --zuvi-date-range-trigger-height: 1.5rem; /* 24px */
+  --zuvi-date-range-trigger-font-size: var(--zuvi-text-xs);
+  --zuvi-date-range-trigger-padding-x: var(--zuvi-space-2);
+  --zuvi-date-range-day-size: 1.75rem;
+  --zuvi-date-range-panel-width: 30rem;
 }
 
-.z-daterange[data-size='lg'] {
-  --z-date-range-trigger-height: 2.5rem; /* 40px */
-  --z-date-range-trigger-font-size: var(--z-text-md);
-  --z-date-range-trigger-padding-x: var(--z-space-4);
-  --z-date-range-day-size: 2.25rem;
-  --z-date-range-panel-width: 36rem;
+.zuvi-daterange[data-size='lg'] {
+  --zuvi-date-range-trigger-height: 2.5rem; /* 40px */
+  --zuvi-date-range-trigger-font-size: var(--zuvi-text-md);
+  --zuvi-date-range-trigger-padding-x: var(--zuvi-space-4);
+  --zuvi-date-range-day-size: 2.25rem;
+  --zuvi-date-range-panel-width: 36rem;
 }
 
 /* -------------------------------- 触发器 -------------------------------- */
 
-.z-daterange-trigger {
+.zuvi-daterange-trigger {
   display: flex;
   align-items: center;
-  gap: var(--z-space-2);
+  gap: var(--zuvi-space-2);
   width: 100%;
-  height: var(--z-date-range-trigger-height);
-  padding: 0 var(--z-date-range-trigger-padding-x);
-  background: var(--z-date-range-trigger-bg);
-  border: 1px solid var(--z-date-range-trigger-border);
-  border-radius: var(--z-date-range-trigger-radius);
+  height: var(--zuvi-date-range-trigger-height);
+  padding: 0 var(--zuvi-date-range-trigger-padding-x);
+  background: var(--zuvi-date-range-trigger-bg);
+  border: 1px solid var(--zuvi-date-range-trigger-border);
+  border-radius: var(--zuvi-date-range-trigger-radius);
   transition:
-    border-color var(--z-date-range-transition),
-    box-shadow var(--z-date-range-transition);
+    border-color var(--zuvi-date-range-transition),
+    box-shadow var(--zuvi-date-range-transition);
 }
 
-.z-daterange-trigger:hover {
-  border-color: var(--z-date-range-trigger-hover-border);
+.zuvi-daterange-trigger:hover {
+  border-color: var(--zuvi-date-range-trigger-hover-border);
 }
 
-.z-daterange-trigger:focus-within {
-  border-color: var(--z-date-range-trigger-focus-border);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--z-date-range-trigger-focus-ring) 15%, transparent);
+.zuvi-daterange-trigger:focus-within {
+  border-color: var(--zuvi-date-range-trigger-focus-border);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--zuvi-date-range-trigger-focus-ring) 15%, transparent);
 }
 
-.z-daterange-input {
+.zuvi-daterange-input {
   flex: 1;
   min-width: 0;
   height: 100%;
@@ -119,24 +119,24 @@
   outline: none;
 }
 
-.z-daterange-input::placeholder {
-  color: var(--z-date-range-placeholder-fg);
+.zuvi-daterange-input::placeholder {
+  color: var(--zuvi-date-range-placeholder-fg);
 }
 
-.z-daterange-separator {
+.zuvi-daterange-separator {
   flex-shrink: 0;
-  color: var(--z-date-range-separator-fg);
+  color: var(--zuvi-date-range-separator-fg);
   user-select: none;
 }
 
-.z-daterange-icon {
+.zuvi-daterange-icon {
   display: inline-flex;
   flex-shrink: 0;
-  color: var(--z-date-range-icon-color);
+  color: var(--zuvi-date-range-icon-color);
   line-height: 0;
 }
 
-.z-daterange-clear {
+.zuvi-daterange-clear {
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
@@ -144,262 +144,262 @@
   width: 1rem;
   height: 1rem;
   padding: 0;
-  color: var(--z-date-range-clear-fg);
+  color: var(--zuvi-date-range-clear-fg);
   background: transparent;
   border: none;
-  border-radius: var(--z-date-range-day-radius);
+  border-radius: var(--zuvi-date-range-day-radius);
   cursor: pointer;
   transition:
-    background-color var(--z-date-range-transition),
-    color var(--z-date-range-transition);
+    background-color var(--zuvi-date-range-transition),
+    color var(--zuvi-date-range-transition);
 }
 
-.z-daterange-clear:hover {
-  color: var(--z-date-range-clear-hover-fg);
-  background: var(--z-date-range-clear-hover-bg);
+.zuvi-daterange-clear:hover {
+  color: var(--zuvi-date-range-clear-hover-fg);
+  background: var(--zuvi-date-range-clear-hover-bg);
 }
 
-.z-daterange-clear:focus-visible {
-  outline: 2px solid var(--z-color-border-focus);
+.zuvi-daterange-clear:focus-visible {
+  outline: 2px solid var(--zuvi-color-border-focus);
   outline-offset: 1px;
 }
 
 /* 状态 */
-.z-daterange[data-status='error'] .z-daterange-trigger {
-  border-color: var(--z-date-range-error-border);
+.zuvi-daterange[data-status='error'] .zuvi-daterange-trigger {
+  border-color: var(--zuvi-date-range-error-border);
 }
 
-.z-daterange[data-status='success'] .z-daterange-trigger {
-  border-color: var(--z-date-range-success-border);
+.zuvi-daterange[data-status='success'] .zuvi-daterange-trigger {
+  border-color: var(--zuvi-date-range-success-border);
 }
 
 /* 禁用态 */
-.z-daterange[data-disabled='true'] .z-daterange-trigger {
-  background: var(--z-date-range-disabled-bg);
-  border-color: var(--z-date-range-disabled-border);
+.zuvi-daterange[data-disabled='true'] .zuvi-daterange-trigger {
+  background: var(--zuvi-date-range-disabled-bg);
+  border-color: var(--zuvi-date-range-disabled-border);
   cursor: not-allowed;
 }
 
-.z-daterange[data-disabled='true'] .z-daterange-input {
-  color: var(--z-date-range-disabled-fg);
+.zuvi-daterange[data-disabled='true'] .zuvi-daterange-input {
+  color: var(--zuvi-date-range-disabled-fg);
   cursor: not-allowed;
 }
 
 /* --------------------------------- 面板 --------------------------------- */
 
-.z-daterange-panel {
-  z-index: var(--z-z-dropdown);
+.zuvi-daterange-panel {
+  z-index: var(--zuvi-z-dropdown);
   box-sizing: border-box;
-  width: var(--z-date-range-panel-width);
-  max-width: calc(100vw - var(--z-space-4));
-  max-height: calc(100dvh - var(--z-space-4));
+  width: var(--zuvi-date-range-panel-width);
+  max-width: calc(100vw - var(--zuvi-space-4));
+  max-height: calc(100dvh - var(--zuvi-space-4));
   overflow-y: auto;
-  padding: var(--z-date-range-panel-padding);
-  background: var(--z-date-range-panel-bg);
-  border: 1px solid var(--z-date-range-panel-border);
-  border-radius: var(--z-date-range-panel-radius);
-  box-shadow: var(--z-date-range-panel-shadow);
-  font-family: var(--z-font-sans);
+  padding: var(--zuvi-date-range-panel-padding);
+  background: var(--zuvi-date-range-panel-bg);
+  border: 1px solid var(--zuvi-date-range-panel-border);
+  border-radius: var(--zuvi-date-range-panel-radius);
+  box-shadow: var(--zuvi-date-range-panel-shadow);
+  font-family: var(--zuvi-font-sans);
 }
 
 /* --------------------------------- 头部 --------------------------------- */
 /* 共享导航：‹ | 左月标题 | 右月标题 | › */
 
-.z-daterange-header {
+.zuvi-daterange-header {
   display: grid;
   grid-template-columns: auto 1fr 1fr auto;
   align-items: center;
-  gap: var(--z-date-range-header-gap);
-  margin-bottom: var(--z-date-range-panel-gap);
+  gap: var(--zuvi-date-range-header-gap);
+  margin-bottom: var(--zuvi-date-range-panel-gap);
 }
 
-.z-daterange-label {
-  font-size: var(--z-date-range-label-font-size);
-  font-weight: var(--z-date-range-label-font-weight);
-  color: var(--z-date-range-label-fg);
+.zuvi-daterange-label {
+  font-size: var(--zuvi-date-range-label-font-size);
+  font-weight: var(--zuvi-date-range-label-font-weight);
+  color: var(--zuvi-date-range-label-fg);
   text-align: center;
 }
 
-.z-daterange-nav {
+.zuvi-daterange-nav {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--z-date-range-nav-size);
-  height: var(--z-date-range-nav-size);
+  width: var(--zuvi-date-range-nav-size);
+  height: var(--zuvi-date-range-nav-size);
   padding: 0;
-  color: var(--z-date-range-nav-color);
+  color: var(--zuvi-date-range-nav-color);
   background: transparent;
   border: none;
-  border-radius: var(--z-date-range-day-radius);
+  border-radius: var(--zuvi-date-range-day-radius);
   cursor: pointer;
-  transition: background-color var(--z-date-range-transition);
+  transition: background-color var(--zuvi-date-range-transition);
 }
 
-.z-daterange-nav:hover:not(:disabled) {
-  background: var(--z-date-range-nav-hover-bg);
-  color: var(--z-date-range-label-fg);
+.zuvi-daterange-nav:hover:not(:disabled) {
+  background: var(--zuvi-date-range-nav-hover-bg);
+  color: var(--zuvi-date-range-label-fg);
 }
 
-.z-daterange-nav:focus-visible {
-  outline: 2px solid var(--z-color-border-focus);
+.zuvi-daterange-nav:focus-visible {
+  outline: 2px solid var(--zuvi-color-border-focus);
   outline-offset: 1px;
 }
 
-.z-daterange-nav:disabled {
-  color: var(--z-date-range-day-disabled-fg);
+.zuvi-daterange-nav:disabled {
+  color: var(--zuvi-date-range-day-disabled-fg);
   cursor: not-allowed;
 }
 
 /* ------------------------------- 双月网格 ------------------------------- */
 
-.z-daterange-months {
+.zuvi-daterange-months {
   display: flex;
-  gap: var(--z-date-range-months-gap);
+  gap: var(--zuvi-date-range-months-gap);
 }
 
-.z-daterange-months > .z-daterange-grid {
+.zuvi-daterange-months > .zuvi-daterange-grid {
   flex: 1;
   min-width: 0;
 }
 
-.z-daterange-grid {
+.zuvi-daterange-grid {
   display: flex;
   flex-direction: column;
-  gap: var(--z-date-range-grid-gap);
+  gap: var(--zuvi-date-range-grid-gap);
 }
 
-.z-daterange-week {
+.zuvi-daterange-week {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: var(--z-date-range-grid-gap);
+  gap: var(--zuvi-date-range-grid-gap);
 }
 
-.z-daterange-weekday {
+.zuvi-daterange-weekday {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: var(--z-date-range-day-size);
-  font-size: var(--z-date-range-weekday-font-size);
-  color: var(--z-date-range-weekday-fg);
+  height: var(--zuvi-date-range-day-size);
+  font-size: var(--zuvi-date-range-weekday-font-size);
+  color: var(--zuvi-date-range-weekday-fg);
   user-select: none;
 }
 
-.z-daterange-day {
+.zuvi-daterange-day {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: var(--z-date-range-day-size);
-  font-size: var(--z-date-range-day-font-size);
-  color: var(--z-date-range-day-fg);
+  height: var(--zuvi-date-range-day-size);
+  font-size: var(--zuvi-date-range-day-font-size);
+  color: var(--zuvi-date-range-day-fg);
   border: 1px solid transparent;
-  border-radius: var(--z-date-range-day-radius);
+  border-radius: var(--zuvi-date-range-day-radius);
   cursor: pointer;
   user-select: none;
   transition:
-    background-color var(--z-date-range-transition),
-    color var(--z-date-range-transition);
+    background-color var(--zuvi-date-range-transition),
+    color var(--zuvi-date-range-transition);
 }
 
-.z-daterange-day:hover:not([aria-disabled='true']) {
-  background: var(--z-date-range-day-hover-bg);
+.zuvi-daterange-day:hover:not([aria-disabled='true']) {
+  background: var(--zuvi-date-range-day-hover-bg);
 }
 
-.z-daterange-day:focus-visible {
-  outline: 2px solid var(--z-color-border-focus);
+.zuvi-daterange-day:focus-visible {
+  outline: 2px solid var(--zuvi-color-border-focus);
   outline-offset: 1px;
 }
 
 /* 范围中间格（浅 primary-subtle 底，直角衔接两端） */
-.z-daterange-day[data-in-range='true'] {
-  background: var(--z-date-range-day-in-range-bg);
-  color: var(--z-date-range-day-in-range-fg);
+.zuvi-daterange-day[data-in-range='true'] {
+  background: var(--zuvi-date-range-day-in-range-bg);
+  color: var(--zuvi-date-range-day-in-range-fg);
   border-radius: 0;
 }
 
 /* start / end 选中格 */
-.z-daterange-day[aria-selected='true'] {
-  background: var(--z-date-range-day-selected-bg);
-  color: var(--z-date-range-day-selected-fg);
-  border-radius: var(--z-date-range-day-radius);
+.zuvi-daterange-day[aria-selected='true'] {
+  background: var(--zuvi-date-range-day-selected-bg);
+  color: var(--zuvi-date-range-day-selected-fg);
+  border-radius: var(--zuvi-date-range-day-radius);
 }
 
-.z-daterange-day[aria-selected='true']:hover {
-  background: var(--z-date-range-day-selected-bg);
+.zuvi-daterange-day[aria-selected='true']:hover {
+  background: var(--zuvi-date-range-day-selected-bg);
 }
 
 /* 今天高亮 */
-.z-daterange-day[data-today] {
-  border-color: var(--z-date-range-day-today-border);
+.zuvi-daterange-day[data-today] {
+  border-color: var(--zuvi-date-range-day-today-border);
 }
 
-.z-daterange-day[data-today][aria-selected='true'] {
-  border-color: var(--z-date-range-day-selected-bg);
+.zuvi-daterange-day[data-today][aria-selected='true'] {
+  border-color: var(--zuvi-date-range-day-selected-bg);
 }
 
 /* 面板内相邻月份的日期 */
-.z-daterange-day[data-out-month] {
-  color: var(--z-date-range-day-out-fg);
+.zuvi-daterange-day[data-out-month] {
+  color: var(--zuvi-date-range-day-out-fg);
 }
 
 /* min/max 之外禁选 */
-.z-daterange-day[aria-disabled='true'] {
-  color: var(--z-date-range-day-disabled-fg);
+.zuvi-daterange-day[aria-disabled='true'] {
+  color: var(--zuvi-date-range-day-disabled-fg);
   cursor: not-allowed;
 }
 
-.z-daterange-day[aria-disabled='true']:hover {
+.zuvi-daterange-day[aria-disabled='true']:hover {
   background: transparent;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .z-daterange-trigger,
-  .z-daterange-clear,
-  .z-daterange-nav,
-  .z-daterange-day {
+  .zuvi-daterange-trigger,
+  .zuvi-daterange-clear,
+  .zuvi-daterange-nav,
+  .zuvi-daterange-day {
     transition: none;
   }
 }
 
 @media (max-width: 560px) {
-  .z-daterange-header {
+  .zuvi-daterange-header {
     grid-template-columns: auto 1fr auto;
   }
 }
 
 @media (forced-colors: active) {
-  .z-daterange-trigger,
-  .z-daterange-panel {
+  .zuvi-daterange-trigger,
+  .zuvi-daterange-panel {
     color: CanvasText;
     background: Canvas;
     border-color: CanvasText;
   }
 
-  .z-daterange-trigger:focus-within {
+  .zuvi-daterange-trigger:focus-within {
     outline: 2px solid Highlight;
     outline-offset: 2px;
     box-shadow: none;
   }
 
-  .z-daterange-day[data-in-range='true'] {
+  .zuvi-daterange-day[data-in-range='true'] {
     color: Highlight;
     background: Canvas;
     border-color: Highlight;
   }
 
-  .z-daterange-day[data-today]:not([aria-selected='true']) {
+  .zuvi-daterange-day[data-today]:not([aria-selected='true']) {
     border-color: ButtonText;
   }
 
-  .z-daterange-day[aria-selected='true'] {
+  .zuvi-daterange-day[aria-selected='true'] {
     color: HighlightText;
     background: Highlight;
     border-color: Highlight;
     outline: 1px solid Highlight;
   }
 
-  .z-daterange-clear:focus-visible,
-  .z-daterange-nav:focus-visible,
-  .z-daterange-day:focus-visible {
+  .zuvi-daterange-clear:focus-visible,
+  .zuvi-daterange-nav:focus-visible,
+  .zuvi-daterange-day:focus-visible {
     outline: 2px solid Highlight;
     outline-offset: 2px;
   }

@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Card, Tag, useControllableState } from '@zui/react';
+import { Card, Tag, useControllableState } from '@zuvi/react';
 
 /* ---------------------------------- 类型 ---------------------------------- */
 
@@ -138,12 +138,12 @@ export function KanbanBlock({
       data-part="root"
       className={[className, classNames?.root].filter(Boolean).join(' ') || undefined}
       style={{
-        padding: 'clamp(var(--z-space-3), 3vw, var(--z-space-6))',
-        background: 'var(--z-color-bg-muted)',
+        padding: 'clamp(var(--zuvi-space-3), 3vw, var(--zuvi-space-6))',
+        background: 'var(--zuvi-color-bg-muted)',
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
-        gap: 'var(--z-space-5)',
+        gap: 'var(--zuvi-space-5)',
         ...style,
       }}
     >
@@ -155,7 +155,7 @@ export function KanbanBlock({
           display: 'flex',
           alignItems: 'flex-start',
           justifyContent: 'space-between',
-          gap: 'var(--z-space-4)',
+          gap: 'var(--zuvi-space-4)',
           flexWrap: 'wrap',
         }}
       >
@@ -163,25 +163,25 @@ export function KanbanBlock({
           <h1
             style={{
               margin: 0,
-              fontSize: 'var(--z-text-xl)',
-              fontWeight: 'var(--z-weight-semibold)',
-              color: 'var(--z-color-fg)',
+              fontSize: 'var(--zuvi-text-xl)',
+              fontWeight: 'var(--zuvi-weight-semibold)',
+              color: 'var(--zuvi-color-fg)',
             }}
           >
             {title}
           </h1>
           <p
             style={{
-              margin: 'var(--z-space-1) 0 0',
-              fontSize: 'var(--z-text-sm)',
-              color: 'var(--z-color-fg-muted)',
+              margin: 'var(--zuvi-space-1) 0 0',
+              fontSize: 'var(--zuvi-text-sm)',
+              color: 'var(--zuvi-color-fg-muted)',
             }}
           >
             {subtitle}
           </p>
         </div>
         {actions != null ? (
-          <div style={{ display: 'flex', gap: 'var(--z-space-3)' }}>{actions}</div>
+          <div style={{ display: 'flex', gap: 'var(--zuvi-space-3)' }}>{actions}</div>
         ) : null}
       </header>
 
@@ -192,7 +192,7 @@ export function KanbanBlock({
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(min(260px, 100%), 1fr))',
-          gap: 'var(--z-space-4)',
+          gap: 'var(--zuvi-space-4)',
           alignItems: 'start',
         }}
       >
@@ -207,13 +207,13 @@ export function KanbanBlock({
             data-part="column"
             className={classNames?.column}
             style={{
-              background: 'var(--z-color-bg-subtle)',
-              border: '1px solid var(--z-color-border-subtle)',
-              borderRadius: 'var(--z-radius-lg)',
-              padding: 'var(--z-space-4)',
+              background: 'var(--zuvi-color-bg-subtle)',
+              border: '1px solid var(--zuvi-color-border-subtle)',
+              borderRadius: 'var(--zuvi-radius-lg)',
+              padding: 'var(--zuvi-space-4)',
               display: 'flex',
               flexDirection: 'column',
-              gap: 'var(--z-space-3)',
+              gap: 'var(--zuvi-space-3)',
               minWidth: 0,
             }}
           >
@@ -223,15 +223,15 @@ export function KanbanBlock({
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                gap: 'var(--z-space-2)',
+                gap: 'var(--zuvi-space-2)',
               }}
             >
               <h2
                 style={{
                   margin: 0,
-                  fontSize: 'var(--z-text-md)',
-                  fontWeight: 'var(--z-weight-semibold)',
-                  color: 'var(--z-color-fg)',
+                  fontSize: 'var(--zuvi-text-md)',
+                  fontWeight: 'var(--zuvi-weight-semibold)',
+                  color: 'var(--zuvi-color-fg)',
                 }}
               >
                 {column.title}
@@ -244,10 +244,10 @@ export function KanbanBlock({
                   minWidth: 20,
                   height: 20,
                   padding: '0 6px',
-                  borderRadius: 'var(--z-radius-full)',
-                  background: 'var(--z-color-primary-subtle)',
-                  color: 'var(--z-color-primary-subtle-fg)',
-                  fontSize: 'var(--z-text-xs)',
+                  borderRadius: 'var(--zuvi-radius-full)',
+                  background: 'var(--zuvi-color-primary-subtle)',
+                  color: 'var(--zuvi-color-primary-subtle-fg)',
+                  fontSize: 'var(--zuvi-text-xs)',
                   display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -274,7 +274,7 @@ export function KanbanBlock({
                     cursor: 'pointer',
                     minWidth: 0,
                     ...(active
-                      ? { borderColor: 'var(--z-color-primary)', boxShadow: 'var(--z-shadow-sm)' }
+                      ? { borderColor: 'var(--zuvi-color-primary)', boxShadow: 'var(--zuvi-shadow-sm)' }
                       : null),
                   }}
                   onClick={() => handleCardClick(card)}
@@ -286,22 +286,22 @@ export function KanbanBlock({
                   }}
                 >
                   <div
-                    style={{ display: 'flex', flexDirection: 'column', gap: 'var(--z-space-2)' }}
+                    style={{ display: 'flex', flexDirection: 'column', gap: 'var(--zuvi-space-2)' }}
                   >
                     <div
                       style={{
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
-                        gap: 'var(--z-space-2)',
+                        gap: 'var(--zuvi-space-2)',
                       }}
                     >
                       <Tag color={priority.color}>{priority.label}</Tag>
                       {card.dueDate != null ? (
                         <span
                           style={{
-                            fontSize: 'var(--z-text-xs)',
-                            color: 'var(--z-color-fg-subtle)',
+                            fontSize: 'var(--zuvi-text-xs)',
+                            color: 'var(--zuvi-color-fg-subtle)',
                             fontVariantNumeric: 'tabular-nums',
                           }}
                         >
@@ -311,9 +311,9 @@ export function KanbanBlock({
                     </div>
                     <div
                       style={{
-                        fontSize: 'var(--z-text-sm)',
-                        fontWeight: 'var(--z-weight-medium)',
-                        color: 'var(--z-color-fg)',
+                        fontSize: 'var(--zuvi-text-sm)',
+                        fontWeight: 'var(--zuvi-weight-medium)',
+                        color: 'var(--zuvi-color-fg)',
                       }}
                     >
                       {card.title}
@@ -322,13 +322,13 @@ export function KanbanBlock({
                       style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: 'var(--z-space-2)',
+                        gap: 'var(--zuvi-space-2)',
                         flexWrap: 'wrap',
                       }}
                     >
                       {card.assignee != null ? (
                         <span
-                          style={{ fontSize: 'var(--z-text-xs)', color: 'var(--z-color-fg-muted)' }}
+                          style={{ fontSize: 'var(--zuvi-text-xs)', color: 'var(--zuvi-color-fg-muted)' }}
                         >
                           {card.assignee}
                         </span>
@@ -337,11 +337,11 @@ export function KanbanBlock({
                         <span
                           key={tag}
                           style={{
-                            fontSize: 'var(--z-text-xs)',
-                            padding: '0 var(--z-space-2)',
-                            borderRadius: 'var(--z-radius-full)',
-                            border: '1px solid var(--z-color-border-subtle)',
-                            color: 'var(--z-color-fg-muted)',
+                            fontSize: 'var(--zuvi-text-xs)',
+                            padding: '0 var(--zuvi-space-2)',
+                            borderRadius: 'var(--zuvi-radius-full)',
+                            border: '1px solid var(--zuvi-color-border-subtle)',
+                            color: 'var(--zuvi-color-fg-muted)',
                           }}
                         >
                           {tag}
@@ -357,9 +357,9 @@ export function KanbanBlock({
               <div
                 style={{
                   textAlign: 'center',
-                  padding: 'var(--z-space-6) 0',
-                  color: 'var(--z-color-fg-subtle)',
-                  fontSize: 'var(--z-text-sm)',
+                  padding: 'var(--zuvi-space-6) 0',
+                  color: 'var(--zuvi-color-fg-subtle)',
+                  fontSize: 'var(--zuvi-text-sm)',
                 }}
               >
                 暂无卡片

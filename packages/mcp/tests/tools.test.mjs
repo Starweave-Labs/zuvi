@@ -72,13 +72,13 @@ test('RPC gives useful failures and recognizes all three tools', () => {
       )
     );
   assert.equal(JSON.parse(handleLine('{')).error.code, -32700);
-  assert.equal(call('zui_get_component_api', { name: 'unknown' }).result.isError, true);
+  assert.equal(call('zuvi_get_component_api', { name: 'unknown' }).result.isError, true);
   assert.equal(
-    call('zui_search_components', { query: 'button' }).result.structuredContent.results[0].name,
+    call('zuvi_search_components', { query: 'button' }).result.structuredContent.results[0].name,
     'Button'
   );
   assert.match(
-    call('zui_generate_code', { component: 'Image', props: { preview: false } }).result
+    call('zuvi_generate_code', { component: 'Image', props: { preview: false } }).result
       .structuredContent.code,
     /preview=\{false\}/
   );
@@ -102,6 +102,6 @@ test('stdio server handles split input and exits after EOF', async () => {
   child.stdin.end('ize"}\n{"jsonrpc":"2.0","id":2,"method":"tools/list"}\n');
   assert.equal(await done, 0);
   const lines = output.trim().split('\n').map(JSON.parse);
-  assert.equal(lines[0].result.serverInfo.name, '@zui/mcp');
+  assert.equal(lines[0].result.serverInfo.name, '@zuvi/mcp');
   assert.equal(lines[1].result.tools.length, 3);
 });

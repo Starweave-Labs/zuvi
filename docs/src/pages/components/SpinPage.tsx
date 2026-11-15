@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Spin } from '@zui/react';
+import { Spin } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -94,14 +94,14 @@ export default function SpinPage(): React.ReactNode {
         name="Spin"
         parts={['root', 'spinner', 'tip']}
         vars={[
-          '--z-spin-size',
-          '--z-spin-ring-width',
-          '--z-spin-color',
-          '--z-spin-track-color',
-          '--z-spin-tip-color',
-          '--z-spin-tip-font-size',
-          '--z-spin-gap',
-          '--z-spin-mask-bg',
+          '--zuvi-spin-size',
+          '--zuvi-spin-ring-width',
+          '--zuvi-spin-color',
+          '--zuvi-spin-track-color',
+          '--zuvi-spin-tip-color',
+          '--zuvi-spin-tip-font-size',
+          '--zuvi-spin-gap',
+          '--zuvi-spin-mask-bg',
         ]}
       />
     </div>

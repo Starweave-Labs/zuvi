@@ -354,35 +354,35 @@ async function mount(
 }
 
 describe('StudioWord structured editing', () => {
-  it('renders an editable document, ZUI ribbon and a scrollable paper stage', async () => {
+  it('renders an editable document, ZUVI ribbon and a scrollable paper stage', async () => {
     const { textbox, container, onChange } = await mount();
     expect(textbox).toHaveTextContent('项目评审内容');
     expect(textbox).toHaveAttribute('contenteditable', 'true');
     expect(textbox).toHaveAttribute('aria-multiline', 'true');
     expect(screen.getByRole('tab', { name: '开始' })).toHaveAttribute('aria-selected', 'true');
-    expect(screen.getByRole('combobox', { name: '字体' })).toHaveClass('z-combobox-input');
+    expect(screen.getByRole('combobox', { name: '字体' })).toHaveClass('zuvi-combobox-input');
     const tabs = screen.getByRole('tablist', { name: 'Word 工具' });
-    const ribbon = tabs.closest('.z-studio-ribbon');
+    const ribbon = tabs.closest('.zuvi-studio-ribbon');
     expect(ribbon).not.toBeNull();
-    const expectZuiButtons = () =>
+    const expectZuviButtons = () =>
       expect(
         Array.from(ribbon!.querySelectorAll('button')).every(
           (button) =>
-            button.classList.contains('z-button') ||
-            button.classList.contains('z-tab') ||
-            button.classList.contains('z-select-trigger') ||
-            button.classList.contains('z-combobox-toggle') ||
-            button.classList.contains('z-color-picker-swatch') ||
-            button.classList.contains('z-studio-word-highlight-trigger') ||
-            button.classList.contains('z-studio-word-case-trigger')
+            button.classList.contains('zuvi-button') ||
+            button.classList.contains('zuvi-tab') ||
+            button.classList.contains('zuvi-select-trigger') ||
+            button.classList.contains('zuvi-combobox-toggle') ||
+            button.classList.contains('zuvi-color-picker-swatch') ||
+            button.classList.contains('zuvi-studio-word-highlight-trigger') ||
+            button.classList.contains('zuvi-studio-word-case-trigger')
         )
       ).toBe(true);
     for (const name of ['开始', '插入', '布局', '引用', '审阅', '视图']) {
       fireEvent.click(within(tabs).getByRole('tab', { name }));
-      expectZuiButtons();
+      expectZuviButtons();
     }
     fireEvent.click(within(tabs).getByRole('tab', { name: '开始' }));
-    expect(container.querySelector('[data-part="word-stage"]')).toHaveClass('z-studio-word-stage');
+    expect(container.querySelector('[data-part="word-stage"]')).toHaveClass('zuvi-studio-word-stage');
     expect(container.querySelector('[data-part="word-paper"]')).toHaveStyle({
       width: `${(210 * 96) / 25.4}px`,
     });

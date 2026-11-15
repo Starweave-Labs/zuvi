@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import type { SideNavProps } from '@zui/react';
+import type { SideNavProps } from '@zuvi/react';
 
 /**
  * 由 docs typecheck 持续验证的 React Router 适配器。

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Button, Combobox, Form, MultiCombobox } from '@zui/react';
+import { Button, Combobox, Form, MultiCombobox } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -103,9 +103,9 @@ const VISUAL_CODE = `<Combobox options={cityOptions} size="sm" aria-label="小�
 <Combobox options={cityOptions} defaultValue="shanghai" disabled aria-label="禁用城市" />`;
 
 const FIELD_LABEL_STYLE: React.CSSProperties = {
-  color: 'var(--z-color-fg-muted)',
-  fontSize: 'var(--z-text-sm)',
-  fontWeight: 'var(--z-weight-medium)',
+  color: 'var(--zuvi-color-fg-muted)',
+  fontSize: 'var(--zuvi-text-sm)',
+  fontWeight: 'var(--zuvi-weight-medium)',
 };
 
 function ControlledDemo(): React.ReactNode {
@@ -114,7 +114,7 @@ function ControlledDemo(): React.ReactNode {
   const [open, setOpen] = useState(false);
 
   return (
-    <div style={{ display: 'grid', gap: 'var(--z-space-3)', width: 'min(100%, 380px)' }}>
+    <div style={{ display: 'grid', gap: 'var(--zuvi-space-3)', width: 'min(100%, 380px)' }}>
       <label htmlFor="combobox-controlled" style={FIELD_LABEL_STYLE}>
         受控城市
       </label>
@@ -230,7 +230,7 @@ function AsyncDemo(): React.ReactNode {
   };
 
   return (
-    <div style={{ display: 'grid', gap: 'var(--z-space-3)', width: 'min(100%, 380px)' }}>
+    <div style={{ display: 'grid', gap: 'var(--zuvi-space-3)', width: 'min(100%, 380px)' }}>
       <label htmlFor="combobox-async" style={FIELD_LABEL_STYLE}>
         远程搜索城市
       </label>
@@ -281,7 +281,7 @@ function VisualStatesDemo(): React.ReactNode {
         />
       ),
       help: (
-        <span id="combobox-status-error-help" style={{ color: 'var(--z-color-danger)' }}>
+        <span id="combobox-status-error-help" style={{ color: 'var(--zuvi-color-danger)' }}>
           请选择一个有效城市
         </span>
       ),
@@ -309,25 +309,25 @@ function VisualStatesDemo(): React.ReactNode {
   ];
 
   return (
-    <div style={{ display: 'grid', gap: 'var(--z-space-5)', width: '100%' }}>
+    <div style={{ display: 'grid', gap: 'var(--zuvi-space-5)', width: '100%' }}>
       <div
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))',
-          gap: 'var(--z-space-4)',
+          gap: 'var(--zuvi-space-4)',
           width: '100%',
         }}
       >
         {fields.map((field) => (
           <div
             key={field.id}
-            style={{ display: 'grid', alignContent: 'start', gap: 'var(--z-space-2)' }}
+            style={{ display: 'grid', alignContent: 'start', gap: 'var(--zuvi-space-2)' }}
           >
             <label htmlFor={field.id} style={FIELD_LABEL_STYLE}>
               {field.label}
             </label>
             {field.control}
-            {field.help ? <span style={{ fontSize: 'var(--z-text-xs)' }}>{field.help}</span> : null}
+            {field.help ? <span style={{ fontSize: 'var(--zuvi-text-xs)' }}>{field.help}</span> : null}
           </div>
         ))}
       </div>
@@ -581,35 +581,35 @@ export default function ComboboxPage(): React.ReactNode {
           'status',
         ]}
         vars={[
-          '--z-combobox-control-height',
-          '--z-combobox-control-padding-x',
-          '--z-combobox-control-gap',
-          '--z-combobox-font-size',
-          '--z-combobox-radius',
-          '--z-combobox-bg',
-          '--z-combobox-fg',
-          '--z-combobox-border',
-          '--z-combobox-hover-border',
-          '--z-combobox-focus-ring',
-          '--z-combobox-placeholder-fg',
-          '--z-combobox-icon-fg',
-          '--z-combobox-clear-hover-bg',
-          '--z-combobox-panel-bg',
-          '--z-combobox-panel-border',
-          '--z-combobox-panel-radius',
-          '--z-combobox-panel-shadow',
-          '--z-combobox-panel-max-height',
-          '--z-combobox-panel-margin-top',
-          '--z-combobox-panel-padding',
-          '--z-combobox-option-height',
-          '--z-combobox-option-padding-x',
-          '--z-combobox-option-radius',
-          '--z-combobox-option-fg',
-          '--z-combobox-option-active-bg',
-          '--z-combobox-option-active-fg',
-          '--z-combobox-option-disabled-fg',
-          '--z-combobox-status-fg',
-          '--z-combobox-animation-duration',
+          '--zuvi-combobox-control-height',
+          '--zuvi-combobox-control-padding-x',
+          '--zuvi-combobox-control-gap',
+          '--zuvi-combobox-font-size',
+          '--zuvi-combobox-radius',
+          '--zuvi-combobox-bg',
+          '--zuvi-combobox-fg',
+          '--zuvi-combobox-border',
+          '--zuvi-combobox-hover-border',
+          '--zuvi-combobox-focus-ring',
+          '--zuvi-combobox-placeholder-fg',
+          '--zuvi-combobox-icon-fg',
+          '--zuvi-combobox-clear-hover-bg',
+          '--zuvi-combobox-panel-bg',
+          '--zuvi-combobox-panel-border',
+          '--zuvi-combobox-panel-radius',
+          '--zuvi-combobox-panel-shadow',
+          '--zuvi-combobox-panel-max-height',
+          '--zuvi-combobox-panel-margin-top',
+          '--zuvi-combobox-panel-padding',
+          '--zuvi-combobox-option-height',
+          '--zuvi-combobox-option-padding-x',
+          '--zuvi-combobox-option-radius',
+          '--zuvi-combobox-option-fg',
+          '--zuvi-combobox-option-active-bg',
+          '--zuvi-combobox-option-active-fg',
+          '--zuvi-combobox-option-disabled-fg',
+          '--zuvi-combobox-status-fg',
+          '--zuvi-combobox-animation-duration',
         ]}
       />
 
@@ -691,43 +691,43 @@ export default function ComboboxPage(): React.ReactNode {
           'status',
         ]}
         vars={[
-          '--z-multicombobox-control-min-height',
-          '--z-multicombobox-control-padding-x',
-          '--z-multicombobox-control-gap',
-          '--z-multicombobox-font-size',
-          '--z-multicombobox-radius',
-          '--z-multicombobox-bg',
-          '--z-multicombobox-fg',
-          '--z-multicombobox-border',
-          '--z-multicombobox-hover-border',
-          '--z-multicombobox-focus-ring',
-          '--z-multicombobox-placeholder-fg',
-          '--z-multicombobox-icon-fg',
-          '--z-multicombobox-clear-hover-bg',
-          '--z-multicombobox-tag-height',
-          '--z-multicombobox-tag-padding-x',
-          '--z-multicombobox-tag-gap',
-          '--z-multicombobox-tag-bg',
-          '--z-multicombobox-tag-fg',
-          '--z-multicombobox-tag-radius',
-          '--z-multicombobox-tag-remove-fg',
-          '--z-multicombobox-tag-remove-hover-fg',
-          '--z-multicombobox-panel-bg',
-          '--z-multicombobox-panel-border',
-          '--z-multicombobox-panel-radius',
-          '--z-multicombobox-panel-shadow',
-          '--z-multicombobox-panel-max-height',
-          '--z-multicombobox-panel-margin-top',
-          '--z-multicombobox-panel-padding',
-          '--z-multicombobox-option-height',
-          '--z-multicombobox-option-padding-x',
-          '--z-multicombobox-option-radius',
-          '--z-multicombobox-option-fg',
-          '--z-multicombobox-option-active-bg',
-          '--z-multicombobox-option-active-fg',
-          '--z-multicombobox-option-disabled-fg',
-          '--z-multicombobox-status-fg',
-          '--z-multicombobox-animation-duration',
+          '--zuvi-multicombobox-control-min-height',
+          '--zuvi-multicombobox-control-padding-x',
+          '--zuvi-multicombobox-control-gap',
+          '--zuvi-multicombobox-font-size',
+          '--zuvi-multicombobox-radius',
+          '--zuvi-multicombobox-bg',
+          '--zuvi-multicombobox-fg',
+          '--zuvi-multicombobox-border',
+          '--zuvi-multicombobox-hover-border',
+          '--zuvi-multicombobox-focus-ring',
+          '--zuvi-multicombobox-placeholder-fg',
+          '--zuvi-multicombobox-icon-fg',
+          '--zuvi-multicombobox-clear-hover-bg',
+          '--zuvi-multicombobox-tag-height',
+          '--zuvi-multicombobox-tag-padding-x',
+          '--zuvi-multicombobox-tag-gap',
+          '--zuvi-multicombobox-tag-bg',
+          '--zuvi-multicombobox-tag-fg',
+          '--zuvi-multicombobox-tag-radius',
+          '--zuvi-multicombobox-tag-remove-fg',
+          '--zuvi-multicombobox-tag-remove-hover-fg',
+          '--zuvi-multicombobox-panel-bg',
+          '--zuvi-multicombobox-panel-border',
+          '--zuvi-multicombobox-panel-radius',
+          '--zuvi-multicombobox-panel-shadow',
+          '--zuvi-multicombobox-panel-max-height',
+          '--zuvi-multicombobox-panel-margin-top',
+          '--zuvi-multicombobox-panel-padding',
+          '--zuvi-multicombobox-option-height',
+          '--zuvi-multicombobox-option-padding-x',
+          '--zuvi-multicombobox-option-radius',
+          '--zuvi-multicombobox-option-fg',
+          '--zuvi-multicombobox-option-active-bg',
+          '--zuvi-multicombobox-option-active-fg',
+          '--zuvi-multicombobox-option-disabled-fg',
+          '--zuvi-multicombobox-status-fg',
+          '--zuvi-multicombobox-animation-duration',
         ]}
         note="Tag remove 按钮固定 tabIndex=-1；键盘删除走输入框 Backspace，避免每个标签额外进入 Tab 序列。"
       />

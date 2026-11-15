@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useZuiConfig } from '../../config';
+import { useZuviConfig } from '../../config';
 import { cx } from '../../utils';
 import './Statistic.css';
 
@@ -93,29 +93,29 @@ function Statistic({
   classNames,
   ...rest
 }: StatisticProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const text = formatStatisticValue(value, precision, locale.code);
 
   return (
-    <div {...rest} data-part="root" className={cx('z-statistic', className, classNames?.root)}>
+    <div {...rest} data-part="root" className={cx('zuvi-statistic', className, classNames?.root)}>
       {title != null ? (
-        <div data-part="title" className={cx('z-statistic-title', classNames?.title)}>
+        <div data-part="title" className={cx('zuvi-statistic-title', classNames?.title)}>
           {title}
         </div>
       ) : null}
       <div
         data-part="value"
-        className={cx('z-statistic-value', classNames?.value)}
+        className={cx('zuvi-statistic-value', classNames?.value)}
         style={valueStyle}
       >
         {prefix != null ? (
-          <span data-part="prefix" className="z-statistic-prefix">
+          <span data-part="prefix" className="zuvi-statistic-prefix">
             {prefix}
           </span>
         ) : null}
-        <span className="z-statistic-number">{text}</span>
+        <span className="zuvi-statistic-number">{text}</span>
         {suffix != null ? (
-          <span data-part="suffix" className={cx('z-statistic-suffix', classNames?.suffix)}>
+          <span data-part="suffix" className={cx('zuvi-statistic-suffix', classNames?.suffix)}>
             {suffix}
           </span>
         ) : null}
@@ -180,7 +180,7 @@ function StatisticCountDown({
   'aria-label': ariaLabel,
   ...rest
 }: StatisticCountDownProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const target = normalizeCountdownTarget(value);
   // Absolute targets cannot be rendered against "now" on the server without a
   // hydration race. Keep the first server/client render deterministic, then
@@ -233,28 +233,28 @@ function StatisticCountDown({
       role="timer"
       aria-label={ariaLabel ?? locale.statistic.countdown}
       data-part="root"
-      className={cx('z-statistic', className, classNames?.root)}
+      className={cx('zuvi-statistic', className, classNames?.root)}
     >
       {title != null ? (
-        <div data-part="title" className={cx('z-statistic-title', classNames?.title)}>
+        <div data-part="title" className={cx('zuvi-statistic-title', classNames?.title)}>
           {title}
         </div>
       ) : null}
       <div
         data-part="value"
-        className={cx('z-statistic-value', classNames?.value)}
+        className={cx('zuvi-statistic-value', classNames?.value)}
         style={valueStyle}
       >
         {prefix != null ? (
-          <span data-part="prefix" className="z-statistic-prefix">
+          <span data-part="prefix" className="zuvi-statistic-prefix">
             {prefix}
           </span>
         ) : null}
-        <span className="z-statistic-number">
+        <span className="zuvi-statistic-number">
           {remaining == null ? '--:--:--' : formatCountdown(remaining)}
         </span>
         {suffix != null ? (
-          <span data-part="suffix" className={cx('z-statistic-suffix', classNames?.suffix)}>
+          <span data-part="suffix" className={cx('zuvi-statistic-suffix', classNames?.suffix)}>
             {suffix}
           </span>
         ) : null}

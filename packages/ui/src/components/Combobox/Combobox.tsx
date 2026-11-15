@@ -1,8 +1,8 @@
 'use client';
 
 import * as React from 'react';
-import { ChevronDown, Close } from '@zui/icons';
-import { useZuiConfig } from '../../config';
+import { ChevronDown, Close } from '@zuvi/icons';
+import { useZuviConfig } from '../../config';
 import { FloatingPanel, cx, useControllableState, useOnClickOutside } from '../../utils';
 import './Combobox.css';
 
@@ -146,11 +146,11 @@ function isProductionRuntime(): boolean {
 }
 
 function warnInDevelopment(message: string): void {
-  if (!isProductionRuntime()) console.warn(`[ZUI Combobox] ${message}`);
+  if (!isProductionRuntime()) console.warn(`[ZUVI Combobox] ${message}`);
 }
 
 export function Combobox(props: ComboboxProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const {
     options,
     value: valueProp,
@@ -710,11 +710,11 @@ export function Combobox(props: ComboboxProps) {
       data-disabled={disabled ? 'true' : undefined}
       data-readonly={readOnly ? 'true' : undefined}
       data-loading={isLoading ? 'true' : undefined}
-      className={cx('z-combobox', classNames?.root, className)}
+      className={cx('zuvi-combobox', classNames?.root, className)}
       style={style}
       onBlur={handleRootBlur}
     >
-      <div data-part="control" className={cx('z-combobox-control', classNames?.control)}>
+      <div data-part="control" className={cx('zuvi-combobox-control', classNames?.control)}>
         <input
           {...inputProps}
           type="text"
@@ -726,7 +726,7 @@ export function Combobox(props: ComboboxProps) {
           }}
           role="combobox"
           data-part="input"
-          className={cx('z-combobox-input', classNames?.input)}
+          className={cx('zuvi-combobox-input', classNames?.input)}
           value={visibleInputValue}
           placeholder={placeholderText}
           disabled={disabled}
@@ -752,7 +752,7 @@ export function Combobox(props: ComboboxProps) {
           <button
             type="button"
             data-part="clear"
-            className={cx('z-combobox-clear', classNames?.clear)}
+            className={cx('zuvi-combobox-clear', classNames?.clear)}
             aria-label={locale.combobox.clear}
             onPointerDown={(event) => event.preventDefault()}
             onClick={clear}
@@ -766,7 +766,7 @@ export function Combobox(props: ComboboxProps) {
             type="button"
             tabIndex={-1}
             data-part="toggle"
-            className={cx('z-combobox-toggle', classNames?.toggle)}
+            className={cx('zuvi-combobox-toggle', classNames?.toggle)}
             aria-label={effectiveOpen ? locale.combobox.hideOptions : locale.combobox.showOptions}
             disabled={disabled}
             onPointerDown={(event) => event.preventDefault()}
@@ -796,20 +796,20 @@ export function Combobox(props: ComboboxProps) {
           open
           anchorRef={rootRef}
           matchWidth
-          offsetVariable="--z-combobox-panel-margin-top"
+          offsetVariable="--zuvi-combobox-panel-margin-top"
         >
           <div
             ref={panelRef}
             data-part="panel"
             data-open="true"
             data-loading={isLoading ? 'true' : undefined}
-            className={cx('z-combobox-panel', classNames?.panel)}
+            className={cx('zuvi-combobox-panel', classNames?.panel)}
           >
             <div
               id={listboxId}
               role="listbox"
               data-part="listbox"
-              className={cx('z-combobox-listbox', classNames?.listbox)}
+              className={cx('zuvi-combobox-listbox', classNames?.listbox)}
               aria-busy={isLoading || undefined}
             >
               {filteredOptions.map((option, index) => (
@@ -821,7 +821,7 @@ export function Combobox(props: ComboboxProps) {
                   id={optionId(index)}
                   role="option"
                   data-part="option"
-                  className={cx('z-combobox-option', classNames?.option)}
+                  className={cx('zuvi-combobox-option', classNames?.option)}
                   aria-label={hasComplexLabel(option) ? getOptionText(option) : undefined}
                   aria-selected={committedValue === option.value}
                   aria-disabled={isOptionDisabled(option) || undefined}
@@ -839,7 +839,7 @@ export function Combobox(props: ComboboxProps) {
             {isLoading ? (
               <div
                 data-part="loading"
-                className={cx('z-combobox-status', classNames?.loading, classNames?.status)}
+                className={cx('zuvi-combobox-status', classNames?.loading, classNames?.status)}
                 role="status"
                 aria-live="polite"
               >
@@ -849,8 +849,8 @@ export function Combobox(props: ComboboxProps) {
               <div
                 data-part="error"
                 className={cx(
-                  'z-combobox-status',
-                  'z-combobox-status-error',
+                  'zuvi-combobox-status',
+                  'zuvi-combobox-status-error',
                   classNames?.error,
                   classNames?.status
                 )}
@@ -862,7 +862,7 @@ export function Combobox(props: ComboboxProps) {
             ) : showEmpty ? (
               <div
                 data-part="empty"
-                className={cx('z-combobox-status', classNames?.empty, classNames?.status)}
+                className={cx('zuvi-combobox-status', classNames?.empty, classNames?.status)}
                 role="status"
                 aria-live="polite"
               >
@@ -874,7 +874,7 @@ export function Combobox(props: ComboboxProps) {
               data-part="status"
               data-kind="results"
               data-hidden="true"
-              className={cx('z-combobox-status', classNames?.status)}
+              className={cx('zuvi-combobox-status', classNames?.status)}
               role="status"
               aria-live={isLoading || showError || showEmpty ? 'off' : 'polite'}
             >

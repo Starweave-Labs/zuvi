@@ -45,7 +45,7 @@ export function studioCellStyleIssue(cell: { verticalAlign?: unknown; borders?: 
 
 export function studioBorderCss(
   border: NonNullable<StudioCell['borders']>[(typeof studioBorderSides)[number]],
-  fallback = 'var(--z-color-fg)'
+  fallback = 'var(--zuvi-color-fg)'
 ) {
   if (!border) return undefined;
   const width =

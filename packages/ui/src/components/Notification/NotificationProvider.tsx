@@ -1,8 +1,8 @@
 'use client';
 
 import * as React from 'react';
-import { AlertTriangle, CheckCircle, Close, Info, XCircle } from '@zui/icons';
-import { useZuiConfig } from '../../config';
+import { AlertTriangle, CheckCircle, Close, Info, XCircle } from '@zuvi/icons';
+import { useZuviConfig } from '../../config';
 import { cx, Portal } from '../../utils';
 import {
   NotificationContext,
@@ -30,7 +30,7 @@ export interface NotificationProviderProps {
 const PLACEMENTS: NotificationPlacement[] = ['topLeft', 'topRight', 'bottomLeft', 'bottomRight'];
 
 function NotificationIcon({ variant }: { variant: NotificationVariant }) {
-  // 图标来自 @zui/icons（容器 .z-notification-icon 控制最终尺寸）
+  // 图标来自 @zuvi/icons（容器 .zuvi-notification-icon 控制最终尺寸）
   if (variant === 'default') return null;
   if (variant === 'success') return <CheckCircle />;
   if (variant === 'error') return <XCircle />;
@@ -44,7 +44,7 @@ export function NotificationProvider({
   placement = 'topRight',
   classNames,
 }: NotificationProviderProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const [items, setItems] = React.useState<NotificationItem[]>([]);
   const itemsRef = React.useRef<NotificationItem[]>([]);
   const timersRef = React.useRef(
@@ -157,14 +157,14 @@ export function NotificationProvider({
           return (
             <div
               key={place}
-              className={cx('z-notification-list', classNames?.root)}
+              className={cx('zuvi-notification-list', classNames?.root)}
               data-part="root"
               data-placement={place}
             >
               {group.map((item) => (
                 <div
                   key={item.id}
-                  className={cx('z-notification', classNames?.item)}
+                  className={cx('zuvi-notification', classNames?.item)}
                   data-part="item"
                   data-variant={item.variant}
                   data-state={item.state}
@@ -192,16 +192,16 @@ export function NotificationProvider({
                   {item.icon ? (
                     item.icon
                   ) : item.variant !== 'default' ? (
-                    <span className="z-notification-icon" data-part="icon">
+                    <span className="zuvi-notification-icon" data-part="icon">
                       <NotificationIcon variant={item.variant} />
                     </span>
                   ) : null}
-                  <div className="z-notification-body" data-part="body">
-                    <div className="z-notification-title" data-part="title">
+                  <div className="zuvi-notification-body" data-part="body">
+                    <div className="zuvi-notification-title" data-part="title">
                       {item.title}
                     </div>
                     {item.description !== undefined && item.description !== null ? (
-                      <div className="z-notification-description" data-part="description">
+                      <div className="zuvi-notification-description" data-part="description">
                         {item.description}
                       </div>
                     ) : null}
@@ -209,7 +209,7 @@ export function NotificationProvider({
                   {item.closable ? (
                     <button
                       type="button"
-                      className="z-notification-close"
+                      className="zuvi-notification-close"
                       data-part="close"
                       aria-label={locale.message.close}
                       onClick={(event) => {

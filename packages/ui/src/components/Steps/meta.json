@@ -16,7 +16,7 @@
   "a11yNotes": [
     "nav aria-label=locale.steps.label + ol role=\"list\" + li；当前项 aria-current=\"step\"",
     "onChange 提供时每项为 button（disabled 除外）：roving tabindex，↑←/↓→/Home/End 移动焦点，Enter/Space 确认",
-    "finish/error 用 @zui/icons CheckCircle/XCircle，且带 aria-hidden（有 title 文本兜底）"
+    "finish/error 用 @zuvi/icons CheckCircle/XCircle，且带 aria-hidden（有 title 文本兜底）"
   ],
   "related": ["Tabs", "Timeline", "Breadcrumb"]
 }

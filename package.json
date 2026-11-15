@@ -1,14 +1,14 @@
 {
-  "name": "zui",
+  "name": "zuvi",
   "private": true,
   "version": "0.1.0",
-  "description": "ZUI — 现代 React 组件库：令牌驱动、零运行时样式、无障碍优先",
+  "description": "ZUVI — 现代 React 组件库：令牌驱动、零运行时样式、无障碍优先",
   "scripts": {
     "build": "pnpm -r build",
     "test": "pnpm -r test",
     "test:e2e": "playwright test --config e2e/playwright.config.ts",
     "typecheck": "pnpm -r typecheck",
-    "dev": "pnpm --filter @zui/docs dev",
+    "dev": "pnpm --filter @zuvi/docs dev",
     "office:start": "node scripts/office-runtime.mjs start",
     "office:status": "node scripts/office-runtime.mjs status",
     "office:stop": "node scripts/office-runtime.mjs stop",

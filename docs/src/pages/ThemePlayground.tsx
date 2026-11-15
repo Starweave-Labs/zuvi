@@ -9,7 +9,7 @@ import {
   TabsList,
   TabsPanel,
   TabsTrigger,
-} from '@zui/react';
+} from '@zuvi/react';
 
 import CodeBlock from '../components/CodeBlock';
 import { usePageTitle } from '../components/usePageTitle';
@@ -42,32 +42,32 @@ const PRESETS: ThemePreset[] = [
 
 function primaryVars(hue: number, dark = false): Record<string, string> {
   return {
-    '--z-color-primary': `hsl(${hue} 62% ${dark ? 68 : 46}%)`,
-    '--z-color-primary-hover': `hsl(${hue} 62% ${dark ? 74 : 40}%)`,
-    '--z-color-primary-active': `hsl(${hue} 62% ${dark ? 80 : 34}%)`,
-    '--z-color-primary-fg': `hsl(${hue} 62% ${dark ? 10 : 97}%)`,
-    '--z-color-primary-subtle': `hsl(${hue} 62% ${dark ? 18 : 95}%)`,
-    '--z-color-primary-subtle-fg': `hsl(${hue} 62% ${dark ? 82 : 36}%)`,
-    '--z-color-border-focus': `hsl(${hue} 62% ${dark ? 68 : 46}%)`,
-    '--z-color-link': `hsl(${hue} 62% ${dark ? 68 : 46}%)`,
-    '--z-color-link-hover': `hsl(${hue} 62% ${dark ? 74 : 40}%)`,
-    '--z-color-focus-ring': `hsl(${hue} 62% ${dark ? 68 : 46}%)`,
+    '--zuvi-color-primary': `hsl(${hue} 62% ${dark ? 68 : 46}%)`,
+    '--zuvi-color-primary-hover': `hsl(${hue} 62% ${dark ? 74 : 40}%)`,
+    '--zuvi-color-primary-active': `hsl(${hue} 62% ${dark ? 80 : 34}%)`,
+    '--zuvi-color-primary-fg': `hsl(${hue} 62% ${dark ? 10 : 97}%)`,
+    '--zuvi-color-primary-subtle': `hsl(${hue} 62% ${dark ? 18 : 95}%)`,
+    '--zuvi-color-primary-subtle-fg': `hsl(${hue} 62% ${dark ? 82 : 36}%)`,
+    '--zuvi-color-border-focus': `hsl(${hue} 62% ${dark ? 68 : 46}%)`,
+    '--zuvi-color-link': `hsl(${hue} 62% ${dark ? 68 : 46}%)`,
+    '--zuvi-color-link-hover': `hsl(${hue} 62% ${dark ? 74 : 40}%)`,
+    '--zuvi-color-focus-ring': `hsl(${hue} 62% ${dark ? 68 : 46}%)`,
   };
 }
 
 function fontVars(base: number): Record<string, string> {
   return {
-    '--z-text-xs': `${(base * 0.75).toFixed(1)}px`,
-    '--z-text-sm': `${(base * 0.875).toFixed(1)}px`,
-    '--z-text-md': `${base}px`,
-    '--z-text-lg': `${(base * 1.125).toFixed(1)}px`,
-    '--z-text-xl': `${(base * 1.25).toFixed(1)}px`,
-    '--z-text-2xl': `${(base * 1.5).toFixed(1)}px`,
+    '--zuvi-text-xs': `${(base * 0.75).toFixed(1)}px`,
+    '--zuvi-text-sm': `${(base * 0.875).toFixed(1)}px`,
+    '--zuvi-text-md': `${base}px`,
+    '--zuvi-text-lg': `${(base * 1.125).toFixed(1)}px`,
+    '--zuvi-text-xl': `${(base * 1.25).toFixed(1)}px`,
+    '--zuvi-text-2xl': `${(base * 1.5).toFixed(1)}px`,
   };
 }
 
 function radiusVars(radius: number): Record<string, string> {
-  return { '--z-radius': `${radius}px`, '--z-radius-sm': `${radius * 0.6}px`, '--z-radius-md': `${radius}px`, '--z-radius-lg': `${radius * 1.4}px`, '--z-radius-xl': `${radius * 2}px` };
+  return { '--zuvi-radius': `${radius}px`, '--zuvi-radius-sm': `${radius * 0.6}px`, '--zuvi-radius-md': `${radius}px`, '--zuvi-radius-lg': `${radius * 1.4}px`, '--zuvi-radius-xl': `${radius * 2}px` };
 }
 
 function allVars(hue: number, radius: number, fontBase: number, dark = false): Record<string, string> {

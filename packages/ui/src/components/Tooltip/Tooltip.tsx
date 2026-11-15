@@ -113,16 +113,16 @@ export function Tooltip({
   });
 
   return (
-    <div ref={rootRef} data-part="root" className={cx('z-tooltip-root', className, classNames?.root)}>
+    <div ref={rootRef} data-part="root" className={cx('zuvi-tooltip-root', className, classNames?.root)}>
       {trigger}
       {open && !disabled ? (
-        <FloatingPanel open={open} anchorRef={rootRef} side={placement} align="center" offsetVariable="--z-tooltip-offset">
+        <FloatingPanel open={open} anchorRef={rootRef} side={placement} align="center" offsetVariable="--zuvi-tooltip-offset">
         <div
           role="tooltip"
           id={tooltipId}
           data-part="content"
           data-placement={placement}
-          className={cx('z-tooltip', classNames?.content)}
+          className={cx('zuvi-tooltip', classNames?.content)}
         >
           {content}
         </div>

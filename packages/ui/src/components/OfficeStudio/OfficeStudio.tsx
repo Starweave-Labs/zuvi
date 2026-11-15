@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { flushSync } from 'react-dom';
-import { ArrowUp, Download, FileText, Maximize, Minimize, Plus, Printer, Save } from '@zui/icons';
+import { ArrowUp, Download, FileText, Maximize, Minimize, Plus, Printer, Save } from '@zuvi/icons';
 import {
   cx,
   isImeComposing,
@@ -38,7 +38,7 @@ const stateLabels = {
   error: '保存失败，请重试',
 } as const;
 
-/** A ZUI document workspace; file codecs and persistence are host callbacks. */
+/** A ZUVI document workspace; file codecs and persistence are host callbacks. */
 export function OfficeStudio({
   ref,
   value,
@@ -305,16 +305,16 @@ export function OfficeStudio({
   };
   const fileMenu = (
     <DropdownMenu>
-      <div className="z-office-studio-file-menu">
+      <div className="zuvi-office-studio-file-menu">
         <DropdownMenu.Trigger
-          className="z-office-studio-file-trigger"
+          className="zuvi-office-studio-file-trigger"
           disabled={actionDisabled}
           aria-label="文件"
         >
           文件
         </DropdownMenu.Trigger>
       </div>
-      <DropdownMenu.Content className="z-office-studio-file-content">
+      <DropdownMenu.Content className="zuvi-office-studio-file-content">
         <DropdownMenu.Label>新建</DropdownMenu.Label>
         {(['word', 'excel', 'pdf'] as const).map((kind) => (
           <DropdownMenu.Item
@@ -330,13 +330,13 @@ export function OfficeStudio({
           disabled={!onImport || editingDisabled}
           onSelect={() => fileRef.current?.click()}
         >
-          <span className="z-office-studio-file-action">
+          <span className="zuvi-office-studio-file-action">
             <ArrowUp size={16} />
             打开文件
           </span>
         </DropdownMenu.Item>
         <DropdownMenu.Item disabled={!onSave || editingDisabled} onSelect={() => consume(save())}>
-          <span className="z-office-studio-file-action">
+          <span className="zuvi-office-studio-file-action">
             <Save size={16} />
             保存
           </span>
@@ -345,7 +345,7 @@ export function OfficeStudio({
           disabled={!onExport || actionDisabled}
           onSelect={() => consume(exportDocument())}
         >
-          <span className="z-office-studio-file-action">
+          <span className="zuvi-office-studio-file-action">
             <Download size={16} />
             导出文件
           </span>
@@ -354,7 +354,7 @@ export function OfficeStudio({
           disabled={!onPrint || actionDisabled}
           onSelect={() => consume(printDocument())}
         >
-          <span className="z-office-studio-file-action">
+          <span className="zuvi-office-studio-file-action">
             <Printer size={16} />
             打印
           </span>
@@ -374,7 +374,7 @@ export function OfficeStudio({
       data-readonly={readOnly ? 'true' : undefined}
       aria-label={rootProps['aria-label'] ?? `${kindLabels[documentValue.kind]} 文档编辑器`}
       aria-busy={busy || undefined}
-      className={cx('z-office-studio', classNames?.root, className)}
+      className={cx('zuvi-office-studio', classNames?.root, className)}
       style={{ height, ...style }}
       onKeyDown={(event) => {
         onKeyDown?.(event);
@@ -388,15 +388,15 @@ export function OfficeStudio({
         }
       }}
     >
-      <header data-part="header" className={cx('z-office-studio-header', classNames?.header)}>
-        <div className="z-office-studio-header-start">
-          <div className="z-office-studio-brand" aria-hidden="true">
+      <header data-part="header" className={cx('zuvi-office-studio-header', classNames?.header)}>
+        <div className="zuvi-office-studio-header-start">
+          <div className="zuvi-office-studio-brand" aria-hidden="true">
             <FileText size={18} />
             <span>{kindLabels[documentValue.kind]}</span>
           </div>
           <div
             data-part="status"
-            className={cx('z-office-studio-status', classNames?.status)}
+            className={cx('zuvi-office-studio-status', classNames?.status)}
             title={replacing ? '正在准备文档…' : readOnly ? '只读预览' : '可编辑 · ⌘ / Ctrl S 保存'}
           >
             <span
@@ -406,15 +406,15 @@ export function OfficeStudio({
               data-save-state={state}
               title={replacing ? '正在准备文档…' : stateLabels[state]}
             >
-              <span className="z-office-studio-status-dot" aria-hidden="true" />
-              <span className="z-office-studio-save-label">
+              <span className="zuvi-office-studio-status-dot" aria-hidden="true" />
+              <span className="zuvi-office-studio-save-label">
                 {replacing ? '正在准备文档…' : stateLabels[state]}
               </span>
             </span>
-            {readOnly && <span className="z-office-studio-readonly">只读</span>}
+            {readOnly && <span className="zuvi-office-studio-readonly">只读</span>}
           </div>
         </div>
-        <div data-part="title" className={cx('z-office-studio-title', classNames?.title)}>
+        <div data-part="title" className={cx('zuvi-office-studio-title', classNames?.title)}>
           <Input
             id={titleId}
             size="sm"
@@ -426,16 +426,16 @@ export function OfficeStudio({
             onChange={(event) => change({ ...documentRef.current, name: event.target.value })}
           />
         </div>
-        <div data-part="actions" className={cx('z-office-studio-actions', classNames?.actions)}>
+        <div data-part="actions" className={cx('zuvi-office-studio-actions', classNames?.actions)}>
           <DropdownMenu>
             <DropdownMenu.Trigger
               disabled={editingDisabled}
-              className="z-office-studio-new"
+              className="zuvi-office-studio-new"
               aria-label="新建"
               title="新建文档"
             >
               <Plus size={15} aria-hidden="true" />
-              <span className="z-office-studio-action-label">新建</span>
+              <span className="zuvi-office-studio-action-label">新建</span>
             </DropdownMenu.Trigger>
             <DropdownMenu.Content>
               <DropdownMenu.Label>新建文档</DropdownMenu.Label>
@@ -460,7 +460,7 @@ export function OfficeStudio({
             disabled={!onImport || disabled || readOnly || busy}
             onClick={() => fileRef.current?.click()}
           >
-            <span className="z-office-studio-action-label">导入</span>
+            <span className="zuvi-office-studio-action-label">导入</span>
           </Button>
           <Button
             type="button"
@@ -473,7 +473,7 @@ export function OfficeStudio({
             disabled={!onExport || disabled || (busy && operation !== 'export')}
             onClick={() => consume(exportDocument())}
           >
-            <span className="z-office-studio-action-label">导出文件</span>
+            <span className="zuvi-office-studio-action-label">导出文件</span>
           </Button>
           <Button
             type="button"
@@ -486,7 +486,7 @@ export function OfficeStudio({
             disabled={!onPrint || disabled || (busy && operation !== 'print')}
             onClick={() => consume(printDocument())}
           >
-            <span className="z-office-studio-action-label">打印</span>
+            <span className="zuvi-office-studio-action-label">打印</span>
           </Button>
           <Button
             type="button"
@@ -499,7 +499,7 @@ export function OfficeStudio({
             disabled={!onSave || disabled || readOnly || (busy && operation !== 'save')}
             onClick={() => consume(save())}
           >
-            <span className="z-office-studio-action-label">保存</span>
+            <span className="zuvi-office-studio-action-label">保存</span>
           </Button>
           <Button
             type="button"
@@ -529,7 +529,7 @@ export function OfficeStudio({
         <div
           role="alert"
           data-part="error"
-          className={cx('z-office-studio-error', classNames?.error)}
+          className={cx('zuvi-office-studio-error', classNames?.error)}
         >
           <span>{error.message}</span>
           <Button
@@ -546,12 +546,12 @@ export function OfficeStudio({
         </div>
       )}
       <StudioRibbonFileContext.Provider value={fileMenu}>
-        <div data-part="stage" className={cx('z-office-studio-stage', classNames?.stage)}>
+        <div data-part="stage" className={cx('zuvi-office-studio-stage', classNames?.stage)}>
           <React.Suspense
             fallback={
               <div
                 data-part="loading"
-                className={cx('z-office-studio-loading', classNames?.loading)}
+                className={cx('zuvi-office-studio-loading', classNames?.loading)}
                 role="status"
                 aria-live="polite"
               >

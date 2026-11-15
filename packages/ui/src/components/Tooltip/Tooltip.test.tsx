@@ -224,10 +224,10 @@ describe('Tooltip 定制出口', () => {
 
     const root = screen.getByRole('button').parentElement as HTMLElement;
     expect(root).toHaveAttribute('data-part', 'root');
-    expect(root).toHaveClass('z-tooltip-root', 'my-tooltip-root', 'slot-root');
+    expect(root).toHaveClass('zuvi-tooltip-root', 'my-tooltip-root', 'slot-root');
 
     fireEvent.mouseOver(getTrigger());
     const tooltip = screen.getByRole('tooltip');
-    expect(tooltip).toHaveClass('z-tooltip', 'slot-content');
+    expect(tooltip).toHaveClass('zuvi-tooltip', 'slot-content');
   });
 });

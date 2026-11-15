@@ -1,8 +1,8 @@
 'use client';
 
 import * as React from 'react';
-import { useZuiConfig } from '../../config';
-import { Close } from '@zui/icons';
+import { useZuviConfig } from '../../config';
+import { Close } from '@zuvi/icons';
 import { cx } from '../../utils';
 import './Tag.css';
 
@@ -45,7 +45,7 @@ export function Tag({
   children,
   ...rest
 }: TagProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   // 关闭后自我隐藏（非受控），同时通知外部
   const [dismissed, setDismissed] = React.useState(false);
   if (dismissed) return null;
@@ -53,13 +53,13 @@ export function Tag({
   const tagText = getNodeText(children).replace(/\s+/g, ' ').trim();
 
   return (
-    <span {...rest} data-part="root" data-color={color} className={cx('z-tag', className, classNames?.root)}>
+    <span {...rest} data-part="root" data-color={color} className={cx('zuvi-tag', className, classNames?.root)}>
       {icon != null ? (
-        <span data-part="icon" aria-hidden="true" className={cx('z-tag-icon', classNames?.icon)}>
+        <span data-part="icon" aria-hidden="true" className={cx('zuvi-tag-icon', classNames?.icon)}>
           {icon}
         </span>
       ) : null}
-      <span className="z-tag-label">{children}</span>
+      <span className="zuvi-tag-label">{children}</span>
       {closable ? (
         <button
           type="button"
@@ -69,7 +69,7 @@ export function Tag({
               ? `${locale.accessibility.removeTag}: ${tagText}`
               : locale.accessibility.removeTag
           }
-          className={cx('z-tag-close', classNames?.close)}
+          className={cx('zuvi-tag-close', classNames?.close)}
           onClick={(e: React.MouseEvent) => {
             setDismissed(true);
             onClose?.(e);

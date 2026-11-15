@@ -1,4 +1,4 @@
-import { Cascader } from '@zui/react';
+import { Cascader } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -161,25 +161,25 @@ export default function CascaderPage(): React.ReactNode {
         name="Cascader"
         parts={['root', 'trigger', 'panel', 'menu', 'item']}
         vars={[
-          '--z-cascader-trigger-height',
-          '--z-cascader-trigger-padding-x',
-          '--z-cascader-trigger-font-size',
-          '--z-cascader-trigger-bg',
-          '--z-cascader-trigger-fg',
-          '--z-cascader-trigger-border',
-          '--z-cascader-placeholder-fg',
-          '--z-cascader-panel-bg',
-          '--z-cascader-panel-border',
-          '--z-cascader-panel-radius',
-          '--z-cascader-panel-shadow',
-          '--z-cascader-menu-width',
-          '--z-cascader-item-height',
-          '--z-cascader-item-padding-x',
-          '--z-cascader-item-fg',
-          '--z-cascader-item-hover-bg',
-          '--z-cascader-item-active-bg',
-          '--z-cascader-item-active-fg',
-          '--z-cascader-item-disabled-fg',
+          '--zuvi-cascader-trigger-height',
+          '--zuvi-cascader-trigger-padding-x',
+          '--zuvi-cascader-trigger-font-size',
+          '--zuvi-cascader-trigger-bg',
+          '--zuvi-cascader-trigger-fg',
+          '--zuvi-cascader-trigger-border',
+          '--zuvi-cascader-placeholder-fg',
+          '--zuvi-cascader-panel-bg',
+          '--zuvi-cascader-panel-border',
+          '--zuvi-cascader-panel-radius',
+          '--zuvi-cascader-panel-shadow',
+          '--zuvi-cascader-menu-width',
+          '--zuvi-cascader-item-height',
+          '--zuvi-cascader-item-padding-x',
+          '--zuvi-cascader-item-fg',
+          '--zuvi-cascader-item-hover-bg',
+          '--zuvi-cascader-item-active-bg',
+          '--zuvi-cascader-item-active-fg',
+          '--zuvi-cascader-item-disabled-fg',
         ]}
       />
     </div>

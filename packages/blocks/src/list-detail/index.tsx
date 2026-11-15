@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Card, Col, Descriptions, Empty, List, Row, Tag, useControllableState } from '@zui/react';
+import { Card, Col, Descriptions, Empty, List, Row, Tag, useControllableState } from '@zuvi/react';
 
 /* ---------------------------------- 类型 ---------------------------------- */
 
@@ -121,21 +121,21 @@ export function ListDetailBlock({
       data-part="root"
       className={[className, classNames?.root].filter(Boolean).join(' ') || undefined}
       style={{
-        padding: 'clamp(var(--z-space-3), 3vw, var(--z-space-6))',
-        background: 'var(--z-color-bg-muted)',
+        padding: 'clamp(var(--zuvi-space-3), 3vw, var(--zuvi-space-6))',
+        background: 'var(--zuvi-color-bg-muted)',
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
-        gap: 'var(--z-space-4)',
+        gap: 'var(--zuvi-space-4)',
         ...style,
       }}
     >
       <h1
         style={{
           margin: 0,
-          fontSize: 'var(--z-text-xl)',
-          fontWeight: 'var(--z-weight-semibold)',
-          color: 'var(--z-color-fg)',
+          fontSize: 'var(--zuvi-text-xl)',
+          fontWeight: 'var(--zuvi-weight-semibold)',
+          color: 'var(--zuvi-color-fg)',
         }}
       >
         {title}
@@ -147,13 +147,13 @@ export function ListDetailBlock({
           span={24}
           flex="1 1 300px"
           style={{ minWidth: 0 }}
-          className="zui-list-detail-col-list"
+          className="zuvi-list-detail-col-list"
         >
           <Card
             className={classNames?.list}
             title={listTitle}
             extra={
-              <span style={{ fontSize: 'var(--z-text-xs)', color: 'var(--z-color-fg-subtle)' }}>
+              <span style={{ fontSize: 'var(--zuvi-text-xs)', color: 'var(--zuvi-color-fg-subtle)' }}>
                 共 {items.length} 项
               </span>
             }
@@ -170,19 +170,19 @@ export function ListDetailBlock({
                     style={{
                       font: 'inherit',
                       border: 'none',
-                      borderRadius: 'var(--z-radius-sm)',
+                      borderRadius: 'var(--zuvi-radius-sm)',
                       background: 'transparent',
-                      padding: 'var(--z-space-1) 0',
+                      padding: 'var(--zuvi-space-1) 0',
                       textAlign: 'left',
                       cursor: 'pointer',
                       display: 'inline-flex',
                       flexWrap: 'wrap',
                       alignItems: 'center',
-                      gap: 'var(--z-space-2)',
+                      gap: 'var(--zuvi-space-2)',
                       color:
-                        currentKey === item.key ? 'var(--z-color-primary)' : 'var(--z-color-fg)',
-                      fontWeight: 'var(--z-weight-medium)',
-                      fontSize: 'var(--z-text-sm)',
+                        currentKey === item.key ? 'var(--zuvi-color-primary)' : 'var(--zuvi-color-fg)',
+                      fontWeight: 'var(--zuvi-weight-medium)',
+                      fontSize: 'var(--zuvi-text-sm)',
                     }}
                   >
                     {item.title}
@@ -196,8 +196,8 @@ export function ListDetailBlock({
                   item.extra != null ? (
                     <span
                       style={{
-                        fontSize: 'var(--z-text-xs)',
-                        color: 'var(--z-color-fg-subtle)',
+                        fontSize: 'var(--zuvi-text-xs)',
+                        color: 'var(--zuvi-color-fg-subtle)',
                         whiteSpace: 'nowrap',
                       }}
                     >
@@ -213,19 +213,19 @@ export function ListDetailBlock({
           span={24}
           flex="2 1 400px"
           style={{ minWidth: 0 }}
-          className="zui-list-detail-col-detail"
+          className="zuvi-list-detail-col-detail"
         >
           <Card className={classNames?.detail} title={detailTitle ?? activeItem?.title ?? '详情'}>
             {activeItem == null ? (
               <Empty description="暂无选中项" />
             ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--z-space-4)' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--zuvi-space-4)' }}>
                 {activeItem.status != null || activeItem.extra != null ? (
                   <div
                     style={{
                       display: 'flex',
                       alignItems: 'center',
-                      gap: 'var(--z-space-2)',
+                      gap: 'var(--zuvi-space-2)',
                       flexWrap: 'wrap',
                     }}
                   >
@@ -234,7 +234,7 @@ export function ListDetailBlock({
                     ) : null}
                     {activeItem.extra != null ? (
                       <span
-                        style={{ fontSize: 'var(--z-text-xs)', color: 'var(--z-color-fg-subtle)' }}
+                        style={{ fontSize: 'var(--zuvi-text-xs)', color: 'var(--zuvi-color-fg-subtle)' }}
                       >
                         {activeItem.extra}
                       </span>
@@ -245,9 +245,9 @@ export function ListDetailBlock({
                   <p
                     style={{
                       margin: 0,
-                      fontSize: 'var(--z-text-sm)',
-                      color: 'var(--z-color-fg-muted)',
-                      lineHeight: 'var(--z-leading-relaxed)',
+                      fontSize: 'var(--zuvi-text-sm)',
+                      color: 'var(--zuvi-color-fg-muted)',
+                      lineHeight: 'var(--zuvi-leading-relaxed)',
                     }}
                   >
                     {activeItem.description}

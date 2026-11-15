@@ -1,8 +1,8 @@
 'use client';
 
 import * as React from 'react';
-import { ChevronDown, Close } from '@zui/icons';
-import { useZuiConfig } from '../../config';
+import { ChevronDown, Close } from '@zuvi/icons';
+import { useZuviConfig } from '../../config';
 import { FloatingPanel, cx, useControllableState, useOnClickOutside } from '../../utils';
 import type { ComboboxOption } from '../Combobox';
 import './MultiCombobox.css';
@@ -154,7 +154,7 @@ function isProductionRuntime(): boolean {
 }
 
 function warnInDevelopment(message: string): void {
-  if (!isProductionRuntime()) console.warn(`[ZUI MultiCombobox] ${message}`);
+  if (!isProductionRuntime()) console.warn(`[ZUVI MultiCombobox] ${message}`);
 }
 
 /** 在浏览器绘制前确认受控选择，SSR 时退化为普通 effect。 */
@@ -164,7 +164,7 @@ const useIsomorphicLayoutEffect: typeof React.useLayoutEffect =
 /* --------------------------------- 组件实现 -------------------------------- */
 
 export function MultiCombobox(props: MultiComboboxProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const {
     options,
     value: valueProp,
@@ -672,13 +672,13 @@ export function MultiCombobox(props: MultiComboboxProps) {
       data-disabled={disabled ? 'true' : undefined}
       data-readonly={readOnly ? 'true' : undefined}
       data-loading={isLoading ? 'true' : undefined}
-      className={cx('z-multicombobox', classNames?.root, className)}
+      className={cx('zuvi-multicombobox', classNames?.root, className)}
       style={style}
       onBlur={handleRootBlur}
     >
-      <div data-part="control" className={cx('z-multicombobox-control', classNames?.control)}>
+      <div data-part="control" className={cx('zuvi-multicombobox-control', classNames?.control)}>
         {selectedValues.length > 0 ? (
-          <span data-part="tags" className={cx('z-multicombobox-tags', classNames?.tags)}>
+          <span data-part="tags" className={cx('zuvi-multicombobox-tags', classNames?.tags)}>
             {selectedValues.map((value) => {
               const tagText =
                 optionLookup.textByValue.get(value) ??
@@ -688,18 +688,18 @@ export function MultiCombobox(props: MultiComboboxProps) {
                 <span
                   key={value}
                   data-part="tag"
-                  className={cx('z-multicombobox-tag', classNames?.tag)}
+                  className={cx('zuvi-multicombobox-tag', classNames?.tag)}
                 >
                   <span
                     data-part="tag-label"
-                    className={cx('z-multicombobox-tag-label', classNames?.tagLabel)}
+                    className={cx('zuvi-multicombobox-tag-label', classNames?.tagLabel)}
                   >
                     {tagText}
                   </span>
                   <button
                     type="button"
                     data-part="tag-remove"
-                    className={cx('z-multicombobox-tag-remove', classNames?.tagRemove)}
+                    className={cx('zuvi-multicombobox-tag-remove', classNames?.tagRemove)}
                     aria-label={locale.accessibility.removeItem.replace('{item}', tagText)}
                     tabIndex={-1}
                     disabled={disabled}
@@ -725,7 +725,7 @@ export function MultiCombobox(props: MultiComboboxProps) {
           }}
           role="combobox"
           data-part="input"
-          className={cx('z-multicombobox-input', classNames?.input)}
+          className={cx('zuvi-multicombobox-input', classNames?.input)}
           value={draftValue}
           placeholder={selectedValues.length === 0 ? placeholderText : undefined}
           disabled={disabled}
@@ -751,7 +751,7 @@ export function MultiCombobox(props: MultiComboboxProps) {
           <button
             type="button"
             data-part="clear"
-            className={cx('z-multicombobox-clear', classNames?.clear)}
+            className={cx('zuvi-multicombobox-clear', classNames?.clear)}
             aria-label={locale.combobox.clear}
             onPointerDown={(event) => event.preventDefault()}
             onClick={clear}
@@ -765,7 +765,7 @@ export function MultiCombobox(props: MultiComboboxProps) {
             type="button"
             tabIndex={-1}
             data-part="toggle"
-            className={cx('z-multicombobox-toggle', classNames?.toggle)}
+            className={cx('zuvi-multicombobox-toggle', classNames?.toggle)}
             aria-label={effectiveOpen ? locale.combobox.hideOptions : locale.combobox.showOptions}
             disabled={disabled}
             onPointerDown={(event) => event.preventDefault()}
@@ -798,20 +798,20 @@ export function MultiCombobox(props: MultiComboboxProps) {
           open
           anchorRef={rootRef}
           matchWidth
-          offsetVariable="--z-multicombobox-panel-margin-top"
+          offsetVariable="--zuvi-multicombobox-panel-margin-top"
         >
           <div
             ref={panelRef}
             data-part="panel"
             data-open="true"
             data-loading={isLoading ? 'true' : undefined}
-            className={cx('z-multicombobox-panel', classNames?.panel)}
+            className={cx('zuvi-multicombobox-panel', classNames?.panel)}
           >
             <div
               id={listboxId}
               role="listbox"
               data-part="listbox"
-              className={cx('z-multicombobox-listbox', classNames?.listbox)}
+              className={cx('zuvi-multicombobox-listbox', classNames?.listbox)}
               aria-multiselectable="true"
               aria-busy={isLoading || undefined}
             >
@@ -824,7 +824,7 @@ export function MultiCombobox(props: MultiComboboxProps) {
                   id={optionId(index)}
                   role="option"
                   data-part="option"
-                  className={cx('z-multicombobox-option', classNames?.option)}
+                  className={cx('zuvi-multicombobox-option', classNames?.option)}
                   aria-label={hasComplexLabel(option) ? getOptionText(option) : undefined}
                   aria-selected={selectedValues.includes(option.value)}
                   aria-disabled={isOptionDisabled(option) || undefined}
@@ -842,7 +842,7 @@ export function MultiCombobox(props: MultiComboboxProps) {
             {isLoading ? (
               <div
                 data-part="loading"
-                className={cx('z-multicombobox-status', classNames?.loading, classNames?.status)}
+                className={cx('zuvi-multicombobox-status', classNames?.loading, classNames?.status)}
                 role="status"
                 aria-live="polite"
               >
@@ -852,8 +852,8 @@ export function MultiCombobox(props: MultiComboboxProps) {
               <div
                 data-part="error"
                 className={cx(
-                  'z-multicombobox-status',
-                  'z-multicombobox-status-error',
+                  'zuvi-multicombobox-status',
+                  'zuvi-multicombobox-status-error',
                   classNames?.error,
                   classNames?.status
                 )}
@@ -865,7 +865,7 @@ export function MultiCombobox(props: MultiComboboxProps) {
             ) : showEmpty ? (
               <div
                 data-part="empty"
-                className={cx('z-multicombobox-status', classNames?.empty, classNames?.status)}
+                className={cx('zuvi-multicombobox-status', classNames?.empty, classNames?.status)}
                 role="status"
                 aria-live="polite"
               >
@@ -877,7 +877,7 @@ export function MultiCombobox(props: MultiComboboxProps) {
               data-part="status"
               data-kind="results"
               data-hidden="true"
-              className={cx('z-multicombobox-status', classNames?.status)}
+              className={cx('zuvi-multicombobox-status', classNames?.status)}
               role="status"
               aria-live={isLoading || showError || showEmpty ? 'off' : 'polite'}
             >

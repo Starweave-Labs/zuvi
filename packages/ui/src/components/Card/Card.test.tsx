@@ -13,12 +13,12 @@ describe('Card', () => {
   it('renders body content by default with data-part structure', () => {
     const { container } = render(<Card>内容</Card>);
     const root = getRoot(container);
-    expect(root).toHaveClass('z-card');
+    expect(root).toHaveClass('zuvi-card');
     expect(root).toHaveAttribute('data-bordered', 'true');
     expect(root).toHaveAttribute('data-hoverable', 'false');
     expect(screen.getByText('内容')).toBeInTheDocument();
     const body = container.querySelector('[data-part="body"]');
-    expect(body).toHaveClass('z-card-body');
+    expect(body).toHaveClass('zuvi-card-body');
   });
 
   it('renders title and extra in header part', () => {
@@ -28,12 +28,12 @@ describe('Card', () => {
       </Card>
     );
     const header = container.querySelector('[data-part="header"]');
-    expect(header).toHaveClass('z-card-header');
+    expect(header).toHaveClass('zuvi-card-header');
     const title = container.querySelector('[data-part="title"]');
-    expect(title).toHaveClass('z-card-title');
+    expect(title).toHaveClass('zuvi-card-title');
     expect(title).toHaveTextContent('卡片标题');
     const extra = container.querySelector('[data-part="extra"]');
-    expect(extra).toHaveClass('z-card-extra');
+    expect(extra).toHaveClass('zuvi-card-extra');
     expect(extra).toContainElement(screen.getByRole('button', { name: '操作' }));
   });
 
@@ -54,7 +54,7 @@ describe('Card', () => {
       <Card cover={<img src="/c.png" alt="封面" />}>内容</Card>
     );
     const cover = container.querySelector('[data-part="cover"]');
-    expect(cover).toHaveClass('z-card-cover');
+    expect(cover).toHaveClass('zuvi-card-cover');
     expect(cover).toContainElement(screen.getByRole('img', { name: '封面' }));
     // cover 在 body 之前
     const root = getRoot(container);
@@ -64,7 +64,7 @@ describe('Card', () => {
   it('renders footer part', () => {
     const { container } = render(<Card footer={<span>底部</span>}>内容</Card>);
     const footer = container.querySelector('[data-part="footer"]');
-    expect(footer).toHaveClass('z-card-footer');
+    expect(footer).toHaveClass('zuvi-card-footer');
     expect(footer).toHaveTextContent('底部');
   });
 
@@ -108,20 +108,20 @@ describe('Card', () => {
       </Card>
     );
     const root = getRoot(container);
-    expect(root).toHaveClass('z-card', 'my-root', 'cls-root');
-    expect(container.querySelector('[data-part="header"]')).toHaveClass('z-card-header', 'cls-header');
-    expect(container.querySelector('[data-part="title"]')).toHaveClass('z-card-title', 'cls-title');
-    expect(container.querySelector('[data-part="extra"]')).toHaveClass('z-card-extra', 'cls-extra');
-    expect(container.querySelector('[data-part="cover"]')).toHaveClass('z-card-cover', 'cls-cover');
-    expect(container.querySelector('[data-part="body"]')).toHaveClass('z-card-body', 'cls-body');
-    expect(container.querySelector('[data-part="footer"]')).toHaveClass('z-card-footer', 'cls-footer');
+    expect(root).toHaveClass('zuvi-card', 'my-root', 'cls-root');
+    expect(container.querySelector('[data-part="header"]')).toHaveClass('zuvi-card-header', 'cls-header');
+    expect(container.querySelector('[data-part="title"]')).toHaveClass('zuvi-card-title', 'cls-title');
+    expect(container.querySelector('[data-part="extra"]')).toHaveClass('zuvi-card-extra', 'cls-extra');
+    expect(container.querySelector('[data-part="cover"]')).toHaveClass('zuvi-card-cover', 'cls-cover');
+    expect(container.querySelector('[data-part="body"]')).toHaveClass('zuvi-card-body', 'cls-body');
+    expect(container.querySelector('[data-part="footer"]')).toHaveClass('zuvi-card-footer', 'cls-footer');
   });
 
   it('forwards ref to the div element', () => {
     const ref = React.createRef<HTMLDivElement>();
     render(<Card ref={ref}>内容</Card>);
     expect(ref.current).toBeInstanceOf(HTMLDivElement);
-    expect(ref.current).toHaveClass('z-card');
+    expect(ref.current).toHaveClass('zuvi-card');
   });
 
   it('passes native props through to the root element', () => {

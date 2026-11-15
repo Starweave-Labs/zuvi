@@ -18,9 +18,9 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const deployment = path.join(root, 'deploy/office');
 const composeFile = path.join(deployment, 'compose.yaml');
 const envFile = path.join(deployment, '.env.local');
-const profile = 'zui-office';
-const context = 'colima-zui-office';
-const project = 'zui-office';
+const profile = 'zuvi-office';
+const context = 'colima-zuvi-office';
+const project = 'zuvi-office';
 const command = process.argv[2] ?? 'status';
 
 function executable(name) {
@@ -141,7 +141,7 @@ function startRuntime(docker) {
     .map((line) => JSON.parse(line));
   const existing = profiles.find((entry) => entry.name === profile);
   if (existing && existing.runtime !== 'docker') {
-    throw new Error('专用 Colima profile zui-office 已存在，但使用的 runtime 不是 Docker。');
+    throw new Error('专用 Colima profile zuvi-office 已存在，但使用的 runtime 不是 Docker。');
   }
   console.log('正在启动文档服务专用 Colima 运行环境。');
   const args = ['start', profile, '--activate=false'];

@@ -1,8 +1,8 @@
 'use client';
 
 import * as React from 'react';
-import { Calendar as CalendarGlyph, ChevronLeft, ChevronRight } from '@zui/icons';
-import { useZuiConfig } from '../../config';
+import { Calendar as CalendarGlyph, ChevronLeft, ChevronRight } from '@zuvi/icons';
+import { useZuviConfig } from '../../config';
 import { cx, FloatingPanel, useControllableState, useOnClickOutside } from '../../utils';
 import './DatePicker.css';
 
@@ -105,7 +105,7 @@ function buildMonthGrid(viewDate: Date): Date[] {
   return cells;
 }
 
-/* --------------------------------- 图标（@zui/icons） -------------------------- */
+/* --------------------------------- 图标（@zuvi/icons） -------------------------- */
 
 function CalendarIcon() {
   return <CalendarGlyph size={16} />;
@@ -136,7 +136,7 @@ export function DatePicker(props: DatePickerProps) {
     ...inputProps
   } = props;
 
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const placeholderText = placeholder ?? locale.date.placeholder;
   const rootRef = React.useRef<HTMLDivElement>(null);
   const triggerRef = React.useRef<HTMLInputElement>(null);
@@ -365,14 +365,14 @@ export function DatePicker(props: DatePickerProps) {
     <div
       ref={rootRef}
       data-part="root"
-      className={cx('z-datepicker', classNames?.root, className)}
+      className={cx('zuvi-datepicker', classNames?.root, className)}
       data-size={size}
       data-open={open ? 'true' : 'false'}
       data-disabled={disabled ? 'true' : undefined}
     >
       <div
         data-part="trigger"
-        className={cx('z-datepicker-trigger', classNames?.trigger)}
+        className={cx('zuvi-datepicker-trigger', classNames?.trigger)}
         data-open={open ? 'true' : 'false'}
       >
         <input
@@ -383,7 +383,7 @@ export function DatePicker(props: DatePickerProps) {
             else if (userRef) userRef.current = node;
           }}
           data-part="input"
-          className={cx('z-datepicker-input', classNames?.input)}
+          className={cx('zuvi-datepicker-input', classNames?.input)}
           type="text"
           role="combobox"
           aria-label={inputProps['aria-label'] ?? (inputProps.id || inputProps['aria-labelledby'] ? undefined : locale.date.inputLabel)}
@@ -410,7 +410,7 @@ export function DatePicker(props: DatePickerProps) {
             if (!event.defaultPrevented) onInputKeyDown(event);
           }}
         />
-        <span data-part="icon" className={cx('z-datepicker-icon', classNames?.icon)}>
+        <span data-part="icon" className={cx('zuvi-datepicker-icon', classNames?.icon)}>
           <CalendarIcon />
         </span>
       </div>
@@ -423,7 +423,7 @@ export function DatePicker(props: DatePickerProps) {
             role="dialog"
             aria-label={locale.date.panelLabel}
             data-part="panel"
-            className={cx('z-datepicker-panel', classNames?.panel)}
+            className={cx('zuvi-datepicker-panel', classNames?.panel)}
             onKeyDown={(event) => {
               if (event.key === 'Escape' && !event.defaultPrevented) {
                 event.preventDefault();
@@ -435,12 +435,12 @@ export function DatePicker(props: DatePickerProps) {
           >
             <div
               data-part="header"
-              className={cx('z-datepicker-header', classNames?.header)}
+              className={cx('zuvi-datepicker-header', classNames?.header)}
             >
               <button
                 type="button"
                 data-part="nav"
-                className={cx('z-datepicker-nav', classNames?.nav)}
+                className={cx('zuvi-datepicker-nav', classNames?.nav)}
                 aria-label={locale.date.previousMonth}
                 disabled={disabled}
                 onClick={() => setFocusedDate(addMonths(focusedDate, -1))}
@@ -450,14 +450,14 @@ export function DatePicker(props: DatePickerProps) {
               <span
                 id={labelId}
                 data-part="label"
-                className={cx('z-datepicker-label', classNames?.label)}
+                className={cx('zuvi-datepicker-label', classNames?.label)}
               >
                 {monthLabel}
               </span>
               <button
                 type="button"
                 data-part="nav"
-                className={cx('z-datepicker-nav', classNames?.nav)}
+                className={cx('zuvi-datepicker-nav', classNames?.nav)}
                 aria-label={locale.date.nextMonth}
                 disabled={disabled}
                 onClick={() => setFocusedDate(addMonths(focusedDate, 1))}
@@ -470,15 +470,15 @@ export function DatePicker(props: DatePickerProps) {
               role="grid"
               aria-labelledby={labelId}
               data-part="grid"
-              className={cx('z-datepicker-grid', classNames?.grid)}
+              className={cx('zuvi-datepicker-grid', classNames?.grid)}
             >
-              <div role="row" data-part="week" className={cx('z-datepicker-week', classNames?.week)}>
+              <div role="row" data-part="week" className={cx('zuvi-datepicker-week', classNames?.week)}>
                 {locale.date.weekdays.map((name) => (
                   <span
                     key={name}
                     role="columnheader"
                     data-part="weekday"
-                    className={cx('z-datepicker-weekday', classNames?.weekday)}
+                    className={cx('zuvi-datepicker-weekday', classNames?.weekday)}
                     aria-label={locale.date.weekdayFormat.replace('{name}', name)}
                   >
                     {name}
@@ -489,7 +489,7 @@ export function DatePicker(props: DatePickerProps) {
                 <div
                   role="row"
                   data-part="week"
-                  className={cx('z-datepicker-week', classNames?.week)}
+                  className={cx('zuvi-datepicker-week', classNames?.week)}
                   key={weekIndex}
                 >
                   {cells.slice(weekIndex * 7, weekIndex * 7 + 7).map((date) => {
@@ -502,7 +502,7 @@ export function DatePicker(props: DatePickerProps) {
                         role="gridcell"
                         data-part="day"
                         data-date={iso}
-                        className={cx('z-datepicker-day', classNames?.day)}
+                        className={cx('zuvi-datepicker-day', classNames?.day)}
                         aria-selected={iso === currentValue}
                         aria-disabled={disabledDay || undefined}
                         aria-current={iso === todayISO ? 'date' : undefined}

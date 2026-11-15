@@ -3,12 +3,12 @@
 .datagrid-prototype {
   display: flex;
   flex-direction: column;
-  gap: var(--z-space-4);
-  padding: var(--z-space-5);
+  gap: var(--zuvi-space-4);
+  padding: var(--zuvi-space-5);
   max-width: 1200px;
   margin: 0 auto;
-  font-family: var(--z-font-sans);
-  color: var(--z-color-fg);
+  font-family: var(--zuvi-font-sans);
+  color: var(--zuvi-color-fg);
 }
 
 .datagrid-prototype-heading {
@@ -16,13 +16,13 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: var(--z-space-4);
+  gap: var(--zuvi-space-4);
 }
 
 .datagrid-prototype h1 {
-  margin: var(--z-space-2) 0 0;
-  font-size: var(--z-text-xl);
-  font-weight: var(--z-weight-semibold);
+  margin: var(--zuvi-space-2) 0 0;
+  font-size: var(--zuvi-text-xl);
+  font-weight: var(--zuvi-weight-semibold);
 }
 
 .datagrid-prototype-badge {
@@ -30,12 +30,12 @@
   align-items: center;
   min-height: 24px;
   padding: 2px 9px;
-  color: var(--z-color-warning-subtle-fg);
-  border: 1px solid color-mix(in srgb, var(--z-color-warning) 45%, transparent);
-  border-radius: var(--z-radius-full);
-  background: var(--z-color-warning-subtle);
-  font-size: var(--z-text-xs);
-  font-weight: var(--z-weight-semibold);
+  color: var(--zuvi-color-warning-subtle-fg);
+  border: 1px solid color-mix(in srgb, var(--zuvi-color-warning) 45%, transparent);
+  border-radius: var(--zuvi-radius-full);
+  background: var(--zuvi-color-warning-subtle);
+  font-size: var(--zuvi-text-xs);
+  font-weight: var(--zuvi-weight-semibold);
 }
 
 .datagrid-prototype-back {
@@ -43,43 +43,43 @@
   min-height: 36px;
   align-items: center;
   padding: 6px 12px;
-  color: var(--z-color-primary);
-  border: 1px solid color-mix(in srgb, var(--z-color-primary) 45%, var(--z-color-border));
-  border-radius: var(--z-radius-md);
-  background: var(--z-color-bg-elevated);
-  font-size: var(--z-text-sm);
-  font-weight: var(--z-weight-medium);
+  color: var(--zuvi-color-primary);
+  border: 1px solid color-mix(in srgb, var(--zuvi-color-primary) 45%, var(--zuvi-color-border));
+  border-radius: var(--zuvi-radius-md);
+  background: var(--zuvi-color-bg-elevated);
+  font-size: var(--zuvi-text-sm);
+  font-weight: var(--zuvi-weight-medium);
   text-decoration: none;
 }
 
 .datagrid-prototype-back:hover {
-  border-color: var(--z-color-primary);
+  border-color: var(--zuvi-color-primary);
 }
 
 .datagrid-prototype-back:focus-visible {
-  outline: 2px solid var(--z-color-focus-ring);
+  outline: 2px solid var(--zuvi-color-focus-ring);
   outline-offset: 2px;
 }
 
 .datagrid-prototype-lead {
-  color: var(--z-color-fg-muted);
-  font-size: var(--z-text-sm);
+  color: var(--zuvi-color-fg-muted);
+  font-size: var(--zuvi-text-sm);
 }
 
 .datagrid-prototype-hud {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--z-space-4);
-  padding: var(--z-space-3) var(--z-space-4);
-  font-size: var(--z-text-xs);
-  color: var(--z-color-fg-muted);
-  background: var(--z-color-bg-muted);
-  border-radius: var(--z-radius-md);
+  gap: var(--zuvi-space-4);
+  padding: var(--zuvi-space-3) var(--zuvi-space-4);
+  font-size: var(--zuvi-text-xs);
+  color: var(--zuvi-color-fg-muted);
+  background: var(--zuvi-color-bg-muted);
+  border-radius: var(--zuvi-radius-md);
 }
 
 .datagrid-prototype-grid {
-  border: 1px solid var(--z-color-border);
-  border-radius: var(--z-radius-md);
+  border: 1px solid var(--zuvi-color-border);
+  border-radius: var(--zuvi-radius-md);
   overflow: hidden;
 }
 
@@ -93,47 +93,47 @@
 .datagrid-prototype-header {
   position: relative;
   z-index: 2;
-  background: var(--z-color-bg-muted);
-  border-bottom: 1px solid var(--z-color-border);
-  font-weight: var(--z-weight-medium);
+  background: var(--zuvi-color-bg-muted);
+  border-bottom: 1px solid var(--zuvi-color-border);
+  font-weight: var(--zuvi-weight-medium);
 }
 
 .datagrid-prototype-cell {
   position: relative;
   display: flex;
   align-items: center;
-  gap: var(--z-space-2);
+  gap: var(--zuvi-space-2);
   height: 100%;
-  padding: 0 var(--z-space-3);
+  padding: 0 var(--zuvi-space-3);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: var(--z-text-sm);
+  font-size: var(--zuvi-text-sm);
 }
 
 .datagrid-prototype-cell--sticky {
   position: sticky;
   z-index: 1;
-  background: var(--z-color-bg-elevated);
+  background: var(--zuvi-color-bg-elevated);
 }
 
 .datagrid-prototype-header .datagrid-prototype-cell--sticky {
-  background: var(--z-color-bg-muted);
+  background: var(--zuvi-color-bg-muted);
 }
 
 .datagrid-prototype-cell--sticky-second {
-  border-inline-end: 1px solid var(--z-color-border);
+  border-inline-end: 1px solid var(--zuvi-color-border);
 }
 
 .datagrid-prototype-row[data-selected='true'] .datagrid-prototype-cell {
-  background: var(--z-color-primary-subtle);
+  background: var(--zuvi-color-primary-subtle);
 }
 
 .datagrid-prototype-sort {
   display: inline-flex;
   flex: 1 1 auto;
   align-items: center;
-  gap: var(--z-space-1);
+  gap: var(--zuvi-space-1);
   padding: 0;
   color: inherit;
   font: inherit;
@@ -143,7 +143,7 @@
 }
 
 .datagrid-prototype-sort-arrow {
-  color: var(--z-color-primary);
+  color: var(--zuvi-color-primary);
 }
 
 .datagrid-prototype-resize {
@@ -158,7 +158,7 @@
 }
 
 .datagrid-prototype-resize:hover {
-  background: color-mix(in srgb, var(--z-color-primary) 30%, transparent);
+  background: color-mix(in srgb, var(--zuvi-color-primary) 30%, transparent);
 }
 
 .datagrid-prototype-viewport {

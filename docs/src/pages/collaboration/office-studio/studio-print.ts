@@ -5,7 +5,7 @@ import {
   type StudioRichNode,
   type StudioSheetChart,
   type StudioWordDocument,
-} from '@zui/react';
+} from '@zuvi/react';
 import {
   studioCalculate,
   studioCellAddress,

@@ -1,7 +1,7 @@
 export { ConfigProvider } from './ConfigProvider';
 export type { ConfigProviderProps } from './ConfigProvider';
-export { useZuiConfig, ZuiConfigContext } from './useZuiConfig';
-export type { ZuiConfig } from './useZuiConfig';
+export { useZuviConfig, ZuviConfigContext } from './useZuviConfig';
+export type { ZuviConfig } from './useZuviConfig';
 export { zhCN, enUS, zhTW, jaJP, koKR, frFR, deDE, esES, ruRU, ptBR, mergeLocale } from './locale';
-export type { DeepPartial, ZuiLocale } from './locale';
+export type { DeepPartial, ZuviLocale } from './locale';
 export type { TranslateConfig, TranslateProvider } from './translate';

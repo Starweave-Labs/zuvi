@@ -1,4 +1,4 @@
-/** ZUI 文案（locale）契约 —— 见 CONTRACTS-V2 §3 / CONTRACTS-V3 §6 */
+/** ZUVI 文案（locale）契约 —— 见 CONTRACTS-V2 §3 / CONTRACTS-V3 §6 */
 
 /* ---------------------------------- 类型 ---------------------------------- */
 
@@ -10,7 +10,7 @@ export type DeepPartial<T> = T extends readonly unknown[]
     : T;
 
 /** 全量文案表（默认 zh-CN） */
-export interface ZuiLocale {
+export interface ZuviLocale {
   /** 语言标识（BCP 47，如 'zh-CN'），供数字 / 日期等 Intl 格式化使用 */
   code?: string;
   accessibility: {
@@ -180,7 +180,7 @@ export interface ZuiLocale {
 /* -------------------------------- 语言包 -------------------------------- */
 
 /** 默认 zh-CN 简体中文 */
-export const zhCN: ZuiLocale = {
+export const zhCN: ZuviLocale = {
   code: 'zh-CN',
   accessibility: {
     loading: '加载中',
@@ -323,7 +323,7 @@ export const zhCN: ZuiLocale = {
 };
 
 /** en-US English */
-export const enUS: ZuiLocale = {
+export const enUS: ZuviLocale = {
   code: 'en-US',
   accessibility: {
     loading: 'Loading',
@@ -471,7 +471,7 @@ export const enUS: ZuiLocale = {
 };
 
 /** zh-TW 繁體中文 */
-export const zhTW: ZuiLocale = {
+export const zhTW: ZuviLocale = {
   code: 'zh-TW',
   accessibility: {
     loading: '載入中',
@@ -609,7 +609,7 @@ export const zhTW: ZuiLocale = {
 };
 
 /** ja-JP 日本語 */
-export const jaJP: ZuiLocale = {
+export const jaJP: ZuviLocale = {
   code: 'ja-JP',
   accessibility: {
     loading: '読み込み中',
@@ -756,7 +756,7 @@ export const jaJP: ZuiLocale = {
 };
 
 /** ko-KR 한국어 */
-export const koKR: ZuiLocale = {
+export const koKR: ZuviLocale = {
   code: 'ko-KR',
   accessibility: {
     loading: '로딩 중',
@@ -908,7 +908,7 @@ export const koKR: ZuiLocale = {
 };
 
 /** fr-FR Français */
-export const frFR: ZuiLocale = {
+export const frFR: ZuviLocale = {
   code: 'fr-FR',
   accessibility: {
     loading: 'Chargement',
@@ -1060,7 +1060,7 @@ export const frFR: ZuiLocale = {
 };
 
 /** de-DE Deutsch */
-export const deDE: ZuiLocale = {
+export const deDE: ZuviLocale = {
   code: 'de-DE',
   accessibility: {
     loading: 'Wird geladen',
@@ -1212,7 +1212,7 @@ export const deDE: ZuiLocale = {
 };
 
 /** es-ES Español */
-export const esES: ZuiLocale = {
+export const esES: ZuviLocale = {
   code: 'es-ES',
   accessibility: {
     loading: 'Cargando',
@@ -1364,7 +1364,7 @@ export const esES: ZuiLocale = {
 };
 
 /** ru-RU Русский */
-export const ruRU: ZuiLocale = {
+export const ruRU: ZuviLocale = {
   code: 'ru-RU',
   accessibility: {
     loading: 'Загрузка',
@@ -1516,7 +1516,7 @@ export const ruRU: ZuiLocale = {
 };
 
 /** pt-BR Português (Brasil) */
-export const ptBR: ZuiLocale = {
+export const ptBR: ZuviLocale = {
   code: 'pt-BR',
   accessibility: {
     loading: 'Carregando',
@@ -1673,7 +1673,7 @@ export const ptBR: ZuiLocale = {
  * 逐段深合并：override 中提供的段与 base 对应段合并，未提供的段沿用 base。
  * 不修改入参，返回新对象。
  */
-export function mergeLocale(base: ZuiLocale, override?: DeepPartial<ZuiLocale>): ZuiLocale {
+export function mergeLocale(base: ZuviLocale, override?: DeepPartial<ZuviLocale>): ZuviLocale {
   if (!override) return base;
   return {
     code: override.code ?? base.code,

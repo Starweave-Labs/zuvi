@@ -10,7 +10,7 @@ import {
   isTopmostLayer,
   isImeComposing,
 } from '../../utils';
-import { useZuiConfig } from '../../config';
+import { useZuviConfig } from '../../config';
 import { NotificationProvider, useNotification } from '../Notification';
 import type { NotificationPlacement } from '../Notification';
 import { AppContext, type AppApi, type AppModalConfig, type ModalApi } from './useApp';
@@ -33,7 +33,7 @@ function AppInner({
   const message = useMessage();
   const notification = useNotification();
   const [modalConfig, setModalConfig] = React.useState<AppModalConfig | null>(null);
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const rootRef = React.useRef<HTMLDivElement>(null);
   const dialogRef = React.useRef<HTMLDivElement>(null);
   const [dialogNode, setDialogNode] = React.useState<HTMLDivElement | null>(null);
@@ -46,7 +46,7 @@ function AppInner({
 
   const closeModal = React.useCallback(() => setModalConfig(null), []);
 
-  // 弹层仲裁：确认框带 [data-zui-modal-layer] 按打开顺序注册，Esc 仅栈顶弹层响应
+  // 弹层仲裁：确认框带 [data-zuvi-modal-layer] 按打开顺序注册，Esc 仅栈顶弹层响应
   React.useEffect(() => {
     if (modalConfig === null || !dialogNode) return;
     return registerLayer(dialogNode);
@@ -82,16 +82,16 @@ function AppInner({
 
   return (
     <AppContext.Provider value={api}>
-      <div ref={rootRef} data-part="root" className={cx('z-app', classNames?.root, className)}>
+      <div ref={rootRef} data-part="root" className={cx('zuvi-app', classNames?.root, className)}>
         {children}
       </div>
       {modalConfig ? (
         <Portal inheritFrom={rootRef}>
           <div
             data-part="modal"
-            data-zui-modal-layer=""
+            data-zuvi-modal-layer=""
             data-state="open"
-            className={cx('z-app-modal', classNames?.modal)}
+            className={cx('zuvi-app-modal', classNames?.modal)}
             ref={setDialogRef}
             tabIndex={-1}
             role="dialog"
@@ -106,19 +106,19 @@ function AppInner({
               }
             }}
           >
-            <div className="z-app-modal-content" onClick={(event) => event.stopPropagation()}>
-              <div data-part="modal-title" className="z-app-modal-title">
+            <div className="zuvi-app-modal-content" onClick={(event) => event.stopPropagation()}>
+              <div data-part="modal-title" className="zuvi-app-modal-title">
                 {modalConfig.title}
               </div>
               {modalConfig.content !== undefined && modalConfig.content !== null ? (
-                <div data-part="modal-content" className="z-app-modal-desc">
+                <div data-part="modal-content" className="zuvi-app-modal-desc">
                   {modalConfig.content}
                 </div>
               ) : null}
-              <div data-part="modal-actions" className="z-app-modal-actions">
+              <div data-part="modal-actions" className="zuvi-app-modal-actions">
                 <button
                   type="button"
-                  className="z-app-modal-btn z-app-modal-cancel"
+                  className="zuvi-app-modal-btn zuvi-app-modal-cancel"
                   onClick={() => {
                     modalConfig.onCancel?.();
                     closeModal();
@@ -129,7 +129,7 @@ function AppInner({
                 <button
                   type="button"
                   data-autofocus
-                  className="z-app-modal-btn z-app-modal-ok"
+                  className="zuvi-app-modal-btn zuvi-app-modal-ok"
                   onClick={() => {
                     modalConfig.onConfirm?.();
                     closeModal();

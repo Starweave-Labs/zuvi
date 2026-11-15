@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useZuiConfig } from '../../config';
+import { useZuviConfig } from '../../config';
 import { cx } from '../../utils';
 import './Result.css';
 
@@ -86,7 +86,7 @@ function ResultIcon({ status }: { status: ResultStatus }) {
         fill="currentColor"
         fontSize="22"
         fontWeight="600"
-        fontFamily="var(--z-font-sans)"
+        fontFamily="var(--zuvi-font-sans)"
       >
         {status}
       </text>
@@ -97,7 +97,7 @@ function ResultIcon({ status }: { status: ResultStatus }) {
 
 
 export function Result(props: ResultProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const {
     status = 'info',
     title,
@@ -114,22 +114,22 @@ export function Result(props: ResultProps) {
     <div
       {...rest}
       data-part="root"
-      className={cx('z-result', classNames?.root, className)}
+      className={cx('zuvi-result', classNames?.root, className)}
       data-status={status}
     >
-      <div data-part="icon" className={cx('z-result-icon', classNames?.icon)}>
+      <div data-part="icon" className={cx('zuvi-result-icon', classNames?.icon)}>
         <ResultIcon status={status} />
       </div>
-      <div data-part="title" className={cx('z-result-title', classNames?.title)}>
+      <div data-part="title" className={cx('zuvi-result-title', classNames?.title)}>
         {resolvedTitle}
       </div>
       {subTitle !== undefined && subTitle !== null ? (
-        <div data-part="subtitle" className={cx('z-result-subtitle', classNames?.subtitle)}>
+        <div data-part="subtitle" className={cx('zuvi-result-subtitle', classNames?.subtitle)}>
           {subTitle}
         </div>
       ) : null}
       {extra !== undefined && extra !== null ? (
-        <div data-part="extra" className={cx('z-result-extra', classNames?.extra)}>
+        <div data-part="extra" className={cx('zuvi-result-extra', classNames?.extra)}>
           {extra}
         </div>
       ) : null}

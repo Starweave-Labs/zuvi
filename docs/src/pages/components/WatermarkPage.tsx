@@ -1,4 +1,4 @@
-import { Watermark } from '@zui/react';
+import { Watermark } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -7,11 +7,11 @@ import { usePageTitle } from '../../components/usePageTitle';
 
 const CARD_STYLE: React.CSSProperties = {
   padding: 24,
-  border: '1px solid var(--z-color-border)',
+  border: '1px solid var(--zuvi-color-border)',
   borderRadius: 8,
 };
 
-const BASIC_CODE = `<Watermark content="ZUI 机密">
+const BASIC_CODE = `<Watermark content="ZUVI 机密">
   <div style={{ padding: 24 }}>
     <h3>受保护的内容</h3>
     <p>水印覆盖在内容之上，pointer-events: none 不阻挡交互。</p>
@@ -45,7 +45,7 @@ export default function WatermarkPage(): React.ReactNode {
         description="content 平铺绘制文本水印；覆盖层 absolute + pointer-events:none，不阻挡内容交互。"
         code={BASIC_CODE}
       >
-        <Watermark content="ZUI 机密">
+        <Watermark content="ZUVI 机密">
           <div style={CARD_STYLE}>
             <h3>受保护的内容</h3>
             <p>水印覆盖在内容之上，pointer-events: none 不阻挡交互。</p>
@@ -63,7 +63,7 @@ export default function WatermarkPage(): React.ReactNode {
       </Demo>
 
       <Demo title="图片水印" description="image 传 data-uri / base64 作为水印图案（优先于 content）。" code={IMAGE_CODE}>
-        <Watermark image="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='60'%3E%3Ctext x='10' y='35' font-size='16' fill='%23000' fill-opacity='0.25'%3EZUI%3C/text%3E%3C/svg%3E">
+        <Watermark image="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='60'%3E%3Ctext x='10' y='35' font-size='16' fill='%23000' fill-opacity='0.25'%3EZUVI%3C/text%3E%3C/svg%3E">
           <div style={CARD_STYLE}>图片水印（data-uri）</div>
         </Watermark>
       </Demo>
@@ -109,7 +109,7 @@ export default function WatermarkPage(): React.ReactNode {
       <CustomizeOutlet
         name="Watermark"
         parts={['root', 'overlay']}
-        vars={['--z-watermark-overlay-bg-repeat', '--z-watermark-overlay-z']}
+        vars={['--zuvi-watermark-overlay-bg-repeat', '--zuvi-watermark-overlay-z']}
       />
     </div>
   );

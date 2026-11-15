@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FloatButton } from '@zui/react';
+import { FloatButton } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -44,7 +44,7 @@ export default function FloatButtonPage(): React.ReactNode {
         code={BASIC_CODE}
         stack
       >
-        <div style={{ position: 'relative', height: 160, border: '1px dashed var(--z-color-border)', borderRadius: 8 }}>
+        <div style={{ position: 'relative', height: 160, border: '1px dashed var(--zuvi-color-border)', borderRadius: 8 }}>
           <FloatButton
             icon={<span aria-hidden="true">↑</span>}
             onClick={() => setLog('基础按钮')}
@@ -60,7 +60,7 @@ export default function FloatButtonPage(): React.ReactNode {
         code={MENU_CODE}
         stack
       >
-        <div style={{ position: 'relative', height: 220, border: '1px dashed var(--z-color-border)', borderRadius: 8 }}>
+        <div style={{ position: 'relative', height: 220, border: '1px dashed var(--zuvi-color-border)', borderRadius: 8 }}>
           <FloatButton
             trigger="click"
             menu={[
@@ -74,7 +74,7 @@ export default function FloatButtonPage(): React.ReactNode {
       </Demo>
 
       <Demo title="形状与类型" description="shape 支持 circle / square，type 支持 default / primary；description 显示按钮内文字说明。" code={STYLE_CODE} stack>
-        <div style={{ position: 'relative', height: 160, border: '1px dashed var(--z-color-border)', borderRadius: 8 }}>
+        <div style={{ position: 'relative', height: 160, border: '1px dashed var(--zuvi-color-border)', borderRadius: 8 }}>
           <FloatButton type="primary" shape="square" description="新建" onClick={() => setLog('新建')} />
           <FloatButton type="primary" shape="circle" icon={<span aria-hidden="true">+</span>} onClick={() => setLog('添加')} />
         </div>
@@ -133,24 +133,24 @@ export default function FloatButtonPage(): React.ReactNode {
         name="FloatButton"
         parts={['root', 'trigger', 'menu', 'item']}
         vars={[
-          '--z-float-button-size',
-          '--z-float-button-bg',
-          '--z-float-button-fg',
-          '--z-float-button-hover-bg',
-          '--z-float-button-border',
-          '--z-float-button-radius',
-          '--z-float-button-shadow',
-          '--z-float-button-font-size',
-          '--z-float-button-icon-size',
-          '--z-float-button-gap',
-          '--z-float-button-primary-bg',
-          '--z-float-button-primary-fg',
-          '--z-float-button-primary-hover-bg',
-          '--z-float-button-menu-gap',
-          '--z-float-button-menu-item-bg',
-          '--z-float-button-right',
-          '--z-float-button-bottom',
-          '--z-float-button-transition',
+          '--zuvi-float-button-size',
+          '--zuvi-float-button-bg',
+          '--zuvi-float-button-fg',
+          '--zuvi-float-button-hover-bg',
+          '--zuvi-float-button-border',
+          '--zuvi-float-button-radius',
+          '--zuvi-float-button-shadow',
+          '--zuvi-float-button-font-size',
+          '--zuvi-float-button-icon-size',
+          '--zuvi-float-button-gap',
+          '--zuvi-float-button-primary-bg',
+          '--zuvi-float-button-primary-fg',
+          '--zuvi-float-button-primary-hover-bg',
+          '--zuvi-float-button-menu-gap',
+          '--zuvi-float-button-menu-item-bg',
+          '--zuvi-float-button-right',
+          '--zuvi-float-button-bottom',
+          '--zuvi-float-button-transition',
         ]}
       />
     </div>

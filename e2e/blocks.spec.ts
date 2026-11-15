@@ -24,7 +24,7 @@ const blocks = [
 async function open(page: Page, width = 1600, theme = 'light') {
   await page.setViewportSize({ width, height: 900 });
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.addInitScript((value) => localStorage.setItem('zui-docs-theme', value), theme);
+  await page.addInitScript((value) => localStorage.setItem('zuvi-docs-theme', value), theme);
   await page.goto('/#/blocks');
   await expect(page.locator('h1.doc-h1')).toHaveText('业务区块');
   await page.evaluate((value) => document.documentElement.setAttribute('data-theme', value), theme);
@@ -100,7 +100,7 @@ test('业务区块：切页和代码切换保留编辑，重置只影响当前�
   await select(page, 'settings');
   await expect(current.getByRole('textbox', { name: '站点名称' })).toHaveValue('我的业务平台');
   await page.getByRole('button', { name: '重置演示' }).click();
-  await expect(current.getByRole('textbox', { name: '站点名称' })).toHaveValue('ZUI 管理平台');
+  await expect(current.getByRole('textbox', { name: '站点名称' })).toHaveValue('ZUVI 管理平台');
   await select(page, 'profile-edit');
   await expect(current.getByRole('textbox', { name: '姓名', exact: true })).toHaveValue('陈设计');
 });

@@ -36,19 +36,19 @@
 }
 .studio {
   --studio-accent: #6051d6;
-  --studio-accent-soft: color-mix(in srgb, var(--studio-accent) 9%, var(--z-color-bg));
-  --studio-surface: var(--z-color-bg-elevated);
-  --studio-muted: var(--z-color-bg-muted);
-  --studio-fg: var(--z-color-fg);
-  --studio-secondary: var(--z-color-fg-muted);
-  --studio-line: var(--z-color-border);
+  --studio-accent-soft: color-mix(in srgb, var(--studio-accent) 9%, var(--zuvi-color-bg));
+  --studio-surface: var(--zuvi-color-bg-elevated);
+  --studio-muted: var(--zuvi-color-bg-muted);
+  --studio-fg: var(--zuvi-color-fg);
+  --studio-secondary: var(--zuvi-color-fg-muted);
+  --studio-line: var(--zuvi-color-border);
   display: flex;
   flex-direction: column;
   height: 100dvh;
   min-width: 0;
   color: var(--studio-fg);
   background: var(--studio-surface);
-  font-family: var(--z-font-sans);
+  font-family: var(--zuvi-font-sans);
   font-size: 12px;
   line-height: 1.5;
 }
@@ -164,12 +164,12 @@
 }
 .studio-sources h3 small {
   font-weight: 400;
-  color: var(--studio-secondary, var(--z-color-fg-muted));
+  color: var(--studio-secondary, var(--zuvi-color-fg-muted));
 }
 .studio-sources button,
 .studio-source-actions button {
-  border: 1px solid var(--studio-line, var(--z-color-border));
-  background: var(--studio-surface, var(--z-color-bg));
+  border: 1px solid var(--studio-line, var(--zuvi-color-border));
+  background: var(--studio-surface, var(--zuvi-color-bg));
   border-radius: 6px;
   padding: 7px 9px;
   color: inherit;
@@ -184,8 +184,8 @@
 }
 .studio-source-field {
   padding: 10px;
-  background: var(--studio-muted, var(--z-color-bg-muted));
-  border: 1px solid var(--studio-line, var(--z-color-border));
+  background: var(--studio-muted, var(--zuvi-color-bg-muted));
+  border: 1px solid var(--studio-line, var(--zuvi-color-border));
   border-radius: 7px;
   display: grid;
   gap: 7px;
@@ -208,9 +208,9 @@
   width: 100%;
   min-width: 0;
   padding: 6px;
-  border: 1px solid var(--studio-line, var(--z-color-border));
+  border: 1px solid var(--studio-line, var(--zuvi-color-border));
   border-radius: 4px;
-  background: var(--studio-surface, var(--z-color-bg));
+  background: var(--studio-surface, var(--zuvi-color-bg));
   color: inherit;
   font: inherit;
   font-size: 10px;
@@ -222,7 +222,7 @@
 }
 .studio-source-grid {
   overflow: auto;
-  border: 1px solid var(--studio-line, var(--z-color-border));
+  border: 1px solid var(--studio-line, var(--zuvi-color-border));
   border-radius: 6px;
 }
 .studio-source-grid table {
@@ -235,10 +235,10 @@
   white-space: nowrap;
   padding: 6px;
   text-align: left;
-  color: var(--studio-secondary, var(--z-color-fg-muted));
+  color: var(--studio-secondary, var(--zuvi-color-fg-muted));
 }
 .studio-source-grid td {
-  border-top: 1px solid var(--studio-line, var(--z-color-border));
+  border-top: 1px solid var(--studio-line, var(--zuvi-color-border));
   padding: 4px;
 }
 .studio-source-grid td input {
@@ -252,10 +252,10 @@
   min-height: 220px;
   resize: vertical;
   width: 100%;
-  background: var(--studio-muted, var(--z-color-bg-muted));
+  background: var(--studio-muted, var(--zuvi-color-bg-muted));
   color: inherit;
-  font: 11px/1.7 var(--z-font-mono);
-  border: 1px solid var(--studio-line, var(--z-color-border));
+  font: 11px/1.7 var(--zuvi-font-mono);
+  border: 1px solid var(--studio-line, var(--zuvi-color-border));
   padding: 10px;
   border-radius: 6px;
 }
@@ -263,7 +263,7 @@
   display: flex;
   justify-content: space-between;
   gap: 8px;
-  border-top: 1px solid var(--studio-line, var(--z-color-border));
+  border-top: 1px solid var(--studio-line, var(--zuvi-color-border));
   padding-top: 14px;
 }
 .studio-primary-action {
@@ -320,18 +320,18 @@
 }
 .studio-template-categories button {
   padding: 7px 12px;
-  border: 1px solid var(--z-color-border);
+  border: 1px solid var(--zuvi-color-border);
   border-radius: 7px;
-  color: var(--z-color-fg-muted);
-  background: var(--z-color-bg);
+  color: var(--zuvi-color-fg-muted);
+  background: var(--zuvi-color-bg);
   font: inherit;
   font-size: 12px;
   cursor: pointer;
 }
 .studio-template-categories button[aria-pressed='true'] {
-  color: var(--z-color-primary);
-  border-color: var(--z-color-primary);
-  background: var(--z-color-primary-subtle);
+  color: var(--zuvi-color-primary);
+  border-color: var(--zuvi-color-primary);
+  background: var(--zuvi-color-primary-subtle);
 }
 .doc-builder-templates.studio-template-gallery {
   display: grid;
@@ -340,7 +340,7 @@
 }
 .studio-template-card {
   overflow: hidden;
-  border: 1px solid var(--z-color-border);
+  border: 1px solid var(--zuvi-color-border);
   border-radius: 12px;
   min-width: 0;
 }
@@ -361,11 +361,11 @@
   overflow: hidden;
   box-shadow: 0 8px 32px #0f172a14;
 }
-.studio-template-thumbnail .z-builder-canvas {
+.studio-template-thumbnail .zuvi-builder-canvas {
   height: 820px;
   overflow: hidden;
 }
-.studio-template-thumbnail .z-builder-canvas:not(:has(.z-builder-app-shell)) {
+.studio-template-thumbnail .zuvi-builder-canvas:not(:has(.zuvi-builder-app-shell)) {
   padding: 32px !important;
 }
 .studio-template-blank {
@@ -388,19 +388,19 @@
   padding: 18px;
 }
 .studio-template-card-info > small {
-  color: var(--z-color-fg-muted);
-  font: 9px var(--z-font-mono);
+  color: var(--zuvi-color-fg-muted);
+  font: 9px var(--zuvi-font-mono);
   letter-spacing: 1px;
 }
 .studio-template-card-info > strong {
   display: block;
   font-size: 15px;
   font-weight: 600;
-  color: var(--z-color-fg);
+  color: var(--zuvi-color-fg);
   margin-top: 8px;
 }
 .studio-template-card-info p {
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 11px;
   line-height: 1.8;
   min-height: 40px;
@@ -415,17 +415,17 @@
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  border: 1px solid var(--z-color-border);
+  border: 1px solid var(--zuvi-color-border);
   border-radius: 5px;
   padding: 6px 9px;
   background: none;
   font: inherit;
   font-size: 11px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   cursor: pointer;
 }
 .studio-template-card-info button:last-child {
-  color: var(--z-color-primary);
+  color: var(--zuvi-color-primary);
   border-color: transparent;
 }
 .studio-template-card-info svg {
@@ -470,7 +470,7 @@
   width: 100%;
   height: min(65vh, 750px);
   overflow: auto;
-  border: 1px solid var(--z-color-border);
+  border: 1px solid var(--zuvi-color-border);
   border-radius: 10px;
 }
 @media (max-width: 600px) {
@@ -1150,7 +1150,7 @@
   min-height: 0;
   position: absolute;
   inset: 0 auto auto 0;
-  background: var(--z-color-bg);
+  background: var(--zuvi-color-bg);
 }
 .studio-canvas-surface [data-puck-preview] {
   height: 100%;
@@ -1366,11 +1366,11 @@
   opacity: 0.7;
 }
 .studio-control small {
-  color: var(--z-color-danger);
+  color: var(--zuvi-color-danger);
   font-size: 9px;
 }
 .studio-control [aria-invalid='true'] {
-  border-color: var(--z-color-danger);
+  border-color: var(--zuvi-color-danger);
 }
 .studio-control .studio-color-control {
   display: flex;
@@ -1386,7 +1386,7 @@
 .studio-color-control input[type='text'] {
   flex: 1;
   width: 100px;
-  font-family: var(--z-font-mono, monospace);
+  font-family: var(--zuvi-font-mono, monospace);
   font-size: 10px;
 }
 .studio-inspector-section > div > .studio-control {
@@ -1527,7 +1527,7 @@
   height: 14px;
 }
 .studio .studio-danger {
-  color: var(--z-color-danger);
+  color: var(--zuvi-color-danger);
 }
 .studio-statusbar {
   height: 29px;
@@ -1861,14 +1861,14 @@
 }
 .studio-mobile-panel {
   --studio-accent: #6051d6;
-  --studio-accent-soft: color-mix(in srgb, #6051d6 9%, var(--z-color-bg));
-  --studio-surface: var(--z-color-bg-elevated);
-  --studio-muted: var(--z-color-bg-muted);
-  --studio-fg: var(--z-color-fg);
-  --studio-secondary: var(--z-color-fg-muted);
-  --studio-line: var(--z-color-border);
+  --studio-accent-soft: color-mix(in srgb, #6051d6 9%, var(--zuvi-color-bg));
+  --studio-surface: var(--zuvi-color-bg-elevated);
+  --studio-muted: var(--zuvi-color-bg-muted);
+  --studio-fg: var(--zuvi-color-fg);
+  --studio-secondary: var(--zuvi-color-fg-muted);
+  --studio-line: var(--zuvi-color-border);
 }
-.studio-mobile-panel .z-modal-body {
+.studio-mobile-panel .zuvi-modal-body {
   min-height: 0;
   max-height: 72dvh;
   overflow-y: auto;
@@ -1906,8 +1906,8 @@
 .studio-mobile-panel .studio-node-actions {
   position: static;
 }
-.studio-help-dialog .z-modal-body > p {
-  color: var(--z-color-fg-muted);
+.studio-help-dialog .zuvi-modal-body > p {
+  color: var(--zuvi-color-fg-muted);
   font-size: 12px;
   line-height: 1.9;
 }
@@ -1916,7 +1916,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 0;
-  border-bottom: 1px solid var(--z-color-border);
+  border-bottom: 1px solid var(--zuvi-color-border);
   font-size: 12px;
   gap: 12px;
 }
@@ -1925,8 +1925,8 @@
   font-size: 10px;
 }
 .studio-help-dialog kbd {
-  background: var(--z-color-bg-muted);
-  border: 1px solid var(--z-color-border);
+  background: var(--zuvi-color-bg-muted);
+  border: 1px solid var(--zuvi-color-border);
   padding: 3px 6px;
   border-radius: 4px;
   white-space: nowrap;
@@ -1936,7 +1936,7 @@
   overflow: auto;
   padding: 20px;
   border-radius: 10px;
-  background: var(--z-color-bg-muted);
+  background: var(--zuvi-color-bg-muted);
   font-size: 11px;
 }
 .doc-builder-page > .doc-builder-storage-error {
@@ -2231,11 +2231,11 @@
   width: 100%;
   min-width: 0;
   resize: vertical;
-  border: 1px solid var(--z-color-border);
+  border: 1px solid var(--zuvi-color-border);
   border-radius: 8px;
   padding: 10px;
-  background: var(--z-color-bg);
-  color: var(--z-color-fg);
+  background: var(--zuvi-color-bg);
+  color: var(--zuvi-color-fg);
   font:
     12px/1.6 ui-monospace,
     monospace;
@@ -2243,16 +2243,16 @@
 .studio-data-field button,
 .studio-css-field button {
   min-height: 30px;
-  border: 1px solid var(--z-color-border);
+  border: 1px solid var(--zuvi-color-border);
   border-radius: 6px;
   padding: 5px 8px;
-  background: var(--z-color-bg);
-  color: var(--z-color-fg);
+  background: var(--zuvi-color-bg);
+  color: var(--zuvi-color-fg);
   cursor: pointer;
 }
 .studio-data-field button:hover,
 .studio-css-field button:hover {
-  background: var(--z-color-bg-muted);
+  background: var(--zuvi-color-bg-muted);
 }
 .studio-data-field button:disabled {
   opacity: 0.45;
@@ -2261,14 +2261,14 @@
 .studio-data-field p {
   margin: 0;
   line-height: 1.7;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
 }
 .studio-data-field [role='alert'],
 .studio-css-field [role='alert'] {
-  color: var(--z-color-danger, #dc2626);
+  color: var(--zuvi-color-danger, #dc2626);
 }
 .studio-data-item {
-  border: 1px solid var(--z-color-border);
+  border: 1px solid var(--zuvi-color-border);
   border-radius: 8px;
   padding: 10px;
 }
@@ -2288,7 +2288,7 @@
   height: 100%;
   border: 0;
   display: block;
-  background: var(--z-color-bg);
+  background: var(--zuvi-color-bg);
 }
 
 .studio-edit-preview {
@@ -2300,7 +2300,7 @@
   visibility: hidden;
   pointer-events: none;
 }
-.z-builder-splitter-slots {
+.zuvi-builder-splitter-slots {
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: minmax(0, 1fr);

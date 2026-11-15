@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Tree, type TreeNode } from '@zui/react';
+import { Tree, type TreeNode } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -178,30 +178,30 @@ export default function TreePage(): React.ReactNode {
         name="Tree"
         parts={['root', 'node', 'row', 'group', 'icon', 'spinner', 'checkbox', 'label']}
         vars={[
-          '--z-tree-font-size',
-          '--z-tree-fg',
-          '--z-tree-node-height',
-          '--z-tree-node-gap',
-          '--z-tree-node-radius',
-          '--z-tree-node-hover-bg',
-          '--z-tree-node-selected-bg',
-          '--z-tree-node-selected-fg',
-          '--z-tree-node-disabled-fg',
-          '--z-tree-indent',
-          '--z-tree-icon-size',
-          '--z-tree-icon-color',
-          '--z-tree-checkbox-size',
-          '--z-tree-checkbox-radius',
-          '--z-tree-checkbox-bg',
-          '--z-tree-checkbox-border',
-          '--z-tree-checkbox-checked-bg',
-          '--z-tree-checkbox-checked-border',
-          '--z-tree-checkbox-fg',
-          '--z-tree-checkbox-indeterminate-bg',
-          '--z-tree-focus-ring',
-          '--z-tree-spinner-size',
-          '--z-tree-spinner-color',
-          '--z-tree-transition',
+          '--zuvi-tree-font-size',
+          '--zuvi-tree-fg',
+          '--zuvi-tree-node-height',
+          '--zuvi-tree-node-gap',
+          '--zuvi-tree-node-radius',
+          '--zuvi-tree-node-hover-bg',
+          '--zuvi-tree-node-selected-bg',
+          '--zuvi-tree-node-selected-fg',
+          '--zuvi-tree-node-disabled-fg',
+          '--zuvi-tree-indent',
+          '--zuvi-tree-icon-size',
+          '--zuvi-tree-icon-color',
+          '--zuvi-tree-checkbox-size',
+          '--zuvi-tree-checkbox-radius',
+          '--zuvi-tree-checkbox-bg',
+          '--zuvi-tree-checkbox-border',
+          '--zuvi-tree-checkbox-checked-bg',
+          '--zuvi-tree-checkbox-checked-border',
+          '--zuvi-tree-checkbox-fg',
+          '--zuvi-tree-checkbox-indeterminate-bg',
+          '--zuvi-tree-focus-ring',
+          '--zuvi-tree-spinner-size',
+          '--zuvi-tree-spinner-color',
+          '--zuvi-tree-transition',
         ]}
       />
     </div>

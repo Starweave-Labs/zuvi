@@ -1,4 +1,4 @@
-# ZUI 契约 V2 —— 新增组件与配套（并行开发第二轮，必读）
+# ZUVI 契约 V2 —— 新增组件与配套（并行开发第二轮，必读）
 
 > 延续 `CONTRACTS.md`（V1）全部约定：'use client' 首行、React 19 原生 ref（禁 forwardRef）、
 > cx 合并类名、useControllableState 受控范式、data-part + classNames + 组件级 CSS 变量三件套、
@@ -42,7 +42,7 @@ interface TooltipProps {
 - root 包裹 `z-tooltip-root`（position:relative），content 绝对定位 `z-tooltip`（role="tooltip"，data-placement）。
 - hover 进入延迟显示、离开隐藏；focus 显示、blur 隐藏；Esc 隐藏（文档级 keydown）。
 - 通过 `aria-describedby` 把 tooltip id 关联到触发器（cloneElement 注入，保留原 props）。
-- 深色底浅字浮层（`--z-color-bg-inverse`/`--z-color-fg-inverse`），圆角 6px，小阴影，12px 字。
+- 深色底浅字浮层（`--zuvi-color-bg-inverse`/`--zuvi-color-fg-inverse`），圆角 6px，小阴影，12px 字。
 
 ### Popover（点击弹出层，组合式）
 ```ts
@@ -248,9 +248,9 @@ interface ProgressProps {
 ```
 - 轨道 bg-muted 圆角 full；填充 primary（success 绿/error 红/active 带流动光）；role="progressbar" aria-valuenow/min/max；过渡 width 300ms。
 
-## 2. @zui/icons 包（新包 packages/icons）
+## 2. @zuvi/icons 包（新包 packages/icons）
 
-- `packages/icons/package.json`：name `@zui/icons`，type module，peerDeps react ^19，exports 指向 dist（build: `tsc -p tsconfig.json`，jsx react-jsx，出 esm + d.ts）。
+- `packages/icons/package.json`：name `@zuvi/icons`，type module，peerDeps react ^19，exports 指向 dist（build: `tsc -p tsconfig.json`，jsx react-jsx，出 esm + d.ts）。
 - 24 个图标组件（统一 24 视窗、stroke=currentColor、stroke-width 2、fill none、线性风格近 Feather/Lucide）：
   `Check, Close, Search, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, ArrowRight, Plus, Minus, Info, CheckCircle, XCircle, AlertTriangle, Loading, Copy, Eye, EyeOff, Trash, Edit, Calendar, User, Settings, MoreHorizontal`
 - 每个组件：
@@ -262,13 +262,13 @@ interface IconProps extends React.ComponentPropsWithRef<'svg'> {
 }
 ```
 - 文件：`src/icons/<Name>.tsx` + `src/index.ts`（全导出 + `IconProps` 类型）+ README。
-- Loading 的 spin 用 CSS-in-attribute？不引 CSS 文件——用 svg 自身 `<animateTransform>` 或 style 属性 keyframes 不可行，改用 `style={{ animation: 'z-icon-spin 1s linear infinite' }}` 需要 keyframes——**用 svg 内嵌 `<style>` 一次**（每个 Loading 渲染内联 style 标签定义 @keyframes z-icon-spin，可接受；或 animateTransform 旋转 360 循环，选 animateTransform 方案，纯 SVG 零 CSS）。
+- Loading 的 spin 用 CSS-in-attribute？不引 CSS 文件——用 svg 自身 `<animateTransform>` 或 style 属性 keyframes 不可行，改用 `style={{ animation: 'zuvi-icon-spin 1s linear infinite' }}` 需要 keyframes——**用 svg 内嵌 `<style>` 一次**（每个 Loading 渲染内联 style 标签定义 @keyframes z-icon-spin，可接受；或 animateTransform 旋转 360 循环，选 animateTransform 方案，纯 SVG 零 CSS）。
 - 文档页不需要（图标在文档站 Overview 里展示即可，集成者处理）。
 
 ## 3. ConfigProvider + 文案收口（Config 组）
 
 ```ts
-interface ZuiLocale {
+interface ZuviLocale {
   select: { placeholder: string };       // '请选择'
   input: { clear: string };              // '清除'
   modal: { close: string };              // '关闭'
@@ -278,27 +278,27 @@ interface ZuiLocale {
   empty: { description: string };        // '暂无数据'
 }
 interface ConfigProviderProps {
-  locale?: Partial<ZuiLocale>;           // 与默认 zh-CN 深合并
+  locale?: Partial<ZuviLocale>;           // 与默认 zh-CN 深合并
   children?: React.ReactNode;
 }
 function ConfigProvider(props): JSX.Element;
-function useZuiConfig(): { locale: ZuiLocale };
+function useZuviConfig(): { locale: ZuviLocale };
 ```
-- 实现放 `packages/ui/src/config/`（ConfigProvider.tsx、locale.ts、useZuiConfig.ts、index.ts）。
-- 收口改动（仅这些既有文件）：Input.tsx（clear aria-label）、Modal.tsx（Close aria-label）、Select.tsx（placeholder 默认值）、Message（close aria-label）、Drawer 新组件直接受影响的写法——**新组件由各组自行用 useZuiConfig**？不行会跨组依赖未就绪的模块。约定：**新组件本轮仍用硬编码中文默认文案**，Config 组只收口 Input/Modal/Select/Message 四处 + 写好 config 模块供下轮统一。文档注明。
-- `useZuiConfig` 在无 Provider 时返回默认 locale 不 throw（与 useMessage 不同，配置必须可缺省）。
+- 实现放 `packages/ui/src/config/`（ConfigProvider.tsx、locale.ts、useZuviConfig.ts、index.ts）。
+- 收口改动（仅这些既有文件）：Input.tsx（clear aria-label）、Modal.tsx（Close aria-label）、Select.tsx（placeholder 默认值）、Message（close aria-label）、Drawer 新组件直接受影响的写法——**新组件由各组自行用 useZuviConfig**？不行会跨组依赖未就绪的模块。约定：**新组件本轮仍用硬编码中文默认文案**，Config 组只收口 Input/Modal/Select/Message 四处 + 写好 config 模块供下轮统一。文档注明。
+- `useZuviConfig` 在无 Provider 时返回默认 locale 不 throw（与 useMessage 不同，配置必须可缺省）。
 
 ## 4. a11y 组（新测试文件，禁止加新依赖）
 
 - `packages/ui/src/test/a11y.roles.test.tsx`：全组件 ARIA 角色矩阵断言（Select 触发器 aria-haspopup/expanded、Modal role=dialog aria-modal、Tabs role=tablist/tab/tabpanel、Message role=status、Switch role=switch、RadioGroup role=radiogroup、Pagination role=navigation、Tooltip role=tooltip）。
 - `packages/ui/src/test/a11y.keyboard.test.tsx`：抽样键盘流（Tabs 方向键、Select 全套、Modal Esc/焦点归还、Message Esc 不吞事件）。
 - `packages/ui/src/test/a11y.labels.test.tsx`：所有可交互元素有可访问名（getByRole('button', { name })）。
-- `docs/a11y-notes.md`：读屏怪癖清单（VoiceOver/NVDA 已知问题与规避，参考 React Aria 博客经验写成 ZUI 自己的清单）+ 组件 a11y 难度分级表。
+- `docs/a11y-notes.md`：读屏怪癖清单（VoiceOver/NVDA 已知问题与规避，参考 React Aria 博客经验写成 ZUVI 自己的清单）+ 组件 a11y 难度分级表。
 - **禁止**安装 vitest-axe 等新依赖；禁止改既有测试文件；只新增 `a11y*` 文件。
 
 ## 5. 工程组（唯一可改 package.json / CI 的组）
 
-- `LICENSE`（MIT，占位 Copyright (c) 2026 ZUI Contributors）。
+- `LICENSE`（MIT，占位 Copyright (c) 2026 ZUVI Contributors）。
 - `packages/ui/package.json` exports 增加 per-component subpath（`"./button"`、`"./modal"` … 每组件指向 `./dist/index.js` 即可（同产物多入口挂同一文件亦可接受，写 `./dist/index.js`），别名 + `./styles.css` 保持。
 - `.changeset/config.json`（changesets 初始化配置，access public，baseBranch main）。
 - `.github/workflows/ci.yml` 增加：`npx vitest run` 全量、`npm pack --dry-run` 冒烟、体积预算步骤（沿用 gzip 预算，JS < 48KB gzip 给新组件留量）。

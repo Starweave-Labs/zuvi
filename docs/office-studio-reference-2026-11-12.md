@@ -1,16 +1,16 @@
-# Office Studio 参考源码与 ZUI 映射（2026-11-12）
+# Office Studio 参考源码与 ZUVI 映射（2026-11-12）
 
 2026-11-13 已扩展为五个主要仓库的全量源码扫描与逐项台账，见 [源码梳理](onlyoffice-source-review-2026-11-13.md) 和 [196 项功能台账](onlyoffice-feature-ledger-2026-11-13.md)。这里仍记录原有实现范围，不能作为全部功能对齐证明。
 
-本文记录本轮实际读取的 ONLYOFFICE 和 ranuts/document 源码，以及对应的自研界面与数据行为。参考内容用于核对标签、工具分组、控件尺度、画布和文件生命周期；交互入口沿用 ZUI 组件。
+本文记录本轮实际读取的 ONLYOFFICE 和 ranuts/document 源码，以及对应的自研界面与数据行为。参考内容用于核对标签、工具分组、控件尺度、画布和文件生命周期；交互入口沿用 ZUVI 组件。
 
-本次追加核对了本地 ZUI 应用的字体输入、手动行高和换行自动行高，修正了字号输入框过窄的问题；这属于功能与局部界面验收，不代表与 Office 逐像素一致。源码依据、截图和验证范围见 [验收记录](office-verification-2026-11-12.md)。
+本次追加核对了本地 ZUVI 应用的字体输入、手动行高和换行自动行高，修正了字号输入框过窄的问题；这属于功能与局部界面验收，不代表与 Office 逐像素一致。源码依据、截图和验证范围见 [验收记录](office-verification-2026-11-12.md)。
 
 本轮继续读取 Spreadsheet `Search.js` 268–352 行、`cell/api.js` 4556–4590 行和 Spreadsheet `Toolbar.js` 840–900 行，补齐查找替换、列宽与边框行为。已实现项与仍缺的细节见 [功能对照表](office-function-comparison-2026-11-12.md)。
 
 ## 参考版本与阅读位置
 
-本地阅读缓存为 `/tmp/zui-onlyoffice-reference-20261112/`。下表的 commit 已通过各仓库的 `git rev-parse HEAD` 核实；后文链接固定到同一版本。
+本地阅读缓存为 `/tmp/zuvi-onlyoffice-reference-20261112/`。下表的 commit 已通过各仓库的 `git rev-parse HEAD` 核实；后文链接固定到同一版本。
 
 | 仓库                                                          | commit                                                                                                                           | 本地子目录        |
 | ------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | ----------------- |
@@ -36,32 +36,32 @@
 
 另外读取了 ranuts 仓库内的 [Word 示例截图][ranuts-word-image]与 [Excel 示例截图][ranuts-sheet-image]，用于对照紧凑的两行工具区、样式预览和画布。PDF 本轮参考来自源码，没有使用 PDF 参考截图。
 
-## 公共布局到 ZUI 的映射
+## 公共布局到 ZUVI 的映射
 
 实现位置：[OfficeStudio.tsx](../packages/ui/src/components/OfficeStudio/OfficeStudio.tsx)、[OfficeStudio.css](../packages/ui/src/components/OfficeStudio/OfficeStudio.css)、[StudioRibbon.tsx](../packages/ui/src/components/OfficeStudio/StudioRibbon.tsx)、[StudioRibbon.css](../packages/ui/src/components/OfficeStudio/StudioRibbon.css)。
 
 | 参考设计或操作                           | 当前实现                                                                                                                                                                                                   |
 | ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 标题 → 标签 → 功能区 → 编辑画布 → 状态栏 | 三类编辑器共用标题栏；`StudioRibbonTabs` 通过 context 将 ZUI 文件菜单放在标签行左端。                                                                                                                      |
-| 按文档类型区分主题                       | Word、Sheet、PDF 使用蓝、绿、红主题语义；`--z-office-studio-accent`、`--z-office-studio-header-bg`、`--z-office-studio-header-fg`、`--z-office-studio-ribbon-bg`、`--z-office-studio-canvas-bg` 统一配色。 |
-| 紧凑标签、小按钮和状态栏                 | ZUI 标签行 32px，小按钮 24px、图标 16px、工具区字体 12px；Word、Sheet、PDF 底部状态栏均为单行 25px。控件尺度来自当前 ZUI 合同，尚未逐像素验收。                                                            |
-| 文件、保存和打印入口                     | 使用 ZUI DropdownMenu、Button、Input；保留新建、导入、导出、保存、打印、全屏、名称编辑及保存状态。文件转换和持久化由宿主回调承担。                                                                         |
-| 菜单、选项与弹窗                         | 工具操作使用 ZUI Tabs、Button、Select、Checkbox、ColorPicker、Modal 等现有组件；内容编辑和页面渲染由现有编辑内核承担。本轮未引入参考项目的 UI 组件库。                                                     |
+| 标题 → 标签 → 功能区 → 编辑画布 → 状态栏 | 三类编辑器共用标题栏；`StudioRibbonTabs` 通过 context 将 ZUVI 文件菜单放在标签行左端。                                                                                                                      |
+| 按文档类型区分主题                       | Word、Sheet、PDF 使用蓝、绿、红主题语义；`--zuvi-office-studio-accent`、`--zuvi-office-studio-header-bg`、`--zuvi-office-studio-header-fg`、`--zuvi-office-studio-ribbon-bg`、`--zuvi-office-studio-canvas-bg` 统一配色。 |
+| 紧凑标签、小按钮和状态栏                 | ZUVI 标签行 32px，小按钮 24px、图标 16px、工具区字体 12px；Word、Sheet、PDF 底部状态栏均为单行 25px。控件尺度来自当前 ZUVI 合同，尚未逐像素验收。                                                            |
+| 文件、保存和打印入口                     | 使用 ZUVI DropdownMenu、Button、Input；保留新建、导入、导出、保存、打印、全屏、名称编辑及保存状态。文件转换和持久化由宿主回调承担。                                                                         |
+| 菜单、选项与弹窗                         | 工具操作使用 ZUVI Tabs、Button、Select、Checkbox、ColorPicker、Modal 等现有组件；内容编辑和页面渲染由现有编辑内核承担。本轮未引入参考项目的 UI 组件库。                                                     |
 
 ## Word 映射
 
 实现位置：[StudioWord.tsx](../packages/ui/src/components/OfficeStudio/StudioWord.tsx)、[StudioWord.css](../packages/ui/src/components/OfficeStudio/StudioWord.css)。文稿内容使用 Tiptap。
 
-| 参考设计或操作     | 当前 ZUI 实现                                                                                                                                                |
+| 参考设计或操作     | 当前 ZUVI 实现                                                                                                                                                |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Office 标签组织    | 文件入口与开始、插入、布局、引用、审阅、视图标签；每个标签显示已有操作。官方 controller 中的 Collaboration 与本项目的审阅标签不代表完整协作/修订能力已实现。 |
-| 字体两行工具       | 上行是可编辑的 ZUI 字体、字号 Combobox；下行是粗体、斜体、下划线、删除线、上下标、文字颜色和清除格式。颜色入口保留 ZUI ColorPicker，以 A 与色条作紧凑预览。  |
+| 字体两行工具       | 上行是可编辑的 ZUVI 字体、字号 Combobox；下行是粗体、斜体、下划线、删除线、上下标、文字颜色和清除格式。颜色入口保留 ZUVI ColorPicker，以 A 与色条作紧凑预览。  |
 | 段落两行工具       | 列表、缩进、行距在上行；对齐在下行。段落操作同步到编辑模型，并沿用撤销/重做。                                                                                |
-| 样式图库           | ZUI Button 显示正文、无间距、标题 1 预览；另保留完整的现有段落样式 Select。无间距实际设为行高 1、段前/段后 0，正文清除这些显式段落值。                       |
-| 剪贴板与编辑       | ZUI 复制、剪切、粘贴、撤销/重做入口。工具栏剪贴板处理纯文本，多行转换成段落；异步剪切/粘贴会核对原文档身份和内容。剪贴板不可用时提示键盘快捷键。             |
-| 插入与页面操作     | 保留已有表格、图片、链接、显式分页、页眉/页脚及页面设置入口；表格、查找替换和相关设置使用 ZUI 弹窗或侧栏。                                                   |
+| 样式图库           | ZUVI Button 显示正文、无间距、标题 1 预览；另保留完整的现有段落样式 Select。无间距实际设为行高 1、段前/段后 0，正文清除这些显式段落值。                       |
+| 剪贴板与编辑       | ZUVI 复制、剪切、粘贴、撤销/重做入口。工具栏剪贴板处理纯文本，多行转换成段落；异步剪切/粘贴会核对原文档身份和内容。剪贴板不可用时提示键盘快捷键。             |
+| 插入与页面操作     | 保留已有表格、图片、链接、显式分页、页眉/页脚及页面设置入口；表格、查找替换和相关设置使用 ZUVI 弹窗或侧栏。                                                   |
 | 左导航、标尺与白纸 | 40px 左工具栏提供查找替换、大纲、字数统计；横纵厘米标尺随缩放显示。灰画布中保留白纸、黑色默认正文和细阴影，视图提供标尺/导航开关、100% 与适应宽度。          |
-| 统计与状态         | ZUI 字数统计 Modal 展示正文 Unicode 字符数（含/不含空白）与段落数；切到页眉/页脚不改变正文统计对象。底部状态栏为 25px。                                      |
+| 统计与状态         | ZUVI 字数统计 Modal 展示正文 Unicode 字符数（含/不含空白）与段落数；切到页眉/页脚不改变正文统计对象。底部状态栏为 25px。                                      |
 
 Word 字体菜单当前提供思源黑体（`Noto Sans SC`）、宋体（`SimSun`）、微软雅黑（`Microsoft YaHei`）、Arial、Times New Roman，并追加当前导入的字体名称。常见字号为 `10, 11, 12, 14, 16, 18, 20, 24, 28, 36, 48`，也保留当前导入字号选项；默认正文显示为思源黑体、12pt。
 
@@ -71,13 +71,13 @@ Word 字体菜单当前提供思源黑体（`Noto Sans SC`）、宋体（`SimSun
 
 实现位置：[StudioSheet.tsx](../packages/ui/src/components/OfficeStudio/StudioSheet.tsx)、[StudioSheet.css](../packages/ui/src/components/OfficeStudio/StudioSheet.css)、[studio-model.ts](../packages/ui/src/components/OfficeStudio/studio-model.ts)、[studio-sheet-hyperlinks.ts](../packages/ui/src/components/OfficeStudio/studio-sheet-hyperlinks.ts)、[studio-excel-codec.ts](src/pages/collaboration/office-studio/studio-excel-codec.ts)。
 
-| 参考设计或操作           | 当前 ZUI 实现                                                                                                                                                                                                              |
+| 参考设计或操作           | 当前 ZUVI 实现                                                                                                                                                                                                              |
 | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Sheet 功能区             | 文件入口与开始、插入、布局、公式、数据、视图标签；工具按编辑、字体、对齐、数字格式、单元格、规则与填充等分组。                                                                                                             |
-| 字体与字号               | 字体组上行使用可编辑的 ZUI 字体和字号 Combobox，下行提供粗体、斜体、下划线、文字/填充颜色。没有显式字体属性的单元格默认显示 Calibri、11pt；选择同步整个选区。                                                              |
-| 对齐与单元格格式         | 使用 ZUI 左对齐、居中、右对齐图标按钮，以及数字格式、换行、合并等现有入口。网格保留行列标题、名称框、公式栏、选区和工作表标签。                                                                                            |
-| 条件格式、数据验证与填充 | ZUI 规则窗口、数据验证窗口及向下/向右/序列填充入口。规则参与显示和编辑反馈，并通过原生 XLSX 条件格式/数据验证 XML 保存；填充同步公式与直接格式，包括字体和字号。                                                           |
-| 原生超链接               | ZUI 超链接窗口管理外部/内部目标、显示文字和提示；打开内部矩形目标时选中范围并激活左上格。增删、结构变化、排序、填充和粘贴沿用模型中的链接记录及迁移逻辑。                                                                  |
+| 字体与字号               | 字体组上行使用可编辑的 ZUVI 字体和字号 Combobox，下行提供粗体、斜体、下划线、文字/填充颜色。没有显式字体属性的单元格默认显示 Calibri、11pt；选择同步整个选区。                                                              |
+| 对齐与单元格格式         | 使用 ZUVI 左对齐、居中、右对齐图标按钮，以及数字格式、换行、合并等现有入口。网格保留行列标题、名称框、公式栏、选区和工作表标签。                                                                                            |
+| 条件格式、数据验证与填充 | ZUVI 规则窗口、数据验证窗口及向下/向右/序列填充入口。规则参与显示和编辑反馈，并通过原生 XLSX 条件格式/数据验证 XML 保存；填充同步公式与直接格式，包括字体和字号。                                                           |
+| 原生超链接               | ZUVI 超链接窗口管理外部/内部目标、显示文字和提示；打开内部矩形目标时选中范围并激活左上格。增删、结构变化、排序、填充和粘贴沿用模型中的链接记录及迁移逻辑。                                                                  |
 | HYPERLINK 与 IF 语义     | 参考 sdkjs 的显示值类型、错误传播、引用隐式交叉和 IF 布尔条件；修复引用 FALSE 时的分支行为。可靠的顶层 HYPERLINK 结果可形成临时链接记录，打开仍由目标解析器判断。                                                          |
 | 原生 XLSX 保真           | 从 worksheet `<hyperlinks>` 及专用 `.rels` 读取链接，源文件/独立导出均同步记录和关系；带链接的数值、布尔、日期、公式及缓存保留真实类型。未知协议、文件路径和未解析内部目标仍保存为元数据，打开时由目标解析器决定是否可用。 |
 | 旧模型恢复               | `hydrateStudioExcelHyperlinks(document, source)` 仅补齐缺少 `hyperlinks` 的工作表，按源工作表身份、结构记录和重命名迁移原链接；已有显式数组保持原意，`[]` 表示显式清除。                                                   |
@@ -95,14 +95,14 @@ Sheet 使用累计行高布局，提供行高弹窗（0–409.5pt，0 隐藏）�
 
 实现位置：[StudioPdf.tsx](../packages/ui/src/components/OfficeStudio/StudioPdf.tsx)、[StudioPdf.css](../packages/ui/src/components/OfficeStudio/StudioPdf.css)、[studio-pdf-adapter.ts](src/pages/collaboration/office-studio/studio-pdf-adapter.ts)、[studio-pdf-codec.ts](src/pages/collaboration/office-studio/studio-pdf-codec.ts)。原文页面由宿主的 PDF.js adapter 渲染，导出由 pdf-lib codec 写回。
 
-| 参考设计或操作     | 当前 ZUI 实现                                                                                                                                                    |
+| 参考设计或操作     | 当前 ZUVI 实现                                                                                                                                                    |
 | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 静态编辑组与标签   | 开始、批注两类 ZUI Tabs 共用撤销、重做、选择组；功能区分组有短标签与分隔，并区分小按钮和带图标的大按钮。                                                         |
+| 静态编辑组与标签   | 开始、批注两类 ZUVI Tabs 共用撤销、重做、选择组；功能区分组有短标签与分隔，并区分小按钮和带图标的大按钮。                                                         |
 | 开始工具           | 插入文字/矩形；当前页旋转/页面缩略导航；查找/侧栏入口。                                                                                                          |
 | 批注工具           | 文字、高亮、矩形、手写签名及批注列表；文字、颜色、几何等属性沿用现有标注模型。手写签名保存为笔迹，不提供证书数字签名。                                           |
 | 左右导航与画布     | 查找、批注、缩略图、表单四类导航，同一入口可关闭侧栏；查找/缩略图在左，批注/表单在右。原文白页放在灰画布上，搜索命中、标注与表单覆盖在对应页面坐标。             |
 | 普通表单与原文保存 | 保留普通 AcroForm 字段的原名、选项、控件位置和只读属性；编辑已有字段值，导出从原 PDF 写入这些值与新增标注。原文内容采用页面渲染，没有任意修改原 PDF 排版的能力。 |
-| 页码和缩放         | 25px 单行状态栏包含前/后页、页码、ZUI 缩放 Select 与有界增减按钮；缩放菜单向上展开。页面渲染、坐标变换、表单和历史逻辑沿用已有实现。                             |
+| 页码和缩放         | 25px 单行状态栏包含前/后页、页码、ZUVI 缩放 Select 与有界增减按钮；缩放菜单向上展开。页面渲染、坐标变换、表单和历史逻辑沿用已有实现。                             |
 
 ## ranuts 文件生命周期到宿主的映射
 

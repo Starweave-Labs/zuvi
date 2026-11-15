@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Calendar } from '@zui/react';
+import { Calendar } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -112,33 +112,33 @@ export default function CalendarPage(): React.ReactNode {
         name="Calendar"
         parts={['root', 'header', 'label', 'nav', 'grid', 'week', 'weekday', 'day']}
         vars={[
-          '--z-calendar-bg',
-          '--z-calendar-fg',
-          '--z-calendar-border',
-          '--z-calendar-radius',
-          '--z-calendar-padding',
-          '--z-calendar-label-font-size',
-          '--z-calendar-label-font-weight',
-          '--z-calendar-label-fg',
-          '--z-calendar-nav-size',
-          '--z-calendar-nav-radius',
-          '--z-calendar-nav-fg',
-          '--z-calendar-nav-hover-bg',
-          '--z-calendar-grid-gap',
-          '--z-calendar-weekday-font-size',
-          '--z-calendar-weekday-fg',
-          '--z-calendar-day-size',
-          '--z-calendar-day-font-size',
-          '--z-calendar-day-fg',
-          '--z-calendar-day-radius',
-          '--z-calendar-day-hover-bg',
-          '--z-calendar-day-selected-bg',
-          '--z-calendar-day-selected-fg',
-          '--z-calendar-day-today-border',
-          '--z-calendar-day-today-fg',
-          '--z-calendar-day-out-fg',
-          '--z-calendar-focus-ring',
-          '--z-calendar-transition',
+          '--zuvi-calendar-bg',
+          '--zuvi-calendar-fg',
+          '--zuvi-calendar-border',
+          '--zuvi-calendar-radius',
+          '--zuvi-calendar-padding',
+          '--zuvi-calendar-label-font-size',
+          '--zuvi-calendar-label-font-weight',
+          '--zuvi-calendar-label-fg',
+          '--zuvi-calendar-nav-size',
+          '--zuvi-calendar-nav-radius',
+          '--zuvi-calendar-nav-fg',
+          '--zuvi-calendar-nav-hover-bg',
+          '--zuvi-calendar-grid-gap',
+          '--zuvi-calendar-weekday-font-size',
+          '--zuvi-calendar-weekday-fg',
+          '--zuvi-calendar-day-size',
+          '--zuvi-calendar-day-font-size',
+          '--zuvi-calendar-day-fg',
+          '--zuvi-calendar-day-radius',
+          '--zuvi-calendar-day-hover-bg',
+          '--zuvi-calendar-day-selected-bg',
+          '--zuvi-calendar-day-selected-fg',
+          '--zuvi-calendar-day-today-border',
+          '--zuvi-calendar-day-today-fg',
+          '--zuvi-calendar-day-out-fg',
+          '--zuvi-calendar-focus-ring',
+          '--zuvi-calendar-transition',
         ]}
       />
     </div>

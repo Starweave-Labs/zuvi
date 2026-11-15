@@ -205,7 +205,7 @@ describe('QRCode component', () => {
     render(<QRCode value="1234567" />);
     const svg = screen.getByRole('img');
     expect(svg).toHaveAttribute('data-part', 'root');
-    expect(svg).toHaveClass('z-qrcode');
+    expect(svg).toHaveClass('zuvi-qrcode');
     expect(svg.getAttribute('aria-label')).toContain('1234567');
     expect(svg).toHaveAttribute('width', '160');
     expect(svg).toHaveAttribute('height', '160');
@@ -260,9 +260,9 @@ describe('QRCode component', () => {
       />
     );
     const root = container.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-qrcode', 'my-root', 'cls-root');
-    expect(root.querySelector('[data-part="bg"]')).toHaveClass('z-qrcode-bg', 'cls-bg');
-    expect(root.querySelector('[data-part="modules"]')).toHaveClass('z-qrcode-modules', 'cls-modules');
+    expect(root).toHaveClass('zuvi-qrcode', 'my-root', 'cls-root');
+    expect(root.querySelector('[data-part="bg"]')).toHaveClass('zuvi-qrcode-bg', 'cls-bg');
+    expect(root.querySelector('[data-part="modules"]')).toHaveClass('zuvi-qrcode-modules', 'cls-modules');
   });
 
   it('allows aria-label override, forwards ref and native svg props', () => {
@@ -305,10 +305,10 @@ describe('qrcode-encoder', () => {
   it('detects numeric / alphanumeric / byte modes', () => {
     expect(detectMode('1234567')).toBe('numeric');
     expect(detectMode('HELLO WORLD')).toBe('alphanumeric');
-    expect(detectMode('ZUI-2026')).toBe('alphanumeric'); // '-' 在字母数字字符集内
+    expect(detectMode('ZUVI-2026')).toBe('alphanumeric'); // '-' 在字母数字字符集内
     expect(detectMode('hello')).toBe('byte');
     expect(detectMode('你好')).toBe('byte');
-    expect(detectMode('Zui')).toBe('byte'); // 小写 → byte
+    expect(detectMode('Zuvi')).toBe('byte'); // 小写 → byte
   });
 
   it('picks minimal version and throws beyond v10', () => {
@@ -413,10 +413,10 @@ describe('qrcode-encoder', () => {
       ['1234567', 'M'],
       ['HELLO WORLD', 'Q'],
       ['HELLO WORLD', 'H'],
-      ['你好, ZUI! 2026', 'M'],
+      ['你好, ZUVI! 2026', 'M'],
       ['1234567890'.repeat(12), 'Q'], // v5-Q 长短混合块（交错回归）
       ['0012', 'L'], // 前导零数字
-      ['zui-' + 'x'.repeat(200), 'M'], // v10（版本信息 + 校正图形）
+      ['zuvi-' + 'x'.repeat(200), 'M'], // v10（版本信息 + 校正图形）
     ];
     for (const [value, ecl] of cases) {
       const result = encodeQR(value, ecl);

@@ -98,7 +98,7 @@ test('设计变量与交互状态验证安全且生成真实状态 CSS', () => {
   const styled = pageData([
     node('a', 'Button', {
       _design: {
-        desktop: { color: 'var(--z-color-token-brand)', gap: 'var(--z-token-space-section)' },
+        desktop: { color: 'var(--zuvi-color-token-brand)', gap: 'var(--zuvi-token-space-section)' },
       },
       _states: {
         hover: { desktop: { backgroundColor: '#123456' } },
@@ -116,8 +116,8 @@ test('设计变量与交互状态验证安全且生成真实状态 CSS', () => {
   assert.match(css, /:hover/);
   assert.match(css, /:focus-within/);
   assert.match(css, /data-builder-preview-state/);
-  assert.match(css, /var\(--z-token-space-section\)/);
-  assert.throws(() => design.validateDesign({ desktop: { gap: 'var(--z-token-fontSize-body)' } }));
+  assert.match(css, /var\(--zuvi-token-space-section\)/);
+  assert.throws(() => design.validateDesign({ desktop: { gap: 'var(--zuvi-token-fontSize-body)' } }));
   assert.throws(() =>
     tokens.validateTokens([{ key: 'bad', label: 'bad', type: 'color', value: 'url(javascript:1)' }])
   );
@@ -283,7 +283,7 @@ test('页面检查定位失效变量、组件关联、数据字段、锚点与�
   const data = pageData([
     node('a', 'Button', {
       href: '#missing',
-      _design: { desktop: { width: '1200px', color: 'var(--z-color-token-missing)' } },
+      _design: { desktop: { width: '1200px', color: 'var(--zuvi-color-token-missing)' } },
       _logic: {
         bindings: [{ property: 'children', value: '{{state.missing}}' }],
         click: [{ type: 'navigate', pageId: 'gone' }],

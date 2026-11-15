@@ -8,14 +8,14 @@ import { ADMIN_SHELL_ROUTE_PREFIX } from './prototypes/admin-shell/routes';
 import { SPLITTER_DETAIL_ROUTE, SPLITTER_IDE_ROUTE } from './prototypes/splitter/routes';
 import { DATAGRID_ROUTE } from './prototypes/datagrid/routes';
 import { catalog } from './site';
-import { CommandPalette, type CommandPaletteCommand, type SideNavSection } from '@zui/react';
+import { CommandPalette, type CommandPaletteCommand, type SideNavSection } from '@zuvi/react';
 
 const AdminShellPrototype = lazy(() => import('./prototypes/admin-shell/AdminShellPrototype'));
 const SplitterPrototype = lazy(() => import('./prototypes/splitter/SplitterPrototype'));
 const DataGridPrototype = lazy(() => import('./prototypes/datagrid/DataGridPrototype'));
 const DocsNavigationDrawer = lazy(() => import('./components/DocsNavigationDrawer'));
 const SideNav = lazy(async () => {
-  const module = await import('@zui/react');
+  const module = await import('@zuvi/react');
   return { default: module.SideNav };
 });
 
@@ -83,7 +83,7 @@ export default function App(): React.ReactNode {
   const mobileSearchRef = useRef<HTMLInputElement | null>(null);
   const focusPageOnRouteRef = useRef<string | null>(null);
 
-  // 暗色切换：写 data-theme，文档 chrome 自身复用 z 令牌（docs.css 全部走 var(--z-*)）
+  // 暗色切换：写 data-theme，文档 chrome 自身复用 z 令牌（docs.css 全部走 var(--zuvi-*)）
   const toggleDark = () => {
     const next = !getEffectiveDarkTheme();
     document.documentElement.dataset.theme = next ? 'dark' : 'light';
@@ -175,7 +175,7 @@ export default function App(): React.ReactNode {
     }
   };
 
-  const GITHUB_URL = 'https://github.com/yeyouyuan/zui';
+  const GITHUB_URL = 'https://github.com/yeyouyuan/zuvi';
   const paletteCommands: CommandPaletteCommand[] = (() => {
     const commands: CommandPaletteCommand[] = [
       {
@@ -392,7 +392,7 @@ export default function App(): React.ReactNode {
           ) : null}
           <a className="doc-brand" href={hrefFor('/')}>
             <span className="doc-brand-mark">Z</span>
-            <span className="doc-brand-name">ZUI</span>
+            <span className="doc-brand-name">ZUVI</span>
             <span className="doc-version">v{catalog.version}</span>
           </a>
           <span className="doc-topbar-context">
@@ -418,7 +418,7 @@ export default function App(): React.ReactNode {
           </button>
           <a
             className="doc-chip-btn doc-chip-link"
-            href="https://github.com/yeyouyuan/zui"
+            href="https://github.com/yeyouyuan/zuvi"
             target="_blank"
             rel="noreferrer"
           >

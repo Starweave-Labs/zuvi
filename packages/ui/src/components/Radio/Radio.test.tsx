@@ -143,10 +143,10 @@ describe('RadioGroup + Radio', () => {
       </RadioGroup>
     );
     const group = screen.getByRole('radiogroup');
-    const root = group.querySelector('[data-part="root"].z-radio') as HTMLElement;
-    expect(root).toHaveClass('z-radio', 'my-root', 'cls-root');
-    expect(root.querySelector('[data-part="control"]')).toHaveClass('z-radio-dot', 'cls-control');
-    expect(root.querySelector('[data-part="label"]')).toHaveClass('z-radio-label', 'cls-label');
+    const root = group.querySelector('[data-part="root"].zuvi-radio') as HTMLElement;
+    expect(root).toHaveClass('zuvi-radio', 'my-root', 'cls-root');
+    expect(root.querySelector('[data-part="control"]')).toHaveClass('zuvi-radio-dot', 'cls-control');
+    expect(root.querySelector('[data-part="label"]')).toHaveClass('zuvi-radio-label', 'cls-label');
   });
 
   it('supports keyboard navigation via native radios', async () => {

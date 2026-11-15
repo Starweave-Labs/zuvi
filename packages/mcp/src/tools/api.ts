@@ -1,5 +1,5 @@
 /**
- * zui_get_component_api —— 组件名 → props 签名 + 用法示例。
+ * zuvi_get_component_api —— 组件名 → props 签名 + 用法示例。
  * 读 meta.json（CONTRACTS-V3 §2 结构）+ CONTRACTS-V3 §1 精确契约。
  */
 
@@ -41,7 +41,7 @@ export function getComponentApi(catalog: Catalog, name: string): ComponentApi | 
   if (!entry) {
     return {
       ok: false,
-      error: `未找到组件 "${name}"。可用组件见 zui_search_components。`,
+      error: `未找到组件 "${name}"。可用组件见 zuvi_search_components。`,
       suggestions: suggestComponents(catalog, name),
     };
   }

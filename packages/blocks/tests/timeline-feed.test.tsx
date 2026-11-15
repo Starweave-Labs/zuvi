@@ -9,9 +9,9 @@ afterEach(cleanup);
 describe('timeline-feed block', () => {
   it('renders Timeline with Avatar and Card entries', () => {
     const { container } = render(<TimelineFeedBlock />);
-    expect(container.querySelector('.z-timeline')).toBeInTheDocument();
-    expect(container.querySelectorAll('.z-timeline-item').length).toBeGreaterThanOrEqual(4);
-    expect(container.querySelectorAll('.z-avatar').length).toBeGreaterThanOrEqual(4);
+    expect(container.querySelector('.zuvi-timeline')).toBeInTheDocument();
+    expect(container.querySelectorAll('.zuvi-timeline-item').length).toBeGreaterThanOrEqual(4);
+    expect(container.querySelectorAll('.zuvi-avatar').length).toBeGreaterThanOrEqual(4);
     expect(screen.getByText('发布了周报《第 45 周产品迭代汇总》')).toBeInTheDocument();
     expect(screen.getByText('李梅')).toBeInTheDocument();
     expect(screen.getByText('告警')).toBeInTheDocument();
@@ -19,8 +19,8 @@ describe('timeline-feed block', () => {
 
   it('shows Skeleton placeholders while loading', () => {
     const { container } = render(<TimelineFeedBlock loading />);
-    expect(container.querySelector('.z-timeline')).not.toBeInTheDocument();
-    expect(container.querySelectorAll('.z-skeleton').length).toBeGreaterThanOrEqual(3);
+    expect(container.querySelector('.zuvi-timeline')).not.toBeInTheDocument();
+    expect(container.querySelectorAll('.zuvi-skeleton').length).toBeGreaterThanOrEqual(3);
     expect(container.querySelector('[aria-busy="true"]')).toBeInTheDocument();
   });
 

@@ -1,4 +1,4 @@
-# ZUI 本地项目与文档显示审计（2026-11-09）
+# ZUVI 本地项目与文档显示审计（2026-11-09）
 
 ## 当前进度
 
@@ -43,7 +43,7 @@ Combobox / MultiCombobox、SideNav、Splitter、CommandPalette 已有实现；Da
 | 逐页显示矩阵                     | 77 路由 × 1440px/320px × 浅色/暗色，共 308 次页面检查通过；覆盖正文/页面溢出、示例直接子元素裁切、图片加载、Slider 宽度和文字对比度          |
 | 截图复核                         | 已逐页查看四组首屏联系表，并放大复核协作原型、Slider、日期范围、Table、Transfer 等修改页面。已刷新最终 Transfer 和 Avatar 修复后的矩阵与截图 |
 
-显示矩阵报告：[1440 浅色](audits/2026-11-09/1440-light.json)、[1440 暗色](audits/2026-11-09/1440-dark.json)、[320 浅色](audits/2026-11-09/320-light.json)、[320 暗色](audits/2026-11-09/320-dark.json)。截图来自仓库 Playwright 检查，完整截图集位于本机 `/tmp/zui-release-audit/`，该临时目录不保证长期保留。
+显示矩阵报告：[1440 浅色](audits/2026-11-09/1440-light.json)、[1440 暗色](audits/2026-11-09/1440-dark.json)、[320 浅色](audits/2026-11-09/320-light.json)、[320 暗色](audits/2026-11-09/320-dark.json)。截图来自仓库 Playwright 检查，完整截图集位于本机 `/tmp/zuvi-release-audit/`，该临时目录不保证长期保留。
 
 之前因审批服务超时未能执行最后的 Transfer 复核；本次发布前已恢复终端权限并完成全部 67 条仓库 Playwright 用例。四份报告为最终修复后的结果，另保存了 [Transfer 窄屏暗色截图](audits/2026-11-09/transfer-mobile-dark.png)。浏览器连接器手动协作预览未补做，相关交互由仓库 Playwright 和截图复核覆盖。
 
@@ -54,4 +54,4 @@ Combobox / MultiCombobox、SideNav、Splitter、CommandPalette 已有实现；Da
 1. 内容协作先用文章维护和附件审核两个消费场景验证 API，然后正式实现 FilePreview、ContentEditor、CommentThread，接入异步状态、错误和冲突、权限及引用版本。
 2. DataGrid 继续完成 RFC 中的立项前置条件；当前不扩大正式组件计数。
 3. 继续补齐全部打开态、长文案、缩放、辅助技术和真实输入法人工矩阵。
-4. npm 仍需使用有 `@zui` scope 发布权限的账号登录；用户选择本轮先发布 GitHub，npm 稍后继续。发布时再消费 changeset、核对版本和执行发布清单。
+4. npm 仍需使用有 `@zuvi` scope 发布权限的账号登录；用户选择本轮先发布 GitHub，npm 稍后继续。发布时再消费 changeset、核对版本和执行发布清单。

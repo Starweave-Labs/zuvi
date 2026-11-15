@@ -45,7 +45,7 @@ describe('FloatingPanel', () => {
     const anchor = React.createRef<HTMLButtonElement>();
     render(<div style={{ position: 'fixed', zIndex: 400 }}>
       <div>
-        <button ref={anchor} style={{ '--z-select-listbox-bg': 'rgb(1, 2, 3)' } as React.CSSProperties}>触发</button>
+        <button ref={anchor} style={{ '--zuvi-select-listbox-bg': 'rgb(1, 2, 3)' } as React.CSSProperties}>触发</button>
         <FloatingPanel open anchorRef={anchor}>
           <div role="listbox" style={{ zIndex: 200 }}>选项</div>
         </FloatingPanel>
@@ -53,6 +53,6 @@ describe('FloatingPanel', () => {
     </div>);
     const panel = screen.getByRole('listbox');
     expect(panel.style.zIndex).toBe('401');
-    expect(panel.parentElement?.style.getPropertyValue('--z-select-listbox-bg')).toBe('rgb(1, 2, 3)');
+    expect(panel.parentElement?.style.getPropertyValue('--zuvi-select-listbox-bg')).toBe('rgb(1, 2, 3)');
   });
 });

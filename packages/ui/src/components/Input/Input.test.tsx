@@ -22,10 +22,10 @@ describe('Input', () => {
     expect(root).toHaveAttribute('data-part', 'root');
     expect(root).toHaveAttribute('data-size', 'md');
     expect(root).toHaveAttribute('data-status', 'default');
-    expect(root).toHaveClass('z-input');
+    expect(root).toHaveClass('zuvi-input');
     const input = getInput();
     expect(input).toHaveAttribute('data-part', 'input');
-    expect(input).toHaveClass('z-input-field');
+    expect(input).toHaveClass('zuvi-input-field');
     expect(input).toHaveValue('');
   });
 
@@ -93,7 +93,7 @@ describe('Input', () => {
     const clear = screen.getByRole('button', { name: '清除' });
     expect(clear).toHaveAttribute('type', 'button');
     expect(clear).toHaveAttribute('data-part', 'clear');
-    expect(clear).toHaveClass('z-input-clear');
+    expect(clear).toHaveClass('zuvi-input-clear');
   });
 
   it('clearable: not rendered without clearable prop even with value', () => {
@@ -185,10 +185,10 @@ describe('Input', () => {
     const prefix = container.querySelector('[data-part="prefix"]');
     const suffix = container.querySelector('[data-part="suffix"]');
     expect(prefix).toBeInTheDocument();
-    expect(prefix).toHaveClass('z-input-prefix');
+    expect(prefix).toHaveClass('zuvi-input-prefix');
     expect(prefix).toHaveTextContent('搜索');
     expect(suffix).toBeInTheDocument();
-    expect(suffix).toHaveClass('z-input-suffix');
+    expect(suffix).toHaveClass('zuvi-input-suffix');
     expect(suffix).toHaveTextContent('个');
   });
 
@@ -211,11 +211,11 @@ describe('Input', () => {
       />
     );
     const root = getRoot(container);
-    expect(root).toHaveClass('z-input', 'my-root', 'cls-root');
-    expect(getInput()).toHaveClass('z-input-field', 'cls-input');
-    expect(root.querySelector('[data-part="prefix"]')).toHaveClass('z-input-prefix', 'cls-prefix');
-    expect(root.querySelector('[data-part="suffix"]')).toHaveClass('z-input-suffix', 'cls-suffix');
-    expect(root.querySelector('[data-part="clear"]')).toHaveClass('z-input-clear', 'cls-clear');
+    expect(root).toHaveClass('zuvi-input', 'my-root', 'cls-root');
+    expect(getInput()).toHaveClass('zuvi-input-field', 'cls-input');
+    expect(root.querySelector('[data-part="prefix"]')).toHaveClass('zuvi-input-prefix', 'cls-prefix');
+    expect(root.querySelector('[data-part="suffix"]')).toHaveClass('zuvi-input-suffix', 'cls-suffix');
+    expect(root.querySelector('[data-part="clear"]')).toHaveClass('zuvi-input-clear', 'cls-clear');
   });
 
   it('forwards ref to the native input element', () => {
@@ -238,13 +238,13 @@ describe('Input.Textarea', () => {
   it('renders textarea with parts, data attributes and modifier class', () => {
     const { container } = render(<InputTextarea aria-label="备注" />);
     const root = getRoot(container);
-    expect(root).toHaveClass('z-input', 'z-input-textarea');
+    expect(root).toHaveClass('zuvi-input', 'zuvi-input-textarea');
     expect(root).toHaveAttribute('data-size', 'md');
     expect(root).toHaveAttribute('data-status', 'default');
     const textarea = screen.getByRole('textbox') as HTMLTextAreaElement;
     expect(textarea).toBeInstanceOf(HTMLTextAreaElement);
     expect(textarea).toHaveAttribute('data-part', 'textarea');
-    expect(textarea).toHaveClass('z-input-field');
+    expect(textarea).toHaveClass('zuvi-input-field');
   });
 
   it('uncontrolled: typing updates value and fires onChange', async () => {
@@ -334,9 +334,9 @@ describe('Input.Textarea', () => {
       />
     );
     const root = getRoot(container);
-    expect(root).toHaveClass('z-input-textarea', 'my-root', 'cls-root');
-    expect(screen.getByRole('textbox')).toHaveClass('z-input-field', 'cls-textarea');
-    expect(root.querySelector('[data-part="clear"]')).toHaveClass('z-input-clear', 'cls-clear');
+    expect(root).toHaveClass('zuvi-input-textarea', 'my-root', 'cls-root');
+    expect(screen.getByRole('textbox')).toHaveClass('zuvi-input-field', 'cls-textarea');
+    expect(root.querySelector('[data-part="clear"]')).toHaveClass('zuvi-input-clear', 'cls-clear');
   });
 });
 
@@ -348,7 +348,7 @@ describe('Input.Password', () => {
     const toggle = screen.getByRole('button', { name: '显示密码' });
     expect(toggle).toHaveAttribute('type', 'button');
     expect(toggle).toHaveAttribute('data-part', 'toggle');
-    expect(toggle).toHaveClass('z-input-toggle');
+    expect(toggle).toHaveClass('zuvi-input-toggle');
   });
 
   it('toggle switches between hidden and visible and updates aria-label', async () => {
@@ -405,7 +405,7 @@ describe('Input.Search', () => {
     const button = screen.getByRole('button', { name: '搜索' });
     expect(button).toHaveAttribute('type', 'button');
     expect(button).toHaveAttribute('data-part', 'search');
-    expect(button).toHaveClass('z-input-search-button');
+    expect(button).toHaveClass('zuvi-input-search-button');
     expect(container).toBeDefined();
   });
 
@@ -516,7 +516,7 @@ describe('Input.Search', () => {
       />
     );
     const root = getRoot(container);
-    expect(root).toHaveClass('z-input-search', 'my-root', 'cls-root');
+    expect(root).toHaveClass('zuvi-input-search', 'my-root', 'cls-root');
     expect(screen.getByRole('searchbox')).toHaveClass('cls-input');
     expect(root.querySelector('[data-part="clear"]')).toHaveClass('cls-clear');
     expect(root.querySelector('[data-part="search"]')).toHaveClass('cls-search');

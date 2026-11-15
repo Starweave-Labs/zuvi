@@ -19,7 +19,7 @@ function stubClipboard(writeText: ReturnType<typeof vi.fn>) {
 }
 
 describe('Typography.Title', () => {
-  it('level 1-5 分别渲染 h1-h5，根类 z-typography + z-typography-h1..h5', () => {
+  it('level 1-5 分别渲染 h1-h5，根类 zuvi-typography + zuvi-typography-h1..h5', () => {
     const texts = ['一', '二', '三', '四', '五'];
     const { container } = render(
       <>
@@ -33,7 +33,7 @@ describe('Typography.Title', () => {
     for (let level = 1; level <= 5; level++) {
       const heading = container.querySelector(`h${level}`);
       expect(heading).not.toBeNull();
-      expect(heading).toHaveClass('z-typography');
+      expect(heading).toHaveClass('zuvi-typography');
       expect(heading).toHaveClass(`z-typography-h${level}`);
       expect(heading).toHaveTextContent(texts[level - 1]);
       expect(heading).toHaveAttribute('data-part', 'root');
@@ -54,20 +54,20 @@ describe('Typography.Title', () => {
 });
 
 describe('Typography.Paragraph', () => {
-  it('渲染 <p>，带 z-typography-paragraph 类', () => {
+  it('渲染 <p>，带 zuvi-typography-paragraph 类', () => {
     const { container } = render(<Typography.Paragraph>段落内容</Typography.Paragraph>);
     const p = container.querySelector('p');
     expect(p).not.toBeNull();
-    expect(p).toHaveClass('z-typography');
-    expect(p).toHaveClass('z-typography-paragraph');
+    expect(p).toHaveClass('zuvi-typography');
+    expect(p).toHaveClass('zuvi-typography-paragraph');
     expect(p).toHaveTextContent('段落内容');
   });
 
-  it('ellipsis=true → data-ellipsis 且默认 1 行（--z-typography-ellipsis-rows=1）', () => {
+  it('ellipsis=true → data-ellipsis 且默认 1 行（--zuvi-typography-ellipsis-rows=1）', () => {
     const { container } = render(<Typography.Paragraph ellipsis>长文本</Typography.Paragraph>);
     const p = container.querySelector('p')!;
     expect(p).toHaveAttribute('data-ellipsis', 'true');
-    expect(p.style.getPropertyValue('--z-typography-ellipsis-rows')).toBe('1');
+    expect(p.style.getPropertyValue('--zuvi-typography-ellipsis-rows')).toBe('1');
   });
 
   it('ellipsis={{ rows: 3 }} → 内联行数变量供 -webkit-line-clamp 消费', () => {
@@ -75,24 +75,24 @@ describe('Typography.Paragraph', () => {
       <Typography.Paragraph ellipsis={{ rows: 3 }}>长文本</Typography.Paragraph>,
     );
     const p = container.querySelector('p')!;
-    expect(p.style.getPropertyValue('--z-typography-ellipsis-rows')).toBe('3');
+    expect(p.style.getPropertyValue('--zuvi-typography-ellipsis-rows')).toBe('3');
   });
 
   it('未开 ellipsis → 无 data-ellipsis、无行数变量', () => {
     const { container } = render(<Typography.Paragraph>普通段落</Typography.Paragraph>);
     const p = container.querySelector('p')!;
     expect(p).not.toHaveAttribute('data-ellipsis');
-    expect(p.style.getPropertyValue('--z-typography-ellipsis-rows')).toBe('');
+    expect(p.style.getPropertyValue('--zuvi-typography-ellipsis-rows')).toBe('');
   });
 });
 
 describe('Typography.Text', () => {
-  it('默认渲染 <span>，带 z-typography-text 类', () => {
+  it('默认渲染 <span>，带 zuvi-typography-text 类', () => {
     const { container } = render(<Typography.Text>普通文本</Typography.Text>);
     const span = container.querySelector('span');
     expect(span).not.toBeNull();
-    expect(span).toHaveClass('z-typography');
-    expect(span).toHaveClass('z-typography-text');
+    expect(span).toHaveClass('zuvi-typography');
+    expect(span).toHaveClass('zuvi-typography-text');
     expect(span).toHaveTextContent('普通文本');
   });
 
@@ -139,7 +139,7 @@ describe('Typography.Text', () => {
 });
 
 describe('type 配色', () => {
-  it('四色 → data-type 透传（CSS 侧映射 --z-color-* 令牌）', () => {
+  it('四色 → data-type 透传（CSS 侧映射 --zuvi-color-* 令牌）', () => {
     for (const type of ['secondary', 'success', 'warning', 'danger'] as const) {
       const { container, unmount } = render(<TypographyText type={type}>颜色</TypographyText>);
       expect(container.firstChild).toHaveAttribute('data-type', type);
@@ -155,13 +155,13 @@ describe('copyable', () => {
     stubClipboard(writeText);
     const onCopy = vi.fn();
     const { container } = render(
-      <Typography.Text copyable={{ onCopy }}>ZUI 文本</Typography.Text>,
+      <Typography.Text copyable={{ onCopy }}>ZUVI 文本</Typography.Text>,
     );
     const button = container.querySelector('button');
     expect(button).not.toBeNull();
     await user.click(button!);
     expect(writeText).toHaveBeenCalledTimes(1);
-    expect(writeText).toHaveBeenCalledWith('ZUI 文本');
+    expect(writeText).toHaveBeenCalledWith('ZUVI 文本');
     expect(onCopy).toHaveBeenCalledTimes(1);
   });
 
@@ -170,7 +170,7 @@ describe('copyable', () => {
     try {
       const writeText = vi.fn().mockResolvedValue(undefined);
       stubClipboard(writeText);
-      const { container } = render(<Typography.Text copyable>ZUI</Typography.Text>);
+      const { container } = render(<Typography.Text copyable>ZUVI</Typography.Text>);
       const button = container.querySelector('button')!;
       expect(button).toHaveAttribute('aria-label', '复制');
       expect(button).not.toHaveAttribute('title');
@@ -256,7 +256,7 @@ describe('定制出口', () => {
         定制
       </Typography.Text>,
     );
-    const root = container.querySelector('span.z-typography')!;
+    const root = container.querySelector('span.zuvi-typography')!;
     expect(root).toHaveClass('my-text');
     expect(root).toHaveClass('my-root');
     expect(root).toHaveAttribute('data-part', 'root');

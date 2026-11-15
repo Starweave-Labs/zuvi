@@ -101,13 +101,13 @@ export function Watermark(props: WatermarkProps) {
     <div
       {...rest}
       data-part="root"
-      className={cx('z-watermark', classNames?.root, className)}
+      className={cx('zuvi-watermark', classNames?.root, className)}
       data-rotate={rotate}
     >
       {children}
       <div
         data-part="overlay"
-        className={cx('z-watermark-overlay', classNames?.overlay)}
+        className={cx('zuvi-watermark-overlay', classNames?.overlay)}
         aria-hidden="true"
         style={{ backgroundImage: tile, backgroundSize: `${gap[0]}px ${gap[1]}px` }}
       />

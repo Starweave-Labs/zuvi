@@ -61,7 +61,7 @@ const sheets = compiled('../../packages/ui/src/components/OfficeStudio/studio-sh
   './studio-sheet-rules': rules,
 });
 const print = compiled('../src/pages/collaboration/office-studio/studio-print.ts', {
-  '@zui/react': models,
+  '@zuvi/react': models,
   '../../../../../packages/ui/src/components/OfficeStudio/studio-sheet-model': sheets,
   '../../../../../packages/ui/src/components/OfficeStudio/studio-sheet-rules': rules,
   './studio-files': {
@@ -667,7 +667,7 @@ test('PDF printing uses the exported file and releases its object URL after prin
   const isolated = compiled(
     '../src/pages/collaboration/office-studio/studio-print.ts',
     {
-      '@zui/react': models,
+      '@zuvi/react': models,
       '../../../../../packages/ui/src/components/OfficeStudio/studio-sheet-model': sheets,
       '../../../../../packages/ui/src/components/OfficeStudio/studio-sheet-rules': rules,
       './studio-files': {
@@ -725,7 +725,7 @@ test('a failed PDF print preview cleans up its file and ignores a late load even
   const isolated = compiled(
     '../src/pages/collaboration/office-studio/studio-print.ts',
     {
-      '@zui/react': models,
+      '@zuvi/react': models,
       '../../../../../packages/ui/src/components/OfficeStudio/studio-sheet-model': sheets,
       '../../../../../packages/ui/src/components/OfficeStudio/studio-sheet-rules': rules,
       './studio-files': { exportStudioFile: async () => source },
@@ -759,7 +759,7 @@ test('a timed-out print preview never starts printing when a late font load comp
   const isolated = compiled(
     '../src/pages/collaboration/office-studio/studio-print.ts',
     {
-      '@zui/react': models,
+      '@zuvi/react': models,
       '../../../../../packages/ui/src/components/OfficeStudio/studio-sheet-model': sheets,
       '../../../../../packages/ui/src/components/OfficeStudio/studio-sheet-rules': rules,
       './studio-files': {},

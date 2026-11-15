@@ -1,4 +1,4 @@
-import type { OfficeStudioDocument } from '@zui/react';
+import type { OfficeStudioDocument } from '@zuvi/react';
 import type { StudioStoredFile } from './studio-storage';
 
 /** Restore missing source metadata for the document entering an editor or history preview. */

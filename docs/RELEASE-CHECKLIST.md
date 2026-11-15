@@ -1,10 +1,10 @@
-# ZUI 发布清单
+# ZUVI 发布清单
 
-适用包：`@zui/react`、`@zui/tokens`、`@zui/icons`、`@zui/i18n`、`@zui/cli`、`@zui/mcp`、`@zui/blocks`。
+适用包：`@zuvi/react`、`@zuvi/tokens`、`@zuvi/icons`、`@zuvi/i18n`、`@zuvi/cli`、`@zuvi/mcp`、`@zuvi/blocks`。
 
 ## v0.5.0 发布基线（2026-11-14）
 
-- 七个公开包统一为 `0.5.0`，GitHub Release 标签必须为 `v0.5.0`；`@zui/mcp` 运行时自报版本同步。
+- 七个公开包统一为 `0.5.0`，GitHub Release 标签必须为 `v0.5.0`；`@zuvi/mcp` 运行时自报版本同步。
 - Registry 保持 73 个组件、16 个业务区块（89 条目）；`Table` 新增数据驱动模式：显式排序循环（受控 `sortState`、`manual` 服务端模式）、专用手柄列移动、高级字段管理，语义化用法向后兼容。
 - 发布前门禁与 v0.4.0 相同：Registry 校验、工作区构建与类型检查、ESLint、全量单元测试、浏览器 E2E、浏览器包构建、分发检查、源码消费者检查、包体预算及 GitHub Packages 本地真实安装检查。
 - 发布流程：`main` CI 与 Pages 在同一提交成功后发布 GitHub Release `v0.5.0`，等待 Publish GitHub Packages 工作流完成。
@@ -12,17 +12,17 @@
 
 ## v0.4.0 发布基线（2026-11-13）
 
-- 七个公开包统一为 `0.4.0`，GitHub Release 标签必须为 `v0.4.0`；`@zui/mcp` 运行时自报版本与包版本一致。
+- 七个公开包统一为 `0.4.0`，GitHub Release 标签必须为 `v0.4.0`；`@zuvi/mcp` 运行时自报版本与包版本一致。
 - Registry 为 73 个组件、16 个业务区块，共 89 个条目；`OfficeEditor` 与 `OfficeStudio` 已进入公共导出、子路径、Registry、CLI 和 MCP。
 - 发布前必须完成 Registry 校验、工作区构建与类型检查、ESLint、全量单元测试、浏览器 E2E、浏览器包构建、分发检查、源码消费者检查、包体预算及 GitHub Packages 本地真实安装检查。
 - `main` 的 CI 与 Pages 必须在同一提交成功；之后发布 GitHub Release，等待 GitHub Packages 工作流完成，并从真实 registry 重新安装七个包核对 SHA-512 完整性。
-- Pages 生产路径为 `/zui/`，CDN 产物位于 `cdn/v0.4.0/`；发布页与公开安装说明使用 `@yeyouyuan/zui-*` 名称和 `@zui/*` npm aliases。
+- Pages 生产路径为 `/zuvi/`，CDN 产物位于 `cdn/v0.4.0/`；发布页与公开安装说明使用 `@yeyouyuan/zuvi-*` 名称和 `@zuvi/*` npm aliases。
 
 ## v0.2.0 发布基线（2026-11-07 历史记录）
 
 - 七包版本和 CHANGELOG 已更新至 `0.2.0`，原 changeset 已消费。**不要再次执行 `changeset version`**。
 - Registry 为 66 个组件、16 个业务区块；Anchor 已有源码、导出、文档和 Registry 条目。
-- 七包已有独立 LICENSE，`@zui/react` 已有 README；`@zui/blocks` 对 `@zui/react` 的依赖已移入 `dependencies`。
+- 七包已有独立 LICENSE，`@zuvi/react` 已有 README；`@zuvi/blocks` 对 `@zuvi/react` 的依赖已移入 `dependencies`。
 - GitHub `main` 已包含质量提交 `c7fec2f` 与 Pages 依赖构建修复 `e60a06f`；对应 CI、Pages、`v0.2.0` JS/CSS 和在线脚本演示均已验证成功。远端仍无 `v0.2.0` tag，npm/unpkg 仍等待发布认证。
 - 文档 71 个导航路由已完成 320px 暗色静态布局审计；概览、图标库和 16 个业务区块另做桌面/窄屏/暗色及关键交互复核。66 个组件的全部打开态、长文案和原生 200% 缩放仍属于持续增强验收，不作为本次本地发布门禁的阻塞项。
 
@@ -45,13 +45,13 @@ pnpm -r build
 pnpm -r typecheck
 pnpm lint
 pnpm -r test
-ZUI_E2E_PORT=5175 pnpm test:e2e
-pnpm --filter @zui/react build:browser
+ZUVI_E2E_PORT=5175 pnpm test:e2e
+pnpm --filter @zuvi/react build:browser
 node scripts/check-distribution.mjs
 node scripts/check-consumer.mjs
 ```
 
-E2E 可用 `ZUI_E2E_PORT` 选空闲端口，避免复用已有文档服务。CI 安装 Chromium 并运行同一套浏览器测试。检查 ESM gzip 小于 CI 的 96 KiB 门槛。
+E2E 可用 `ZUVI_E2E_PORT` 选空闲端口，避免复用已有文档服务。CI 安装 Chromium 并运行同一套浏览器测试。检查 ESM gzip 小于 CI 的 96 KiB 门槛。
 
 ### 交互与适配专项复核
 
@@ -66,21 +66,21 @@ E2E 可用 `ZUI_E2E_PORT` 选空闲端口，避免复用已有文档服务。CI 
 - [x] 七包 `package.json` 的版本均为 `0.2.0`，内部依赖可由 workspace 构建和消费者检查正确解析。
 - [x] 七包 `CHANGELOG.md` 条目已按 66 个组件、10 套语言包、142 枚图标和 16 个业务区块核对。
 - [x] 每包 tarball 包含构建产物、README、LICENSE；CLI/MCP 包还包含 `data/registry/registry.json`。
-- [x] `@zui/react` tarball 包含 `dist/browser/zui.global.js`、`zui.css`、`LICENSE.txt`，`unpkg` 字段指向浏览器脚本。
+- [x] `@zuvi/react` tarball 包含 `dist/browser/zuvi.global.js`、`zuvi.css`、`LICENSE.txt`，`unpkg` 字段指向浏览器脚本。
 - [x] `docs/dist/cdn/v0.2.0/` 有同一组三个浏览器产物，`docs/public/cdn-demo.html` 已指向公开的 `v0.2.0`。
-- [x] 七包 `npm pack --dry-run` 不含测试、stories、`node_modules` 等开发文件；`@zui/tokens` 的 CSS 导出和源码令牌、`@zui/blocks` 的源码分发均按包清单保留。
+- [x] 七包 `npm pack --dry-run` 不含测试、stories、`node_modules` 等开发文件；`@zuvi/tokens` 的 CSS 导出和源码令牌、`@zuvi/blocks` 的源码分发均按包清单保留。
 
 ## 3. 发布 npm 与 unpkg
 
-发布账号需要 `@zui` scope 的公开包发布权限，并先在本机或受控 CI 完成 npm 认证。凭据只存 npm/CI 安全配置，不写入仓库。
+发布账号需要 `@zuvi` scope 的公开包发布权限，并先在本机或受控 CI 完成 npm 认证。凭据只存 npm/CI 安全配置，不写入仓库。
 
 ```bash
 npm whoami
 npx changeset publish
-npm view @zui/react@0.2.0 version
+npm view @zuvi/react@0.2.0 version
 ```
 
-发布后核对七包版本及 `@zui/react` tarball 的浏览器产物，再用真实 URL 验证 unpkg 的 JS 与 CSS 返回成功且可在普通 HTML 页面调用 `window.ZUI`。unpkg 是 npm 包的 CDN，不需要单独上传；npm 未发布前不能引用其 URL 作为已上线资源。
+发布后核对七包版本及 `@zuvi/react` tarball 的浏览器产物，再用真实 URL 验证 unpkg 的 JS 与 CSS 返回成功且可在普通 HTML 页面调用 `window.ZUVI`。unpkg 是 npm 包的 CDN，不需要单独上传；npm 未发布前不能引用其 URL 作为已上线资源。
 
 ## 4. GitHub 与 Pages
 
@@ -88,5 +88,5 @@ npm view @zui/react@0.2.0 version
 
 - [x] GitHub 上确认 `e60a06f` 已进入 `main`，对应 CI 全绿、Pages 部署成功。
 - [x] `e60a06f` 对应部署的 `v0.2.0` JS、CSS 与演示页返回成功，入口引用与最终产物哈希一致。
-- [x] 在线打开该部署的脚本演示，确认 `ZUI.createRoot`、Button 样式与点击交互正常，且无页面异常或 console error。
+- [x] 在线打开该部署的脚本演示，确认 `ZUVI.createRoot`、Button 样式与点击交互正常，且无页面异常或 console error。
 - [ ] 发布完成后核对 Git tag、npm 七包版本、unpkg 和 Pages 版本一致。

@@ -15,7 +15,7 @@ import {
   TableHeaderCell,
   TableRow,
   Tag,
-} from '@zui/react';
+} from '@zuvi/react';
 
 /* ---------------------------------- 类型 ---------------------------------- */
 
@@ -258,12 +258,12 @@ export function TablePageBlock<T extends TablePageRow = TablePageRow>({
       data-part="root"
       className={className}
       style={{
-        padding: 'clamp(var(--z-space-3), 3vw, var(--z-space-6))',
-        background: 'var(--z-color-bg-muted)',
+        padding: 'clamp(var(--zuvi-space-3), 3vw, var(--zuvi-space-6))',
+        background: 'var(--zuvi-color-bg-muted)',
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
-        gap: 'var(--z-space-4)',
+        gap: 'var(--zuvi-space-4)',
         ...style,
       }}
     >
@@ -276,25 +276,25 @@ export function TablePageBlock<T extends TablePageRow = TablePageRow>({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            gap: 'var(--z-space-4)',
+            gap: 'var(--zuvi-space-4)',
             flexWrap: 'wrap',
-            marginBottom: 'var(--z-space-4)',
+            marginBottom: 'var(--zuvi-space-4)',
           }}
         >
           <div
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: 'var(--z-space-3)',
+              gap: 'var(--zuvi-space-3)',
               flexWrap: 'wrap',
             }}
           >
             <h2
               style={{
                 margin: 0,
-                fontSize: 'var(--z-text-lg)',
-                fontWeight: 'var(--z-weight-semibold)',
-                color: 'var(--z-color-fg)',
+                fontSize: 'var(--zuvi-text-lg)',
+                fontWeight: 'var(--zuvi-weight-semibold)',
+                color: 'var(--zuvi-color-fg)',
               }}
             >
               {title}
@@ -326,12 +326,12 @@ export function TablePageBlock<T extends TablePageRow = TablePageRow>({
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: 'var(--z-space-3)',
+              gap: 'var(--zuvi-space-3)',
               flexWrap: 'wrap',
             }}
           >
             {effectiveSelected.length > 0 ? (
-              <span style={{ fontSize: 'var(--z-text-sm)', color: 'var(--z-color-fg-muted)' }}>
+              <span style={{ fontSize: 'var(--zuvi-text-sm)', color: 'var(--zuvi-color-fg-muted)' }}>
                 已选 {effectiveSelected.length} 项
               </span>
             ) : null}
@@ -350,7 +350,7 @@ export function TablePageBlock<T extends TablePageRow = TablePageRow>({
           style={{
             opacity: loading ? 0.6 : 1,
             overflowX: 'auto',
-            transition: 'opacity var(--z-duration-fast) var(--z-ease-standard)',
+            transition: 'opacity var(--zuvi-duration-fast) var(--zuvi-ease-standard)',
           }}
           aria-busy={loading || undefined}
         >
@@ -385,7 +385,7 @@ export function TablePageBlock<T extends TablePageRow = TablePageRow>({
                   <TableCell
                     align="center"
                     colSpan={columns.length + (selectable ? 1 : 0) + (rowActions != null ? 1 : 0)}
-                    style={{ padding: 'var(--z-space-9)', color: 'var(--z-color-fg-subtle)' }}
+                    style={{ padding: 'var(--zuvi-space-9)', color: 'var(--zuvi-color-fg-subtle)' }}
                   >
                     暂无数据
                   </TableCell>
@@ -425,12 +425,12 @@ export function TablePageBlock<T extends TablePageRow = TablePageRow>({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            marginTop: 'var(--z-space-4)',
+            marginTop: 'var(--zuvi-space-4)',
             flexWrap: 'wrap',
-            gap: 'var(--z-space-3)',
+            gap: 'var(--zuvi-space-3)',
           }}
         >
-          <span style={{ fontSize: 'var(--z-text-sm)', color: 'var(--z-color-fg-muted)' }}>
+          <span style={{ fontSize: 'var(--zuvi-text-sm)', color: 'var(--zuvi-color-fg-muted)' }}>
             共 {total ?? data.length} 条记录
           </span>
           <Pagination

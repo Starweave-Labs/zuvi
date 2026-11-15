@@ -10,7 +10,7 @@ export function localSourcePath(cwd: string, directory: string, item: RegistryIt
   const shared = /^packages\/ui\/src\/(utils|config|styles)\/(.+)$/.exec(file);
   const block = /^packages\/blocks\/src\/([^/]+)\/(.+)$/.exec(file);
   const relative = component ? path.join(kebab(component[1]), component[2])
-    : shared ? path.join('_zui', shared[1], shared[2])
+    : shared ? path.join('_zuvi', shared[1], shared[2])
     : block ? path.join('blocks', block[1], block[2])
     : path.join(item.name, path.basename(file));
   return path.resolve(cwd, directory, relative);
@@ -42,7 +42,7 @@ export function readSource(ctx: Ctx, item: RegistryItem, file: string): string {
   };
 
   // 业务块使用本地安装的组件（包含 TableBody / FormInstance 等子导出）。
-  text = text.replace(/import\s+(type\s+)?\{([^}]+)\}\s+from\s+(['"])@zui\/react\3\s*;?/g,
+  text = text.replace(/import\s+(type\s+)?\{([^}]+)\}\s+from\s+(['"])@zuvi\/react\3\s*;?/g,
     (_match, typeOnly: string | undefined, symbols: string) => symbols.split(',').map((symbol) => {
       const specifier = symbol.trim();
       if (!specifier) return '';

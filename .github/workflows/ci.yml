@@ -19,7 +19,7 @@ jobs:
       - run: pnpm exec playwright install --with-deps chromium
       - run: node registry/scripts/generate.mjs --check
       - run: pnpm -r build
-      - run: pnpm --filter @zui/react build:browser
+      - run: pnpm --filter @zuvi/react build:browser
       - run: pnpm -r typecheck
       - run: pnpm lint
       # a11y: axe-core 扫描已包含在 packages/ui 测试套件（src/test/a11y.axe.test.tsx）

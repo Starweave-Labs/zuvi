@@ -48,7 +48,7 @@ async function html(page: Page) {
   return readFileSync((await (await downloaded).path())!, 'utf8');
 }
 
-test('完整 ZUI 组件目录：公开组件全部能配置、保存、画布渲染和离线渲染', async ({
+test('完整 ZUVI 组件目录：公开组件全部能配置、保存、画布渲染和离线渲染', async ({
   page,
   context,
 }) => {
@@ -154,7 +154,7 @@ test('复杂组件：表单值、可视数据、标签页和浮层在导出后�
   await expect(standalone.getByText('该项为必填')).toBeVisible();
   await standalone.getByRole('textbox', { name: '姓名', exact: true }).fill('实际使用者');
   await standalone
-    .locator('.z-upload input[type=file]')
+    .locator('.zuvi-upload input[type=file]')
     .setInputFiles({ name: 'notes.txt', mimeType: 'text/plain', buffer: Buffer.from('附件内容') });
   await expect(standalone.getByRole('button', { name: '下载 notes.txt' })).toBeVisible();
   const fileDownloaded = standalone.waitForEvent('download', { timeout: 15000 });
@@ -227,7 +227,7 @@ test('自定义布局：自由定位、栅格跨度、CSS、主题和响应式�
                 left: '32px',
                 width: 'calc(100% - 64px)',
                 customCss: 'letter-spacing:2px; text-transform:uppercase',
-                wrapperCss: 'z-index:7',
+                wrapperCss: 'zuvi-index:7',
                 hoverCss: 'color:#ff0000',
               },
               mobile: { left: '12px', width: 'calc(100% - 24px)' },
@@ -308,7 +308,7 @@ test('自定义布局：自由定位、栅格跨度、CSS、主题和响应式�
   const standaloneTitle = standalone.getByRole('heading', { name: '自由定位标题' });
   await expect(standaloneTitle).toHaveCSS('letter-spacing', '4px');
   await expect(standaloneTitle.locator('..')).toHaveCSS('left', '32px');
-  await expect(standalone.locator('.z-builder-canvas')).toHaveCSS(
+  await expect(standalone.locator('.zuvi-builder-canvas')).toHaveCSS(
     'background-color',
     'rgb(250, 245, 255)'
   );
@@ -605,7 +605,7 @@ test('交互工作台模板：任意组件分栏、键盘调整、明暗与手�
   await expect
     .poll(() => standalone.evaluate(() => document.documentElement.scrollWidth <= innerWidth))
     .toBe(true);
-  const splitCards = standalone.locator('.z-builder-responsive-splitter .z-card');
+  const splitCards = standalone.locator('.zuvi-builder-responsive-splitter .zuvi-card');
   await expect
     .poll(async () => {
       const first = await splitCards.nth(0).boundingBox();
@@ -614,7 +614,7 @@ test('交互工作台模板：任意组件分栏、键盘调整、明暗与手�
     })
     .toBe(true);
   await expect(
-    standalone.locator('.z-builder-responsive-splitter').getByText('品牌设计系统', { exact: true })
+    standalone.locator('.zuvi-builder-responsive-splitter').getByText('品牌设计系统', { exact: true })
   ).toBeVisible();
   await standalone.screenshot({ path: `${audit}/catalog-preview-mobile.png`, fullPage: true });
   await standalone.setViewportSize({ width: 1200, height: 900 });

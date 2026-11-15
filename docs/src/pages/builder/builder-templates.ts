@@ -44,7 +44,7 @@ export const builderTemplates = [
         anchor: 'intro',
         padding: 40,
         content: [
-          node('Tag', 'product-tag', { children: 'BUILT WITH ZUI', color: 'primary' }),
+          node('Tag', 'product-tag', { children: 'BUILT WITH ZUVI', color: 'primary' }),
           node('Heading', 'product-title', {
             text: '让团队的好想法，\n开始发生。',
             level: 'h1',
@@ -214,7 +214,7 @@ export const builderTemplates = [
   {
     id: 'workspace',
     name: '交互工作台',
-    label: 'ZUI WORKSPACE',
+    label: 'ZUVI WORKSPACE',
     description: '用真实表格、统计、标签面板、弹窗与表单组成业务页面。',
     data: {
       root: {

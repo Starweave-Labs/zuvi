@@ -46,7 +46,7 @@ export function Button({
       data-full-width={fullWidth ? 'true' : undefined}
       aria-busy={loading || undefined}
       aria-disabled={loading || undefined}
-      className={cx('z-button', className, classNames?.root)}
+      className={cx('zuvi-button', className, classNames?.root)}
       onClick={(event) => {
         // loading 时不设 disabled，用 aria-disabled 保留可聚焦，但拦截点击
         if (loading) {
@@ -57,7 +57,7 @@ export function Button({
       }}
     >
       {iconStart != null ? (
-        <span data-part="icon" aria-hidden="true" className={cx('z-button-icon', classNames?.icon)}>
+        <span data-part="icon" aria-hidden="true" className={cx('zuvi-button-icon', classNames?.icon)}>
           {iconStart}
         </span>
       ) : null}
@@ -65,14 +65,14 @@ export function Button({
         <span
           data-part="spinner"
           aria-hidden="true"
-          className={cx('z-button-spinner', classNames?.spinner)}
+          className={cx('zuvi-button-spinner', classNames?.spinner)}
         />
       ) : null}
-      <span data-part="label" className={cx('z-button-label', classNames?.label)}>
+      <span data-part="label" className={cx('zuvi-button-label', classNames?.label)}>
         {children}
       </span>
       {iconEnd != null ? (
-        <span data-part="icon" aria-hidden="true" className={cx('z-button-icon', classNames?.icon)}>
+        <span data-part="icon" aria-hidden="true" className={cx('zuvi-button-icon', classNames?.icon)}>
           {iconEnd}
         </span>
       ) : null}

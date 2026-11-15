@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BackTop } from '@zui/react';
+import { BackTop } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -8,7 +8,7 @@ import { usePageTitle } from '../../components/usePageTitle';
 
 const BASIC_CODE = `const [count, setCount] = useState(0);
 
-<div style={{ height: 300, overflow: 'auto', border: '1px solid var(--z-color-border)', position: 'relative' }}>
+<div style={{ height: 300, overflow: 'auto', border: '1px solid var(--zuvi-color-border)', position: 'relative' }}>
   <div style={{ height: 1000, padding: 16 }}>
     {Array.from({ length: 40 }).map((_, i) => (
       <p key={i}>滚动内容 {i + 1}</p>
@@ -49,7 +49,7 @@ export default function BackTopPage(): React.ReactNode {
           style={{
             height: 300,
             overflow: 'auto',
-            border: '1px solid var(--z-color-border)',
+            border: '1px solid var(--zuvi-color-border)',
             position: 'relative',
           }}
         >
@@ -70,7 +70,7 @@ export default function BackTopPage(): React.ReactNode {
           style={{
             height: 200,
             overflow: 'auto',
-            border: '1px solid var(--z-color-border)',
+            border: '1px solid var(--zuvi-color-border)',
             position: 'relative',
           }}
         >
@@ -88,7 +88,7 @@ export default function BackTopPage(): React.ReactNode {
           style={{
             height: 200,
             overflow: 'auto',
-            border: '1px solid var(--z-color-border)',
+            border: '1px solid var(--zuvi-color-border)',
             position: 'relative',
           }}
         >
@@ -144,17 +144,17 @@ export default function BackTopPage(): React.ReactNode {
         name="BackTop"
         parts={['root']}
         vars={[
-          '--z-back-top-size',
-          '--z-back-top-bg',
-          '--z-back-top-fg',
-          '--z-back-top-hover-bg',
-          '--z-back-top-border',
-          '--z-back-top-radius',
-          '--z-back-top-shadow',
-          '--z-back-top-icon-size',
-          '--z-back-top-right',
-          '--z-back-top-bottom',
-          '--z-back-top-transition',
+          '--zuvi-back-top-size',
+          '--zuvi-back-top-bg',
+          '--zuvi-back-top-fg',
+          '--zuvi-back-top-hover-bg',
+          '--zuvi-back-top-border',
+          '--zuvi-back-top-radius',
+          '--zuvi-back-top-shadow',
+          '--zuvi-back-top-icon-size',
+          '--zuvi-back-top-right',
+          '--zuvi-back-top-bottom',
+          '--zuvi-back-top-transition',
         ]}
       />
     </div>

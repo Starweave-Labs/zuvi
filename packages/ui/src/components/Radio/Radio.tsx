@@ -32,7 +32,7 @@ export function Radio({
   const group = React.useContext(RadioGroupContext);
 
   return (
-    <label data-part="root" className={cx('z-radio', className, classNames?.root)}>
+    <label data-part="root" className={cx('zuvi-radio', className, classNames?.root)}>
       <input
         {...rest}
         ref={ref}
@@ -49,10 +49,10 @@ export function Radio({
       <span
         data-part="control"
         aria-hidden="true"
-        className={cx('z-radio-dot', classNames?.control)}
+        className={cx('zuvi-radio-dot', classNames?.control)}
       />
       {label != null && label !== '' ? (
-        <span data-part="label" className={cx('z-radio-label', classNames?.label)}>
+        <span data-part="label" className={cx('zuvi-radio-label', classNames?.label)}>
           {label}
         </span>
       ) : null}

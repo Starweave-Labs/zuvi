@@ -250,20 +250,20 @@ splitter: {
 首版 CSS 变量：
 
 ```css
---z-splitter-handle-size        /* 分隔条厚度，默认 0.5rem */
---z-splitter-handle-hit-size    /* 命中热区，默认 1.5rem，至少 24 CSS px */
---z-splitter-handle-bg
---z-splitter-handle-hover-bg
---z-splitter-handle-active-bg
---z-splitter-handle-radius
---z-splitter-handle-fg          /* indicator 颜色 */
---z-splitter-animation-duration
+--zuvi-splitter-handle-size        /* 分隔条厚度，默认 0.5rem */
+--zuvi-splitter-handle-hit-size    /* 命中热区，默认 1.5rem，至少 24 CSS px */
+--zuvi-splitter-handle-bg
+--zuvi-splitter-handle-hover-bg
+--zuvi-splitter-handle-active-bg
+--zuvi-splitter-handle-radius
+--zuvi-splitter-handle-fg          /* indicator 颜色 */
+--zuvi-splitter-animation-duration
 ```
 
 - 默认视觉：细分隔线 + hover/active 主色；拖动中显示 `col-resize` / `row-resize` 光标。
-- Handle 的布局轨道只占 `--z-splitter-handle-size`；`--z-splitter-handle-hit-size` 通过居中的绝对热区扩展，不进入第 4 节的 `H` 两次。相邻 Handle 热区不得覆盖彼此或 Panel 内可点击控件。
+- Handle 的布局轨道只占 `--zuvi-splitter-handle-size`；`--zuvi-splitter-handle-hit-size` 通过居中的绝对热区扩展，不进入第 4 节的 `H` 两次。相邻 Handle 热区不得覆盖彼此或 Panel 内可点击控件。
 - 折叠 Panel 只保留 `collapsedSize` 高度/宽度；content 除 `overflow: hidden` 外必须同步 `inert`、`aria-hidden` 与禁用 pointer events。展开时一次性移除，不出现“视觉已展开但仍 inert”的过渡帧。
-- `--z-splitter-animation-duration` 只允许用于折叠/展开轨道过渡；直接拖动与键盘步进必须实时，不做追随动画。reduced-motion 下过渡禁用；forced-colors 下分隔条、disabled、active 与焦点环保持可辨认。
+- `--zuvi-splitter-animation-duration` 只允许用于折叠/展开轨道过渡；直接拖动与键盘步进必须实时，不做追随动画。reduced-motion 下过渡禁用；forced-colors 下分隔条、disabled、active 与焦点环保持可辨认。
 
 ## 10. 测试矩阵
 
@@ -311,7 +311,7 @@ docs/src/pages/components/SplitterPage.tsx
 1. IDE 壳：左侧文件树可折叠、中间编辑器、右侧预览，覆盖三个 Panel、两个有独立名称的 Handle、键盘与受控拒绝。
 2. 主从详情：两 Panel、320px 容器、RTL、内容区有真实输入与按钮，覆盖外部受控折叠时 inert 和焦点回退。
 
-评审证据为 `e2e/splitter-prototype.spec.ts` 的 5 条浏览器用例：真实 Pointer Capture 提交、Escape / pointercancel 恢复、`C - H` 像素闭合、keyup / blur 会话、受控拒绝、ResizeObserver 从零可用尺寸恢复、外部折叠焦点回退、RTL、320px、浅色 / 暗色 axe 与隐藏路由边界。视觉快照保存在本次评审产物 `/tmp/zui-splitter-visual/`，浅色、暗色 hover 与 320px RTL 均无文档横向溢出。
+评审证据为 `e2e/splitter-prototype.spec.ts` 的 5 条浏览器用例：真实 Pointer Capture 提交、Escape / pointercancel 恢复、`C - H` 像素闭合、keyup / blur 会话、受控拒绝、ResizeObserver 从零可用尺寸恢复、外部折叠焦点回退、RTL、320px、浅色 / 暗色 axe 与隐藏路由边界。视觉快照保存在本次评审产物 `/tmp/zuvi-splitter-visual/`，浅色、暗色 hover 与 320px RTL 均无文档横向溢出。
 
 正式实现已按“尺寸求解纯函数与自动 Handle DOM → 水平 Pointer → 键盘 / ARIA → 受控实际值与结束详情 → 折叠 / focus → 垂直、RTL、ResizeObserver → 发布同步”的顺序完成；后续修改必须继续通过上述组件矩阵与双原型证据，不能退回调用方手写 Handle 或 debounce 键盘提交。
 

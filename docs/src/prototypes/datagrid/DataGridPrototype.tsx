@@ -3,7 +3,7 @@
 /**
  * DataGrid 性能原型（RFC-005 立项前置，仅直达访问）：
  * 验证 10,000 行下虚拟化渲染、排序、选择、列宽调整与固定列的性能预算。
- * 实现是一次性的测量脚手架，不进入 @zui/react，也不作为 DataGrid 的实现起点。
+ * 实现是一次性的测量脚手架，不进入 @zuvi/react，也不作为 DataGrid 的实现起点。
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';

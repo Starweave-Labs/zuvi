@@ -1,8 +1,8 @@
 'use client';
 
 import * as React from 'react';
-import { Button, Card, Descriptions, Input, Select, Steps, useControllableState } from '@zui/react';
-import type { StepsItem } from '@zui/react';
+import { Button, Card, Descriptions, Input, Select, Steps, useControllableState } from '@zuvi/react';
+import type { StepsItem } from '@zuvi/react';
 
 /* ---------------------------------- 类型 ---------------------------------- */
 
@@ -68,10 +68,10 @@ export const DEMO_CATEGORY_OPTIONS: { value: string; label: string }[] = [
 
 const fieldLabelStyle: React.CSSProperties = {
   display: 'block',
-  fontSize: 'var(--z-text-sm)',
-  fontWeight: 'var(--z-weight-medium)',
-  color: 'var(--z-color-fg)',
-  marginBottom: 'var(--z-space-2)',
+  fontSize: 'var(--zuvi-text-sm)',
+  fontWeight: 'var(--zuvi-weight-medium)',
+  color: 'var(--zuvi-color-fg)',
+  marginBottom: 'var(--zuvi-space-2)',
 };
 
 /** 分步向导区块：Steps + 三步表单（下一步/上一步，最后一步完成回调） */
@@ -146,9 +146,9 @@ export function WizardBlock({
   };
 
   const errorTextStyle: React.CSSProperties = {
-    marginTop: 'var(--z-space-1)',
-    fontSize: 'var(--z-text-xs)',
-    color: 'var(--z-color-danger)',
+    marginTop: 'var(--zuvi-space-1)',
+    fontSize: 'var(--zuvi-text-xs)',
+    color: 'var(--zuvi-color-danger)',
   };
 
   return (
@@ -158,10 +158,10 @@ export function WizardBlock({
       style={{
         display: 'flex',
         flexDirection: 'column',
-        gap: 'var(--z-space-5)',
+        gap: 'var(--zuvi-space-5)',
         maxWidth: 640,
         margin: '0 auto',
-        padding: 'var(--z-space-6) var(--z-space-4)',
+        padding: 'var(--zuvi-space-6) var(--zuvi-space-4)',
         ...style,
       }}
     >
@@ -171,7 +171,7 @@ export function WizardBlock({
         {/* 第一步：基本信息 */}
         {current === 0 ? (
           <section data-part="step" data-step="0" aria-label="基本信息">
-            <div style={{ marginBottom: 'var(--z-space-4)' }}>
+            <div style={{ marginBottom: 'var(--zuvi-space-4)' }}>
               <label htmlFor="wizard-name" style={fieldLabelStyle}>
                 项目名称
               </label>
@@ -181,7 +181,7 @@ export function WizardBlock({
                 status={errors.name ? 'error' : 'default'}
                 value={values.name}
                 onChange={(event) => setField('name', event.target.value)}
-                placeholder="如：ZUI 组件库"
+                placeholder="如：ZUVI 组件库"
               />
               {errors.name ? (
                 <div role="alert" style={errorTextStyle}>
@@ -213,7 +213,7 @@ export function WizardBlock({
         {/* 第二步：项目配置 */}
         {current === 1 ? (
           <section data-part="step" data-step="1" aria-label="项目配置">
-            <div style={{ marginBottom: 'var(--z-space-4)' }}>
+            <div style={{ marginBottom: 'var(--zuvi-space-4)' }}>
               <span style={fieldLabelStyle}>项目类别</span>
               <span style={{ display: 'block' }}>
                 <Select
@@ -275,20 +275,20 @@ export function WizardBlock({
           style={{
             display: 'flex',
             justifyContent: 'space-between',
-            gap: 'var(--z-space-3)',
-            paddingTop: 'var(--z-space-5)',
-            marginTop: 'var(--z-space-2)',
-            borderTop: '1px solid var(--z-color-border-subtle)',
+            gap: 'var(--zuvi-space-3)',
+            paddingTop: 'var(--zuvi-space-5)',
+            marginTop: 'var(--zuvi-space-2)',
+            borderTop: '1px solid var(--zuvi-color-border-subtle)',
           }}
         >
-          <div style={{ display: 'flex', gap: 'var(--z-space-3)' }}>
+          <div style={{ display: 'flex', gap: 'var(--zuvi-space-3)' }}>
             {onCancel != null && current === 0 ? (
               <Button variant="outline" onClick={onCancel}>
                 {cancelText}
               </Button>
             ) : null}
           </div>
-          <div style={{ display: 'flex', gap: 'var(--z-space-3)' }}>
+          <div style={{ display: 'flex', gap: 'var(--zuvi-space-3)' }}>
             {current > 0 ? (
               <Button variant="outline" onClick={goPrev}>
                 {prevText}

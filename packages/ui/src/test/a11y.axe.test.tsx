@@ -74,7 +74,7 @@ const hosts: HTMLElement[] = [];
  */
 function renderForAxe(ui: React.ReactElement): HTMLElement {
   const host = document.createElement('div');
-  host.className = 'z-reset';
+  host.className = 'zuvi-reset';
   document.body.appendChild(host);
   hosts.push(host);
   render(<main>{ui}</main>, { container: host });
@@ -137,7 +137,7 @@ describe('axe-core 组件矩阵扫描', () => {
     const host = renderForAxe(
       <>
         <label htmlFor="axe-input-name">用户名</label>
-        <Input id="axe-input-name" clearable defaultValue="ZUI" />
+        <Input id="axe-input-name" clearable defaultValue="ZUVI" />
         <label htmlFor="axe-input-empty">空输入</label>
         <Input id="axe-input-empty" status="error" />
       </>

@@ -1,9 +1,9 @@
 .collaboration-page {
-  --collaboration-accent: var(--z-color-primary-subtle-fg);
-  --collaboration-tint: var(--z-color-primary-subtle);
-  --collaboration-canvas: color-mix(in srgb, var(--z-color-bg-muted) 62%, var(--z-color-bg));
+  --collaboration-accent: var(--zuvi-color-primary-subtle-fg);
+  --collaboration-tint: var(--zuvi-color-primary-subtle);
+  --collaboration-canvas: color-mix(in srgb, var(--zuvi-color-bg-muted) 62%, var(--zuvi-color-bg));
   container-type: inline-size;
-  color: var(--z-color-fg);
+  color: var(--zuvi-color-fg);
 }
 .collaboration-page svg {
   flex-shrink: 0;
@@ -17,7 +17,7 @@
   gap: 28px;
   padding-bottom: 28px;
   margin-bottom: 26px;
-  border-bottom: 1px solid var(--z-color-border);
+  border-bottom: 1px solid var(--zuvi-color-border);
 }
 .collaboration-eyebrow {
   display: flex;
@@ -26,7 +26,7 @@
   gap: 10px;
   margin-bottom: 16px;
   color: var(--collaboration-accent);
-  font: 10px var(--z-font-mono);
+  font: 10px var(--zuvi-font-mono);
   letter-spacing: 0.08em;
 }
 .collaboration-eyebrow > span:first-child {
@@ -39,10 +39,10 @@
 }
 .collaboration-prototype {
   padding: 4px 7px;
-  border: 1px solid var(--z-color-border);
+  border: 1px solid var(--zuvi-color-border);
   border-radius: 5px;
-  color: var(--z-color-fg-muted);
-  font: 10px var(--z-font-sans);
+  color: var(--zuvi-color-fg-muted);
+  font: 10px var(--zuvi-font-sans);
   letter-spacing: 0;
 }
 .collaboration-intro .doc-h1 {
@@ -63,14 +63,14 @@
   display: flex;
   align-items: center;
   gap: 7px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 11px;
   white-space: nowrap;
 }
 .collaboration-steps li + li::before {
   content: '/';
   margin-right: 9px;
-  color: var(--z-color-border);
+  color: var(--zuvi-color-border);
 }
 .collaboration-steps svg {
   width: 14px;
@@ -96,11 +96,11 @@
 }
 .collaboration-workspace-heading > div > span {
   font-size: 12px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
 }
 .collaboration-local-note {
   margin-left: auto;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 10px;
 }
 .collaboration-settings {
@@ -115,10 +115,10 @@
   align-items: center;
   gap: 6px;
   padding: 7px 9px;
-  border: 1px solid var(--z-color-border);
+  border: 1px solid var(--zuvi-color-border);
   border-radius: 7px;
-  background: var(--z-color-bg-elevated);
-  color: var(--z-color-fg-muted);
+  background: var(--zuvi-color-bg-elevated);
+  color: var(--zuvi-color-fg-muted);
   font-size: 11px;
   list-style: none;
   cursor: pointer;
@@ -145,37 +145,37 @@
   gap: 14px;
   width: min(310px, calc(100cqw - 2px));
   padding: 18px;
-  border: 1px solid var(--z-color-border);
+  border: 1px solid var(--zuvi-color-border);
   border-radius: 12px;
-  background: var(--z-color-bg-elevated);
-  box-shadow: var(--z-shadow-lg);
+  background: var(--zuvi-color-bg-elevated);
+  box-shadow: var(--zuvi-shadow-lg);
 }
 .collaboration-controls label {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 12px;
 }
 .collaboration-controls select {
   min-width: 80px;
   max-width: 100%;
   padding: 7px 9px;
-  border: 1px solid var(--z-color-border);
+  border: 1px solid var(--zuvi-color-border);
   border-radius: 7px;
-  color: var(--z-color-fg);
-  background: var(--z-color-bg);
+  color: var(--zuvi-color-fg);
+  background: var(--zuvi-color-bg);
   font: inherit;
 }
 .collaboration-workspace {
   display: grid;
   grid-template-columns: 184px minmax(0, 1fr) 300px;
-  border: 1px solid var(--z-color-border);
+  border: 1px solid var(--zuvi-color-border);
   border-radius: 14px;
   overflow: clip;
-  background: var(--z-color-bg-elevated);
-  box-shadow: 0 4px 18px color-mix(in srgb, var(--z-color-fg) 3%, transparent);
+  background: var(--zuvi-color-bg-elevated);
+  box-shadow: 0 4px 18px color-mix(in srgb, var(--zuvi-color-fg) 3%, transparent);
 }
 .collaboration-workspace-bar {
   grid-column: 1 / -1;
@@ -185,7 +185,7 @@
   flex-wrap: wrap;
   gap: 16px;
   padding: 17px 20px;
-  border-bottom: 1px solid var(--z-color-border);
+  border-bottom: 1px solid var(--zuvi-color-border);
 }
 .collaboration-office-examples {
   grid-column: 1 / -1;
@@ -194,8 +194,8 @@
   flex-wrap: wrap;
   gap: 8px;
   padding: 12px 20px;
-  border-bottom: 1px solid var(--z-color-border);
-  color: var(--z-color-fg-muted);
+  border-bottom: 1px solid var(--zuvi-color-border);
+  color: var(--zuvi-color-fg-muted);
   font-size: 12px;
 }
 .collaboration-project,
@@ -209,7 +209,7 @@
   place-items: center;
   width: 34px;
   height: 34px;
-  border: 1px solid color-mix(in srgb, var(--collaboration-accent) 15%, var(--z-color-border));
+  border: 1px solid color-mix(in srgb, var(--collaboration-accent) 15%, var(--zuvi-color-border));
   border-radius: 10px;
   background: var(--collaboration-tint);
   color: var(--collaboration-accent);
@@ -229,7 +229,7 @@
   gap: 5px;
   margin-top: 5px;
   font-size: 10px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
 }
 .collaboration-project > div > span svg {
   width: 10px;
@@ -245,27 +245,27 @@
   width: 29px;
   height: 29px;
   margin-left: -5px;
-  border: 2px solid var(--z-color-bg-elevated);
+  border: 2px solid var(--zuvi-color-bg-elevated);
   border-radius: 50%;
   color: var(--collaboration-accent);
   background: var(--collaboration-tint);
   font-size: 10px;
 }
 .collaboration-members > span:nth-child(2) {
-  color: var(--z-color-warning-subtle-fg);
-  background: var(--z-color-warning-subtle);
+  color: var(--zuvi-color-warning-subtle-fg);
+  background: var(--zuvi-color-warning-subtle);
 }
 .collaboration-members > span:nth-child(3) {
-  color: var(--z-color-success-subtle-fg);
-  background: var(--z-color-success-subtle);
+  color: var(--zuvi-color-success-subtle-fg);
+  background: var(--zuvi-color-success-subtle);
 }
 .collaboration-permission {
   display: inline-flex;
   align-items: center;
   gap: 5px;
   padding-left: 12px;
-  border-left: 1px solid var(--z-color-border);
-  color: var(--z-color-fg-muted);
+  border-left: 1px solid var(--zuvi-color-border);
+  color: var(--zuvi-color-fg-muted);
   font-size: 11px;
 }
 .collaboration-permission svg {
@@ -277,8 +277,8 @@
   flex-direction: column;
   min-width: 0;
   padding: 21px 10px 16px;
-  border-right: 1px solid var(--z-color-border);
-  background: color-mix(in srgb, var(--z-color-bg-muted) 40%, var(--z-color-bg-elevated));
+  border-right: 1px solid var(--zuvi-color-border);
+  background: color-mix(in srgb, var(--zuvi-color-bg-muted) 40%, var(--zuvi-color-bg-elevated));
 }
 .collaboration-files-heading {
   display: flex;
@@ -289,18 +289,18 @@
   font-weight: 600;
 }
 .collaboration-files-heading > span:last-child {
-  color: var(--z-color-fg-muted);
-  font: 10px var(--z-font-mono);
+  color: var(--zuvi-color-fg-muted);
+  font: 10px var(--zuvi-font-mono);
 }
 .collaboration-files {
   display: grid;
   gap: 5px;
 }
-.collaboration-workspace :where(button:not(.z-button)) {
+.collaboration-workspace :where(button:not(.zuvi-button)) {
   padding: 0;
   border: 0;
   background: transparent;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-family: inherit;
   cursor: pointer;
 }
@@ -317,13 +317,13 @@
   text-align: left;
 }
 .collaboration-files button:hover:not(:disabled) {
-  background: var(--z-color-bg-muted);
+  background: var(--zuvi-color-bg-muted);
 }
 .collaboration-files button[aria-current='true'] {
-  color: var(--z-color-fg);
-  background: var(--z-color-bg-elevated);
-  border-color: var(--z-color-border);
-  box-shadow: var(--z-shadow-sm);
+  color: var(--zuvi-color-fg);
+  background: var(--zuvi-color-bg-elevated);
+  border-color: var(--zuvi-color-border);
+  box-shadow: var(--zuvi-shadow-sm);
 }
 .collaboration-file-type {
   display: grid;
@@ -336,12 +336,12 @@
   background: var(--collaboration-tint);
 }
 .collaboration-files [data-kind='image'] .collaboration-file-type {
-  color: var(--z-color-success-subtle-fg);
-  background: var(--z-color-success-subtle);
+  color: var(--zuvi-color-success-subtle-fg);
+  background: var(--zuvi-color-success-subtle);
 }
 .collaboration-files [data-kind='binary'] .collaboration-file-type {
-  color: var(--z-color-warning-subtle-fg);
-  background: var(--z-color-warning-subtle);
+  color: var(--zuvi-color-warning-subtle-fg);
+  background: var(--zuvi-color-warning-subtle);
 }
 .collaboration-file-info {
   display: block;
@@ -358,7 +358,7 @@
   display: block;
   margin-top: 4px;
   font-size: 10px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   overflow-wrap: anywhere;
 }
 .collaboration-file-selected {
@@ -377,18 +377,18 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--z-color-warning-subtle-fg);
+  background: var(--zuvi-color-warning-subtle-fg);
 }
 .collaboration-outline {
   display: grid;
   gap: 4px;
   margin: 25px 6px 0;
   padding-top: 20px;
-  border-top: 1px solid var(--z-color-border);
+  border-top: 1px solid var(--zuvi-color-border);
 }
 .collaboration-outline p {
   margin: 0 0 10px 2px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 10px;
 }
 .collaboration-outline button {
@@ -400,7 +400,7 @@
   text-align: left;
 }
 .collaboration-outline button > span {
-  font: 9px var(--z-font-mono);
+  font: 9px var(--zuvi-font-mono);
 }
 .collaboration-outline button > svg {
   margin-left: auto;
@@ -413,7 +413,7 @@
   font-weight: 600;
 }
 .collaboration-outline button:hover {
-  color: var(--z-color-fg);
+  color: var(--zuvi-color-fg);
 }
 .collaboration-file-panel-note {
   display: flex;
@@ -421,7 +421,7 @@
   gap: 7px;
   margin-top: auto;
   padding: 28px 8px 0;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
 }
 .collaboration-file-panel-note svg {
   width: 11px;
@@ -449,7 +449,7 @@
   flex-wrap: wrap;
   gap: 12px;
   padding: 18px 22px;
-  border-bottom: 1px solid var(--z-color-border);
+  border-bottom: 1px solid var(--zuvi-color-border);
 }
 .collaboration-current-file {
   display: flex;
@@ -458,7 +458,7 @@
   min-width: 0;
 }
 .collaboration-current-file > svg {
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
 }
 .collaboration-current-file strong {
   display: block;
@@ -469,7 +469,7 @@
 .collaboration-current-file > div > span {
   display: block;
   margin-top: 5px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 11px;
 }
 .collaboration-canvas {
@@ -479,10 +479,10 @@
 }
 .collaboration-document {
   padding: 28px 30px 20px;
-  border: 1px solid var(--z-color-border);
+  border: 1px solid var(--zuvi-color-border);
   border-radius: 8px;
-  background: var(--z-color-bg-elevated);
-  box-shadow: 0 2px 5px color-mix(in srgb, var(--z-color-fg) 2%, transparent);
+  background: var(--zuvi-color-bg-elevated);
+  box-shadow: 0 2px 5px color-mix(in srgb, var(--zuvi-color-fg) 2%, transparent);
 }
 .collaboration-document-meta {
   display: flex;
@@ -492,12 +492,12 @@
   gap: 8px;
 }
 .collaboration-document-kicker {
-  color: var(--z-color-fg-muted);
-  font: 9px var(--z-font-mono);
+  color: var(--zuvi-color-fg-muted);
+  font: 9px var(--zuvi-font-mono);
   letter-spacing: 0.08em;
 }
 .collaboration-document-meta > span:last-child {
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 9px;
 }
 .collaboration-document > h2 {
@@ -508,7 +508,7 @@
 }
 .collaboration-document-subtitle {
   margin: 0 0 26px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 11px;
 }
 .collaboration-document section {
@@ -524,7 +524,7 @@
   background: var(--collaboration-tint);
 }
 .collaboration-document section[data-editing] {
-  background: color-mix(in srgb, var(--collaboration-tint) 26%, var(--z-color-bg-elevated));
+  background: color-mix(in srgb, var(--collaboration-tint) 26%, var(--zuvi-color-bg-elevated));
 }
 .collaboration-section-heading {
   display: flex;
@@ -540,8 +540,8 @@
 }
 .collaboration-section-heading h3 > span {
   margin-right: 9px;
-  color: var(--z-color-fg-muted);
-  font: 9px var(--z-font-mono);
+  color: var(--zuvi-color-fg-muted);
+  font: 9px var(--zuvi-font-mono);
 }
 .collaboration-section-heading button {
   display: inline-flex;
@@ -567,11 +567,11 @@
 }
 .collaboration-section-count {
   color: var(--collaboration-accent);
-  font: 9px var(--z-font-mono);
+  font: 9px var(--zuvi-font-mono);
 }
 .collaboration-document section > p {
   margin: 5px 0;
-  color: var(--z-color-fg);
+  color: var(--zuvi-color-fg);
   font-size: 13px;
   line-height: 2;
   white-space: pre-wrap;
@@ -584,8 +584,8 @@
   gap: 6px;
   margin-top: 22px;
   padding-top: 16px;
-  border-top: 1px solid var(--z-color-border);
-  color: var(--z-color-fg-muted);
+  border-top: 1px solid var(--zuvi-color-border);
+  color: var(--zuvi-color-fg-muted);
   font-size: 9px;
 }
 .collaboration-preview-footer {
@@ -594,8 +594,8 @@
   align-items: center;
   gap: 12px;
   padding: 10px 22px;
-  border-top: 1px solid var(--z-color-border);
-  color: var(--z-color-fg-muted);
+  border-top: 1px solid var(--zuvi-color-border);
+  color: var(--zuvi-color-fg-muted);
   font-size: 9px;
 }
 .collaboration-preview-footer > span:first-child {
@@ -611,12 +611,12 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
-  border-left: 1px solid var(--z-color-border);
-  background: var(--z-color-bg-elevated);
+  border-left: 1px solid var(--zuvi-color-border);
+  background: var(--zuvi-color-bg-elevated);
 }
 .collaboration-discussion-header {
   padding: 21px 20px 14px;
-  border-bottom: 1px solid var(--z-color-border);
+  border-bottom: 1px solid var(--zuvi-color-border);
 }
 .collaboration-comments-heading {
   display: flex;
@@ -626,7 +626,7 @@
 .collaboration-comments-heading > svg {
   width: 15px;
   height: 15px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
 }
 .collaboration-comments-heading h2 {
   display: flex;
@@ -645,16 +645,16 @@
   border-radius: 6px;
   background: var(--collaboration-tint);
   color: var(--collaboration-accent);
-  font: 10px var(--z-font-mono);
+  font: 10px var(--zuvi-font-mono);
 }
 .collaboration-comments-heading > span {
   margin-left: auto;
   font-size: 10px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
 }
 .collaboration-discussion-header > p {
   margin: 10px 0 16px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 10px;
   line-height: 1.7;
 }
@@ -662,7 +662,7 @@
   display: flex;
   gap: 3px;
   padding: 3px;
-  border: 1px solid var(--z-color-border);
+  border: 1px solid var(--zuvi-color-border);
   border-radius: 7px;
   background: var(--collaboration-canvas);
 }
@@ -674,10 +674,10 @@
   font-size: 11px;
 }
 .collaboration-filter button[aria-pressed='true'] {
-  border-color: var(--z-color-border);
-  background: var(--z-color-bg-elevated);
-  color: var(--z-color-fg);
-  box-shadow: var(--z-shadow-sm);
+  border-color: var(--zuvi-color-border);
+  background: var(--zuvi-color-bg-elevated);
+  color: var(--zuvi-color-fg);
+  box-shadow: var(--zuvi-shadow-sm);
   font-weight: 500;
 }
 .collaboration-threads {
@@ -689,9 +689,9 @@
 .collaboration-thread {
   min-width: 0;
   padding: 15px;
-  border: 1px solid var(--z-color-border);
+  border: 1px solid var(--zuvi-color-border);
   border-radius: 10px;
-  background: var(--z-color-bg);
+  background: var(--zuvi-color-bg);
 }
 .collaboration-thread[data-active] {
   border-color: var(--collaboration-accent);
@@ -723,7 +723,7 @@
 .collaboration-author small {
   display: block;
   margin-top: 4px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 10px;
 }
 .collaboration-resolved {
@@ -731,7 +731,7 @@
   align-items: center;
   gap: 3px;
   margin-left: auto;
-  color: var(--z-color-success-subtle-fg);
+  color: var(--zuvi-color-success-subtle-fg);
   font-size: 9px;
 }
 .collaboration-resolved svg {
@@ -745,11 +745,11 @@
   width: 100%;
   margin: 14px 0 12px;
   padding: 8px 10px;
-  border-left: 2px solid color-mix(in srgb, var(--collaboration-accent) 35%, var(--z-color-border));
+  border-left: 2px solid color-mix(in srgb, var(--collaboration-accent) 35%, var(--zuvi-color-border));
   border-radius: 0 5px 5px 0;
   background: var(--collaboration-canvas);
-  color: var(--z-color-fg-muted);
-  font: 11px/1.8 var(--z-font-sans);
+  color: var(--zuvi-color-fg-muted);
+  font: 11px/1.8 var(--zuvi-font-sans);
   text-align: left;
   overflow-wrap: anywhere;
 }
@@ -759,22 +759,22 @@
   flex-wrap: wrap;
   gap: 6px;
   margin-top: 15px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 10px;
   line-height: 1.8;
 }
 .collaboration-quote-updated {
   padding: 1px 5px;
   border-radius: 4px;
-  color: var(--z-color-warning-subtle-fg);
-  background: var(--z-color-warning-subtle);
+  color: var(--zuvi-color-warning-subtle-fg);
+  background: var(--zuvi-color-warning-subtle);
 }
 .collaboration-quote-meta + .collaboration-quote {
   margin-top: 7px;
 }
 .collaboration-quote-note {
   display: block;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 10px;
   line-height: 1.8;
 }
@@ -802,7 +802,7 @@
 .collaboration-reply {
   margin-top: 14px;
   padding-left: 11px;
-  border-left: 2px solid var(--z-color-border);
+  border-left: 2px solid var(--zuvi-color-border);
   font-size: 11px;
 }
 .collaboration-reply > p {
@@ -842,30 +842,30 @@
   height: 43px;
   border-radius: 50%;
   background: var(--collaboration-canvas);
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
 }
 .collaboration-empty > span svg {
   width: 19px;
   height: 19px;
 }
 .collaboration-empty > strong {
-  color: var(--z-color-fg);
+  color: var(--zuvi-color-fg);
   font-size: 12px;
   font-weight: 500;
 }
 .collaboration-empty > p {
   max-width: 190px;
   margin: 0;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 11px;
   line-height: 1.8;
 }
 .collaboration-composer {
   margin: auto 16px 16px;
   padding: 15px;
-  border: 1px solid var(--z-color-border);
+  border: 1px solid var(--zuvi-color-border);
   border-radius: 10px;
-  background: var(--z-color-bg);
+  background: var(--zuvi-color-bg);
 }
 .collaboration-composer:focus-within {
   border-color: var(--collaboration-accent);
@@ -875,14 +875,14 @@
 .collaboration-editor label {
   display: block;
   margin-bottom: 10px;
-  color: var(--z-color-fg);
+  color: var(--zuvi-color-fg);
   font-size: 11px;
   font-weight: 500;
 }
 .collaboration-composer-context {
   margin: -2px 0 14px;
   padding-bottom: 11px;
-  border-bottom: 1px solid var(--z-color-border);
+  border-bottom: 1px solid var(--zuvi-color-border);
   color: var(--collaboration-accent);
   font-size: 10px;
 }
@@ -908,7 +908,7 @@
   border-radius: 4px;
 }
 .collaboration-composer-context-heading > button:hover {
-  background: var(--z-color-bg-muted);
+  background: var(--zuvi-color-bg-muted);
 }
 .collaboration-composer-context-heading > button svg {
   width: 12px;
@@ -924,7 +924,7 @@
   border-left: 2px solid var(--collaboration-accent);
   border-radius: 0 5px 5px 0;
   background: var(--collaboration-canvas);
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 11px;
   line-height: 1.8;
   overflow-wrap: anywhere;
@@ -944,7 +944,7 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 10px;
 }
 .collaboration-composer-label svg {
@@ -953,7 +953,7 @@
 }
 .collaboration-composer-help {
   margin: 11px 0 0;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 10px;
   line-height: 1.9;
 }
@@ -964,14 +964,14 @@
   min-height: 116px;
   resize: vertical;
   padding: 11px;
-  border: 1px solid var(--z-color-border);
+  border: 1px solid var(--zuvi-color-border);
   border-radius: 7px;
-  background: var(--z-color-bg-elevated);
-  color: var(--z-color-fg);
-  font: 13px/1.9 var(--z-font-sans);
+  background: var(--zuvi-color-bg-elevated);
+  color: var(--zuvi-color-fg);
+  font: 13px/1.9 var(--zuvi-font-sans);
 }
 .collaboration-workspace textarea::placeholder {
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   opacity: 1;
 }
 .collaboration-composer textarea {
@@ -988,17 +988,17 @@
   flex-wrap: wrap;
   gap: 10px;
   padding-top: 12px;
-  border-top: 1px solid var(--z-color-border);
+  border-top: 1px solid var(--zuvi-color-border);
 }
 .collaboration-composer-actions small {
-  color: var(--z-color-fg-muted);
-  font: 9px var(--z-font-mono);
+  color: var(--zuvi-color-fg-muted);
+  font: 9px var(--zuvi-font-mono);
 }
 .collaboration-editor {
   padding: 14px;
-  border: 1px solid var(--z-color-border);
+  border: 1px solid var(--zuvi-color-border);
   border-radius: 8px;
-  background: var(--z-color-bg);
+  background: var(--zuvi-color-bg);
 }
 .collaboration-editor label {
   display: flex;
@@ -1013,7 +1013,7 @@
 }
 .collaboration-editor textarea {
   min-height: 150px;
-  background: var(--z-color-bg-elevated);
+  background: var(--zuvi-color-bg-elevated);
 }
 .collaboration-editor-meta {
   display: flex;
@@ -1021,13 +1021,13 @@
   flex-wrap: wrap;
   gap: 4px;
   margin: 10px 0 15px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 10px;
   line-height: 1.8;
 }
 .collaboration-editor > p {
   margin: 10px 0;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 10px;
   line-height: 1.8;
 }
@@ -1046,7 +1046,7 @@
 .collaboration-workspace :is(button, textarea):focus-visible,
 .collaboration-controls select:focus-visible,
 .collaboration-settings summary:focus-visible {
-  outline: 2px solid var(--z-color-focus-ring);
+  outline: 2px solid var(--zuvi-color-focus-ring);
   outline-offset: 3px;
 }
 .collaboration-composer textarea:focus-visible {
@@ -1060,12 +1060,12 @@
   gap: 17px;
   min-height: 474px;
   padding: 30px;
-  border: 1px dashed var(--z-color-border);
+  border: 1px dashed var(--zuvi-color-border);
   border-radius: 8px;
-  background: var(--z-color-bg-elevated);
+  background: var(--zuvi-color-bg-elevated);
   text-align: center;
 }
-.collaboration-placeholder .z-skeleton {
+.collaboration-placeholder .zuvi-skeleton {
   align-self: stretch;
 }
 .collaboration-placeholder > strong {
@@ -1075,7 +1075,7 @@
 .collaboration-placeholder p {
   max-width: 270px;
   margin: 0;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 12px;
   line-height: 1.9;
 }
@@ -1086,10 +1086,10 @@
   width: 58px;
   height: 64px;
   margin-bottom: 8px;
-  border: 1px solid var(--z-color-border);
+  border: 1px solid var(--zuvi-color-border);
   border-radius: 12px;
   background: var(--collaboration-canvas);
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
 }
 .collaboration-unsupported svg,
 .collaboration-placeholder-icon svg {
@@ -1107,7 +1107,7 @@
   display: block;
   width: 100%;
   height: auto;
-  border: 1px solid var(--z-color-border);
+  border: 1px solid var(--zuvi-color-border);
   border-radius: 9px;
 }
 .collaboration-figure figcaption {
@@ -1116,7 +1116,7 @@
   align-items: center;
   gap: 6px;
   margin-top: 18px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 10px;
 }
 .collaboration-figure figcaption svg {
@@ -1126,7 +1126,7 @@
 .collaboration-feedback {
   min-height: 20px;
   margin: 12px 2px 0;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 11px;
   line-height: 1.8;
 }
@@ -1142,13 +1142,13 @@
 }
 .collaboration-designs > div {
   padding: 20px;
-  border: 1px solid var(--z-color-border);
+  border: 1px solid var(--zuvi-color-border);
   border-radius: 10px;
-  background: var(--z-color-bg-elevated);
+  background: var(--zuvi-color-bg-elevated);
 }
 .collaboration-designs span {
   color: var(--collaboration-accent);
-  font: 9px var(--z-font-mono);
+  font: 9px var(--zuvi-font-mono);
 }
 .collaboration-designs h3 {
   margin: 13px 0 10px;
@@ -1157,7 +1157,7 @@
 }
 .collaboration-designs p {
   margin: 0;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 12px;
   line-height: 1.9;
 }
@@ -1180,7 +1180,7 @@
     grid-column: 1 / -1;
     padding: 12px 16px;
     border-right: 0;
-    border-bottom: 1px solid var(--z-color-border);
+    border-bottom: 1px solid var(--zuvi-color-border);
   }
   .collaboration-files-heading,
   .collaboration-outline,
@@ -1210,7 +1210,7 @@
   }
   .collaboration-comments {
     border-left: 0;
-    border-top: 1px solid var(--z-color-border);
+    border-top: 1px solid var(--zuvi-color-border);
   }
   .collaboration-discussion-header {
     padding: 20px;
@@ -1434,10 +1434,10 @@
   width: 100%;
   min-width: 0;
   padding: 8px 10px;
-  border: 1px solid var(--z-color-border);
+  border: 1px solid var(--zuvi-color-border);
   border-radius: 6px;
-  background: var(--z-color-bg);
-  color: var(--z-color-fg);
+  background: var(--zuvi-color-bg);
+  color: var(--zuvi-color-fg);
   font: inherit;
 }
 .collaboration-controls input {
@@ -1445,7 +1445,7 @@
 }
 .collaboration-controls p {
   margin: 0;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 11px;
   line-height: 1.8;
 }
@@ -1456,10 +1456,10 @@
   min-width: 0;
   padding: 8px;
   margin: 0 0 10px;
-  border: 1px solid var(--z-color-border);
+  border: 1px solid var(--zuvi-color-border);
   border-radius: 7px;
-  background: var(--z-color-bg);
-  color: var(--z-color-fg-muted);
+  background: var(--zuvi-color-bg);
+  color: var(--zuvi-color-fg-muted);
 }
 .collaboration-file-search svg {
   width: 13px;
@@ -1472,15 +1472,15 @@
   border: 0;
   outline: 0;
   background: transparent;
-  color: var(--z-color-fg);
-  font: 11px var(--z-font-sans);
+  color: var(--zuvi-color-fg);
+  font: 11px var(--zuvi-font-sans);
 }
 .collaboration-file-search:focus-within {
-  outline: 2px solid var(--z-color-focus-ring);
+  outline: 2px solid var(--zuvi-color-focus-ring);
   outline-offset: 2px;
 }
 .collaboration-search-empty {
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 11px;
 }
 .collaboration-toolbar-actions {
@@ -1489,8 +1489,8 @@
   flex-wrap: wrap;
   gap: 7px;
 }
-.collaboration-toolbar-actions .z-button[data-variant='outline'] {
-  --z-button-hover-fg: var(--collaboration-accent);
+.collaboration-toolbar-actions .zuvi-button[data-variant='outline'] {
+  --zuvi-button-hover-fg: var(--collaboration-accent);
 }
 .collaboration-section-actions {
   flex-wrap: wrap;
@@ -1508,10 +1508,10 @@
   gap: 12px;
   padding: 14px 18px;
   margin: 0 0 16px;
-  border: 1px solid var(--z-color-warning-subtle-fg);
+  border: 1px solid var(--zuvi-color-warning-subtle-fg);
   border-radius: 9px;
-  background: var(--z-color-warning-subtle);
-  color: var(--z-color-warning-subtle-fg);
+  background: var(--zuvi-color-warning-subtle);
+  color: var(--zuvi-color-warning-subtle-fg);
 }
 .collaboration-storage-error p {
   margin: 0;
@@ -1527,12 +1527,12 @@
 }
 .collaboration-local-note[data-state='error'],
 .collaboration-local-note[data-state='conflict'] {
-  color: var(--z-color-warning-subtle-fg);
+  color: var(--zuvi-color-warning-subtle-fg);
 }
 .collaboration-thread time {
   display: block;
   margin: 7px 0;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 10px;
   line-height: 1.6;
 }
@@ -1542,12 +1542,12 @@
 .collaboration-pdf iframe {
   width: 100%;
   height: 640px;
-  border: 1px solid var(--z-color-border);
+  border: 1px solid var(--zuvi-color-border);
   border-radius: 8px;
-  background: var(--z-color-bg);
+  background: var(--zuvi-color-bg);
 }
 .collaboration-pdf p {
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 11px;
   line-height: 1.8;
 }
@@ -1558,11 +1558,11 @@
 }
 .collaboration-dialog input:focus-visible,
 .collaboration-controls input:focus-visible {
-  outline: 2px solid var(--z-color-focus-ring);
+  outline: 2px solid var(--zuvi-color-focus-ring);
   outline-offset: 2px;
 }
 .collaboration-dialog [role='alert'] {
-  color: var(--z-color-danger-subtle-fg);
+  color: var(--zuvi-color-danger-subtle-fg);
   font-size: 12px;
 }
 @container (max-width: 1050px) {
@@ -1623,7 +1623,7 @@
 }
 .collaboration-local-help {
   margin: 7px 2px 0;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 11px;
   line-height: 1.8;
 }

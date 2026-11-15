@@ -1,6 +1,6 @@
 # SSR / Next.js App Router 接入指南
 
-ZUI 使用原生 CSS 与 CSS 变量。`@zui/react` 的 ESM/CJS 入口保留 `'use client'`，
+ZUVI 使用原生 CSS 与 CSS 变量。`@zuvi/react` 的 ESM/CJS 入口保留 `'use client'`，
 图标、业务块和翻译 Hook 的公开入口也声明客户端边界。
 
 ## 样式与客户端边界
@@ -9,14 +9,14 @@ ZUI 使用原生 CSS 与 CSS 变量。`@zui/react` 的 ESM/CJS 入口保留 `'us
 
 ```tsx
 // app/layout.tsx
-import '@zui/react/styles.css';
+import '@zuvi/react/styles.css';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return <html lang="zh-CN"><body>{children}</body></html>;
 }
 ```
 
-Server Component 可以导入和渲染 ZUI 的客户端组件，跨边界 props 必须可序列化。
+Server Component 可以导入和渲染 ZUVI 的客户端组件，跨边界 props 必须可序列化。
 例如 `<Button>继续</Button>` 可以直接渲染；事件处理、hooks、ref 和函数型配置应在自己的
 客户端组件中定义。需要交互时把边界放在相应功能上：
 
@@ -24,7 +24,7 @@ Server Component 可以导入和渲染 ZUI 的客户端组件，跨边界 props 
 // app/ui/name-field.tsx
 'use client';
 import { useState } from 'react';
-import { Input } from '@zui/react';
+import { Input } from '@zuvi/react';
 
 export function NameField() {
   const [name, setName] = useState('');
@@ -33,7 +33,7 @@ export function NameField() {
 ```
 
 `ConfigProvider`、`MessageProvider` 等在客户端入口中组合，Server Component 可引用该入口。
-子路径（如 `@zui/react/button`）与主入口目前指向同一产物，仍需引入完整样式。
+子路径（如 `@zuvi/react/button`）与主入口目前指向同一产物，仍需引入完整样式。
 通过 CLI 复制源码时，应保留复制文件中的 `'use client'` 和 CSS 导入。
 
 ## 服务端渲染与水合

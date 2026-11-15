@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Affix, Button } from '@zui/react';
+import { Affix, Button } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -19,10 +19,10 @@ const BOTTOM_CODE = `<Affix offsetBottom={20}>
 
 const TARGET_CODE = `const containerRef = useRef<HTMLDivElement>(null);
 
-<div ref={containerRef} style={{ height: 200, overflow: 'auto', border: '1px solid var(--z-color-border)' }}>
+<div ref={containerRef} style={{ height: 200, overflow: 'auto', border: '1px solid var(--zuvi-color-border)' }}>
   <div style={{ height: 500 }}>
     <Affix offsetTop={0} target={() => containerRef.current!}>
-      <div style={{ background: 'var(--z-color-primary)', color: 'var(--z-color-primary-fg)', padding: 8 }}>容器内固钉</div>
+      <div style={{ background: 'var(--zuvi-color-primary)', color: 'var(--zuvi-color-primary-fg)', padding: 8 }}>容器内固钉</div>
     </Affix>
   </div>
 </div>`;
@@ -55,11 +55,11 @@ export default function AffixPage(): React.ReactNode {
       <Demo title="自定义滚动容器" description="target 返回滚动容器元素，固钉在容器内生效。" code={TARGET_CODE}>
         <div
           ref={containerRef}
-          style={{ height: 200, overflow: 'auto', border: '1px solid var(--z-color-border)' }}
+          style={{ height: 200, overflow: 'auto', border: '1px solid var(--zuvi-color-border)' }}
         >
           <div style={{ height: 500, position: 'relative' }}>
             <Affix offsetTop={0} target={() => containerRef.current!}>
-              <div style={{ background: 'var(--z-color-primary)', color: 'var(--z-color-primary-fg)', padding: 8 }}>容器内固钉</div>
+              <div style={{ background: 'var(--zuvi-color-primary)', color: 'var(--zuvi-color-primary-fg)', padding: 8 }}>容器内固钉</div>
             </Affix>
           </div>
         </div>
@@ -105,7 +105,7 @@ export default function AffixPage(): React.ReactNode {
       <CustomizeOutlet
         name="Affix"
         parts={['root', 'content']}
-        vars={['--z-affix-z']}
+        vars={['--zuvi-affix-z']}
       />
     </div>
   );

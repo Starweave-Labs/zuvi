@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { flushSync } from 'react-dom';
-import { AlignCenter, AlignLeft, AlignRight, Plus, Trash } from '@zui/icons';
+import { AlignCenter, AlignLeft, AlignRight, Plus, Trash } from '@zuvi/icons';
 import { Button } from '../Button';
 import { Input } from '../Input';
 import { Select } from '../Select';
@@ -897,7 +897,7 @@ export function StudioSheet({
     const widths: Record<string, number> = {};
     const measuredColumns = new Set<number>();
     const probe = globalThis.document.createElement('span');
-    probe.className = 'z-studio-sheet-fit-probe';
+    probe.className = 'zuvi-studio-sheet-fit-probe';
     gridRef.current?.append(probe);
     try {
       for (let col = range.firstCol; col <= range.lastCol; col++)
@@ -915,7 +915,7 @@ export function StudioSheet({
         if (!text) continue;
         Object.assign(probe.style, {
           width: 'max-content',
-          fontFamily: `${quotedFontFamily(cell.fontFamily ?? DEFAULT_FONT)}, var(--z-font-sans)`,
+          fontFamily: `${quotedFontFamily(cell.fontFamily ?? DEFAULT_FONT)}, var(--zuvi-font-sans)`,
           fontSize: `${cell.fontSize ?? DEFAULT_FONT_SIZE}pt`,
           fontWeight: cell.bold ? '700' : '400',
           fontStyle: cell.italic ? 'italic' : 'normal',
@@ -1267,7 +1267,7 @@ export function StudioSheet({
       grouped.set(position.row, cells);
     }
     const probe = globalThis.document.createElement('span');
-    probe.className = 'z-studio-sheet-fit-probe';
+    probe.className = 'zuvi-studio-sheet-fit-probe';
     gridRef.current?.append(probe);
     try {
       const heights = { ...currentSheet.rowHeights };
@@ -1279,7 +1279,7 @@ export function StudioSheet({
           (cell) => {
             Object.assign(probe.style, {
               width: `${Math.max(1, cell.width - 10)}px`,
-              fontFamily: `${quotedFontFamily(cell.fontFamily ?? DEFAULT_FONT)}, var(--z-font-sans)`,
+              fontFamily: `${quotedFontFamily(cell.fontFamily ?? DEFAULT_FONT)}, var(--zuvi-font-sans)`,
               fontSize: `${cell.fontSize ?? DEFAULT_FONT_SIZE}pt`,
               fontWeight: cell.bold ? '700' : '400',
               fontStyle: cell.italic ? 'italic' : 'normal',
@@ -1959,11 +1959,11 @@ export function StudioSheet({
           ? `${address}：${error}。请检查公式。`
           : notice;
 
-  if (!sheet) return <div className="z-studio-sheet-empty">工作簿中没有工作表。</div>;
+  if (!sheet) return <div className="zuvi-studio-sheet-empty">工作簿中没有工作表。</div>;
 
   return (
     <div
-      className="z-studio-sheet"
+      className="zuvi-studio-sheet"
       data-disabled={disabled || undefined}
       data-readonly={readOnly || undefined}
       data-studio-input-error={inputError ?? undefined}
@@ -1997,7 +1997,7 @@ export function StudioSheet({
       <Tabs
         value={ribbon}
         onValueChange={setRibbon}
-        className="z-studio-sheet-ribbon z-studio-ribbon"
+        className="zuvi-studio-sheet-ribbon zuvi-studio-ribbon"
       >
         <StudioRibbonTabs>
           <Tabs.List aria-label="表格工具栏">
@@ -2022,9 +2022,9 @@ export function StudioSheet({
           </Tabs.List>
         </StudioRibbonTabs>
         <Tabs.Panel value="home">
-          <div className="z-studio-sheet-tools">
-            <div className="z-studio-sheet-toolgroup">
-              <div className="z-studio-sheet-toolrow">
+          <div className="zuvi-studio-sheet-tools">
+            <div className="zuvi-studio-sheet-toolgroup">
+              <div className="zuvi-studio-sheet-toolrow">
                 <Button
                   size="sm"
                   variant="ghost"
@@ -2076,7 +2076,7 @@ export function StudioSheet({
                   清除格式
                 </Button>
               </div>
-              <div className="z-studio-sheet-toolrow">
+              <div className="zuvi-studio-sheet-toolrow">
                 <Button
                   size="sm"
                   variant="ghost"
@@ -2098,12 +2098,12 @@ export function StudioSheet({
               </div>
               <span>编辑</span>
             </div>
-            <div className="z-studio-sheet-toolgroup z-studio-sheet-fontgroup">
-              <div className="z-studio-sheet-toolrow">
+            <div className="zuvi-studio-sheet-toolgroup zuvi-studio-sheet-fontgroup">
+              <div className="zuvi-studio-sheet-toolrow">
                 <StudioFontControl
                   label="表格字体"
                   kind="family"
-                  className="z-studio-sheet-font"
+                  className="zuvi-studio-sheet-font"
                   value={cell?.fontFamily ?? DEFAULT_FONT}
                   options={fontOptions}
                   contextKey={`${document.id}:${sheet.id}:${studioRangeAddress(bounds)}:${address}`}
@@ -2119,7 +2119,7 @@ export function StudioSheet({
                 <StudioFontControl
                   label="表格字号"
                   kind="size"
-                  className="z-studio-sheet-fontsize"
+                  className="zuvi-studio-sheet-fontsize"
                   value={String(cell?.fontSize ?? DEFAULT_FONT_SIZE)}
                   options={fontSizeOptions}
                   contextKey={`${document.id}:${sheet.id}:${studioRangeAddress(bounds)}:${address}`}
@@ -2133,7 +2133,7 @@ export function StudioSheet({
                   onCancel={() => gridRef.current?.focus()}
                 />
               </div>
-              <div className="z-studio-sheet-toolrow">
+              <div className="zuvi-studio-sheet-toolrow">
                 <Button
                   size="sm"
                   variant={cell?.bold ? 'outline' : 'ghost'}
@@ -2195,8 +2195,8 @@ export function StudioSheet({
               </div>
               <span>字体</span>
             </div>
-            <div className="z-studio-sheet-toolgroup">
-              <div className="z-studio-sheet-toolrow">
+            <div className="zuvi-studio-sheet-toolgroup">
+              <div className="zuvi-studio-sheet-toolrow">
                 {alignments.map(({ value: align, label, Icon }) => (
                   <Button
                     key={align}
@@ -2227,8 +2227,8 @@ export function StudioSheet({
                 ]}
               />
             </div>
-            <div className="z-studio-sheet-toolgroup z-studio-sheet-bordergroup">
-              <div className="z-studio-sheet-toolrow">
+            <div className="zuvi-studio-sheet-toolgroup zuvi-studio-sheet-bordergroup">
+              <div className="zuvi-studio-sheet-toolrow">
                 <Select
                   size="sm"
                   aria-label="边框线型"
@@ -2252,7 +2252,7 @@ export function StudioSheet({
                   onChange={setBorderColor}
                 />
               </div>
-              <div className="z-studio-sheet-toolrow">
+              <div className="zuvi-studio-sheet-toolrow">
                 {(
                   [
                     { value: 'all', label: '所有边框' },
@@ -2282,7 +2282,7 @@ export function StudioSheet({
               </div>
               <span>边框</span>
             </div>
-            <div className="z-studio-sheet-toolgroup z-studio-sheet-numbergroup">
+            <div className="zuvi-studio-sheet-toolgroup zuvi-studio-sheet-numbergroup">
               <Select
                 size="sm"
                 aria-label="单元格数字格式"
@@ -2297,8 +2297,8 @@ export function StudioSheet({
               />
               <span>数字格式</span>
             </div>
-            <div className="z-studio-sheet-toolgroup">
-              <div className="z-studio-sheet-toolrow">
+            <div className="zuvi-studio-sheet-toolgroup">
+              <div className="zuvi-studio-sheet-toolrow">
                 <Button
                   size="sm"
                   variant="ghost"
@@ -2327,8 +2327,8 @@ export function StudioSheet({
               </div>
               <span>单元格布局</span>
             </div>
-            <div className="z-studio-sheet-toolgroup">
-              <div className="z-studio-sheet-toolrow">
+            <div className="zuvi-studio-sheet-toolgroup">
+              <div className="zuvi-studio-sheet-toolrow">
                 <Button size="sm" variant="ghost" disabled={blocked} onClick={openRowHeight}>
                   行高
                 </Button>
@@ -2341,15 +2341,15 @@ export function StudioSheet({
                   自动调整行高
                 </Button>
               </div>
-              <div className="z-studio-sheet-toolrow">
+              <div className="zuvi-studio-sheet-toolrow">
                 <Button size="sm" variant="ghost" disabled={blocked} onClick={resetRowHeights}>
                   恢复默认行高
                 </Button>
               </div>
               <span>行大小 · 磅</span>
             </div>
-            <div className="z-studio-sheet-toolgroup">
-              <div className="z-studio-sheet-toolrow">
+            <div className="zuvi-studio-sheet-toolgroup">
+              <div className="zuvi-studio-sheet-toolrow">
                 <Button
                   size="sm"
                   variant="ghost"
@@ -2432,7 +2432,7 @@ export function StudioSheet({
               </Button>
               <span>列大小 · 字符</span>
             </div>
-            <div className="z-studio-sheet-toolgroup">
+            <div className="zuvi-studio-sheet-toolgroup">
               <Button
                 size="sm"
                 variant="ghost"
@@ -2443,8 +2443,8 @@ export function StudioSheet({
               </Button>
               <span>公式</span>
             </div>
-            <div className="z-studio-sheet-toolgroup">
-              <div className="z-studio-sheet-toolrow">
+            <div className="zuvi-studio-sheet-toolgroup">
+              <div className="zuvi-studio-sheet-toolrow">
                 <Button
                   size="sm"
                   variant="ghost"
@@ -2485,9 +2485,9 @@ export function StudioSheet({
           </div>
         </Tabs.Panel>
         <Tabs.Panel value="insert">
-          <div className="z-studio-sheet-tools">
-            <div className="z-studio-sheet-toolgroup">
-              <div className="z-studio-sheet-toolrow">
+          <div className="zuvi-studio-sheet-tools">
+            <div className="zuvi-studio-sheet-toolgroup">
+              <div className="zuvi-studio-sheet-toolrow">
                 <Input
                   size="sm"
                   aria-label="图表数据区域"
@@ -2524,8 +2524,8 @@ export function StudioSheet({
               </div>
               <span title="首行作为系列名、首列作为分类；区域留空时使用选区。">图表</span>
             </div>
-            <div className="z-studio-sheet-toolgroup">
-              <div className="z-studio-sheet-toolrow">
+            <div className="zuvi-studio-sheet-toolgroup">
+              <div className="zuvi-studio-sheet-toolrow">
                 <Button
                   size="sm"
                   variant="ghost"
@@ -2548,7 +2548,7 @@ export function StudioSheet({
                   打开链接
                 </Button>
               </div>
-              <div className="z-studio-sheet-toolrow">
+              <div className="zuvi-studio-sheet-toolrow">
                 <Button
                   size="sm"
                   variant="ghost"
@@ -2563,8 +2563,8 @@ export function StudioSheet({
           </div>
         </Tabs.Panel>
         <Tabs.Panel value="data">
-          <div className="z-studio-sheet-tools z-studio-sheet-data-tools">
-            <div className="z-studio-sheet-toolgroup">
+          <div className="zuvi-studio-sheet-tools zuvi-studio-sheet-data-tools">
+            <div className="zuvi-studio-sheet-toolgroup">
               <Button
                 size="sm"
                 variant="outline"
@@ -2575,8 +2575,8 @@ export function StudioSheet({
               </Button>
               <span title={`${sheet.dataValidations?.length ?? 0} 条规则`}>数据工具</span>
             </div>
-            <div className="z-studio-sheet-toolgroup">
-              <div className="z-studio-sheet-toolrow">
+            <div className="zuvi-studio-sheet-toolgroup">
+              <div className="zuvi-studio-sheet-toolrow">
                 <Button
                   size="sm"
                   variant="outline"
@@ -2610,8 +2610,8 @@ export function StudioSheet({
               </div>
               <span>排序当前选区，活动列为排序列</span>
             </div>
-            <div className="z-studio-sheet-toolgroup">
-              <div className="z-studio-sheet-toolrow">
+            <div className="zuvi-studio-sheet-toolgroup">
+              <div className="zuvi-studio-sheet-toolrow">
                 <Input
                   size="sm"
                   aria-label="筛选区域"
@@ -2684,9 +2684,9 @@ export function StudioSheet({
           </div>
         </Tabs.Panel>
         <Tabs.Panel value="formulas">
-          <div className="z-studio-sheet-tools">
-            <div className="z-studio-sheet-toolgroup">
-              <div className="z-studio-sheet-toolrow">
+          <div className="zuvi-studio-sheet-tools">
+            <div className="zuvi-studio-sheet-toolgroup">
+              <div className="zuvi-studio-sheet-toolrow">
                 {['SUM', 'AVERAGE', 'COUNT', 'IF'].map((name) => (
                   <Button
                     key={name}
@@ -2707,15 +2707,15 @@ export function StudioSheet({
               </div>
               <span>插入函数</span>
             </div>
-            <p className="z-studio-sheet-help">
+            <p className="zuvi-studio-sheet-help">
               以 = 开头输入公式，支持跨工作表引用，如 =SUM(Sheet1!A1:A5)。
             </p>
           </div>
         </Tabs.Panel>
         <Tabs.Panel value="layout">
-          <div className="z-studio-sheet-tools">
-            <div className="z-studio-sheet-toolgroup">
-              <div className="z-studio-sheet-toolrow">
+          <div className="zuvi-studio-sheet-tools">
+            <div className="zuvi-studio-sheet-toolgroup">
+              <div className="zuvi-studio-sheet-toolrow">
                 <Button
                   size="sm"
                   variant="outline"
@@ -2751,8 +2751,8 @@ export function StudioSheet({
               </div>
               <span title="按选区操作，插入在选区之前；删除可撤销。">单元格</span>
             </div>
-            <div className="z-studio-sheet-toolgroup">
-              <div className="z-studio-sheet-toolrow">
+            <div className="zuvi-studio-sheet-toolgroup">
+              <div className="zuvi-studio-sheet-toolrow">
                 <Button size="sm" variant="outline" disabled={blocked} onClick={addSheet}>
                   ＋ 新工作表
                 </Button>
@@ -2786,9 +2786,9 @@ export function StudioSheet({
           </div>
         </Tabs.Panel>
         <Tabs.Panel value="view">
-          <div className="z-studio-sheet-tools">
-            <div className="z-studio-sheet-toolgroup">
-              <div className="z-studio-sheet-toolrow">
+          <div className="zuvi-studio-sheet-tools">
+            <div className="zuvi-studio-sheet-toolgroup">
+              <div className="zuvi-studio-sheet-toolrow">
                 <Button
                   size="sm"
                   variant="ghost"
@@ -2835,10 +2835,10 @@ export function StudioSheet({
           </div>
         </Tabs.Panel>
       </Tabs>
-      <div className="z-studio-sheet-formulabar">
+      <div className="zuvi-studio-sheet-formulabar">
         <Input
           size="sm"
-          className="z-studio-sheet-address"
+          className="zuvi-studio-sheet-address"
           aria-label="单元格地址"
           value={addressDraft}
           disabled={disabled}
@@ -2869,13 +2869,13 @@ export function StudioSheet({
             }
           }}
         />
-        <span className="z-studio-sheet-fx" aria-hidden="true">
+        <span className="zuvi-studio-sheet-fx" aria-hidden="true">
           ƒx
         </span>
         <Input
           size="sm"
           ref={formulaRef}
-          className="z-studio-sheet-formula"
+          className="zuvi-studio-sheet-formula"
           aria-label="表格公式栏"
           value={formulaValue}
           placeholder="输入内容或公式"
@@ -2924,7 +2924,7 @@ export function StudioSheet({
         {activeValidation?.rule.type === 'list' && !!activeValidation.options?.length && (
           <Select
             size="sm"
-            className="z-studio-sheet-validation-list"
+            className="zuvi-studio-sheet-validation-list"
             aria-label={`${address} 数据验证选项`}
             value={String(calculated.read(sheet.id, address).value ?? '')}
             placeholder="选择列表值"
@@ -2946,7 +2946,7 @@ export function StudioSheet({
       {validationPrompt && activeValidation && (
         <div
           id={`${gridId}-validation`}
-          className="z-studio-sheet-validation-prompt"
+          className="zuvi-studio-sheet-validation-prompt"
           data-invalid={!activeValidation.valid || undefined}
         >
           {validationPrompt}
@@ -2974,11 +2974,11 @@ export function StudioSheet({
           }}
         />
       )}
-      <div className="z-studio-sheet-workarea">
+      <div className="zuvi-studio-sheet-workarea">
         <div
           ref={gridRef}
           id={`${gridId}-grid`}
-          className="z-studio-sheet-grid"
+          className="zuvi-studio-sheet-grid"
           role="grid"
           aria-label={`${sheet.name} 单元格网格`}
           aria-rowcount={rowCount + 1}
@@ -3001,7 +3001,7 @@ export function StudioSheet({
           }}
         >
           <div
-            className="z-studio-sheet-canvas"
+            className="zuvi-studio-sheet-canvas"
             style={{
               width: offsets[columnCount],
               height: HEADER_HEIGHT + rowLayout.offsets[shownRows.length],
@@ -3010,16 +3010,16 @@ export function StudioSheet({
             <div
               role="row"
               aria-rowindex={1}
-              className="z-studio-sheet-columnheaders"
+              className="zuvi-studio-sheet-columnheaders"
               style={{ width: offsets[columnCount] }}
             >
-              <div role="columnheader" aria-label="行号" className="z-studio-sheet-corner" />
+              <div role="columnheader" aria-label="行号" className="zuvi-studio-sheet-corner" />
               {visibleColumns.map((col) => (
                 <div
                   key={col}
                   role="columnheader"
                   aria-colindex={col + 1}
-                  className="z-studio-sheet-columnheader"
+                  className="zuvi-studio-sheet-columnheader"
                   data-selected={(col >= bounds.firstCol && col <= bounds.lastCol) || undefined}
                   data-frozen={col <= freezeColumns || undefined}
                   style={{
@@ -3048,7 +3048,7 @@ export function StudioSheet({
                       studioColumnCharacterWidth(offsets[col] - offsets[col - 1]).toFixed(2)
                     )}
                     tabIndex={blocked ? -1 : 0}
-                    className="z-studio-sheet-column-resize"
+                    className="zuvi-studio-sheet-column-resize"
                     onPointerDown={(event) => startColumnResize(event, col)}
                     onDoubleClick={(event) => {
                       event.stopPropagation();
@@ -3095,7 +3095,7 @@ export function StudioSheet({
                 key={`${sheet.id}-${row}`}
                 role="row"
                 aria-rowindex={row + 1}
-                className="z-studio-sheet-row"
+                className="zuvi-studio-sheet-row"
                 data-frozen={row <= (sheet.freeze?.rows ?? 0) || undefined}
                 style={{
                   top:
@@ -3110,7 +3110,7 @@ export function StudioSheet({
                 <div
                   role="rowheader"
                   aria-colindex={1}
-                  className="z-studio-sheet-rowheader"
+                  className="zuvi-studio-sheet-rowheader"
                   style={{ height: studioRowSpanHeight(rowLayout, row) }}
                   onDoubleClick={() => fitRowHeights({ firstRow: row, lastRow: row })}
                   data-selected={(row >= bounds.firstRow && row <= bounds.lastRow) || undefined}
@@ -3134,7 +3134,7 @@ export function StudioSheet({
                       (sheet.rowHeights?.[String(row)] ?? sheet.defaultRowHeight ?? 18).toFixed(2)
                     )}
                     tabIndex={blocked ? -1 : 0}
-                    className="z-studio-sheet-row-resize"
+                    className="zuvi-studio-sheet-row-resize"
                     onPointerDown={(event) => startRowResize(event, row)}
                     onDoubleClick={(event) => {
                       event.stopPropagation();
@@ -3231,7 +3231,7 @@ export function StudioSheet({
                         active && validationPrompt ? `${gridId}-validation` : undefined
                       }
                       aria-label={`${currentAddress}${currentError ? ` ${currentError}` : ''}`}
-                      className="z-studio-sheet-cell"
+                      className="zuvi-studio-sheet-cell"
                       data-active={active || undefined}
                       data-selected={selected || undefined}
                       data-error={!!currentError || undefined}
@@ -3248,7 +3248,7 @@ export function StudioSheet({
                         fontWeight: displayCell.bold ? 700 : undefined,
                         fontStyle: displayCell.italic ? 'italic' : undefined,
                         fontFamily: displayCell.fontFamily
-                          ? `${quotedFontFamily(displayCell.fontFamily)}, var(--z-font-sans)`
+                          ? `${quotedFontFamily(displayCell.fontFamily)}, var(--zuvi-font-sans)`
                           : undefined,
                         fontSize:
                           displayCell.fontSize === undefined
@@ -3257,7 +3257,7 @@ export function StudioSheet({
                         textDecoration:
                           displayCell.underline || currentLink ? 'underline' : undefined,
                         color:
-                          displayCell.color ?? (currentLink ? 'var(--z-color-link)' : undefined),
+                          displayCell.color ?? (currentLink ? 'var(--zuvi-color-link)' : undefined),
                         backgroundColor: displayCell.background,
                         alignItems:
                           (currentCell?.verticalAlign ?? 'bottom') === 'top'
@@ -3359,7 +3359,7 @@ export function StudioSheet({
           {fillPreview && (
             <div
               aria-hidden="true"
-              className="z-studio-sheet-fill-preview"
+              className="zuvi-studio-sheet-fill-preview"
               style={{
                 left: ROW_HEADER_WIDTH + offsets[fillPreview.firstCol - 1],
                 top: HEADER_HEIGHT + studioRowTop(rowLayout, fillPreview.firstRow),
@@ -3373,7 +3373,7 @@ export function StudioSheet({
               type="button"
               aria-label="填充柄"
               title="拖动填充：数字/日期自动递增，文本复制"
-              className="z-studio-sheet-fill-handle"
+              className="zuvi-studio-sheet-fill-handle"
               style={{
                 left:
                   ROW_HEADER_WIDTH +
@@ -3391,8 +3391,8 @@ export function StudioSheet({
           )}
         </div>
         {chartPanel && (
-          <aside className="z-studio-sheet-chartpanel" aria-label="工作表图表">
-            <div className="z-studio-sheet-chartheading">
+          <aside className="zuvi-studio-sheet-chartpanel" aria-label="工作表图表">
+            <div className="zuvi-studio-sheet-chartheading">
               <strong>图表</strong>
               <Button
                 size="sm"
@@ -3405,7 +3405,7 @@ export function StudioSheet({
             </div>
             {(sheet.charts ?? []).map((chart) => (
               <div
-                className="z-studio-sheet-chartcard"
+                className="zuvi-studio-sheet-chartcard"
                 key={chart.id}
                 data-selected={chart.id === selectedChart || undefined}
               >
@@ -3420,7 +3420,7 @@ export function StudioSheet({
                   onChange={(event) => changeChart(chart.id, { title: event.target.value })}
                 />
                 <SheetChartPreview chart={chart} data={studioChartData(sheet, chart, calculated)} />
-                <div className="z-studio-sheet-chartcontrols">
+                <div className="zuvi-studio-sheet-chartcontrols">
                   <span>{chart.range}</span>
                   <Button
                     size="sm"
@@ -3448,8 +3448,8 @@ export function StudioSheet({
           </aside>
         )}
       </div>
-      <div className="z-studio-sheet-bottom">
-        <Tabs value={sheet.id} onValueChange={switchSheet} className="z-studio-sheet-tabs">
+      <div className="zuvi-studio-sheet-bottom">
+        <Tabs value={sheet.id} onValueChange={switchSheet} className="zuvi-studio-sheet-tabs">
           <Tabs.List aria-label="工作表">
             {document.sheets.map((item) => (
               <Tabs.Trigger
@@ -3488,14 +3488,14 @@ export function StudioSheet({
         </Button>
         <span
           id={`${gridId}-notice`}
-          className="z-studio-sheet-notice"
+          className="zuvi-studio-sheet-notice"
           role="status"
           title={noticeText}
         >
           {noticeText}
         </span>
         <span
-          className="z-studio-sheet-summary"
+          className="zuvi-studio-sheet-summary"
           title={`${count > 1 ? `选中 ${count} 格` : address}${summary ? ` · ${summary}` : ''}`}
         >
           {count > 1 ? `选中 ${count} 格` : address}
@@ -3503,7 +3503,7 @@ export function StudioSheet({
         </span>
       </div>
       {rename !== null && (
-        <div className="z-studio-sheet-rename">
+        <div className="zuvi-studio-sheet-rename">
           <Input
             size="sm"
             aria-label="工作表新名称"
@@ -3537,18 +3537,18 @@ export function StudioSheet({
               <Modal.Title>选择性粘贴</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <p className="z-studio-sheet-paste-help">
+              <p className="zuvi-studio-sheet-paste-help">
                 从最近一次在 OfficeStudio 中复制的区域粘贴到 {address}。
               </p>
               <div
-                className="z-studio-sheet-paste-options"
+                className="zuvi-studio-sheet-paste-options"
                 role="radiogroup"
                 aria-label="选择粘贴方式"
               >
                 {pasteModes.map((option) => (
                   <label
                     key={option.value}
-                    className="z-studio-sheet-paste-option"
+                    className="zuvi-studio-sheet-paste-option"
                     data-checked={pasteMode === option.value || undefined}
                   >
                     <input
@@ -3776,14 +3776,14 @@ export function StudioSheet({
 export default StudioSheet;
 
 const chartPalette = [
-  'var(--z-color-primary)',
-  'var(--z-color-info)',
-  'var(--z-color-warning)',
-  'var(--z-color-link)',
-  'var(--z-color-danger)',
-  'var(--z-color-success)',
-  'var(--z-color-fg-muted)',
-  'var(--z-color-primary-hover)',
+  'var(--zuvi-color-primary)',
+  'var(--zuvi-color-info)',
+  'var(--zuvi-color-warning)',
+  'var(--zuvi-color-link)',
+  'var(--zuvi-color-danger)',
+  'var(--zuvi-color-success)',
+  'var(--zuvi-color-fg-muted)',
+  'var(--zuvi-color-primary-hover)',
 ];
 
 function SheetChartPreview({
@@ -3807,14 +3807,14 @@ function SheetChartPreview({
   return (
     <>
       <svg
-        className="z-studio-sheet-chart"
+        className="zuvi-studio-sheet-chart"
         role="img"
         aria-label={`${chart.title} ${chart.type === 'bar' ? '柱状图' : '折线图'}`}
         viewBox="0 0 300 190"
       >
         <title>{chart.title}</title>
-        <line x1="48" y1={zero} x2="282" y2={zero} stroke="var(--z-color-border-strong)" />
-        <line x1="48" y1="18" x2="48" y2="145" stroke="var(--z-color-border-strong)" />
+        <line x1="48" y1={zero} x2="282" y2={zero} stroke="var(--zuvi-color-border-strong)" />
+        <line x1="48" y1="18" x2="48" y2="145" stroke="var(--zuvi-color-border-strong)" />
         <text x="43" y="24" textAnchor="end" fill="currentColor">
           {Number(high.toPrecision(3))}
         </text>
@@ -3879,7 +3879,7 @@ function SheetChartPreview({
         )}
       </svg>
       <Collapse
-        className="z-studio-sheet-chartdata"
+        className="zuvi-studio-sheet-chartdata"
         items={[
           {
             key: 'data',

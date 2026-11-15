@@ -22,7 +22,7 @@ const test = base.extend<{ errorGuard: void }>({
 async function openPrototype(page: import('@playwright/test').Page) {
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1, name: 'ZUI 组件库' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: 'ZUVI 组件库' })).toBeVisible();
   await page.evaluate(() => {
     window.location.hash = '/prototype/datagrid';
   });

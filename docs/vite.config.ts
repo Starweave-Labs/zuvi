@@ -21,7 +21,7 @@ export default defineConfig({
     builderRuntimePlugin(),
     officePdfAssetsPlugin(),
     {
-      name: 'zui-puck-local-font',
+      name: 'zuvi-puck-local-font',
       enforce: 'pre',
       transform(code, id) {
         if (!id.includes('@puckeditor/core') || !id.endsWith('.css')) return null;
@@ -32,9 +32,9 @@ export default defineConfig({
       },
     },
   ],
-  base: process.env.GITHUB_PAGES_BUILD === 'true' ? '/zui/' : '/',
+  base: process.env.GITHUB_PAGES_BUILD === 'true' ? '/zuvi/' : '/',
   define: {
-    __ZUI_CATALOG__: JSON.stringify({
+    __ZUVI_CATALOG__: JSON.stringify({
       version,
       components: countDirectories('../packages/ui/src/components/'),
       blocks: countDirectories('../packages/blocks/src/'),
@@ -48,9 +48,9 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (/\/node_modules\/(react|react-dom|scheduler)\//.test(id)) return 'react-runtime';
-          // Editor kernels stay behind their dynamic imports. The shared ZUI
+          // Editor kernels stay behind their dynamic imports. The shared ZUVI
           // entry remains available to every route without loading them.
-          if (/\/packages\/ui\/dist\/index\.(?:js|cjs)$/.test(id)) return 'zui-components';
+          if (/\/packages\/ui\/dist\/index\.(?:js|cjs)$/.test(id)) return 'zuvi-components';
           // Puck 只在懒加载的 Builder 路由中使用；将其两组大依赖保持为
           // 独立路由级 chunk，避免单个 Builder chunk 越过 Vite 的 500 kB
           // 预算，同时不把编辑器代码抬到文档站首屏。

@@ -1,5 +1,5 @@
 import { useId, type ReactNode } from 'react';
-import type { IconProps } from '@zui/icons';
+import type { IconProps } from '@zuvi/icons';
 
 export type LabCategory = 'insight' | 'collaboration' | 'team' | 'creation';
 export const CATEGORIES: Record<LabCategory, string> = {

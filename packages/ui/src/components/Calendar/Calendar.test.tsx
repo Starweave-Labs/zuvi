@@ -18,7 +18,7 @@ describe('Calendar', () => {
   it('renders default structure: header label, weekday headers and 42 day cells', () => {
     const { container } = render(<Calendar defaultValue="2026-11-04" />);
     const root = getRoot(container);
-    expect(root).toHaveClass('z-calendar');
+    expect(root).toHaveClass('zuvi-calendar');
     expect(root).toHaveAttribute('data-part', 'root');
     expect(root).toHaveAttribute('data-fullscreen', 'true');
     expect(screen.getByText('2026年11月')).toBeInTheDocument();
@@ -174,14 +174,14 @@ describe('Calendar', () => {
       />
     );
     const root = getRoot(container);
-    expect(root).toHaveClass('z-calendar', 'my-root', 'cls-root');
-    expect(root.querySelector('[data-part="header"]')).toHaveClass('z-calendar-header', 'cls-header');
-    expect(root.querySelector('[data-part="label"]')).toHaveClass('z-calendar-label', 'cls-label');
-    expect(root.querySelector('[data-part="grid"]')).toHaveClass('z-calendar-grid', 'cls-grid');
-    expect(root.querySelector('[data-part="nav"]')).toHaveClass('z-calendar-nav', 'cls-nav');
-    expect(root.querySelector('[data-part="week"]')).toHaveClass('z-calendar-week', 'cls-week');
-    expect(root.querySelector('[data-part="weekday"]')).toHaveClass('z-calendar-weekday', 'cls-weekday');
-    expect(root.querySelector('[data-part="day"]')).toHaveClass('z-calendar-day', 'cls-day');
+    expect(root).toHaveClass('zuvi-calendar', 'my-root', 'cls-root');
+    expect(root.querySelector('[data-part="header"]')).toHaveClass('zuvi-calendar-header', 'cls-header');
+    expect(root.querySelector('[data-part="label"]')).toHaveClass('zuvi-calendar-label', 'cls-label');
+    expect(root.querySelector('[data-part="grid"]')).toHaveClass('zuvi-calendar-grid', 'cls-grid');
+    expect(root.querySelector('[data-part="nav"]')).toHaveClass('zuvi-calendar-nav', 'cls-nav');
+    expect(root.querySelector('[data-part="week"]')).toHaveClass('zuvi-calendar-week', 'cls-week');
+    expect(root.querySelector('[data-part="weekday"]')).toHaveClass('zuvi-calendar-weekday', 'cls-weekday');
+    expect(root.querySelector('[data-part="day"]')).toHaveClass('zuvi-calendar-day', 'cls-day');
   });
 
   it('fullscreen=false collapses to content width via data-fullscreen', () => {

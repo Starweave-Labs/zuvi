@@ -14,7 +14,7 @@ import {
   Form as ZForm,
   App as ZApp,
   useMessage,
-} from '@zui/react';
+} from '@zuvi/react';
 import type { Config, SlotComponent } from '@puckeditor/core';
 import { useId, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import { catalogComponents } from './builder-catalog';
@@ -55,7 +55,7 @@ function ImageSourceField({
   const [error, setError] = useState('');
   const id = useId();
   return (
-    <div className="z-builder-image-field">
+    <div className="zuvi-builder-image-field">
       <label htmlFor={`${id}-url`}>图片地址</label>
       <input
         id={`${id}-url`}
@@ -194,16 +194,16 @@ function BuilderForm({
   };
   if (isEditing)
     return (
-      <div className="z-builder-form" aria-label={title || '页面表单'}>
-        {title && <h2 className="z-builder-section-title">{title}</h2>}
-        <Content className="z-builder-stack" minEmptyHeight={120} />
+      <div className="zuvi-builder-form" aria-label={title || '页面表单'}>
+        {title && <h2 className="zuvi-builder-section-title">{title}</h2>}
+        <Content className="zuvi-builder-stack" minEmptyHeight={120} />
       </div>
     );
   return (
     <BuilderFormContext.Provider value={true}>
       <ZForm
         ref={formRef}
-        className="z-builder-form"
+        className="zuvi-builder-form"
         data-builder-form
         data-success-message={successMessage}
         aria-label={title || '页面表单'}
@@ -216,11 +216,11 @@ function BuilderForm({
           }
         }}
       >
-        {title && <h2 className="z-builder-section-title">{title}</h2>}
-        <Content className="z-builder-stack" minEmptyHeight={120} />
+        {title && <h2 className="zuvi-builder-section-title">{title}</h2>}
+        <Content className="zuvi-builder-stack" minEmptyHeight={120} />
         <div data-builder-form-result>
           {submission && (
-            <div className="z-builder-form-result" role="status">
+            <div className="zuvi-builder-form-result" role="status">
               <p>{successMessage || '已生成本次提交数据。'}</p>
               <ZButton
                 variant="outline"
@@ -357,7 +357,7 @@ export const builderConfig: Config = {
       <ZApp>
         <BuilderDataProvider sources={datasets} editing={puck?.isEditing} dataKey={dataKey}>
           <div
-            className="z-builder-canvas"
+            className="zuvi-builder-canvas"
             data-theme={theme}
             data-visual={visualPreset}
             style={
@@ -366,19 +366,19 @@ export const builderConfig: Config = {
                 '--builder-page-gap': `${boundedNumber(contentGap, 20, 0, 160)}px`,
                 '--builder-radius': `${boundedNumber(radius, 12, 0, 32)}px`,
                 ...tokenStyles(tokens),
-                ...(primaryColor ? { '--z-color-primary': primaryColor } : {}),
+                ...(primaryColor ? { '--zuvi-color-primary': primaryColor } : {}),
                 ...(background ? { backgroundColor: background } : {}),
                 ...(fontFamily ? { fontFamily } : {}),
               } as CSSProperties
             }
           >
             <div
-              className="z-builder-page-content"
+              className="zuvi-builder-page-content"
               style={{ maxWidth: boundedNumber(maxWidth, 1120, 320, 1920) }}
             >
               {children}
               {customCss && (
-                <style>{`.z-builder-page-content > [data-builder-runtime-content],.z-builder-page-content > [data-puck-dropzone]{${validateCssDeclarations(customCss)}}`}</style>
+                <style>{`.zuvi-builder-page-content > [data-builder-runtime-content],.zuvi-builder-page-content > [data-puck-dropzone]{${validateCssDeclarations(customCss)}}`}</style>
               )}
             </div>
           </div>
@@ -394,7 +394,7 @@ export const builderConfig: Config = {
         content: [],
         _design: { desktop: { display: 'flex', flexDirection: 'column', gap: 20 } },
       },
-      render: ({ content: Content }) => <Content className="z-builder-flex" minEmptyHeight={120} />,
+      render: ({ content: Content }) => <Content className="zuvi-builder-flex" minEmptyHeight={120} />,
     },
     Spacer: {
       label: '留白',
@@ -402,7 +402,7 @@ export const builderConfig: Config = {
       defaultProps: { height: 32 },
       render: ({ height = 32, puck }) => (
         <div
-          className="z-builder-spacer"
+          className="zuvi-builder-spacer"
           data-editing={puck.isEditing || undefined}
           style={{ height: boundedNumber(height, 32, 0, 96) }}
           aria-hidden="true"
@@ -426,7 +426,7 @@ export const builderConfig: Config = {
         rows: 4,
       },
       render: ({ label, name, placeholder, required, rows = 4 }) => (
-        <label className="z-builder-native-field">
+        <label className="zuvi-builder-native-field">
           <span>{label || '留言'}</span>
           <ZInput.Textarea
             name={name}
@@ -479,7 +479,7 @@ export const builderConfig: Config = {
         options: 'design=产品设计\ndevelopment=技术开发\nother=其他',
       },
       render: ({ label, name, placeholder, required, options = '' }) => (
-        <label className="z-builder-native-field">
+        <label className="zuvi-builder-native-field">
           <span>{label || '请选择'}</span>
           <select name={name} required={required} defaultValue="">
             <option value="">{placeholder || '请选择'}</option>
@@ -521,7 +521,7 @@ export const builderConfig: Config = {
       render: ({ text, level = 'h2', align = 'left' }) => {
         const Tag = level as 'h1' | 'h2' | 'h3';
         return (
-          <Tag className="z-builder-heading" style={{ textAlign: align }}>
+          <Tag className="zuvi-builder-heading" style={{ textAlign: align }}>
             {text}
           </Tag>
         );
@@ -547,13 +547,13 @@ export const builderConfig: Config = {
       defaultProps: { title: '', anchor: '', tone: 'muted', padding: 24, content: [] },
       render: ({ title, anchor, tone = 'muted', padding = 24, content: Content }) => (
         <section
-          className="z-builder-section"
+          className="zuvi-builder-section"
           id={anchor || undefined}
           data-tone={tone}
           style={{ padding: boundedNumber(padding, 24, 0, 96) }}
         >
-          {title && <h2 className="z-builder-section-title">{title}</h2>}
-          <Content className="z-builder-stack" minEmptyHeight={100} />
+          {title && <h2 className="zuvi-builder-section-title">{title}</h2>}
+          <Content className="zuvi-builder-stack" minEmptyHeight={100} />
         </section>
       ),
     },
@@ -566,9 +566,9 @@ export const builderConfig: Config = {
       },
       defaultProps: { columns: 2, gap: 20, content: [] },
       render: ({ columns = 2, gap = 20, content: Content }) => (
-        <div className="z-builder-columns-container">
+        <div className="zuvi-builder-columns-container">
           <Content
-            className="z-builder-columns"
+            className="zuvi-builder-columns"
             style={{
               gridTemplateColumns: `repeat(${Math.round(boundedNumber(columns, 2, 1, 4))}, minmax(0, 1fr))`,
               gap: boundedNumber(gap, 20, 0, 96),
@@ -602,7 +602,7 @@ export const builderConfig: Config = {
       },
       defaultProps: { src: '', alt: '图片说明', caption: '', height: 280, fit: 'cover' },
       render: ({ src, alt, caption, height = 280, fit = 'cover' }) => (
-        <figure className="z-builder-image">
+        <figure className="zuvi-builder-image">
           {safeImage(src) ? (
             <ZImage
               src={safeImage(src)}
@@ -612,7 +612,7 @@ export const builderConfig: Config = {
             />
           ) : (
             <div
-              className="z-builder-image-placeholder"
+              className="zuvi-builder-image-placeholder"
               style={{ minHeight: boundedNumber(height, 280, 80, 1000) }}
             >
               在属性面板上传图片，或填写图片地址
@@ -703,7 +703,7 @@ export const builderConfig: Config = {
       }) =>
         (action === 'button' || !action) && safeLink(href) && !disabled ? (
           <a
-            className="z-button"
+            className="zuvi-button"
             data-part="root"
             data-variant={variant}
             data-size={size}
@@ -728,7 +728,7 @@ export const builderConfig: Config = {
               }
             }}
           >
-            <span className="z-button-label" data-part="label">
+            <span className="zuvi-button-label" data-part="label">
               {children}
             </span>
           </a>
@@ -803,7 +803,7 @@ export const builderConfig: Config = {
         clearable,
         status,
       }) => (
-        <div className="z-builder-field">
+        <div className="zuvi-builder-field">
           {label && (
             <label htmlFor={`field-${id}`}>
               {label}
@@ -839,7 +839,7 @@ export const builderConfig: Config = {
         return (
           <ZCard title={title || undefined} hoverable={hoverable}>
             {children && <div>{children}</div>}
-            <Slot className="z-builder-stack" minEmptyHeight={puck?.isEditing ? 72 : 0} />
+            <Slot className="zuvi-builder-stack" minEmptyHeight={puck?.isEditing ? 72 : 0} />
           </ZCard>
         );
       },

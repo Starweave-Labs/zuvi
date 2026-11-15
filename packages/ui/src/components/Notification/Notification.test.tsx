@@ -38,7 +38,7 @@ describe('Notification hooks 契约', () => {
       api.success({ title: '保存成功', description: '已同步到云端' });
     });
     const item = screen.getByText('保存成功').closest('[data-part="item"]') as HTMLElement;
-    expect(item).toHaveClass('z-notification');
+    expect(item).toHaveClass('zuvi-notification');
     expect(item).toHaveAttribute('role', 'status');
     expect(item).toHaveAttribute('aria-live', 'polite');
     expect(item).toHaveAttribute('data-variant', 'success');
@@ -216,7 +216,7 @@ describe('Notification 定制', () => {
     const br = screen.getByText('BR').closest('[data-part="root"]') as HTMLElement;
     expect(tl).toHaveAttribute('data-placement', 'topLeft');
     expect(br).toHaveAttribute('data-placement', 'bottomRight');
-    expect(tl).toHaveClass('z-notification-list');
+    expect(tl).toHaveClass('zuvi-notification-list');
   });
 
   it('classNames 追加到 list 与 item', () => {
@@ -225,7 +225,7 @@ describe('Notification 定制', () => {
       api.info({ title: 'X', duration: 0 });
     });
     const item = screen.getByText('X').closest('[data-part="item"]') as HTMLElement;
-    expect(item).toHaveClass('z-notification', 'my-item');
+    expect(item).toHaveClass('zuvi-notification', 'my-item');
     expect(item.closest('[data-part="root"]')).toHaveClass('my-list');
     expect(document.querySelector('[data-part="title"]')).toHaveTextContent('X');
     expect(document.querySelector('[data-part="body"]')).toBeInTheDocument();

@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { ChevronRight } from '@zui/icons';
+import { ChevronRight } from '@zuvi/icons';
 import { cx, useControllableState } from '../../utils';
 import './Collapse.css';
 
@@ -17,11 +17,11 @@ export interface CollapseProps {
   classNames?: { root?: string; item?: string; header?: string; content?: string };
 }
 
-/* -------------------------------- 图标（@zui/icons） -------------------------- */
+/* -------------------------------- 图标（@zuvi/icons） -------------------------- */
 
 function ArrowIcon(): React.ReactNode {
   // className 交给 CSS 旋转（展开时 rotate 90°）
-  return <ChevronRight className="z-collapse-arrow-icon" size={12} />;
+  return <ChevronRight className="zuvi-collapse-arrow-icon" size={12} />;
 }
 
 /* --------------------------------- Collapse -------------------------------- */
@@ -62,7 +62,7 @@ export function Collapse({
   return (
     <div
       data-part="root"
-      className={cx('z-collapse', className, classNames?.root)}
+      className={cx('zuvi-collapse', className, classNames?.root)}
       data-accordion={accordion ? 'true' : undefined}
     >
       {items.map((item) => {
@@ -73,7 +73,7 @@ export function Collapse({
           <div
             key={item.key}
             data-part="item"
-            className={cx('z-collapse-item', classNames?.item)}
+            className={cx('zuvi-collapse-item', classNames?.item)}
             data-expanded={isOpen ? 'true' : 'false'}
             data-disabled={item.disabled ? true : undefined}
           >
@@ -82,16 +82,16 @@ export function Collapse({
               role="button"
               id={headerId}
               data-part="header"
-              className={cx('z-collapse-header', classNames?.header)}
+              className={cx('zuvi-collapse-header', classNames?.header)}
               aria-expanded={isOpen}
               aria-controls={contentId}
               aria-disabled={item.disabled ? true : undefined}
               onClick={() => toggle(item.key, item.disabled)}
             >
-              <span className="z-collapse-arrow" aria-hidden="true" data-expanded={isOpen ? 'true' : 'false'}>
+              <span className="zuvi-collapse-arrow" aria-hidden="true" data-expanded={isOpen ? 'true' : 'false'}>
                 <ArrowIcon />
               </span>
-              <span className="z-collapse-header-label">{item.label}</span>
+              <span className="zuvi-collapse-header-label">{item.label}</span>
             </button>
 
             <div
@@ -99,10 +99,10 @@ export function Collapse({
               role="region"
               aria-labelledby={headerId}
               data-part="content"
-              className={cx('z-collapse-content', classNames?.content)}
+              className={cx('zuvi-collapse-content', classNames?.content)}
               data-expanded={isOpen ? 'true' : 'false'}
             >
-              <div className="z-collapse-content-inner" data-part="content-inner">
+              <div className="zuvi-collapse-content-inner" data-part="content-inner">
                 {item.children}
               </div>
             </div>

@@ -33,7 +33,7 @@ describe('Descriptions', () => {
   it('renders dl/dt/dd semantics with labels and content', () => {
     render(<Basic />);
     const root = document.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-descriptions');
+    expect(root).toHaveClass('zuvi-descriptions');
     const body = root.querySelector('[data-part="body"]') as HTMLElement;
     expect(body.tagName).toBe('DL');
     const item = root.querySelector('[data-part="item"]') as HTMLElement;
@@ -51,13 +51,13 @@ describe('Descriptions', () => {
     expect(root).toHaveAttribute('data-size', 'md');
     expect(root).toHaveAttribute('data-bordered', 'false');
     const body = root.querySelector('[data-part="body"]') as HTMLElement;
-    expect(body.style.getPropertyValue('--z-descriptions-columns')).toBe('3');
+    expect(body.style.getPropertyValue('--zuvi-descriptions-columns')).toBe('3');
   });
 
   it('applies column to the grid via CSS variable', () => {
     render(<Basic column={2} />);
     const body = document.querySelector('[data-part="body"]') as HTMLElement;
-    expect(body.style.getPropertyValue('--z-descriptions-columns')).toBe('2');
+    expect(body.style.getPropertyValue('--zuvi-descriptions-columns')).toBe('2');
   });
 
   it('applies size to root data attribute', () => {
@@ -69,7 +69,7 @@ describe('Descriptions', () => {
     render(<Basic title="用户信息" />);
     const title = screen.getByText('用户信息');
     expect(title).toHaveAttribute('data-part', 'title');
-    expect(title).toHaveClass('z-descriptions-title');
+    expect(title).toHaveClass('zuvi-descriptions-title');
   });
 
   it('omits title part when title is not provided', () => {
@@ -95,7 +95,7 @@ describe('Descriptions', () => {
     );
     const items = container.querySelectorAll('[data-part="item"]');
     expect(items[0]).toHaveAttribute('data-span', '2');
-    expect((items[0] as HTMLElement).style.getPropertyValue('--z-descriptions-item-span')).toBe('2');
+    expect((items[0] as HTMLElement).style.getPropertyValue('--zuvi-descriptions-item-span')).toBe('2');
     expect(items[1]).toHaveAttribute('data-span', '2'); // 99 → 收敛到 column=2
   });
 
@@ -111,9 +111,9 @@ describe('Descriptions', () => {
   it('passes classNames to parts and className to root', () => {
     render(<Basic className="my-desc" classNames={{ root: 'r', label: 'l', item: 'i' }} />);
     const root = document.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-descriptions', 'my-desc', 'r');
-    expect(document.querySelector('[data-part="item"]')).toHaveClass('z-descriptions-item', 'i');
-    expect(document.querySelector('[data-part="label"]')).toHaveClass('z-descriptions-label', 'l');
+    expect(root).toHaveClass('zuvi-descriptions', 'my-desc', 'r');
+    expect(document.querySelector('[data-part="item"]')).toHaveClass('zuvi-descriptions-item', 'i');
+    expect(document.querySelector('[data-part="label"]')).toHaveClass('zuvi-descriptions-label', 'l');
   });
 
   it('forwards native props (aria-label / data-*) to the root element', () => {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Input } from '@zui/react';
+import { Input } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -8,7 +8,7 @@ import { usePageTitle } from '../../components/usePageTitle';
 
 const BASIC_CODE = `<Input placeholder="请输入用户名" />
 <Input prefix="搜索" placeholder="带前置内容" />
-<Input suffix="@zui.dev" placeholder="带后置内容" />`;
+<Input suffix="@zuvi.dev" placeholder="带后置内容" />`;
 
 const CLEAR_CODE = `const [value, setValue] = useState('');
 
@@ -60,7 +60,7 @@ export default function InputPage(): React.ReactNode {
       >
         <Input placeholder="请输入用户名" />
         <Input prefix={<span aria-hidden="true">🔍</span>} placeholder="带前置内容" />
-        <Input suffix="@zui.dev" placeholder="带后置内容" />
+        <Input suffix="@zuvi.dev" placeholder="带后置内容" />
       </Demo>
 
       <Demo
@@ -210,26 +210,26 @@ export default function InputPage(): React.ReactNode {
         name="Input"
         parts={['root', 'input', 'prefix', 'suffix', 'clear']}
         vars={[
-          '--z-input-height',
-          '--z-input-padding-x',
-          '--z-input-font-size',
-          '--z-input-radius',
-          '--z-input-gap',
-          '--z-input-bg',
-          '--z-input-fg',
-          '--z-input-border',
-          '--z-input-border-width',
-          '--z-input-focus-border',
-          '--z-input-focus-ring',
-          '--z-input-placeholder-color',
-          '--z-input-affix-color',
-          '--z-input-affix-font-size',
-          '--z-input-clear-color',
-          '--z-input-clear-hover-color',
-          '--z-input-disabled-bg',
-          '--z-input-disabled-fg',
-          '--z-input-disabled-border',
-          '--z-input-transition',
+          '--zuvi-input-height',
+          '--zuvi-input-padding-x',
+          '--zuvi-input-font-size',
+          '--zuvi-input-radius',
+          '--zuvi-input-gap',
+          '--zuvi-input-bg',
+          '--zuvi-input-fg',
+          '--zuvi-input-border',
+          '--zuvi-input-border-width',
+          '--zuvi-input-focus-border',
+          '--zuvi-input-focus-ring',
+          '--zuvi-input-placeholder-color',
+          '--zuvi-input-affix-color',
+          '--zuvi-input-affix-font-size',
+          '--zuvi-input-clear-color',
+          '--zuvi-input-clear-hover-color',
+          '--zuvi-input-disabled-bg',
+          '--zuvi-input-disabled-fg',
+          '--zuvi-input-disabled-border',
+          '--zuvi-input-transition',
         ]}
       />
     </div>

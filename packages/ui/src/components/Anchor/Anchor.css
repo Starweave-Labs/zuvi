@@ -1,87 +1,87 @@
 /* Anchor —— 组件级变量定义在根选择器上，用户可任意覆盖 */
 
-.z-anchor {
-  --z-anchor-font-size: var(--z-text-sm);
-  --z-anchor-link-color: var(--z-color-fg-muted);
-  --z-anchor-link-hover-color: var(--z-color-fg);
-  --z-anchor-link-active-color: var(--z-color-primary);
-  --z-anchor-link-bg: transparent;
-  --z-anchor-link-active-bg: transparent;
-  --z-anchor-link-padding-x: var(--z-space-3);
-  --z-anchor-link-padding-y: var(--z-space-1);
-  --z-anchor-indicator-width: 2px;
-  --z-anchor-indicator-color: var(--z-color-primary);
-  --z-anchor-sublist-indent: var(--z-space-6);
-  --z-anchor-transition: var(--z-duration-fast) var(--z-ease-standard);
+.zuvi-anchor {
+  --zuvi-anchor-font-size: var(--zuvi-text-sm);
+  --zuvi-anchor-link-color: var(--zuvi-color-fg-muted);
+  --zuvi-anchor-link-hover-color: var(--zuvi-color-fg);
+  --zuvi-anchor-link-active-color: var(--zuvi-color-primary);
+  --zuvi-anchor-link-bg: transparent;
+  --zuvi-anchor-link-active-bg: transparent;
+  --zuvi-anchor-link-padding-x: var(--zuvi-space-3);
+  --zuvi-anchor-link-padding-y: var(--zuvi-space-1);
+  --zuvi-anchor-indicator-width: 2px;
+  --zuvi-anchor-indicator-color: var(--zuvi-color-primary);
+  --zuvi-anchor-sublist-indent: var(--zuvi-space-6);
+  --zuvi-anchor-transition: var(--zuvi-duration-fast) var(--zuvi-ease-standard);
 }
 
-.z-anchor-list,
-.z-anchor-sublist {
+.zuvi-anchor-list,
+.zuvi-anchor-sublist {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.z-anchor-sublist {
-  padding-inline-start: var(--z-anchor-sublist-indent);
+.zuvi-anchor-sublist {
+  padding-inline-start: var(--zuvi-anchor-sublist-indent);
 }
 
-.z-anchor-item {
+.zuvi-anchor-item {
   list-style: none;
 }
 
-.z-anchor-link {
+.zuvi-anchor-link {
   position: relative;
   display: block;
   box-sizing: border-box;
-  padding: var(--z-anchor-link-padding-y) var(--z-anchor-link-padding-x);
-  border-radius: var(--z-radius-sm);
-  background: var(--z-anchor-link-bg);
-  color: var(--z-anchor-link-color);
-  font-size: var(--z-anchor-font-size);
-  line-height: var(--z-leading-normal);
+  padding: var(--zuvi-anchor-link-padding-y) var(--zuvi-anchor-link-padding-x);
+  border-radius: var(--zuvi-radius-sm);
+  background: var(--zuvi-anchor-link-bg);
+  color: var(--zuvi-anchor-link-color);
+  font-size: var(--zuvi-anchor-font-size);
+  line-height: var(--zuvi-leading-normal);
   text-decoration: none;
   transition:
-    color var(--z-anchor-transition),
-    background var(--z-anchor-transition);
+    color var(--zuvi-anchor-transition),
+    background var(--zuvi-anchor-transition);
 }
 
 /* 行内起始侧 2px 激活指示条 */
-.z-anchor-link::before {
+.zuvi-anchor-link::before {
   content: '';
   position: absolute;
   inset-inline-start: 0;
   top: 50%;
-  width: var(--z-anchor-indicator-width);
+  width: var(--zuvi-anchor-indicator-width);
   height: 1.25em;
-  border-radius: var(--z-radius-full);
-  background: var(--z-anchor-indicator-color);
+  border-radius: var(--zuvi-radius-full);
+  background: var(--zuvi-anchor-indicator-color);
   transform: translateY(-50%) scaleY(0);
-  transition: transform var(--z-anchor-transition);
+  transition: transform var(--zuvi-anchor-transition);
 }
 
-.z-anchor-link:hover {
-  color: var(--z-anchor-link-hover-color);
+.zuvi-anchor-link:hover {
+  color: var(--zuvi-anchor-link-hover-color);
 }
 
-.z-anchor-link[data-active='true'] {
-  color: var(--z-anchor-link-active-color);
-  background: var(--z-anchor-link-active-bg);
-  font-weight: var(--z-weight-medium);
+.zuvi-anchor-link[data-active='true'] {
+  color: var(--zuvi-anchor-link-active-color);
+  background: var(--zuvi-anchor-link-active-bg);
+  font-weight: var(--zuvi-weight-medium);
 }
 
-.z-anchor-link[data-active='true']::before {
+.zuvi-anchor-link[data-active='true']::before {
   transform: translateY(-50%) scaleY(1);
 }
 
-.z-anchor-link:focus-visible {
-  outline: 2px solid var(--z-color-border-focus);
+.zuvi-anchor-link:focus-visible {
+  outline: 2px solid var(--zuvi-color-border-focus);
   outline-offset: 2px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .z-anchor-link,
-  .z-anchor-link::before {
+  .zuvi-anchor-link,
+  .zuvi-anchor-link::before {
     transition: none;
   }
 }

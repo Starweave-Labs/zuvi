@@ -28,7 +28,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: node registry/scripts/generate.mjs --check
       - run: pnpm -r build
-      - run: pnpm --filter @zui/react build:browser
+      - run: pnpm --filter @zuvi/react build:browser
       - run: node scripts/check-distribution.mjs
       - run: node scripts/prepare-github-packages.mjs --owner "$GITHUB_REPOSITORY_OWNER"
       - run: node scripts/check-github-packages.mjs --local
@@ -45,7 +45,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           for PACKAGE in tokens icons i18n react blocks cli mcp; do
-            gh api "users/$GITHUB_REPOSITORY_OWNER/packages/npm/zui-$PACKAGE" \
+            gh api "users/$GITHUB_REPOSITORY_OWNER/packages/npm/zuvi-$PACKAGE" \
               --jq '{name,visibility,repository:.repository.full_name,html_url}' \
               > ".release/github-packages/package-$PACKAGE.json"
             cat ".release/github-packages/package-$PACKAGE.json"

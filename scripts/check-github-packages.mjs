@@ -15,7 +15,7 @@ const { values } = parseArgs({
 const directory = path.resolve(root, values.dir || '.release/github-packages');
 const release = JSON.parse(fs.readFileSync(path.join(directory, 'github-packages.json'), 'utf8'));
 const owner = release.repository.split('/')[0].toLowerCase();
-const cwd = fs.mkdtempSync(path.join(os.tmpdir(), 'zui-github-consumer-'));
+const cwd = fs.mkdtempSync(path.join(os.tmpdir(), 'zuvi-github-consumer-'));
 let server;
 try {
   let registry = 'https://npm.pkg.github.com/';
@@ -141,25 +141,25 @@ try {
       "import { createRequire } from 'node:module';",
       "import React from 'react';",
       "import { renderToStaticMarkup } from 'react-dom/server';",
-      "import { Button, OfficeEditor, OfficeStudio, createOfficeStudioDocument } from '@zui/react';",
+      "import { Button, OfficeEditor, OfficeStudio, createOfficeStudioDocument } from '@zuvi/react';",
       'const require = createRequire(import.meta.url);',
-      "for (const name of ['tokens', 'icons', 'i18n', 'react', 'blocks']) assert.ok(Object.keys(await import('@zui/' + name)).length);",
-      "assert.equal(typeof require('@zui/react').Button, 'function');",
+      "for (const name of ['tokens', 'icons', 'i18n', 'react', 'blocks']) assert.ok(Object.keys(await import('@zuvi/' + name)).length);",
+      "assert.equal(typeof require('@zuvi/react').Button, 'function');",
       "assert.equal(typeof OfficeEditor, 'function');",
       "assert.equal(typeof OfficeStudio, 'function');",
-      "assert.equal(require('@zui/react/office-editor').OfficeEditor, require('@zui/react').OfficeEditor);",
-      "assert.equal(require('@zui/react/office-studio').OfficeStudio, require('@zui/react').OfficeStudio);",
+      "assert.equal(require('@zuvi/react/office-editor').OfficeEditor, require('@zuvi/react').OfficeEditor);",
+      "assert.equal(require('@zuvi/react/office-studio').OfficeStudio, require('@zuvi/react').OfficeStudio);",
       "assert.equal(createOfficeStudioDocument('word').kind, 'word');",
-      "assert.match(renderToStaticMarkup(React.createElement(Button, null, 'Installed ZUI')), /Installed ZUI/);",
-      "require.resolve('@zui/react/styles.css');",
-      "require.resolve('@zui/tokens/css');",
+      "assert.match(renderToStaticMarkup(React.createElement(Button, null, 'Installed ZUVI')), /Installed ZUVI/);",
+      "require.resolve('@zuvi/react/styles.css');",
+      "require.resolve('@zuvi/tokens/css');",
       "console.log('Installed ESM, CommonJS, React 19 SSR, CSS and dependency aliases passed');",
     ].join('\n')
   );
   execFileSync(process.execPath, ['check.mjs'], { cwd, stdio: 'inherit' });
   const cli = execFileSync(
     process.execPath,
-    [path.join(cwd, 'node_modules/@zui/cli/dist/index.js'), 'list'],
+    [path.join(cwd, 'node_modules/@zuvi/cli/dist/index.js'), 'list'],
     { cwd, encoding: 'utf8' }
   );
   for (const name of ['button', 'splitter', 'office-editor', 'office-studio', 'kanban'])
@@ -170,7 +170,7 @@ try {
   ];
   const mcp = execFileSync(
     process.execPath,
-    [path.join(cwd, 'node_modules/@zui/mcp/dist/index.js')],
+    [path.join(cwd, 'node_modules/@zuvi/mcp/dist/index.js')],
     {
       cwd,
       encoding: 'utf8',
@@ -185,13 +185,13 @@ try {
   fs.writeFileSync(
     path.join(cwd, 'consumer.tsx'),
     [
-      "import { Button } from '@zui/react';",
-      "import { OfficeStudio, createOfficeStudioDocument, type OfficeStudioHandle, type StudioPdfSearchResult, type StudioSheetChart, type StudioSheetStructureEdit } from '@zui/react/office-studio';",
-      "import { OfficeEditor, type OfficeEditorConfig } from '@zui/react/office-editor';",
-      "import { DashboardBlock } from '@zui/blocks';",
-      "import { tokens } from '@zui/tokens';",
-      "import { Search } from '@zui/icons';",
-      "import { useAutoTranslate } from '@zui/i18n';",
+      "import { Button } from '@zuvi/react';",
+      "import { OfficeStudio, createOfficeStudioDocument, type OfficeStudioHandle, type StudioPdfSearchResult, type StudioSheetChart, type StudioSheetStructureEdit } from '@zuvi/react/office-studio';",
+      "import { OfficeEditor, type OfficeEditorConfig } from '@zuvi/react/office-editor';",
+      "import { DashboardBlock } from '@zuvi/blocks';",
+      "import { tokens } from '@zuvi/tokens';",
+      "import { Search } from '@zuvi/icons';",
+      "import { useAutoTranslate } from '@zuvi/i18n';",
       "export const example = <><Button variant='primary'>发布检查</Button><DashboardBlock /><Search /></>;",
       'export const api = { tokens, useAutoTranslate };',
       'export function OfficeExample({ config, documentServerUrl }: { config: OfficeEditorConfig; documentServerUrl: string }) {',
@@ -226,7 +226,7 @@ try {
   );
   execFileSync(
     process.execPath,
-    [path.join(cwd, 'node_modules/@zui/cli/dist/index.js'), 'add', 'office-studio'],
+    [path.join(cwd, 'node_modules/@zuvi/cli/dist/index.js'), 'add', 'office-studio'],
     { cwd, stdio: 'inherit' }
   );
   fs.writeFileSync(path.join(cwd, 'src/styles.d.ts'), "declare module '*.css';\n");

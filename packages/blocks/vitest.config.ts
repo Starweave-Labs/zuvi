@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@zui/react': new URL('../ui/src/index.ts', import.meta.url).pathname,
+      '@zuvi/react': new URL('../ui/src/index.ts', import.meta.url).pathname,
     },
   },
   test: {

@@ -17,15 +17,15 @@ import {
   Menu,
   Shield,
   Users,
-} from '@zui/icons';
-import { CommandPalette, Drawer, type CommandPaletteCommand } from '@zui/react';
+} from '@zuvi/icons';
+import { CommandPalette, Drawer, type CommandPaletteCommand } from '@zuvi/react';
 import { usePageTitle } from '../../components/usePageTitle';
 import {
   SideNav,
   type SideNavLinkItem,
   type SideNavLinkRenderProps,
   type SideNavSection,
-} from '@zui/react';
+} from '@zuvi/react';
 import { ADMIN_SHELL_ROUTE_PREFIX } from './routes';
 import './AdminShellPrototype.css';
 

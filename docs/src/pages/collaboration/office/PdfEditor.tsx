@@ -6,7 +6,7 @@ import {
   type PageViewport,
 } from 'pdfjs-dist';
 import workerUrl from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
-import { Button } from '@zui/react';
+import { Button } from '@zuvi/react';
 import { exportPdf, loadPdfInfo, type PdfField } from './pdf-document';
 import type { EditorProps, PdfChanges } from './office-model';
 

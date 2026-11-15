@@ -1,5 +1,5 @@
 /**
- * Zero-dependency Node.js built-in type shims for @zui/mcp.
+ * Zero-dependency Node.js built-in type shims for @zuvi/mcp.
  *
  * Why: the workspace ships no `@types/node` and the pnpm lockfile must not be
  * touched during parallel development, so this package compiles with nothing

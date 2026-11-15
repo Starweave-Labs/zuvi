@@ -183,12 +183,12 @@ describe('TimePicker 定制出口', () => {
         classNames={{ root: 'r', trigger: 't', panel: 'p', column: 'c', item: 'i' }}
       />
     );
-    expect(document.querySelector('[data-part="root"]')).toHaveClass('z-time-picker', 'r', 'my-time');
-    expect(document.querySelector('[data-part="trigger"]')).toHaveClass('z-time-picker-trigger', 't');
-    expect(document.querySelector('[data-part="panel"]')).toHaveClass('z-time-picker-panel', 'p');
+    expect(document.querySelector('[data-part="root"]')).toHaveClass('zuvi-time-picker', 'r', 'my-time');
+    expect(document.querySelector('[data-part="trigger"]')).toHaveClass('zuvi-time-picker-trigger', 't');
+    expect(document.querySelector('[data-part="panel"]')).toHaveClass('zuvi-time-picker-panel', 'p');
     await user.click(getTrigger());
-    expect(document.querySelector('[data-part="column"]')).toHaveClass('z-time-picker-column', 'c');
-    expect(document.querySelector('[data-part="item"]')).toHaveClass('z-time-picker-item', 'i');
+    expect(document.querySelector('[data-part="column"]')).toHaveClass('zuvi-time-picker-column', 'c');
+    expect(document.querySelector('[data-part="item"]')).toHaveClass('zuvi-time-picker-item', 'i');
   });
 
   it('data-part 与 data-size 完整', () => {

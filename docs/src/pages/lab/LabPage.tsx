@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowUpRight, Search, Zap } from '@zui/icons';
+import { ArrowUpRight, Search, Zap } from '@zuvi/icons';
 import { usePageTitle } from '../../components/usePageTitle';
 import { MetricBoard, QueryBuilder } from './InsightDemos';
 import { DiffViewer, FileWorkbench } from './CollaborationDemos';
@@ -37,7 +37,7 @@ export default function LabPage() {
     <div className="doc-page ui-lab">
       <div className="lab-eyebrow">
         <Zap aria-hidden="true" />
-        ZUI DESIGN LAB<span>交互设计原型</span>
+        ZUVI DESIGN LAB<span>交互设计原型</span>
       </div>
       <h1 className="doc-h1">
         好看，也好用。

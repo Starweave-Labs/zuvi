@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Checkbox, ConfigProvider, Radio, RadioGroup, Select, Steps, Switch } from '@zui/react';
+import { Button, Checkbox, ConfigProvider, Radio, RadioGroup, Select, Steps, Switch } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import { catalog } from '../../site';
@@ -10,7 +10,7 @@ import { usePageTitle } from '../../components/usePageTitle';
 /* ------------------------------ 代码示例文案 ------------------------------ */
 
 const TOKENS_JSON_CODE = `{
-  "zui": {
+  "zuvi": {
     "primitives": {
       "brand": {
         "50": { "$type": "color", "$value": "oklch(0.970 0.015 264)" },
@@ -20,8 +20,8 @@ const TOKENS_JSON_CODE = `{
     },
     "semantic": {
       "color": {
-        "primary": { "$type": "color", "$value": "{zui.primitives.brand.600}" },
-        "primary-hover": { "$type": "color", "$value": "{zui.primitives.brand.700}" }
+        "primary": { "$type": "color", "$value": "{zuvi.primitives.brand.600}" },
+        "primary-hover": { "$type": "color", "$value": "{zuvi.primitives.brand.700}" }
       }
     }
   }
@@ -41,25 +41,25 @@ const STEPS_CODE = `const [current, setCurrent] = useState(0);
 />`;
 
 const SKIN_CSS_CODE = `/* 第一步：新建 brand-skin.css —— 只覆盖 semantic 层，
-   $value 一律引用既有 primitive 色阶（如 --z-success-600），禁止出现裸色值 */
+   $value 一律引用既有 primitive 色阶（如 --zuvi-success-600），禁止出现裸色值 */
 .brand-spring {
-  --z-color-primary: var(--z-success-600);
-  --z-color-primary-hover: var(--z-success-700);
-  --z-color-primary-active: var(--z-success-800);
-  --z-color-primary-fg: var(--z-neutral-50);
-  --z-color-primary-subtle: var(--z-success-50);
-  --z-color-primary-subtle-fg: var(--z-success-700);
-  --z-color-border-focus: var(--z-success-600);
-  --z-color-link: var(--z-success-600);
-  --z-color-link-hover: var(--z-success-700);
-  --z-color-focus-ring: var(--z-success-600);
+  --zuvi-color-primary: var(--zuvi-success-600);
+  --zuvi-color-primary-hover: var(--zuvi-success-700);
+  --zuvi-color-primary-active: var(--zuvi-success-800);
+  --zuvi-color-primary-fg: var(--zuvi-neutral-50);
+  --zuvi-color-primary-subtle: var(--zuvi-success-50);
+  --zuvi-color-primary-subtle-fg: var(--zuvi-success-700);
+  --zuvi-color-border-focus: var(--zuvi-success-600);
+  --zuvi-color-link: var(--zuvi-success-600);
+  --zuvi-color-link-hover: var(--zuvi-success-700);
+  --zuvi-color-focus-ring: var(--zuvi-success-600);
 }`;
 
-const SKIN_TSX_CODE = `// 第二步：在 @zui/react/styles.css 之后引入皮肤，挂到容器（或 :root 全局）上。
+const SKIN_TSX_CODE = `// 第二步：在 @zuvi/react/styles.css 之后引入皮肤，挂到容器（或 :root 全局）上。
 // ConfigProvider 只管内置文案（locale / translate），与 CSS 换肤互不干扰。
-import '@zui/react/styles.css';
+import '@zuvi/react/styles.css';
 import './brand-skin.css';
-import { ConfigProvider, Button, Select } from '@zui/react';
+import { ConfigProvider, Button, Select } from '@zuvi/react';
 
 export function App() {
   return (
@@ -75,16 +75,16 @@ export function App() {
 const SKIN_DARK_CODE = `/* 第三步：补暗色取值。规则与 dark.css 完全一致：
    色阶 600 → 500、fg 反转（neutral-50 ↔ neutral-950）、subtle 底 → 900 / 300 */
 [data-theme='dark'] .brand-spring {
-  --z-color-primary: var(--z-success-500);
-  --z-color-primary-hover: var(--z-success-400);
-  --z-color-primary-active: var(--z-success-300);
-  --z-color-primary-fg: var(--z-neutral-950);
-  --z-color-primary-subtle: var(--z-success-900);
-  --z-color-primary-subtle-fg: var(--z-success-300);
-  --z-color-border-focus: var(--z-success-500);
-  --z-color-link: var(--z-success-500);
-  --z-color-link-hover: var(--z-success-400);
-  --z-color-focus-ring: var(--z-success-500);
+  --zuvi-color-primary: var(--zuvi-success-500);
+  --zuvi-color-primary-hover: var(--zuvi-success-400);
+  --zuvi-color-primary-active: var(--zuvi-success-300);
+  --zuvi-color-primary-fg: var(--zuvi-neutral-950);
+  --zuvi-color-primary-subtle: var(--zuvi-success-900);
+  --zuvi-color-primary-subtle-fg: var(--zuvi-success-300);
+  --zuvi-color-border-focus: var(--zuvi-success-500);
+  --zuvi-color-link: var(--zuvi-success-500);
+  --zuvi-color-link-hover: var(--zuvi-success-400);
+  --zuvi-color-focus-ring: var(--zuvi-success-500);
 }
 
 /* 跟随系统（未显式设置 data-theme='light' 时）再补一条，镜像 dark.css 的 media 查询 */
@@ -94,25 +94,25 @@ const SKIN_DARK_CODE = `/* 第三步：补暗色取值。规则与 dark.css 完�
   }
 }`;
 
-const CDN_BUILD_CODE = `pnpm --filter @zui/react build:browser
-# 产物：packages/ui/dist/browser/zui.global.js + zui.css + LICENSE.txt
+const CDN_BUILD_CODE = `pnpm --filter @zuvi/react build:browser
+# 产物：packages/ui/dist/browser/zuvi.global.js + zuvi.css + LICENSE.txt
 # 同时自动同步到 docs/dist/cdn/v${catalog.version}/（版本号取自 package.json）`;
 
 const CDN_HTML_CODE = `<!doctype html>
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <!-- zui.css 已包含 tokens + reset + 全部组件样式 -->
-    <link rel="stylesheet" href="cdn/v${catalog.version}/zui.css" />
+    <!-- zuvi.css 已包含 tokens + reset + 全部组件样式 -->
+    <link rel="stylesheet" href="cdn/v${catalog.version}/zuvi.css" />
   </head>
   <body>
     <main id="root"></main>
-    <!-- zui.global.js 内置 React 19，全局命名空间为 ZUI -->
-    <script src="cdn/v${catalog.version}/zui.global.js"></script>
+    <!-- zuvi.global.js 内置 React 19，全局命名空间为 ZUVI -->
+    <script src="cdn/v${catalog.version}/zuvi.global.js"></script>
     <script>
-      const root = ZUI.createRoot(document.getElementById('root'));
+      const root = ZUVI.createRoot(document.getElementById('root'));
       root.render(
-        ZUI.React.createElement(ZUI.Button, { variant: 'primary' }, 'ZUI 按钮')
+        ZUVI.React.createElement(ZUVI.Button, { variant: 'primary' }, 'ZUVI 按钮')
       );
     </script>
   </body>
@@ -123,30 +123,30 @@ const CDN_HTML_CODE = `<!doctype html>
 const LAYER_ROWS: { layer: string; dtcg: string; cssVar: string; note: string }[] = [
   {
     layer: '第 1 层 · primitive（原始刻度）',
-    dtcg: 'zui.primitives.brand.600',
-    cssVar: '--z-brand-600',
+    dtcg: 'zuvi.primitives.brand.600',
+    cssVar: '--zuvi-brand-600',
     note: '唯一定义色值 / 尺寸的地方（oklch 色阶、间距、字阶、阴影、动效），设计师只在这一层改数字。',
   },
   {
     layer: '第 2 层 · semantic（语义别名）',
-    dtcg: 'zui.semantic.color.primary',
-    cssVar: '--z-color-primary',
+    dtcg: 'zuvi.semantic.color.primary',
+    cssVar: '--zuvi-color-primary',
     note: '$value 全部是 {别名链} 指向 primitive；组件 CSS 只允许消费本层（dark.css 也只重映射本层）。',
   },
   {
     layer: '第 3 层 · 组件级',
     dtcg: '—（运行时派生）',
-    cssVar: '--z-button-bg',
-    note: '各组件自己的 --z-<name>-* 变量，默认取 semantic 层值；单组件微调时覆盖，不参与全局换肤。',
+    cssVar: '--zuvi-button-bg',
+    note: '各组件自己的 --zuvi-<name>-* 变量，默认取 semantic 层值；单组件微调时覆盖，不参与全局换肤。',
   },
 ];
 
 const DTCG_MAP_ROWS: { figma: string; cssVar: string; note: string }[] = [
-  { figma: 'zui.primitives.brand.600', cssVar: '--z-brand-600', note: '原始色阶（base.css 定义）' },
-  { figma: 'zui.semantic.color.primary', cssVar: '--z-color-primary', note: '语义色（semantic.css 定义，dark.css 重映射）' },
-  { figma: 'zui.semantic.radius.lg', cssVar: '--z-radius-lg', note: '圆角（单源 --z-radius，sm/md/lg/xl 按 calc 派生）' },
-  { figma: 'zui.semantic.shadow.md', cssVar: '--z-shadow-md', note: '阴影（不分深浅色）' },
-  { figma: 'zui.semantic.font.sans', cssVar: '--z-font-sans', note: '字体族' },
+  { figma: 'zuvi.primitives.brand.600', cssVar: '--zuvi-brand-600', note: '原始色阶（base.css 定义）' },
+  { figma: 'zuvi.semantic.color.primary', cssVar: '--zuvi-color-primary', note: '语义色（semantic.css 定义，dark.css 重映射）' },
+  { figma: 'zuvi.semantic.radius.lg', cssVar: '--zuvi-radius-lg', note: '圆角（单源 --zuvi-radius，sm/md/lg/xl 按 calc 派生）' },
+  { figma: 'zuvi.semantic.shadow.md', cssVar: '--zuvi-shadow-md', note: '阴影（不分深浅色）' },
+  { figma: 'zuvi.semantic.font.sans', cssVar: '--zuvi-font-sans', note: '字体族' },
 ];
 
 interface TokenRow {
@@ -176,10 +176,10 @@ function TokenTable({ rows }: { rows: TokenRow[] }): React.ReactNode {
               </td>
               <td>{row.usage}</td>
               <td>
-                <code className="doc-code-inline">var(--z-{row.light})</code>
+                <code className="doc-code-inline">var(--zuvi-{row.light})</code>
               </td>
               <td>
-                <code className="doc-code-inline">var(--z-{row.dark})</code>
+                <code className="doc-code-inline">var(--zuvi-{row.dark})</code>
               </td>
             </tr>
           ))}
@@ -190,56 +190,56 @@ function TokenTable({ rows }: { rows: TokenRow[] }): React.ReactNode {
 }
 
 const BG_ROWS: TokenRow[] = [
-  { cssVar: '--z-color-bg', usage: '页面底色', light: 'neutral-50', dark: 'neutral-950' },
-  { cssVar: '--z-color-bg-subtle', usage: '次级背景：分区、斑马行', light: 'neutral-100', dark: 'neutral-900' },
-  { cssVar: '--z-color-bg-muted', usage: '弱化填充：标签、代码块、禁用输入', light: 'neutral-200', dark: 'neutral-800' },
-  { cssVar: '--z-color-bg-elevated', usage: '浮层表面：卡片、弹层、菜单', light: 'neutral-50', dark: 'neutral-900' },
-  { cssVar: '--z-color-bg-inverse', usage: '反色表面：Tooltip、深色条', light: 'neutral-900', dark: 'neutral-50' },
+  { cssVar: '--zuvi-color-bg', usage: '页面底色', light: 'neutral-50', dark: 'neutral-950' },
+  { cssVar: '--zuvi-color-bg-subtle', usage: '次级背景：分区、斑马行', light: 'neutral-100', dark: 'neutral-900' },
+  { cssVar: '--zuvi-color-bg-muted', usage: '弱化填充：标签、代码块、禁用输入', light: 'neutral-200', dark: 'neutral-800' },
+  { cssVar: '--zuvi-color-bg-elevated', usage: '浮层表面：卡片、弹层、菜单', light: 'neutral-50', dark: 'neutral-900' },
+  { cssVar: '--zuvi-color-bg-inverse', usage: '反色表面：Tooltip、深色条', light: 'neutral-900', dark: 'neutral-50' },
 ];
 
 const FG_ROWS: TokenRow[] = [
-  { cssVar: '--z-color-fg', usage: '正文文字 / 图标', light: 'neutral-950', dark: 'neutral-50' },
-  { cssVar: '--z-color-fg-muted', usage: '次要文字：说明、元信息', light: 'neutral-600', dark: 'neutral-300' },
-  { cssVar: '--z-color-fg-subtle', usage: '弱化文字：占位符、时间戳', light: 'neutral-500', dark: 'neutral-400' },
-  { cssVar: '--z-color-fg-inverse', usage: '反色表面上的文字', light: 'neutral-50', dark: 'neutral-950' },
-  { cssVar: '--z-color-fg-on-primary', usage: '主色填充上的文字（与 primary-fg 同源）', light: 'neutral-50', dark: 'neutral-950' },
+  { cssVar: '--zuvi-color-fg', usage: '正文文字 / 图标', light: 'neutral-950', dark: 'neutral-50' },
+  { cssVar: '--zuvi-color-fg-muted', usage: '次要文字：说明、元信息', light: 'neutral-600', dark: 'neutral-300' },
+  { cssVar: '--zuvi-color-fg-subtle', usage: '弱化文字：占位符、时间戳', light: 'neutral-500', dark: 'neutral-400' },
+  { cssVar: '--zuvi-color-fg-inverse', usage: '反色表面上的文字', light: 'neutral-50', dark: 'neutral-950' },
+  { cssVar: '--zuvi-color-fg-on-primary', usage: '主色填充上的文字（与 primary-fg 同源）', light: 'neutral-50', dark: 'neutral-950' },
 ];
 
 const BORDER_ROWS: TokenRow[] = [
-  { cssVar: '--z-color-border', usage: '常规描边：输入框、卡片', light: 'neutral-300', dark: 'neutral-700' },
-  { cssVar: '--z-color-border-subtle', usage: '极弱分隔：行分隔线', light: 'neutral-200', dark: 'neutral-800' },
-  { cssVar: '--z-color-border-strong', usage: '强调描边：hover / 选中态（≥3:1）', light: 'neutral-500', dark: 'neutral-400' },
-  { cssVar: '--z-color-border-focus', usage: '焦点描边', light: 'brand-600', dark: 'brand-500' },
+  { cssVar: '--zuvi-color-border', usage: '常规描边：输入框、卡片', light: 'neutral-300', dark: 'neutral-700' },
+  { cssVar: '--zuvi-color-border-subtle', usage: '极弱分隔：行分隔线', light: 'neutral-200', dark: 'neutral-800' },
+  { cssVar: '--zuvi-color-border-strong', usage: '强调描边：hover / 选中态（≥3:1）', light: 'neutral-500', dark: 'neutral-400' },
+  { cssVar: '--zuvi-color-border-focus', usage: '焦点描边', light: 'brand-600', dark: 'brand-500' },
 ];
 
 const PRIMARY_ROWS: TokenRow[] = [
-  { cssVar: '--z-color-primary', usage: '主按钮、选中态、主强调', light: 'brand-600', dark: 'brand-500' },
-  { cssVar: '--z-color-primary-hover', usage: '悬停（加深）', light: 'brand-700', dark: 'brand-400' },
-  { cssVar: '--z-color-primary-active', usage: '按下', light: 'brand-800', dark: 'brand-300' },
-  { cssVar: '--z-color-primary-fg', usage: '主色上的文字 / 图标', light: 'neutral-50', dark: 'neutral-950' },
-  { cssVar: '--z-color-primary-subtle', usage: '主色弱化底：浅色徽标、选中行', light: 'brand-50', dark: 'brand-900' },
-  { cssVar: '--z-color-primary-subtle-fg', usage: '主色弱化底上的文字', light: 'brand-700', dark: 'brand-300' },
+  { cssVar: '--zuvi-color-primary', usage: '主按钮、选中态、主强调', light: 'brand-600', dark: 'brand-500' },
+  { cssVar: '--zuvi-color-primary-hover', usage: '悬停（加深）', light: 'brand-700', dark: 'brand-400' },
+  { cssVar: '--zuvi-color-primary-active', usage: '按下', light: 'brand-800', dark: 'brand-300' },
+  { cssVar: '--zuvi-color-primary-fg', usage: '主色上的文字 / 图标', light: 'neutral-50', dark: 'neutral-950' },
+  { cssVar: '--zuvi-color-primary-subtle', usage: '主色弱化底：浅色徽标、选中行', light: 'brand-50', dark: 'brand-900' },
+  { cssVar: '--zuvi-color-primary-subtle-fg', usage: '主色弱化底上的文字', light: 'brand-700', dark: 'brand-300' },
 ];
 
 const STATUS_ROWS: TokenRow[] = [
-  { cssVar: '--z-color-{role}', usage: '状态主色：danger / success / warning / info', light: '{role}-600', dark: '{role}-500' },
-  { cssVar: '--z-color-{role}-hover', usage: '状态色悬停', light: '{role}-700', dark: '{role}-400' },
-  { cssVar: '--z-color-{role}-fg', usage: '状态色填充上的文字', light: 'neutral-50', dark: 'neutral-950' },
-  { cssVar: '--z-color-{role}-subtle', usage: '状态弱化底：浅色 Alert / Tag', light: '{role}-50', dark: '{role}-900' },
-  { cssVar: '--z-color-{role}-subtle-fg', usage: '状态弱化底上的文字', light: '{role}-700', dark: '{role}-300' },
+  { cssVar: '--zuvi-color-{role}', usage: '状态主色：danger / success / warning / info', light: '{role}-600', dark: '{role}-500' },
+  { cssVar: '--zuvi-color-{role}-hover', usage: '状态色悬停', light: '{role}-700', dark: '{role}-400' },
+  { cssVar: '--zuvi-color-{role}-fg', usage: '状态色填充上的文字', light: 'neutral-50', dark: 'neutral-950' },
+  { cssVar: '--zuvi-color-{role}-subtle', usage: '状态弱化底：浅色 Alert / Tag', light: '{role}-50', dark: '{role}-900' },
+  { cssVar: '--zuvi-color-{role}-subtle-fg', usage: '状态弱化底上的文字', light: '{role}-700', dark: '{role}-300' },
 ];
 
 const LINK_ROWS: TokenRow[] = [
-  { cssVar: '--z-color-link', usage: '正文中的链接（与 bg ≥ 4.5:1）', light: 'brand-600', dark: 'brand-500' },
-  { cssVar: '--z-color-link-hover', usage: '链接悬停', light: 'brand-700', dark: 'brand-400' },
-  { cssVar: '--z-color-focus-ring', usage: ':focus-visible 焦点圈（与 bg ≥ 3:1）', light: 'brand-600', dark: 'brand-500' },
+  { cssVar: '--zuvi-color-link', usage: '正文中的链接（与 bg ≥ 4.5:1）', light: 'brand-600', dark: 'brand-500' },
+  { cssVar: '--zuvi-color-link-hover', usage: '链接悬停', light: 'brand-700', dark: 'brand-400' },
+  { cssVar: '--zuvi-color-focus-ring', usage: ':focus-visible 焦点圈（与 bg ≥ 3:1）', light: 'brand-600', dark: 'brand-500' },
 ];
 
 const OVERLAY_ROWS: TokenRow[] = [
-  { cssVar: '--z-color-overlay', usage: '弹层遮罩（color-mix 透明度）', light: 'neutral-950 45%', dark: 'neutral-950 65%' },
-  { cssVar: '--z-color-disabled-bg', usage: '禁用底色', light: 'neutral-100', dark: 'neutral-800' },
-  { cssVar: '--z-color-disabled-fg', usage: '禁用文字', light: 'neutral-400', dark: 'neutral-500' },
-  { cssVar: '--z-color-disabled-border', usage: '禁用描边', light: 'neutral-200', dark: 'neutral-800' },
+  { cssVar: '--zuvi-color-overlay', usage: '弹层遮罩（color-mix 透明度）', light: 'neutral-950 45%', dark: 'neutral-950 65%' },
+  { cssVar: '--zuvi-color-disabled-bg', usage: '禁用底色', light: 'neutral-100', dark: 'neutral-800' },
+  { cssVar: '--zuvi-color-disabled-fg', usage: '禁用文字', light: 'neutral-400', dark: 'neutral-500' },
+  { cssVar: '--zuvi-color-disabled-border', usage: '禁用描边', light: 'neutral-200', dark: 'neutral-800' },
 ];
 
 /* ------------------------------ 换肤演示数据 ------------------------------ */
@@ -257,29 +257,29 @@ function skinVars(palette: SkinPalette, dark: boolean): Record<string, string> {
   if (palette === 'blue') return {};
   if (dark) {
     return {
-      '--z-color-primary': `var(--z-${palette}-500)`,
-      '--z-color-primary-hover': `var(--z-${palette}-400)`,
-      '--z-color-primary-active': `var(--z-${palette}-300)`,
-      '--z-color-primary-fg': 'var(--z-neutral-950)',
-      '--z-color-primary-subtle': `var(--z-${palette}-900)`,
-      '--z-color-primary-subtle-fg': `var(--z-${palette}-300)`,
-      '--z-color-border-focus': `var(--z-${palette}-500)`,
-      '--z-color-link': `var(--z-${palette}-500)`,
-      '--z-color-link-hover': `var(--z-${palette}-400)`,
-      '--z-color-focus-ring': `var(--z-${palette}-500)`,
+      '--zuvi-color-primary': `var(--zuvi-${palette}-500)`,
+      '--zuvi-color-primary-hover': `var(--zuvi-${palette}-400)`,
+      '--zuvi-color-primary-active': `var(--zuvi-${palette}-300)`,
+      '--zuvi-color-primary-fg': 'var(--zuvi-neutral-950)',
+      '--zuvi-color-primary-subtle': `var(--zuvi-${palette}-900)`,
+      '--zuvi-color-primary-subtle-fg': `var(--zuvi-${palette}-300)`,
+      '--zuvi-color-border-focus': `var(--zuvi-${palette}-500)`,
+      '--zuvi-color-link': `var(--zuvi-${palette}-500)`,
+      '--zuvi-color-link-hover': `var(--zuvi-${palette}-400)`,
+      '--zuvi-color-focus-ring': `var(--zuvi-${palette}-500)`,
     };
   }
   return {
-    '--z-color-primary': `var(--z-${palette}-600)`,
-    '--z-color-primary-hover': `var(--z-${palette}-700)`,
-    '--z-color-primary-active': `var(--z-${palette}-800)`,
-    '--z-color-primary-fg': 'var(--z-neutral-50)',
-    '--z-color-primary-subtle': `var(--z-${palette}-50)`,
-    '--z-color-primary-subtle-fg': `var(--z-${palette}-700)`,
-    '--z-color-border-focus': `var(--z-${palette}-600)`,
-    '--z-color-link': `var(--z-${palette}-600)`,
-    '--z-color-link-hover': `var(--z-${palette}-700)`,
-    '--z-color-focus-ring': `var(--z-${palette}-600)`,
+    '--zuvi-color-primary': `var(--zuvi-${palette}-600)`,
+    '--zuvi-color-primary-hover': `var(--zuvi-${palette}-700)`,
+    '--zuvi-color-primary-active': `var(--zuvi-${palette}-800)`,
+    '--zuvi-color-primary-fg': 'var(--zuvi-neutral-50)',
+    '--zuvi-color-primary-subtle': `var(--zuvi-${palette}-50)`,
+    '--zuvi-color-primary-subtle-fg': `var(--zuvi-${palette}-700)`,
+    '--zuvi-color-border-focus': `var(--zuvi-${palette}-600)`,
+    '--zuvi-color-link': `var(--zuvi-${palette}-600)`,
+    '--zuvi-color-link-hover': `var(--zuvi-${palette}-700)`,
+    '--zuvi-color-focus-ring': `var(--zuvi-${palette}-600)`,
   };
 }
 
@@ -313,7 +313,7 @@ export default function DesignAssetsPage(): React.ReactNode {
         <strong>DTCG（Design Tokens Community Group）标准格式</strong>：<code className="doc-code-inline">$type</code>{' '}
         声明类型、<code className="doc-code-inline">$value</code> 承载取值，语义层的{' '}
         <code className="doc-code-inline">$value</code> 全部是 <code className="doc-code-inline">{'{别名链}'}</code>{' '}
-        指向 primitive 层（例如 <code className="doc-code-inline">{'{zui.primitives.brand.600}'}</code>），不含裸色值。
+        指向 primitive 层（例如 <code className="doc-code-inline">{'{zuvi.primitives.brand.600}'}</code>），不含裸色值。
         该文件同时供 Figma / Tokens Studio / Style Dictionary 消费。
       </p>
 
@@ -366,7 +366,7 @@ export default function DesignAssetsPage(): React.ReactNode {
         </table>
       </div>
       <p className="doc-p">
-        Figma 侧的 Token 路径与 CSS 变量按前缀机械对应（Token Set 名即路径前缀 <code className="doc-code-inline">zui.</code>）：
+        Figma 侧的 Token 路径与 CSS 变量按前缀机械对应（Token Set 名即路径前缀 <code className="doc-code-inline">zuvi.</code>）：
       </p>
       <div className="doc-table-wrap">
         <table className="doc-api-table">
@@ -419,10 +419,10 @@ export default function DesignAssetsPage(): React.ReactNode {
             style={
               {
                 ...skinVars(palette, dark),
-                padding: 'var(--z-space-6)',
-                background: 'var(--z-color-bg)',
-                border: '1px solid var(--z-color-border)',
-                borderRadius: 'var(--z-radius-lg)',
+                padding: 'var(--zuvi-space-6)',
+                background: 'var(--zuvi-color-bg)',
+                border: '1px solid var(--zuvi-color-border)',
+                borderRadius: 'var(--zuvi-radius-lg)',
                 width: '100%',
               } as React.CSSProperties
             }
@@ -454,7 +454,7 @@ export default function DesignAssetsPage(): React.ReactNode {
 
       <h3 className="doc-h3">第二步：挂载 + ConfigProvider</h3>
       <p className="doc-p">
-        皮肤在 <code className="doc-code-inline">@zui/react/styles.css</code> 之后引入，挂在容器（或 <code className="doc-code-inline">:root</code>）上；
+        皮肤在 <code className="doc-code-inline">@zuvi/react/styles.css</code> 之后引入，挂在容器（或 <code className="doc-code-inline">:root</code>）上；
         <code className="doc-code-inline">ConfigProvider</code> 负责内置文案（locale / translate），与换肤正交、互不干扰：
       </p>
       <CodeBlock code={SKIN_TSX_CODE} language="tsx" />
@@ -471,7 +471,7 @@ export default function DesignAssetsPage(): React.ReactNode {
         rows={[
           {
             name: 'locale',
-            type: 'DeepPartial<ZuiLocale>',
+            type: 'DeepPartial<ZuviLocale>',
             description: '与默认 zh-CN 深合并的内置文案覆盖（未提供的段 / 键保持默认）。',
           },
           {
@@ -495,8 +495,8 @@ export default function DesignAssetsPage(): React.ReactNode {
       <CodeBlock code={CDN_BUILD_CODE} language="bash" />
       <CodeBlock code={CDN_HTML_CODE} language="html" />
       <p className="doc-p">
-        全局命名空间 <code className="doc-code-inline">ZUI</code> 暴露全部组件与 <code className="doc-code-inline">ZUI.React</code>、
-        <code className="doc-code-inline">ZUI.createRoot</code>、<code className="doc-code-inline">ZUI.hydrateRoot</code>，
+        全局命名空间 <code className="doc-code-inline">ZUVI</code> 暴露全部组件与 <code className="doc-code-inline">ZUVI.React</code>、
+        <code className="doc-code-inline">ZUVI.createRoot</code>、<code className="doc-code-inline">ZUVI.hydrateRoot</code>，
         无需额外引入 React。完整可运行示例见{' '}
         <a className="doc-chip-link" href={`${import.meta.env.BASE_URL}cdn-demo.html`}>
           /cdn-demo.html
@@ -509,7 +509,7 @@ export default function DesignAssetsPage(): React.ReactNode {
       <p className="doc-p">
         下表给出 semantic 层 CSS 变量的标准取值映射（与 <code className="doc-code-inline">semantic.css</code> /{' '}
         <code className="doc-code-inline">dark.css</code> 逐条一致），深浅两套均指向 primitive 色阶{' '}
-        <code className="doc-code-inline">--z-{'{色阶}'}-{'{阶号}'}</code>。换肤时在语义层重新指认即可；明暗对比度均按 WCAG AA 校准
+        <code className="doc-code-inline">--zuvi-{'{色阶}'}-{'{阶号}'}</code>。换肤时在语义层重新指认即可；明暗对比度均按 WCAG AA 校准
         （正文 fg 与 bg ≥ 4.5:1，primary-fg 与 primary ≥ 4.5:1）。
       </p>
 
@@ -540,10 +540,10 @@ export default function DesignAssetsPage(): React.ReactNode {
       <TokenTable rows={OVERLAY_ROWS} />
 
       <p className="doc-p">
-        尺寸类变量不分深浅色（dark.css 从不覆盖）：<code className="doc-code-inline">--z-radius</code>（单源，sm / md / lg / xl 按 calc 派生）、
-        <code className="doc-code-inline">--z-space-1..12</code>、<code className="doc-code-inline">--z-text-xs..2xl</code>、
-        <code className="doc-code-inline">--z-shadow-xs..lg</code>、<code className="doc-code-inline">--z-font-sans / mono</code>、
-        <code className="doc-code-inline">--z-duration-*</code>、<code className="doc-code-inline">--z-z-*</code>（z-index 刻度）。
+        尺寸类变量不分深浅色（dark.css 从不覆盖）：<code className="doc-code-inline">--zuvi-radius</code>（单源，sm / md / lg / xl 按 calc 派生）、
+        <code className="doc-code-inline">--zuvi-space-1..12</code>、<code className="doc-code-inline">--zuvi-text-xs..2xl</code>、
+        <code className="doc-code-inline">--zuvi-shadow-xs..lg</code>、<code className="doc-code-inline">--zuvi-font-sans / mono</code>、
+        <code className="doc-code-inline">--zuvi-duration-*</code>、<code className="doc-code-inline">--zuvi-z-*</code>（z-index 刻度）。
       </p>
     </div>
   );

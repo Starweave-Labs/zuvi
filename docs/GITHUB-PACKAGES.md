@@ -1,16 +1,16 @@
 # GitHub Packages
 
-本次发布使用 GitHub 的 npm registry（https://npm.pkg.github.com），不向 npmjs 发布。源码继续使用 @zui/*，发布名称归属 GitHub 仓库账号。
+本次发布使用 GitHub 的 npm registry（https://npm.pkg.github.com），不向 npmjs 发布。源码继续使用 @zuvi/*，发布名称归属 GitHub 仓库账号。
 
 | 源码与安装别名 | GitHub Packages 名称  |
 | -------------- | --------------------- |
-| @zui/react     | @yeyouyuan/zui-react  |
-| @zui/blocks    | @yeyouyuan/zui-blocks |
-| @zui/icons     | @yeyouyuan/zui-icons  |
-| @zui/tokens    | @yeyouyuan/zui-tokens |
-| @zui/i18n      | @yeyouyuan/zui-i18n   |
-| @zui/cli       | @yeyouyuan/zui-cli    |
-| @zui/mcp       | @yeyouyuan/zui-mcp    |
+| @zuvi/react     | @yeyouyuan/zuvi-react  |
+| @zuvi/blocks    | @yeyouyuan/zuvi-blocks |
+| @zuvi/icons     | @yeyouyuan/zuvi-icons  |
+| @zuvi/tokens    | @yeyouyuan/zuvi-tokens |
+| @zuvi/i18n      | @yeyouyuan/zuvi-i18n   |
+| @zuvi/cli       | @yeyouyuan/zuvi-cli    |
+| @zuvi/mcp       | @yeyouyuan/zuvi-mcp    |
 
 ## 安装
 
@@ -24,24 +24,24 @@ GitHub Packages 的 npm 安装需要身份验证。使用有读取包权限的 G
 
 ```bash
 npm login --scope=@yeyouyuan --auth-type=legacy --registry=https://npm.pkg.github.com
-npm install @zui/react@npm:@yeyouyuan/zui-react@0.5.0 @zui/blocks@npm:@yeyouyuan/zui-blocks@0.5.0
+npm install @zuvi/react@npm:@yeyouyuan/zuvi-react@0.5.0 @zuvi/blocks@npm:@yeyouyuan/zuvi-blocks@0.5.0
 ```
 
 ```tsx
-import '@zui/react/styles.css';
-import { Button } from '@zui/react';
-import { DashboardBlock } from '@zui/blocks';
+import '@zuvi/react/styles.css';
+import { Button } from '@zuvi/react';
+import { DashboardBlock } from '@zuvi/blocks';
 ```
 
 按需安装其他包时使用同样的别名形式，例如：
 
 ```bash
-npm install @zui/tokens@npm:@yeyouyuan/zui-tokens@0.5.0 @zui/icons@npm:@yeyouyuan/zui-icons@0.5.0
-npm install --save-dev @zui/cli@npm:@yeyouyuan/zui-cli@0.5.0 @zui/mcp@npm:@yeyouyuan/zui-mcp@0.5.0
-npx zui list
+npm install @zuvi/tokens@npm:@yeyouyuan/zuvi-tokens@0.5.0 @zuvi/icons@npm:@yeyouyuan/zuvi-icons@0.5.0
+npm install --save-dev @zuvi/cli@npm:@yeyouyuan/zuvi-cli@0.5.0 @zuvi/mcp@npm:@yeyouyuan/zuvi-mcp@0.5.0
+npx zuvi list
 ```
 
-内部依赖也使用 npm aliases，确保区块中的 @zui/react 导入和声明能够解析。直接安装发布名称仍可使用该包，但生成的代码示例使用 @zui/*，推荐上面的别名方式。
+内部依赖也使用 npm aliases，确保区块中的 @zuvi/react 导入和声明能够解析。直接安装发布名称仍可使用该包，但生成的代码示例使用 @zuvi/*，推荐上面的别名方式。
 
 ## 发布流程
 
@@ -49,14 +49,14 @@ npx zui list
 
 ```bash
 pnpm build
-pnpm --filter @zui/react build:browser
+pnpm --filter @zuvi/react build:browser
 node scripts/check-distribution.mjs
 node scripts/check-consumer.mjs
 pnpm release:prepare
 node scripts/check-github-packages.mjs --local
 ```
 
-prepare 脚本从 npm pack 实际文件清单创建暂存包，重写发布名称和内部依赖，关联 yeyouyuan/zui 仓库，输出七个 tarball、SHA-512 完整性值和清单。它不修改源码名称，不包含测试、依赖目录或开发脚本。
+prepare 脚本从 npm pack 实际文件清单创建暂存包，重写发布名称和内部依赖，关联 yeyouyuan/zuvi 仓库，输出七个 tarball、SHA-512 完整性值和清单。它不修改源码名称，不包含测试、依赖目录或开发脚本。
 
 local 检查通过临时本机 registry 安装这些 tarball，以验证真实 npm aliases 解析及内部依赖；同时执行 ESM、CommonJS、React 19 SSR、CSS 导出、CLI、MCP stdio 和严格 TypeScript 声明检查。发布之后，工作流重新从 GitHub registry 安装七个版本并重复检查，结果保存为工作流附件。
 

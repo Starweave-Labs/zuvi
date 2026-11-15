@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Segmented } from '@zui/react';
+import { Segmented } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -131,22 +131,22 @@ export default function SegmentedPage(): React.ReactNode {
         name="Segmented"
         parts={['root', 'item', 'thumb']}
         vars={[
-          '--z-segmented-bg',
-          '--z-segmented-fg',
-          '--z-segmented-active-fg',
-          '--z-segmented-hover-bg',
-          '--z-segmented-padding',
-          '--z-segmented-radius',
-          '--z-segmented-gap',
-          '--z-segmented-font-size',
-          '--z-segmented-font-weight',
-          '--z-segmented-item-height',
-          '--z-segmented-item-padding-x',
-          '--z-segmented-icon-size',
-          '--z-segmented-thumb-bg',
-          '--z-segmented-thumb-radius',
-          '--z-segmented-thumb-shadow',
-          '--z-segmented-transition',
+          '--zuvi-segmented-bg',
+          '--zuvi-segmented-fg',
+          '--zuvi-segmented-active-fg',
+          '--zuvi-segmented-hover-bg',
+          '--zuvi-segmented-padding',
+          '--zuvi-segmented-radius',
+          '--zuvi-segmented-gap',
+          '--zuvi-segmented-font-size',
+          '--zuvi-segmented-font-weight',
+          '--zuvi-segmented-item-height',
+          '--zuvi-segmented-item-padding-x',
+          '--zuvi-segmented-icon-size',
+          '--zuvi-segmented-thumb-bg',
+          '--zuvi-segmented-thumb-radius',
+          '--zuvi-segmented-thumb-shadow',
+          '--zuvi-segmented-transition',
         ]}
       />
     </div>

@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
-import { Button, Modal, Skeleton, Tag } from '@zui/react';
+import { Button, Modal, Skeleton, Tag } from '@zuvi/react';
 import {
   Archive,
   ArrowUpRight,
@@ -19,7 +19,7 @@ import {
   Plus,
   Trash,
   Search,
-} from '@zui/icons';
+} from '@zuvi/icons';
 import ApiTable from '../../components/ApiTable';
 import { usePageTitle } from '../../components/usePageTitle';
 import {
@@ -384,7 +384,7 @@ function WorkspaceView({
       const latest = workspaceStore.getSnapshot().data!;
       downloadBlob(
         await exportBackup(latest, workspaceStore.asset),
-        `内容工作区-${new Date().toISOString().slice(0, 10)}.zui.json`
+        `内容工作区-${new Date().toISOString().slice(0, 10)}.zuvi.json`
       );
       setFeedback('工作区备份已导出，包含文件、讨论和草稿。');
     } catch (error) {

@@ -10,7 +10,7 @@ function getRoot(container: HTMLElement): HTMLElement {
 }
 
 describe('Space', () => {
-  it('renders default space with z-space class and default gap (md = --z-space-2)', () => {
+  it('renders default space with zuvi-space class and default gap (md = --zuvi-space-2)', () => {
     const { container } = render(
       <Space>
         <span>一</span>
@@ -18,21 +18,21 @@ describe('Space', () => {
       </Space>,
     );
     const root = getRoot(container);
-    expect(root).toHaveClass('z-space');
+    expect(root).toHaveClass('zuvi-space');
     expect(root).toHaveAttribute('data-direction', 'horizontal');
     expect(root).toHaveAttribute('data-align', 'start');
     expect(root).toHaveAttribute('data-wrap', 'false');
-    // 默认 md → 8px → --z-space-2
-    expect(root.style.gap).toBe('var(--z-space-2)');
+    // 默认 md → 8px → --zuvi-space-2
+    expect(root.style.gap).toBe('var(--zuvi-space-2)');
   });
 
-  it('maps size sm/md/lg to --z-space-1/2/3', () => {
+  it('maps size sm/md/lg to --zuvi-space-1/2/3', () => {
     const { container } = render(<Space size="sm" />);
-    expect(getRoot(container).style.gap).toBe('var(--z-space-1)');
+    expect(getRoot(container).style.gap).toBe('var(--zuvi-space-1)');
     const { container: c2 } = render(<Space size="md" />);
-    expect(getRoot(c2).style.gap).toBe('var(--z-space-2)');
+    expect(getRoot(c2).style.gap).toBe('var(--zuvi-space-2)');
     const { container: c3 } = render(<Space size="lg" />);
-    expect(getRoot(c3).style.gap).toBe('var(--z-space-3)');
+    expect(getRoot(c3).style.gap).toBe('var(--zuvi-space-3)');
   });
 
   it('supports numeric size as px', () => {
@@ -79,7 +79,7 @@ describe('Space', () => {
     const { container } = render(
       <Space className="my-space" classNames={{ root: 'extra-space' }} />,
     );
-    expect(getRoot(container)).toHaveClass('z-space', 'my-space', 'extra-space');
+    expect(getRoot(container)).toHaveClass('zuvi-space', 'my-space', 'extra-space');
   });
 
   it('forwards ref and passes native props through to the root element', () => {
@@ -95,7 +95,7 @@ describe('Space', () => {
       />,
     );
     expect(ref.current).toBeInstanceOf(HTMLDivElement);
-    expect(ref.current).toHaveClass('z-space');
+    expect(ref.current).toHaveClass('zuvi-space');
     expect(getRoot(container)).toHaveAttribute('id', 'my-space');
     expect(getRoot(container)).toHaveAttribute('aria-label', '操作组');
     // 用户 style 与 size 内联 gap 合并（用户值后展开）

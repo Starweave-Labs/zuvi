@@ -1,7 +1,7 @@
 import { expect, test, type Page, type Download, type Locator } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 
-const STORAGE = 'zui-page-builder-v1';
+const STORAGE = 'zuvi-page-builder-v1';
 const AXE_SOURCE = readFileSync('packages/ui/node_modules/axe-core/axe.min.js', 'utf8');
 
 async function open(page: Page, width = 1440) {
@@ -202,7 +202,7 @@ test('搭建器：JSON与全工作区可往返导入，错误文件不改动草�
   });
   await expect(page.locator('.doc-builder-notice')).toContainText('链接仅支持');
   expect(await currentData(page)).toEqual(before);
-  await setJsonFile(page, { format: 'zui-page', version: 2, data: before });
+  await setJsonFile(page, { format: 'zuvi-page', version: 2, data: before });
   await expect(page.locator('.doc-builder-notice')).toContainText('不支持此页面文件版本');
   expect(await currentData(page)).toEqual(before);
   const backupDownload = page.waitForEvent('download');
@@ -231,7 +231,7 @@ test('搭建器：独立预览与导出HTML可离线展示并提交表单下载�
   await expect(dialog).toBeVisible();
   const preview = page.frameLocator('.doc-builder-preview-stage iframe');
   await expect(preview.getByRole('heading', { name: '聊聊你的下一个项目。' })).toBeVisible();
-  await expect(preview.locator('.z-builder-page-content > div')).toHaveCSS('gap', '20px');
+  await expect(preview.locator('.zuvi-builder-page-content > div')).toHaveCSS('gap', '20px');
   await preview.getByRole('button', { name: '提交并生成数据' }).click();
   await expect(preview.locator('input:invalid')).toHaveCount(3);
   await preview.getByRole('textbox', { name: '姓名' }).fill('陈设计');
@@ -264,7 +264,7 @@ test('搭建器：独立预览与导出HTML可离线展示并提交表单下载�
   await offline.route('**/*', (route) => route.abort());
   await offline.setContent(html);
   await expect(offline.getByRole('heading', { name: '聊聊你的下一个项目。' })).toBeVisible();
-  await expect(offline.locator('.z-builder-page-content > div')).toHaveCSS('gap', '20px');
+  await expect(offline.locator('.zuvi-builder-page-content > div')).toHaveCSS('gap', '20px');
   await offline.getByRole('textbox', { name: '姓名' }).fill('离线用户');
   await offline.getByRole('textbox', { name: '工作邮箱' }).fill('local@example.com');
   await offline.getByRole('textbox', { name: '项目需求' }).fill('测试离线表单');
@@ -289,7 +289,7 @@ test('搭建器：保存失败可重试，损坏存档保留并支持重建', as
       Storage.prototype.setItem = original;
     };
     Storage.prototype.setItem = function (key, value) {
-      if (key === 'zui-page-builder-v1') throw new DOMException('Full', 'QuotaExceededError');
+      if (key === 'zuvi-page-builder-v1') throw new DOMException('Full', 'QuotaExceededError');
       return original.call(this, key, value);
     };
   });

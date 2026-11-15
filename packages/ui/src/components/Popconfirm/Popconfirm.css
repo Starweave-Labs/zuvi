@@ -1,100 +1,100 @@
 /* Popconfirm —— 组件级变量定义在根选择器上 */
 
-.z-popconfirm {
-  --z-popconfirm-gap: var(--z-space-3);
-  --z-popconfirm-width: 15rem;
-  --z-popconfirm-padding: var(--z-space-4);
-  --z-popconfirm-radius: var(--z-radius-md);
-  --z-popconfirm-bg: var(--z-color-bg-elevated);
-  --z-popconfirm-fg: var(--z-color-fg);
-  --z-popconfirm-border: var(--z-color-border-subtle);
-  --z-popconfirm-shadow: var(--z-shadow-md);
-  --z-popconfirm-title-size: var(--z-text-md);
-  --z-popconfirm-title-weight: var(--z-weight-medium);
-  --z-popconfirm-desc-size: var(--z-text-sm);
-  --z-popconfirm-desc-fg: var(--z-color-fg-muted);
-  --z-popconfirm-btn-height: 2rem;
-  --z-popconfirm-btn-radius: var(--z-radius-sm);
-  --z-popconfirm-ok-bg: var(--z-color-primary);
-  --z-popconfirm-ok-fg: var(--z-color-primary-fg);
-  --z-popconfirm-ok-hover-bg: var(--z-color-primary-hover);
-  --z-popconfirm-cancel-bg: var(--z-color-bg);
-  --z-popconfirm-cancel-fg: var(--z-color-fg);
-  --z-popconfirm-cancel-border: var(--z-color-border);
-  --z-popconfirm-z: var(--z-z-dropdown);
+.zuvi-popconfirm {
+  --zuvi-popconfirm-gap: var(--zuvi-space-3);
+  --zuvi-popconfirm-width: 15rem;
+  --zuvi-popconfirm-padding: var(--zuvi-space-4);
+  --zuvi-popconfirm-radius: var(--zuvi-radius-md);
+  --zuvi-popconfirm-bg: var(--zuvi-color-bg-elevated);
+  --zuvi-popconfirm-fg: var(--zuvi-color-fg);
+  --zuvi-popconfirm-border: var(--zuvi-color-border-subtle);
+  --zuvi-popconfirm-shadow: var(--zuvi-shadow-md);
+  --zuvi-popconfirm-title-size: var(--zuvi-text-md);
+  --zuvi-popconfirm-title-weight: var(--zuvi-weight-medium);
+  --zuvi-popconfirm-desc-size: var(--zuvi-text-sm);
+  --zuvi-popconfirm-desc-fg: var(--zuvi-color-fg-muted);
+  --zuvi-popconfirm-btn-height: 2rem;
+  --zuvi-popconfirm-btn-radius: var(--zuvi-radius-sm);
+  --zuvi-popconfirm-ok-bg: var(--zuvi-color-primary);
+  --zuvi-popconfirm-ok-fg: var(--zuvi-color-primary-fg);
+  --zuvi-popconfirm-ok-hover-bg: var(--zuvi-color-primary-hover);
+  --zuvi-popconfirm-cancel-bg: var(--zuvi-color-bg);
+  --zuvi-popconfirm-cancel-fg: var(--zuvi-color-fg);
+  --zuvi-popconfirm-cancel-border: var(--zuvi-color-border);
+  --zuvi-popconfirm-z: var(--zuvi-z-dropdown);
 }
 
-.z-popconfirm {
+.zuvi-popconfirm {
   position: relative;
   display: inline-block;
 }
 
-.z-popconfirm-content {
+.zuvi-popconfirm-content {
   position: fixed;
-  z-index: var(--z-popconfirm-z);
+  z-index: var(--zuvi-popconfirm-z);
   display: flex;
   flex-direction: column;
-  gap: var(--z-space-2);
-  width: var(--z-popconfirm-width);
+  gap: var(--zuvi-space-2);
+  width: var(--zuvi-popconfirm-width);
   box-sizing: border-box;
-  padding: var(--z-popconfirm-padding);
-  border: 1px solid var(--z-popconfirm-border);
-  border-radius: var(--z-popconfirm-radius);
-  background: var(--z-popconfirm-bg);
-  color: var(--z-popconfirm-fg);
-  font-family: var(--z-font-sans);
-  box-shadow: var(--z-popconfirm-shadow);
-  max-width: calc(100vw - var(--z-space-4));
+  padding: var(--zuvi-popconfirm-padding);
+  border: 1px solid var(--zuvi-popconfirm-border);
+  border-radius: var(--zuvi-popconfirm-radius);
+  background: var(--zuvi-popconfirm-bg);
+  color: var(--zuvi-popconfirm-fg);
+  font-family: var(--zuvi-font-sans);
+  box-shadow: var(--zuvi-popconfirm-shadow);
+  max-width: calc(100vw - var(--zuvi-space-4));
   max-height: calc(100dvh - 16px);
   overflow: auto;
   overflow-wrap: break-word;
 }
 
-.z-popconfirm-title {
-  font-size: var(--z-popconfirm-title-size);
-  font-weight: var(--z-popconfirm-title-weight);
-  line-height: var(--z-leading-normal);
+.zuvi-popconfirm-title {
+  font-size: var(--zuvi-popconfirm-title-size);
+  font-weight: var(--zuvi-popconfirm-title-weight);
+  line-height: var(--zuvi-leading-normal);
 }
 
-.z-popconfirm-description {
-  color: var(--z-popconfirm-desc-fg);
-  font-size: var(--z-popconfirm-desc-size);
-  line-height: var(--z-leading-normal);
+.zuvi-popconfirm-description {
+  color: var(--zuvi-popconfirm-desc-fg);
+  font-size: var(--zuvi-popconfirm-desc-size);
+  line-height: var(--zuvi-leading-normal);
 }
 
-.z-popconfirm-actions {
+.zuvi-popconfirm-actions {
   display: flex;
   justify-content: flex-end;
-  gap: var(--z-space-2);
-  margin-top: var(--z-space-1);
+  gap: var(--zuvi-space-2);
+  margin-top: var(--zuvi-space-1);
 }
 
-.z-popconfirm-btn {
-  height: var(--z-popconfirm-btn-height);
-  padding: 0 var(--z-space-3);
+.zuvi-popconfirm-btn {
+  height: var(--zuvi-popconfirm-btn-height);
+  padding: 0 var(--zuvi-space-3);
   border: 1px solid transparent;
-  border-radius: var(--z-popconfirm-btn-radius);
+  border-radius: var(--zuvi-popconfirm-btn-radius);
   font-family: inherit;
-  font-size: var(--z-text-sm);
+  font-size: var(--zuvi-text-sm);
   cursor: pointer;
 }
 
-.z-popconfirm-btn:focus-visible {
-  outline: 2px solid var(--z-color-border-focus);
+.zuvi-popconfirm-btn:focus-visible {
+  outline: 2px solid var(--zuvi-color-border-focus);
   outline-offset: 1px;
 }
 
-.z-popconfirm-cancel {
-  background: var(--z-popconfirm-cancel-bg);
-  color: var(--z-popconfirm-cancel-fg);
-  border-color: var(--z-popconfirm-cancel-border);
+.zuvi-popconfirm-cancel {
+  background: var(--zuvi-popconfirm-cancel-bg);
+  color: var(--zuvi-popconfirm-cancel-fg);
+  border-color: var(--zuvi-popconfirm-cancel-border);
 }
 
-.z-popconfirm-ok {
-  background: var(--z-popconfirm-ok-bg);
-  color: var(--z-popconfirm-ok-fg);
+.zuvi-popconfirm-ok {
+  background: var(--zuvi-popconfirm-ok-bg);
+  color: var(--zuvi-popconfirm-ok-fg);
 }
 
-.z-popconfirm-ok:hover {
-  background: var(--z-popconfirm-ok-hover-bg);
+.zuvi-popconfirm-ok:hover {
+  background: var(--zuvi-popconfirm-ok-hover-bg);
 }

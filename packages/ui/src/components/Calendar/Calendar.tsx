@@ -1,8 +1,8 @@
 'use client';
 
 import * as React from 'react';
-import { ChevronLeft, ChevronRight } from '@zui/icons';
-import { useZuiConfig } from '../../config';
+import { ChevronLeft, ChevronRight } from '@zuvi/icons';
+import { useZuviConfig } from '../../config';
 import { cx, useControllableState } from '../../utils';
 import './Calendar.css';
 
@@ -96,7 +96,7 @@ function buildMonthGrid(viewDate: Date): Date[] {
   return cells;
 }
 
-/* --------------------------------- 图标（@zui/icons） -------------------------- */
+/* --------------------------------- 图标（@zuvi/icons） -------------------------- */
 
 function ChevronIcon({ direction }: { direction: 'left' | 'right' }) {
   return direction === 'left' ? <ChevronLeft size={16} /> : <ChevronRight size={16} />;
@@ -115,7 +115,7 @@ export function Calendar(props: CalendarProps) {
     ...rest
   } = props;
 
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const baseId = React.useId();
   const labelId = `${baseId}-label`;
 
@@ -228,14 +228,14 @@ export function Calendar(props: CalendarProps) {
     <div
       {...rest}
       data-part="root"
-      className={cx('z-calendar', classNames?.root, className)}
+      className={cx('zuvi-calendar', classNames?.root, className)}
       data-fullscreen={fullscreen ? 'true' : 'false'}
     >
-      <div data-part="header" className={cx('z-calendar-header', classNames?.header)}>
+      <div data-part="header" className={cx('zuvi-calendar-header', classNames?.header)}>
         <button
           type="button"
           data-part="nav"
-          className={cx('z-calendar-nav', classNames?.nav)}
+          className={cx('zuvi-calendar-nav', classNames?.nav)}
           aria-label={locale.date.previousMonth}
           onClick={() => setFocusedDate(addMonths(focusedDate, -1))}
         >
@@ -244,14 +244,14 @@ export function Calendar(props: CalendarProps) {
         <span
           id={labelId}
           data-part="label"
-          className={cx('z-calendar-label', classNames?.label)}
+          className={cx('zuvi-calendar-label', classNames?.label)}
         >
           {monthLabel}
         </span>
         <button
           type="button"
           data-part="nav"
-          className={cx('z-calendar-nav', classNames?.nav)}
+          className={cx('zuvi-calendar-nav', classNames?.nav)}
           aria-label={locale.date.nextMonth}
           onClick={() => setFocusedDate(addMonths(focusedDate, 1))}
         >
@@ -264,15 +264,15 @@ export function Calendar(props: CalendarProps) {
         role="grid"
         aria-labelledby={labelId}
         data-part="grid"
-        className={cx('z-calendar-grid', classNames?.grid)}
+        className={cx('zuvi-calendar-grid', classNames?.grid)}
       >
-        <div role="row" data-part="week" className={cx('z-calendar-week', classNames?.week)}>
+        <div role="row" data-part="week" className={cx('zuvi-calendar-week', classNames?.week)}>
           {locale.date.weekdays.map((name) => (
             <span
               key={name}
               role="columnheader"
               data-part="weekday"
-              className={cx('z-calendar-weekday', classNames?.weekday)}
+              className={cx('zuvi-calendar-weekday', classNames?.weekday)}
               aria-label={locale.date.weekdayFormat.replace('{name}', name)}
             >
               {name}
@@ -283,7 +283,7 @@ export function Calendar(props: CalendarProps) {
           <div
             role="row"
             data-part="week"
-            className={cx('z-calendar-week', classNames?.week)}
+            className={cx('zuvi-calendar-week', classNames?.week)}
             key={weekIndex}
           >
             {cells.slice(weekIndex * 7, weekIndex * 7 + 7).map((date) => {
@@ -295,7 +295,7 @@ export function Calendar(props: CalendarProps) {
                   role="gridcell"
                   data-part="day"
                   data-date={iso}
-                  className={cx('z-calendar-day', classNames?.day)}
+                  className={cx('zuvi-calendar-day', classNames?.day)}
                   aria-selected={iso === currentValue}
                   aria-current={iso === todayISO ? 'date' : undefined}
                   tabIndex={iso === focusedISO ? 0 : -1}

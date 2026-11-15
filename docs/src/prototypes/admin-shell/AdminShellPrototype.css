@@ -2,8 +2,8 @@
   height: 100dvh;
   min-height: 0;
   overflow: hidden;
-  color: var(--z-color-fg);
-  background: var(--z-color-bg);
+  color: var(--zuvi-color-fg);
+  background: var(--zuvi-color-bg);
   display: flex;
   flex-direction: column;
 }
@@ -16,7 +16,7 @@
   justify-content: space-between;
   gap: 16px;
   padding: 12px 24px;
-  border-bottom: 1px solid var(--z-color-border);
+  border-bottom: 1px solid var(--zuvi-color-border);
 }
 
 .admin-prototype-brand,
@@ -32,7 +32,7 @@
 }
 
 .admin-prototype-brand > svg {
-  color: var(--z-color-primary);
+  color: var(--zuvi-color-primary);
 }
 
 .admin-prototype-back {
@@ -51,8 +51,8 @@
   inline-size: 32px;
   block-size: 32px;
   border-radius: 50%;
-  color: var(--z-color-primary);
-  background: color-mix(in srgb, var(--z-color-primary) 12%, transparent);
+  color: var(--zuvi-color-primary);
+  background: color-mix(in srgb, var(--zuvi-color-primary) 12%, transparent);
   font-size: 13px;
 }
 
@@ -72,13 +72,13 @@
   flex-direction: column;
   min-height: 0;
   padding: 16px 12px 12px;
-  border-inline-end: 1px solid var(--z-color-border);
+  border-inline-end: 1px solid var(--zuvi-color-border);
 }
 
 .admin-prototype-workspace {
   padding: 4px 10px 20px;
   font-size: 12px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   white-space: nowrap;
 }
 
@@ -94,7 +94,7 @@
   justify-content: center;
   min-height: 40px;
   margin-block-start: 12px;
-  border-top: 1px solid var(--z-color-border);
+  border-top: 1px solid var(--zuvi-color-border);
   font-size: 12px;
 }
 
@@ -102,7 +102,7 @@
   min-width: 0;
   overflow: auto;
   padding: 36px clamp(20px, 4vw, 64px) 64px;
-  background: color-mix(in srgb, var(--z-color-fg) 2%, var(--z-color-bg));
+  background: color-mix(in srgb, var(--zuvi-color-fg) 2%, var(--zuvi-color-bg));
 }
 
 .admin-prototype-page-heading {
@@ -121,7 +121,7 @@
 .admin-prototype-muted,
 .admin-prototype-project p,
 .admin-prototype-metric p {
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 13px;
 }
 
@@ -141,8 +141,8 @@
 .admin-prototype-panel,
 .admin-prototype-project,
 .admin-prototype-controls {
-  background: var(--z-color-bg);
-  border: 1px solid var(--z-color-border);
+  background: var(--zuvi-color-bg);
+  border: 1px solid var(--zuvi-color-border);
   border-radius: 10px;
   padding: 20px;
 }
@@ -151,7 +151,7 @@
   margin: 0 0 12px;
   font-size: 13px;
   font-weight: 500;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
 }
 
 .admin-prototype-metric > strong {
@@ -199,7 +199,7 @@
   inline-size: 100%;
   block-size: 6px;
   margin: 18px 0 8px;
-  accent-color: var(--z-color-primary);
+  accent-color: var(--zuvi-color-primary);
 }
 
 .admin-prototype-badge,
@@ -208,8 +208,8 @@
   align-items: center;
   border-radius: 5px;
   padding: 2px 6px;
-  background: var(--z-color-primary-subtle);
-  color: var(--z-color-primary-subtle-fg);
+  background: var(--zuvi-color-primary-subtle);
+  color: var(--zuvi-color-primary-subtle-fg);
   font-size: 11px;
   white-space: nowrap;
 }
@@ -228,13 +228,13 @@
 .admin-prototype th,
 .admin-prototype td {
   padding: 14px 12px;
-  border-bottom: 1px solid var(--z-color-border);
+  border-bottom: 1px solid var(--zuvi-color-border);
   text-align: start;
   white-space: nowrap;
 }
 
 .admin-prototype thead th {
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-weight: 500;
 }
 
@@ -258,7 +258,7 @@
 }
 
 .admin-prototype-activity span {
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   margin-block-start: 6px;
   font-size: 12px;
 }
@@ -271,14 +271,14 @@
 
 .admin-prototype-period a {
   padding: 6px 12px;
-  border: 1px solid var(--z-color-border);
+  border: 1px solid var(--zuvi-color-border);
   border-radius: 6px;
   font-size: 12px;
 }
 
 .admin-prototype-period a[aria-current] {
-  color: var(--z-color-primary);
-  border-color: var(--z-color-primary);
+  color: var(--zuvi-color-primary);
+  border-color: var(--zuvi-color-primary);
 }
 
 .admin-prototype-controls {
@@ -310,7 +310,7 @@
 
 .admin-prototype-events {
   padding-inline-start: 20px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   overflow-wrap: anywhere;
 }
 
@@ -319,9 +319,9 @@
   place-items: center;
   inline-size: 36px;
   block-size: 36px;
-  border: 1px solid var(--z-color-border);
+  border: 1px solid var(--zuvi-color-border);
   border-radius: 6px;
-  background: var(--z-color-bg);
+  background: var(--zuvi-color-bg);
   color: inherit;
   cursor: pointer;
 }
@@ -333,12 +333,12 @@
 }
 
 .admin-prototype-drawer {
-  --z-drawer-content-bg: var(--z-color-bg);
-  --z-drawer-content-padding: 16px;
+  --zuvi-drawer-content-bg: var(--zuvi-color-bg);
+  --zuvi-drawer-content-padding: 16px;
 }
 
 .admin-prototype-drawer nav {
-  --z-sidenav-width: 100%;
+  --zuvi-sidenav-width: 100%;
   flex: 1 1 auto;
   inline-size: 100%;
   min-height: 0;
@@ -401,32 +401,32 @@
 /* --------------------- RFC-004 原型 2：异步命令入口 --------------------- */
 
 .admin-prototype-command {
-  padding: var(--z-space-1) var(--z-space-3);
-  color: var(--z-color-fg-muted);
-  font-size: var(--z-text-sm);
-  background: var(--z-color-bg-muted);
-  border: 1px solid var(--z-color-border);
-  border-radius: var(--z-radius-full);
+  padding: var(--zuvi-space-1) var(--zuvi-space-3);
+  color: var(--zuvi-color-fg-muted);
+  font-size: var(--zuvi-text-sm);
+  background: var(--zuvi-color-bg-muted);
+  border: 1px solid var(--zuvi-color-border);
+  border-radius: var(--zuvi-radius-full);
   cursor: pointer;
 }
 
 .admin-prototype-command:hover {
-  border-color: var(--z-color-border-focus);
-  color: var(--z-color-fg);
+  border-color: var(--zuvi-color-border-focus);
+  color: var(--zuvi-color-fg);
 }
 
 .admin-prototype-command-notice {
   position: fixed;
-  bottom: var(--z-space-4);
+  bottom: var(--zuvi-space-4);
   left: 50%;
-  z-index: calc(var(--z-z-dropdown) + 1);
-  padding: var(--z-space-2) var(--z-space-4);
-  color: var(--z-color-fg);
-  font-size: var(--z-text-sm);
-  background: var(--z-color-bg-elevated);
-  border: 1px solid var(--z-color-border);
-  border-radius: var(--z-radius-md);
-  box-shadow: var(--z-shadow-lg);
+  z-index: calc(var(--zuvi-z-dropdown) + 1);
+  padding: var(--zuvi-space-2) var(--zuvi-space-4);
+  color: var(--zuvi-color-fg);
+  font-size: var(--zuvi-text-sm);
+  background: var(--zuvi-color-bg-elevated);
+  border: 1px solid var(--zuvi-color-border);
+  border-radius: var(--zuvi-radius-md);
+  box-shadow: var(--zuvi-shadow-lg);
   transform: translateX(-50%);
 }
 

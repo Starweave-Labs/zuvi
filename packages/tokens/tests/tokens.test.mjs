@@ -9,7 +9,7 @@ const semanticCss = readSource('semantic.css');
 const darkCss = readSource('dark.css');
 const typescriptSource = readSource('index.ts');
 
-const declarationPattern = /(--z-[a-z0-9-]+)\s*:\s*([^;]+);/g;
+const declarationPattern = /(--zuvi-[a-z0-9-]+)\s*:\s*([^;]+);/g;
 
 function declarations(source) {
   return [...source.matchAll(declarationPattern)].map((match) => ({
@@ -32,7 +32,7 @@ function resolvePath(root, path) {
 }
 
 test('DTCG semantic 令牌只引用存在的 primitive 令牌', () => {
-  const leaves = tokenLeaves(tokenDocument.zui.semantic, ['zui', 'semantic']);
+  const leaves = tokenLeaves(tokenDocument.zuvi.semantic, ['zuvi', 'semantic']);
   assert.ok(leaves.length > 0);
 
   for (const leaf of leaves) {
@@ -41,7 +41,7 @@ test('DTCG semantic 令牌只引用存在的 primitive 令牌', () => {
     assert.ok(references.length > 0, `${leaf.path} 不能写入原始值`);
 
     for (const reference of references) {
-      assert.match(reference, /^zui\.primitives\./, `${leaf.path} 必须指向 primitive 层`);
+      assert.match(reference, /^zuvi\.primitives\./, `${leaf.path} 必须指向 primitive 层`);
       const target = resolvePath(tokenDocument, reference);
       assert.ok(target && '$value' in target, `${leaf.path} 引用了不存在的 ${reference}`);
     }
@@ -59,17 +59,17 @@ test('semantic.css、DTCG color 与 TypeScript tokens.color 暴露同一组变�
   const cssNames = new Set(
     declarations(semanticCss)
       .map(({ name }) => name)
-      .filter((name) => name.startsWith('--z-color-'))
+      .filter((name) => name.startsWith('--zuvi-color-'))
   );
   const dtcgNames = new Set(
-    Object.keys(tokenDocument.zui.semantic.color).map((name) => `--z-color-${name}`)
+    Object.keys(tokenDocument.zuvi.semantic.color).map((name) => `--zuvi-color-${name}`)
   );
 
   const colorStart = typescriptSource.indexOf('  color: {');
   const colorEnd = typescriptSource.indexOf('\n  radius: {', colorStart);
   assert.ok(colorStart >= 0 && colorEnd > colorStart, '找不到 tokens.color 定义');
   const typescriptNames = new Set(
-    [...typescriptSource.slice(colorStart, colorEnd).matchAll(/var\((--z-color-[^)]+)\)/g)].map(
+    [...typescriptSource.slice(colorStart, colorEnd).matchAll(/var\((--zuvi-color-[^)]+)\)/g)].map(
       (match) => match[1]
     )
   );
@@ -82,13 +82,13 @@ test('dark.css 仅覆盖全部语义颜色，并保持主动暗色与系统暗�
   const semanticNames = new Set(
     declarations(semanticCss)
       .map(({ name }) => name)
-      .filter((name) => name.startsWith('--z-color-'))
+      .filter((name) => name.startsWith('--zuvi-color-'))
   );
   const darkDeclarations = declarations(darkCss);
   const valuesByName = new Map();
 
   for (const declaration of darkDeclarations) {
-    assert.match(declaration.name, /^--z-color-/, `暗色主题不应覆盖尺寸令牌 ${declaration.name}`);
+    assert.match(declaration.name, /^--zuvi-color-/, `暗色主题不应覆盖尺寸令牌 ${declaration.name}`);
     assert.ok(semanticNames.has(declaration.name), `暗色主题覆盖了未知变量 ${declaration.name}`);
     const values = valuesByName.get(declaration.name) ?? [];
     values.push(declaration.value);

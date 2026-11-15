@@ -42,12 +42,12 @@ function firePointer(
 describe('Slider', () => {
   it('渲染 root/track/fill/thumb 结构与默认 ARIA', () => {
     const { container } = render(<Slider aria-label="音量" />);
-    expect(getRoot(container)).toHaveClass('z-slider');
-    expect(container.querySelector('[data-part="track"]')).toHaveClass('z-slider-track');
-    expect(container.querySelector('[data-part="fill"]')).toHaveClass('z-slider-fill');
+    expect(getRoot(container)).toHaveClass('zuvi-slider');
+    expect(container.querySelector('[data-part="track"]')).toHaveClass('zuvi-slider-track');
+    expect(container.querySelector('[data-part="fill"]')).toHaveClass('zuvi-slider-fill');
     const thumb = getThumb();
     expect(thumb).toHaveAttribute('data-part', 'thumb');
-    expect(thumb).toHaveClass('z-slider-thumb');
+    expect(thumb).toHaveClass('zuvi-slider-thumb');
     expect(thumb).toHaveAttribute('aria-valuemin', '0');
     expect(thumb).toHaveAttribute('aria-valuemax', '100');
     expect(thumb).toHaveAttribute('aria-valuenow', '0');

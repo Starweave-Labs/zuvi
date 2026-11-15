@@ -15,11 +15,11 @@ const BASE_ITEMS: StepsItem[] = [
 ];
 
 function itemsOf(container: HTMLElement): HTMLElement[] {
-  return Array.from(container.querySelectorAll<HTMLElement>('.z-steps > li'));
+  return Array.from(container.querySelectorAll<HTMLElement>('.zuvi-steps > li'));
 }
 
 function buttonsOf(container: HTMLElement): HTMLButtonElement[] {
-  return Array.from(container.querySelectorAll<HTMLButtonElement>('.z-steps button'));
+  return Array.from(container.querySelectorAll<HTMLButtonElement>('.zuvi-steps button'));
 }
 
 describe('Steps', () => {
@@ -210,7 +210,7 @@ describe('Steps', () => {
         }}
       />
     );
-    const root = container.querySelector('.z-steps') as HTMLElement;
+    const root = container.querySelector('.zuvi-steps') as HTMLElement;
     expect(root).toHaveClass('my-root');
     expect(root).toHaveClass('my-extra');
     expect(root).toHaveAttribute('data-part', 'root');

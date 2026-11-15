@@ -17,7 +17,7 @@ describe('Skeleton', () => {
   it('renders 3 lines by default with data-lines/data-active', () => {
     const { container } = render(<Skeleton />);
     const root = getRoot(container);
-    expect(root).toHaveClass('z-skeleton');
+    expect(root).toHaveClass('zuvi-skeleton');
     expect(root).toHaveAttribute('data-lines', '3');
     expect(root).toHaveAttribute('data-active', 'true');
     expect(root).not.toHaveAttribute('data-circle');
@@ -30,7 +30,7 @@ describe('Skeleton', () => {
     expect(lines[0]).not.toHaveAttribute('data-last');
     expect(lines[1]).not.toHaveAttribute('data-last');
     expect(lines[2]).toHaveAttribute('data-last', 'true');
-    expect(lines[2]).toHaveClass('z-skeleton-line');
+    expect(lines[2]).toHaveClass('zuvi-skeleton-line');
   });
 
   it('respects custom lines count', () => {
@@ -63,25 +63,25 @@ describe('Skeleton', () => {
     expect(getRoot(container)).not.toHaveAttribute('data-active');
   });
 
-  it('applies numeric width/height as --z-skeleton-* px values', () => {
+  it('applies numeric width/height as --zuvi-skeleton-* px values', () => {
     const { container } = render(<Skeleton width={200} height={24} />);
     const root = getRoot(container);
-    expect(root.style.getPropertyValue('--z-skeleton-width')).toBe('200px');
-    expect(root.style.getPropertyValue('--z-skeleton-height')).toBe('24px');
+    expect(root.style.getPropertyValue('--zuvi-skeleton-width')).toBe('200px');
+    expect(root.style.getPropertyValue('--zuvi-skeleton-height')).toBe('24px');
   });
 
   it('passes string width/height through', () => {
     const { container } = render(<Skeleton width="60%" height="2em" />);
     const root = getRoot(container);
-    expect(root.style.getPropertyValue('--z-skeleton-width')).toBe('60%');
-    expect(root.style.getPropertyValue('--z-skeleton-height')).toBe('2em');
+    expect(root.style.getPropertyValue('--zuvi-skeleton-width')).toBe('60%');
+    expect(root.style.getPropertyValue('--zuvi-skeleton-height')).toBe('2em');
   });
 
   it('circle with single dimension keeps a circle (both axes follow)', () => {
     const { container } = render(<Skeleton circle width={48} />);
     const root = getRoot(container);
-    expect(root.style.getPropertyValue('--z-skeleton-width')).toBe('48px');
-    expect(root.style.getPropertyValue('--z-skeleton-height')).toBe('48px');
+    expect(root.style.getPropertyValue('--zuvi-skeleton-width')).toBe('48px');
+    expect(root.style.getPropertyValue('--zuvi-skeleton-height')).toBe('48px');
   });
 
   it('is aria-hidden by default (decorative placeholder)', () => {
@@ -92,7 +92,7 @@ describe('Skeleton', () => {
   it('passes className and native props through to the root', () => {
     render(<Skeleton className="my-skeleton" id="my-sk" data-testid="sk" />);
     const root = screen.getByTestId('sk');
-    expect(root).toHaveClass('z-skeleton', 'my-skeleton');
+    expect(root).toHaveClass('zuvi-skeleton', 'my-skeleton');
     expect(root).toHaveAttribute('id', 'my-sk');
   });
 
@@ -100,6 +100,6 @@ describe('Skeleton', () => {
     const ref = React.createRef<HTMLDivElement>();
     render(<Skeleton ref={ref} />);
     expect(ref.current).toBeInstanceOf(HTMLDivElement);
-    expect(ref.current).toHaveClass('z-skeleton');
+    expect(ref.current).toHaveClass('zuvi-skeleton');
   });
 });

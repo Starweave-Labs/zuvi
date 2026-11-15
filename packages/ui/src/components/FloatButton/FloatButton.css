@@ -1,139 +1,139 @@
 /* FloatButton —— 组件级变量定义在根选择器上 */
 
-.z-float-button {
-  --z-float-button-size: 2.75rem;
-  --z-float-button-radius: var(--z-radius-full);
-  --z-float-button-gap: var(--z-space-3);
-  --z-float-button-bg: var(--z-color-bg-elevated);
-  --z-float-button-fg: var(--z-color-fg);
-  --z-float-button-border: var(--z-color-border-subtle);
-  --z-float-button-hover-bg: var(--z-color-bg-subtle);
-  --z-float-button-shadow: var(--z-shadow-md);
-  --z-float-button-primary-bg: var(--z-color-primary);
-  --z-float-button-primary-fg: var(--z-color-primary-fg);
-  --z-float-button-primary-hover-bg: var(--z-color-primary-hover);
-  --z-float-button-icon-size: 1.25rem;
-  --z-float-button-font-size: var(--z-text-sm);
-  --z-float-button-right: var(--z-space-6);
-  --z-float-button-bottom: var(--z-space-6);
-  --z-float-button-menu-gap: var(--z-space-2);
-  --z-float-button-menu-item-bg: var(--z-color-bg-elevated);
-  --z-float-button-transition: var(--z-duration-fast) var(--z-ease-standard);
+.zuvi-float-button {
+  --zuvi-float-button-size: 2.75rem;
+  --zuvi-float-button-radius: var(--zuvi-radius-full);
+  --zuvi-float-button-gap: var(--zuvi-space-3);
+  --zuvi-float-button-bg: var(--zuvi-color-bg-elevated);
+  --zuvi-float-button-fg: var(--zuvi-color-fg);
+  --zuvi-float-button-border: var(--zuvi-color-border-subtle);
+  --zuvi-float-button-hover-bg: var(--zuvi-color-bg-subtle);
+  --zuvi-float-button-shadow: var(--zuvi-shadow-md);
+  --zuvi-float-button-primary-bg: var(--zuvi-color-primary);
+  --zuvi-float-button-primary-fg: var(--zuvi-color-primary-fg);
+  --zuvi-float-button-primary-hover-bg: var(--zuvi-color-primary-hover);
+  --zuvi-float-button-icon-size: 1.25rem;
+  --zuvi-float-button-font-size: var(--zuvi-text-sm);
+  --zuvi-float-button-right: var(--zuvi-space-6);
+  --zuvi-float-button-bottom: var(--zuvi-space-6);
+  --zuvi-float-button-menu-gap: var(--zuvi-space-2);
+  --zuvi-float-button-menu-item-bg: var(--zuvi-color-bg-elevated);
+  --zuvi-float-button-transition: var(--zuvi-duration-fast) var(--zuvi-ease-standard);
 }
 
-.z-float-button {
+.zuvi-float-button {
   box-sizing: border-box;
   position: fixed;
-  inset-inline-end: var(--z-float-button-right);
-  bottom: var(--z-float-button-bottom);
-  z-index: var(--z-z-sticky);
+  inset-inline-end: var(--zuvi-float-button-right);
+  bottom: var(--zuvi-float-button-bottom);
+  z-index: var(--zuvi-z-sticky);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--z-float-button-menu-gap);
-  font-family: var(--z-font-sans);
+  gap: var(--zuvi-float-button-menu-gap);
+  font-family: var(--zuvi-font-sans);
 }
 
-.z-float-button-trigger {
+.zuvi-float-button-trigger {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 2px;
-  min-width: var(--z-float-button-size);
-  min-height: var(--z-float-button-size);
-  padding: var(--z-space-2);
-  border: 1px solid var(--z-float-button-border);
-  border-radius: var(--z-float-button-radius);
-  background: var(--z-float-button-bg);
-  color: var(--z-float-button-fg);
-  font-size: var(--z-float-button-font-size);
-  line-height: var(--z-leading-tight);
+  min-width: var(--zuvi-float-button-size);
+  min-height: var(--zuvi-float-button-size);
+  padding: var(--zuvi-space-2);
+  border: 1px solid var(--zuvi-float-button-border);
+  border-radius: var(--zuvi-float-button-radius);
+  background: var(--zuvi-float-button-bg);
+  color: var(--zuvi-float-button-fg);
+  font-size: var(--zuvi-float-button-font-size);
+  line-height: var(--zuvi-leading-tight);
   cursor: pointer;
-  box-shadow: var(--z-float-button-shadow);
-  transition: background var(--z-float-button-transition);
+  box-shadow: var(--zuvi-float-button-shadow);
+  transition: background var(--zuvi-float-button-transition);
 }
 
-.z-float-button[data-shape='square'] .z-float-button-trigger,
-.z-float-button[data-shape='square'] .z-float-button-item-button {
-  border-radius: var(--z-radius-md);
+.zuvi-float-button[data-shape='square'] .zuvi-float-button-trigger,
+.zuvi-float-button[data-shape='square'] .zuvi-float-button-item-button {
+  border-radius: var(--zuvi-radius-md);
 }
 
-.z-float-button[data-type='primary'] .z-float-button-trigger {
-  background: var(--z-float-button-primary-bg);
-  color: var(--z-float-button-primary-fg);
+.zuvi-float-button[data-type='primary'] .zuvi-float-button-trigger {
+  background: var(--zuvi-float-button-primary-bg);
+  color: var(--zuvi-float-button-primary-fg);
   border-color: transparent;
 }
 
-.z-float-button-trigger:hover {
-  background: var(--z-float-button-hover-bg);
+.zuvi-float-button-trigger:hover {
+  background: var(--zuvi-float-button-hover-bg);
 }
 
-.z-float-button[data-type='primary'] .z-float-button-trigger:hover {
-  background: var(--z-float-button-primary-hover-bg);
+.zuvi-float-button[data-type='primary'] .zuvi-float-button-trigger:hover {
+  background: var(--zuvi-float-button-primary-hover-bg);
 }
 
-.z-float-button-trigger:focus-visible,
-.z-float-button-item-button:focus-visible {
-  outline: 2px solid var(--z-color-border-focus);
+.zuvi-float-button-trigger:focus-visible,
+.zuvi-float-button-item-button:focus-visible {
+  outline: 2px solid var(--zuvi-color-border-focus);
   outline-offset: 2px;
 }
 
-.z-float-button-icon {
+.zuvi-float-button-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--z-float-button-icon-size);
-  height: var(--z-float-button-icon-size);
+  width: var(--zuvi-float-button-icon-size);
+  height: var(--zuvi-float-button-icon-size);
 }
 
-.z-float-button-desc {
-  font-size: var(--z-text-xs);
+.zuvi-float-button-desc {
+  font-size: var(--zuvi-text-xs);
   white-space: nowrap;
 }
 
-.z-float-button-menu {
+.zuvi-float-button-menu {
   display: flex;
   flex-direction: column;
-  gap: var(--z-float-button-menu-gap);
+  gap: var(--zuvi-float-button-menu-gap);
   margin: 0;
   padding: 0;
   list-style: none;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(var(--z-space-2));
+  transform: translateY(var(--zuvi-space-2));
   transition:
-    opacity var(--z-float-button-transition),
-    transform var(--z-float-button-transition),
-    visibility var(--z-float-button-transition);
+    opacity var(--zuvi-float-button-transition),
+    transform var(--zuvi-float-button-transition),
+    visibility var(--zuvi-float-button-transition);
 }
 
-.z-float-button-menu[data-open='true'] {
+.zuvi-float-button-menu[data-open='true'] {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
 }
 
-.z-float-button-item-button {
+.zuvi-float-button-item-button {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 2px;
-  min-width: var(--z-float-button-size);
-  min-height: var(--z-float-button-size);
-  padding: var(--z-space-2);
-  border: 1px solid var(--z-float-button-border);
-  border-radius: var(--z-float-button-radius);
-  background: var(--z-float-button-menu-item-bg);
-  color: var(--z-float-button-fg);
+  min-width: var(--zuvi-float-button-size);
+  min-height: var(--zuvi-float-button-size);
+  padding: var(--zuvi-space-2);
+  border: 1px solid var(--zuvi-float-button-border);
+  border-radius: var(--zuvi-float-button-radius);
+  background: var(--zuvi-float-button-menu-item-bg);
+  color: var(--zuvi-float-button-fg);
   cursor: pointer;
-  box-shadow: var(--z-float-button-shadow);
+  box-shadow: var(--zuvi-float-button-shadow);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .z-float-button-trigger,
-  .z-float-button-menu {
+  .zuvi-float-button-trigger,
+  .zuvi-float-button-menu {
     transition: none;
   }
 }

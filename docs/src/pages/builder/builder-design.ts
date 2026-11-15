@@ -109,7 +109,7 @@ export function validateCssDeclarations(value: unknown): string {
   const declarations: string[] = [];
   for (const raw of value.split(';')) {
     if (!raw.trim()) continue;
-    const match = /^\s*((?:--z-[a-z\d-]+)|(?:-?[a-z][a-z-]*))\s*:\s*(.+?)\s*$/i.exec(raw);
+    const match = /^\s*((?:--zuvi-[a-z\d-]+)|(?:-?[a-z][a-z-]*))\s*:\s*(.+?)\s*$/i.exec(raw);
     if (!match || ['behavior', '-moz-binding'].includes(match[1].toLowerCase()))
       throw new Error(`CSS 声明格式不正确：${raw.slice(0, 60)}`);
     let depth = 0;
@@ -140,14 +140,14 @@ export function validateDesign(value: unknown): BuilderDesign {
         valid =
           typeof entry === 'string' &&
           entry.length <= 200 &&
-          /^(auto|fit-content|min-content|max-content|none|0|-?\d{1,5}(?:\.\d{1,3})?(?:px|%|rem|em|vh|vw|dvh|svh)|(?:calc|min|max|clamp)\([\d\s.,()+*/%\-a-z]+\)|var\(--z-[\w-]+\))$/.test(
+          /^(auto|fit-content|min-content|max-content|none|0|-?\d{1,5}(?:\.\d{1,3})?(?:px|%|rem|em|vh|vw|dvh|svh)|(?:calc|min|max|clamp)\([\d\s.,()+*/%\-a-z]+\)|var\(--zuvi-[\w-]+\))$/.test(
             entry
           ) &&
           !/url|expression/i.test(entry);
       } else if (rule === 'color') {
         valid =
           typeof entry === 'string' &&
-          /^(#[\da-f]{3,4}|#[\da-f]{6}|#[\da-f]{8}|transparent|currentColor|white|black|(?:rgb|hsl)a?\([\d\s.,%/]+\)|var\(--z-color-[a-z-]+\))$/i.test(
+          /^(#[\da-f]{3,4}|#[\da-f]{6}|#[\da-f]{8}|transparent|currentColor|white|black|(?:rgb|hsl)a?\([\d\s.,%/]+\)|var\(--zuvi-color-[a-z-]+\))$/i.test(
             entry
           );
       } else if (rule === 'columns') {
@@ -203,7 +203,7 @@ export function validateDesign(value: unknown): BuilderDesign {
           (typeof entry === 'number' && Number.isFinite(entry) && entry >= min && entry <= max) ||
           (!!tokenType &&
             typeof entry === 'string' &&
-            new RegExp(`^var\\(--z-token-${tokenType}-[a-z][a-z-]{0,39}\\)$`).test(entry));
+            new RegExp(`^var\\(--zuvi-token-${tokenType}-[a-z][a-z-]{0,39}\\)$`).test(entry));
       } else valid = typeof entry === 'string' && rule.split('|').includes(entry);
       if (!valid) throw new Error(`样式 ${key} 的值不正确。`);
       clean[key as keyof BuilderStyles] = entry as string | number;
@@ -343,7 +343,7 @@ export function designCss(id: string, input?: BuilderDesign, inputStates?: Build
     );
     const layout = Object.fromEntries(entries.filter(([key]) => layoutKeys.has(key)));
     // Content slots receive layout without moving section headings or card chrome.
-    const layoutTarget = `${selector}:not(.z-builder-section,.z-builder-form,.z-builder-columns-container,.z-builder-app-view,.z-card),${selector} > :is(.z-builder-stack,.z-builder-columns),${selector}.z-card > .z-card-body > .z-builder-stack`;
+    const layoutTarget = `${selector}:not(.zuvi-builder-section,.zuvi-builder-form,.zuvi-builder-columns-container,.zuvi-builder-app-view,.zuvi-card),${selector} > :is(.zuvi-builder-stack,.zuvi-builder-columns),${selector}.zuvi-card > .zuvi-card-body > .zuvi-builder-stack`;
     const fill =
       styles.width === undefined
         ? ''
@@ -352,7 +352,7 @@ export function designCss(id: string, input?: BuilderDesign, inputStates?: Build
     return `${target}{${declarations(outer)}}${selector}{${fill}${heightFill}${declarations(appearance)}}${Object.keys(layout).length ? `${layoutTarget}{${declarations(layout)}}` : ''}${styles.hoverCss ? `${selector}:hover{${validateCssDeclarations(styles.hoverCss)}}` : ''}`;
   };
   const responsive = (styles: BuilderDesign, target = owner) =>
-    `${styles.desktop ? rule(styles.desktop, target) : ''}${styles.tablet ? `@container z-builder-page (max-width:900px){${rule(styles.tablet, target)}}` : ''}${styles.mobile ? `@container z-builder-page (max-width:600px){${rule(styles.mobile, target)}}` : ''}`;
+    `${styles.desktop ? rule(styles.desktop, target) : ''}${styles.tablet ? `@container zuvi-builder-page (max-width:900px){${rule(styles.tablet, target)}}` : ''}${styles.mobile ? `@container zuvi-builder-page (max-width:600px){${rule(styles.mobile, target)}}` : ''}`;
   return (
     responsive(design) +
     Object.entries(validateStateDesign(inputStates || {}))

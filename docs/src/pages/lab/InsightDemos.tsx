@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react';
-import { ArrowUpRight, Database, Filter, Plus, Close } from '@zui/icons';
+import { ArrowUpRight, Database, Filter, Plus, Close } from '@zuvi/icons';
 import { Choices, LabCard, Notice } from './shared';
 
 const PERIODS = {

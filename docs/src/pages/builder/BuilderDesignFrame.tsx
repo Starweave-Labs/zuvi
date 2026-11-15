@@ -62,7 +62,7 @@ export function BuilderDesignFrame({
         }
         events('submit', event.target);
       }}
-      className="z-builder-element"
+      className="zuvi-builder-element"
       style={layoutStyle}
       data-builder-component={component}
       data-builder-node={builderStyleKey(id)}
@@ -70,7 +70,7 @@ export function BuilderDesignFrame({
       data-builder-locked={meta?.locked || undefined}
     >
       {meta?.hidden ? (
-        <div className="z-builder-hidden-placeholder">
+        <div className="zuvi-builder-hidden-placeholder">
           已隐藏 · {meta.label || '组件'}（导出时不显示）
         </div>
       ) : (

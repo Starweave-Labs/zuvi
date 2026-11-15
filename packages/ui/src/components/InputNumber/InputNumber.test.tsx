@@ -20,19 +20,19 @@ describe('InputNumber', () => {
     const root = getRoot(container);
     expect(root).toHaveAttribute('data-part', 'root');
     expect(root).toHaveAttribute('data-size', 'md');
-    expect(root).toHaveClass('z-input-number');
+    expect(root).toHaveClass('zuvi-input-number');
     const input = getInput();
     expect(input).toHaveAttribute('data-part', 'input');
     expect(input).toHaveAttribute('type', 'number');
-    expect(input).toHaveClass('z-input-number-input');
+    expect(input).toHaveClass('zuvi-input-number-input');
     expect(input.value).toBe('');
     const increase = screen.getByRole('button', { name: '增加' });
     const decrease = screen.getByRole('button', { name: '减少' });
     expect(increase).toHaveAttribute('data-part', 'increase');
-    expect(increase).toHaveClass('z-input-number-increase');
+    expect(increase).toHaveClass('zuvi-input-number-increase');
     expect(increase).toHaveAttribute('type', 'button');
     expect(decrease).toHaveAttribute('data-part', 'decrease');
-    expect(decrease).toHaveClass('z-input-number-decrease');
+    expect(decrease).toHaveClass('zuvi-input-number-decrease');
     expect(container.querySelector('[data-part="controls"]')).toBeInTheDocument();
   });
 
@@ -175,14 +175,14 @@ describe('InputNumber', () => {
       />
     );
     const root = getRoot(container);
-    expect(root).toHaveClass('z-input-number', 'my-root', 'cls-root');
-    expect(getInput()).toHaveClass('z-input-number-input', 'cls-input');
+    expect(root).toHaveClass('zuvi-input-number', 'my-root', 'cls-root');
+    expect(getInput()).toHaveClass('zuvi-input-number-input', 'cls-input');
     expect(screen.getByRole('button', { name: '增加' })).toHaveClass(
-      'z-input-number-increase',
+      'zuvi-input-number-increase',
       'cls-inc'
     );
     expect(screen.getByRole('button', { name: '减少' })).toHaveClass(
-      'z-input-number-decrease',
+      'zuvi-input-number-decrease',
       'cls-dec'
     );
   });

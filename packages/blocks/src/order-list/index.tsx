@@ -14,8 +14,8 @@ import {
   TableHeaderCell,
   TableRow,
   Tag,
-} from '@zui/react';
-import { useControllableState } from '@zui/react';
+} from '@zuvi/react';
+import { useControllableState } from '@zuvi/react';
 
 /* ---------------------------------- 类型 ---------------------------------- */
 
@@ -80,11 +80,11 @@ export const DEMO_ORDER_STATUS_OPTIONS: OrderStatusOption[] = [
 ];
 
 export const DEMO_ORDERS: OrderRow[] = [
-  { key: 'o-1001', orderNo: 'SO-2025-1001', product: 'ZUI 年度会员', buyer: '林小满', amount: 1299, status: 'paid', createdAt: '2025-11-01 10:24' },
+  { key: 'o-1001', orderNo: 'SO-2025-1001', product: 'ZUVI 年度会员', buyer: '林小满', amount: 1299, status: 'paid', createdAt: '2025-11-01 10:24' },
   { key: 'o-1002', orderNo: 'SO-2025-1002', product: '设计_tokens 套装', buyer: '陈默', amount: 199, status: 'pending', createdAt: '2025-11-02 14:05' },
   { key: 'o-1003', orderNo: 'SO-2025-1003', product: '图标授权包', buyer: '赵一鸣', amount: 499, status: 'shipped', createdAt: '2025-11-03 09:41' },
   { key: 'o-1004', orderNo: 'SO-2025-1004', product: '主题定制服务', buyer: '王雨晴', amount: 4999, status: 'completed', createdAt: '2025-11-04 16:18' },
-  { key: 'o-1005', orderNo: 'SO-2025-1005', product: 'ZUI 年度会员', buyer: '孙晓', amount: 1299, status: 'cancelled', createdAt: '2025-11-05 11:52' },
+  { key: 'o-1005', orderNo: 'SO-2025-1005', product: 'ZUVI 年度会员', buyer: '孙晓', amount: 1299, status: 'cancelled', createdAt: '2025-11-05 11:52' },
   { key: 'o-1006', orderNo: 'SO-2025-1006', product: '私有部署授权', buyer: '周航', amount: 9999, status: 'paid', createdAt: '2025-11-06 08:30' },
 ];
 
@@ -170,10 +170,10 @@ export function OrderListBlock({
       style={{
         display: 'flex',
         flexDirection: 'column',
-        gap: 'var(--z-space-4)',
+        gap: 'var(--zuvi-space-4)',
         maxWidth: 960,
         margin: '0 auto',
-        padding: 'var(--z-space-6) var(--z-space-4)',
+        padding: 'var(--zuvi-space-6) var(--zuvi-space-4)',
         ...style,
       }}
     >
@@ -186,17 +186,17 @@ export function OrderListBlock({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            gap: 'var(--z-space-4)',
+            gap: 'var(--zuvi-space-4)',
             flexWrap: 'wrap',
-            marginBottom: 'var(--z-space-4)',
+            marginBottom: 'var(--zuvi-space-4)',
           }}
         >
           <h2
             style={{
               margin: 0,
-              fontSize: 'var(--z-text-lg)',
-              fontWeight: 'var(--z-weight-semibold)',
-              color: 'var(--z-color-fg)',
+              fontSize: 'var(--zuvi-text-lg)',
+              fontWeight: 'var(--zuvi-weight-semibold)',
+              color: 'var(--zuvi-color-fg)',
             }}
           >
             {title}
@@ -230,7 +230,7 @@ export function OrderListBlock({
                 <TableRow>
                   <TableCell colSpan={7} align="center">
                     <span
-                      style={{ color: 'var(--z-color-fg-muted)', fontSize: 'var(--z-text-sm)' }}
+                      style={{ color: 'var(--zuvi-color-fg-muted)', fontSize: 'var(--zuvi-text-sm)' }}
                     >
                       暂无符合条件的订单
                     </span>
@@ -242,26 +242,26 @@ export function OrderListBlock({
                     <TableCell>
                       <span
                         style={{
-                          fontFamily: 'var(--z-font-mono)',
-                          fontSize: 'var(--z-text-sm)',
-                          color: 'var(--z-color-fg)',
+                          fontFamily: 'var(--zuvi-font-mono)',
+                          fontSize: 'var(--zuvi-text-sm)',
+                          color: 'var(--zuvi-color-fg)',
                         }}
                       >
                         {order.orderNo}
                       </span>
                     </TableCell>
                     <TableCell>
-                      <span style={{ color: 'var(--z-color-fg)' }}>{order.product}</span>
+                      <span style={{ color: 'var(--zuvi-color-fg)' }}>{order.product}</span>
                     </TableCell>
                     <TableCell>
-                      <span style={{ color: 'var(--z-color-fg-muted)' }}>{order.buyer}</span>
+                      <span style={{ color: 'var(--zuvi-color-fg-muted)' }}>{order.buyer}</span>
                     </TableCell>
                     <TableCell align="right">
                       <span
                         style={{
                           fontVariantNumeric: 'tabular-nums',
-                          fontWeight: 'var(--z-weight-medium)',
-                          color: 'var(--z-color-fg)',
+                          fontWeight: 'var(--zuvi-weight-medium)',
+                          color: 'var(--zuvi-color-fg)',
                         }}
                       >
                         {formatAmount(order.amount)}
@@ -271,7 +271,7 @@ export function OrderListBlock({
                       <Tag color={STATUS_TAG_COLOR[order.status]}>{STATUS_LABEL[order.status]}</Tag>
                     </TableCell>
                     <TableCell>
-                      <span style={{ color: 'var(--z-color-fg-muted)', fontSize: 'var(--z-text-sm)' }}>
+                      <span style={{ color: 'var(--zuvi-color-fg-muted)', fontSize: 'var(--zuvi-text-sm)' }}>
                         {order.createdAt}
                       </span>
                     </TableCell>
@@ -288,7 +288,7 @@ export function OrderListBlock({
                         </Popconfirm>
                       ) : (
                         <span
-                          style={{ color: 'var(--z-color-fg-subtle)', fontSize: 'var(--z-text-sm)' }}
+                          style={{ color: 'var(--zuvi-color-fg-subtle)', fontSize: 'var(--zuvi-text-sm)' }}
                         >
                           —
                         </span>
@@ -310,11 +310,11 @@ export function OrderListBlock({
             alignItems: 'center',
             justifyContent: 'space-between',
             flexWrap: 'wrap',
-            gap: 'var(--z-space-3)',
-            paddingTop: 'var(--z-space-4)',
+            gap: 'var(--zuvi-space-3)',
+            paddingTop: 'var(--zuvi-space-4)',
           }}
         >
-          <span style={{ fontSize: 'var(--z-text-sm)', color: 'var(--z-color-fg-muted)' }}>
+          <span style={{ fontSize: 'var(--zuvi-text-sm)', color: 'var(--zuvi-color-fg-muted)' }}>
             共 {filtered.length} 条订单
           </span>
           <Pagination

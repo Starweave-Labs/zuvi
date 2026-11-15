@@ -1,9 +1,9 @@
 'use client';
 
 import * as React from 'react';
-import { CheckCircle, XCircle } from '@zui/icons';
+import { CheckCircle, XCircle } from '@zuvi/icons';
 import { cx } from '../../utils';
-import { useZuiConfig } from '../../config';
+import { useZuviConfig } from '../../config';
 import './Steps.css';
 
 /* ---------------------------------- 类型 ---------------------------------- */
@@ -62,7 +62,7 @@ export function Steps({
   className,
   classNames,
 }: StepsProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const label = locale.steps.label;
 
   const interactive = typeof onChange === 'function';
@@ -144,7 +144,7 @@ export function Steps({
   return (
     <nav
       data-part="nav"
-      className="z-steps-nav"
+      className="zuvi-steps-nav"
       aria-label={label}
     >
       <ol
@@ -154,7 +154,7 @@ export function Steps({
         data-direction={direction}
         data-size={size}
         data-clickable={interactive ? 'true' : undefined}
-        className={cx('z-steps', classNames?.root, className)}
+        className={cx('zuvi-steps', classNames?.root, className)}
       >
         {items.map((item, index) => {
           const status = deriveStatus(index, clampedCurrent, item.status);
@@ -165,35 +165,35 @@ export function Steps({
           const iconNode = (
             <span
               data-part="icon"
-              className={cx('z-steps-icon', classNames?.icon)}
+              className={cx('zuvi-steps-icon', classNames?.icon)}
               aria-hidden={item.icon != null ? undefined : true}
             >
               {item.icon != null ? (
                 item.icon
               ) : status === 'finish' ? (
-                <CheckCircle className="z-steps-icon-svg" />
+                <CheckCircle className="zuvi-steps-icon-svg" />
               ) : status === 'error' ? (
-                <XCircle className="z-steps-icon-svg" />
+                <XCircle className="zuvi-steps-icon-svg" />
               ) : (
-                <span className="z-steps-icon-number">{index + 1}</span>
+                <span className="zuvi-steps-icon-number">{index + 1}</span>
               )}
             </span>
           );
 
           const contentNode = (
-            <span data-part="content" className={cx('z-steps-content', classNames?.content)}>
-              <span data-part="title" className="z-steps-title">
+            <span data-part="content" className={cx('zuvi-steps-content', classNames?.content)}>
+              <span data-part="title" className="zuvi-steps-title">
                 {item.title}
               </span>
               {item.description != null ? (
-                <span data-part="description" className="z-steps-description">
+                <span data-part="description" className="zuvi-steps-description">
                   {item.description}
                 </span>
               ) : null}
             </span>
           );
 
-          const triggerClass = 'z-steps-trigger';
+          const triggerClass = 'zuvi-steps-trigger';
 
           return (
             <li
@@ -202,7 +202,7 @@ export function Steps({
               data-status={status}
               data-disabled={disabled ? 'true' : undefined}
               aria-current={isCurrent ? 'step' : undefined}
-              className={cx('z-steps-item', classNames?.item)}
+              className={cx('zuvi-steps-item', classNames?.item)}
             >
               {interactive && !disabled ? (
                 <button
@@ -223,7 +223,7 @@ export function Steps({
               ) : interactive && disabled ? (
                 <span
                   data-part="trigger"
-                  className={cx(triggerClass, 'z-steps-trigger-disabled')}
+                  className={cx(triggerClass, 'zuvi-steps-trigger-disabled')}
                   aria-disabled="true"
                 >
                   {iconNode}
@@ -240,7 +240,7 @@ export function Steps({
                 <span
                   data-part="connector"
                   aria-hidden="true"
-                  className={cx('z-steps-connector', classNames?.connector)}
+                  className={cx('zuvi-steps-connector', classNames?.connector)}
                 />
               ) : null}
             </li>

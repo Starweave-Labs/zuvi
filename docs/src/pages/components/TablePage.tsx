@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import type { TableColumn, TableColumnState, TableSortState } from '@zui/react';
-import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '@zui/react';
+import type { TableColumn, TableColumnState, TableSortState } from '@zuvi/react';
+import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -300,17 +300,17 @@ export default function TablePage(): React.ReactNode {
         name="Table"
         parts={['root', 'header-cell', 'cell']}
         vars={[
-          '--z-table-font-size',
-          '--z-table-header-font-size',
-          '--z-table-header-fg',
-          '--z-table-cell-padding-x',
-          '--z-table-cell-padding-y',
-          '--z-table-border-color',
-          '--z-table-border-color-subtle',
-          '--z-table-row-hover-bg',
-          '--z-table-row-selected-bg',
-          '--z-table-row-selected-fg',
-          '--z-table-striped-bg',
+          '--zuvi-table-font-size',
+          '--zuvi-table-header-font-size',
+          '--zuvi-table-header-fg',
+          '--zuvi-table-cell-padding-x',
+          '--zuvi-table-cell-padding-y',
+          '--zuvi-table-border-color',
+          '--zuvi-table-border-color-subtle',
+          '--zuvi-table-row-hover-bg',
+          '--zuvi-table-row-selected-bg',
+          '--zuvi-table-row-selected-fg',
+          '--zuvi-table-striped-bg',
         ]}
         note="Table.Row 以 data-selected 暴露选中态；Head / Body / Row 结构类名不属于公开契约。"
       />

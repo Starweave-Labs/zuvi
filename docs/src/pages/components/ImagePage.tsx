@@ -1,4 +1,4 @@
-import { Image } from '@zui/react';
+import { Image } from '@zuvi/react';
 
 import demoCover from '../../assets/demo-cover.svg';
 
@@ -140,14 +140,14 @@ export default function ImagePage(): React.ReactNode {
         name="Image"
         parts={['root', 'image', 'preview']}
         vars={[
-          '--z-image-radius',
-          '--z-image-object-fit',
-          '--z-image-cursor',
-          '--z-image-preview-bg',
-          '--z-image-preview-img-shadow',
-          '--z-image-preview-close-size',
-          '--z-image-preview-close-bg',
-          '--z-image-preview-close-fg',
+          '--zuvi-image-radius',
+          '--zuvi-image-object-fit',
+          '--zuvi-image-cursor',
+          '--zuvi-image-preview-bg',
+          '--zuvi-image-preview-img-shadow',
+          '--zuvi-image-preview-close-size',
+          '--zuvi-image-preview-close-bg',
+          '--zuvi-image-preview-close-fg',
         ]}
       />
     </div>

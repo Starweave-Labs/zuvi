@@ -184,10 +184,10 @@ describe('Transfer 定制出口', () => {
         classNames={{ root: 'r', list: 'l', item: 'i', buttons: 'b' }}
       />
     );
-    expect(document.querySelector('[data-part="root"]')).toHaveClass('z-transfer', 'r', 'my-transfer');
-    expect(document.querySelector('[data-part="list"]')).toHaveClass('z-transfer-list', 'l');
-    expect(document.querySelector('[data-part="item"]')).toHaveClass('z-transfer-item', 'i');
-    expect(document.querySelector('[data-part="buttons"]')).toHaveClass('z-transfer-buttons', 'b');
+    expect(document.querySelector('[data-part="root"]')).toHaveClass('zuvi-transfer', 'r', 'my-transfer');
+    expect(document.querySelector('[data-part="list"]')).toHaveClass('zuvi-transfer-list', 'l');
+    expect(document.querySelector('[data-part="item"]')).toHaveClass('zuvi-transfer-item', 'i');
+    expect(document.querySelector('[data-part="buttons"]')).toHaveClass('zuvi-transfer-buttons', 'b');
   });
 
   it('data-part 结构完整', () => {

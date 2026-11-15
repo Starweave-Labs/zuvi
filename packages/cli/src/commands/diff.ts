@@ -1,5 +1,5 @@
 /**
- * zui diff —— 本地副本 vs registry 的 unified diff（上游更新通道）
+ * zuvi diff —— 本地副本 vs registry 的 unified diff（上游更新通道）
  *
  * 对比 registry 源文件与本地已复制文件：
  * - 一致：state = 'same'

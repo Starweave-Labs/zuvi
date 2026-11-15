@@ -1,14 +1,14 @@
 'use client';
 
 import * as React from 'react';
-import { CheckCircle, Copy } from '@zui/icons';
-import { useZuiConfig } from '../../config';
+import { CheckCircle, Copy } from '@zuvi/icons';
+import { useZuviConfig } from '../../config';
 import { cx } from '../../utils';
 import './Typography.css';
 
 /* ---------------------------------- 类型 ---------------------------------- */
 
-/** type 只调色：secondary → --z-color-fg-muted；success/warning/danger → 同名语义色 */
+/** type 只调色：secondary → --zuvi-color-fg-muted；success/warning/danger → 同名语义色 */
 export type TypographyType = 'secondary' | 'success' | 'warning' | 'danger';
 
 /** copyable 对象配置：text 覆盖被复制内容（默认取 children 文本），onCopy 在复制成功后回调 */
@@ -54,7 +54,7 @@ export interface TextProps
   keyboard?: boolean;
   /** 高亮 → <mark> */
   mark?: boolean;
-  /** 加粗（data-strong，走 --z-weight-semibold） */
+  /** 加粗（data-strong，走 --zuvi-weight-semibold） */
   strong?: boolean;
   /** 下划线（data-underline） */
   underline?: boolean;
@@ -112,7 +112,7 @@ function CopyButton({
   onCopy?: () => void;
   className?: string;
 }) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const [copied, setCopied] = React.useState(false);
   const timerRef = React.useRef<number | undefined>(undefined);
 
@@ -144,19 +144,19 @@ function CopyButton({
         type="button"
         data-part="copy"
         data-copied={copied ? 'true' : undefined}
-        className={cx('z-typography-copy', className)}
+        className={cx('zuvi-typography-copy', className)}
         aria-label={locale.accessibility.copy}
         title={copied ? locale.accessibility.copied : undefined}
         onClick={handleCopy}
       >
         {copied ? (
-          <CheckCircle className="z-typography-copy-icon" />
+          <CheckCircle className="zuvi-typography-copy-icon" />
         ) : (
-          <Copy className="z-typography-copy-icon" />
+          <Copy className="zuvi-typography-copy-icon" />
         )}
       </button>
       {copied ? (
-        <span data-part="copy-feedback" aria-live="polite" className="z-typography-copy-feedback">
+        <span data-part="copy-feedback" aria-live="polite" className="zuvi-typography-copy-feedback">
           {locale.accessibility.copied}
         </span>
       ) : null}
@@ -204,7 +204,7 @@ export function TypographyTitle({
       data-part="root"
       data-type={type}
       data-delete={deleted ? 'true' : undefined}
-      className={cx('z-typography', `z-typography-h${safeLevel}`, className, classNames?.root)}
+      className={cx('zuvi-typography', `z-typography-h${safeLevel}`, className, classNames?.root)}
     >
       {children}
       {renderCopy(copyable, children, classNames?.copy)}
@@ -226,9 +226,9 @@ export function TypographyParagraph({
 }: ParagraphProps) {
   const isEllipsis = ellipsis === true || (typeof ellipsis === 'object' && ellipsis != null);
   const rows = typeof ellipsis === 'object' && ellipsis != null ? ellipsis.rows : 1;
-  // 行数走内联 CSS 变量，由 .z-typography[data-ellipsis] 的 -webkit-line-clamp 消费
+  // 行数走内联 CSS 变量，由 .zuvi-typography[data-ellipsis] 的 -webkit-line-clamp 消费
   const ellipsisStyle = isEllipsis
-    ? ({ '--z-typography-ellipsis-rows': rows } as React.CSSProperties)
+    ? ({ '--zuvi-typography-ellipsis-rows': rows } as React.CSSProperties)
     : undefined;
   return (
     <p
@@ -239,7 +239,7 @@ export function TypographyParagraph({
       data-delete={deleted ? 'true' : undefined}
       data-ellipsis={isEllipsis ? 'true' : undefined}
       style={{ ...ellipsisStyle, ...style }}
-      className={cx('z-typography', 'z-typography-paragraph', className, classNames?.root)}
+      className={cx('zuvi-typography', 'zuvi-typography-paragraph', className, classNames?.root)}
     >
       {children}
       {renderCopy(copyable, children, classNames?.copy)}
@@ -277,7 +277,7 @@ export function TypographyText({
       data-strong={strong ? 'true' : undefined}
       data-underline={underline ? 'true' : undefined}
       data-delete={deleted ? 'true' : undefined}
-      className={cx('z-typography', 'z-typography-text', className, classNames?.root)}
+      className={cx('zuvi-typography', 'zuvi-typography-text', className, classNames?.root)}
     >
       {children}
       {renderCopy(copyable, children, classNames?.copy)}

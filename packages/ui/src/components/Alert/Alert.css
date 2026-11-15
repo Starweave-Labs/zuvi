@@ -1,149 +1,149 @@
 /* Alert —— 组件级变量定义在根选择器上，可被用户任意覆盖 */
 
-.z-alert {
-  --z-alert-padding-x: var(--z-space-4);
-  --z-alert-padding-y: var(--z-space-3);
-  --z-alert-gap: var(--z-space-3);
-  --z-alert-radius: 0.5rem; /* 8px */
-  --z-alert-border-width: 1px;
-  --z-alert-font-size: var(--z-text-sm);
-  --z-alert-line-height: var(--z-leading-normal);
-  --z-alert-title-font-size: var(--z-text-sm);
-  --z-alert-title-font-weight: var(--z-weight-semibold);
-  --z-alert-icon-size: 1.25rem; /* 20px */
-  --z-alert-close-size: 1.5rem; /* 24px 点击域 */
-  --z-alert-close-icon-size: 1rem;
-  --z-alert-close-radius: var(--z-radius-sm);
-  --z-alert-bg: var(--z-color-info-subtle);
-  --z-alert-fg: var(--z-color-info-subtle-fg);
-  --z-alert-border: color-mix(in srgb, var(--z-color-info) 30%, transparent);
-  --z-alert-icon-color: var(--z-color-info);
-  --z-alert-close-hover-bg: color-mix(in srgb, var(--z-color-info) 12%, transparent);
-  --z-alert-focus-ring: var(--z-color-focus-ring);
-  --z-alert-transition: var(--z-duration-fast) var(--z-ease-standard);
+.zuvi-alert {
+  --zuvi-alert-padding-x: var(--zuvi-space-4);
+  --zuvi-alert-padding-y: var(--zuvi-space-3);
+  --zuvi-alert-gap: var(--zuvi-space-3);
+  --zuvi-alert-radius: 0.5rem; /* 8px */
+  --zuvi-alert-border-width: 1px;
+  --zuvi-alert-font-size: var(--zuvi-text-sm);
+  --zuvi-alert-line-height: var(--zuvi-leading-normal);
+  --zuvi-alert-title-font-size: var(--zuvi-text-sm);
+  --zuvi-alert-title-font-weight: var(--zuvi-weight-semibold);
+  --zuvi-alert-icon-size: 1.25rem; /* 20px */
+  --zuvi-alert-close-size: 1.5rem; /* 24px 点击域 */
+  --zuvi-alert-close-icon-size: 1rem;
+  --zuvi-alert-close-radius: var(--zuvi-radius-sm);
+  --zuvi-alert-bg: var(--zuvi-color-info-subtle);
+  --zuvi-alert-fg: var(--zuvi-color-info-subtle-fg);
+  --zuvi-alert-border: color-mix(in srgb, var(--zuvi-color-info) 30%, transparent);
+  --zuvi-alert-icon-color: var(--zuvi-color-info);
+  --zuvi-alert-close-hover-bg: color-mix(in srgb, var(--zuvi-color-info) 12%, transparent);
+  --zuvi-alert-focus-ring: var(--zuvi-color-focus-ring);
+  --zuvi-alert-transition: var(--zuvi-duration-fast) var(--zuvi-ease-standard);
 }
 
 /* 状态：仅覆盖颜色类变量（error 收口到 danger 令牌） */
-.z-alert[data-type='success'] {
-  --z-alert-bg: var(--z-color-success-subtle);
-  --z-alert-fg: var(--z-color-success-subtle-fg);
-  --z-alert-border: color-mix(in srgb, var(--z-color-success) 30%, transparent);
-  --z-alert-icon-color: var(--z-color-success);
-  --z-alert-close-hover-bg: color-mix(in srgb, var(--z-color-success) 12%, transparent);
+.zuvi-alert[data-type='success'] {
+  --zuvi-alert-bg: var(--zuvi-color-success-subtle);
+  --zuvi-alert-fg: var(--zuvi-color-success-subtle-fg);
+  --zuvi-alert-border: color-mix(in srgb, var(--zuvi-color-success) 30%, transparent);
+  --zuvi-alert-icon-color: var(--zuvi-color-success);
+  --zuvi-alert-close-hover-bg: color-mix(in srgb, var(--zuvi-color-success) 12%, transparent);
 }
 
-.z-alert[data-type='warning'] {
-  --z-alert-bg: var(--z-color-warning-subtle);
-  --z-alert-fg: var(--z-color-warning-subtle-fg);
-  --z-alert-border: color-mix(in srgb, var(--z-color-warning) 30%, transparent);
-  --z-alert-icon-color: var(--z-color-warning);
-  --z-alert-close-hover-bg: color-mix(in srgb, var(--z-color-warning) 12%, transparent);
+.zuvi-alert[data-type='warning'] {
+  --zuvi-alert-bg: var(--zuvi-color-warning-subtle);
+  --zuvi-alert-fg: var(--zuvi-color-warning-subtle-fg);
+  --zuvi-alert-border: color-mix(in srgb, var(--zuvi-color-warning) 30%, transparent);
+  --zuvi-alert-icon-color: var(--zuvi-color-warning);
+  --zuvi-alert-close-hover-bg: color-mix(in srgb, var(--zuvi-color-warning) 12%, transparent);
 }
 
-.z-alert[data-type='error'] {
-  --z-alert-bg: var(--z-color-danger-subtle);
-  --z-alert-fg: var(--z-color-danger-subtle-fg);
-  --z-alert-border: color-mix(in srgb, var(--z-color-danger) 30%, transparent);
-  --z-alert-icon-color: var(--z-color-danger);
-  --z-alert-close-hover-bg: color-mix(in srgb, var(--z-color-danger) 12%, transparent);
+.zuvi-alert[data-type='error'] {
+  --zuvi-alert-bg: var(--zuvi-color-danger-subtle);
+  --zuvi-alert-fg: var(--zuvi-color-danger-subtle-fg);
+  --zuvi-alert-border: color-mix(in srgb, var(--zuvi-color-danger) 30%, transparent);
+  --zuvi-alert-icon-color: var(--zuvi-color-danger);
+  --zuvi-alert-close-hover-bg: color-mix(in srgb, var(--zuvi-color-danger) 12%, transparent);
 }
 
 /* 布局与视觉：浅色状态底 + 状态色边/图标 */
-.z-alert {
+.zuvi-alert {
   box-sizing: border-box;
   display: flex;
   align-items: flex-start;
-  gap: var(--z-alert-gap);
-  padding: var(--z-alert-padding-y) var(--z-alert-padding-x);
-  border: var(--z-alert-border-width) solid var(--z-alert-border);
-  border-radius: var(--z-alert-radius);
-  background: var(--z-alert-bg);
-  color: var(--z-alert-fg);
-  font-family: var(--z-font-sans);
-  font-size: var(--z-alert-font-size);
-  line-height: var(--z-alert-line-height);
+  gap: var(--zuvi-alert-gap);
+  padding: var(--zuvi-alert-padding-y) var(--zuvi-alert-padding-x);
+  border: var(--zuvi-alert-border-width) solid var(--zuvi-alert-border);
+  border-radius: var(--zuvi-alert-radius);
+  background: var(--zuvi-alert-bg);
+  color: var(--zuvi-alert-fg);
+  font-family: var(--zuvi-font-sans);
+  font-size: var(--zuvi-alert-font-size);
+  line-height: var(--zuvi-alert-line-height);
 }
 
-.z-alert-icon {
+.zuvi-alert-icon {
   display: inline-flex;
   flex: none;
   align-items: center;
   justify-content: center;
-  width: var(--z-alert-icon-size);
-  height: var(--z-alert-icon-size);
+  width: var(--zuvi-alert-icon-size);
+  height: var(--zuvi-alert-icon-size);
   margin-top: 0.125rem; /* 与首行文字视觉居中 */
-  color: var(--z-alert-icon-color);
+  color: var(--zuvi-alert-icon-color);
 }
 
-.z-alert-icon > svg {
+.zuvi-alert-icon > svg {
   width: 100%;
   height: 100%;
 }
 
-.z-alert-body {
+.zuvi-alert-body {
   flex: 1 1 auto;
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--z-space-1);
+  gap: var(--zuvi-space-1);
   overflow-wrap: anywhere;
   word-break: break-word;
 }
 
-.z-alert-title {
-  font-size: var(--z-alert-title-font-size);
-  font-weight: var(--z-alert-title-font-weight);
+.zuvi-alert-title {
+  font-size: var(--zuvi-alert-title-font-size);
+  font-weight: var(--zuvi-alert-title-font-weight);
   overflow-wrap: anywhere;
   word-break: break-word;
 }
 
-.z-alert-description {
+.zuvi-alert-description {
   overflow-wrap: anywhere;
   word-break: break-word;
 }
 
-.z-alert-close {
+.zuvi-alert-close {
   box-sizing: border-box;
   display: inline-flex;
   flex: none;
   align-items: center;
   justify-content: center;
-  width: var(--z-alert-close-size);
-  height: var(--z-alert-close-size);
+  width: var(--zuvi-alert-close-size);
+  height: var(--zuvi-alert-close-size);
   margin-block: -0.125rem;
   margin-inline: 0 -0.375rem; /* 视觉贴边、点击域不挤压内容 */
   padding: 0;
   border: none;
-  border-radius: var(--z-alert-close-radius);
+  border-radius: var(--zuvi-alert-close-radius);
   background: transparent;
   color: inherit;
   cursor: pointer;
   opacity: 0.75;
   transition:
-    background-color var(--z-alert-transition),
-    opacity var(--z-alert-transition);
+    background-color var(--zuvi-alert-transition),
+    opacity var(--zuvi-alert-transition);
 }
 
-.z-alert-close:hover {
-  background: var(--z-alert-close-hover-bg);
+.zuvi-alert-close:hover {
+  background: var(--zuvi-alert-close-hover-bg);
   opacity: 1;
 }
 
-.z-alert-close:focus-visible {
+.zuvi-alert-close:focus-visible {
   outline: none;
   opacity: 1;
   box-shadow:
-    0 0 0 2px var(--z-alert-bg),
-    0 0 0 4px color-mix(in srgb, var(--z-alert-focus-ring) 35%, transparent);
+    0 0 0 2px var(--zuvi-alert-bg),
+    0 0 0 4px color-mix(in srgb, var(--zuvi-alert-focus-ring) 35%, transparent);
 }
 
-.z-alert-close > svg {
-  width: var(--z-alert-close-icon-size);
-  height: var(--z-alert-close-icon-size);
+.zuvi-alert-close > svg {
+  width: var(--zuvi-alert-close-icon-size);
+  height: var(--zuvi-alert-close-icon-size);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .z-alert-close {
+  .zuvi-alert-close {
     transition: none;
   }
 }

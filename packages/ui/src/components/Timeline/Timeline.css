@@ -1,84 +1,84 @@
 /* Timeline —— 时间轴（竖线 + 节点圆点 + 内容）。
    组件级变量定义在根选择器上，可被用户任意覆盖。 */
 
-.z-timeline {
-  --z-timeline-font-family: var(--z-font-sans);
-  --z-timeline-font-size: var(--z-text-sm);
-  --z-timeline-fg: var(--z-color-fg);
-  --z-timeline-line-color: var(--z-color-border);
-  --z-timeline-line-width: 2px;
-  --z-timeline-dot-size: 0.75rem;
-  --z-timeline-dot-border-width: 2px;
-  --z-timeline-dot-bg: var(--z-color-bg);
-  --z-timeline-item-gap: var(--z-space-6);
-  --z-timeline-content-gap: var(--z-space-4);
-  --z-timeline-label-color: var(--z-color-fg-muted);
-  --z-timeline-label-width: 5.5rem;
-  --z-timeline-label-margin: var(--z-space-3);
-  --z-timeline-dot-color: var(--z-color-primary);
-  --z-timeline-dot-pending-color: var(--z-color-border-strong);
-  --z-timeline-dot-offset-top: 0.35em; /* 约 5px，使得 12px 圆点垂直中心与首行文字中轴平齐 */
+.zuvi-timeline {
+  --zuvi-timeline-font-family: var(--zuvi-font-sans);
+  --zuvi-timeline-font-size: var(--zuvi-text-sm);
+  --zuvi-timeline-fg: var(--zuvi-color-fg);
+  --zuvi-timeline-line-color: var(--zuvi-color-border);
+  --zuvi-timeline-line-width: 2px;
+  --zuvi-timeline-dot-size: 0.75rem;
+  --zuvi-timeline-dot-border-width: 2px;
+  --zuvi-timeline-dot-bg: var(--zuvi-color-bg);
+  --zuvi-timeline-item-gap: var(--zuvi-space-6);
+  --zuvi-timeline-content-gap: var(--zuvi-space-4);
+  --zuvi-timeline-label-color: var(--zuvi-color-fg-muted);
+  --zuvi-timeline-label-width: 5.5rem;
+  --zuvi-timeline-label-margin: var(--zuvi-space-3);
+  --zuvi-timeline-dot-color: var(--zuvi-color-primary);
+  --zuvi-timeline-dot-pending-color: var(--zuvi-color-border-strong);
+  --zuvi-timeline-dot-offset-top: 0.35em; /* 约 5px，使得 12px 圆点垂直中心与首行文字中轴平齐 */
 }
 
-.z-timeline {
+.zuvi-timeline {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: var(--z-timeline-item-gap);
-  font-family: var(--z-timeline-font-family);
-  font-size: var(--z-timeline-font-size);
-  color: var(--z-timeline-fg);
+  gap: var(--zuvi-timeline-item-gap);
+  font-family: var(--zuvi-timeline-font-family);
+  font-size: var(--zuvi-timeline-font-size);
+  color: var(--zuvi-timeline-fg);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 /* 节点项：dot 悬浮于竖线，content 在侧 */
-.z-timeline-item {
+.zuvi-timeline-item {
   position: relative;
   display: flex;
-  gap: var(--z-timeline-content-gap);
+  gap: var(--zuvi-timeline-content-gap);
 }
 
 /* 竖线：从 dot 向下延伸，圆点正处于轴线中央，最后一项不画 */
-.z-timeline-item:not(:last-child)::before {
+.zuvi-timeline-item:not(:last-child)::before {
   content: '';
   position: absolute;
-  top: calc(var(--z-timeline-dot-offset-top) + var(--z-timeline-dot-size));
-  bottom: calc(-1 * var(--z-timeline-item-gap));
-  width: var(--z-timeline-line-width);
-  background: var(--z-timeline-line-color);
-  inset-inline-start: calc(var(--z-timeline-dot-size) / 2 - var(--z-timeline-line-width) / 2);
+  top: calc(var(--zuvi-timeline-dot-offset-top) + var(--zuvi-timeline-dot-size));
+  bottom: calc(-1 * var(--zuvi-timeline-item-gap));
+  width: var(--zuvi-timeline-line-width);
+  background: var(--zuvi-timeline-line-color);
+  inset-inline-start: calc(var(--zuvi-timeline-dot-size) / 2 - var(--zuvi-timeline-line-width) / 2);
 }
 
-.z-timeline-dot {
+.zuvi-timeline-dot {
   flex: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: var(--z-timeline-dot-size);
-  height: var(--z-timeline-dot-size);
-  margin-top: var(--z-timeline-dot-offset-top);
+  width: var(--zuvi-timeline-dot-size);
+  height: var(--zuvi-timeline-dot-size);
+  margin-top: var(--zuvi-timeline-dot-offset-top);
   z-index: 1;
 }
 
-.z-timeline-dot-default {
+.zuvi-timeline-dot-default {
   width: 100%;
   height: 100%;
-  border-radius: var(--z-radius-full);
-  border: var(--z-timeline-dot-border-width) solid var(--z-timeline-dot-color);
-  background: var(--z-timeline-dot-bg);
+  border-radius: var(--zuvi-radius-full);
+  border: var(--zuvi-timeline-dot-border-width) solid var(--zuvi-timeline-dot-color);
+  background: var(--zuvi-timeline-dot-bg);
 }
 
-.z-timeline-dot-pending {
+.zuvi-timeline-dot-pending {
   width: 100%;
   height: 100%;
-  border-radius: var(--z-radius-full);
-  border: var(--z-timeline-dot-border-width) solid var(--z-timeline-dot-pending-color);
-  background: var(--z-timeline-dot-bg);
+  border-radius: var(--zuvi-radius-full);
+  border: var(--zuvi-timeline-dot-border-width) solid var(--zuvi-timeline-dot-pending-color);
+  background: var(--zuvi-timeline-dot-bg);
 }
 
-.z-timeline-dot-custom {
+.zuvi-timeline-dot-custom {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -86,90 +86,90 @@
   height: 100%;
 }
 
-.z-timeline-label {
+.zuvi-timeline-label {
   flex: none;
-  width: var(--z-timeline-label-width);
-  color: var(--z-timeline-label-color);
-  line-height: var(--z-leading-normal);
+  width: var(--zuvi-timeline-label-width);
+  color: var(--zuvi-timeline-label-color);
+  line-height: var(--zuvi-leading-normal);
 }
 
-.z-timeline-content {
+.zuvi-timeline-content {
   flex: 1;
   min-width: 0;
-  line-height: var(--z-leading-normal);
+  line-height: var(--zuvi-leading-normal);
 }
 
 /* 颜色映射：primary/success/warning/error/neutral → dot 描边色 */
-.z-timeline-item[data-color='primary'] {
-  --z-timeline-dot-color: var(--z-color-primary);
+.zuvi-timeline-item[data-color='primary'] {
+  --zuvi-timeline-dot-color: var(--zuvi-color-primary);
 }
 
-.z-timeline-item[data-color='success'] {
-  --z-timeline-dot-color: var(--z-color-success);
+.zuvi-timeline-item[data-color='success'] {
+  --zuvi-timeline-dot-color: var(--zuvi-color-success);
 }
 
-.z-timeline-item[data-color='warning'] {
-  --z-timeline-dot-color: var(--z-color-warning);
+.zuvi-timeline-item[data-color='warning'] {
+  --zuvi-timeline-dot-color: var(--zuvi-color-warning);
 }
 
-.z-timeline-item[data-color='error'] {
-  --z-timeline-dot-color: var(--z-color-danger);
+.zuvi-timeline-item[data-color='error'] {
+  --zuvi-timeline-dot-color: var(--zuvi-color-danger);
 }
 
-.z-timeline-item[data-color='neutral'] {
-  --z-timeline-dot-color: var(--z-color-border-strong);
+.zuvi-timeline-item[data-color='neutral'] {
+  --zuvi-timeline-dot-color: var(--zuvi-color-border-strong);
 }
 
 /* mode=right：内容靠右、竖线靠右 */
-.z-timeline[data-mode='right'] .z-timeline-item {
+.zuvi-timeline[data-mode='right'] .zuvi-timeline-item {
   flex-direction: row-reverse;
   justify-content: flex-end;
 }
 
-.z-timeline[data-mode='right'] .z-timeline-item:not(:last-child)::before {
+.zuvi-timeline[data-mode='right'] .zuvi-timeline-item:not(:last-child)::before {
   inset-inline-start: auto;
-  inset-inline-end: calc(var(--z-timeline-dot-size) / 2 - var(--z-timeline-line-width) / 2);
+  inset-inline-end: calc(var(--zuvi-timeline-dot-size) / 2 - var(--zuvi-timeline-line-width) / 2);
 }
 
-.z-timeline[data-mode='right'] .z-timeline-label {
+.zuvi-timeline[data-mode='right'] .zuvi-timeline-label {
   text-align: end;
 }
 
 /* mode=alternate：奇偶交替左右，竖线居中 */
-.z-timeline[data-mode='alternate'] .z-timeline-item {
+.zuvi-timeline[data-mode='alternate'] .zuvi-timeline-item {
   justify-content: center;
   text-align: start;
 }
 
-.z-timeline[data-mode='alternate'] .z-timeline-item[data-side='right'] {
+.zuvi-timeline[data-mode='alternate'] .zuvi-timeline-item[data-side='right'] {
   flex-direction: row-reverse;
 }
 
-.z-timeline[data-mode='alternate'] .z-timeline-item:not(:last-child)::before {
-  inset-inline-start: calc(50% - var(--z-timeline-line-width) / 2);
+.zuvi-timeline[data-mode='alternate'] .zuvi-timeline-item:not(:last-child)::before {
+  inset-inline-start: calc(50% - var(--zuvi-timeline-line-width) / 2);
   inset-inline-end: auto;
 }
 
-.z-timeline[data-mode='alternate'] .z-timeline-item[data-side='left'] .z-timeline-content,
-.z-timeline[data-mode='alternate'] .z-timeline-item[data-side='left'] .z-timeline-label {
+.zuvi-timeline[data-mode='alternate'] .zuvi-timeline-item[data-side='left'] .zuvi-timeline-content,
+.zuvi-timeline[data-mode='alternate'] .zuvi-timeline-item[data-side='left'] .zuvi-timeline-label {
   text-align: end;
 }
 
 @media (max-width: 480px) {
-  .z-timeline[data-mode='alternate'] .z-timeline-item,
-  .z-timeline[data-mode='alternate'] .z-timeline-item[data-side='right'] {
+  .zuvi-timeline[data-mode='alternate'] .zuvi-timeline-item,
+  .zuvi-timeline[data-mode='alternate'] .zuvi-timeline-item[data-side='right'] {
     flex-direction: row;
     justify-content: flex-start;
     text-align: start;
   }
 
-  .z-timeline[data-mode='alternate'] .z-timeline-item:not(:last-child)::before {
-    inset-inline-start: calc(var(--z-timeline-dot-size) / 2 - var(--z-timeline-line-width) / 2);
+  .zuvi-timeline[data-mode='alternate'] .zuvi-timeline-item:not(:last-child)::before {
+    inset-inline-start: calc(var(--zuvi-timeline-dot-size) / 2 - var(--zuvi-timeline-line-width) / 2);
     inset-inline-end: auto;
   }
 
-  .z-timeline[data-mode='alternate'] .z-timeline-item[data-side='left'] .z-timeline-content,
-  .z-timeline[data-mode='alternate'] .z-timeline-item[data-side='left'] .z-timeline-label {
+  .zuvi-timeline[data-mode='alternate'] .zuvi-timeline-item[data-side='left'] .zuvi-timeline-content,
+  .zuvi-timeline[data-mode='alternate'] .zuvi-timeline-item[data-side='left'] .zuvi-timeline-label {
     text-align: start;
   }
 }

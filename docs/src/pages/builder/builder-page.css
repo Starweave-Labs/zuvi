@@ -2,23 +2,23 @@
   container: builder-page / inline-size;
 }
 .doc-builder-editor {
-  --puck-color-surface: var(--z-color-bg-elevated);
-  --puck-color-surface-muted: var(--z-color-bg-muted);
-  --puck-color-surface-subtle: var(--z-color-bg);
-  --puck-color-border: var(--z-color-border);
-  --puck-color-border-muted: var(--z-color-border-subtle);
-  --puck-color-border-hover: var(--z-color-fg-muted);
-  --puck-color-text: var(--z-color-fg);
-  --puck-color-text-secondary: var(--z-color-fg-muted);
-  --puck-color-text-muted: var(--z-color-fg-muted);
-  --puck-color-text-subtle: var(--z-color-fg-muted);
-  --puck-color-text-inverse: var(--z-color-primary-fg);
-  --puck-color-interactive: var(--z-color-primary);
-  --puck-color-interactive-hover: var(--z-color-primary-hover);
-  --puck-color-interactive-subtle: var(--z-color-primary-subtle);
-  --puck-color-interactive-soft: var(--z-color-primary-subtle);
-  --puck-color-interactive-neutral-hover: var(--z-color-bg-muted);
-  --puck-color-focus-ring: var(--z-color-focus-ring);
+  --puck-color-surface: var(--zuvi-color-bg-elevated);
+  --puck-color-surface-muted: var(--zuvi-color-bg-muted);
+  --puck-color-surface-subtle: var(--zuvi-color-bg);
+  --puck-color-border: var(--zuvi-color-border);
+  --puck-color-border-muted: var(--zuvi-color-border-subtle);
+  --puck-color-border-hover: var(--zuvi-color-fg-muted);
+  --puck-color-text: var(--zuvi-color-fg);
+  --puck-color-text-secondary: var(--zuvi-color-fg-muted);
+  --puck-color-text-muted: var(--zuvi-color-fg-muted);
+  --puck-color-text-subtle: var(--zuvi-color-fg-muted);
+  --puck-color-text-inverse: var(--zuvi-color-primary-fg);
+  --puck-color-interactive: var(--zuvi-color-primary);
+  --puck-color-interactive-hover: var(--zuvi-color-primary-hover);
+  --puck-color-interactive-subtle: var(--zuvi-color-primary-subtle);
+  --puck-color-interactive-soft: var(--zuvi-color-primary-subtle);
+  --puck-color-interactive-neutral-hover: var(--zuvi-color-bg-muted);
+  --puck-color-focus-ring: var(--zuvi-color-focus-ring);
 }
 .doc-builder-page .doc-sr-only {
   position: absolute;
@@ -42,8 +42,8 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: var(--z-color-fg-muted);
-  font: 11px var(--z-font-mono);
+  color: var(--zuvi-color-fg-muted);
+  font: 11px var(--zuvi-font-mono);
   letter-spacing: 0.08em;
   margin-bottom: 12px;
 }
@@ -66,9 +66,9 @@
   gap: 8px;
 }
 .doc-builder-workspace {
-  border: 1px solid var(--z-color-border);
+  border: 1px solid var(--zuvi-color-border);
   border-radius: 12px;
-  background: var(--z-color-bg-elevated);
+  background: var(--zuvi-color-bg-elevated);
 }
 .doc-builder-projectbar {
   display: flex;
@@ -88,18 +88,18 @@
 .doc-builder-page-picker > svg {
   width: 16px;
   height: 16px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   flex-shrink: 0;
 }
 .doc-builder-page-picker select {
   min-width: 160px;
   max-width: 260px;
   padding: 8px 26px 8px 8px;
-  border: 1px solid var(--z-color-border);
+  border: 1px solid var(--zuvi-color-border);
   border-radius: 6px;
-  background: var(--z-color-bg);
-  color: var(--z-color-fg);
-  font: 500 13px var(--z-font-sans);
+  background: var(--zuvi-color-bg);
+  color: var(--zuvi-color-fg);
+  font: 500 13px var(--zuvi-font-sans);
   text-overflow: ellipsis;
 }
 .doc-builder-page-actions,
@@ -115,9 +115,9 @@
   min-width: 18px;
   height: 18px;
   padding-inline: 4px;
-  background: var(--z-color-bg-muted);
+  background: var(--zuvi-color-bg-muted);
   border-radius: 4px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 10px;
 }
 .doc-builder-filebar {
@@ -126,7 +126,7 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 10px;
-  border-top: 1px solid var(--z-color-border-subtle);
+  border-top: 1px solid var(--zuvi-color-border-subtle);
   padding: 8px 12px 8px 16px;
 }
 .doc-builder-save-state {
@@ -134,37 +134,37 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 6px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 11px;
 }
 .doc-builder-save-state svg {
   width: 13px;
   height: 13px;
-  color: var(--z-color-success);
+  color: var(--zuvi-color-success);
 }
 .doc-builder-save-state[data-status='error'] svg,
 .doc-builder-save-state[data-status='conflict'] svg,
 .doc-builder-save-state[data-status='corrupt'] svg {
-  color: var(--z-color-danger);
+  color: var(--zuvi-color-danger);
 }
 .doc-builder-save-state > span {
   margin-left: 8px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
 }
 .doc-builder-notice {
   min-height: 1.7em;
   margin: 12px 2px 18px;
   font-size: 11px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   line-height: 1.7;
 }
 .doc-builder-storage-error {
   margin: 0 0 20px;
   padding: 16px;
-  border: 1px solid var(--z-color-warning);
+  border: 1px solid var(--zuvi-color-warning);
   border-radius: 10px;
-  background: var(--z-color-warning-subtle);
-  color: var(--z-color-warning-subtle-fg);
+  background: var(--zuvi-color-warning-subtle);
+  color: var(--zuvi-color-warning-subtle-fg);
   font-size: 13px;
 }
 .doc-builder-storage-error > p {
@@ -180,7 +180,7 @@
   margin-top: 24px;
 }
 .doc-builder-data-details {
-  border: 1px solid var(--z-color-border-subtle);
+  border: 1px solid var(--zuvi-color-border-subtle);
   border-radius: 10px;
   overflow: hidden;
 }
@@ -200,7 +200,7 @@
 .doc-builder-data-details > summary::after {
   content: '+';
   margin-left: auto;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
 }
 .doc-builder-data-details[open] > summary::after {
   content: '−';
@@ -208,10 +208,10 @@
 .doc-builder-data-details > summary > svg {
   width: 16px;
   height: 16px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
 }
 .doc-builder-data-details > summary > span {
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 11px;
 }
 .doc-builder-data-details .doc-builder-json-heading {
@@ -226,7 +226,7 @@
   max-height: 340px;
 }
 .doc-builder-local-note {
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   margin: 16px 0 0;
   font-size: 11px;
   line-height: 1.8;
@@ -234,14 +234,14 @@
 .doc-builder-dialog {
   width: min(760px, calc(100vw - 32px));
 }
-.doc-builder-dialog .z-modal-body {
+.doc-builder-dialog .zuvi-modal-body {
   min-width: 0;
   max-height: 70vh;
   overflow-y: auto;
 }
 .doc-builder-dialog-intro {
   margin: 0 0 20px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 13px;
   line-height: 1.7;
 }
@@ -254,17 +254,17 @@
   min-width: 0;
   padding: 0 0 16px;
   text-align: left;
-  border: 1px solid var(--z-color-border);
+  border: 1px solid var(--zuvi-color-border);
   border-radius: 12px;
-  background: var(--z-color-bg);
-  color: var(--z-color-fg);
+  background: var(--zuvi-color-bg);
+  color: var(--zuvi-color-fg);
   font: inherit;
   overflow: hidden;
   cursor: pointer;
 }
 .doc-builder-templates > button:hover {
-  border-color: var(--z-color-primary);
-  background: var(--z-color-bg-muted);
+  border-color: var(--zuvi-color-primary);
+  background: var(--zuvi-color-bg-muted);
 }
 .doc-builder-template-art {
   position: relative;
@@ -274,34 +274,34 @@
   height: 120px;
   margin-bottom: 16px;
   padding: 22px;
-  background: var(--z-color-bg-muted);
-  border-bottom: 1px solid var(--z-color-border-subtle);
+  background: var(--zuvi-color-bg-muted);
+  border-bottom: 1px solid var(--zuvi-color-border-subtle);
 }
 .doc-builder-template-art > span {
   position: absolute;
   top: 12px;
   right: 16px;
-  color: var(--z-color-fg-muted);
-  font: 10px var(--z-font-mono);
+  color: var(--zuvi-color-fg-muted);
+  font: 10px var(--zuvi-font-mono);
 }
 .doc-builder-template-art > i {
   display: block;
   width: 72%;
   height: 8px;
   border-radius: 3px;
-  background: var(--z-color-border);
+  background: var(--zuvi-color-border);
 }
 .doc-builder-template-art > i:first-of-type {
   width: 48%;
   height: 14px;
-  background: var(--z-color-primary);
+  background: var(--zuvi-color-primary);
   opacity: 0.6;
 }
 .doc-builder-template-art > i:last-of-type {
   width: 38%;
 }
 .doc-builder-template-art[data-template='product'] {
-  background: var(--z-color-primary-subtle);
+  background: var(--zuvi-color-primary-subtle);
 }
 .doc-builder-template-art[data-template='contact'] {
   grid-template-columns: 1fr 1fr;
@@ -309,13 +309,13 @@
 .doc-builder-template-art[data-template='contact'] > i {
   width: 100%;
   height: 20px;
-  background: var(--z-color-bg);
-  border: 1px solid var(--z-color-border);
+  background: var(--zuvi-color-bg);
+  border: 1px solid var(--zuvi-color-border);
 }
 .doc-builder-template-art[data-template='contact'] > i:last-of-type {
   width: 100%;
   height: 12px;
-  background: var(--z-color-primary);
+  background: var(--zuvi-color-primary);
   opacity: 0.5;
 }
 .doc-builder-template-art[data-template='project'] {
@@ -327,7 +327,7 @@
 }
 .doc-builder-template-art[data-template='blank'] {
   place-content: center;
-  background-image: radial-gradient(var(--z-color-border) 1px, transparent 1px);
+  background-image: radial-gradient(var(--zuvi-color-border) 1px, transparent 1px);
   background-size: 12px 12px;
 }
 .doc-builder-template-art[data-template='blank'] > i {
@@ -341,8 +341,8 @@
   margin: 0 16px;
 }
 .doc-builder-templates > button > small {
-  color: var(--z-color-fg-muted);
-  font: 10px var(--z-font-mono);
+  color: var(--zuvi-color-fg-muted);
+  font: 10px var(--zuvi-font-mono);
   letter-spacing: 0.04em;
 }
 .doc-builder-templates > button > strong {
@@ -353,12 +353,12 @@
 .doc-builder-templates > button > p {
   margin-top: 8px;
   font-size: 12px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   line-height: 1.8;
 }
 .doc-builder-template-action {
   margin-top: 16px;
-  color: var(--z-color-primary);
+  color: var(--zuvi-color-primary);
   font-size: 12px;
 }
 .doc-builder-dialog form > label {
@@ -378,7 +378,7 @@
   gap: 16px;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid var(--z-color-border-subtle);
+  border: 1px solid var(--zuvi-color-border-subtle);
   border-radius: 8px;
   padding: 14px;
 }
@@ -391,7 +391,7 @@
 }
 .doc-builder-history time,
 .doc-builder-history small {
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 11px;
 }
 .doc-builder-history-empty {
@@ -402,7 +402,7 @@
   text-align: center;
 }
 .doc-builder-history-empty > svg {
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   width: 28px;
   height: 28px;
 }
@@ -411,7 +411,7 @@
 }
 .doc-builder-history-empty > p {
   margin: 0;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 12px;
 }
 .doc-builder-preview-dialog {
@@ -426,12 +426,12 @@
   align-items: center;
   gap: 12px;
   padding: 12px 20px;
-  border-block: 1px solid var(--z-color-border-subtle);
+  border-block: 1px solid var(--zuvi-color-border-subtle);
 }
 .doc-builder-preview-toolbar > p {
   margin: 0;
   font-size: 11px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
 }
 .doc-builder-preview-toolbar > div {
   display: flex;
@@ -441,20 +441,20 @@
   border: 0;
   border-radius: 6px;
   padding: 6px 12px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   background: transparent;
   font: inherit;
   font-size: 12px;
   cursor: pointer;
 }
 .doc-builder-preview-toolbar > div > button[aria-pressed='true'] {
-  background: var(--z-color-bg-muted);
-  color: var(--z-color-fg);
+  background: var(--zuvi-color-bg-muted);
+  color: var(--zuvi-color-fg);
 }
 .doc-builder-preview-stage {
   display: flex;
   justify-content: center;
-  background: var(--z-color-bg-muted);
+  background: var(--zuvi-color-bg-muted);
   padding: 16px;
   min-height: 0;
 }
@@ -463,14 +463,14 @@
   width: 100%;
   height: min(680px, calc(100dvh - 220px));
   min-height: 240px;
-  border: 1px solid var(--z-color-border);
-  background: var(--z-color-bg);
+  border: 1px solid var(--zuvi-color-border);
+  background: var(--zuvi-color-bg);
   border-radius: 6px;
 }
 .doc-builder-page :is(select, summary):focus-visible,
 .doc-builder-dialog button:focus-visible,
 .doc-builder-preview-toolbar button:focus-visible {
-  outline: 2px solid var(--z-color-primary);
+  outline: 2px solid var(--zuvi-color-primary);
   outline-offset: 3px;
 }
 @container builder-page (max-width: 900px) {
@@ -529,7 +529,7 @@
   .doc-builder-template-art {
     height: 100px;
   }
-  .doc-builder-dialog .z-modal-body {
+  .doc-builder-dialog .zuvi-modal-body {
     max-height: 65vh;
   }
   .doc-builder-preview-stage {

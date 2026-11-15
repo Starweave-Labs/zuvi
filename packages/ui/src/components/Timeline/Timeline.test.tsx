@@ -15,7 +15,7 @@ describe('Timeline', () => {
     render(<Timeline items={ITEMS} />);
     const root = screen.getByRole('list');
     expect(root).toHaveAttribute('data-part', 'root');
-    expect(root).toHaveClass('z-timeline');
+    expect(root).toHaveClass('zuvi-timeline');
     const items = screen.getAllByRole('listitem');
     expect(items).toHaveLength(3);
     items.forEach((item) => expect(item).toHaveAttribute('data-part', 'item'));
@@ -84,12 +84,12 @@ describe('Timeline', () => {
       />
     );
     const root = document.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-timeline', 'my-tl', 'r');
+    expect(root).toHaveClass('zuvi-timeline', 'my-tl', 'r');
     const item = root.querySelector('[data-part="item"]') as HTMLElement;
-    expect(item).toHaveClass('z-timeline-item', 'i');
-    expect(item.querySelector('[data-part="dot"]')).toHaveClass('z-timeline-dot', 'd');
-    expect(item.querySelector('[data-part="label"]')).toHaveClass('z-timeline-label', 'l');
-    expect(item.querySelector('[data-part="content"]')).toHaveClass('z-timeline-content', 'c');
+    expect(item).toHaveClass('zuvi-timeline-item', 'i');
+    expect(item.querySelector('[data-part="dot"]')).toHaveClass('zuvi-timeline-dot', 'd');
+    expect(item.querySelector('[data-part="label"]')).toHaveClass('zuvi-timeline-label', 'l');
+    expect(item.querySelector('[data-part="content"]')).toHaveClass('zuvi-timeline-content', 'c');
   });
 
   it('forwards native props (aria-label / data-*) to root', () => {

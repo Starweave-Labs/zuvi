@@ -1,22 +1,22 @@
-# @zui/i18n
+# @zuvi/i18n
 
-> v0.4.0 发布到 GitHub Packages：`@yeyouyuan/zui-i18n`，npmjs 暂不发布。先在项目 `.npmrc` 配置 `@yeyouyuan:registry=https://npm.pkg.github.com`，再用拥有包读取权限的 GitHub 账号登录。
+> v0.4.0 发布到 GitHub Packages：`@yeyouyuan/zuvi-i18n`，npmjs 暂不发布。先在项目 `.npmrc` 配置 `@yeyouyuan:registry=https://npm.pkg.github.com`，再用拥有包读取权限的 GitHub 账号登录。
 
 ```bash
 npm login --scope=@yeyouyuan --auth-type=legacy --registry=https://npm.pkg.github.com
-pnpm add @zui/i18n@npm:@yeyouyuan/zui-i18n@0.4.0
+pnpm add @zuvi/i18n@npm:@yeyouyuan/zuvi-i18n@0.4.0
 ```
 
-源码导入继续使用 `@zui/i18n`。完整认证和安装说明见仓库 [GitHub Packages 文档](https://github.com/yeyouyuan/zui/blob/main/docs/GITHUB-PACKAGES.md)。
+源码导入继续使用 `@zuvi/i18n`。完整认证和安装说明见仓库 [GitHub Packages 文档](https://github.com/yeyouyuan/zuvi/blob/main/docs/GITHUB-PACKAGES.md)。
 
-ZUI 组件内置文案自动翻译。标准语言请优先使用 `ConfigProvider locale={enUS}` 等静态语言包；运行时翻译适合尚无语言包的语种或动态文案。支持 4 种 provider、localStorage 缓存，失败回退原文。
+ZUVI 组件内置文案自动翻译。标准语言请优先使用 `ConfigProvider locale={enUS}` 等静态语言包；运行时翻译适合尚无语言包的语种或动态文案。支持 4 种 provider、localStorage 缓存，失败回退原文。
 
 对应契约：`CONTRACTS-V3.md` §2「AI 翻译组」。
 
 ## 安装
 
 ```bash
-pnpm add @zui/i18n@npm:@yeyouyuan/zui-i18n@0.4.0
+pnpm add @zuvi/i18n@npm:@yeyouyuan/zuvi-i18n@0.4.0
 ```
 
 `react ^19` 为 peer 依赖。
@@ -37,7 +37,7 @@ interface TranslateConfig {
   sourceLang?: string; // 默认 'zh'
   targetLang: string; // 必填，如 'en'
   cache?: boolean; // 默认 true，localStorage
-  cacheKey?: string; // 默认 'zui-translate-cache'
+  cacheKey?: string; // 默认 'zuvi-translate-cache'
 }
 
 function useAutoTranslate(config: TranslateConfig): {
@@ -94,7 +94,7 @@ function useAutoTranslate(config: TranslateConfig): {
 独立使用 Hook 时也可通过自定义服务端批量翻译接口：
 
 ```tsx
-import { useAutoTranslate } from '@zui/i18n';
+import { useAutoTranslate } from '@zuvi/i18n';
 
 function MyComponent() {
   const { tSync } = useAutoTranslate({
@@ -124,7 +124,7 @@ function MyComponent() {
 
 ## 缓存
 
-- localStorage，条目名默认 `zui-translate-cache`。
+- localStorage，条目名默认 `zuvi-translate-cache`。
 - 缓存 key 包含源/目标语言、provider、baseURL、端点、模型、凭据和原文及组件/角色上下文（FNV-1a 32 位，8 位 hex）。不同密钥不会共用译文；localStorage 只保存哈希键，不保存明文凭据。旧版缓存会自然失效。
 - 模板文案会校验 `{year}`、`{min}` 等变量；译文缺失、增加或改名变量时回退原文，不缓存损坏的译文。
 - 同一渲染批次的待译文案合并为一次 provider 调用；OpenAI 适配器保留每条文案的组件上下文，并将独立请求的并发量限制为 3。有道适配器仍按接口逐条发送请求。

@@ -1,7 +1,7 @@
 'use client';
 
-// @zui/blocks 公共导出 —— 16 个页面级业务区块
-// 样式由使用方引入：import '@zui/react/styles.css'
+// @zuvi/blocks 公共导出 —— 16 个页面级业务区块
+// 样式由使用方引入：import '@zuvi/react/styles.css'
 
 export { LoginBlock } from './login/index.js';
 export type { LoginBlockProps, LoginBlockValues } from './login/index.js';

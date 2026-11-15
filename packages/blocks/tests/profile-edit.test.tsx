@@ -10,18 +10,18 @@ describe('profile-edit block', () => {
   it('renders the grid form with labeled fields, tenure range and avatar upload', () => {
     const { container } = render(<ProfileEditBlock values={DEMO_PROFILE} tenure={DEMO_TENURE} />);
     // 栅格布局
-    expect(container.querySelector('.z-row')).toBeInTheDocument();
-    expect(container.querySelector('.z-col')).toBeInTheDocument();
+    expect(container.querySelector('.zuvi-row')).toBeInTheDocument();
+    expect(container.querySelector('.zuvi-col')).toBeInTheDocument();
     // 表单字段与 label 关联
     expect(screen.getByLabelText('姓名')).toHaveValue('林小满');
     expect(screen.getByLabelText('昵称')).toHaveValue('小满');
     expect(screen.getByLabelText('邮箱')).toHaveValue('xiaoman.lin@example.com');
-    expect(screen.getByLabelText('个人简介')).toHaveValue('负责 ZUI 组件库与设计系统工程化建设。');
+    expect(screen.getByLabelText('个人简介')).toHaveValue('负责 ZUVI 组件库与设计系统工程化建设。');
     // 任职时间 + 头像上传
     expect(screen.getByText('任职时间')).toBeInTheDocument();
-    expect(container.querySelector('.z-daterange')).toBeInTheDocument();
+    expect(container.querySelector('.zuvi-daterange')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '点击上传' })).toBeInTheDocument();
-    expect(container.querySelector('.z-avatar')).toBeInTheDocument();
+    expect(container.querySelector('.zuvi-avatar')).toBeInTheDocument();
   });
 
   it('reports field edits through onChange', async () => {

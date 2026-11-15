@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { Modal } from '../Modal';
-import { useZuiConfig } from '../../config';
+import { useZuviConfig } from '../../config';
 import { cx, useControllableState } from '../../utils';
 import './CommandPalette.css';
 
@@ -302,7 +302,7 @@ function isProductionRuntime(): boolean {
 }
 
 function warnInDevelopment(message: string): void {
-  if (!isProductionRuntime()) console.warn(`[ZUI CommandPalette] ${message}`);
+  if (!isProductionRuntime()) console.warn(`[ZUVI CommandPalette] ${message}`);
 }
 
 function normalizeSearchText(value: string): string {
@@ -354,7 +354,7 @@ function createSelectEvent(
 /* --------------------------------- 组件实现 -------------------------------- */
 
 function CommandPalette(props: CommandPaletteProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const {
     commands,
     open: openProp,
@@ -648,7 +648,7 @@ function CommandPalette(props: CommandPaletteProps) {
         size="lg"
         aria-label={ariaLabelledBy ? undefined : dialogLabel}
         aria-labelledby={ariaLabelledBy}
-        className={cx('z-command-palette-dialog', classNames.dialog)}
+        className={cx('zuvi-command-palette-dialog', classNames.dialog)}
         restoreFocus={restoreFocus}
         returnFocusRef={returnFocusRef}
         onEscapeKeyDown={(event) => {
@@ -662,14 +662,14 @@ function CommandPalette(props: CommandPaletteProps) {
           data-part="root"
           data-open={open ? '' : undefined}
           data-loading={loading ? '' : undefined}
-          className={cx('z-command-palette', className, classNames.root)}
+          className={cx('zuvi-command-palette', className, classNames.root)}
         >
           <input
             data-part="input"
             data-autofocus
             type="text"
             role="combobox"
-            className={cx('z-command-palette-input', classNames.input)}
+            className={cx('zuvi-command-palette-input', classNames.input)}
             value={query}
             placeholder={placeholderText}
             aria-label={inputLabel}
@@ -696,7 +696,7 @@ function CommandPalette(props: CommandPaletteProps) {
             role="listbox"
             aria-busy={loading}
             data-part="listbox"
-            className={cx('z-command-palette-listbox', classNames.listbox)}
+            className={cx('zuvi-command-palette-listbox', classNames.listbox)}
           >
             {sections.map((section) => {
               const items = section.records.map((record) => {
@@ -718,7 +718,7 @@ function CommandPalette(props: CommandPaletteProps) {
                     data-key={command.key}
                     data-active={active ? '' : undefined}
                     data-disabled={record.disabled ? '' : undefined}
-                    className={cx('z-command-palette-option', classNames.option)}
+                    className={cx('zuvi-command-palette-option', classNames.option)}
                     onPointerEnter={(event) => {
                       if (
                         !record.disabled &&
@@ -736,14 +736,14 @@ function CommandPalette(props: CommandPaletteProps) {
                       <span
                         data-part="option-icon"
                         aria-hidden="true"
-                        className={cx('z-command-palette-option-icon', classNames.optionIcon)}
+                        className={cx('zuvi-command-palette-option-icon', classNames.optionIcon)}
                       >
                         {command.icon}
                       </span>
                     ) : null}
                     <span
                       data-part="option-label"
-                      className={cx('z-command-palette-option-label', classNames.optionLabel)}
+                      className={cx('zuvi-command-palette-option-label', classNames.optionLabel)}
                     >
                       {command.label}
                     </span>
@@ -753,7 +753,7 @@ function CommandPalette(props: CommandPaletteProps) {
                         aria-hidden="true"
                         dir="ltr"
                         className={cx(
-                          'z-command-palette-option-shortcut',
+                          'zuvi-command-palette-option-shortcut',
                           classNames.optionShortcut
                         )}
                       >
@@ -774,12 +774,12 @@ function CommandPalette(props: CommandPaletteProps) {
                   role="group"
                   aria-labelledby={groupId}
                   data-part="group"
-                  className={cx('z-command-palette-group', classNames.group)}
+                  className={cx('zuvi-command-palette-group', classNames.group)}
                 >
                   <div
                     id={groupId}
                     data-part="group-label"
-                    className={cx('z-command-palette-group-label', classNames.groupLabel)}
+                    className={cx('zuvi-command-palette-group-label', classNames.groupLabel)}
                   >
                     {section.label}
                   </div>
@@ -793,16 +793,16 @@ function CommandPalette(props: CommandPaletteProps) {
             aria-live="polite"
             aria-atomic="true"
             data-part="status"
-            className={cx('z-command-palette-status', classNames.status)}
+            className={cx('zuvi-command-palette-status', classNames.status)}
           >
             <span
               data-part={loading ? 'loading' : visibleRecords.length === 0 ? 'empty' : 'results'}
               className={cx(
-                loading && 'z-command-palette-loading',
+                loading && 'zuvi-command-palette-loading',
                 loading && classNames.loading,
-                !loading && visibleRecords.length === 0 && 'z-command-palette-empty',
+                !loading && visibleRecords.length === 0 && 'zuvi-command-palette-empty',
                 !loading && visibleRecords.length === 0 && classNames.empty,
-                !loading && visibleRecords.length > 0 && 'z-command-palette-results'
+                !loading && visibleRecords.length > 0 && 'zuvi-command-palette-results'
               )}
             >
               {statusContent}

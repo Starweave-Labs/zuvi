@@ -1,7 +1,7 @@
 {
-  "name": "@zui/blocks",
-  "version": "0.5.0",
-  "description": "ZUI 业务区块：16 个覆盖数据展示、表单账户与系统管理的 React 页面级区块",
+  "name": "@zuvi/blocks",
+  "version": "1.0.0",
+  "description": "ZUVI 业务区块：16 个覆盖数据展示、表单账户与系统管理的 React 页面级区块",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -106,6 +106,6 @@
     "vitest": "^2.1.8"
   },
   "dependencies": {
-    "@zui/react": "workspace:*"
+    "@zuvi/react": "workspace:*"
   }
 }

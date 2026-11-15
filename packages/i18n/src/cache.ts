@@ -25,7 +25,7 @@ export interface TranslationCache {
 /* --------------------------------- 常量 ---------------------------------- */
 
 /** 默认 localStorage key（契约默认值） */
-export const DEFAULT_CACHE_KEY = 'zui-translate-cache';
+export const DEFAULT_CACHE_KEY = 'zuvi-translate-cache';
 
 /** 最多缓存条数（超出按插入序淘汰最旧，防止 localStorage 超额） */
 export const MAX_CACHE_ENTRIES = 500;
@@ -71,7 +71,7 @@ export function resolveCacheStorage(): TranslationCacheStorage {
     const ls = globalThis.localStorage;
     if (ls) {
       // 探测可写：Safari 隐私模式 getItem/setItem 会抛错
-      const probe = '__zui_i18n_probe__';
+      const probe = '__zuvi_i18n_probe__';
       ls.setItem(probe, '1');
       ls.removeItem(probe);
       return ls;
@@ -86,7 +86,7 @@ export function resolveCacheStorage(): TranslationCacheStorage {
 
 /**
  * 创建翻译缓存。
- * @param cacheKey localStorage 条目名（默认 'zui-translate-cache'）
+ * @param cacheKey localStorage 条目名（默认 'zuvi-translate-cache'）
  * @param storage 自定义存储（测试可注入；缺省自动取 localStorage，退化内存 Map）
  */
 export function createTranslationCache(

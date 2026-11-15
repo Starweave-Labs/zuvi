@@ -12,7 +12,7 @@ import {
   Select,
   Switch,
   Tag,
-} from '@zui/react';
+} from '@zuvi/react';
 
 /* ---------------------------------- 类型 ---------------------------------- */
 
@@ -52,16 +52,16 @@ export interface FormPageBlockProps {
 
 const labelStyle: React.CSSProperties = {
   display: 'block',
-  fontSize: 'var(--z-text-sm)',
-  fontWeight: 'var(--z-weight-medium)',
-  color: 'var(--z-color-fg)',
-  marginBottom: 'var(--z-space-2)',
+  fontSize: 'var(--zuvi-text-sm)',
+  fontWeight: 'var(--zuvi-weight-medium)',
+  color: 'var(--zuvi-color-fg)',
+  marginBottom: 'var(--zuvi-space-2)',
 };
 
 const hintStyle: React.CSSProperties = {
-  marginTop: 'var(--z-space-2)',
-  fontSize: 'var(--z-text-xs)',
-  color: 'var(--z-color-fg-subtle)',
+  marginTop: 'var(--zuvi-space-2)',
+  fontSize: 'var(--zuvi-text-xs)',
+  color: 'var(--zuvi-color-fg-subtle)',
 };
 
 function Field({
@@ -130,22 +130,22 @@ export function FormPageBlock({
       data-part="root"
       className={[className, classNames?.root].filter(Boolean).join(' ') || undefined}
       style={{
-        padding: 'clamp(var(--z-space-3), 3vw, var(--z-space-6))',
-        background: 'var(--z-color-bg-muted)',
+        padding: 'clamp(var(--zuvi-space-3), 3vw, var(--zuvi-space-6))',
+        background: 'var(--zuvi-color-bg-muted)',
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
-        gap: 'var(--z-space-4)',
+        gap: 'var(--zuvi-space-4)',
         ...style,
       }}
     >
       {/* 页头 */}
-      <header style={{ display: 'flex', alignItems: 'center', gap: 'var(--z-space-3)', flexWrap: 'wrap' }}>
-        <h1 style={{ margin: 0, fontSize: 'var(--z-text-xl)', fontWeight: 'var(--z-weight-semibold)', color: 'var(--z-color-fg)' }}>
+      <header style={{ display: 'flex', alignItems: 'center', gap: 'var(--zuvi-space-3)', flexWrap: 'wrap' }}>
+        <h1 style={{ margin: 0, fontSize: 'var(--zuvi-text-xl)', fontWeight: 'var(--zuvi-weight-semibold)', color: 'var(--zuvi-color-fg)' }}>
           {title}
         </h1>
         <Tag color={mode === 'edit' ? 'warning' : 'primary'}>{mode === 'edit' ? '编辑' : '新建'}</Tag>
-        <span style={{ fontSize: 'var(--z-text-sm)', color: 'var(--z-color-fg-muted)' }}>{subtitle}</span>
+        <span style={{ fontSize: 'var(--zuvi-text-sm)', color: 'var(--zuvi-color-fg-muted)' }}>{subtitle}</span>
       </header>
 
       <Form initialValues={{ ...values }} onFinish={(fields) => {
@@ -165,7 +165,7 @@ export function FormPageBlock({
             style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))',
-              gap: 'var(--z-space-5)',
+              gap: 'var(--zuvi-space-5)',
             }}
           >
             <Field name="name" label="项目名称" required>
@@ -250,12 +250,12 @@ export function FormPageBlock({
         </Card>
 
         {/* 联系方式 */}
-        <Card title="联系方式" className={classNames?.section} style={{ marginTop: 'var(--z-space-4)' }}>
+        <Card title="联系方式" className={classNames?.section} style={{ marginTop: 'var(--zuvi-space-4)' }}>
           <div
             style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))',
-              gap: 'var(--z-space-5)',
+              gap: 'var(--zuvi-space-5)',
             }}
           >
             <Field name="phone" label="联系电话">
@@ -282,7 +282,7 @@ export function FormPageBlock({
             </Field>
           </div>
 
-          <div style={{ marginTop: 'var(--z-space-5)' }}>
+          <div style={{ marginTop: 'var(--zuvi-space-5)' }}>
             <Field name="description" label="项目描述" hint="简要描述项目背景与目标，不超过 500 字">
               <textarea
 
@@ -294,13 +294,13 @@ export function FormPageBlock({
                 style={{
                   width: '100%',
                   boxSizing: 'border-box',
-                  padding: 'var(--z-space-3) var(--z-space-4)',
-                  fontSize: 'var(--z-text-md)',
-                  lineHeight: 'var(--z-leading-normal)',
-                  color: 'var(--z-color-fg)',
-                  background: 'var(--z-color-bg-elevated)',
-                  border: '1px solid var(--z-color-border)',
-                  borderRadius: 'var(--z-radius-md)',
+                  padding: 'var(--zuvi-space-3) var(--zuvi-space-4)',
+                  fontSize: 'var(--zuvi-text-md)',
+                  lineHeight: 'var(--zuvi-leading-normal)',
+                  color: 'var(--zuvi-color-fg)',
+                  background: 'var(--zuvi-color-bg-elevated)',
+                  border: '1px solid var(--zuvi-color-border)',
+                  borderRadius: 'var(--zuvi-radius-md)',
                   resize: 'vertical',
                   fontFamily: 'inherit',
                 }}
@@ -310,11 +310,11 @@ export function FormPageBlock({
         </Card>
 
         {/* 通知与状态 */}
-        <Card title="通知与状态" className={classNames?.section} style={{ marginTop: 'var(--z-space-4)' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--z-space-4)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--z-space-4)' }}>
+        <Card title="通知与状态" className={classNames?.section} style={{ marginTop: 'var(--zuvi-space-4)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--zuvi-space-4)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--zuvi-space-4)' }}>
               <div>
-                <div style={{ fontSize: 'var(--z-text-sm)', color: 'var(--z-color-fg)' }}>进度通知</div>
+                <div style={{ fontSize: 'var(--zuvi-text-sm)', color: 'var(--zuvi-color-fg)' }}>进度通知</div>
                 <div style={hintStyle}>项目状态变化时通过邮件通知相关成员</div>
               </div>
               <Switch
@@ -324,9 +324,9 @@ export function FormPageBlock({
               />
             </div>
             <Divider style={{ margin: 0 }} />
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--z-space-4)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--zuvi-space-4)' }}>
               <div>
-                <div style={{ fontSize: 'var(--z-text-sm)', color: 'var(--z-color-fg)' }}>立即启用</div>
+                <div style={{ fontSize: 'var(--zuvi-text-sm)', color: 'var(--zuvi-color-fg)' }}>立即启用</div>
                 <div style={hintStyle}>关闭后项目以草稿状态保存</div>
               </div>
               <Switch
@@ -352,14 +352,14 @@ export function FormPageBlock({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'flex-end',
-            gap: 'var(--z-space-3)',
-            marginTop: 'var(--z-space-5)',
-            padding: 'var(--z-space-4) var(--z-space-5)',
-            background: 'var(--z-color-bg-elevated)',
-            borderRadius: 'var(--z-radius-md)',
-            border: '1px solid var(--z-color-border-subtle)',
+            gap: 'var(--zuvi-space-3)',
+            marginTop: 'var(--zuvi-space-5)',
+            padding: 'var(--zuvi-space-4) var(--zuvi-space-5)',
+            background: 'var(--zuvi-color-bg-elevated)',
+            borderRadius: 'var(--zuvi-radius-md)',
+            border: '1px solid var(--zuvi-color-border-subtle)',
             position: 'sticky',
-            bottom: 'var(--z-space-4)',
+            bottom: 'var(--zuvi-space-4)',
           }}
         >
           <Button type="button" variant="outline" onClick={onCancel}>

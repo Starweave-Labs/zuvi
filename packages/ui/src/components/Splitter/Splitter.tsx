@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useZuiConfig } from '../../config';
+import { useZuviConfig } from '../../config';
 import { cx } from '../../utils';
 import './Splitter.css';
 
@@ -317,7 +317,7 @@ function formatTemplate(template: string, values: Record<string, string>): strin
 function gridTemplate(sizes: readonly number[]): string {
   const tracks: string[] = [];
   sizes.forEach((size, index) => {
-    if (index > 0) tracks.push('var(--z-splitter-handle-size)');
+    if (index > 0) tracks.push('var(--zuvi-splitter-handle-size)');
     tracks.push(`${Math.max(0, size)}fr`);
   });
   const value = tracks.join(' ');
@@ -387,7 +387,7 @@ function Splitter({
   style,
   ...rootProps
 }: SplitterProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const rootId = React.useId();
   const rootRef = React.useRef<HTMLDivElement | null>(null);
   const handleRefs = React.useRef(new Map<number, HTMLDivElement>());
@@ -509,7 +509,7 @@ function Splitter({
   const warn = React.useCallback((message: string) => {
     if (isProductionRuntime() || warned.current.has(message)) return;
     warned.current.add(message);
-    console.warn(`[ZUI Splitter] ${message}`);
+    console.warn(`[ZUVI Splitter] ${message}`);
   }, []);
 
   React.useEffect(() => {
@@ -822,7 +822,7 @@ function Splitter({
       tabIndex={tabIndex}
       data-part="root"
       data-orientation={orientation}
-      className={cx('z-splitter', vertical && 'z-splitter--vertical', className, classNames.root)}
+      className={cx('zuvi-splitter', vertical && 'zuvi-splitter--vertical', className, classNames.root)}
       style={rootStyle}
       onFocusCapture={(event) => {
         onFocusCapture?.(event);
@@ -858,7 +858,7 @@ function Splitter({
             data-part="panel"
             data-panel-key={panel.key}
             data-collapsed={collapsed ? 'true' : 'false'}
-            className={cx('z-splitter-panel', panelClassName, panelClassNames.root)}
+            className={cx('zuvi-splitter-panel', panelClassName, panelClassNames.root)}
             style={panelStyle}
           >
             <div
@@ -869,7 +869,7 @@ function Splitter({
               data-part="content"
               inert={collapsed ? true : undefined}
               aria-hidden={collapsed || undefined}
-              className={cx('z-splitter-content', panelClassNames.content)}
+              className={cx('zuvi-splitter-content', panelClassNames.content)}
             >
               {panelChildren}
             </div>
@@ -927,7 +927,7 @@ function Splitter({
             aria-valuenow={Math.round(actualSizes[panelIndex])}
             aria-labelledby={labelledBy}
             aria-label={labelledBy ? undefined : (explicitLabel ?? defaultLabel)}
-            className={cx('z-splitter-handle', classNames.handle, handleClassName)}
+            className={cx('zuvi-splitter-handle', classNames.handle, handleClassName)}
             onPointerDown={(event) => {
               onPointerDown?.(event);
               if (
@@ -1072,7 +1072,7 @@ function Splitter({
             <span
               data-part="handle-indicator"
               aria-hidden="true"
-              className={cx('z-splitter-handle-indicator', classNames.handleIndicator)}
+              className={cx('zuvi-splitter-handle-indicator', classNames.handleIndicator)}
             />
           </div>
         );

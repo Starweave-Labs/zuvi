@@ -50,7 +50,7 @@ export function validateTokens(value: unknown): BuilderToken[] {
   });
 }
 export const tokenVariable = (token: BuilderToken) =>
-  token.type === 'color' ? `--z-color-token-${token.key}` : `--z-token-${token.type}-${token.key}`;
+  token.type === 'color' ? `--zuvi-color-token-${token.key}` : `--zuvi-token-${token.type}-${token.key}`;
 export const tokenReference = (token: BuilderToken) => `var(${tokenVariable(token)})`;
 export const tokenStyles = (tokens: BuilderToken[] = []): CSSProperties =>
   Object.fromEntries(

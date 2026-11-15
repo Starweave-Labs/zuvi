@@ -40,7 +40,7 @@ describe('Combobox 渲染与 ARIA', () => {
     expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
 
     const root = container.querySelector('[data-part="root"]');
-    expect(root).toHaveClass('z-combobox', 'custom-root', 'slot-root');
+    expect(root).toHaveClass('zuvi-combobox', 'custom-root', 'slot-root');
     expect(root).toHaveAttribute('data-size', 'lg');
     expect(root).toHaveAttribute('data-status', 'error');
     expect(container.querySelector('[data-part="control"]')).toHaveClass('slot-control');

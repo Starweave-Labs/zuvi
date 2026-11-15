@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, CommandPalette, MessageProvider, useMessage, type CommandPaletteCommand } from '@zui/react';
+import { Button, CommandPalette, MessageProvider, useMessage, type CommandPaletteCommand } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import Demo from '../../components/Demo';

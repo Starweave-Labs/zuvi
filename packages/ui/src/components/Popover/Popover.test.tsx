@@ -208,7 +208,7 @@ describe('Popover 关闭方式', () => {
     await user.keyboard('{Escape}');
     expect(screen.getByRole('dialog', { name: '弹窗标题' })).toHaveAttribute('data-state', 'open');
     await waitFor(() => expect(screen.getAllByRole('dialog')).toHaveLength(1));
-    expect(screen.getByRole('dialog')).toHaveClass('z-modal');
+    expect(screen.getByRole('dialog')).toHaveClass('zuvi-modal');
   });
   it('Esc 关闭并回调 onOpenChange(false)', async () => {
     const user = userEvent.setup();
@@ -379,9 +379,9 @@ describe('Popover.Trigger asChild 与定制出口', () => {
     await user.click(screen.getByTestId('trigger'));
 
     const content = screen.getByRole('dialog');
-    expect(content).toHaveClass('z-popover', 'my-popover', 'slot-content');
+    expect(content).toHaveClass('zuvi-popover', 'my-popover', 'slot-content');
 
     const root = container.querySelector('[data-part="root"]');
-    expect(root).toHaveClass('z-popover-root');
+    expect(root).toHaveClass('zuvi-popover-root');
   });
 });

@@ -11,10 +11,10 @@ function getRoot(container: HTMLElement): HTMLElement {
 }
 
 describe('Row', () => {
-  it('renders default row with z-row class and default data attributes', () => {
+  it('renders default row with zuvi-row class and default data attributes', () => {
     const { container } = render(<Row>内容</Row>);
     const root = getRoot(container);
-    expect(root).toHaveClass('z-row');
+    expect(root).toHaveClass('zuvi-row');
     expect(root).toHaveAttribute('data-justify', 'start');
     expect(root).toHaveAttribute('data-align', 'top');
     expect(root).toHaveAttribute('data-wrap', 'true');
@@ -44,7 +44,7 @@ describe('Row', () => {
       </Row>,
     );
     const col = container.querySelector('[data-testid="col"]') as HTMLElement;
-    expect(col).toHaveClass('z-col');
+    expect(col).toHaveClass('zuvi-col');
     expect(col.style.paddingInline).toBe('8px');
     // 垂直 gutter 只作用于 Row 的 row-gap，Col 不产生垂直 padding
     const { container: c2 } = render(
@@ -101,7 +101,7 @@ describe('Row', () => {
     const { container } = render(
       <Row className="my-row" classNames={{ root: 'extra-row' }} />,
     );
-    expect(getRoot(container)).toHaveClass('z-row', 'my-row', 'extra-row');
+    expect(getRoot(container)).toHaveClass('zuvi-row', 'my-row', 'extra-row');
   });
 
   it('forwards ref and passes native props through to the root element', () => {
@@ -117,7 +117,7 @@ describe('Row', () => {
       />,
     );
     expect(ref.current).toBeInstanceOf(HTMLDivElement);
-    expect(ref.current).toHaveClass('z-row');
+    expect(ref.current).toHaveClass('zuvi-row');
     expect(getRoot(container)).toHaveAttribute('id', 'my-row');
     expect(getRoot(container)).toHaveAttribute('aria-label', '栅格');
     // 用户 style 与 gutter 内联样式合并（用户值后展开）

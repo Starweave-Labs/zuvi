@@ -120,7 +120,7 @@ test('DOCX roundtrip keeps headings, rich text, link, hard/page breaks and page 
         { type: 'hardBreak' },
         text('下一行'),
         text('官网', [
-          { type: 'link', attrs: { href: 'https://zui.test/docs?lang=zh&view=word' } },
+          { type: 'link', attrs: { href: 'https://zuvi.test/docs?lang=zh&view=word' } },
         ]),
       ],
     },
@@ -153,7 +153,7 @@ test('DOCX roundtrip keeps headings, rich text, link, hard/page breaks and page 
   assert.equal(attrs(marked, 'textStyle').backgroundColor, '#ffff00');
   assert.equal(
     attrs(findText(restored.content, '官网'), 'link').href,
-    'https://zui.test/docs?lang=zh&view=word'
+    'https://zuvi.test/docs?lang=zh&view=word'
   );
   const paragraph = find(restored.content, 'paragraph').find((item) =>
     flatten(item).includes('重点说明')
@@ -387,7 +387,7 @@ test('DOCX embeds raster images and retains body, default header/footer, fields 
   const source = model([
     p(
       text('插图前'),
-      { ...image(), marks: [{ type: 'link', attrs: { href: 'https://zui.test/picture' } }] },
+      { ...image(), marks: [{ type: 'link', attrs: { href: 'https://zuvi.test/picture' } }] },
       text('插图后')
     ),
   ]);
@@ -428,7 +428,7 @@ test('DOCX embeds raster images and retains body, default header/footer, fields 
   assert.equal(picture.attrs.width, 300);
   assert.equal(picture.attrs.height, 150);
   assert.equal(picture.attrs.alt, '项目示意图');
-  assert.equal(attrs(picture, 'link').href, 'https://zui.test/picture');
+  assert.equal(attrs(picture, 'link').href, 'https://zuvi.test/picture');
   assert.equal(flatten(restored.header), '项目机密');
   assert.equal(find(restored.header, 'image')[0].attrs.alt, '页眉徽标');
   assert.equal(
@@ -579,7 +579,7 @@ test('DOCX refuses image layout that cannot be preserved and external image link
     );
   }
   await assert.rejects(
-    exportStudioWord(model([p(image({ src: 'https://zui.test/photo.png' }))])),
+    exportStudioWord(model([p(image({ src: 'https://zuvi.test/photo.png' }))])),
     /外部图片地址/
   );
   await assert.rejects(

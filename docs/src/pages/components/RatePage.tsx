@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Rate } from '@zui/react';
+import { Rate } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -107,14 +107,14 @@ export default function RatePage(): React.ReactNode {
         name="Rate"
         parts={['root', 'star', 'half']}
         vars={[
-          '--z-rate-star-size',
-          '--z-rate-star-empty-color',
-          '--z-rate-star-filled-color',
-          '--z-rate-star-hover-color',
-          '--z-rate-gap',
-          '--z-rate-disabled-opacity',
-          '--z-rate-focus-ring',
-          '--z-rate-transition',
+          '--zuvi-rate-star-size',
+          '--zuvi-rate-star-empty-color',
+          '--zuvi-rate-star-filled-color',
+          '--zuvi-rate-star-hover-color',
+          '--zuvi-rate-gap',
+          '--zuvi-rate-disabled-opacity',
+          '--zuvi-rate-focus-ring',
+          '--zuvi-rate-transition',
         ]}
       />
     </div>

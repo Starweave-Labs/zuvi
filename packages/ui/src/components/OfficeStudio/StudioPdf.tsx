@@ -16,7 +16,7 @@ import {
   Type,
   ZoomIn,
   ZoomOut,
-} from '@zui/icons';
+} from '@zuvi/icons';
 import { Button } from '../Button/Button';
 import { Checkbox } from '../Checkbox/Checkbox';
 import { ColorPicker } from '../ColorPicker/ColorPicker';
@@ -304,13 +304,13 @@ function PdfThumbnail({
       ref={button}
       variant="outline"
       fullWidth
-      className="z-studio-pdf-thumbnail"
+      className="zuvi-studio-pdf-thumbnail"
       aria-label={`PDF 第 ${page + 1} 页缩略图`}
       aria-pressed={page === currentPage}
       disabled={disabled}
       onClick={onSelect}
     >
-      <span className="z-studio-pdf-thumbnail-paper">
+      <span className="zuvi-studio-pdf-thumbnail-paper">
         <canvas
           ref={canvas}
           aria-hidden="true"
@@ -747,7 +747,7 @@ export default function StudioPdf({
     return (
       <div
         key={`${field.name}-${index}`}
-        className="z-studio-pdf-widget"
+        className="zuvi-studio-pdf-widget"
         data-field={field.name}
         style={{
           width: widget.width,
@@ -757,17 +757,17 @@ export default function StudioPdf({
         onClick={(event) => event.stopPropagation()}
         onPointerDown={(event) => event.stopPropagation()}
       >
-        <div className="z-studio-pdf-widget-content" style={widgetContentStyle(widget)}>
+        <div className="zuvi-studio-pdf-widget-content" style={widgetContentStyle(widget)}>
           {widget.option !== undefined ? (
             <Radio
-              className="z-studio-pdf-widget-check"
+              className="zuvi-studio-pdf-widget-check"
               aria-label={label}
               value={widget.option}
               disabled={locked}
             />
           ) : field.type === 'checkbox' ? (
             <Checkbox
-              className="z-studio-pdf-widget-check"
+              className="zuvi-studio-pdf-widget-check"
               aria-label={label}
               name={`${formId}-${field.name}`}
               checked={Boolean(field.value)}
@@ -776,8 +776,8 @@ export default function StudioPdf({
             />
           ) : field.type === 'choice' ? (
             <Select
-              className="z-studio-pdf-widget-input"
-              classNames={{ trigger: 'z-studio-pdf-widget-value' }}
+              className="zuvi-studio-pdf-widget-input"
+              classNames={{ trigger: 'zuvi-studio-pdf-widget-value' }}
               size="sm"
               aria-label={label}
               name={`${formId}-${field.name}`}
@@ -792,8 +792,8 @@ export default function StudioPdf({
             />
           ) : field.multiline ? (
             <Input.Textarea
-              className="z-studio-pdf-widget-input"
-              classNames={{ textarea: 'z-studio-pdf-widget-value' }}
+              className="zuvi-studio-pdf-widget-input"
+              classNames={{ textarea: 'zuvi-studio-pdf-widget-value' }}
               size="sm"
               aria-label={label}
               disabled={locked}
@@ -803,8 +803,8 @@ export default function StudioPdf({
             />
           ) : (
             <Input
-              className="z-studio-pdf-widget-input"
-              classNames={{ input: 'z-studio-pdf-widget-value' }}
+              className="zuvi-studio-pdf-widget-input"
+              classNames={{ input: 'zuvi-studio-pdf-widget-value' }}
               size="sm"
               aria-label={label}
               disabled={locked}
@@ -822,7 +822,7 @@ export default function StudioPdf({
     <Button
       size="sm"
       variant="ghost"
-      className="z-studio-pdf-ribbon-tool"
+      className="zuvi-studio-pdf-ribbon-tool"
       iconStart={next === 'text' ? <Type /> : next === 'rectangle' ? <Maximize /> : <Edit />}
       aria-pressed={tool === next}
       disabled={!canModify}
@@ -839,7 +839,7 @@ export default function StudioPdf({
 
   return (
     <div
-      className="z-studio-pdf"
+      className="zuvi-studio-pdf"
       data-inspector={inspector ? 'open' : 'closed'}
       onKeyDown={(event) => {
         if (disabled) return;
@@ -868,7 +868,7 @@ export default function StudioPdf({
       <Tabs
         value={ribbon}
         onValueChange={setRibbon}
-        className="z-studio-ribbon z-studio-pdf-ribbon"
+        className="zuvi-studio-ribbon zuvi-studio-pdf-ribbon"
       >
         <StudioRibbonTabs>
           <Tabs.List aria-label="PDF 功能区选项卡">
@@ -880,10 +880,10 @@ export default function StudioPdf({
             </Tabs.Trigger>
           </Tabs.List>
         </StudioRibbonTabs>
-        <div className="z-studio-pdf-ribbon-controls" role="group" aria-label="PDF 编辑工具栏">
-          <div className="z-studio-pdf-ribbon-group" role="group" aria-label="编辑">
-            <div className="z-studio-pdf-ribbon-group-body">
-              <div className="z-studio-pdf-ribbon-stack">
+        <div className="zuvi-studio-pdf-ribbon-controls" role="group" aria-label="PDF 编辑工具栏">
+          <div className="zuvi-studio-pdf-ribbon-group" role="group" aria-label="编辑">
+            <div className="zuvi-studio-pdf-ribbon-group-body">
+              <div className="zuvi-studio-pdf-ribbon-stack">
                 <Button
                   size="sm"
                   variant="ghost"
@@ -904,7 +904,7 @@ export default function StudioPdf({
               <Button
                 size="sm"
                 variant="ghost"
-                className="z-studio-pdf-ribbon-tool"
+                className="zuvi-studio-pdf-ribbon-tool"
                 iconStart={<Navigation />}
                 aria-pressed={tool === 'select'}
                 disabled={disabled}
@@ -913,26 +913,26 @@ export default function StudioPdf({
                 选择
               </Button>
             </div>
-            <span className="z-studio-pdf-ribbon-caption" aria-hidden="true">
+            <span className="zuvi-studio-pdf-ribbon-caption" aria-hidden="true">
               编辑
             </span>
           </div>
-          <Tabs.Panel value="home" className="z-studio-pdf-ribbon-panel">
-            <div className="z-studio-pdf-ribbon-group" role="group" aria-label="插入">
-              <div className="z-studio-pdf-ribbon-group-body">
+          <Tabs.Panel value="home" className="zuvi-studio-pdf-ribbon-panel">
+            <div className="zuvi-studio-pdf-ribbon-group" role="group" aria-label="插入">
+              <div className="zuvi-studio-pdf-ribbon-group-body">
                 {markToolButton('text')}
                 {markToolButton('rectangle')}
               </div>
-              <span className="z-studio-pdf-ribbon-caption" aria-hidden="true">
+              <span className="zuvi-studio-pdf-ribbon-caption" aria-hidden="true">
                 插入
               </span>
             </div>
-            <div className="z-studio-pdf-ribbon-group" role="group" aria-label="页面">
-              <div className="z-studio-pdf-ribbon-group-body">
+            <div className="zuvi-studio-pdf-ribbon-group" role="group" aria-label="页面">
+              <div className="zuvi-studio-pdf-ribbon-group-body">
                 <Button
                   size="sm"
                   variant="ghost"
-                  className="z-studio-pdf-ribbon-tool"
+                  className="zuvi-studio-pdf-ribbon-tool"
                   iconStart={<RotateCcw />}
                   disabled={!canModify}
                   onClick={() => {
@@ -951,7 +951,7 @@ export default function StudioPdf({
                 <Button
                   size="sm"
                   variant="ghost"
-                  className="z-studio-pdf-ribbon-tool"
+                  className="zuvi-studio-pdf-ribbon-tool"
                   iconStart={<FileText />}
                   disabled={disabled || !activeLoaded}
                   aria-pressed={panel === 'pages' && inspector}
@@ -963,16 +963,16 @@ export default function StudioPdf({
                   页面
                 </Button>
               </div>
-              <span className="z-studio-pdf-ribbon-caption" aria-hidden="true">
+              <span className="zuvi-studio-pdf-ribbon-caption" aria-hidden="true">
                 页面
               </span>
             </div>
-            <div className="z-studio-pdf-ribbon-group" role="group" aria-label="查看">
-              <div className="z-studio-pdf-ribbon-group-body">
+            <div className="zuvi-studio-pdf-ribbon-group" role="group" aria-label="查看">
+              <div className="zuvi-studio-pdf-ribbon-group-body">
                 <Button
                   size="sm"
                   variant="ghost"
-                  className="z-studio-pdf-ribbon-tool"
+                  className="zuvi-studio-pdf-ribbon-tool"
                   iconStart={<Search />}
                   disabled={disabled || !activeLoaded?.session.search}
                   aria-pressed={panel === 'search' && inspector}
@@ -986,7 +986,7 @@ export default function StudioPdf({
                 <Button
                   size="sm"
                   variant="ghost"
-                  className="z-studio-pdf-ribbon-tool"
+                  className="zuvi-studio-pdf-ribbon-tool"
                   aria-label="PDF 批注与表单侧栏"
                   aria-pressed={inspector}
                   iconStart={<Settings />}
@@ -996,36 +996,36 @@ export default function StudioPdf({
                   侧栏
                 </Button>
               </div>
-              <span className="z-studio-pdf-ribbon-caption" aria-hidden="true">
+              <span className="zuvi-studio-pdf-ribbon-caption" aria-hidden="true">
                 查看
               </span>
             </div>
           </Tabs.Panel>
-          <Tabs.Panel value="comment" className="z-studio-pdf-ribbon-panel">
-            <div className="z-studio-pdf-ribbon-group" role="group" aria-label="批注工具">
-              <div className="z-studio-pdf-ribbon-group-body">
+          <Tabs.Panel value="comment" className="zuvi-studio-pdf-ribbon-panel">
+            <div className="zuvi-studio-pdf-ribbon-group" role="group" aria-label="批注工具">
+              <div className="zuvi-studio-pdf-ribbon-group-body">
                 {markToolButton('text')}
                 {markToolButton('highlight')}
               </div>
-              <span className="z-studio-pdf-ribbon-caption" aria-hidden="true">
+              <span className="zuvi-studio-pdf-ribbon-caption" aria-hidden="true">
                 批注
               </span>
             </div>
-            <div className="z-studio-pdf-ribbon-group" role="group" aria-label="绘图与签名">
-              <div className="z-studio-pdf-ribbon-group-body">
+            <div className="zuvi-studio-pdf-ribbon-group" role="group" aria-label="绘图与签名">
+              <div className="zuvi-studio-pdf-ribbon-group-body">
                 {markToolButton('rectangle')}
                 {markToolButton('ink')}
               </div>
-              <span className="z-studio-pdf-ribbon-caption" aria-hidden="true">
+              <span className="zuvi-studio-pdf-ribbon-caption" aria-hidden="true">
                 绘图与签名
               </span>
             </div>
-            <div className="z-studio-pdf-ribbon-group" role="group" aria-label="显示批注">
-              <div className="z-studio-pdf-ribbon-group-body">
+            <div className="zuvi-studio-pdf-ribbon-group" role="group" aria-label="显示批注">
+              <div className="zuvi-studio-pdf-ribbon-group-body">
                 <Button
                   size="sm"
                   variant="ghost"
-                  className="z-studio-pdf-ribbon-tool"
+                  className="zuvi-studio-pdf-ribbon-tool"
                   iconStart={<MessageCircle />}
                   disabled={disabled}
                   aria-pressed={panel === 'marks' && inspector}
@@ -1039,7 +1039,7 @@ export default function StudioPdf({
                 <Button
                   size="sm"
                   variant="ghost"
-                  className="z-studio-pdf-ribbon-tool"
+                  className="zuvi-studio-pdf-ribbon-tool"
                   iconStart={<Settings />}
                   disabled={disabled}
                   aria-label="PDF 批注与表单侧栏"
@@ -1049,7 +1049,7 @@ export default function StudioPdf({
                   侧栏
                 </Button>
               </div>
-              <span className="z-studio-pdf-ribbon-caption" aria-hidden="true">
+              <span className="zuvi-studio-pdf-ribbon-caption" aria-hidden="true">
                 显示
               </span>
             </div>
@@ -1058,7 +1058,7 @@ export default function StudioPdf({
       </Tabs>
 
       {(error || notice) && (
-        <div className="z-studio-pdf-alert" role="alert">
+        <div className="zuvi-studio-pdf-alert" role="alert">
           <span>{error || notice}</span>
           {error && (
             <Button
@@ -1072,8 +1072,8 @@ export default function StudioPdf({
           )}
         </div>
       )}
-      <div className="z-studio-pdf-workspace">
-        <nav className="z-studio-pdf-side-navigation" aria-label="PDF 侧边导航">
+      <div className="zuvi-studio-pdf-workspace">
+        <nav className="zuvi-studio-pdf-side-navigation" aria-label="PDF 侧边导航">
           {(['search', 'marks', 'pages', 'fields'] as const).map((value) => {
             const Icon = panelIcons[value];
             const pressed = inspector && panel === value;
@@ -1104,14 +1104,14 @@ export default function StudioPdf({
           })}
         </nav>
         <div
-          className="z-studio-pdf-viewport"
+          className="zuvi-studio-pdf-viewport"
           role="region"
           aria-label="PDF 页面编辑区"
           tabIndex={0}
           aria-busy={!!source && !!pdfRenderer && !view && !error}
         >
           {!source || !pdfRenderer ? (
-            <div className="z-studio-pdf-placeholder">
+            <div className="zuvi-studio-pdf-placeholder">
               <Type />
               <strong>{source ? 'PDF 预览暂不可用' : '导入 PDF 开始编辑'}</strong>
               <span>全文搜索、文字与绘图批注、旋转页面和表单填写</span>
@@ -1119,13 +1119,13 @@ export default function StudioPdf({
           ) : (
             <>
               {!view && !error && (
-                <div className="z-studio-pdf-loading" role="status">
+                <div className="zuvi-studio-pdf-loading" role="status">
                   正在加载第 {page + 1} 页…
                 </div>
               )}
               <div
                 ref={paper}
-                className="z-studio-pdf-paper"
+                className="zuvi-studio-pdf-paper"
                 data-tool={tool}
                 style={{
                   width: view?.width ?? rendered?.result.width ?? 595,
@@ -1175,7 +1175,7 @@ export default function StudioPdf({
                 {view && (
                   <>
                     <svg
-                      className="z-studio-pdf-annotations"
+                      className="zuvi-studio-pdf-annotations"
                       viewBox={`0 0 ${view.width} ${view.height}`}
                       aria-label="PDF 页面标注"
                       onPointerMove={(event) => {
@@ -1224,7 +1224,7 @@ export default function StudioPdf({
                           <g
                             key={`search-${index}`}
                             transform={`matrix(${pdfMatrix(view, result.rect.x, result.rect.y).join(' ')})`}
-                            className="z-studio-pdf-search-hit"
+                            className="zuvi-studio-pdf-search-hit"
                             aria-hidden="true"
                           >
                             <rect
@@ -1317,7 +1317,7 @@ export default function StudioPdf({
                               }}
                             >
                               <rect
-                                className="z-studio-pdf-mark-hit"
+                                className="zuvi-studio-pdf-mark-hit"
                                 x={-2}
                                 y={-dimensions.above - 2}
                                 width={dimensions.width + 4}
@@ -1328,7 +1328,7 @@ export default function StudioPdf({
                                 canModify &&
                                 (mark.type === 'rectangle' || mark.type === 'highlight') && (
                                   <rect
-                                    className="z-studio-pdf-mark-resize"
+                                    className="zuvi-studio-pdf-mark-resize"
                                     data-mark-resize={mark.id}
                                     aria-hidden="true"
                                     x={dimensions.width - 4}
@@ -1361,14 +1361,14 @@ export default function StudioPdf({
                       {previewMark && (
                         <g
                           transform={`matrix(${pdfMatrix(view, previewMark.x, previewMark.y).join(' ')})`}
-                          className="z-studio-pdf-drawing-preview"
+                          className="zuvi-studio-pdf-drawing-preview"
                           aria-hidden="true"
                         >
                           {markContent(previewMark)}
                         </g>
                       )}
                     </svg>
-                    <div className="z-studio-pdf-form-layer">
+                    <div className="zuvi-studio-pdf-form-layer">
                       {pdfDocument.fields.flatMap((field) => {
                         const widgets = (field.widgets ?? []).flatMap((widget, index) =>
                           widget.page === page ? [overlayField(field, widget, index)] : []
@@ -1378,7 +1378,7 @@ export default function StudioPdf({
                           ? [
                               <RadioGroup
                                 key={JSON.stringify(['radio', field.name])}
-                                className="z-studio-pdf-widget-radio-group"
+                                className="zuvi-studio-pdf-widget-radio-group"
                                 name={`${formId}-${field.name}`}
                                 value={String(field.value)}
                                 disabled={!canModify || field.readOnly}
@@ -1395,7 +1395,7 @@ export default function StudioPdf({
                 )}
               </div>
               {view && (
-                <span className="z-studio-pdf-page-caption">
+                <span className="zuvi-studio-pdf-page-caption">
                   第 {page + 1} 页 · {Math.round(zoom * 100)}%
                 </span>
               )}
@@ -1406,12 +1406,12 @@ export default function StudioPdf({
         {inspector && (
           <aside
             id={panelId}
-            className="z-studio-pdf-inspector"
+            className="zuvi-studio-pdf-inspector"
             data-panel={panel}
             data-side={panel === 'pages' || panel === 'search' ? 'left' : 'right'}
             aria-label="PDF 批注与表单"
           >
-            <div className="z-studio-pdf-panel-switch" role="group" aria-label="PDF 侧栏内容">
+            <div className="zuvi-studio-pdf-panel-switch" role="group" aria-label="PDF 侧栏内容">
               <Button
                 size="sm"
                 variant="ghost"
@@ -1450,7 +1450,7 @@ export default function StudioPdf({
               </Button>
             </div>
             {panel === 'pages' ? (
-              <div className="z-studio-pdf-panel-body" aria-label="PDF 页面缩略导航">
+              <div className="zuvi-studio-pdf-panel-body" aria-label="PDF 页面缩略导航">
                 {activeLoaded &&
                   Array.from({ length: pdfDocument.pageCount }, (_, index) => (
                     <PdfThumbnail
@@ -1469,7 +1469,7 @@ export default function StudioPdf({
                   ))}
               </div>
             ) : panel === 'search' ? (
-              <div className="z-studio-pdf-panel-body">
+              <div className="zuvi-studio-pdf-panel-body">
                 <form
                   role="search"
                   aria-label="PDF 全文查找"
@@ -1498,7 +1498,7 @@ export default function StudioPdf({
                     查找全部
                   </Button>
                 </form>
-                <div className="z-studio-pdf-search-navigation">
+                <div className="zuvi-studio-pdf-search-navigation">
                   <span role="status">
                     {searchBusy
                       ? '正在查找…'
@@ -1528,18 +1528,18 @@ export default function StudioPdf({
                   />
                 </div>
                 {searchError && <p role="alert">{searchError}</p>}
-                <p className="z-studio-pdf-hint">
+                <p className="zuvi-studio-pdf-hint">
                   点击结果跳转并标出文本所在位置。扫描图片页需要 OCR 才能查找文字。
                 </p>
                 {searchResults.length === 1000 && (
-                  <p className="z-studio-pdf-hint">最多显示前 1000 处匹配，请缩小查找范围。</p>
+                  <p className="zuvi-studio-pdf-hint">最多显示前 1000 处匹配，请缩小查找范围。</p>
                 )}
-                <div className="z-studio-pdf-mark-list" aria-label="PDF 查找结果">
+                <div className="zuvi-studio-pdf-mark-list" aria-label="PDF 查找结果">
                   {searchResults.map((result, index) => (
                     <Button
                       size="sm"
                       variant="ghost"
-                      className="z-studio-pdf-list-item"
+                      className="zuvi-studio-pdf-list-item"
                       key={index}
                       disabled={disabled}
                       aria-pressed={index === searchIndex}
@@ -1556,7 +1556,7 @@ export default function StudioPdf({
                 </div>
               </div>
             ) : panel === 'marks' ? (
-              <div className="z-studio-pdf-panel-body">
+              <div className="zuvi-studio-pdf-panel-body">
                 <strong>
                   {selected
                     ? `编辑${markNames[selected.type]}标注`
@@ -1599,11 +1599,11 @@ export default function StudioPdf({
                     </label>
                   </>
                 ) : (selected?.type ?? tool) === 'ink' ? (
-                  <p className="z-studio-pdf-hint">
+                  <p className="zuvi-studio-pdf-hint">
                     按住页面拖动绘制手写签名，可连续画多笔。完成后点“选择”移动笔迹。
                   </p>
                 ) : (
-                  <div className="z-studio-pdf-mark-sizes">
+                  <div className="zuvi-studio-pdf-mark-sizes">
                     <label>
                       宽度
                       <InputNumber
@@ -1658,7 +1658,7 @@ export default function StudioPdf({
                     />
                   </label>
                 )}
-                <div className="z-studio-pdf-color">
+                <div className="zuvi-studio-pdf-color">
                   <span>颜色</span>
                   <ColorPicker
                     size="sm"
@@ -1675,7 +1675,7 @@ export default function StudioPdf({
                 </div>
                 {selected ? (
                   <>
-                    <p className="z-studio-pdf-hint">
+                    <p className="zuvi-studio-pdf-hint">
                       拖动页面上的标注调整位置。方向键微调，Delete 删除。
                     </p>
                     <Button
@@ -1690,7 +1690,7 @@ export default function StudioPdf({
                   </>
                 ) : (
                   <>
-                    <p className="z-studio-pdf-hint">
+                    <p className="zuvi-studio-pdf-hint">
                       {tool === 'rectangle'
                         ? '在页面上按住并拖动，绘制矩形框。'
                         : tool === 'ink'
@@ -1716,15 +1716,15 @@ export default function StudioPdf({
                     )}
                   </>
                 )}
-                <div className="z-studio-pdf-mark-list" aria-label="PDF 标注列表">
+                <div className="zuvi-studio-pdf-mark-list" aria-label="PDF 标注列表">
                   {pdfDocument.marks.length === 0 ? (
-                    <p className="z-studio-pdf-hint">还没有标注。原文页面会完整保留。</p>
+                    <p className="zuvi-studio-pdf-hint">还没有标注。原文页面会完整保留。</p>
                   ) : (
                     pdfDocument.marks.map((mark, index) => (
                       <Button
                         size="sm"
                         variant="ghost"
-                        className="z-studio-pdf-list-item"
+                        className="zuvi-studio-pdf-list-item"
                         key={mark.id}
                         aria-pressed={mark.id === selectedId}
                         disabled={disabled}
@@ -1735,7 +1735,7 @@ export default function StudioPdf({
                         }}
                       >
                         <span
-                          className="z-studio-pdf-mark-dot"
+                          className="zuvi-studio-pdf-mark-dot"
                           style={{
                             background:
                               mark.color ?? (mark.type === 'highlight' ? '#f5c542' : '#253044'),
@@ -1761,15 +1761,15 @@ export default function StudioPdf({
                 </div>
               </div>
             ) : (
-              <div className="z-studio-pdf-panel-body">
-                <p className="z-studio-pdf-hint">
+              <div className="zuvi-studio-pdf-panel-body">
+                <p className="zuvi-studio-pdf-hint">
                   直接点击页面上的表单填写，或在这里修改。保存后仍是可填写的 PDF 表单。
                 </p>
                 {pdfDocument.fields.length === 0 ? (
-                  <p className="z-studio-pdf-hint">此文件没有可填写的 PDF 表单。</p>
+                  <p className="zuvi-studio-pdf-hint">此文件没有可填写的 PDF 表单。</p>
                 ) : (
                   pdfDocument.fields.map((field) => (
-                    <div className="z-studio-pdf-field" key={field.name}>
+                    <div className="zuvi-studio-pdf-field" key={field.name}>
                       {field.type === 'checkbox' ? (
                         <Checkbox
                           label={field.name}
@@ -1824,8 +1824,8 @@ export default function StudioPdf({
           </aside>
         )}
       </div>
-      <div className="z-studio-pdf-statusbar" role="group" aria-label="PDF 状态栏">
-        <div className="z-studio-pdf-navigation" role="group" aria-label="PDF 页面导航">
+      <div className="zuvi-studio-pdf-statusbar" role="group" aria-label="PDF 状态栏">
+        <div className="zuvi-studio-pdf-navigation" role="group" aria-label="PDF 页面导航">
           <Button
             size="sm"
             variant="ghost"
@@ -1866,7 +1866,7 @@ export default function StudioPdf({
           />
         </div>
         <span
-          className="z-studio-pdf-status-mode"
+          className="zuvi-studio-pdf-status-mode"
           tabIndex={0}
           title="PDF 原有正文保持原版式；可编辑新增批注和原文件的可填写表单。"
           aria-label={
@@ -1888,7 +1888,7 @@ export default function StudioPdf({
                 ? '选择工具'
                 : markNames[tool]}
         </span>
-        <div className="z-studio-pdf-zoom" role="group" aria-label="PDF 视图缩放">
+        <div className="zuvi-studio-pdf-zoom" role="group" aria-label="PDF 视图缩放">
           <Button
             size="sm"
             variant="ghost"
@@ -1902,7 +1902,7 @@ export default function StudioPdf({
             aria-label="PDF 缩放"
             value={String(zoom)}
             disabled={disabled}
-            classNames={{ listbox: 'z-studio-pdf-zoom-listbox' }}
+            classNames={{ listbox: 'zuvi-studio-pdf-zoom-listbox' }}
             options={zoomSteps.map((value) => ({ value: String(value), label: value * 100 + '%' }))}
             onChange={(value) => setZoom(Number(value))}
           />

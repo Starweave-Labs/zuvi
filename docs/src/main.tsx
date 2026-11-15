@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
-import '@zui/react/styles.css';
+import '@zuvi/react/styles.css';
 import './styles/docs.css';
 import App from './App';
 

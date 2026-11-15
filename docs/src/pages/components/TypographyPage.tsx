@@ -1,4 +1,4 @@
-import { Typography } from '@zui/react';
+import { Typography } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -12,7 +12,7 @@ const TITLES_CODE = `<Typography.Title>一级标题</Typography.Title>
 <Typography.Title level={5}>五级标题</Typography.Title>`;
 
 const PARAGRAPH_CODE = `<Typography.Paragraph>
-  段落渲染为 &lt;p&gt;，行高走 --z-leading-normal；ellipsis 折行用 -webkit-line-clamp 实现。
+  段落渲染为 &lt;p&gt;，行高走 --zuvi-leading-normal；ellipsis 折行用 -webkit-line-clamp 实现。
 </Typography.Paragraph>
 <div style={{ maxWidth: 360 }}>
   <Typography.Paragraph ellipsis={{ rows: 2 }}>
@@ -53,7 +53,7 @@ export default function TypographyPage(): React.ReactNode {
 
       <h2 className="doc-h2">示例</h2>
 
-      <Demo title="标题" description="level 1-5 分别渲染 h1-h5，默认 level=1；字号字重全部走 --z-text-* / --z-weight-* 令牌。" code={TITLES_CODE} stack>
+      <Demo title="标题" description="level 1-5 分别渲染 h1-h5，默认 level=1；字号字重全部走 --zuvi-text-* / --zuvi-weight-* 令牌。" code={TITLES_CODE} stack>
         <Typography.Title>一级标题</Typography.Title>
         <Typography.Title level={2}>二级标题</Typography.Title>
         <Typography.Title level={3}>三级标题</Typography.Title>
@@ -68,12 +68,12 @@ export default function TypographyPage(): React.ReactNode {
         stack
       >
         <Typography.Paragraph>
-          段落渲染为 p 元素，行高走 --z-leading-normal；ellipsis 折行用 -webkit-line-clamp 实现，
-          行数以内联 CSS 变量 --z-typography-ellipsis-rows 提供。
+          段落渲染为 p 元素，行高走 --zuvi-leading-normal；ellipsis 折行用 -webkit-line-clamp 实现，
+          行数以内联 CSS 变量 --zuvi-typography-ellipsis-rows 提供。
         </Typography.Paragraph>
         <div style={{ maxWidth: 360 }}>
           <Typography.Paragraph ellipsis={{ rows: 2 }}>
-            超出两行的长文本会被截断并显示省略号：ZUI 是一套零运行时 CSS
+            超出两行的长文本会被截断并显示省略号：ZUVI 是一套零运行时 CSS
             的组件库，所有样式都由语义令牌驱动，暗色模式与主题定制无需重新编译，组件级
             CSS 变量可以逐个覆盖。
           </Typography.Paragraph>
@@ -90,7 +90,7 @@ export default function TypographyPage(): React.ReactNode {
         <Typography.Text delete>已废弃</Typography.Text>
       </Demo>
 
-      <Demo title="type 配色" description="type 只调色不改语义：secondary → --z-color-fg-muted，success / warning / danger → 同名语义色令牌。" code={TYPES_CODE} stack>
+      <Demo title="type 配色" description="type 只调色不改语义：secondary → --zuvi-color-fg-muted，success / warning / danger → 同名语义色令牌。" code={TYPES_CODE} stack>
         <Typography.Text type="secondary">次要文本</Typography.Text>
         <Typography.Text type="success">成功文本</Typography.Text>
         <Typography.Text type="warning">警告文本</Typography.Text>
@@ -164,7 +164,7 @@ export default function TypographyPage(): React.ReactNode {
             name: 'type',
             type: "'secondary' | 'success' | 'warning' | 'danger'",
             defaultValue: '—',
-            description: '只调色：secondary → --z-color-fg-muted，其余映射同名语义色令牌。',
+            description: '只调色：secondary → --zuvi-color-fg-muted，其余映射同名语义色令牌。',
           },
           {
             name: 'copyable',
@@ -208,29 +208,29 @@ export default function TypographyPage(): React.ReactNode {
         name="Typography"
         parts={['root', 'copy', 'copy-feedback']}
         vars={[
-          '--z-typography-margin',
-          '--z-typography-color',
-          '--z-typography-h1-size',
-          '--z-typography-h2-size',
-          '--z-typography-h3-size',
-          '--z-typography-h4-size',
-          '--z-typography-h5-size',
-          '--z-typography-paragraph-size',
-          '--z-typography-code-bg',
-          '--z-typography-code-fg',
-          '--z-typography-code-border',
-          '--z-typography-code-border-width',
-          '--z-typography-code-radius',
-          '--z-typography-kbd-bg',
-          '--z-typography-kbd-border',
-          '--z-typography-mark-bg',
-          '--z-typography-mark-fg',
-          '--z-typography-copy-color',
-          '--z-typography-copy-hover-color',
-          '--z-typography-copy-success-color',
-          '--z-typography-copy-size',
-          '--z-typography-copy-gap',
-          '--z-typography-ellipsis-rows',
+          '--zuvi-typography-margin',
+          '--zuvi-typography-color',
+          '--zuvi-typography-h1-size',
+          '--zuvi-typography-h2-size',
+          '--zuvi-typography-h3-size',
+          '--zuvi-typography-h4-size',
+          '--zuvi-typography-h5-size',
+          '--zuvi-typography-paragraph-size',
+          '--zuvi-typography-code-bg',
+          '--zuvi-typography-code-fg',
+          '--zuvi-typography-code-border',
+          '--zuvi-typography-code-border-width',
+          '--zuvi-typography-code-radius',
+          '--zuvi-typography-kbd-bg',
+          '--zuvi-typography-kbd-border',
+          '--zuvi-typography-mark-bg',
+          '--zuvi-typography-mark-fg',
+          '--zuvi-typography-copy-color',
+          '--zuvi-typography-copy-hover-color',
+          '--zuvi-typography-copy-success-color',
+          '--zuvi-typography-copy-size',
+          '--zuvi-typography-copy-gap',
+          '--zuvi-typography-ellipsis-rows',
         ]}
       />
     </div>

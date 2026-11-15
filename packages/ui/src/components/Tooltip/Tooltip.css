@@ -1,43 +1,43 @@
 /* Tooltip —— 悬浮提示浮层（深底浅字），组件级变量定义在根选择器上 */
 
-.z-tooltip-root {
+.zuvi-tooltip-root {
   /* 组件级变量（用户可覆盖） */
-  --z-tooltip-max-width: 16rem;
-  --z-tooltip-bg: var(--z-color-bg-inverse);
-  --z-tooltip-fg: var(--z-color-fg-inverse);
-  --z-tooltip-radius: var(--z-radius-sm); /* 6px */
-  --z-tooltip-font-size: var(--z-text-xs); /* 12px */
-  --z-tooltip-line-height: var(--z-leading-normal);
-  --z-tooltip-padding-x: var(--z-space-2);
-  --z-tooltip-padding-y: var(--z-space-1);
-  --z-tooltip-shadow: var(--z-shadow-sm);
-  --z-tooltip-offset: var(--z-space-1);
-  --z-tooltip-z: var(--z-z-dropdown);
-  --z-tooltip-animation: var(--z-duration-fast) var(--z-ease-entrance);
+  --zuvi-tooltip-max-width: 16rem;
+  --zuvi-tooltip-bg: var(--zuvi-color-bg-inverse);
+  --zuvi-tooltip-fg: var(--zuvi-color-fg-inverse);
+  --zuvi-tooltip-radius: var(--zuvi-radius-sm); /* 6px */
+  --zuvi-tooltip-font-size: var(--zuvi-text-xs); /* 12px */
+  --zuvi-tooltip-line-height: var(--zuvi-leading-normal);
+  --zuvi-tooltip-padding-x: var(--zuvi-space-2);
+  --zuvi-tooltip-padding-y: var(--zuvi-space-1);
+  --zuvi-tooltip-shadow: var(--zuvi-shadow-sm);
+  --zuvi-tooltip-offset: var(--zuvi-space-1);
+  --zuvi-tooltip-z: var(--zuvi-z-dropdown);
+  --zuvi-tooltip-animation: var(--zuvi-duration-fast) var(--zuvi-ease-entrance);
 
   position: relative;
   display: inline-flex;
   max-width: 100%;
 }
 
-.z-tooltip {
+.zuvi-tooltip {
   position: fixed;
-  z-index: var(--z-tooltip-z);
+  z-index: var(--zuvi-tooltip-z);
   box-sizing: border-box;
-  max-width: min(var(--z-tooltip-max-width), calc(100vw - var(--z-space-4)));
-  padding: var(--z-tooltip-padding-y) var(--z-tooltip-padding-x);
-  color: var(--z-tooltip-fg);
-  background: var(--z-tooltip-bg);
-  border-radius: var(--z-tooltip-radius);
-  box-shadow: var(--z-tooltip-shadow);
-  font-family: var(--z-font-sans);
-  font-size: var(--z-tooltip-font-size);
-  font-weight: var(--z-weight-regular);
-  line-height: var(--z-tooltip-line-height);
+  max-width: min(var(--zuvi-tooltip-max-width), calc(100vw - var(--zuvi-space-4)));
+  padding: var(--zuvi-tooltip-padding-y) var(--zuvi-tooltip-padding-x);
+  color: var(--zuvi-tooltip-fg);
+  background: var(--zuvi-tooltip-bg);
+  border-radius: var(--zuvi-tooltip-radius);
+  box-shadow: var(--zuvi-tooltip-shadow);
+  font-family: var(--zuvi-font-sans);
+  font-size: var(--zuvi-tooltip-font-size);
+  font-weight: var(--zuvi-weight-regular);
+  line-height: var(--zuvi-tooltip-line-height);
   text-align: start;
   overflow-wrap: break-word;
   pointer-events: none;
-  animation: z-tooltip-in var(--z-tooltip-animation);
+  animation: z-tooltip-in var(--zuvi-tooltip-animation);
   max-height: calc(100dvh - 16px);
 }
 
@@ -51,13 +51,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .z-tooltip {
+  .zuvi-tooltip {
     animation: none;
   }
 }
 
 @media (forced-colors: active) {
-  .z-tooltip {
+  .zuvi-tooltip {
     color: CanvasText;
     background: Canvas;
     border: 1px solid CanvasText;

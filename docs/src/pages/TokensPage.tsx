@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { colorScales, tokens } from '@zui/tokens';
+import { colorScales, tokens } from '@zuvi/tokens';
 
 import CodeBlock from '../components/CodeBlock';
 import { usePageTitle } from '../components/usePageTitle';
@@ -18,84 +18,84 @@ const SEMANTIC_COLORS: { title: string; items: { name: string; cssVar: string; n
   {
     title: '背景',
     items: [
-      { name: 'bg', cssVar: 'var(--z-color-bg)', note: '页面底色' },
-      { name: 'bg-subtle', cssVar: 'var(--z-color-bg-subtle)', note: '次级背景 / 分区' },
-      { name: 'bg-muted', cssVar: 'var(--z-color-bg-muted)', note: '弱化填充：标签、代码块' },
-      { name: 'bg-elevated', cssVar: 'var(--z-color-bg-elevated)', note: '浮层表面：卡片、弹层' },
-      { name: 'bg-inverse', cssVar: 'var(--z-color-bg-inverse)', note: '反色表面' },
+      { name: 'bg', cssVar: 'var(--zuvi-color-bg)', note: '页面底色' },
+      { name: 'bg-subtle', cssVar: 'var(--zuvi-color-bg-subtle)', note: '次级背景 / 分区' },
+      { name: 'bg-muted', cssVar: 'var(--zuvi-color-bg-muted)', note: '弱化填充：标签、代码块' },
+      { name: 'bg-elevated', cssVar: 'var(--zuvi-color-bg-elevated)', note: '浮层表面：卡片、弹层' },
+      { name: 'bg-inverse', cssVar: 'var(--zuvi-color-bg-inverse)', note: '反色表面' },
     ],
   },
   {
     title: '前景',
     items: [
-      { name: 'fg', cssVar: 'var(--z-color-fg)', note: '正文' },
-      { name: 'fg-muted', cssVar: 'var(--z-color-fg-muted)', note: '次要文字' },
-      { name: 'fg-subtle', cssVar: 'var(--z-color-fg-subtle)', note: '弱化文字：占位符' },
-      { name: 'fg-inverse', cssVar: 'var(--z-color-fg-inverse)', note: '反色表面文字' },
-      { name: 'fg-on-primary', cssVar: 'var(--z-color-fg-on-primary)', note: '主色上的文字' },
+      { name: 'fg', cssVar: 'var(--zuvi-color-fg)', note: '正文' },
+      { name: 'fg-muted', cssVar: 'var(--zuvi-color-fg-muted)', note: '次要文字' },
+      { name: 'fg-subtle', cssVar: 'var(--zuvi-color-fg-subtle)', note: '弱化文字：占位符' },
+      { name: 'fg-inverse', cssVar: 'var(--zuvi-color-fg-inverse)', note: '反色表面文字' },
+      { name: 'fg-on-primary', cssVar: 'var(--zuvi-color-fg-on-primary)', note: '主色上的文字' },
     ],
   },
   {
     title: '边框',
     items: [
-      { name: 'border', cssVar: 'var(--z-color-border)', note: '常规描边' },
-      { name: 'border-subtle', cssVar: 'var(--z-color-border-subtle)', note: '弱分隔线' },
-      { name: 'border-strong', cssVar: 'var(--z-color-border-strong)', note: '强调描边' },
-      { name: 'border-focus', cssVar: 'var(--z-color-border-focus)', note: '焦点描边' },
+      { name: 'border', cssVar: 'var(--zuvi-color-border)', note: '常规描边' },
+      { name: 'border-subtle', cssVar: 'var(--zuvi-color-border-subtle)', note: '弱分隔线' },
+      { name: 'border-strong', cssVar: 'var(--zuvi-color-border-strong)', note: '强调描边' },
+      { name: 'border-focus', cssVar: 'var(--zuvi-color-border-focus)', note: '焦点描边' },
     ],
   },
   {
     title: '主色',
     items: [
-      { name: 'primary', cssVar: 'var(--z-color-primary)', note: '主按钮 / 选中态' },
-      { name: 'primary-hover', cssVar: 'var(--z-color-primary-hover)', note: '悬停' },
-      { name: 'primary-active', cssVar: 'var(--z-color-primary-active)', note: '按下' },
-      { name: 'primary-subtle', cssVar: 'var(--z-color-primary-subtle)', note: '弱化主色底' },
-      { name: 'primary-subtle-fg', cssVar: 'var(--z-color-primary-subtle-fg)', note: '弱化底上的文字' },
+      { name: 'primary', cssVar: 'var(--zuvi-color-primary)', note: '主按钮 / 选中态' },
+      { name: 'primary-hover', cssVar: 'var(--zuvi-color-primary-hover)', note: '悬停' },
+      { name: 'primary-active', cssVar: 'var(--zuvi-color-primary-active)', note: '按下' },
+      { name: 'primary-subtle', cssVar: 'var(--zuvi-color-primary-subtle)', note: '弱化主色底' },
+      { name: 'primary-subtle-fg', cssVar: 'var(--zuvi-color-primary-subtle-fg)', note: '弱化底上的文字' },
     ],
   },
   {
     title: '状态色',
     items: [
-      { name: 'danger', cssVar: 'var(--z-color-danger)', note: '危险' },
-      { name: 'success', cssVar: 'var(--z-color-success)', note: '成功' },
-      { name: 'warning', cssVar: 'var(--z-color-warning)', note: '警告' },
-      { name: 'info', cssVar: 'var(--z-color-info)', note: '信息' },
+      { name: 'danger', cssVar: 'var(--zuvi-color-danger)', note: '危险' },
+      { name: 'success', cssVar: 'var(--zuvi-color-success)', note: '成功' },
+      { name: 'warning', cssVar: 'var(--zuvi-color-warning)', note: '警告' },
+      { name: 'info', cssVar: 'var(--zuvi-color-info)', note: '信息' },
     ],
   },
 ];
 
 const RADII: { name: string; cssVar: string }[] = [
-  { name: '--z-radius-sm', cssVar: tokens.radius.sm },
-  { name: '--z-radius-md', cssVar: tokens.radius.md },
-  { name: '--z-radius-lg', cssVar: tokens.radius.lg },
-  { name: '--z-radius-xl', cssVar: tokens.radius.xl },
-  { name: '--z-radius-full', cssVar: tokens.radius.full },
+  { name: '--zuvi-radius-sm', cssVar: tokens.radius.sm },
+  { name: '--zuvi-radius-md', cssVar: tokens.radius.md },
+  { name: '--zuvi-radius-lg', cssVar: tokens.radius.lg },
+  { name: '--zuvi-radius-xl', cssVar: tokens.radius.xl },
+  { name: '--zuvi-radius-full', cssVar: tokens.radius.full },
 ];
 
 const TYPE_SCALE: { name: string; cssVar: string; note: string }[] = [
-  { name: '--z-text-xs', cssVar: tokens.text.xs, note: '12px · 辅助信息' },
-  { name: '--z-text-sm', cssVar: tokens.text.sm, note: '14px · 次要正文' },
-  { name: '--z-text-md', cssVar: tokens.text.md, note: '16px · 正文（基准）' },
-  { name: '--z-text-lg', cssVar: tokens.text.lg, note: '18px · 小标题' },
-  { name: '--z-text-xl', cssVar: tokens.text.xl, note: '20px · 标题' },
-  { name: '--z-text-2xl', cssVar: tokens.text['2xl'], note: '24px · 页面标题' },
+  { name: '--zuvi-text-xs', cssVar: tokens.text.xs, note: '12px · 辅助信息' },
+  { name: '--zuvi-text-sm', cssVar: tokens.text.sm, note: '14px · 次要正文' },
+  { name: '--zuvi-text-md', cssVar: tokens.text.md, note: '16px · 正文（基准）' },
+  { name: '--zuvi-text-lg', cssVar: tokens.text.lg, note: '18px · 小标题' },
+  { name: '--zuvi-text-xl', cssVar: tokens.text.xl, note: '20px · 标题' },
+  { name: '--zuvi-text-2xl', cssVar: tokens.text['2xl'], note: '24px · 页面标题' },
 ];
 
 const SHADOWS: { name: string; cssVar: string }[] = [
-  { name: '--z-shadow-xs', cssVar: tokens.shadow.xs },
-  { name: '--z-shadow-sm', cssVar: tokens.shadow.sm },
-  { name: '--z-shadow-md', cssVar: tokens.shadow.md },
-  { name: '--z-shadow-lg', cssVar: tokens.shadow.lg },
+  { name: '--zuvi-shadow-xs', cssVar: tokens.shadow.xs },
+  { name: '--zuvi-shadow-sm', cssVar: tokens.shadow.sm },
+  { name: '--zuvi-shadow-md', cssVar: tokens.shadow.md },
+  { name: '--zuvi-shadow-lg', cssVar: tokens.shadow.lg },
 ];
 
-const IMPORT_CODE = `import { tokens, colorScales } from '@zui/tokens';
+const IMPORT_CODE = `import { tokens, colorScales } from '@zuvi/tokens';
 
 // tokens：语义层 var() 引用，可直接用于 style / CSS-in-JS
 <div style={{ background: tokens.color.bg, color: tokens.color.fg }} />
 
 // colorScales：原始色阶 var() 引用，适合画色板 / 调试
-colorScales.brand[600]; // 'var(--z-brand-600)'`;
+colorScales.brand[600]; // 'var(--zuvi-brand-600)'`;
 
 function resolveCssValue(value: string, computed: CSSStyleDeclaration, depth = 0): string {
   if (depth > 5) return value.trim();
@@ -143,7 +143,7 @@ export default function TokensPage(): React.ReactNode {
     <div className="doc-page">
       <h1 className="doc-h1">设计令牌</h1>
       <p className="doc-lead">
-        ZUI 的视觉事实来源是三层令牌：base（原始色阶）→ semantic（语义变量，组件唯一消费入口）→
+        ZUVI 的视觉事实来源是三层令牌：base（原始色阶）→ semantic（语义变量，组件唯一消费入口）→
         dark（暗色映射）。下例色块直接以 CSS 变量渲染，切主题即全部跟随。
       </p>
 
@@ -161,7 +161,7 @@ export default function TokensPage(): React.ReactNode {
                 <div className="doc-swatch-color" style={{ background: cssVar }} />
                 <div className="doc-swatch-meta">
                   <span className="doc-swatch-name">
-                    --z-{scaleName}-{step}
+                    --zuvi-{scaleName}-{step}
                   </span>
                   <span className="doc-swatch-hex">{resolvedValues[cssVar] || '解析中…'}</span>
                 </div>
@@ -180,7 +180,7 @@ export default function TokensPage(): React.ReactNode {
               <li className="doc-swatch" key={item.name}>
                 <div className="doc-swatch-color" style={{ background: item.cssVar }} />
                 <div className="doc-swatch-meta">
-                  <span className="doc-swatch-name">--z-color-{item.name}</span>
+                  <span className="doc-swatch-name">--zuvi-color-{item.name}</span>
                   <span className="doc-swatch-hex">{resolvedValues[item.cssVar] || item.note}</span>
                 </div>
               </li>
@@ -191,12 +191,12 @@ export default function TokensPage(): React.ReactNode {
 
       <h2 className="doc-h2">间距</h2>
       <p className="doc-p">
-        <code className="doc-code-inline">--z-space-1..12</code>，4px 步进（1=4px … 12=48px）。
+        <code className="doc-code-inline">--zuvi-space-1..12</code>，4px 步进（1=4px … 12=48px）。
       </p>
       <ul className="doc-ruler">
         {Object.entries(tokens.space).map(([step, cssVar]) => (
           <li className="doc-ruler-row" key={step}>
-            <span className="doc-ruler-label">--z-space-{step}</span>
+            <span className="doc-ruler-label">--zuvi-space-{step}</span>
             <span className="doc-ruler-bar" style={{ width: cssVar }} />
           </li>
         ))}
@@ -204,7 +204,7 @@ export default function TokensPage(): React.ReactNode {
 
       <h2 className="doc-h2">圆角</h2>
       <p className="doc-p">
-        <code className="doc-code-inline">--z-radius</code> 是唯一来源（0.625rem），其余全部派生。
+        <code className="doc-code-inline">--zuvi-radius</code> 是唯一来源（0.625rem），其余全部派生。
       </p>
       <ul className="doc-radius-grid">
         {RADII.map((item) => (
@@ -219,7 +219,7 @@ export default function TokensPage(): React.ReactNode {
         {TYPE_SCALE.map((item) => (
           <li className="doc-type-row" key={item.name}>
             <span className="doc-type-label">{item.name}</span>
-            <span style={{ fontSize: item.cssVar, lineHeight: 'var(--z-leading-tight)' }}>
+            <span style={{ fontSize: item.cssVar, lineHeight: 'var(--zuvi-leading-tight)' }}>
               令牌驱动的排版 Aa 永 0
             </span>
             <span className="doc-type-label">{item.note}</span>

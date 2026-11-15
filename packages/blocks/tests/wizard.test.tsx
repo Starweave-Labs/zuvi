@@ -57,10 +57,10 @@ describe('wizard block', () => {
     const { rerender } = render(<WizardBlock {...props} />);
 
     // 第一步（受控 Input 用 fireEvent 整体赋值，避免逐键回退）
-    fireEvent.change(screen.getByLabelText('项目名称'), { target: { value: 'ZUI 组件库' } });
+    fireEvent.change(screen.getByLabelText('项目名称'), { target: { value: 'ZUVI 组件库' } });
     fireEvent.change(screen.getByLabelText('项目编号'), { target: { value: 'prj-001' } });
     rerender(<WizardBlock {...props} />);
-    expect(screen.getByLabelText('项目名称')).toHaveValue('ZUI 组件库');
+    expect(screen.getByLabelText('项目名称')).toHaveValue('ZUVI 组件库');
     await user.click(screen.getByRole('button', { name: '下一步' }));
     expect(onCurrentChange).toHaveBeenLastCalledWith(1);
 
@@ -75,19 +75,19 @@ describe('wizard block', () => {
 
     // 第三步：确认信息 + 完成
     expect(screen.getByText('确认项目信息')).toBeInTheDocument();
-    expect(screen.getByText('ZUI 组件库')).toBeInTheDocument();
+    expect(screen.getByText('ZUVI 组件库')).toBeInTheDocument();
     expect(screen.getByText('平台组件')).toBeInTheDocument();
     expect(screen.getByText('林小满')).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: '完成创建' }));
     expect(onFinish).toHaveBeenCalledTimes(1);
     expect(onFinish).toHaveBeenCalledWith(
-      expect.objectContaining({ name: 'ZUI 组件库', code: 'prj-001', category: 'platform', owner: '林小满' })
+      expect.objectContaining({ name: 'ZUVI 组件库', code: 'prj-001', category: 'platform', owner: '林小满' })
     );
   });
 
   it('goes back to the previous step with 上一步', async () => {
     const user = userEvent.setup();
-    const values = { ...DEMO_WIZARD_VALUES, name: 'ZUI 组件库', code: 'prj-001' };
+    const values = { ...DEMO_WIZARD_VALUES, name: 'ZUVI 组件库', code: 'prj-001' };
     render(<WizardBlock values={values} defaultCurrent={1} />);
     expect(screen.getByLabelText('负责人')).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: '上一步' }));

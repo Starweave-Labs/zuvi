@@ -9,7 +9,7 @@ describe('Result 渲染', () => {
     render(<Result />);
     const root = document.querySelector('[data-part="root"]') as HTMLElement;
     expect(root).toBeInTheDocument();
-    expect(root).toHaveClass('z-result');
+    expect(root).toHaveClass('zuvi-result');
     expect(root).toHaveAttribute('data-status', 'info');
     expect(screen.getByText('提示')).toBeInTheDocument();
     expect(document.querySelector('[data-part="icon"] svg')).toBeInTheDocument();
@@ -71,7 +71,7 @@ describe('Result data-part / classNames', () => {
 
   it('className 追加到根元素', () => {
     render(<Result className="page-404" />);
-    expect(document.querySelector('[data-part="root"]')).toHaveClass('z-result', 'page-404');
+    expect(document.querySelector('[data-part="root"]')).toHaveClass('zuvi-result', 'page-404');
   });
 });
 

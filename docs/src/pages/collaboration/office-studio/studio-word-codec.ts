@@ -26,7 +26,7 @@ import {
   type NumberingDefinition,
   type ParagraphChild,
 } from 'docx';
-import type { StudioRichNode, StudioWordDocument } from '@zui/react';
+import type { StudioRichNode, StudioWordDocument } from '@zuvi/react';
 
 const W = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';
 const R = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships';
@@ -444,7 +444,7 @@ function parseStyles(xml?: XMLDocument): { defaults: Style; styles: Map<string, 
       run: runProperties(child(source, 'rPr'), base.run),
       paragraph: paragraphProperties(child(source, 'pPr'), base.paragraph),
       heading: level,
-      quote: id === 'ZuiQuote' || base.quote,
+      quote: id === 'ZuviQuote' || base.quote,
     };
     styles.set(id, result);
     return result;
@@ -789,9 +789,9 @@ function parseParagraph(element: Element, context: ImportContext): ParsedParagra
     };
   }
   const border = child(properties, 'pBdr');
-  if (styleId === 'ZuiRule' || (border && child(border, 'bottom') && !inline.length))
+  if (styleId === 'ZuviRule' || (border && child(border, 'bottom') && !inline.length))
     return { nodes: [{ type: 'horizontalRule' }] };
-  if (border && styleId !== 'ZuiQuote') unsupported('段落边框');
+  if (border && styleId !== 'ZuviQuote') unsupported('段落边框');
   const base: StudioRichNode = {
     type: style.heading ? 'heading' : 'paragraph',
     ...(Object.keys(attrs).length || style.heading
@@ -975,11 +975,11 @@ function parsePage(body: Element): StudioWordDocument['page'] {
 function packageTarget(part: string, target: string): string {
   let resolved: URL;
   try {
-    resolved = new URL(target, `https://zui-docx.invalid/${part}`);
+    resolved = new URL(target, `https://zuvi-docx.invalid/${part}`);
   } catch {
     unsupported('无效的文档关系');
   }
-  if (resolved!.origin !== 'https://zui-docx.invalid' || resolved!.search || resolved!.hash)
+  if (resolved!.origin !== 'https://zuvi-docx.invalid' || resolved!.search || resolved!.hash)
     unsupported('外部图片或页眉页脚引用');
   try {
     return decodeURIComponent(resolved!.pathname).replace(/^\//, '');
@@ -1329,7 +1329,7 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
       else if (node.type === 'horizontalRule')
         result.push(
           new Paragraph({
-            style: 'ZuiRule',
+            style: 'ZuviRule',
             border: { bottom: { style: BorderStyle.SINGLE, size: 6, color: '1F2937' } },
           })
         );
@@ -1338,7 +1338,7 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
         for (const item of node.content || []) {
           if (!['paragraph', 'heading'].includes(item.type))
             throw new Error('DOCX 首版支持由段落组成的引用。');
-          result.push(paragraph(item, { style: 'ZuiQuote' }));
+          result.push(paragraph(item, { style: 'ZuviQuote' }));
         }
       } else if (node.type === 'bulletList' || node.type === 'orderedList') {
         const renderList = (list: StudioRichNode, level: number) => {
@@ -1346,7 +1346,7 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
           checkAttrs(list, ['start', 'type']);
           if (list.attrs?.type != null && list.attrs.type !== '1')
             unsupported('字母或特殊列表编号');
-          const reference = `zui-list-${numbering.length}`;
+          const reference = `zuvi-list-${numbering.length}`;
           numbering.push({
             reference,
             levels: Array.from({ length: 9 }, (_, index) => ({
@@ -1450,7 +1450,7 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
       ? [12240, 15840]
       : [Math.round(210 * TWIPS_PER_MM), Math.round(297 * TWIPS_PER_MM)];
   const file = new DocxDocument({
-    creator: 'ZUI Office Studio',
+    creator: 'ZUVI Office Studio',
     title: document.name,
     numbering: { config: numbering },
     styles: {
@@ -1486,15 +1486,15 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
       },
       paragraphStyles: [
         {
-          id: 'ZuiQuote',
-          name: 'ZUI Quote',
+          id: 'ZuviQuote',
+          name: 'ZUVI Quote',
           basedOn: 'Normal',
           paragraph: {
             indent: { left: 360 },
             border: { left: { style: BorderStyle.SINGLE, size: 18, color: '1F2937' } },
           },
         },
-        { id: 'ZuiRule', name: 'ZUI Rule', basedOn: 'Normal' },
+        { id: 'ZuviRule', name: 'ZUVI Rule', basedOn: 'Normal' },
       ],
     },
     sections: [

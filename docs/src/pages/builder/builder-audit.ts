@@ -192,7 +192,7 @@ export function auditBuilderDesign(
     const states = (node.props._states || {}) as BuilderStateDesign;
     const serialized = JSON.stringify([design, states]);
     for (const match of serialized.matchAll(
-      /var\(--z-(?:color-token|token-(?:space|radius|fontSize))-[a-z-]+\)/g
+      /var\(--zuvi-(?:color-token|token-(?:space|radius|fontSize))-[a-z-]+\)/g
     ))
       if (!tokens.has(match[0]))
         add(

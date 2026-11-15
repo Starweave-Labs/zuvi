@@ -2,12 +2,12 @@
 
 日期：2026-11-10。入口：文档站「页面搭建器」，路由 `#/builder`。
 
-本轮继续完善页面设计能力。现有 89 个搭建节点、71 个公开 ZUI 组件目录、10 套整页模板和 15 个预设区块继续可用。企业 API 与统一登录尚未确定，保留现有标准数据源接口；新增能力均在前端与本机工作区运行。
+本轮继续完善页面设计能力。现有 89 个搭建节点、71 个公开 ZUVI 组件目录、10 套整页模板和 15 个预设区块继续可用。企业 API 与统一登录尚未确定，保留现有标准数据源接口；新增能力均在前端与本机工作区运行。
 
 ## 从哪里开始
 
 1. 在顶部「新建页面」选择模板。业务系统可从「项目业务工作台」「运营分析看板」「内容资源中心」开始；官网与信息收集可使用「品牌产品官网」「需求收集门户」。
-2. 在「组件」拖入或插入 ZUI 组件，在「图层」调整嵌套、顺序、锁定与隐藏。双击画布文字直接编辑；使用桌面、平板、手机画布分别调整布局。
+2. 在「组件」拖入或插入 ZUVI 组件，在「图层」调整嵌套、顺序、锁定与隐藏。双击画布文字直接编辑；使用桌面、平板、手机画布分别调整布局。
 3. 在「规范」加入基础设计变量，再绑定组件颜色、间距、圆角与字号。右侧样式面板可以单独设计悬停、聚焦、按下与禁用状态。
 4. 在「主组件」创建重复使用的组件及变体。跨页插入关联实例，保留页面自身的文字和样式覆盖。
 5. 选中组件后，在属性面板「交互」配置状态、属性绑定、显隐、禁用条件与事件动作。
@@ -68,11 +68,11 @@ REST 请求保持只读，使用 `credentials: 'omit'`；跨域端点需允许�
 机器可读结果见验收证据目录的 `verification.json` 与 `regression.json`。
 
 ```sh
-pnpm --filter @zui/docs test
-pnpm --filter @zui/docs typecheck
+pnpm --filter @zuvi/docs test
+pnpm --filter @zuvi/docs typecheck
 pnpm exec eslint docs/src/pages/builder docs/tests/builder-enterprise.test.mjs e2e/builder-enterprise.spec.ts --max-warnings=0
-GITHUB_PAGES_BUILD=true pnpm --filter @zui/docs build
-ZUI_E2E_PORT=5190 pnpm exec playwright test --config e2e/playwright.config.ts e2e/builder.spec.ts e2e/builder-studio.spec.ts e2e/builder-layout.spec.ts e2e/builder-catalog.spec.ts e2e/builder-scenes.spec.ts e2e/builder-enterprise.spec.ts --workers=1
+GITHUB_PAGES_BUILD=true pnpm --filter @zuvi/docs build
+ZUVI_E2E_PORT=5190 pnpm exec playwright test --config e2e/playwright.config.ts e2e/builder.spec.ts e2e/builder-studio.spec.ts e2e/builder-layout.spec.ts e2e/builder-catalog.spec.ts e2e/builder-scenes.spec.ts e2e/builder-enterprise.spec.ts --workers=1
 ```
 
 浏览器覆盖 320 / 768 / 1440 像素、明暗主题、真实拖放、嵌套和自由布局、文字编辑、保存与刷新恢复、导入冲突、表单、数据联动、全部模板，以及断开外部请求后的 HTML 交互。新增流程还覆盖跨页主组件同步、实例覆盖、变量绑定、输入焦点、事件分支、导航和检查报告。

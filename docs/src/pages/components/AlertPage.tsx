@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Alert, Button } from '@zui/react';
+import { Alert, Button } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -144,26 +144,26 @@ export default function AlertPage(): React.ReactNode {
         name="Alert"
         parts={['root', 'icon', 'title', 'description', 'close']}
         vars={[
-          '--z-alert-padding-x',
-          '--z-alert-padding-y',
-          '--z-alert-gap',
-          '--z-alert-radius',
-          '--z-alert-border-width',
-          '--z-alert-font-size',
-          '--z-alert-line-height',
-          '--z-alert-title-font-size',
-          '--z-alert-title-font-weight',
-          '--z-alert-icon-size',
-          '--z-alert-close-size',
-          '--z-alert-close-icon-size',
-          '--z-alert-close-radius',
-          '--z-alert-bg',
-          '--z-alert-fg',
-          '--z-alert-border',
-          '--z-alert-icon-color',
-          '--z-alert-close-hover-bg',
-          '--z-alert-focus-ring',
-          '--z-alert-transition',
+          '--zuvi-alert-padding-x',
+          '--zuvi-alert-padding-y',
+          '--zuvi-alert-gap',
+          '--zuvi-alert-radius',
+          '--zuvi-alert-border-width',
+          '--zuvi-alert-font-size',
+          '--zuvi-alert-line-height',
+          '--zuvi-alert-title-font-size',
+          '--zuvi-alert-title-font-weight',
+          '--zuvi-alert-icon-size',
+          '--zuvi-alert-close-size',
+          '--zuvi-alert-close-icon-size',
+          '--zuvi-alert-close-radius',
+          '--zuvi-alert-bg',
+          '--zuvi-alert-fg',
+          '--zuvi-alert-border',
+          '--zuvi-alert-icon-color',
+          '--zuvi-alert-close-hover-bg',
+          '--zuvi-alert-focus-ring',
+          '--zuvi-alert-transition',
         ]}
       />
     </div>

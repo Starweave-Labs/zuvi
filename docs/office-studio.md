@@ -1,10 +1,10 @@
 # OfficeStudio 独立文档编辑器
 
-2026-11-13：独立 `OfficeStudio` 已在基础编辑能力上补齐图片、页眉页脚、查找替换、工作表与行列增删、表格合并与冻结、筛选排序、原生图表、条件格式、数据验证与填充、Excel 字体/字号、超链接和选择性粘贴、PDF 绘图与表单，以及打印和历史版本。可见工具、菜单与表单直接使用 ZUI 的 Button、Input、Select、Tabs、DropdownMenu、ColorPicker、Modal、Checkbox、Radio/RadioGroup、Collapse 和 Table 等组件；Word、Excel、PDF 分别使用自己的文档模型和编辑内核。无需文档服务器，示例没有调用 `/api/office`。
+2026-11-13：独立 `OfficeStudio` 已在基础编辑能力上补齐图片、页眉页脚、查找替换、工作表与行列增删、表格合并与冻结、筛选排序、原生图表、条件格式、数据验证与填充、Excel 字体/字号、超链接和选择性粘贴、PDF 绘图与表单，以及打印和历史版本。可见工具、菜单与表单直接使用 ZUVI 的 Button、Input、Select、Tabs、DropdownMenu、ColorPicker、Modal、Checkbox、Radio/RadioGroup、Collapse 和 Table 等组件；Word、Excel、PDF 分别使用自己的文档模型和编辑内核。无需文档服务器，示例没有调用 `/api/office`。
 
-本地页面：`http://127.0.0.1:5175/#/components/office-studio`。已有 `OfficeEditor` 的 ONLYOFFICE 集成继续保留。v0.4.0 包含 73 个 UI 组件与 16 个业务块，两个编辑器均随 `@zui/react` 和 Registry 分发。
+本地页面：`http://127.0.0.1:5175/#/components/office-studio`。已有 `OfficeEditor` 的 ONLYOFFICE 集成继续保留。v0.4.0 包含 73 个 UI 组件与 16 个业务块，两个编辑器均随 `@zuvi/react` 和 Registry 分发。
 
-本轮依据 ONLYOFFICE web-apps、sdkjs 与 ranuts/document 的固定源码版本调整标题栏、文件菜单、标签、两行工具分组、画布与状态栏；实际来源和 ZUI 映射见 [界面与操作参考记录](office-studio-reference-2026-11-12.md)。已完成本地字体/行高及本轮编辑操作的浏览器核对；真实打印与 Office 精确分页仍需单独验收。功能状态逐项见 [Office 功能细节对照](office-function-comparison-2026-11-12.md)，不能据此认定整体功能已完全一致。
+本轮依据 ONLYOFFICE web-apps、sdkjs 与 ranuts/document 的固定源码版本调整标题栏、文件菜单、标签、两行工具分组、画布与状态栏；实际来源和 ZUVI 映射见 [界面与操作参考记录](office-studio-reference-2026-11-12.md)。已完成本地字体/行高及本轮编辑操作的浏览器核对；真实打印与 Office 精确分页仍需单独验收。功能状态逐项见 [Office 功能细节对照](office-function-comparison-2026-11-12.md)，不能据此认定整体功能已完全一致。
 
 ## 能力与边界
 
@@ -42,7 +42,7 @@ Excel 原生超链接使用可选的 `StudioSheet.hyperlinks`，保存单格或�
 
 公共文件菜单位于标签行左侧，包含新建、打开、保存、导出和打印。Word、Sheet、PDF 使用蓝、绿、红的标题栏主题；标签行 32px、小按钮 24px、工具文字 12px，编辑器底部状态栏为单行 25px。Word 的开始、插入、布局、引用、审阅、视图标签保留现有操作，字体和段落分成两行；样式图库提供正文、无间距、标题 1，并保留其余段落样式菜单。左侧导航切换查找替换、大纲和字数；厘米标尺用于预览，正文使用灰底画布上的白纸。
 
-Word 和 Sheet 的字体组上行使用可编辑的 ZUI Combobox 输入字体和字号；Sheet 下行是粗体、斜体、下划线和文字/填充颜色，段落组使用左、中、右对齐图标。图表仍由独立 SVG 绘制，“查看图表数据”使用 ZUI Collapse 展开 ZUI Table，显示分类和系列值。
+Word 和 Sheet 的字体组上行使用可编辑的 ZUVI Combobox 输入字体和字号；Sheet 下行是粗体、斜体、下划线和文字/填充颜色，段落组使用左、中、右对齐图标。图表仍由独立 SVG 绘制，“查看图表数据”使用 ZUVI Collapse 展开 ZUVI Table，显示分类和系列值。
 
 | 编辑器 | 缺省字体/字号                  | 菜单范围                                                                                                                                                   |
 | ------ | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -55,7 +55,7 @@ XLSX 适配从原生字体表、单元格和行列样式恢复小数字号，避
 
 Sheet 按累计行高计算可见区域、滚动定位、冻结行与合并格跨度，默认 18pt（24px），导入的默认行高、显式行高和手动隐藏行会参与显示。开始标签提供“行高”弹窗（0–409.5pt，0 隐藏）、“自动调整行高”和“恢复默认行高”，应用到选区覆盖的行；双击行号也可自动调整。行高支持撤销重做，并随行列结构编辑、XLSX 保存重开和旧草稿恢复保留。自动调整测量当前字体、字号、换行与列宽，跨多行合并的内容不参与计算；修改字号本身不会自动调整行高。单元格按其边界裁切。Excel 打印使用独立 HTML 表格，沿用当前模型的行高和隐藏行，保留隐藏合并起始行的可见内容；其分页仍由浏览器决定。
 
-PDF 提供开始、批注标签，左导航切换查找、批注、缩略图和表单；查找与缩略图在左面板，批注和表单在右面板，同一导航按钮可关闭面板。页码、前后页、缩放菜单及有界加减位于 25px 状态栏。页面覆盖层中的文字、多行文字、复选、单选和下拉字段分别使用 ZUI Input、Input.Textarea、Checkbox、Radio/RadioGroup 和 Select；查找和标注列表使用 Button。同一字段的单选控件保持受控分组，原坐标、旋转、值提交及只读/禁用行为继续生效。
+PDF 提供开始、批注标签，左导航切换查找、批注、缩略图和表单；查找与缩略图在左面板，批注和表单在右面板，同一导航按钮可关闭面板。页码、前后页、缩放菜单及有界加减位于 25px 状态栏。页面覆盖层中的文字、多行文字、复选、单选和下拉字段分别使用 ZUVI Input、Input.Textarea、Checkbox、Radio/RadioGroup 和 Select；查找和标注列表使用 Button。同一字段的单选控件保持受控分组，原坐标、旋转、值提交及只读/禁用行为继续生效。
 
 ## Excel 常用编辑补齐
 
@@ -67,7 +67,7 @@ PDF 提供开始、批注标签，左导航切换查找、批注、缩略图和�
 
 ## 源码与接入
 
-- UI：`packages/ui/src/components/OfficeStudio/`，公共导出及子路径 `@zui/react/office-studio`。
+- UI：`packages/ui/src/components/OfficeStudio/`，公共导出及子路径 `@zuvi/react/office-studio`。
 - 文件适配：`docs/src/pages/collaboration/office-studio/studio-{word,excel,pdf}-codec.ts`。
 - PDF 渲染：`studio-pdf-adapter.ts`，负责 PDF.js worker、分页、旋转与点坐标变换。
 - 本地存储：`studio-storage.ts` 与 `studio-workspace.ts`。
@@ -75,8 +75,8 @@ PDF 提供开始、批注标签，左导航切换查找、批注、缩略图和�
 - 演示页：`docs/src/pages/components/OfficeStudioPage.tsx`。
 
 ```tsx
-import { OfficeStudio, type OfficeStudioDocument } from '@zui/react';
-import '@zui/react/styles.css';
+import { OfficeStudio, type OfficeStudioDocument } from '@zuvi/react';
+import '@zuvi/react/styles.css';
 
 <OfficeStudio
   value={document}
@@ -94,13 +94,13 @@ import '@zui/react/styles.css';
 />;
 ```
 
-组件管理编辑与反馈，文件解析、持久化、下载及打印由宿主回调实现；示例中的回调名表示应用提供的函数。本仓库提供三种可运行的适配实现。复制到其他业务仓库时，应一起迁移需要的 codec、PDF worker/字体配置、打印和持久化实现，并调整相对导入；CLI 的 `office-studio` 条目复制 UI 组件与其 ZUI 依赖，文档示例中的适配器不属于 UI 包的公共导出。
+组件管理编辑与反馈，文件解析、持久化、下载及打印由宿主回调实现；示例中的回调名表示应用提供的函数。本仓库提供三种可运行的适配实现。复制到其他业务仓库时，应一起迁移需要的 codec、PDF worker/字体配置、打印和持久化实现，并调整相对导入；CLI 的 `office-studio` 条目复制 UI 组件与其 ZUVI 依赖，文档示例中的适配器不属于 UI 包的公共导出。
 
 `ref` 提供 `getDocument()`、`save()`、`export()`、`print()` 和 `setFullscreen(boolean)`。读取模型、保存、导出和打印前会提交当前输入；数据验证失败时保留输入草稿，并阻止读取模型、文件操作和文档切换，修正或取消草稿后可重试。Ctrl/Command S 调用保存；提供 `onPrint` 后 Ctrl/Command P 调用打印。只读模式保留查找、导航、缩放、导出和打印，禁用模式暂停编辑与文件操作。
 
 ## 保存与显示
 
-本地示例使用独立 IndexedDB 数据库 `zui-office-studio`，同一记录保存模型、原始 Blob、修订号和保存时间。没有复用旧工作区的 `officeDrafts`。刷新恢复最近文档，文档选择器可打开之前保存的文件。
+本地示例使用独立 IndexedDB 数据库 `zuvi-office-studio`，同一记录保存模型、原始 Blob、修订号和保存时间。没有复用旧工作区的 `officeDrafts`。刷新恢复最近文档，文档选择器可打开之前保存的文件。
 
 保存等待事务提交后才确认成功；同一修订号采用事务内比较，两个页面并发保存时拒绝过期写入。保存时继续输入不会覆盖新内容，自动保存随后合并最新版本。新建、导入和切换前排空保存请求。存储失败保留当前编辑数据，仍可导出文件或通过“另存本地副本”生成独立记录。
 
@@ -132,7 +132,7 @@ PDF 页面的原始字节仅在文件切换时重新载入。标注/表单变化
 
 这些许可允许符合各自条款的商业使用。分发时保留相关版权、许可证、Apache NOTICE（如存在）及字体许可；依赖的传递项也应保留其自身通知。UI 的 npm 构建将 Tiptap 与公式解析器作为依赖引用，文件 codec 留在宿主适配中，不能将整个实现描述为无任何许可要求。本轮最终 IIFE 已按实际打包模块生成 `LICENSE.txt`，重新核对包含 48 个依赖的许可通知，共 64,605 字节。宿主 codec、worker 与字体的通知仍须随各自分发产物保留。
 
-验证结果记录于 [文档编辑器验证记录](office-verification-2026-11-12.md)。其中保留的 1577 项 UI、162 项文档站 Node、21 项 XLSX、10 项打印及本地分发数字属于 2026-11-12 的规则/日期阶段，早于本轮超链接、Office 界面、字体与 PDF ZUI 控件追加；不能当作当前源码的最终全量结果。
+验证结果记录于 [文档编辑器验证记录](office-verification-2026-11-12.md)。其中保留的 1577 项 UI、162 项文档站 Node、21 项 XLSX、10 项打印及本地分发数字属于 2026-11-12 的规则/日期阶段，早于本轮超链接、Office 界面、字体与 PDF ZUVI 控件追加；不能当作当前源码的最终全量结果。
 
 本轮最终测试合计 2010 项通过：UI 全量 1668/1668、93 个文件，其中 OfficeStudio 359 项、OfficeEditor 19 项均已计入；文档站 Node 194/194，包含 187 个顶层测试；CLI 26、MCP 7、Tokens 3、Icons 7、I18n 37、Blocks 68 均通过。UI、docs 及其余工作区包的 TypeScript 与仓库 `pnpm lint` 通过。真实 XLSX 专项 32/32，覆盖超链接、字体与小数字号继承的重复往返；打印专项 19/19，jsdom 计算样式另确认 Excel 缺省 Calibri / 11pt、显式 Times New Roman / 11.5pt 优先，Word 表格保留 10pt；上述专项已计入各自全量。
 

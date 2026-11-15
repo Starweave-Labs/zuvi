@@ -13,7 +13,7 @@ describe('FloatButton 渲染', () => {
   it('默认渲染圆形按钮与 data-part', () => {
     render(<FloatButton />);
     const root = document.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-float-button');
+    expect(root).toHaveClass('zuvi-float-button');
     expect(root).toHaveAttribute('data-shape', 'circle');
     expect(root).toHaveAttribute('data-type', 'default');
     expect(root).toHaveAttribute('data-open', 'false');
@@ -130,7 +130,7 @@ describe('FloatButton 定制', () => {
       />
     );
     const root = document.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-float-button', 'my-root', 'page-fab');
+    expect(root).toHaveClass('zuvi-float-button', 'my-root', 'page-fab');
     expect(screen.getByRole('button', { name: '快捷入口' })).toBeInTheDocument();
     expect(document.querySelector('[data-part="menu"]')).toHaveClass('my-menu');
     expect(document.querySelector('[data-part="item"]')).toHaveClass('my-item');

@@ -10,7 +10,7 @@ describe('Tag', () => {
   it('renders with default color=neutral and label content', () => {
     const { container } = render(<Tag>标签</Tag>);
     const root = container.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-tag');
+    expect(root).toHaveClass('zuvi-tag');
     expect(root).toHaveAttribute('data-color', 'neutral');
     expect(screen.getByText('标签')).toBeInTheDocument();
   });
@@ -27,7 +27,7 @@ describe('Tag', () => {
   it('renders icon part when icon is provided', () => {
     const { container } = render(<Tag icon={<i data-testid="icon">★</i>}>标签</Tag>);
     const icon = container.querySelector('[data-part="icon"]');
-    expect(icon).toHaveClass('z-tag-icon');
+    expect(icon).toHaveClass('zuvi-tag-icon');
     expect(icon).toHaveAttribute('aria-hidden', 'true');
     expect(icon!.contains(screen.getByTestId('icon'))).toBe(true);
   });
@@ -47,7 +47,7 @@ describe('Tag', () => {
     );
     const close = screen.getByRole('button', { name: '移除标签: 标签' });
     expect(close).toHaveAttribute('data-part', 'close');
-    expect(close).toHaveClass('z-tag-close');
+    expect(close).toHaveClass('zuvi-tag-close');
 
     await user.click(close);
     expect(onClose).toHaveBeenCalledTimes(1);
@@ -103,9 +103,9 @@ describe('Tag', () => {
       </Tag>
     );
     const root = container.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-tag', 'my-root', 'cls-root');
-    expect(root.querySelector('[data-part="icon"]')).toHaveClass('z-tag-icon', 'cls-icon');
-    expect(root.querySelector('[data-part="close"]')).toHaveClass('z-tag-close', 'cls-close');
+    expect(root).toHaveClass('zuvi-tag', 'my-root', 'cls-root');
+    expect(root.querySelector('[data-part="icon"]')).toHaveClass('zuvi-tag-icon', 'cls-icon');
+    expect(root.querySelector('[data-part="close"]')).toHaveClass('zuvi-tag-close', 'cls-close');
   });
 
   it('forwards ref to the root element', () => {

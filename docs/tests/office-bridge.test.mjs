@@ -36,7 +36,7 @@ async function close(server) {
 
 async function fixture(t, options = {}) {
   const fixture = {
-    dataDir: await mkdtemp(join(tmpdir(), 'zui-office-bridge-test-')),
+    dataDir: await mkdtemp(join(tmpdir(), 'zuvi-office-bridge-test-')),
     generated: new Map(),
     downloads: [],
     commands: [],

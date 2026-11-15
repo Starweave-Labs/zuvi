@@ -1,33 +1,33 @@
-# @zui/blocks
+# @zuvi/blocks
 
-> v0.4.0 发布到 GitHub Packages：`@yeyouyuan/zui-blocks`，npmjs 暂不发布。先在项目 `.npmrc` 配置 `@yeyouyuan:registry=https://npm.pkg.github.com`，再用拥有包读取权限的 GitHub 账号登录。
+> v0.4.0 发布到 GitHub Packages：`@yeyouyuan/zuvi-blocks`，npmjs 暂不发布。先在项目 `.npmrc` 配置 `@yeyouyuan:registry=https://npm.pkg.github.com`，再用拥有包读取权限的 GitHub 账号登录。
 
 ```bash
 npm login --scope=@yeyouyuan --auth-type=legacy --registry=https://npm.pkg.github.com
-pnpm add @zui/blocks@npm:@yeyouyuan/zui-blocks@0.4.0
+pnpm add @zuvi/blocks@npm:@yeyouyuan/zuvi-blocks@0.4.0
 ```
 
-源码导入继续使用 `@zui/blocks`。完整认证和安装说明见仓库 [GitHub Packages 文档](https://github.com/yeyouyuan/zui/blob/main/docs/GITHUB-PACKAGES.md)。
+源码导入继续使用 `@zuvi/blocks`。完整认证和安装说明见仓库 [GitHub Packages 文档](https://github.com/yeyouyuan/zuvi/blob/main/docs/GITHUB-PACKAGES.md)。
 
-ZUI 业务区块：16 个页面级区块，用 `@zui/react` 组件拼装，可整体嵌入业务系统，也可拆改。内置演示数据均可替换，业务请求由使用方的回调处理。
+ZUVI 业务区块：16 个页面级区块，用 `@zuvi/react` 组件拼装，可整体嵌入业务系统，也可拆改。内置演示数据均可替换，业务请求由使用方的回调处理。
 
 - 每块是一个 React 组件（首行 `'use client'`，RSC/Next.js 友好），自带布局/间距/层次，直接像真实页面渲染。
-- 样式走 ZUI 语义令牌（`--z-color-*` / `--z-space-*` / `--z-text-*` 等），无硬编码色值；**块本身不引 CSS 文件**，由使用方全局引入 `@zui/react/styles.css`。
+- 样式走 ZUVI 语义令牌（`--zuvi-color-*` / `--zuvi-space-*` / `--zuvi-text-*` 等），无硬编码色值；**块本身不引 CSS 文件**，由使用方全局引入 `@zuvi/react/styles.css`。
 - 每块附 `block.json`（名称 / 描述 / 依赖组件清单 / category: "业务块"），供 registry 分发与 AI 检索。
 
 ## 安装与引入
 
 ```bash
-pnpm add @zui/blocks@npm:@yeyouyuan/zui-blocks@0.4.0 @zui/react@npm:@yeyouyuan/zui-react@0.4.0 react react-dom
+pnpm add @zuvi/blocks@npm:@yeyouyuan/zuvi-blocks@0.4.0 @zuvi/react@npm:@yeyouyuan/zuvi-react@0.4.0 react react-dom
 ```
 
 ```tsx
 // 入口处引入一次样式（由使用方引入，块不自带 CSS）
-import '@zui/react/styles.css';
+import '@zuvi/react/styles.css';
 
-import { LoginBlock, DashboardBlock, TablePageBlock, FormPageBlock } from '@zui/blocks';
+import { LoginBlock, DashboardBlock, TablePageBlock, FormPageBlock } from '@zuvi/blocks';
 // 或按块单独引入（tree-shaking 友好）：
-import { LoginBlock } from '@zui/blocks/login';
+import { LoginBlock } from '@zuvi/blocks/login';
 ```
 
 ## 用法示例
@@ -46,7 +46,7 @@ import { LoginBlock } from '@zui/blocks/login';
 
 ```tsx
 import { useState } from 'react';
-import { SettingsBlock, DEMO_SETTINGS_VALUES } from '@zui/blocks';
+import { SettingsBlock, DEMO_SETTINGS_VALUES } from '@zuvi/blocks';
 
 export default function SettingsPage() {
   const [values, setValues] = useState({ ...DEMO_SETTINGS_VALUES });
@@ -107,7 +107,7 @@ export default function SettingsPage() {
 ### TablePageBlock 表格页
 
 ```tsx
-import { TablePageBlock, DEMO_COLUMNS, DEMO_DATA, DEMO_FILTERS } from '@zui/blocks';
+import { TablePageBlock, DEMO_COLUMNS, DEMO_DATA, DEMO_FILTERS } from '@zuvi/blocks';
 
 <TablePageBlock
   title="商品管理"
@@ -150,7 +150,7 @@ import { TablePageBlock, DEMO_COLUMNS, DEMO_DATA, DEMO_FILTERS } from '@zui/bloc
 
 ## 组件依赖
 
-业务块直接使用 `@zui/react` 的 Form、Statistic、DatePicker、Card、Input、Select、Button、Checkbox、Switch、Divider、Tag、Table、Tabs 和 Pagination。块的 props 接口保持稳定，使用方只需引入一次 `@zui/react/styles.css`。
+业务块直接使用 `@zuvi/react` 的 Form、Statistic、DatePicker、Card、Input、Select、Button、Checkbox、Switch、Divider、Tag、Table、Tabs 和 Pagination。块的 props 接口保持稳定，使用方只需引入一次 `@zuvi/react/styles.css`。
 
 ## 与 registry / CLI 配合分发
 
@@ -168,17 +168,17 @@ import { TablePageBlock, DEMO_COLUMNS, DEMO_DATA, DEMO_FILTERS } from '@zui/bloc
 分发流程（registry 组的 `registry/scripts/generate.mjs` 扫描 `packages/blocks/src/*/`，读取 `block.json` + 文件清单生成 registry 条目）：
 
 1. **生成**：registry 生成脚本读取每个 `src/<block>/block.json`，产出 `type: "registry:block"` 条目，`files` 指向 `src/<block>/index.tsx`，`registryDependencies` 由 `dependencies`（组件名）映射为 `registry:component` 条目。
-2. **安装**：`npx zui add login` 复制 `index.tsx` 到业务方 `src/components/blocks/login/`，并按依赖清单拉取 Button/Input/Card 等组件源码（先装组件后装块，块是纯组件拼装，无独立 CSS 文件）。
-3. **升级**：`npx zui diff login` 对比本地副本与 registry 上游，输出 unified diff。
-4. **AI 检索**：`block.json` 的 `name/description/dependencies/category` 进入 `@zui/mcp` 的 `zui_search_components` 索引（category="业务块"），供 AI 按描述直接生成页面骨架。
+2. **安装**：`npx zuvi add login` 复制 `index.tsx` 到业务方 `src/components/blocks/login/`，并按依赖清单拉取 Button/Input/Card 等组件源码（先装组件后装块，块是纯组件拼装，无独立 CSS 文件）。
+3. **升级**：`npx zuvi diff login` 对比本地副本与 registry 上游，输出 unified diff。
+4. **AI 检索**：`block.json` 的 `name/description/dependencies/category` 进入 `@zuvi/mcp` 的 `zuvi_search_components` 索引（category="业务块"），供 AI 按描述直接生成页面骨架。
 
-包内亦可整体安装（`@zui/blocks` workspace 包），此时按上文「安装与引入」直接 import 即可，不走文件复制。
+包内亦可整体安装（`@zuvi/blocks` workspace 包），此时按上文「安装与引入」直接 import 即可，不走文件复制。
 
 ## 目录结构
 
 ```
 packages/blocks/
-├── package.json          # @zui/blocks，peerDeps: react/react-dom ^19 + @zui/react
+├── package.json          # @zuvi/blocks，peerDeps: react/react-dom ^19 + @zuvi/react
 ├── tsconfig.json
 ├── README.md
 └── src/
@@ -219,6 +219,6 @@ npx tsc -p tsconfig.json   # 类型检查（0 错误）
 ## 约定
 
 - 首行 `'use client'`；React 19 原生 ref；禁 forwardRef（同 V1/V2 契约）。
-- 只用语义令牌（`--z-color-primary`、`--z-color-fg-muted`、`--z-space-4`、`--z-radius-md`、`--z-text-sm` 等），适配亮/暗主题自动生效。
+- 只用语义令牌（`--zuvi-color-primary`、`--zuvi-color-fg-muted`、`--zuvi-space-4`、`--zuvi-radius-md`、`--zuvi-text-sm` 等），适配亮/暗主题自动生效。
 - `data-part="root|brand|form|toolbar|footer"` 标记关键节点，配合 `classNames` 可从外部覆盖局部样式。
 - 数据全部 props 化（内置演示数据可覆盖），块不发请求、不持业务状态，回调交给业务方。

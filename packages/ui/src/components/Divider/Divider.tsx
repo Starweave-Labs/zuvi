@@ -35,15 +35,15 @@ export function Divider({
       data-orientation={orientation}
       data-dashed={dashed ? 'true' : undefined}
       data-has-text={hasText ? 'true' : undefined}
-      className={cx('z-divider', className)}
+      className={cx('zuvi-divider', className)}
     >
-      <span data-part="line" aria-hidden="true" className="z-divider-line" />
+      <span data-part="line" aria-hidden="true" className="zuvi-divider-line" />
       {hasText ? (
-        <span data-part="text" className="z-divider-text">
+        <span data-part="text" className="zuvi-divider-text">
           {children}
         </span>
       ) : null}
-      {hasText ? <span data-part="line" aria-hidden="true" className="z-divider-line" /> : null}
+      {hasText ? <span data-part="line" aria-hidden="true" className="zuvi-divider-line" /> : null}
     </div>
   );
 }

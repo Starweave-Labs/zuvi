@@ -1,4 +1,4 @@
-import { Statistic } from '@zui/react';
+import { Statistic } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -15,7 +15,7 @@ const STYLE_CODE = `<Statistic
   title="今日营收"
   value={123456}
   prefix="¥"
-  valueStyle={{ color: 'var(--z-color-success)' }}
+  valueStyle={{ color: 'var(--zuvi-color-success)' }}
 />`;
 
 const COUNTDOWN_CODE = `<Statistic.CountDown
@@ -68,7 +68,7 @@ export default function StatisticPage(): React.ReactNode {
           title="今日营收"
           value={123456}
           prefix="¥"
-          valueStyle={{ color: 'var(--z-color-success)' }}
+          valueStyle={{ color: 'var(--zuvi-color-success)' }}
         />
       </Demo>
 
@@ -141,7 +141,7 @@ export default function StatisticPage(): React.ReactNode {
       />
       <p className="doc-p">
         数字使用 <code className="doc-code-inline">tabular-nums</code> 等宽数字避免跳动；
-        大数字字重由 <code className="doc-code-inline">--z-statistic-value-font-weight</code>
+        大数字字重由 <code className="doc-code-inline">--zuvi-statistic-value-font-weight</code>
         （600）控制。 CountDown
         的服务端与水合首帧使用确定性占位，挂载后再按客户端时钟计算剩余时间，避免跨秒水合不一致。
       </p>
@@ -150,23 +150,23 @@ export default function StatisticPage(): React.ReactNode {
         name="Statistic"
         parts={['root', 'title', 'value', 'prefix', 'suffix']}
         vars={[
-          '--z-statistic-font-family',
-          '--z-statistic-title-font-size',
-          '--z-statistic-title-fg',
-          '--z-statistic-title-font-weight',
-          '--z-statistic-title-margin-bottom',
-          '--z-statistic-value-font-size',
-          '--z-statistic-value-font-weight',
-          '--z-statistic-value-fg',
-          '--z-statistic-value-line-height',
-          '--z-statistic-suffix-font-size',
-          '--z-statistic-suffix-font-weight',
-          '--z-statistic-suffix-fg',
-          '--z-statistic-suffix-margin-left',
-          '--z-statistic-prefix-font-size',
-          '--z-statistic-prefix-font-weight',
-          '--z-statistic-prefix-fg',
-          '--z-statistic-prefix-margin-right',
+          '--zuvi-statistic-font-family',
+          '--zuvi-statistic-title-font-size',
+          '--zuvi-statistic-title-fg',
+          '--zuvi-statistic-title-font-weight',
+          '--zuvi-statistic-title-margin-bottom',
+          '--zuvi-statistic-value-font-size',
+          '--zuvi-statistic-value-font-weight',
+          '--zuvi-statistic-value-fg',
+          '--zuvi-statistic-value-line-height',
+          '--zuvi-statistic-suffix-font-size',
+          '--zuvi-statistic-suffix-font-weight',
+          '--zuvi-statistic-suffix-fg',
+          '--zuvi-statistic-suffix-margin-left',
+          '--zuvi-statistic-prefix-font-size',
+          '--zuvi-statistic-prefix-font-weight',
+          '--zuvi-statistic-prefix-fg',
+          '--zuvi-statistic-prefix-margin-right',
         ]}
       />
     </div>

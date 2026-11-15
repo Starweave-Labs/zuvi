@@ -669,7 +669,7 @@ test.describe('Office 宿主集成（受控 DocsAPI 与桥接服务）', () => {
       page.getByRole('button', { name: '导出工作区备份', exact: true })
     );
     const backup = JSON.parse(backupBytes.toString('utf8')) as WorkspaceBackup;
-    expect(backup.format).toBe('zui-content-workspace');
+    expect(backup.format).toBe('zuvi-content-workspace');
     const stored = backup.data.files.find((file) => file.id === session.fileId)!;
     expect(stored.revision).toBe(session.ackRevision);
     expect(backup.data.officeDrafts?.[stored.id]).toBeUndefined();

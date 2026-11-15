@@ -1,4 +1,4 @@
-import { Breadcrumb } from '@zui/react';
+import { Breadcrumb } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -49,7 +49,7 @@ export default function BreadcrumbPage(): React.ReactNode {
 
       <Demo
         title="自定义分隔符"
-        description="separator 可传任意节点覆盖默认「/」，渲染在 z-breadcrumb-separator 插槽（aria-hidden）。"
+        description="separator 可传任意节点覆盖默认「/」，渲染在 zuvi-breadcrumb-separator 插槽（aria-hidden）。"
         code={SEPARATOR_CODE}
       >
         <Breadcrumb separator="›">
@@ -127,15 +127,15 @@ export default function BreadcrumbPage(): React.ReactNode {
         name="Breadcrumb"
         parts={['root', 'item', 'separator']}
         vars={[
-          '--z-breadcrumb-font-size',
-          '--z-breadcrumb-fg',
-          '--z-breadcrumb-hover-fg',
-          '--z-breadcrumb-current-fg',
-          '--z-breadcrumb-current-font-weight',
-          '--z-breadcrumb-separator-fg',
-          '--z-breadcrumb-separator-margin-x',
-          '--z-breadcrumb-focus-ring',
-          '--z-breadcrumb-transition',
+          '--zuvi-breadcrumb-font-size',
+          '--zuvi-breadcrumb-fg',
+          '--zuvi-breadcrumb-hover-fg',
+          '--zuvi-breadcrumb-current-fg',
+          '--zuvi-breadcrumb-current-font-weight',
+          '--zuvi-breadcrumb-separator-fg',
+          '--zuvi-breadcrumb-separator-margin-x',
+          '--zuvi-breadcrumb-focus-ring',
+          '--zuvi-breadcrumb-transition',
         ]}
       />
     </div>

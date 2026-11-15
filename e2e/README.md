@@ -1,7 +1,7 @@
-# ZUI 文档站 Playwright E2E 冒烟
+# ZUVI 文档站 Playwright E2E 冒烟
 
 针对 `docs/` hash 路由文档站的 163 条浏览器测试。默认端口为 **5174**，可用
-`ZUI_E2E_PORT` 指定独立端口。覆盖四个核心起始页、Form / Select / Combobox / Modal / 日期范围 / VirtualTable
+`ZUVI_E2E_PORT` 指定独立端口。覆盖四个核心起始页、Form / Select / Combobox / Modal / 日期范围 / VirtualTable
 交互、暗色切换、移动菜单与页内目录，以及 78 个导航路由在 1440px / 320px、浅色 / 暗色四种组合下的溢出、示例裁切、图片加载与文字对比度检查。全站另有 `pageerror` / `console.error` 检查。
 
 当前 0.3.0 发布验证：**163/163 passed（9.1 分钟）**，零失败、零跳过、零不稳定。78 个导航路由在四组尺寸/主题下共 312 次显示检查全部通过。记录见 `docs/audits/2026-11-10/release/`。
@@ -17,7 +17,7 @@
 | `builder.spec.ts`                                                | 真实拖拽与图片、多页面管理、编辑历史、JSON 备份、独立 HTML 表单、存储失败与冲突，以及三种宽度明暗主题检查，共 13 条                                                     |
 | `builder-studio.spec.ts`                                         | 完整编辑器：内容与响应式样式、图层管理与快捷键、六个区块组合、独立表单、三种宽度实际编辑、缩放拖拽、图片资源、非法样式与结构保护，共 11 条                              |
 | `builder-layout.spec.ts`                                         | 编辑器完整性：真实百分比与最大宽度、分区与表单栅格、页内锚点滚动、样式复制与重置、自定义画布和专注模式，共 4 条                                                         |
-| `docs-page-audit.spec.ts`                                        | 78 个导航路由的四组显示矩阵，共 4 条；可用 `ZUI_AUDIT_DIR` 导出每页截图与 JSON 报告                                                                                     |
+| `docs-page-audit.spec.ts`                                        | 78 个导航路由的四组显示矩阵，共 4 条；可用 `ZUVI_AUDIT_DIR` 导出每页截图与 JSON 报告                                                                                     |
 | `collaboration.spec.ts`                                          | 本地文件工作台：真实文件导入、完整编辑、下载、持久保存、备份恢复、存储失败重试、标签页冲突、文件管理、评论与草稿，以及 1440/1280/768/320px 明暗布局和完整 axe，共 24 条 |
 | `ui-lab.spec.ts`                                                 | 10 个新设计的实际状态变化、目录状态保留、焦点、复制 CSS，以及桌面/320px 明暗主题完整 axe，共 12 条                                                                      |
 | `docs-smoke.spec.ts`                                             | 22 条冒烟用例，含全路由 320px 布局审计、焦点管理与 console error 监听                                                                                                   |
@@ -59,13 +59,13 @@ internal state」）：
 pnpm test:e2e                                              # 推荐入口（等价下行）
 npx playwright test --config e2e/playwright.config.ts --reporter=line
 npx playwright test --config e2e/playwright.config.ts -g "Select"   # 只跑匹配用例
-ZUI_E2E_PORT=5175 pnpm test:e2e                            # 指定空闲端口
+ZUVI_E2E_PORT=5175 pnpm test:e2e                            # 指定空闲端口
 ```
 
-webServer 行为：Playwright 先探测 `http://localhost:<ZUI_E2E_PORT>`（未设置时为 5174）：
+webServer 行为：Playwright 先探测 `http://localhost:<ZUVI_E2E_PORT>`（未设置时为 5174）：
 
-- **已有手动 dev server 在监听**（`pnpm dev` / `pnpm --filter @zui/docs dev`）→ 本地直接复用，不执行 webServer command；
-- **目标端口空闲** → 自动执行 `pnpm --filter @zui/docs dev --port <port> --strictPort`，测试结束后关闭；
+- **已有手动 dev server 在监听**（`pnpm dev` / `pnpm --filter @zuvi/docs dev`）→ 本地直接复用，不执行 webServer command；
+- **目标端口空闲** → 自动执行 `pnpm --filter @zuvi/docs dev --port <port> --strictPort`，测试结束后关闭；
 - **CI** → 不复用已有服务，避免误测残留进程。
 
 只跑单条用例可加过滤：`pnpm test:e2e -g "Select"`。

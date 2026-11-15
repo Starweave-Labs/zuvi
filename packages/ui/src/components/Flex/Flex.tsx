@@ -27,7 +27,7 @@ export interface FlexProps extends React.ComponentPropsWithRef<'div'> {
   justify?: FlexJustify;
   /** 交叉轴对齐方式，默认 'start' */
   align?: FlexAlign;
-  /** 间距：sm/md/lg 映射 --z-space-2/3/4；number → px；string 原样（内联 gap） */
+  /** 间距：sm/md/lg 映射 --zuvi-space-2/3/4；number → px；string 原样（内联 gap） */
   gap?: FlexGap;
   /** 是否允许换行，默认 false */
   wrap?: boolean;
@@ -41,9 +41,9 @@ export interface FlexProps extends React.ComponentPropsWithRef<'div'> {
 /* --------------------------------- 内部工具 -------------------------------- */
 
 const GAP_TOKEN: Record<'sm' | 'md' | 'lg', string> = {
-  sm: 'var(--z-space-2)',
-  md: 'var(--z-space-3)',
-  lg: 'var(--z-space-4)',
+  sm: 'var(--zuvi-space-2)',
+  md: 'var(--zuvi-space-3)',
+  lg: 'var(--zuvi-space-4)',
 };
 
 function resolveGap(gap: FlexProps['gap']): string | undefined {
@@ -96,7 +96,7 @@ export function Flex({
       data-justify={justify}
       data-align={align}
       data-wrap={wrap ? 'true' : 'false'}
-      className={cx('z-flex', className, classNames?.root)}
+      className={cx('zuvi-flex', className, classNames?.root)}
       style={{ ...flexStyle, ...style }}
     >
       {children}

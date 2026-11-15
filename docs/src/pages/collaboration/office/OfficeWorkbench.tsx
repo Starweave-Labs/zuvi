@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { Button, DropdownMenu, OfficeEditor, Switch } from '@zui/react';
-import { ArrowUpRight, Check, Download, RefreshCw, Save } from '@zui/icons';
+import { Button, DropdownMenu, OfficeEditor, Switch } from '@zuvi/react';
+import { ArrowUpRight, Check, Download, RefreshCw, Save } from '@zuvi/icons';
 import type { WorkspaceFile } from '../workspace-model';
 import { workspaceStore } from '../workspace-store';
 import { downloadBlob } from '../workspace-backup';

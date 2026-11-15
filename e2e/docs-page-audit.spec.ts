@@ -22,8 +22,8 @@ for (const width of [1440, 320]) {
       const issues: unknown[] = [];
       page.on('pageerror', (error) => issues.push({ path: page.url(), error: error.message }));
       const records: unknown[] = [];
-      const directory = process.env.ZUI_AUDIT_DIR
-        ? path.join(process.env.ZUI_AUDIT_DIR, `${width}-${colorScheme}`)
+      const directory = process.env.ZUVI_AUDIT_DIR
+        ? path.join(process.env.ZUVI_AUDIT_DIR, `${width}-${colorScheme}`)
         : undefined;
       if (directory) mkdirSync(directory, { recursive: true });
       await page.goto('/');
@@ -57,7 +57,7 @@ for (const width of [1440, 320]) {
           for (const image of main.querySelectorAll<HTMLImageElement>('.doc-demo img')) {
             if (image.naturalWidth === 0) problems.push(`图片未成功加载：${image.alt}`);
           }
-          for (const track of main.querySelectorAll<HTMLElement>('.z-slider-track')) {
+          for (const track of main.querySelectorAll<HTMLElement>('.zuvi-slider-track')) {
             if (track.getBoundingClientRect().width < 24) problems.push('Slider 轨道宽度不足');
           }
           for (const stage of main.querySelectorAll<HTMLElement>('.doc-demo-stage')) {

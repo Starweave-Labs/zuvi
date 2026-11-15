@@ -3,12 +3,12 @@ import { BuilderDocument } from './BuilderDocument';
 import { validateBuilderData } from './builder-model';
 import { BuilderPrototype, validatePrototype } from './BuilderPrototype';
 
-const element = document.getElementById('zui-page-root');
-const payload = document.getElementById('zui-page-data');
+const element = document.getElementById('zuvi-page-root');
+const payload = document.getElementById('zuvi-page-data');
 if (element && payload) {
   try {
     const input = JSON.parse(payload.textContent || '{}');
-    if (input.format === 'zui-prototype')
+    if (input.format === 'zuvi-prototype')
       createRoot(element).render(<BuilderPrototype prototype={validatePrototype(input)} />);
     else createRoot(element).render(<BuilderDocument data={validateBuilderData(input)} />);
   } catch (reason) {

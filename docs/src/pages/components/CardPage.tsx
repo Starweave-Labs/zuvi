@@ -1,4 +1,4 @@
-import { Card } from '@zui/react';
+import { Card } from '@zuvi/react';
 
 import demoCover from '../../assets/demo-cover.svg';
 
@@ -132,22 +132,22 @@ export default function CardPage(): React.ReactNode {
         name="Card"
         parts={['root', 'header', 'title', 'extra', 'cover', 'body', 'footer']}
         vars={[
-          '--z-card-bg',
-          '--z-card-border',
-          '--z-card-border-width',
-          '--z-card-radius',
-          '--z-card-padding',
-          '--z-card-header-height',
-          '--z-card-header-gap',
-          '--z-card-title-font-size',
-          '--z-card-title-font-weight',
-          '--z-card-title-fg',
-          '--z-card-extra-font-size',
-          '--z-card-extra-fg',
-          '--z-card-shadow',
-          '--z-card-hover-shadow',
-          '--z-card-hover-translate-y',
-          '--z-card-transition',
+          '--zuvi-card-bg',
+          '--zuvi-card-border',
+          '--zuvi-card-border-width',
+          '--zuvi-card-radius',
+          '--zuvi-card-padding',
+          '--zuvi-card-header-height',
+          '--zuvi-card-header-gap',
+          '--zuvi-card-title-font-size',
+          '--zuvi-card-title-font-weight',
+          '--zuvi-card-title-fg',
+          '--zuvi-card-extra-font-size',
+          '--zuvi-card-extra-fg',
+          '--zuvi-card-shadow',
+          '--zuvi-card-hover-shadow',
+          '--zuvi-card-hover-translate-y',
+          '--zuvi-card-transition',
         ]}
       />
     </div>

@@ -78,7 +78,7 @@ describe('渲染与语义', () => {
   it('按钮模式：可见按钮是唯一键盘入口，隐藏 input 不重复聚焦', () => {
     const { container } = render(<Upload />);
     const root = getRoot(container);
-    expect(root).toHaveClass('z-upload');
+    expect(root).toHaveClass('zuvi-upload');
     expect(root).toHaveAttribute('data-part', 'root');
 
     expect(screen.getByRole('button', { name: '点击上传' })).toBeInTheDocument();
@@ -93,7 +93,7 @@ describe('渲染与语义', () => {
     const { container } = render(<Upload draggable classNames={{ dragzone: 'c-dz' }} />);
     expect(screen.getByText('点击或拖拽文件到此处')).toBeInTheDocument();
     const zone = container.querySelector('[data-part="dragzone"]');
-    expect(zone).toHaveClass('z-upload-dragzone', 'c-dz');
+    expect(zone).toHaveClass('zuvi-upload-dragzone', 'c-dz');
     expect(zone).toHaveAttribute('role', 'button');
     expect(zone).toHaveAttribute('tabindex', '0');
     expect(screen.getByRole('button', { name: '点击或拖拽文件到此处' })).toBeInTheDocument();
@@ -489,7 +489,7 @@ describe('受控 / 禁用 / 定制出口', () => {
       />
     );
     const root = getRoot(container);
-    expect(root).toHaveClass('z-upload', 'my-root', 'c-root');
+    expect(root).toHaveClass('zuvi-upload', 'my-root', 'c-root');
     expect(root).toHaveAttribute('aria-label', '上传组件');
     expect(container.querySelector('[data-part="trigger"]')).toHaveClass('c-trigger');
     expect(screen.getByRole('list')).toHaveClass('c-list');

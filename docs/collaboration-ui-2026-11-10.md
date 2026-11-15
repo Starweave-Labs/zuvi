@@ -25,7 +25,7 @@
 
 全站标题检查改为识别专用 `h1.doc-h1`，允许标题位于语义页头内；仍要求文档主标题唯一，嵌入的业务区块预览不计入主标题。
 
-显示矩阵摘要保存在 [matrix-summary.json](audits/2026-11-10/collaboration-ui/matrix-summary.json)。完整临时报告与逐页截图位于 `/tmp/zui-collaboration-ui-audit/`，该目录不保证长期保留。浏览器矩阵不替代真实辅助技术、中文输入法及原生缩放人工验收。
+显示矩阵摘要保存在 [matrix-summary.json](audits/2026-11-10/collaboration-ui/matrix-summary.json)。完整临时报告与逐页截图位于 `/tmp/zuvi-collaboration-ui-audit/`，该目录不保证长期保留。浏览器矩阵不替代真实辅助技术、中文输入法及原生缩放人工验收。
 
 ## 截图
 

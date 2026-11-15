@@ -1,128 +1,128 @@
 /* Switch —— 组件级变量定义在根选择器上 */
 
-.z-switch {
-  --z-switch-track-width: 2.25rem; /* 36px md */
-  --z-switch-track-height: 1.25rem; /* 20px md */
-  --z-switch-thumb-size: 1rem; /* 16px */
-  --z-switch-thumb-offset: calc((var(--z-switch-track-height) - var(--z-switch-thumb-size)) / 2);
-  --z-switch-thumb-travel: calc(
-    var(--z-switch-track-width) - var(--z-switch-thumb-size) - 2 * var(--z-switch-thumb-offset)
+.zuvi-switch {
+  --zuvi-switch-track-width: 2.25rem; /* 36px md */
+  --zuvi-switch-track-height: 1.25rem; /* 20px md */
+  --zuvi-switch-thumb-size: 1rem; /* 16px */
+  --zuvi-switch-thumb-offset: calc((var(--zuvi-switch-track-height) - var(--zuvi-switch-thumb-size)) / 2);
+  --zuvi-switch-thumb-travel: calc(
+    var(--zuvi-switch-track-width) - var(--zuvi-switch-thumb-size) - 2 * var(--zuvi-switch-thumb-offset)
   );
-  --z-switch-gap: var(--z-space-2);
-  --z-switch-track-bg: var(--z-color-border-strong); /* 关态中性灰 */
-  --z-switch-track-checked-bg: var(--z-color-primary);
-  --z-switch-track-disabled-bg: var(--z-color-disabled-border);
-  --z-switch-thumb-bg: var(--z-color-bg-elevated);
-  --z-switch-thumb-shadow: var(--z-shadow-sm);
-  --z-switch-thumb-disabled-bg: var(--z-color-bg-elevated);
-  --z-switch-label-color: var(--z-color-fg);
-  --z-switch-label-font-size: var(--z-text-sm);
-  --z-switch-transition: var(--z-duration-normal) var(--z-ease-standard);
+  --zuvi-switch-gap: var(--zuvi-space-2);
+  --zuvi-switch-track-bg: var(--zuvi-color-border-strong); /* 关态中性灰 */
+  --zuvi-switch-track-checked-bg: var(--zuvi-color-primary);
+  --zuvi-switch-track-disabled-bg: var(--zuvi-color-disabled-border);
+  --zuvi-switch-thumb-bg: var(--zuvi-color-bg-elevated);
+  --zuvi-switch-thumb-shadow: var(--zuvi-shadow-sm);
+  --zuvi-switch-thumb-disabled-bg: var(--zuvi-color-bg-elevated);
+  --zuvi-switch-label-color: var(--zuvi-color-fg);
+  --zuvi-switch-label-font-size: var(--zuvi-text-sm);
+  --zuvi-switch-transition: var(--zuvi-duration-normal) var(--zuvi-ease-standard);
 }
 
-.z-switch[data-size='sm'] {
-  --z-switch-track-width: 1.75rem; /* 28px */
-  --z-switch-track-height: 1rem; /* 16px */
-  --z-switch-thumb-size: 0.75rem; /* 12px */
+.zuvi-switch[data-size='sm'] {
+  --zuvi-switch-track-width: 1.75rem; /* 28px */
+  --zuvi-switch-track-height: 1rem; /* 16px */
+  --zuvi-switch-thumb-size: 0.75rem; /* 12px */
 }
 
-.z-switch {
+.zuvi-switch {
   display: inline-flex;
   align-items: center;
-  gap: var(--z-switch-gap);
+  gap: var(--zuvi-switch-gap);
   border: 0;
   padding: 0;
   background: none;
-  color: var(--z-switch-label-color);
-  font-family: var(--z-font-sans);
-  font-size: var(--z-switch-label-font-size);
-  line-height: var(--z-leading-normal);
+  color: var(--zuvi-switch-label-color);
+  font-family: var(--zuvi-font-sans);
+  font-size: var(--zuvi-switch-label-font-size);
+  line-height: var(--zuvi-leading-normal);
   cursor: pointer;
 }
 
-.z-switch:disabled {
+.zuvi-switch:disabled {
   cursor: not-allowed;
-  color: var(--z-color-disabled-fg);
+  color: var(--zuvi-color-disabled-fg);
 }
 
-.z-switch-track {
+.zuvi-switch-track {
   box-sizing: border-box;
   position: relative;
   display: inline-flex;
   flex: none;
   align-items: center;
-  width: var(--z-switch-track-width);
-  height: var(--z-switch-track-height);
-  padding: 0 var(--z-switch-thumb-offset);
-  border-radius: var(--z-radius-full);
-  background: var(--z-switch-track-bg);
-  transition: background-color var(--z-switch-transition);
+  width: var(--zuvi-switch-track-width);
+  height: var(--zuvi-switch-track-height);
+  padding: 0 var(--zuvi-switch-thumb-offset);
+  border-radius: var(--zuvi-radius-full);
+  background: var(--zuvi-switch-track-bg);
+  transition: background-color var(--zuvi-switch-transition);
 }
 
-.z-switch-thumb {
+.zuvi-switch-thumb {
   display: block;
-  width: var(--z-switch-thumb-size);
-  height: var(--z-switch-thumb-size);
-  border-radius: var(--z-radius-full);
-  background: var(--z-switch-thumb-bg);
-  box-shadow: var(--z-switch-thumb-shadow);
+  width: var(--zuvi-switch-thumb-size);
+  height: var(--zuvi-switch-thumb-size);
+  border-radius: var(--zuvi-radius-full);
+  background: var(--zuvi-switch-thumb-bg);
+  box-shadow: var(--zuvi-switch-thumb-shadow);
   transform: translateX(0);
   transition:
-    transform var(--z-switch-transition),
-    box-shadow var(--z-switch-transition);
+    transform var(--zuvi-switch-transition),
+    box-shadow var(--zuvi-switch-transition);
 }
 
-.z-switch[data-checked] .z-switch-track {
-  background: var(--z-switch-track-checked-bg);
+.zuvi-switch[data-checked] .zuvi-switch-track {
+  background: var(--zuvi-switch-track-checked-bg);
 }
 
-.z-switch[data-checked] .z-switch-thumb {
-  transform: translateX(var(--z-switch-thumb-travel));
+.zuvi-switch[data-checked] .zuvi-switch-thumb {
+  transform: translateX(var(--zuvi-switch-thumb-travel));
 }
 
-.z-switch:disabled .z-switch-track {
-  background: var(--z-switch-track-disabled-bg);
+.zuvi-switch:disabled .zuvi-switch-track {
+  background: var(--zuvi-switch-track-disabled-bg);
 }
 
-.z-switch:disabled .z-switch-thumb {
-  background: var(--z-switch-thumb-disabled-bg);
+.zuvi-switch:disabled .zuvi-switch-thumb {
+  background: var(--zuvi-switch-thumb-disabled-bg);
   box-shadow: none;
 }
 
-.z-switch:focus-visible {
-  outline: 2px solid var(--z-color-focus-ring);
+.zuvi-switch:focus-visible {
+  outline: 2px solid var(--zuvi-color-focus-ring);
   outline-offset: 2px;
-  border-radius: var(--z-radius-sm);
+  border-radius: var(--zuvi-radius-sm);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .z-switch-track,
-  .z-switch-thumb {
+  .zuvi-switch-track,
+  .zuvi-switch-thumb {
     transition: none;
   }
 }
 
 @media (forced-colors: active) {
-  .z-switch-track {
+  .zuvi-switch-track {
     background: Canvas;
     border: 1px solid CanvasText;
   }
 
-  .z-switch-thumb {
+  .zuvi-switch-thumb {
     background: ButtonText;
     box-shadow: none;
   }
 
-  .z-switch[data-checked] .z-switch-track {
+  .zuvi-switch[data-checked] .zuvi-switch-track {
     background: Highlight;
     border-color: Highlight;
   }
 
-  .z-switch[data-checked] .z-switch-thumb {
+  .zuvi-switch[data-checked] .zuvi-switch-thumb {
     background: HighlightText;
   }
 
-  .z-switch:focus-visible {
+  .zuvi-switch:focus-visible {
     outline: 2px solid Highlight;
     outline-offset: 2px;
   }

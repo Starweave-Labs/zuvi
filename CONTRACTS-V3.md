@@ -1,4 +1,4 @@
-# ZUI 契约 V3 —— V3 扩产（并行开发第三轮，必读）
+# ZUVI 契约 V3 —— V3 扩产（并行开发第三轮，必读）
 
 > 延续 `CONTRACTS.md`（V1）与 `CONTRACTS-V2.md`（V2）全部约定：'use client' 首行、
 > React 19 原生 ref（禁 forwardRef）、cx 合并类名、useControllableState 受控范式、
@@ -22,7 +22,7 @@
 | docs/src/nav.ts、App.tsx、router.tsx、index.ts、packages/ui/vite/vitest/tsconfig、utils/**                                                                               | 仅集成者                                             |
 
 - 各组并行期间只用 `| grep <你的目录>` 过滤 tsc；只跑自己目录的 vitest。
-- 新组件页照抄 `docs/src/pages/components/ButtonPage.tsx` 模式（usePageTitle + Demo + ApiTable + CustomizeOutlet），import 自 `@zui/react`，不要动 nav.ts。
+- 新组件页照抄 `docs/src/pages/components/ButtonPage.tsx` 模式（usePageTitle + Demo + ApiTable + CustomizeOutlet），import 自 `@zuvi/react`，不要动 nav.ts。
 
 ## 1. 新组件 API（精确契约；未写明处同 V1/V2 范式；每组件均含 data-part/classNames/CSS 变量三件套）
 
@@ -90,7 +90,7 @@ interface RateProps {
 }
 ```
 
-- 原生 button 星形 + aria-checked/role="radio" 或 role="slider"（用 radiogroup 语义更清晰：role="radiogroup" + 每星 role="radio" aria-checked）；←→ 键盘调整。星形 SVG（五角星 path），选中 warning 色（`--z-color-warning`）。
+- 原生 button 星形 + aria-checked/role="radio" 或 role="slider"（用 radiogroup 语义更清晰：role="radiogroup" + 每星 role="radio" aria-checked）；←→ 键盘调整。星形 SVG（五角星 path），选中 warning 色（`--zuvi-color-warning`）。
 
 ### InputNumber（数字输入）
 
@@ -522,8 +522,8 @@ interface QRCodeProps {
   value: string;
   size?: number; // 默认 160
   level?: 'L' | 'M' | 'Q' | 'H'; // 纠错级别，默认 'M'
-  color?: string; // 默认 --z-color-fg
-  bgColor?: string; // 默认 --z-color-bg
+  color?: string; // 默认 --zuvi-color-fg
+  bgColor?: string; // 默认 --zuvi-color-bg
   className?: string;
 }
 ```
@@ -635,7 +635,7 @@ interface TranslateConfig {
   sourceLang?: string;                 // 默认 'zh'
   targetLang: string;                  // 必填，如 'en'
   cache?: boolean;                     // 默认 true，localStorage
-  cacheKey?: string;                   // 默认 'zui-translate-cache'
+  cacheKey?: string;                   // 默认 'zuvi-translate-cache'
 }
 function useAutoTranslate(config: TranslateConfig): {
   t: (text: string, context?: { component?: string; role?: string }) => string | Promise<string>;
@@ -691,8 +691,8 @@ interface ConfigProviderProps { translate?: TranslateConfig; ... }
 
 ```json
 {
-  "name": "zui",
-  "homepage": "https://zui.dev",
+  "name": "zuvi",
+  "homepage": "https://zuvi.dev",
   "items": [
     {
       "name": "button",
@@ -705,7 +705,7 @@ interface ConfigProviderProps { translate?: TranslateConfig; ... }
         "packages/ui/src/components/Button/Button.tsx",
         "packages/ui/src/components/Button/Button.css"
       ],
-      "cssVars": { "--z-button-height": "32px" },
+      "cssVars": { "--zuvi-button-height": "32px" },
       "meta": "packages/ui/src/components/Button/meta.json"
     }
   ]
@@ -715,12 +715,12 @@ interface ConfigProviderProps { translate?: TranslateConfig; ... }
 ### CLI（packages/cli/src/index.ts）
 
 ```bash
-npx zui init                     # 交互式初始化（检测框架、配置目标目录、写 .zurc.json）
-npx zui add button               # 从 registry 复制 Button.tsx + Button.css 到 src/components/ui/button/
-npx zui add button modal        # 多组件
-npx zui add --all                # 全部
-npx zui diff button              # 显示本地副本 vs registry 的 diff（上游更新通道）
-npx zui list                     # 列出 registry 所有组件
+npx zuvi init                     # 交互式初始化（检测框架、配置目标目录、写 .zurc.json）
+npx zuvi add button               # 从 registry 复制 Button.tsx + Button.css 到 src/components/ui/button/
+npx zuvi add button modal        # 多组件
+npx zuvi add --all                # 全部
+npx zuvi diff button              # 显示本地副本 vs registry 的 diff（上游更新通道）
+npx zuvi list                     # 列出 registry 所有组件
 ```
 
 - 命令行用 commander 或纯 process.argv 解析（不引重依赖，选轻量 `commander`）。
@@ -734,15 +734,15 @@ npx zui list                     # 列出 registry 所有组件
 
 ## 4. MCP 组（packages/mcp）
 
-### @zui/mcp（Model Context Protocol server）
+### @zuvi/mcp（Model Context Protocol server）
 
 - 三个 tool：
-  1. `zui_search_components`：输入 query，返回匹配组件（name/description/category）
-  2. `zui_get_component_api`：输入组件名，返回 props 签名 + 用法示例（读 meta.json + CONTRACTS）
-  3. `zui_generate_code`：输入组件名 + props，生成可用 JSX 代码片段
+  1. `zuvi_search_components`：输入 query，返回匹配组件（name/description/category）
+  2. `zuvi_get_component_api`：输入组件名，返回 props 签名 + 用法示例（读 meta.json + CONTRACTS）
+  3. `zuvi_generate_code`：输入组件名 + props，生成可用 JSX 代码片段
 - 用 `@modelcontextprotocol/sdk`（或纯 stdio JSON-RPC，避免重依赖——**优先纯 stdio 实现**，不引 MCP SDK，手写 JSON-RPC 2.0 消息处理）。
 - 实现：`packages/mcp/src/index.ts`，监听 stdio，解析 `tools/list`、`tools/call`，返回 meta.json 数据。
-- **AI 就绪文档**：`packages/mcp/README.md` + 更新 `docs/public/llms.txt`（说明如何配置 Claude Desktop / Cursor 调用 ZUI MCP）。
+- **AI 就绪文档**：`packages/mcp/README.md` + 更新 `docs/public/llms.txt`（说明如何配置 Claude Desktop / Cursor 调用 ZUVI MCP）。
 
 ## 5. 区块组（packages/blocks）
 
@@ -757,10 +757,10 @@ npx zui list                     # 列出 registry 所有组件
 
 ## 6. 工程组（图标接入/locale/README/CHANGELOG/SSR）
 
-### @zui/icons 接入组件（替换内联 SVG）
+### @zuvi/icons 接入组件（替换内联 SVG）
 
-- 给 26 个组件中用到内联 SVG 的地方替换为 `@zui/icons`（Search/ChevronDown/Close/Check/Loading 等）。
-- `packages/ui/package.json` dependencies 加 `"@zui/icons": "workspace:*"`。
+- 给 26 个组件中用到内联 SVG 的地方替换为 `@zuvi/icons`（Search/ChevronDown/Close/Check/Loading 等）。
+- `packages/ui/package.json` dependencies 加 `"@zuvi/icons": "workspace:*"`。
 - **只改图标 import 与 JSX，不动逻辑/测试**（测试若断言 svg 结构需最小调整）。
 
 ### exports 补齐（packages/ui/package.json）
@@ -769,8 +769,8 @@ npx zui list                     # 列出 registry 所有组件
 
 ### locale 全量接入
 
-- DatePicker/Calendar/Pagination/Transfer/TimePicker 的内置文案（上一月/下月/今天/确定/取消/上一页/下一页/搜索 等）接入 `useZuiConfig` locale。
-- 扩展 `ZuiLocale` 类型（新增 date/pagination/transfer/timePicker 等段）。
+- DatePicker/Calendar/Pagination/Transfer/TimePicker 的内置文案（上一月/下月/今天/确定/取消/上一页/下一页/搜索 等）接入 `useZuviConfig` locale。
+- 扩展 `ZuviLocale` 类型（新增 date/pagination/transfer/timePicker 等段）。
 
 ### README + CHANGELOG
 
@@ -779,7 +779,7 @@ npx zui list                     # 列出 registry 所有组件
 
 ### SSR/Next.js 指南（docs/SSR.md）
 
-- 如何在 Next.js App Router 用 ZUI（'use client' 边界、样式引入、SSR 兼容性说明）。
+- 如何在 Next.js App Router 用 ZUVI（'use client' 边界、样式引入、SSR 兼容性说明）。
 
 ## 7. 测试文档组
 

@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useZuiConfig } from '../../config';
+import { useZuviConfig } from '../../config';
 import { cx, floatingPosition, Portal } from '../../utils';
 import './SideNav.css';
 
@@ -330,7 +330,7 @@ export function SideNav({
   onPointerDownCapture,
   ...navProps
 }: SideNavProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const id = React.useId();
   const viewportId = `${id}-viewport`;
   const rootRef = React.useRef<HTMLElement>(null);
@@ -633,7 +633,7 @@ export function SideNav({
     for (const message of messages)
       if (!warned.current.has(message)) {
         warned.current.add(message);
-        console.warn(`[ZUI SideNav] ${message}`);
+        console.warn(`[ZUVI SideNav] ${message}`);
       }
   }, [model, currentKey, current, expandedKeys, internalExpanded]);
 
@@ -772,15 +772,15 @@ export function SideNav({
   const content = (item: SideNavItem, topLevel: boolean) => (
     <>
       {(item.icon || (topLevel && (collapsible || collapsed))) && (
-        <span data-part="icon" aria-hidden="true" className={cx('z-sidenav-icon', classNames.icon)}>
-          {item.icon ?? <span className="z-sidenav-icon-placeholder" />}
+        <span data-part="icon" aria-hidden="true" className={cx('zuvi-sidenav-icon', classNames.icon)}>
+          {item.icon ?? <span className="zuvi-sidenav-icon-placeholder" />}
         </span>
       )}
-      <span data-part="label" className={cx('z-sidenav-label', classNames.label)}>
+      <span data-part="label" className={cx('zuvi-sidenav-label', classNames.label)}>
         {item.label}
       </span>
       {item.badge !== undefined && (
-        <span data-part="badge" className={cx('z-sidenav-badge', classNames.badge)}>
+        <span data-part="badge" className={cx('zuvi-sidenav-badge', classNames.badge)}>
           {item.badge}
         </span>
       )}
@@ -798,7 +798,7 @@ export function SideNav({
     const entry = model.entries.get(item.key)!;
     const active = current?.item.key === item.key;
     const children = content(item, !parent);
-    const linkClass = cx('z-sidenav-link', classNames.link);
+    const linkClass = cx('zuvi-sidenav-link', classNames.link);
     let node: React.ReactNode;
     if (!entry.enabled)
       node = (
@@ -859,7 +859,7 @@ export function SideNav({
         key={item.key}
         data-part="item"
         data-current={active || undefined}
-        className={cx('z-sidenav-item', classNames.item)}
+        className={cx('zuvi-sidenav-item', classNames.item)}
       >
         {node}
       </li>
@@ -877,14 +877,14 @@ export function SideNav({
         data-part="item"
         data-expanded={open}
         data-current-descendant={current?.parent === group.key || undefined}
-        className={cx('z-sidenav-item', classNames.item)}
+        className={cx('zuvi-sidenav-item', classNames.item)}
       >
         <button
           {...pointerTip(group.key)}
           type="button"
           data-part="group-toggle"
           data-key={group.key}
-          className={cx('z-sidenav-group-toggle', classNames.groupToggle)}
+          className={cx('zuvi-sidenav-group-toggle', classNames.groupToggle)}
           disabled={!entry.enabled}
           ref={(element) => {
             if (element) topRefs.current.set(group.key, element);
@@ -903,7 +903,7 @@ export function SideNav({
           <span
             data-part="group-indicator"
             aria-hidden="true"
-            className={cx('z-sidenav-group-indicator', classNames.groupIndicator)}
+            className={cx('zuvi-sidenav-group-indicator', classNames.groupIndicator)}
           >
             <svg viewBox="0 0 16 16">
               <path d="m6 3 5 5-5 5" />
@@ -915,7 +915,7 @@ export function SideNav({
             id={childId}
             data-part="children"
             hidden={!open}
-            className={cx('z-sidenav-children', classNames.children)}
+            className={cx('zuvi-sidenav-children', classNames.children)}
           >
             {group.children.map((item) => renderLeaf(item, group.key))}
           </ul>
@@ -937,7 +937,7 @@ export function SideNav({
       aria-label={labelledBy ? undefined : (ariaLabel ?? locale.sideNav.navigation)}
       data-part="root"
       data-collapsed={collapsed}
-      className={cx('z-sidenav', classNames.root, className)}
+      className={cx('zuvi-sidenav', classNames.root, className)}
       onFocusCapture={recordFocus}
       onKeyDown={handleKeyDown}
       onKeyDownCapture={(event) => {
@@ -953,7 +953,7 @@ export function SideNav({
         ref={viewportRef}
         id={viewportId}
         data-part="viewport"
-        className={cx('z-sidenav-viewport', classNames.viewport)}
+        className={cx('zuvi-sidenav-viewport', classNames.viewport)}
       >
         {model.sections.map((section) => {
           const labelId = `${id}-section-${encodeURIComponent(section.key)}`;
@@ -965,18 +965,18 @@ export function SideNav({
               data-part="section"
               role={hasLabel ? 'group' : undefined}
               aria-labelledby={hasLabel ? labelId : undefined}
-              className={cx('z-sidenav-section', classNames.section)}
+              className={cx('zuvi-sidenav-section', classNames.section)}
             >
               {hasLabel && (
                 <div
                   id={labelId}
                   data-part="section-label"
-                  className={cx('z-sidenav-section-label', classNames.sectionLabel)}
+                  className={cx('zuvi-sidenav-section-label', classNames.sectionLabel)}
                 >
                   {section.label}
                 </div>
               )}
-              <ul data-part="list" className={cx('z-sidenav-list', classNames.list)}>
+              <ul data-part="list" className={cx('zuvi-sidenav-list', classNames.list)}>
                 {section.items.map((item) =>
                   isGroup(item) ? renderGroup(item) : renderLeaf(item)
                 )}
@@ -990,7 +990,7 @@ export function SideNav({
           ref={collapseRef}
           type="button"
           data-part="collapse-toggle"
-          className={cx('z-sidenav-collapse-toggle', classNames.collapseToggle)}
+          className={cx('zuvi-sidenav-collapse-toggle', classNames.collapseToggle)}
           aria-label={collapsed ? locale.sideNav.expand : locale.sideNav.collapse}
           aria-expanded={!collapsed}
           aria-controls={viewportId}
@@ -1000,12 +1000,12 @@ export function SideNav({
             setTooltipKey(null);
           }}
         >
-          <span aria-hidden="true" className="z-sidenav-collapse-icon">
+          <span aria-hidden="true" className="zuvi-sidenav-collapse-icon">
             <svg viewBox="0 0 20 20">
               <path d="m11 5-5 5 5 5M16 4v12" />
             </svg>
           </span>
-          <span className="z-sidenav-label">
+          <span className="zuvi-sidenav-label">
             {collapsed ? locale.sideNav.expand : locale.sideNav.collapse}
           </span>
         </button>
@@ -1017,7 +1017,7 @@ export function SideNav({
             rootRef={rootRef}
             anchor={topRefs.current.get(flyoutGroup.key)}
             data-part="flyout"
-            className={cx('z-sidenav-flyout', classNames.flyout)}
+            className={cx('zuvi-sidenav-flyout', classNames.flyout)}
             role="navigation"
             aria-labelledby={`${id}-flyout-label-${encodeURIComponent(flyoutGroup.key)}`}
             onReady={(element) => {
@@ -1034,14 +1034,14 @@ export function SideNav({
             >
               <div
                 id={`${id}-flyout-label-${encodeURIComponent(flyoutGroup.key)}`}
-                className="z-sidenav-flyout-label"
+                className="zuvi-sidenav-flyout-label"
               >
                 {flyoutGroup.label}
               </div>
               <ul
                 id={`${id}-flyout-${encodeURIComponent(flyoutGroup.key)}`}
                 data-part="children"
-                className={cx('z-sidenav-flyout-list', classNames.children)}
+                className={cx('zuvi-sidenav-flyout-list', classNames.children)}
               >
                 {flyoutGroup.children.map((item) => renderLeaf(item, flyoutGroup.key))}
               </ul>
@@ -1056,7 +1056,7 @@ export function SideNav({
             anchor={topRefs.current.get(tooltip.key)}
             data-part="tooltip"
             visual
-            className={cx('z-sidenav-tooltip', classNames.tooltip)}
+            className={cx('zuvi-sidenav-tooltip', classNames.tooltip)}
           >
             {tooltip.textValue ?? textOf(tooltip.label)}
           </FloatingSurface>

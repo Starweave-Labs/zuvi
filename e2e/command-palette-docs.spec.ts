@@ -29,7 +29,7 @@ async function modKey(page: import('@playwright/test').Page): Promise<string> {
 async function openDocs(page: import('@playwright/test').Page) {
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1, name: 'ZUI 组件库' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: 'ZUVI 组件库' })).toBeVisible();
 }
 
 async function pressModK(page: import('@playwright/test').Page) {
@@ -125,7 +125,7 @@ test('Esc 关闭并归还焦点', async ({ page }) => {
 test('320px：⌘K 打开面板而非抽屉，旧抽屉行为不受影响', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 640 });
   await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1, name: 'ZUI 组件库' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: 'ZUVI 组件库' })).toBeVisible();
   const menuButton = page.getByRole('button', { name: /打开文档菜单|菜单/ });
   await pressModK(page);
   await expect(page.getByRole('dialog', { name: '文档命令面板' })).toBeVisible();

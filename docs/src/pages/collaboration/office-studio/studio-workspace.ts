@@ -1,4 +1,4 @@
-import type { OfficeStudioDocument } from '@zui/react';
+import type { OfficeStudioDocument } from '@zuvi/react';
 import type {
   StudioFileSummary,
   StudioStorage,

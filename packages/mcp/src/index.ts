@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * @zui/mcp —— ZUI 组件库 MCP server。
+ * @zuvi/mcp —— ZUVI 组件库 MCP server。
  *
  * 纯 stdio JSON-RPC 2.0 实现（不引 @modelcontextprotocol/sdk）：
  * 逐行读取 stdin 上的 JSON-RPC 请求，stdout 写回 response。
@@ -9,9 +9,9 @@
  *   initialize / notifications/initialized / ping / tools/list / tools/call
  *
  * tools（CONTRACTS-V3 §4）：
- *   zui_search_components   query → 匹配组件（name/description/category）
- *   zui_get_component_api   组件名 → props 签名 + 用法示例（meta.json + CONTRACTS-V3）
- *   zui_generate_code       组件名 + props → 可用 JSX 代码片段
+ *   zuvi_search_components   query → 匹配组件（name/description/category）
+ *   zuvi_get_component_api   组件名 → props 签名 + 用法示例（meta.json + CONTRACTS-V3）
+ *   zuvi_generate_code       组件名 + props → 可用 JSX 代码片段
  */
 
 import { fileURLToPath } from 'node:url';
@@ -25,20 +25,20 @@ import { generateCode } from './tools/generate.js';
 
 /* --------------------------------- 常量 --------------------------------- */
 
-export const SERVER_NAME = '@zui/mcp';
-export const SERVER_VERSION = '0.5.0';
+export const SERVER_NAME = '@zuvi/mcp';
+export const SERVER_VERSION = '1.0.0';
 const PROTOCOL_VERSION = '2024-11-05';
 
-export const TOOL_SEARCH = 'zui_search_components';
-export const TOOL_API = 'zui_get_component_api';
-export const TOOL_GENERATE = 'zui_generate_code';
+export const TOOL_SEARCH = 'zuvi_search_components';
+export const TOOL_API = 'zuvi_get_component_api';
+export const TOOL_GENERATE = 'zuvi_generate_code';
 
 /** tools/list 返回的 3 个 tool 定义。 */
 export const TOOLS: unknown[] = [
   {
     name: TOOL_SEARCH,
     description:
-      '搜索 ZUI 组件：query 匹配组件名/描述/分类/适用场景，返回 name/description/category。query 为空时返回全部组件。',
+      '搜索 ZUVI 组件：query 匹配组件名/描述/分类/适用场景，返回 name/description/category。query 为空时返回全部组件。',
     inputSchema: {
       type: 'object',
       properties: {
@@ -57,7 +57,7 @@ export const TOOLS: unknown[] = [
   {
     name: TOOL_API,
     description:
-      '查询单个 ZUI 组件的 API：props 签名（type/default/desc）+ 用法示例 + 无障碍说明。数据来自 meta.json + CONTRACTS-V3。',
+      '查询单个 ZUVI 组件的 API：props 签名（type/default/desc）+ 用法示例 + 无障碍说明。数据来自 meta.json + CONTRACTS-V3。',
     inputSchema: {
       type: 'object',
       properties: {
@@ -72,7 +72,7 @@ export const TOOLS: unknown[] = [
   {
     name: TOOL_GENERATE,
     description:
-      '生成可用的 ZUI JSX 代码片段（import + 示例组件）。props 值可传字符串/数字/布尔；字符串 "{表达式}" 会原样输出为 JSX 表达式。',
+      '生成可用的 ZUVI JSX 代码片段（import + 示例组件）。props 值可传字符串/数字/布尔；字符串 "{表达式}" 会原样输出为 JSX 表达式。',
     inputSchema: {
       type: 'object',
       properties: {

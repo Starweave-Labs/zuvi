@@ -27,7 +27,7 @@ import {
   type PDFPage,
 } from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
-import type { StudioPdfDocument, StudioPdfField, StudioPdfMark } from '@zui/react';
+import type { StudioPdfDocument, StudioPdfField, StudioPdfMark } from '@zuvi/react';
 
 const MAX_PAGES = 200;
 const quarterTurn = (angle: number) => ((angle % 360) + 360) % 360;

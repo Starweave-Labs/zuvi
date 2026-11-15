@@ -13,7 +13,7 @@ export type SpaceDirection = 'horizontal' | 'vertical';
 export type SpaceAlign = 'start' | 'center' | 'end' | 'baseline';
 
 export interface SpaceProps extends React.ComponentPropsWithRef<'div'> {
-  /** 间距尺寸，默认 'md'（8px，即 --z-space-2） */
+  /** 间距尺寸，默认 'md'（8px，即 --zuvi-space-2） */
   size?: SpaceSize;
   /** 排列方向，默认 'horizontal' */
   direction?: SpaceDirection;
@@ -26,11 +26,11 @@ export interface SpaceProps extends React.ComponentPropsWithRef<'div'> {
 
 /* --------------------------------- 内部工具 -------------------------------- */
 
-// 契约 §2：默认 'md' = 8px = --z-space-2，三档取相邻令牌 sm/md/lg → --z-space-1/2/3
+// 契约 §2：默认 'md' = 8px = --zuvi-space-2，三档取相邻令牌 sm/md/lg → --zuvi-space-1/2/3
 const SIZE_TOKEN: Record<'sm' | 'md' | 'lg', string> = {
-  sm: 'var(--z-space-1)',
-  md: 'var(--z-space-2)',
-  lg: 'var(--z-space-3)',
+  sm: 'var(--zuvi-space-1)',
+  md: 'var(--zuvi-space-2)',
+  lg: 'var(--zuvi-space-3)',
 };
 
 function resolveSize(size: SpaceProps['size']): string {
@@ -65,7 +65,7 @@ export function Space({
       data-direction={direction}
       data-align={align}
       data-wrap={wrap ? 'true' : 'false'}
-      className={cx('z-space', className, classNames?.root)}
+      className={cx('zuvi-space', className, classNames?.root)}
       style={{ gap: resolveSize(size), ...style }}
     >
       {children}

@@ -18,7 +18,7 @@ for (const entry of release.packages) {
     entry.integrity,
     'sha512-' + createHash('sha512').update(fs.readFileSync(tarball)).digest('base64')
   );
-  assert.ok(entry.name.startsWith('@' + release.repository.split('/')[0].toLowerCase() + '/zui-'));
+  assert.ok(entry.name.startsWith('@' + release.repository.split('/')[0].toLowerCase() + '/zuvi-'));
   let existing;
   try {
     existing = JSON.parse(

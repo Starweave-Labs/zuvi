@@ -1,4 +1,4 @@
-import { App, Button, useApp } from '@zui/react';
+import { App, Button, useApp } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -127,24 +127,24 @@ export default function AppPage(): React.ReactNode {
         name="App"
         parts={['root', 'modal', 'modal-title', 'modal-content', 'modal-actions', 'item']}
         vars={[
-          '--z-app-modal-width',
-          '--z-app-modal-bg',
-          '--z-app-modal-fg',
-          '--z-app-modal-padding',
-          '--z-app-modal-radius',
-          '--z-app-modal-shadow',
-          '--z-app-modal-overlay-bg',
-          '--z-app-modal-title-size',
-          '--z-app-modal-title-weight',
-          '--z-app-modal-desc-size',
-          '--z-app-modal-desc-fg',
-          '--z-app-modal-btn-height',
-          '--z-app-modal-btn-radius',
-          '--z-app-modal-ok-bg',
-          '--z-app-modal-ok-fg',
-          '--z-app-modal-ok-hover-bg',
-          '--z-app-modal-cancel-border',
-          '--z-app-modal-z',
+          '--zuvi-app-modal-width',
+          '--zuvi-app-modal-bg',
+          '--zuvi-app-modal-fg',
+          '--zuvi-app-modal-padding',
+          '--zuvi-app-modal-radius',
+          '--zuvi-app-modal-shadow',
+          '--zuvi-app-modal-overlay-bg',
+          '--zuvi-app-modal-title-size',
+          '--zuvi-app-modal-title-weight',
+          '--zuvi-app-modal-desc-size',
+          '--zuvi-app-modal-desc-fg',
+          '--zuvi-app-modal-btn-height',
+          '--zuvi-app-modal-btn-radius',
+          '--zuvi-app-modal-ok-bg',
+          '--zuvi-app-modal-ok-fg',
+          '--zuvi-app-modal-ok-hover-bg',
+          '--zuvi-app-modal-cancel-border',
+          '--zuvi-app-modal-z',
         ]}
       />
     </div>

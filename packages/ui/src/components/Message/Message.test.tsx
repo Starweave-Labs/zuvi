@@ -35,7 +35,7 @@ describe('Message', () => {
     });
     const item = screen.getByText('hi').closest('[data-part="item"]') as HTMLElement;
     expect(item).toBeInTheDocument();
-    expect(item).toHaveClass('z-message');
+    expect(item).toHaveClass('zuvi-message');
     expect(item).toHaveAttribute('role', 'status');
     expect(item).toHaveAttribute('aria-live', 'polite');
     expect(item).toHaveAttribute('data-variant', 'success');
@@ -70,12 +70,12 @@ describe('Message', () => {
 
   it('renders list container with data-placement (default top)', () => {
     const { container } = renderWithProvider();
-    const list = document.querySelector('.z-message-list');
+    const list = document.querySelector('.zuvi-message-list');
     expect(list).toHaveAttribute('data-placement', 'top');
     expect(list).toHaveAttribute('data-part', 'root');
     expect(container).toBeTruthy();
     renderWithProvider({ placement: 'bottom' });
-    const lists = document.querySelectorAll('.z-message-list');
+    const lists = document.querySelectorAll('.zuvi-message-list');
     expect(lists[lists.length - 1]).toHaveAttribute('data-placement', 'bottom');
   });
 

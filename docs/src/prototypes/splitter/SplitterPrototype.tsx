@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { Splitter } from '@zui/react';
-import type { SplitterResizeEndDetails, SplitterSizesChangeDetails } from '@zui/react';
+import { Splitter } from '@zuvi/react';
+import type { SplitterResizeEndDetails, SplitterSizesChangeDetails } from '@zuvi/react';
 import { usePageTitle } from '../../components/usePageTitle';
 import { SPLITTER_DETAIL_ROUTE, SPLITTER_IDE_ROUTE, type SplitterPrototypeVariant } from './routes';
 import './SplitterPrototype.css';

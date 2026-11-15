@@ -1,6 +1,6 @@
 import { useId, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
-import { Button } from '@zui/react';
-import { Calendar, Check, Clock, Copy, RotateCcw, Settings } from '@zui/icons';
+import { Button } from '@zuvi/react';
+import { Calendar, Check, Clock, Copy, RotateCcw, Settings } from '@zuvi/icons';
 import { Choices, LabCard, Notice, Person } from './shared';
 
 const DAYS = [

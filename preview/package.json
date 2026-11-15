@@ -1,9 +1,9 @@
 {
-  "name": "zui-preview",
+  "name": "zuvi-preview",
   "private": true,
   "type": "module",
   "dependencies": {
-    "@zui/react": "file:../packages/ui",
+    "@zuvi/react": "file:../packages/ui",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

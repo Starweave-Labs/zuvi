@@ -2664,7 +2664,7 @@ test('native merges, frozen panes, filter conditions and charts survive two actu
     worksheetXml,
     /<filterColumn colId="1"><customFilters><customFilter operator="greaterThan" val="15"/
   );
-  assert.match(worksheetXml, /<drawing r:id="rIdZuiDrawing"/);
+  assert.match(worksheetXml, /<drawing r:id="rIdZuviDrawing"/);
   assert.match(await firstZip.file('[Content_Types].xml').async('string'), /drawingml.chart\+xml/);
   const loaded = await readWorkbook(firstFile);
   assert.equal(loaded.worksheets[0].getCell('F1').isMerged, true);

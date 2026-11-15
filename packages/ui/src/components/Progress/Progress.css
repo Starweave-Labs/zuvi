@@ -1,63 +1,63 @@
-/* ZUI Progress —— 进度条（圆角轨道 + 语义状态填充 + 300ms 宽度过渡） */
+/* ZUVI Progress —— 进度条（圆角轨道 + 语义状态填充 + 300ms 宽度过渡） */
 
-.z-progress {
+.zuvi-progress {
   /* 组件级变量（用户可覆盖） */
-  --z-progress-height: 8px;
-  --z-progress-radius: var(--z-radius-full);
-  --z-progress-track-bg: var(--z-color-bg-muted);
-  --z-progress-color: var(--z-color-primary);
-  --z-progress-info-gap: var(--z-space-3);
-  --z-progress-info-font-size: var(--z-text-sm);
-  --z-progress-info-color: var(--z-color-fg-muted);
-  --z-progress-transition: width 300ms var(--z-ease-standard);
+  --zuvi-progress-height: 8px;
+  --zuvi-progress-radius: var(--zuvi-radius-full);
+  --zuvi-progress-track-bg: var(--zuvi-color-bg-muted);
+  --zuvi-progress-color: var(--zuvi-color-primary);
+  --zuvi-progress-info-gap: var(--zuvi-space-3);
+  --zuvi-progress-info-font-size: var(--zuvi-text-sm);
+  --zuvi-progress-info-color: var(--zuvi-color-fg-muted);
+  --zuvi-progress-transition: width 300ms var(--zuvi-ease-standard);
 
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  gap: var(--z-progress-info-gap);
-  font-family: var(--z-font-sans);
+  gap: var(--zuvi-progress-info-gap);
+  font-family: var(--zuvi-font-sans);
 }
 
-.z-progress[data-size='sm'] {
-  --z-progress-height: 6px;
+.zuvi-progress[data-size='sm'] {
+  --zuvi-progress-height: 6px;
 }
 
-.z-progress-track {
+.zuvi-progress-track {
   flex: 1;
-  height: var(--z-progress-height);
+  height: var(--zuvi-progress-height);
   overflow: hidden;
-  background: var(--z-progress-track-bg);
-  border-radius: var(--z-progress-radius);
+  background: var(--zuvi-progress-track-bg);
+  border-radius: var(--zuvi-progress-radius);
 }
 
-.z-progress-fill {
+.zuvi-progress-fill {
   height: 100%;
-  background: var(--z-progress-color);
-  border-radius: var(--z-progress-radius);
-  transition: var(--z-progress-transition);
+  background: var(--zuvi-progress-color);
+  border-radius: var(--zuvi-progress-radius);
+  transition: var(--zuvi-progress-transition);
 }
 
 /* ------------------------------- 语义状态 ------------------------------- */
 
-.z-progress[data-status='success'] {
-  --z-progress-color: var(--z-color-success);
+.zuvi-progress[data-status='success'] {
+  --zuvi-progress-color: var(--zuvi-color-success);
 }
 
-.z-progress[data-status='error'] {
-  --z-progress-color: var(--z-color-danger);
+.zuvi-progress[data-status='error'] {
+  --zuvi-progress-color: var(--zuvi-color-danger);
 }
 
-.z-progress[data-status='active'] {
-  --z-progress-color: var(--z-color-primary);
+.zuvi-progress[data-status='active'] {
+  --zuvi-progress-color: var(--zuvi-color-primary);
 }
 
 /* active：流动光扫过填充 */
-.z-progress[data-status='active'] .z-progress-fill {
+.zuvi-progress[data-status='active'] .zuvi-progress-fill {
   background-image: linear-gradient(
     115deg,
-    color-mix(in oklch, var(--z-progress-color) 60%, transparent) 0%,
-    color-mix(in oklch, var(--z-color-primary-fg) 45%, transparent) 50%,
-    color-mix(in oklch, var(--z-progress-color) 60%, transparent) 100%
+    color-mix(in oklch, var(--zuvi-progress-color) 60%, transparent) 0%,
+    color-mix(in oklch, var(--zuvi-color-primary-fg) 45%, transparent) 50%,
+    color-mix(in oklch, var(--zuvi-progress-color) 60%, transparent) 100%
   );
   background-size: 200% 100%;
   animation: z-progress-flow 1.2s linear infinite;
@@ -72,21 +72,21 @@
   }
 }
 
-.z-progress-info {
+.zuvi-progress-info {
   min-width: 3em;
-  font-size: var(--z-progress-info-font-size);
-  line-height: var(--z-leading-normal);
-  color: var(--z-progress-info-color);
+  font-size: var(--zuvi-progress-info-font-size);
+  line-height: var(--zuvi-leading-normal);
+  color: var(--zuvi-progress-info-color);
   text-align: end;
   font-variant-numeric: tabular-nums;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .z-progress-fill {
+  .zuvi-progress-fill {
     transition: none;
   }
 
-  .z-progress[data-status='active'] .z-progress-fill {
+  .zuvi-progress[data-status='active'] .zuvi-progress-fill {
     animation: none;
   }
 }

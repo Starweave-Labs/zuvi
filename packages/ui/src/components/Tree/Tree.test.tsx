@@ -30,7 +30,7 @@ describe('Tree', () => {
     render(<Tree data={TREE_DATA} />);
     const root = screen.getByRole('tree');
     expect(root).toHaveAttribute('data-part', 'root');
-    expect(root).toHaveClass('z-tree');
+    expect(root).toHaveClass('zuvi-tree');
     expect(root.querySelectorAll('[role="treeitem"]')).toHaveLength(2); // 未展开只渲染顶层
     expect(getItem('父节点')).toHaveAttribute('data-part', 'node');
     expect(getItem('独立节点')).toHaveAttribute('aria-level', '1');
@@ -62,13 +62,13 @@ describe('Tree', () => {
       />
     );
     const root = screen.getByRole('tree');
-    expect(root).toHaveClass('z-tree', 'my-root', 'c-root');
+    expect(root).toHaveClass('zuvi-tree', 'my-root', 'c-root');
     const item = getItem('独立节点');
-    expect(item).toHaveClass('z-tree-node', 'c-node');
-    expect(item.querySelector('[data-part="label"]')).toHaveClass('z-tree-node-label', 'c-label');
-    expect(item.querySelector('[data-part="icon"]')).toHaveClass('z-tree-node-icon', 'c-icon');
+    expect(item).toHaveClass('zuvi-tree-node', 'c-node');
+    expect(item.querySelector('[data-part="label"]')).toHaveClass('zuvi-tree-node-label', 'c-label');
+    expect(item.querySelector('[data-part="icon"]')).toHaveClass('zuvi-tree-node-icon', 'c-icon');
     const checkbox = item.querySelector('[data-part="checkbox"]') as HTMLElement;
-    expect(checkbox).toHaveClass('z-tree-node-checkbox', 'c-checkbox');
+    expect(checkbox).toHaveClass('zuvi-tree-node-checkbox', 'c-checkbox');
   });
 
   /* -------------------------------- 展开 -------------------------------- */

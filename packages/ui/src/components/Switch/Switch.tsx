@@ -42,7 +42,7 @@ export function Switch({
       data-part="root"
       data-size={size}
       data-checked={isChecked || undefined}
-      className={cx('z-switch', className, classNames?.root)}
+      className={cx('zuvi-switch', className, classNames?.root)}
       disabled={disabled}
       aria-checked={isChecked}
       onClick={(event) => {
@@ -54,12 +54,12 @@ export function Switch({
       <span
         data-part="track"
         aria-hidden="true"
-        className={cx('z-switch-track', classNames?.track)}
+        className={cx('zuvi-switch-track', classNames?.track)}
       >
-        <span className={cx('z-switch-thumb', classNames?.thumb)} />
+        <span className={cx('zuvi-switch-thumb', classNames?.thumb)} />
       </span>
       {label != null && label !== '' ? (
-        <span data-part="label" className={cx('z-switch-label', classNames?.label)}>
+        <span data-part="label" className={cx('zuvi-switch-label', classNames?.label)}>
           {label}
         </span>
       ) : null}

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Radio, RadioGroup } from '@zui/react';
+import { Radio, RadioGroup } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -183,21 +183,21 @@ export default function RadioPage(): React.ReactNode {
         name="Radio"
         parts={['root', 'control', 'label']}
         vars={[
-          '--z-radio-size',
-          '--z-radio-gap',
-          '--z-radio-group-gap',
-          '--z-radio-bg',
-          '--z-radio-border',
-          '--z-radio-border-width',
-          '--z-radio-checked-border',
-          '--z-radio-dot-size',
-          '--z-radio-dot-color',
-          '--z-radio-label-color',
-          '--z-radio-label-font-size',
-          '--z-radio-disabled-bg',
-          '--z-radio-disabled-fg',
-          '--z-radio-disabled-border',
-          '--z-radio-transition',
+          '--zuvi-radio-size',
+          '--zuvi-radio-gap',
+          '--zuvi-radio-group-gap',
+          '--zuvi-radio-bg',
+          '--zuvi-radio-border',
+          '--zuvi-radio-border-width',
+          '--zuvi-radio-checked-border',
+          '--zuvi-radio-dot-size',
+          '--zuvi-radio-dot-color',
+          '--zuvi-radio-label-color',
+          '--zuvi-radio-label-font-size',
+          '--zuvi-radio-disabled-bg',
+          '--zuvi-radio-disabled-fg',
+          '--zuvi-radio-disabled-border',
+          '--zuvi-radio-transition',
         ]}
       />
     </div>

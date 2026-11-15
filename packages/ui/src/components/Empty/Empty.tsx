@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useZuiConfig } from '../../config';
+import { useZuviConfig } from '../../config';
 import { cx } from '../../utils';
 import './Empty.css';
 
@@ -41,22 +41,22 @@ export function Empty({
   ref,
   ...rest
 }: EmptyProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   return (
     <div
       {...rest}
       ref={ref}
       data-part="root"
-      className={cx('z-empty', className, classNames?.root)}
+      className={cx('zuvi-empty', className, classNames?.root)}
     >
-      <div data-part="image" className={cx('z-empty-image', classNames?.image)}>
+      <div data-part="image" className={cx('zuvi-empty-image', classNames?.image)}>
         {image ?? <DefaultImage />}
       </div>
-      <div data-part="description" className={cx('z-empty-description', classNames?.description)}>
+      <div data-part="description" className={cx('zuvi-empty-description', classNames?.description)}>
         {description == null ? locale.empty.description : description}
       </div>
       {children != null ? (
-        <div data-part="actions" className="z-empty-actions">
+        <div data-part="actions" className="zuvi-empty-actions">
           {children}
         </div>
       ) : null}

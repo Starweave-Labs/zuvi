@@ -52,7 +52,7 @@
 | 业务区块单元测试                             | 68 / 68，通过             |
 | 文档站单元测试                               | 8 / 8，通过               |
 | 文档类型检查、改动范围 ESLint、diff 空白检查 | 通过                      |
-| GitHub Pages 产物构建，base 为 `/zui/`       | 通过                      |
+| GitHub Pages 产物构建，base 为 `/zuvi/`       | 通过                      |
 
 构建仍提示 BuilderPage 和组件库分块大于 Vite 的 500 kB 建议阈值；搭建器保持路由懒加载。未修改依赖与版本号。
 
@@ -69,11 +69,11 @@
 
 ```sh
 pnpm exec playwright test --config e2e/playwright.config.ts --workers=2
-pnpm --filter @zui/react exec vitest run
-pnpm --filter @zui/blocks test
-pnpm --filter @zui/docs test
-pnpm --filter @zui/docs typecheck
-GITHUB_PAGES_BUILD=true pnpm --filter @zui/docs build
+pnpm --filter @zuvi/react exec vitest run
+pnpm --filter @zuvi/blocks test
+pnpm --filter @zuvi/docs test
+pnpm --filter @zuvi/docs typecheck
+GITHUB_PAGES_BUILD=true pnpm --filter @zuvi/docs build
 ```
 
 本轮修改保留在本地工作区，未执行版本发布。

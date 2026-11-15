@@ -8,7 +8,7 @@ afterEach(cleanup);
 describe('error-pages block', () => {
   it('renders the 404 result with back actions by default', () => {
     const { container } = render(<ErrorPagesBlock />);
-    expect(container.querySelector('.z-result')).toHaveAttribute('data-status', '404');
+    expect(container.querySelector('.zuvi-result')).toHaveAttribute('data-status', '404');
     // SVG 图标内数字码 + Result 标题
     expect(screen.getAllByText('404').length).toBeGreaterThanOrEqual(2);
     expect(screen.getByText('抱歉，你访问的页面不存在或已被移除')).toBeInTheDocument();
@@ -23,11 +23,11 @@ describe('error-pages block', () => {
     const { container } = render(<ErrorPagesBlock showSwitcher onStatusChange={onStatusChange} />);
     fireEvent.click(screen.getByRole('radio', { name: '403' }));
     expect(onStatusChange).toHaveBeenCalledWith('403');
-    expect(container.querySelector('.z-result')).toHaveAttribute('data-status', '403');
+    expect(container.querySelector('.zuvi-result')).toHaveAttribute('data-status', '403');
     expect(screen.getByText('抱歉，你没有权限访问该页面')).toBeInTheDocument();
     fireEvent.click(screen.getByRole('radio', { name: '500' }));
     expect(onStatusChange).toHaveBeenLastCalledWith('500');
-    expect(container.querySelector('.z-result')).toHaveAttribute('data-status', '500');
+    expect(container.querySelector('.zuvi-result')).toHaveAttribute('data-status', '500');
     expect(screen.getByText('抱歉，服务器出了点问题，请稍后再试')).toBeInTheDocument();
   });
 
@@ -38,14 +38,14 @@ describe('error-pages block', () => {
     const { container, rerender } = render(
       <ErrorPagesBlock status="500" onStatusChange={onStatusChange} onBack={onBack} onHome={onHome} />
     );
-    expect(container.querySelector('.z-result')).toHaveAttribute('data-status', '500');
+    expect(container.querySelector('.zuvi-result')).toHaveAttribute('data-status', '500');
     fireEvent.click(screen.getByRole('button', { name: '返回上一页' }));
     expect(onBack).toHaveBeenCalledTimes(1);
     fireEvent.click(screen.getByRole('button', { name: '回到首页' }));
     expect(onHome).toHaveBeenCalledTimes(1);
     // 受控切换：父级改 props 才变
     rerender(<ErrorPagesBlock status="403" onStatusChange={onStatusChange} onBack={onBack} onHome={onHome} />);
-    expect(container.querySelector('.z-result')).toHaveAttribute('data-status', '403');
+    expect(container.querySelector('.zuvi-result')).toHaveAttribute('data-status', '403');
   });
 
   it('supports per-status custom copy', () => {

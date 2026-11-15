@@ -14,7 +14,7 @@ describe('Empty', () => {
     const { container } = render(<Empty />);
     expect(screen.getByText('暂无数据')).toBeInTheDocument();
     const image = container.querySelector('[data-part="image"]');
-    expect(image).toHaveClass('z-empty-image');
+    expect(image).toHaveClass('zuvi-empty-image');
     // 内置插图：灰调两个矩形 + 圆
     const svg = image?.querySelector('svg');
     expect(svg).toBeInTheDocument();
@@ -25,10 +25,10 @@ describe('Empty', () => {
   it('renders root with data-part structure', () => {
     const { container } = render(<Empty />);
     const root = getRoot(container);
-    expect(root).toHaveClass('z-empty');
+    expect(root).toHaveClass('zuvi-empty');
     expect(root).toHaveAttribute('data-part', 'root');
     const description = container.querySelector('[data-part="description"]');
-    expect(description).toHaveClass('z-empty-description');
+    expect(description).toHaveClass('zuvi-empty-description');
   });
 
   it('renders custom description', () => {
@@ -50,7 +50,7 @@ describe('Empty', () => {
       </Empty>
     );
     const actions = container.querySelector('[data-part="actions"]');
-    expect(actions).toHaveClass('z-empty-actions');
+    expect(actions).toHaveClass('zuvi-empty-actions');
     expect(actions).toContainElement(screen.getByRole('button', { name: '去添加' }));
   });
 
@@ -67,10 +67,10 @@ describe('Empty', () => {
       />
     );
     const root = getRoot(container);
-    expect(root).toHaveClass('z-empty', 'my-root', 'cls-root');
-    expect(container.querySelector('[data-part="image"]')).toHaveClass('z-empty-image', 'cls-image');
+    expect(root).toHaveClass('zuvi-empty', 'my-root', 'cls-root');
+    expect(container.querySelector('[data-part="image"]')).toHaveClass('zuvi-empty-image', 'cls-image');
     expect(container.querySelector('[data-part="description"]')).toHaveClass(
-      'z-empty-description',
+      'zuvi-empty-description',
       'cls-description'
     );
   });
@@ -79,7 +79,7 @@ describe('Empty', () => {
     const ref = React.createRef<HTMLDivElement>();
     render(<Empty ref={ref} />);
     expect(ref.current).toBeInstanceOf(HTMLDivElement);
-    expect(ref.current).toHaveClass('z-empty');
+    expect(ref.current).toHaveClass('zuvi-empty');
   });
 
   it('passes native props through to the root element', () => {

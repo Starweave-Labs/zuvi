@@ -1,8 +1,8 @@
 'use client';
 
 import * as React from 'react';
-import { AlertTriangle, CheckCircle, Close, Info, XCircle } from '@zui/icons';
-import { useZuiConfig } from '../../config';
+import { AlertTriangle, CheckCircle, Close, Info, XCircle } from '@zuvi/icons';
+import { useZuviConfig } from '../../config';
 import { Portal } from '../../utils';
 import {
   MessageContext,
@@ -26,7 +26,7 @@ export interface MessageProviderProps {
 }
 
 function MessageIcon({ variant }: { variant: MessageVariant }) {
-  // 图标来自 @zui/icons（容器 .z-message-icon 控制最终尺寸）
+  // 图标来自 @zuvi/icons（容器 .zuvi-message-icon 控制最终尺寸）
   if (variant === 'success') return <CheckCircle />;
   if (variant === 'error') return <XCircle />;
   if (variant === 'warning') return <AlertTriangle />;
@@ -38,7 +38,7 @@ export function MessageProvider({
   max = 3,
   placement = 'top',
 }: MessageProviderProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const [items, setItems] = React.useState<MessageItem[]>([]);
   const itemsRef = React.useRef<MessageItem[]>([]);
   const timersRef = React.useRef(
@@ -151,27 +151,27 @@ export function MessageProvider({
     <MessageContext.Provider value={api}>
       {children}
       <Portal>
-        <div className="z-message-list" data-part="root" data-placement={placement}>
+        <div className="zuvi-message-list" data-part="root" data-placement={placement}>
           {items.map((item) => (
             <div
               key={item.id}
-              className="z-message"
+              className="zuvi-message"
               data-part="item"
               data-variant={item.variant}
               data-state={item.state}
               role="status"
               aria-live={item.variant === 'error' ? 'assertive' : 'polite'}
             >
-              <span className="z-message-icon" data-part="icon">
+              <span className="zuvi-message-icon" data-part="icon">
                 <MessageIcon variant={item.variant} />
               </span>
-              <div className="z-message-content" data-part="content">
+              <div className="zuvi-message-content" data-part="content">
                 {item.content}
               </div>
               {item.closable ? (
                 <button
                   type="button"
-                  className="z-message-close"
+                  className="zuvi-message-close"
                   data-part="close"
                   aria-label={locale.message.close}
                   onClick={() => startClose(item.id)}

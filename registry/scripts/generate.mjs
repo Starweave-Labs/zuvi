@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * ZUI registry 生成脚本（registry 组）
+ * ZUVI registry 生成脚本（registry 组）
  *
  * 遍历 packages/ui/src/components/ 下的每个组件目录，读取 meta.json（若存在）与源文件清单
  * （.tsx / .ts / .css，排除 *.test.*，保留 index.ts 出口文件），自动生成 registry/registry.json。
@@ -15,7 +15,7 @@
  * 说明：
  * - meta.json 缺失时从 docs 文档站标题/描述兜底，再缺失用组件名占位，
  *   AI 翻译组补写 meta.json 后重跑本脚本即可覆盖。
- * - cssVars 解析组件 CSS 中根选择器（如 .z-button）上定义的组件级变量的默认值。
+ * - cssVars 解析组件 CSS 中根选择器（如 .zuvi-button）上定义的组件级变量的默认值。
  * - dependencies / registryDependencies 取自 meta.json；无 meta 时 npm 依赖扫 import，
  *   registry 依赖留给人工（meta.json 的 related / registryDependencies）。
  */
@@ -61,12 +61,12 @@ function docsFallback(componentDirName) {
 /** 解析组件 CSS：收集根选择器上定义的组件级 CSS 变量（默认值） */
 export function extractCssVars(cssText) {
   const vars = {};
-  // 只取类选择器块（.z-xxx { ... }）里的定义，跳过嵌套的尺寸/变体覆盖块
+  // 只取类选择器块（.zuvi-xxx { ... }）里的定义，跳过嵌套的尺寸/变体覆盖块
   const rootBlockRe = /\.(z-[a-z0-9-]+)\s*\{([^{}]*)\}/g;
   let m;
   while ((m = rootBlockRe.exec(cssText)) !== null) {
     const body = m[2];
-    const defRe = /(--z-[a-z0-9-]+)\s*:\s*([^;]+);/g;
+    const defRe = /(--zuvi-[a-z0-9-]+)\s*:\s*([^;]+);/g;
     let d;
     while ((d = defRe.exec(body)) !== null) {
       const key = d[1];
@@ -207,7 +207,7 @@ export function generate() {
     }
   }
   // utils / config 的桶导出（cx / useControllableState / locale 包等）也进入映射，
-  // 否则业务区块从 '@zui/react' 具名导入这些符号时复制模式无法解析本地源文件。
+  // 否则业务区块从 '@zuvi/react' 具名导入这些符号时复制模式无法解析本地源文件。
   for (const extra of ['utils/index.ts', 'config/index.ts']) {
     const barrel = path.join(UI_SRC, extra);
     if (!fs.existsSync(barrel)) continue;
@@ -231,7 +231,7 @@ export function generate() {
     const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'));
     const files = listSourceFiles(dir);
     const source = files.map((file) => fs.readFileSync(path.join(REPO_ROOT, file), 'utf8')).join('\n');
-    const imported = [...source.matchAll(/import\s+(?:type\s+)?\{([^}]+)\}\s+from\s+['"]@zui\/react['"]/g)]
+    const imported = [...source.matchAll(/import\s+(?:type\s+)?\{([^}]+)\}\s+from\s+['"]@zuvi\/react['"]/g)]
       .flatMap((match) => match[1].split(',').map((specifier) => specifier.trim().replace(/^type\s+/, '').split(/\s+as\s+/)[0]));
     const inferred = imported
       .map((symbol) => exports[symbol])
@@ -239,13 +239,13 @@ export function generate() {
       .filter((file) => file.includes('/components/')) // utils/config 符号由 sharedFiles 覆盖，不进 registryDependencies
       .map((file) => toKebab(file.split('/')[4]));
     items.push({ name, type: 'registry:block', title: name, description: meta.description,
-      dependencies: inferNpmDeps(files.map((file) => path.join(REPO_ROOT, file))).filter((dep) => dep !== '@zui/react'),
+      dependencies: inferNpmDeps(files.map((file) => path.join(REPO_ROOT, file))).filter((dep) => dep !== '@zuvi/react'),
       registryDependencies: [...new Set([...(meta.dependencies ?? []).map(toKebab), ...inferred])].sort(),
       files, cssVars: {}, meta: path.relative(REPO_ROOT, metaPath).split(path.sep).join('/') });
   }
   const sharedFiles = ['utils', 'config', 'styles'].flatMap((dir) => listSourceFiles(path.join(UI_SRC, dir)));
   const dependencies = inferNpmDeps(sharedFiles.map((file) => path.join(REPO_ROOT, file)));
-  const registry = { name: 'zui', homepage: 'https://zui.dev', sharedFiles, dependencies, exports, items };
+  const registry = { name: 'zuvi', homepage: 'https://zuvi.dev', sharedFiles, dependencies, exports, items };
   return registry;
 }
 

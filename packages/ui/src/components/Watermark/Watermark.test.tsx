@@ -30,10 +30,10 @@ describe('Watermark 渲染', () => {
   });
 
   it('文本内容平铺为 SVG data-uri 背景', () => {
-    render(<Watermark content="ZUI">x</Watermark>);
+    render(<Watermark content="ZUVI">x</Watermark>);
     const overlay = getOverlay();
     expect(overlay.style.backgroundImage).toContain('data:image/svg+xml');
-    expect(tileOf(overlay)).toContain('ZUI');
+    expect(tileOf(overlay)).toContain('ZUVI');
   });
 
   it('多行 content 平铺多个 text 节点', () => {
@@ -67,13 +67,13 @@ describe('Watermark 定制与安全', () => {
       </Watermark>
     );
     const root = document.querySelector('[data-part="root"]');
-    expect(root).toHaveClass('z-watermark', 'my-root', 'doc-wrap');
-    expect(getOverlay()).toHaveClass('z-watermark-overlay', 'my-overlay');
+    expect(root).toHaveClass('zuvi-watermark', 'my-root', 'doc-wrap');
+    expect(getOverlay()).toHaveClass('zuvi-watermark-overlay', 'my-overlay');
   });
 
   it('覆盖层不拦截指针（pointer-events: none 类名语义）', () => {
     render(<Watermark content="W">x</Watermark>);
-    expect(getOverlay()).toHaveClass('z-watermark-overlay');
+    expect(getOverlay()).toHaveClass('zuvi-watermark-overlay');
   });
 
   it('特殊字符被 XML 转义，不破坏 data-uri', () => {
@@ -93,7 +93,7 @@ describe('Watermark 定制与安全', () => {
       )
     ).not.toThrow();
     const html = renderToString(<Watermark content="CONFIDENTIAL">正文</Watermark>);
-    expect(html).toContain('z-watermark');
+    expect(html).toContain('zuvi-watermark');
     expect(html).toContain('data:image/svg+xml');
   });
 });

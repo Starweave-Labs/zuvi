@@ -1,80 +1,80 @@
 /* Image —— 组件级变量定义在根选择器上 */
 
-.z-image {
-  --z-image-radius: var(--z-radius-md);
-  --z-image-object-fit: cover;
-  --z-image-cursor: zoom-in;
-  --z-image-preview-bg: var(--z-color-overlay);
-  --z-image-preview-img-shadow: var(--z-shadow-lg);
-  --z-image-preview-close-size: 2.25rem;
-  --z-image-preview-close-bg: var(--z-color-bg-elevated);
-  --z-image-preview-close-fg: var(--z-color-fg);
+.zuvi-image {
+  --zuvi-image-radius: var(--zuvi-radius-md);
+  --zuvi-image-object-fit: cover;
+  --zuvi-image-cursor: zoom-in;
+  --zuvi-image-preview-bg: var(--zuvi-color-overlay);
+  --zuvi-image-preview-img-shadow: var(--zuvi-shadow-lg);
+  --zuvi-image-preview-close-size: 2.25rem;
+  --zuvi-image-preview-close-bg: var(--zuvi-color-bg-elevated);
+  --zuvi-image-preview-close-fg: var(--zuvi-color-fg);
 }
 
-.z-image {
+.zuvi-image {
   box-sizing: border-box;
   display: inline-block;
   overflow: hidden;
-  border-radius: var(--z-image-radius);
+  border-radius: var(--zuvi-image-radius);
   line-height: 0;
 }
 
-.z-image-img {
+.zuvi-image-img {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: var(--z-image-object-fit);
+  object-fit: var(--zuvi-image-object-fit);
 }
 
-.z-image[data-preview='true'] .z-image-img {
-  cursor: var(--z-image-cursor);
+.zuvi-image[data-preview='true'] .zuvi-image-img {
+  cursor: var(--zuvi-image-cursor);
 }
 
-.z-image-img:focus-visible {
-  outline: 2px solid var(--z-color-border-focus);
+.zuvi-image-img:focus-visible {
+  outline: 2px solid var(--zuvi-color-border-focus);
   outline-offset: -2px;
 }
 
-.z-image-preview {
+.zuvi-image-preview {
   position: fixed;
   inset: 0;
-  z-index: var(--z-z-modal);
+  z-index: var(--zuvi-z-modal);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--z-image-preview-bg);
+  background: var(--zuvi-image-preview-bg);
   cursor: zoom-out;
 }
 
-.z-image-preview:focus-visible {
+.zuvi-image-preview:focus-visible {
   outline: none;
 }
 
-.z-image-preview-img {
+.zuvi-image-preview-img {
   max-width: 90vw;
   max-height: 90vh;
   max-height: 90dvh;
-  border-radius: var(--z-radius-sm);
-  box-shadow: var(--z-image-preview-img-shadow);
+  border-radius: var(--zuvi-radius-sm);
+  box-shadow: var(--zuvi-image-preview-img-shadow);
 }
 
-.z-image-preview-close {
+.zuvi-image-preview-close {
   position: absolute;
-  top: var(--z-space-4);
-  inset-inline-end: var(--z-space-4);
+  top: var(--zuvi-space-4);
+  inset-inline-end: var(--zuvi-space-4);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: var(--z-image-preview-close-size);
-  height: var(--z-image-preview-close-size);
+  width: var(--zuvi-image-preview-close-size);
+  height: var(--zuvi-image-preview-close-size);
   border: none;
-  border-radius: var(--z-radius-full);
-  background: var(--z-image-preview-close-bg);
-  color: var(--z-image-preview-close-fg);
+  border-radius: var(--zuvi-radius-full);
+  background: var(--zuvi-image-preview-close-bg);
+  color: var(--zuvi-image-preview-close-fg);
   cursor: pointer;
 }
 
-.z-image-preview-close:focus-visible {
-  outline: 2px solid var(--z-color-border-focus);
+.zuvi-image-preview-close:focus-visible {
+  outline: 2px solid var(--zuvi-color-border-focus);
   outline-offset: 2px;
 }

@@ -61,15 +61,15 @@ describe('ColorPicker', () => {
     const root = getRoot(container);
     expect(root).toHaveAttribute('data-part', 'root');
     expect(root).toHaveAttribute('data-size', 'md');
-    expect(root).toHaveClass('z-color-picker');
+    expect(root).toHaveClass('zuvi-color-picker');
     const trigger = getTrigger();
     expect(trigger).toHaveAttribute('data-part', 'swatch');
-    expect(trigger).toHaveClass('z-color-picker-swatch');
+    expect(trigger).toHaveClass('zuvi-color-picker-swatch');
     expect(trigger).toHaveAttribute('aria-haspopup', 'dialog');
     expect(trigger).toHaveAttribute('aria-expanded', 'false');
     expect(trigger).not.toHaveAttribute('aria-controls');
     const chip = container.querySelector('[data-part="swatch-color"]') as HTMLElement;
-    expect(chip).toHaveClass('z-color-picker-swatch-color');
+    expect(chip).toHaveClass('zuvi-color-picker-swatch-color');
     expect(['#ff0000', 'rgb(255, 0, 0)']).toContain(chip.style.background);
     expect(container.querySelector('[data-part="swatch-hex"]')).toHaveTextContent('#ff0000');
   });
@@ -83,11 +83,11 @@ describe('ColorPicker', () => {
     expect(trigger.getAttribute('aria-controls')).toBeTruthy();
     const panel = screen.getByRole('dialog', { name: '颜色选择面板' });
     expect(panel).toHaveAttribute('data-part', 'panel');
-    expect(panel).toHaveClass('z-color-picker-panel');
+    expect(panel).toHaveClass('zuvi-color-picker-panel');
     expect(getRoot(container)).toHaveAttribute('data-open', '');
     expect(getSv()).toHaveAttribute('data-part', 'sv');
     expect(getHue()).toHaveAttribute('data-part', 'hue');
-    expect(getHue()).toHaveClass('z-color-picker-hue');
+    expect(getHue()).toHaveClass('zuvi-color-picker-hue');
     expect(document.querySelector('[data-part="hex"]')).toBeInTheDocument();
     await user.click(trigger);
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
@@ -228,11 +228,11 @@ describe('ColorPicker', () => {
       />
     );
     const root = getRoot(container);
-    expect(root).toHaveClass('z-color-picker', 'my-root', 'cls-root');
+    expect(root).toHaveClass('zuvi-color-picker', 'my-root', 'cls-root');
     expect(root).toHaveAttribute('data-size', 'lg');
-    expect(getTrigger()).toHaveClass('z-color-picker-swatch', 'cls-swatch');
+    expect(getTrigger()).toHaveClass('zuvi-color-picker-swatch', 'cls-swatch');
     await user.click(getTrigger());
-    expect(screen.getByRole('dialog')).toHaveClass('z-color-picker-panel', 'cls-panel');
-    expect(getHue()).toHaveClass('z-color-picker-hue', 'cls-hue');
+    expect(screen.getByRole('dialog')).toHaveClass('zuvi-color-picker-panel', 'cls-panel');
+    expect(getHue()).toHaveClass('zuvi-color-picker-hue', 'cls-hue');
   });
 });

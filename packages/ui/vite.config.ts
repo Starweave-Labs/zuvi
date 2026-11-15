@@ -9,7 +9,7 @@ export default defineConfig({
     react(),
     dts({ rollupTypes: true, tsconfigPath: './tsconfig.json' }),
     {
-      name: 'zui-compact-esm',
+      name: 'zuvi-compact-esm',
       renderChunk: {
         order: 'post',
         async handler(code, _chunk, options) {
@@ -36,7 +36,7 @@ export default defineConfig({
       },
     },
     {
-      name: 'zui-esm-annotations',
+      name: 'zuvi-esm-annotations',
       renderChunk: {
         order: 'post',
         handler(code, _chunk, options) {

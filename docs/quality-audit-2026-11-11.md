@@ -1,4 +1,4 @@
-# ZUI 71 组件全量交互审计（2026-11-11）
+# ZUVI 71 组件全量交互审计（2026-11-11）
 
 ## 范围与结论
 
@@ -44,7 +44,7 @@ pnpm --dir packages/ui exec vitest run \
   src/components/Watermark/Watermark.test.tsx \
   src/components/Popover/Popover.test.tsx \
   src/components/Message/Message.test.tsx
-pnpm --filter @zui/docs typecheck
+pnpm --filter @zuvi/docs typecheck
 pnpm exec eslint \
   packages/ui/src/components/Anchor/Anchor.test.tsx \
   docs/quality-audit-2026-11-11.md \
@@ -52,7 +52,7 @@ pnpm exec eslint \
 git diff --check
 ```
 
-说明：若运行 `pnpm --filter @zui/react test -- <file>`，当前包脚本会把参数追加到 `vitest run` 后但仍收集完整测试集；定向回归应使用上面的 `pnpm --dir packages/ui exec vitest run ...`。
+说明：若运行 `pnpm --filter @zuvi/react test -- <file>`，当前包脚本会把参数追加到 `vitest run` 后但仍收集完整测试集；定向回归应使用上面的 `pnpm --dir packages/ui exec vitest run ...`。
 
 ## 人工验证边界
 

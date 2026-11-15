@@ -13,7 +13,7 @@ export interface SavedBuilderBlock {
   tokens?: BuilderToken[];
   variables?: BuilderVariable[];
 }
-export const BLOCK_LIBRARY_KEY = 'zui-builder-blocks-v1';
+export const BLOCK_LIBRARY_KEY = 'zuvi-builder-blocks-v1';
 export function parseBlockLibrary(raw: string): SavedBuilderBlock[] {
   const input = JSON.parse(raw);
   if (!Array.isArray(input) || input.length > 20) throw new Error('区块库最多保存 20 个区块。');

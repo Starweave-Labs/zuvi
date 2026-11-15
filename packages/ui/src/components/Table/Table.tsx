@@ -11,7 +11,7 @@ import {
   RotateCcw,
   Search,
   Settings,
-} from '@zui/icons';
+} from '@zuvi/icons';
 import { Portal, cx, useControllableState } from '../../utils';
 import { Button } from '../Button';
 import { Checkbox } from '../Checkbox';
@@ -253,7 +253,7 @@ function Table<T>(props: TableProps<T>) {
     const keys = (columns ?? []).map((column) => column.key);
     const duplicates = keys.filter((key, index) => !key || keys.indexOf(key) !== index);
     if (duplicates.length > 0) {
-      console.warn('[ZUI Table] column.key 必须非空且唯一，重复项已忽略：', duplicates);
+      console.warn('[ZUVI Table] column.key 必须非空且唯一，重复项已忽略：', duplicates);
     }
   }, [columns]);
 
@@ -595,7 +595,7 @@ function Table<T>(props: TableProps<T>) {
     return (
       <button
         type="button"
-        className="z-table-sort-trigger"
+        className="zuvi-table-sort-trigger"
         data-active={active ?? undefined}
         data-sort={active ?? undefined}
         aria-label={`${label}，${stateText}，${nextHint}`}
@@ -610,16 +610,16 @@ function Table<T>(props: TableProps<T>) {
           )
         }
       >
-        <span className="z-table-header-title">{column.title}</span>
-        <span className="z-table-sort-indicator" aria-hidden="true">
+        <span className="zuvi-table-header-title">{column.title}</span>
+        <span className="zuvi-table-sort-indicator" aria-hidden="true">
           {active === 'ascend' ? (
             <ArrowUp size={13} />
           ) : active === 'descend' ? (
             <ArrowDown size={13} />
           ) : (
             <>
-              <ChevronUp size={11} className="z-table-sort-caret" />
-              <ChevronDown size={11} className="z-table-sort-caret" />
+              <ChevronUp size={11} className="zuvi-table-sort-caret" />
+              <ChevronDown size={11} className="zuvi-table-sort-caret" />
             </>
           )}
         </span>
@@ -652,11 +652,11 @@ function Table<T>(props: TableProps<T>) {
         align={column.align}
         style={column.width != null ? { width: column.width } : undefined}
       >
-        <span className="z-table-header-content">
+        <span className="zuvi-table-header-content">
           <Tooltip content={`拖动调整${label}列；Alt+方向键也可移动`} placement="top">
             <button
               type="button"
-              className="z-table-drag-handle"
+              className="zuvi-table-drag-handle"
               aria-label={`移动 ${label} 列`}
               onPointerDown={(event) => beginDrag(event, key, 'header')}
               onLostPointerCapture={(event) => {
@@ -671,7 +671,7 @@ function Table<T>(props: TableProps<T>) {
           {column.sortable ? (
             renderSortTrigger(column)
           ) : (
-            <span className="z-table-header-title">{column.title}</span>
+            <span className="zuvi-table-header-title">{column.title}</span>
           )}
         </span>
       </TableHeaderCell>
@@ -695,7 +695,7 @@ function Table<T>(props: TableProps<T>) {
     return (
       <table
         data-part="root"
-        className={cx('z-table', classNames?.root, className)}
+        className={cx('zuvi-table', classNames?.root, className)}
         data-density={density}
         data-bordered={bordered ? 'true' : 'false'}
         data-striped={striped ? 'true' : 'false'}
@@ -709,10 +709,10 @@ function Table<T>(props: TableProps<T>) {
   const describedBy = [rest['aria-describedby'], instructionsId].filter(Boolean).join(' ');
 
   return (
-    <div className="z-table-data-wrap" data-table-instance={instanceId}>
-      <div className="z-table-toolbar">
-        <div className="z-table-sort-summary">
-          <span className="z-table-toolbar-label">数据排序</span>
+    <div className="zuvi-table-data-wrap" data-table-instance={instanceId}>
+      <div className="zuvi-table-toolbar">
+        <div className="zuvi-table-sort-summary">
+          <span className="zuvi-table-toolbar-label">数据排序</span>
           {validSortState && sortedColumn ? (
             <Tag
               color="primary"
@@ -720,12 +720,12 @@ function Table<T>(props: TableProps<T>) {
                 validSortState.order === 'ascend' ? <ArrowUp size={12} /> : <ArrowDown size={12} />
               }
             >
-              <span className="z-table-sort-tag-label">
+              <span className="zuvi-table-sort-tag-label">
                 {sortedLabel} · {sortLabel(validSortState.order)}
               </span>
               <button
                 type="button"
-                className="z-table-sort-tag-clear"
+                className="zuvi-table-sort-tag-clear"
                 aria-label={`清除${sortedLabel}排序`}
                 onClick={() => setSort(null)}
               >
@@ -733,7 +733,7 @@ function Table<T>(props: TableProps<T>) {
               </button>
             </Tag>
           ) : (
-            <span className="z-table-unsorted">未排序</span>
+            <span className="zuvi-table-unsorted">未排序</span>
           )}
         </div>
 
@@ -743,29 +743,29 @@ function Table<T>(props: TableProps<T>) {
               size="sm"
               variant={columnsCustomized ? 'secondary' : 'outline'}
               iconStart={<Settings size={14} />}
-              className="z-table-settings-button"
+              className="zuvi-table-settings-button"
             >
               字段 {visibleCount}/{declaredKeys.length}
             </Button>
           </Popover.Trigger>
           <Popover.Content
-            className="z-table-column-panel"
+            className="zuvi-table-column-panel"
             aria-labelledby={managerTitleId}
             aria-describedby={managerDescriptionId}
             align="end"
           >
-            <div className="z-table-column-panel-head">
+            <div className="zuvi-table-column-panel-head">
               <div>
-                <div id={managerTitleId} className="z-table-column-panel-title">
+                <div id={managerTitleId} className="zuvi-table-column-panel-title">
                   字段管理
                 </div>
-                <div id={managerDescriptionId} className="z-table-column-panel-description">
+                <div id={managerDescriptionId} className="zuvi-table-column-panel-description">
                   {visibleCount} / {declaredKeys.length} 个字段可见
                 </div>
               </div>
               <button
                 type="button"
-                className="z-table-panel-close"
+                className="zuvi-table-panel-close"
                 aria-label="关闭字段管理"
                 onClick={() => setManagerOpen(false)}
               >
@@ -773,7 +773,7 @@ function Table<T>(props: TableProps<T>) {
               </button>
             </div>
 
-            <div className="z-table-column-search">
+            <div className="zuvi-table-column-search">
               <Input
                 data-autofocus
                 size="sm"
@@ -787,7 +787,7 @@ function Table<T>(props: TableProps<T>) {
               />
             </div>
 
-            <div className="z-table-show-all">
+            <div className="zuvi-table-show-all">
               <Checkbox
                 checked={allVisible}
                 indeterminate={someVisible}
@@ -796,7 +796,7 @@ function Table<T>(props: TableProps<T>) {
               />
             </div>
 
-            <ul ref={panelListRef} className="z-table-column-list" data-drag-scope="panel">
+            <ul ref={panelListRef} className="zuvi-table-column-list" data-drag-scope="panel">
               {filteredKeys.map((key) => {
                 const column = columnByKey.get(key);
                 if (!column) return null;
@@ -808,7 +808,7 @@ function Table<T>(props: TableProps<T>) {
                 return (
                   <li
                     key={key}
-                    className="z-table-column-item"
+                    className="zuvi-table-column-item"
                     data-column-key={key}
                     data-dragging={
                       dragVisual?.scope === 'panel' && dragVisual.key === key ? 'true' : undefined
@@ -818,7 +818,7 @@ function Table<T>(props: TableProps<T>) {
                     <Tooltip content={`拖动调整${label}字段`} placement="left">
                       <button
                         type="button"
-                        className="z-table-panel-drag-handle"
+                        className="zuvi-table-panel-drag-handle"
                         aria-label={`移动 ${label} 字段`}
                         onPointerDown={(event) => beginDrag(event, key, 'panel')}
                         onLostPointerCapture={(event) => {
@@ -830,12 +830,12 @@ function Table<T>(props: TableProps<T>) {
                         <Menu size={14} aria-hidden="true" />
                       </button>
                     </Tooltip>
-                    <span className="z-table-column-item-label">{column.title}</span>
-                    <span className="z-table-column-item-actions">
+                    <span className="zuvi-table-column-item-label">{column.title}</span>
+                    <span className="zuvi-table-column-item-actions">
                       <Tooltip content="上移" placement="top">
                         <button
                           type="button"
-                          className="z-table-column-move-button"
+                          className="zuvi-table-column-move-button"
                           aria-label={`上移 ${label} 字段`}
                           disabled={currentIndex <= 0}
                           onClick={() => moveColumnTo(key, currentIndex - 1)}
@@ -846,7 +846,7 @@ function Table<T>(props: TableProps<T>) {
                       <Tooltip content="下移" placement="top">
                         <button
                           type="button"
-                          className="z-table-column-move-button"
+                          className="zuvi-table-column-move-button"
                           aria-label={`下移 ${label} 字段`}
                           disabled={currentIndex >= columnState.order.length - 1}
                           onClick={() => moveColumnTo(key, currentIndex + 1)}
@@ -860,7 +860,7 @@ function Table<T>(props: TableProps<T>) {
                         }
                         placement="right"
                       >
-                        <span className="z-table-column-visible-control">
+                        <span className="zuvi-table-column-visible-control">
                           <Checkbox
                             checked={visible}
                             disabled={lastVisible}
@@ -876,10 +876,10 @@ function Table<T>(props: TableProps<T>) {
             </ul>
 
             {filteredKeys.length === 0 ? (
-              <div className="z-table-column-empty">没有匹配的字段</div>
+              <div className="zuvi-table-column-empty">没有匹配的字段</div>
             ) : null}
 
-            <div className="z-table-column-panel-foot">
+            <div className="zuvi-table-column-panel-foot">
               <Button
                 size="sm"
                 variant="ghost"
@@ -897,7 +897,7 @@ function Table<T>(props: TableProps<T>) {
       </div>
 
       <div
-        className="z-table-scroll-region"
+        className="zuvi-table-scroll-region"
         role="region"
         aria-label={
           rest['aria-label'] ? `${rest['aria-label']}，可横向滚动` : '数据表格，可横向滚动'
@@ -911,21 +911,21 @@ function Table<T>(props: TableProps<T>) {
             else if (userRef) (userRef as React.RefObject<HTMLTableElement | null>).current = node;
           }}
           data-part="root"
-          className={cx('z-table', 'z-table-data', classNames?.root, className)}
+          className={cx('zuvi-table', 'zuvi-table-data', classNames?.root, className)}
           data-density={density}
           data-bordered={bordered ? 'true' : 'false'}
           data-striped={striped ? 'true' : 'false'}
           {...rest}
           aria-describedby={describedBy || undefined}
         >
-          <caption id={instructionsId} className="z-table-visually-hidden">
+          <caption id={instructionsId} className="zuvi-table-visually-hidden">
             使用每个字段的排序菜单选择升序、降序或清除排序；使用移动字段按钮或 Alt
             加方向键调整字段顺序。
           </caption>
-          <thead ref={headerRef} className="z-table-head" data-drag-scope="header">
-            <tr className="z-table-row">{visibleKeys.map(renderHeaderCell)}</tr>
+          <thead ref={headerRef} className="zuvi-table-head" data-drag-scope="header">
+            <tr className="zuvi-table-row">{visibleKeys.map(renderHeaderCell)}</tr>
           </thead>
-          <tbody className="z-table-body">
+          <tbody className="zuvi-table-body">
             {rows.map(({ row, sourceIndex }, displayIndex) => (
               <TableRow key={resolveRowKey(row, sourceIndex, rowKey)}>
                 {visibleKeys.map((key) => renderBodyCell(key, row, displayIndex, sourceIndex))}
@@ -935,14 +935,14 @@ function Table<T>(props: TableProps<T>) {
         </table>
       </div>
 
-      <span className="z-table-visually-hidden" role="status" aria-live="polite" aria-atomic="true">
+      <span className="zuvi-table-visually-hidden" role="status" aria-live="polite" aria-atomic="true">
         {announcement}
       </span>
 
       {dragVisual ? (
         <Portal inheritFrom={{ current: tableRef.current }}>
           <div
-            className="z-table-drag-ghost"
+            className="zuvi-table-drag-ghost"
             data-scope={dragVisual.scope}
             style={{ left: dragVisual.x + 12, top: dragVisual.y + 12 }}
             aria-hidden="true"
@@ -961,7 +961,7 @@ function Table<T>(props: TableProps<T>) {
 function TableHead(props: TableHeadProps) {
   const { className, children, ...rest } = props;
   return (
-    <thead className={cx('z-table-head', className)} {...rest}>
+    <thead className={cx('zuvi-table-head', className)} {...rest}>
       {children}
     </thead>
   );
@@ -970,7 +970,7 @@ function TableHead(props: TableHeadProps) {
 function TableBody(props: TableBodyProps) {
   const { className, children, ...rest } = props;
   return (
-    <tbody className={cx('z-table-body', className)} {...rest}>
+    <tbody className={cx('zuvi-table-body', className)} {...rest}>
       {children}
     </tbody>
   );
@@ -980,7 +980,7 @@ function TableRow(props: TableRowProps) {
   const { selected = false, className, children, ...rest } = props;
   return (
     <tr
-      className={cx('z-table-row', className)}
+      className={cx('zuvi-table-row', className)}
       data-selected={selected ? 'true' : 'false'}
       {...rest}
     >
@@ -995,7 +995,7 @@ function TableHeaderCell(props: TableHeaderCellProps) {
     <th
       scope="col"
       data-part="header-cell"
-      className={cx('z-table-header-cell', className)}
+      className={cx('zuvi-table-header-cell', className)}
       data-align={align}
       {...rest}
     >
@@ -1007,7 +1007,7 @@ function TableHeaderCell(props: TableHeaderCellProps) {
 function TableCell(props: TableCellProps) {
   const { align = 'left', className, children, ...rest } = props;
   return (
-    <td data-part="cell" className={cx('z-table-cell', className)} data-align={align} {...rest}>
+    <td data-part="cell" className={cx('zuvi-table-cell', className)} data-align={align} {...rest}>
       {children}
     </td>
   );

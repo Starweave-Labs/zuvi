@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Switch } from '@zui/react';
+import { Switch } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -102,22 +102,22 @@ export default function SwitchPage(): React.ReactNode {
         name="Switch"
         parts={['root', 'track', 'label']}
         vars={[
-          '--z-switch-track-width',
-          '--z-switch-track-height',
-          '--z-switch-track-bg',
-          '--z-switch-track-checked-bg',
-          '--z-switch-track-disabled-bg',
-          '--z-switch-thumb-size',
-          '--z-switch-thumb-offset',
-          '--z-switch-thumb-travel',
-          '--z-switch-thumb-bg',
-          '--z-switch-thumb-disabled-bg',
-          '--z-switch-gap',
-          '--z-switch-label-color',
-          '--z-switch-label-font-size',
-          '--z-switch-transition',
+          '--zuvi-switch-track-width',
+          '--zuvi-switch-track-height',
+          '--zuvi-switch-track-bg',
+          '--zuvi-switch-track-checked-bg',
+          '--zuvi-switch-track-disabled-bg',
+          '--zuvi-switch-thumb-size',
+          '--zuvi-switch-thumb-offset',
+          '--zuvi-switch-thumb-travel',
+          '--zuvi-switch-thumb-bg',
+          '--zuvi-switch-thumb-disabled-bg',
+          '--zuvi-switch-gap',
+          '--zuvi-switch-label-color',
+          '--zuvi-switch-label-font-size',
+          '--zuvi-switch-transition',
         ]}
-        note="thumb 槽位当前带类名 z-switch-thumb（classNames.thumb 可追加），未标注 data-part。"
+        note="thumb 槽位当前带类名 zuvi-switch-thumb（classNames.thumb 可追加），未标注 data-part。"
       />
     </div>
   );

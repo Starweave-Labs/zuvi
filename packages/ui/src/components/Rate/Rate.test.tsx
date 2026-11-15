@@ -18,7 +18,7 @@ describe('Rate', () => {
     render(<Rate />);
     const group = getGroup();
     expect(group).toHaveAttribute('data-part', 'root');
-    expect(group).toHaveClass('z-rate');
+    expect(group).toHaveClass('zuvi-rate');
     expect(group).toHaveAttribute('aria-label', '评分');
     const stars = getStars();
     expect(stars).toHaveLength(5);

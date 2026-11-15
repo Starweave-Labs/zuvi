@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useZuiConfig } from '../../config';
+import { useZuviConfig } from '../../config';
 import { cx } from '../../utils';
 import './BackTop.css';
 
@@ -32,7 +32,7 @@ function isWindow(scroller: HTMLElement | Window): boolean {
 }
 
 export function BackTop(props: BackTopProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const {
     target,
     visibilityHeight = 400,
@@ -82,7 +82,7 @@ export function BackTop(props: BackTopProps) {
       {...rest}
       type="button"
       data-part="root"
-      className={cx('z-back-top', classNames?.root, className)}
+      className={cx('zuvi-back-top', classNames?.root, className)}
       data-visible={visible ? 'true' : 'false'}
       aria-label={ariaLabel ?? locale.accessibility.backTop}
       aria-hidden={visible ? undefined : 'true'}

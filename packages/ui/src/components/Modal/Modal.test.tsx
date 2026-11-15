@@ -434,24 +434,24 @@ describe('Modal 透传与定制出口', () => {
     );
 
     const overlay = document.querySelector('[data-part="overlay"]');
-    expect(overlay).toHaveClass('z-modal-overlay', 'c-overlay');
+    expect(overlay).toHaveClass('zuvi-modal-overlay', 'c-overlay');
 
     const dialog = screen.getByRole('dialog');
     expect(dialog).toHaveAttribute('data-part', 'content');
     expect(dialog).toHaveAttribute('data-size', 'lg');
-    expect(dialog).toHaveClass('z-modal', 'c-content');
+    expect(dialog).toHaveClass('zuvi-modal', 'c-content');
 
     expect(screen.getByText('弹窗标题')).toHaveAttribute('data-part', 'title');
     expect(screen.getByText('弹窗描述')).toHaveAttribute('data-part', 'description');
 
     const header = document.querySelector('[data-part="header"]');
-    expect(header).toHaveClass('z-modal-header');
+    expect(header).toHaveClass('zuvi-modal-header');
     const body = document.querySelector('[data-part="body"]');
-    expect(body).toHaveClass('z-modal-body');
+    expect(body).toHaveClass('zuvi-modal-body');
     const footer = document.querySelector('[data-part="footer"]');
-    expect(footer).toHaveClass('z-modal-footer');
+    expect(footer).toHaveClass('zuvi-modal-footer');
     const close = document.querySelector('[data-part="close"]');
-    expect(close).toHaveClass('z-modal-close');
+    expect(close).toHaveClass('zuvi-modal-close');
   });
 
   it('Trigger 透传 props 与 className', async () => {
@@ -470,7 +470,7 @@ describe('Modal 透传与定制出口', () => {
     const trigger = screen.getByTestId('trigger');
     expect(trigger).toHaveAttribute('data-part', 'trigger');
     expect(trigger).toHaveAttribute('data-foo', 'bar');
-    expect(trigger).toHaveClass('z-modal-trigger', 'c-trigger');
+    expect(trigger).toHaveClass('zuvi-modal-trigger', 'c-trigger');
     expect(trigger).toHaveAttribute('aria-haspopup', 'dialog');
 
     // 触发器仍可切换

@@ -1,10 +1,10 @@
 # OfficeStudio
 
-使用 ZUI 控件的独立文档工作台。Word 用 Tiptap / ProseMirror 编辑文档结构，Excel 使用可计算的单元格模型，PDF 使用宿主提供的分页渲染器。无需 ONLYOFFICE Docs 服务。
+使用 ZUVI 控件的独立文档工作台。Word 用 Tiptap / ProseMirror 编辑文档结构，Excel 使用可计算的单元格模型，PDF 使用宿主提供的分页渲染器。无需 ONLYOFFICE Docs 服务。
 
 ```tsx
-import { OfficeStudio, createOfficeStudioDocument } from '@zui/react';
-import '@zui/react/styles.css';
+import { OfficeStudio, createOfficeStudioDocument } from '@zuvi/react';
+import '@zuvi/react/styles.css';
 
 <OfficeStudio
   defaultValue={createOfficeStudioDocument('word')}
@@ -18,7 +18,7 @@ import '@zui/react/styles.css';
 />;
 ```
 
-也可以从 `@zui/react/office-studio` 导入组件和类型。该子路径自 v0.4.0 起随 `@zui/react` 发布。
+也可以从 `@zuvi/react/office-studio` 导入组件和类型。该子路径自 v0.4.0 起随 `@zuvi/react` 发布。
 
 `value / defaultValue / onChange` 管理文档模型。`onImport(file)` 与 `onCreate(kind)` 由宿主生成新的模型并更新受控 `value`。PDF 还需提供原始 `source: Blob` 和 `pdfRenderer`；新建 PDF 的原始字节由 `onCreate` 生成。Word 和 Excel 在无 `onCreate` 时可创建默认文档。
 
@@ -34,9 +34,9 @@ import '@zui/react/styles.css';
 
 三种编辑内核按需加载，等待时在画布位置显示加载状态，不影响文件栏和保存状态。
 
-结构出口：`root / header / title / actions / stage / loading / status / error`，使用 `data-part`、`classNames` 和 `--z-office-studio-*` CSS 变量定制。
+结构出口：`root / header / title / actions / stage / loading / status / error`，使用 `data-part`、`classNames` 和 `--zuvi-office-studio-*` CSS 变量定制。
 
-本地文件适配、打印和持久化演示见 `docs/src/pages/collaboration/office-studio/` 和 `#/components/office-studio`。示例保留最近 20 次保存前的版本，支持查看、导出、打印和恢复为新文件；历史版本由宿主存储维护，UI 包不自动提供这些持久化服务。适配器位于文档站，不随 `@zui/react/office-studio` 导出，也不由 CLI 的 UI 条目复制。
+本地文件适配、打印和持久化演示见 `docs/src/pages/collaboration/office-studio/` 和 `#/components/office-studio`。示例保留最近 20 次保存前的版本，支持查看、导出、打印和恢复为新文件；历史版本由宿主存储维护，UI 包不自动提供这些持久化服务。适配器位于文档站，不随 `@zuvi/react/office-studio` 导出，也不由 CLI 的 UI 条目复制。
 
 示例导入最大 20 MB；Excel 最多 10,000 行、256 列、32 张表和 100,000 个已使用单元格；PDF 最多 200 页。Word 没有完整自动分页、多节版式、修订或目录兼容，XLSX 不支持透视、复杂图表、图片、保护和条件格式等对象，PDF 不提供任意原文修改、重排或扫描件 OCR。文件适配器会明确拒绝无法保留的对象，完整边界见 [独立编辑器说明](../../../../../docs/office-studio.md)。
 

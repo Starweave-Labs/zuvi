@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useZuiConfig } from '../../config';
+import { useZuviConfig } from '../../config';
 import { FloatingPanel, cx, useControllableState, useOnClickOutside } from '../../utils';
 import './Select.css';
 
@@ -75,7 +75,7 @@ export function Select(props: SelectProps) {
   } = props;
 
   // placeholder 默认值走 locale（显式传入含空串时以传入值为准）
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const placeholderText = placeholder === undefined ? locale.select.placeholder : placeholder;
 
   const panelRef = React.useRef<HTMLDivElement>(null);
@@ -265,7 +265,7 @@ export function Select(props: SelectProps) {
     <div
       ref={rootRef}
       data-part="root"
-      className={cx('z-select', classNames?.root, className)}
+      className={cx('zuvi-select', classNames?.root, className)}
       data-open={open ? 'true' : 'false'}
       data-size={size}
       data-status={status}
@@ -294,7 +294,7 @@ export function Select(props: SelectProps) {
         id={triggerId}
         ref={triggerRef}
         data-part="trigger"
-        className={cx('z-select-trigger', classNames?.trigger)}
+        className={cx('zuvi-select-trigger', classNames?.trigger)}
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-controls={listboxId}
@@ -315,7 +315,7 @@ export function Select(props: SelectProps) {
         <span
           data-part="value"
           id={`${triggerId}-value`}
-          className={cx('z-select-value', classNames?.value)}
+          className={cx('zuvi-select-value', classNames?.value)}
           data-placeholder={selectedOption ? undefined : ''}
         >
           {selectedOption ? selectedOption.label : placeholderText}
@@ -328,7 +328,7 @@ export function Select(props: SelectProps) {
         open={open}
         anchorRef={rootRef}
         matchWidth
-        offsetVariable="--z-select-listbox-margin-top"
+        offsetVariable="--zuvi-select-listbox-margin-top"
       >
         <div
           ref={panelRef}
@@ -336,10 +336,10 @@ export function Select(props: SelectProps) {
           id={listboxId}
           data-part="listbox"
           data-open={open ? 'true' : 'false'}
-          className={cx('z-select-listbox', classNames?.listbox)}
+          className={cx('zuvi-select-listbox', classNames?.listbox)}
         >
           {options.length === 0 ? (
-            <div data-part="empty" className={cx('z-select-empty', classNames?.empty)}>
+            <div data-part="empty" className={cx('zuvi-select-empty', classNames?.empty)}>
               {locale.select.empty}
             </div>
           ) : (
@@ -349,7 +349,7 @@ export function Select(props: SelectProps) {
                 id={optionId(index)}
                 role="option"
                 data-part="option"
-                className={cx('z-select-option', classNames?.option)}
+                className={cx('zuvi-select-option', classNames?.option)}
                 aria-selected={currentValue === option.value}
                 aria-disabled={option.disabled ? true : undefined}
                 data-active={activeIndex === index ? 'true' : undefined}

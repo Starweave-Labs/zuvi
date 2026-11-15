@@ -27,7 +27,7 @@ export function createOfficeStudioDocument(kind: OfficeStudioKind = 'word'): Off
             content: [
               {
                 type: 'text',
-                text: 'ZUI STUDIO  /  项目工作文档',
+                text: 'ZUVI STUDIO  /  项目工作文档',
                 marks: [{ type: 'textStyle', attrs: { color: '#59746b' } }],
               },
             ],

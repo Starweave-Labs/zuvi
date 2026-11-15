@@ -39,7 +39,7 @@ export interface SheetPosition {
   col: number;
 }
 
-export const STUDIO_SHEET_CLIPBOARD_TYPE = 'application/x-zui-studio-sheet-range';
+export const STUDIO_SHEET_CLIPBOARD_TYPE = 'application/x-zuvi-studio-sheet-range';
 
 export type StudioSheetPasteMode =
   | 'all'

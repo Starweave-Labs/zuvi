@@ -309,7 +309,7 @@ export function StudioSheetRuleDialog({
         if (!open) onClose();
       }}
     >
-      <Modal.Content size="lg" className="z-studio-sheet-rule-dialog">
+      <Modal.Content size="lg" className="zuvi-studio-sheet-rule-dialog">
         <Modal.Header>
           <Modal.Title>{title}</Modal.Title>
           <Modal.Description>
@@ -321,14 +321,14 @@ export function StudioSheetRuleDialog({
         <Modal.Body>
           <form
             id={formId}
-            className="z-studio-sheet-rule-form"
+            className="zuvi-studio-sheet-rule-form"
             onSubmit={(event) => {
               event.preventDefault();
               apply();
             }}
           >
             {mode.kind !== 'series' && (
-              <label className="z-studio-sheet-rule-field">
+              <label className="zuvi-studio-sheet-rule-field">
                 <span>应用范围</span>
                 <Input
                   aria-label="规则应用范围"
@@ -342,7 +342,7 @@ export function StudioSheetRuleDialog({
             )}
             {mode.kind === 'conditional' && (
               <>
-                <label className="z-studio-sheet-rule-field">
+                <label className="zuvi-studio-sheet-rule-field">
                   <span>规则类型</span>
                   <Select
                     aria-label="条件格式类型"
@@ -356,7 +356,7 @@ export function StudioSheetRuleDialog({
                   />
                 </label>
                 {conditionType === 'containsText' && (
-                  <label className="z-studio-sheet-rule-field">
+                  <label className="zuvi-studio-sheet-rule-field">
                     <span>包含文字</span>
                     <Input
                       aria-label="条件文字"
@@ -368,8 +368,8 @@ export function StudioSheetRuleDialog({
                   </label>
                 )}
                 {conditionType === 'top10' && (
-                  <div className="z-studio-sheet-rule-row">
-                    <label className="z-studio-sheet-rule-field">
+                  <div className="zuvi-studio-sheet-rule-row">
+                    <label className="zuvi-studio-sheet-rule-field">
                       <span>数量或百分比</span>
                       <Input
                         type="number"
@@ -408,7 +408,7 @@ export function StudioSheetRuleDialog({
                   />
                 )}
                 {conditionType === 'colorScale' && (
-                  <div className="z-studio-sheet-rule-row">
+                  <div className="zuvi-studio-sheet-rule-row">
                     <Select
                       aria-label="色阶数量"
                       value={scaleCount}
@@ -420,7 +420,7 @@ export function StudioSheetRuleDialog({
                       onChange={setScaleCount}
                     />
                     {[0, ...(scaleCount === '3' ? [1] : []), 2].map((index) => (
-                      <label key={index} className="z-studio-sheet-rule-field">
+                      <label key={index} className="zuvi-studio-sheet-rule-field">
                         <span>{['最低值', '中位数', '最高值'][index]}</span>
                         <ColorPicker
                           aria-label={`色阶${['最低值', '中位数', '最高值'][index]}颜色`}
@@ -440,7 +440,7 @@ export function StudioSheetRuleDialog({
             )}
             {mode.kind === 'validation' && (
               <>
-                <label className="z-studio-sheet-rule-field">
+                <label className="zuvi-studio-sheet-rule-field">
                   <span>允许的值</span>
                   <Select
                     aria-label="数据验证类型"
@@ -465,7 +465,7 @@ export function StudioSheetRuleDialog({
                       disabled={blocked}
                       onChange={setListMode}
                     />
-                    <label className="z-studio-sheet-rule-field">
+                    <label className="zuvi-studio-sheet-rule-field">
                       <span>{listMode === 'source' ? '来源区域' : '列表选项，用逗号分隔'}</span>
                       <Input
                         aria-label={listMode === 'source' ? '验证列表来源' : '验证列表选项'}
@@ -478,7 +478,7 @@ export function StudioSheetRuleDialog({
                         }
                       />
                     </label>
-                    <p className="z-studio-sheet-rule-hint">
+                    <p className="zuvi-studio-sheet-rule-hint">
                       来源可使用 =$A$1:$A$5 或 ='工作表名'!$A$1:$A$5。直接列表最多 255 个字符。
                     </p>
                   </>
@@ -490,7 +490,7 @@ export function StudioSheetRuleDialog({
                 validationType !== 'list' &&
                 validationType !== 'custom')) && (
               <>
-                <label className="z-studio-sheet-rule-field">
+                <label className="zuvi-studio-sheet-rule-field">
                   <span>比较条件</span>
                   <Select
                     aria-label="规则比较条件"
@@ -503,8 +503,8 @@ export function StudioSheetRuleDialog({
                     }}
                   />
                 </label>
-                <div className="z-studio-sheet-rule-row">
-                  <label className="z-studio-sheet-rule-field">
+                <div className="zuvi-studio-sheet-rule-row">
+                  <label className="zuvi-studio-sheet-rule-field">
                     <span>{between ? '最小值' : '比较值'}</span>
                     <Input
                       aria-label="规则比较值"
@@ -514,7 +514,7 @@ export function StudioSheetRuleDialog({
                     />
                   </label>
                   {between && (
-                    <label className="z-studio-sheet-rule-field">
+                    <label className="zuvi-studio-sheet-rule-field">
                       <span>最大值</span>
                       <Input
                         aria-label="规则比较值上限"
@@ -525,14 +525,14 @@ export function StudioSheetRuleDialog({
                     </label>
                   )}
                 </div>
-                <p className="z-studio-sheet-rule-hint">
+                <p className="zuvi-studio-sheet-rule-hint">
                   输入数字或以 = 开始的公式。日期可输入 2026-11-12，时间可输入 09:30。
                 </p>
               </>
             )}
             {((mode.kind === 'conditional' && conditionType === 'expression') ||
               (mode.kind === 'validation' && validationType === 'custom')) && (
-              <label className="z-studio-sheet-rule-field">
+              <label className="zuvi-studio-sheet-rule-field">
                 <span>公式，结果为 TRUE 时满足条件</span>
                 <Input
                   aria-label="规则公式"
@@ -546,9 +546,9 @@ export function StudioSheetRuleDialog({
             {mode.kind === 'conditional' && (
               <>
                 {conditionType !== 'colorScale' && (
-                  <fieldset className="z-studio-sheet-rule-style">
+                  <fieldset className="zuvi-studio-sheet-rule-style">
                     <legend>满足条件时的格式</legend>
-                    <div className="z-studio-sheet-rule-row">
+                    <div className="zuvi-studio-sheet-rule-row">
                       <Checkbox
                         label="使用背景色"
                         checked={style.background !== undefined}
@@ -590,7 +590,7 @@ export function StudioSheetRuleDialog({
                         onChange={(color) => setStyle((current) => ({ ...current, color }))}
                       />
                     </div>
-                    <div className="z-studio-sheet-rule-row">
+                    <div className="zuvi-studio-sheet-rule-row">
                       <Checkbox
                         label="条件加粗"
                         checked={!!style.bold}
@@ -626,8 +626,8 @@ export function StudioSheetRuleDialog({
                     />
                   </fieldset>
                 )}
-                <div className="z-studio-sheet-rule-row">
-                  <label className="z-studio-sheet-rule-field">
+                <div className="zuvi-studio-sheet-rule-row">
+                  <label className="zuvi-studio-sheet-rule-field">
                     <span>优先级，较小的数字优先</span>
                     <Input
                       type="number"
@@ -655,7 +655,7 @@ export function StudioSheetRuleDialog({
                   disabled={blocked}
                   onChange={setAllowBlank}
                 />
-                <fieldset className="z-studio-sheet-rule-style">
+                <fieldset className="zuvi-studio-sheet-rule-style">
                   <legend>输入提示</legend>
                   <Checkbox
                     label="选中单元格时显示提示"
@@ -681,7 +681,7 @@ export function StudioSheetRuleDialog({
                     onChange={(event) => setInputMessage(event.target.value)}
                   />
                 </fieldset>
-                <fieldset className="z-studio-sheet-rule-style">
+                <fieldset className="zuvi-studio-sheet-rule-style">
                   <legend>无效输入处理</legend>
                   <Checkbox
                     label="显示错误提示"
@@ -723,12 +723,12 @@ export function StudioSheetRuleDialog({
             )}
             {mode.kind === 'series' && (
               <>
-                <p className="z-studio-sheet-rule-hint">
+                <p className="zuvi-studio-sheet-rule-hint">
                   当前选区：{selectionRange}
                   。数字和日期支持一个种子与指定步长，或根据两个种子推算步长；文本支持末尾数字，例如
                   项目001。
                 </p>
-                <label className="z-studio-sheet-rule-field">
+                <label className="zuvi-studio-sheet-rule-field">
                   <span>填充方向</span>
                   <Select
                     aria-label="序列填充方向"
@@ -743,7 +743,7 @@ export function StudioSheetRuleDialog({
                     }}
                   />
                 </label>
-                <label className="z-studio-sheet-rule-field">
+                <label className="zuvi-studio-sheet-rule-field">
                   <span>序列类型</span>
                   <Select
                     aria-label="序列类型"
@@ -760,7 +760,7 @@ export function StudioSheetRuleDialog({
                     }}
                   />
                 </label>
-                <label className="z-studio-sheet-rule-field">
+                <label className="zuvi-studio-sheet-rule-field">
                   <span>用于推算的种子</span>
                   <Select
                     aria-label="序列种子数量"
@@ -775,7 +775,7 @@ export function StudioSheetRuleDialog({
                     }}
                   />
                 </label>
-                <label className="z-studio-sheet-rule-field">
+                <label className="zuvi-studio-sheet-rule-field">
                   <span>步长，可留空自动推算</span>
                   <Input
                     aria-label="序列步长"
@@ -788,14 +788,14 @@ export function StudioSheetRuleDialog({
               </>
             )}
             {error && (
-              <p role="alert" className="z-studio-sheet-rule-error">
+              <p role="alert" className="zuvi-studio-sheet-rule-error">
                 {error}
               </p>
             )}
           </form>
           {mode.kind !== 'series' && (
-            <section className="z-studio-sheet-rule-list" aria-label="当前工作表规则">
-              <div className="z-studio-sheet-rule-row">
+            <section className="zuvi-studio-sheet-rule-list" aria-label="当前工作表规则">
+              <div className="zuvi-studio-sheet-rule-row">
                 <strong>当前工作表规则</strong>
                 <Button
                   size="sm"
@@ -810,7 +810,7 @@ export function StudioSheetRuleDialog({
                 ? [...(sheet.conditionalFormats ?? [])].sort((a, b) => a.priority - b.priority)
                 : (sheet.dataValidations ?? [])
               ).map((rule, index) => (
-                <div key={rule.id} className="z-studio-sheet-rule-entry">
+                <div key={rule.id} className="zuvi-studio-sheet-rule-entry">
                   <span>
                     {rule.range} · {ruleLabel(rule)}
                     {'priority' in rule ? ` · 优先级 ${rule.priority}` : ''}
@@ -839,7 +839,7 @@ export function StudioSheetRuleDialog({
               {!(mode.kind === 'conditional'
                 ? sheet.conditionalFormats?.length
                 : sheet.dataValidations?.length) && (
-                <p className="z-studio-sheet-rule-hint">尚未创建规则。</p>
+                <p className="zuvi-studio-sheet-rule-hint">尚未创建规则。</p>
               )}
             </section>
           )}

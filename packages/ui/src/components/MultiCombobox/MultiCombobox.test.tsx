@@ -60,7 +60,7 @@ describe('MultiCombobox 渲染与 ARIA', () => {
     expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
 
     const root = getRoot(container);
-    expect(root).toHaveClass('z-multicombobox', 'custom-root', 'slot-root');
+    expect(root).toHaveClass('zuvi-multicombobox', 'custom-root', 'slot-root');
     expect(root).toHaveAttribute('data-size', 'lg');
     expect(root).toHaveAttribute('data-status', 'error');
     expect(container.querySelector('[data-part="control"]')).toHaveClass('slot-control');

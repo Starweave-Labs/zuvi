@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Collapse } from '@zui/react';
+import { Collapse } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -7,7 +7,7 @@ import Demo from '../../components/Demo';
 import { usePageTitle } from '../../components/usePageTitle';
 
 const ITEMS = [
-  { key: 'a', label: 'ZUI 是什么？', children: <p>ZUI 是令牌驱动、无障碍优先的现代 React 组件库。</p> },
+  { key: 'a', label: 'ZUVI 是什么？', children: <p>ZUVI 是令牌驱动、无障碍优先的现代 React 组件库。</p> },
   { key: 'b', label: '支持受控/非受控吗？', children: <p>全部状态型组件遵循 value / defaultValue / onChange 受控范式。</p> },
   { key: 'c', label: '如何定制样式？', children: <p>data-part + classNames + 组件级 CSS 变量三件套，不依赖内部类名。</p> },
   { key: 'd', label: '禁用项（不可展开）', children: <p>不会被渲染到。</p>, disabled: true },
@@ -88,22 +88,22 @@ export default function CollapsePage(): React.ReactNode {
         name="Collapse"
         parts={['root', 'item', 'header', 'content', 'content-inner']}
         vars={[
-          '--z-collapse-font-size',
-          '--z-collapse-fg',
-          '--z-collapse-border',
-          '--z-collapse-radius',
-          '--z-collapse-header-bg',
-          '--z-collapse-header-hover-bg',
-          '--z-collapse-header-padding-x',
-          '--z-collapse-header-padding-y',
-          '--z-collapse-header-font-weight',
-          '--z-collapse-header-disabled-fg',
-          '--z-collapse-content-bg',
-          '--z-collapse-content-padding-x',
-          '--z-collapse-content-padding-y',
-          '--z-collapse-arrow-color',
-          '--z-collapse-focus-ring',
-          '--z-collapse-animation-duration',
+          '--zuvi-collapse-font-size',
+          '--zuvi-collapse-fg',
+          '--zuvi-collapse-border',
+          '--zuvi-collapse-radius',
+          '--zuvi-collapse-header-bg',
+          '--zuvi-collapse-header-hover-bg',
+          '--zuvi-collapse-header-padding-x',
+          '--zuvi-collapse-header-padding-y',
+          '--zuvi-collapse-header-font-weight',
+          '--zuvi-collapse-header-disabled-fg',
+          '--zuvi-collapse-content-bg',
+          '--zuvi-collapse-content-padding-x',
+          '--zuvi-collapse-content-padding-y',
+          '--zuvi-collapse-arrow-color',
+          '--zuvi-collapse-focus-ring',
+          '--zuvi-collapse-animation-duration',
         ]}
       />
     </div>

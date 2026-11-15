@@ -35,7 +35,7 @@ function getBodyRows(container: HTMLElement): HTMLElement[] {
 
 /**
  * jsdom 无布局（getBoundingClientRect 全 0），这里模拟浏览器真实布局：
- * CSS 固定表头高 2.5rem = 40px（--z-virtual-table-header-height），与 rowHeight 无关。
+ * CSS 固定表头高 2.5rem = 40px（--zuvi-virtual-table-header-height），与 rowHeight 无关。
  * 只需在首次 render 时生效（挂布局效果同步测量一次），测试内手动恢复。
  */
 let restoreHeaderStub: null | (() => void) = null;
@@ -62,7 +62,7 @@ describe('VirtualTable', () => {
     render(<VirtualTable data={makeRows(3)} columns={COLUMNS} height={400} />);
     const root = screen.getByRole('table');
     expect(root).toHaveAttribute('data-part', 'root');
-    expect(root).toHaveClass('z-virtual-table');
+    expect(root).toHaveClass('zuvi-virtual-table');
     expect(root).toHaveStyle({ height: '400px' });
     expect(screen.getAllByRole('columnheader')).toHaveLength(3);
   });

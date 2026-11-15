@@ -44,9 +44,9 @@ export function Progress({
       data-part="root"
       data-size={size}
       data-status={status}
-      className={cx('z-progress', className, classNames?.root)}
+      className={cx('zuvi-progress', className, classNames?.root)}
     >
-      <div data-part="track" className={cx('z-progress-track', classNames?.track)}>
+      <div data-part="track" className={cx('zuvi-progress-track', classNames?.track)}>
         <div
           role="progressbar"
           aria-valuemin={0}
@@ -56,17 +56,17 @@ export function Progress({
           aria-label={ariaLabel}
           aria-labelledby={ariaLabelledBy}
           data-part="fill"
-          className={cx('z-progress-fill', classNames?.fill)}
+          className={cx('zuvi-progress-fill', classNames?.fill)}
           style={{
             width: `${clamped}%`,
             ...(color != null
-              ? ({ ['--z-progress-color' as string]: color } as React.CSSProperties)
+              ? ({ ['--zuvi-progress-color' as string]: color } as React.CSSProperties)
               : null),
           }}
         />
       </div>
       {showInfo ? (
-        <div data-part="info" className={cx('z-progress-info', classNames?.info)}>
+        <div data-part="info" className={cx('zuvi-progress-info', classNames?.info)}>
           {`${displayPercent}%`}
         </div>
       ) : null}

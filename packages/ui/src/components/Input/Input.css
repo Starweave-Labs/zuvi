@@ -1,91 +1,91 @@
 /* Input —— 组件级变量定义在根选择器上，可被用户任意覆盖 */
 
-.z-input {
-  --z-input-height: 2rem; /* 32px md，与 Button 同高 */
-  --z-input-padding-x: var(--z-space-3);
-  --z-input-gap: var(--z-space-2);
-  --z-input-font-size: var(--z-text-sm);
-  --z-input-radius: var(--z-radius-sm); /* 6px，与 Button 同圆角 */
-  --z-input-border-width: 1px;
-  --z-input-bg: var(--z-color-bg-elevated);
-  --z-input-fg: var(--z-color-fg);
-  --z-input-border: var(--z-color-border);
-  --z-input-hover-border: var(--z-color-border-focus);
-  --z-input-focus-border: var(--z-color-border-focus);
-  --z-input-focus-ring: var(--z-color-focus-ring);
-  --z-input-placeholder-color: var(--z-color-fg-subtle);
-  --z-input-affix-color: var(--z-color-fg-muted);
-  --z-input-affix-font-size: var(--z-text-sm);
-  --z-input-clear-color: var(--z-color-fg-subtle);
-  --z-input-clear-hover-color: var(--z-color-fg);
-  --z-input-disabled-bg: var(--z-color-disabled-bg);
-  --z-input-disabled-fg: var(--z-color-disabled-fg);
-  --z-input-disabled-border: var(--z-color-disabled-border);
-  --z-input-transition: var(--z-duration-fast) var(--z-ease-standard);
-  --z-input-textarea-min-height: 4.5rem; /* 约 3 行 */
-  --z-input-action-color: var(--z-input-clear-color);
-  --z-input-action-hover-color: var(--z-input-clear-hover-color);
+.zuvi-input {
+  --zuvi-input-height: 2rem; /* 32px md，与 Button 同高 */
+  --zuvi-input-padding-x: var(--zuvi-space-3);
+  --zuvi-input-gap: var(--zuvi-space-2);
+  --zuvi-input-font-size: var(--zuvi-text-sm);
+  --zuvi-input-radius: var(--zuvi-radius-sm); /* 6px，与 Button 同圆角 */
+  --zuvi-input-border-width: 1px;
+  --zuvi-input-bg: var(--zuvi-color-bg-elevated);
+  --zuvi-input-fg: var(--zuvi-color-fg);
+  --zuvi-input-border: var(--zuvi-color-border);
+  --zuvi-input-hover-border: var(--zuvi-color-border-focus);
+  --zuvi-input-focus-border: var(--zuvi-color-border-focus);
+  --zuvi-input-focus-ring: var(--zuvi-color-focus-ring);
+  --zuvi-input-placeholder-color: var(--zuvi-color-fg-subtle);
+  --zuvi-input-affix-color: var(--zuvi-color-fg-muted);
+  --zuvi-input-affix-font-size: var(--zuvi-text-sm);
+  --zuvi-input-clear-color: var(--zuvi-color-fg-subtle);
+  --zuvi-input-clear-hover-color: var(--zuvi-color-fg);
+  --zuvi-input-disabled-bg: var(--zuvi-color-disabled-bg);
+  --zuvi-input-disabled-fg: var(--zuvi-color-disabled-fg);
+  --zuvi-input-disabled-border: var(--zuvi-color-disabled-border);
+  --zuvi-input-transition: var(--zuvi-duration-fast) var(--zuvi-ease-standard);
+  --zuvi-input-textarea-min-height: 4.5rem; /* 约 3 行 */
+  --zuvi-input-action-color: var(--zuvi-input-clear-color);
+  --zuvi-input-action-hover-color: var(--zuvi-input-clear-hover-color);
 }
 
 /* 尺寸：仅覆盖尺寸类变量（sm 24px / md 32px / lg 40px，与 Button 对齐） */
-.z-input[data-size='sm'] {
-  --z-input-height: 1.5rem; /* 24px */
-  --z-input-padding-x: var(--z-space-2);
-  --z-input-font-size: var(--z-text-xs);
-  --z-input-radius: 0.25rem;
+.zuvi-input[data-size='sm'] {
+  --zuvi-input-height: 1.5rem; /* 24px */
+  --zuvi-input-padding-x: var(--zuvi-space-2);
+  --zuvi-input-font-size: var(--zuvi-text-xs);
+  --zuvi-input-radius: 0.25rem;
 }
 
-.z-input[data-size='lg'] {
-  --z-input-height: 2.5rem; /* 40px */
-  --z-input-padding-x: var(--z-space-4);
-  --z-input-font-size: var(--z-text-md);
-  --z-input-radius: 0.5rem;
+.zuvi-input[data-size='lg'] {
+  --zuvi-input-height: 2.5rem; /* 40px */
+  --zuvi-input-padding-x: var(--zuvi-space-4);
+  --zuvi-input-font-size: var(--zuvi-text-md);
+  --zuvi-input-radius: 0.5rem;
 }
 
 /* 状态：仅覆盖颜色类变量 */
-.z-input[data-status='error'] {
-  --z-input-border: var(--z-color-danger);
-  --z-input-hover-border: var(--z-color-danger);
-  --z-input-focus-border: var(--z-color-danger);
-  --z-input-focus-ring: var(--z-color-danger);
+.zuvi-input[data-status='error'] {
+  --zuvi-input-border: var(--zuvi-color-danger);
+  --zuvi-input-hover-border: var(--zuvi-color-danger);
+  --zuvi-input-focus-border: var(--zuvi-color-danger);
+  --zuvi-input-focus-ring: var(--zuvi-color-danger);
 }
 
-.z-input[data-status='success'] {
-  --z-input-border: var(--z-color-success);
-  --z-input-hover-border: var(--z-color-success);
-  --z-input-focus-border: var(--z-color-success);
-  --z-input-focus-ring: var(--z-color-success);
+.zuvi-input[data-status='success'] {
+  --zuvi-input-border: var(--zuvi-color-success);
+  --zuvi-input-hover-border: var(--zuvi-color-success);
+  --zuvi-input-focus-border: var(--zuvi-color-success);
+  --zuvi-input-focus-ring: var(--zuvi-color-success);
 }
 
 /* 布局与视觉 */
-.z-input {
+.zuvi-input {
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
-  gap: var(--z-input-gap);
-  height: var(--z-input-height);
-  padding: 0 var(--z-input-padding-x);
-  border: var(--z-input-border-width) solid var(--z-input-border);
-  border-radius: var(--z-input-radius);
-  background: var(--z-input-bg);
+  gap: var(--zuvi-input-gap);
+  height: var(--zuvi-input-height);
+  padding: 0 var(--zuvi-input-padding-x);
+  border: var(--zuvi-input-border-width) solid var(--zuvi-input-border);
+  border-radius: var(--zuvi-input-radius);
+  background: var(--zuvi-input-bg);
   transition:
-    border-color var(--z-input-transition),
-    box-shadow var(--z-input-transition);
+    border-color var(--zuvi-input-transition),
+    box-shadow var(--zuvi-input-transition);
 }
 
 /* hover：边框转 primary（antd 式） */
-.z-input:hover:not(:has(.z-input-field:disabled)) {
-  border-color: var(--z-input-hover-border);
+.zuvi-input:hover:not(:has(.zuvi-input-field:disabled)) {
+  border-color: var(--zuvi-input-hover-border);
 }
 
 /* focus：柔光圈（color-mix 15%）而非生硬描边 */
-.z-input:focus-within {
-  border-color: var(--z-input-focus-border);
+.zuvi-input:focus-within {
+  border-color: var(--zuvi-input-focus-border);
   outline: none;
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--z-input-focus-ring) 15%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--zuvi-input-focus-ring) 15%, transparent);
 }
 
-.z-input-field {
+.zuvi-input-field {
   box-sizing: border-box;
   flex: 1 1 auto;
   min-width: 0;
@@ -94,29 +94,29 @@
   padding: 0;
   border: none;
   background: transparent;
-  color: var(--z-input-fg);
-  font-family: var(--z-font-sans);
-  font-size: var(--z-input-font-size);
-  line-height: var(--z-leading-normal);
+  color: var(--zuvi-input-fg);
+  font-family: var(--zuvi-font-sans);
+  font-size: var(--zuvi-input-font-size);
+  line-height: var(--zuvi-leading-normal);
   outline: none;
 }
 
-.z-input-field::placeholder {
-  color: var(--z-input-placeholder-color);
+.zuvi-input-field::placeholder {
+  color: var(--zuvi-input-placeholder-color);
 }
 
-.z-input-prefix,
-.z-input-suffix {
+.zuvi-input-prefix,
+.zuvi-input-suffix {
   display: inline-flex;
   flex: none;
   align-items: center;
-  color: var(--z-input-affix-color);
-  font-size: var(--z-input-affix-font-size);
+  color: var(--zuvi-input-affix-color);
+  font-size: var(--zuvi-input-affix-font-size);
 }
 
-.z-input-clear,
-.z-input-toggle,
-.z-input-search-button {
+.zuvi-input-clear,
+.zuvi-input-toggle,
+.zuvi-input-search-button {
   display: inline-flex;
   flex: none;
   min-width: 1.5rem;
@@ -125,69 +125,69 @@
   justify-content: center;
   padding: 0;
   border: none;
-  border-radius: var(--z-radius-full);
+  border-radius: var(--zuvi-radius-full);
   background: transparent;
-  color: var(--z-input-action-color);
-  font-size: var(--z-input-affix-font-size);
+  color: var(--zuvi-input-action-color);
+  font-size: var(--zuvi-input-affix-font-size);
   line-height: 1;
   cursor: pointer;
-  transition: color var(--z-input-transition);
+  transition: color var(--zuvi-input-transition);
 }
 
-.z-input-clear:hover,
-.z-input-toggle:hover:not(:disabled),
-.z-input-search-button:hover:not(:disabled) {
-  color: var(--z-input-action-hover-color);
+.zuvi-input-clear:hover,
+.zuvi-input-toggle:hover:not(:disabled),
+.zuvi-input-search-button:hover:not(:disabled) {
+  color: var(--zuvi-input-action-hover-color);
 }
 
-.z-input-clear:focus-visible,
-.z-input-toggle:focus-visible,
-.z-input-search-button:focus-visible {
-  outline: 2px solid var(--z-input-focus-ring);
+.zuvi-input-clear:focus-visible,
+.zuvi-input-toggle:focus-visible,
+.zuvi-input-search-button:focus-visible {
+  outline: 2px solid var(--zuvi-input-focus-ring);
   outline-offset: 2px;
 }
 
-.z-input-toggle:disabled,
-.z-input-search-button:disabled {
-  color: var(--z-input-disabled-fg);
+.zuvi-input-toggle:disabled,
+.zuvi-input-search-button:disabled {
+  color: var(--zuvi-input-disabled-fg);
   cursor: not-allowed;
 }
 
 /* Textarea：解除固定高度，允许纵向拖拽 */
-.z-input-textarea {
+.zuvi-input-textarea {
   height: auto;
   align-items: flex-start;
-  padding: var(--z-space-2) var(--z-input-padding-x);
+  padding: var(--zuvi-space-2) var(--zuvi-input-padding-x);
 }
 
-.z-input-textarea .z-input-field {
+.zuvi-input-textarea .zuvi-input-field {
   height: auto;
-  min-height: var(--z-input-textarea-min-height);
+  min-height: var(--zuvi-input-textarea-min-height);
   resize: vertical;
 }
 
 /* type=search 的 WebKit 原生清除按钮与 clearable 冲突，隐藏之 */
-.z-input-search .z-input-field::-webkit-search-cancel-button {
+.zuvi-input-search .zuvi-input-field::-webkit-search-cancel-button {
   -webkit-appearance: none;
   appearance: none;
 }
 
-.z-input:has(.z-input-field:disabled) {
-  background: var(--z-input-disabled-bg);
-  border-color: var(--z-input-disabled-border);
+.zuvi-input:has(.zuvi-input-field:disabled) {
+  background: var(--zuvi-input-disabled-bg);
+  border-color: var(--zuvi-input-disabled-border);
   cursor: not-allowed;
 }
 
-.z-input-field:disabled {
-  color: var(--z-input-disabled-fg);
+.zuvi-input-field:disabled {
+  color: var(--zuvi-input-disabled-fg);
   cursor: not-allowed;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .z-input,
-  .z-input-clear,
-  .z-input-toggle,
-  .z-input-search-button {
+  .zuvi-input,
+  .zuvi-input-clear,
+  .zuvi-input-toggle,
+  .zuvi-input-search-button {
     transition: none;
   }
 }

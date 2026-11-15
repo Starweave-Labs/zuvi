@@ -164,7 +164,7 @@ describe('OfficeStudio', () => {
     await waitFor(() => expect(onPrint).toHaveBeenCalledTimes(2));
     expect(onPrint.mock.calls[1][0].content.content[0].content[0].text).toBe('重试时的新内容');
   });
-  it('uses ZUI actions and exposes semantic slots, root props and a live document ref', async () => {
+  it('uses ZUVI actions and exposes semantic slots, root props and a live document ref', async () => {
     const ref = React.createRef<OfficeStudioHandle>();
     const document = doc();
     const { container } = render(
@@ -183,8 +183,8 @@ describe('OfficeStudio', () => {
     expect(
       Array.from(container.querySelectorAll('[data-part="actions"] button')).every(
         (button) =>
-          button.classList.contains('z-button') ||
-          button.classList.contains('z-dropdown-menu-trigger')
+          button.classList.contains('zuvi-button') ||
+          button.classList.contains('zuvi-dropdown-menu-trigger')
       )
     ).toBe(true);
     expect(screen.getByRole('button', { name: '保存' })).toBeDisabled();

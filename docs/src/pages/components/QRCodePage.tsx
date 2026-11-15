@@ -1,19 +1,19 @@
-import { QRCode } from '@zui/react';
+import { QRCode } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
 import Demo from '../../components/Demo';
 import { usePageTitle } from '../../components/usePageTitle';
 
-const BASIC_CODE = `<QRCode value="https://zui.dev" />
+const BASIC_CODE = `<QRCode value="https://zuvi.dev" />
 <QRCode value="1234567" />`;
 
-const SIZE_LEVEL_CODE = `<QRCode value="https://zui.dev" size={96} level="L" />
-<QRCode value="https://zui.dev" size={160} level="M" />
-<QRCode value="https://zui.dev" size={224} level="H" />`;
+const SIZE_LEVEL_CODE = `<QRCode value="https://zuvi.dev" size={96} level="L" />
+<QRCode value="https://zuvi.dev" size={160} level="M" />
+<QRCode value="https://zuvi.dev" size={224} level="H" />`;
 
-const COLOR_CODE = `<QRCode value="https://zui.dev" color="#0f62fe" bgColor="#eef4ff" />
-<QRCode value="https://zui.dev" color="white" bgColor="#111827" />`;
+const COLOR_CODE = `<QRCode value="https://zuvi.dev" color="#0f62fe" bgColor="#eef4ff" />
+<QRCode value="https://zuvi.dev" color="white" bgColor="#111827" />`;
 
 export default function QRCodePage(): React.ReactNode {
   usePageTitle('QRCode 二维码');
@@ -30,7 +30,7 @@ export default function QRCodePage(): React.ReactNode {
 
       <Demo title="基础用法" description="传入 value 即可生成；role=img + aria-label 携带内容，便于读屏。" code={BASIC_CODE}>
         <div className="doc-pg-preview-row">
-          <QRCode value="https://zui.dev" />
+          <QRCode value="https://zuvi.dev" />
           <QRCode value="1234567" />
         </div>
       </Demo>
@@ -41,9 +41,9 @@ export default function QRCodePage(): React.ReactNode {
         code={SIZE_LEVEL_CODE}
       >
         <div className="doc-pg-preview-row">
-          <QRCode value="https://zui.dev" size={96} level="L" />
-          <QRCode value="https://zui.dev" size={160} level="M" />
-          <QRCode value="https://zui.dev" size={224} level="H" />
+          <QRCode value="https://zuvi.dev" size={96} level="L" />
+          <QRCode value="https://zuvi.dev" size={160} level="M" />
+          <QRCode value="https://zuvi.dev" size={224} level="H" />
         </div>
       </Demo>
 
@@ -53,8 +53,8 @@ export default function QRCodePage(): React.ReactNode {
         code={COLOR_CODE}
       >
         <div className="doc-pg-preview-row">
-          <QRCode value="https://zui.dev" color="#0f62fe" bgColor="#eef4ff" />
-          <QRCode value="https://zui.dev" color="white" bgColor="#111827" />
+          <QRCode value="https://zuvi.dev" color="#0f62fe" bgColor="#eef4ff" />
+          <QRCode value="https://zuvi.dev" color="white" bgColor="#111827" />
         </div>
       </Demo>
 
@@ -90,13 +90,13 @@ export default function QRCodePage(): React.ReactNode {
           {
             name: 'color',
             type: 'string',
-            defaultValue: 'var(--z-color-fg)',
+            defaultValue: 'var(--zuvi-color-fg)',
             description: '前景色（模块）。',
           },
           {
             name: 'bgColor',
             type: 'string',
-            defaultValue: 'var(--z-color-bg)',
+            defaultValue: 'var(--zuvi-color-bg)',
             description: '背景色。',
           },
           {
@@ -115,7 +115,7 @@ export default function QRCodePage(): React.ReactNode {
       <CustomizeOutlet
         name="QRCode"
         parts={['root', 'bg', 'modules']}
-        vars={['--z-qrcode-fg', '--z-qrcode-bg']}
+        vars={['--zuvi-qrcode-fg', '--zuvi-qrcode-bg']}
       />
     </div>
   );

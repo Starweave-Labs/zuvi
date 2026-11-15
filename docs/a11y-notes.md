@@ -1,6 +1,6 @@
-# ZUI 无障碍（a11y）笔记
+# ZUVI 无障碍（a11y）笔记
 
-> 本文件由 a11y 测试组维护，是 ZUI 无障碍工作的「已知问题与规避」知识库：
+> 本文件由 a11y 测试组维护，是 ZUVI 无障碍工作的「已知问题与规避」知识库：
 > 承诺与实现策略、组件难度分级、读屏怪癖清单、自动化测试边界与人工实测清单。
 > 契约依据：`CONTRACTS.md` §1（一票否决项）/ §2（逐组件 ARIA 要求）、`CONTRACTS-V2.md` §4（a11y 组交付物）。
 > 配套测试：`packages/ui/src/test/a11y.roles.test.tsx`（角色/状态矩阵）、
@@ -62,8 +62,8 @@ B = 低难度（原生语义为主）。A 级以浮层/菜单类复合组件为�
 
 ## 3. 读屏怪癖清单（已知问题与规避）
 
-以下条目整理自业界实测经验（含 React Aria 团队公开的读屏行为分析），以 ZUI 视角重写为
-「现象 → 影响 → ZUI 的规避」。这些是 jsdom 自动化测不出、必须人工实测的领域。
+以下条目整理自业界实测经验（含 React Aria 团队公开的读屏行为分析），以 ZUVI 视角重写为
+「现象 → 影响 → ZUVI 的规避」。这些是 jsdom 自动化测不出、必须人工实测的领域。
 
 ### 3.1 VoiceOver + Safari：`aria-activedescendant` 播报不稳定
 
@@ -71,7 +71,7 @@ B = 低难度（原生语义为主）。A 级以浮层/菜单类复合组件为�
   模式下，VoiceOver+Safari 对活动项移动的播报时灵时不灵——朗读游标不跟随虚拟活动项、
   只读出首个选项后不再更新，或与 Chrome 下的行为不一致。
 - **影响**：Select 或 Combobox 打开后按 ↑↓，VO 用户可能「静默移动」，不知道当前停在哪一项。
-- **ZUI 的规避**：
+- **ZUVI 的规避**：
   - Select 与 Combobox 坚持 APG 标准实现（`aria-activedescendant` 是 combobox 规范做法，不因单平台缺陷降级成
     自创模式）；
   - 保证「最终状态一定可感知」：Select 选中后触发器文本更新；Combobox 的 committed 文本更新并保留
@@ -84,7 +84,7 @@ B = 低难度（原生语义为主）。A 级以浮层/菜单类复合组件为�
 - **现象**：Dialog 打开的同一瞬间立刻把焦点移进内容，NVDA 常把「对话框 + 标题」的初始播报吞掉或
   跳过，只读出最终被聚焦控件的名字，用户不知道自己进了什么弹窗。
 - **影响**：Modal 打开后上下文丢失，标题/描述白写。
-- **ZUI 的规避**：
+- **ZUVI 的规避**：
   - `useFocusTrap` 把初始聚焦推迟到 `requestAnimationFrame`——先让 `role="dialog"` +
     `aria-labelledby`/`aria-describedby` 渲染完成、读屏建立虚拟缓冲，再移动焦点；
   - 标题一律经 `Modal.Title` 自动挂 `aria-labelledby`（无标题不产生悬空引用），保证 dialog
@@ -97,11 +97,11 @@ B = 低难度（原生语义为主）。A 级以浮层/菜单类复合组件为�
 - **现象**：Modal/Message 经 Portal 挂到 `body`，视觉上盖住页面，但读屏的浏览模式（虚拟光标）
   仍可「下钻」到背景内容——DOM 上背景与弹层是兄弟，不在弹层子树内。
 - **影响**：对 `aria-modal` 支持不完整的旧版读屏/盲文用户，可能读到并 Tab 到弹窗背后的内容。
-- **ZUI 的规避**：
+- **ZUVI 的规避**：
   - Modal 依赖 `aria-modal="true"`（主流 AT 会隔离背景）+ 焦点陷阱双保险，Tab 不逃出 dialog
     （`a11y.keyboard.test.tsx` 锁定）；
   - 社区标准兜底方案是 React Aria 式 `ariaHideOutside`（把弹层外一切 `aria-hidden` +
-    `inert`）——ZUI 暂未内置，列为已知限制；后续若纳入将进 `src/utils`（集成者领地），
+    `inert`）——ZUVI 暂未内置，列为已知限制；后续若纳入将进 `src/utils`（集成者领地），
     对接点是 Modal/浮层组共用；
   - Message 是非模态提示，不做背景隔离（隔离反而会打断用户当前操作的朗读）。
 
@@ -111,7 +111,7 @@ B = 低难度（原生语义为主）。A 级以浮层/菜单类复合组件为�
   `aria-live`，部分读屏会把同一条消息读两遍；另外 `role="status"` 隐含 `aria-live="polite"`，
   error 用 `aria-live="assertive"` 覆盖时，个别读屏/浏览器组合仍按 polite 播报。
 - **影响**：提示重复朗读很吵；error 的紧急度可能丢失（用户不知道出错了）。
-- **ZUI 的规避**：
+- **ZUVI 的规避**：
   - `z-message-list` 容器本身**不是** live region，只有每条 `z-message` 是唯一播报节点
     （`role="status"` + `aria-live`），从结构上杜绝双重播报；
   - error 显式 `aria-live="assertive"`；该「status + assertive」组合在 NVDA/JAWS 的实际表现

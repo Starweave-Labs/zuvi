@@ -17,7 +17,7 @@ const compiled = ts.transpileModule(readFileSync(sourceUrl, 'utf8'), {
     target: ts.ScriptTarget.ES2022,
   },
 }).outputText;
-const credentialsKey = 'zui-office-sessions-v1';
+const credentialsKey = 'zuvi-office-sessions-v1';
 const mimeTypes = {
   word: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
   excel: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -828,7 +828,7 @@ test('自动保存开关持久化：关闭时不自动回写，手动保存不�
   const tick = f.intervals[0].callback;
 
   f.api.setOfficeAutoSaveEnabled(false);
-  assert.equal(f.storage.get('zui-office-autosave-v1'), '0');
+  assert.equal(f.storage.get('zuvi-office-autosave-v1'), '0');
   f.now += f.api.OFFICE_AUTOSAVE_IDLE_MS;
   await tick();
   await session.pendingSave;
@@ -842,7 +842,7 @@ test('自动保存开关持久化：关闭时不自动回写，手动保存不�
 
   f.markChanged(session);
   f.api.setOfficeAutoSaveEnabled(true);
-  assert.equal(f.storage.get('zui-office-autosave-v1'), '1');
+  assert.equal(f.storage.get('zuvi-office-autosave-v1'), '1');
   f.now += f.api.OFFICE_AUTOSAVE_IDLE_MS - 100;
   await tick();
   await session.pendingSave;

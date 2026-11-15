@@ -10,10 +10,10 @@ describe('Spin 独立模式', () => {
   it('默认 spinning 渲染旋转环与 root 类名', () => {
     const { container } = render(<Spin />);
     const root = container.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-spin', 'z-spin--inline');
+    expect(root).toHaveClass('zuvi-spin', 'zuvi-spin--inline');
     expect(root).toHaveAttribute('data-spinning', '');
     expect(root).toHaveAttribute('data-size', 'md');
-    expect(root.querySelector('[data-part="spinner"]')).toHaveClass('z-spin-spinner');
+    expect(root.querySelector('[data-part="spinner"]')).toHaveClass('zuvi-spin-spinner');
   });
 
   it('spinning=false 时独立模式不渲染', () => {
@@ -24,7 +24,7 @@ describe('Spin 独立模式', () => {
   it('tip 渲染为底部文案', () => {
     render(<Spin tip="加载中…" />);
     expect(screen.getByText('加载中…')).toHaveAttribute('data-part', 'tip');
-    expect(screen.getByText('加载中…')).toHaveClass('z-spin-tip');
+    expect(screen.getByText('加载中…')).toHaveClass('zuvi-spin-tip');
   });
 
   it('size 暴露 data-size', () => {
@@ -41,17 +41,17 @@ describe('Spin 包裹模式', () => {
       </Spin>
     );
     const root = container.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-spin--wrap');
+    expect(root).toHaveClass('zuvi-spin--wrap');
     expect(root).toHaveAttribute('data-spinning', '');
 
     expect(screen.getByTestId('content')).toBeInTheDocument();
-    const childrenWrap = container.querySelector('.z-spin-children') as HTMLElement;
+    const childrenWrap = container.querySelector('.zuvi-spin-children') as HTMLElement;
     expect(childrenWrap).toHaveAttribute('aria-busy', 'true');
 
     // 遮罩 + 旋转环 + tip 同时可见
-    expect(container.querySelector('.z-spin-mask')).not.toBeNull();
+    expect(container.querySelector('.zuvi-spin-mask')).not.toBeNull();
     expect(container.querySelector('[data-part="spinner"]')).not.toBeNull();
-    expect(screen.getByText('加载中')).toHaveClass('z-spin-tip');
+    expect(screen.getByText('加载中')).toHaveClass('zuvi-spin-tip');
   });
 
   it('spinning=false 时内容可交互、无遮罩与 aria-busy', () => {
@@ -61,8 +61,8 @@ describe('Spin 包裹模式', () => {
       </Spin>
     );
     expect(container.querySelector('[data-part="root"]')).not.toHaveAttribute('data-spinning');
-    expect(container.querySelector('.z-spin-mask')).toBeNull();
-    const childrenWrap = container.querySelector('.z-spin-children') as HTMLElement;
+    expect(container.querySelector('.zuvi-spin-mask')).toBeNull();
+    const childrenWrap = container.querySelector('.zuvi-spin-children') as HTMLElement;
     expect(childrenWrap).not.toHaveAttribute('aria-busy');
     expect(screen.getByTestId('content')).toBeInTheDocument();
   });
@@ -76,15 +76,15 @@ describe('Spin 定制出口', () => {
       </Spin>
     );
     const root = container.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-spin', 'c-root');
-    expect(container.querySelector('[data-part="spinner"]')).toHaveClass('z-spin-spinner', 'c-spinner');
-    expect(screen.getByText('加载中')).toHaveClass('z-spin-tip', 'c-tip');
+    expect(root).toHaveClass('zuvi-spin', 'c-root');
+    expect(container.querySelector('[data-part="spinner"]')).toHaveClass('zuvi-spin-spinner', 'c-spinner');
+    expect(screen.getByText('加载中')).toHaveClass('zuvi-spin-tip', 'c-tip');
   });
 
   it('透传原生属性（className、data-*）', () => {
     const { container } = render(<Spin className="my-spin" data-foo="bar" tip="加载中" />);
     const root = container.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-spin', 'my-spin');
+    expect(root).toHaveClass('zuvi-spin', 'my-spin');
     expect(root).toHaveAttribute('data-foo', 'bar');
   });
 

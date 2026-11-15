@@ -130,14 +130,14 @@ export function Affix(props: AffixProps) {
     <div
       {...rest}
       data-part="root"
-      className={cx('z-affix', classNames?.root, className)}
+      className={cx('zuvi-affix', classNames?.root, className)}
       data-affixed={affixed ? 'true' : 'false'}
       style={affixed ? { ...placeholderStyle, ...rest.style } : rest.style}
       ref={placeholderRef}
     >
       <div
         data-part="content"
-        className={cx('z-affix-content', classNames?.content)}
+        className={cx('zuvi-affix-content', classNames?.content)}
         ref={contentRef}
         style={affixed ? fixedStyle : undefined}
       >

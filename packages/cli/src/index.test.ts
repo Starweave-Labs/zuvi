@@ -1,5 +1,5 @@
 /**
- * @zui/cli 测试：init / add 的文件复制逻辑（mock 目标目录与 registry）+ diff / list + argv 解析。
+ * @zuvi/cli 测试：init / add 的文件复制逻辑（mock 目标目录与 registry）+ diff / list + argv 解析。
  * 环境：node（无 DOM）；临时目录自清理。
  */
 
@@ -21,7 +21,7 @@ import { list } from './commands/list.js';
 const tmpDirs: string[] = [];
 
 function tmpDir(): string {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'zui-cli-test-'));
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'zuvi-cli-test-'));
   tmpDirs.push(dir);
   return dir;
 }
@@ -41,12 +41,12 @@ function buildMockRegistry(root: string): string {
   fs.mkdirSync(path.join(components, 'Foo'), { recursive: true });
   fs.mkdirSync(path.join(components, 'Bar'), { recursive: true });
   fs.writeFileSync(path.join(components, 'Foo', 'Foo.tsx'), 'export const Foo = 1;\n');
-  fs.writeFileSync(path.join(components, 'Foo', 'Foo.css'), '.z-foo { --z-foo-gap: 4px; }\n');
+  fs.writeFileSync(path.join(components, 'Foo', 'Foo.css'), '.zuvi-foo { --zuvi-foo-gap: 4px; }\n');
   fs.writeFileSync(path.join(components, 'Bar', 'Bar.tsx'), 'export const Bar = 2;\n');
 
   const registry = {
-    name: 'zui-mock',
-    homepage: 'https://zui.dev',
+    name: 'zuvi-mock',
+    homepage: 'https://zuvi.dev',
     items: [
       {
         name: 'foo',
@@ -56,7 +56,7 @@ function buildMockRegistry(root: string): string {
         dependencies: ['lodash'],
         registryDependencies: ['bar'],
         files: ['packages/ui/src/components/Foo/Foo.tsx', 'packages/ui/src/components/Foo/Foo.css'],
-        cssVars: { '--z-foo-gap': '4px' },
+        cssVars: { '--zuvi-foo-gap': '4px' },
         meta: 'packages/ui/src/components/Foo/meta.json',
       },
       {
@@ -120,7 +120,7 @@ describe('parseArgs', () => {
 /* --------------------------------- init ---------------------------------- */
 
 describe('init', () => {
-  it('检测框架并写 .zurc.json', async () => {
+  it('检测框架并写 .zuvirc.json', async () => {
     const cwd = tmpDir();
     fs.writeFileSync(
       path.join(cwd, 'package.json'),
@@ -181,7 +181,7 @@ describe('add', () => {
     const fooDir = path.join(project, 'src', 'components', 'ui', 'foo');
     const barDir = path.join(project, 'src', 'components', 'ui', 'bar');
     expect(fs.readFileSync(path.join(fooDir, 'Foo.tsx'), 'utf8')).toContain('Foo = 1');
-    expect(fs.readFileSync(path.join(fooDir, 'Foo.css'), 'utf8')).toContain('--z-foo-gap');
+    expect(fs.readFileSync(path.join(fooDir, 'Foo.css'), 'utf8')).toContain('--zuvi-foo-gap');
     expect(fs.existsSync(path.join(barDir, 'Bar.tsx'))).toBe(true);
 
     expect(result.dependencies).toEqual(['lodash']);
@@ -219,11 +219,11 @@ describe('add', () => {
     );
   });
 
-  it('自定义目标目录（.zurc.json）', async () => {
+  it('自定义目标目录（.zuvirc.json）', async () => {
     const root = tmpDir();
     const registryPath = buildMockRegistry(root);
     const project = tmpDir();
-    fs.writeFileSync(path.join(project, '.zurc.json'), JSON.stringify({ components: 'app/ui' }));
+    fs.writeFileSync(path.join(project, '.zuvirc.json'), JSON.stringify({ components: 'app/ui' }));
     const ctx = createContext({ cwd: project, registryPath, log: silent });
     await add({ ctx, names: ['bar'] });
     expect(fs.existsSync(path.join(project, 'app', 'ui', 'bar', 'Bar.tsx'))).toBe(true);
@@ -344,8 +344,8 @@ describe('真实 registry 契约校验（73 组件 + 16 业务块）', () => {
       homepage: string;
       items: Array<Record<string, unknown>>;
     };
-    expect(registry.name).toBe('zui');
-    expect(registry.homepage).toBe('https://zui.dev');
+    expect(registry.name).toBe('zuvi');
+    expect(registry.homepage).toBe('https://zuvi.dev');
     expect(registry.items.filter((item) => item.type === 'registry:component')).toHaveLength(73);
     expect(registry.items.filter((item) => item.type === 'registry:block')).toHaveLength(16);
     for (const item of registry.items) {
@@ -363,7 +363,7 @@ describe('真实 registry 契约校验（73 组件 + 16 业务块）', () => {
     expect(button).toBeTruthy();
     expect((button as { files: string[] }).files.length).toBeGreaterThanOrEqual(2);
     expect(
-      (button as { cssVars: Record<string, string> })['cssVars']['--z-button-height']
+      (button as { cssVars: Record<string, string> })['cssVars']['--zuvi-button-height']
     ).toBeTruthy();
   });
 
@@ -402,7 +402,7 @@ describe('真实 registry 契约校验（73 组件 + 16 业务块）', () => {
     expect(d.files.every((file) => file.state === 'same')).toBe(true);
   });
 
-  it('安装 OfficeStudio 时包含三种编辑内核、公式声明及 ZUI 控件依赖', async () => {
+  it('安装 OfficeStudio 时包含三种编辑内核、公式声明及 ZUVI 控件依赖', async () => {
     const project = tmpDir();
     const ctx = createContext({ cwd: project, registryPath: realRegistry, log: silent });
     const result = await add({ ctx, names: ['office-studio'] });
@@ -455,13 +455,13 @@ describe('真实 registry 契约校验（73 组件 + 16 业务块）', () => {
     const result = await add({ ctx, names: ['form-page'] });
     const local = (file: string) =>
       fs.readFileSync(path.join(project, 'src/components/ui', file), 'utf8');
-    expect(local('blocks/form-page/index.tsx')).not.toMatch(/from ['"]@zui\/react['"]/);
+    expect(local('blocks/form-page/index.tsx')).not.toMatch(/from ['"]@zuvi\/react['"]/);
     expect(local('blocks/form-page/index.tsx')).toContain("from '../../form'");
-    expect(local('form/Form.tsx')).toContain("import('../_zui/config')");
-    expect(local('input/Input.css')).toContain("@import '../_zui/styles/tokens.css'");
-    expect(local('_zui/utils/floatingPosition.ts')).toContain('floatingPosition');
+    expect(local('form/Form.tsx')).toContain("import('../_zuvi/config')");
+    expect(local('input/Input.css')).toContain("@import '../_zuvi/styles/tokens.css'");
+    expect(local('_zuvi/utils/floatingPosition.ts')).toContain('floatingPosition');
     expect(result.dependencies).toEqual(
-      expect.arrayContaining(['@zui/icons', '@zui/tokens', '@zui/i18n'])
+      expect.arrayContaining(['@zuvi/icons', '@zuvi/tokens', '@zuvi/i18n'])
     );
     const d = await diff({ ctx, names: ['form-page'] });
     expect(d.files.every((file) => file.state === 'same')).toBe(true);

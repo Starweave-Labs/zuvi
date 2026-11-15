@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useZuiConfig } from '../../config';
+import { useZuviConfig } from '../../config';
 import { FloatingPanel, cx, useOnClickOutside } from '../../utils';
 import './Popconfirm.css';
 
@@ -21,7 +21,7 @@ export interface PopconfirmProps {
 }
 
 export function Popconfirm(props: PopconfirmProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const {
     title,
     description,
@@ -115,7 +115,7 @@ export function Popconfirm(props: PopconfirmProps) {
     <div
       ref={rootRef}
       data-part="root"
-      className={cx('z-popconfirm', classNames?.root, className)}
+      className={cx('zuvi-popconfirm', classNames?.root, className)}
       data-open={open ? 'true' : 'false'}
     >
       {trigger}
@@ -125,33 +125,33 @@ export function Popconfirm(props: PopconfirmProps) {
           open
           anchorRef={rootRef}
           align="center"
-          offsetVariable="--z-popconfirm-gap"
+          offsetVariable="--zuvi-popconfirm-gap"
           focusOnOpen
           initialFocusSelector="[data-part='ok']"
         >
           <div
             ref={panelRef}
             data-part="content"
-            className={cx('z-popconfirm-content', classNames?.content)}
+            className={cx('zuvi-popconfirm-content', classNames?.content)}
             role="dialog"
             tabIndex={-1}
             aria-labelledby={titleId}
             aria-describedby={description ? descId : undefined}
             onKeyDown={onPanelKeyDown}
           >
-            <div data-part="title" className="z-popconfirm-title" id={titleId}>
+            <div data-part="title" className="zuvi-popconfirm-title" id={titleId}>
               {title}
             </div>
             {description ? (
-              <div data-part="description" className="z-popconfirm-description" id={descId}>
+              <div data-part="description" className="zuvi-popconfirm-description" id={descId}>
                 {description}
               </div>
             ) : null}
-            <div data-part="actions" className={cx('z-popconfirm-actions', classNames?.actions)}>
+            <div data-part="actions" className={cx('zuvi-popconfirm-actions', classNames?.actions)}>
               <button
                 type="button"
                 data-part="cancel"
-                className="z-popconfirm-btn z-popconfirm-cancel"
+                className="zuvi-popconfirm-btn zuvi-popconfirm-cancel"
                 onClick={handleCancel}
               >
                 {cancelText}
@@ -159,7 +159,7 @@ export function Popconfirm(props: PopconfirmProps) {
               <button
                 type="button"
                 data-part="ok"
-                className="z-popconfirm-btn z-popconfirm-ok"
+                className="zuvi-popconfirm-btn zuvi-popconfirm-ok"
                 onClick={handleConfirm}
               >
                 {okText}

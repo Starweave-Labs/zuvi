@@ -13,15 +13,15 @@ describe('Progress 渲染与默认值', () => {
   it('渲染轨道/填充/信息三部件，默认 md + normal', () => {
     const { container } = render(<Progress percent={30} />);
     const root = container.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-progress');
+    expect(root).toHaveClass('zuvi-progress');
     expect(root).toHaveAttribute('data-size', 'md');
     expect(root).toHaveAttribute('data-status', 'normal');
 
     const track = container.querySelector('[data-part="track"]');
-    expect(track).toHaveClass('z-progress-track');
+    expect(track).toHaveClass('zuvi-progress-track');
 
     const fill = getFill(container);
-    expect(fill).toHaveClass('z-progress-fill');
+    expect(fill).toHaveClass('zuvi-progress-fill');
     expect(fill.style.width).toBe('30%');
 
     expect(screen.getByText('30%')).toHaveAttribute('data-part', 'info');
@@ -104,16 +104,16 @@ describe('Progress 定制出口', () => {
       />
     );
     const root = container.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-progress', 'my-root', 'c-root');
+    expect(root).toHaveClass('zuvi-progress', 'my-root', 'c-root');
     expect(container.querySelector('[data-part="track"]')).toHaveClass(
-      'z-progress-track',
+      'zuvi-progress-track',
       'c-track'
     );
 
     const fill = getFill(container);
-    expect(fill).toHaveClass('z-progress-fill', 'c-fill');
-    expect(fill.style.getPropertyValue('--z-progress-color')).toBe('rebeccapurple');
+    expect(fill).toHaveClass('zuvi-progress-fill', 'c-fill');
+    expect(fill.style.getPropertyValue('--zuvi-progress-color')).toBe('rebeccapurple');
 
-    expect(screen.getByText('70%')).toHaveClass('z-progress-info', 'c-info');
+    expect(screen.getByText('70%')).toHaveClass('zuvi-progress-info', 'c-info');
   });
 });

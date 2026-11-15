@@ -1,4 +1,4 @@
-import { Badge, Button } from '@zui/react';
+import { Badge, Button } from '@zuvi/react';
 import { useState } from 'react';
 
 import ApiTable from '../../components/ApiTable';
@@ -171,16 +171,16 @@ export default function BadgePage(): React.ReactNode {
         name="Badge"
         parts={['root', 'indicator']}
         vars={[
-          '--z-badge-size',
-          '--z-badge-padding-x',
-          '--z-badge-font-size',
-          '--z-badge-font-weight',
-          '--z-badge-radius',
-          '--z-badge-dot-size',
-          '--z-badge-border-width',
-          '--z-badge-bg',
-          '--z-badge-fg',
-          '--z-badge-border-color',
+          '--zuvi-badge-size',
+          '--zuvi-badge-padding-x',
+          '--zuvi-badge-font-size',
+          '--zuvi-badge-font-weight',
+          '--zuvi-badge-radius',
+          '--zuvi-badge-dot-size',
+          '--zuvi-badge-border-width',
+          '--zuvi-badge-bg',
+          '--zuvi-badge-fg',
+          '--zuvi-badge-border-color',
         ]}
       />
     </div>

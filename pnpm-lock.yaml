@@ -44,19 +44,19 @@ importers:
       '@puckeditor/core':
         specifier: ^0.24.0
         version: 0.24.0(@floating-ui/dom@1.8.0)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))
-      '@zui/blocks':
+      '@zuvi/blocks':
         specifier: workspace:*
         version: link:../packages/blocks
-      '@zui/i18n':
+      '@zuvi/i18n':
         specifier: workspace:*
         version: link:../packages/i18n
-      '@zui/icons':
+      '@zuvi/icons':
         specifier: workspace:*
         version: link:../packages/icons
-      '@zui/react':
+      '@zuvi/react':
         specifier: workspace:*
         version: link:../packages/ui
-      '@zui/tokens':
+      '@zuvi/tokens':
         specifier: workspace:*
         version: link:../packages/tokens
       docx:
@@ -111,7 +111,7 @@ importers:
 
   packages/blocks:
     dependencies:
-      '@zui/react':
+      '@zuvi/react':
         specifier: workspace:*
         version: link:../ui
     devDependencies:
@@ -235,13 +235,13 @@ importers:
       '@tiptap/starter-kit':
         specifier: ^3.33.1
         version: 3.33.1
-      '@zui/i18n':
+      '@zuvi/i18n':
         specifier: workspace:*
         version: link:../i18n
-      '@zui/icons':
+      '@zuvi/icons':
         specifier: workspace:*
         version: link:../icons
-      '@zui/tokens':
+      '@zuvi/tokens':
         specifier: workspace:*
         version: link:../tokens
       fast-formula-parser:

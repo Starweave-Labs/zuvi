@@ -1,139 +1,139 @@
-/* ZUI MultiCombobox —— 可编辑多选，input 焦点 + listbox aria-activedescendant + tag 删除 */
+/* ZUVI MultiCombobox —— 可编辑多选，input 焦点 + listbox aria-activedescendant + tag 删除 */
 
-.z-multicombobox {
-  --z-multicombobox-control-min-height: 2rem;
-  --z-multicombobox-control-padding-x: var(--z-space-3);
-  --z-multicombobox-control-gap: var(--z-space-1);
-  --z-multicombobox-font-size: var(--z-text-sm);
-  --z-multicombobox-radius: var(--z-radius-sm);
-  --z-multicombobox-bg: var(--z-color-bg-elevated);
-  --z-multicombobox-fg: var(--z-color-fg);
-  --z-multicombobox-border: var(--z-color-border);
-  --z-multicombobox-hover-border: var(--z-color-border-focus);
-  --z-multicombobox-focus-ring: var(--z-color-focus-ring);
-  --z-multicombobox-placeholder-fg: var(--z-color-fg-subtle);
-  --z-multicombobox-icon-fg: var(--z-color-fg-muted);
-  --z-multicombobox-clear-hover-bg: var(--z-color-bg-muted);
-  --z-multicombobox-tag-height: 1.25rem;
-  --z-multicombobox-tag-padding-x: var(--z-space-2);
-  --z-multicombobox-tag-gap: var(--z-space-1);
-  --z-multicombobox-tag-bg: var(--z-color-bg-muted);
-  --z-multicombobox-tag-fg: var(--z-color-fg);
-  --z-multicombobox-tag-radius: var(--z-radius-sm);
-  --z-multicombobox-tag-remove-fg: var(--z-color-fg-muted);
-  --z-multicombobox-tag-remove-hover-fg: var(--z-color-danger);
-  --z-multicombobox-tag-remove-hit-size: 1.5rem;
-  --z-multicombobox-panel-bg: var(--z-color-bg-elevated);
-  --z-multicombobox-panel-border: var(--z-color-border-subtle);
-  --z-multicombobox-panel-radius: 0.5rem;
-  --z-multicombobox-panel-shadow: var(--z-shadow-lg);
-  --z-multicombobox-panel-max-height: 16rem;
-  --z-multicombobox-panel-margin-top: var(--z-space-1);
-  --z-multicombobox-panel-padding: var(--z-space-1);
-  --z-multicombobox-option-height: 2rem;
-  --z-multicombobox-option-padding-x: var(--z-space-3);
-  --z-multicombobox-option-radius: var(--z-radius-sm);
-  --z-multicombobox-option-fg: var(--z-color-fg);
-  --z-multicombobox-option-active-bg: var(--z-color-primary-subtle);
-  --z-multicombobox-option-active-fg: var(--z-color-primary-subtle-fg);
-  --z-multicombobox-option-disabled-fg: var(--z-color-disabled-fg);
-  --z-multicombobox-status-fg: var(--z-color-fg-muted);
-  --z-multicombobox-animation-duration: var(--z-duration-fast);
+.zuvi-multicombobox {
+  --zuvi-multicombobox-control-min-height: 2rem;
+  --zuvi-multicombobox-control-padding-x: var(--zuvi-space-3);
+  --zuvi-multicombobox-control-gap: var(--zuvi-space-1);
+  --zuvi-multicombobox-font-size: var(--zuvi-text-sm);
+  --zuvi-multicombobox-radius: var(--zuvi-radius-sm);
+  --zuvi-multicombobox-bg: var(--zuvi-color-bg-elevated);
+  --zuvi-multicombobox-fg: var(--zuvi-color-fg);
+  --zuvi-multicombobox-border: var(--zuvi-color-border);
+  --zuvi-multicombobox-hover-border: var(--zuvi-color-border-focus);
+  --zuvi-multicombobox-focus-ring: var(--zuvi-color-focus-ring);
+  --zuvi-multicombobox-placeholder-fg: var(--zuvi-color-fg-subtle);
+  --zuvi-multicombobox-icon-fg: var(--zuvi-color-fg-muted);
+  --zuvi-multicombobox-clear-hover-bg: var(--zuvi-color-bg-muted);
+  --zuvi-multicombobox-tag-height: 1.25rem;
+  --zuvi-multicombobox-tag-padding-x: var(--zuvi-space-2);
+  --zuvi-multicombobox-tag-gap: var(--zuvi-space-1);
+  --zuvi-multicombobox-tag-bg: var(--zuvi-color-bg-muted);
+  --zuvi-multicombobox-tag-fg: var(--zuvi-color-fg);
+  --zuvi-multicombobox-tag-radius: var(--zuvi-radius-sm);
+  --zuvi-multicombobox-tag-remove-fg: var(--zuvi-color-fg-muted);
+  --zuvi-multicombobox-tag-remove-hover-fg: var(--zuvi-color-danger);
+  --zuvi-multicombobox-tag-remove-hit-size: 1.5rem;
+  --zuvi-multicombobox-panel-bg: var(--zuvi-color-bg-elevated);
+  --zuvi-multicombobox-panel-border: var(--zuvi-color-border-subtle);
+  --zuvi-multicombobox-panel-radius: 0.5rem;
+  --zuvi-multicombobox-panel-shadow: var(--zuvi-shadow-lg);
+  --zuvi-multicombobox-panel-max-height: 16rem;
+  --zuvi-multicombobox-panel-margin-top: var(--zuvi-space-1);
+  --zuvi-multicombobox-panel-padding: var(--zuvi-space-1);
+  --zuvi-multicombobox-option-height: 2rem;
+  --zuvi-multicombobox-option-padding-x: var(--zuvi-space-3);
+  --zuvi-multicombobox-option-radius: var(--zuvi-radius-sm);
+  --zuvi-multicombobox-option-fg: var(--zuvi-color-fg);
+  --zuvi-multicombobox-option-active-bg: var(--zuvi-color-primary-subtle);
+  --zuvi-multicombobox-option-active-fg: var(--zuvi-color-primary-subtle-fg);
+  --zuvi-multicombobox-option-disabled-fg: var(--zuvi-color-disabled-fg);
+  --zuvi-multicombobox-status-fg: var(--zuvi-color-fg-muted);
+  --zuvi-multicombobox-animation-duration: var(--zuvi-duration-fast);
 
   position: relative;
   display: inline-flex;
   min-width: 0;
   flex-direction: column;
-  color: var(--z-multicombobox-fg);
-  font-family: var(--z-font-sans);
-  font-size: var(--z-multicombobox-font-size);
+  color: var(--zuvi-multicombobox-fg);
+  font-family: var(--zuvi-font-sans);
+  font-size: var(--zuvi-multicombobox-font-size);
 }
 
-.z-multicombobox[data-size='sm'] {
-  --z-multicombobox-control-min-height: 1.5rem;
-  --z-multicombobox-control-padding-x: var(--z-space-2);
-  --z-multicombobox-font-size: var(--z-text-xs);
-  --z-multicombobox-tag-height: 1.125rem;
-  --z-multicombobox-option-height: 1.75rem;
+.zuvi-multicombobox[data-size='sm'] {
+  --zuvi-multicombobox-control-min-height: 1.5rem;
+  --zuvi-multicombobox-control-padding-x: var(--zuvi-space-2);
+  --zuvi-multicombobox-font-size: var(--zuvi-text-xs);
+  --zuvi-multicombobox-tag-height: 1.125rem;
+  --zuvi-multicombobox-option-height: 1.75rem;
 }
 
-.z-multicombobox[data-size='lg'] {
-  --z-multicombobox-control-min-height: 2.5rem;
-  --z-multicombobox-control-padding-x: var(--z-space-4);
-  --z-multicombobox-font-size: var(--z-text-md);
-  --z-multicombobox-tag-height: 1.5rem;
-  --z-multicombobox-option-height: 2.25rem;
+.zuvi-multicombobox[data-size='lg'] {
+  --zuvi-multicombobox-control-min-height: 2.5rem;
+  --zuvi-multicombobox-control-padding-x: var(--zuvi-space-4);
+  --zuvi-multicombobox-font-size: var(--zuvi-text-md);
+  --zuvi-multicombobox-tag-height: 1.5rem;
+  --zuvi-multicombobox-option-height: 2.25rem;
 }
 
-.z-multicombobox[data-status='error'] {
-  --z-multicombobox-border: var(--z-color-danger);
-  --z-multicombobox-hover-border: var(--z-color-danger);
-  --z-multicombobox-focus-ring: var(--z-color-danger);
+.zuvi-multicombobox[data-status='error'] {
+  --zuvi-multicombobox-border: var(--zuvi-color-danger);
+  --zuvi-multicombobox-hover-border: var(--zuvi-color-danger);
+  --zuvi-multicombobox-focus-ring: var(--zuvi-color-danger);
 }
 
-.z-multicombobox[data-status='success'] {
-  --z-multicombobox-border: var(--z-color-success);
-  --z-multicombobox-hover-border: var(--z-color-success);
-  --z-multicombobox-focus-ring: var(--z-color-success);
+.zuvi-multicombobox[data-status='success'] {
+  --zuvi-multicombobox-border: var(--zuvi-color-success);
+  --zuvi-multicombobox-hover-border: var(--zuvi-color-success);
+  --zuvi-multicombobox-focus-ring: var(--zuvi-color-success);
 }
 
 /* 多选 control：tag 换行，min-height 而非固定高度 */
-.z-multicombobox-control {
+.zuvi-multicombobox-control {
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
   width: 100%;
   min-width: 0;
-  min-height: var(--z-multicombobox-control-min-height);
+  min-height: var(--zuvi-multicombobox-control-min-height);
   align-items: center;
-  gap: var(--z-multicombobox-control-gap);
-  padding: 0.125rem calc(var(--z-multicombobox-control-padding-x) / 2) 0.125rem
-    var(--z-multicombobox-control-padding-x);
-  background: var(--z-multicombobox-bg);
-  border: 1px solid var(--z-multicombobox-border);
-  border-radius: var(--z-multicombobox-radius);
+  gap: var(--zuvi-multicombobox-control-gap);
+  padding: 0.125rem calc(var(--zuvi-multicombobox-control-padding-x) / 2) 0.125rem
+    var(--zuvi-multicombobox-control-padding-x);
+  background: var(--zuvi-multicombobox-bg);
+  border: 1px solid var(--zuvi-multicombobox-border);
+  border-radius: var(--zuvi-multicombobox-radius);
   transition:
-    border-color var(--z-duration-fast) var(--z-ease-standard),
-    box-shadow var(--z-duration-fast) var(--z-ease-standard),
-    background-color var(--z-duration-fast) var(--z-ease-standard);
+    border-color var(--zuvi-duration-fast) var(--zuvi-ease-standard),
+    box-shadow var(--zuvi-duration-fast) var(--zuvi-ease-standard),
+    background-color var(--zuvi-duration-fast) var(--zuvi-ease-standard);
 }
 
-.z-multicombobox-control:hover:not(:has(.z-multicombobox-input:disabled)) {
-  border-color: var(--z-multicombobox-hover-border);
+.zuvi-multicombobox-control:hover:not(:has(.zuvi-multicombobox-input:disabled)) {
+  border-color: var(--zuvi-multicombobox-hover-border);
 }
 
-.z-multicombobox-control:focus-within {
-  border-color: var(--z-multicombobox-hover-border);
+.zuvi-multicombobox-control:focus-within {
+  border-color: var(--zuvi-multicombobox-hover-border);
   outline: none;
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--z-multicombobox-focus-ring) 15%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--zuvi-multicombobox-focus-ring) 15%, transparent);
 }
 
 /* --------------------------------- Tag ---------------------------------- */
 
-.z-multicombobox-tags {
+.zuvi-multicombobox-tags {
   display: contents;
 }
 
-.z-multicombobox-tag {
+.zuvi-multicombobox-tag {
   display: inline-flex;
   flex: 0 1 auto;
   max-width: 100%;
   align-items: center;
-  gap: var(--z-multicombobox-tag-gap);
-  height: var(--z-multicombobox-tag-height);
-  padding: 0 var(--z-multicombobox-tag-padding-x);
-  color: var(--z-multicombobox-tag-fg);
-  background: var(--z-multicombobox-tag-bg);
-  border-radius: var(--z-multicombobox-tag-radius);
+  gap: var(--zuvi-multicombobox-tag-gap);
+  height: var(--zuvi-multicombobox-tag-height);
+  padding: 0 var(--zuvi-multicombobox-tag-padding-x);
+  color: var(--zuvi-multicombobox-tag-fg);
+  background: var(--zuvi-multicombobox-tag-bg);
+  border-radius: var(--zuvi-multicombobox-tag-radius);
   white-space: nowrap;
 }
 
-.z-multicombobox-tag-label {
+.zuvi-multicombobox-tag-label {
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.z-multicombobox-tag-remove {
+.zuvi-multicombobox-tag-remove {
   position: relative;
   box-sizing: border-box;
   display: inline-flex;
@@ -143,66 +143,66 @@
   align-items: center;
   justify-content: center;
   padding: 0;
-  color: var(--z-multicombobox-tag-remove-fg);
+  color: var(--zuvi-multicombobox-tag-remove-fg);
   background: none;
   border: none;
-  border-radius: var(--z-radius-full);
+  border-radius: var(--zuvi-radius-full);
   cursor: pointer;
   transition:
-    color var(--z-duration-fast) var(--z-ease-standard),
-    background-color var(--z-duration-fast) var(--z-ease-standard);
+    color var(--zuvi-duration-fast) var(--zuvi-ease-standard),
+    background-color var(--zuvi-duration-fast) var(--zuvi-ease-standard);
 }
 
 /* 删除图标保持 14px 视觉盒，伪元素向四周扩到 24px。 */
-.z-multicombobox-tag-remove::before {
+.zuvi-multicombobox-tag-remove::before {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: max(100%, var(--z-multicombobox-tag-remove-hit-size));
-  height: max(100%, var(--z-multicombobox-tag-remove-hit-size));
+  width: max(100%, var(--zuvi-multicombobox-tag-remove-hit-size));
+  height: max(100%, var(--zuvi-multicombobox-tag-remove-hit-size));
   content: '';
   transform: translate(-50%, -50%);
 }
 
-.z-multicombobox-tag-remove:hover:not(:disabled) {
-  color: var(--z-multicombobox-tag-remove-hover-fg);
+.zuvi-multicombobox-tag-remove:hover:not(:disabled) {
+  color: var(--zuvi-multicombobox-tag-remove-hover-fg);
   background-color: color-mix(in srgb, currentColor 12%, transparent);
 }
 
-.z-multicombobox-tag-remove:focus-visible {
-  outline: 2px solid var(--z-multicombobox-focus-ring);
+.zuvi-multicombobox-tag-remove:focus-visible {
+  outline: 2px solid var(--zuvi-multicombobox-focus-ring);
   outline-offset: 1px;
 }
 
-.z-multicombobox-tag-remove:disabled {
-  color: var(--z-color-disabled-fg);
+.zuvi-multicombobox-tag-remove:disabled {
+  color: var(--zuvi-color-disabled-fg);
   cursor: not-allowed;
 }
 
 /* -------------------------------- Input --------------------------------- */
 
-.z-multicombobox-input {
+.zuvi-multicombobox-input {
   box-sizing: border-box;
   flex: 1 1 auto;
   width: 100%;
   min-width: 6rem;
-  height: calc(var(--z-multicombobox-control-min-height) - 0.25rem);
+  height: calc(var(--zuvi-multicombobox-control-min-height) - 0.25rem);
   margin: 0;
   padding: 0;
-  color: var(--z-multicombobox-fg);
+  color: var(--zuvi-multicombobox-fg);
   font: inherit;
-  line-height: var(--z-leading-normal);
+  line-height: var(--zuvi-leading-normal);
   background: transparent;
   border: none;
   outline: none;
 }
 
-.z-multicombobox-input::placeholder {
-  color: var(--z-multicombobox-placeholder-fg);
+.zuvi-multicombobox-input::placeholder {
+  color: var(--zuvi-multicombobox-placeholder-fg);
 }
 
-.z-multicombobox-clear,
-.z-multicombobox-toggle {
+.zuvi-multicombobox-clear,
+.zuvi-multicombobox-toggle {
   box-sizing: border-box;
   display: inline-flex;
   flex: none;
@@ -211,145 +211,145 @@
   align-items: center;
   justify-content: center;
   padding: 0;
-  color: var(--z-multicombobox-icon-fg);
+  color: var(--zuvi-multicombobox-icon-fg);
   background: transparent;
   border: none;
-  border-radius: var(--z-radius-full);
+  border-radius: var(--zuvi-radius-full);
   cursor: pointer;
   transition:
-    color var(--z-duration-fast) var(--z-ease-standard),
-    background-color var(--z-duration-fast) var(--z-ease-standard),
-    transform var(--z-duration-fast) var(--z-ease-standard);
+    color var(--zuvi-duration-fast) var(--zuvi-ease-standard),
+    background-color var(--zuvi-duration-fast) var(--zuvi-ease-standard),
+    transform var(--zuvi-duration-fast) var(--zuvi-ease-standard);
 }
 
-.z-multicombobox-clear:hover,
-.z-multicombobox-toggle:hover:not(:disabled) {
-  color: var(--z-multicombobox-fg);
-  background: var(--z-multicombobox-clear-hover-bg);
+.zuvi-multicombobox-clear:hover,
+.zuvi-multicombobox-toggle:hover:not(:disabled) {
+  color: var(--zuvi-multicombobox-fg);
+  background: var(--zuvi-multicombobox-clear-hover-bg);
 }
 
-.z-multicombobox-clear:focus-visible,
-.z-multicombobox-toggle:focus-visible {
-  outline: 2px solid var(--z-multicombobox-focus-ring);
+.zuvi-multicombobox-clear:focus-visible,
+.zuvi-multicombobox-toggle:focus-visible {
+  outline: 2px solid var(--zuvi-multicombobox-focus-ring);
   outline-offset: 1px;
 }
 
-.z-multicombobox[data-open='true'] .z-multicombobox-toggle {
+.zuvi-multicombobox[data-open='true'] .zuvi-multicombobox-toggle {
   transform: rotate(180deg);
 }
 
-.z-multicombobox-toggle:disabled {
-  color: var(--z-color-disabled-fg);
+.zuvi-multicombobox-toggle:disabled {
+  color: var(--zuvi-color-disabled-fg);
   cursor: not-allowed;
 }
 
-.z-multicombobox[data-disabled='true'] .z-multicombobox-control {
-  color: var(--z-color-disabled-fg);
-  background: var(--z-color-disabled-bg);
-  border-color: var(--z-color-disabled-border);
+.zuvi-multicombobox[data-disabled='true'] .zuvi-multicombobox-control {
+  color: var(--zuvi-color-disabled-fg);
+  background: var(--zuvi-color-disabled-bg);
+  border-color: var(--zuvi-color-disabled-border);
   cursor: not-allowed;
 }
 
-.z-multicombobox-input:disabled {
-  color: var(--z-color-disabled-fg);
+.zuvi-multicombobox-input:disabled {
+  color: var(--zuvi-color-disabled-fg);
   cursor: not-allowed;
 }
 
-.z-multicombobox[data-readonly='true'] .z-multicombobox-control {
-  background: var(--z-color-bg-muted);
+.zuvi-multicombobox[data-readonly='true'] .zuvi-multicombobox-control {
+  background: var(--zuvi-color-bg-muted);
 }
 
 /* -------------------------------- Panel --------------------------------- */
 
-.z-multicombobox-panel {
+.zuvi-multicombobox-panel {
   position: fixed;
-  z-index: var(--z-z-dropdown);
+  z-index: var(--zuvi-z-dropdown);
   box-sizing: border-box;
-  max-width: calc(100vw - var(--z-space-4));
+  max-width: calc(100vw - var(--zuvi-space-4));
   overflow: hidden;
-  color: var(--z-multicombobox-fg);
-  background: var(--z-multicombobox-panel-bg);
-  border: 1px solid var(--z-multicombobox-panel-border);
-  border-radius: var(--z-multicombobox-panel-radius);
-  box-shadow: var(--z-multicombobox-panel-shadow);
-  animation: z-multicombobox-panel-in var(--z-multicombobox-animation-duration)
-    var(--z-ease-entrance);
+  color: var(--zuvi-multicombobox-fg);
+  background: var(--zuvi-multicombobox-panel-bg);
+  border: 1px solid var(--zuvi-multicombobox-panel-border);
+  border-radius: var(--zuvi-multicombobox-panel-radius);
+  box-shadow: var(--zuvi-multicombobox-panel-shadow);
+  animation: z-multicombobox-panel-in var(--zuvi-multicombobox-animation-duration)
+    var(--zuvi-ease-entrance);
 }
 
-.z-multicombobox-listbox {
+.zuvi-multicombobox-listbox {
   box-sizing: border-box;
-  max-height: min(var(--z-multicombobox-panel-max-height), calc(100dvh - 16px));
-  padding: var(--z-multicombobox-panel-padding);
+  max-height: min(var(--zuvi-multicombobox-panel-max-height), calc(100dvh - 16px));
+  padding: var(--zuvi-multicombobox-panel-padding);
   overflow-y: auto;
 }
 
-.z-multicombobox-listbox:empty {
+.zuvi-multicombobox-listbox:empty {
   padding: 0;
 }
 
-.z-multicombobox-option {
+.zuvi-multicombobox-option {
   box-sizing: border-box;
   display: flex;
-  min-height: var(--z-multicombobox-option-height);
+  min-height: var(--zuvi-multicombobox-option-height);
   align-items: center;
-  gap: var(--z-space-2);
-  padding: 0 var(--z-multicombobox-option-padding-x);
-  color: var(--z-multicombobox-option-fg);
-  border-radius: var(--z-multicombobox-option-radius);
+  gap: var(--zuvi-space-2);
+  padding: 0 var(--zuvi-multicombobox-option-padding-x);
+  color: var(--zuvi-multicombobox-option-fg);
+  border-radius: var(--zuvi-multicombobox-option-radius);
   cursor: pointer;
   user-select: none;
   transition:
-    color var(--z-duration-fast) var(--z-ease-standard),
-    background-color var(--z-duration-fast) var(--z-ease-standard),
-    opacity var(--z-duration-fast) var(--z-ease-standard);
+    color var(--zuvi-duration-fast) var(--zuvi-ease-standard),
+    background-color var(--zuvi-duration-fast) var(--zuvi-ease-standard),
+    opacity var(--zuvi-duration-fast) var(--zuvi-ease-standard);
 }
 
-.z-multicombobox-option[data-active='true'] {
-  color: var(--z-multicombobox-option-active-fg);
-  background: var(--z-multicombobox-option-active-bg);
+.zuvi-multicombobox-option[data-active='true'] {
+  color: var(--zuvi-multicombobox-option-active-fg);
+  background: var(--zuvi-multicombobox-option-active-bg);
 }
 
-.z-multicombobox-option:hover:not([aria-disabled='true']):not([data-active='true']) {
-  background: var(--z-color-bg-muted);
+.zuvi-multicombobox-option:hover:not([aria-disabled='true']):not([data-active='true']) {
+  background: var(--zuvi-color-bg-muted);
 }
 
-.z-multicombobox-option[aria-selected='true'] {
-  font-weight: var(--z-weight-medium);
+.zuvi-multicombobox-option[aria-selected='true'] {
+  font-weight: var(--zuvi-weight-medium);
 }
 
-.z-multicombobox-option[aria-selected='true']::after {
+.zuvi-multicombobox-option[aria-selected='true']::after {
   content: '✓';
   margin-inline-start: auto;
-  color: var(--z-color-primary);
+  color: var(--zuvi-color-primary);
 }
 
-.z-multicombobox-option[aria-disabled='true'] {
-  color: var(--z-multicombobox-option-disabled-fg);
+.zuvi-multicombobox-option[aria-disabled='true'] {
+  color: var(--zuvi-multicombobox-option-disabled-fg);
   cursor: not-allowed;
 }
 
-.z-multicombobox-option[data-stale='true'] {
+.zuvi-multicombobox-option[data-stale='true'] {
   cursor: progress;
   opacity: 0.72;
 }
 
-.z-multicombobox-status {
-  padding: var(--z-space-3) var(--z-multicombobox-option-padding-x);
-  color: var(--z-multicombobox-status-fg);
-  font-size: var(--z-text-sm);
+.zuvi-multicombobox-status {
+  padding: var(--zuvi-space-3) var(--zuvi-multicombobox-option-padding-x);
+  color: var(--zuvi-multicombobox-status-fg);
+  font-size: var(--zuvi-text-sm);
   text-align: center;
-  border-top: 1px solid var(--z-color-border-subtle);
+  border-top: 1px solid var(--zuvi-color-border-subtle);
 }
 
-.z-multicombobox-listbox:empty + .z-multicombobox-status {
+.zuvi-multicombobox-listbox:empty + .zuvi-multicombobox-status {
   border-top: 0;
 }
 
-.z-multicombobox-status-error {
-  color: var(--z-color-danger);
+.zuvi-multicombobox-status-error {
+  color: var(--zuvi-color-danger);
 }
 
-.z-multicombobox-status[data-hidden='true'] {
+.zuvi-multicombobox-status[data-hidden='true'] {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -362,12 +362,12 @@
 }
 
 @media (max-width: 320px) {
-  .z-multicombobox {
+  .zuvi-multicombobox {
     width: 100%;
     max-width: 100%;
   }
 
-  .z-multicombobox-panel {
+  .zuvi-multicombobox-panel {
     max-width: calc(100vw - 8px);
   }
 }
@@ -384,32 +384,32 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .z-multicombobox-control,
-  .z-multicombobox-tag-remove,
-  .z-multicombobox-clear,
-  .z-multicombobox-toggle,
-  .z-multicombobox-option,
-  .z-multicombobox-panel {
+  .zuvi-multicombobox-control,
+  .zuvi-multicombobox-tag-remove,
+  .zuvi-multicombobox-clear,
+  .zuvi-multicombobox-toggle,
+  .zuvi-multicombobox-option,
+  .zuvi-multicombobox-panel {
     transition: none;
     animation: none;
   }
 }
 
 @media (forced-colors: active) {
-  .z-multicombobox-control,
-  .z-multicombobox-panel {
+  .zuvi-multicombobox-control,
+  .zuvi-multicombobox-panel {
     border-color: CanvasText;
   }
 
-  .z-multicombobox-control:focus-within,
-  .z-multicombobox-clear:focus-visible,
-  .z-multicombobox-toggle:focus-visible {
+  .zuvi-multicombobox-control:focus-within,
+  .zuvi-multicombobox-clear:focus-visible,
+  .zuvi-multicombobox-toggle:focus-visible {
     outline: 2px solid Highlight;
     outline-offset: 2px;
     box-shadow: none;
   }
 
-  .z-multicombobox-option[data-active='true'] {
+  .zuvi-multicombobox-option[data-active='true'] {
     color: HighlightText;
     background: Highlight;
   }

@@ -1,27 +1,27 @@
-# @zui/cli
+# @zuvi/cli
 
-> v0.4.0 发布到 GitHub Packages：`@yeyouyuan/zui-cli`，npmjs 暂不发布。先在项目 `.npmrc` 配置 `@yeyouyuan:registry=https://npm.pkg.github.com`，再用拥有包读取权限的 GitHub 账号登录。
+> v0.4.0 发布到 GitHub Packages：`@yeyouyuan/zuvi-cli`，npmjs 暂不发布。先在项目 `.npmrc` 配置 `@yeyouyuan:registry=https://npm.pkg.github.com`，再用拥有包读取权限的 GitHub 账号登录。
 
 ```bash
 npm login --scope=@yeyouyuan --auth-type=legacy --registry=https://npm.pkg.github.com
-pnpm add @zui/cli@npm:@yeyouyuan/zui-cli@0.4.0
+pnpm add @zuvi/cli@npm:@yeyouyuan/zuvi-cli@0.4.0
 ```
 
-源码导入继续使用 `@zui/cli`。完整认证和安装说明见仓库 [GitHub Packages 文档](https://github.com/yeyouyuan/zui/blob/main/docs/GITHUB-PACKAGES.md)。
+源码导入继续使用 `@zuvi/cli`。完整认证和安装说明见仓库 [GitHub Packages 文档](https://github.com/yeyouyuan/zuvi/blob/main/docs/GITHUB-PACKAGES.md)。
 
-ZUI registry 命令行工具：把 registry 里的组件**源码**复制进你的项目（可自由修改），并提供
+ZUVI registry 命令行工具：把 registry 里的组件**源码**复制进你的项目（可自由修改），并提供
 上游更新对比通道。零运行时依赖，纯 `process.argv` 解析。
 
 ## 命令（契约 §3）
 
 ```bash
-pnpm dlx @yeyouyuan/zui-cli@0.4.0 init                     # 交互式初始化：检测框架、配置目标目录、写 .zurc.json
-pnpm dlx @yeyouyuan/zui-cli@0.4.0 add button               # 复制 Button.tsx + Button.css 到 src/components/ui/button/
-pnpm dlx @yeyouyuan/zui-cli@0.4.0 add button modal         # 多组件
-pnpm dlx @yeyouyuan/zui-cli@0.4.0 add --all                # 复制全部组件与业务块
-pnpm dlx @yeyouyuan/zui-cli@0.4.0 diff button              # 本地副本 vs registry 的 unified diff（上游更新通道）
-pnpm dlx @yeyouyuan/zui-cli@0.4.0 list                     # 列出 registry 所有组件
-pnpm dlx @yeyouyuan/zui-cli@0.4.0 list --json              # JSON 输出整个 registry
+pnpm dlx @yeyouyuan/zuvi-cli@0.4.0 init                     # 交互式初始化：检测框架、配置目标目录、写 .zurc.json
+pnpm dlx @yeyouyuan/zuvi-cli@0.4.0 add button               # 复制 Button.tsx + Button.css 到 src/components/ui/button/
+pnpm dlx @yeyouyuan/zuvi-cli@0.4.0 add button modal         # 多组件
+pnpm dlx @yeyouyuan/zuvi-cli@0.4.0 add --all                # 复制全部组件与业务块
+pnpm dlx @yeyouyuan/zuvi-cli@0.4.0 diff button              # 本地副本 vs registry 的 unified diff（上游更新通道）
+pnpm dlx @yeyouyuan/zuvi-cli@0.4.0 list                     # 列出 registry 所有组件
+pnpm dlx @yeyouyuan/zuvi-cli@0.4.0 list --json              # JSON 输出整个 registry
 ```
 
 ## 选项
@@ -39,7 +39,7 @@ pnpm dlx @yeyouyuan/zui-cli@0.4.0 list --json              # JSON 输出整个 r
 
 ## .zurc.json
 
-`zui init` 写入项目根：
+`zuvi init` 写入项目根：
 
 ```json
 {
@@ -55,7 +55,7 @@ pnpm dlx @yeyouyuan/zui-cli@0.4.0 list --json              # JSON 输出整个 r
 ## registry 定位顺序
 
 1. `--registry <path>` 参数
-2. `ZUI_REGISTRY` 环境变量
+2. `ZUVI_REGISTRY` 环境变量
 3. `.zurc.json` 的 `registry` 字段
 4. 自 cwd 向上找 `registry/registry.json`
 5. 包内 `data/registry/registry.json`（发布包自带源码与元数据）
@@ -64,19 +64,19 @@ pnpm dlx @yeyouyuan/zui-cli@0.4.0 list --json              # JSON 输出整个 r
 ## add 行为
 
 - 组件文件复制到 `<components>/<组件名>/<原文件名>`（如 `src/components/ui/button/Button.tsx`）。
-- 公共 utils/config/styles 放到 `<components>/_zui/`，业务块放到 `<components>/blocks/<name>/`；转换相对导入与样式入口。
+- 公共 utils/config/styles 放到 `<components>/_zuvi/`，业务块放到 `<components>/blocks/<name>/`；转换相对导入与样式入口。
 - 自动补齐 `registryDependencies`（组件间依赖，递归去重）。
 - 已存在且内容一致 → `skipped`；已存在且不同 → `updated`（覆盖式同步，registry 为准）。
 - 输出 import 提示与需要安装的 npm `dependencies`（无则提示仅 react peer 依赖）。
 
 ```bash
-pnpm dlx @yeyouyuan/zui-cli@0.4.0 add button modal
+pnpm dlx @yeyouyuan/zuvi-cli@0.4.0 add button modal
 #   created  src/components/ui/button/Button.css
 #   created  src/components/ui/button/Button.tsx
 #   created  src/components/ui/modal/Modal.css
 #   created  src/components/ui/modal/Modal.tsx
 # import 提示：import { Button } from './src/components/ui/button'; // Button 按钮
-# 按 GitHub Packages 文档中的别名方式安装 @zui/icons / @zui/i18n / @zui/tokens 等依赖；另需 react / react-dom。
+# 按 GitHub Packages 文档中的别名方式安装 @zuvi/icons / @zuvi/i18n / @zuvi/tokens 等依赖；另需 react / react-dom。
 ```
 
 ## diff 行为

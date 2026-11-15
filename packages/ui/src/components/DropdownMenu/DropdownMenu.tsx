@@ -114,7 +114,7 @@ function DropdownMenu(props: DropdownMenuProps) {
       <div
         ref={rootRef}
         data-part="root"
-        className="z-dropdown-menu-root"
+        className="zuvi-dropdown-menu-root"
         data-state={open ? 'open' : 'closed'}
       >
         {children}
@@ -145,7 +145,7 @@ function DropdownMenuTrigger(props: DropdownMenuTriggerProps) {
       ref={setTriggerRef}
       id={ctx.triggerId}
       data-part="trigger"
-      className={cx('z-dropdown-menu-trigger', className)}
+      className={cx('zuvi-dropdown-menu-trigger', className)}
       aria-haspopup="menu"
       aria-expanded={ctx.open}
       aria-controls={ctx.open ? ctx.contentId : undefined}
@@ -313,7 +313,7 @@ function DropdownMenuContentInner(props: DropdownMenuContentProps) {
   useOnClickOutside(outsideRefs, () => ctx.setOpen(false), ctx.open);
 
   return (
-    <FloatingPanel open={ctx.open} anchorRef={ctx.rootRef} offsetVariable="--z-dropdown-menu-offset">
+    <FloatingPanel open={ctx.open} anchorRef={ctx.rootRef} offsetVariable="--zuvi-dropdown-menu-offset">
     <div
       {...rest}
       ref={setContentRef}
@@ -321,7 +321,7 @@ function DropdownMenuContentInner(props: DropdownMenuContentProps) {
       id={ctx.contentId}
       tabIndex={-1}
       data-part="content"
-      className={cx('z-dropdown-menu', classNames?.content, className)}
+      className={cx('zuvi-dropdown-menu', classNames?.content, className)}
       onKeyDown={onContentKeyDown}
     >
       {children}
@@ -364,7 +364,7 @@ function DropdownMenuItem(props: DropdownMenuItemProps) {
       role="menuitem"
       data-part="item"
       data-danger={danger ? 'true' : undefined}
-      className={cx('z-dropdown-menu-item', className, classNames?.item)}
+      className={cx('zuvi-dropdown-menu-item', className, classNames?.item)}
       aria-disabled={disabled || undefined}
       onPointerDown={(event) => {
         onPointerDown?.(event);
@@ -389,7 +389,7 @@ function DropdownMenuItem(props: DropdownMenuItemProps) {
         <span
           data-part="icon"
           aria-hidden="true"
-          className={cx('z-dropdown-menu-item-icon', classNames?.icon)}
+          className={cx('zuvi-dropdown-menu-item-icon', classNames?.icon)}
         >
           {icon}
         </span>
@@ -408,7 +408,7 @@ function DropdownMenuSeparator(props: DropdownMenuSeparatorProps) {
       {...rest}
       role="separator"
       data-part="separator"
-      className={cx('z-dropdown-menu-separator', className)}
+      className={cx('zuvi-dropdown-menu-separator', className)}
     />
   );
 }
@@ -422,7 +422,7 @@ function DropdownMenuLabel(props: DropdownMenuLabelProps) {
       {...rest}
       role="presentation"
       data-part="label"
-      className={cx('z-dropdown-menu-label', className)}
+      className={cx('zuvi-dropdown-menu-label', className)}
     >
       {children}
     </div>

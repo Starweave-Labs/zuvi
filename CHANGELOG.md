@@ -1,6 +1,6 @@
 # Changelog
 
-ZUI 遵循语义化版本：破坏性变更只随 major 发布，废弃 API 跨一个大版本后才移除。
+ZUVI 遵循语义化版本：破坏性变更只随 major 发布，废弃 API 跨一个大版本后才移除。
 
 ## v0.5.0 — Table 数据模式与高级字段管理（2026-11-14）
 
@@ -12,7 +12,7 @@ ZUI 遵循语义化版本：破坏性变更只随 major 发布，废弃 API 跨�
 ## v0.4.0 — OfficeStudio 与全组件质量审计（2026-11-13）
 
 - 正式发布 `OfficeEditor` 与 `OfficeStudio`，Registry 扩展到 73 个组件和 16 个业务区块；CLI 与 MCP 同步支持两个编辑器的检索、源码复制和代码生成。
-- `OfficeEditor` 提供自部署 ONLYOFFICE Docs 接入；`OfficeStudio` 使用 ZUI 控件与独立模型完成 Word、Excel、PDF 页面内编辑，并提供真实文件导入导出、打印、本地恢复和历史版本宿主适配。
+- `OfficeEditor` 提供自部署 ONLYOFFICE Docs 接入；`OfficeStudio` 使用 ZUVI 控件与独立模型完成 Word、Excel、PDF 页面内编辑，并提供真实文件导入导出、打印、本地恢复和历史版本宿主适配。
 - Word 补齐图片缩放、页眉页脚常规双击编辑、上下文功能区、正文锁定和内容流式布局；Excel 补齐可拖动及键盘调整的行高；PDF 补齐矩形与高亮批注尺寸调整。
 - 完成全组件 P1/P2 交互、无障碍、视觉、RTL 和性能审计修复，覆盖焦点恢复、受控状态、浮层、窄屏与高对比度等边界。
 - 七个公开包统一发布到 GitHub Packages `0.4.0`，浏览器 IIFE、CSS 与许可清单同步部署到 GitHub Pages `cdn/v0.4.0/`。
@@ -21,11 +21,11 @@ ZUI 遵循语义化版本：破坏性变更只随 major 发布，废弃 API 跨�
 
 - 组件目录扩展到 71 个，新增 Combobox、MultiCombobox、CommandPalette、SideNav 和 Splitter，保留 16 个业务区块。
 - 文档导航按用途分组，改善切页加载、移动布局、示例代码与静态图片；业务区块支持分类搜索、预览状态保留和独立重置。
-- 页面编辑器覆盖完整 ZUI 组件目录、多页模板、拖拽和图层、响应式样式、设计变量、交互状态与事件、主组件和变体、设计检查、工作区备份及离线 HTML 原型。
+- 页面编辑器覆盖完整 ZUVI 组件目录、多页模板、拖拽和图层、响应式样式、设计变量、交互状态与事件、主组件和变体、设计检查、工作区备份及离线 HTML 原型。
 - 本地文件工作台支持导入真实文件、文本编辑、评论、版本、持久保存、备份和下载；数据留在当前浏览器。
 - 新增组件创意工坊，覆盖文件、条件、版本、任务、审批、成员、通知与预约等交互场景。
 - 修复 Select 可访问性、日期选择器命名、业务区块状态与手机演示裁切；修复 GitHub Pages 子路径下 CDN 演示链接。
-- 七个包发布到 GitHub Packages，使用 @yeyouyuan/zui-* 发布名称和 @zui/* 安装别名；新增打包、完整性校验、真实安装与类型声明检查。npmjs 暂不发布。
+- 七个包发布到 GitHub Packages，使用 @yeyouyuan/zuvi-* 发布名称和 @zuvi/* 安装别名；新增打包、完整性校验、真实安装与类型声明检查。npmjs 暂不发布。
 
 ## v0.2.0 —— 66 组件 + AI 生态
 
@@ -38,18 +38,18 @@ ZUI 遵循语义化版本：破坏性变更只随 major 发布，废弃 API 跨�
 
 **工程**
 
-- `@zui/icons`（142 枚线性图标）全面接入组件内置图标（Chevron/Close/Check/Loading 等不再内联 SVG）
-- locale 全量接入：`ZuiLocale` 新增 date / transfer / timePicker 段，pagination 段收口；DatePicker、Calendar、Pagination、Transfer、TimePicker 内置文案统一走 `useZuiConfig`
+- `@zuvi/icons`（142 枚线性图标）全面接入组件内置图标（Chevron/Close/Check/Loading 等不再内联 SVG）
+- locale 全量接入：`ZuviLocale` 新增 date / transfer / timePicker 段，pagination 段收口；DatePicker、Calendar、Pagination、Transfer、TimePicker 内置文案统一走 `useZuviConfig`
 - 内置语言包扩展至 10 套；OpenAI 兼容翻译支持 `baseURL`、`key`、`model`，并提供服务端代理示例
-- `@zui/react` exports 补齐 `./tooltip`、`./popover`、`./dropdown-menu`、`./progress`、`./spin` 子路径
+- `@zuvi/react` exports 补齐 `./tooltip`、`./popover`、`./dropdown-menu`、`./progress`、`./spin` 子路径
 - 新增 `docs/SSR.md`（Next.js App Router 接入指南）
 
 **AI 生态**
 
-- `@zui/i18n`：`useAutoTranslate` 组件内置文案自动翻译（OpenAI / DeepL / 有道 / 自定义 provider，localStorage 缓存）
-- `registry/` + `@zui/cli`：机器可读组件目录，`zui init / add / diff / list` 把组件源码分发进用户项目
-- `@zui/mcp`：stdio JSON-RPC MCP server（`search` / `api` / `generate` 工具），服务 AI 编码助手
-- `@zui/blocks`：16 个页面级业务区块
+- `@zuvi/i18n`：`useAutoTranslate` 组件内置文案自动翻译（OpenAI / DeepL / 有道 / 自定义 provider，localStorage 缓存）
+- `registry/` + `@zuvi/cli`：机器可读组件目录，`zuvi init / add / diff / list` 把组件源码分发进用户项目
+- `@zuvi/mcp`：stdio JSON-RPC MCP server（`search` / `api` / `generate` 工具），服务 AI 编码助手
+- `@zuvi/blocks`：16 个页面级业务区块
 
 ## 早期开发阶段：26 个组件
 
@@ -62,7 +62,7 @@ ZUI 遵循语义化版本：破坏性变更只随 major 发布，废弃 API 跨�
 
 - 三层设计令牌（primitive → semantic → component）+ CSS 变量换肤（`data-theme` 暗色零闪烁）
 - `data-part` + slot 级 `classNames` + 组件级 CSS 变量三件套定制出口
-- `@zui/tokens` DTCG JSON（Figma / Tokens Studio 可消费）
+- `@zuvi/tokens` DTCG JSON（Figma / Tokens Studio 可消费）
 - hooks 型反馈 API：`useMessage()`（无静态方法陷阱）
 - a11y 矩阵测试（role / aria / 键盘）+ SSR 冒烟测试
 

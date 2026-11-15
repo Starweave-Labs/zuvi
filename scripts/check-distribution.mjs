@@ -69,9 +69,9 @@ for (const name of ['tokens', 'icons', 'i18n', 'ui', 'blocks', 'cli', 'mcp']) {
       assert.ok(Object.keys(module).length, `react lazy or shared module can load: ${file}`);
     }
     const styles = fs.readFileSync(new URL('dist/style.css', cwd), 'utf8');
-    assert.match(styles, /\.z-office-editor[\s,{[]/, 'react ships OfficeEditor styles');
-    assert.match(styles, /\.z-office-studio[\s,{[]/, 'react ships OfficeStudio styles');
-    for (const file of ['zui.global.js', 'zui.css', 'LICENSE.txt']) {
+    assert.match(styles, /\.zuvi-office-editor[\s,{[]/, 'react ships OfficeEditor styles');
+    assert.match(styles, /\.zuvi-office-studio[\s,{[]/, 'react ships OfficeStudio styles');
+    for (const file of ['zuvi.global.js', 'zuvi.css', 'LICENSE.txt']) {
       assert.ok(files.includes(`dist/browser/${file}`), `react ships browser ${file}`);
     }
     const browserNotices = fs.readFileSync(new URL('dist/browser/LICENSE.txt', cwd), 'utf8');

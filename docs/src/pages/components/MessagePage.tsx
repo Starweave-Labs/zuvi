@@ -3,7 +3,7 @@ import {
   MessageProvider,
   useMessage,
   type MessageConfig,
-} from '@zui/react';
+} from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -217,22 +217,22 @@ export default function MessagePage(): React.ReactNode {
         name="Message"
         parts={['root', 'item', 'icon', 'content', 'close']}
         vars={[
-          '--z-message-width',
-          '--z-message-max-width',
-          '--z-message-padding-x',
-          '--z-message-padding-y',
-          '--z-message-gap',
-          '--z-message-font-size',
-          '--z-message-bg',
-          '--z-message-fg',
-          '--z-message-border',
-          '--z-message-radius',
-          '--z-message-shadow',
-          '--z-message-icon-size',
-          '--z-message-close-size',
-          '--z-message-transition',
+          '--zuvi-message-width',
+          '--zuvi-message-max-width',
+          '--zuvi-message-padding-x',
+          '--zuvi-message-padding-y',
+          '--zuvi-message-gap',
+          '--zuvi-message-font-size',
+          '--zuvi-message-bg',
+          '--zuvi-message-fg',
+          '--zuvi-message-border',
+          '--zuvi-message-radius',
+          '--zuvi-message-shadow',
+          '--zuvi-message-icon-size',
+          '--zuvi-message-close-size',
+          '--zuvi-message-transition',
         ]}
-        note="容器为 z-message-list（data-placement），条目 z-message（data-variant + data-state=open/closing）。"
+        note="容器为 zuvi-message-list（data-placement），条目 zuvi-message（data-variant + data-state=open/closing）。"
       />
     </div>
   );

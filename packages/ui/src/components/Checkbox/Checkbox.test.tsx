@@ -78,11 +78,11 @@ describe('Checkbox', () => {
       />
     );
     const root = container.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-checkbox', 'my-root', 'cls-root');
+    expect(root).toHaveClass('zuvi-checkbox', 'my-root', 'cls-root');
     const control = root.querySelector('[data-part="control"]');
-    expect(control).toHaveClass('z-checkbox-box', 'cls-control');
+    expect(control).toHaveClass('zuvi-checkbox-box', 'cls-control');
     const label = root.querySelector('[data-part="label"]');
-    expect(label).toHaveClass('z-checkbox-label', 'cls-label');
+    expect(label).toHaveClass('zuvi-checkbox-label', 'cls-label');
   });
 
   it('renders hidden native input inside the label root', () => {

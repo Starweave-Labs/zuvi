@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Check, ChevronRight, Minus } from '@zui/icons';
+import { Check, ChevronRight, Minus } from '@zuvi/icons';
 import { cx, useControllableState } from '../../utils';
 import './Tree.css';
 
@@ -113,11 +113,11 @@ function collectCheckedKeys(
   return out;
 }
 
-/* -------------------------------- 图标（@zui/icons） -------------------------- */
+/* -------------------------------- 图标（@zuvi/icons） -------------------------- */
 
 function ChevronIcon(): React.ReactNode {
   // className 交给 CSS 旋转（展开时 rotate 90°）
-  return <ChevronRight className="z-tree-node-chevron" size={12} />;
+  return <ChevronRight className="zuvi-tree-node-chevron" size={12} />;
 }
 
 function CheckIcon(): React.ReactNode {
@@ -359,7 +359,7 @@ export function Tree({
         key={node.key}
         role="treeitem"
         data-part="node"
-        className={cx('z-tree-node', classNames?.node)}
+        className={cx('zuvi-tree-node', classNames?.node)}
         ref={(element) => {
           if (element) nodeRefs.current.set(node.key, element);
           else nodeRefs.current.delete(node.key);
@@ -385,10 +385,10 @@ export function Tree({
           selectNode(node);
         }}
       >
-        <div className="z-tree-node-row" data-part="row">
+        <div className="zuvi-tree-node-row" data-part="row">
           <span
             data-part="icon"
-            className={cx('z-tree-node-icon', classNames?.icon)}
+            className={cx('zuvi-tree-node-icon', classNames?.icon)}
             aria-hidden="true"
             data-expanded={expandable ? (isExpanded ? 'true' : 'false') : undefined}
             onClick={(event) => {
@@ -398,7 +398,7 @@ export function Tree({
             }}
           >
             {isLoading ? (
-              <span data-part="spinner" className="z-tree-node-spinner" />
+              <span data-part="spinner" className="zuvi-tree-node-spinner" />
             ) : expandable ? (
               <ChevronIcon />
             ) : null}
@@ -407,7 +407,7 @@ export function Tree({
           {checkable ? (
             <span
               data-part="checkbox"
-              className={cx('z-tree-node-checkbox', classNames?.checkbox)}
+              className={cx('zuvi-tree-node-checkbox', classNames?.checkbox)}
               aria-hidden="true"
               data-checked={isChecked ? 'true' : 'false'}
               data-indeterminate={isHalf ? 'true' : undefined}
@@ -421,13 +421,13 @@ export function Tree({
             </span>
           ) : null}
 
-          <span data-part="label" className={cx('z-tree-node-label', classNames?.label)}>
+          <span data-part="label" className={cx('zuvi-tree-node-label', classNames?.label)}>
             {node.title}
           </span>
         </div>
 
         {hasChildren && isExpanded ? (
-          <ul role="group" data-part="group" className="z-tree-node-children">
+          <ul role="group" data-part="group" className="zuvi-tree-node-children">
             {node.children!.map((child) => renderNode(child, depth + 1))}
           </ul>
         ) : null}
@@ -440,7 +440,7 @@ export function Tree({
       ref={treeRef}
       role="tree"
       data-part="root"
-      className={cx('z-tree', className, classNames?.root)}
+      className={cx('zuvi-tree', className, classNames?.root)}
       onKeyDown={onKeyDown}
     >
       {data.map((node) => renderNode(node, 1))}

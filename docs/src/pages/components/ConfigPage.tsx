@@ -5,9 +5,9 @@ import {
   Modal,
   Select,
   useMessage,
-  useZuiConfig,
+  useZuviConfig,
   Button,
-} from '@zui/react';
+} from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import Demo from '../../components/Demo';
@@ -26,7 +26,7 @@ const EN_LOCALE = {
   message: { close: 'Dismiss' },
 };
 
-const DEFAULT_CODE = `// 无 ConfigProvider：useZuiConfig 返回默认 zh-CN 文案，不 throw
+const DEFAULT_CODE = `// 无 ConfigProvider：useZuviConfig 返回默认 zh-CN 文案，不 throw
 <Input clearable defaultValue="有值时显示清除按钮" />
 <Select options={FRUIT_OPTIONS} />`;
 
@@ -54,7 +54,7 @@ const OVERRIDE_CODE = `<ConfigProvider
 </ConfigProvider>`;
 
 const READ_CODE = `function LocaleReadout() {
-  const { locale } = useZuiConfig(); // 无 Provider 时返回默认，不 throw
+  const { locale } = useZuviConfig(); // 无 Provider 时返回默认，不 throw
   return <span>{locale.select.placeholder}</span>;
 }
 
@@ -65,9 +65,9 @@ const READ_CODE = `function LocaleReadout() {
   </ConfigProvider>
 </ConfigProvider>`;
 
-/** 当前生效文案读取器：演示 useZuiConfig */
+/** 当前生效文案读取器：演示 useZuviConfig */
 function LocaleReadout({ label }: { label?: string }): React.ReactNode {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   return (
     <div>
       {label ? <p className="doc-p">{label}</p> : null}
@@ -108,19 +108,19 @@ export default function ConfigPage(): React.ReactNode {
       <h1 className="doc-h1">ConfigProvider 全局配置</h1>
       <p className="doc-lead">
         文案收口入口：通过 locale 深合并覆盖组件默认文案（placeholder、aria-label 等）， 子组件用
-        useZuiConfig 读取；无 Provider 时返回默认 zh-CN，不抛错。
+        useZuviConfig 读取；无 Provider 时返回默认 zh-CN，不抛错。
       </p>
 
       <h2 className="doc-h2">示例</h2>
 
       <Demo
         title="默认文案（无 Provider）"
-        description="不包 ConfigProvider 时一切照旧：Select 显示「请选择」、Input 清除按钮 aria-label 为「清除」，useZuiConfig 返回默认 zh-CN。"
+        description="不包 ConfigProvider 时一切照旧：Select 显示「请选择」、Input 清除按钮 aria-label 为「清除」，useZuviConfig 返回默认 zh-CN。"
         code={DEFAULT_CODE}
       >
         <Input aria-label="搜索" clearable defaultValue="有值时显示清除按钮" />
         <Select options={FRUIT_OPTIONS} aria-label="水果" />
-        <LocaleReadout label="useZuiConfig() 读取到的当前文案：" />
+        <LocaleReadout label="useZuviConfig() 读取到的当前文案：" />
       </Demo>
 
       <Demo
@@ -150,8 +150,8 @@ export default function ConfigPage(): React.ReactNode {
       </Demo>
 
       <Demo
-        title="useZuiConfig 与嵌套"
-        description="useZuiConfig 无 Provider 时返回默认不 throw；嵌套 ConfigProvider 逐层深合并，内层覆盖外层。"
+        title="useZuviConfig 与嵌套"
+        description="useZuviConfig 无 Provider 时返回默认不 throw；嵌套 ConfigProvider 逐层深合并，内层覆盖外层。"
         code={READ_CODE}
         stack
       >
@@ -169,7 +169,7 @@ export default function ConfigPage(): React.ReactNode {
         rows={[
           {
             name: 'locale',
-            type: 'DeepPartial<ZuiLocale>',
+            type: 'DeepPartial<ZuviLocale>',
             defaultValue: '—',
             description:
               '与默认 zh-CN 深合并的文案覆盖；未提供的段/键保持默认。嵌套 Provider 逐层合并。',
@@ -187,11 +187,11 @@ export default function ConfigPage(): React.ReactNode {
         ]}
       />
       <p className="doc-p">
-        <code className="doc-code-inline">useZuiConfig(): {'{ locale: ZuiLocale }'}</code>
+        <code className="doc-code-inline">useZuviConfig(): {'{ locale: ZuviLocale }'}</code>
         ：读取当前生效配置。无 ConfigProvider 时返回默认 zh-CN（不 throw，配置必须可缺省）。
       </p>
 
-      <h3 className="doc-h3">ZuiLocale 文案键</h3>
+      <h3 className="doc-h3">ZuviLocale 文案键</h3>
       <ApiTable
         rows={[
           {

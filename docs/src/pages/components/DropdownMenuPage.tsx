@@ -1,4 +1,4 @@
-import { DropdownMenu } from '@zui/react';
+import { DropdownMenu } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -186,27 +186,27 @@ export default function DropdownMenuPage(): React.ReactNode {
         name="DropdownMenu"
         parts={['root', 'trigger', 'content', 'item', 'icon', 'separator', 'label']}
         vars={[
-          '--z-dropdown-menu-bg',
-          '--z-dropdown-menu-fg',
-          '--z-dropdown-menu-radius',
-          '--z-dropdown-menu-padding',
-          '--z-dropdown-menu-shadow',
-          '--z-dropdown-menu-min-width',
-          '--z-dropdown-menu-z',
-          '--z-dropdown-menu-offset',
-          '--z-dropdown-menu-item-height',
-          '--z-dropdown-menu-item-padding-x',
-          '--z-dropdown-menu-item-gap',
-          '--z-dropdown-menu-item-radius',
-          '--z-dropdown-menu-item-font-size',
-          '--z-dropdown-menu-item-hover-bg',
-          '--z-dropdown-menu-item-fg',
-          '--z-dropdown-menu-item-danger-fg',
-          '--z-dropdown-menu-item-disabled-fg',
-          '--z-dropdown-menu-label-font-size',
-          '--z-dropdown-menu-label-fg',
-          '--z-dropdown-menu-separator-color',
-          '--z-dropdown-menu-animation',
+          '--zuvi-dropdown-menu-bg',
+          '--zuvi-dropdown-menu-fg',
+          '--zuvi-dropdown-menu-radius',
+          '--zuvi-dropdown-menu-padding',
+          '--zuvi-dropdown-menu-shadow',
+          '--zuvi-dropdown-menu-min-width',
+          '--zuvi-dropdown-menu-z',
+          '--zuvi-dropdown-menu-offset',
+          '--zuvi-dropdown-menu-item-height',
+          '--zuvi-dropdown-menu-item-padding-x',
+          '--zuvi-dropdown-menu-item-gap',
+          '--zuvi-dropdown-menu-item-radius',
+          '--zuvi-dropdown-menu-item-font-size',
+          '--zuvi-dropdown-menu-item-hover-bg',
+          '--zuvi-dropdown-menu-item-fg',
+          '--zuvi-dropdown-menu-item-danger-fg',
+          '--zuvi-dropdown-menu-item-disabled-fg',
+          '--zuvi-dropdown-menu-label-font-size',
+          '--zuvi-dropdown-menu-label-fg',
+          '--zuvi-dropdown-menu-separator-color',
+          '--zuvi-dropdown-menu-animation',
         ]}
       />
     </div>

@@ -2,7 +2,7 @@ import {
   isOfficeStudioDocument,
   type OfficeStudioDocument,
   type OfficeStudioKind,
-} from '@zui/react';
+} from '@zuvi/react';
 
 export interface StudioStoredFile {
   id: string;
@@ -66,7 +66,7 @@ export function createStudioStorage(factory: IDBFactory = globalThis.indexedDB):
       return Promise.reject(new Error('当前浏览器没有可用的本地文档存储，可继续编辑并导出文件。'));
     if (opening) return opening;
     opening = new Promise<IDBDatabase>((resolve, reject) => {
-      const request = factory.open('zui-office-studio', 2);
+      const request = factory.open('zuvi-office-studio', 2);
       let finished = false;
       const timeout = globalThis.setTimeout(() => {
         if (finished) return;

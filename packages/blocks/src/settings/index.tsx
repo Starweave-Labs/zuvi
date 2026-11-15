@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Button, Card, Input, Select, Switch, useControllableState } from '@zui/react';
+import { Button, Card, Input, Select, Switch, useControllableState } from '@zuvi/react';
 
 /* ---------------------------------- 类型 ---------------------------------- */
 
@@ -54,7 +54,7 @@ export interface SettingsBlockProps {
 /* -------------------------------- 演示数据 -------------------------------- */
 
 export const DEMO_SETTINGS_VALUES: SettingsValues = {
-  siteName: 'ZUI 管理平台',
+  siteName: 'ZUVI 管理平台',
   siteDescription: '企业级中后台统一工作台',
   emailNotify: true,
   smsNotify: false,
@@ -76,20 +76,20 @@ const rowStyle: React.CSSProperties = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  gap: 'var(--z-space-4)',
-  padding: 'var(--z-space-4) 0',
-  borderBottom: '1px solid var(--z-color-border-subtle)',
+  gap: 'var(--zuvi-space-4)',
+  padding: 'var(--zuvi-space-4) 0',
+  borderBottom: '1px solid var(--zuvi-color-border-subtle)',
 };
 
 const rowLabelStyle: React.CSSProperties = {
-  fontSize: 'var(--z-text-sm)',
-  color: 'var(--z-color-fg)',
-  fontWeight: 'var(--z-weight-medium)',
+  fontSize: 'var(--zuvi-text-sm)',
+  color: 'var(--zuvi-color-fg)',
+  fontWeight: 'var(--zuvi-weight-medium)',
 };
 
 const rowHintStyle: React.CSSProperties = {
-  fontSize: 'var(--z-text-xs)',
-  color: 'var(--z-color-fg-muted)',
+  fontSize: 'var(--zuvi-text-xs)',
+  color: 'var(--zuvi-color-fg-muted)',
   marginTop: 2,
 };
 
@@ -148,22 +148,22 @@ export function SettingsBlock({
     onChange?.(key, value);
 
   const sectionTitleStyle: React.CSSProperties = {
-    margin: '0 0 var(--z-space-1)',
-    fontSize: 'var(--z-text-lg)',
-    fontWeight: 'var(--z-weight-semibold)',
-    color: 'var(--z-color-fg)',
+    margin: '0 0 var(--zuvi-space-1)',
+    fontSize: 'var(--zuvi-text-lg)',
+    fontWeight: 'var(--zuvi-weight-semibold)',
+    color: 'var(--zuvi-color-fg)',
   };
   const sectionDescStyle: React.CSSProperties = {
-    margin: '0 0 var(--z-space-4)',
-    fontSize: 'var(--z-text-sm)',
-    color: 'var(--z-color-fg-muted)',
+    margin: '0 0 var(--zuvi-space-4)',
+    fontSize: 'var(--zuvi-text-sm)',
+    color: 'var(--zuvi-color-fg-muted)',
   };
   const fieldLabelStyle: React.CSSProperties = {
     display: 'block',
-    fontSize: 'var(--z-text-sm)',
-    fontWeight: 'var(--z-weight-medium)',
-    color: 'var(--z-color-fg)',
-    marginBottom: 'var(--z-space-2)',
+    fontSize: 'var(--zuvi-text-sm)',
+    fontWeight: 'var(--zuvi-weight-medium)',
+    color: 'var(--zuvi-color-fg)',
+    marginBottom: 'var(--zuvi-space-2)',
   };
 
   return (
@@ -174,10 +174,10 @@ export function SettingsBlock({
         display: 'flex',
         flexWrap: 'wrap',
         alignItems: 'flex-start',
-        gap: 'var(--z-space-5)',
+        gap: 'var(--zuvi-space-5)',
         maxWidth: 920,
         margin: '0 auto',
-        padding: 'var(--z-space-6) var(--z-space-4)',
+        padding: 'var(--zuvi-space-6) var(--zuvi-space-4)',
         ...style,
       }}
     >
@@ -191,15 +191,15 @@ export function SettingsBlock({
           flex: '1 1 180px',
           minWidth: 0,
           flexDirection: 'column',
-          gap: 'var(--z-space-1)',
+          gap: 'var(--zuvi-space-1)',
         }}
       >
         <h2
           style={{
-            margin: '0 0 var(--z-space-3)',
-            fontSize: 'var(--z-text-md)',
-            fontWeight: 'var(--z-weight-semibold)',
-            color: 'var(--z-color-fg)',
+            margin: '0 0 var(--zuvi-space-3)',
+            fontSize: 'var(--zuvi-text-md)',
+            fontWeight: 'var(--zuvi-weight-semibold)',
+            color: 'var(--zuvi-color-fg)',
           }}
         >
           {title}
@@ -216,14 +216,14 @@ export function SettingsBlock({
               onClick={() => handleSection(section.key)}
               style={{
                 textAlign: 'left',
-                padding: 'var(--z-space-2) var(--z-space-3)',
-                borderRadius: 'var(--z-radius-md)',
+                padding: 'var(--zuvi-space-2) var(--zuvi-space-3)',
+                borderRadius: 'var(--zuvi-radius-md)',
                 border: 'none',
                 cursor: 'pointer',
-                fontSize: 'var(--z-text-sm)',
-                fontWeight: active ? 'var(--z-weight-semibold)' : 'var(--z-weight-regular)',
-                color: active ? 'var(--z-color-primary-subtle-fg)' : 'var(--z-color-fg-muted)',
-                background: active ? 'var(--z-color-primary-subtle)' : 'transparent',
+                fontSize: 'var(--zuvi-text-sm)',
+                fontWeight: active ? 'var(--zuvi-weight-semibold)' : 'var(--zuvi-weight-regular)',
+                color: active ? 'var(--zuvi-color-primary-subtle-fg)' : 'var(--zuvi-color-fg-muted)',
+                background: active ? 'var(--zuvi-color-primary-subtle)' : 'transparent',
               }}
             >
               {section.title}
@@ -238,7 +238,7 @@ export function SettingsBlock({
           <section data-part="section" data-section="basic" aria-label="基本设置">
             <h3 style={sectionTitleStyle}>基本设置</h3>
             <p style={sectionDescStyle}>站点的公开名称与介绍文案。</p>
-            <div style={{ marginBottom: 'var(--z-space-4)' }}>
+            <div style={{ marginBottom: 'var(--zuvi-space-4)' }}>
               <label htmlFor={fieldId('site-name')} style={fieldLabelStyle}>
                 站点名称
               </label>
@@ -311,7 +311,7 @@ export function SettingsBlock({
               onChange={(checked) => handleField('ipWhitelist', checked)}
               className={classNames?.row}
             />
-            <div style={{ paddingTop: 'var(--z-space-4)' }}>
+            <div style={{ paddingTop: 'var(--zuvi-space-4)' }}>
               <label htmlFor={fieldId('password-policy')} style={fieldLabelStyle}>
                 密码策略
               </label>
@@ -335,9 +335,9 @@ export function SettingsBlock({
           style={{
             display: 'flex',
             justifyContent: 'flex-end',
-            paddingTop: 'var(--z-space-5)',
-            borderTop: '1px solid var(--z-color-border-subtle)',
-            marginTop: 'var(--z-space-4)',
+            paddingTop: 'var(--zuvi-space-5)',
+            borderTop: '1px solid var(--zuvi-color-border-subtle)',
+            marginTop: 'var(--zuvi-space-4)',
           }}
         >
           <Button type="button" loading={saving} onClick={() => onSave?.(values)}>

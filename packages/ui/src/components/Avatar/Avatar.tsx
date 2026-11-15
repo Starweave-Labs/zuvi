@@ -74,7 +74,7 @@ export function Avatar({
   const isNamedSize = typeof size === 'string';
   const sizeStyle: React.CSSProperties =
     !isNamedSize && typeof size === 'number'
-      ? ({ '--z-avatar-size': `${size}px` } as React.CSSProperties)
+      ? ({ '--zuvi-avatar-size': `${size}px` } as React.CSSProperties)
       : {};
 
   // 三级回退：图 → 名字首字 → 图标（无图标时内置默认用户图标）
@@ -93,13 +93,13 @@ export function Avatar({
       data-size={isNamedSize ? size : 'custom'}
       data-shape={shape}
       data-color={name != null && name !== '' ? hashNameColor(name) : undefined}
-      className={cx('z-avatar', className, classNames?.root)}
+      className={cx('zuvi-avatar', className, classNames?.root)}
       style={{ ...style, ...sizeStyle }}
     >
       {hasImage ? (
         <img
           data-part="image"
-          className={cx('z-avatar-image', classNames?.image)}
+          className={cx('zuvi-avatar-image', classNames?.image)}
           src={src}
           alt={alt ?? name}
           onError={(event) => {
@@ -108,7 +108,7 @@ export function Avatar({
           }}
         />
       ) : (
-        <span data-part="fallback" className={cx('z-avatar-fallback', classNames?.fallback)}>
+        <span data-part="fallback" className={cx('zuvi-avatar-fallback', classNames?.fallback)}>
           {fallback}
         </span>
       )}

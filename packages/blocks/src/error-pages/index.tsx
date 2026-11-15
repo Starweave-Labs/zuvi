@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Button, Result, Segmented, useControllableState } from '@zui/react';
+import { Button, Result, Segmented, useControllableState } from '@zuvi/react';
 
 /* ---------------------------------- 类型 ---------------------------------- */
 
@@ -82,14 +82,14 @@ export function ErrorPagesBlock({
       data-part="root"
       className={[className, classNames?.root].filter(Boolean).join(' ') || undefined}
       style={{
-        padding: 'clamp(var(--z-space-4), 4vw, var(--z-space-9))',
-        background: 'var(--z-color-bg-muted)',
+        padding: 'clamp(var(--zuvi-space-4), 4vw, var(--zuvi-space-9))',
+        background: 'var(--zuvi-color-bg-muted)',
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: 'var(--z-space-5)',
+        gap: 'var(--zuvi-space-5)',
         ...style,
       }}
     >
@@ -112,7 +112,7 @@ export function ErrorPagesBlock({
       <div
         data-part="extra"
         className={classNames?.extra}
-        style={{ display: 'flex', gap: 'var(--z-space-3)', flexWrap: 'wrap', justifyContent: 'center' }}
+        style={{ display: 'flex', gap: 'var(--zuvi-space-3)', flexWrap: 'wrap', justifyContent: 'center' }}
       >
         <Button variant="outline" onClick={() => onBack?.()}>
           返回上一页

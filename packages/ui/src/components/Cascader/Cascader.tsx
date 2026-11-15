@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useZuiConfig } from '../../config';
+import { useZuviConfig } from '../../config';
 import { FloatingPanel, cx, useControllableState, useOnClickOutside } from '../../utils';
 import './Cascader.css';
 
@@ -102,7 +102,7 @@ function flattenOptions(options: CascaderOption[]): FlatEntry[] {
 /* --------------------------------- 级联 ---------------------------------- */
 
 export function Cascader(props: CascaderProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const {
     options,
     value,
@@ -342,13 +342,13 @@ export function Cascader(props: CascaderProps) {
   /* -------------------------------- 渲染 --------------------------------- */
 
   const renderColumns = () => (
-    <div className="z-cascader-menus">
+    <div className="zuvi-cascader-menus">
       {columns.map((list, colIndex) => (
         <div
           key={colIndex}
           role="listbox"
           data-part="menu"
-          className={cx('z-cascader-menu', classNames?.menu)}
+          className={cx('zuvi-cascader-menu', classNames?.menu)}
           aria-label={locale.accessibility.column.replace('{index}', String(colIndex + 1))}
           data-focused={focusCol === colIndex ? 'true' : undefined}
         >
@@ -361,7 +361,7 @@ export function Cascader(props: CascaderProps) {
                 id={optionId(colIndex, optionIndex)}
                 role="option"
                 data-part="item"
-                className={cx('z-cascader-item', classNames?.item)}
+                className={cx('zuvi-cascader-item', classNames?.item)}
                 aria-selected={selected}
                 aria-disabled={option.disabled ? true : undefined}
                 data-active={active ? 'true' : undefined}
@@ -378,10 +378,10 @@ export function Cascader(props: CascaderProps) {
                 }}
                 onClick={() => activate(colIndex, option)}
               >
-                <span className="z-cascader-item-label">{option.label}</span>
+                <span className="zuvi-cascader-item-label">{option.label}</span>
                 {option.children && option.children.length > 0 ? (
                   <svg
-                    className="z-cascader-item-arrow"
+                    className="zuvi-cascader-item-arrow"
                     viewBox="0 0 16 16"
                     width="12"
                     height="12"
@@ -410,11 +410,11 @@ export function Cascader(props: CascaderProps) {
     <div
       role="listbox"
       data-part="menu"
-      className={cx('z-cascader-menu', 'z-cascader-search-results', classNames?.menu)}
+      className={cx('zuvi-cascader-menu', 'zuvi-cascader-search-results', classNames?.menu)}
       aria-label={locale.accessibility.searchResults}
     >
       {searchResults.length === 0 ? (
-        <div className="z-cascader-empty">{locale.accessibility.noMatch}</div>
+        <div className="zuvi-cascader-empty">{locale.accessibility.noMatch}</div>
       ) : (
         searchResults.map((entry, index) => (
           <div
@@ -422,7 +422,7 @@ export function Cascader(props: CascaderProps) {
             id={searchOptionId(index)}
             role="option"
             data-part="item"
-            className={cx('z-cascader-item', classNames?.item)}
+            className={cx('zuvi-cascader-item', classNames?.item)}
             aria-selected={path.join('/') === entry.path.join('/')}
             aria-disabled={entry.disabled ? true : undefined}
             data-active={searchActive === index ? 'true' : undefined}
@@ -437,10 +437,10 @@ export function Cascader(props: CascaderProps) {
               if (!entry.disabled) commit(entry.path);
             }}
           >
-            <span className="z-cascader-item-label">
+            <span className="zuvi-cascader-item-label">
               {entry.labels.map((label, i) => (
                 <React.Fragment key={i}>
-                  {i > 0 ? <span className="z-cascader-item-separator"> / </span> : null}
+                  {i > 0 ? <span className="zuvi-cascader-item-separator"> / </span> : null}
                   {label}
                 </React.Fragment>
               ))}
@@ -455,7 +455,7 @@ export function Cascader(props: CascaderProps) {
     <div
       ref={rootRef}
       data-part="root"
-      className={cx('z-cascader', classNames?.root, className)}
+      className={cx('zuvi-cascader', classNames?.root, className)}
       data-open={open ? 'true' : 'false'}
       data-size={size}
       data-disabled={disabled ? 'true' : undefined}
@@ -465,7 +465,7 @@ export function Cascader(props: CascaderProps) {
         id={triggerId}
         ref={triggerRef}
         data-part="trigger"
-        className={cx('z-cascader-trigger', classNames?.trigger)}
+        className={cx('zuvi-cascader-trigger', classNames?.trigger)}
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-controls={panelId}
@@ -487,20 +487,20 @@ export function Cascader(props: CascaderProps) {
         }}
       >
         <span
-          className="z-cascader-value"
+          className="zuvi-cascader-value"
           data-placeholder={valueLabels.length === 0 ? '' : undefined}
         >
           {valueLabels.length === 0
             ? placeholder
             : valueLabels.map((label, i) => (
                 <React.Fragment key={i}>
-                  {i > 0 ? <span className="z-cascader-value-separator"> / </span> : null}
+                  {i > 0 ? <span className="zuvi-cascader-value-separator"> / </span> : null}
                   {label}
                 </React.Fragment>
               ))}
         </span>
         <svg
-          className="z-cascader-arrow"
+          className="zuvi-cascader-arrow"
           viewBox="0 0 16 16"
           width="12"
           height="12"
@@ -518,22 +518,22 @@ export function Cascader(props: CascaderProps) {
         </svg>
       </button>
 
-      <FloatingPanel open={open} anchorRef={rootRef} focusOnOpen offsetVariable="--z-cascader-panel-margin-top">
+      <FloatingPanel open={open} anchorRef={rootRef} focusOnOpen offsetVariable="--zuvi-cascader-panel-margin-top">
         <div
         id={panelId}
         ref={panelRef}
         tabIndex={-1}
         data-part="panel"
-        className={cx('z-cascader-panel', classNames?.panel)}
+        className={cx('zuvi-cascader-panel', classNames?.panel)}
         data-open={open ? 'true' : 'false'}
         aria-activedescendant={searchMode ? undefined : activeDescendantId}
         onKeyDown={onKeyDown}
       >
         {showSearch ? (
-          <div className="z-cascader-search">
+          <div className="zuvi-cascader-search">
             <input
               type="search"
-              className="z-cascader-search-input"
+              className="zuvi-cascader-search-input"
               value={query}
               placeholder={locale.transfer.search}
               aria-label={locale.accessibility.searchCascader}

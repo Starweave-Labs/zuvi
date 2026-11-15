@@ -1,7 +1,7 @@
 {
   "name": "OfficeStudio",
   "title": "OfficeStudio 独立文档工作台",
-  "description": "以 ZUI 控件构建的独立文档工作台：Word 富文本页面、Excel 单元格和公式、PDF 分页批注与表单，支持文件适配、保存反馈、只读预览和全屏，不依赖 ONLYOFFICE 服务",
+  "description": "以 ZUVI 控件构建的独立文档工作台：Word 富文本页面、Excel 单元格和公式、PDF 分页批注与表单，支持文件适配、保存反馈、只读预览和全屏，不依赖 ONLYOFFICE 服务",
   "category": "数据输入",
   "useCase": [
     "在 React 业务页面内编辑 DOCX、XLSX 和 PDF",
@@ -59,7 +59,7 @@
     }
   },
   "a11yNotes": [
-    "编辑控件直接使用 ZUI 的可访问组件",
+    "编辑控件直接使用 ZUVI 的可访问组件",
     "保存状态通过 role=status 表达，失败提供 alert 和重试",
     "支持 Ctrl/Command S 保存，全屏通过 Esc 退出，编辑内容保持挂载"
   ],

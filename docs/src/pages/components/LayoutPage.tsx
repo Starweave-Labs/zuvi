@@ -1,4 +1,4 @@
-import { Col, Flex, Row, Space } from '@zui/react';
+import { Col, Flex, Row, Space } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -45,15 +45,15 @@ const SPACE_CODE = `<Space size="sm">小间距</Space>
 
 const DEMO_BOX_STYLE: React.CSSProperties = {
   boxSizing: 'border-box',
-  background: 'var(--z-color-bg-subtle)',
-  border: '1px solid var(--z-color-border-subtle)',
-  borderRadius: 'var(--z-radius-sm)',
-  padding: 'var(--z-space-2) var(--z-space-3)',
+  background: 'var(--zuvi-color-bg-subtle)',
+  border: '1px solid var(--zuvi-color-border-subtle)',
+  borderRadius: 'var(--zuvi-radius-sm)',
+  padding: 'var(--zuvi-space-2) var(--zuvi-space-3)',
   textAlign: 'center',
-  color: 'var(--z-color-fg-muted)',
+  color: 'var(--zuvi-color-fg-muted)',
 };
 
-const DEMO_ROW_STYLE: React.CSSProperties = { marginBottom: 'var(--z-space-2)' };
+const DEMO_ROW_STYLE: React.CSSProperties = { marginBottom: 'var(--zuvi-space-2)' };
 
 export default function LayoutPage(): React.ReactNode {
   usePageTitle('Layout 布局');
@@ -147,7 +147,7 @@ export default function LayoutPage(): React.ReactNode {
 
       <Demo
         title="Flex 弹性容器"
-        description="vertical 换主轴方向；justify/align 控制主轴/交叉轴排列；gap 支持 sm/md/lg（映射 --z-space-2/3/4）、number（px）与任意字符串；component 可换语义标签。"
+        description="vertical 换主轴方向；justify/align 控制主轴/交叉轴排列；gap 支持 sm/md/lg（映射 --zuvi-space-2/3/4）、number（px）与任意字符串；component 可换语义标签。"
         code={FLEX_CODE}
         stack
       >
@@ -172,7 +172,7 @@ export default function LayoutPage(): React.ReactNode {
 
       <Demo
         title="Space 间距容器"
-        description="size 默认 md（8px）；sm/md/lg 取相邻间距令牌 --z-space-1/2/3，number 直接按 px。direction=vertical 纵向排列，wrap 允许换行。"
+        description="size 默认 md（8px）；sm/md/lg 取相邻间距令牌 --zuvi-space-1/2/3，number 直接按 px。direction=vertical 纵向排列，wrap 允许换行。"
         code={SPACE_CODE}
         stack
       >
@@ -239,13 +239,13 @@ export default function LayoutPage(): React.ReactNode {
             type: 'number',
             defaultValue: '24',
             description:
-              '占 1-24 格，宽度 calc(span/24*100%)；以内联 CSS 变量 --z-col-span + CSS calc 实现，不生成工具类。',
+              '占 1-24 格，宽度 calc(span/24*100%)；以内联 CSS 变量 --zuvi-col-span + CSS calc 实现，不生成工具类。',
           },
           {
             name: 'offset',
             type: 'number',
             defaultValue: '0',
-            description: '左侧偏移 0-23 格（margin-left，内联 --z-col-offset）。',
+            description: '左侧偏移 0-23 格（margin-left，内联 --zuvi-col-offset）。',
           },
           {
             name: 'flex',
@@ -295,7 +295,7 @@ export default function LayoutPage(): React.ReactNode {
             type: "'sm' | 'md' | 'lg' | number | string",
             defaultValue: '—',
             description:
-              '间距：sm/md/lg 映射 --z-space-2/3/4；number → px；string 原样内联 gap。',
+              '间距：sm/md/lg 映射 --zuvi-space-2/3/4；number → px；string 原样内联 gap。',
           },
           {
             name: 'wrap',
@@ -331,7 +331,7 @@ export default function LayoutPage(): React.ReactNode {
             type: "'sm' | 'md' | 'lg' | number",
             defaultValue: "'md'（8px）",
             description:
-              '间距尺寸：sm/md/lg 取相邻令牌 --z-space-1/2/3，number 直接按 px。',
+              '间距尺寸：sm/md/lg 取相邻令牌 --zuvi-space-1/2/3，number 直接按 px。',
           },
           {
             name: 'direction',
@@ -377,15 +377,15 @@ export default function LayoutPage(): React.ReactNode {
       <CustomizeOutlet
         name="Row"
         parts={['root']}
-        vars={['--z-row-gutter-x', '--z-row-gutter-y']}
+        vars={['--zuvi-row-gutter-x', '--zuvi-row-gutter-y']}
       />
       <CustomizeOutlet
         name="Col"
         parts={['root']}
-        vars={['--z-col-span', '--z-col-offset', '--z-col-gutter-x']}
+        vars={['--zuvi-col-span', '--zuvi-col-offset', '--zuvi-col-gutter-x']}
       />
-      <CustomizeOutlet name="Flex" parts={['root']} vars={['--z-flex-gap']} />
-      <CustomizeOutlet name="Space" parts={['root']} vars={['--z-space-gap']} />
+      <CustomizeOutlet name="Flex" parts={['root']} vars={['--zuvi-flex-gap']} />
+      <CustomizeOutlet name="Space" parts={['root']} vars={['--zuvi-space-gap']} />
     </div>
   );
 }

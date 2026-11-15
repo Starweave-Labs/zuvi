@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useZuiConfig } from '../../config';
+import { useZuviConfig } from '../../config';
 import { cx, floatingPosition, Portal, useControllableState, useFocusTrap } from '../../utils';
 import './Tour.css';
 
@@ -59,7 +59,7 @@ function getCardStyle(rect: Rect | null, placement: NonNullable<TourStep['placem
 /* --------------------------------- Tour ---------------------------------- */
 
 export function Tour(props: TourProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const {
     steps,
     open,
@@ -207,12 +207,12 @@ export function Tour(props: TourProps) {
     <Portal>
       <div
         data-part="root"
-        className={cx('z-tour', classNames?.root, className)}
+        className={cx('zuvi-tour', classNames?.root, className)}
         data-open="true"
       >
         <div
           data-part="mask"
-          className={cx('z-tour-mask', !rect ? 'z-tour-mask--full' : undefined, classNames?.mask)}
+          className={cx('zuvi-tour-mask', !rect ? 'zuvi-tour-mask--full' : undefined, classNames?.mask)}
           aria-hidden="true"
           style={
             rect
@@ -232,7 +232,7 @@ export function Tour(props: TourProps) {
           aria-modal="true"
           tabIndex={-1}
           data-part="card"
-          className={cx('z-tour-card', classNames?.card)}
+          className={cx('zuvi-tour-card', classNames?.card)}
           data-placement={placement}
           data-step={index}
           aria-labelledby={`${baseId}-title`}
@@ -242,7 +242,7 @@ export function Tour(props: TourProps) {
           <div
             id={`${baseId}-title`}
             data-part="title"
-            className={cx('z-tour-title', classNames?.title)}
+            className={cx('zuvi-tour-title', classNames?.title)}
           >
             {step.title}
           </div>
@@ -250,30 +250,30 @@ export function Tour(props: TourProps) {
             <div
               id={`${baseId}-description`}
               data-part="description"
-              className={cx('z-tour-description', classNames?.description)}
+              className={cx('zuvi-tour-description', classNames?.description)}
             >
               {step.description}
             </div>
           ) : null}
-          <div data-part="footer" className={cx('z-tour-footer', classNames?.footer)}>
-            <span className="z-tour-progress">
+          <div data-part="footer" className={cx('zuvi-tour-footer', classNames?.footer)}>
+            <span className="zuvi-tour-progress">
               {index + 1}/{steps.length}
             </span>
-            <div className="z-tour-actions">
+            <div className="zuvi-tour-actions">
               <button
                 type="button"
-                className="z-tour-button"
+                className="zuvi-tour-button"
                 disabled={index === 0}
                 onClick={goPrev}
               >
                 {locale.tour.prev}
               </button>
               {isLast ? (
-                <button type="button" className="z-tour-button z-tour-button--primary" onClick={goNext}>
+                <button type="button" className="zuvi-tour-button zuvi-tour-button--primary" onClick={goNext}>
                   {locale.tour.finish}
                 </button>
               ) : (
-                <button type="button" className="z-tour-button z-tour-button--primary" onClick={goNext}>
+                <button type="button" className="zuvi-tour-button zuvi-tour-button--primary" onClick={goNext}>
                   {locale.tour.next}
                 </button>
               )}

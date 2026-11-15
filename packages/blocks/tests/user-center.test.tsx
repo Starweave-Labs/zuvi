@@ -10,7 +10,7 @@ describe('user-center block', () => {
   it('renders header avatar with user info and profile descriptions', () => {
     const { container } = render(<UserCenterBlock user={DEMO_USER} />);
     // 头像与头部信息（名字同时出现在头部与描述列表，至少两处）
-    expect(container.querySelector('.z-avatar')).toBeInTheDocument();
+    expect(container.querySelector('.zuvi-avatar')).toBeInTheDocument();
     expect(screen.getAllByText('林小满').length).toBeGreaterThanOrEqual(2);
     expect(screen.getByText('@xiaoman.lin · 前端工程师')).toBeInTheDocument();
     // 资料描述列表

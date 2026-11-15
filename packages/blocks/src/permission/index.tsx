@@ -12,9 +12,9 @@ import {
   TableRow,
   Tag,
   Tree,
-} from '@zui/react';
-import type { TreeNode } from '@zui/react';
-import { useControllableState } from '@zui/react';
+} from '@zuvi/react';
+import type { TreeNode } from '@zuvi/react';
+import { useControllableState } from '@zuvi/react';
 
 /* ---------------------------------- 类型 ---------------------------------- */
 
@@ -111,9 +111,9 @@ export const DEMO_MEMBERS: PermissionMember[] = [
 
 const titleStyle: React.CSSProperties = {
   margin: 0,
-  fontSize: 'var(--z-text-lg)',
-  fontWeight: 'var(--z-weight-semibold)',
-  color: 'var(--z-color-fg)',
+  fontSize: 'var(--zuvi-text-lg)',
+  fontWeight: 'var(--zuvi-weight-semibold)',
+  color: 'var(--zuvi-color-fg)',
 };
 
 /** 权限管理区块：Tree（角色权限树，checkable）+ Table（成员）+ Switch 开关列 */
@@ -150,10 +150,10 @@ export function PermissionBlock({
       style={{
         display: 'flex',
         flexDirection: 'column',
-        gap: 'var(--z-space-4)',
+        gap: 'var(--zuvi-space-4)',
         maxWidth: 1080,
         margin: '0 auto',
-        padding: 'var(--z-space-6) var(--z-space-4)',
+        padding: 'var(--zuvi-space-6) var(--zuvi-space-4)',
         ...style,
       }}
     >
@@ -165,7 +165,7 @@ export function PermissionBlock({
         style={{
           display: 'flex',
           flexWrap: 'wrap',
-          gap: 'var(--z-space-4)',
+          gap: 'var(--zuvi-space-4)',
           alignItems: 'start',
         }}
       >
@@ -173,10 +173,10 @@ export function PermissionBlock({
         <Card className={classNames?.treeCard} style={{ flex: '1 1 280px', minWidth: 0 }}>
           <h3
             style={{
-              margin: '0 0 var(--z-space-3)',
-              fontSize: 'var(--z-text-md)',
-              fontWeight: 'var(--z-weight-medium)',
-              color: 'var(--z-color-fg)',
+              margin: '0 0 var(--zuvi-space-3)',
+              fontSize: 'var(--zuvi-text-md)',
+              fontWeight: 'var(--zuvi-weight-medium)',
+              color: 'var(--zuvi-color-fg)',
             }}
           >
             角色权限
@@ -196,10 +196,10 @@ export function PermissionBlock({
         <Card className={classNames?.tableCard} style={{ flex: '2 1 380px', minWidth: 0 }}>
           <h3
             style={{
-              margin: '0 0 var(--z-space-3)',
-              fontSize: 'var(--z-text-md)',
-              fontWeight: 'var(--z-weight-medium)',
-              color: 'var(--z-color-fg)',
+              margin: '0 0 var(--zuvi-space-3)',
+              fontSize: 'var(--zuvi-text-md)',
+              fontWeight: 'var(--zuvi-weight-medium)',
+              color: 'var(--zuvi-color-fg)',
             }}
           >
             成员列表
@@ -219,7 +219,7 @@ export function PermissionBlock({
                   <TableRow>
                     <TableCell colSpan={4} align="center">
                       <span
-                        style={{ color: 'var(--z-color-fg-muted)', fontSize: 'var(--z-text-sm)' }}
+                        style={{ color: 'var(--zuvi-color-fg-muted)', fontSize: 'var(--zuvi-text-sm)' }}
                       >
                         暂无成员
                       </span>
@@ -233,9 +233,9 @@ export function PermissionBlock({
                           style={{
                             display: 'inline-flex',
                             alignItems: 'center',
-                            gap: 'var(--z-space-2)',
-                            fontWeight: 'var(--z-weight-medium)',
-                            color: 'var(--z-color-fg)',
+                            gap: 'var(--zuvi-space-2)',
+                            fontWeight: 'var(--zuvi-weight-medium)',
+                            color: 'var(--zuvi-color-fg)',
                           }}
                         >
                           {member.name}
@@ -248,7 +248,7 @@ export function PermissionBlock({
                       </TableCell>
                       <TableCell>
                         <span
-                          style={{ color: 'var(--z-color-fg-muted)', fontSize: 'var(--z-text-sm)' }}
+                          style={{ color: 'var(--zuvi-color-fg-muted)', fontSize: 'var(--zuvi-text-sm)' }}
                         >
                           {member.email}
                         </span>

@@ -26,7 +26,7 @@ export async function exportBackup(
   const assets: Record<string, string> = {};
   for (const file of data.files)
     if (file.assetKey) assets[file.assetKey] = await dataUrl(await asset(file.assetKey));
-  return new Blob([JSON.stringify({ format: 'zui-content-workspace', version: 1, data, assets })], {
+  return new Blob([JSON.stringify({ format: 'zuvi-content-workspace', version: 1, data, assets })], {
     type: 'application/json',
   });
 }
@@ -64,7 +64,7 @@ export async function importBackup(
   } catch {
     throw new Error('无法读取备份，请选择本工作台导出的 JSON 文件。');
   }
-  if (raw.format !== 'zui-content-workspace' || raw.version !== 1)
+  if (raw.format !== 'zuvi-content-workspace' || raw.version !== 1)
     throw new Error('这不是受支持的工作台备份。');
   const original = record(raw.data);
   const sourceAssets = record(raw.assets);

@@ -3,7 +3,7 @@ interface CustomizeOutletProps {
   name: string;
   /** data-part 清单（从组件源码 grep 提取） */
   parts: string[];
-  /** 组件级 CSS 变量清单（--z-<name>-*） */
+  /** 组件级 CSS 变量清单（--zuvi-<name>-*） */
   vars: string[];
   /** 额外说明 */
   note?: string;
@@ -32,7 +32,7 @@ export default function CustomizeOutlet({
           </li>
         ))}
       </ul>
-      <h3 className="doc-h3">CSS 变量（--z-{name.toLowerCase()}-*）</h3>
+      <h3 className="doc-h3">CSS 变量（--zuvi-{name.toLowerCase()}-*）</h3>
       <ul className="doc-chip-list">
         {vars.map((v) => (
           <li className="doc-chip" key={v}>

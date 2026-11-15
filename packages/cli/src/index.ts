@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 /**
- * @zui/cli —— ZUI registry 命令行入口（registry 组）
+ * @zuvi/cli —— ZUVI registry 命令行入口（registry 组）
  *
  * 命令（契约 §3）：
- *   zui init                交互式初始化：检测框架、配置组件目标目录、写 .zurc.json
- *   zui add <组件...>        从 registry 复制组件源码到目标目录（支持多组件 / --all）
- *   zui diff <组件...>       本地副本 vs registry 的 unified diff
- *   zui list                列出 registry 所有组件
+ *   zuvi init                交互式初始化：检测框架、配置组件目标目录、写 .zuvirc.json
+ *   zuvi add <组件...>        从 registry 复制组件源码到目标目录（支持多组件 / --all）
+ *   zuvi diff <组件...>       本地副本 vs registry 的 unified diff
+ *   zuvi list                列出 registry 所有组件
  *
  * 零运行时依赖：纯 process.argv 解析。
- * registry 定位顺序：--registry 参数 > ZUI_REGISTRY 环境变量 > .zurc.json 的 registry
+ * registry 定位顺序：--registry 参数 > ZUVI_REGISTRY 环境变量 > .zuvirc.json 的 registry
  *   > 自 cwd 向上找 registry/registry.json > 自 CLI 包位置向上找（monorepo 开发态）。
  */
 
@@ -49,8 +49,8 @@ export interface Registry {
   exports?: Record<string, string>;
 }
 
-/** .zurc.json 项目配置 */
-export interface ZuiConfig {
+/** .zuvirc.json 项目配置 */
+export interface ZuviConfig {
   /** 组件复制目标目录（相对 cwd 或绝对路径） */
   components: string;
   /** 检测到的框架：next / vite / react-scripts / remix / react */
@@ -64,7 +64,7 @@ export interface ZuiConfig {
 /** 命令执行上下文：配置 + registry + 定位工具 */
 export interface Ctx {
   cwd: string;
-  config: ZuiConfig;
+  config: ZuviConfig;
   registry: Registry;
   /** registry.json 绝对路径 */
   registryPath: string;
@@ -78,7 +78,7 @@ export interface Ctx {
   localPathFor: (item: RegistryItem, file: string) => string;
 }
 
-export const CONFIG_FILE = '.zurc.json';
+export const CONFIG_FILE = '.zuvirc.json';
 export const DEFAULT_COMPONENTS_DIR = 'src/components/ui';
 
 /* -------------------------------- 基础工具 -------------------------------- */
@@ -101,12 +101,12 @@ export function readJson<T>(file: string): T {
 function resolveRegistryFile(cwd: string, explicit?: string): string {
   const candidates: Array<string | undefined> = [];
   if (explicit) candidates.push(path.resolve(cwd, explicit));
-  if (process.env['ZUI_REGISTRY']) candidates.push(path.resolve(cwd, process.env['ZUI_REGISTRY']));
+  if (process.env['ZUVI_REGISTRY']) candidates.push(path.resolve(cwd, process.env['ZUVI_REGISTRY']));
 
-  // .zurc.json 的 registry 字段
+  // .zuvirc.json 的 registry 字段
   const configFile = path.join(cwd, CONFIG_FILE);
   if (fs.existsSync(configFile)) {
-    const cfg = readJson<Partial<ZuiConfig>>(configFile);
+    const cfg = readJson<Partial<ZuviConfig>>(configFile);
     if (cfg.registry) candidates.push(path.resolve(cwd, cfg.registry));
   }
 
@@ -140,7 +140,7 @@ function resolveRegistryFile(cwd: string, explicit?: string): string {
   }
 
   throw new Error(
-    `找不到 registry.json（依次尝试 --registry / $ZUI_REGISTRY / ${CONFIG_FILE} / 向上查找）。` +
+    `找不到 registry.json（依次尝试 --registry / $ZUVI_REGISTRY / ${CONFIG_FILE} / 向上查找）。` +
       `用 --registry <path> 指定，或在仓库根目录运行。`
   );
 }
@@ -153,17 +153,17 @@ export function registryRootOf(registryPath: string): string {
 
 /* -------------------------------- 配置读写 -------------------------------- */
 
-/** 读取 .zurc.json（缺失返回默认值） */
-export function readConfig(cwd: string): ZuiConfig {
+/** 读取 .zuvirc.json（缺失返回默认值） */
+export function readConfig(cwd: string): ZuviConfig {
   const file = path.join(cwd, CONFIG_FILE);
-  const defaults: ZuiConfig = { components: DEFAULT_COMPONENTS_DIR };
+  const defaults: ZuviConfig = { components: DEFAULT_COMPONENTS_DIR };
   if (!fs.existsSync(file)) return defaults;
-  const cfg = readJson<Partial<ZuiConfig>>(file);
+  const cfg = readJson<Partial<ZuviConfig>>(file);
   return { ...defaults, ...cfg, components: cfg.components ?? DEFAULT_COMPONENTS_DIR };
 }
 
-/** 写 .zurc.json */
-export function writeConfig(cwd: string, config: ZuiConfig): string {
+/** 写 .zuvirc.json */
+export function writeConfig(cwd: string, config: ZuviConfig): string {
   const file = path.join(cwd, CONFIG_FILE);
   fs.writeFileSync(file, `${JSON.stringify(config, null, 2)}\n`, 'utf8');
   return file;
@@ -275,14 +275,14 @@ export function parseArgs(argv: string[]): CliOptions {
 
 /* ---------------------------------- 用法 ---------------------------------- */
 
-export const USAGE = `zui —— ZUI registry CLI
+export const USAGE = `zuvi —— ZUVI registry CLI
 
 用法：
-  zui init [选项]             初始化：检测框架、配置目标目录、写 ${CONFIG_FILE}
-  zui add <组件...>           复制组件源码到目标目录（如 zui add button modal）
-  zui add --all               复制 registry 全部组件
-  zui diff <组件...>          显示本地副本 vs registry 的 unified diff
-  zui list                    列出 registry 所有组件
+  zuvi init [选项]             初始化：检测框架、配置目标目录、写 ${CONFIG_FILE}
+  zuvi add <组件...>           复制组件源码到目标目录（如 zuvi add button modal）
+  zuvi add --all               复制 registry 全部组件
+  zuvi diff <组件...>          显示本地副本 vs registry 的 unified diff
+  zuvi list                    列出 registry 所有组件
 
 选项：
   -c, --components <dir>      组件目标目录（默认 ${DEFAULT_COMPONENTS_DIR}）
@@ -331,7 +331,7 @@ export async function run(argv: string[]): Promise<void> {
       }
       case 'add': {
         if (!opts.all && opts.names.length === 0) {
-          throw new Error('add 需要组件名（zui add button modal）或 --all');
+          throw new Error('add 需要组件名（zuvi add button modal）或 --all');
         }
         const ctx = createContext({ cwd: opts.cwd, registryPath: opts.registry, log });
         const result = await addCommand({ ctx, names: opts.names, all: opts.all });
@@ -350,7 +350,7 @@ export async function run(argv: string[]): Promise<void> {
         break;
       }
       case 'diff': {
-        if (opts.names.length === 0) throw new Error('diff 需要组件名（zui diff button）');
+        if (opts.names.length === 0) throw new Error('diff 需要组件名（zuvi diff button）');
         const ctx = createContext({ cwd: opts.cwd, registryPath: opts.registry, log });
         const result = await diffCommand({ ctx, names: opts.names });
         for (const file of result.files) {
@@ -381,7 +381,7 @@ export async function run(argv: string[]): Promise<void> {
         log(USAGE);
     }
   } catch (e) {
-    console.error(`zui: ${(e instanceof Error ? e.message : String(e))}`);
+    console.error(`zuvi: ${(e instanceof Error ? e.message : String(e))}`);
     process.exitCode = 1;
   }
 }

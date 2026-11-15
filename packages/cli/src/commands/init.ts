@@ -1,11 +1,11 @@
 /**
- * zui init —— 交互式初始化：检测框架、配置组件目标目录、写 .zurc.json
+ * zuvi init —— 交互式初始化：检测框架、配置组件目标目录、写 .zuvirc.json
  */
 
 import fs from 'node:fs';
 import path from 'node:path';
 
-import type { ZuiConfig } from '../index.js';
+import type { ZuviConfig } from '../index.js';
 import { CONFIG_FILE, DEFAULT_COMPONENTS_DIR, writeConfig } from '../index.js';
 
 export interface InitOptions {
@@ -17,7 +17,7 @@ export interface InitOptions {
   framework?: string;
   /** 非交互模式：全部取默认/传入值 */
   yes?: boolean;
-  /** 覆盖已有 .zurc.json */
+  /** 覆盖已有 .zuvirc.json */
   force?: boolean;
   /** 自定义交互问询（测试可注入；默认 readline/TTY） */
   prompt?: (question: string, defaultValue: string) => Promise<string>;
@@ -26,7 +26,7 @@ export interface InitOptions {
 
 export interface InitResult {
   configFile: string;
-  config: ZuiConfig;
+  config: ZuviConfig;
   detected: { framework: string; language: string };
 }
 
@@ -84,7 +84,7 @@ export async function init(options: InitOptions = {}): Promise<InitResult> {
     options.components ??
     ((await prompt('组件安装到哪个目录', DEFAULT_COMPONENTS_DIR)) || DEFAULT_COMPONENTS_DIR);
 
-  const config: ZuiConfig = {
+  const config: ZuviConfig = {
     components,
     framework: detectedFramework,
     language: detectedLanguage,

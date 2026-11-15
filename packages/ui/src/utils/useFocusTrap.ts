@@ -122,9 +122,9 @@ export function useFocusTrap(
           return;
         }
         const layers = document.querySelectorAll<HTMLElement>(
-          '[data-zui-modal-layer][data-state="open"]'
+          '[data-zuvi-modal-layer][data-state="open"]'
         );
-        const outer = container.closest('[data-zui-modal-layer]')
+        const outer = container.closest('[data-zuvi-modal-layer]')
           ? layers[layers.length - 1]?.querySelector<HTMLElement>('[role="dialog"]')
           : null;
         const explicitTarget = explicitReturnTarget;

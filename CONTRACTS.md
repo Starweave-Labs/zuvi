@@ -1,4 +1,4 @@
-# ZUI 契约层规范（所有实作者必读，禁止偏离）
+# ZUVI 契约层规范（所有实作者必读，禁止偏离）
 
 > 本文件是并行开发的唯一事实来源。任何组件的 props、类名、CSS 变量命名必须与本文一致。
 > 竞品调研结论已折算进本规范：零运行时 CSS、三层令牌、语义化定制出口（永不暴露内部类名）、
@@ -227,20 +227,20 @@ function useMessage(): MessageApi;               // 无 Provider 时 throw 明�
 
 - **类名**：`z-<component>`、`z-<component>-<part>`；状态用 data 属性选择器（`[data-variant='primary']`），不引入状态修饰类。
 - **令牌命名（必须逐字使用）**：
-  - 语义色：`--z-color-bg / bg-subtle / bg-muted / bg-elevated / bg-inverse`、
-    `--z-color-fg / fg-muted / fg-subtle / fg-inverse / fg-on-primary`、
-    `--z-color-border / border-subtle / border-strong / border-focus`、
-    `--z-color-primary / primary-hover / primary-active / primary-fg / primary-subtle / primary-subtle-fg`、
-    `--z-color-{danger|success|warning|info}` 及其 `-hover`/`-fg`/`-subtle`/`-subtle-fg`、
-    `--z-color-link / link-hover / focus-ring / overlay / disabled-bg / disabled-fg / disabled-border`。
-  - 尺寸：`--z-radius`（唯一来源 0.625rem，派生 `--z-radius-sm/md/lg/xl/full`）、
-    `--z-space-1..12`（4px 步进）、`--z-text-xs/sm/md/lg/xl/2xl`、`--z-leading-tight/normal/relaxed`、
-    `--z-weight-regular/medium/semibold`、`--z-font-sans/mono`、
-    `--z-shadow-xs/sm/md/lg`、`--z-duration-fast/normal/slow`、`--z-ease-standard/entrance/exit`、
-    `--z-z-base/sticky/dropdown/overlay/modal/toast`。
-  - 组件级（示例，Button 内定义）：`--z-button-height / padding-x / font-size / radius / bg / fg / border / hover-bg / hover-fg / active-bg`。每个组件同理定义自己的 `--z-<name>-*`。
+  - 语义色：`--zuvi-color-bg / bg-subtle / bg-muted / bg-elevated / bg-inverse`、
+    `--zuvi-color-fg / fg-muted / fg-subtle / fg-inverse / fg-on-primary`、
+    `--zuvi-color-border / border-subtle / border-strong / border-focus`、
+    `--zuvi-color-primary / primary-hover / primary-active / primary-fg / primary-subtle / primary-subtle-fg`、
+    `--zuvi-color-{danger|success|warning|info}` 及其 `-hover`/`-fg`/`-subtle`/`-subtle-fg`、
+    `--zuvi-color-link / link-hover / focus-ring / overlay / disabled-bg / disabled-fg / disabled-border`。
+  - 尺寸：`--zuvi-radius`（唯一来源 0.625rem，派生 `--zuvi-radius-sm/md/lg/xl/full`）、
+    `--zuvi-space-1..12`（4px 步进）、`--zuvi-text-xs/sm/md/lg/xl/2xl`、`--zuvi-leading-tight/normal/relaxed`、
+    `--zuvi-weight-regular/medium/semibold`、`--zuvi-font-sans/mono`、
+    `--zuvi-shadow-xs/sm/md/lg`、`--zuvi-duration-fast/normal/slow`、`--zuvi-ease-standard/entrance/exit`、
+    `--zuvi-z-base/sticky/dropdown/overlay/modal/toast`。
+  - 组件级（示例，Button 内定义）：`--zuvi-button-height / padding-x / font-size / radius / bg / fg / border / hover-bg / hover-fg / active-bg`。每个组件同理定义自己的 `--zuvi-<name>-*`。
 - 组件 CSS 只消费语义层与本组件变量；**禁止硬编码色值**（透明度叠加除外，用 `color-mix()`）。
-- 动效遵守 `prefers-reduced-motion`（在 reset.css 已有全局降级，组件动画用 `var(--z-duration-*)`）。
+- 动效遵守 `prefers-reduced-motion`（在 reset.css 已有全局降级，组件动画用 `var(--zuvi-duration-*)`）。
 
 ## 4. 测试要求（每个组件必须有 `<Name>.test.tsx`）
 

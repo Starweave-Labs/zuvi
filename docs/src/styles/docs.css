@@ -1,9 +1,9 @@
 /* ============================================================
- * ZUI 文档站样式 —「Refined Minimal」设计语言
+ * ZUVI 文档站样式 —「Refined Minimal」设计语言
  * （对标 Linear / shadcn/ui / Vercel docs：Less chrome, more content）
  *
  * chrome 类名一律 doc- 前缀，避免与 z- 组件冲突。
- * 颜色策略：能与 var(--z-*) 语义令牌对齐的一律用令牌（文字 / 主色 / 弱化底）；
+ * 颜色策略：能与 var(--zuvi-*) 语义令牌对齐的一律用令牌（文字 / 主色 / 弱化底）；
  * 设计语言要求精确色值（近不可见边框 / 纯白底 / 真暗底）的，
  * 收敛到 --doc-* 局部变量并做暗色映射；代码块为明暗恒定的纯暗底。
  * ============================================================ */
@@ -24,16 +24,16 @@
   --doc-code-bg: #0d0d0d;
   --doc-code-fg: #e8e8e8;
   /* 文档排版：页级导语与章节导语分别占用大/小节奏，避免页面局部覆写漂移。 */
-  --doc-lead-page-size: var(--z-text-md);
+  --doc-lead-page-size: var(--zuvi-text-md);
   --doc-lead-section-size: 13px;
-  --doc-lead-page-gap: var(--z-space-8);
-  --doc-lead-section-gap: var(--z-space-6);
-  --doc-lead-color: var(--z-color-fg-muted);
+  --doc-lead-page-gap: var(--zuvi-space-8);
+  --doc-lead-section-gap: var(--zuvi-space-6);
+  --doc-lead-color: var(--zuvi-color-fg-muted);
   /* 文档交互基础：三类按钮共享最小可点击高度、过渡和 focus ring，variant 自行定视觉。 */
   --doc-action-height: 36px;
   --doc-action-focus-inner: var(--doc-bg);
-  --doc-action-focus-ring: color-mix(in srgb, var(--z-color-primary) 30%, transparent);
-  --doc-action-hover-bg: var(--z-color-bg-muted);
+  --doc-action-focus-ring: color-mix(in srgb, var(--zuvi-color-primary) 30%, transparent);
+  --doc-action-hover-bg: var(--zuvi-color-bg-muted);
 }
 
 [data-theme='dark'] {
@@ -69,14 +69,14 @@ html {
   /* Inter 风格字符变体（不支持的字体安全忽略）；细滚动条 */
   font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
   scrollbar-width: thin;
-  scrollbar-color: var(--z-color-border) transparent;
+  scrollbar-color: var(--zuvi-color-border) transparent;
 }
 
 body {
-  font-family: var(--z-font-sans);
-  font-size: var(--z-text-md);
-  line-height: var(--z-leading-normal);
-  color: var(--z-color-fg);
+  font-family: var(--zuvi-font-sans);
+  font-size: var(--zuvi-text-md);
+  line-height: var(--zuvi-leading-normal);
+  color: var(--zuvi-color-fg);
   background: var(--doc-bg);
   -webkit-font-smoothing: antialiased;
 }
@@ -86,7 +86,7 @@ body {
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--z-color-primary) 15%, transparent);
+  background: color-mix(in srgb, var(--zuvi-color-primary) 15%, transparent);
 }
 
 ::-webkit-scrollbar {
@@ -99,17 +99,17 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--z-color-border);
+  background: var(--zuvi-color-border);
   border-radius: 3px;
 }
 
 a {
-  color: var(--z-color-link);
+  color: var(--zuvi-color-link);
   text-decoration: none;
 }
 
 a:hover {
-  color: var(--z-color-link-hover);
+  color: var(--zuvi-color-link-hover);
   text-decoration: underline;
 }
 
@@ -121,9 +121,9 @@ a:hover {
   font-family: inherit;
   cursor: pointer;
   transition:
-    background-color var(--z-duration-fast) var(--z-ease-standard),
-    border-color var(--z-duration-fast) var(--z-ease-standard),
-    color var(--z-duration-fast) var(--z-ease-standard);
+    background-color var(--zuvi-duration-fast) var(--zuvi-ease-standard),
+    border-color var(--zuvi-duration-fast) var(--zuvi-ease-standard),
+    color var(--zuvi-duration-fast) var(--zuvi-ease-standard);
 }
 
 /* 统一双层 focus ring：贴底色内圈 + 半透明主色外圈 */
@@ -164,22 +164,22 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--z-space-4);
+  gap: var(--zuvi-space-4);
   height: 60px;
-  padding: 0 var(--z-space-5);
+  padding: 0 var(--zuvi-space-5);
   /* 毛玻璃：底色 72% 不透明 + 提饱和模糊 */
   background: color-mix(in srgb, var(--doc-bg) 72%, transparent);
   -webkit-backdrop-filter: blur(12px) saturate(1.2);
   backdrop-filter: blur(12px) saturate(1.2);
   /* 边界几乎不可见 */
-  border-bottom: 1px solid color-mix(in srgb, var(--z-color-border) 50%, transparent);
-  z-index: var(--z-z-sticky);
+  border-bottom: 1px solid color-mix(in srgb, var(--zuvi-color-border) 50%, transparent);
+  z-index: var(--zuvi-z-sticky);
 }
 
 .doc-topbar-left {
   display: flex;
   align-items: center;
-  gap: var(--z-space-2);
+  gap: var(--zuvi-space-2);
   min-width: 0;
 }
 
@@ -190,28 +190,28 @@ a:hover {
   border: none;
   border-radius: 6px;
   background: transparent;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-family: inherit;
   font-size: 13px;
   cursor: pointer;
 }
 
 .doc-menu-btn:hover {
-  color: var(--z-color-fg);
-  background: var(--z-color-bg-muted);
+  color: var(--zuvi-color-fg);
+  background: var(--zuvi-color-bg-muted);
 }
 
 .doc-brand {
   display: inline-flex;
   align-items: center;
-  gap: var(--z-space-2);
-  color: var(--z-color-fg);
+  gap: var(--zuvi-space-2);
+  color: var(--zuvi-color-fg);
   text-decoration: none;
 }
 
 .doc-brand:hover {
   text-decoration: none;
-  color: var(--z-color-fg);
+  color: var(--zuvi-color-fg);
 }
 
 .doc-brand-mark {
@@ -221,8 +221,8 @@ a:hover {
   width: 26px;
   height: 26px;
   border-radius: 8px;
-  background: var(--z-color-primary);
-  color: var(--z-color-primary-fg);
+  background: var(--zuvi-color-primary);
+  color: var(--zuvi-color-primary-fg);
   font-size: 14px;
   font-weight: 700;
   line-height: 1;
@@ -230,7 +230,7 @@ a:hover {
 
 .doc-brand-name {
   font-size: 15px;
-  font-weight: var(--z-weight-semibold);
+  font-weight: var(--zuvi-weight-semibold);
   letter-spacing: -0.01em;
 }
 
@@ -241,18 +241,18 @@ a:hover {
   white-space: nowrap;
   padding: 1px 6px;
   border-radius: 4px;
-  background: var(--z-color-primary-subtle);
+  background: var(--zuvi-color-primary-subtle);
   /* 11px 的辅助徽标需要普通文本 4.5:1；暗色品牌 300/900 组合略低于阈值。 */
-  color: var(--z-color-fg);
+  color: var(--zuvi-color-fg);
   font-size: 11px;
-  font-weight: var(--z-weight-medium);
+  font-weight: var(--zuvi-weight-medium);
   line-height: 1.6;
 }
 
 .doc-topbar-actions {
   display: flex;
   align-items: center;
-  gap: var(--z-space-1);
+  gap: var(--zuvi-space-1);
 }
 
 /* 顶栏动作按钮：共享交互底座上的紧凑 ghost variant。 */
@@ -261,12 +261,12 @@ a:hover {
   border: none;
   border-radius: 6px;
   background: transparent;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 13px;
 }
 
 .doc-chip-btn:hover {
-  color: var(--z-color-fg);
+  color: var(--zuvi-color-fg);
   background: var(--doc-action-hover-bg);
   text-decoration: none;
 }
@@ -289,18 +289,18 @@ a:hover {
   padding: 12px 8px 24px;
   /* 与主区域同底色，右侧仅一条近不可见分隔 */
   border-right: 1px solid var(--doc-border);
-  background: var(--z-color-bg-subtle);
+  background: var(--zuvi-color-bg-subtle);
 }
 
 .doc-sidebar .doc-sidenav,
 .doc-nav-drawer .doc-sidenav {
-  --z-sidenav-width: 100%;
-  --z-sidenav-padding: 0;
-  --z-sidenav-item-height: 0;
-  --z-sidenav-bg: transparent;
-  --z-sidenav-fg: var(--z-color-fg-muted);
-  --z-sidenav-active-bg: var(--z-color-bg-muted);
-  --z-sidenav-active-fg: var(--z-color-fg);
+  --zuvi-sidenav-width: 100%;
+  --zuvi-sidenav-padding: 0;
+  --zuvi-sidenav-item-height: 0;
+  --zuvi-sidenav-bg: transparent;
+  --zuvi-sidenav-fg: var(--zuvi-color-fg-muted);
+  --zuvi-sidenav-active-bg: var(--zuvi-color-bg-muted);
+  --zuvi-sidenav-active-fg: var(--zuvi-color-fg);
   flex: 1;
   min-height: 0;
   width: 100%;
@@ -315,8 +315,8 @@ a:hover {
 }
 
 .doc-nav-drawer {
-  --z-drawer-content-bg: var(--doc-bg);
-  --z-drawer-content-padding: 16px;
+  --zuvi-drawer-content-bg: var(--doc-bg);
+  --zuvi-drawer-content-padding: 16px;
 }
 
 .doc-nav-drawer-body {
@@ -340,23 +340,23 @@ a:hover {
   padding: 0 10px;
   border: 1px solid transparent;
   border-radius: 8px;
-  background: var(--z-color-bg-subtle);
-  color: var(--z-color-fg);
+  background: var(--zuvi-color-bg-subtle);
+  color: var(--zuvi-color-fg);
   font-family: inherit;
   font-size: 13px;
   transition:
-    border-color var(--z-duration-fast) var(--z-ease-standard),
-    background var(--z-duration-fast) var(--z-ease-standard),
-    box-shadow var(--z-duration-fast) var(--z-ease-standard);
+    border-color var(--zuvi-duration-fast) var(--zuvi-ease-standard),
+    background var(--zuvi-duration-fast) var(--zuvi-ease-standard),
+    box-shadow var(--zuvi-duration-fast) var(--zuvi-ease-standard);
 }
 
 .doc-nav-search-input::placeholder {
-  color: var(--z-color-fg-subtle);
+  color: var(--zuvi-color-fg-subtle);
 }
 
 .doc-nav-search-input:hover {
-  border-color: var(--z-color-fg-subtle);
-  background: var(--z-color-bg-subtle);
+  border-color: var(--zuvi-color-fg-subtle);
+  background: var(--zuvi-color-bg-subtle);
 }
 
 /* 聚焦时才出现边框 + 微妙 ring */
@@ -364,14 +364,14 @@ a:hover {
   outline: none;
   border-color: var(--doc-border);
   background: var(--doc-bg);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--z-color-primary) 12%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--zuvi-color-primary) 12%, transparent);
 }
 
 .doc-nav-empty {
-  margin: var(--z-space-4) 12px 0;
+  margin: var(--zuvi-space-4) 12px 0;
   font-size: 13px;
-  color: var(--z-color-fg-subtle);
-  line-height: var(--z-leading-relaxed);
+  color: var(--zuvi-color-fg-subtle);
+  line-height: var(--zuvi-leading-relaxed);
 }
 
 .doc-nav-loading {
@@ -387,7 +387,7 @@ a:hover {
   inline-size: min(100%, 10rem);
   block-size: 10px;
   border-radius: 999px;
-  background: var(--z-color-bg-muted);
+  background: var(--zuvi-color-bg-muted);
   opacity: 0.65;
 }
 
@@ -396,7 +396,7 @@ a:hover {
 }
 
 .doc-sidenav .doc-nav-group + .doc-nav-group {
-  margin-top: var(--z-space-5);
+  margin-top: var(--zuvi-space-5);
 }
 
 .doc-sidenav .doc-nav-group-title {
@@ -404,8 +404,8 @@ a:hover {
   padding-inline-start: 8px;
   margin: 20px 0 4px;
   font-size: 11px;
-  font-weight: var(--z-weight-medium);
-  color: var(--z-color-fg-muted);
+  font-weight: var(--zuvi-weight-medium);
+  color: var(--zuvi-color-fg-muted);
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
@@ -425,24 +425,24 @@ a:hover {
   margin: 0 4px;
   padding: 5px 8px;
   border-radius: 6px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 13px;
   line-height: 1.5;
   text-decoration: none;
 }
 
 .doc-sidenav .doc-nav-link:hover {
-  background: var(--z-color-bg-muted);
-  color: var(--z-color-fg);
+  background: var(--zuvi-color-bg-muted);
+  color: var(--zuvi-color-fg);
   text-decoration: none;
 }
 
 /* 当前页语义由 SideNav 持有；文档 chrome 只负责视觉定制。 */
 .doc-sidenav .doc-nav-link[aria-current='page'],
 .doc-sidenav .doc-nav-link[aria-current='page']:hover {
-  background: var(--z-color-primary-subtle);
-  color: var(--z-color-fg);
-  font-weight: var(--z-weight-medium);
+  background: var(--zuvi-color-primary-subtle);
+  color: var(--zuvi-color-fg);
+  font-weight: var(--zuvi-weight-medium);
 }
 
 /* ============================================================
@@ -469,7 +469,7 @@ a:hover {
   max-width: 800px;
   min-width: 0;
   margin: 0 auto;
-  animation: doc-page-in var(--z-duration-normal) var(--z-ease-entrance);
+  animation: doc-page-in var(--zuvi-duration-normal) var(--zuvi-ease-entrance);
 }
 
 .doc-main--wide {
@@ -493,14 +493,14 @@ a:hover {
 
 .doc-builder-editor {
   overflow: hidden;
-  border: 1px solid var(--z-color-border);
-  border-radius: var(--z-radius-lg);
-  background: var(--z-color-bg);
-  box-shadow: var(--z-shadow-sm);
+  border: 1px solid var(--zuvi-color-border);
+  border-radius: var(--zuvi-radius-lg);
+  background: var(--zuvi-color-bg);
+  box-shadow: var(--zuvi-shadow-sm);
 }
 
 .doc-builder-editor nav > ul > li > [role='button']:focus-visible {
-  outline: 2px solid var(--z-color-primary);
+  outline: 2px solid var(--zuvi-color-primary);
   outline-offset: 2px;
 }
 
@@ -508,7 +508,7 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--z-space-4);
+  gap: var(--zuvi-space-4);
   margin-top: 48px;
 }
 
@@ -517,9 +517,9 @@ a:hover {
 }
 
 .doc-builder-copy-status {
-  margin: var(--z-space-2) 0 0;
-  color: var(--z-color-fg-muted);
-  font-size: var(--z-text-sm);
+  margin: var(--zuvi-space-2) 0 0;
+  color: var(--zuvi-color-fg-muted);
+  font-size: var(--zuvi-text-sm);
 }
 
 .doc-builder-json {
@@ -528,17 +528,17 @@ a:hover {
   overflow: auto;
   padding: 16px;
   border: 1px solid transparent;
-  border-radius: var(--z-radius-md);
-  background: var(--z-color-bg-muted);
-  color: var(--z-color-fg);
-  font-family: var(--z-font-mono);
+  border-radius: var(--zuvi-radius-md);
+  background: var(--zuvi-color-bg-muted);
+  color: var(--zuvi-color-fg);
+  font-family: var(--zuvi-font-mono);
   font-size: 12px;
   line-height: 1.6;
 }
 
 .doc-builder-json:focus-visible {
-  border-color: var(--z-color-primary);
-  outline: 2px solid var(--z-color-primary);
+  border-color: var(--zuvi-color-primary);
+  outline: 2px solid var(--zuvi-color-primary);
   outline-offset: 2px;
 }
 
@@ -567,7 +567,7 @@ a:hover {
   margin: 48px 0 16px;
   font-size: 1.25rem;
   line-height: 1.35;
-  font-weight: var(--z-weight-semibold);
+  font-weight: var(--zuvi-weight-semibold);
   letter-spacing: -0.02em;
 }
 
@@ -575,7 +575,7 @@ a:hover {
   margin: 40px 0 12px;
   font-size: 1.0625rem;
   line-height: 1.4;
-  font-weight: var(--z-weight-semibold);
+  font-weight: var(--zuvi-weight-semibold);
   letter-spacing: -0.01em;
 }
 
@@ -590,7 +590,7 @@ a:hover {
 .doc-lead {
   margin: 0 0 var(--doc-lead-page-gap);
   font-size: var(--doc-lead-page-size);
-  font-weight: var(--z-weight-regular);
+  font-weight: var(--zuvi-weight-regular);
   color: var(--doc-lead-color);
   line-height: 1.7;
 }
@@ -603,16 +603,16 @@ a:hover {
 
 .doc-ul {
   margin: 0 0 16px;
-  padding-left: var(--z-space-6);
+  padding-left: var(--zuvi-space-6);
   line-height: 1.8;
 }
 
 .doc-ul li {
-  margin-bottom: var(--z-space-2);
+  margin-bottom: var(--zuvi-space-2);
 }
 
 .doc-ul li::marker {
-  color: var(--z-color-fg-subtle);
+  color: var(--zuvi-color-fg-subtle);
 }
 
 /* 提示块：灰阶 callout，不引入装饰色 */
@@ -621,7 +621,7 @@ a:hover {
   padding: 14px 16px;
   border: 1px solid var(--doc-border-faint);
   border-radius: 10px;
-  background: var(--z-color-bg-subtle);
+  background: var(--zuvi-color-bg-subtle);
   line-height: 1.7;
 }
 
@@ -653,7 +653,7 @@ a:hover {
   padding: 18px 20px;
   background: var(--doc-code-bg);
   color: var(--doc-code-fg);
-  font-family: var(--z-font-mono);
+  font-family: var(--zuvi-font-mono);
   font-size: 12px;
   line-height: 1.8;
   overflow-x: auto;
@@ -669,16 +669,16 @@ a:hover {
 .doc-code-inline {
   padding: 2px 6px;
   border-radius: 4px;
-  background: color-mix(in srgb, var(--z-color-primary) 8%, transparent);
-  color: color-mix(in oklch, var(--z-color-primary) 75%, var(--z-color-fg));
-  font-family: var(--z-font-mono);
+  background: color-mix(in srgb, var(--zuvi-color-primary) 8%, transparent);
+  color: color-mix(in oklch, var(--zuvi-color-primary) 75%, var(--zuvi-color-fg));
+  font-family: var(--zuvi-font-mono);
   font-size: 0.875em;
   overflow-wrap: anywhere;
   overflow-wrap: anywhere;
 }
 
 .doc-code-lang {
-  font-family: var(--z-font-mono);
+  font-family: var(--zuvi-font-mono);
   font-size: 11px;
   color: #b4b8c1;
 }
@@ -703,13 +703,13 @@ a:hover {
 }
 
 .doc-copy-btn[data-state='copied'] {
-  border-color: var(--z-color-success);
-  color: var(--z-color-success);
+  border-color: var(--zuvi-color-success);
+  color: var(--zuvi-color-success);
 }
 
 .doc-copy-btn[data-state='failed'] {
-  border-color: var(--z-color-danger);
-  color: var(--z-color-danger);
+  border-color: var(--zuvi-color-danger);
+  color: var(--zuvi-color-danger);
 }
 
 /* 语法高亮 token（#0d0d0d 底上的固定高亮色，明暗共用） */
@@ -757,14 +757,14 @@ a:hover {
 .doc-demo-title {
   margin: 0;
   font-size: 15px;
-  font-weight: var(--z-weight-semibold);
-  color: var(--z-color-fg);
+  font-weight: var(--zuvi-weight-semibold);
+  color: var(--zuvi-color-fg);
 }
 
 .doc-demo-desc {
   margin: 6px 0 0;
   font-size: 13px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   line-height: 1.6;
 }
 
@@ -774,7 +774,7 @@ a:hover {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--z-space-4);
+  gap: var(--zuvi-space-4);
   min-height: 108px;
   background: var(--doc-bg);
 }
@@ -806,9 +806,9 @@ a:hover {
   grid-template-columns: minmax(0, 1fr);
   gap: 16px;
   padding: 20px;
-  border: 1px solid var(--z-color-border-subtle);
-  border-radius: var(--z-radius-md);
-  background: var(--z-color-bg-subtle);
+  border: 1px solid var(--zuvi-color-border-subtle);
+  border-radius: var(--zuvi-radius-md);
+  background: var(--zuvi-color-bg-subtle);
 }
 .doc-locale-controls {
   display: flex;
@@ -823,13 +823,13 @@ a:hover {
   min-width: 0;
   max-width: 100%;
 }
-.doc-locale-demo .z-select,
-.doc-locale-demo .z-datepicker,
-.doc-locale-demo .z-time-picker {
+.doc-locale-demo .zuvi-select,
+.doc-locale-demo .zuvi-datepicker,
+.doc-locale-demo .zuvi-time-picker {
   max-width: 100%;
 }
 
-.doc-demo-stage .z-image {
+.doc-demo-stage .zuvi-image {
   max-width: 100%;
 }
 
@@ -857,7 +857,7 @@ a:hover {
   grid-column: 2;
   grid-row: 1;
   position: sticky;
-  top: var(--z-space-2);
+  top: var(--zuvi-space-2);
   max-height: calc(100vh - 72px);
   max-height: calc(100dvh - 72px);
   overflow-y: auto;
@@ -867,12 +867,12 @@ a:hover {
 }
 
 .doc-toc-title {
-  margin-bottom: var(--z-space-2);
+  margin-bottom: var(--zuvi-space-2);
   font-size: 11px;
-  font-weight: var(--z-weight-medium);
+  font-weight: var(--zuvi-weight-medium);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--z-color-fg-subtle);
+  color: var(--zuvi-color-fg-subtle);
 }
 
 .doc-toc-compact-trigger {
@@ -887,7 +887,7 @@ a:hover {
   border-left: 1px solid var(--doc-border-faint);
   border-radius: 0;
   background: transparent;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-family: inherit;
   font-size: 13px;
   line-height: 1.5;
@@ -895,20 +895,20 @@ a:hover {
   text-decoration: none;
   cursor: pointer;
   transition:
-    color var(--z-duration-fast) var(--z-ease-standard),
-    border-color var(--z-duration-fast) var(--z-ease-standard);
+    color var(--zuvi-duration-fast) var(--zuvi-ease-standard),
+    border-color var(--zuvi-duration-fast) var(--zuvi-ease-standard);
 }
 
 .doc-toc-link:hover {
-  color: var(--z-color-fg);
+  color: var(--zuvi-color-fg);
   text-decoration: none;
 }
 
 /* 页内导航用细线标记当前阅读位置 */
 .doc-toc-link--active {
-  color: var(--z-color-fg);
-  border-left-color: var(--z-color-fg);
-  font-weight: var(--z-weight-medium);
+  color: var(--zuvi-color-fg);
+  border-left-color: var(--zuvi-color-fg);
+  font-weight: var(--zuvi-weight-medium);
 }
 
 .doc-toc-link--sub {
@@ -933,9 +933,9 @@ a:hover {
       no-repeat local,
     linear-gradient(to left, var(--doc-bg-elevated) 30%, transparent) right center / 32px 100%
       no-repeat local,
-    linear-gradient(to right, color-mix(in srgb, var(--z-color-fg) 16%, transparent), transparent)
+    linear-gradient(to right, color-mix(in srgb, var(--zuvi-color-fg) 16%, transparent), transparent)
       left center / 12px 100% no-repeat scroll,
-    linear-gradient(to left, color-mix(in srgb, var(--z-color-fg) 16%, transparent), transparent)
+    linear-gradient(to left, color-mix(in srgb, var(--zuvi-color-fg) 16%, transparent), transparent)
       right center / 12px 100% no-repeat scroll;
 }
 
@@ -948,9 +948,9 @@ a:hover {
 .doc-api-table th {
   text-align: left;
   padding: 10px 16px;
-  background: var(--z-color-bg-subtle);
-  color: var(--z-color-fg-muted);
-  font-weight: var(--z-weight-medium);
+  background: var(--zuvi-color-bg-subtle);
+  color: var(--zuvi-color-fg-muted);
+  font-weight: var(--zuvi-weight-medium);
   white-space: nowrap;
   border-bottom: 1px solid var(--doc-border);
 }
@@ -967,8 +967,8 @@ a:hover {
 }
 
 .doc-api-table td:first-child {
-  font-family: var(--z-font-mono);
-  font-weight: var(--z-weight-medium);
+  font-family: var(--zuvi-font-mono);
+  font-weight: var(--zuvi-weight-medium);
   white-space: nowrap;
 }
 
@@ -979,7 +979,7 @@ a:hover {
 .doc-chip-list {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--z-space-2);
+  gap: var(--zuvi-space-2);
   margin: 0 0 16px;
   padding: 0;
   list-style: none;
@@ -990,11 +990,11 @@ a:hover {
   align-items: center;
   padding: 2px 10px;
   border: 1px solid var(--doc-border-faint);
-  border-radius: var(--z-radius-full);
+  border-radius: var(--zuvi-radius-full);
   background: var(--doc-bg);
-  font-family: var(--z-font-mono);
-  font-size: var(--z-text-xs);
-  color: var(--z-color-fg-muted);
+  font-family: var(--zuvi-font-mono);
+  font-size: var(--zuvi-text-xs);
+  color: var(--zuvi-color-fg-muted);
 }
 
 /* ============================================================
@@ -1019,7 +1019,7 @@ a:hover {
 
 .doc-eyebrow {
   margin: 0 0 16px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -1044,7 +1044,7 @@ a:hover {
 
 .doc-hero-desc {
   margin: 0 0 24px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 14px;
   line-height: 1.9;
 }
@@ -1079,35 +1079,35 @@ a:hover {
   border: 1px solid transparent;
   border-radius: 8px;
   font-size: 14px;
-  font-weight: var(--z-weight-medium);
+  font-weight: var(--zuvi-weight-medium);
   line-height: 1;
   text-decoration: none;
 }
 
 .doc-btn--primary {
-  background: var(--z-color-primary);
-  color: var(--z-color-primary-fg);
+  background: var(--zuvi-color-primary);
+  color: var(--zuvi-color-primary-fg);
 }
 
 .doc-btn--primary:hover {
-  background: var(--z-color-primary-hover);
-  color: var(--z-color-primary-fg);
+  background: var(--zuvi-color-primary-hover);
+  color: var(--zuvi-color-primary-fg);
   text-decoration: none;
 }
 
 .doc-btn--primary:active {
-  background: var(--z-color-primary-active);
+  background: var(--zuvi-color-primary-active);
 }
 
 .doc-btn--outline {
   border-color: var(--doc-border);
   background: transparent;
-  color: var(--z-color-fg);
+  color: var(--zuvi-color-fg);
 }
 
 .doc-btn--outline:hover {
-  background: var(--z-color-bg-muted);
-  color: var(--z-color-fg);
+  background: var(--zuvi-color-bg-muted);
+  color: var(--zuvi-color-fg);
   text-decoration: none;
 }
 
@@ -1132,14 +1132,14 @@ a:hover {
   display: block;
   margin: 0 0 8px;
   font-size: 14px;
-  font-weight: var(--z-weight-semibold);
+  font-weight: var(--zuvi-weight-semibold);
 }
 
 .doc-feature-desc {
   display: block;
   margin: 0;
   font-size: 13px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   line-height: 1.7;
 }
 
@@ -1164,14 +1164,14 @@ a:hover {
   display: block;
   margin: 0 0 8px;
   font-size: 14px;
-  font-weight: var(--z-weight-semibold);
+  font-weight: var(--zuvi-weight-semibold);
 }
 
 .doc-principle-desc {
   display: block;
   margin: 0;
   font-size: 13px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   line-height: 1.7;
 }
 
@@ -1185,8 +1185,8 @@ a:hover {
 
 .doc-swatch-scale-name {
   margin: 0 0 12px;
-  font-size: var(--z-text-md);
-  font-weight: var(--z-weight-semibold);
+  font-size: var(--zuvi-text-md);
+  font-weight: var(--zuvi-weight-semibold);
 }
 
 .doc-swatch-grid {
@@ -1215,23 +1215,23 @@ a:hover {
 
 .doc-swatch-name {
   display: block;
-  font-family: var(--z-font-mono);
+  font-family: var(--zuvi-font-mono);
   font-size: 11px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   overflow-wrap: anywhere;
 }
 
 .doc-swatch-hex {
   display: block;
-  font-family: var(--z-font-mono);
+  font-family: var(--zuvi-font-mono);
   font-size: 11px;
-  color: var(--z-color-fg-subtle);
+  color: var(--zuvi-color-fg-subtle);
 }
 
 .doc-ruler {
   display: flex;
   flex-direction: column;
-  gap: var(--z-space-2);
+  gap: var(--zuvi-space-2);
   margin: 0 0 24px;
   padding: 0;
   list-style: none;
@@ -1240,10 +1240,10 @@ a:hover {
 .doc-ruler-row {
   display: flex;
   align-items: center;
-  gap: var(--z-space-4);
-  font-family: var(--z-font-mono);
-  font-size: var(--z-text-xs);
-  color: var(--z-color-fg-muted);
+  gap: var(--zuvi-space-4);
+  font-family: var(--zuvi-font-mono);
+  font-size: var(--zuvi-text-xs);
+  color: var(--zuvi-color-fg-muted);
 }
 
 .doc-ruler-label {
@@ -1253,15 +1253,15 @@ a:hover {
 
 .doc-ruler-bar {
   height: 16px;
-  border-radius: var(--z-radius-sm);
-  background: var(--z-color-primary-subtle);
-  border: 1px solid var(--z-color-primary);
+  border-radius: var(--zuvi-radius-sm);
+  background: var(--zuvi-color-primary-subtle);
+  border: 1px solid var(--zuvi-color-primary);
 }
 
 .doc-radius-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--z-space-4);
+  gap: var(--zuvi-space-4);
   margin: 0 0 24px;
   padding: 0;
   list-style: none;
@@ -1277,9 +1277,9 @@ a:hover {
   gap: 4px;
   border: 1px solid var(--doc-border);
   background: var(--doc-bg-elevated);
-  font-family: var(--z-font-mono);
-  font-size: var(--z-text-xs);
-  color: var(--z-color-fg-muted);
+  font-family: var(--zuvi-font-mono);
+  font-size: var(--zuvi-text-xs);
+  color: var(--zuvi-color-fg-muted);
 }
 
 .doc-type-scale {
@@ -1294,7 +1294,7 @@ a:hover {
 .doc-type-row {
   display: flex;
   align-items: baseline;
-  gap: var(--z-space-5);
+  gap: var(--zuvi-space-5);
   padding: 12px 16px;
   border-bottom: 1px solid var(--doc-border-faint);
   background: var(--doc-bg-elevated);
@@ -1307,15 +1307,15 @@ a:hover {
 .doc-type-label {
   width: 110px;
   flex: none;
-  font-family: var(--z-font-mono);
-  font-size: var(--z-text-xs);
-  color: var(--z-color-fg-subtle);
+  font-family: var(--zuvi-font-mono);
+  font-size: var(--zuvi-text-xs);
+  color: var(--zuvi-color-fg-subtle);
 }
 
 .doc-shadow-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--z-space-5);
+  gap: var(--zuvi-space-5);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -1331,9 +1331,9 @@ a:hover {
   gap: 4px;
   border-radius: 12px;
   background: var(--doc-bg-elevated);
-  font-family: var(--z-font-mono);
-  font-size: var(--z-text-xs);
-  color: var(--z-color-fg-muted);
+  font-family: var(--zuvi-font-mono);
+  font-size: var(--zuvi-text-xs);
+  color: var(--zuvi-color-fg-muted);
 }
 
 /* ============================================================
@@ -1369,18 +1369,18 @@ a:hover {
   justify-content: space-between;
   align-items: baseline;
   font-size: 13px;
-  font-weight: var(--z-weight-medium);
+  font-weight: var(--zuvi-weight-medium);
 }
 
 .doc-pg-value {
-  font-family: var(--z-font-mono);
-  font-size: var(--z-text-xs);
-  color: var(--z-color-fg-muted);
+  font-family: var(--zuvi-font-mono);
+  font-size: var(--zuvi-text-xs);
+  color: var(--zuvi-color-fg-muted);
 }
 
 .doc-pg-slider {
   width: 100%;
-  accent-color: var(--z-color-primary);
+  accent-color: var(--zuvi-color-primary);
   cursor: pointer;
 }
 
@@ -1389,62 +1389,62 @@ a:hover {
 .doc-pg-presets {
   display: flex;
   flex-direction: column;
-  gap: var(--z-space-2);
+  gap: var(--zuvi-space-2);
 }
 
 .doc-pg-preset-btn {
   display: flex;
   align-items: center;
-  gap: var(--z-space-2);
+  gap: var(--zuvi-space-2);
   width: 100%;
   padding: 8px 12px;
   border: 1px solid var(--doc-border-faint);
   border-radius: 8px;
   background: var(--doc-bg);
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-family: inherit;
   font-size: 13px;
   text-align: left;
   cursor: pointer;
   transition:
-    border-color var(--z-duration-fast) var(--z-ease-standard),
-    color var(--z-duration-fast) var(--z-ease-standard),
-    background var(--z-duration-fast) var(--z-ease-standard);
+    border-color var(--zuvi-duration-fast) var(--zuvi-ease-standard),
+    color var(--zuvi-duration-fast) var(--zuvi-ease-standard),
+    background var(--zuvi-duration-fast) var(--zuvi-ease-standard);
 }
 
 .doc-pg-preset-btn:hover {
   border-color: var(--doc-border);
-  color: var(--z-color-fg);
+  color: var(--zuvi-color-fg);
 }
 
 .doc-pg-preset-btn--active,
 .doc-pg-preset-btn--active:hover {
-  border-color: var(--z-color-primary);
-  background: var(--z-color-primary-subtle);
-  color: var(--z-color-primary-subtle-fg);
-  font-weight: var(--z-weight-medium);
+  border-color: var(--zuvi-color-primary);
+  background: var(--zuvi-color-primary-subtle);
+  color: var(--zuvi-color-primary-subtle-fg);
+  font-weight: var(--zuvi-weight-medium);
 }
 
 .doc-pg-preset-dot {
   width: 12px;
   height: 12px;
   flex: none;
-  border-radius: var(--z-radius-full);
+  border-radius: var(--zuvi-radius-full);
   border: 1px solid var(--doc-border);
 }
 
 .doc-pg-preset-meta {
   margin-left: auto;
-  font-family: var(--z-font-mono);
-  font-size: var(--z-text-xs);
-  color: var(--z-color-fg-muted);
+  font-family: var(--zuvi-font-mono);
+  font-size: var(--zuvi-text-xs);
+  color: var(--zuvi-color-fg-muted);
 }
 
 .doc-pg-switch-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--z-space-4);
+  gap: var(--zuvi-space-4);
 }
 
 .doc-pg-preview {
@@ -1481,33 +1481,33 @@ a:hover {
   border: 1px solid var(--doc-border);
   border-bottom-width: 2px;
   border-radius: 5px;
-  background: var(--z-color-bg-subtle);
-  font-family: var(--z-font-mono);
-  font-size: var(--z-text-xs);
-  color: var(--z-color-fg-muted);
+  background: var(--zuvi-color-bg-subtle);
+  font-family: var(--zuvi-font-mono);
+  font-size: var(--zuvi-text-xs);
+  color: var(--zuvi-color-fg-muted);
   text-align: center;
 }
 
 .doc-kbd-row {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--z-space-2) var(--z-space-4);
+  gap: var(--zuvi-space-2) var(--zuvi-space-4);
   margin: 0 0 16px;
   padding: 0;
   list-style: none;
   font-size: 13px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
 }
 
 /* Shared navigation and example controls. */
 .doc-topbar-context {
   margin-left: 18px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 12px;
 }
 .doc-topbar-context span {
   margin: 0 12px;
-  color: var(--z-color-fg-subtle);
+  color: var(--zuvi-color-fg-subtle);
 }
 .doc-command-trigger {
   gap: 10px;
@@ -1517,8 +1517,8 @@ a:hover {
   margin-right: 14px;
   border: 1px solid var(--doc-border);
   border-radius: 7px;
-  background: var(--z-color-bg-subtle);
-  color: var(--z-color-fg-muted);
+  background: var(--zuvi-color-bg-subtle);
+  color: var(--zuvi-color-fg-muted);
   font-size: 12px;
 }
 .doc-command-trigger svg,
@@ -1531,10 +1531,10 @@ a:hover {
 .doc-command-trigger kbd {
   margin-left: 20px;
   font-size: 10px;
-  font-family: var(--z-font-mono);
+  font-family: var(--zuvi-font-mono);
 }
 .doc-command-trigger:hover {
-  border-color: var(--z-color-fg-subtle);
+  border-color: var(--zuvi-color-fg-subtle);
 }
 .doc-nav-intro {
   display: grid;
@@ -1548,7 +1548,7 @@ a:hover {
 .doc-nav-intro > :last-child,
 .doc-nav-footer {
   font-size: 11px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
 }
 .doc-nav-footer {
   border-top: 1px solid var(--doc-border);
@@ -1564,7 +1564,7 @@ a:hover {
   position: absolute;
   left: 10px;
   top: 13px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   pointer-events: none;
 }
 .doc-nav-search-input {
@@ -1582,14 +1582,14 @@ a:hover {
   border: 0;
   border-radius: 4px;
   background: transparent;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   cursor: pointer;
   font-size: 18px;
 }
 .doc-nav-results {
   margin: 0 12px 8px;
   font-size: 11px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
 }
 .doc-demo-code-toggle {
   display: flex;
@@ -1598,18 +1598,18 @@ a:hover {
   list-style: none;
   padding: 11px 20px;
   font-size: 12px;
-  color: var(--z-color-fg-muted);
-  background: var(--z-color-bg-subtle);
+  color: var(--zuvi-color-fg-muted);
+  background: var(--zuvi-color-bg-subtle);
   cursor: pointer;
 }
 .doc-demo-code-toggle::-webkit-details-marker {
   display: none;
 }
 .doc-demo-code-toggle:hover {
-  color: var(--z-color-fg);
+  color: var(--zuvi-color-fg);
 }
 .doc-demo-code-toggle > :first-child {
-  font-family: var(--z-font-mono);
+  font-family: var(--zuvi-font-mono);
 }
 .doc-demo-code-hint {
   margin-left: auto;
@@ -1626,10 +1626,10 @@ a:hover {
   min-width: 150px;
 }
 .doc-api-table tbody tr:hover {
-  background: var(--z-color-bg-subtle);
+  background: var(--zuvi-color-bg-subtle);
 }
 :where(.doc-demo-code-toggle, .doc-nav-clear, .doc-table-wrap):focus-visible {
-  outline: 2px solid var(--z-color-primary);
+  outline: 2px solid var(--zuvi-color-primary);
   outline-offset: 3px;
 }
 
@@ -1642,7 +1642,7 @@ a:hover {
   border: 1px solid var(--doc-border);
   border-radius: 14px;
   background: var(--doc-bg-elevated);
-  box-shadow: 0 12px 36px -18px color-mix(in srgb, var(--z-color-fg) 20%, transparent);
+  box-shadow: 0 12px 36px -18px color-mix(in srgb, var(--zuvi-color-fg) 20%, transparent);
   overflow: hidden;
 }
 .doc-preview-bar {
@@ -1651,20 +1651,20 @@ a:hover {
   gap: 8px;
   padding: 12px 18px;
   border-bottom: 1px solid var(--doc-border);
-  background: var(--z-color-bg-subtle);
+  background: var(--zuvi-color-bg-subtle);
   font-size: 10px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
 }
 .doc-preview-bar > :last-child {
   margin-left: auto;
-  font: 9px var(--z-font-mono);
+  font: 9px var(--zuvi-font-mono);
   letter-spacing: 0.1em;
 }
 .doc-preview-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--z-color-success);
+  background: var(--zuvi-color-success);
 }
 .doc-preview-body {
   padding: 22px;
@@ -1682,7 +1682,7 @@ a:hover {
 .doc-preview-title {
   margin: 0;
   font-size: 19px;
-  font-weight: var(--z-weight-semibold);
+  font-weight: var(--zuvi-weight-semibold);
   letter-spacing: -0.02em;
   line-height: 1.35;
 }
@@ -1699,7 +1699,7 @@ a:hover {
 }
 .doc-preview-metric > div > span {
   font-size: 11px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
 }
 .doc-preview-metric strong {
   font-size: 30px;
@@ -1710,7 +1710,7 @@ a:hover {
 .doc-preview-metric small {
   font-size: 13px;
   font-weight: 400;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   letter-spacing: 0;
 }
 .doc-preview-setting {
@@ -1731,7 +1731,7 @@ a:hover {
 }
 .doc-preview-setting span {
   font-size: 10px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
 }
 .doc-preview-label {
   display: block;
@@ -1750,13 +1750,13 @@ a:hover {
   align-items: center;
   padding-left: 4px;
 }
-.doc-preview-avatars .z-avatar {
+.doc-preview-avatars .zuvi-avatar {
   margin-left: -4px;
   outline: 2px solid var(--doc-bg-elevated);
 }
 .doc-preview-avatars > :last-child {
   font-size: 10px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   margin-left: 8px;
 }
 .doc-preview-status {
@@ -1764,7 +1764,7 @@ a:hover {
   margin: 14px 0 0;
   font-size: 10px;
   line-height: 1.6;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   overflow-wrap: anywhere;
 }
 .doc-catalog-stats {
@@ -1782,7 +1782,7 @@ a:hover {
 }
 .doc-catalog-stats dt {
   font-size: 11px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
 }
 .doc-catalog-stats dd {
   margin: 0;
@@ -1795,7 +1795,7 @@ a:hover {
   margin-left: 6px;
   font-size: 11px;
   font-weight: 400;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
 }
 .doc-catalog-stats .doc-stat-theme {
   font-size: 18px;
@@ -1809,7 +1809,7 @@ a:hover {
 }
 /* 章节导语：只解释紧邻 h2 的局部内容，视觉权级与间距均低于页级 .doc-lead。 */
 .doc-section-lead {
-  margin: calc(0px - var(--z-space-2)) 0 var(--doc-lead-section-gap);
+  margin: calc(0px - var(--zuvi-space-2)) 0 var(--doc-lead-section-gap);
   font-size: var(--doc-lead-section-size);
   color: var(--doc-lead-color);
   line-height: 1.8;
@@ -1826,8 +1826,8 @@ a:hover {
   margin-bottom: 18px;
   border: 1px solid var(--doc-border);
   border-radius: 7px;
-  color: var(--z-color-primary);
-  font: 15px var(--z-font-mono);
+  color: var(--zuvi-color-primary);
+  font: 15px var(--zuvi-font-mono);
 }
 .doc-feature a {
   display: inline-block;
@@ -1852,8 +1852,8 @@ a:hover {
   border-radius: 50%;
   height: 28px;
   width: 28px;
-  font: 10px var(--z-font-mono);
-  color: var(--z-color-fg-muted);
+  font: 10px var(--zuvi-font-mono);
+  color: var(--zuvi-color-fg-muted);
 }
 .doc-start-steps h3 {
   margin: 3px 0 6px;
@@ -1862,7 +1862,7 @@ a:hover {
 }
 .doc-start-steps p {
   margin: 0;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 12px;
 }
 .doc-start-steps .doc-code-wrap {
@@ -1887,8 +1887,8 @@ a:hover {
   border-top: 1px solid var(--doc-border);
 }
 .doc-architecture li > span {
-  font: 11px var(--z-font-mono);
-  color: var(--z-color-fg-muted);
+  font: 11px var(--zuvi-font-mono);
+  color: var(--zuvi-color-fg-muted);
   padding-top: 3px;
 }
 .doc-architecture h3 {
@@ -1900,11 +1900,11 @@ a:hover {
   margin: 0;
   font-size: 12px;
   line-height: 1.8;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
 }
 .doc-architecture code {
-  font: 10px var(--z-font-mono);
-  color: var(--z-color-fg-muted);
+  font: 10px var(--zuvi-font-mono);
+  color: var(--zuvi-color-fg-muted);
   padding-top: 4px;
 }
 .doc-explore-grid {
@@ -1918,12 +1918,12 @@ a:hover {
   padding: 22px 18px;
   border: 1px solid var(--doc-border);
   border-radius: 10px;
-  color: var(--z-color-fg);
+  color: var(--zuvi-color-fg);
 }
 .doc-explore-grid a:hover {
   text-decoration: none;
-  border-color: var(--z-color-fg-subtle);
-  background: var(--z-color-bg-subtle);
+  border-color: var(--zuvi-color-fg-subtle);
+  background: var(--zuvi-color-bg-subtle);
 }
 .doc-explore-grid .doc-eyebrow {
   font-size: 9px;
@@ -1940,7 +1940,7 @@ a:hover {
 .doc-explore-grid p {
   font-size: 11px;
   line-height: 1.9;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   margin: 10px 0 0;
 }
 .doc-overview-footer {
@@ -1952,7 +1952,7 @@ a:hover {
   margin-top: 48px;
   padding-top: 24px;
   font-size: 10px;
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
 }
 @container overview (max-width: 680px) {
   .doc-hero {
@@ -2103,7 +2103,7 @@ a:hover {
     z-index: 1;
     width: 100%;
     max-height: none;
-    margin-bottom: var(--z-space-5);
+    margin-bottom: var(--zuvi-space-5);
     overflow: visible;
     padding: 0;
     border: 1px solid var(--doc-border-faint);
@@ -2122,25 +2122,25 @@ a:hover {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    min-height: calc(var(--doc-action-height) + var(--z-space-1));
-    padding: 0 var(--z-space-4);
+    min-height: calc(var(--doc-action-height) + var(--zuvi-space-1));
+    padding: 0 var(--zuvi-space-4);
     border: 0;
     border-radius: inherit;
     background: transparent;
-    color: var(--z-color-fg-muted);
+    color: var(--zuvi-color-fg-muted);
     font: inherit;
     font-size: 13px;
-    font-weight: var(--z-weight-medium);
+    font-weight: var(--zuvi-weight-medium);
     cursor: pointer;
   }
 
   .doc-toc-compact-trigger:hover {
     background: var(--doc-action-hover-bg);
-    color: var(--z-color-fg);
+    color: var(--zuvi-color-fg);
   }
 
   .doc-toc-compact-trigger > :last-child {
-    transition: transform var(--z-duration-fast) var(--z-ease-standard);
+    transition: transform var(--zuvi-duration-fast) var(--zuvi-ease-standard);
   }
 
   .doc-toc[data-compact-open='true'] .doc-toc-compact-trigger > :last-child {
@@ -2151,7 +2151,7 @@ a:hover {
     display: none;
     max-height: min(52vh, 360px);
     overflow-y: auto;
-    padding: 0 var(--z-space-4) var(--z-space-3);
+    padding: 0 var(--zuvi-space-4) var(--zuvi-space-3);
     border-top: 1px solid var(--doc-border-faint);
   }
 
@@ -2228,12 +2228,12 @@ a:hover {
   }
 
   .doc-topbar {
-    gap: var(--z-space-2);
-    padding: 0 var(--z-space-4);
+    gap: var(--zuvi-space-2);
+    padding: 0 var(--zuvi-space-4);
   }
 
   .doc-topbar-left {
-    gap: var(--z-space-2);
+    gap: var(--zuvi-space-2);
   }
 
   .doc-sidebar {
@@ -2255,7 +2255,7 @@ a:hover {
 /* 320px 等效高缩放视口：保留品牌识别和主题开关，隐藏次要信息。 */
 @media (max-width: 420px) {
   .doc-topbar {
-    padding-inline: var(--z-space-2);
+    padding-inline: var(--zuvi-space-2);
   }
 
   .doc-brand .doc-version,
@@ -2264,7 +2264,7 @@ a:hover {
   }
 
   .doc-chip-btn {
-    padding-inline: var(--z-space-2);
+    padding-inline: var(--zuvi-space-2);
   }
 
   .doc-builder-editor {
@@ -2298,17 +2298,17 @@ a:hover {
   pointer-events: none;
   text-align: center;
   font-size: 12px;
-  color: var(--z-color-fg);
+  color: var(--zuvi-color-fg);
 }
 .doc-route-status:not(:empty) {
   padding: 8px 12px;
   background: var(--doc-bg-elevated);
-  border-bottom: 1px solid var(--z-color-border);
+  border-bottom: 1px solid var(--zuvi-color-border);
 }
 .doc-route-progress {
   display: block;
   height: 3px;
-  background: var(--z-color-primary);
+  background: var(--zuvi-color-primary);
   animation: doc-route-progress 1.2s ease-in-out infinite;
   transform-origin: left;
 }
@@ -2332,14 +2332,14 @@ a:hover {
   min-height: 560px;
 }
 .doc-page-loading-label {
-  color: var(--z-color-fg-muted);
+  color: var(--zuvi-color-fg-muted);
   font-size: 13px;
 }
 .doc-page-loading-title,
 .doc-page-loading-line,
 .doc-page-loading-demo {
-  background: var(--z-color-bg-muted);
-  border-radius: var(--z-radius-md);
+  background: var(--zuvi-color-bg-muted);
+  border-radius: var(--zuvi-radius-md);
   margin-block: 16px;
 }
 .doc-page-loading-title {
@@ -2355,7 +2355,7 @@ a:hover {
 }
 .doc-page-loading-demo {
   height: 160px;
-  border: 1px solid var(--z-color-border);
+  border: 1px solid var(--zuvi-color-border);
 }
 @media (prefers-reduced-motion: reduce) {
   .doc-route-progress {
@@ -2365,10 +2365,10 @@ a:hover {
 }
 
 .doc-note a {
-  color: color-mix(in oklch, var(--z-color-primary) 75%, var(--z-color-fg));
+  color: color-mix(in oklch, var(--zuvi-color-primary) 75%, var(--zuvi-color-fg));
 }
 
-.doc-demo-stage > .z-daterange {
+.doc-demo-stage > .zuvi-daterange {
   max-width: 100%;
 }
 .doc-demo-scroll {
@@ -2378,27 +2378,27 @@ a:hover {
   padding: 4px;
 }
 .doc-demo-scroll:focus-visible {
-  outline: 2px solid var(--z-color-focus-ring);
+  outline: 2px solid var(--zuvi-color-focus-ring);
   outline-offset: -2px;
 }
-.doc-demo-scroll .z-steps[data-direction='horizontal'] {
+.doc-demo-scroll .zuvi-steps[data-direction='horizontal'] {
   min-width: 540px;
 }
 
-.doc-demo-scroll .z-table {
+.doc-demo-scroll .zuvi-table {
   min-width: 440px;
 }
 
 /* 窄屏仍保留穿梭框条目的可读宽度；内容在演示区内滚动。 */
-.doc-demo-scroll .z-transfer {
+.doc-demo-scroll .zuvi-transfer {
   min-width: 440px;
 }
 @media (max-width: 400px) {
-  .doc-demo-stage .z-daterange {
-    --z-date-range-trigger-padding-x: 6px;
-    --z-date-range-trigger-font-size: 12px;
+  .doc-demo-stage .zuvi-daterange {
+    --zuvi-date-range-trigger-padding-x: 6px;
+    --zuvi-date-range-trigger-font-size: 12px;
   }
-  .doc-demo-stage .z-daterange-trigger {
+  .doc-demo-stage .zuvi-daterange-trigger {
     gap: 4px;
   }
 }

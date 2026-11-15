@@ -46,34 +46,34 @@ export function Card({
       data-part="root"
       data-bordered={bordered ? 'true' : 'false'}
       data-hoverable={hoverable ? 'true' : 'false'}
-      className={cx('z-card', className, classNames?.root)}
+      className={cx('zuvi-card', className, classNames?.root)}
     >
       {cover != null ? (
-        <div data-part="cover" className={cx('z-card-cover', classNames?.cover)}>
+        <div data-part="cover" className={cx('zuvi-card-cover', classNames?.cover)}>
           {cover}
         </div>
       ) : null}
       {title != null || extra != null ? (
-        <div data-part="header" className={cx('z-card-header', classNames?.header)}>
+        <div data-part="header" className={cx('zuvi-card-header', classNames?.header)}>
           {title != null ? (
-            <div data-part="title" className={cx('z-card-title', classNames?.title)}>
+            <div data-part="title" className={cx('zuvi-card-title', classNames?.title)}>
               {title}
             </div>
           ) : null}
           {extra != null ? (
-            <div data-part="extra" className={cx('z-card-extra', classNames?.extra)}>
+            <div data-part="extra" className={cx('zuvi-card-extra', classNames?.extra)}>
               {extra}
             </div>
           ) : null}
         </div>
       ) : null}
       {children != null ? (
-        <div data-part="body" className={cx('z-card-body', classNames?.body)}>
+        <div data-part="body" className={cx('zuvi-card-body', classNames?.body)}>
           {children}
         </div>
       ) : null}
       {footer != null ? (
-        <div data-part="footer" className={cx('z-card-footer', classNames?.footer)}>
+        <div data-part="footer" className={cx('zuvi-card-footer', classNames?.footer)}>
           {footer}
         </div>
       ) : null}

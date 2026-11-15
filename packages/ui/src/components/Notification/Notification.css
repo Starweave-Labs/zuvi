@@ -1,182 +1,182 @@
 /* Notification —— 组件级变量定义在根选择器上 */
 
-.z-notification-list {
-  --z-notification-gap: var(--z-space-3);
-  --z-notification-width: 22rem;
-  --z-notification-padding: var(--z-space-4);
-  --z-notification-radius: var(--z-radius-md);
-  --z-notification-bg: var(--z-color-bg-elevated);
-  --z-notification-fg: var(--z-color-fg);
-  --z-notification-border: var(--z-color-border-subtle);
-  --z-notification-shadow: var(--z-shadow-lg);
-  --z-notification-title-size: var(--z-text-md);
-  --z-notification-title-weight: var(--z-weight-medium);
-  --z-notification-desc-size: var(--z-text-sm);
-  --z-notification-desc-fg: var(--z-color-fg-muted);
-  --z-notification-icon-size: 1.25rem;
-  --z-notification-close-size: var(--z-space-5);
-  --z-notification-inset: var(--z-space-6);
-  --z-notification-transition: var(--z-duration-normal) var(--z-ease-standard);
+.zuvi-notification-list {
+  --zuvi-notification-gap: var(--zuvi-space-3);
+  --zuvi-notification-width: 22rem;
+  --zuvi-notification-padding: var(--zuvi-space-4);
+  --zuvi-notification-radius: var(--zuvi-radius-md);
+  --zuvi-notification-bg: var(--zuvi-color-bg-elevated);
+  --zuvi-notification-fg: var(--zuvi-color-fg);
+  --zuvi-notification-border: var(--zuvi-color-border-subtle);
+  --zuvi-notification-shadow: var(--zuvi-shadow-lg);
+  --zuvi-notification-title-size: var(--zuvi-text-md);
+  --zuvi-notification-title-weight: var(--zuvi-weight-medium);
+  --zuvi-notification-desc-size: var(--zuvi-text-sm);
+  --zuvi-notification-desc-fg: var(--zuvi-color-fg-muted);
+  --zuvi-notification-icon-size: 1.25rem;
+  --zuvi-notification-close-size: var(--zuvi-space-5);
+  --zuvi-notification-inset: var(--zuvi-space-6);
+  --zuvi-notification-transition: var(--zuvi-duration-normal) var(--zuvi-ease-standard);
 }
 
-.z-notification-list {
+.zuvi-notification-list {
   position: fixed;
-  z-index: var(--z-z-toast);
+  z-index: var(--zuvi-z-toast);
   display: flex;
   flex-direction: column;
-  gap: var(--z-notification-gap);
-  width: var(--z-notification-width);
-  max-width: calc(100vw - var(--z-notification-inset) - var(--z-notification-inset));
+  gap: var(--zuvi-notification-gap);
+  width: var(--zuvi-notification-width);
+  max-width: calc(100vw - var(--zuvi-notification-inset) - var(--zuvi-notification-inset));
   pointer-events: none;
 }
 
-.z-notification-list[data-placement='topLeft'] {
-  top: var(--z-notification-inset);
-  inset-inline-start: var(--z-notification-inset);
+.zuvi-notification-list[data-placement='topLeft'] {
+  top: var(--zuvi-notification-inset);
+  inset-inline-start: var(--zuvi-notification-inset);
 }
 
-.z-notification-list[data-placement='topRight'] {
-  top: var(--z-notification-inset);
-  inset-inline-end: var(--z-notification-inset);
+.zuvi-notification-list[data-placement='topRight'] {
+  top: var(--zuvi-notification-inset);
+  inset-inline-end: var(--zuvi-notification-inset);
 }
 
-.z-notification-list[data-placement='bottomLeft'] {
-  bottom: var(--z-notification-inset);
-  inset-inline-start: var(--z-notification-inset);
+.zuvi-notification-list[data-placement='bottomLeft'] {
+  bottom: var(--zuvi-notification-inset);
+  inset-inline-start: var(--zuvi-notification-inset);
   flex-direction: column-reverse;
 }
 
-.z-notification-list[data-placement='bottomRight'] {
-  inset-inline-end: var(--z-notification-inset);
-  bottom: var(--z-notification-inset);
+.zuvi-notification-list[data-placement='bottomRight'] {
+  inset-inline-end: var(--zuvi-notification-inset);
+  bottom: var(--zuvi-notification-inset);
   flex-direction: column-reverse;
 }
 
-.z-notification {
+.zuvi-notification {
   display: flex;
   align-items: flex-start;
-  gap: var(--z-space-3);
+  gap: var(--zuvi-space-3);
   box-sizing: border-box;
-  padding: var(--z-notification-padding);
-  border: 1px solid var(--z-notification-border);
-  border-radius: var(--z-notification-radius);
-  background: var(--z-notification-bg);
-  color: var(--z-notification-fg);
-  font-family: var(--z-font-sans);
-  line-height: var(--z-leading-normal);
-  box-shadow: var(--z-notification-shadow);
+  padding: var(--zuvi-notification-padding);
+  border: 1px solid var(--zuvi-notification-border);
+  border-radius: var(--zuvi-notification-radius);
+  background: var(--zuvi-notification-bg);
+  color: var(--zuvi-notification-fg);
+  font-family: var(--zuvi-font-sans);
+  line-height: var(--zuvi-leading-normal);
+  box-shadow: var(--zuvi-notification-shadow);
   pointer-events: auto;
   cursor: default;
   transition:
-    opacity var(--z-notification-transition),
-    transform var(--z-notification-transition);
+    opacity var(--zuvi-notification-transition),
+    transform var(--zuvi-notification-transition);
 }
 
-.z-notification[data-clickable='true'] {
+.zuvi-notification[data-clickable='true'] {
   cursor: pointer;
 }
 
-.z-notification-list[data-placement='topLeft'] .z-notification[data-state='open'],
-.z-notification-list[data-placement='topRight'] .z-notification[data-state='open'] {
-  animation: z-notification-enter-top var(--z-notification-transition);
+.zuvi-notification-list[data-placement='topLeft'] .zuvi-notification[data-state='open'],
+.zuvi-notification-list[data-placement='topRight'] .zuvi-notification[data-state='open'] {
+  animation: z-notification-enter-top var(--zuvi-notification-transition);
 }
 
-.z-notification-list[data-placement='bottomLeft'] .z-notification[data-state='open'],
-.z-notification-list[data-placement='bottomRight'] .z-notification[data-state='open'] {
-  animation: z-notification-enter-bottom var(--z-notification-transition);
+.zuvi-notification-list[data-placement='bottomLeft'] .zuvi-notification[data-state='open'],
+.zuvi-notification-list[data-placement='bottomRight'] .zuvi-notification[data-state='open'] {
+  animation: z-notification-enter-bottom var(--zuvi-notification-transition);
 }
 
-.z-notification-list[data-placement='topLeft'] .z-notification[data-state='closing'],
-.z-notification-list[data-placement='topRight'] .z-notification[data-state='closing'] {
+.zuvi-notification-list[data-placement='topLeft'] .zuvi-notification[data-state='closing'],
+.zuvi-notification-list[data-placement='topRight'] .zuvi-notification[data-state='closing'] {
   opacity: 0;
-  transform: translateY(calc(var(--z-space-2) * -1));
+  transform: translateY(calc(var(--zuvi-space-2) * -1));
 }
 
-.z-notification-list[data-placement='bottomLeft'] .z-notification[data-state='closing'],
-.z-notification-list[data-placement='bottomRight'] .z-notification[data-state='closing'] {
+.zuvi-notification-list[data-placement='bottomLeft'] .zuvi-notification[data-state='closing'],
+.zuvi-notification-list[data-placement='bottomRight'] .zuvi-notification[data-state='closing'] {
   opacity: 0;
-  transform: translateY(var(--z-space-2));
+  transform: translateY(var(--zuvi-space-2));
 }
 
-.z-notification-icon {
+.zuvi-notification-icon {
   display: inline-flex;
   flex: none;
   align-items: center;
   justify-content: center;
-  width: var(--z-notification-icon-size);
-  height: var(--z-notification-icon-size);
+  width: var(--zuvi-notification-icon-size);
+  height: var(--zuvi-notification-icon-size);
   margin-top: 2px;
 }
 
-.z-notification-icon svg {
+.zuvi-notification-icon svg {
   width: 100%;
   height: 100%;
 }
 
-.z-notification[data-variant='success'] .z-notification-icon {
-  color: var(--z-color-success);
+.zuvi-notification[data-variant='success'] .zuvi-notification-icon {
+  color: var(--zuvi-color-success);
 }
 
-.z-notification[data-variant='error'] .z-notification-icon {
-  color: var(--z-color-danger);
+.zuvi-notification[data-variant='error'] .zuvi-notification-icon {
+  color: var(--zuvi-color-danger);
 }
 
-.z-notification[data-variant='warning'] .z-notification-icon {
-  color: var(--z-color-warning);
+.zuvi-notification[data-variant='warning'] .zuvi-notification-icon {
+  color: var(--zuvi-color-warning);
 }
 
-.z-notification[data-variant='info'] .z-notification-icon {
-  color: var(--z-color-info);
+.zuvi-notification[data-variant='info'] .zuvi-notification-icon {
+  color: var(--zuvi-color-info);
 }
 
-.z-notification-body {
+.zuvi-notification-body {
   flex: 1 1 auto;
   min-width: 0;
 }
 
-.z-notification-title {
-  font-size: var(--z-notification-title-size);
-  font-weight: var(--z-notification-title-weight);
+.zuvi-notification-title {
+  font-size: var(--zuvi-notification-title-size);
+  font-weight: var(--zuvi-notification-title-weight);
   overflow-wrap: anywhere;
   word-break: break-word;
 }
 
-.z-notification-description {
-  margin-top: var(--z-space-1);
-  color: var(--z-notification-desc-fg);
-  font-size: var(--z-notification-desc-size);
+.zuvi-notification-description {
+  margin-top: var(--zuvi-space-1);
+  color: var(--zuvi-notification-desc-fg);
+  font-size: var(--zuvi-notification-desc-size);
   overflow-wrap: anywhere;
   word-break: break-word;
 }
 
-.z-notification-close {
+.zuvi-notification-close {
   display: inline-flex;
   flex: none;
   align-items: center;
   justify-content: center;
-  width: var(--z-notification-close-size);
-  height: var(--z-notification-close-size);
+  width: var(--zuvi-notification-close-size);
+  height: var(--zuvi-notification-close-size);
   padding: 0;
   border: none;
-  border-radius: var(--z-radius-sm);
+  border-radius: var(--zuvi-radius-sm);
   background: transparent;
-  color: var(--z-color-fg-subtle);
+  color: var(--zuvi-color-fg-subtle);
   cursor: pointer;
 }
 
-.z-notification-close:hover {
-  background: var(--z-color-bg-subtle);
+.zuvi-notification-close:hover {
+  background: var(--zuvi-color-bg-subtle);
 }
 
-.z-notification-close:focus-visible {
-  outline: 2px solid var(--z-color-border-focus);
+.zuvi-notification-close:focus-visible {
+  outline: 2px solid var(--zuvi-color-border-focus);
   outline-offset: 1px;
 }
 
 @keyframes z-notification-enter-top {
   from {
     opacity: 0;
-    transform: translateY(calc(var(--z-space-2) * -1));
+    transform: translateY(calc(var(--zuvi-space-2) * -1));
   }
   to {
     opacity: 1;
@@ -187,7 +187,7 @@
 @keyframes z-notification-enter-bottom {
   from {
     opacity: 0;
-    transform: translateY(var(--z-space-2));
+    transform: translateY(var(--zuvi-space-2));
   }
   to {
     opacity: 1;
@@ -196,7 +196,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .z-notification {
+  .zuvi-notification {
     transition: none;
     animation: none !important;
   }

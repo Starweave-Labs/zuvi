@@ -1,4 +1,4 @@
-import { Timeline } from '@zui/react';
+import { Timeline } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -138,21 +138,21 @@ export default function TimelinePage(): React.ReactNode {
         name="Timeline"
         parts={['root', 'item', 'dot', 'label', 'content']}
         vars={[
-          '--z-timeline-font-family',
-          '--z-timeline-font-size',
-          '--z-timeline-fg',
-          '--z-timeline-line-color',
-          '--z-timeline-line-width',
-          '--z-timeline-dot-size',
-          '--z-timeline-dot-border-width',
-          '--z-timeline-dot-bg',
-          '--z-timeline-item-gap',
-          '--z-timeline-content-gap',
-          '--z-timeline-label-color',
-          '--z-timeline-label-width',
-          '--z-timeline-label-margin',
-          '--z-timeline-dot-color',
-          '--z-timeline-dot-pending-color',
+          '--zuvi-timeline-font-family',
+          '--zuvi-timeline-font-size',
+          '--zuvi-timeline-fg',
+          '--zuvi-timeline-line-color',
+          '--zuvi-timeline-line-width',
+          '--zuvi-timeline-dot-size',
+          '--zuvi-timeline-dot-border-width',
+          '--zuvi-timeline-dot-bg',
+          '--zuvi-timeline-item-gap',
+          '--zuvi-timeline-content-gap',
+          '--zuvi-timeline-label-color',
+          '--zuvi-timeline-label-width',
+          '--zuvi-timeline-label-margin',
+          '--zuvi-timeline-dot-color',
+          '--zuvi-timeline-dot-pending-color',
         ]}
       />
     </div>

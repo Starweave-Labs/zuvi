@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Steps } from '@zui/react';
-import type { StepsItem } from '@zui/react';
+import { Steps } from '@zuvi/react';
+import type { StepsItem } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -178,21 +178,21 @@ export default function StepsPage(): React.ReactNode {
         name="Steps"
         parts={['root', 'item', 'icon', 'content', 'connector']}
         vars={[
-          '--z-steps-icon-size',
-          '--z-steps-icon-font-size',
-          '--z-steps-line-width',
-          '--z-steps-line-color',
-          '--z-steps-line-finish-color',
-          '--z-steps-item-gap',
-          '--z-steps-gap',
-          '--z-steps-title-font-size',
-          '--z-steps-description-font-size',
-          '--z-steps-title-fg',
-          '--z-steps-description-fg',
-          '--z-steps-icon-bg',
-          '--z-steps-icon-fg',
-          '--z-steps-icon-border',
-          '--z-steps-transition',
+          '--zuvi-steps-icon-size',
+          '--zuvi-steps-icon-font-size',
+          '--zuvi-steps-line-width',
+          '--zuvi-steps-line-color',
+          '--zuvi-steps-line-finish-color',
+          '--zuvi-steps-item-gap',
+          '--zuvi-steps-gap',
+          '--zuvi-steps-title-font-size',
+          '--zuvi-steps-description-font-size',
+          '--zuvi-steps-title-fg',
+          '--zuvi-steps-description-fg',
+          '--zuvi-steps-icon-bg',
+          '--zuvi-steps-icon-fg',
+          '--zuvi-steps-icon-border',
+          '--zuvi-steps-transition',
         ]}
       />
     </div>

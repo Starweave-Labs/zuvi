@@ -1,5 +1,5 @@
 /**
- * zui list —— 列出 registry 所有组件
+ * zuvi list —— 列出 registry 所有组件
  */
 
 import type { Ctx, RegistryItem } from '../index.js';

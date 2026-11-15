@@ -45,7 +45,7 @@ export function Checkbox({
   return (
     <label
       data-part="root"
-      className={cx('z-checkbox', className, classNames?.root)}
+      className={cx('zuvi-checkbox', className, classNames?.root)}
     >
       <input
         {...rest}
@@ -65,10 +65,10 @@ export function Checkbox({
       <span
         data-part="control"
         aria-hidden="true"
-        className={cx('z-checkbox-box', classNames?.control)}
+        className={cx('zuvi-checkbox-box', classNames?.control)}
       />
       {label != null && label !== '' ? (
-        <span data-part="label" className={cx('z-checkbox-label', classNames?.label)}>
+        <span data-part="label" className={cx('zuvi-checkbox-label', classNames?.label)}>
           {label}
         </span>
       ) : null}

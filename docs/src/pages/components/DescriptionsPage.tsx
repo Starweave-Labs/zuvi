@@ -1,4 +1,4 @@
-import { Descriptions } from '@zui/react';
+import { Descriptions } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -137,24 +137,24 @@ export default function DescriptionsPage(): React.ReactNode {
         name="Descriptions"
         parts={['root', 'title', 'body', 'item', 'label', 'content']}
         vars={[
-          '--z-descriptions-font-size',
-          '--z-descriptions-fg',
-          '--z-descriptions-font-family',
-          '--z-descriptions-title-font-size',
-          '--z-descriptions-title-font-weight',
-          '--z-descriptions-title-fg',
-          '--z-descriptions-title-margin-bottom',
-          '--z-descriptions-row-gap',
-          '--z-descriptions-column-gap',
-          '--z-descriptions-item-padding-x',
-          '--z-descriptions-item-padding-y',
-          '--z-descriptions-item-gap',
-          '--z-descriptions-label-fg',
-          '--z-descriptions-label-min-width',
-          '--z-descriptions-label-bg',
-          '--z-descriptions-content-fg',
-          '--z-descriptions-border',
-          '--z-descriptions-border-width',
+          '--zuvi-descriptions-font-size',
+          '--zuvi-descriptions-fg',
+          '--zuvi-descriptions-font-family',
+          '--zuvi-descriptions-title-font-size',
+          '--zuvi-descriptions-title-font-weight',
+          '--zuvi-descriptions-title-fg',
+          '--zuvi-descriptions-title-margin-bottom',
+          '--zuvi-descriptions-row-gap',
+          '--zuvi-descriptions-column-gap',
+          '--zuvi-descriptions-item-padding-x',
+          '--zuvi-descriptions-item-padding-y',
+          '--zuvi-descriptions-item-gap',
+          '--zuvi-descriptions-label-fg',
+          '--zuvi-descriptions-label-min-width',
+          '--zuvi-descriptions-label-bg',
+          '--zuvi-descriptions-content-fg',
+          '--zuvi-descriptions-border',
+          '--zuvi-descriptions-border-width',
         ]}
       />
     </div>

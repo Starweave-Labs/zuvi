@@ -17,7 +17,7 @@ describe('Button', () => {
     expect(button).toHaveAttribute('data-part', 'root');
     expect(button).toHaveAttribute('data-variant', 'primary');
     expect(button).toHaveAttribute('data-size', 'md');
-    expect(button).toHaveClass('z-button');
+    expect(button).toHaveClass('zuvi-button');
     expect(button).not.toBeDisabled();
     expect(screen.getByText('提交')).toBeInTheDocument();
   });
@@ -101,7 +101,7 @@ describe('Button', () => {
     const { container } = render(<Button loading>加载中</Button>);
     const spinner = container.querySelector('[data-part="spinner"]');
     expect(spinner).toBeInTheDocument();
-    expect(spinner).toHaveClass('z-button-spinner');
+    expect(spinner).toHaveClass('zuvi-button-spinner');
     expect(spinner).toHaveAttribute('aria-hidden', 'true');
   });
 
@@ -115,8 +115,8 @@ describe('Button', () => {
     expect(screen.getByTestId('end')).toBeInTheDocument();
     const icons = container.querySelectorAll('[data-part="icon"]');
     expect(icons).toHaveLength(2);
-    expect(icons[0]).toHaveClass('z-button-icon');
-    expect(icons[1]).toHaveClass('z-button-icon');
+    expect(icons[0]).toHaveClass('zuvi-button-icon');
+    expect(icons[1]).toHaveClass('zuvi-button-icon');
     expect(icons[0].contains(screen.getByTestId('start'))).toBe(true);
     expect(icons[1].contains(screen.getByTestId('end'))).toBe(true);
   });
@@ -133,13 +133,13 @@ describe('Button', () => {
       </Button>
     );
     const root = container.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-button', 'my-root', 'cls-root');
+    expect(root).toHaveClass('zuvi-button', 'my-root', 'cls-root');
     const icon = root.querySelector('[data-part="icon"]');
-    expect(icon).toHaveClass('z-button-icon', 'cls-icon');
+    expect(icon).toHaveClass('zuvi-button-icon', 'cls-icon');
     const label = root.querySelector('[data-part="label"]');
-    expect(label).toHaveClass('z-button-label', 'cls-label');
+    expect(label).toHaveClass('zuvi-button-label', 'cls-label');
     const spinner = root.querySelector('[data-part="spinner"]');
-    expect(spinner).toHaveClass('z-button-spinner', 'cls-spinner');
+    expect(spinner).toHaveClass('zuvi-button-spinner', 'cls-spinner');
   });
 
   it('forwards ref to the button element', () => {

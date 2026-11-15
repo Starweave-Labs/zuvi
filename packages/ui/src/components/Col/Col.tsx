@@ -37,10 +37,10 @@ export function Col({
   const colStyle: React.CSSProperties = {
     // flex 提供时覆盖 span（flex-basis 语义接管主轴尺寸），span 变量不再下发
     ...(flex == null && span != null
-      ? ({ '--z-col-span': String(span) } as React.CSSProperties)
+      ? ({ '--zuvi-col-span': String(span) } as React.CSSProperties)
       : null),
     ...(offset != null
-      ? ({ '--z-col-offset': String(offset) } as React.CSSProperties)
+      ? ({ '--zuvi-col-offset': String(offset) } as React.CSSProperties)
       : null),
   };
   if (horizontal > 0) {
@@ -56,7 +56,7 @@ export function Col({
       ref={ref}
       data-part="root"
       data-flex={flex != null ? 'true' : undefined}
-      className={cx('z-col', className, classNames?.root)}
+      className={cx('zuvi-col', className, classNames?.root)}
       style={{ ...colStyle, ...style }}
     >
       {children}

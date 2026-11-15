@@ -1,4 +1,4 @@
-import { TimePicker } from '@zui/react';
+import { TimePicker } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -106,25 +106,25 @@ export default function TimePickerPage(): React.ReactNode {
         name="TimePicker"
         parts={['root', 'trigger', 'panel', 'column', 'item']}
         vars={[
-          '--z-time-picker-trigger-height',
-          '--z-time-picker-trigger-padding-x',
-          '--z-time-picker-trigger-font-size',
-          '--z-time-picker-trigger-bg',
-          '--z-time-picker-trigger-fg',
-          '--z-time-picker-trigger-border',
-          '--z-time-picker-placeholder-fg',
-          '--z-time-picker-panel-bg',
-          '--z-time-picker-panel-border',
-          '--z-time-picker-panel-radius',
-          '--z-time-picker-panel-shadow',
-          '--z-time-picker-panel-height',
-          '--z-time-picker-column-width',
-          '--z-time-picker-column-border',
-          '--z-time-picker-item-height',
-          '--z-time-picker-item-fg',
-          '--z-time-picker-item-hover-bg',
-          '--z-time-picker-item-active-bg',
-          '--z-time-picker-item-active-fg',
+          '--zuvi-time-picker-trigger-height',
+          '--zuvi-time-picker-trigger-padding-x',
+          '--zuvi-time-picker-trigger-font-size',
+          '--zuvi-time-picker-trigger-bg',
+          '--zuvi-time-picker-trigger-fg',
+          '--zuvi-time-picker-trigger-border',
+          '--zuvi-time-picker-placeholder-fg',
+          '--zuvi-time-picker-panel-bg',
+          '--zuvi-time-picker-panel-border',
+          '--zuvi-time-picker-panel-radius',
+          '--zuvi-time-picker-panel-shadow',
+          '--zuvi-time-picker-panel-height',
+          '--zuvi-time-picker-column-width',
+          '--zuvi-time-picker-column-border',
+          '--zuvi-time-picker-item-height',
+          '--zuvi-time-picker-item-fg',
+          '--zuvi-time-picker-item-hover-bg',
+          '--zuvi-time-picker-item-active-bg',
+          '--zuvi-time-picker-item-active-fg',
         ]}
       />
     </div>

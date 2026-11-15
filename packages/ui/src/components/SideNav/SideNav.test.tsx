@@ -506,7 +506,7 @@ describe('SideNav renderLink 与样式槽位', () => {
     expect(renderLink).toHaveBeenCalled();
     const custom = screen.getByTestId('custom-overview');
     expect(custom).toHaveAttribute('href', '#/overview');
-    expect(custom).toHaveClass('z-sidenav-link', 'cls-link');
+    expect(custom).toHaveClass('zuvi-sidenav-link', 'cls-link');
     // SideNav 提供的 ref 被转发到最终 <a>（注册内部焦点登记表）
     expect(linkRef).toHaveBeenCalledWith(expect.any(HTMLAnchorElement));
   });
@@ -526,7 +526,7 @@ describe('SideNav renderLink 与样式槽位', () => {
         classNames={{ root: 'cls-root', viewport: 'cls-viewport', list: 'cls-list' }}
       />
     );
-    expect(container.querySelector('nav')).toHaveClass('z-sidenav', 'my-nav', 'cls-root');
+    expect(container.querySelector('nav')).toHaveClass('zuvi-sidenav', 'my-nav', 'cls-root');
     expect(container.querySelector('[data-part="viewport"]')).toHaveClass('cls-viewport');
     expect(container.querySelector('[data-part="list"]')).toHaveClass('cls-list');
   });
@@ -565,7 +565,7 @@ describe('SideNav SSR', () => {
     const html = renderToString(
       <SideNav sections={sections} currentKey="projects-active" aria-label="主导航" />
     );
-    expect(html).toContain('z-sidenav');
+    expect(html).toContain('zuvi-sidenav');
     expect(html).toContain('aria-current="page"');
     // 非受控初值在 SSR 阶段已并入父组，不出现"先收起再展开"
     expect(html).not.toContain('hidden=""');

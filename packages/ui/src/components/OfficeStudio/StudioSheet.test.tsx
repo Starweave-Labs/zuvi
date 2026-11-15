@@ -70,35 +70,35 @@ function setup({
 }
 
 describe('StudioSheet Office editing details', () => {
-  it('uses ZUI controls for every ribbon action and exposes pressed state without native button chrome', () => {
+  it('uses ZUVI controls for every ribbon action and exposes pressed state without native button chrome', () => {
     const document = documentFixture();
     document.sheets[0].cells.A1 = { input: 'Alpha', bold: true, wrap: true };
     setup({ document });
     const tabs = screen.getByRole('tablist', { name: '表格工具栏' });
-    const ribbon = tabs.closest('.z-studio-ribbon');
+    const ribbon = tabs.closest('.zuvi-studio-ribbon');
     expect(ribbon).not.toBeNull();
-    const expectZuiButtons = () => {
+    const expectZuviButtons = () => {
       const actions = Array.from(ribbon!.querySelectorAll('button'));
       expect(actions.length).toBeGreaterThan(0);
       expect(
         actions.every((button) =>
           [
-            'z-button',
-            'z-tab',
-            'z-select-trigger',
-            'z-combobox-toggle',
-            'z-color-picker-swatch',
+            'zuvi-button',
+            'zuvi-tab',
+            'zuvi-select-trigger',
+            'zuvi-combobox-toggle',
+            'zuvi-color-picker-swatch',
           ].some((className) => button.classList.contains(className))
         )
       ).toBe(true);
     };
     for (const name of ['开始', '插入', '布局', '公式', '数据', '视图']) {
       fireEvent.click(within(tabs).getByRole('tab', { name }));
-      expectZuiButtons();
+      expectZuviButtons();
     }
     fireEvent.click(within(tabs).getByRole('tab', { name: '开始' }));
     for (const name of ['自动换行', '合并单元格', '拆分单元格'])
-      expect(screen.getByRole('button', { name })).toHaveClass('z-button');
+      expect(screen.getByRole('button', { name })).toHaveClass('zuvi-button');
     expect(screen.getByRole('button', { name: '自动换行' })).toHaveAttribute(
       'aria-pressed',
       'true'

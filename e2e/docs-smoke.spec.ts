@@ -2,7 +2,7 @@ import { expect, type Page, test } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 
 /**
- * ZUI 文档站冒烟用例（契约 §3）。
+ * ZUVI 文档站冒烟用例（契约 §3）。
  *
  * 纪律：
  * - hash 路由切换统一走 page.evaluate(location.hash = ...)：page.goto 对同源 hash
@@ -31,7 +31,7 @@ const AXE_SOURCE = readFileSync(
 
 /** 文档页标题（.doc-h1） */
 const H1 = {
-  overview: 'ZUI 组件库',
+  overview: 'ZUVI 组件库',
   tokens: '设计令牌',
   theme: '主题调参',
   i18n: '国际化 i18n 与 AI 翻译',
@@ -106,7 +106,7 @@ test('四个起始页 h1 可见且无「页面出错了」', async ({ page }) =>
 test('Form 页：空提交出现校验红字', async ({ page }) => {
   await openRoute(page, '/components/form', H1.form);
 
-  const form = page.locator('.z-form').first();
+  const form = page.locator('.zuvi-form').first();
   const username = form.locator('input[placeholder="请输入用户名"]');
   await expect(username).toHaveCount(1);
 
@@ -118,7 +118,7 @@ test('Form 页：空提交出现校验红字', async ({ page }) => {
   await expect(submit).toHaveCount(1);
   await username.press('Enter');
 
-  const usernameError = form.locator('.z-form-item-error', { hasText: '请输入用户名' });
+  const usernameError = form.locator('.zuvi-form-item-error', { hasText: '请输入用户名' });
   await expect(usernameError).toHaveCount(1);
   await expect(usernameError).toBeVisible();
   await expect(username).toHaveAttribute('aria-invalid', 'true');
@@ -131,26 +131,26 @@ test('Form 页：空提交出现校验红字', async ({ page }) => {
 test('Form 页：填写后提交成功回显', async ({ page }) => {
   await openRoute(page, '/components/form', H1.form);
 
-  const form = page.locator('.z-form').first();
+  const form = page.locator('.zuvi-form').first();
   const username = form.locator('input[placeholder="请输入用户名"]');
   const email = form.locator('input[placeholder="请输入邮箱"]');
   await expect(username).toHaveCount(1);
   await expect(email).toHaveCount(1);
   await username.fill('张三');
-  await email.fill('zhang@zui.dev');
+  await email.fill('zhang@zuvi.dev');
   // Enter 隐式提交，理由同「空提交」用例（避免 blur 校验插入错误行导致的点击落空）
   await username.press('Enter');
 
   const success = page.locator('.doc-p', { hasText: '提交成功' });
   await expect(success).toHaveCount(1);
   await expect(success).toContainText('张三');
-  await expect(success).toContainText('zhang@zui.dev');
+  await expect(success).toContainText('zhang@zuvi.dev');
 });
 
 test('Form 页：表单实例填充与重置', async ({ page }) => {
   await openRoute(page, '/components/form', H1.form);
 
-  const instanceForm = page.locator('.z-form').nth(1);
+  const instanceForm = page.locator('.zuvi-form').nth(1);
   const username = instanceForm.locator('input[placeholder="点击右侧按钮操作"]');
   await expect(username).toHaveCount(1);
   await expect(username).toHaveValue('');
@@ -165,13 +165,13 @@ test('Form 页：表单实例填充与重置', async ({ page }) => {
 test('Select 页：展开选项并选中，触发器文本变化', async ({ page }) => {
   await openRoute(page, '/components/select', H1.select);
 
-  const select = page.locator('.z-select').first();
+  const select = page.locator('.zuvi-select').first();
   const trigger = select.locator('button[data-part="trigger"]');
   await expect(trigger).toHaveCount(1);
   await expect(trigger).toContainText('简体中文');
 
   await trigger.click();
-  const listbox = page.locator('.z-select-listbox[data-open="true"]');
+  const listbox = page.locator('.zuvi-select-listbox[data-open="true"]');
   await expect(listbox).toHaveCount(1);
   await expect(listbox).toBeVisible();
 
@@ -188,22 +188,22 @@ test('Select 页：展开选项并选中，触发器文本变化', async ({ page
 test('Select 页：Esc 关闭列表，焦点留在触发器上', async ({ page }) => {
   await openRoute(page, '/components/select', H1.select);
 
-  const select = page.locator('.z-select').first();
+  const select = page.locator('.zuvi-select').first();
   const trigger = select.locator('button[data-part="trigger"]');
   await expect(trigger).toHaveCount(1);
   await trigger.click();
-  await expect(page.locator('.z-select-listbox[data-open="true"]')).toHaveCount(1);
+  await expect(page.locator('.zuvi-select-listbox[data-open="true"]')).toHaveCount(1);
 
   await trigger.press('Escape');
   await expect(trigger).toHaveAttribute('aria-expanded', 'false');
-  await expect(page.locator('.z-select-listbox[data-open="true"]')).toHaveCount(0);
+  await expect(page.locator('.zuvi-select-listbox[data-open="true"]')).toHaveCount(0);
   await expect(trigger).toBeFocused();
 });
 
 test('Combobox 页：严格选择、回退与 320px 暗色浮层可用', async ({ page }) => {
   await openRoute(page, '/components/combobox', H1.combobox);
 
-  const combobox = page.locator('.z-combobox').first();
+  const combobox = page.locator('.zuvi-combobox').first();
   const input = combobox.getByRole('combobox', { name: '城市' });
   await expect(input).toHaveCount(1);
   await expect(input).toHaveValue('上海');
@@ -225,7 +225,7 @@ test('Combobox 页：严格选择、回退与 320px 暗色浮层可用', async (
   await page.setViewportSize({ width: 320, height: 640 });
   await page.getByRole('button', { name: '切换暗色' }).click();
   await input.press('ArrowDown');
-  const panel = page.locator('.z-combobox-panel');
+  const panel = page.locator('.zuvi-combobox-panel');
   await expect(panel).toHaveCount(1);
   await expect(panel).toBeVisible();
   const geometry = await panel.evaluate((node) => {
@@ -247,7 +247,7 @@ test('Combobox 页：严格选择、回退与 320px 暗色浮层可用', async (
 test('MultiCombobox 页：多选标签、面板保持打开与 320px 可用', async ({ page }) => {
   await openRoute(page, '/components/combobox', H1.combobox);
 
-  const multi = page.locator('.z-multicombobox').first();
+  const multi = page.locator('.zuvi-multicombobox').first();
   const multiInput = multi.getByRole('combobox', { name: '出差城市' });
   await expect(multiInput).toHaveCount(1);
   await expect(multi.getByRole('button', { name: '移除 上海' })).toHaveCount(1);
@@ -266,7 +266,7 @@ test('MultiCombobox 页：多选标签、面板保持打开与 320px 可用', as
 
   await page.setViewportSize({ width: 320, height: 640 });
   await multiInput.press('ArrowDown');
-  const multiPanel = page.locator('.z-multicombobox-panel');
+  const multiPanel = page.locator('.zuvi-multicombobox-panel');
   await expect(multiPanel).toHaveCount(1);
   await expect(multiPanel).toBeVisible();
   const multiGeometry = await multiPanel.evaluate((node) => {
@@ -546,7 +546,7 @@ test('页面搭建器：宽画布、第三方控件可访问名与窄屏边界�
 test('Modal 页：打开后 role=dialog 可见，Esc 关闭', async ({ page }) => {
   await openRoute(page, '/components/modal', H1.modal);
 
-  const openDialog = page.locator('.z-modal[data-state="open"][role="dialog"]');
+  const openDialog = page.locator('.zuvi-modal[data-state="open"][role="dialog"]');
   await expect(openDialog).toHaveCount(0);
 
   const openTrigger = page.getByRole('button', { name: '打开对话框' });
@@ -559,19 +559,19 @@ test('Modal 页：打开后 role=dialog 可见，Esc 关闭', async ({ page }) =
 
   await page.keyboard.press('Escape');
   await expect(openDialog).toHaveCount(0);
-  await expect(page.locator('.z-modal[data-state="open"]')).toHaveCount(0);
+  await expect(page.locator('.zuvi-modal[data-state="open"]')).toHaveCount(0);
 });
 
 test('DatePicker 页：打开日历选一天，输入位出现所选 ISO', async ({ page }) => {
   await openRoute(page, '/components/date-picker', H1.datePicker);
 
-  const datepicker = page.locator('.z-datepicker').first();
+  const datepicker = page.locator('.zuvi-datepicker').first();
   const input = datepicker.locator('input[data-part="input"]');
   await expect(input).toHaveCount(1);
   await expect(input).toHaveValue('');
 
   await input.click();
-  const panel = page.locator('.z-datepicker-panel');
+  const panel = page.locator('.zuvi-datepicker-panel');
   await expect(panel).toHaveCount(1);
   await expect(panel.getByRole('grid')).toHaveCount(1);
 
@@ -591,7 +591,7 @@ test('DateRangePicker 窄屏单月面板可跨月选择', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 640 });
   await openRoute(page, '/components/date-range-picker', 'DateRangePicker 日期范围选择器');
 
-  const range = page.locator('.z-daterange').first();
+  const range = page.locator('.zuvi-daterange').first();
   await range.getByRole('combobox', { name: '开始日期' }).click();
   const panel = page.getByRole('dialog', { name: '选择日期范围' });
   await expect(panel.getByRole('grid')).toHaveCount(1);
@@ -611,7 +611,7 @@ test('DateRangePicker 窄屏单月面板可跨月选择', async ({ page }) => {
 
 test('DateRangePicker 中间宽度与暗色面板保持可用', async ({ page }) => {
   await openRoute(page, '/components/date-range-picker', 'DateRangePicker 日期范围选择器');
-  const range = page.locator('.z-daterange').first();
+  const range = page.locator('.zuvi-daterange').first();
   const trigger = range.getByRole('combobox', { name: '开始日期' });
 
   for (const [width, expectedGrids] of [
@@ -653,7 +653,7 @@ test('DateRangePicker 中间宽度与暗色面板保持可用', async ({ page })
 test('VirtualTable 页：容器滚动后 aria-rowindex 变化（虚拟化生效）', async ({ page }) => {
   await openRoute(page, '/components/virtual-table', H1.virtualTable);
 
-  const table = page.locator('.z-virtual-table').first();
+  const table = page.locator('.zuvi-virtual-table').first();
   await expect(table).toHaveCount(1);
 
   const rows = table.locator('[data-part="row"]');
@@ -677,7 +677,7 @@ test('VirtualTable 页：容器滚动后 aria-rowindex 变化（虚拟化生效�
 test('VirtualTable 页：行点击回显所选行', async ({ page }) => {
   await openRoute(page, '/components/virtual-table', H1.virtualTable);
 
-  const clickableTable = page.locator('.z-virtual-table').nth(1);
+  const clickableTable = page.locator('.zuvi-virtual-table').nth(1);
   await expect(clickableTable).toHaveCount(1);
   const firstRow = clickableTable.locator('[data-part="row"][aria-rowindex="2"]');
   await expect(firstRow).toHaveCount(1);

@@ -1,4 +1,4 @@
-import { Button, Popover } from '@zui/react';
+import { Button, Popover } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -215,16 +215,16 @@ export default function PopoverPage(): React.ReactNode {
         name="Popover"
         parts={['root', 'trigger', 'content']}
         vars={[
-          '--z-popover-bg',
-          '--z-popover-fg',
-          '--z-popover-radius',
-          '--z-popover-padding',
-          '--z-popover-shadow',
-          '--z-popover-offset',
-          '--z-popover-max-width',
-          '--z-popover-z',
-          '--z-popover-animation-duration',
-          '--z-popover-transition',
+          '--zuvi-popover-bg',
+          '--zuvi-popover-fg',
+          '--zuvi-popover-radius',
+          '--zuvi-popover-padding',
+          '--zuvi-popover-shadow',
+          '--zuvi-popover-offset',
+          '--zuvi-popover-max-width',
+          '--zuvi-popover-z',
+          '--zuvi-popover-animation-duration',
+          '--zuvi-popover-transition',
         ]}
       />
     </div>

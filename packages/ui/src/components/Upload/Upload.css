@@ -1,51 +1,51 @@
-/* ZUI Upload —— 文件上传（按钮/拖拽区触发 + 文件列表 + 上传进度） */
+/* ZUVI Upload —— 文件上传（按钮/拖拽区触发 + 文件列表 + 上传进度） */
 
-.z-upload {
+.zuvi-upload {
   /* 组件级变量（用户可覆盖） */
-  --z-upload-gap: var(--z-space-3);
-  --z-upload-button-height: 2.25rem;
-  --z-upload-button-padding-x: var(--z-space-4);
-  --z-upload-button-font-size: var(--z-text-sm);
-  --z-upload-button-radius: var(--z-radius);
-  --z-upload-button-bg: var(--z-color-primary);
-  --z-upload-button-fg: var(--z-color-primary-fg);
-  --z-upload-button-hover-bg: var(--z-color-primary-hover);
-  --z-upload-dragzone-padding: var(--z-space-6);
-  --z-upload-dragzone-radius: var(--z-radius);
-  --z-upload-dragzone-bg: var(--z-color-bg-subtle);
-  --z-upload-dragzone-fg: var(--z-color-fg-muted);
-  --z-upload-dragzone-border: var(--z-color-border-strong);
-  --z-upload-dragzone-border-hover: var(--z-color-primary);
-  --z-upload-dragzone-font-size: var(--z-text-sm);
-  --z-upload-list-gap: var(--z-space-2);
-  --z-upload-list-max-height: min(320px, calc(100dvh - 16px));
-  --z-upload-item-padding: var(--z-space-2);
-  --z-upload-item-radius: var(--z-radius-sm);
-  --z-upload-item-bg: var(--z-color-bg-subtle);
-  --z-upload-item-fg: var(--z-color-fg);
-  --z-upload-item-gap: var(--z-space-2);
-  --z-upload-icon-uploading: var(--z-color-primary);
-  --z-upload-icon-success: var(--z-color-success);
-  --z-upload-icon-error: var(--z-color-danger);
-  --z-upload-size-color: var(--z-color-fg-muted);
-  --z-upload-progress-height: 6px;
-  --z-upload-progress-bg: var(--z-color-bg-muted);
-  --z-upload-progress-fill: var(--z-color-primary);
-  --z-upload-remove-color: var(--z-color-fg-subtle);
-  --z-upload-remove-hover-color: var(--z-color-danger);
-  --z-upload-focus-ring: var(--z-color-focus-ring);
+  --zuvi-upload-gap: var(--zuvi-space-3);
+  --zuvi-upload-button-height: 2.25rem;
+  --zuvi-upload-button-padding-x: var(--zuvi-space-4);
+  --zuvi-upload-button-font-size: var(--zuvi-text-sm);
+  --zuvi-upload-button-radius: var(--zuvi-radius);
+  --zuvi-upload-button-bg: var(--zuvi-color-primary);
+  --zuvi-upload-button-fg: var(--zuvi-color-primary-fg);
+  --zuvi-upload-button-hover-bg: var(--zuvi-color-primary-hover);
+  --zuvi-upload-dragzone-padding: var(--zuvi-space-6);
+  --zuvi-upload-dragzone-radius: var(--zuvi-radius);
+  --zuvi-upload-dragzone-bg: var(--zuvi-color-bg-subtle);
+  --zuvi-upload-dragzone-fg: var(--zuvi-color-fg-muted);
+  --zuvi-upload-dragzone-border: var(--zuvi-color-border-strong);
+  --zuvi-upload-dragzone-border-hover: var(--zuvi-color-primary);
+  --zuvi-upload-dragzone-font-size: var(--zuvi-text-sm);
+  --zuvi-upload-list-gap: var(--zuvi-space-2);
+  --zuvi-upload-list-max-height: min(320px, calc(100dvh - 16px));
+  --zuvi-upload-item-padding: var(--zuvi-space-2);
+  --zuvi-upload-item-radius: var(--zuvi-radius-sm);
+  --zuvi-upload-item-bg: var(--zuvi-color-bg-subtle);
+  --zuvi-upload-item-fg: var(--zuvi-color-fg);
+  --zuvi-upload-item-gap: var(--zuvi-space-2);
+  --zuvi-upload-icon-uploading: var(--zuvi-color-primary);
+  --zuvi-upload-icon-success: var(--zuvi-color-success);
+  --zuvi-upload-icon-error: var(--zuvi-color-danger);
+  --zuvi-upload-size-color: var(--zuvi-color-fg-muted);
+  --zuvi-upload-progress-height: 6px;
+  --zuvi-upload-progress-bg: var(--zuvi-color-bg-muted);
+  --zuvi-upload-progress-fill: var(--zuvi-color-primary);
+  --zuvi-upload-remove-color: var(--zuvi-color-fg-subtle);
+  --zuvi-upload-remove-hover-color: var(--zuvi-color-danger);
+  --zuvi-upload-focus-ring: var(--zuvi-color-focus-ring);
 
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: var(--z-upload-gap);
-  font-family: var(--z-font-sans);
+  gap: var(--zuvi-upload-gap);
+  font-family: var(--zuvi-font-sans);
 }
 
 /* ------------------------------- 隐藏 input ------------------------------ */
 
 /* opacity 0 + 绝对定位：不可见但仍可聚焦（Enter 原生打开文件选择） */
-.z-upload-input {
+.zuvi-upload-input {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -58,160 +58,160 @@
 
 /* ------------------------------ 按钮模式 -------------------------------- */
 
-.z-upload-trigger {
+.zuvi-upload-trigger {
   position: relative;
   display: inline-flex;
 }
 
-.z-upload-button {
+.zuvi-upload-button {
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: var(--z-upload-button-height);
-  padding: 0 var(--z-upload-button-padding-x);
+  height: var(--zuvi-upload-button-height);
+  padding: 0 var(--zuvi-upload-button-padding-x);
   font-family: inherit;
-  font-size: var(--z-upload-button-font-size);
-  font-weight: var(--z-weight-medium);
-  line-height: var(--z-leading-normal);
-  color: var(--z-upload-button-fg);
-  background: var(--z-upload-button-bg);
+  font-size: var(--zuvi-upload-button-font-size);
+  font-weight: var(--zuvi-weight-medium);
+  line-height: var(--zuvi-leading-normal);
+  color: var(--zuvi-upload-button-fg);
+  background: var(--zuvi-upload-button-bg);
   border: none;
-  border-radius: var(--z-upload-button-radius);
+  border-radius: var(--zuvi-upload-button-radius);
   cursor: pointer;
   transition:
-    background var(--z-duration-fast) var(--z-ease-standard),
-    color var(--z-duration-fast) var(--z-ease-standard);
+    background var(--zuvi-duration-fast) var(--zuvi-ease-standard),
+    color var(--zuvi-duration-fast) var(--zuvi-ease-standard);
 }
 
-.z-upload-button:hover {
-  background: var(--z-upload-button-hover-bg);
+.zuvi-upload-button:hover {
+  background: var(--zuvi-upload-button-hover-bg);
 }
 
 /* input 获得键盘焦点时在可见按钮上给出焦点环 */
-.z-upload-trigger:focus-within .z-upload-button {
-  outline: 2px solid var(--z-upload-focus-ring);
+.zuvi-upload-trigger:focus-within .zuvi-upload-button {
+  outline: 2px solid var(--zuvi-upload-focus-ring);
   outline-offset: 2px;
 }
 
 /* ------------------------------ 拖拽区模式 ------------------------------- */
 
-.z-upload-dragzone {
+.zuvi-upload-dragzone {
   position: relative;
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--z-upload-dragzone-padding);
-  font-size: var(--z-upload-dragzone-font-size);
-  color: var(--z-upload-dragzone-fg);
-  background: var(--z-upload-dragzone-bg);
-  border: 1px dashed var(--z-upload-dragzone-border);
-  border-radius: var(--z-upload-dragzone-radius);
+  padding: var(--zuvi-upload-dragzone-padding);
+  font-size: var(--zuvi-upload-dragzone-font-size);
+  color: var(--zuvi-upload-dragzone-fg);
+  background: var(--zuvi-upload-dragzone-bg);
+  border: 1px dashed var(--zuvi-upload-dragzone-border);
+  border-radius: var(--zuvi-upload-dragzone-radius);
   cursor: pointer;
   transition:
-    border-color var(--z-duration-fast) var(--z-ease-standard),
-    background var(--z-duration-fast) var(--z-ease-standard),
-    color var(--z-duration-fast) var(--z-ease-standard);
+    border-color var(--zuvi-duration-fast) var(--zuvi-ease-standard),
+    background var(--zuvi-duration-fast) var(--zuvi-ease-standard),
+    color var(--zuvi-duration-fast) var(--zuvi-ease-standard);
 }
 
-.z-upload-dragzone[data-dragover='true'] {
-  color: var(--z-color-primary);
-  background: color-mix(in oklch, var(--z-color-primary) 8%, var(--z-upload-dragzone-bg));
-  border-color: var(--z-upload-dragzone-border-hover);
+.zuvi-upload-dragzone[data-dragover='true'] {
+  color: var(--zuvi-color-primary);
+  background: color-mix(in oklch, var(--zuvi-color-primary) 8%, var(--zuvi-upload-dragzone-bg));
+  border-color: var(--zuvi-upload-dragzone-border-hover);
 }
 
-.z-upload-dragzone:focus-within {
-  outline: 2px solid var(--z-upload-focus-ring);
+.zuvi-upload-dragzone:focus-within {
+  outline: 2px solid var(--zuvi-upload-focus-ring);
   outline-offset: 2px;
 }
 
 /* ------------------------------- 禁用态 --------------------------------- */
 
-.z-upload[data-disabled='true'] .z-upload-button {
-  color: var(--z-color-disabled-fg);
-  background: var(--z-color-disabled-bg);
+.zuvi-upload[data-disabled='true'] .zuvi-upload-button {
+  color: var(--zuvi-color-disabled-fg);
+  background: var(--zuvi-color-disabled-bg);
   cursor: not-allowed;
 }
 
-.z-upload-dragzone[data-disabled='true'] {
-  color: var(--z-color-disabled-fg);
-  background: var(--z-color-disabled-bg);
-  border-color: var(--z-color-disabled-border);
+.zuvi-upload-dragzone[data-disabled='true'] {
+  color: var(--zuvi-color-disabled-fg);
+  background: var(--zuvi-color-disabled-bg);
+  border-color: var(--zuvi-color-disabled-border);
   cursor: not-allowed;
 }
 
 /* ------------------------------- 文件列表 ------------------------------- */
 
-.z-upload-list {
+.zuvi-upload-list {
   display: flex;
   flex-direction: column;
-  gap: var(--z-upload-list-gap);
-  max-height: var(--z-upload-list-max-height);
+  gap: var(--zuvi-upload-list-gap);
+  max-height: var(--zuvi-upload-list-max-height);
   margin: 0;
   padding: 0;
   overflow-y: auto;
   list-style: none;
 }
 
-.z-upload-item {
+.zuvi-upload-item {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: var(--z-space-1);
-  padding: var(--z-upload-item-padding);
-  background: var(--z-upload-item-bg);
-  border-radius: var(--z-upload-item-radius);
+  gap: var(--zuvi-space-1);
+  padding: var(--zuvi-upload-item-padding);
+  background: var(--zuvi-upload-item-bg);
+  border-radius: var(--zuvi-upload-item-radius);
 }
 
-.z-upload-item-main {
+.zuvi-upload-item-main {
   display: flex;
   align-items: center;
-  gap: var(--z-upload-item-gap);
+  gap: var(--zuvi-upload-item-gap);
   min-width: 0;
 }
 
-.z-upload-item-icon {
+.zuvi-upload-item-icon {
   display: inline-flex;
   flex-shrink: 0;
-  color: var(--z-upload-icon-uploading);
+  color: var(--zuvi-upload-icon-uploading);
 }
 
-.z-upload-item[data-status='uploading'] .z-upload-item-icon {
-  color: var(--z-upload-icon-uploading);
+.zuvi-upload-item[data-status='uploading'] .zuvi-upload-item-icon {
+  color: var(--zuvi-upload-icon-uploading);
 }
 
-.z-upload-item[data-status='success'] .z-upload-item-icon {
-  color: var(--z-upload-icon-success);
+.zuvi-upload-item[data-status='success'] .zuvi-upload-item-icon {
+  color: var(--zuvi-upload-icon-success);
 }
 
-.z-upload-item[data-status='error'] .z-upload-item-icon {
-  color: var(--z-upload-icon-error);
+.zuvi-upload-item[data-status='error'] .zuvi-upload-item-icon {
+  color: var(--zuvi-upload-icon-error);
 }
 
-.z-upload-item-name {
+.zuvi-upload-item-name {
   flex: 1;
   min-width: 0;
   overflow: hidden;
-  font-size: var(--z-text-sm);
-  line-height: var(--z-leading-normal);
-  color: var(--z-upload-item-fg);
+  font-size: var(--zuvi-text-sm);
+  line-height: var(--zuvi-leading-normal);
+  color: var(--zuvi-upload-item-fg);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.z-upload-item[data-status='error'] .z-upload-item-name {
-  color: var(--z-color-danger);
+.zuvi-upload-item[data-status='error'] .zuvi-upload-item-name {
+  color: var(--zuvi-color-danger);
 }
 
-.z-upload-item-size {
+.zuvi-upload-item-size {
   flex-shrink: 0;
-  font-size: var(--z-text-xs);
-  line-height: var(--z-leading-normal);
-  color: var(--z-upload-size-color);
+  font-size: var(--zuvi-text-xs);
+  line-height: var(--zuvi-leading-normal);
+  color: var(--zuvi-upload-size-color);
 }
 
-.z-upload-item-remove {
+.zuvi-upload-item-remove {
   box-sizing: border-box;
   display: inline-flex;
   flex-shrink: 0;
@@ -220,51 +220,51 @@
   width: 1.5rem;
   height: 1.5rem;
   padding: 0;
-  color: var(--z-upload-remove-color);
+  color: var(--zuvi-upload-remove-color);
   background: transparent;
   border: none;
-  border-radius: var(--z-upload-item-radius);
+  border-radius: var(--zuvi-upload-item-radius);
   cursor: pointer;
-  transition: color var(--z-duration-fast) var(--z-ease-standard);
+  transition: color var(--zuvi-duration-fast) var(--zuvi-ease-standard);
 }
 
-.z-upload-item-remove:hover {
-  color: var(--z-upload-remove-hover-color);
+.zuvi-upload-item-remove:hover {
+  color: var(--zuvi-upload-remove-hover-color);
 }
 
-.z-upload-item-remove:focus-visible {
-  outline: 2px solid var(--z-upload-focus-ring);
+.zuvi-upload-item-remove:focus-visible {
+  outline: 2px solid var(--zuvi-upload-focus-ring);
   outline-offset: 1px;
 }
 
-.z-upload[data-disabled='true'] .z-upload-item-remove {
-  color: var(--z-color-disabled-fg);
+.zuvi-upload[data-disabled='true'] .zuvi-upload-item-remove {
+  color: var(--zuvi-color-disabled-fg);
   cursor: not-allowed;
 }
 
 /* ------------------------------ 上传进度条 ------------------------------ */
 
-.z-upload-item-progress {
+.zuvi-upload-item-progress {
   display: block;
-  height: var(--z-upload-progress-height);
+  height: var(--zuvi-upload-progress-height);
   overflow: hidden;
-  background: var(--z-upload-progress-bg);
-  border-radius: var(--z-radius-full);
+  background: var(--zuvi-upload-progress-bg);
+  border-radius: var(--zuvi-radius-full);
 }
 
-.z-upload-item-progress-fill {
+.zuvi-upload-item-progress-fill {
   display: block;
   height: 100%;
-  background: var(--z-upload-progress-fill);
-  border-radius: var(--z-radius-full);
-  transition: width var(--z-duration-normal) var(--z-ease-standard);
+  background: var(--zuvi-upload-progress-fill);
+  border-radius: var(--zuvi-radius-full);
+  transition: width var(--zuvi-duration-normal) var(--zuvi-ease-standard);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .z-upload-button,
-  .z-upload-dragzone,
-  .z-upload-item-remove,
-  .z-upload-item-progress-fill {
+  .zuvi-upload-button,
+  .zuvi-upload-dragzone,
+  .zuvi-upload-item-remove,
+  .zuvi-upload-item-progress-fill {
     transition: none;
   }
 }

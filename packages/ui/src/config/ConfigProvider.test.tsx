@@ -1,9 +1,9 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import { ConfigProvider } from './ConfigProvider';
-import { useZuiConfig } from './useZuiConfig';
+import { useZuviConfig } from './useZuviConfig';
 import { Input } from '../components/Input';
-import type { TranslateConfig } from '@zui/i18n';
+import type { TranslateConfig } from '@zuvi/i18n';
 
 afterEach(() => {
   cleanup();
@@ -11,7 +11,7 @@ afterEach(() => {
 });
 
 function Copy() {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   return (
     <>
       <span data-testid="copy">{locale.input.clear}</span>
@@ -30,7 +30,7 @@ describe('ConfigProvider 翻译集成', () => {
       })
     );
     function TemplateCopy() {
-      const { locale } = useZuiConfig();
+      const { locale } = useZuviConfig();
       return (
         <>
           <span data-testid="month">

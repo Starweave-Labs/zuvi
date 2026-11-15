@@ -1,4 +1,4 @@
-import type { OfficeEditorConfig } from '@zui/react';
+import type { OfficeEditorConfig } from '@zuvi/react';
 
 export type OfficialOfficeDemoKind = 'word' | 'excel' | 'pdf';
 
@@ -17,17 +17,17 @@ const examples = {
   word: {
     documentType: 'word',
     extension: 'docx',
-    title: 'ZUI-OfficeEditor-Word-Demo.docx',
+    title: 'ZUVI-OfficeEditor-Word-Demo.docx',
   },
   excel: {
     documentType: 'cell',
     extension: 'xlsx',
-    title: 'ZUI-OfficeEditor-Excel-Demo.xlsx',
+    title: 'ZUVI-OfficeEditor-Excel-Demo.xlsx',
   },
   pdf: {
     documentType: 'pdf',
     extension: 'pdf',
-    title: 'ZUI-OfficeEditor-PDF-Demo.pdf',
+    title: 'ZUVI-OfficeEditor-PDF-Demo.pdf',
   },
 } as const satisfies Record<
   OfficialOfficeDemoKind,
@@ -64,7 +64,7 @@ async function signDemoConfig(config: OfficeEditorConfig): Promise<string> {
 
 function sessionKey(kind: OfficialOfficeDemoKind): string {
   const random = crypto.getRandomValues(new Uint32Array(2));
-  return `zui-demo-${kind}-${Date.now()}-${random[0].toString(36)}${random[1].toString(36)}`;
+  return `zuvi-demo-${kind}-${Date.now()}-${random[0].toString(36)}${random[1].toString(36)}`;
 }
 
 export function usesOfficialOfficeDemo(
@@ -106,11 +106,11 @@ export async function createOfficialOfficeDemoConfig(
       lang: 'zh-CN',
       mode: 'edit',
       user: {
-        id: `zui-demo-${kind}`,
-        name: 'ZUI Demo 访客',
+        id: `zuvi-demo-${kind}`,
+        name: 'ZUVI Demo 访客',
       },
       customization: {
-        anonymous: { request: false, label: 'ZUI Demo 访客' },
+        anonymous: { request: false, label: 'ZUVI Demo 访客' },
         autosave: false,
         feedback: false,
         forcesave: false,

@@ -49,7 +49,7 @@ export function Badge({
         data-color={color}
         data-dot={dot ? 'true' : undefined}
         data-single={isSingle ? 'true' : undefined}
-        className={cx('z-badge-indicator', 'z-badge-indicator--standalone', className, classNames?.indicator)}
+        className={cx('zuvi-badge-indicator', 'zuvi-badge-indicator--standalone', className, classNames?.indicator)}
       >
         {formatted}
       </span>
@@ -61,7 +61,7 @@ export function Badge({
     <span
       data-part="root"
       data-color={color}
-      className={cx('z-badge', className, classNames?.root)}
+      className={cx('zuvi-badge', className, classNames?.root)}
     >
       {children}
       {visible ? (
@@ -69,7 +69,7 @@ export function Badge({
           data-part="indicator"
           data-dot={dot ? 'true' : undefined}
           data-single={isSingle ? 'true' : undefined}
-          className={cx('z-badge-indicator', classNames?.indicator)}
+          className={cx('zuvi-badge-indicator', classNames?.indicator)}
         >
           {formatted}
         </span>

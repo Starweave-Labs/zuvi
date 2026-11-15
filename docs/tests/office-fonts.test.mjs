@@ -26,7 +26,7 @@ const sourceFont = (weight) => readFileSync(join(fontRoot, 'files', sourceFile(w
 const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
 
 function temporary(t) {
-  const root = mkdtempSync(join(tmpdir(), 'zui-office-fonts-test-'));
+  const root = mkdtempSync(join(tmpdir(), 'zuvi-office-fonts-test-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   return root;
 }

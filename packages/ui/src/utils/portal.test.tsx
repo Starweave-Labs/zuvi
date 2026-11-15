@@ -8,22 +8,22 @@ afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 describe('Portal theme inheritance', () => {
   it('keeps local tokens and follows changes to the source theme', async () => {
     const { rerender } = render(<section data-theme="light"><Portal><button>浮层</button></Portal></section>);
-    const source = document.querySelector<HTMLElement>('[data-zui-portal-source]')!;
+    const source = document.querySelector<HTMLElement>('[data-zuvi-portal-source]')!;
     const nativeStyle = window.getComputedStyle.bind(window);
     vi.spyOn(window, 'getComputedStyle').mockImplementation((element) => {
       if (element !== source) return nativeStyle(element);
       const style = document.createElement('div').style;
-      style.setProperty('--z-color-bg', source.parentElement?.dataset.theme === 'dark' ? 'black' : 'white');
-      style.setProperty('--z-popover-padding', '12px');
+      style.setProperty('--zuvi-color-bg', source.parentElement?.dataset.theme === 'dark' ? 'black' : 'white');
+      style.setProperty('--zuvi-popover-padding', '12px');
       return style;
     });
     rerender(<section data-theme="dark"><Portal><button>浮层</button></Portal></section>);
     const host = screen.getByRole('button', { name: '浮层' }).parentElement!;
-    await waitFor(() => expect(host.style.getPropertyValue('--z-color-bg')).toBe('black'));
-    expect(host.style.getPropertyValue('--z-popover-padding')).toBe('12px');
+    await waitFor(() => expect(host.style.getPropertyValue('--zuvi-color-bg')).toBe('black'));
+    expect(host.style.getPropertyValue('--zuvi-popover-padding')).toBe('12px');
     expect(host.parentElement).toBe(document.body);
     rerender(<section data-theme="light"><Portal><button>浮层</button></Portal></section>);
-    await waitFor(() => expect(host.style.getPropertyValue('--z-color-bg')).toBe('white'));
+    await waitFor(() => expect(host.style.getPropertyValue('--zuvi-color-bg')).toBe('white'));
   });
 
   it('inherits component variables from an explicit source and preserves a custom container', () => {
@@ -31,12 +31,12 @@ describe('Portal theme inheritance', () => {
     document.body.append(container);
     function Example() {
       const source = React.useRef<HTMLDivElement>(null);
-      return <><div ref={source} style={{ '--z-image-preview-bg': 'red' } as React.CSSProperties} />
+      return <><div ref={source} style={{ '--zuvi-image-preview-bg': 'red' } as React.CSSProperties} />
         <Portal container={container} inheritFrom={source}><span>预览</span></Portal></>;
     }
     const { unmount } = render(<Example />);
     const host = screen.getByText('预览').parentElement!;
-    expect(host.style.getPropertyValue('--z-image-preview-bg')).toBe('red');
+    expect(host.style.getPropertyValue('--zuvi-image-preview-bg')).toBe('red');
     expect(host.parentElement).toBe(container);
     unmount();
     expect(container).toBeEmptyDOMElement();

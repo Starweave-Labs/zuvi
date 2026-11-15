@@ -1,6 +1,6 @@
 import { useEffect, useId, useState, type ReactNode } from 'react';
 import { Puck } from '@puckeditor/core';
-import { Eye, EyeOff, Lock, Unlock, Copy, Trash, ArrowUp, ArrowDown, RotateCcw } from '@zui/icons';
+import { Eye, EyeOff, Lock, Unlock, Copy, Trash, ArrowUp, ArrowDown, RotateCcw } from '@zuvi/icons';
 import { useBuilderEditor } from './builder-editor-context';
 import { builderConfig } from './builder-config';
 import { flattenNodes, type BuilderNode } from './builder-tree';

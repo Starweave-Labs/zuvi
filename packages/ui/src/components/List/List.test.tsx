@@ -14,7 +14,7 @@ describe('List', () => {
   it('renders ul/li semantics with title and description', () => {
     render(<List items={ITEMS} />);
     const root = document.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-list');
+    expect(root).toHaveClass('zuvi-list');
     expect(screen.getByRole('list')).toHaveAttribute('data-part', 'body');
     expect(screen.getAllByRole('listitem')).toHaveLength(3);
     expect(screen.getByText('标题一')).toHaveAttribute('data-part', 'title');
@@ -85,10 +85,10 @@ describe('List', () => {
       />
     );
     const root = document.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-list', 'my-root', 'c-root');
+    expect(root).toHaveClass('zuvi-list', 'my-root', 'c-root');
     const items = document.querySelectorAll('[data-part="item"]');
-    expect(items[0]).toHaveClass('z-list-item', 'c-item');
-    expect(document.querySelector('[data-part="meta"]')).toHaveClass('z-list-item-meta', 'c-meta');
-    expect(document.querySelector('[data-part="extra"]')).toHaveClass('z-list-item-extra', 'c-extra');
+    expect(items[0]).toHaveClass('zuvi-list-item', 'c-item');
+    expect(document.querySelector('[data-part="meta"]')).toHaveClass('zuvi-list-item-meta', 'c-meta');
+    expect(document.querySelector('[data-part="extra"]')).toHaveClass('zuvi-list-item-extra', 'c-extra');
   });
 });

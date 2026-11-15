@@ -1,7 +1,7 @@
-# ZUI 契约 V5 —— 第二批：质量护城河 + 页面骨架层
+# ZUVI 契约 V5 —— 第二批：质量护城河 + 页面骨架层
 
 > 延续 CONTRACTS V1-V4 全部约定。新基线（V4 后）：FloatingPanel 浮层引擎为弹层标配、
-> locale 全走 `useZuiConfig()`、零硬编码色值、React 19 原生 ref、'use client' 首行。
+> locale 全走 `useZuviConfig()`、零硬编码色值、React 19 原生 ref、'use client' 首行。
 > 版本基线：**v0.2.0**（已固化，CHANGELOG 已生成）。
 
 ## 0. 文件边界（4 路并行）
@@ -29,8 +29,8 @@ Typography.Text: BaseProps & { code?: boolean; mark?: boolean; underline?: boole
 ```
 
 - **copyable**：内容后渲染复制按钮（图标 Copy→成功短暂 CheckCircle 1.5s）；`navigator.clipboard.writeText`，失败回退 `textarea + execCommand('copy')`；`aria-label=locale.accessibility.copy`，成功后 `title=locale.accessibility.copied` + `aria-live="polite"` 反馈节点；CopyConfig.text 覆盖被复制内容（默认取 children 文本）。
-- **语义**：Text 默认 `<span>`（code→`<code>`、keyboard→`<kbd>`、mark→`<mark>`、strong 加粗、underline 下划线、delete→`<del>`）；Title 渲染 `h1-h5`；Paragraph `<p>`。`type` 只调色（`--z-color-fg-muted` / success / warning / danger）。
-- 类名：`z-typography`（根共享）+ `z-typography-h1..h5 / paragraph / text`；字号字重全部走 `--z-text-*` / `--z-weight-*` 令牌。
+- **语义**：Text 默认 `<span>`（code→`<code>`、keyboard→`<kbd>`、mark→`<mark>`、strong 加粗、underline 下划线、delete→`<del>`）；Title 渲染 `h1-h5`；Paragraph `<p>`。`type` 只调色（`--zuvi-color-fg-muted` / success / warning / danger）。
+- 类名：`z-typography`（根共享）+ `z-typography-h1..h5 / paragraph / text`；字号字重全部走 `--zuvi-text-*` / `--zuvi-weight-*` 令牌。
 - **测试 ≥14**：h 级别标签、type 配色 data-type、code/mark/strong/delete/underline 组合、ellipsis rows（style 断言）、copyable 点击写剪贴板（mock navigator.clipboard）+ 反馈态、CopyConfig.text、classNames/data-part。
 
 ## 2. Layout（Row / Col / Flex / Space，纯展示无状态）
@@ -60,17 +60,17 @@ Space: { size?: 'sm'|'md'|'lg' | number;   // 默认 'md'（8px）
 ```
 
 - **gutter 实现（antd 范式）**：Row 水平 gutter → 自身 `margin-inline: -g/2` + 每个 Col `padding-inline: g/2`（经 Context 注入 Col，禁止 children 遍历 clone）；垂直 gutter → Row `row-gap`。
-- Col 宽度走 CSS：`.z-col` 默认 `flex: 0 0 auto`，span/offset 用内联 `style={{ '--z-col-span': n }}` + CSS `width: calc(var(--z-col-span,24)/24*100%)`；flex prop 直接内联 `flex`。Col 内联 CSS 变量而非生成 240 个工具类（零运行时样式原则下最简方案，文档注明）。
-- Flex gap：sm/md/lg 映射 `--z-space-2/3/4`；number→px、string 原样（走内联 `gap`）。
+- Col 宽度走 CSS：`.zuvi-col` 默认 `flex: 0 0 auto`，span/offset 用内联 `style={{ '--zuvi-col-span': n }}` + CSS `width: calc(var(--zuvi-col-span,24)/24*100%)`；flex prop 直接内联 `flex`。Col 内联 CSS 变量而非生成 240 个工具类（零运行时样式原则下最简方案，文档注明）。
+- Flex gap：sm/md/lg 映射 `--zuvi-space-2/3/4`；number→px、string 原样（走内联 `gap`）。
 - Space：`inline-flex; gap`；direction=vertical 加 `flex-direction: column`；wrap 允许 `flex-wrap: wrap`。
 - 语义：Row/Col/Flex 无 role（纯布局 div）；Flex component prop 可换语义标签。
-- CSS 全部语义令牌 + `--z-row-* / --z-col-* / --z-flex-* / --z-space-*` 组件变量。
+- CSS 全部语义令牌 + `--zuvi-row-* / --zuvi-col-* / --zuvi-flex-* / --zuvi-space-*` 组件变量。
 - **测试（合计 ≥24）**：Row gutter（含负 margin/Col padding/Context 断言）、justify/align/wrap data 属性、Col span/offset 内联变量、flex 覆盖、Flex 方向/gap 映射/component 换标签、Space 尺寸映射（number→px）/direction/wrap、classNames/data-part。
 
 ## 3. Playwright E2E 框架（E2E 智能体）
 
 - 根目录新增：`e2e/docs-smoke.spec.ts`（可拆多个 spec）、`playwright.config.ts`、根 package.json 增加 devDep `@playwright/test` 与 script `"test:e2e": "playwright test"`。
-- **config**：`testDir: '../e2e'`（config 放 e2e/ 内则 testDir '.'）、`baseURL: http://localhost:5174`、`webServer: { command: 'pnpm --filter @zui/docs dev --port 5174 --strictPort', url: 'http://localhost:5174', reuseExistingServer: true }`、`projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }]`、`use: { viewport: { width: 1280, height: 800 } }`。
+- **config**：`testDir: '../e2e'`（config 放 e2e/ 内则 testDir '.'）、`baseURL: http://localhost:5174`、`webServer: { command: 'pnpm --filter @zuvi/docs dev --port 5174 --strictPort', url: 'http://localhost:5174', reuseExistingServer: true }`、`projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }]`、`use: { viewport: { width: 1280, height: 800 } }`。
 - **冒烟用例（≥10）**：
   1. 概览/令牌/主题/i18n 四页 h1 可见且无「页面出错了」；
   2. Form 页：空提交出现校验红字，填写后提交成功回显；

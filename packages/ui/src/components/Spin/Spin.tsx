@@ -29,10 +29,10 @@ export function Spin({
   ...rest
 }: SpinProps) {
   const indicator = (
-    <span data-part="spinner" className={cx('z-spin-spinner', classNames?.spinner)}>
-      <svg viewBox="0 0 50 50" aria-hidden="true" focusable="false" className="z-spin-svg">
-        <circle className="z-spin-track" cx="25" cy="25" r="20" fill="none" />
-        <circle className="z-spin-head" cx="25" cy="25" r="20" fill="none" />
+    <span data-part="spinner" className={cx('zuvi-spin-spinner', classNames?.spinner)}>
+      <svg viewBox="0 0 50 50" aria-hidden="true" focusable="false" className="zuvi-spin-svg">
+        <circle className="zuvi-spin-track" cx="25" cy="25" r="20" fill="none" />
+        <circle className="zuvi-spin-head" cx="25" cy="25" r="20" fill="none" />
       </svg>
     </span>
   );
@@ -46,20 +46,20 @@ export function Spin({
         data-part="root"
         data-size={size}
         data-spinning={spinning ? '' : undefined}
-        className={cx('z-spin', 'z-spin--wrap', className, classNames?.root)}
+        className={cx('zuvi-spin', 'zuvi-spin--wrap', className, classNames?.root)}
       >
         <div
-          className="z-spin-children"
+          className="zuvi-spin-children"
           aria-busy={spinning || undefined}
           inert={spinning ? true : undefined}
         >
           {children}
         </div>
         {spinning ? (
-          <div className="z-spin-mask">
+          <div className="zuvi-spin-mask">
             {indicator}
             {tip != null ? (
-              <div data-part="tip" className={cx('z-spin-tip', classNames?.tip)}>
+              <div data-part="tip" className={cx('zuvi-spin-tip', classNames?.tip)}>
                 {tip}
               </div>
             ) : null}
@@ -79,11 +79,11 @@ export function Spin({
       data-part="root"
       data-size={size}
       data-spinning=""
-      className={cx('z-spin', 'z-spin--inline', className, classNames?.root)}
+      className={cx('zuvi-spin', 'zuvi-spin--inline', className, classNames?.root)}
     >
       {indicator}
       {tip != null ? (
-        <div data-part="tip" className={cx('z-spin-tip', classNames?.tip)}>
+        <div data-part="tip" className={cx('zuvi-spin-tip', classNames?.tip)}>
           {tip}
         </div>
       ) : null}

@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useZuiConfig } from '../../config';
+import { useZuviConfig } from '../../config';
 import { cx, useControllableState } from '../../utils';
 import './Transfer.css';
 
@@ -56,7 +56,7 @@ export function Transfer(props: TransferProps) {
     'aria-label': ariaLabel,
   } = props;
 
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
 
   const [target, setTarget] = useControllableState<string[]>({
     value: targetKeys,
@@ -199,11 +199,11 @@ export function Transfer(props: TransferProps) {
     return (
       <div
         data-part="list"
-        className={cx('z-transfer-list', classNames?.list)}
+        className={cx('zuvi-transfer-list', classNames?.list)}
         data-side={side}
       >
-        <div data-part="header" className="z-transfer-list-header">
-          <label className="z-transfer-checkbox">
+        <div data-part="header" className="zuvi-transfer-list-header">
+          <label className="zuvi-transfer-checkbox">
             <input
               type="checkbox"
               checked={allChecked}
@@ -215,18 +215,18 @@ export function Transfer(props: TransferProps) {
               disabled={enabledKeys.length === 0}
               onChange={() => toggleAll(side)}
             />
-            <span data-part="checkbox" className="z-transfer-checkbox-box" aria-hidden="true" />
+            <span data-part="checkbox" className="zuvi-transfer-checkbox-box" aria-hidden="true" />
           </label>
-          <span className="z-transfer-list-title">{sideTitle}</span>
-          <span className="z-transfer-list-count">
+          <span className="zuvi-transfer-list-title">{sideTitle}</span>
+          <span className="zuvi-transfer-list-count">
             {checked.length}/{items.length}
           </span>
         </div>
 
         {showSearch ? (
-          <div data-part="search" className="z-transfer-search">
+          <div data-part="search" className="zuvi-transfer-search">
             <svg
-              className="z-transfer-search-icon"
+              className="zuvi-transfer-search-icon"
               viewBox="0 0 16 16"
               width="14"
               height="14"
@@ -244,7 +244,7 @@ export function Transfer(props: TransferProps) {
             </svg>
             <input
               type="search"
-              className="z-transfer-search-input"
+              className="zuvi-transfer-search-input"
               value={query}
               placeholder={locale.transfer.search}
               aria-label={isSource ? locale.accessibility.searchSource : locale.accessibility.searchTarget}
@@ -261,11 +261,11 @@ export function Transfer(props: TransferProps) {
           role="listbox"
           aria-multiselectable="true"
           aria-label={sideTitle}
-          className="z-transfer-list-body"
+          className="zuvi-transfer-list-body"
           onKeyDown={onListKeyDown(side)}
         >
           {visible.length === 0 ? (
-            <li className="z-transfer-empty">{locale.empty.description}</li>
+            <li className="zuvi-transfer-empty">{locale.empty.description}</li>
           ) : (
             visible.map((item) => {
               const itemChecked = checked.includes(item.key);
@@ -274,21 +274,21 @@ export function Transfer(props: TransferProps) {
                   key={item.key}
                   role="option"
                   data-part="item"
-                  className={cx('z-transfer-item', classNames?.item)}
+                  className={cx('zuvi-transfer-item', classNames?.item)}
                   aria-selected={itemChecked}
                   aria-disabled={item.disabled ? true : undefined}
                   data-checked={itemChecked ? 'true' : undefined}
                   data-disabled={item.disabled ? 'true' : undefined}
                 >
-                  <label className="z-transfer-item-label">
+                  <label className="zuvi-transfer-item-label">
                     <input
                       type="checkbox"
                       checked={itemChecked}
                       disabled={item.disabled}
                       onChange={(event) => toggleChecked(side, item.key, event.target.checked)}
                     />
-                    <span data-part="checkbox" className="z-transfer-checkbox-box" aria-hidden="true" />
-                    <span className="z-transfer-item-title">{item.title}</span>
+                    <span data-part="checkbox" className="zuvi-transfer-checkbox-box" aria-hidden="true" />
+                    <span className="zuvi-transfer-item-title">{item.title}</span>
                   </label>
                 </li>
               );
@@ -302,16 +302,16 @@ export function Transfer(props: TransferProps) {
   return (
     <div
       data-part="root"
-      className={cx('z-transfer', classNames?.root, className)}
+      className={cx('zuvi-transfer', classNames?.root, className)}
       aria-label={ariaLabel}
     >
       {renderList('source')}
 
-      <div data-part="buttons" className={cx('z-transfer-buttons', classNames?.buttons)}>
+      <div data-part="buttons" className={cx('zuvi-transfer-buttons', classNames?.buttons)}>
         <button
           ref={buttonRefs.right}
           type="button"
-          className="z-transfer-button"
+          className="zuvi-transfer-button"
           aria-label={locale.transfer.moveRight}
           disabled={movable('source').length === 0}
           onClick={() => move('right')}
@@ -330,7 +330,7 @@ export function Transfer(props: TransferProps) {
         <button
           ref={buttonRefs.left}
           type="button"
-          className="z-transfer-button"
+          className="zuvi-transfer-button"
           aria-label={locale.transfer.moveLeft}
           disabled={movable('target').length === 0}
           onClick={() => move('left')}

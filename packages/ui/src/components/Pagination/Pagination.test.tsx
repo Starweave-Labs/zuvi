@@ -35,7 +35,7 @@ describe('Pagination', () => {
     const nav = getNav();
     expect(nav.tagName).toBe('NAV');
     expect(nav).toHaveAttribute('data-part', 'root');
-    expect(nav).toHaveClass('z-pagination');
+    expect(nav).toHaveClass('zuvi-pagination');
 
     // total=50 / pageSize=10 → 5 页；当前第 1 页、siblings=1 → 1 2 … 5
     expect(pageLabels()).toEqual(['1', '2', '5']);
@@ -55,10 +55,10 @@ describe('Pagination', () => {
     // 10 页，当前 5，两侧各 1 → 1 … 4 5 6 … 10
     expect(pageLabels()).toEqual(['1', '4', '5', '6', '10']);
 
-    const ellipses = getNav().querySelectorAll(".z-pagination-ellipsis");
+    const ellipses = getNav().querySelectorAll(".zuvi-pagination-ellipsis");
     expect(ellipses).toHaveLength(2);
     for (const el of ellipses) {
-      expect(el).toHaveClass('z-pagination-ellipsis');
+      expect(el).toHaveClass('zuvi-pagination-ellipsis');
       expect(el).toHaveAttribute('aria-hidden', 'true');
       expect(el.textContent).toBe('…');
     }
@@ -70,13 +70,13 @@ describe('Pagination', () => {
   it('siblings=0：仅当前页与首尾，两侧省略号', () => {
     render(<Pagination total={100} defaultPage={5} siblings={0} />);
     expect(pageLabels()).toEqual(['1', '5', '10']);
-    expect(getNav().querySelectorAll(".z-pagination-ellipsis")).toHaveLength(2);
+    expect(getNav().querySelectorAll(".zuvi-pagination-ellipsis")).toHaveLength(2);
   });
 
   it('范围与首尾衔接时全部平铺，无省略号', () => {
     render(<Pagination total={50} defaultPage={3} siblings={2} />);
     expect(pageLabels()).toEqual(['1', '2', '3', '4', '5']);
-    expect(getNav().querySelectorAll(".z-pagination-ellipsis")).toHaveLength(0);
+    expect(getNav().querySelectorAll(".zuvi-pagination-ellipsis")).toHaveLength(0);
   });
 
   it('仅一页时只渲染 1，上一页/下一页均禁用', () => {
@@ -226,16 +226,16 @@ describe('Pagination', () => {
       />
     );
     const nav = getNav();
-    expect(nav).toHaveClass('z-pagination', 'my-root', 'cls-root');
+    expect(nav).toHaveClass('zuvi-pagination', 'my-root', 'cls-root');
 
     const items = nav.querySelectorAll('[data-part="item"]');
     expect(items.length).toBeGreaterThan(0);
     for (const item of items) {
-      expect(item).toHaveClass('z-pagination-item', 'cls-item');
+      expect(item).toHaveClass('zuvi-pagination-item', 'cls-item');
     }
 
     const jumper = nav.querySelector('[data-part="jumper"]');
-    expect(jumper).toHaveClass('z-pagination-jumper', 'cls-jumper');
+    expect(jumper).toHaveClass('zuvi-pagination-jumper', 'cls-jumper');
   });
 
   it('forwards ref to the nav element', () => {

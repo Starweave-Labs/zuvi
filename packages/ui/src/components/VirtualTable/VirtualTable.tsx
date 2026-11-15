@@ -76,7 +76,7 @@ export function VirtualTable<T = Record<string, unknown>>({
   const headerRef = React.useRef<HTMLDivElement | null>(null);
   const frameRef = React.useRef<number | null>(null);
   const [scrollTop, setScrollTop] = React.useState(0);
-  // 表头真实高度：sticky 表头固定为 --z-virtual-table-header-height（默认 2.5rem），
+  // 表头真实高度：sticky 表头固定为 --zuvi-virtual-table-header-height（默认 2.5rem），
   // 占据文档流高度，必须计入滚动总高。SSR / jsdom 等无布局环境量不到
   // （getBoundingClientRect 返回 0），保持 null 回退 rowHeight。
   const [measuredHeaderHeight, setMeasuredHeaderHeight] = React.useState<number | null>(null);
@@ -163,7 +163,7 @@ export function VirtualTable<T = Record<string, unknown>>({
       role="table"
       aria-rowcount={data.length + 1}
       tabIndex={0}
-      className={cx('z-virtual-table', className, classNames?.root)}
+      className={cx('zuvi-virtual-table', className, classNames?.root)}
       style={{ height }}
       onScroll={handleScroll}
       onKeyDown={(event) => {
@@ -189,7 +189,7 @@ export function VirtualTable<T = Record<string, unknown>>({
         data-part="header"
         role="row"
         aria-rowindex={1}
-        className={cx('z-virtual-table-header', classNames?.header)}
+        className={cx('zuvi-virtual-table-header', classNames?.header)}
         style={{ width: Math.max(totalWidth, 0) }}
       >
         {columns.map((col, i) => (
@@ -197,7 +197,7 @@ export function VirtualTable<T = Record<string, unknown>>({
             key={col.key}
             data-part="cell"
             role="columnheader"
-            className={cx('z-virtual-table-cell', 'z-virtual-table-header-cell', classNames?.cell)}
+            className={cx('zuvi-virtual-table-cell', 'zuvi-virtual-table-header-cell', classNames?.cell)}
             style={{
               width: columnWidths[i],
               minWidth: columnWidths[i],
@@ -223,7 +223,7 @@ export function VirtualTable<T = Record<string, unknown>>({
       {/* 表体：总高度撑出滚动条，窗口行绝对定位 */}
       <div
         data-part="body"
-        className={cx('z-virtual-table-body', classNames?.body)}
+        className={cx('zuvi-virtual-table-body', classNames?.body)}
         style={{ height: totalHeight, width: Math.max(totalWidth, 0) }}
       >
         {visibleRows.map((row, i) => {
@@ -240,7 +240,7 @@ export function VirtualTable<T = Record<string, unknown>>({
               data-part="row"
               role="row"
               aria-rowindex={index + 2}
-              className={cx('z-virtual-table-row', classNames?.row)}
+              className={cx('zuvi-virtual-table-row', classNames?.row)}
               style={{ top: index * rowHeight, height: rowHeight, width: Math.max(totalWidth, 0) }}
               onClick={onRowClick ? () => onRowClick(row) : undefined}
               tabIndex={onRowClick ? 0 : undefined}
@@ -256,7 +256,7 @@ export function VirtualTable<T = Record<string, unknown>>({
                   key={col.key}
                   data-part="cell"
                   role="cell"
-                  className={cx('z-virtual-table-cell', classNames?.cell)}
+                  className={cx('zuvi-virtual-table-cell', classNames?.cell)}
                   style={{
                     width: columnWidths[ci],
                     minWidth: columnWidths[ci],

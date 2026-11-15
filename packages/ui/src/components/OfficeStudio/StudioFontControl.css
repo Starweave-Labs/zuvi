@@ -1,31 +1,31 @@
-.z-studio-font-control {
+.zuvi-studio-font-control {
   display: inline-flex;
   min-width: 0;
   position: relative;
 }
 
-.z-studio-font-control > .z-combobox {
+.zuvi-studio-font-control > .zuvi-combobox {
   width: 100%;
   min-width: 0;
 }
 
-.z-studio-font-control .z-combobox[data-size='sm'] {
-  --z-combobox-control-height: 24px;
-  --z-combobox-radius: var(--z-radius-sm);
-  --z-combobox-control-padding-x: 0px;
-  --z-combobox-control-gap: 0px;
+.zuvi-studio-font-control .zuvi-combobox[data-size='sm'] {
+  --zuvi-combobox-control-height: 24px;
+  --zuvi-combobox-radius: var(--zuvi-radius-sm);
+  --zuvi-combobox-control-padding-x: 0px;
+  --zuvi-combobox-control-gap: 0px;
 }
 
-.z-studio-font-control .z-combobox-input {
+.zuvi-studio-font-control .zuvi-combobox-input {
   padding-inline: 6px;
 }
 
-.z-studio-font-control .z-combobox-toggle {
+.zuvi-studio-font-control .zuvi-combobox-toggle {
   width: 20px;
   min-width: 20px;
 }
 
-.z-studio-font-control-error {
+.zuvi-studio-font-control-error {
   position: absolute;
   width: 1px;
   height: 1px;

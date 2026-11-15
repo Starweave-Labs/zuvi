@@ -1,7 +1,7 @@
 /**
  * 弹层 Esc 仲裁（共享机制）：
  *
- * Modal / Drawer 的 overlay（[data-zui-modal-layer]）、Popover 的 popup、
+ * Modal / Drawer 的 overlay（[data-zuvi-modal-layer]）、Popover 的 popup、
  * App 内置确认框等模态弹层在打开时通过 `registerLayer` 按打开顺序压入
  * 同一棵弹层栈，关闭/卸载时 `unregisterLayer` 弹出。各弹层的 Esc 监听
  * 只在自己 `isTopmostLayer` 为真（位于栈顶）时响应，从而保证：

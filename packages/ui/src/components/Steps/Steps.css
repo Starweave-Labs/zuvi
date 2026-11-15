@@ -1,55 +1,55 @@
-/* ZUI Steps —— 步骤条（派生状态 + 显式 status 覆盖 + 可点击键盘导航）。
+/* ZUVI Steps —— 步骤条（派生状态 + 显式 status 覆盖 + 可点击键盘导航）。
    组件级变量定义在根选择器上，可被用户任意覆盖；颜色一律消费语义令牌。 */
 
-.z-steps {
+.zuvi-steps {
   /* 组件级变量（用户可覆盖） */
-  --z-steps-icon-size: 2rem;
-  --z-steps-icon-font-size: var(--z-text-sm);
-  --z-steps-icon-svg-size: calc(var(--z-steps-icon-size) * 0.5625);
-  --z-steps-line-width: 2px;
-  --z-steps-line-color: var(--z-color-border);
-  --z-steps-line-finish-color: var(--z-color-primary);
-  --z-steps-item-gap: var(--z-space-4);
-  --z-steps-gap: var(--z-space-3);
-  --z-steps-vertical-line-gap: var(--z-space-2);
-  --z-steps-title-font-size: var(--z-text-md);
-  --z-steps-description-font-size: var(--z-text-sm);
-  --z-steps-title-fg: var(--z-color-fg);
-  --z-steps-description-fg: var(--z-color-fg-muted);
-  --z-steps-icon-bg: var(--z-color-bg-muted);
-  --z-steps-icon-fg: var(--z-color-fg-muted);
-  --z-steps-icon-border: transparent;
-  --z-steps-icon-border-width: 1px;
-  --z-steps-transition: var(--z-duration-fast) var(--z-ease-standard);
+  --zuvi-steps-icon-size: 2rem;
+  --zuvi-steps-icon-font-size: var(--zuvi-text-sm);
+  --zuvi-steps-icon-svg-size: calc(var(--zuvi-steps-icon-size) * 0.5625);
+  --zuvi-steps-line-width: 2px;
+  --zuvi-steps-line-color: var(--zuvi-color-border);
+  --zuvi-steps-line-finish-color: var(--zuvi-color-primary);
+  --zuvi-steps-item-gap: var(--zuvi-space-4);
+  --zuvi-steps-gap: var(--zuvi-space-3);
+  --zuvi-steps-vertical-line-gap: var(--zuvi-space-2);
+  --zuvi-steps-title-font-size: var(--zuvi-text-md);
+  --zuvi-steps-description-font-size: var(--zuvi-text-sm);
+  --zuvi-steps-title-fg: var(--zuvi-color-fg);
+  --zuvi-steps-description-fg: var(--zuvi-color-fg-muted);
+  --zuvi-steps-icon-bg: var(--zuvi-color-bg-muted);
+  --zuvi-steps-icon-fg: var(--zuvi-color-fg-muted);
+  --zuvi-steps-icon-border: transparent;
+  --zuvi-steps-icon-border-width: 1px;
+  --zuvi-steps-transition: var(--zuvi-duration-fast) var(--zuvi-ease-standard);
 
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  gap: var(--z-steps-item-gap);
+  gap: var(--zuvi-steps-item-gap);
   margin: 0;
   padding: 0;
   list-style: none;
-  font-family: var(--z-font-sans);
-  color: var(--z-color-fg);
+  font-family: var(--zuvi-font-sans);
+  color: var(--zuvi-color-fg);
 }
 
 /* ---------------------------------- item ---------------------------------- */
 
-.z-steps-item {
+.zuvi-steps-item {
   display: flex;
   align-items: flex-start;
-  gap: var(--z-steps-item-gap);
+  gap: var(--zuvi-steps-item-gap);
   min-width: 0;
 }
 
 /* --------------------------------- trigger -------------------------------- */
 
-.z-steps-trigger {
+.zuvi-steps-trigger {
   box-sizing: border-box;
   display: flex;
   align-items: flex-start;
-  gap: var(--z-steps-gap);
+  gap: var(--zuvi-steps-gap);
   min-width: 0;
   margin: 0;
   padding: 0;
@@ -60,206 +60,206 @@
   text-align: start;
 }
 
-button.z-steps-trigger {
+button.zuvi-steps-trigger {
   cursor: pointer;
-  transition: color var(--z-steps-transition);
+  transition: color var(--zuvi-steps-transition);
 }
 
-button.z-steps-trigger:focus-visible {
-  outline: 2px solid var(--z-color-focus-ring);
+button.zuvi-steps-trigger:focus-visible {
+  outline: 2px solid var(--zuvi-color-focus-ring);
   outline-offset: 2px;
-  border-radius: var(--z-radius-sm);
+  border-radius: var(--zuvi-radius-sm);
 }
 
-.z-steps[data-clickable='true'] button.z-steps-trigger:hover .z-steps-title {
-  color: var(--z-color-primary);
+.zuvi-steps[data-clickable='true'] button.zuvi-steps-trigger:hover .zuvi-steps-title {
+  color: var(--zuvi-color-primary);
 }
 
 /* disabled（仅 onChange 模式渲染 span，原生不可聚焦、不可点击） */
-.z-steps-trigger-disabled,
-.z-steps-item[data-disabled='true'] {
+.zuvi-steps-trigger-disabled,
+.zuvi-steps-item[data-disabled='true'] {
   cursor: not-allowed;
 }
 
-.z-steps-item[data-disabled='true'] {
-  --z-steps-icon-bg: var(--z-color-disabled-bg);
-  --z-steps-icon-fg: var(--z-color-disabled-fg);
-  --z-steps-icon-border: var(--z-color-disabled-border);
-  --z-steps-title-fg: var(--z-color-disabled-fg);
-  --z-steps-description-fg: var(--z-color-disabled-fg);
+.zuvi-steps-item[data-disabled='true'] {
+  --zuvi-steps-icon-bg: var(--zuvi-color-disabled-bg);
+  --zuvi-steps-icon-fg: var(--zuvi-color-disabled-fg);
+  --zuvi-steps-icon-border: var(--zuvi-color-disabled-border);
+  --zuvi-steps-title-fg: var(--zuvi-color-disabled-fg);
+  --zuvi-steps-description-fg: var(--zuvi-color-disabled-fg);
 }
 
 /* ---------------------------------- icon ---------------------------------- */
 
-.z-steps-icon {
+.zuvi-steps-icon {
   box-sizing: border-box;
   flex: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--z-steps-icon-size);
-  height: var(--z-steps-icon-size);
-  border: var(--z-steps-icon-border-width) solid var(--z-steps-icon-border);
-  border-radius: var(--z-radius-full);
-  background: var(--z-steps-icon-bg);
-  color: var(--z-steps-icon-fg);
-  font-size: var(--z-steps-icon-font-size);
-  font-weight: var(--z-weight-medium);
+  width: var(--zuvi-steps-icon-size);
+  height: var(--zuvi-steps-icon-size);
+  border: var(--zuvi-steps-icon-border-width) solid var(--zuvi-steps-icon-border);
+  border-radius: var(--zuvi-radius-full);
+  background: var(--zuvi-steps-icon-bg);
+  color: var(--zuvi-steps-icon-fg);
+  font-size: var(--zuvi-steps-icon-font-size);
+  font-weight: var(--zuvi-weight-medium);
   line-height: 1;
   transition:
-    background-color var(--z-steps-transition),
-    color var(--z-steps-transition),
-    border-color var(--z-steps-transition);
+    background-color var(--zuvi-steps-transition),
+    color var(--zuvi-steps-transition),
+    border-color var(--zuvi-steps-transition);
 }
 
-.z-steps-icon-svg {
-  width: var(--z-steps-icon-svg-size);
-  height: var(--z-steps-icon-svg-size);
+.zuvi-steps-icon-svg {
+  width: var(--zuvi-steps-icon-svg-size);
+  height: var(--zuvi-steps-icon-svg-size);
 }
 
 /* 派生状态 → 图标节点配色（显式 status 覆盖走同一 data-status 出口） */
 
 /* wait：默认（muted） */
-.z-steps-item[data-status='wait'] {
-  --z-steps-title-fg: var(--z-color-fg-muted);
+.zuvi-steps-item[data-status='wait'] {
+  --zuvi-steps-title-fg: var(--zuvi-color-fg-muted);
 }
 
 /* process：主色描边 + 填充 */
-.z-steps-item[data-status='process'] {
-  --z-steps-icon-bg: var(--z-color-primary);
-  --z-steps-icon-fg: var(--z-color-primary-fg);
-  --z-steps-icon-border: var(--z-color-primary);
-  --z-steps-title-fg: var(--z-color-fg);
+.zuvi-steps-item[data-status='process'] {
+  --zuvi-steps-icon-bg: var(--zuvi-color-primary);
+  --zuvi-steps-icon-fg: var(--zuvi-color-primary-fg);
+  --zuvi-steps-icon-border: var(--zuvi-color-primary);
+  --zuvi-steps-title-fg: var(--zuvi-color-fg);
 }
 
-.z-steps-item[data-status='process'] .z-steps-title {
-  font-weight: var(--z-weight-semibold);
+.zuvi-steps-item[data-status='process'] .zuvi-steps-title {
+  font-weight: var(--zuvi-weight-semibold);
 }
 
 /* finish：主色对勾 */
-.z-steps-item[data-status='finish'] {
-  --z-steps-icon-bg: var(--z-color-primary-subtle);
-  --z-steps-icon-fg: var(--z-color-primary);
-  --z-steps-icon-border: transparent;
-  --z-steps-title-fg: var(--z-color-fg);
+.zuvi-steps-item[data-status='finish'] {
+  --zuvi-steps-icon-bg: var(--zuvi-color-primary-subtle);
+  --zuvi-steps-icon-fg: var(--zuvi-color-primary);
+  --zuvi-steps-icon-border: transparent;
+  --zuvi-steps-title-fg: var(--zuvi-color-fg);
 }
 
 /* error：danger 色 */
-.z-steps-item[data-status='error'] {
-  --z-steps-icon-bg: var(--z-color-danger-subtle);
-  --z-steps-icon-fg: var(--z-color-danger);
-  --z-steps-icon-border: transparent;
-  --z-steps-title-fg: var(--z-color-danger);
+.zuvi-steps-item[data-status='error'] {
+  --zuvi-steps-icon-bg: var(--zuvi-color-danger-subtle);
+  --zuvi-steps-icon-fg: var(--zuvi-color-danger);
+  --zuvi-steps-icon-border: transparent;
+  --zuvi-steps-title-fg: var(--zuvi-color-danger);
 }
 
 /* --------------------------------- content -------------------------------- */
 
-.z-steps-content {
+.zuvi-steps-content {
   display: flex;
   flex-direction: column;
-  gap: var(--z-space-1);
+  gap: var(--zuvi-space-1);
   min-width: 0;
   /* 标题首行与图标圆心对齐 */
-  padding-top: calc((var(--z-steps-icon-size) - 1.25em) / 2);
+  padding-top: calc((var(--zuvi-steps-icon-size) - 1.25em) / 2);
 }
 
-.z-steps-title {
-  font-size: var(--z-steps-title-font-size);
-  font-weight: var(--z-weight-medium);
-  line-height: var(--z-leading-normal);
-  color: var(--z-steps-title-fg);
-  transition: color var(--z-steps-transition);
+.zuvi-steps-title {
+  font-size: var(--zuvi-steps-title-font-size);
+  font-weight: var(--zuvi-weight-medium);
+  line-height: var(--zuvi-leading-normal);
+  color: var(--zuvi-steps-title-fg);
+  transition: color var(--zuvi-steps-transition);
 }
 
-.z-steps-description {
-  font-size: var(--z-steps-description-font-size);
-  line-height: var(--z-leading-normal);
-  color: var(--z-steps-description-fg);
+.zuvi-steps-description {
+  font-size: var(--zuvi-steps-description-font-size);
+  line-height: var(--zuvi-leading-normal);
+  color: var(--zuvi-steps-description-fg);
 }
 
 /* -------------------------------- connector ------------------------------- */
 
 /* 连接线：元素本体占位（水平 flex:1），线体由 ::after 绘制；最后一个无线（不渲染） */
-.z-steps-connector {
+.zuvi-steps-connector {
   position: relative;
   flex: 1 1 0;
-  min-width: var(--z-space-4);
+  min-width: var(--zuvi-space-4);
   align-self: flex-start;
-  height: var(--z-steps-icon-size);
+  height: var(--zuvi-steps-icon-size);
 }
 
-.z-steps-connector::after {
+.zuvi-steps-connector::after {
   content: '';
   position: absolute;
   top: 50%;
   inset-inline: 0;
-  height: var(--z-steps-line-width);
+  height: var(--zuvi-steps-line-width);
   transform: translateY(-50%);
-  border-radius: var(--z-radius-full);
-  background: var(--z-steps-line-color);
-  transition: background var(--z-steps-transition);
+  border-radius: var(--zuvi-radius-full);
+  background: var(--zuvi-steps-line-color);
+  transition: background var(--zuvi-steps-transition);
 }
 
 /* 已完成步骤之后的连接线呈主色（进度感） */
-.z-steps-item[data-status='finish'] .z-steps-connector::after {
-  background: var(--z-steps-line-finish-color);
+.zuvi-steps-item[data-status='finish'] .zuvi-steps-connector::after {
+  background: var(--zuvi-steps-line-finish-color);
 }
 
 /* -------------------------------- vertical -------------------------------- */
 
-.z-steps[data-direction='vertical'] {
+.zuvi-steps[data-direction='vertical'] {
   flex-direction: column;
 }
 
-.z-steps[data-direction='vertical'] .z-steps-item {
+.zuvi-steps[data-direction='vertical'] .zuvi-steps-item {
   display: block;
   position: relative;
 }
 
-.z-steps[data-direction='vertical'] .z-steps-trigger {
-  min-height: var(--z-steps-icon-size);
+.zuvi-steps[data-direction='vertical'] .zuvi-steps-trigger {
+  min-height: var(--zuvi-steps-icon-size);
 }
 
 /* 垂直连接线：绝对定位在行内起始侧图标列下方，延伸到下一项图标顶部（含行间距） */
-.z-steps[data-direction='vertical'] .z-steps-connector {
+.zuvi-steps[data-direction='vertical'] .zuvi-steps-connector {
   position: absolute;
   flex: none;
   inset-inline-start: 0;
-  width: var(--z-steps-icon-size);
-  top: calc(var(--z-steps-icon-size) + var(--z-steps-vertical-line-gap));
-  bottom: calc(-1 * var(--z-steps-item-gap));
+  width: var(--zuvi-steps-icon-size);
+  top: calc(var(--zuvi-steps-icon-size) + var(--zuvi-steps-vertical-line-gap));
+  bottom: calc(-1 * var(--zuvi-steps-item-gap));
   height: auto;
   min-width: 0;
 }
 
-.z-steps[data-direction='vertical'] .z-steps-connector::after {
+.zuvi-steps[data-direction='vertical'] .zuvi-steps-connector::after {
   top: 0;
   bottom: 0;
-  inset-inline-start: calc(50% - var(--z-steps-line-width) / 2);
+  inset-inline-start: calc(50% - var(--zuvi-steps-line-width) / 2);
   inset-inline-end: auto;
-  width: var(--z-steps-line-width);
+  width: var(--zuvi-steps-line-width);
   height: auto;
   transform: none;
 }
 
 /* ---------------------------------- size ---------------------------------- */
 
-.z-steps[data-size='sm'] {
-  --z-steps-icon-size: 1.5rem;
-  --z-steps-icon-font-size: var(--z-text-xs);
-  --z-steps-item-gap: var(--z-space-3);
-  --z-steps-gap: var(--z-space-2);
-  --z-steps-title-font-size: var(--z-text-sm);
-  --z-steps-description-font-size: var(--z-text-xs);
+.zuvi-steps[data-size='sm'] {
+  --zuvi-steps-icon-size: 1.5rem;
+  --zuvi-steps-icon-font-size: var(--zuvi-text-xs);
+  --zuvi-steps-item-gap: var(--zuvi-space-3);
+  --zuvi-steps-gap: var(--zuvi-space-2);
+  --zuvi-steps-title-font-size: var(--zuvi-text-sm);
+  --zuvi-steps-description-font-size: var(--zuvi-text-xs);
 }
 
 /* --------------------------------- motion --------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
-  button.z-steps-trigger,
-  .z-steps-icon,
-  .z-steps-title,
-  .z-steps-connector::after {
+  button.zuvi-steps-trigger,
+  .zuvi-steps-icon,
+  .zuvi-steps-title,
+  .zuvi-steps-connector::after {
     transition: none;
   }
 }

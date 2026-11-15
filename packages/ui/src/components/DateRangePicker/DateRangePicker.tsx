@@ -1,8 +1,8 @@
 'use client';
 
 import * as React from 'react';
-import { Calendar as CalendarGlyph, ChevronLeft, ChevronRight, Close } from '@zui/icons';
-import { useZuiConfig } from '../../config';
+import { Calendar as CalendarGlyph, ChevronLeft, ChevronRight, Close } from '@zuvi/icons';
+import { useZuviConfig } from '../../config';
 import { cx, FloatingPanel, useControllableState, useOnClickOutside } from '../../utils';
 import './DateRangePicker.css';
 
@@ -106,7 +106,7 @@ function monthIndex(date: Date): number {
   return date.getFullYear() * 12 + date.getMonth();
 }
 
-/* --------------------------------- 图标（@zui/icons） -------------------------- */
+/* --------------------------------- 图标（@zuvi/icons） -------------------------- */
 
 function CalendarIcon() {
   return <CalendarGlyph size={16} />;
@@ -136,7 +136,7 @@ export function DateRangePicker(props: DateRangePickerProps) {
     ...restProps
   } = props;
 
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const rootRef = React.useRef<HTMLDivElement>(null);
   const startRef = React.useRef<HTMLInputElement>(null);
   const endRef = React.useRef<HTMLInputElement>(null);
@@ -403,15 +403,15 @@ export function DateRangePicker(props: DateRangePickerProps) {
       ref={gridRef}
       aria-labelledby={labelId}
       data-part="grid"
-      className="z-daterange-grid"
+      className="zuvi-daterange-grid"
     >
-      <div role="row" data-part="week" className="z-daterange-week">
+      <div role="row" data-part="week" className="zuvi-daterange-week">
         {locale.date.weekdays.map((name) => (
           <span
             key={name}
             role="columnheader"
             data-part="weekday"
-            className="z-daterange-weekday"
+            className="zuvi-daterange-weekday"
             aria-label={locale.date.weekdayFormat.replace('{name}', name)}
           >
             {name}
@@ -419,7 +419,7 @@ export function DateRangePicker(props: DateRangePickerProps) {
         ))}
       </div>
       {Array.from({ length: 6 }, (_, weekIndex) => (
-        <div role="row" data-part="week" className="z-daterange-week" key={weekIndex}>
+        <div role="row" data-part="week" className="zuvi-daterange-week" key={weekIndex}>
           {cells.slice(weekIndex * 7, weekIndex * 7 + 7).map((date) => {
             const iso = toISO(date);
             const outMonth =
@@ -434,7 +434,7 @@ export function DateRangePicker(props: DateRangePickerProps) {
                 role="gridcell"
                 data-part="day"
                 data-date={iso}
-                className={cx('z-daterange-day', classNames?.day)}
+                className={cx('zuvi-daterange-day', classNames?.day)}
                 aria-selected={isSelected}
                 aria-disabled={disabledDay || undefined}
                 aria-current={iso === todayISO ? 'date' : undefined}
@@ -472,7 +472,7 @@ export function DateRangePicker(props: DateRangePickerProps) {
         else if (userRef) userRef.current = node;
       }}
       data-part="root"
-      className={cx('z-daterange', classNames?.root, className)}
+      className={cx('zuvi-daterange', classNames?.root, className)}
       data-size={size}
       data-status={status}
       data-open={open ? 'true' : 'false'}
@@ -480,14 +480,14 @@ export function DateRangePicker(props: DateRangePickerProps) {
     >
       <div
         data-part="trigger"
-        className={cx('z-daterange-trigger', classNames?.trigger)}
+        className={cx('zuvi-daterange-trigger', classNames?.trigger)}
         data-open={open ? 'true' : 'false'}
       >
         <input
           ref={startRef}
           id={id}
           data-part="input-start"
-          className="z-daterange-input"
+          className="zuvi-daterange-input"
           type="text"
           role="combobox"
           aria-label={locale.dateRange.startPlaceholder}
@@ -502,13 +502,13 @@ export function DateRangePicker(props: DateRangePickerProps) {
           onClick={openPanel}
           onKeyDown={onTriggerKeyDown}
         />
-        <span data-part="separator" aria-hidden="true" className="z-daterange-separator">
+        <span data-part="separator" aria-hidden="true" className="zuvi-daterange-separator">
           {locale.dateRange.separator}
         </span>
         <input
           ref={endRef}
           data-part="input-end"
-          className="z-daterange-input"
+          className="zuvi-daterange-input"
           type="text"
           role="combobox"
           aria-label={locale.dateRange.endPlaceholder}
@@ -523,14 +523,14 @@ export function DateRangePicker(props: DateRangePickerProps) {
           onClick={openPanel}
           onKeyDown={onTriggerKeyDown}
         />
-        <span data-part="icon" aria-hidden="true" className="z-daterange-icon">
+        <span data-part="icon" aria-hidden="true" className="zuvi-daterange-icon">
           <CalendarIcon />
         </span>
         {showClear ? (
           <button
             type="button"
             data-part="clear"
-            className="z-daterange-clear"
+            className="zuvi-daterange-clear"
             aria-label={locale.input.clear}
             onClick={clearRange}
           >
@@ -547,7 +547,7 @@ export function DateRangePicker(props: DateRangePickerProps) {
             role="dialog"
             aria-label={locale.dateRange.panelLabel}
             data-part="panel"
-            className={cx('z-daterange-panel', classNames?.panel)}
+            className={cx('zuvi-daterange-panel', classNames?.panel)}
             onKeyDown={(event) => {
               if (event.key === 'Escape' && !event.defaultPrevented) {
                 event.preventDefault();
@@ -556,29 +556,29 @@ export function DateRangePicker(props: DateRangePickerProps) {
               }
             }}
           >
-            <div data-part="header" className={cx('z-daterange-header', classNames?.header)}>
+            <div data-part="header" className={cx('zuvi-daterange-header', classNames?.header)}>
               <button
                 type="button"
                 data-part="nav"
-                className="z-daterange-nav"
+                className="zuvi-daterange-nav"
                 aria-label={locale.date.previousMonth}
                 disabled={disabled}
                 onClick={() => shiftView(-1)}
               >
                 <ChevronIcon direction="left" />
               </button>
-              <span id={leftLabelId} data-part="label" className="z-daterange-label">
+              <span id={leftLabelId} data-part="label" className="zuvi-daterange-label">
                 {monthLabel(viewMonth)}
               </span>
               {!singleMonth && (
-                <span id={rightLabelId} data-part="label" className="z-daterange-label">
+                <span id={rightLabelId} data-part="label" className="zuvi-daterange-label">
                   {monthLabel(addMonths(viewMonth, 1))}
                 </span>
               )}
               <button
                 type="button"
                 data-part="nav"
-                className="z-daterange-nav"
+                className="zuvi-daterange-nav"
                 aria-label={locale.date.nextMonth}
                 disabled={disabled}
                 onClick={() => shiftView(1)}
@@ -587,7 +587,7 @@ export function DateRangePicker(props: DateRangePickerProps) {
               </button>
             </div>
 
-            <div data-part="months" className="z-daterange-months">
+            <div data-part="months" className="zuvi-daterange-months">
               {renderMonthGrid(leftCells, viewMonth, leftLabelId, leftGridRef)}
               {!singleMonth &&
                 renderMonthGrid(rightCells, addMonths(viewMonth, 1), rightLabelId, rightGridRef)}

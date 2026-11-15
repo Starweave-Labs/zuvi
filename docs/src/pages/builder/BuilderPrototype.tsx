@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { BuilderDocument } from './BuilderDocument';
 import { validateBuilderData, type BuilderData } from './builder-model';
 export interface BuilderPrototypeData {
-  format: 'zui-prototype';
+  format: 'zuvi-prototype';
   version: 1;
   startId: string;
   pages: { id: string; name: string; data: BuilderData }[];
@@ -11,7 +11,7 @@ export function validatePrototype(input: unknown): BuilderPrototypeData {
   const source = input as BuilderPrototypeData;
   if (
     !source ||
-    source.format !== 'zui-prototype' ||
+    source.format !== 'zuvi-prototype' ||
     source.version !== 1 ||
     !Array.isArray(source.pages) ||
     !source.pages.length ||
@@ -33,7 +33,7 @@ export function validatePrototype(input: unknown): BuilderPrototypeData {
     return { id: page.id, name: page.name, data: validateBuilderData(page.data) };
   });
   if (!ids.has(source.startId)) throw new Error('原型首页不存在。');
-  return { format: 'zui-prototype', version: 1, pages, startId: source.startId };
+  return { format: 'zuvi-prototype', version: 1, pages, startId: source.startId };
 }
 export function BuilderPrototype({ prototype }: { prototype: BuilderPrototypeData }) {
   const readRoute = () =>
@@ -61,9 +61,9 @@ export function BuilderPrototype({ prototype }: { prototype: BuilderPrototypeDat
   };
   return (
     <>
-      <nav className="z-builder-prototype-nav" aria-label="原型页面">
+      <nav className="zuvi-builder-prototype-nav" aria-label="原型页面">
         <strong>
-          ZUI <span>交互原型</span>
+          ZUVI <span>交互原型</span>
         </strong>
         <select
           aria-label="当前原型页面"
@@ -82,7 +82,7 @@ export function BuilderPrototype({ prototype }: { prototype: BuilderPrototypeDat
       {page ? (
         <BuilderDocument key={page.id} data={page.data} navigate={navigate} />
       ) : (
-        <section className="z-builder-prototype-empty">
+        <section className="zuvi-builder-prototype-empty">
           <h1>页面不存在</h1>
           <p>这个链接所指向的页面不在当前原型中。</p>
           <button type="button" onClick={() => navigate(prototype.startId)}>

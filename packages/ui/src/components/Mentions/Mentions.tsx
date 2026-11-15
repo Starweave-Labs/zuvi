@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useZuiConfig } from '../../config';
+import { useZuviConfig } from '../../config';
 import { FloatingPanel, cx, useControllableState, useOnClickOutside } from '../../utils';
 import './Mentions.css';
 
@@ -69,7 +69,7 @@ function findMention(text: string, pos: number, prefix: string): MentionTrigger 
 /* --------------------------------- 提及 ---------------------------------- */
 
 export function Mentions(props: MentionsProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const {
     options,
     value,
@@ -228,7 +228,7 @@ export function Mentions(props: MentionsProps) {
     <div
       ref={rootRef}
       data-part="root"
-      className={cx('z-mentions', classNames?.root, className)}
+      className={cx('zuvi-mentions', classNames?.root, className)}
       data-open={open ? 'true' : 'false'}
       data-disabled={disabled ? 'true' : undefined}
     >
@@ -236,7 +236,7 @@ export function Mentions(props: MentionsProps) {
         id={textareaId}
         ref={textareaRef}
         data-part="textarea"
-        className={cx('z-mentions-textarea', classNames?.textarea)}
+        className={cx('zuvi-mentions-textarea', classNames?.textarea)}
         rows={rows}
         value={current}
         placeholder={placeholder}
@@ -253,16 +253,16 @@ export function Mentions(props: MentionsProps) {
       />
 
       {open ? (
-        <FloatingPanel open={open} anchorRef={rootRef} matchWidth offsetVariable="--z-mentions-panel-margin-top">
+        <FloatingPanel open={open} anchorRef={rootRef} matchWidth offsetVariable="--zuvi-mentions-panel-margin-top">
         <div ref={panelRef}
           id={panelId}
           role="listbox"
           data-part="panel"
-          className={cx('z-mentions-panel', classNames?.panel)}
+          className={cx('zuvi-mentions-panel', classNames?.panel)}
           aria-label={locale.accessibility.mentions}
         >
           {filtered.length === 0 ? (
-            <div className="z-mentions-empty">{locale.accessibility.noMatch}</div>
+            <div className="zuvi-mentions-empty">{locale.accessibility.noMatch}</div>
           ) : (
             filtered.map((option, index) => (
               <div
@@ -273,7 +273,7 @@ export function Mentions(props: MentionsProps) {
                 id={optionId(index)}
                 role="option"
                 data-part="item"
-                className={cx('z-mentions-item', classNames?.item)}
+                className={cx('zuvi-mentions-item', classNames?.item)}
                 aria-selected={activeIndex === index}
                 data-active={activeIndex === index ? 'true' : undefined}
                 onMouseDown={(event) => {

@@ -15,7 +15,7 @@ describe('kanban block', () => {
     expect(screen.getByLabelText('3 张卡片')).toBeInTheDocument();
     expect(screen.getAllByLabelText('2 张卡片')).toHaveLength(2);
     // 优先级 Tag
-    expect(container.querySelectorAll('.z-tag').length).toBeGreaterThanOrEqual(7);
+    expect(container.querySelectorAll('.zuvi-tag').length).toBeGreaterThanOrEqual(7);
     expect(screen.getByText('数据大屏移动端适配')).toBeInTheDocument();
   });
 
@@ -23,30 +23,30 @@ describe('kanban block', () => {
     const onActiveCardChange = vi.fn();
     const onCardClick = vi.fn();
     render(<KanbanBlock onActiveCardChange={onActiveCardChange} onCardClick={onCardClick} />);
-    const card = screen.getByText('看板拖拽交互调研').closest('.z-card');
+    const card = screen.getByText('看板拖拽交互调研').closest('.zuvi-card');
     expect(card).not.toBeNull();
     expect(card).toHaveAttribute('data-active', 'false');
-    fireEvent.click(screen.getByText('看板拖拽交互调研').closest('.z-card')!);
+    fireEvent.click(screen.getByText('看板拖拽交互调研').closest('.zuvi-card')!);
     expect(onActiveCardChange).toHaveBeenCalledWith('k4');
     expect(onCardClick).toHaveBeenCalledWith(
       expect.objectContaining({ key: 'k4', priority: 'high' })
     );
     // 再次点击同一卡片取消高亮
-    fireEvent.click(screen.getByText('看板拖拽交互调研').closest('.z-card')!);
+    fireEvent.click(screen.getByText('看板拖拽交互调研').closest('.zuvi-card')!);
     expect(onActiveCardChange).toHaveBeenLastCalledWith(null);
   });
 
   it('supports controlled activeCardKey', () => {
     const onActiveCardChange = vi.fn();
     render(<KanbanBlock activeCardKey="k1" onActiveCardChange={onActiveCardChange} />);
-    const activeCard = screen.getByText('数据大屏移动端适配').closest('.z-card');
+    const activeCard = screen.getByText('数据大屏移动端适配').closest('.zuvi-card');
     expect(activeCard).toHaveAttribute('data-active', 'true');
-    const other = screen.getByText('订单导出接口性能优化').closest('.z-card');
+    const other = screen.getByText('订单导出接口性能优化').closest('.zuvi-card');
     expect(other).toHaveAttribute('data-active', 'false');
     fireEvent.click(other!);
     expect(onActiveCardChange).toHaveBeenCalledWith('k2');
     // 受控：值不内部翻转
-    expect(screen.getByText('数据大屏移动端适配').closest('.z-card')).toHaveAttribute(
+    expect(screen.getByText('数据大屏移动端适配').closest('.zuvi-card')).toHaveAttribute(
       'data-active',
       'true'
     );

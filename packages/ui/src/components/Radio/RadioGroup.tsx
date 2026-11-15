@@ -43,7 +43,7 @@ export function RadioGroup({
       aria-orientation={orientation}
       data-part="root"
       data-orientation={orientation}
-      className={cx('z-radio-group', className, classNames?.root)}
+      className={cx('zuvi-radio-group', className, classNames?.root)}
       {...rest}
     >
       <RadioGroupContext.Provider

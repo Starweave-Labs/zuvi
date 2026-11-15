@@ -14,7 +14,7 @@ const DEFAULT_MODEL = 'gpt-4o-mini';
 /** Host-only base URLs use /v1; versioned or proxied paths keep their prefix. */
 function chatCompletionsURL(baseURL: string): string {
   const base = baseURL.replace(/\/+$/, '');
-  const path = new URL(base, 'https://zui.invalid').pathname;
+  const path = new URL(base, 'https://zuvi.invalid').pathname;
   return `${base}${path === '/' ? '/v1' : ''}/chat/completions`;
 }
 
@@ -30,7 +30,7 @@ export function describeContext(context?: TranslateContext): string {
 /** 组装 system prompt：翻译要求 + 语言方向 + 组件上下文注入 */
 export function buildSystemPrompt(request: TranslateRequest, context?: TranslateContext): string {
   const lines = [
-    `你是 ZUI 组件库的 UI 文案翻译引擎。把用户消息从 ${request.sourceLang} 翻译成 ${request.targetLang}。`,
+    `你是 ZUVI 组件库的 UI 文案翻译引擎。把用户消息从 ${request.sourceLang} 翻译成 ${request.targetLang}。`,
     '要求：只输出译文本身，不要解释、不要引号、保持占位符与术语一致，语气符合 UI 控件用语（简洁、祈使、无句末标点偏好与原文一致）。',
   ];
   const hint = describeContext(context);

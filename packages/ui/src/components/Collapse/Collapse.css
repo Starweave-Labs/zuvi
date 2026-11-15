@@ -1,92 +1,92 @@
 /* Collapse —— 折叠面板（手风琴单开 + grid-template-rows 高度动画）。
    组件级变量定义在根选择器上，可被用户任意覆盖。 */
 
-.z-collapse {
-  --z-collapse-font-size: var(--z-text-sm);
-  --z-collapse-fg: var(--z-color-fg);
-  --z-collapse-border: var(--z-color-border);
-  --z-collapse-radius: var(--z-radius-md);
-  --z-collapse-header-bg: var(--z-color-bg-subtle);
-  --z-collapse-header-hover-bg: var(--z-color-bg-muted);
-  --z-collapse-header-padding-x: var(--z-space-4);
-  --z-collapse-header-padding-y: var(--z-space-3);
-  --z-collapse-header-font-weight: var(--z-weight-medium);
-  --z-collapse-header-disabled-fg: var(--z-color-disabled-fg);
-  --z-collapse-header-disabled-bg: var(--z-color-bg-subtle);
-  --z-collapse-content-bg: var(--z-color-bg);
-  --z-collapse-content-padding-x: var(--z-space-4);
-  --z-collapse-content-padding-y: var(--z-space-3);
-  --z-collapse-arrow-color: var(--z-color-fg-muted);
-  --z-collapse-arrow-gap: var(--z-space-2);
-  --z-collapse-focus-ring: var(--z-color-focus-ring);
-  --z-collapse-animation-duration: var(--z-duration-normal);
+.zuvi-collapse {
+  --zuvi-collapse-font-size: var(--zuvi-text-sm);
+  --zuvi-collapse-fg: var(--zuvi-color-fg);
+  --zuvi-collapse-border: var(--zuvi-color-border);
+  --zuvi-collapse-radius: var(--zuvi-radius-md);
+  --zuvi-collapse-header-bg: var(--zuvi-color-bg-subtle);
+  --zuvi-collapse-header-hover-bg: var(--zuvi-color-bg-muted);
+  --zuvi-collapse-header-padding-x: var(--zuvi-space-4);
+  --zuvi-collapse-header-padding-y: var(--zuvi-space-3);
+  --zuvi-collapse-header-font-weight: var(--zuvi-weight-medium);
+  --zuvi-collapse-header-disabled-fg: var(--zuvi-color-disabled-fg);
+  --zuvi-collapse-header-disabled-bg: var(--zuvi-color-bg-subtle);
+  --zuvi-collapse-content-bg: var(--zuvi-color-bg);
+  --zuvi-collapse-content-padding-x: var(--zuvi-space-4);
+  --zuvi-collapse-content-padding-y: var(--zuvi-space-3);
+  --zuvi-collapse-arrow-color: var(--zuvi-color-fg-muted);
+  --zuvi-collapse-arrow-gap: var(--zuvi-space-2);
+  --zuvi-collapse-focus-ring: var(--zuvi-color-focus-ring);
+  --zuvi-collapse-animation-duration: var(--zuvi-duration-normal);
 }
 
-.z-collapse {
+.zuvi-collapse {
   box-sizing: border-box;
-  color: var(--z-collapse-fg);
-  font-family: var(--z-font-sans);
-  font-size: var(--z-collapse-font-size);
-  border: 1px solid var(--z-collapse-border);
-  border-radius: var(--z-collapse-radius);
+  color: var(--zuvi-collapse-fg);
+  font-family: var(--zuvi-font-sans);
+  font-size: var(--zuvi-collapse-font-size);
+  border: 1px solid var(--zuvi-collapse-border);
+  border-radius: var(--zuvi-collapse-radius);
   overflow: hidden;
 }
 
-.z-collapse-item + .z-collapse-item {
-  border-top: 1px solid var(--z-collapse-border);
+.zuvi-collapse-item + .zuvi-collapse-item {
+  border-top: 1px solid var(--zuvi-collapse-border);
 }
 
 /* -------------------------------- 头部 -------------------------------- */
 
-.z-collapse-header {
+.zuvi-collapse-header {
   display: flex;
   align-items: center;
-  gap: var(--z-collapse-arrow-gap);
+  gap: var(--zuvi-collapse-arrow-gap);
   width: 100%;
   box-sizing: border-box;
-  padding: var(--z-collapse-header-padding-y) var(--z-collapse-header-padding-x);
+  padding: var(--zuvi-collapse-header-padding-y) var(--zuvi-collapse-header-padding-x);
   font-family: inherit;
   font-size: inherit;
-  font-weight: var(--z-collapse-header-font-weight);
+  font-weight: var(--zuvi-collapse-header-font-weight);
   color: inherit;
   text-align: start;
-  background: var(--z-collapse-header-bg);
+  background: var(--zuvi-collapse-header-bg);
   border: none;
   cursor: pointer;
-  transition: background-color var(--z-duration-fast) var(--z-ease-standard);
+  transition: background-color var(--zuvi-duration-fast) var(--zuvi-ease-standard);
 }
 
-.z-collapse-header:hover {
-  background: var(--z-collapse-header-hover-bg);
+.zuvi-collapse-header:hover {
+  background: var(--zuvi-collapse-header-hover-bg);
 }
 
-.z-collapse-header:focus-visible {
+.zuvi-collapse-header:focus-visible {
   outline: none;
-  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--z-collapse-focus-ring) 45%, transparent);
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--zuvi-collapse-focus-ring) 45%, transparent);
 }
 
-.z-collapse-header[aria-disabled='true'] {
-  color: var(--z-collapse-header-disabled-fg);
-  background: var(--z-collapse-header-disabled-bg);
+.zuvi-collapse-header[aria-disabled='true'] {
+  color: var(--zuvi-collapse-header-disabled-fg);
+  background: var(--zuvi-collapse-header-disabled-bg);
   cursor: not-allowed;
 }
 
-.z-collapse-arrow {
+.zuvi-collapse-arrow {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--z-collapse-arrow-color);
+  color: var(--zuvi-collapse-arrow-color);
 }
 
-.z-collapse-arrow[data-expanded='true'] .z-collapse-arrow-icon {
+.zuvi-collapse-arrow[data-expanded='true'] .zuvi-collapse-arrow-icon {
   transform: rotate(90deg);
 }
 
-.z-collapse-arrow-icon {
-  transition: transform var(--z-duration-fast) var(--z-ease-standard);
+.zuvi-collapse-arrow-icon {
+  transition: transform var(--zuvi-duration-fast) var(--zuvi-ease-standard);
 }
 
-.z-collapse-header-label {
+.zuvi-collapse-header-label {
   flex: 1 1 auto;
   min-width: 0;
 }
@@ -95,38 +95,38 @@
 /* grid-template-rows 0fr ↔ 1fr 过渡实现高度动画；
    收起时 visibility:hidden 延迟到动画结束，同步退出无障碍树。 */
 
-.z-collapse-content {
+.zuvi-collapse-content {
   display: grid;
   grid-template-rows: 0fr;
   visibility: hidden;
-  background: var(--z-collapse-content-bg);
+  background: var(--zuvi-collapse-content-bg);
   transition:
-    grid-template-rows var(--z-collapse-animation-duration) var(--z-ease-standard),
-    visibility 0s linear var(--z-collapse-animation-duration);
+    grid-template-rows var(--zuvi-collapse-animation-duration) var(--zuvi-ease-standard),
+    visibility 0s linear var(--zuvi-collapse-animation-duration);
 }
 
-.z-collapse-content[data-expanded='true'] {
+.zuvi-collapse-content[data-expanded='true'] {
   grid-template-rows: 1fr;
   visibility: visible;
   transition:
-    grid-template-rows var(--z-collapse-animation-duration) var(--z-ease-standard),
+    grid-template-rows var(--zuvi-collapse-animation-duration) var(--zuvi-ease-standard),
     visibility 0s;
 }
 
-.z-collapse-content-inner {
+.zuvi-collapse-content-inner {
   overflow: hidden;
   min-height: 0;
-  padding: var(--z-collapse-content-padding-y) var(--z-collapse-content-padding-x);
+  padding: var(--zuvi-collapse-content-padding-y) var(--zuvi-collapse-content-padding-x);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .z-collapse-content,
-  .z-collapse-content[data-expanded='true'] {
+  .zuvi-collapse-content,
+  .zuvi-collapse-content[data-expanded='true'] {
     transition: none;
   }
 
-  .z-collapse-arrow-icon,
-  .z-collapse-header {
+  .zuvi-collapse-arrow-icon,
+  .zuvi-collapse-header {
     transition: none;
   }
 }

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Slider } from '@zui/react';
+import { Slider } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -121,26 +121,26 @@ export default function SliderPage(): React.ReactNode {
         name="Slider"
         parts={['root', 'track', 'fill', 'thumb', 'mark', 'tooltip']}
         vars={[
-          '--z-slider-track-height',
-          '--z-slider-track-bg',
-          '--z-slider-track-radius',
-          '--z-slider-fill-bg',
-          '--z-slider-thumb-size',
-          '--z-slider-thumb-bg',
-          '--z-slider-thumb-border',
-          '--z-slider-thumb-shadow',
-          '--z-slider-thumb-focus-ring',
-          '--z-slider-mark-color',
-          '--z-slider-mark-active-color',
-          '--z-slider-mark-font-size',
-          '--z-slider-tooltip-bg',
-          '--z-slider-tooltip-fg',
-          '--z-slider-tooltip-font-size',
-          '--z-slider-tooltip-padding-x',
-          '--z-slider-tooltip-padding-y',
-          '--z-slider-tooltip-radius',
-          '--z-slider-disabled-opacity',
-          '--z-slider-transition',
+          '--zuvi-slider-track-height',
+          '--zuvi-slider-track-bg',
+          '--zuvi-slider-track-radius',
+          '--zuvi-slider-fill-bg',
+          '--zuvi-slider-thumb-size',
+          '--zuvi-slider-thumb-bg',
+          '--zuvi-slider-thumb-border',
+          '--zuvi-slider-thumb-shadow',
+          '--zuvi-slider-thumb-focus-ring',
+          '--zuvi-slider-mark-color',
+          '--zuvi-slider-mark-active-color',
+          '--zuvi-slider-mark-font-size',
+          '--zuvi-slider-tooltip-bg',
+          '--zuvi-slider-tooltip-fg',
+          '--zuvi-slider-tooltip-font-size',
+          '--zuvi-slider-tooltip-padding-x',
+          '--zuvi-slider-tooltip-padding-y',
+          '--zuvi-slider-tooltip-radius',
+          '--zuvi-slider-disabled-opacity',
+          '--zuvi-slider-transition',
         ]}
       />
     </div>

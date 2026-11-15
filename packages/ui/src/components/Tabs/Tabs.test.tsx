@@ -271,7 +271,7 @@ describe('Tabs', () => {
         classNames={{ root: 'my-root', list: 'my-list', trigger: 'my-trigger', panel: 'my-panel' }}
       />
     );
-    const root = container.querySelector('.z-tabs') as HTMLElement;
+    const root = container.querySelector('.zuvi-tabs') as HTMLElement;
     expect(root).toHaveClass('my-root');
     expect(root).toHaveAttribute('data-part', 'root');
     expect(root).toHaveAttribute('data-orientation', 'horizontal');

@@ -40,17 +40,17 @@ describe('TreeSelect', () => {
       />
     );
     const root = document.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-tree-select', 'my-root', 'c-root');
+    expect(root).toHaveClass('zuvi-tree-select', 'my-root', 'c-root');
     expect(root).toHaveAttribute('data-open', 'false');
-    expect(getTrigger()).toHaveClass('z-tree-select-trigger', 'c-trigger');
+    expect(getTrigger()).toHaveClass('zuvi-tree-select-trigger', 'c-trigger');
     expect(getTrigger()).toHaveAttribute('role', 'combobox');
     expect(getTrigger()).toHaveAttribute('aria-label', '请选择');
     expect(getTrigger()).toHaveAttribute('aria-haspopup', 'tree');
     expect(getTrigger()).toHaveAttribute('aria-expanded', 'false');
     expect(screen.getByText('请选择')).toHaveAttribute('data-part', 'placeholder');
-    expect(getPanel()).toHaveClass('z-tree-select-panel', 'c-panel');
+    expect(getPanel()).toHaveClass('zuvi-tree-select-panel', 'c-panel');
     expect(document.querySelector('[data-part="tags"]')).toHaveClass(
-      'z-tree-select-tags',
+      'zuvi-tree-select-tags',
       'c-tags'
     );
   });

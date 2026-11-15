@@ -1,152 +1,152 @@
 /* List —— 列表（ul/li 语义 + 头像/标题/描述/extra）。
    组件级变量定义在根选择器上，可被用户任意覆盖。 */
 
-.z-list {
-  --z-list-font-size: var(--z-text-sm);
-  --z-list-fg: var(--z-color-fg);
-  --z-list-bg: var(--z-color-bg);
-  --z-list-border: var(--z-color-border);
-  --z-list-radius: var(--z-radius-md);
-  --z-list-item-padding-x: var(--z-space-4);
-  --z-list-item-padding-y: var(--z-space-3);
-  --z-list-item-gap: var(--z-space-3);
-  --z-list-item-hover-bg: var(--z-color-bg-subtle);
-  --z-list-item-border: var(--z-color-border-subtle);
-  --z-list-title-font-weight: var(--z-weight-medium);
-  --z-list-title-fg: var(--z-color-fg);
-  --z-list-description-fg: var(--z-color-fg-muted);
-  --z-list-description-margin-top: var(--z-space-1);
-  --z-list-avatar-size: 2.5rem;
-  --z-list-header-padding-x: var(--z-space-4);
-  --z-list-header-padding-y: var(--z-space-3);
-  --z-list-header-bg: var(--z-color-bg-subtle);
-  --z-list-header-border: var(--z-color-border-subtle);
-  --z-list-header-fg: var(--z-color-fg-muted);
-  --z-list-loading-padding: var(--z-space-8);
-  --z-list-spinner-size: 1.25rem;
-  --z-list-spinner-width: 2px;
-  --z-list-spinner-color: var(--z-color-primary);
-  --z-list-spinner-track: var(--z-color-border);
+.zuvi-list {
+  --zuvi-list-font-size: var(--zuvi-text-sm);
+  --zuvi-list-fg: var(--zuvi-color-fg);
+  --zuvi-list-bg: var(--zuvi-color-bg);
+  --zuvi-list-border: var(--zuvi-color-border);
+  --zuvi-list-radius: var(--zuvi-radius-md);
+  --zuvi-list-item-padding-x: var(--zuvi-space-4);
+  --zuvi-list-item-padding-y: var(--zuvi-space-3);
+  --zuvi-list-item-gap: var(--zuvi-space-3);
+  --zuvi-list-item-hover-bg: var(--zuvi-color-bg-subtle);
+  --zuvi-list-item-border: var(--zuvi-color-border-subtle);
+  --zuvi-list-title-font-weight: var(--zuvi-weight-medium);
+  --zuvi-list-title-fg: var(--zuvi-color-fg);
+  --zuvi-list-description-fg: var(--zuvi-color-fg-muted);
+  --zuvi-list-description-margin-top: var(--zuvi-space-1);
+  --zuvi-list-avatar-size: 2.5rem;
+  --zuvi-list-header-padding-x: var(--zuvi-space-4);
+  --zuvi-list-header-padding-y: var(--zuvi-space-3);
+  --zuvi-list-header-bg: var(--zuvi-color-bg-subtle);
+  --zuvi-list-header-border: var(--zuvi-color-border-subtle);
+  --zuvi-list-header-fg: var(--zuvi-color-fg-muted);
+  --zuvi-list-loading-padding: var(--zuvi-space-8);
+  --zuvi-list-spinner-size: 1.25rem;
+  --zuvi-list-spinner-width: 2px;
+  --zuvi-list-spinner-color: var(--zuvi-color-primary);
+  --zuvi-list-spinner-track: var(--zuvi-color-border);
 }
 
 /* --------------------------------- 尺寸 --------------------------------- */
 
-.z-list[data-size='sm'] {
-  --z-list-font-size: var(--z-text-xs);
-  --z-list-item-padding-x: var(--z-space-3);
-  --z-list-item-padding-y: var(--z-space-2);
-  --z-list-avatar-size: 2rem;
+.zuvi-list[data-size='sm'] {
+  --zuvi-list-font-size: var(--zuvi-text-xs);
+  --zuvi-list-item-padding-x: var(--zuvi-space-3);
+  --zuvi-list-item-padding-y: var(--zuvi-space-2);
+  --zuvi-list-avatar-size: 2rem;
 }
 
-.z-list {
+.zuvi-list {
   box-sizing: border-box;
-  color: var(--z-list-fg);
-  font-family: var(--z-font-sans);
-  font-size: var(--z-list-font-size);
-  background: var(--z-list-bg);
+  color: var(--zuvi-list-fg);
+  font-family: var(--zuvi-font-sans);
+  font-size: var(--zuvi-list-font-size);
+  background: var(--zuvi-list-bg);
 }
 
-.z-list[data-bordered='true'] {
-  border: 1px solid var(--z-list-border);
-  border-radius: var(--z-list-radius);
+.zuvi-list[data-bordered='true'] {
+  border: 1px solid var(--zuvi-list-border);
+  border-radius: var(--zuvi-list-radius);
   overflow: hidden;
 }
 
 /* -------------------------------- 头/尾 -------------------------------- */
 
-.z-list-header,
-.z-list-footer {
-  padding: var(--z-list-header-padding-y) var(--z-list-header-padding-x);
-  color: var(--z-list-header-fg);
-  background: var(--z-list-header-bg);
-  border-bottom: 1px solid var(--z-list-header-border);
+.zuvi-list-header,
+.zuvi-list-footer {
+  padding: var(--zuvi-list-header-padding-y) var(--zuvi-list-header-padding-x);
+  color: var(--zuvi-list-header-fg);
+  background: var(--zuvi-list-header-bg);
+  border-bottom: 1px solid var(--zuvi-list-header-border);
 }
 
-.z-list-footer {
+.zuvi-list-footer {
   border-bottom: none;
-  border-top: 1px solid var(--z-list-header-border);
+  border-top: 1px solid var(--zuvi-list-header-border);
 }
 
-.z-list[data-bordered='false'] .z-list-header,
-.z-list[data-bordered='false'] .z-list-footer {
+.zuvi-list[data-bordered='false'] .zuvi-list-header,
+.zuvi-list[data-bordered='false'] .zuvi-list-footer {
   background: none;
   padding-inline: 0;
 }
 
 /* -------------------------------- 列表项 ------------------------------- */
 
-.z-list-body {
+.zuvi-list-body {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.z-list-item {
+.zuvi-list-item {
   display: flex;
   align-items: center;
-  gap: var(--z-list-item-gap);
+  gap: var(--zuvi-list-item-gap);
   box-sizing: border-box;
-  padding: var(--z-list-item-padding-y) var(--z-list-item-padding-x);
-  transition: background-color var(--z-duration-fast) var(--z-ease-standard);
+  padding: var(--zuvi-list-item-padding-y) var(--zuvi-list-item-padding-x);
+  transition: background-color var(--zuvi-duration-fast) var(--zuvi-ease-standard);
 }
 
-.z-list-item + .z-list-item {
-  border-top: 1px solid var(--z-list-item-border);
+.zuvi-list-item + .zuvi-list-item {
+  border-top: 1px solid var(--zuvi-list-item-border);
 }
 
-.z-list-item:hover {
-  background: var(--z-list-item-hover-bg);
+.zuvi-list-item:hover {
+  background: var(--zuvi-list-item-hover-bg);
 }
 
-.z-list-item-avatar {
+.zuvi-list-item-avatar {
   flex: 0 0 auto;
-  width: var(--z-list-avatar-size);
-  height: var(--z-list-avatar-size);
+  width: var(--zuvi-list-avatar-size);
+  height: var(--zuvi-list-avatar-size);
   overflow: hidden;
 }
 
-.z-list-item-meta {
+.zuvi-list-item-meta {
   flex: 1 1 auto;
   min-width: 0;
 }
 
-.z-list-item-title {
-  color: var(--z-list-title-fg);
-  font-weight: var(--z-list-title-font-weight);
+.zuvi-list-item-title {
+  color: var(--zuvi-list-title-fg);
+  font-weight: var(--zuvi-list-title-font-weight);
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.z-list-item-description {
-  margin-top: var(--z-list-description-margin-top);
-  color: var(--z-list-description-fg);
+.zuvi-list-item-description {
+  margin-top: var(--zuvi-list-description-margin-top);
+  color: var(--zuvi-list-description-fg);
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.z-list-item-extra {
+.zuvi-list-item-extra {
   flex: 0 0 auto;
   margin-inline-start: auto;
 }
 
 /* -------------------------------- 加载态 ------------------------------- */
 
-.z-list-loading {
+.zuvi-list-loading {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--z-list-loading-padding);
+  padding: var(--zuvi-list-loading-padding);
 }
 
-.z-list-spinner {
+.zuvi-list-spinner {
   box-sizing: border-box;
-  width: var(--z-list-spinner-size);
-  height: var(--z-list-spinner-size);
-  border: var(--z-list-spinner-width) solid var(--z-list-spinner-track);
-  border-top-color: var(--z-list-spinner-color);
-  border-radius: var(--z-radius-full);
-  animation: z-list-spin calc(var(--z-duration-slow) * 2) linear infinite;
+  width: var(--zuvi-list-spinner-size);
+  height: var(--zuvi-list-spinner-size);
+  border: var(--zuvi-list-spinner-width) solid var(--zuvi-list-spinner-track);
+  border-top-color: var(--zuvi-list-spinner-color);
+  border-radius: var(--zuvi-radius-full);
+  animation: z-list-spin calc(var(--zuvi-duration-slow) * 2) linear infinite;
 }
 
 @keyframes z-list-spin {
@@ -156,16 +156,16 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .z-list-item {
+  .zuvi-list-item {
     transition: none;
   }
 }
 
 @media (forced-colors: active) {
-  .z-list[data-bordered='true'],
-  .z-list-header,
-  .z-list-footer,
-  .z-list-item + .z-list-item {
+  .zuvi-list[data-bordered='true'],
+  .zuvi-list-header,
+  .zuvi-list-footer,
+  .zuvi-list-item + .zuvi-list-item {
     border-color: CanvasText;
   }
 }

@@ -64,7 +64,7 @@ describe('Anchor 渲染与语义', () => {
       </Anchor>
     );
     const nav = screen.getByRole('navigation', { name: '锚点导航' });
-    expect(nav).toHaveClass('z-anchor');
+    expect(nav).toHaveClass('zuvi-anchor');
     expect(nav).toHaveAttribute('data-part', 'root');
     expect(nav.querySelector('ul')).toHaveAttribute('data-part', 'list');
     const links = screen.getAllByRole('link');
@@ -402,16 +402,16 @@ describe('Anchor 结构与定制', () => {
         <Anchor.Link href="#q" title="另一父级" />
       </Anchor>
     );
-    const sublist = document.querySelector('ul ul.z-anchor-sublist');
+    const sublist = document.querySelector('ul ul.zuvi-anchor-sublist');
     expect(sublist).not.toBeNull();
     expect(sublist).toHaveAttribute('data-part', 'sublist');
     // 嵌套 ul 位于父级 li 内
-    expect(sublist?.parentElement).toHaveClass('z-anchor-item');
+    expect(sublist?.parentElement).toHaveClass('zuvi-anchor-item');
     const childLinks = sublist?.querySelectorAll('a');
     expect(childLinks).toHaveLength(2);
     expect(childLinks?.[0]).toHaveAttribute('href', '#c1');
     // 顶层列表只有两个 li（父级链接自己不进入子列表）
-    const topList = document.querySelector('.z-anchor-list');
+    const topList = document.querySelector('.zuvi-anchor-list');
     expect(topList?.children).toHaveLength(2);
   });
 
@@ -423,9 +423,9 @@ describe('Anchor 结构与定制', () => {
       </Anchor>
     );
     const nav = screen.getByRole('navigation');
-    expect(nav).toHaveClass('z-anchor', 'page-toc', 'my-root');
+    expect(nav).toHaveClass('zuvi-anchor', 'page-toc', 'my-root');
     const link = screen.getByRole('link', { name: '定制' });
-    expect(link).toHaveClass('z-anchor-link', 'my-link', 'extra-link');
+    expect(link).toHaveClass('zuvi-anchor-link', 'my-link', 'extra-link');
     expect(link.getAttribute('data-part')).toBe('link');
     expect(nav.querySelector('[data-part="item"]')).not.toBeNull();
   });

@@ -1,8 +1,8 @@
 'use client';
 
 import * as React from 'react';
-import { Close, Eye, EyeOff, Search } from '@zui/icons';
-import { useZuiConfig } from '../../config';
+import { Close, Eye, EyeOff, Search } from '@zuvi/icons';
+import { useZuviConfig } from '../../config';
 import { cx, useControllableState } from '../../utils';
 import './Input.css';
 
@@ -100,7 +100,7 @@ function InputRootBox({
       data-part="root"
       data-size={size}
       data-status={status}
-      className={cx('z-input', modifier, className, classNames?.root)}
+      className={cx('zuvi-input', modifier, className, classNames?.root)}
       style={style}
     >
       {children}
@@ -133,7 +133,7 @@ function Input({
     defaultValue: defaultValue === undefined ? '' : String(defaultValue),
   });
 
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const inputRef = React.useRef<HTMLInputElement | null>(null);
 
   // clear 按钮：clearable 且有值时显示，只读/禁用时隐藏
@@ -167,7 +167,7 @@ function Input({
       modifier=""
     >
       {prefix != null && prefix !== '' ? (
-        <span data-part="prefix" className={cx('z-input-prefix', classNames?.prefix)}>
+        <span data-part="prefix" className={cx('zuvi-input-prefix', classNames?.prefix)}>
           {prefix}
         </span>
       ) : null}
@@ -179,7 +179,7 @@ function Input({
           if (typeof ref === 'function') ref(node);
           else if (ref) (ref as React.RefObject<HTMLInputElement | null>).current = node;
         }}
-        className={cx('z-input-field', classNames?.input)}
+        className={cx('zuvi-input-field', classNames?.input)}
         value={value}
         disabled={disabled}
         readOnly={readOnly}
@@ -189,7 +189,7 @@ function Input({
         <button
           type="button"
           data-part="clear"
-          className={cx('z-input-clear', classNames?.clear)}
+          className={cx('zuvi-input-clear', classNames?.clear)}
           aria-label={locale.input.clear}
           onPointerDown={(event) => event.preventDefault()}
           onClick={handleClear}
@@ -198,7 +198,7 @@ function Input({
         </button>
       ) : null}
       {suffix != null && suffix !== '' ? (
-        <span data-part="suffix" className={cx('z-input-suffix', classNames?.suffix)}>
+        <span data-part="suffix" className={cx('zuvi-input-suffix', classNames?.suffix)}>
           {suffix}
         </span>
       ) : null}
@@ -229,7 +229,7 @@ function InputTextarea({
     defaultValue: defaultValue === undefined ? '' : String(defaultValue),
   });
 
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const textareaRef = React.useRef<HTMLTextAreaElement | null>(null);
 
   const showClear = clearable && value !== '' && !readOnly && !disabled;
@@ -259,7 +259,7 @@ function InputTextarea({
       className={className}
       style={style}
       classNames={classNames}
-      modifier="z-input-textarea"
+      modifier="zuvi-input-textarea"
     >
       <textarea
         {...rest}
@@ -269,7 +269,7 @@ function InputTextarea({
           if (typeof ref === 'function') ref(node);
           else if (ref) (ref as React.RefObject<HTMLTextAreaElement | null>).current = node;
         }}
-        className={cx('z-input-field', classNames?.textarea)}
+        className={cx('zuvi-input-field', classNames?.textarea)}
         value={value}
         disabled={disabled}
         readOnly={readOnly}
@@ -279,7 +279,7 @@ function InputTextarea({
         <button
           type="button"
           data-part="clear"
-          className={cx('z-input-clear', classNames?.clear)}
+          className={cx('zuvi-input-clear', classNames?.clear)}
           aria-label={locale.input.clear}
           onPointerDown={(event) => event.preventDefault()}
           onClick={handleClear}
@@ -316,7 +316,7 @@ function InputPassword({
   });
   const [visible, setVisible] = React.useState(false);
 
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const inputRef = React.useRef<HTMLInputElement | null>(null);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -334,7 +334,7 @@ function InputPassword({
       modifier=""
     >
       {prefix != null && prefix !== '' ? (
-        <span data-part="prefix" className={cx('z-input-prefix', classNames?.prefix)}>
+        <span data-part="prefix" className={cx('zuvi-input-prefix', classNames?.prefix)}>
           {prefix}
         </span>
       ) : null}
@@ -347,7 +347,7 @@ function InputPassword({
           if (typeof ref === 'function') ref(node);
           else if (ref) (ref as React.RefObject<HTMLInputElement | null>).current = node;
         }}
-        className={cx('z-input-field', classNames?.input)}
+        className={cx('zuvi-input-field', classNames?.input)}
         value={value}
         disabled={disabled}
         readOnly={readOnly}
@@ -357,7 +357,7 @@ function InputPassword({
         <button
           type="button"
           data-part="toggle"
-          className={cx('z-input-toggle', classNames?.toggle)}
+          className={cx('zuvi-input-toggle', classNames?.toggle)}
           aria-label={visible ? locale.input.hidePassword : locale.input.showPassword}
           disabled={disabled}
           onClick={() => setVisible((prev) => !prev)}
@@ -366,7 +366,7 @@ function InputPassword({
         </button>
       ) : null}
       {suffix != null && suffix !== '' ? (
-        <span data-part="suffix" className={cx('z-input-suffix', classNames?.suffix)}>
+        <span data-part="suffix" className={cx('zuvi-input-suffix', classNames?.suffix)}>
           {suffix}
         </span>
       ) : null}
@@ -400,7 +400,7 @@ function InputSearch({
     defaultValue: defaultValue === undefined ? '' : String(defaultValue),
   });
 
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const inputRef = React.useRef<HTMLInputElement | null>(null);
 
   const showClear = clearable && value !== '' && !readOnly && !disabled;
@@ -444,10 +444,10 @@ function InputSearch({
       className={className}
       style={style}
       classNames={classNames}
-      modifier="z-input-search"
+      modifier="zuvi-input-search"
     >
       {prefix != null && prefix !== '' ? (
-        <span data-part="prefix" className={cx('z-input-prefix', classNames?.prefix)}>
+        <span data-part="prefix" className={cx('zuvi-input-prefix', classNames?.prefix)}>
           {prefix}
         </span>
       ) : null}
@@ -460,7 +460,7 @@ function InputSearch({
           if (typeof ref === 'function') ref(node);
           else if (ref) (ref as React.RefObject<HTMLInputElement | null>).current = node;
         }}
-        className={cx('z-input-field', classNames?.input)}
+        className={cx('zuvi-input-field', classNames?.input)}
         value={value}
         disabled={disabled}
         readOnly={readOnly}
@@ -471,7 +471,7 @@ function InputSearch({
         <button
           type="button"
           data-part="clear"
-          className={cx('z-input-clear', classNames?.clear)}
+          className={cx('zuvi-input-clear', classNames?.clear)}
           aria-label={locale.input.clear}
           onPointerDown={(event) => event.preventDefault()}
           onClick={handleClear}
@@ -482,7 +482,7 @@ function InputSearch({
       <button
         type="button"
         data-part="search"
-        className={cx('z-input-search-button', classNames?.search)}
+        className={cx('zuvi-input-search-button', classNames?.search)}
         aria-label={locale.input.search}
         disabled={disabled || readOnly}
         onClick={handleSearch}

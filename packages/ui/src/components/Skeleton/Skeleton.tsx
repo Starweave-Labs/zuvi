@@ -44,8 +44,8 @@ export function Skeleton({
   }
 
   const sizeStyle: React.CSSProperties = {
-    ...(widthValue != null ? { '--z-skeleton-width': widthValue } : null),
-    ...(heightValue != null ? { '--z-skeleton-height': heightValue } : null),
+    ...(widthValue != null ? { '--zuvi-skeleton-width': widthValue } : null),
+    ...(heightValue != null ? { '--zuvi-skeleton-height': heightValue } : null),
   } as React.CSSProperties;
 
   const lineCount = Math.max(1, Math.floor(lines));
@@ -59,18 +59,18 @@ export function Skeleton({
       data-circle={circle ? 'true' : undefined}
       data-active={active ? 'true' : undefined}
       data-lines={circle ? undefined : String(lineCount)}
-      className={cx('z-skeleton', className)}
+      className={cx('zuvi-skeleton', className)}
       style={{ ...style, ...sizeStyle }}
     >
       {circle ? (
-        <span data-part="line" className="z-skeleton-line" />
+        <span data-part="line" className="zuvi-skeleton-line" />
       ) : (
         Array.from({ length: lineCount }, (_, index) => (
           <span
             key={index}
             data-part="line"
             data-last={index === lineCount - 1 ? 'true' : undefined}
-            className="z-skeleton-line"
+            className="zuvi-skeleton-line"
           />
         ))
       )}

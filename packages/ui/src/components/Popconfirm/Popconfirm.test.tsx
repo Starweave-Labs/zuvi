@@ -24,7 +24,7 @@ describe('Popconfirm 渲染', () => {
     expect(getTrigger()).toBeInTheDocument();
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     const root = document.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-popconfirm');
+    expect(root).toHaveClass('zuvi-popconfirm');
     expect(root).toHaveAttribute('data-open', 'false');
   });
 
@@ -149,7 +149,7 @@ describe('Popconfirm 定制', () => {
       classNames: { root: 'my-root', content: 'my-content', actions: 'my-actions' },
     });
     const root = document.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-popconfirm', 'my-root', 'page-pop');
+    expect(root).toHaveClass('zuvi-popconfirm', 'my-root', 'page-pop');
     await user.click(getTrigger());
     expect(document.querySelector('[data-part="content"]')).toHaveClass('my-content');
     expect(document.querySelector('[data-part="actions"]')).toHaveClass('my-actions');

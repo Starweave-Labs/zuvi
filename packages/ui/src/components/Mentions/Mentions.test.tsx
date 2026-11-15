@@ -213,10 +213,10 @@ describe('Mentions 定制出口', () => {
         classNames={{ root: 'r', textarea: 't', panel: 'p', item: 'i' }}
       />
     );
-    expect(document.querySelector('[data-part="root"]')).toHaveClass('z-mentions', 'r', 'my-mentions');
-    expect(document.querySelector('[data-part="textarea"]')).toHaveClass('z-mentions-textarea', 't');
+    expect(document.querySelector('[data-part="root"]')).toHaveClass('zuvi-mentions', 'r', 'my-mentions');
+    expect(document.querySelector('[data-part="textarea"]')).toHaveClass('zuvi-mentions-textarea', 't');
     await user.type(getTextarea(), '@');
-    expect(document.querySelector('[data-part="panel"]')).toHaveClass('z-mentions-panel', 'p');
-    expect(document.querySelector('[data-part="item"]')).toHaveClass('z-mentions-item', 'i');
+    expect(document.querySelector('[data-part="panel"]')).toHaveClass('zuvi-mentions-panel', 'p');
+    expect(document.querySelector('[data-part="item"]')).toHaveClass('zuvi-mentions-item', 'i');
   });
 });

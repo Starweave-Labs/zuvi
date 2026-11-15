@@ -9,7 +9,7 @@ const AXE_SOURCE = readFileSync(
 test('概览：实时预览可操作，命令入口支持点击并归还焦点', async ({ page }) => {
   await page.goto('/');
   await expect(
-    page.getByRole('heading', { level: 1, name: 'ZUI 组件库', exact: true })
+    page.getByRole('heading', { level: 1, name: 'ZUVI 组件库', exact: true })
   ).toBeVisible();
   const preview = page.getByRole('region', { name: '交互组件预览' });
   await preview.getByRole('radio', { name: '本月', exact: true }).click();
@@ -38,7 +38,7 @@ test('概览：实时预览可操作，命令入口支持点击并归还焦点',
 
 test('组件示例：键盘展开高亮代码，API 表可聚焦，侧栏可清除过滤', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { name: 'ZUI 组件库', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'ZUVI 组件库', exact: true })).toBeVisible();
   await page.getByRole('link', { name: '浏览组件', exact: true }).click();
   await expect(
     page.getByRole('heading', { level: 1, name: 'Button 按钮', exact: true })
@@ -111,7 +111,7 @@ test('图片示例：头像、封面与失败回退使用站内素材，不依�
       externalImages.push(request.url());
   });
   await page.goto('/');
-  await expect(page.getByRole('heading', { name: 'ZUI 组件库', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'ZUVI 组件库', exact: true })).toBeVisible();
   const nav = page.getByRole('navigation', { name: '文档导航', exact: true });
   for (const [name, count] of [
     ['Avatar 头像', 1],

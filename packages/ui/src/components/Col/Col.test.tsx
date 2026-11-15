@@ -11,29 +11,29 @@ function getRoot(container: HTMLElement): HTMLElement {
 }
 
 describe('Col', () => {
-  it('renders default col with z-col class and no inline span/flex state', () => {
+  it('renders default col with zuvi-col class and no inline span/flex state', () => {
     const { container } = render(<Col>内容</Col>);
     const root = getRoot(container);
-    expect(root).toHaveClass('z-col');
+    expect(root).toHaveClass('zuvi-col');
     expect(root).toHaveAttribute('data-part', 'root');
     expect(root).not.toHaveAttribute('data-flex');
-    // 无 span：不下发内联变量（宽度走 CSS 默认 var(--z-col-span, 24)）
-    expect(root.style.getPropertyValue('--z-col-span')).toBe('');
+    // 无 span：不下发内联变量（宽度走 CSS 默认 var(--zuvi-col-span, 24)）
+    expect(root.style.getPropertyValue('--zuvi-col-span')).toBe('');
     expect(root.style.flex).toBe('');
   });
 
-  it('sets span via inline CSS variable --z-col-span', () => {
+  it('sets span via inline CSS variable --zuvi-col-span', () => {
     const { container } = render(<Col span={8} />);
     const root = getRoot(container);
-    expect(root.style.getPropertyValue('--z-col-span')).toBe('8');
+    expect(root.style.getPropertyValue('--zuvi-col-span')).toBe('8');
     expect(root).not.toHaveAttribute('data-flex');
   });
 
-  it('sets offset via inline CSS variable --z-col-offset', () => {
+  it('sets offset via inline CSS variable --zuvi-col-offset', () => {
     const { container } = render(<Col span={12} offset={4} />);
     const root = getRoot(container);
-    expect(root.style.getPropertyValue('--z-col-span')).toBe('12');
-    expect(root.style.getPropertyValue('--z-col-offset')).toBe('4');
+    expect(root.style.getPropertyValue('--zuvi-col-span')).toBe('12');
+    expect(root.style.getPropertyValue('--zuvi-col-offset')).toBe('4');
   });
 
   it('flex prop overrides span (inline flex, no span variable, data-flex)', () => {
@@ -41,7 +41,7 @@ describe('Col', () => {
     const root = getRoot(container);
     // jsdom 将 flex: auto 归一化为 '1 1 auto'
     expect(root.style.flex).toBe('1 1 auto');
-    expect(root.style.getPropertyValue('--z-col-span')).toBe('');
+    expect(root.style.getPropertyValue('--zuvi-col-span')).toBe('');
     expect(root).toHaveAttribute('data-flex', 'true');
   });
 
@@ -74,7 +74,7 @@ describe('Col', () => {
     const { container } = render(
       <Col className="my-col" classNames={{ root: 'extra-col' }} />,
     );
-    expect(getRoot(container)).toHaveClass('z-col', 'my-col', 'extra-col');
+    expect(getRoot(container)).toHaveClass('zuvi-col', 'my-col', 'extra-col');
   });
 
   it('forwards ref and passes native props through to the root element', () => {
@@ -86,15 +86,15 @@ describe('Col', () => {
         data-testid="col"
         aria-label="列"
         span={6}
-        style={{ color: 'var(--z-color-fg)' }}
+        style={{ color: 'var(--zuvi-color-fg)' }}
       />,
     );
     expect(ref.current).toBeInstanceOf(HTMLDivElement);
-    expect(ref.current).toHaveClass('z-col');
+    expect(ref.current).toHaveClass('zuvi-col');
     expect(getRoot(container)).toHaveAttribute('id', 'my-col');
     expect(getRoot(container)).toHaveAttribute('aria-label', '列');
     // 用户 style 与内联变量合并（用户值后展开）
-    expect(getRoot(container).style.getPropertyValue('--z-col-span')).toBe('6');
-    expect(getRoot(container).style.color).toBe('var(--z-color-fg)');
+    expect(getRoot(container).style.getPropertyValue('--zuvi-col-span')).toBe('6');
+    expect(getRoot(container).style.color).toBe('var(--zuvi-color-fg)');
   });
 });

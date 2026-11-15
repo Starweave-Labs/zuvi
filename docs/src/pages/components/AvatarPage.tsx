@@ -1,4 +1,4 @@
-import { Avatar } from '@zui/react';
+import { Avatar } from '@zuvi/react';
 import demoAvatar from '../../assets/demo-avatar.svg';
 
 import ApiTable from '../../components/ApiTable';
@@ -142,7 +142,7 @@ export default function AvatarPage(): React.ReactNode {
       <p className="doc-p">
         根元素 data 属性：<code className="doc-code-inline">data-size</code>（number 尺寸为{' '}
         <code className="doc-code-inline">custom</code>，实际像素经内联{' '}
-        <code className="doc-code-inline">--z-avatar-size</code> 注入）、
+        <code className="doc-code-inline">--zuvi-avatar-size</code> 注入）、
         <code className="doc-code-inline">data-shape</code>、
         <code className="doc-code-inline">data-color</code>（名字哈希色）。
       </p>
@@ -151,15 +151,15 @@ export default function AvatarPage(): React.ReactNode {
         name="Avatar"
         parts={['root', 'image', 'fallback']}
         vars={[
-          '--z-avatar-size',
-          '--z-avatar-radius',
-          '--z-avatar-bg',
-          '--z-avatar-fg',
-          '--z-avatar-font-size',
-          '--z-avatar-font-weight',
-          '--z-avatar-font-family',
-          '--z-avatar-icon-size',
-          '--z-avatar-border',
+          '--zuvi-avatar-size',
+          '--zuvi-avatar-radius',
+          '--zuvi-avatar-bg',
+          '--zuvi-avatar-fg',
+          '--zuvi-avatar-font-size',
+          '--zuvi-avatar-font-weight',
+          '--zuvi-avatar-font-family',
+          '--zuvi-avatar-icon-size',
+          '--zuvi-avatar-border',
         ]}
       />
     </div>

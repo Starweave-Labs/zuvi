@@ -1,22 +1,22 @@
-.z-studio-ribbon {
-  --z-studio-ribbon-control-height: 24px;
-  --z-studio-ribbon-icon-size: 16px;
-  --z-studio-ribbon-font-size: 12px;
-  background: var(--z-office-studio-ribbon-bg, var(--z-color-bg-subtle));
+.zuvi-studio-ribbon {
+  --zuvi-studio-ribbon-control-height: 24px;
+  --zuvi-studio-ribbon-icon-size: 16px;
+  --zuvi-studio-ribbon-font-size: 12px;
+  background: var(--zuvi-office-studio-ribbon-bg, var(--zuvi-color-bg-subtle));
 }
 
-.z-studio-ribbon-tabbar {
+.zuvi-studio-ribbon-tabbar {
   display: flex;
   align-items: stretch;
   flex: none;
   min-width: 0;
   height: 32px;
   padding-inline: 8px;
-  background: var(--z-office-studio-header-bg, var(--z-color-bg-subtle));
-  color: var(--z-office-studio-header-fg, var(--z-color-fg));
+  background: var(--zuvi-office-studio-header-bg, var(--zuvi-color-bg-subtle));
+  color: var(--zuvi-office-studio-header-fg, var(--zuvi-color-fg));
 }
 
-.z-studio-ribbon-tabbar > .z-tabs-list {
+.zuvi-studio-ribbon-tabbar > .zuvi-tabs-list {
   flex: 1;
   min-width: 0;
   align-items: stretch;
@@ -27,131 +27,131 @@
   scrollbar-width: none;
 }
 
-.z-studio-ribbon-tabbar .z-tab {
+.zuvi-studio-ribbon-tabbar .zuvi-tab {
   flex: none;
   min-height: 0;
   padding: 0 14px;
   border: 0;
   border-radius: 3px 3px 0 0;
   color: inherit;
-  font-size: var(--z-studio-ribbon-font-size, 12px);
-  font-weight: var(--z-weight-regular);
+  font-size: var(--zuvi-studio-ribbon-font-size, 12px);
+  font-weight: var(--zuvi-weight-regular);
   white-space: nowrap;
 }
 
-.z-studio-ribbon-tabbar .z-tab::after {
+.zuvi-studio-ribbon-tabbar .zuvi-tab::after {
   display: none;
 }
 
-.z-studio-ribbon-tabbar .z-tab:hover:not(:disabled) {
+.zuvi-studio-ribbon-tabbar .zuvi-tab:hover:not(:disabled) {
   background: color-mix(in srgb, currentColor 12%, transparent);
 }
 
-.z-studio-ribbon-tabbar .z-tab[aria-selected='true'] {
-  background: var(--z-office-studio-ribbon-bg, var(--z-color-bg-subtle));
-  color: var(--z-color-fg);
+.zuvi-studio-ribbon-tabbar .zuvi-tab[aria-selected='true'] {
+  background: var(--zuvi-office-studio-ribbon-bg, var(--zuvi-color-bg-subtle));
+  color: var(--zuvi-color-fg);
 }
 
-.z-office-studio-file-menu {
+.zuvi-office-studio-file-menu {
   display: flex;
   flex: none;
   align-items: stretch;
 }
 
-.z-office-studio-file-trigger {
+.zuvi-office-studio-file-trigger {
   padding: 0 18px;
   border: 0;
   border-radius: 3px 3px 0 0;
   background: transparent;
   color: inherit;
   font: inherit;
-  font-size: var(--z-studio-ribbon-font-size, 12px);
+  font-size: var(--zuvi-studio-ribbon-font-size, 12px);
   cursor: pointer;
 }
 
-.z-office-studio-file-trigger:hover,
-.z-office-studio-file-trigger[aria-expanded='true'] {
+.zuvi-office-studio-file-trigger:hover,
+.zuvi-office-studio-file-trigger[aria-expanded='true'] {
   background: color-mix(in srgb, currentColor 15%, transparent);
 }
 
-.z-office-studio-file-trigger:focus-visible {
-  outline: 2px solid var(--z-color-focus-ring);
+.zuvi-office-studio-file-trigger:focus-visible {
+  outline: 2px solid var(--zuvi-color-focus-ring);
   outline-offset: -3px;
 }
 
-.z-studio-ribbon > .z-tabs-panel {
+.zuvi-studio-ribbon > .zuvi-tabs-panel {
   padding: 0;
 }
 
-.z-studio-ribbon .z-button {
-  --z-button-height: var(--z-studio-ribbon-control-height);
-  --z-button-padding-x: 7px;
-  --z-button-font-size: var(--z-studio-ribbon-font-size);
-  --z-button-radius: var(--z-radius-sm);
-  --z-button-fg: var(--z-color-fg);
-  --z-button-hover-bg: var(--z-color-bg-muted);
-  --z-button-hover-fg: var(--z-color-fg);
-  --z-button-active-bg: color-mix(in srgb, var(--z-color-primary) 12%, var(--z-color-bg-muted));
-  min-width: var(--z-studio-ribbon-control-height);
+.zuvi-studio-ribbon .zuvi-button {
+  --zuvi-button-height: var(--zuvi-studio-ribbon-control-height);
+  --zuvi-button-padding-x: 7px;
+  --zuvi-button-font-size: var(--zuvi-studio-ribbon-font-size);
+  --zuvi-button-radius: var(--zuvi-radius-sm);
+  --zuvi-button-fg: var(--zuvi-color-fg);
+  --zuvi-button-hover-bg: var(--zuvi-color-bg-muted);
+  --zuvi-button-hover-fg: var(--zuvi-color-fg);
+  --zuvi-button-active-bg: color-mix(in srgb, var(--zuvi-color-primary) 12%, var(--zuvi-color-bg-muted));
+  min-width: var(--zuvi-studio-ribbon-control-height);
   white-space: nowrap;
 }
 
-.z-studio-ribbon .z-button[data-variant='ghost'] {
-  --z-button-bg: transparent;
-  --z-button-border: transparent;
+.zuvi-studio-ribbon .zuvi-button[data-variant='ghost'] {
+  --zuvi-button-bg: transparent;
+  --zuvi-button-border: transparent;
 }
 
-.z-studio-ribbon .z-button[data-variant='outline'] {
-  --z-button-border: transparent;
-  --z-button-bg: transparent;
-  --z-button-fg: var(--z-color-fg);
-  --z-button-hover-bg: var(--z-color-bg-muted);
-  --z-button-hover-fg: var(--z-color-fg);
-  --z-button-active-bg: var(--z-color-bg-muted);
+.zuvi-studio-ribbon .zuvi-button[data-variant='outline'] {
+  --zuvi-button-border: transparent;
+  --zuvi-button-bg: transparent;
+  --zuvi-button-fg: var(--zuvi-color-fg);
+  --zuvi-button-hover-bg: var(--zuvi-color-bg-muted);
+  --zuvi-button-hover-fg: var(--zuvi-color-fg);
+  --zuvi-button-active-bg: var(--zuvi-color-bg-muted);
 }
 
-.z-studio-ribbon .z-button[aria-pressed='true'] {
-  --z-button-bg: var(--z-color-primary-subtle);
-  --z-button-fg: var(--z-color-primary-subtle-fg);
-  --z-button-border: color-mix(in srgb, var(--z-color-primary) 42%, var(--z-color-border));
-  --z-button-hover-bg: color-mix(in srgb, var(--z-color-primary) 16%, var(--z-color-bg));
-  --z-button-hover-fg: var(--z-color-primary-subtle-fg);
-  --z-button-active-bg: color-mix(in srgb, var(--z-color-primary) 22%, var(--z-color-bg));
-  background: var(--z-button-bg);
-  border-color: var(--z-button-border);
-  color: var(--z-button-fg);
-  box-shadow: 0 1px 2px color-mix(in srgb, var(--z-color-primary) 12%, transparent);
+.zuvi-studio-ribbon .zuvi-button[aria-pressed='true'] {
+  --zuvi-button-bg: var(--zuvi-color-primary-subtle);
+  --zuvi-button-fg: var(--zuvi-color-primary-subtle-fg);
+  --zuvi-button-border: color-mix(in srgb, var(--zuvi-color-primary) 42%, var(--zuvi-color-border));
+  --zuvi-button-hover-bg: color-mix(in srgb, var(--zuvi-color-primary) 16%, var(--zuvi-color-bg));
+  --zuvi-button-hover-fg: var(--zuvi-color-primary-subtle-fg);
+  --zuvi-button-active-bg: color-mix(in srgb, var(--zuvi-color-primary) 22%, var(--zuvi-color-bg));
+  background: var(--zuvi-button-bg);
+  border-color: var(--zuvi-button-border);
+  color: var(--zuvi-button-fg);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--zuvi-color-primary) 12%, transparent);
 }
 
-.z-studio-ribbon .z-input,
-.z-studio-ribbon .z-select {
-  font-size: var(--z-studio-ribbon-font-size);
+.zuvi-studio-ribbon .zuvi-input,
+.zuvi-studio-ribbon .zuvi-select {
+  font-size: var(--zuvi-studio-ribbon-font-size);
 }
 
-.z-studio-ribbon .z-input-field,
-.z-studio-ribbon .z-select-trigger {
-  min-height: var(--z-studio-ribbon-control-height);
-  height: var(--z-studio-ribbon-control-height);
+.zuvi-studio-ribbon .zuvi-input-field,
+.zuvi-studio-ribbon .zuvi-select-trigger {
+  min-height: var(--zuvi-studio-ribbon-control-height);
+  height: var(--zuvi-studio-ribbon-control-height);
   padding: 2px 7px;
   border-radius: 2px;
-  font-size: var(--z-studio-ribbon-font-size);
+  font-size: var(--zuvi-studio-ribbon-font-size);
 }
 
-.z-studio-ribbon .z-button svg,
-.z-studio-ribbon .z-color-picker-trigger svg {
+.zuvi-studio-ribbon .zuvi-button svg,
+.zuvi-studio-ribbon .zuvi-color-picker-trigger svg {
   flex: none;
 }
 
 @media (max-width: 560px) {
-  .z-studio-ribbon-tabbar {
+  .zuvi-studio-ribbon-tabbar {
     padding-inline: 0;
   }
 
-  .z-studio-ribbon-tabbar .z-tab {
+  .zuvi-studio-ribbon-tabbar .zuvi-tab {
     padding-inline: 12px;
   }
 
-  .z-office-studio-file-trigger {
+  .zuvi-office-studio-file-trigger {
     padding-inline: 14px;
   }
 }

@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
-import { Modal, Button } from '@zui/react';
-import { Archive, ArrowLeft, ArrowRight, FileText, Folder, Layers, Search } from '@zui/icons';
+import { Modal, Button } from '@zuvi/react';
+import { Archive, ArrowLeft, ArrowRight, FileText, Folder, Layers, Search } from '@zuvi/icons';
 import cover from '../../assets/demo-cover.svg';
 import { Choices, LabCard, Notice } from './shared';
 

@@ -66,8 +66,8 @@ class OfficeRequestError extends Error {
     super(message);
   }
 }
-const credentialsKey = 'zui-office-sessions-v1';
-const autoSaveKey = 'zui-office-autosave-v1';
+const credentialsKey = 'zuvi-office-sessions-v1';
+const autoSaveKey = 'zuvi-office-autosave-v1';
 /** Idle window before the background poller force-saves a dirty session. */
 export const OFFICE_AUTOSAVE_IDLE_MS = 5000;
 const sessions = new Map<string, OfficeSession>();
@@ -121,10 +121,10 @@ function remember(session: SessionCredentials) {
   localStorage.setItem(credentialsKey, JSON.stringify(list));
 }
 function workspaceId() {
-  let id = localStorage.getItem('zui-office-workspace-id');
+  let id = localStorage.getItem('zuvi-office-workspace-id');
   if (!id) {
     id = crypto.randomUUID();
-    localStorage.setItem('zui-office-workspace-id', id);
+    localStorage.setItem('zuvi-office-workspace-id', id);
   }
   return id;
 }

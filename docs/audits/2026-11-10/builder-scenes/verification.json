@@ -3,7 +3,7 @@
   "route": "#/builder",
   "scope": "Multi-scene page design, reusable blocks, shared local and read-only REST data",
   "catalog": {
-    "publicZuiComponentDirectories": 71,
+    "publicZuviComponentDirectories": 71,
     "builderNodeTypes": 89,
     "templates": 10,
     "presetBlocks": 15,
@@ -78,7 +78,7 @@
     "gitDiffCheck": "passed",
     "githubPagesBuild": {
       "result": "passed",
-      "command": "GITHUB_PAGES_BUILD=true pnpm --filter @zui/docs build",
+      "command": "GITHUB_PAGES_BUILD=true pnpm --filter @zuvi/docs build",
       "log": "build.log",
       "warning": "Editor and standalone export chunks exceed the existing 500 kB advisory threshold"
     }

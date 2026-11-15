@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useZuiConfig } from '../../config';
+import { useZuviConfig } from '../../config';
 import { cx } from '../../utils';
 import './Breadcrumb.css';
 
@@ -39,7 +39,7 @@ function Breadcrumb({
   ref,
   ...rest
 }: BreadcrumbProps) {
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const items = React.Children.toArray(children);
   const lastIndex = items.length - 1;
 
@@ -56,7 +56,7 @@ function Breadcrumb({
         role="navigation"
         aria-label={locale.accessibility.breadcrumb}
         data-part="root"
-        className={cx('z-breadcrumb', className, classNames?.root)}
+        className={cx('zuvi-breadcrumb', className, classNames?.root)}
       >
         <ol>
           {items.map((child, index) => {
@@ -76,7 +76,7 @@ function Breadcrumb({
                   <span
                     data-part="separator"
                     aria-hidden="true"
-                    className={cx('z-breadcrumb-separator', classNames?.separator)}
+                    className={cx('zuvi-breadcrumb-separator', classNames?.separator)}
                   >
                     {separator}
                   </span>
@@ -94,7 +94,7 @@ function Breadcrumb({
 
 function BreadcrumbItem({ href, children, className, ref, ...rest }: BreadcrumbItemProps) {
   const context = React.useContext(BreadcrumbContext);
-  const itemClassName = cx('z-breadcrumb-item', className, context?.classNames?.item);
+  const itemClassName = cx('zuvi-breadcrumb-item', className, context?.classNames?.item);
 
   if (href !== undefined) {
     return (

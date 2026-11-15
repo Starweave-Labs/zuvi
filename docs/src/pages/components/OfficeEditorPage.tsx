@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Button, OfficeEditor, Tag, type OfficeEditorConfig } from '@zui/react';
+import { Button, OfficeEditor, Tag, type OfficeEditorConfig } from '@zuvi/react';
 import ApiTable from '../../components/ApiTable';
 import Demo from '../../components/Demo';
 import { usePageTitle } from '../../components/usePageTitle';
@@ -16,7 +16,7 @@ import {
 } from './official-office-demo';
 import './office-editor-page.css';
 
-const BASIC_CODE = `import { OfficeEditor, type OfficeEditorConfig } from '@zui/react';
+const BASIC_CODE = `import { OfficeEditor, type OfficeEditorConfig } from '@zuvi/react';
 
 interface FileEditorProps {
   session: { id: string; documentServerUrl: string; config: OfficeEditorConfig };
@@ -99,7 +99,7 @@ function OfficialOfficeDemo(): React.ReactNode {
       <div className="office-editor-demo-disclosure" role="note">
         <Tag color="success">ONLYOFFICE 官方演示服务</Tag>
         <span>
-          仅加载 ONLYOFFICE 官方样例。会话临时有效，不写入 ZUI 工作区；请勿输入或插入敏感内容。
+          仅加载 ONLYOFFICE 官方样例。会话临时有效，不写入 ZUVI 工作区；请勿输入或插入敏感内容。
         </span>
       </div>
       {error && (
@@ -250,7 +250,7 @@ export default function OfficeEditorPage(): React.ReactNode {
         title="Word、Excel、PDF 内嵌编辑"
         description={
           officialDemo
-            ? '发布站直接连接 ONLYOFFICE 官方免费演示服务，打开官方样例即可体验 ZUI OfficeEditor。'
+            ? '发布站直接连接 ONLYOFFICE 官方免费演示服务，打开官方样例即可体验 ZUVI OfficeEditor。'
             : '点击创建独立示例副本；文件会保存到当前浏览器工作区，可在文件工作区继续编辑、备份或删除。'
         }
         code={BASIC_CODE}
@@ -490,7 +490,7 @@ export default function OfficeEditorPage(): React.ReactNode {
           {
             name: 'classNames',
             type: '{ root?; header?; toolbar?; title?; brand?; status?; actions?; stage?; canvas?; overlay?; error?; notice?; heading? }',
-            description: '定制外层各区域的类名，沿用 ZUI CSS 令牌。',
+            description: '定制外层各区域的类名，沿用 ZUVI CSS 令牌。',
           },
           {
             name: 'scriptTimeout / readyTimeout',

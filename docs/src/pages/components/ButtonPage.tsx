@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button } from '@zui/react';
+import { Button } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -148,26 +148,26 @@ export default function ButtonPage(): React.ReactNode {
         name="Button"
         parts={['root', 'icon', 'label', 'spinner']}
         vars={[
-          '--z-button-height',
-          '--z-button-padding-x',
-          '--z-button-font-size',
-          '--z-button-font-weight',
-          '--z-button-radius',
-          '--z-button-gap',
-          '--z-button-bg',
-          '--z-button-fg',
-          '--z-button-border',
-          '--z-button-border-width',
-          '--z-button-hover-bg',
-          '--z-button-hover-fg',
-          '--z-button-active-bg',
-          '--z-button-disabled-bg',
-          '--z-button-disabled-fg',
-          '--z-button-disabled-border',
-          '--z-button-focus-ring',
-          '--z-button-spinner-size',
-          '--z-button-spinner-width',
-          '--z-button-transition',
+          '--zuvi-button-height',
+          '--zuvi-button-padding-x',
+          '--zuvi-button-font-size',
+          '--zuvi-button-font-weight',
+          '--zuvi-button-radius',
+          '--zuvi-button-gap',
+          '--zuvi-button-bg',
+          '--zuvi-button-fg',
+          '--zuvi-button-border',
+          '--zuvi-button-border-width',
+          '--zuvi-button-hover-bg',
+          '--zuvi-button-hover-fg',
+          '--zuvi-button-active-bg',
+          '--zuvi-button-disabled-bg',
+          '--zuvi-button-disabled-fg',
+          '--zuvi-button-disabled-border',
+          '--zuvi-button-focus-ring',
+          '--zuvi-button-spinner-size',
+          '--zuvi-button-spinner-width',
+          '--zuvi-button-transition',
         ]}
       />
     </div>

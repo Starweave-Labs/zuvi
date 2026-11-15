@@ -1,4 +1,4 @@
-import { Tabs, TabsList, TabsPanel, TabsTrigger } from '@zui/react';
+import { Tabs, TabsList, TabsPanel, TabsTrigger } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -209,19 +209,19 @@ export default function TabsPage(): React.ReactNode {
         name="Tabs"
         parts={['root', 'list', 'trigger', 'panel', 'icon']}
         vars={[
-          '--z-tabs-gap',
-          '--z-tabs-trigger-font-size',
-          '--z-tabs-trigger-padding-x',
-          '--z-tabs-trigger-padding-y',
-          '--z-tabs-trigger-radius',
-          '--z-tabs-trigger-fg',
-          '--z-tabs-trigger-active-fg',
-          '--z-tabs-trigger-hover-bg',
-          '--z-tabs-indicator-color',
-          '--z-tabs-indicator-size',
-          '--z-tabs-panel-padding',
-          '--z-tabs-panel-padding-top',
-          '--z-tabs-transition',
+          '--zuvi-tabs-gap',
+          '--zuvi-tabs-trigger-font-size',
+          '--zuvi-tabs-trigger-padding-x',
+          '--zuvi-tabs-trigger-padding-y',
+          '--zuvi-tabs-trigger-radius',
+          '--zuvi-tabs-trigger-fg',
+          '--zuvi-tabs-trigger-active-fg',
+          '--zuvi-tabs-trigger-hover-bg',
+          '--zuvi-tabs-indicator-color',
+          '--zuvi-tabs-indicator-size',
+          '--zuvi-tabs-panel-padding',
+          '--zuvi-tabs-panel-padding-top',
+          '--zuvi-tabs-transition',
         ]}
       />
     </div>

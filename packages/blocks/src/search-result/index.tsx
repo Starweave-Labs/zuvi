@@ -7,7 +7,7 @@ import {
   Input,
   List,
   useControllableState,
-} from '@zui/react';
+} from '@zuvi/react';
 
 /* ---------------------------------- 类型 ---------------------------------- */
 
@@ -68,8 +68,8 @@ export const DEMO_SEARCH_TYPES: SearchResultType[] = [
 export const DEMO_SEARCH_RESULTS: SearchResultItem[] = [
   {
     key: 'r1',
-    title: 'ZUI 设计系统接入指南',
-    description: '介绍如何在前端项目中接入 ZUI 组件库、令牌与图标体系。',
+    title: 'ZUVI 设计系统接入指南',
+    description: '介绍如何在前端项目中接入 ZUVI 组件库、令牌与图标体系。',
     type: 'doc',
     extra: '2026-10-28',
     href: '#doc-1',
@@ -149,12 +149,12 @@ export function SearchResultBlock({
       data-part="root"
       className={[className, classNames?.root].filter(Boolean).join(' ') || undefined}
       style={{
-        padding: 'clamp(var(--z-space-3), 3vw, var(--z-space-6))',
-        background: 'var(--z-color-bg-muted)',
+        padding: 'clamp(var(--zuvi-space-3), 3vw, var(--zuvi-space-6))',
+        background: 'var(--zuvi-color-bg-muted)',
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
-        gap: 'var(--z-space-4)',
+        gap: 'var(--zuvi-space-4)',
         ...style,
       }}
     >
@@ -163,26 +163,26 @@ export function SearchResultBlock({
         data-part="toolbar"
         className={classNames?.toolbar}
         style={{
-          background: 'var(--z-color-bg-elevated)',
-          border: '1px solid var(--z-color-border-subtle)',
-          borderRadius: 'var(--z-radius-lg)',
-          padding: 'var(--z-space-5)',
+          background: 'var(--zuvi-color-bg-elevated)',
+          border: '1px solid var(--zuvi-color-border-subtle)',
+          borderRadius: 'var(--zuvi-radius-lg)',
+          padding: 'var(--zuvi-space-5)',
           display: 'flex',
           flexDirection: 'column',
-          gap: 'var(--z-space-4)',
+          gap: 'var(--zuvi-space-4)',
         }}
       >
         <h1
           style={{
             margin: 0,
-            fontSize: 'var(--z-text-xl)',
-            fontWeight: 'var(--z-weight-semibold)',
-            color: 'var(--z-color-fg)',
+            fontSize: 'var(--zuvi-text-xl)',
+            fontWeight: 'var(--zuvi-weight-semibold)',
+            color: 'var(--zuvi-color-fg)',
           }}
         >
           {title}
         </h1>
-        <div style={{ display: 'flex', gap: 'var(--z-space-3)', maxWidth: 640 }}>
+        <div style={{ display: 'flex', gap: 'var(--zuvi-space-3)', maxWidth: 640 }}>
           <Input
             type="search"
             value={currentKeyword}
@@ -199,7 +199,7 @@ export function SearchResultBlock({
           <Button onClick={() => onSearch?.(currentKeyword)}>搜索</Button>
         </div>
         {types.length > 0 ? (
-          <div role="group" aria-label="结果类型" style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--z-space-2)' }}>
+          <div role="group" aria-label="结果类型" style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--zuvi-space-2)' }}>
               {types.map((item) => (
                 <Button key={item.value} size="sm" variant={item.value === currentType ? 'primary' : 'ghost'} aria-pressed={item.value === currentType} onClick={() => setCurrentType(item.value)}>
                   {item.label}
@@ -215,9 +215,9 @@ export function SearchResultBlock({
           <Empty
             description={emptyText}
             style={{
-              background: 'var(--z-color-bg-elevated)',
-              border: '1px solid var(--z-color-border-subtle)',
-              borderRadius: 'var(--z-radius-lg)',
+              background: 'var(--zuvi-color-bg-elevated)',
+              border: '1px solid var(--zuvi-color-border-subtle)',
+              borderRadius: 'var(--zuvi-radius-lg)',
             }}
           >
             <Button
@@ -242,7 +242,7 @@ export function SearchResultBlock({
                     if (item.href == null) e.preventDefault();
                     onResultClick?.(item);
                   }}
-                  style={{ color: 'var(--z-color-link)', textDecoration: 'none' }}
+                  style={{ color: 'var(--zuvi-color-link)', textDecoration: 'none' }}
                 >
                   {item.title}
                 </a>
@@ -252,17 +252,17 @@ export function SearchResultBlock({
                   style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: 'var(--z-space-2)',
+                    gap: 'var(--zuvi-space-2)',
                     flexWrap: 'wrap',
                   }}
                 >
                   <span
                     style={{
-                      fontSize: 'var(--z-text-xs)',
-                      padding: '0 var(--z-space-2)',
-                      borderRadius: 'var(--z-radius-full)',
-                      border: '1px solid var(--z-color-border-subtle)',
-                      color: 'var(--z-color-fg-muted)',
+                      fontSize: 'var(--zuvi-text-xs)',
+                      padding: '0 var(--zuvi-space-2)',
+                      borderRadius: 'var(--zuvi-radius-full)',
+                      border: '1px solid var(--zuvi-color-border-subtle)',
+                      color: 'var(--zuvi-color-fg-muted)',
                     }}
                   >
                     {types.find((t) => t.value === item.type)?.label ?? item.type}
@@ -274,8 +274,8 @@ export function SearchResultBlock({
                 item.extra != null ? (
                   <span
                     style={{
-                      fontSize: 'var(--z-text-xs)',
-                      color: 'var(--z-color-fg-subtle)',
+                      fontSize: 'var(--zuvi-text-xs)',
+                      color: 'var(--zuvi-color-fg-subtle)',
                       whiteSpace: 'nowrap',
                     }}
                   >

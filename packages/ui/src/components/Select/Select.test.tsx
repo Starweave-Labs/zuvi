@@ -75,7 +75,7 @@ describe('Select 渲染', () => {
     render(<Select options={[]} />);
     const empty = document.querySelector('[data-part="empty"]');
     expect(empty).toBeInTheDocument();
-    expect(empty).toHaveClass('z-select-empty');
+    expect(empty).toHaveClass('zuvi-select-empty');
     expect(empty).toHaveTextContent('暂无选项');
     expect(getListbox()).toBeInTheDocument();
   });
@@ -115,9 +115,9 @@ describe('Select 渲染', () => {
       />
     );
     const root = document.querySelector('[data-part="root"]');
-    expect(root).toHaveClass('z-select', 'c-root', 'extra-root');
+    expect(root).toHaveClass('zuvi-select', 'c-root', 'extra-root');
     const trigger = document.querySelector('[data-part="trigger"]');
-    expect(trigger).toHaveClass('z-select-trigger', 'c-trigger');
+    expect(trigger).toHaveClass('zuvi-select-trigger', 'c-trigger');
     expect(document.querySelector('[data-part="value"]')).toHaveClass('c-value');
     expect(document.querySelector('[data-part="listbox"]')).toHaveClass('c-listbox');
     expect(document.querySelector('[data-part="option"]')).toHaveClass('c-option');

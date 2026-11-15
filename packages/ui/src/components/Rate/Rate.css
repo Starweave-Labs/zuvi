@@ -1,107 +1,107 @@
 /* Rate —— 组件级变量定义在根选择器上，可被用户任意覆盖 */
 
-.z-rate {
-  --z-rate-star-size: 1.25rem; /* 20px */
-  --z-rate-star-hit-size: 1.5rem; /* 24px 命中热区，不放大星形 */
-  --z-rate-gap: var(--z-space-1);
-  --z-rate-star-empty-color: var(--z-color-border-strong);
-  --z-rate-star-filled-color: var(--z-color-warning);
-  --z-rate-star-hover-color: var(--z-color-warning-hover);
-  --z-rate-focus-ring: var(--z-color-focus-ring);
-  --z-rate-disabled-opacity: 0.5;
-  --z-rate-transition: var(--z-duration-fast) var(--z-ease-standard);
+.zuvi-rate {
+  --zuvi-rate-star-size: 1.25rem; /* 20px */
+  --zuvi-rate-star-hit-size: 1.5rem; /* 24px 命中热区，不放大星形 */
+  --zuvi-rate-gap: var(--zuvi-space-1);
+  --zuvi-rate-star-empty-color: var(--zuvi-color-border-strong);
+  --zuvi-rate-star-filled-color: var(--zuvi-color-warning);
+  --zuvi-rate-star-hover-color: var(--zuvi-color-warning-hover);
+  --zuvi-rate-focus-ring: var(--zuvi-color-focus-ring);
+  --zuvi-rate-disabled-opacity: 0.5;
+  --zuvi-rate-transition: var(--zuvi-duration-fast) var(--zuvi-ease-standard);
 }
 
 /* 布局 */
-.z-rate {
+.zuvi-rate {
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
-  gap: var(--z-rate-gap);
+  gap: var(--zuvi-rate-gap);
 }
 
 /* 单星按钮：左右两半保持视觉尺寸，伪元素把命中区扩到至少 24px。 */
-.z-rate-star {
+.zuvi-rate-star {
   position: relative;
   box-sizing: border-box;
   display: inline-flex;
-  width: var(--z-rate-star-size);
-  height: var(--z-rate-star-size);
+  width: var(--zuvi-rate-star-size);
+  height: var(--zuvi-rate-star-size);
   padding: 0;
   border: none;
   background: none;
   cursor: pointer;
 }
 
-.z-rate-star::before {
+.zuvi-rate-star::before {
   position: absolute;
   top: 50%;
   left: 50%;
   z-index: 0;
-  width: max(100%, var(--z-rate-star-hit-size));
-  height: max(100%, var(--z-rate-star-hit-size));
+  width: max(100%, var(--zuvi-rate-star-hit-size));
+  height: max(100%, var(--zuvi-rate-star-hit-size));
   content: '';
   transform: translate(-50%, -50%);
 }
 
-.z-rate-star:focus-visible {
-  outline: 2px solid var(--z-rate-focus-ring);
+.zuvi-rate-star:focus-visible {
+  outline: 2px solid var(--zuvi-rate-focus-ring);
   outline-offset: 2px;
-  border-radius: var(--z-radius-sm);
+  border-radius: var(--zuvi-radius-sm);
 }
 
-.z-rate-star-half {
+.zuvi-rate-star-half {
   position: relative;
   z-index: 1;
-  width: calc(var(--z-rate-star-size) / 2);
-  height: var(--z-rate-star-size);
+  width: calc(var(--zuvi-rate-star-size) / 2);
+  height: var(--zuvi-rate-star-size);
   overflow: hidden;
-  color: var(--z-rate-star-empty-color);
-  transition: color var(--z-rate-transition);
+  color: var(--zuvi-rate-star-empty-color);
+  transition: color var(--zuvi-rate-transition);
 }
 
-.z-rate-star-half svg {
+.zuvi-rate-star-half svg {
   display: block;
-  width: var(--z-rate-star-size);
-  height: var(--z-rate-star-size);
+  width: var(--zuvi-rate-star-size);
+  height: var(--zuvi-rate-star-size);
 }
 
-.z-rate-star-half[data-half='1'] svg {
-  margin-left: calc(var(--z-rate-star-size) / -2);
+.zuvi-rate-star-half[data-half='1'] svg {
+  margin-left: calc(var(--zuvi-rate-star-size) / -2);
 }
 
 /* 选中态：warning 语义色填充 */
-.z-rate-star[data-filled='half'] .z-rate-star-half[data-half='0.5'],
-.z-rate-star[data-filled='full'] .z-rate-star-half {
-  color: var(--z-rate-star-filled-color);
+.zuvi-rate-star[data-filled='half'] .zuvi-rate-star-half[data-half='0.5'],
+.zuvi-rate-star[data-filled='full'] .zuvi-rate-star-half {
+  color: var(--zuvi-rate-star-filled-color);
 }
 
-.z-rate:not([data-disabled]):not([data-readonly]) .z-rate-star:hover .z-rate-star-half {
-  color: var(--z-rate-star-hover-color);
+.zuvi-rate:not([data-disabled]):not([data-readonly]) .zuvi-rate-star:hover .zuvi-rate-star-half {
+  color: var(--zuvi-rate-star-hover-color);
 }
 
-.z-rate:not([data-disabled]):not([data-readonly])
-  .z-rate-star[data-filled='full']:hover
-  .z-rate-star-half[data-half='0.5'] {
-  color: var(--z-rate-star-hover-color);
+.zuvi-rate:not([data-disabled]):not([data-readonly])
+  .zuvi-rate-star[data-filled='full']:hover
+  .zuvi-rate-star-half[data-half='0.5'] {
+  color: var(--zuvi-rate-star-hover-color);
 }
 
 /* 禁用 / 只读 */
-.z-rate[data-disabled],
-.z-rate[data-readonly] {
-  opacity: var(--z-rate-disabled-opacity);
+.zuvi-rate[data-disabled],
+.zuvi-rate[data-readonly] {
+  opacity: var(--zuvi-rate-disabled-opacity);
 }
 
-.z-rate[data-disabled] .z-rate-star {
+.zuvi-rate[data-disabled] .zuvi-rate-star {
   cursor: not-allowed;
 }
 
-.z-rate[data-readonly] .z-rate-star {
+.zuvi-rate[data-readonly] .zuvi-rate-star {
   cursor: default;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .z-rate-star-half {
+  .zuvi-rate-star-half {
     transition: none;
   }
 }

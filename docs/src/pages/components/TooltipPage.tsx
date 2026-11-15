@@ -1,4 +1,4 @@
-import { Button, Tooltip } from '@zui/react';
+import { Button, Tooltip } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -131,7 +131,7 @@ export default function TooltipPage(): React.ReactNode {
           {
             name: 'className',
             type: 'string',
-            description: '追加到根元素 z-tooltip-root。',
+            description: '追加到根元素 zuvi-tooltip-root。',
           },
           {
             name: 'classNames',
@@ -145,18 +145,18 @@ export default function TooltipPage(): React.ReactNode {
         name="Tooltip"
         parts={['root', 'content']}
         vars={[
-          '--z-tooltip-max-width',
-          '--z-tooltip-bg',
-          '--z-tooltip-fg',
-          '--z-tooltip-radius',
-          '--z-tooltip-font-size',
-          '--z-tooltip-line-height',
-          '--z-tooltip-padding-x',
-          '--z-tooltip-padding-y',
-          '--z-tooltip-shadow',
-          '--z-tooltip-offset',
-          '--z-tooltip-z',
-          '--z-tooltip-animation',
+          '--zuvi-tooltip-max-width',
+          '--zuvi-tooltip-bg',
+          '--zuvi-tooltip-fg',
+          '--zuvi-tooltip-radius',
+          '--zuvi-tooltip-font-size',
+          '--zuvi-tooltip-line-height',
+          '--zuvi-tooltip-padding-x',
+          '--zuvi-tooltip-padding-y',
+          '--zuvi-tooltip-shadow',
+          '--zuvi-tooltip-offset',
+          '--zuvi-tooltip-z',
+          '--zuvi-tooltip-animation',
         ]}
       />
     </div>

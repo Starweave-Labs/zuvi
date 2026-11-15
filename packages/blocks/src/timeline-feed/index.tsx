@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Avatar, Button, Card, Skeleton, Timeline } from '@zui/react';
+import { Avatar, Button, Card, Skeleton, Timeline } from '@zuvi/react';
 
 /* ---------------------------------- 类型 ---------------------------------- */
 
@@ -130,31 +130,31 @@ export function TimelineFeedBlock({
             : undefined
         }
       >
-        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--z-space-3)' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--zuvi-space-3)' }}>
           <Avatar name={entry.author} src={entry.avatarSrc} size="md" />
           <div style={{ minWidth: 0, flex: 1, overflowWrap: 'anywhere' }}>
             <div
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: 'var(--z-space-2)',
+                gap: 'var(--zuvi-space-2)',
                 flexWrap: 'wrap',
               }}
             >
-              <span style={{ fontWeight: 'var(--z-weight-medium)', color: 'var(--z-color-fg)' }}>
+              <span style={{ fontWeight: 'var(--zuvi-weight-medium)', color: 'var(--zuvi-color-fg)' }}>
                 {entry.author}
               </span>
-              <span style={{ fontSize: 'var(--z-text-xs)', color: 'var(--z-color-fg-muted)' }}>
+              <span style={{ fontSize: 'var(--zuvi-text-xs)', color: 'var(--zuvi-color-fg-muted)' }}>
                 {entry.time}
               </span>
               {entry.type != null ? (
                 <span
                   style={{
-                    fontSize: 'var(--z-text-xs)',
-                    padding: '0 var(--z-space-2)',
-                    borderRadius: 'var(--z-radius-full)',
-                    border: '1px solid var(--z-color-border-subtle)',
-                    color: 'var(--z-color-fg-muted)',
+                    fontSize: 'var(--zuvi-text-xs)',
+                    padding: '0 var(--zuvi-space-2)',
+                    borderRadius: 'var(--zuvi-radius-full)',
+                    border: '1px solid var(--zuvi-color-border-subtle)',
+                    color: 'var(--zuvi-color-fg-muted)',
                   }}
                 >
                   {entry.type}
@@ -174,13 +174,13 @@ export function TimelineFeedBlock({
                   }}
                   style={{
                     marginLeft: 'auto',
-                    padding: '2px var(--z-space-2)',
-                    border: '1px solid var(--z-color-border-subtle)',
-                    borderRadius: 'var(--z-radius-sm)',
+                    padding: '2px var(--zuvi-space-2)',
+                    border: '1px solid var(--zuvi-color-border-subtle)',
+                    borderRadius: 'var(--zuvi-radius-sm)',
                     background: 'transparent',
-                    color: 'var(--z-color-fg-muted)',
+                    color: 'var(--zuvi-color-fg-muted)',
                     font: 'inherit',
-                    fontSize: 'var(--z-text-xs)',
+                    fontSize: 'var(--zuvi-text-xs)',
                     cursor: 'pointer',
                   }}
                 >
@@ -190,10 +190,10 @@ export function TimelineFeedBlock({
             </div>
             <div
               style={{
-                marginTop: 'var(--z-space-1)',
-                color: 'var(--z-color-fg)',
-                fontSize: 'var(--z-text-sm)',
-                fontWeight: 'var(--z-weight-medium)',
+                marginTop: 'var(--zuvi-space-1)',
+                color: 'var(--zuvi-color-fg)',
+                fontSize: 'var(--zuvi-text-sm)',
+                fontWeight: 'var(--zuvi-weight-medium)',
               }}
             >
               {entry.title}
@@ -201,10 +201,10 @@ export function TimelineFeedBlock({
             {entry.content != null ? (
               <div
                 style={{
-                  marginTop: 'var(--z-space-2)',
-                  color: 'var(--z-color-fg-muted)',
-                  fontSize: 'var(--z-text-sm)',
-                  lineHeight: 'var(--z-leading-relaxed)',
+                  marginTop: 'var(--zuvi-space-2)',
+                  color: 'var(--zuvi-color-fg-muted)',
+                  fontSize: 'var(--zuvi-text-sm)',
+                  lineHeight: 'var(--zuvi-leading-relaxed)',
                 }}
               >
                 {entry.content}
@@ -221,12 +221,12 @@ export function TimelineFeedBlock({
       data-part="root"
       className={[className, classNames?.root].filter(Boolean).join(' ') || undefined}
       style={{
-        padding: 'clamp(var(--z-space-3), 3vw, var(--z-space-6))',
-        background: 'var(--z-color-bg-muted)',
+        padding: 'clamp(var(--zuvi-space-3), 3vw, var(--zuvi-space-6))',
+        background: 'var(--zuvi-color-bg-muted)',
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
-        gap: 'var(--z-space-5)',
+        gap: 'var(--zuvi-space-5)',
         ...style,
       }}
     >
@@ -238,7 +238,7 @@ export function TimelineFeedBlock({
           display: 'flex',
           alignItems: 'flex-start',
           justifyContent: 'space-between',
-          gap: 'var(--z-space-4)',
+          gap: 'var(--zuvi-space-4)',
           flexWrap: 'wrap',
         }}
       >
@@ -246,25 +246,25 @@ export function TimelineFeedBlock({
           <h1
             style={{
               margin: 0,
-              fontSize: 'var(--z-text-xl)',
-              fontWeight: 'var(--z-weight-semibold)',
-              color: 'var(--z-color-fg)',
+              fontSize: 'var(--zuvi-text-xl)',
+              fontWeight: 'var(--zuvi-weight-semibold)',
+              color: 'var(--zuvi-color-fg)',
             }}
           >
             {title}
           </h1>
           <p
             style={{
-              margin: 'var(--z-space-1) 0 0',
-              fontSize: 'var(--z-text-sm)',
-              color: 'var(--z-color-fg-muted)',
+              margin: 'var(--zuvi-space-1) 0 0',
+              fontSize: 'var(--zuvi-text-sm)',
+              color: 'var(--zuvi-color-fg-muted)',
             }}
           >
             {subtitle}
           </p>
         </div>
         {actions != null ? (
-          <div style={{ display: 'flex', gap: 'var(--z-space-3)' }}>{actions}</div>
+          <div style={{ display: 'flex', gap: 'var(--zuvi-space-3)' }}>{actions}</div>
         ) : null}
       </header>
 
@@ -275,12 +275,12 @@ export function TimelineFeedBlock({
           <div
             data-part="loading"
             aria-busy="true"
-            style={{ display: 'flex', flexDirection: 'column', gap: 'var(--z-space-5)' }}
+            style={{ display: 'flex', flexDirection: 'column', gap: 'var(--zuvi-space-5)' }}
           >
             {[0, 1, 2].map((index) => (
               <div
                 key={index}
-                style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--z-space-3)' }}
+                style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--zuvi-space-3)' }}
               >
                 <Skeleton circle width={32} height={32} />
                 <div style={{ flex: 1 }}>
@@ -293,8 +293,8 @@ export function TimelineFeedBlock({
           <div
             style={{
               textAlign: 'center',
-              color: 'var(--z-color-fg-subtle)',
-              padding: 'var(--z-space-8) 0',
+              color: 'var(--zuvi-color-fg-subtle)',
+              padding: 'var(--zuvi-space-8) 0',
             }}
           >
             {emptyText}
@@ -307,7 +307,7 @@ export function TimelineFeedBlock({
                 style={{
                   display: 'flex',
                   justifyContent: 'center',
-                  paddingTop: 'var(--z-space-4)',
+                  paddingTop: 'var(--zuvi-space-4)',
                 }}
               >
                 <Button variant="outline" onClick={() => onLoadMore?.()}>

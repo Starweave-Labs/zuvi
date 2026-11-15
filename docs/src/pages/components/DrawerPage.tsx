@@ -1,4 +1,4 @@
-import { Button, Drawer } from '@zui/react';
+import { Button, Drawer } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -235,21 +235,21 @@ export default function DrawerPage(): React.ReactNode {
         name="Drawer"
         parts={['overlay', 'content', 'header', 'title', 'body', 'footer', 'close']}
         vars={[
-          '--z-drawer-overlay-bg',
-          '--z-drawer-size',
-          '--z-drawer-content-bg',
-          '--z-drawer-content-fg',
-          '--z-drawer-content-shadow',
-          '--z-drawer-content-padding',
-          '--z-drawer-header-gap',
-          '--z-drawer-title-font-size',
-          '--z-drawer-body-padding',
-          '--z-drawer-footer-gap',
-          '--z-drawer-footer-padding-top',
-          '--z-drawer-close-size',
-          '--z-drawer-close-fg',
-          '--z-drawer-close-hover-bg',
-          '--z-drawer-animation-duration',
+          '--zuvi-drawer-overlay-bg',
+          '--zuvi-drawer-size',
+          '--zuvi-drawer-content-bg',
+          '--zuvi-drawer-content-fg',
+          '--zuvi-drawer-content-shadow',
+          '--zuvi-drawer-content-padding',
+          '--zuvi-drawer-header-gap',
+          '--zuvi-drawer-title-font-size',
+          '--zuvi-drawer-body-padding',
+          '--zuvi-drawer-footer-gap',
+          '--zuvi-drawer-footer-padding-top',
+          '--zuvi-drawer-close-size',
+          '--zuvi-drawer-close-fg',
+          '--zuvi-drawer-close-hover-bg',
+          '--zuvi-drawer-animation-duration',
         ]}
       />
     </div>

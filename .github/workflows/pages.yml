@@ -20,11 +20,11 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       # 文档直接依赖 blocks/i18n/icons/react/tokens；先按依赖拓扑构建全部工作区依赖。
-      - run: pnpm --filter '@zui/docs^...' build
-      - run: pnpm --filter @zui/docs build
+      - run: pnpm --filter '@zuvi/docs^...' build
+      - run: pnpm --filter @zuvi/docs build
         env:
           GITHUB_PAGES_BUILD: 'true'
-      - run: pnpm --filter @zui/react build:browser
+      - run: pnpm --filter @zuvi/react build:browser
       - run: cp docs/public/cdn-demo.html docs/dist/cdn-demo.html
       - uses: actions/upload-pages-artifact@v4
         with:

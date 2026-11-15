@@ -1,4 +1,4 @@
-import { List } from '@zui/react';
+import { List } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -101,25 +101,25 @@ export default function ListPage(): React.ReactNode {
         name="List"
         parts={['root', 'header', 'body', 'item', 'avatar', 'meta', 'title', 'description', 'extra', 'footer', 'loading']}
         vars={[
-          '--z-list-font-size',
-          '--z-list-fg',
-          '--z-list-bg',
-          '--z-list-border',
-          '--z-list-radius',
-          '--z-list-item-padding-x',
-          '--z-list-item-padding-y',
-          '--z-list-item-gap',
-          '--z-list-item-hover-bg',
-          '--z-list-item-border',
-          '--z-list-title-font-weight',
-          '--z-list-title-fg',
-          '--z-list-description-fg',
-          '--z-list-avatar-size',
-          '--z-list-header-bg',
-          '--z-list-header-fg',
-          '--z-list-loading-padding',
-          '--z-list-spinner-size',
-          '--z-list-spinner-color',
+          '--zuvi-list-font-size',
+          '--zuvi-list-fg',
+          '--zuvi-list-bg',
+          '--zuvi-list-border',
+          '--zuvi-list-radius',
+          '--zuvi-list-item-padding-x',
+          '--zuvi-list-item-padding-y',
+          '--zuvi-list-item-gap',
+          '--zuvi-list-item-hover-bg',
+          '--zuvi-list-item-border',
+          '--zuvi-list-title-font-weight',
+          '--zuvi-list-title-fg',
+          '--zuvi-list-description-fg',
+          '--zuvi-list-avatar-size',
+          '--zuvi-list-header-bg',
+          '--zuvi-list-header-fg',
+          '--zuvi-list-loading-padding',
+          '--zuvi-list-spinner-size',
+          '--zuvi-list-spinner-color',
         ]}
       />
     </div>

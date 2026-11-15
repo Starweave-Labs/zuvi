@@ -19,7 +19,7 @@ describe('Collapse', () => {
   it('renders items with headers collapsed by default', () => {
     render(<Collapse items={ITEMS} />);
     const root = document.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-collapse');
+    expect(root).toHaveClass('zuvi-collapse');
     expect(screen.getAllByRole('button')).toHaveLength(3);
     expect(getHeader('标题一')).toHaveAttribute('aria-expanded', 'false');
     expect(getHeader('标题一')).toHaveAttribute('data-part', 'header');
@@ -122,10 +122,10 @@ describe('Collapse', () => {
       />
     );
     const root = document.querySelector('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-collapse', 'my-root', 'c-root');
+    expect(root).toHaveClass('zuvi-collapse', 'my-root', 'c-root');
     expect(root).toHaveAttribute('data-accordion', 'true');
-    expect(document.querySelector('[data-part="item"]')).toHaveClass('z-collapse-item', 'c-item');
-    expect(getHeader('标题一')).toHaveClass('z-collapse-header', 'c-header');
-    expect(document.querySelector('[data-part="content"]')).toHaveClass('z-collapse-content', 'c-content');
+    expect(document.querySelector('[data-part="item"]')).toHaveClass('zuvi-collapse-item', 'c-item');
+    expect(getHeader('标题一')).toHaveClass('zuvi-collapse-header', 'c-header');
+    expect(document.querySelector('[data-part="content"]')).toHaveClass('zuvi-collapse-content', 'c-content');
   });
 });

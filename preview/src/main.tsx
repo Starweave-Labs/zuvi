@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
-import '@zui/react/styles.css';
+import '@zuvi/react/styles.css';
 import {
   Button,
   Input,
@@ -14,7 +14,7 @@ import {
   Table,
   MessageProvider,
   useMessage,
-} from '@zui/react';
+} from '@zuvi/react';
 
 function MessageDemo() {
   const message = useMessage();
@@ -57,7 +57,7 @@ function App() {
         }}
       >
         <div>
-          <h1 style={{ margin: 0, fontSize: 24 }}>ZUI 组件预览</h1>
+          <h1 style={{ margin: 0, fontSize: 24 }}>ZUVI 组件预览</h1>
           <p style={{ margin: '4px 0 0', opacity: 0.65 }}>
             10 个核心组件 · 令牌驱动 · 零运行时 · 完整文档站开发中
           </p>
@@ -191,12 +191,12 @@ function App() {
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section
-      className="z-reset"
+      className="zuvi-reset"
       style={{
-        border: '1px solid var(--z-color-border)',
-        borderRadius: 'var(--z-radius-lg)',
+        border: '1px solid var(--zuvi-color-border)',
+        borderRadius: 'var(--zuvi-radius-lg)',
         padding: 20,
-        background: 'var(--z-color-bg-elevated)',
+        background: 'var(--zuvi-color-bg-elevated)',
       }}
     >
       <h2 style={{ margin: '0 0 14px', fontSize: 15, opacity: 0.75, fontWeight: 600 }}>{title}</h2>
@@ -208,7 +208,7 @@ function Card({ title, children }: { title: string; children: React.ReactNode })
 createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <MessageProvider>
-      <div className="z-reset" style={{ minHeight: '100vh', background: 'var(--z-color-bg)' }}>
+      <div className="zuvi-reset" style={{ minHeight: '100vh', background: 'var(--zuvi-color-bg)' }}>
         <App />
       </div>
     </MessageProvider>

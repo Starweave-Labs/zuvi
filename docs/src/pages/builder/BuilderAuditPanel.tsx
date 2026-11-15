@@ -79,7 +79,7 @@ export function BuilderAuditPanel({
               null,
               2
             ),
-            'ZUI-页面设计检查.json'
+            'ZUVI-页面设计检查.json'
           )
         }
       >

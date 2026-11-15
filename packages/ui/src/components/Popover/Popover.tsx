@@ -105,7 +105,7 @@ function Popover(props: PopoverProps) {
 
   return (
     <PopoverContext.Provider value={contextValue}>
-      <div ref={rootRef} data-part="root" className="z-popover-root">
+      <div ref={rootRef} data-part="root" className="zuvi-popover-root">
         {children}
       </div>
     </PopoverContext.Provider>
@@ -141,7 +141,7 @@ function PopoverTrigger(props: PopoverTriggerProps) {
       ref: setTriggerRef,
       'aria-haspopup': 'dialog',
       'aria-expanded': ctx.open,
-      'data-zui-popover-trigger': ctx.open ? 'open' : undefined,
+      'data-zuvi-popover-trigger': ctx.open ? 'open' : undefined,
       'aria-controls': ctx.open ? ctx.contentId : undefined,
       onClick: (event: React.MouseEvent<HTMLButtonElement>) => {
         (child.props.onClick as ((event: React.MouseEvent) => void) | undefined)?.(event);
@@ -157,10 +157,10 @@ function PopoverTrigger(props: PopoverTriggerProps) {
       ref={setTriggerRef}
       id={ctx.triggerId}
       data-part="trigger"
-      className={cx('z-popover-trigger', className)}
+      className={cx('zuvi-popover-trigger', className)}
       aria-haspopup="dialog"
       aria-expanded={ctx.open}
-      data-zui-popover-trigger={ctx.open ? 'open' : undefined}
+      data-zuvi-popover-trigger={ctx.open ? 'open' : undefined}
       aria-controls={ctx.open ? ctx.contentId : undefined}
       onClick={toggle}
     >
@@ -319,11 +319,11 @@ function PopoverContentInner(props: PopoverContentProps) {
         tabIndex={-1}
         data-part="content"
         data-state={state}
-        data-zui-popover-popup={state}
+        data-zuvi-popover-popup={state}
         data-side={side}
         data-placement={position.side}
         data-align={align}
-        className={cx('z-popover', classNames?.content, className)}
+        className={cx('zuvi-popover', classNames?.content, className)}
         style={{ position: 'fixed', top: position.top, left: position.left,
           zIndex: position.zIndex, ...style }}
         onKeyDown={(event) => {

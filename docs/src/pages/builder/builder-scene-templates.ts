@@ -21,7 +21,7 @@ const text = (children: string, styles: BuilderStyles = {}) =>
   n(
     'Typography_Text',
     { children, strong: false },
-    { color: 'var(--z-color-fg-muted)', fontSize: 13, lineHeight: 1.8, ...styles }
+    { color: 'var(--zuvi-color-fg-muted)', fontSize: 13, lineHeight: 1.8, ...styles }
   );
 const title = (value: string, size = 28) =>
   n(
@@ -310,7 +310,7 @@ const brandHero = () =>
           text('MAKE SPACE FOR BETTER WORK', {
             fontSize: 11,
             letterSpacing: 1.8,
-            color: 'var(--z-color-primary)',
+            color: 'var(--zuvi-color-primary)',
           }),
           title('让好想法，\n成为下一件作品。', 58),
           text(
@@ -351,7 +351,7 @@ const brandHero = () =>
           paddingRight: 28,
           paddingBottom: 28,
           paddingLeft: 28,
-          backgroundColor: 'var(--z-color-primary-subtle)',
+          backgroundColor: 'var(--zuvi-color-primary-subtle)',
           borderRadius: 20,
           gap: 18,
           rotate: 1,
@@ -409,7 +409,7 @@ const contact = () =>
         }),
       ],
     },
-    { backgroundColor: 'var(--z-color-bg-muted)', borderRadius: 20, marginTop: 50 }
+    { backgroundColor: 'var(--zuvi-color-bg-muted)', borderRadius: 20, marginTop: 50 }
   );
 
 export const sceneTemplates = [
@@ -643,7 +643,7 @@ export const sceneTemplates = [
             ),
             contact(),
             stack(
-              [title('FORMA®', 22), text('把专注留给创造。'), text('© 2026 Forma · 用 ZUI 构建')],
+              [title('FORMA®', 22), text('把专注留给创造。'), text('© 2026 Forma · 用 ZUVI 构建')],
               { paddingTop: 32, paddingBottom: 32, gap: 8 }
             ),
           ],
@@ -779,7 +779,7 @@ export const sceneSnippets = [
     data: shell(
       [
         view('overview', '工作概览', [
-          heading('你的工作空间，从这里开始。', '拖入数据、表单或其他 ZUI 组件。'),
+          heading('你的工作空间，从这里开始。', '拖入数据、表单或其他 ZUVI 组件。'),
         ]),
       ],
       { navigation: 'overview|工作概览' }

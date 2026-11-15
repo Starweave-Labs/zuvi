@@ -1,4 +1,4 @@
-declare const __ZUI_CATALOG__: {
+declare const __ZUVI_CATALOG__: {
   version: string;
   components: number;
   blocks: number;
@@ -6,4 +6,4 @@ declare const __ZUI_CATALOG__: {
 };
 
 /** Counts come from the local source tree in vite.config.ts. */
-export const catalog = __ZUI_CATALOG__;
+export const catalog = __ZUVI_CATALOG__;

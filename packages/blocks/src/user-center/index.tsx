@@ -1,8 +1,8 @@
 'use client';
 
 import * as React from 'react';
-import { Avatar, Card, Descriptions, Switch, Tabs, Upload, useControllableState } from '@zui/react';
-import type { UploadChangeInfo, UploadFile } from '@zui/react';
+import { Avatar, Card, Descriptions, Switch, Tabs, Upload, useControllableState } from '@zuvi/react';
+import type { UploadChangeInfo, UploadFile } from '@zuvi/react';
 
 /* ---------------------------------- 类型 ---------------------------------- */
 
@@ -74,7 +74,7 @@ export const DEMO_USER: UserCenterUser = {
   department: '平台研发部 / 体验技术组',
   location: '杭州',
   joinDate: '2023-06-12',
-  bio: '负责 ZUI 组件库与设计系统工程化建设。',
+  bio: '负责 ZUVI 组件库与设计系统工程化建设。',
   avatarSrc: 'https://example.com/avatars/xiaoman.png',
 };
 
@@ -135,13 +135,13 @@ function ShieldIcon() {
 const actionButtonStyle: React.CSSProperties = {
   display: 'inline-flex',
   alignItems: 'center',
-  gap: 'var(--z-space-1)',
+  gap: 'var(--zuvi-space-1)',
   padding: '6px 12px',
-  borderRadius: 'var(--z-radius-md)',
-  border: '1px solid var(--z-color-border)',
-  background: 'var(--z-color-bg)',
-  color: 'var(--z-color-fg)',
-  fontSize: 'var(--z-text-sm)',
+  borderRadius: 'var(--zuvi-radius-md)',
+  border: '1px solid var(--zuvi-color-border)',
+  background: 'var(--zuvi-color-bg)',
+  color: 'var(--zuvi-color-fg)',
+  fontSize: 'var(--zuvi-text-sm)',
   cursor: 'pointer',
 };
 
@@ -182,10 +182,10 @@ export function UserCenterBlock({
       style={{
         display: 'flex',
         flexDirection: 'column',
-        gap: 'var(--z-space-4)',
+        gap: 'var(--zuvi-space-4)',
         maxWidth: 880,
         margin: '0 auto',
-        padding: 'var(--z-space-6) var(--z-space-4)',
+        padding: 'var(--zuvi-space-6) var(--zuvi-space-4)',
         ...style,
       }}
     >
@@ -195,7 +195,7 @@ export function UserCenterBlock({
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: 'var(--z-space-5)',
+            gap: 'var(--zuvi-space-5)',
             flexWrap: 'wrap',
           }}
         >
@@ -204,18 +204,18 @@ export function UserCenterBlock({
             <h2
               style={{
                 margin: 0,
-                fontSize: 'var(--z-text-xl)',
-                fontWeight: 'var(--z-weight-semibold)',
-                color: 'var(--z-color-fg)',
+                fontSize: 'var(--zuvi-text-xl)',
+                fontWeight: 'var(--zuvi-weight-semibold)',
+                color: 'var(--zuvi-color-fg)',
               }}
             >
               {user.name}
             </h2>
             <p
               style={{
-                margin: 'var(--z-space-1) 0 0',
-                fontSize: 'var(--z-text-sm)',
-                color: 'var(--z-color-fg-muted)',
+                margin: 'var(--zuvi-space-1) 0 0',
+                fontSize: 'var(--zuvi-text-sm)',
+                color: 'var(--zuvi-color-fg-muted)',
               }}
             >
               @{user.account}
@@ -224,9 +224,9 @@ export function UserCenterBlock({
             {user.bio ? (
               <p
                 style={{
-                  margin: 'var(--z-space-2) 0 0',
-                  fontSize: 'var(--z-text-sm)',
-                  color: 'var(--z-color-fg-muted)',
+                  margin: 'var(--zuvi-space-2) 0 0',
+                  fontSize: 'var(--zuvi-text-sm)',
+                  color: 'var(--zuvi-color-fg-muted)',
                 }}
               >
                 {user.bio}
@@ -238,14 +238,14 @@ export function UserCenterBlock({
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'stretch',
-              gap: 'var(--z-space-2)',
+              gap: 'var(--zuvi-space-2)',
             }}
           >
             <button type="button" style={actionButtonStyle} onClick={onEditProfile}>
               <EditIcon />
               编辑资料
             </button>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--z-space-1)' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--zuvi-space-1)' }}>
               <Upload
                 accept="image/*"
                 fileList={avatarFileList}
@@ -290,21 +290,21 @@ export function UserCenterBlock({
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                gap: 'var(--z-space-4)',
-                padding: 'var(--z-space-4) 0 0',
-                marginTop: 'var(--z-space-4)',
-                borderTop: '1px solid var(--z-color-border-subtle)',
+                gap: 'var(--zuvi-space-4)',
+                padding: 'var(--zuvi-space-4) 0 0',
+                marginTop: 'var(--zuvi-space-4)',
+                borderTop: '1px solid var(--zuvi-color-border-subtle)',
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--z-space-2)' }}>
-                <span style={{ color: 'var(--z-color-fg-muted)', display: 'inline-flex' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--zuvi-space-2)' }}>
+                <span style={{ color: 'var(--zuvi-color-fg-muted)', display: 'inline-flex' }}>
                   <ShieldIcon />
                 </span>
                 <div>
-                  <div style={{ fontSize: 'var(--z-text-sm)', color: 'var(--z-color-fg)' }}>
+                  <div style={{ fontSize: 'var(--zuvi-text-sm)', color: 'var(--zuvi-color-fg)' }}>
                     登录二次验证
                   </div>
-                  <div style={{ fontSize: 'var(--z-text-xs)', color: 'var(--z-color-fg-muted)' }}>
+                  <div style={{ fontSize: 'var(--zuvi-text-xs)', color: 'var(--zuvi-color-fg-muted)' }}>
                     新设备登录时需要邮箱验证码确认
                   </div>
                 </div>
@@ -315,7 +315,7 @@ export function UserCenterBlock({
                 aria-label="登录二次验证"
               />
             </div>
-            <div style={{ paddingTop: 'var(--z-space-4)' }}>
+            <div style={{ paddingTop: 'var(--zuvi-space-4)' }}>
               <button type="button" style={actionButtonStyle} onClick={onChangePassword}>
                 修改密码
               </button>
@@ -326,14 +326,14 @@ export function UserCenterBlock({
             <div
               className={classNames?.preferences}
               data-part="preferences"
-              style={{ display: 'flex', flexDirection: 'column', gap: 'var(--z-space-4)' }}
+              style={{ display: 'flex', flexDirection: 'column', gap: 'var(--zuvi-space-4)' }}
             >
               {preferences.length === 0 ? (
                 <p
                   style={{
                     margin: 0,
-                    fontSize: 'var(--z-text-sm)',
-                    color: 'var(--z-color-fg-muted)',
+                    fontSize: 'var(--zuvi-text-sm)',
+                    color: 'var(--zuvi-color-fg-muted)',
                   }}
                 >
                   暂无可配置偏好
@@ -347,21 +347,21 @@ export function UserCenterBlock({
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
-                      gap: 'var(--z-space-4)',
-                      padding: 'var(--z-space-3) var(--z-space-4)',
-                      borderRadius: 'var(--z-radius-md)',
-                      border: '1px solid var(--z-color-border-subtle)',
+                      gap: 'var(--zuvi-space-4)',
+                      padding: 'var(--zuvi-space-3) var(--zuvi-space-4)',
+                      borderRadius: 'var(--zuvi-radius-md)',
+                      border: '1px solid var(--zuvi-color-border-subtle)',
                     }}
                   >
                     <div>
-                      <div style={{ fontSize: 'var(--z-text-sm)', color: 'var(--z-color-fg)' }}>
+                      <div style={{ fontSize: 'var(--zuvi-text-sm)', color: 'var(--zuvi-color-fg)' }}>
                         {item.label}
                       </div>
                       {item.description ? (
                         <div
                           style={{
-                            fontSize: 'var(--z-text-xs)',
-                            color: 'var(--z-color-fg-muted)',
+                            fontSize: 'var(--zuvi-text-xs)',
+                            color: 'var(--zuvi-color-fg-muted)',
                             marginTop: 2,
                           }}
                         >

@@ -34,9 +34,9 @@ async function expectHeading(page: Page, name: string): Promise<Locator> {
   return heading;
 }
 
-async function openRoute(page: Page, route = '/', heading = 'ZUI 组件库'): Promise<void> {
+async function openRoute(page: Page, route = '/', heading = 'ZUVI 组件库'): Promise<void> {
   await page.goto('/');
-  await expectHeading(page, 'ZUI 组件库');
+  await expectHeading(page, 'ZUVI 组件库');
   if (route !== '/') {
     // Same-document hash changes must go through the app's hashchange subscription.
     await page.evaluate((next) => {

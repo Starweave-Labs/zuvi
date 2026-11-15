@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useZuiConfig } from '../../config';
+import { useZuviConfig } from '../../config';
 import { FloatingPanel, cx, useControllableState, useOnClickOutside } from '../../utils';
 import './TimePicker.css';
 
@@ -73,7 +73,7 @@ export function TimePicker(props: TimePickerProps) {
     'aria-labelledby': ariaLabelledBy,
   } = props;
 
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const unitLabels: Record<TimeUnit, string> = {
     hour: locale.timePicker.hour,
     minute: locale.timePicker.minute,
@@ -204,7 +204,7 @@ export function TimePicker(props: TimePickerProps) {
     <div
       ref={rootRef}
       data-part="root"
-      className={cx('z-time-picker', classNames?.root, className)}
+      className={cx('zuvi-time-picker', classNames?.root, className)}
       data-open={open ? 'true' : 'false'}
       data-size={size}
       data-disabled={disabled ? 'true' : undefined}
@@ -214,7 +214,7 @@ export function TimePicker(props: TimePickerProps) {
         id={triggerId}
         ref={triggerRef}
         data-part="trigger"
-        className={cx('z-time-picker-trigger', classNames?.trigger)}
+        className={cx('zuvi-time-picker-trigger', classNames?.trigger)}
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-controls={panelId}
@@ -235,13 +235,13 @@ export function TimePicker(props: TimePickerProps) {
         }}
       >
         <span
-          className="z-time-picker-value"
+          className="zuvi-time-picker-value"
           data-placeholder={displayTime ? undefined : ''}
         >
           {displayTime || locale.timePicker.placeholder}
         </span>
         <svg
-          className="z-time-picker-clock-icon"
+          className="zuvi-time-picker-clock-icon"
           viewBox="0 0 16 16"
           width="14"
           height="14"
@@ -260,13 +260,13 @@ export function TimePicker(props: TimePickerProps) {
         </svg>
       </button>
 
-      <FloatingPanel open={open} anchorRef={rootRef} focusOnOpen offsetVariable="--z-time-picker-panel-margin-top">
+      <FloatingPanel open={open} anchorRef={rootRef} focusOnOpen offsetVariable="--zuvi-time-picker-panel-margin-top">
         <div
         id={panelId}
         ref={panelRef}
         tabIndex={-1}
         data-part="panel"
-        className={cx('z-time-picker-panel', classNames?.panel)}
+        className={cx('zuvi-time-picker-panel', classNames?.panel)}
         data-open={open ? 'true' : 'false'}
         aria-activedescendant={activeDescendantId}
         onKeyDown={onKeyDown}
@@ -276,7 +276,7 @@ export function TimePicker(props: TimePickerProps) {
             key={unit}
             role="listbox"
             data-part="column"
-            className={cx('z-time-picker-column', classNames?.column)}
+            className={cx('zuvi-time-picker-column', classNames?.column)}
             aria-label={unitLabels[unit]}
             data-unit={unit}
             data-focused={focusUnit === unit ? 'true' : undefined}
@@ -287,7 +287,7 @@ export function TimePicker(props: TimePickerProps) {
                 id={optionId(unit, index)}
                 role="option"
                 data-part="item"
-                className={cx('z-time-picker-item', classNames?.item)}
+                className={cx('zuvi-time-picker-item', classNames?.item)}
                 aria-selected={draft[unit] === index}
                 data-active={draft[unit] === index ? 'true' : undefined}
                 ref={(element) => {

@@ -34,12 +34,12 @@ async function offline(context: BrowserContext, exported: string, path: string) 
       : route.abort()
   );
   await result.goto(`http://localhost:5174/${path}.html`);
-  await expect(result.locator('.z-builder-canvas')).toBeVisible();
+  await expect(result.locator('.zuvi-builder-canvas')).toBeVisible();
   return result;
 }
 function metric(page: Page, name: string) {
   return page
-    .locator('.z-builder-metric')
+    .locator('.zuvi-builder-metric')
     .filter({ has: page.locator('span:first-child', { hasText: name }) })
     .locator('> strong');
 }
@@ -71,17 +71,17 @@ test('多场景模板：真实缩略图、分类选择、所有新模板可离�
     const runtime = await offline(context, exported, `template-${index}`);
     runtime.on('pageerror', (error) => errors.push(error.message));
     await runtime.setViewportSize({ width: 1440, height: 1000 });
-    await expect(runtime.locator('.z-builder-canvas')).toBeVisible();
+    await expect(runtime.locator('.zuvi-builder-canvas')).toBeVisible();
     if (index === 2) {
       await expect
         .poll(() =>
           runtime
-            .locator('.z-builder-collection-grid')
+            .locator('.zuvi-builder-collection-grid')
             .evaluate((grid) => getComputedStyle(grid).gridTemplateColumns.split(' ').length)
         )
         .toBe(3);
       const topbarRows = await runtime
-        .locator('.z-builder-app-sidebar nav button')
+        .locator('.zuvi-builder-app-sidebar nav button')
         .evaluateAll((buttons) =>
           buttons.map((button) => Math.round(button.getBoundingClientRect().top))
         );
@@ -94,7 +94,7 @@ test('多场景模板：真实缩略图、分类选择、所有新模板可离�
       await expect
         .poll(() =>
           runtime
-            .locator('.z-builder-cartesian svg')
+            .locator('.zuvi-builder-cartesian svg')
             .first()
             .evaluate((svg) => {
               const element = svg as SVGSVGElement;
@@ -107,7 +107,7 @@ test('多场景模板：真实缩略图、分类选择、所有新模板可离�
       await expect
         .poll(() =>
           runtime
-            .locator('.z-builder-cartesian svg')
+            .locator('.zuvi-builder-cartesian svg')
             .first()
             .evaluate((svg) => {
               const matrix = (svg as SVGSVGElement).getScreenCTM()!;
@@ -156,7 +156,7 @@ test('业务闭环：导航、表单创建、图表统计联动、详情编辑�
     .click();
   await expect(metric(runtime, '全部项目')).toHaveText('9');
   await expect(metric(runtime, '项目总预算')).toHaveText('¥465,200');
-  await expect(runtime.locator('.z-builder-chart').first().getByRole('img')).toHaveAttribute(
+  await expect(runtime.locator('.zuvi-builder-chart').first().getByRole('img')).toHaveAttribute(
     'aria-label',
     /测试负责人 1,200/
   );
@@ -285,16 +285,16 @@ test('直接操作：双击、退格与失焦提交、鼠标调整尺寸，以�
     .click();
   await page.getByLabel('快速布局', { exact: true }).selectOption('两列等分');
   await expect(
-    canvas.locator('[data-builder-component="Card"] > .z-card > .z-card-body > .z-builder-stack')
+    canvas.locator('[data-builder-component="Card"] > .zuvi-card > .zuvi-card-body > .zuvi-builder-stack')
   ).toHaveCSS('display', 'grid');
   await expect(
-    canvas.locator('[data-builder-component="Card"] > .z-card > .z-card-header')
+    canvas.locator('[data-builder-component="Card"] > .zuvi-card > .zuvi-card-header')
   ).toHaveCSS('display', 'flex');
   await create(page, '项目业务工作台');
   await page.getByLabel('编辑应用视图').selectOption({ label: '工作概览' });
   await page.getByLabel('快速布局', { exact: true }).selectOption('两列等分');
   await expect(
-    canvas.locator('.z-builder-app-view[data-view="overview"] > .z-builder-stack')
+    canvas.locator('.zuvi-builder-app-view[data-view="overview"] > .zuvi-builder-stack')
   ).toHaveCSS('display', 'grid');
 });
 
@@ -320,7 +320,7 @@ test('数据配置：CSV 导入、数值类型校验、字段绑定、样式主�
   await page.getByRole('button', { name: '插入数据统计卡', exact: true }).click();
   await page.getByLabel('绑定数据源').selectOption(JSON.stringify({ value: 'projects' }));
   await expect(
-    page.frameLocator('#preview-frame').locator('.z-builder-metric > strong')
+    page.frameLocator('#preview-frame').locator('.zuvi-builder-metric > strong')
   ).toHaveText('1');
   await page.getByRole('button', { name: '页面', exact: true }).last().click();
   await page.getByRole('button', { name: '应用松石绿风格', exact: true }).click();
@@ -328,7 +328,7 @@ test('数据配置：CSV 导入、数值类型校验、字段绑定、样式主�
   await expect(page.locator('.doc-builder-save-state')).toContainText('已保存到本机');
   await page.reload();
   await expect(
-    page.frameLocator('#preview-frame').locator('.z-builder-metric > strong')
+    page.frameLocator('#preview-frame').locator('.zuvi-builder-metric > strong')
   ).toHaveText('1');
   expect((await data(page)).root.props.datasets[0].name).toBe('我的项目数据');
 });
@@ -407,7 +407,7 @@ test('REST 数据源：画布使用样本，运行态请求、错误重试、只
   });
   await expect(page.locator('.doc-builder-notice')).toContainText('已导入 1 个页面');
   await expect(
-    page.frameLocator('#preview-frame').locator('.z-builder-metric > strong')
+    page.frameLocator('#preview-frame').locator('.zuvi-builder-metric > strong')
   ).toHaveText('8');
   const exported = await html(page),
     runtime = await context.newPage();
@@ -432,7 +432,7 @@ test('REST 数据源：画布使用样本，运行态请求、错误重试、只
   state = 'success';
   await runtime.getByRole('button', { name: '重新请求' }).click();
   await expect(runtime.getByRole('cell', { name: '远程真实项目' })).toBeVisible();
-  await expect(runtime.locator('.z-builder-metric > strong')).toHaveText('1');
+  await expect(runtime.locator('.zuvi-builder-metric > strong')).toHaveText('1');
   await expect(runtime.getByRole('button', { name: '新建记录' })).toHaveCount(0);
   await expect(runtime.getByRole('button', { name: '编辑', exact: true })).toHaveCount(0);
   state = 'empty';

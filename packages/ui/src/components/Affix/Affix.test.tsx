@@ -129,8 +129,8 @@ describe('Affix 定制与透传', () => {
       </Affix>
     );
     const root = screen.getByText('导航').closest('[data-part="root"]') as HTMLElement;
-    expect(root).toHaveClass('z-affix', 'my-root', 'page-affix');
-    expect(getContent()).toHaveClass('z-affix-content', 'my-content');
+    expect(root).toHaveClass('zuvi-affix', 'my-root', 'page-affix');
+    expect(getContent()).toHaveClass('zuvi-affix-content', 'my-content');
   });
 
   it('children 原样渲染', () => {

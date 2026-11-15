@@ -204,7 +204,7 @@ describe('Splitter DOM、API 与 ARIA', () => {
         </Splitter.Panel>
       </Splitter>
     );
-    expect(root().style.gridTemplateColumns).toBe('50fr var(--z-splitter-handle-size) 50fr');
+    expect(root().style.gridTemplateColumns).toBe('50fr var(--zuvi-splitter-handle-size) 50fr');
   });
 
   it('Handle 具名并同时控制前后稳定 Panel id', () => {
@@ -291,7 +291,7 @@ describe('Splitter DOM、API 与 ARIA', () => {
 
   it('固定 Handle 轨道与 Panel fr 共用同一 grid，不把 Handle 叠加到 100% 之外', () => {
     renderTwo();
-    expect(root().style.gridTemplateColumns).toBe('40fr var(--z-splitter-handle-size) 60fr');
+    expect(root().style.gridTemplateColumns).toBe('40fr var(--zuvi-splitter-handle-size) 60fr');
     expect(panels()[0].style.flexBasis).toBe('');
   });
 
@@ -631,7 +631,7 @@ describe('折叠、焦点与受控状态', () => {
       </Splitter>
     );
 
-    expect(root().style.gridTemplateColumns).toBe('5fr var(--z-splitter-handle-size) 95fr');
+    expect(root().style.gridTemplateColumns).toBe('5fr var(--zuvi-splitter-handle-size) 95fr');
     expect(onSizesChange).toHaveBeenCalledTimes(2);
     expect(onSizesChange).toHaveBeenLastCalledWith([5, 95], {
       reason: 'collapse',
@@ -700,7 +700,7 @@ describe('折叠、焦点与受控状态', () => {
     );
 
     expect(root().style.gridTemplateColumns).toBe(
-      '45fr var(--z-splitter-handle-size) 45fr var(--z-splitter-handle-size) 10fr'
+      '45fr var(--zuvi-splitter-handle-size) 45fr var(--zuvi-splitter-handle-size) 10fr'
     );
     expect(onSizesChange).toHaveBeenCalledTimes(2);
     expect(onSizesChange).toHaveBeenLastCalledWith([45, 45, 10], {
@@ -820,7 +820,7 @@ describe('动态模型、警告与 SSR', () => {
         </Splitter.Panel>
       </Splitter>
     );
-    expect(html).toContain('grid-template-columns:40fr var(--z-splitter-handle-size) 60fr');
+    expect(html).toContain('grid-template-columns:40fr var(--zuvi-splitter-handle-size) 60fr');
     expect(html).toContain('role="separator"');
     expect(html).toContain('aria-controls=');
   });

@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Button, Card, Checkbox, Divider, Form, Input } from '@zui/react';
+import { Button, Card, Checkbox, Divider, Form, Input } from '@zuvi/react';
 
 /* ---------------------------------- 类型 ---------------------------------- */
 
@@ -98,8 +98,8 @@ function GoogleIcon() {
 /* ---------------------------------- 区块 ---------------------------------- */
 
 const linkStyle: React.CSSProperties = {
-  fontSize: 'var(--z-text-sm)',
-  color: 'var(--z-color-link)',
+  fontSize: 'var(--zuvi-text-sm)',
+  color: 'var(--zuvi-color-link)',
   textDecoration: 'underline',
   background: 'none',
   border: 'none',
@@ -109,7 +109,7 @@ const linkStyle: React.CSSProperties = {
 
 /** 登录页区块：Card + Form + Input + Button + Checkbox 拼装的登录布局 */
 export function LoginBlock({
-  productName = 'ZUI',
+  productName = 'ZUVI',
   logo,
   title = '欢迎回来',
   subtitle = '登录你的账号以继续',
@@ -140,11 +140,11 @@ export function LoginBlock({
         justifyContent: 'center',
         width: 40,
         height: 40,
-        borderRadius: 'var(--z-radius-lg)',
-        background: 'var(--z-color-primary)',
-        color: 'var(--z-color-primary-fg)',
-        fontSize: 'var(--z-text-lg)',
-        fontWeight: 'var(--z-weight-semibold)',
+        borderRadius: 'var(--zuvi-radius-lg)',
+        background: 'var(--zuvi-color-primary)',
+        color: 'var(--zuvi-color-primary-fg)',
+        fontSize: 'var(--zuvi-text-lg)',
+        fontWeight: 'var(--zuvi-weight-semibold)',
       }}
     >
       {productName.slice(0, 1).toUpperCase()}
@@ -161,10 +161,10 @@ export function LoginBlock({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: 'var(--z-space-6)',
-        padding: 'var(--z-space-8) var(--z-space-4)',
+        gap: 'var(--zuvi-space-6)',
+        padding: 'var(--zuvi-space-8) var(--zuvi-space-4)',
         background:
-          'radial-gradient(1200px 600px at 50% -10%, var(--z-color-primary-subtle), transparent 60%), var(--z-color-bg-muted)',
+          'radial-gradient(1200px 600px at 50% -10%, var(--zuvi-color-primary-subtle), transparent 60%), var(--zuvi-color-bg-muted)',
         ...style,
       }}
     >
@@ -172,14 +172,14 @@ export function LoginBlock({
       <div
         data-part="brand"
         className={classNames?.brand}
-        style={{ display: 'flex', alignItems: 'center', gap: 'var(--z-space-3)' }}
+        style={{ display: 'flex', alignItems: 'center', gap: 'var(--zuvi-space-3)' }}
       >
         {brand}
         <span
           style={{
-            fontSize: 'var(--z-text-xl)',
-            fontWeight: 'var(--z-weight-semibold)',
-            color: 'var(--z-color-fg)',
+            fontSize: 'var(--zuvi-text-xl)',
+            fontWeight: 'var(--zuvi-weight-semibold)',
+            color: 'var(--zuvi-color-fg)',
             letterSpacing: '0.02em',
           }}
         >
@@ -188,22 +188,22 @@ export function LoginBlock({
       </div>
 
       <Card className={classNames?.card} style={{ width: '100%', maxWidth: 420 }}>
-        <div className={classNames?.form} data-part="form" style={{ padding: 'var(--z-space-2) 0' }}>
+        <div className={classNames?.form} data-part="form" style={{ padding: 'var(--zuvi-space-2) 0' }}>
           <h1
             style={{
               margin: 0,
-              fontSize: 'var(--z-text-2xl)',
-              fontWeight: 'var(--z-weight-semibold)',
-              color: 'var(--z-color-fg)',
+              fontSize: 'var(--zuvi-text-2xl)',
+              fontWeight: 'var(--zuvi-weight-semibold)',
+              color: 'var(--zuvi-color-fg)',
             }}
           >
             {title}
           </h1>
           <p
             style={{
-              margin: 'var(--z-space-2) 0 var(--z-space-6)',
-              fontSize: 'var(--z-text-sm)',
-              color: 'var(--z-color-fg-muted)',
+              margin: 'var(--zuvi-space-2) 0 var(--zuvi-space-6)',
+              fontSize: 'var(--zuvi-text-sm)',
+              color: 'var(--zuvi-color-fg-muted)',
             }}
           >
             {subtitle}
@@ -214,12 +214,12 @@ export function LoginBlock({
               role="alert"
               data-part="error"
               style={{
-                marginBottom: 'var(--z-space-4)',
-                padding: 'var(--z-space-3) var(--z-space-4)',
-                borderRadius: 'var(--z-radius-md)',
-                background: 'var(--z-color-danger-subtle)',
-                color: 'var(--z-color-danger-subtle-fg)',
-                fontSize: 'var(--z-text-sm)',
+                marginBottom: 'var(--zuvi-space-4)',
+                padding: 'var(--zuvi-space-3) var(--zuvi-space-4)',
+                borderRadius: 'var(--zuvi-radius-md)',
+                background: 'var(--zuvi-color-danger-subtle)',
+                color: 'var(--zuvi-color-danger-subtle-fg)',
+                fontSize: 'var(--zuvi-text-sm)',
               }}
             >
               {error}
@@ -232,7 +232,7 @@ export function LoginBlock({
               if (!loading) onSubmit?.({ username: String(values.username ?? ''), password: String(values.password ?? ''), remember: Boolean(values.remember) });
             }}
           >
-            <div style={{ marginBottom: 'var(--z-space-4)' }}>
+            <div style={{ marginBottom: 'var(--zuvi-space-4)' }}>
               <Form.Item name="username" label="账号" required>
               <Input
                 name="username"
@@ -244,7 +244,7 @@ export function LoginBlock({
               </Form.Item>
             </div>
 
-            <div style={{ marginBottom: 'var(--z-space-4)' }}>
+            <div style={{ marginBottom: 'var(--zuvi-space-4)' }}>
               <Form.Item name="password" label="密码" required>
               <Input
                 name="password"
@@ -264,7 +264,7 @@ export function LoginBlock({
                       border: 'none',
                       padding: 0,
                       cursor: 'pointer',
-                      color: 'var(--z-color-fg-muted)',
+                      color: 'var(--zuvi-color-fg-muted)',
                     }}
                   >
                     <EyeIcon hidden={passwordVisible} />
@@ -280,7 +280,7 @@ export function LoginBlock({
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                marginBottom: 'var(--z-space-5)',
+                marginBottom: 'var(--zuvi-space-5)',
               }}
             >
               <Form.Item name="remember"><Checkbox checked={rememberDefault} label="记住我" /></Form.Item>
@@ -307,13 +307,13 @@ export function LoginBlock({
             </Button>
           </Form>
 
-          <Divider style={{ margin: 'var(--z-space-5) 0' }}>或</Divider>
+          <Divider style={{ margin: 'var(--zuvi-space-5) 0' }}>或</Divider>
 
           <div
             style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: 'var(--z-space-3)',
+              gap: 'var(--zuvi-space-3)',
             }}
           >
             {(
@@ -336,16 +336,16 @@ export function LoginBlock({
 
           <p
             style={{
-              margin: 'var(--z-space-6) 0 0',
+              margin: 'var(--zuvi-space-6) 0 0',
               textAlign: 'center',
-              fontSize: 'var(--z-text-sm)',
-              color: 'var(--z-color-fg-muted)',
+              fontSize: 'var(--zuvi-text-sm)',
+              color: 'var(--zuvi-color-fg-muted)',
             }}
           >
             还没有账号？
             <a
               href={registerHref ?? '#'}
-              style={{ ...linkStyle, marginLeft: 'var(--z-space-1)' }}
+              style={{ ...linkStyle, marginLeft: 'var(--zuvi-space-1)' }}
               onClick={
                 onRegister
                   ? (e) => {

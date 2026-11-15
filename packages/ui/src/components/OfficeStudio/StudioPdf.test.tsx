@@ -141,7 +141,7 @@ function host(
   return { ...f, ...rendered, source, changed, document: () => latest };
 }
 
-const paper = () => window.document.querySelector<HTMLDivElement>('.z-studio-pdf-paper')!;
+const paper = () => window.document.querySelector<HTMLDivElement>('.zuvi-studio-pdf-paper')!;
 const mark = () => window.document.querySelector<SVGGElement>('[data-mark="note"]')!;
 async function ready() {
   await waitFor(() =>
@@ -199,7 +199,7 @@ describe('StudioPdf document editing', () => {
     expect(f.document().marks[0].text).toBe('Edited');
     expect(mark().textContent).toContain('Edited');
     const item = within(screen.getByLabelText('PDF 标注列表')).getByRole('button');
-    expect(item).toHaveClass('z-button');
+    expect(item).toHaveClass('zuvi-button');
     fireEvent.click(screen.getByRole('button', { name: '文字' }));
     expect(item).toHaveAttribute('aria-pressed', 'false');
     fireEvent.click(item);
@@ -208,7 +208,7 @@ describe('StudioPdf document editing', () => {
     expect(f.renderPage).toHaveBeenCalledTimes(1);
   });
 
-  it('controls ZUI radio groups independently, mirrors sidebar edits and history, and carries checkbox values between pages', async () => {
+  it('controls ZUVI radio groups independently, mirrors sidebar edits and history, and carries checkbox values between pages', async () => {
     const model = document();
     model.fields.push({
       name: 'secondChoice',
@@ -230,11 +230,11 @@ describe('StudioPdf document editing', () => {
     expect(firstA).toBeChecked();
     expect(firstB).not.toBeChecked();
     expect(secondB).toBeChecked();
-    expect(firstA.closest('.z-radio')).not.toBeNull();
+    expect(firstA.closest('.zuvi-radio')).not.toBeNull();
     expect(firstA.closest('[role="radiogroup"]')).toBe(firstB.closest('[role="radiogroup"]'));
     expect(firstA.getAttribute('name')).toBe(firstB.getAttribute('name'));
     expect(firstA.getAttribute('name')).not.toBe(secondB.getAttribute('name'));
-    expect(confirmed.closest('.z-checkbox')).not.toBeNull();
+    expect(confirmed.closest('.zuvi-checkbox')).not.toBeNull();
     fireEvent.click(firstB);
     expect(firstA).not.toBeChecked();
     expect(firstB).toBeChecked();
@@ -416,7 +416,7 @@ describe('StudioPdf document editing', () => {
     expect(disabled.changed).not.toHaveBeenCalled();
   });
 
-  it('blocks ZUI choice and multiline edits for intrinsic locks, read-only documents and disabled editors', async () => {
+  it('blocks ZUVI choice and multiline edits for intrinsic locks, read-only documents and disabled editors', async () => {
     for (const permissions of [{}, { readOnly: true }, { disabled: true }]) {
       const model = document();
       const intrinsic = !('readOnly' in permissions || 'disabled' in permissions);
@@ -477,8 +477,8 @@ describe('StudioPdf document editing', () => {
     await ready();
     const status = screen.getByLabelText('PDF 页面表单 status');
     const notes = screen.getByLabelText('PDF 页面表单 notes');
-    expect(status.closest('.z-select')).not.toBeNull();
-    expect(notes.closest('.z-input')).not.toBeNull();
+    expect(status.closest('.zuvi-select')).not.toBeNull();
+    expect(notes.closest('.zuvi-input')).not.toBeNull();
     expect(notes).toHaveAttribute('maxlength', '10000');
     fireEvent.click(status);
     fireEvent.click(screen.getByRole('option', { name: 'Approved' }));
@@ -660,23 +660,23 @@ describe('StudioPdf Office ribbon and navigation', () => {
     const f = host();
     await ready();
     const tabs = screen.getByRole('tablist', { name: 'PDF 功能区选项卡' });
-    const ribbon = tabs.closest('.z-studio-ribbon');
+    const ribbon = tabs.closest('.zuvi-studio-ribbon');
     expect(ribbon).not.toBeNull();
-    const editor = f.container.querySelector('.z-studio-pdf');
+    const editor = f.container.querySelector('.zuvi-studio-pdf');
     expect(editor).not.toBeNull();
-    const expectZuiButtons = () =>
+    const expectZuviButtons = () =>
       expect(
         Array.from(editor!.querySelectorAll('button')).every((button) =>
           [
-            'z-button',
-            'z-tab',
-            'z-select-trigger',
-            'z-color-picker-swatch',
-            'z-input-number-btn',
+            'zuvi-button',
+            'zuvi-tab',
+            'zuvi-select-trigger',
+            'zuvi-color-picker-swatch',
+            'zuvi-input-number-btn',
           ].some((className) => button.classList.contains(className))
         )
       ).toBe(true);
-    expectZuiButtons();
+    expectZuviButtons();
     const home = within(tabs).getByRole('tab', { name: '开始' });
     const comments = within(tabs).getByRole('tab', { name: '批注' });
     expect(home).toHaveAttribute('aria-selected', 'true');
@@ -685,7 +685,7 @@ describe('StudioPdf Office ribbon and navigation', () => {
     fireEvent.keyDown(home, { key: 'ArrowRight' });
     expect(comments).toHaveFocus();
     expect(comments).toHaveAttribute('aria-selected', 'true');
-    expectZuiButtons();
+    expectZuviButtons();
     fireEvent.click(screen.getByRole('button', { name: '文字' }));
     fireEvent.change(screen.getByLabelText('PDF 新增文字'), { target: { value: 'Review draft' } });
     fireEvent.click(home);
@@ -812,7 +812,7 @@ describe('StudioPdf drawing and search', () => {
     pointer(paper(), 'pointerdown', 60, 40);
     pointer(paper(), 'pointermove', 140, 90);
     expect(f.changed).not.toHaveBeenCalled();
-    expect(window.document.querySelector('.z-studio-pdf-drawing-preview rect')).toHaveAttribute(
+    expect(window.document.querySelector('.zuvi-studio-pdf-drawing-preview rect')).toHaveAttribute(
       'fill',
       'none'
     );
@@ -888,7 +888,7 @@ describe('StudioPdf drawing and search', () => {
     pointer(paper(), 'pointermove', 45, 80);
     pointer(paper(), 'pointercancel', 45, 80);
     expect(f.changed).toHaveBeenCalledTimes(count);
-    expect(window.document.querySelector('.z-studio-pdf-drawing-preview')).toBeNull();
+    expect(window.document.querySelector('.zuvi-studio-pdf-drawing-preview')).toBeNull();
   });
 
   it('searches extracted text, navigates results and marks their original rectangles in read-only mode', async () => {
@@ -914,14 +914,14 @@ describe('StudioPdf drawing and search', () => {
       expect(screen.getByRole('img', { name: 'PDF 第 2 页原文' })).toBeInTheDocument()
     );
     await ready();
-    const hit = window.document.querySelector('.z-studio-pdf-search-hit')!;
+    const hit = window.document.querySelector('.zuvi-studio-pdf-search-hit')!;
     expect(hit).toHaveAttribute('transform', 'matrix(1 0 0 1 40 270)');
     expect(hit.querySelector('rect')).toHaveAttribute('y', '-12');
     fireEvent.click(screen.getByRole('button', { name: 'PDF 下一个匹配' }));
     await ready();
     expect(screen.getByRole('img', { name: 'PDF 第 1 页原文' })).toBeInTheDocument();
     const firstResult = within(screen.getByLabelText('PDF 查找结果')).getAllByRole('button')[0];
-    expect(firstResult).toHaveClass('z-button');
+    expect(firstResult).toHaveClass('zuvi-button');
     expect(firstResult).toHaveAttribute('aria-pressed', 'false');
     fireEvent.click(firstResult);
     await ready();

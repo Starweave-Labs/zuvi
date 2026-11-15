@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Form, Input, useForm } from '@zui/react';
+import { Button, Form, Input, useForm } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -206,15 +206,15 @@ export default function FormPage(): React.ReactNode {
         name="Form"
         parts={['root', 'item', 'label', 'control', 'error']}
         vars={[
-          '--z-form-item-gap',
-          '--z-form-label-color',
-          '--z-form-label-font-size',
-          '--z-form-label-font-weight',
-          '--z-form-label-margin-bottom',
-          '--z-form-required-color',
-          '--z-form-error-color',
-          '--z-form-error-font-size',
-          '--z-form-error-margin-top',
+          '--zuvi-form-item-gap',
+          '--zuvi-form-label-color',
+          '--zuvi-form-label-font-size',
+          '--zuvi-form-label-font-weight',
+          '--zuvi-form-label-margin-bottom',
+          '--zuvi-form-required-color',
+          '--zuvi-form-error-color',
+          '--zuvi-form-error-font-size',
+          '--zuvi-form-error-margin-top',
         ]}
       />
     </div>

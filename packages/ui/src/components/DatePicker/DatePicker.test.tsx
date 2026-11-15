@@ -49,7 +49,7 @@ describe('DatePicker 渲染与受控', () => {
     expect(input).toHaveAttribute('aria-expanded', 'false');
 
     const root = document.querySelector('[data-part="root"]');
-    expect(root).toHaveClass('z-datepicker');
+    expect(root).toHaveClass('zuvi-datepicker');
     expect(document.querySelector('[data-part="trigger"]')).toBeInTheDocument();
     expect(document.querySelector('[data-part="input"]')).toBe(input);
     expect(document.querySelector('[data-part="icon"]')).toBeInTheDocument();

@@ -13,7 +13,7 @@ describe('Divider', () => {
   it('renders horizontal divider by default as a single line', () => {
     const { container } = render(<Divider />);
     const root = getRoot(container);
-    expect(root).toHaveClass('z-divider');
+    expect(root).toHaveClass('zuvi-divider');
     expect(root).toHaveAttribute('data-orientation', 'horizontal');
     expect(root).not.toHaveAttribute('data-dashed');
     expect(root).not.toHaveAttribute('data-has-text');
@@ -25,7 +25,7 @@ describe('Divider', () => {
     const root = getRoot(container);
     expect(root).toHaveAttribute('data-has-text', 'true');
     const text = container.querySelector('[data-part="text"]');
-    expect(text).toHaveClass('z-divider-text');
+    expect(text).toHaveClass('zuvi-divider-text');
     expect(text).toHaveTextContent('分割文字');
     expect(container.querySelectorAll('[data-part="line"]')).toHaveLength(2);
   });
@@ -54,14 +54,14 @@ describe('Divider', () => {
 
   it('appends className on the root', () => {
     const { container } = render(<Divider className="my-divider">文字</Divider>);
-    expect(getRoot(container)).toHaveClass('z-divider', 'my-divider');
+    expect(getRoot(container)).toHaveClass('zuvi-divider', 'my-divider');
   });
 
   it('forwards ref to the div element', () => {
     const ref = React.createRef<HTMLDivElement>();
     render(<Divider ref={ref} />);
     expect(ref.current).toBeInstanceOf(HTMLDivElement);
-    expect(ref.current).toHaveClass('z-divider');
+    expect(ref.current).toHaveClass('zuvi-divider');
   });
 
   it('passes native props through to the root element', () => {

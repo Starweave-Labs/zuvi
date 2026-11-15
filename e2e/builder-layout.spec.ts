@@ -73,7 +73,7 @@ test('编辑器排版：子组件百分比宽度在画布、手机和独立页�
     title.evaluate(
       (node) =>
         node.getBoundingClientRect().width /
-        node.closest('.z-builder-flex')!.getBoundingClientRect().width
+        node.closest('.zuvi-builder-flex')!.getBoundingClientRect().width
     );
   await expect.poll(ratio).toBeCloseTo(0.5, 2);
   const subtitle = frame.getByRole('heading', { name: '副标题', exact: true });
@@ -82,7 +82,7 @@ test('编辑器排版：子组件百分比宽度在画布、手机和独立页�
       subtitle.evaluate(
         (node) =>
           node.getBoundingClientRect().width /
-          node.closest('.z-builder-flex')!.getBoundingClientRect().width
+          node.closest('.zuvi-builder-flex')!.getBoundingClientRect().width
       )
     )
     .toBeCloseTo(0.5, 2);
@@ -99,7 +99,7 @@ test('编辑器排版：子组件百分比宽度在画布、手机和独立页�
       subtitle.evaluate(
         (node) =>
           node.getBoundingClientRect().width /
-          node.closest('.z-builder-flex')!.getBoundingClientRect().width
+          node.closest('.zuvi-builder-flex')!.getBoundingClientRect().width
       )
     )
     .toBeCloseTo(1, 2);
@@ -114,7 +114,7 @@ test('编辑器排版：子组件百分比宽度在画布、手机和独立页�
       standalone.evaluate(
         (node) =>
           node.getBoundingClientRect().width /
-          node.closest('.z-builder-flex')!.getBoundingClientRect().width
+          node.closest('.zuvi-builder-flex')!.getBoundingClientRect().width
       )
     )
     .toBeCloseTo(0.5, 2);
@@ -124,7 +124,7 @@ test('编辑器排版：子组件百分比宽度在画布、手机和独立页�
       standalone.evaluate(
         (node) =>
           node.getBoundingClientRect().width /
-          node.closest('.z-builder-flex')!.getBoundingClientRect().width
+          node.closest('.zuvi-builder-flex')!.getBoundingClientRect().width
       )
     )
     .toBeCloseTo(1, 2);
@@ -228,7 +228,7 @@ test('编辑器排版：分区、表单和分栏的栅格作用于内容，标�
     await expect
       .poll(() =>
         first.evaluate((node) => {
-          const slot = node.closest('.z-builder-stack,.z-builder-columns')!;
+          const slot = node.closest('.zuvi-builder-stack,.zuvi-builder-columns')!;
           return Math.abs(
             node.getBoundingClientRect().width - (slot.getBoundingClientRect().width - 24) / 2
           );
@@ -239,7 +239,7 @@ test('编辑器排版：分区、表单和分栏的栅格作用于内容，标�
       .poll(() =>
         first.evaluate((node) => {
           const peer = node
-            .closest('.z-builder-stack,.z-builder-columns')!
+            .closest('.zuvi-builder-stack,.zuvi-builder-columns')!
             .querySelectorAll('h3')[1];
           return Math.abs(node.getBoundingClientRect().y - peer.getBoundingClientRect().y);
         })
@@ -250,8 +250,8 @@ test('编辑器排版：分区、表单和分栏的栅格作用于内容，标�
         .poll(() =>
           first.evaluate((node) => {
             const header = node
-              .closest('.z-builder-section,.z-builder-form')
-              ?.querySelector('.z-builder-section-title');
+              .closest('.zuvi-builder-section,.zuvi-builder-form')
+              ?.querySelector('.zuvi-builder-section-title');
             return (
               !!header && header.getBoundingClientRect().bottom < node.getBoundingClientRect().top
             );
@@ -268,7 +268,7 @@ test('编辑器排版：分区、表单和分栏的栅格作用于内容，标�
         first.evaluate(
           (node) =>
             node.getBoundingClientRect().width /
-            node.closest('.z-builder-stack,.z-builder-columns')!.getBoundingClientRect().width
+            node.closest('.zuvi-builder-stack,.zuvi-builder-columns')!.getBoundingClientRect().width
         )
       )
       .toBeCloseTo(1, 2);
@@ -281,7 +281,7 @@ test('编辑器排版：分区、表单和分栏的栅格作用于内容，标�
     await expect
       .poll(() =>
         first.evaluate((node) => {
-          const slot = node.closest('.z-builder-stack,.z-builder-columns')!;
+          const slot = node.closest('.zuvi-builder-stack,.zuvi-builder-columns')!;
           return Math.abs(
             node.getBoundingClientRect().width - (slot.getBoundingClientRect().width - 24) / 2
           );

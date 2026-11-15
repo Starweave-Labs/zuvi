@@ -1,8 +1,8 @@
 'use client';
 
 import * as React from 'react';
-import { useZuiConfig } from '../../config';
-import { Close } from '@zui/icons';
+import { useZuviConfig } from '../../config';
+import { Close } from '@zuvi/icons';
 import {
   cx,
   Portal,
@@ -127,7 +127,7 @@ function DrawerTrigger(props: DrawerTriggerProps) {
       aria-haspopup="dialog"
       aria-expanded={ctx.open}
       data-part="trigger"
-      className={cx('z-drawer-trigger', className)}
+      className={cx('zuvi-drawer-trigger', className)}
       onClick={(event) => {
         onClick?.(event);
         if (!event.defaultPrevented) ctx.setOpen(!ctx.open);
@@ -186,7 +186,7 @@ function DrawerContentInner(props: DrawerContentProps) {
     returnFocus: true,
   });
 
-  // 弹层仲裁：按打开顺序注册 overlay（[data-zui-modal-layer]），Esc 仅栈顶弹层响应
+  // 弹层仲裁：按打开顺序注册 overlay（[data-zuvi-modal-layer]），Esc 仅栈顶弹层响应
   const layerNode = dialogNode?.parentElement ?? null;
   React.useEffect(() => {
     if (!open || !layerNode) return;
@@ -200,15 +200,15 @@ function DrawerContentInner(props: DrawerContentProps) {
       const isTopmost = isTopmostLayer(dialogRef.current?.parentElement);
       const inNestedPopup =
         event.target instanceof Element &&
-        !!event.target.closest('[data-zui-portal]') &&
-        !event.target.closest('[data-zui-modal-layer]') &&
+        !!event.target.closest('[data-zuvi-portal]') &&
+        !event.target.closest('[data-zuvi-modal-layer]') &&
         !dialogRef.current?.contains(event.target);
       const activePopup = Array.from(
-        document.querySelectorAll<HTMLElement>('[data-zui-popover-popup="open"]')
+        document.querySelectorAll<HTMLElement>('[data-zuvi-popover-popup="open"]')
       ).some((popup) => popup.contains(document.activeElement));
       const popoverTrigger =
         event.target instanceof Element &&
-        !!event.target.closest<HTMLElement>('[data-zui-popover-trigger="open"]');
+        !!event.target.closest<HTMLElement>('[data-zuvi-popover-trigger="open"]');
       if (
         event.key === 'Escape' &&
         !event.defaultPrevented &&
@@ -252,11 +252,11 @@ function DrawerContentInner(props: DrawerContentProps) {
   return (
     <Portal>
       <div
-        data-zui-modal-layer=""
+        data-zuvi-modal-layer=""
         data-part="overlay"
         data-state={state}
         data-placement={placement}
-        className={cx('z-drawer-overlay', classNames?.overlay)}
+        className={cx('zuvi-drawer-overlay', classNames?.overlay)}
         onMouseDown={(event) => {
           if (closeOnOverlay && event.target === event.currentTarget) ctx.setOpen(false);
         }}
@@ -271,11 +271,11 @@ function DrawerContentInner(props: DrawerContentProps) {
           data-part="content"
           data-state={state}
           data-placement={placement}
-          className={cx('z-drawer', classNames?.content, className)}
+          className={cx('zuvi-drawer', classNames?.content, className)}
           style={
             {
               ...style,
-              ['--z-drawer-size' as string]: toCssSize(size),
+              ['--zuvi-drawer-size' as string]: toCssSize(size),
             } as React.CSSProperties
           }
         >
@@ -291,7 +291,7 @@ function DrawerContentInner(props: DrawerContentProps) {
 function DrawerHeader(props: DrawerHeaderProps) {
   const { className, children, ...rest } = props;
   return (
-    <div data-part="header" className={cx('z-drawer-header', className)} {...rest}>
+    <div data-part="header" className={cx('zuvi-drawer-header', className)} {...rest}>
       {children}
     </div>
   );
@@ -308,7 +308,7 @@ function DrawerTitle(props: DrawerTitleProps) {
   }, [registerTitle]);
 
   return (
-    <h2 {...rest} id={ctx.titleId} data-part="title" className={cx('z-drawer-title', className)}>
+    <h2 {...rest} id={ctx.titleId} data-part="title" className={cx('zuvi-drawer-title', className)}>
       {children}
     </h2>
   );
@@ -317,7 +317,7 @@ function DrawerTitle(props: DrawerTitleProps) {
 function DrawerBody(props: DrawerBodyProps) {
   const { className, children, ...rest } = props;
   return (
-    <div data-part="body" className={cx('z-drawer-body', className)} {...rest}>
+    <div data-part="body" className={cx('zuvi-drawer-body', className)} {...rest}>
       {children}
     </div>
   );
@@ -326,7 +326,7 @@ function DrawerBody(props: DrawerBodyProps) {
 function DrawerFooter(props: DrawerFooterProps) {
   const { className, children, ...rest } = props;
   return (
-    <div data-part="footer" className={cx('z-drawer-footer', className)} {...rest}>
+    <div data-part="footer" className={cx('zuvi-drawer-footer', className)} {...rest}>
       {children}
     </div>
   );
@@ -335,7 +335,7 @@ function DrawerFooter(props: DrawerFooterProps) {
 function DrawerClose(props: DrawerCloseProps) {
   const { onClick, className, children, ...rest } = props;
   const ctx = useDrawerContext('Drawer.Close');
-  const { locale } = useZuiConfig();
+  const { locale } = useZuviConfig();
   const iconOnly = children == null || (typeof children === 'string' && children.trim() === '×');
 
   return (
@@ -344,7 +344,7 @@ function DrawerClose(props: DrawerCloseProps) {
       aria-label={iconOnly ? locale.drawer.close : undefined}
       data-has-label={iconOnly ? undefined : ''}
       data-part="close"
-      className={cx('z-drawer-close', className)}
+      className={cx('zuvi-drawer-close', className)}
       onClick={(event) => {
         onClick?.(event);
         if (!event.defaultPrevented) ctx.setOpen(false);

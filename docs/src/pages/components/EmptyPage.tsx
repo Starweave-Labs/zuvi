@@ -1,4 +1,4 @@
-import { Empty } from '@zui/react';
+import { Empty } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -102,13 +102,13 @@ export default function EmptyPage(): React.ReactNode {
         name="Empty"
         parts={['root', 'image', 'description', 'actions']}
         vars={[
-          '--z-empty-gap',
-          '--z-empty-image-size',
-          '--z-empty-image-color',
-          '--z-empty-description-font-size',
-          '--z-empty-description-color',
-          '--z-empty-description-line-height',
-          '--z-empty-actions-gap',
+          '--zuvi-empty-gap',
+          '--zuvi-empty-image-size',
+          '--zuvi-empty-image-color',
+          '--zuvi-empty-description-font-size',
+          '--zuvi-empty-description-color',
+          '--zuvi-empty-description-line-height',
+          '--zuvi-empty-actions-gap',
         ]}
       />
     </div>

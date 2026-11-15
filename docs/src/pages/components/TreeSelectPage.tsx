@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TreeSelect } from '@zui/react';
+import { TreeSelect } from '@zuvi/react';
 
 import ApiTable from '../../components/ApiTable';
 import CustomizeOutlet from '../../components/CustomizeOutlet';
@@ -162,28 +162,28 @@ export default function TreeSelectPage(): React.ReactNode {
           'empty',
         ]}
         vars={[
-          '--z-tree-select-font-size',
-          '--z-tree-select-trigger-min-height',
-          '--z-tree-select-trigger-padding-x',
-          '--z-tree-select-trigger-radius',
-          '--z-tree-select-trigger-bg',
-          '--z-tree-select-trigger-fg',
-          '--z-tree-select-trigger-border',
-          '--z-tree-select-placeholder-fg',
-          '--z-tree-select-tag-height',
-          '--z-tree-select-tag-bg',
-          '--z-tree-select-tag-fg',
-          '--z-tree-select-tag-radius',
-          '--z-tree-select-panel-bg',
-          '--z-tree-select-panel-border',
-          '--z-tree-select-panel-radius',
-          '--z-tree-select-panel-shadow',
-          '--z-tree-select-panel-max-height',
-          '--z-tree-select-node-hover-bg',
-          '--z-tree-select-node-selected-bg',
-          '--z-tree-select-checkbox-size',
-          '--z-tree-select-checkbox-checked-bg',
-          '--z-tree-select-focus-ring',
+          '--zuvi-tree-select-font-size',
+          '--zuvi-tree-select-trigger-min-height',
+          '--zuvi-tree-select-trigger-padding-x',
+          '--zuvi-tree-select-trigger-radius',
+          '--zuvi-tree-select-trigger-bg',
+          '--zuvi-tree-select-trigger-fg',
+          '--zuvi-tree-select-trigger-border',
+          '--zuvi-tree-select-placeholder-fg',
+          '--zuvi-tree-select-tag-height',
+          '--zuvi-tree-select-tag-bg',
+          '--zuvi-tree-select-tag-fg',
+          '--zuvi-tree-select-tag-radius',
+          '--zuvi-tree-select-panel-bg',
+          '--zuvi-tree-select-panel-border',
+          '--zuvi-tree-select-panel-radius',
+          '--zuvi-tree-select-panel-shadow',
+          '--zuvi-tree-select-panel-max-height',
+          '--zuvi-tree-select-node-hover-bg',
+          '--zuvi-tree-select-node-selected-bg',
+          '--zuvi-tree-select-checkbox-size',
+          '--zuvi-tree-select-checkbox-checked-bg',
+          '--zuvi-tree-select-focus-ring',
         ]}
       />
     </div>

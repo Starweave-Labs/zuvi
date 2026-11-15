@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Drawer } from '@zui/react';
+import { Drawer } from '@zuvi/react';
 
 interface DocsNavigationDrawerProps {
   open: boolean;

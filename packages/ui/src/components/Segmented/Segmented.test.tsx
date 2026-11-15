@@ -23,7 +23,7 @@ describe('Segmented 渲染', () => {
     const group = screen.getByRole('radiogroup');
     expect(group).toHaveAttribute('aria-orientation', 'horizontal');
     expect(group).toHaveAttribute('data-part', 'root');
-    expect(group).toHaveClass('z-segmented');
+    expect(group).toHaveClass('zuvi-segmented');
     const items = getItems();
     expect(items).toHaveLength(3);
     expect(items[0]).toHaveAttribute('aria-checked', 'true');
@@ -39,7 +39,7 @@ describe('Segmented 渲染', () => {
 
   it('icon 渲染且 aria-hidden', () => {
     render(<Segmented options={[{ value: 'a', label: 'A', icon: <svg /> }]} />);
-    const icon = document.querySelector('.z-segmented-icon');
+    const icon = document.querySelector('.zuvi-segmented-icon');
     expect(icon).toBeInTheDocument();
     expect(icon).toHaveAttribute('aria-hidden', 'true');
   });
@@ -129,12 +129,12 @@ describe('Segmented 禁用与定制', () => {
       />
     );
     const group = screen.getByRole('radiogroup');
-    expect(group).toHaveClass('z-segmented', 'my-root', 'seg-page');
+    expect(group).toHaveClass('zuvi-segmented', 'my-root', 'seg-page');
     expect(group).toHaveAttribute('data-size', 'lg');
     expect(group).toHaveAttribute('data-block', 'true');
-    expect(getItems()[0]).toHaveClass('z-segmented-item', 'my-item');
+    expect(getItems()[0]).toHaveClass('zuvi-segmented-item', 'my-item');
     const thumb = document.querySelector('[data-part="thumb"]');
-    expect(thumb).toHaveClass('z-segmented-thumb', 'my-thumb');
+    expect(thumb).toHaveClass('zuvi-segmented-thumb', 'my-thumb');
     expect(thumb).toHaveAttribute('aria-hidden', 'true');
   });
 });

@@ -1,13 +1,13 @@
 /* Affix —— 组件级变量定义在根选择器上 */
 
-.z-affix {
-  --z-affix-z: var(--z-z-sticky);
+.zuvi-affix {
+  --zuvi-affix-z: var(--zuvi-z-sticky);
 }
 
-.z-affix {
+.zuvi-affix {
   display: block;
 }
 
-.z-affix[data-affixed='true'] .z-affix-content {
-  z-index: var(--z-affix-z);
+.zuvi-affix[data-affixed='true'] .zuvi-affix-content {
+  z-index: var(--zuvi-affix-z);
 }
