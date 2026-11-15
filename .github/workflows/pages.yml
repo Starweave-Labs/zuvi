@@ -25,7 +25,9 @@ jobs:
         env:
           GITHUB_PAGES_BUILD: 'true'
       - run: pnpm --filter @zuvi/react build:browser
-      - run: cp docs/public/cdn-demo.html docs/dist/cdn-demo.html
+      # cdn-demo.html 的版本引用随每次发布自动重写（vite.browser.config.ts
+      # 的 closeBundle 已把浏览器产物归档到 docs/dist/cdn/v<version>/）
+      - run: node -e "const fs=require('fs');const v=require('./packages/ui/package.json').version;fs.writeFileSync('docs/dist/cdn-demo.html',fs.readFileSync('docs/public/cdn-demo.html','utf8').replace(/cdn\/v[0-9.]+\//g,'cdn/v'+v+'/'))"
       - uses: actions/upload-pages-artifact@v4
         with:
           path: docs/dist
