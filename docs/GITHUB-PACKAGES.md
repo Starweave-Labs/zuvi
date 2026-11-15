@@ -1,6 +1,6 @@
 # GitHub Packages
 
-本次发布使用 GitHub 的 npm registry（https://npm.pkg.github.com），不向 npmjs 发布。源码继续使用 @zuvi/*，发布名称归属 GitHub 仓库账号。
+组件包发布到两个 registry：GitHub Packages（https://npm.pkg.github.com，名称 `@yeyouyuan/zuvi-*`）与 npmjs.com（公网，名称 `@zuvi/*`，即源码包名本身）。源码与导入路径始终是 `@zuvi/*`；装 npm 公网版无需别名与令牌。
 
 | 源码与安装别名 | GitHub Packages 名称  |
 | -------------- | --------------------- |
@@ -24,7 +24,7 @@ GitHub Packages 的 npm 安装需要身份验证。使用有读取包权限的 G
 
 ```bash
 npm login --scope=@yeyouyuan --auth-type=legacy --registry=https://npm.pkg.github.com
-npm install @zuvi/react@npm:@yeyouyuan/zuvi-react@0.5.0 @zuvi/blocks@npm:@yeyouyuan/zuvi-blocks@0.5.0
+npm install @zuvi/react@npm:@yeyouyuan/zuvi-react@1.0.0 @zuvi/blocks@npm:@yeyouyuan/zuvi-blocks@1.0.0
 ```
 
 ```tsx
@@ -36,8 +36,8 @@ import { DashboardBlock } from '@zuvi/blocks';
 按需安装其他包时使用同样的别名形式，例如：
 
 ```bash
-npm install @zuvi/tokens@npm:@yeyouyuan/zuvi-tokens@0.5.0 @zuvi/icons@npm:@yeyouyuan/zuvi-icons@0.5.0
-npm install --save-dev @zuvi/cli@npm:@yeyouyuan/zuvi-cli@0.5.0 @zuvi/mcp@npm:@yeyouyuan/zuvi-mcp@0.5.0
+npm install @zuvi/tokens@npm:@yeyouyuan/zuvi-tokens@1.0.0 @zuvi/icons@npm:@yeyouyuan/zuvi-icons@1.0.0
+npm install --save-dev @zuvi/cli@npm:@yeyouyuan/zuvi-cli@1.0.0 @zuvi/mcp@npm:@yeyouyuan/zuvi-mcp@1.0.0
 npx zuvi list
 ```
 
@@ -45,7 +45,7 @@ npx zuvi list
 
 ## 发布流程
 
-七个公开包保持相同版本。先完成全站回归、工作区检查、构建和分发检查，再在对应提交发布同版本 GitHub Release（例如 v0.5.0）。Publish GitHub Packages 工作流只向 npm.pkg.github.com 发布，通过 GITHUB_TOKEN 的 packages:write 权限认证；也可手动触发工作流。
+七个公开包保持相同版本。先完成全站回归、工作区检查、构建和分发检查，再在对应提交发布同版本 GitHub Release（例如 v1.0.0）。Publish GitHub Packages 工作流只向 npm.pkg.github.com 发布，通过 GITHUB_TOKEN 的 packages:write 权限认证；也可手动触发工作流。
 
 ```bash
 pnpm build
@@ -63,6 +63,32 @@ local 检查通过临时本机 registry 安装这些 tarball，以验证真实 n
 发布脚本只允许清单中的 owner scope，校验 tarball 的 SHA-512；重跑时只跳过同版本且内容相同的包。发现已存在但内容不同的版本会停止，不覆盖版本。
 
 包的实际可见性和访问权限以 GitHub 包设置为准；工作流安装成功代表对应仓库的令牌可读取。需要向其他仓库开放时，配置包的 Actions access 或使用拥有该包读取权限的凭据。
+
+## npm 公网发布与 provenance
+
+Publish npm 工作流（`.github/workflows/publish-npm.yml`）在 GitHub Release 发布或手动触发时运行，把 `@zuvi/*` 七包按依赖拓扑顺序发到 npmjs.com。与 GitHub Packages 双轨并行：同一个版本号，两个 registry 各一份。
+
+**配置一次：**
+
+1. npmjs.com 注册账号，创建组织 `zuvi`（scope 归属），开启 2FA
+2. Access Tokens → Generate New Token → Granular Access Token：Packages 选 *All packages*，Permissions 选 *Read and write*
+3. 写入仓库 Secret：`gh secret set NPM_TOKEN --repo yeyouyuan/zuvi`
+
+**Sigstore provenance 签名：** 发布用 `npm publish --provenance`，工作流声明 `id-token: write`，npm 通过 GitHub Actions OIDC 向 Sigstore 取证，把「该版本由此仓库此提交构建」的签名证明附着在包上。前提由代码强制：七个 package.json 声明了指向本仓库的 `repository` 字段；工作流在每次运行（包括未配置 token 的跳过模式）先做 OIDC 自检，验证令牌可达且 `repository` 声明匹配。供应链监测方（如 UNPKG Shield 的发布分类器）把「缺 provenance 认证」计入风险判定，签名是免费的第一方信任信号。
+
+**发布后验证：**
+
+```bash
+npm view @zuvi/react dist.attestations   # 有 Sigstore 证明即签名成功
+npm audit signatures                      # 校验当前依赖树内签名完整性
+```
+
+npm 公网版经 unpkg 自动托管，免 token 直引浏览器 IIFE：
+
+```html
+<link rel="stylesheet" href="https://unpkg.com/@zuvi/react/dist/browser/zuvi.global.css" />
+<script src="https://unpkg.com/@zuvi/react/dist/browser/zuvi.global.js"></script>
+```
 
 ## 前端功能范围
 
