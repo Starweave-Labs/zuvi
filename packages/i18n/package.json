@@ -32,5 +32,10 @@
     "react-dom": "^19.0.0",
     "typescript": "^5.7.2",
     "vitest": "^2.1.8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yeyouyuan/zuvi.git",
+    "directory": "packages/i18n"
   }
 }
