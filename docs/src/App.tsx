@@ -175,7 +175,7 @@ export default function App(): React.ReactNode {
     }
   };
 
-  const GITHUB_URL = 'https://github.com/yeyouyuan/zuvi';
+  const GITHUB_URL = 'https://github.com/Starweave-Labs/zuvi';
   const paletteCommands: CommandPaletteCommand[] = (() => {
     const commands: CommandPaletteCommand[] = [
       {
@@ -418,7 +418,7 @@ export default function App(): React.ReactNode {
           </button>
           <a
             className="doc-chip-btn doc-chip-link"
-            href="https://github.com/yeyouyuan/zuvi"
+            href="https://github.com/Starweave-Labs/zuvi"
             target="_blank"
             rel="noreferrer"
           >

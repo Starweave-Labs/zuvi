@@ -5,10 +5,22 @@
 
 ## Install & Setup
 
-Version 0.5.0 is distributed through GitHub Packages, not npmjs. Configure
+Version 1.0.0 is distributed through GitHub Packages, not npmjs. Configure
 @yeyouyuan:registry=https://npm.pkg.github.com in the project .npmrc and log in
 with a GitHub account that has package read access. Install aliases below keep
 source imports at @zuvi/*.
+
+Canonical repository: https://github.com/Starweave-Labs/zuvi
+Documentation and CDN base: https://starweave-labs.github.io/zuvi/
+The repository transfer retains the published v1.0.0 @yeyouyuan/zuvi-* package
+names and installation aliases. Adopt a future organization scope only after
+its packages have been published and verified by real consumer installation.
+Do not assume this repository transfer publishes packages to npmjs.
+
+Page Studio workspaces (localStorage) and OfficeStudio documents (IndexedDB)
+are local to each website origin. Export existing work from the old origin
+and import it at the new origin; transferring the repository does not delete
+the old browser data or automatically copy it to the new origin.
 
 This release includes OfficeEditor and OfficeStudio. OfficeEditor requires a
 separately deployed ONLYOFFICE Docs service and backend configuration. OfficeStudio
@@ -17,9 +29,9 @@ and persistence; it does not require an Office server. The published Registry ha
 73 components and 16 blocks.
 
 ```
-pnpm add @zuvi/react@npm:@yeyouyuan/zuvi-react@0.5.0          # components + bundled styles
-pnpm add @zuvi/tokens@npm:@yeyouyuan/zuvi-tokens@0.5.0         # optional: TS constants + CSS variable references
-pnpm add @zuvi/blocks@npm:@yeyouyuan/zuvi-blocks@0.5.0         # optional: 16 page-level business blocks
+pnpm add @zuvi/react@npm:@yeyouyuan/zuvi-react@1.0.0          # components + bundled styles
+pnpm add @zuvi/tokens@npm:@yeyouyuan/zuvi-tokens@1.0.0         # optional: TS constants + CSS variable references
+pnpm add @zuvi/blocks@npm:@yeyouyuan/zuvi-blocks@1.0.0         # optional: 16 page-level business blocks
 ```
 
 ```tsx
@@ -562,12 +574,12 @@ upstream update channel.
 node registry/scripts/generate.mjs          # rebuild registry.json
 node registry/scripts/generate.mjs --check  # CI: registry vs components
 
-pnpm dlx @yeyouyuan/zuvi-cli@0.5.0 init                 # interactive setup → writes .zurc.json
-pnpm dlx @yeyouyuan/zuvi-cli@0.5.0 add button           # copy Button.tsx + Button.css → src/components/ui/button/
-pnpm dlx @yeyouyuan/zuvi-cli@0.5.0 add button modal     # multiple components
-pnpm dlx @yeyouyuan/zuvi-cli@0.5.0 add --all            # everything in the registry
-pnpm dlx @yeyouyuan/zuvi-cli@0.5.0 diff button          # unified diff: local copy vs registry (update channel)
-pnpm dlx @yeyouyuan/zuvi-cli@0.5.0 list                 # list all components (--json for machine output)
+pnpm dlx @yeyouyuan/zuvi-cli@1.0.0 init                 # interactive setup → writes .zurc.json
+pnpm dlx @yeyouyuan/zuvi-cli@1.0.0 add button           # copy Button.tsx + Button.css → src/components/ui/button/
+pnpm dlx @yeyouyuan/zuvi-cli@1.0.0 add button modal     # multiple components
+pnpm dlx @yeyouyuan/zuvi-cli@1.0.0 add --all            # everything in the registry
+pnpm dlx @yeyouyuan/zuvi-cli@1.0.0 diff button          # unified diff: local copy vs registry (update channel)
+pnpm dlx @yeyouyuan/zuvi-cli@1.0.0 list                 # list all components (--json for machine output)
 ```
 
 - `add` copies components to `<components>/<kebab-name>/`, blocks to `<components>/blocks/<name>/`,
@@ -641,12 +653,12 @@ never remapped). Contrast is WCAG AA calibrated in both themes.
      `:root:not([data-theme='light'])` media fallback.
 - CDN (no-build): `pnpm --filter @zuvi/react build:browser` →
   `packages/ui/dist/browser/zuvi.global.js` + `zuvi.css` (+ LICENSE.txt), synced
-  to `docs/dist/cdn/v<v>/` (version from package.json, currently v0.5.0).
-  Public Pages serves `cdn/v0.5.0/` and the matching demo page after deployment.
-  Usage: `<link rel="stylesheet" href="cdn/v0.5.0/zuvi.css">` +
-  `<script src="cdn/v0.5.0/zuvi.global.js">`; the IIFE bundles React 19 under
-  the global namespace `Zuvi` (`Zuvi.React`, `Zuvi.createRoot`, `Zuvi.hydrateRoot`,
-  every component). Live example: `/cdn-demo.html`.
+  to `docs/dist/cdn/v<v>/` (version from package.json, currently v1.0.0).
+  Public Pages serves `cdn/v1.0.0/` and the matching demo page after deployment.
+  Usage: `<link rel="stylesheet" href="https://starweave-labs.github.io/zuvi/cdn/v1.0.0/zuvi.css">` +
+  `<script src="https://starweave-labs.github.io/zuvi/cdn/v1.0.0/zuvi.global.js">`; the IIFE bundles React 19 under
+  the global namespace `ZUVI` (`ZUVI.React`, `ZUVI.createRoot`, `ZUVI.hydrateRoot`,
+  every component). Live example: `https://starweave-labs.github.io/zuvi/cdn-demo.html`.
 - Naming map (Figma path ↔ CSS variable): `zuvi.primitives.brand.600` ↔
   `--z-brand-600`; `zuvi.semantic.color.primary` ↔ `--z-color-primary`;
   `zuvi.semantic.radius.lg` ↔ `--z-radius-lg` (single source `--z-radius`,

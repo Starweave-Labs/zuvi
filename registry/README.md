@@ -29,10 +29,12 @@ CLI 将组件放到 `<components>/<kebab-name>/`、业务块放到 `<components>
 公共源码放到 `<components>/_zuvi/`，并转换相对路径、业务块组件导入和样式入口。
 `add` 与 `diff` 共用同一转换，比较的是用户项目最终接收的代码。
 
+运行已发布的 CLI 前，先按 [GitHub Packages 认证说明](../docs/GITHUB-PACKAGES.md#安装)配置 registry 并登录。
+
 ```bash
-pnpm dlx @zuvi/cli list
-pnpm dlx @zuvi/cli add button form-page
-pnpm dlx @zuvi/cli diff button
+pnpm dlx @yeyouyuan/zuvi-cli@1.0.0 list
+pnpm dlx @yeyouyuan/zuvi-cli@1.0.0 add button form-page
+pnpm dlx @yeyouyuan/zuvi-cli@1.0.0 diff button
 ```
 
 `registry/scripts/bundle.mjs` 在 CLI/MCP 构建时将清单、源码和 metadata 打包到各包的 `data/`，

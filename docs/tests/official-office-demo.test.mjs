@@ -38,13 +38,13 @@ const fromBase64Url = (value) =>
   Buffer.from(value.replace(/-/g, '+').replace(/_/g, '/'), 'base64').toString('utf8');
 
 test('GitHub Pages 自动启用官方 Demo，查询参数可以显式切换模式', () => {
-  assert.equal(usesOfficialOfficeDemo({ hostname: 'yeyouyuan.github.io', search: '' }), true);
+  assert.equal(usesOfficialOfficeDemo({ hostname: 'starweave-labs.github.io', search: '' }), true);
   assert.equal(
     usesOfficialOfficeDemo({ hostname: '127.0.0.1', search: '?office-demo=official' }),
     true
   );
   assert.equal(
-    usesOfficialOfficeDemo({ hostname: 'yeyouyuan.github.io', search: '?office-demo=local' }),
+    usesOfficialOfficeDemo({ hostname: 'starweave-labs.github.io', search: '?office-demo=local' }),
     false
   );
   assert.equal(usesOfficialOfficeDemo({ hostname: 'docs.example.com', search: '' }), false);
