@@ -1,13 +1,15 @@
 # @zuvi/mcp
 
-> v0.4.0 发布到 GitHub Packages：`@yeyouyuan/zuvi-mcp`，npmjs 暂不发布。先在项目 `.npmrc` 配置 `@yeyouyuan:registry=https://npm.pkg.github.com`，再用拥有包读取权限的 GitHub 账号登录。
+> v1.0.0 发布到 GitHub Packages：`@yeyouyuan/zuvi-mcp`，npmjs 暂不发布。先在项目 `.npmrc` 配置 `@yeyouyuan:registry=https://npm.pkg.github.com`，再用拥有包读取权限的 GitHub 账号登录。
 
 ```bash
 npm login --scope=@yeyouyuan --auth-type=legacy --registry=https://npm.pkg.github.com
-pnpm add @zuvi/mcp@npm:@yeyouyuan/zuvi-mcp@0.4.0
+pnpm add @zuvi/mcp@npm:@yeyouyuan/zuvi-mcp@1.0.0
 ```
 
-源码导入继续使用 `@zuvi/mcp`。完整认证和安装说明见仓库 [GitHub Packages 文档](https://github.com/yeyouyuan/zuvi/blob/main/docs/GITHUB-PACKAGES.md)。
+源码导入继续使用 `@zuvi/mcp`。完整认证和安装说明见仓库 [GitHub Packages 文档](https://github.com/Starweave-Labs/zuvi/blob/main/docs/GITHUB-PACKAGES.md)。
+
+仓库已迁至 [Starweave-Labs/zuvi](https://github.com/Starweave-Labs/zuvi)，文档为 <https://starweave-labs.github.io/zuvi/>。已发布的 v1.0.0 继续使用上面的 `@yeyouyuan/zuvi-*` 名称；未来组织 scope 的包完成发布与安装验证后，才会更新安装入口。
 
 ZUVI 组件库 MCP（Model Context Protocol）server：纯 stdio JSON-RPC 2.0 实现（不引
 `@modelcontextprotocol/sdk`），让 Claude Desktop / Cursor 等 MCP 客户端直接查询 ZUVI 组件、

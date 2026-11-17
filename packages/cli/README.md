@@ -1,13 +1,15 @@
 # @zuvi/cli
 
-> v0.4.0 发布到 GitHub Packages：`@yeyouyuan/zuvi-cli`，npmjs 暂不发布。先在项目 `.npmrc` 配置 `@yeyouyuan:registry=https://npm.pkg.github.com`，再用拥有包读取权限的 GitHub 账号登录。
+> v1.0.0 发布到 GitHub Packages：`@yeyouyuan/zuvi-cli`，npmjs 暂不发布。先在项目 `.npmrc` 配置 `@yeyouyuan:registry=https://npm.pkg.github.com`，再用拥有包读取权限的 GitHub 账号登录。
 
 ```bash
 npm login --scope=@yeyouyuan --auth-type=legacy --registry=https://npm.pkg.github.com
-pnpm add @zuvi/cli@npm:@yeyouyuan/zuvi-cli@0.4.0
+pnpm add @zuvi/cli@npm:@yeyouyuan/zuvi-cli@1.0.0
 ```
 
-源码导入继续使用 `@zuvi/cli`。完整认证和安装说明见仓库 [GitHub Packages 文档](https://github.com/yeyouyuan/zuvi/blob/main/docs/GITHUB-PACKAGES.md)。
+源码导入继续使用 `@zuvi/cli`。完整认证和安装说明见仓库 [GitHub Packages 文档](https://github.com/Starweave-Labs/zuvi/blob/main/docs/GITHUB-PACKAGES.md)。
+
+仓库已迁至 [Starweave-Labs/zuvi](https://github.com/Starweave-Labs/zuvi)，文档为 <https://starweave-labs.github.io/zuvi/>。已发布的 v1.0.0 继续使用上面的 `@yeyouyuan/zuvi-*` 名称；未来组织 scope 的包完成发布与安装验证后，才会更新安装入口。
 
 ZUVI registry 命令行工具：把 registry 里的组件**源码**复制进你的项目（可自由修改），并提供
 上游更新对比通道。零运行时依赖，纯 `process.argv` 解析。
@@ -15,13 +17,13 @@ ZUVI registry 命令行工具：把 registry 里的组件**源码**复制进你�
 ## 命令（契约 §3）
 
 ```bash
-pnpm dlx @yeyouyuan/zuvi-cli@0.4.0 init                     # 交互式初始化：检测框架、配置目标目录、写 .zurc.json
-pnpm dlx @yeyouyuan/zuvi-cli@0.4.0 add button               # 复制 Button.tsx + Button.css 到 src/components/ui/button/
-pnpm dlx @yeyouyuan/zuvi-cli@0.4.0 add button modal         # 多组件
-pnpm dlx @yeyouyuan/zuvi-cli@0.4.0 add --all                # 复制全部组件与业务块
-pnpm dlx @yeyouyuan/zuvi-cli@0.4.0 diff button              # 本地副本 vs registry 的 unified diff（上游更新通道）
-pnpm dlx @yeyouyuan/zuvi-cli@0.4.0 list                     # 列出 registry 所有组件
-pnpm dlx @yeyouyuan/zuvi-cli@0.4.0 list --json              # JSON 输出整个 registry
+pnpm dlx @yeyouyuan/zuvi-cli@1.0.0 init                     # 交互式初始化：检测框架、配置目标目录、写 .zurc.json
+pnpm dlx @yeyouyuan/zuvi-cli@1.0.0 add button               # 复制 Button.tsx + Button.css 到 src/components/ui/button/
+pnpm dlx @yeyouyuan/zuvi-cli@1.0.0 add button modal         # 多组件
+pnpm dlx @yeyouyuan/zuvi-cli@1.0.0 add --all                # 复制全部组件与业务块
+pnpm dlx @yeyouyuan/zuvi-cli@1.0.0 diff button              # 本地副本 vs registry 的 unified diff（上游更新通道）
+pnpm dlx @yeyouyuan/zuvi-cli@1.0.0 list                     # 列出 registry 所有组件
+pnpm dlx @yeyouyuan/zuvi-cli@1.0.0 list --json              # JSON 输出整个 registry
 ```
 
 ## 选项
@@ -70,7 +72,7 @@ pnpm dlx @yeyouyuan/zuvi-cli@0.4.0 list --json              # JSON 输出整个 
 - 输出 import 提示与需要安装的 npm `dependencies`（无则提示仅 react peer 依赖）。
 
 ```bash
-pnpm dlx @yeyouyuan/zuvi-cli@0.4.0 add button modal
+pnpm dlx @yeyouyuan/zuvi-cli@1.0.0 add button modal
 #   created  src/components/ui/button/Button.css
 #   created  src/components/ui/button/Button.tsx
 #   created  src/components/ui/modal/Modal.css

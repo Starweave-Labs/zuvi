@@ -1,18 +1,20 @@
 # @zuvi/react
 
-> v0.4.0 发布到 GitHub Packages：`@yeyouyuan/zuvi-react`，npmjs 暂不发布。先在项目 `.npmrc` 配置 `@yeyouyuan:registry=https://npm.pkg.github.com`，再用拥有包读取权限的 GitHub 账号登录。
+> v1.0.0 发布到 GitHub Packages：`@yeyouyuan/zuvi-react`，npmjs 暂不发布。先在项目 `.npmrc` 配置 `@yeyouyuan:registry=https://npm.pkg.github.com`，再用拥有包读取权限的 GitHub 账号登录。
 
 ```bash
 npm login --scope=@yeyouyuan --auth-type=legacy --registry=https://npm.pkg.github.com
-pnpm add @zuvi/react@npm:@yeyouyuan/zuvi-react@0.4.0
+pnpm add @zuvi/react@npm:@yeyouyuan/zuvi-react@1.0.0
 ```
 
-源码导入继续使用 `@zuvi/react`。完整认证和安装说明见仓库 [GitHub Packages 文档](https://github.com/yeyouyuan/zuvi/blob/main/docs/GITHUB-PACKAGES.md)。
+源码导入继续使用 `@zuvi/react`。完整认证和安装说明见仓库 [GitHub Packages 文档](https://github.com/Starweave-Labs/zuvi/blob/main/docs/GITHUB-PACKAGES.md)。
 
-ZUVI 组件库核心包：v0.4.0 含 73 个 Registry 组件条目，令牌驱动、零运行时样式、无障碍优先。
+仓库已迁至 [Starweave-Labs/zuvi](https://github.com/Starweave-Labs/zuvi)，文档为 <https://starweave-labs.github.io/zuvi/>。已发布的 v1.0.0 继续使用上面的 `@yeyouyuan/zuvi-*` 名称；未来组织 scope 的包完成发布与安装验证后，才会更新安装入口。
+
+ZUVI 组件库核心包：v1.0.0 含 73 个 Registry 组件条目，令牌驱动、零运行时样式、无障碍优先。
 
 ```bash
-pnpm add @zuvi/react@npm:@yeyouyuan/zuvi-react@0.4.0
+pnpm add @zuvi/react@npm:@yeyouyuan/zuvi-react@1.0.0
 ```
 
 ```tsx

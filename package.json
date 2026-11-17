@@ -16,7 +16,7 @@
     "format": "prettier --write .",
     "changeset": "changeset",
     "release": "node scripts/publish-github-packages.mjs",
-    "release:prepare": "node scripts/prepare-github-packages.mjs --owner yeyouyuan",
+    "release:prepare": "node scripts/prepare-github-packages.mjs --owner starweave-labs",
     "release:check": "node scripts/check-github-packages.mjs"
   },
   "devDependencies": {

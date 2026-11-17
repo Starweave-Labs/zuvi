@@ -2,6 +2,15 @@
 
 适用包：`@zuvi/react`、`@zuvi/tokens`、`@zuvi/icons`、`@zuvi/i18n`、`@zuvi/cli`、`@zuvi/mcp`、`@zuvi/blocks`。
 
+## Starweave Labs 仓库迁移（2026-11-17）
+
+- 代码仓库入口为 [Starweave-Labs/zuvi](https://github.com/Starweave-Labs/zuvi)，文档入口为 <https://starweave-labs.github.io/zuvi/>；Pages 的基础路径继续使用 `/zuvi/`，浏览器产物为 `cdn/v1.0.0/`。
+- 已发布的 v1.0.0 包继续通过 `@yeyouyuan/zuvi-*` 和 `@zuvi/*` npm aliases 安装。不要重打包覆盖现有版本、改写历史 tarball 或完整性记录；组织 scope 需要先明确发布目标，完成发布及真实消费者安装校验后，再更新公开示例。
+- 迁移验收需检查新站组件页面、页面搭建器、OfficeStudio、CDN 演示和 JS/CSS 资源；Pages 部署不等于包发布，本次迁移不发布 npmjs 包。
+- 页面搭建器使用 localStorage，OfficeStudio 使用 IndexedDB；两者均受网站来源隔离。迁移前从旧站导出作品，之后导入新站；仓库迁移不会删除旧来源的浏览器数据，也不会自动迁移这些数据。
+
+下列旧版本基线保留当时的版本、提交与验收记录，不代表当前版本的发布状态。
+
 ## v0.5.0 发布基线（2026-11-14）
 
 - 七个公开包统一为 `0.5.0`，GitHub Release 标签必须为 `v0.5.0`；`@zuvi/mcp` 运行时自报版本同步。

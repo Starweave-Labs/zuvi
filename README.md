@@ -4,34 +4,38 @@
   <p>73 个组件、16 个业务区块、OfficeStudio、页面搭建器，以及可供 CLI / MCP 消费的机器可读 Registry。</p>
 
   <p>
-    <a href="https://github.com/yeyouyuan/zuvi/releases/tag/v1.0.0"><img alt="Release" src="https://img.shields.io/github/v/release/yeyouyuan/zuvi?display_name=tag&sort=semver"></a>
-    <a href="https://github.com/yeyouyuan/zuvi/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/yeyouyuan/zuvi/actions/workflows/ci.yml/badge.svg"></a>
-    <a href="https://github.com/yeyouyuan/zuvi/actions/workflows/pages.yml"><img alt="Pages" src="https://github.com/yeyouyuan/zuvi/actions/workflows/pages.yml/badge.svg"></a>
-    <a href="./LICENSE"><img alt="MIT License" src="https://img.shields.io/github/license/yeyouyuan/zuvi"></a>
+    <a href="https://github.com/Starweave-Labs/zuvi/releases/tag/v1.0.0"><img alt="Release" src="https://img.shields.io/github/v/release/Starweave-Labs/zuvi?display_name=tag&sort=semver"></a>
+    <a href="https://github.com/Starweave-Labs/zuvi/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Starweave-Labs/zuvi/actions/workflows/ci.yml/badge.svg"></a>
+    <a href="https://github.com/Starweave-Labs/zuvi/actions/workflows/pages.yml"><img alt="Pages" src="https://github.com/Starweave-Labs/zuvi/actions/workflows/pages.yml/badge.svg"></a>
+    <a href="./LICENSE"><img alt="MIT License" src="https://img.shields.io/github/license/Starweave-Labs/zuvi"></a>
     <img alt="React 19" src="https://img.shields.io/badge/React-19-087ea4?logo=react&logoColor=white">
   </p>
 
   <p>
-    <a href="https://yeyouyuan.github.io/zuvi/"><strong>在线文档</strong></a>
-    · <a href="https://yeyouyuan.github.io/zuvi/#/components/office-studio">OfficeStudio</a>
-    · <a href="https://yeyouyuan.github.io/zuvi/#/builder">页面搭建器</a>
-    · <a href="https://yeyouyuan.github.io/zuvi/#/blocks">业务区块</a>
-    · <a href="https://yeyouyuan.github.io/zuvi/cdn-demo.html">CDN 演示</a>
+    <a href="https://starweave-labs.github.io/zuvi/"><strong>在线文档</strong></a>
+    · <a href="https://starweave-labs.github.io/zuvi/#/components/office-studio">OfficeStudio</a>
+    · <a href="https://starweave-labs.github.io/zuvi/#/builder">页面搭建器</a>
+    · <a href="https://starweave-labs.github.io/zuvi/#/blocks">业务区块</a>
+    · <a href="https://starweave-labs.github.io/zuvi/cdn-demo.html">CDN 演示</a>
   </p>
 </div>
 
-[![ZUVI v1.0.0 组件库概览](./docs/assets/readme/overview.png)](https://yeyouyuan.github.io/zuvi/)
+[![ZUVI v1.0.0 组件库概览](./docs/assets/readme/overview.png)](https://starweave-labs.github.io/zuvi/)
 
 ZUVI 以设计令牌连接设计与代码。组件使用原生 CSS、CSS 变量和语义化定制出口，覆盖常规产品界面、页面级业务场景、文档编辑和可视化页面设计。文档站中的演示可直接操作，截图来自当前 `v1.0.0` 生产站。
+
+仓库已迁至 [Starweave-Labs/zuvi](https://github.com/Starweave-Labs/zuvi)，文档与 CDN 位于 <https://starweave-labs.github.io/zuvi/>。已发布的 v1.0.0 继续使用 `@yeyouyuan/zuvi-*` 安装名称和 `@zuvi/*` 导入路径；未来组织 scope 的包完成发布与真实安装验证后，再更新安装入口。本次迁移不发布 npmjs 包。
+
+页面搭建器的工作区保存在网站来源对应的 localStorage，OfficeStudio 文档保存在对应的 IndexedDB。切换到新文档域名前，请从旧站导出作品，再到新站导入；仓库迁移不会删除旧站浏览器数据，也不会自动复制这些本地数据。
 
 ## 现在包含什么
 
 | 能力       | 当前范围                                                                 | 入口                                                                                                                                                    |
 | ---------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| React 组件 | 73 个 Registry 组件、142 枚图标、10 套语言包                             | [组件文档](https://yeyouyuan.github.io/zuvi/#/components/button)                                                                                         |
-| 业务区块   | 16 个页面级区块，覆盖数据展示、表单与账户、系统管理                      | [业务区块](https://yeyouyuan.github.io/zuvi/#/blocks)                                                                                                    |
-| 文档编辑   | `OfficeEditor` 接入 ONLYOFFICE；`OfficeStudio` 原生编辑 Word、Excel、PDF | [OfficeEditor](https://yeyouyuan.github.io/zuvi/#/components/office-editor) · [OfficeStudio](https://yeyouyuan.github.io/zuvi/#/components/office-studio) |
-| 页面设计   | 多页、拖拽、图层、响应式样式、主组件、数据源与离线 HTML 导出             | [页面搭建器](https://yeyouyuan.github.io/zuvi/#/builder)                                                                                                 |
+| React 组件 | 73 个 Registry 组件、142 枚图标、10 套语言包                             | [组件文档](https://starweave-labs.github.io/zuvi/#/components/button)                                                                                         |
+| 业务区块   | 16 个页面级区块，覆盖数据展示、表单与账户、系统管理                      | [业务区块](https://starweave-labs.github.io/zuvi/#/blocks)                                                                                                    |
+| 文档编辑   | `OfficeEditor` 接入 ONLYOFFICE；`OfficeStudio` 原生编辑 Word、Excel、PDF | [OfficeEditor](https://starweave-labs.github.io/zuvi/#/components/office-editor) · [OfficeStudio](https://starweave-labs.github.io/zuvi/#/components/office-studio) |
+| 页面设计   | 多页、拖拽、图层、响应式样式、主组件、数据源与离线 HTML 导出             | [页面搭建器](https://starweave-labs.github.io/zuvi/#/builder)                                                                                                 |
 | AI 工具链  | Registry、CLI、MCP、`llms.txt`、机器可读 API 契约                        | [Registry 说明](./registry/README.md)                                                                                                                   |
 
 ## 设计取向
@@ -49,7 +53,7 @@ ZUVI 以设计令牌连接设计与代码。组件使用原生 CSS、CSS 变量�
 
 `OfficeStudio` 使用 ZUVI 的按钮、菜单、表单和状态反馈构建独立编辑器，无需文档服务器。它支持真实文件导入导出、打印、浏览器本地恢复和最近 20 次历史版本；需要多人协同与服务端编辑时，可使用 `OfficeEditor` 接入自部署的 ONLYOFFICE Docs。在线文档中的 `OfficeEditor` 临时 Demo 会连接 ONLYOFFICE 官方公共演示服务，并且只加载官方样例文件。
 
-[![OfficeStudio Word 页眉上下文编辑](./docs/assets/readme/office-studio.png)](https://yeyouyuan.github.io/zuvi/#/components/office-studio)
+[![OfficeStudio Word 页眉上下文编辑](./docs/assets/readme/office-studio.png)](https://starweave-labs.github.io/zuvi/#/components/office-studio)
 
 - **Word**：正文排版、图片、表格、页眉页脚、页码、查找替换和 DOCX 导入导出。
 - **Excel**：多工作表、行列与单元格、合并、冻结、筛选排序、公式、条件格式、数据验证和图表。
@@ -62,13 +66,13 @@ ZUVI 以设计令牌连接设计与代码。组件使用原生 CSS、CSS 变量�
 
 页面搭建器覆盖组件目录、多页项目、拖拽与图层、响应式样式、设计变量、交互状态、数据源、主组件与变体、设计检查、版本保存和离线 HTML 导出。导出的页面包含样式与交互，可作为原型离线打开。
 
-[![ZUVI 页面搭建器](./docs/assets/readme/page-builder.png)](https://yeyouyuan.github.io/zuvi/#/builder)
+[![ZUVI 页面搭建器](./docs/assets/readme/page-builder.png)](https://starweave-labs.github.io/zuvi/#/builder)
 
 ## 业务区块：直接组合完整场景
 
 16 个业务区块提供真实交互和代码查看，包括仪表盘、数据大屏、表格页、订单、搜索、列表详情、时间线、看板、登录、注册、账户设置和系统管理等场景。
 
-[![ZUVI 业务区块目录与仪表盘预览](./docs/assets/readme/blocks.png)](https://yeyouyuan.github.io/zuvi/#/blocks)
+[![ZUVI 业务区块目录与仪表盘预览](./docs/assets/readme/blocks.png)](https://starweave-labs.github.io/zuvi/#/blocks)
 
 ## 快速开始
 
@@ -77,9 +81,9 @@ ZUVI 以设计令牌连接设计与代码。组件使用原生 CSS、CSS 变量�
 浏览器版已包含 React 和 React DOM，适合演示或没有构建步骤的页面。不要与页面中另一份 React 同时使用。
 
 ```html
-<link rel="stylesheet" href="https://yeyouyuan.github.io/zuvi/cdn/v1.0.0/zuvi.css" />
+<link rel="stylesheet" href="https://starweave-labs.github.io/zuvi/cdn/v1.0.0/zuvi.css" />
 <div id="root"></div>
-<script src="https://yeyouyuan.github.io/zuvi/cdn/v1.0.0/zuvi.global.js"></script>
+<script src="https://starweave-labs.github.io/zuvi/cdn/v1.0.0/zuvi.global.js"></script>
 <script>
   ZUVI.createRoot(document.getElementById('root')).render(
     ZUVI.React.createElement(ZUVI.Button, { variant: 'primary' }, '你好，ZUVI')
@@ -87,7 +91,7 @@ ZUVI 以设计令牌连接设计与代码。组件使用原生 CSS、CSS 变量�
 </script>
 ```
 
-打开 [在线 CDN 演示](https://yeyouyuan.github.io/zuvi/cdn-demo.html) 查看运行结果。
+打开 [在线 CDN 演示](https://starweave-labs.github.io/zuvi/cdn-demo.html) 查看运行结果。
 
 ### 从 GitHub Packages 安装
 
@@ -199,7 +203,7 @@ CI 会执行 Registry 校验、全工作区构建与类型检查、ESLint、单�
 
 ## 文档
 
-- [在线文档与组件演示](https://yeyouyuan.github.io/zuvi/)
+- [在线文档与组件演示](https://starweave-labs.github.io/zuvi/)
 - [OfficeStudio 能力与兼容性](./docs/office-studio.md)
 - [OfficeEditor / ONLYOFFICE 接入](./docs/office-full-editor.md)
 - [SSR 与 Next.js](./docs/SSR.md)

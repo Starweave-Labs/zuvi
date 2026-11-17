@@ -15,6 +15,7 @@ concurrency:
 
 jobs:
   publish:
+    if: vars.ENABLE_GITHUB_PACKAGES == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -24,7 +25,7 @@ jobs:
           node-version: 20
           cache: pnpm
           registry-url: https://npm.pkg.github.com
-          scope: '@${{ github.repository_owner }}'
+          scope: '@starweave-labs'
       - run: pnpm install --frozen-lockfile
       - run: node registry/scripts/generate.mjs --check
       - run: pnpm -r build
@@ -44,8 +45,10 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          OWNER_ENDPOINT=$(gh api "users/$GITHUB_REPOSITORY_OWNER" \
+            --jq 'if .type == "Organization" then "orgs" else "users" end')
           for PACKAGE in tokens icons i18n react blocks cli mcp; do
-            gh api "users/$GITHUB_REPOSITORY_OWNER/packages/npm/zuvi-$PACKAGE" \
+            gh api "$OWNER_ENDPOINT/$GITHUB_REPOSITORY_OWNER/packages/npm/zuvi-$PACKAGE" \
               --jq '{name,visibility,repository:.repository.full_name,html_url}' \
               > ".release/github-packages/package-$PACKAGE.json"
             cat ".release/github-packages/package-$PACKAGE.json"
