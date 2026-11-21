@@ -1,5 +1,13 @@
 # @zuvi/tokens
 
+## 1.1.0
+
+### Minor Changes
+
+- 发布 Zuvi v1.1.0：与 @zuvi/react 1.1.0 统一版本发布（Chart 数据图表、Globe 3D 地球、DataGrid 数据网格 v1.0–v1.2 与 DropdownMenu.ContextTrigger 右键菜单，详见 @zuvi/react CHANGELOG）。
+
+# @zuvi/tokens
+
 ## 0.5.0
 
 ### Minor Changes

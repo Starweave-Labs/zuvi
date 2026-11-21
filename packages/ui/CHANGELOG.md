@@ -1,5 +1,26 @@
 # @zuvi/react
 
+## 1.1.0
+
+### Minor Changes
+
+- 20572bf: DropdownMenu 支持右键上下文菜单（`DropdownMenu.ContextTrigger`）
+
+  - 新增 `DropdownMenu.ContextTrigger`：包裹任意内容形成右键触发区域，`contextmenu` 时在指针坐标处打开菜单并拦截原生菜单；再次右键移动菜单位置。
+  - 键盘等价手势：菜单键 / `Shift+F10` 按触发区域锚元素定位打开（与指针打开共用同一菜单实现，APG 键盘模型、typeahead、Esc 归还焦点全部继承）。
+  - 选择菜单项或 Esc 关闭后焦点归还触发区域（区域为 `tabIndex=-1` 的可编程聚焦目标，非 Tab 停靠点）。
+  - `FloatingPanel` 新增 `anchorPoint` 视口坐标锚点（内部通用能力）：零尺寸矩形走既有 `floatingPosition` 视口钳制，右缘/底缘越界自动收进视口。
+
+- 20572bf: DataGrid v1.2：枚举筛选与服务端模式接口
+
+  - 列声明 `filterable` + `filterValues` 后，表头出现筛选 disclosure（`aria-expanded`），面板为原生 checkbox 列表；Esc 关闭并把焦点还给触发钮，点击面板外关闭。
+  - 新增受控筛选 `filters` / `defaultFilters` / `onFiltersChange`（`DataGridFilters`）：空选择 = 无约束，全部清空回调 `null`；未声明或未 `filterable` 的列忽略并告警。
+  - 过滤先于排序：`aria-rowcount`、`aria-rowindex`、全选范围随过滤后数据集收缩；被过滤掉的已选 key 保留；过滤到 0 行时显示筛选空态文案（`filterEmpty`）并携带 `data-filtered-empty`。
+  - 服务端模式对齐 RFC-005：`loading` 时正文显示 loadingContent，排序与筛选保持可用，选择输入禁用。
+  - 修复：非 sticky 列的列宽拖拽 handle 此前锚定到表头行右端，现正确锚定到自身表头单元格。
+
+- 20572bf: 新增 DataGrid 数据网格组件：10k+ 行固定行高虚拟滚动、单列排序（asc → desc → 清除）、行选择与全选（含半选与 isRowSelectable 过滤）、完整 role="grid" 键盘模型（方向键 / Home / End / Ctrl+Home / Ctrl+End / PageUp / PageDown / Space）与 aria-activedescendant 焦点恢复；实现层按需异步加载，新增顶层 locale.dataGrid 十语言文案与 ./data-grid 子路径。列宽拖拽与键盘调整（±16px、Home/End，受控 columnWidths）与 sticky 固定列（≤左 2）已随 v1.1 交付；筛选与服务端模式接口按 RFC-005 在 v1.2 交付。
+
 ## 0.5.0
 
 ### Minor Changes

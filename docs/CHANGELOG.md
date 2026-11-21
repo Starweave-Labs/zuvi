@@ -1,4 +1,15 @@
 # @zuvi/docs
+
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies [20572bf]
+- Updated dependencies [20572bf]
+- Updated dependencies [20572bf]
+  - @zuvi/react@1.1.0
+  - @zuvi/blocks@1.0.1
+
 ## 0.1.3
 
 ### Patch Changes
@@ -9,7 +20,6 @@
   - @zuvi/icons@0.5.0
   - @zuvi/tokens@0.5.0
   - @zuvi/i18n@0.5.0
-
 
 ## 0.1.2
 

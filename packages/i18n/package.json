@@ -1,6 +1,6 @@
 {
   "name": "@zuvi/i18n",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "ZUVI AI 翻译：useAutoTranslate 组件内置文案自动翻译（openai/deepl/youdao/custom + localStorage 缓存）",
   "type": "module",
   "sideEffects": false,

@@ -1,6 +1,6 @@
 {
   "name": "@zuvi/cli",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "ZUVI registry CLI：init / add / diff / list，把 registry 组件源码复制进你的项目",
   "type": "module",
   "bin": {

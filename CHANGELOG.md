@@ -2,6 +2,14 @@
 
 ZUVI 遵循语义化版本：破坏性变更只随 major 发布，废弃 API 跨一个大版本后才移除。
 
+## v1.1.0 — Chart、Globe、DataGrid 与右键菜单（2026-11-22）
+
+- **Chart 数据图表**：原生 SVG 实现 13 个 API 类型、17 种形态；十字准线、X 范围缩放与框选、双指触控、图例强调、动画与完整 CSV 导出；文档新增「数据可视化」板块（画廊 / 交互与联动 / 可视化实验室，实验室支持数据/外观/代码三栏工作台与平滑过渡开关）。
+- **Globe 3D 地球**：点位、连接弧线、可访问点位列表与 2D 回退；地理位置数据预处理脚本入仓。
+- **DataGrid 数据网格（RFC-005 v1.0–v1.2）**：10k+ 行固定行高虚拟滚动、单列三态排序、行选择与全选（`isRowSelectable`、reason）、完整 `role="grid"` 键盘模型与 aria-activedescendant 焦点恢复；v1.1 指针/键盘列宽调整与 sticky 固定列（≤左 2）；v1.2 枚举筛选面板（disclosure + 原生 checkbox、Esc 回焦）与服务端 loading 语义（排序/筛选保持可用），并修复非 sticky 列 resize handle 锚点。实现层异步分块，入口预算上调至 122 KiB gzip。
+- **DropdownMenu.ContextTrigger**：右键上下文菜单在指针坐标打开（FloatingPanel 新增 `anchorPoint` 坐标锚点），菜单键 / Shift+F10 等价手势，选择/Esc 焦点归还触发区域。
+- Registry 92 条目、公开组件 76、文档导航 86；CLI/MCP 副本与消费者检查同步。
+
 ## v0.5.0 — Table 数据模式与高级字段管理（2026-11-14）
 
 - `Table` 新增数据驱动模式：字段点击循环升序、降序与清除，支持受控 `sortState` 与服务端 `manual` 排序模式；表头仅活动列携带 `aria-sort`，工具栏常驻可关闭的排序摘要。

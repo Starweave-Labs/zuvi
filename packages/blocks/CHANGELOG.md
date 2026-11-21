@@ -1,5 +1,14 @@
 # @zuvi/blocks
 
+## 1.1.0
+
+### Patch Changes
+
+- Updated dependencies [20572bf]
+- Updated dependencies [20572bf]
+- Updated dependencies [20572bf]
+  - @zuvi/react@1.1.0
+
 ## 0.5.0
 
 ### Minor Changes

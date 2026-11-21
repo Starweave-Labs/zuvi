@@ -11,7 +11,7 @@ pnpm add @zuvi/react@npm:@yeyouyuan/zuvi-react@1.0.0
 
 仓库已迁至 [Starweave-Labs/zuvi](https://github.com/Starweave-Labs/zuvi)，文档为 <https://starweave-labs.github.io/zuvi/>。已发布的 v1.0.0 继续使用上面的 `@yeyouyuan/zuvi-*` 名称；未来组织 scope 的包完成发布与安装验证后，才会更新安装入口。
 
-当前源码新增 `Globe` 地球可视化、`Chart` 数据图表与 `DataGrid` 数据网格，共 76 个组件条目；这些增量尚未发布，安装示例与历史版本数量保持不变。
+v1.1.0 新增 `Globe` 地球可视化、`Chart` 数据图表、`DataGrid` 数据网格（v1.0–v1.2）与 `DropdownMenu.ContextTrigger` 右键菜单，共 76 个组件条目；v1.1.0 的 GitHub Packages 包以组织 scope `@starweave-labs/zuvi-*` 发布，安装示例在上面的真实安装校验通过后随更新入口一并切换。
 
 ```bash
 pnpm add @zuvi/react@npm:@yeyouyuan/zuvi-react@1.0.0

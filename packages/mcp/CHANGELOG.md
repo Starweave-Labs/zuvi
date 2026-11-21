@@ -1,5 +1,13 @@
 # @zuvi/mcp
 
+## 1.1.0
+
+### Minor Changes
+
+- 发布 Zuvi v1.1.0：`generate` 工具新增 Chart、Globe、DataGrid 组件示例，SERVER_VERSION 随包版本升至 1.1.0。
+
+# @zuvi/mcp
+
 ## 0.5.0
 
 ### Minor Changes

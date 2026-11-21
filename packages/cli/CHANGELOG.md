@@ -1,5 +1,13 @@
 # @zuvi/cli
 
+## 1.1.0
+
+### Minor Changes
+
+- 发布 Zuvi v1.1.0：Registry 副本同步至 92 个组件（新增 Chart、Globe、DataGrid），内置组件源与新增 `./data-grid` 等子路径元数据同步更新。
+
+# @zuvi/cli
+
 ## 0.5.0
 
 ### Minor Changes

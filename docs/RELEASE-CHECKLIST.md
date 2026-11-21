@@ -110,3 +110,9 @@ npm view @zuvi/react@0.2.0 version
 - [x] `e60a06f` 对应部署的 `v0.2.0` JS、CSS 与演示页返回成功，入口引用与最终产物哈希一致。
 - [x] 在线打开该部署的脚本演示，确认 `ZUVI.createRoot`、Button 样式与点击交互正常，且无页面异常或 console error。
 - [ ] 发布完成后核对 Git tag、npm 七包版本、unpkg 和 Pages 版本一致。
+
+## 5. v1.1.0 发布记录（2026-11-22）
+
+- [ ] 四项本地门禁（distribution / consumer / bundle-size / registry --check）在发布提交上全绿。
+- [ ] CI 全绿（e2e --workers=1），Pages 部署成功且 `cdn/v1.1.0/` 可访问。
+- [ ] GitHub Packages 七包 1.1.0 发布成功；npm 侧按第 3 节执行（NPM_TOKEN 配置后自动）。
