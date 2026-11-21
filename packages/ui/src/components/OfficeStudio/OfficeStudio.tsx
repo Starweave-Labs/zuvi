@@ -19,13 +19,13 @@ import { StudioRibbonFileContext } from './StudioRibbon';
 import type { OfficeStudioDocument, OfficeStudioKind, OfficeStudioProps } from './studio-types';
 import './OfficeStudio.css';
 
-const StudioWord = React.lazy(() =>
+const StudioWord = /* @__PURE__ */ React.lazy(() =>
   import('./StudioWord').then((module) => ({ default: module.StudioWord }))
 );
-const StudioSheet = React.lazy(() =>
+const StudioSheet = /* @__PURE__ */ React.lazy(() =>
   import('./StudioSheet').then((module) => ({ default: module.StudioSheet }))
 );
-const StudioPdf = React.lazy(() =>
+const StudioPdf = /* @__PURE__ */ React.lazy(() =>
   import('./StudioPdf').then((module) => ({ default: module.StudioPdf }))
 );
 

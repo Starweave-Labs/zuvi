@@ -52,7 +52,9 @@ export function formatAttribute(name: string, value: unknown): string {
 function formatOpenTag(name: string, props: Record<string, unknown>): string {
   let tag = `<${name}`;
   for (const [key, value] of Object.entries(props)) {
-    tag += formatAttribute(key, value);
+    // Preserve caller Chart null literals, especially controlled selection/ranges.
+    const jsxValue = name === 'Chart' && value === null ? '{null}' : value;
+    tag += formatAttribute(key, jsxValue);
   }
   return `${tag}`;
 }
@@ -88,7 +90,7 @@ export function generateCode(
     }
   }
 
-  const example = exampleFor(entry.name);
+  const example = exampleFor(entry.name, props);
   const jsx = renderJsx(
     example.tag ?? entry.name,
     { ...example.props, ...props },
@@ -154,7 +156,84 @@ interface Example {
 }
 
 /** Required props and compound children come from the public component API. */
-function exampleFor(name: string): Example {
+function exampleFor(name: string, props: Record<string, unknown> = {}): Example {
+  if (name === 'Chart') {
+    const type = props.type ?? 'line';
+    const common = {
+      title: 'Synthetic sample chart',
+      'aria-label': 'Synthetic sample chart',
+    };
+    // Pick only the compatible data family; caller literals still win at the merge.
+    let dataProps: Record<string, unknown>;
+    if (['pie', 'donut', 'treemap', 'funnel'].includes(type as string)) {
+      dataProps = {
+        type,
+        data: [
+          { id: 'sample-a', label: 'Sample A', value: 60 },
+          { id: 'sample-b', label: 'Sample B', value: 40 },
+        ],
+      };
+    } else if (type === 'gauge') {
+      dataProps = { type, data: [{ id: 'sample-value', label: 'Sample value', value: 60 }] };
+    } else if (type === 'heatmap') {
+      dataProps = {
+        type,
+        data: [
+          { id: 'sample-a', row: 'Row A', col: 'Jan', value: -4 },
+          { id: 'sample-b', row: 'Row A', col: 'Feb', value: 0 },
+          { id: 'sample-c', row: 'Row B', col: 'Jan', value: 12 },
+        ],
+      };
+    } else if (type === 'waterfall') {
+      dataProps = {
+        type,
+        data: [
+          { id: 'sample-start', label: 'Start', value: 40 },
+          { id: 'sample-cost', label: 'Cost', value: -12 },
+          { id: 'sample-growth', label: 'Growth', value: 8 },
+        ],
+      };
+    } else if (type === 'scatter') {
+      dataProps = {
+        type,
+        series: [
+          {
+            id: 'sample-a',
+            name: 'Sample A',
+            points: [
+              { id: 'a-1', x: -2.5, y: 8, ...(props.bubble === true ? { value: 4 } : {}) },
+              { id: 'a-2', x: 0.75, y: 12, ...(props.bubble === true ? { value: 12 } : {}) },
+              { id: 'a-3', x: 3, y: 15, ...(props.bubble === true ? { value: 20 } : {}) },
+            ],
+          },
+          {
+            id: 'sample-b',
+            name: 'Sample B',
+            points: [
+              { id: 'b-1', x: -1, y: 6, ...(props.bubble === true ? { value: 8 } : {}) },
+              { id: 'b-2', x: 2.25, y: 10, ...(props.bubble === true ? { value: 16 } : {}) },
+            ],
+          },
+        ],
+      };
+    } else {
+      dataProps = {
+        type: ['area', 'bar', 'radar', 'sparkline'].includes(type as string) ? type : 'line',
+        categories: type === 'radar' ? ['Quality', 'Speed', 'Coverage'] : ['Jan', 'Feb', 'Mar'],
+        series: [
+          { id: 'sample-a', name: 'Sample A', values: [12, 18, 15] },
+          { id: 'sample-b', name: 'Sample B', values: [8, 12, 20] },
+        ],
+      };
+    }
+    return {
+      helper:
+        '// Synthetic sample data; not live metrics. Keep values numeric (null marks Cartesian gaps).\n' +
+        '// 13 types / 17 forms: stack area/bar, horizontal bar, bubble scatter; new interactions are opt-in.\n' +
+        '// Radar/slices are nonnegative; heatmap/waterfall are signed; gauge uses one value inside min/max.\n',
+      props: { ...common, ...dataProps },
+    };
+  }
   const examples: Record<string, Example> = {
     Button: { children: 'Submit' },
     Input: { props: { placeholder: 'Enter text', 'aria-label': 'Name' } },
@@ -266,7 +345,87 @@ function exampleFor(name: string): Example {
     Calendar: {},
     Descriptions: { children: '<Descriptions.Item label="Name">Alice</Descriptions.Item>' },
     Statistic: { props: { title: 'Visitors', value: 12345 } },
+    Globe: {
+      helper:
+        '// Synthetic sample locations and connection; not live telemetry.\n' +
+        '// Keep point values numeric for valueScale; format display values in renderTooltip.\n' +
+        '// value selects a point without moving the camera; focus requests only the camera.\n',
+      props: {
+        'aria-label': 'Sample locations',
+        points: [
+          {
+            id: 'sample-a',
+            name: 'Sample A',
+            latitude: 35,
+            longitude: 105,
+            category: 'sample-hub',
+            value: 120,
+          },
+          {
+            id: 'sample-b',
+            name: 'Sample B',
+            latitude: -15,
+            longitude: -40,
+            category: 'sample-region',
+            value: 45,
+          },
+        ],
+        arcs: [
+          {
+            id: 'sample-arc',
+            from: 'sample-a',
+            to: 'sample-b',
+            name: 'Sample connection',
+            value: 30,
+          },
+        ],
+        categories: [
+          { id: 'sample-hub', name: 'Sample hub', color: '#6366f1' },
+          { id: 'sample-region', name: 'Sample region', color: '#06b6d4' },
+        ],
+        pointLabels: 'auto',
+        searchable: true,
+        valueScale: { domain: [0, 120], range: [0.012, 0.036] },
+        transitionDuration: 700,
+        showArcList: true,
+      },
+    },
     Timeline: { props: { items: [{ key: 'a', children: 'Created' }] } },
+    DataGrid: {
+      helper:
+        '// Synthetic sample rows; not live telemetry.\n' +
+        '// rowKey backs the selection registry; duplicate or missing keys are skipped with a warning.\n' +
+        '// sort/selectedKeys are controlled or uncontrolled; rowHeight must stay fixed for virtualization.\n',
+      props: {
+        'aria-label': 'Sample orders',
+        height: 320,
+        rowHeight: 40,
+        columns: [
+          {
+            key: 'name',
+            dataIndex: 'name',
+            header: 'Name',
+            textValue: 'Name',
+            sortable: true,
+            width: 200,
+          },
+          {
+            key: 'amount',
+            dataIndex: 'amount',
+            header: 'Amount',
+            textValue: 'Amount',
+            sortable: true,
+            align: 'end',
+            width: 120,
+          },
+        ],
+        rows: [
+          { id: 'row-1', name: 'Sample order A', amount: 120 },
+          { id: 'row-2', name: 'Sample order B', amount: 45 },
+          { id: 'row-3', name: 'Sample order C', amount: 78.5 },
+        ],
+      },
+    },
     VirtualTable: {
       props: { height: 320, columns: [{ key: 'name', title: 'Name' }], data: [{ name: 'Alice' }] },
     },

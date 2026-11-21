@@ -445,6 +445,7 @@ export default function App(): React.ReactNode {
           displayedRoute === '/lab' ||
           displayedRoute === '/collaboration' ||
           displayedRoute === '/blocks' ||
+          displayedRoute === '/charts/playground' ||
           displayedRoute === '/components/office-editor' ||
           displayedRoute === '/components/office-studio'
             ? 'doc-main doc-main--wide'

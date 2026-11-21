@@ -15,6 +15,10 @@ export interface DropdownMenuProps {
 
 export type DropdownMenuTriggerProps = React.ComponentPropsWithRef<'button'>;
 
+export interface DropdownMenuContextTriggerProps extends React.ComponentPropsWithRef<'div'> {
+  children: React.ReactNode;
+}
+
 export interface DropdownMenuContentProps extends React.ComponentPropsWithRef<'div'> {
   classNames?: { content?: string };
 }
@@ -41,6 +45,11 @@ interface DropdownMenuContextValue {
   contentId: string;
   rootRef: React.RefObject<HTMLDivElement | null>;
   triggerRef: React.RefObject<HTMLButtonElement | null>;
+  /** 右键触发区域；关闭时若无按钮 Trigger，焦点归还到这里。 */
+  regionRef: React.RefObject<HTMLDivElement | null>;
+  /** 右键打开的视口坐标；null 表示按锚元素定位（键盘打开或按钮 Trigger）。 */
+  point: { x: number; y: number } | null;
+  setPoint: (point: { x: number; y: number } | null) => void;
   contentRef: React.RefObject<HTMLDivElement | null>;
   initialFocusRef: React.MutableRefObject<'first' | 'last'>;
 }
@@ -92,8 +101,10 @@ function DropdownMenu(props: DropdownMenuProps) {
   const contentId = `${baseId}-content`;
   const rootRef = React.useRef<HTMLDivElement | null>(null);
   const triggerRef = React.useRef<HTMLButtonElement | null>(null);
+  const regionRef = React.useRef<HTMLDivElement | null>(null);
   const contentRef = React.useRef<HTMLDivElement | null>(null);
   const initialFocusRef = React.useRef<'first' | 'last'>('first');
+  const [point, setPoint] = React.useState<{ x: number; y: number } | null>(null);
 
   const contextValue = React.useMemo<DropdownMenuContextValue>(
     () => ({
@@ -103,10 +114,13 @@ function DropdownMenu(props: DropdownMenuProps) {
       contentId,
       rootRef,
       triggerRef,
+      regionRef,
+      point,
+      setPoint,
       contentRef,
       initialFocusRef,
     }),
-    [open, setOpen, triggerId, contentId]
+    [open, setOpen, triggerId, contentId, point]
   );
 
   return (
@@ -171,6 +185,59 @@ function DropdownMenuTrigger(props: DropdownMenuTriggerProps) {
   );
 }
 
+/* ------------------------ DropdownMenu.ContextTrigger --------------------- */
+
+function DropdownMenuContextTrigger(props: DropdownMenuContextTriggerProps) {
+  const { onContextMenu, onKeyDown, className, children, ref: userRef, ...rest } = props;
+  const ctx = useDropdownMenuContext('DropdownMenu.ContextTrigger');
+
+  const setRegionRef = React.useCallback(
+    (element: HTMLDivElement | null) => {
+      ctx.regionRef.current = element;
+      if (typeof userRef === 'function') userRef(element);
+      else if (userRef) (userRef as React.RefObject<HTMLDivElement | null>).current = element;
+    },
+    [ctx, userRef]
+  );
+
+  return (
+    <div
+      {...rest}
+      ref={setRegionRef}
+      data-part="context-trigger"
+      className={cx('zuvi-dropdown-menu-context-trigger', className)}
+      data-state={ctx.open ? 'open' : 'closed'}
+      // 程序化焦点目标（非 Tab 停靠点）：菜单键打开、选择后焦点归还。
+      tabIndex={-1}
+      onContextMenu={(event) => {
+        onContextMenu?.(event);
+        if (event.defaultPrevented) return;
+        event.preventDefault();
+        // 无坐标环境（jsdom 等）回退为锚元素定位。
+        ctx.setPoint(
+          Number.isFinite(event.clientX) && Number.isFinite(event.clientY)
+            ? { x: event.clientX, y: event.clientY }
+            : null
+        );
+        ctx.initialFocusRef.current = 'first';
+        ctx.setOpen(true);
+      }}
+      onKeyDown={(event) => {
+        onKeyDown?.(event);
+        if (event.defaultPrevented) return;
+        // 键盘等价手势：菜单键 / Shift+F10；按锚元素定位。
+        if (event.key === 'ContextMenu' || (event.key === 'F10' && event.shiftKey)) {
+          event.preventDefault();
+          ctx.initialFocusRef.current = 'first';
+          ctx.setOpen(true);
+        }
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
 /* --------------------------- DropdownMenu.Content ------------------------- */
 
 function DropdownMenuContent(props: DropdownMenuContentProps) {
@@ -198,7 +265,7 @@ function DropdownMenuContentInner(props: DropdownMenuContentProps) {
 
   const closeAndRefocusTrigger = React.useCallback(() => {
     ctx.setOpen(false);
-    ctx.triggerRef.current?.focus();
+    (ctx.triggerRef.current ?? ctx.regionRef.current)?.focus();
   }, [ctx]);
 
   /** roving tabindex：目标项 0，其余 -1，随后聚焦 */
@@ -313,7 +380,12 @@ function DropdownMenuContentInner(props: DropdownMenuContentProps) {
   useOnClickOutside(outsideRefs, () => ctx.setOpen(false), ctx.open);
 
   return (
-    <FloatingPanel open={ctx.open} anchorRef={ctx.rootRef} offsetVariable="--zuvi-dropdown-menu-offset">
+    <FloatingPanel
+      open={ctx.open}
+      anchorRef={ctx.rootRef}
+      anchorPoint={ctx.point}
+      offsetVariable="--zuvi-dropdown-menu-offset"
+    >
     <div
       {...rest}
       ref={setContentRef}
@@ -352,9 +424,9 @@ function DropdownMenuItem(props: DropdownMenuItemProps) {
   const handleSelect = () => {
     if (disabled) return;
     onSelect?.();
-    // 触发后关闭并把焦点归还 Trigger
+    // 触发后关闭并把焦点归还 Trigger（右键模式归还触发区域）
     ctx.setOpen(false);
-    ctx.triggerRef.current?.focus();
+    (ctx.triggerRef.current ?? ctx.regionRef.current)?.focus();
   };
 
   return (
@@ -433,6 +505,7 @@ function DropdownMenuLabel(props: DropdownMenuLabelProps) {
 
 const DropdownMenuRoot = Object.assign(DropdownMenu, {
   Trigger: DropdownMenuTrigger,
+  ContextTrigger: DropdownMenuContextTrigger,
   Content: DropdownMenuContent,
   Item: DropdownMenuItem,
   Separator: DropdownMenuSeparator,
@@ -442,6 +515,7 @@ const DropdownMenuRoot = Object.assign(DropdownMenu, {
 export {
   DropdownMenuRoot as DropdownMenu,
   DropdownMenuTrigger,
+  DropdownMenuContextTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,

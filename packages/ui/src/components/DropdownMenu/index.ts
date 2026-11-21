@@ -1,6 +1,7 @@
 export {
   DropdownMenu,
   DropdownMenuTrigger,
+  DropdownMenuContextTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
@@ -9,6 +10,7 @@ export {
 export type {
   DropdownMenuProps,
   DropdownMenuTriggerProps,
+  DropdownMenuContextTriggerProps,
   DropdownMenuContentProps,
   DropdownMenuItemProps,
   DropdownMenuSeparatorProps,

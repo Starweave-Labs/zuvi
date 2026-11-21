@@ -64,8 +64,8 @@ export interface DataGridColumn<T> {
   maxWidth?: number;
   align?: 'start' | 'center' | 'end';
   sortable?: boolean;
-  filterable?: boolean;           // v1 仅枚举/关键字两种内置 UI
-  filterValues?: Array<{ label: string; value: string }>; // 枚举筛选选项
+  filterable?: boolean;           // v1.2 已交付：表头 disclosure + 原生 checkbox 面板
+  filterValues?: readonly string[]; // 枚举筛选选项；显示文案即值本身（实现期锁定，替代早期 {label,value} 草案）
   sticky?: boolean;               // v1 最多前两列生效，超出警告
   render?: (row: T, context: { rowIndex: number }) => React.ReactNode;
   headerRender?: (context: { sortState: 'asc' | 'desc' | null }) => React.ReactNode;
@@ -262,3 +262,26 @@ docs/src/pages/components/DataGridPage.tsx
 - [MUI X Data Grid](https://mui.com/x/react-data-grid/)（列定义与受控状态形态）
 - [TanStack Table](https://tanstack.com/table)（headless 状态拆分参考；实现阶段评估复用其状态机还是自研，倾向自研以贴合令牌与受控契约）
 - 仓库内原型：`docs/src/prototypes/datagrid/`（性能预算的来源与防回退基线）
+
+## 14. v1.0 实现决议（2026-11-21 评审收口）
+
+v1.0 已随 `@zuvi/react` 源码落地，以下开放问题在本期实现中关闭：
+
+- **焦点模型**：采用 root `tabIndex=0` + `aria-activedescendant` 指向 `cell id`。虚拟窗口重组时 id 不变即焦点不丢；行滚出渲染窗口时回退 root（回落链在 `DataGrid.test.tsx` 固化）。
+- **排序循环**：asc → desc → 清除回原序，与 Table 的三态语义一致；`aria-sort` 只出现在激活列。
+- **CSS 变量前缀**：按仓库现行惯例使用 `--zuvi-datagrid-*`（本文早期 `--z-datagrid-*` 为改名前残留）。
+- **词表独立性**：`dir: 'asc' | 'desc'`、`align: 'start' | 'center' | 'end'` 与 Table 的 `ascend/descend`、`left/center/right` 并存，文档页已写明差异；不改 Table。
+- **状态机**：自研（不引 TanStack）；四组受控状态全部走 `useControllableState`，受控不乐观更新。
+- **文件布局**：实际落地为 `DataGrid.tsx`（shell）+ `DataGridView.tsx`（lazy 实现）+ `data-grid-model.ts` / `data-grid-virtual.ts`（纯函数），较第 12 节清单多出的拆分文件是 Chart 先例的既定惯例。
+- **入口预算**：shell + 十语言 locale 的静态边际成本约 1.0 KiB gzip，预算从 120 KiB 上调至 122 KiB（见 `scripts/check-bundle-size.mjs` 注释）；交互实现层保持异步分块、不计入预算。
+- **locale**：`dataGrid` 为新增顶层段，11 键 × 十语言（含 v1.1/v1.2 预留键），`mergeLocale` 同步。
+
+v1.1（列宽 + 固定列）已于 2026-11-21 落地：拖拽与键盘（±16px、Home/End）均提交受控 `columnWidths`，handle 为可聚焦 `role="separator"` 并携带 aria-valuemin/max/now；sticky 列按源顺序固定、上限前两列并告警，offsets 含选择列累计。组件级预算与交互断言由 `e2e/data-grid.spec.ts` 承接，原型页保留为历史基线。
+
+v1.2（筛选 + 服务端模式接口）已于 2026-11-21 落地，实现期关闭的决策：
+
+- **筛选形态**：表头内 disclosure（触发钮 `aria-expanded` + 面板），面板为原生 checkbox 列表；`filterValues` 保持 `readonly string[]`（与第 5 节 `{label, value}` 草案不同，直接以值本身为显示文案，独立词表偏差已在本文修正）。
+- **语义**：空选择 = 无约束（全不选一列即移除该列约束，全部清空回调 `null`）；nullish 值不匹配任何非空约束；过滤先于排序，`aria-rowcount` 与全选范围随之收缩，被过滤掉的已选 key 保留不渲染。
+- **服务端模式**：对齐第 5 节"交互不被打断"——`loading` 时正文显示 loadingContent，排序与筛选保持可用，选择输入禁用（v1.0 的"排序禁用"行为随之修正）。
+- **焦点**：面板打开聚焦首个 checkbox，Esc 关闭并把焦点还给触发钮；面板内键盘不冒泡进 grid 键盘模型。
+- **顺带修复**：非 sticky 列的 resize handle 因 `.zuvi-datagrid-header-cell` 缺少定位而锚定到 header row（v1.1 遗留），本期补 `position: relative`（sticky 列保持既有定位不受影响）。

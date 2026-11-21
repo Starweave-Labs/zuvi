@@ -55,4 +55,31 @@ describe('FloatingPanel', () => {
     expect(panel.style.zIndex).toBe('401');
     expect(panel.parentElement?.style.getPropertyValue('--zuvi-select-listbox-bg')).toBe('rgb(1, 2, 3)');
   });
+
+  it('positions from a viewport point anchor and clamps it into the viewport', () => {
+    vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
+      if (this.getAttribute('role') === 'listbox') return { top: 0, left: 0, bottom: 180, right: 60, width: 60, height: 180 } as DOMRect;
+      return { top: 0, left: 0, bottom: 0, right: 0, width: 0, height: 0 } as DOMRect;
+    });
+    vi.stubGlobal('innerWidth', 375);
+    vi.stubGlobal('innerHeight', 667);
+    function PointExample() {
+      const anchor = React.useRef<HTMLDivElement>(null);
+      return (
+        <section>
+          <div ref={anchor}>锚</div>
+          {/* 底部空间不足：向上翻转；右缘越界：钳回视口内 */}
+          <FloatingPanel open anchorRef={anchor} anchorPoint={{ x: 340, y: 500 }}>
+            <div role="listbox">内容</div>
+          </FloatingPanel>
+        </section>
+      );
+    }
+    render(<PointExample />);
+    const panel = screen.getByRole('listbox');
+    expect(panel.style.position).toBe('fixed');
+    expect(panel.style.top).toBe('316px');
+    expect(panel.style.left).toBe('307px');
+    vi.unstubAllGlobals();
+  });
 });

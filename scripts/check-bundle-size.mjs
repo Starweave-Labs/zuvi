@@ -11,7 +11,11 @@ const entry = path.join(directory, 'index.js');
 // remain asynchronous and are reported separately rather than hidden in this limit.
 // 120 KiB: Table 数据模式（字段拖拽/排序/字段管理）随 v0.5.0 进入入口，
 // 排序交互不做异步分块以免首次点击卡顿；Async Studio* 分块继续单独上报。
-const initialBudget = 120 * 1024;
+// 122 KiB（2026-11-20）：DataGrid 成为 120 KiB 上调后第一个新增组件。库的
+// DoD 要求十语言 locale，shell + 文案的静态边际成本实测约 1.0 KiB gzip，
+// 而当时余量仅 249 字节；交互实现（DataGridView ~4 KiB）保持异步分块、
+// 只上报不计入本预算。不得把实现层挪回入口来"省出"预算。
+const initialBudget = 122 * 1024;
 const modules = new Map();
 
 function readModule(file) {

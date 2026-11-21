@@ -44,6 +44,7 @@ const DescriptionsPage = lazy(() => import('./pages/components/DescriptionsPage'
 const StatisticPage = lazy(() => import('./pages/components/StatisticPage'));
 const TimelinePage = lazy(() => import('./pages/components/TimelinePage'));
 const VirtualTablePage = lazy(() => import('./pages/components/VirtualTablePage'));
+const DataGridPage = lazy(() => import('./pages/components/DataGridPage'));
 const TreePage = lazy(() => import('./pages/components/TreePage'));
 const TreeSelectPage = lazy(() => import('./pages/components/TreeSelectPage'));
 const CollapsePage = lazy(() => import('./pages/components/CollapsePage'));
@@ -80,10 +81,15 @@ const SideNavPage = lazy(() => import('./pages/components/SideNavPage'));
 const SplitterPage = lazy(() => import('./pages/components/SplitterPage'));
 const OfficeEditorPage = lazy(() => import('./pages/components/OfficeEditorPage'));
 const OfficeStudioPage = lazy(() => import('./pages/components/OfficeStudioPage'));
+const GlobePage = lazy(() => import('./pages/components/GlobePage'));
+const ChartPage = lazy(() => import('./pages/components/ChartPage'));
+const ChartsGalleryPage = lazy(() => import('./pages/charts/ChartsGalleryPage'));
+const ChartInteractionsPage = lazy(() => import('./pages/charts/ChartInteractionsPage'));
+const ChartPlaygroundPage = lazy(() => import('./pages/charts/ChartPlaygroundPage'));
 
 /** 按使用目的组织导航，页面、搜索和命令面板共享同一分类。 */
 export type NavGroup =
-  'start' | 'basic' | 'layout' | 'navigation' | 'input' | 'data' | 'feedback' | 'configuration';
+  'start' | 'basic' | 'layout' | 'navigation' | 'input' | 'data' | 'visualization' | 'feedback' | 'configuration';
 
 export const GROUP_LABELS: Record<NavGroup, string> = {
   start: '开始',
@@ -92,6 +98,7 @@ export const GROUP_LABELS: Record<NavGroup, string> = {
   navigation: '导航',
   input: '数据录入',
   data: '数据展示',
+  visualization: '数据可视化',
   feedback: '反馈',
   configuration: '全局配置',
 };
@@ -103,6 +110,7 @@ export const GROUP_ORDER: NavGroup[] = [
   'navigation',
   'input',
   'data',
+  'visualization',
   'feedback',
   'configuration',
 ];
@@ -145,6 +153,11 @@ export const navItems: NavItem[] = [
   { title: 'Modal 对话框', path: '/components/modal', group: 'feedback' },
   { title: 'Tabs 标签页', path: '/components/tabs', group: 'navigation' },
   { title: 'Table 表格', path: '/components/table', group: 'data' },
+  { title: 'Chart 数据图表', path: '/components/chart', group: 'data' },
+  { title: 'Globe 3D 地球', path: '/components/globe', group: 'data' },
+  { title: '图表画廊', path: '/charts', group: 'visualization' },
+  { title: '交互与联动', path: '/charts/interactions', group: 'visualization' },
+  { title: '可视化实验室', path: '/charts/playground', group: 'visualization' },
   { title: 'Message 全局提示', path: '/components/message', group: 'feedback' },
   { title: 'Tooltip 文字提示', path: '/components/tooltip', group: 'feedback' },
   { title: 'Popover 气泡卡片', path: '/components/popover', group: 'feedback' },
@@ -174,6 +187,7 @@ export const navItems: NavItem[] = [
   { title: 'Statistic 统计数值', path: '/components/statistic', group: 'data' },
   { title: 'Timeline 时间轴', path: '/components/timeline', group: 'data' },
   { title: 'VirtualTable 虚拟滚动表格', path: '/components/virtual-table', group: 'data' },
+  { title: 'DataGrid 数据网格', path: '/components/data-grid', group: 'data' },
   { title: 'Tree 树形控件', path: '/components/tree', group: 'data' },
   { title: 'TreeSelect 树选择', path: '/components/tree-select', group: 'input' },
   { title: 'Collapse 折叠面板', path: '/components/collapse', group: 'data' },
@@ -229,6 +243,11 @@ export const routeComponents: Record<string, ComponentType> = {
   '/components/modal': ModalPage,
   '/components/tabs': TabsPage,
   '/components/table': TablePage,
+  '/components/chart': ChartPage,
+  '/components/globe': GlobePage,
+  '/charts': ChartsGalleryPage,
+  '/charts/interactions': ChartInteractionsPage,
+  '/charts/playground': ChartPlaygroundPage,
   '/components/message': MessagePage,
   '/components/tooltip': TooltipPage,
   '/components/popover': PopoverPage,
@@ -258,6 +277,7 @@ export const routeComponents: Record<string, ComponentType> = {
   '/components/statistic': StatisticPage,
   '/components/timeline': TimelinePage,
   '/components/virtual-table': VirtualTablePage,
+  '/components/data-grid': DataGridPage,
   '/components/tree': TreePage,
   '/components/tree-select': TreeSelectPage,
   '/components/collapse': CollapsePage,

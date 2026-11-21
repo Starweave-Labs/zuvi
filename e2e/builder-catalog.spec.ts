@@ -61,7 +61,7 @@ test('完整 ZUVI 组件目录：公开组件全部能配置、保存、画布�
   const publicTypes = [...publicIndex.matchAll(/export \* from '\.\/components\/([^']+)'/g)].map(
     (match) => match[1]
   );
-  expect(publicTypes).toHaveLength(73);
+  expect(publicTypes).toHaveLength(76);
   // 完整页文档编辑器不作为 builder 可配置节点，也不进入离线渲染目录。
   const editorOnlyTypes = new Set(['OfficeEditor', 'OfficeStudio']);
   expect(publicTypes.filter((type) => !defs[type] && !editorOnlyTypes.has(type))).toEqual([]);
@@ -614,7 +614,9 @@ test('交互工作台模板：任意组件分栏、键盘调整、明暗与手�
     })
     .toBe(true);
   await expect(
-    standalone.locator('.zuvi-builder-responsive-splitter').getByText('品牌设计系统', { exact: true })
+    standalone
+      .locator('.zuvi-builder-responsive-splitter')
+      .getByText('品牌设计系统', { exact: true })
   ).toBeVisible();
   await standalone.screenshot({ path: `${audit}/catalog-preview-mobile.png`, fullPage: true });
   await standalone.setViewportSize({ width: 1200, height: 900 });

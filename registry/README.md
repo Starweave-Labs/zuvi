@@ -3,6 +3,9 @@
 `registry.json` 从组件、业务块和公共源码生成，供 CLI 复制与 MCP 查询。
 v0.4.0 包含 73 个组件、16 个业务块，共 89 个条目。`OfficeEditor` 需要 ONLYOFFICE Docs；`OfficeStudio` 使用 ZUVI 与独立编辑内核，无需文档服务器，支持 Word 图片/页眉页脚/查找替换、Excel 工作表与行列增删/合并/冻结/筛选排序/原生图表和 PDF 绘图/文字查找/普通表单。`OfficeStudio` 的 UI 条目包含编辑内核与 ZUVI 依赖；真实文件 codec、PDF worker/字体、打印及历史版本持久化由宿主适配，文档示例中的适配器不随此条目复制。接入与格式限制见 [OfficeStudio 说明](../docs/office-studio.md)。
 
+当前源码新增未发布的 `Globe`、`Chart` 与 `DataGrid` 条目，共 76 个组件、16 个业务块，合计 92 个条目；既有发布版本的 73 / 89 数量保留。`Globe` 点位使用 `latitude` / `longitude`，弧线的 `from` / `to` 引用点位 ID，并提供可访问点位列表与 2D 回退。
+`Chart` 使用原生 SVG 与按需加载 View，无新增图形依赖；13 个类型配合堆叠、横向与气泡 props 提供 17 种形态。metadata 声明分类/径向/散点/热力/瀑布等数据契约，以及十字准线、缩放框选、动画与 CSV 的显式开关。MCP 按 `props.type` 生成对应示例，调用方数据覆盖默认数据，不混入其他类型的数据字段；全部 17 种形态已纳入严格 TSX 消费者编译与断网 HTML 验证。
+
 ```bash
 node registry/scripts/generate.mjs
 node registry/scripts/generate.mjs --check

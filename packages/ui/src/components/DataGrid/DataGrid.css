@@ -1,0 +1,330 @@
+.zuvi-datagrid {
+  --zuvi-datagrid-header-height: 44px;
+  --zuvi-datagrid-row-height: 40px;
+  --zuvi-datagrid-select-width: 44px;
+  --zuvi-datagrid-border-color: var(--zuvi-color-border-subtle);
+  --zuvi-datagrid-header-bg: var(--zuvi-color-bg-subtle);
+  --zuvi-datagrid-sticky-bg: var(--zuvi-color-bg);
+  --zuvi-datagrid-selected-bg: color-mix(
+    in srgb,
+    var(--zuvi-color-primary) 8%,
+    var(--zuvi-color-bg)
+  );
+  --zuvi-datagrid-focused-ring: var(--zuvi-color-focus-ring);
+  position: relative;
+  min-width: 0;
+  width: 100%;
+  color: var(--zuvi-color-fg);
+  font-family: var(--zuvi-font-sans);
+  font-size: var(--zuvi-text-sm);
+  line-height: var(--zuvi-leading-normal);
+}
+
+.zuvi-datagrid-grid {
+  min-width: 0;
+}
+
+.zuvi-datagrid-grid:focus-visible {
+  outline: 2px solid var(--zuvi-datagrid-focused-ring);
+  outline-offset: 2px;
+}
+
+.zuvi-datagrid-viewport {
+  overflow: auto;
+  overscroll-behavior: contain;
+  border: 1px solid var(--zuvi-datagrid-border-color);
+  border-radius: var(--zuvi-radius-md);
+  background: var(--zuvi-color-bg);
+}
+
+.zuvi-datagrid-header-row,
+.zuvi-datagrid-row {
+  display: grid;
+  align-items: stretch;
+  min-width: 100%;
+  width: max-content;
+}
+
+.zuvi-datagrid-header-row {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  height: var(--zuvi-datagrid-header-height);
+  background: var(--zuvi-datagrid-header-bg);
+  box-shadow: 0 1px 0 var(--zuvi-datagrid-border-color);
+}
+
+.zuvi-datagrid-row {
+  background: var(--zuvi-color-bg);
+}
+
+.zuvi-datagrid-row[data-selected='true'] {
+  background: var(--zuvi-datagrid-selected-bg);
+}
+
+.zuvi-datagrid-cell {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  padding: 0 var(--zuvi-space-3);
+  border-bottom: 1px solid var(--zuvi-datagrid-border-color);
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+
+.zuvi-datagrid-cell[data-align='center'] {
+  justify-content: center;
+  text-align: center;
+}
+
+.zuvi-datagrid-cell[data-align='end'] {
+  justify-content: flex-end;
+  text-align: end;
+}
+
+.zuvi-datagrid-cell--sticky {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  flex: 0 0 var(--zuvi-datagrid-select-width);
+  width: var(--zuvi-datagrid-select-width);
+  justify-content: center;
+  background: var(--zuvi-datagrid-sticky-bg);
+  border-inline-end: 1px solid var(--zuvi-datagrid-border-color);
+}
+
+/* Business sticky columns keep their grid-track width; only the offset is fixed. */
+.zuvi-datagrid-cell--sticky-column {
+  flex: 0 0 auto;
+  width: auto;
+  z-index: 1;
+}
+
+.zuvi-datagrid-row[data-selected='true'] .zuvi-datagrid-cell--sticky {
+  background: var(--zuvi-datagrid-selected-bg);
+}
+
+.zuvi-datagrid-header-cell .zuvi-datagrid-cell--sticky,
+.zuvi-datagrid-header-row .zuvi-datagrid-cell--sticky {
+  z-index: 4;
+  background: var(--zuvi-datagrid-header-bg);
+}
+
+.zuvi-datagrid-header-cell {
+  /* Anchors the resize handle and filter panel to the cell itself; without it
+     the sticky header row (positioned) would capture absolute children. */
+  position: relative;
+  background: var(--zuvi-datagrid-header-bg);
+  font-size: var(--zuvi-text-xs);
+  font-weight: var(--zuvi-weight-medium);
+  color: var(--zuvi-color-fg-muted);
+}
+
+/* The open filter panel must escape the cell's clipping. */
+.zuvi-datagrid-header-cell[data-filter-open='true'] {
+  overflow: visible;
+}
+
+.zuvi-datagrid-header-cell .zuvi-datagrid-header-text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.zuvi-datagrid-header-cell [data-part='filter-trigger'] {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  margin-inline-start: var(--zuvi-space-1);
+  border: 0;
+  border-radius: var(--zuvi-radius-sm);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.zuvi-datagrid-header-cell [data-part='filter-trigger']:hover {
+  color: var(--zuvi-color-fg);
+  background: color-mix(in srgb, var(--zuvi-color-primary) 14%, transparent);
+}
+
+.zuvi-datagrid-header-cell [data-part='filter-trigger']:focus-visible {
+  outline: 2px solid var(--zuvi-datagrid-focused-ring);
+  outline-offset: -2px;
+}
+
+.zuvi-datagrid-header-cell [data-part='filter-trigger'][data-filtered],
+.zuvi-datagrid-header-cell [data-part='filter-trigger'][data-open] {
+  color: var(--zuvi-color-primary);
+}
+
+.zuvi-datagrid-filter-panel {
+  position: absolute;
+  top: 100%;
+  inset-inline-start: 0;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  gap: var(--zuvi-space-1);
+  min-width: 180px;
+  padding: var(--zuvi-space-2);
+  border: 1px solid var(--zuvi-color-border);
+  border-radius: var(--zuvi-radius-md);
+  background: var(--zuvi-color-bg-elevated);
+  box-shadow: var(--zuvi-shadow-md);
+  font-size: var(--zuvi-text-sm);
+  color: var(--zuvi-color-fg);
+}
+
+.zuvi-datagrid-filter-option {
+  display: flex;
+  align-items: center;
+  gap: var(--zuvi-space-2);
+  padding: var(--zuvi-space-1) var(--zuvi-space-2);
+  border-radius: var(--zuvi-radius-sm);
+  cursor: pointer;
+}
+
+.zuvi-datagrid-filter-option:hover {
+  background: var(--zuvi-color-bg-subtle);
+}
+
+.zuvi-datagrid-filter-option input[type='checkbox'] {
+  accent-color: var(--zuvi-color-primary);
+}
+
+.zuvi-datagrid-filter-option:focus-within {
+  outline: 2px solid var(--zuvi-datagrid-focused-ring);
+  outline-offset: -2px;
+}
+
+.zuvi-datagrid-header-cell[data-sortable] {
+  padding: 0;
+}
+
+.zuvi-datagrid-header-cell [data-part='sort'] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--zuvi-space-2);
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  padding: 0 var(--zuvi-space-3);
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+.zuvi-datagrid-header-cell [data-part='sort']:hover {
+  color: var(--zuvi-color-fg);
+}
+
+.zuvi-datagrid-header-cell [data-part='sort']:focus-visible {
+  outline: 2px solid var(--zuvi-datagrid-focused-ring);
+  outline-offset: -2px;
+}
+
+.zuvi-datagrid-header-cell [data-part='sort'][data-sorted] {
+  color: var(--zuvi-color-primary);
+}
+
+.zuvi-datagrid-sort-arrow {
+  flex: 0 0 auto;
+  font-size: var(--zuvi-text-xs);
+  color: var(--zuvi-color-fg-muted);
+}
+
+.zuvi-datagrid-header-cell [data-part='sort'][data-sorted] .zuvi-datagrid-sort-arrow {
+  color: var(--zuvi-color-primary);
+}
+
+.zuvi-datagrid-cell input[type='checkbox'] {
+  accent-color: var(--zuvi-color-primary);
+}
+
+.zuvi-datagrid-resize {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 0;
+  width: 8px;
+  cursor: col-resize;
+  background: transparent;
+}
+
+.zuvi-datagrid-resize:hover {
+  background: color-mix(in srgb, var(--zuvi-color-primary) 35%, transparent);
+}
+
+.zuvi-datagrid-resize:focus-visible {
+  outline: 2px solid var(--zuvi-datagrid-focused-ring);
+  outline-offset: -2px;
+}
+
+html[data-z-datagrid-resizing] {
+  cursor: col-resize;
+  user-select: none;
+}
+
+.zuvi-datagrid-cell[data-focused] {
+  box-shadow: inset 0 0 0 1px var(--zuvi-datagrid-focused-ring);
+}
+
+.zuvi-datagrid-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--zuvi-space-3);
+  padding: var(--zuvi-space-4);
+  border: 1px solid var(--zuvi-datagrid-border-color);
+  border-radius: var(--zuvi-radius-md);
+  background: var(--zuvi-color-bg);
+  color: var(--zuvi-color-fg-muted);
+  font-size: var(--zuvi-text-sm);
+  overflow-wrap: anywhere;
+}
+
+.zuvi-datagrid-state button {
+  padding: var(--zuvi-space-1) var(--zuvi-space-3);
+  border: 1px solid var(--zuvi-color-border);
+  border-radius: var(--zuvi-radius-md);
+  background: var(--zuvi-color-bg-elevated);
+  color: var(--zuvi-color-fg);
+  font: inherit;
+  cursor: pointer;
+}
+
+.zuvi-datagrid-state button:focus-visible {
+  outline: 2px solid var(--zuvi-datagrid-focused-ring);
+  outline-offset: 2px;
+}
+
+@media (forced-colors: active) {
+  .zuvi-datagrid-grid:focus-visible,
+  .zuvi-datagrid-header-cell [data-part='sort']:focus-visible,
+  .zuvi-datagrid-header-cell [data-part='filter-trigger']:focus-visible,
+  .zuvi-datagrid-filter-option:focus-within,
+  .zuvi-datagrid-state button:focus-visible {
+    outline-color: Highlight;
+  }
+
+  .zuvi-datagrid-cell--sticky {
+    forced-color-adjust: none;
+    background: Canvas;
+    border-inline-end-color: CanvasText;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zuvi-datagrid-row,
+  .zuvi-datagrid-header-cell [data-part='sort'] {
+    transition: none;
+  }
+}

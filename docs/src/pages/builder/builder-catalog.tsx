@@ -1,8 +1,21 @@
 import * as Z from '@zuvi/react';
 import type { Config, SlotComponent } from '@puckeditor/core';
-import { useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from 'react';
 import { BuilderFormContext, BuilderTabsContext } from './builder-form-context';
-import { catalogDefinitions, type CatalogItem } from './builder-catalog-data';
+import {
+  catalogDefinitions,
+  resolveCatalogChartData,
+  resolveCatalogGlobeData,
+  type CatalogItem,
+} from './builder-catalog-data';
 import { BuilderDataField } from './BuilderDataField';
 import { builderId, safeLink, safeImage, saveDownload } from './builder-model';
 
@@ -391,6 +404,198 @@ function CatalogFormItem({ p, editing }: { p: Props; editing: boolean }) {
     >
       {input}
     </Z.Form.Item>
+  );
+}
+
+function CatalogChart({ p, editing }: { p: Props; editing: boolean }) {
+  const resolved = useMemo(
+    () => resolveCatalogChartData(p.type, p.rowsJson, p.seriesJson, { min: p.min, max: p.max }),
+    [p.type, p.rowsJson, p.seriesJson, p.min, p.max]
+  );
+  const toggle = (key: string, fallback = true) =>
+    typeof p[key] === 'boolean' ? (p[key] as boolean) : fallback;
+  const text = (key: string) => s(p, key).slice(0, 10000).trim();
+  const title = text('title');
+  const label = text('label') || title || '数据图表';
+  const [selectedId, setSelectedId] = useState<string | null>(text('defaultValue') || null);
+  const [lastClick, setLastClick] = useState<Z.ChartDatum | null>(null);
+  const [hiddenSeries, setHiddenSeries] = useState<string[]>(split(text('defaultHiddenSeries')));
+  const dataProps = resolved.props;
+  const props: Z.ChartProps =
+    dataProps.type === 'scatter'
+      ? { ...dataProps, bubble: toggle('bubble', false) }
+      : dataProps.type === 'area'
+        ? { ...dataProps, stack: toggle('stack', false) }
+        : dataProps.type === 'bar'
+          ? {
+              ...dataProps,
+              stack: toggle('stack', false),
+              ...(p.orientation === 'horizontal' ? { orientation: 'horizontal' as const } : {}),
+            }
+          : dataProps;
+  const seriesIds = props.data
+    ? props.data.map((item) => item.id)
+    : (props.series ?? []).map((series) => series.id);
+  const hidden = hiddenSeries.filter((id) => seriesIds.includes(id));
+  const containsDatum = (id: string | null): boolean => {
+    if (!id) return false;
+    if (props.type === 'heatmap')
+      return props.data.some((cell) => `heatmap:${encodeURIComponent(cell.id)}` === id);
+    if (props.type === 'waterfall')
+      return props.data.some((step) => `waterfall:${encodeURIComponent(step.id)}` === id);
+    if (props.data) return props.data.some((slice) => slice.id === id);
+    if (props.type === 'scatter')
+      return props.series.some((series) =>
+        series.points.some(
+          (point) => `${encodeURIComponent(series.id)}:${encodeURIComponent(point.id)}` === id
+        )
+      );
+    return (props.series ?? []).some((series) =>
+      series.values.some(
+        (value, index) => value !== null && `${encodeURIComponent(series.id)}:${index}` === id
+      )
+    );
+  };
+  const selection = containsDatum(selectedId) ? selectedId : null;
+  const labels: Partial<Z.ChartLabels> = {};
+  if (text('dataTableLabel')) labels.dataTable = text('dataTableLabel');
+  if (text('emptyLabel')) labels.empty = text('emptyLabel');
+  return (
+    <section aria-label={label} style={{ minWidth: 0, maxWidth: '100%' }} data-builder-chart>
+      <Z.Chart
+        {...props}
+        aria-label={label}
+        title={title || undefined}
+        description={text('description') || undefined}
+        height={Math.min(800, Math.max(180, n(p, 'height', 300)))}
+        xLabel={text('xLabel') || undefined}
+        yLabel={text('yLabel') || undefined}
+        legend={toggle('legend')}
+        grid={toggle('grid')}
+        tooltip={toggle('tooltip')}
+        showDataTable={toggle('showDataTable')}
+        tooltipMode={p.tooltipMode === 'crosshair' ? 'crosshair' : 'datum'}
+        zoom={toggle('zoom', false)}
+        brush={toggle('brush', false)}
+        animated={toggle('animated', false)}
+        csv={toggle('csv', false)}
+        loading={b(p, 'loading')}
+        error={text('error') || undefined}
+        disabled={editing || b(p, 'disabled')}
+        hiddenSeries={hidden}
+        onHiddenSeriesChange={setHiddenSeries}
+        value={selection}
+        onChange={setSelectedId}
+        onDataClick={setLastClick}
+        labels={labels}
+      />
+      {resolved.issues.length > 0 && (
+        <div role="status" className="zuvi-builder-control-note">
+          <strong>部分图表数据未绘制</strong>
+          <ul>
+            {resolved.issues.map((message, index) => (
+              <li key={index}>{message}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {!editing && (
+        <p className="zuvi-builder-control-note" aria-live="polite" data-builder-chart-selection>
+          当前选择：
+          {selection
+            ? lastClick?.id === selection
+              ? `${lastClick.seriesName} · ${lastClick.label} · ${lastClick.value}`
+              : selection
+            : '未选择'}
+        </p>
+      )}
+    </section>
+  );
+}
+
+function CatalogGlobe({ p, editing }: { p: Props; editing: boolean }) {
+  const { points, arcs, categories, issues } = resolveCatalogGlobeData(
+    p.rowsJson,
+    p.arcsJson,
+    p.categoriesJson
+  );
+  const label = s(p, 'label') || '城市坐标地球';
+  const initialSelection = s(p, 'defaultValue');
+  const [selectedId, setSelectedId] = useState<string | null>(initialSelection || null);
+  const [selectedArcId, setSelectedArcId] = useState<string | null>(
+    s(p, 'defaultArcValue').trim() || null
+  );
+  const selected = points.find((point) => point.id === selectedId);
+  const selectedArc = arcs.find((arc) => arc.id === selectedArcId);
+  const bounded = (key: string, fallback: number, min: number, max: number) =>
+    Math.min(max, Math.max(min, n(p, key, fallback)));
+  return (
+    <section style={{ minWidth: 0, maxWidth: '100%' }} aria-label={label}>
+      <Z.Globe
+        points={points}
+        arcs={arcs}
+        categories={categories}
+        legend={typeof p.legend === 'boolean' ? p.legend : undefined}
+        pointLabels={pick(p, 'pointLabels', ['none', 'selected', 'auto'])}
+        maxLabels={Math.round(bounded('maxLabels', 12, 1, 40))}
+        valueScale={b(p, 'valueScale')}
+        searchable={b(p, 'searchable')}
+        defaultSearchValue={s(p, 'defaultSearchValue').slice(0, 10000)}
+        showArcList={b(p, 'showArcList')}
+        arcValue={selectedArc?.id ?? null}
+        onArcChange={setSelectedArcId}
+        transitionDuration={editing ? 0 : bounded('transitionDuration', 0, 0, 10000)}
+        renderArcDetails={(arc, { from, to }) => (
+          <div
+            data-builder-globe-route-id={arc.id}
+            style={{ display: 'grid', gap: 'var(--zuvi-space-2)', overflowWrap: 'anywhere' }}
+          >
+            <strong>{arc.name ?? `${from.name ?? from.id} → ${to.name ?? to.id}`}</strong>
+            <span>
+              {from.name ?? from.id} → {to.name ?? to.id}
+            </span>
+            {arc.value !== undefined ? <span>{arc.value}</span> : null}
+            <code>{arc.id}</code>
+            <small>
+              端点 id：{arc.from} → {arc.to}
+            </small>
+          </div>
+        )}
+        value={selected?.id ?? null}
+        onChange={setSelectedId}
+        defaultView={{
+          latitude: bounded('latitude', 20, -90, 90),
+          longitude: bounded('longitude', 105, -180, 180),
+          zoom: bounded('zoom', 1, 0.75, 2),
+        }}
+        renderMode={editing ? '2d' : pick(p, 'renderMode', ['2d', 'auto'])}
+        height={bounded('height', 360, 160, 1200)}
+        autoRotate={!editing && b(p, 'autoRotate')}
+        rotationSpeed={bounded('rotationSpeed', 6, -60, 60)}
+        animateArcs={!editing && b(p, 'animateArcs')}
+        interactive={!editing && b(p, 'interactive')}
+        disabled={b(p, 'disabled')}
+        controls={b(p, 'controls')}
+        wheelZoom={!editing && b(p, 'wheelZoom')}
+        showPointList={b(p, 'showPointList')}
+        labels={{ label, points: `${label}城市列表` }}
+      />
+      {issues.length > 0 && (
+        <div role="status" className="zuvi-builder-control-note">
+          <strong>部分地球数据未绘制</strong>
+          <ul>
+            {issues.map((message) => (
+              <li key={message}>{message}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {!editing && (
+        <p className="zuvi-builder-control-note" aria-live="polite">
+          当前选择：{selected?.name ?? selected?.id ?? '未选择'}
+        </p>
+      )}
+    </section>
   );
 }
 
@@ -1098,6 +1303,10 @@ export function CatalogRender({
           pending={s(p, 'pending') || undefined}
         />
       );
+    case 'Chart':
+      return <CatalogChart p={p} editing={editing} />;
+    case 'Globe':
+      return <CatalogGlobe p={p} editing={editing} />;
     case 'Table':
       return <CatalogTable p={p} />;
     case 'VirtualTable':
@@ -1112,6 +1321,23 @@ export function CatalogRender({
           }))}
           height={n(p, 'height', 280)}
           rowHeight={n(p, 'rowHeight', 44)}
+        />
+      );
+    case 'DataGrid':
+      return (
+        <Z.DataGrid
+          rows={(p.rows || []) as Record<string, unknown>[]}
+          columns={list(p, 'columns').map((item) => ({
+            key: item.value,
+            dataIndex: item.value,
+            header: item.label,
+            textValue: item.label,
+            sortable: true,
+            width: item.width,
+          }))}
+          height={n(p, 'height', 320)}
+          rowHeight={n(p, 'rowHeight', 40)}
+          aria-label="DataGrid 数据网格"
         />
       );
     case 'Tree':

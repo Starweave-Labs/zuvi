@@ -14,11 +14,13 @@ interface FloatingPanelProps {
   offsetVariable?: string;
   focusOnOpen?: boolean;
   initialFocusSelector?: string;
+  /** 视口坐标锚点（右键菜单等）；提供时优先于 anchorRef，按零尺寸矩形定位。 */
+  anchorPoint?: { x: number; y: number } | null;
 }
 
 /** 浮层脱离滚动容器，保留源主题并跟随锚点和内容尺寸重新定位。 */
 export function FloatingPanel({ open, anchorRef, children, side = 'bottom', align = 'start',
-  matchWidth = false, offsetVariable, focusOnOpen = false, initialFocusSelector }: FloatingPanelProps) {
+  matchWidth = false, offsetVariable, focusOnOpen = false, initialFocusSelector, anchorPoint }: FloatingPanelProps) {
   const [node, setNode] = React.useState<HTMLDivElement | null>(null);
   const childRef = children.props.ref;
   const ref = React.useCallback((element: HTMLDivElement | null) => {
@@ -29,8 +31,9 @@ export function FloatingPanel({ open, anchorRef, children, side = 'bottom', alig
   const [position, setPosition] = React.useState<React.CSSProperties>({});
 
   React.useLayoutEffect(() => {
-    if (!open || !node || !anchorRef.current) return;
-    const anchor = anchorRef.current;
+    if (!open || !node) return;
+    const anchor = anchorPoint ? null : anchorRef.current;
+    if (!anchor && !anchorPoint) return;
 
     // 浏览器将 rem/calc/嵌套变量解析为 px。公开间距变量只需在本次挂载时
     // 探测一次，避免每次滚动都 append/remove DOM 节点并强制布局。
@@ -46,6 +49,7 @@ export function FloatingPanel({ open, anchorRef, children, side = 'bottom', alig
     }
 
     // 层级只依赖当前 panel 与锚点祖先的 stacking context；挂载时计算一次。
+    // 坐标锚点没有元素祖先，取 panel 自身的 z-index。
     const panelLayer = Number.parseInt(window.getComputedStyle(node).zIndex, 10) || 0;
     let layer = panelLayer;
     for (let parent: HTMLElement | null = anchor; parent; parent = parent.parentElement) {
@@ -54,7 +58,16 @@ export function FloatingPanel({ open, anchorRef, children, side = 'bottom', alig
     }
 
     const update = () => {
-      const rect = anchor.getBoundingClientRect();
+      const rect = anchor
+        ? anchor.getBoundingClientRect()
+        : {
+            top: anchorPoint!.y,
+            left: anchorPoint!.x,
+            right: anchorPoint!.x,
+            bottom: anchorPoint!.y,
+            width: 0,
+            height: 0,
+          };
       const viewport = { width: window.innerWidth, height: window.innerHeight };
       const width = matchWidth ? Math.min(rect.width, Math.max(0, viewport.width - 16)) : undefined;
       if (width !== undefined) node.style.width = `${width}px`;
@@ -74,7 +87,7 @@ export function FloatingPanel({ open, anchorRef, children, side = 'bottom', alig
     update();
     const observer = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(scheduleUpdate) : undefined;
     observer?.observe(node);
-    observer?.observe(anchor);
+    if (anchor) observer?.observe(anchor);
     window.addEventListener('resize', scheduleUpdate);
     window.addEventListener('scroll', scheduleUpdate, true);
     return () => {
@@ -83,7 +96,7 @@ export function FloatingPanel({ open, anchorRef, children, side = 'bottom', alig
       window.removeEventListener('resize', scheduleUpdate);
       window.removeEventListener('scroll', scheduleUpdate, true);
     };
-  }, [open, node, anchorRef, side, align, matchWidth, offsetVariable]);
+  }, [open, node, anchorRef, side, align, matchWidth, offsetVariable, anchorPoint]);
 
   React.useEffect(() => {
     if (open && node && focusOnOpen) {

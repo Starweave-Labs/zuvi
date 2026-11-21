@@ -19,7 +19,11 @@ const sourceRegistry = JSON.parse(
 const cwd = fs.mkdtempSync(path.join(os.tmpdir(), 'zuvi-consumer-'));
 try {
   const ctx = createContext({ cwd, log: () => {} });
-  assert.deepEqual(ctx.registry, sourceRegistry, 'CLI bundled registry is stale; rebuild @zuvi/cli');
+  assert.deepEqual(
+    ctx.registry,
+    sourceRegistry,
+    'CLI bundled registry is stale; rebuild @zuvi/cli'
+  );
   const sourceFiles = new Set([
     ...sourceRegistry.sharedFiles,
     ...sourceRegistry.items.flatMap((item) => [...item.files, item.meta]),
@@ -34,6 +38,21 @@ try {
   const added = await add({ ctx, names: [], all: true });
   assert.deepEqual(added.warnings, []);
   assert.equal(added.items.length, sourceRegistry.items.length);
+  const repeatedGlobe = await add({ ctx, names: ['globe'] });
+  assert.ok(
+    repeatedGlobe.written.every((file) => file.status === 'skipped'),
+    'Globe add is idempotent'
+  );
+  const repeatedChart = await add({ ctx, names: ['chart'] });
+  assert.ok(
+    repeatedChart.written.every((file) => file.status === 'skipped'),
+    'Chart add is idempotent'
+  );
+  const repeatedDataGrid = await add({ ctx, names: ['data-grid'] });
+  assert.ok(
+    repeatedDataGrid.written.every((file) => file.status === 'skipped'),
+    'DataGrid add is idempotent'
+  );
   const compared = await diff({ ctx, names: ctx.allItems().map((item) => item.name) });
   assert.ok(compared.files.every((file) => file.state === 'same'));
 
@@ -69,6 +88,103 @@ try {
       ...officeRuleConsumerLines(),
     ].join('\n')
   );
+  fs.writeFileSync(
+    path.join(examples, 'globe-subpath.tsx'),
+    [
+      "import { Globe as RootGlobe, type GlobeProps } from '@zuvi/react';",
+      "import { Globe, type GlobePoint, type GlobeArc, type GlobeView, type GlobeLabels, type GlobeError, type GlobeStatus, type GlobeRenderMode, type GlobeViewChangeReason } from '@zuvi/react/globe';",
+      "const points: readonly GlobePoint[] = [{ id: 'sample', name: 'Synthetic sample', latitude: 35, longitude: 105 }];",
+      'const arcs: readonly GlobeArc[] = [];',
+      'const view: GlobeView = { latitude: 35, longitude: 105, zoom: 1 };',
+      "const props: GlobeProps = { points, arcs, view, labels: { label: 'Sample locations' } };",
+      'export function GlobeSubpathExample() { return <><RootGlobe {...props} /><Globe {...props} renderMode="2d" /></>; }',
+      'export type GlobePublicTypes = { labels: GlobeLabels; error: GlobeError; status: GlobeStatus; mode: GlobeRenderMode; reason: GlobeViewChangeReason };',
+    ].join('\n')
+  );
+  const chartForms = [
+    ...[
+      'line',
+      'area',
+      'bar',
+      'pie',
+      'donut',
+      'scatter',
+      'radar',
+      'heatmap',
+      'treemap',
+      'funnel',
+      'gauge',
+      'waterfall',
+      'sparkline',
+    ].map((type) => ({ name: type, props: { type } })),
+    { name: 'stacked-area', props: { type: 'area', stack: true } },
+    { name: 'stacked-bar', props: { type: 'bar', stack: true } },
+    { name: 'horizontal-bar', props: { type: 'bar', orientation: 'horizontal' } },
+    { name: 'bubble', props: { type: 'scatter', bubble: true, bubbleDomain: [0, 100] } },
+  ];
+  for (const form of chartForms) {
+    const result = generateCode(catalog, 'Chart', form.props);
+    assert.equal(result.ok, true);
+    fs.writeFileSync(path.join(examples, `chart-${form.name}.tsx`), result.code);
+  }
+  fs.writeFileSync(
+    path.join(examples, 'data-grid-subpath.tsx'),
+    [
+      "import { DataGrid as RootDataGrid, type DataGridProps } from '@zuvi/react';",
+      "import { DataGrid, type DataGridColumn, type DataGridLabels, type DataGridError, type DataGridStatus, type DataGridSortState, type DataGridSelectionReason } from '@zuvi/react/data-grid';",
+      'interface SampleRow { id: string; name: string; amount: number }',
+      "const rows: readonly SampleRow[] = [{ id: 'row-1', name: 'Sample row', amount: 120 }];",
+      "const columns: readonly DataGridColumn<SampleRow>[] = [{ key: 'name', dataIndex: 'name', header: 'Name', textValue: 'Name', sortable: true, width: 200 }];",
+      "const props: DataGridProps<SampleRow> = { columns, rows, height: 320, labels: { selectAll: 'Select all' } };",
+      'const onSort = (sort: DataGridSortState | null) => { void sort; };',
+      'const onSelect = (keys: string[], reason: DataGridSelectionReason) => { void keys; void reason; };',
+      'export function DataGridSubpathExample() {',
+      '  return <><RootDataGrid {...props} /><DataGrid {...props} sort={null} onSortChange={onSort} selectedKeys={[]} onSelectedKeysChange={onSelect} /></>;',
+      '}',
+      'export type DataGridPublicTypes = { labels: DataGridLabels; error: DataGridError; status: DataGridStatus };',
+      '// @ts-expect-error DataGrid requires columns; an empty grid is a contract error, not an empty view',
+      'const invalidEmpty: DataGridProps<SampleRow> = { rows };',
+      'void invalidEmpty;',
+      '// @ts-expect-error DataGridColumn requires header; a headerless column is a contract error',
+      "const invalidColumn: DataGridColumn<SampleRow> = { key: 'broken' };",
+      'void invalidColumn;',
+    ].join('\n')
+  );
+  fs.writeFileSync(
+    path.join(examples, 'chart-subpath.tsx'),
+    [
+      "import { Chart as RootChart, type ChartProps } from '@zuvi/react';",
+      "import { Chart, type ChartBaseProps, type ChartCartesianProps, type ChartRadialProps, type ChartScatterProps, type ChartHeatmapProps, type ChartTreemapProps, type ChartFunnelProps, type ChartGaugeProps, type ChartWaterfallProps, type ChartHeatmapCell, type ChartWaterfallStep, type ChartSeries, type ChartSlice, type ChartScatterPoint, type ChartScatterSeries, type ChartDatum, type ChartLabels, type ChartError, type ChartStatus, type ChartType } from '@zuvi/react/chart';",
+      "import { createRef } from 'react';",
+      "const series: readonly ChartSeries[] = [{ id: 'sample', name: 'Sample', values: [0, null] }];",
+      "const data: readonly ChartSlice[] = [{ id: 'sample', label: 'Sample', value: 0 }];",
+      "const points: readonly ChartScatterPoint[] = [{ id: 'p', x: -1.5, y: 2.25 }];",
+      "const scatterSeries: readonly ChartScatterSeries[] = [{ id: 'sample', name: 'Sample', points }];",
+      'const ref = createRef<HTMLDivElement>();',
+      'const onChange = (id: string | null) => { void id; };',
+      "const base: ChartBaseProps = { ref, value: null, hiddenSeries: [], onChange, onHiddenSeriesChange: (ids) => { void ids; }, labels: { dataTable: 'Sample data' }, onDataClick: (datum, event) => { void datum.value; void event.type; } };",
+      "const cartesian: ChartCartesianProps = { ...base, type: 'line', categories: ['A', 'B'], series };",
+      "const radial: ChartRadialProps = { ...base, type: 'pie', data };",
+      "const scatter: ChartScatterProps = { ...base, type: 'scatter', series: scatterSeries, bubble: true, bubbleDomain: [0, 100] };",
+      "const cells: readonly ChartHeatmapCell[] = [{ id: 'cell', row: 'R', col: 'C', value: -3 }];",
+      "const steps: readonly ChartWaterfallStep[] = [{ id: 'step', label: 'Change', value: -3 }];",
+      "const heatmap: ChartHeatmapProps = { ...base, type: 'heatmap', data: cells };",
+      "const treemap: ChartTreemapProps = { ...base, type: 'treemap', data };",
+      "const funnel: ChartFunnelProps = { ...base, type: 'funnel', data };",
+      "const gauge: ChartGaugeProps = { ...base, type: 'gauge', data, min: -10, max: 10 };",
+      "const waterfall: ChartWaterfallProps = { ...base, type: 'waterfall', data: steps };",
+      'const props: ChartProps = cartesian;',
+      'export function ChartSubpathExample() { return <><RootChart {...props} /><Chart {...radial} /><Chart {...scatter} /><Chart {...heatmap} /><Chart {...treemap} /><Chart {...funnel} /><Chart {...gauge} /><Chart {...waterfall} /></>; }',
+      'export type ChartPublicTypes = { base: ChartBaseProps; datum: ChartDatum; labels: ChartLabels; error: ChartError; status: ChartStatus; type: ChartType };',
+      '// @ts-expect-error radial charts do not accept categories',
+      "const invalidRadial: ChartProps = { type: 'pie', data, categories: ['A'] };",
+      '// @ts-expect-error scatter charts require points, not category-aligned values',
+      "const invalidScatter: ChartProps = { type: 'scatter', series };",
+      '// @ts-expect-error Chart is not an imperative graphics-engine ref',
+      'const invalidRef: ChartBaseProps = { ref: createRef<SVGSVGElement>() };',
+      'void invalidRadial; void invalidScatter; void invalidRef;',
+    ].join('\n')
+  );
   fs.writeFileSync(path.join(cwd, 'src/styles.d.ts'), "declare module '*.css';\n");
   const workspacePackages = new Map([
     ['@zuvi/react', 'ui'],
@@ -81,6 +197,7 @@ try {
     'react-dom',
     '@types/react',
     '@types/react-dom',
+    '@types/three',
     '@zuvi/react',
     ...added.dependencies,
   ]);
@@ -123,7 +240,7 @@ try {
     { stdio: 'inherit' }
   );
   console.log(
-    `Consumer passed: ${added.items.length} registry items, ${added.written.length} files, ${catalog.size} MCP examples and Office subpaths; bundled sources current, diff unchanged`
+    `Consumer passed: ${added.items.length} registry items, ${added.written.length} files, ${catalog.size} MCP examples plus seventeen Chart forms and Office/Globe/Chart/DataGrid subpaths; bundled sources current, Globe/Chart/DataGrid add idempotent, diff unchanged`
   );
 } finally {
   fs.rmSync(cwd, { recursive: true, force: true });

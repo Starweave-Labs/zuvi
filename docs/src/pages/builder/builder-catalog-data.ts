@@ -1,3 +1,15 @@
+import type { GlobeArc, GlobeCategory, GlobePoint } from '@zuvi/react';
+import type {
+  ChartProps,
+  ChartHeatmapCell,
+  ChartScatterPoint,
+  ChartScatterSeries,
+  ChartSeries,
+  ChartSlice,
+  ChartType,
+  ChartWaterfallStep,
+} from '@zuvi/react';
+
 /** Serializable component contracts, shared by the editor, importer and HTML runtime. */
 export interface CatalogField {
   kind: 'text' | 'textarea' | 'number' | 'boolean' | 'select' | 'items' | 'rows' | 'slot';
@@ -407,6 +419,152 @@ export const catalogDefinitions: Record<string, CatalogDefinition> = {
     mode: choice('排列模式', ['left', 'right', 'alternate']),
     pending: text('待完成提示'),
   }),
+  Chart: entry(
+    'Chart 数据图表',
+    'content',
+    '13 种类型、17 种形式。分类 / 雷达 / 迷你图用 category + 数值列和 valueKey；切片 / 仪表 / 瀑布用 id、label、value；热力用 id、row、col、value；散点 / 气泡用 id、seriesId、x、y、可选 value。所有数据均为扁平行，示例数值不代表实际业务。',
+    {
+      type: choice('图表类型', [
+        'line',
+        'area',
+        'bar',
+        'pie',
+        'donut',
+        'scatter',
+        'radar',
+        'heatmap',
+        'treemap',
+        'funnel',
+        'gauge',
+        'waterfall',
+        'sparkline',
+      ]),
+      title: text('标题（可选）', '半年趋势（示例）'),
+      description: text('说明（可选）', '合成示例数据，不代表实际业务。'),
+      label: text('可访问名称（可选）', '数据图表示例'),
+      rowsJson: {
+        kind: 'rows',
+        label: '行数据（按图表类型配置）',
+        value: [
+          { category: '1 月', design: 28, development: 20 },
+          { category: '2 月', design: 36, development: 28 },
+          { category: '3 月', design: 32, development: 38 },
+          { category: '4 月', design: 48, development: 34 },
+          { category: '5 月', design: 54, development: 46 },
+          { category: '6 月', design: 64, development: 52 },
+        ],
+      },
+      seriesJson: {
+        kind: 'rows',
+        label: '系列（id、name、valueKey、color；散点无需 valueKey）',
+        value: [
+          {
+            id: 'design',
+            name: '设计项目',
+            valueKey: 'design',
+            color: 'var(--zuvi-color-primary)',
+          },
+          {
+            id: 'development',
+            name: '研发项目',
+            valueKey: 'development',
+            color: 'var(--zuvi-color-success)',
+          },
+        ],
+      },
+      height: number('绘图区高度 px', 300, 180, 800),
+      xLabel: text('横轴名称（可选）', '月份'),
+      yLabel: text('纵轴名称（可选）', '项目数'),
+      legend: flag('显示图例', true),
+      grid: flag('显示网格', true),
+      tooltip: flag('显示数据提示', true),
+      showDataTable: flag('显示数据表', true),
+      stack: flag('堆叠系列（仅面积 / 柱状）'),
+      orientation: choice('柱状方向', ['vertical', 'horizontal'], 'vertical'),
+      bubble: flag('按可选 value 显示气泡（仅散点）'),
+      min: { kind: 'number', label: '仪表最小值（仅 gauge）', value: 0 },
+      max: { kind: 'number', label: '仪表最大值（仅 gauge）', value: 100 },
+      tooltipMode: choice('数据提示模式', ['datum', 'crosshair'], 'datum'),
+      zoom: flag('启用缩放（分类 / 散点）'),
+      brush: flag('启用框选缩放（分类 / 散点）'),
+      animated: flag('启用过渡动画（尊重减少动态效果设置）'),
+      csv: flag('下载完整原始 CSV'),
+      loading: flag('正在加载'),
+      error: text('外部错误说明（可选）'),
+      disabled,
+      defaultValue: text('默认选中数据 id（可选）'),
+      defaultHiddenSeries: text('初始隐藏的系列 / 切片 id（逗号分隔）'),
+      dataTableLabel: text('数据表展开文案（可选）'),
+      emptyLabel: text('空数据文案（可选）'),
+    }
+  ),
+  Globe: entry(
+    'Globe 3D 地球',
+    'content',
+    '城市经纬度与示例连接；编辑画布用二维，预览和离线导出使用配置的模式。',
+    {
+      label: text('地球名称', '全球城市网络'),
+      rowsJson: {
+        kind: 'rows',
+        label: '点位（id、lat、lng）',
+        value: [
+          { id: 'shanghai', name: '上海', lat: 31.2304, lng: 121.4737, value: '城市中心' },
+          { id: 'tokyo', name: '东京', lat: 35.6762, lng: 139.6503, value: '城市中心' },
+          { id: 'singapore', name: '新加坡', lat: 1.3521, lng: 103.8198, value: '城市中心' },
+          { id: 'london', name: '伦敦', lat: 51.5074, lng: -0.1278, value: '城市中心' },
+        ],
+      },
+      arcsJson: {
+        kind: 'rows',
+        label: '连接（id、from、to）',
+        value: [
+          { id: 'shanghai-tokyo', from: 'shanghai', to: 'tokyo', altitude: 0.12, animated: true },
+          {
+            id: 'shanghai-singapore',
+            from: 'shanghai',
+            to: 'singapore',
+            altitude: 0.18,
+            animated: true,
+          },
+          {
+            id: 'singapore-london',
+            from: 'singapore',
+            to: 'london',
+            altitude: 0.3,
+            animated: true,
+          },
+        ],
+      },
+      categoriesJson: {
+        kind: 'rows',
+        label: '分类（id、name、color）',
+        value: [],
+      },
+      legend: flag('显示分类图例（配置分类后生效）', true),
+      pointLabels: choice('点位标签', ['none', 'selected', 'auto'], 'none'),
+      maxLabels: number('自动标签数量上限', 12, 1, 40),
+      valueScale: flag('按数字 value 映射点位面积'),
+      searchable: flag('允许列表搜索（不筛选地图）'),
+      defaultSearchValue: text('初始列表搜索'),
+      showArcList: flag('显示路径列表'),
+      defaultArcValue: text('默认选中路径 id'),
+      transitionDuration: number('聚焦过渡时间 ms（减少动态效果时立即完成）', 0, 0, 10000),
+      defaultValue: text('默认选中点位 id', 'shanghai'),
+      latitude: number('初始视角纬度', 20, -90, 90),
+      longitude: number('初始视角经度', 105, -180, 180),
+      zoom: number('初始缩放', 1, 0.75, 2),
+      renderMode: choice('渲染模式', ['2d', 'auto'], '2d'),
+      height: number('地球高度 px', 360, 160, 1200),
+      autoRotate: flag('自动旋转', true),
+      rotationSpeed: number('转速 °/s', 6, -60, 60),
+      animateArcs: flag('WebGL 连线动画（二维保持静态）', true),
+      interactive: flag('允许交互', true),
+      controls: flag('显示控件', true),
+      wheelZoom: flag('滚轮缩放（默认保留页面滚动）'),
+      showPointList: flag('显示城市列表', true),
+      disabled,
+    }
+  ),
   Table: entry('Table 表格', 'content', '编辑列定义和真实行数据，可搜索与排序。', {
     caption: text('表格标题', '项目列表'),
     columns: items('列（value 对应数据字段）', [
@@ -442,6 +600,23 @@ export const catalogDefinitions: Record<string, CatalogDefinition> = {
     },
     height: number('可视高度', 280, 120, 1200),
     rowHeight: number('行高', 44, 24, 100),
+  }),
+  DataGrid: entry('DataGrid 数据网格', 'content', '可排序、可选择的大数据量虚拟网格。', {
+    columns: items('列定义', [
+      { value: 'name', label: '项目', width: 200 },
+      { value: 'status', label: '状态', width: 120 },
+    ]),
+    rows: {
+      kind: 'rows',
+      label: '行数据 JSON',
+      value: Array.from({ length: 30 }, (_, index) => ({
+        id: `row-${index}`,
+        name: `项目 ${index + 1}`,
+        status: index % 2 ? '进行中' : '已完成',
+      })),
+    },
+    height: number('可视高度', 320, 120, 1200),
+    rowHeight: number('行高', 40, 24, 100),
   }),
   Tree: entry('Tree 树形控件', 'content', '可展开和勾选的层级数据。', {
     items: items('树形数据', tree),
@@ -656,4 +831,440 @@ export function validateCatalogJson(value: unknown, kind: 'items' | 'rows'): unk
     });
   };
   return validate(value, 0);
+}
+
+export interface CatalogChartData {
+  props: ChartProps;
+  issues: string[];
+}
+
+/** Map only supported flat scalar fields into a fresh, discriminated Chart data model. */
+export function resolveCatalogChartData(
+  typeInput: unknown,
+  rowsInput: unknown,
+  seriesInput: unknown,
+  options: { min?: unknown; max?: unknown } = {}
+): CatalogChartData {
+  const issues: string[] = [];
+  let omittedIssues = 0;
+  const issue = (message: string) => {
+    if (issues.length < 12) issues.push(message);
+    else omittedIssues++;
+  };
+  const finish = (props: ChartProps): CatalogChartData => {
+    if (omittedIssues)
+      issues.push(`另有 ${omittedIssues} 项同类数据问题，请检查行数据和系列定义。`);
+    return { props, issues };
+  };
+  const types: readonly ChartType[] = [
+    'line',
+    'area',
+    'bar',
+    'pie',
+    'donut',
+    'scatter',
+    'radar',
+    'heatmap',
+    'treemap',
+    'funnel',
+    'gauge',
+    'waterfall',
+    'sparkline',
+  ];
+  if (typeInput !== undefined && !types.includes(typeInput as ChartType)) {
+    issue(`图表类型无效：请使用 ${types.join('、')}。`);
+    return finish({ type: 'line', categories: [], series: [] });
+  }
+  const type = (typeInput ?? 'line') as ChartType;
+  const rows = (input: unknown, label: string): unknown[] => {
+    if (!Array.isArray(input)) {
+      issue(`${label}应为扁平对象数组，当前数据未绘制。`);
+      return [];
+    }
+    if (input.length > 2000) issue(`${label}超过 2000 行，仅处理前 2000 行。`);
+    return input.slice(0, 2000);
+  };
+  const record = (input: unknown): Record<string, unknown> | null => {
+    if (!input || typeof input !== 'object' || Array.isArray(input)) return null;
+    const prototype = Object.getPrototypeOf(input);
+    return prototype === Object.prototype || prototype === null
+      ? (input as Record<string, unknown>)
+      : null;
+  };
+  const own = (row: Record<string, unknown>, key: string): unknown =>
+    Object.getOwnPropertyDescriptor(row, key)?.value;
+  const readable = (value: unknown, max: number): value is string =>
+    typeof value === 'string' &&
+    value.length <= max &&
+    ![...value].some(
+      (character) => character.charCodeAt(0) < 32 || character.charCodeAt(0) === 127
+    ) &&
+    // encodeURIComponent is part of the public datum ID contract; reject lone surrogates.
+    !/[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/u.test(value);
+  const id = (row: Record<string, unknown>, key: string): string | null => {
+    const value = own(row, key);
+    return readable(value, 150) && value.trim() ? value.trim() : null;
+  };
+  const name = (row: Record<string, unknown>, key: string): string | null => {
+    const value = own(row, key);
+    return readable(value, 10000) && value.trim() ? value.trim() : null;
+  };
+  const finite = (value: unknown): value is number =>
+    typeof value === 'number' && Number.isFinite(value);
+  const color = (row: Record<string, unknown>, context: string): string | undefined => {
+    const value = own(row, 'color');
+    if (value === undefined || value === '') return undefined;
+    if (
+      readable(value, 240) &&
+      value.trim() &&
+      !/[;{}<>\\]|\/\*|(?:url|image-set|expression)\s*\(|@import|javascript:/i.test(value)
+    )
+      return value.trim();
+    issue(`${context}颜色无效，改用默认令牌颜色。`);
+    return undefined;
+  };
+  const inputRows = rows(rowsInput, '行数据');
+
+  if (type === 'heatmap') {
+    const data: ChartHeatmapCell[] = [];
+    const ids = new Set<string>();
+    const coordinates = new Map<string, Set<string>>();
+    for (const [index, input] of inputRows.entries()) {
+      const row = record(input);
+      const cellId = row ? id(row, 'id') : null;
+      const rowName = row ? name(row, 'row') : null;
+      const colName = row ? name(row, 'col') : null;
+      const value = row ? own(row, 'value') : undefined;
+      if (
+        !row ||
+        !cellId ||
+        ids.has(cellId) ||
+        !rowName ||
+        !colName ||
+        coordinates.get(rowName)?.has(colName) ||
+        !finite(value)
+      ) {
+        issue(
+          `热力第 ${index + 1} 行已忽略：需要唯一 id、不重复的 row / col 坐标和有限数值 value（可为负值）。`
+        );
+        continue;
+      }
+      ids.add(cellId);
+      const columns = coordinates.get(rowName) ?? new Set<string>();
+      columns.add(colName);
+      coordinates.set(rowName, columns);
+      const cell: ChartHeatmapCell = { id: cellId, row: rowName, col: colName, value };
+      const cellColor = color(row, `热力第 ${index + 1} 行`);
+      if (cellColor) cell.color = cellColor;
+      data.push(cell);
+    }
+    return finish({ type, data });
+  }
+
+  if (
+    type === 'pie' ||
+    type === 'donut' ||
+    type === 'treemap' ||
+    type === 'funnel' ||
+    type === 'gauge' ||
+    type === 'waterfall'
+  ) {
+    const data: ChartSlice[] | ChartWaterfallStep[] = [];
+    const signed = type === 'waterfall' || type === 'gauge';
+    const ids = new Set<string>();
+    for (const [index, input] of inputRows.entries()) {
+      const row = record(input);
+      const sliceId = row ? id(row, 'id') : null;
+      const label = row ? name(row, 'label') : null;
+      const value = row ? own(row, 'value') : undefined;
+      if (
+        !row ||
+        !sliceId ||
+        ids.has(sliceId) ||
+        !label ||
+        !finite(value) ||
+        (!signed && value < 0)
+      ) {
+        issue(
+          `切片第 ${index + 1} 行已忽略：需要唯一 id、非空 label 和${signed ? '有限数值 value（可为负值）' : '非负有限数值 value'}。`
+        );
+        continue;
+      }
+      ids.add(sliceId);
+      const slice: ChartSlice = { id: sliceId, label, value };
+      const sliceColor = color(row, `切片第 ${index + 1} 行`);
+      if (sliceColor) slice.color = sliceColor;
+      data.push(slice);
+    }
+    if (type === 'gauge') {
+      const minInput = Object.getOwnPropertyDescriptor(options, 'min')?.value;
+      const maxInput = Object.getOwnPropertyDescriptor(options, 'max')?.value;
+      const min = minInput === undefined ? 0 : minInput;
+      const max = maxInput === undefined ? Math.max(100, data[0]?.value ?? 0) : maxInput;
+      const validBounds = finite(min) && finite(max) && min < max;
+      const singleValue = inputRows.length === 1 && data.length === 1;
+      if (!validBounds) issue('仪表 min / max 需要有限数值且 min < max；当前仪表未绘制。');
+      if (!singleValue) issue('仪表需要且仅接受一行有限数值；当前仪表未绘制。');
+      if (validBounds && singleValue && (data[0].value < min || data[0].value > max))
+        issue('仪表 value 必须位于 min / max 范围内；当前仪表未绘制。');
+      return finish({
+        type,
+        data:
+          validBounds && singleValue && data[0].value >= min && data[0].value <= max ? data : [],
+        ...(validBounds ? { min, max } : {}),
+      });
+    }
+    return finish({ type, data });
+  }
+
+  const definitions = rows(seriesInput, '系列定义');
+  const seriesIds = new Set<string>();
+  if (type === 'scatter') {
+    const series: ChartScatterSeries[] = [];
+    const pointsBySeries = new Map<string, ChartScatterPoint[]>();
+    const pointIds = new Map<string, Set<string>>();
+    for (const [index, input] of definitions.entries()) {
+      const row = record(input);
+      const seriesId = row ? id(row, 'id') : null;
+      const seriesName = row ? name(row, 'name') : null;
+      if (!row || !seriesId || seriesIds.has(seriesId) || !seriesName) {
+        issue(`系列第 ${index + 1} 行已忽略：需要唯一 id 和非空 name。`);
+        continue;
+      }
+      seriesIds.add(seriesId);
+      const points: ChartScatterPoint[] = [];
+      const definition: ChartScatterSeries = { id: seriesId, name: seriesName, points };
+      const seriesColor = color(row, `系列第 ${index + 1} 行`);
+      if (seriesColor) definition.color = seriesColor;
+      series.push(definition);
+      pointsBySeries.set(seriesId, points);
+      pointIds.set(seriesId, new Set());
+    }
+    for (const [index, input] of inputRows.entries()) {
+      const row = record(input);
+      const pointId = row ? id(row, 'id') : null;
+      const seriesId = row ? id(row, 'seriesId') : null;
+      const x = row ? own(row, 'x') : undefined;
+      const y = row ? own(row, 'y') : undefined;
+      const value = row ? own(row, 'value') : undefined;
+      if (
+        !row ||
+        !pointId ||
+        !seriesId ||
+        !pointsBySeries.has(seriesId) ||
+        pointIds.get(seriesId)!.has(pointId) ||
+        !finite(x) ||
+        !finite(y) ||
+        (value !== undefined && (!finite(value) || value < 0))
+      ) {
+        issue(
+          `散点第 ${index + 1} 行已忽略：需要系列内唯一 id、有效 seriesId 和有限数值 x、y；可选 value 必须为非负有限数值。`
+        );
+        continue;
+      }
+      pointIds.get(seriesId)!.add(pointId);
+      const point: ChartScatterPoint = { id: pointId, x, y };
+      if (value !== undefined) point.value = value as number;
+      const label = own(row, 'label');
+      if (readable(label, 10000)) point.label = label;
+      else if (label !== undefined) issue(`散点第 ${index + 1} 行 label 无效，改用点位 id。`);
+      pointsBySeries.get(seriesId)!.push(point);
+    }
+    return finish({ type, series });
+  }
+
+  const series: ChartSeries[] = [];
+  const keys: string[] = [];
+  const values: (number | null)[][] = [];
+  for (const [index, input] of definitions.entries()) {
+    const row = record(input);
+    const seriesId = row ? id(row, 'id') : null;
+    const seriesName = row ? name(row, 'name') : null;
+    const valueKey = row ? id(row, 'valueKey') : null;
+    if (
+      !row ||
+      !seriesId ||
+      seriesIds.has(seriesId) ||
+      !seriesName ||
+      !valueKey ||
+      !/^[\w\u4e00-\u9fff-]{1,80}$/.test(valueKey) ||
+      ['__proto__', 'prototype', 'constructor'].includes(valueKey)
+    ) {
+      issue(`系列第 ${index + 1} 行已忽略：需要唯一 id、非空 name 和有效的数值列 valueKey。`);
+      continue;
+    }
+    seriesIds.add(seriesId);
+    const seriesValues: (number | null)[] = [];
+    const definition: ChartSeries = { id: seriesId, name: seriesName, values: seriesValues };
+    const seriesColor = color(row, `系列第 ${index + 1} 行`);
+    if (seriesColor) definition.color = seriesColor;
+    keys.push(valueKey);
+    values.push(seriesValues);
+    series.push(definition);
+  }
+  const categories: string[] = [];
+  for (const [index, input] of inputRows.entries()) {
+    const row = record(input);
+    const category = row ? name(row, 'category') : null;
+    if (!row || !category) {
+      issue(`行数据第 ${index + 1} 行已忽略：需要非空文字 category。`);
+      continue;
+    }
+    if (
+      type === 'radar' &&
+      keys.some((key) => !finite(own(row, key)) || (own(row, key) as number) < 0)
+    ) {
+      issue(`雷达第 ${index + 1} 行已忽略：所有系列需要非负有限数值，不接受 null 缺口。`);
+      continue;
+    }
+    categories.push(category);
+    for (const [seriesIndex, valueKey] of keys.entries()) {
+      const value = own(row, valueKey);
+      values[seriesIndex].push(finite(value) ? value : null);
+      if (value !== null && !finite(value))
+        issue(`行数据第 ${index + 1} 行的 ${valueKey} 不是有限数值，按缺口显示（不转换为 0）。`);
+    }
+  }
+  if (type === 'radar' && categories.length < 3)
+    issue('雷达需要至少三个有效分类轴；当前雷达未绘制。');
+  return finish({ type, categories, series });
+}
+
+/** Convert flat serializable rows without passing unchecked objects to the renderer. */
+export function resolveCatalogGlobeData(
+  pointsInput: unknown,
+  arcsInput: unknown,
+  categoriesInput: unknown = []
+): { points: GlobePoint[]; arcs: GlobeArc[]; categories: GlobeCategory[]; issues: string[] } {
+  const issues: string[] = [];
+  let omittedIssues = 0;
+  const issue = (message: string) => {
+    if (issues.length < 12) issues.push(message);
+    else omittedIssues++;
+  };
+  const rows = (input: unknown, label: string): unknown[] => {
+    if (!Array.isArray(input)) {
+      issue(`${label}应为扁平对象数组，当前数据未绘制。`);
+      return [];
+    }
+    if (input.length > 2000) issue(`${label}超过 2000 行，仅处理前 2000 行。`);
+    return input.slice(0, 2000);
+  };
+  const record = (input: unknown): Record<string, unknown> | null =>
+    input && typeof input === 'object' && !Array.isArray(input)
+      ? (input as Record<string, unknown>)
+      : null;
+  const id = (row: Record<string, unknown>, key: string) =>
+    typeof row[key] === 'string' && row[key].trim() && row[key].length <= 150
+      ? row[key].trim()
+      : null;
+  const finite = (value: unknown): value is number =>
+    typeof value === 'number' && Number.isFinite(value);
+  const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
+  const color = (value: unknown) =>
+    typeof value === 'string' &&
+    value.trim() &&
+    value.length <= 240 &&
+    ![...value].some(
+      (character) => character.charCodeAt(0) < 32 || character.charCodeAt(0) === 127
+    ) &&
+    !/[;{}<>]|(?:url|image-set|expression)\s*\(|@import|javascript:/i.test(value)
+      ? value.trim()
+      : undefined;
+  const categories: GlobeCategory[] = [];
+  const categoryIds = new Set<string>();
+  for (const [index, input] of rows(categoriesInput, '分类').entries()) {
+    const row = record(input);
+    const categoryId = row ? id(row, 'id') : null;
+    if (
+      !row ||
+      !categoryId ||
+      categoryIds.has(categoryId) ||
+      typeof row.name !== 'string' ||
+      !row.name.trim() ||
+      row.name.length > 10000
+    ) {
+      issue(`分类第 ${index + 1} 行已忽略：需要唯一 id 和非空文字 name。`);
+      continue;
+    }
+    categoryIds.add(categoryId);
+    const category: GlobeCategory = { id: categoryId, name: row.name.trim() };
+    const categoryColor = color(row.color);
+    if (categoryColor) category.color = categoryColor;
+    else if (row.color !== undefined && row.color !== '')
+      issue(`分类第 ${index + 1} 行颜色无效，改用默认令牌颜色。`);
+    categories.push(category);
+  }
+  const points: GlobePoint[] = [];
+  const pointIds = new Set<string>();
+  for (const [index, input] of rows(pointsInput, '点位').entries()) {
+    const row = record(input);
+    const pointId = row ? id(row, 'id') : null;
+    if (
+      !row ||
+      !pointId ||
+      !finite(row.lat) ||
+      row.lat < -90 ||
+      row.lat > 90 ||
+      !finite(row.lng) ||
+      row.lng < -180 ||
+      row.lng > 180 ||
+      pointIds.has(pointId)
+    ) {
+      issue(`点位第 ${index + 1} 行已忽略：需要唯一 id、数值 lat（−90…90）和 lng（−180…180）。`);
+      continue;
+    }
+    pointIds.add(pointId);
+    const point: GlobePoint = { id: pointId, latitude: row.lat, longitude: row.lng };
+    if (typeof row.name === 'string') point.name = row.name.slice(0, 10000);
+    if (typeof row.value === 'string') point.value = row.value.slice(0, 10000);
+    else if (finite(row.value)) point.value = row.value;
+    const pointCategory = id(row, 'category');
+    if (pointCategory) point.category = pointCategory;
+    else if (row.category !== undefined && row.category !== '' && row.category !== null)
+      issue(`点位第 ${index + 1} 行分类无效，按未分类点位显示。`);
+    if (finite(row.size)) point.size = clamp(row.size, 0.008, 0.06);
+    const pointColor = color(row.color);
+    if (pointColor) point.color = pointColor;
+    else if (row.color !== undefined && row.color !== '')
+      issue(`点位第 ${index + 1} 行颜色无效，改用默认令牌颜色。`);
+    points.push(point);
+  }
+  const arcs: GlobeArc[] = [];
+  const arcIds = new Set<string>();
+  for (const [index, input] of rows(arcsInput, '连接').entries()) {
+    const row = record(input);
+    const arcId = row ? id(row, 'id') : null;
+    const from = row ? id(row, 'from') : null;
+    const to = row ? id(row, 'to') : null;
+    if (
+      !row ||
+      !arcId ||
+      arcIds.has(arcId) ||
+      !from ||
+      !to ||
+      from === to ||
+      !pointIds.has(from) ||
+      !pointIds.has(to)
+    ) {
+      issue(`连接第 ${index + 1} 行已忽略：需要唯一 id，from / to 引用两个不同的有效点位 id。`);
+      continue;
+    }
+    arcIds.add(arcId);
+    const arc: GlobeArc = { id: arcId, from, to };
+    if (typeof row.name === 'string') arc.name = row.name.slice(0, 10000);
+    if (typeof row.value === 'string') arc.value = row.value.slice(0, 10000);
+    else if (finite(row.value)) arc.value = row.value;
+    if (finite(row.width)) arc.width = clamp(row.width, 0.001, 0.02);
+    if (finite(row.altitude)) arc.altitude = clamp(row.altitude, 0.02, 0.8);
+    if (typeof row.animated === 'boolean') arc.animated = row.animated;
+    const arcColor = color(row.color);
+    if (arcColor) arc.color = arcColor;
+    else if (row.color !== undefined && row.color !== '')
+      issue(`连接第 ${index + 1} 行颜色无效，改用默认令牌颜色。`);
+    arcs.push(arc);
+  }
+  if (omittedIssues)
+    issues.push(`另有 ${omittedIssues} 项同类数据问题，请检查点位、连接与分类字段。`);
+  return { points, arcs, categories, issues };
 }

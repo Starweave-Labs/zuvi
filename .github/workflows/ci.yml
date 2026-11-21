@@ -29,5 +29,5 @@ jobs:
         run: node scripts/check-distribution.mjs
       - name: Compile installed sources and MCP examples
         run: node scripts/check-consumer.mjs
-      - name: Check complete entry bundle budget (JS gzip < 120 KiB)
+      - name: Check complete entry bundle budget (JS gzip < 122 KiB)
         run: node scripts/check-bundle-size.mjs

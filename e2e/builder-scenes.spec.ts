@@ -247,8 +247,9 @@ test('直接操作：双击、退格与失焦提交、鼠标调整尺寸，以�
   const canvas = page.frameLocator('#preview-frame');
   await page.getByRole('button', { name: '插入标题', exact: true }).click();
   const heading = canvas.getByRole('heading', { name: '为你的想法，搭一张页面。', exact: true });
-  const headingBox = (await heading.boundingBox())!;
-  await page.mouse.dblclick(headingBox.x + 50, headingBox.y + headingBox.height / 2);
+  // The builder's wrapper owns pointer events; wait for its selected-node tools and live layout.
+  await expect(page.getByRole('button', { name: '编辑文字', exact: true })).toBeVisible();
+  await canvas.locator('[data-builder-component="Heading"]').filter({ has: heading }).dblclick();
   const inline = canvas.locator('[data-builder-inline-edit]');
   await expect(inline).toBeVisible();
   await inline.fill('实际输入测试');

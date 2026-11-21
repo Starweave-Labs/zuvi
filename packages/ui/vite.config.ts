@@ -19,8 +19,9 @@ export default defineConfig({
           // remove unused components while the complete entry stays in budget.
           const result = await minify(code, {
             module: true,
-            // Compact output without further expression rewrites.
-            compress: false,
+            // Standard, side-effect-safe reductions; keep getters and function
+            // boundaries intact, and preserve PURE annotations for consumers.
+            compress: { passes: 2, inline: false, pure_getters: false, directives: false },
             format: {
               comments: false,
               preserve_annotations: true,

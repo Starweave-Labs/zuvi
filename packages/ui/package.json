@@ -338,6 +338,21 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
+    "./globe": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./chart": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./data-grid": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
     "./config": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
@@ -366,7 +381,8 @@
     "@zuvi/i18n": "workspace:*",
     "@zuvi/icons": "workspace:*",
     "@zuvi/tokens": "workspace:*",
-    "fast-formula-parser": "^1.0.19"
+    "fast-formula-parser": "^1.0.19",
+    "three": "^0.187.0"
   },
   "peerDependencies": {
     "react": "^19.0.0",
@@ -378,6 +394,7 @@
     "@testing-library/user-event": "^14.5.2",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "@types/three": "^0.187.0",
     "@vitejs/plugin-react": "^4.3.4",
     "axe-core": "^4.14.0",
     "jsdom": "^25.0.1",

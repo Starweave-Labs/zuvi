@@ -80,6 +80,7 @@ try {
     'react-dom': '19.0.0',
     '@types/react': '^19.0.0',
     '@types/react-dom': '^19.0.0',
+    '@types/three': '^0.187.0',
   });
   fs.writeFileSync(
     path.join(cwd, 'package.json'),
@@ -141,12 +142,20 @@ try {
       "import { createRequire } from 'node:module';",
       "import React from 'react';",
       "import { renderToStaticMarkup } from 'react-dom/server';",
-      "import { Button, OfficeEditor, OfficeStudio, createOfficeStudioDocument } from '@zuvi/react';",
+      "import { Button, Chart, Globe, OfficeEditor, OfficeStudio, createOfficeStudioDocument } from '@zuvi/react';",
       'const require = createRequire(import.meta.url);',
       "for (const name of ['tokens', 'icons', 'i18n', 'react', 'blocks']) assert.ok(Object.keys(await import('@zuvi/' + name)).length);",
       "assert.equal(typeof require('@zuvi/react').Button, 'function');",
       "assert.equal(typeof OfficeEditor, 'function');",
       "assert.equal(typeof OfficeStudio, 'function');",
+      "assert.equal(typeof Chart, 'function');",
+      "assert.equal((await import('@zuvi/react/chart')).Chart, Chart);",
+      "assert.equal(require('@zuvi/react/chart').Chart, require('@zuvi/react').Chart);",
+      "assert.match(renderToStaticMarkup(React.createElement(Chart, { 'aria-label': 'Installed chart', categories: ['Sample'], series: [{ id: 'sample', name: 'Sample', values: [0] }] })), /Installed chart/);",
+      "assert.equal(typeof Globe, 'function');",
+      "assert.equal((await import('@zuvi/react/globe')).Globe, Globe);",
+      "assert.equal(require('@zuvi/react/globe').Globe, require('@zuvi/react').Globe);",
+      "assert.match(renderToStaticMarkup(React.createElement(Globe, { 'aria-label': 'Installed globe', renderMode: '2d' })), /Installed globe/);",
       "assert.equal(require('@zuvi/react/office-editor').OfficeEditor, require('@zuvi/react').OfficeEditor);",
       "assert.equal(require('@zuvi/react/office-studio').OfficeStudio, require('@zuvi/react').OfficeStudio);",
       "assert.equal(createOfficeStudioDocument('word').kind, 'word');",
@@ -162,7 +171,15 @@ try {
     [path.join(cwd, 'node_modules/@zuvi/cli/dist/index.js'), 'list'],
     { cwd, encoding: 'utf8' }
   );
-  for (const name of ['button', 'splitter', 'office-editor', 'office-studio', 'kanban'])
+  for (const name of [
+    'button',
+    'splitter',
+    'chart',
+    'globe',
+    'office-editor',
+    'office-studio',
+    'kanban',
+  ])
     assert.ok(cli.includes(name), 'Installed CLI finds ' + name);
   const requests = [
     { jsonrpc: '2.0', id: 1, method: 'initialize' },
@@ -185,7 +202,8 @@ try {
   fs.writeFileSync(
     path.join(cwd, 'consumer.tsx'),
     [
-      "import { Button } from '@zuvi/react';",
+      "import { Button, Globe as RootGlobe, type GlobeProps } from '@zuvi/react';",
+      "import { Globe, type GlobePoint, type GlobeArc, type GlobeView, type GlobeLabels, type GlobeError, type GlobeStatus, type GlobeRenderMode, type GlobeViewChangeReason } from '@zuvi/react/globe';",
       "import { OfficeStudio, createOfficeStudioDocument, type OfficeStudioHandle, type StudioPdfSearchResult, type StudioSheetChart, type StudioSheetStructureEdit } from '@zuvi/react/office-studio';",
       "import { OfficeEditor, type OfficeEditorConfig } from '@zuvi/react/office-editor';",
       "import { DashboardBlock } from '@zuvi/blocks';",
@@ -194,6 +212,29 @@ try {
       "import { useAutoTranslate } from '@zuvi/i18n';",
       "export const example = <><Button variant='primary'>发布检查</Button><DashboardBlock /><Search /></>;",
       'export const api = { tokens, useAutoTranslate };',
+      "const points: readonly GlobePoint[] = [{ id: 'sample', name: 'Synthetic sample', latitude: 35, longitude: 105 }];",
+      'const arcs: readonly GlobeArc[] = [];',
+      'const view: GlobeView = { latitude: 35, longitude: 105, zoom: 1 };',
+      "const globeProps: GlobeProps = { points, arcs, view, labels: { label: 'Sample locations' } };",
+      'export function GlobeExample() { return <><RootGlobe {...globeProps} /><Globe {...globeProps} renderMode="2d" /></>; }',
+      'export type GlobePublicTypes = { labels: GlobeLabels; error: GlobeError; status: GlobeStatus; mode: GlobeRenderMode; reason: GlobeViewChangeReason };',
+      "import { Chart as RootChart, type ChartProps } from '@zuvi/react';",
+      "import { Chart, type ChartBaseProps, type ChartCartesianProps, type ChartRadialProps, type ChartScatterProps, type ChartSeries, type ChartSlice, type ChartScatterPoint, type ChartScatterSeries, type ChartDatum, type ChartLabels, type ChartError, type ChartStatus, type ChartType } from '@zuvi/react/chart';",
+      "import { createRef } from 'react';",
+      "const series: readonly ChartSeries[] = [{ id: 'sample', name: 'Sample', values: [0, null] }];",
+      "const data: readonly ChartSlice[] = [{ id: 'sample', label: 'Sample', value: 0 }];",
+      "const scatterPoints: readonly ChartScatterPoint[] = [{ id: 'p', x: -1.5, y: 2.25 }];",
+      "const scatterSeries: readonly ChartScatterSeries[] = [{ id: 'sample', name: 'Sample', points: scatterPoints }];",
+      'const chartBase: ChartBaseProps = { ref: createRef<HTMLDivElement>(), value: null, hiddenSeries: [], onChange: (id) => { void id; }, onHiddenSeriesChange: (ids) => { void ids; }, onDataClick: (datum, event) => { void datum.value; void event.type; } };',
+      "const cartesian: ChartCartesianProps = { ...chartBase, type: 'line', categories: ['A', 'B'], series };",
+      "const radial: ChartRadialProps = { ...chartBase, type: 'pie', data };",
+      "const scatter: ChartScatterProps = { ...chartBase, type: 'scatter', series: scatterSeries };",
+      'const chartProps: ChartProps = cartesian;',
+      'export function ChartExample() { return <><RootChart {...chartProps} /><Chart {...cartesian} type="area" /><Chart {...cartesian} type="bar" /><Chart {...radial} /><Chart {...radial} type="donut" /><Chart {...scatter} /></>; }',
+      'export type ChartPublicTypes = { datum: ChartDatum; labels: ChartLabels; error: ChartError; status: ChartStatus; type: ChartType };',
+      '// @ts-expect-error radial charts do not accept categories',
+      "const invalidChart: ChartProps = { type: 'pie', data, categories: ['A'] };",
+      'void invalidChart;',
       'export function OfficeExample({ config, documentServerUrl }: { config: OfficeEditorConfig; documentServerUrl: string }) {',
       "  return <><OfficeEditor config={config} documentServerUrl={documentServerUrl} /><OfficeStudio defaultValue={createOfficeStudioDocument('word')} onPrint={async (document) => { void document; }} /></>;",
       '}',
@@ -226,9 +267,41 @@ try {
   );
   execFileSync(
     process.execPath,
-    [path.join(cwd, 'node_modules/@zuvi/cli/dist/index.js'), 'add', 'office-studio'],
+    [
+      path.join(cwd, 'node_modules/@zuvi/cli/dist/index.js'),
+      'add',
+      'office-studio',
+      'globe',
+      'chart',
+    ],
     { cwd, stdio: 'inherit' }
   );
+  const repeatedGlobe = execFileSync(
+    process.execPath,
+    [path.join(cwd, 'node_modules/@zuvi/cli/dist/index.js'), 'add', 'globe'],
+    { cwd, encoding: 'utf8' }
+  );
+  assert.match(repeatedGlobe, /skipped/);
+  assert.doesNotMatch(repeatedGlobe, /^\s*(?:created|updated)\s/m, 'Globe add is idempotent');
+  const globeDiff = execFileSync(
+    process.execPath,
+    [path.join(cwd, 'node_modules/@zuvi/cli/dist/index.js'), 'diff', 'globe'],
+    { cwd, encoding: 'utf8' }
+  );
+  assert.doesNotMatch(globeDiff, /^--- /m, 'Globe diff stays unchanged');
+  const repeatedChart = execFileSync(
+    process.execPath,
+    [path.join(cwd, 'node_modules/@zuvi/cli/dist/index.js'), 'add', 'chart'],
+    { cwd, encoding: 'utf8' }
+  );
+  assert.match(repeatedChart, /skipped/);
+  assert.doesNotMatch(repeatedChart, /^\s*(?:created|updated)\s/m, 'Chart add is idempotent');
+  const chartDiff = execFileSync(
+    process.execPath,
+    [path.join(cwd, 'node_modules/@zuvi/cli/dist/index.js'), 'diff', 'chart'],
+    { cwd, encoding: 'utf8' }
+  );
+  assert.doesNotMatch(chartDiff, /^--- /m, 'Chart diff stays unchanged');
   fs.writeFileSync(path.join(cwd, 'src/styles.d.ts'), "declare module '*.css';\n");
   fs.writeFileSync(
     path.join(cwd, 'tsconfig-cli.json'),
@@ -267,8 +340,12 @@ try {
           'MCP stdio',
           'strict TypeScript declarations',
           'Office component subpaths and public APIs',
+          'Globe root/subpath exports, public types and SSR-safe import',
           'Public Excel conditional formatting and validation types; internal runtimes remain private',
-          'Installed CLI OfficeStudio source compilation',
+          'Installed CLI OfficeStudio, Globe and Chart source compilation',
+          'Globe CLI add idempotence and unchanged diff',
+          'Chart root/subpath exports, public types, six data families and SSR-safe import',
+          'Chart CLI add idempotence and unchanged diff',
         ],
       },
       null,

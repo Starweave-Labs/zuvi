@@ -37,6 +37,19 @@ const KEYBOARD_CODE = `<DropdownMenu>
   </DropdownMenu.Content>
 </DropdownMenu>`;
 
+const CONTEXT_CODE = `<DropdownMenu>
+  <DropdownMenu.ContextTrigger
+    style={{ padding: 16, border: '1px dashed var(--zuvi-color-border)', borderRadius: 8 }}
+  >
+    在此区域右键（或聚焦后按菜单键 / Shift+F10）
+  </DropdownMenu.ContextTrigger>
+  <DropdownMenu.Content>
+    <DropdownMenu.Item onSelect={rename}>重命名</DropdownMenu.Item>
+    <DropdownMenu.Separator />
+    <DropdownMenu.Item danger onSelect={remove}>删除</DropdownMenu.Item>
+  </DropdownMenu.Content>
+</DropdownMenu>`;
+
 export default function DropdownMenuPage(): React.ReactNode {
   usePageTitle('DropdownMenu 下拉菜单');
 
@@ -46,6 +59,8 @@ export default function DropdownMenuPage(): React.ReactNode {
       <p className="doc-lead">
         APG menu-button 模式的下拉菜单：打开焦点进入首项（roving tabindex），↑↓ 跳过 disabled、
         Home/End、Enter/Space 触发并归还焦点、Esc 关闭归还、首字母 typeahead、Tab 关闭。
+        需要右键上下文菜单时用 <code>ContextTrigger</code> 替换 <code>Trigger</code>，
+        菜单实现完全复用。
       </p>
 
       <h2 className="doc-h2">示例</h2>
@@ -101,6 +116,32 @@ export default function DropdownMenuPage(): React.ReactNode {
         </DropdownMenu>
       </Demo>
 
+      <Demo
+        title="右键菜单（ContextTrigger）"
+        description="ContextTrigger 渲染右键触发区域：菜单在指针坐标处打开（视口边缘自动钳制），再次右键移动位置；键盘用菜单键 / Shift+F10 等价打开。选择或 Esc 关闭后焦点归还触发区域。"
+        code={CONTEXT_CODE}
+        stack
+      >
+        <DropdownMenu>
+          <DropdownMenu.ContextTrigger
+            style={{
+              padding: 16,
+              border: '1px dashed var(--zuvi-color-border)',
+              borderRadius: 8,
+              cursor: 'context-menu',
+            }}
+          >
+            在此区域右键（或聚焦后按菜单键 / Shift+F10）
+          </DropdownMenu.ContextTrigger>
+          <DropdownMenu.Content>
+            <DropdownMenu.Item>重命名</DropdownMenu.Item>
+            <DropdownMenu.Item>复制路径</DropdownMenu.Item>
+            <DropdownMenu.Separator />
+            <DropdownMenu.Item danger>删除</DropdownMenu.Item>
+          </DropdownMenu.Content>
+        </DropdownMenu>
+      </Demo>
+
       <h2 className="doc-h2">API</h2>
       <h3 className="doc-h3">DropdownMenu</h3>
       <ApiTable
@@ -124,7 +165,7 @@ export default function DropdownMenuPage(): React.ReactNode {
           {
             name: 'children',
             type: 'React.ReactNode',
-            description: '组合 Trigger / Content / Item / Separator / Label。',
+            description: '组合 Trigger / ContextTrigger / Content / Item / Separator / Label。',
           },
         ]}
       />
@@ -136,6 +177,17 @@ export default function DropdownMenuPage(): React.ReactNode {
             type: "React.ComponentPropsWithRef<'button'>",
             description:
               "原生 button 属性透传；内置 aria-haspopup=\"menu\" / aria-expanded，关闭态 ↑↓ 打开菜单。",
+          },
+        ]}
+      />
+      <h3 className="doc-h3">DropdownMenu.ContextTrigger</h3>
+      <ApiTable
+        rows={[
+          {
+            name: '...rest',
+            type: "React.ComponentPropsWithRef<'div'>",
+            description:
+              '右键触发区域（任意内容包裹层，tabIndex=-1 可编程聚焦）：右键在指针坐标打开菜单并拦截原生菜单；菜单键 / Shift+F10 等价打开（按区域锚元素定位）；选择 / Esc 后焦点归还区域。',
           },
         ]}
       />
@@ -184,7 +236,7 @@ export default function DropdownMenuPage(): React.ReactNode {
 
       <CustomizeOutlet
         name="DropdownMenu"
-        parts={['root', 'trigger', 'content', 'item', 'icon', 'separator', 'label']}
+        parts={['root', 'trigger', 'context-trigger', 'content', 'item', 'icon', 'separator', 'label']}
         vars={[
           '--zuvi-dropdown-menu-bg',
           '--zuvi-dropdown-menu-fg',

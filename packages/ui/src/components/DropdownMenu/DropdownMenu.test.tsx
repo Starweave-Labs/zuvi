@@ -406,4 +406,92 @@ describe('DropdownMenu 指针交互与定制出口', () => {
     );
     expect(item).toHaveAttribute('data-part', 'item');
   });
+})
+
+describe('DropdownMenu.ContextTrigger 右键菜单', () => {
+  function TestContextMenu(props: {
+    onSelectCopy?: () => void;
+    onOpenChange?: (open: boolean) => void;
+  }) {
+    return (
+      <DropdownMenu onOpenChange={props.onOpenChange}>
+        <DropdownMenu.ContextTrigger data-testid="region" style={{ width: 120, height: 60 }}>
+          右键区域
+        </DropdownMenu.ContextTrigger>
+        <DropdownMenu.Content data-testid="content">
+          <DropdownMenu.Item data-testid="item-copy" onSelect={props.onSelectCopy}>
+            复制
+          </DropdownMenu.Item>
+          <DropdownMenu.Item data-testid="item-paste">粘贴</DropdownMenu.Item>
+        </DropdownMenu.Content>
+      </DropdownMenu>
+    );
+  }
+
+  it('右键打开：阻止原生菜单、按指针坐标定位并聚焦首项', async () => {
+    const onOpenChange = vi.fn();
+    render(<TestContextMenu onOpenChange={onOpenChange} />);
+    const region = screen.getByTestId('region');
+    expect(region).toHaveAttribute('data-part', 'context-trigger');
+    expect(region).toHaveAttribute('data-state', 'closed');
+
+    // fireEvent 返回 false 表示事件被 preventDefault（原生菜单被拦截）
+    expect(fireEvent.contextMenu(region, { clientX: 120, clientY: 90 })).toBe(false);
+    const menu = screen.getByRole('menu');
+    expect(menu).toHaveAttribute('data-part', 'content');
+    expect(region).toHaveAttribute('data-state', 'open');
+    expect(onOpenChange).toHaveBeenLastCalledWith(true);
+    // 零尺寸矩形在 (120, 90)：bottom 侧 offset 4，视口内不钳制
+    expect(menu.style.position).toBe('fixed');
+    // 与原生右键菜单一致：top = 指针 y + offset，left = 指针 x
+    expect(menu.style.top).toBe('94px');
+    expect(menu.style.left).toBe('120px');
+    expect(document.activeElement).toHaveTextContent('复制');
+  });
+
+  it('已打开时再次右键移动坐标锚点', () => {
+    render(<TestContextMenu />);
+    const region = screen.getByTestId('region');
+    fireEvent.contextMenu(region, { clientX: 100, clientY: 100 });
+    fireEvent.contextMenu(region, { clientX: 200, clientY: 300 });
+    const menu = screen.getByRole('menu');
+    expect(menu.style.top).toBe('304px');
+    expect(menu.style.left).toBe('200px');
+  });
+
+  it('选择菜单项后关闭且焦点归还触发区域', () => {
+    const onSelectCopy = vi.fn();
+    render(<TestContextMenu onSelectCopy={onSelectCopy} />);
+    const region = screen.getByTestId('region');
+    fireEvent.contextMenu(region, { clientX: 40, clientY: 40 });
+    fireEvent.click(screen.getByTestId('item-copy'));
+    expect(onSelectCopy).toHaveBeenCalledOnce();
+    expect(screen.queryByRole('menu')).not.toBeInTheDocument();
+    expect(document.activeElement).toBe(region);
+  });
+
+  it('菜单键 / Shift+F10 等价打开并按锚元素定位，Escape 关闭', () => {
+    render(<TestContextMenu />);
+    const region = screen.getByTestId('region');
+    region.focus();
+    const root = region.parentElement!;
+    vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
+      if (this === root) return { top: 200, left: 100, bottom: 240, right: 400, width: 300, height: 40 } as DOMRect;
+      return { top: 0, left: 0, bottom: 0, right: 0, width: 0, height: 0 } as DOMRect;
+    });
+    fireEvent.keyDown(region, { key: 'ContextMenu' });
+    let menu = screen.getByRole('menu');
+    // 锚元素 bottom-start：top = 240 + 4，left = 100（横轴不加 offset）
+    expect(menu.style.top).toBe('244px');
+    expect(menu.style.left).toBe('100px');
+
+    fireEvent.keyDown(menu, { key: 'Escape' });
+    expect(screen.queryByRole('menu')).not.toBeInTheDocument();
+    expect(document.activeElement).toBe(region);
+
+    fireEvent.keyDown(region, { key: 'F10', shiftKey: true });
+    menu = screen.getByRole('menu');
+    expect(menu).toBeInTheDocument();
+    vi.restoreAllMocks();
+  });
 });

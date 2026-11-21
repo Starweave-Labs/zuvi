@@ -26,7 +26,10 @@ This release includes OfficeEditor and OfficeStudio. OfficeEditor requires a
 separately deployed ONLYOFFICE Docs service and backend configuration. OfficeStudio
 uses Zuvi controls and independent document models with host file codecs, printing
 and persistence; it does not require an Office server. The published Registry has
-73 components and 16 blocks.
+73 components and 16 blocks (89 entries). Current source adds the unreleased Globe
+and Chart: 75 components and 16 blocks, 91 Registry entries, 82 public docs routes.
+Neither addition is in those published version snapshots; package versions and
+installation examples remain unchanged.
 
 ```
 pnpm add @zuvi/react@npm:@yeyouyuan/zuvi-react@1.0.0          # components + bundled styles
@@ -344,6 +347,300 @@ with an explicit export-XLSX suggestion.
 Parts: root | header | title | actions | stage | loading | status | error
 ```
 
+### Chart (13 native SVG types, 17 forms; unreleased source addition)
+
+API baseline: /components/chart keeps the original six basic demonstrations;
+the independent chart section has /charts (gallery), /charts/interactions and
+/charts/playground. The 17 forms are line, area, stacked area, bar, stacked bar,
+horizontal bar, pie, donut, scatter, bubble, radar, heatmap, treemap, funnel,
+gauge, waterfall and sparkline. Shape variants use props, not additional types.
+```
+import { Chart, type ChartProps, type ChartBaseProps, type ChartCartesianProps, type ChartRadialProps, type ChartScatterProps, type ChartHeatmapProps, type ChartTreemapProps, type ChartFunnelProps, type ChartGaugeProps, type ChartWaterfallProps, type ChartSeries, type ChartSlice, type ChartScatterPoint, type ChartScatterSeries, type ChartHeatmapCell, type ChartWaterfallStep, type ChartDatum, type ChartError, type ChartLabels, type ChartStatus, type ChartType } from '@zuvi/react';
+// The same public API is available from '@zuvi/react/chart'.
+ChartType: 'line' | 'area' | 'bar' | 'pie' | 'donut' | 'scatter' | 'radar' | 'heatmap' | 'treemap' | 'funnel' | 'gauge' | 'waterfall' | 'sparkline'
+ChartSeries: { id: string; name: string; color?: string; values: readonly (number | null)[] }
+ChartSlice: { id: string; label: string; value: number; color?: string }
+ChartScatterPoint: { id: string; x: number; y: number; label?: string; value?: number }
+ChartScatterSeries: { id: string; name: string; color?: string; points: readonly ChartScatterPoint[] }
+ChartHeatmapCell: { id: string; row: string; col: string; value: number; color?: string }
+ChartWaterfallStep: { id: string; label: string; value: number; color?: string }
+ChartProps = ChartCartesianProps | ChartRadialProps | ChartScatterProps | ChartHeatmapProps | ChartTreemapProps | ChartFunnelProps | ChartGaugeProps | ChartWaterfallProps
+ChartCartesianProps: ChartBaseProps + { type?: 'line' | 'area' | 'bar' | 'radar' | 'sparkline'; categories: readonly string[]; series: readonly ChartSeries[]; stack?: boolean; orientation?: 'horizontal'; data?: never }
+ChartRadialProps: ChartBaseProps + { type: 'pie' | 'donut'; data: readonly ChartSlice[]; categories?: never; series?: never }
+ChartScatterProps: ChartBaseProps + { type: 'scatter'; series: readonly ChartScatterSeries[]; bubble?: boolean; bubbleDomain?: readonly [number, number]; categories?: never; data?: never }
+ChartHeatmapProps: ChartBaseProps + { type: 'heatmap'; data: readonly ChartHeatmapCell[]; categories?: never; series?: never }
+ChartTreemapProps: ChartBaseProps + { type: 'treemap'; data: readonly ChartSlice[]; categories?: never; series?: never }
+ChartFunnelProps: ChartBaseProps + { type: 'funnel'; data: readonly ChartSlice[]; categories?: never; series?: never }
+ChartGaugeProps: ChartBaseProps + { type: 'gauge'; data: readonly ChartSlice[]; min?: number; max?: number; categories?: never; series?: never }
+ChartWaterfallProps: ChartBaseProps + { type: 'waterfall'; data: readonly ChartWaterfallStep[]; categories?: never; series?: never }
+Chart: (props: ChartProps) => JSX.Element
+Shared ChartBaseProps:
+  title?: React.ReactNode
+  description?: React.ReactNode
+  height?: number                                                      // default 300 CSS px, clamped [180,800]
+  legend?: boolean                                                     // default true
+  grid?: boolean                                                       // default true, not used by radial charts
+  tooltip?: boolean                                                    // default true
+  showDataTable?: boolean                                              // default true, complete data not deleted by legend filters
+  loading?: boolean                                                    // default false
+  disabled?: boolean                                                   // default false
+  loadingContent?: React.ReactNode
+  emptyContent?: React.ReactNode
+  error?: React.ReactNode                                              // host data error; previous data remains in its table
+  hiddenSeries?: readonly string[]                                     // controlled hidden series IDs; radial uses slice IDs
+  defaultHiddenSeries?: readonly string[]                              // default []
+  onHiddenSeriesChange?: (ids: string[]) => void
+  value?: string | null                                                // controlled selected datum ID, independent of hiddenSeries
+  defaultValue?: string | null                                         // default null
+  onChange?: (id: string | null) => void
+  onDataClick?: (datum: ChartDatum, event: React.MouseEvent<Element>) => void
+  renderTooltip?: (datum: ChartDatum) => React.ReactNode
+  valueFormatter?: (value: number, context: 'x' | 'y' | 'value') => string
+  xLabel?: string
+  yLabel?: string
+  xDomain?: readonly [number, number]                                  // finite ascending numeric domain, radial ignores
+  yDomain?: readonly [number, number]                                  // finite ascending numeric domain, radial ignores
+  animated?: boolean                                                   // default false; reduced motion overrides
+  tooltipMode?: 'datum' | 'crosshair'                                  // default datum; opt-in cartesian crosshair
+  zoom?: boolean                                                       // default false; wheel/pinch X zoom for cartesian/scatter
+  brush?: boolean                                                      // default false; drag-to-zoom for cartesian/scatter
+  viewRange?: readonly [number, number] | null                         // controlled visible X range; null restores full domain
+  defaultViewRange?: readonly [number, number] | null                  // default null
+  onViewRangeChange?: (range: readonly [number, number] | null) => void
+  csv?: boolean                                                        // default false; full canonical data, not current visible range
+  labels?: Partial<ChartLabels>                                        // explicit keys override ConfigProvider locale.chart
+  onReady?: () => void
+  onStatusChange?: (status: ChartStatus) => void
+  onError?: (error: ChartError) => void
+  classNames?: { root?; header?; title?; description?; plot?; svg?; legend?; legendItem?; tooltip?; dataTable?; loading?; empty?; error?; crosshair?; brush?; actions? } // string slots
+  ...rest: Omit<React.ComponentPropsWithRef<'div'>, 'children'|'title'|'color'|'onChange'|'onError'|'defaultValue'>
+ChartDatum: { id: string; type: ChartType; seriesId: string; seriesName: string; index: number; label: string; value: number; color: string; x?: number; y?: number; percent?: number }
+ChartError: { code: 'load' | 'data'; message: string; issues?: readonly string[]; cause?: unknown }
+ChartStatus: 'loading' | 'ready' | 'empty' | 'error'
+ChartLabels: 21 string fields chart/loading/error/retry/empty/noVisible/showAll/legend/dataTable/category/series/value/x/y/percent/instructions/invalidData/zoomHint/brushHint/resetZoom/downloadCsv
+```
+
+- line/area/bar/sparkline use categories plus numeric values aligned by index.
+  Values must be finite numbers or null gaps; numeric strings are never coerced.
+  `stack` is opt-in only for area/bar; `orientation="horizontal"` applies only to bar.
+- radar uses the same category-series shape but requires at least three categories,
+  with every value finite and nonnegative; no null gaps.
+- pie/donut/treemap/funnel require finite nonnegative slices. Zero remains in the
+  legend/table without a pie/donut sector. Pie/donut percent is visible share in [0,1].
+- heatmap cells have unique IDs and distinct row/col coordinates; value is any finite
+  signed scalar. waterfall step values are signed increments from a zero baseline.
+- gauge uses exactly one finite slice value of any sign, inside finite min < max;
+  min defaults to 0 and max to max(100, value). Do not clamp or invent invalid values.
+- scatter uses continuous finite x/y coordinates, not category positions. Optional
+  point value must be finite and nonnegative; bubble maps it to area-aware radii.
+- Datum IDs: slice.id for pie/donut/treemap/funnel/gauge; encoded series.id + ':' + index
+  for category-series charts; encoded series.id + ':' + encoded point.id for scatter;
+  'heatmap:' + encoded cell.id or 'waterfall:' + encoded step.id for the new data families.
+- Existing onChange/onDataClick/renderTooltip/valueFormatter signatures remain unchanged.
+  Ordinary legend activation changes hiddenSeries; Shift activation is emphasis/dimming
+  only and must not change that hidden-state collection.
+- animated/zoom/brush/csv default false; tooltipMode defaults datum. Crosshair is opt-in;
+  zoom/brush update independent viewRange/onViewRangeChange, not selection or raw data.
+  CSV always exports the full canonical data (including hidden/out-of-range rows), with
+  UTF-8 BOM, CRLF records, CSV quoting and formula guards on text fields.
+- React 19 ref is a native HTMLDivElement ref, not a graphics engine handle.
+  Native props, aria-* and data-* pass through to the root; styles use zuvi classes.
+- SVG View loads lazily; root imports and SSR do not require DOM or a chart engine.
+  Offline HTML derives geometry locally; no remote graphics service or new dependency.
+  No dual axes, image export or editor API.
+- Label copy comes from all 10 ConfigProvider locales and accepts partial overrides.
+  Arrow keys browse data, Home/End jump to first/last, Enter/Space select; Escape
+  closes the tooltip without clearing the selected value.
+  Name the chart with title or aria-label, retain its full data table for accessible reading.
+- Builder Chart keeps DataChart independent. rowsJson/seriesJson are flat scalar arrays:
+  category + valueKey fields for category-series/radar/sparkline; id/label/value/color?
+  for slices/gauge/waterfall; id/row/col/value/color? for heatmap; id/seriesId/x/y/label?/value?
+  for scatter. min/max are gauge controls; stack/orientation/bubble choose shape variants;
+  tooltipMode, zoom, brush, animated and csv are serializable opt-in controls.
+
+```tsx
+import { Chart } from '@zuvi/react';
+import '@zuvi/react/styles.css';
+
+const categories = ['Jan', 'Feb', 'Mar'];
+const series = [
+  { id: 'sample-a', name: 'Sample A', values: [12, 18, 15] },
+  { id: 'sample-b', name: 'Sample B', values: [8, 12, 20] },
+];
+const data = [
+  { id: 'sample-a', label: 'Sample A', value: 60 },
+  { id: 'sample-b', label: 'Sample B', value: 40 },
+];
+const scatterSeries = [
+  { id: 'sample', name: 'Sample', points: [{ id: 'a', x: -2.5, y: 8, value: 4 }, { id: 'b', x: 0.75, y: 12, value: 12 }] },
+];
+const cells = [
+  { id: 'cell-a', row: 'A', col: 'Jan', value: -4 },
+  { id: 'cell-b', row: 'A', col: 'Feb', value: 8 },
+];
+const steps = [
+  { id: 'start', label: 'Start', value: 40 },
+  { id: 'cost', label: 'Cost', value: -12 },
+];
+
+export function ChartExamples() {
+  // Synthetic sample data, not live metrics. Each family supplies only compatible fields.
+  return <>
+    <Chart type="line" categories={categories} series={series} title="Sample trend" />
+    <Chart type="area" categories={categories} series={series} aria-label="Sample area" />
+    <Chart type="bar" categories={categories} series={series} aria-label="Sample comparison" />
+    <Chart type="pie" data={data} aria-label="Sample composition" />
+    <Chart type="donut" data={data} aria-label="Sample share" />
+    <Chart type="scatter" series={scatterSeries} aria-label="Sample relationship" />
+    <Chart type="area" stack categories={categories} series={series} aria-label="Stacked area" />
+    <Chart type="bar" stack categories={categories} series={series} aria-label="Stacked bar" />
+    <Chart type="bar" orientation="horizontal" categories={categories} series={series} aria-label="Horizontal bar" />
+    <Chart type="scatter" bubble series={scatterSeries} aria-label="Bubble magnitudes" />
+    <Chart type="radar" categories={['Quality', 'Speed', 'Coverage']} series={series} aria-label="Radar axes" />
+    <Chart type="heatmap" data={cells} aria-label="Signed heatmap" />
+    <Chart type="treemap" data={data} aria-label="Treemap composition" />
+    <Chart type="funnel" data={data} aria-label="Funnel stages" />
+    <Chart type="gauge" data={[{ id: 'g', label: 'Value', value: -2 }]} min={-4} max={4} aria-label="Signed gauge" />
+    <Chart type="waterfall" data={steps} aria-label="Signed increments" />
+    <Chart type="sparkline" categories={categories} series={series} aria-label="Compact trend" />
+  </>;
+}
+```
+
+### Globe (geographic points and connection arcs; unreleased source addition)
+```
+import { Globe, type GlobeProps, type GlobePoint, type GlobeArc, type GlobeView, type GlobeLabels, type GlobeCategory, type GlobeValueScale, type GlobeFocusRequest, type GlobeLabelMode } from '@zuvi/react';
+// Also available at the source subpath @zuvi/react/globe.
+GlobePoint: { id: string; latitude: number; longitude: number; name?: string; value?: number | string; category?: string; color?: string; size?: number }
+GlobeArc: { id: string; from: string; to: string; name?: string; value?: number | string; color?: string; width?: number; altitude?: number; animated?: boolean }
+GlobeCategory: { id: string; name: string; color?: string }
+GlobeValueScale: { domain?: readonly [number, number]; range?: readonly [number, number] }
+GlobeFocusRequest: { pointId: string; key?: string | number; zoom?: number }
+GlobeLabelMode: 'none' | 'selected' | 'auto'
+GlobeView: { latitude: number; longitude: number; zoom: number }
+Globe: (props: GlobeProps) => JSX.Element
+  points?: readonly GlobePoint[]                                       // degrees: latitude [-90,90], longitude [-180,180]
+  arcs?: readonly GlobeArc[]                                           // from/to reference point IDs, not coordinates
+  categories?: readonly GlobeCategory[]                                // point.category references category.id
+  legend?: boolean                                                    // defaults true when categories are provided
+  hiddenCategories?/defaultHiddenCategories?: readonly string[]        // controlled/uncontrolled hidden IDs; default []
+  onHiddenCategoriesChange?: (categories: string[]) => void
+  pointLabels?: GlobeLabelMode                                         // default 'none'; overlap hides labels, not points
+  maxLabels?: number                                                  // auto-label budget; default 12, clamped [1,40]
+  valueScale?: boolean | GlobeValueScale                               // default false; true uses full numeric domain
+  searchable?: boolean                                                // local point-list search; default false
+  searchValue?/defaultSearchValue?: string                             // controlled/uncontrolled search; default ''
+  onSearchValueChange?: (value: string) => void
+  value?/defaultValue?: string | null                                  // selected point ID; default null; no implicit camera move
+  onChange?: (value: string | null) => void
+  onPointClick?: (point: GlobePoint, event: React.MouseEvent<HTMLElement>) => void
+  focus?: GlobeFocusRequest | null                                    // camera-only request; key can repeat a point; zoom defaults current
+  transitionDuration?: number                                         // flight duration in ms; default 0; example opts into 700
+  arcValue?/defaultArcValue?: string | null                             // independent selected arc ID; default null
+  onArcChange?: (id: string | null) => void
+  onArcClick?: (arc: GlobeArc, event: React.MouseEvent<HTMLElement>) => void
+  showArcList?: boolean                                               // accessible connection list; default false
+  renderArcDetails?: (arc: GlobeArc, endpoints: { from: GlobePoint; to: GlobePoint }) => React.ReactNode
+  view?: GlobeView
+  defaultView?: Partial<GlobeView>                                      // default { latitude: 20, longitude: 105, zoom: 1 }
+  onViewChange?: (view, { reason: 'drag'|'zoom'|'keyboard'|'reset'|'point'|'focus' }) => void
+  autoRotate?: boolean                                                // default true; no implicit rotation with controlled view
+  rotationSpeed?: number                                               // degrees/second; default 6, clamped [-60,60]
+  animateArcs?/interactive?/disabled?/controls?: boolean                // defaults true/true/false/true
+  wheelZoom?: boolean                                                  // opt-in; off by default to preserve page scrolling
+  showPointList?: boolean                                              // accessible point list enabled by default
+  renderMode?: 'auto' | '2d'                                            // default 'auto'
+  height?: number | string                                             // default 420; numbers are px
+  loading?: React.ReactNode
+  renderTooltip?: (point: GlobePoint) => React.ReactNode
+  labels?: Partial<GlobeLabels>                                        // overrides ConfigProvider locale.globe
+  onReady?: ({ renderer: 'webgl' | '2d' }) => void
+  onError?: (error: GlobeError) => void
+  onStatusChange?: (status: 'loading' | 'ready' | 'fallback' | 'error') => void
+  classNames?: { root?, stage?, canvas?, controls?, control?, point?, tooltip?, pointList?, pointItem?, loading?, fallback?, error?, label?, legend?, legendItem?, search?, arcList?, arcItem?, arcDetails? }
+  ...rest: React.ComponentPropsWithRef<'div'>                           // native div ref; excludes children/color/onChange/onError/defaultValue
+GlobeError: { code: 'load'|'unsupported'|'render'|'context-lost'; message: string; cause?: unknown }
+GlobeLabels: 28 string fields label/loading/rotate/pause/zoomIn/zoomOut/reset/points/noPoints/instructions/fallback/error/retry/latitude/longitude/value/search/searchPlaceholder/clearSearch/searchResults/noResults/legend/showAll/hiddenSelection/focusPoint/arcs/noArcs/selectedArc
+searchResults uses {count}; focusPoint uses {name}. All ten built-in locale tables
+supply every field; partial labels overrides preserve the remaining locale copy.
+Selection and focus are separate: changing value does not move the camera; focus
+moves only the camera, never point or arc selection. Point clicks select and request
+focus unless onPointClick prevents default. Arc clicks toggle independent selection
+unless onArcClick prevents default; arc selection does not change the camera.
+A focus/point flight reports its target view once with reason focus/point, not each
+animation frame. Controlled view must be updated by the parent via onViewChange.
+transitionDuration=0 and reduced motion are instantaneous. Changing focus.key repeats
+a request to the same point. Search/category filters preserve selected IDs; a hidden
+point selection is explained with hiddenSelection rather than silently cleared.
+valueScale maps finite numeric point.value (including negatives) to radius using a
+square-root area mapping. The domain is explicit or derived from full points, never
+filtered data; the default radius range is [0.012,0.036]. An equal domain maps at the
+normalized midpoint. Explicit point.size takes priority; string values stay display
+text and are not parsed as numbers. Keep raw numbers for scaling, and format display
+units in renderTooltip; renderArcDetails formats arc name/value and endpoint details.
+Explicit point.color takes priority over its category color. Zoom is clamped to
+[0.75,2]. Point size [0.008,0.06], arc width [0.001,0.02] and altitude [0.02,0.8]
+are relative to globe radius. Arc animated defaults true. Keyboard: arrows rotate,
++ / - zoom, Home resets. Name the group with aria-label or aria-labelledby. Markers,
+legend items and point/arc list items use native buttons with aria-pressed; back-facing
+markers cannot receive focus. Lists, search and legend work without WebGL in 2D
+fallback. Renderer loading is on demand; module imports must remain SSR-safe.
+Parts: root | stage | canvas | controls | control | point | tooltip | point-list |
+point-item | loading | fallback | error | label | legend | legend-item | search |
+arc-list | arc-item | arc-details
+```
+
+```tsx
+import { Globe } from '@zuvi/react';
+import '@zuvi/react/styles.css';
+
+export function GlobeExample() {
+  // Synthetic sample locations and connection; not live telemetry.
+  // Keep point values numeric for valueScale; format display values in renderTooltip.
+  // value selects a point without moving the camera; focus requests only the camera.
+  return (
+    <Globe
+      aria-label="Sample locations"
+      points={[
+        {
+          id: 'sample-a', name: 'Sample A', latitude: 35, longitude: 105,
+          category: 'sample-hub', value: 120,
+        },
+        {
+          id: 'sample-b', name: 'Sample B', latitude: -15, longitude: -40,
+          category: 'sample-region', value: 45,
+        },
+      ]}
+      arcs={[
+        {
+          id: 'sample-arc', from: 'sample-a', to: 'sample-b',
+          name: 'Sample connection', value: 30,
+        },
+      ]}
+      categories={[
+        { id: 'sample-hub', name: 'Sample hub', color: '#6366f1' },
+        { id: 'sample-region', name: 'Sample region', color: '#06b6d4' },
+      ]}
+      pointLabels="auto"
+      maxLabels={12}
+      searchable
+      valueScale={{ domain: [0, 120], range: [0.012, 0.036] }}
+      transitionDuration={700}
+      showArcList
+      defaultValue="sample-a"
+      defaultArcValue="sample-arc"
+      focus={{ pointId: 'sample-b', key: 'initial-focus', zoom: 1.15 }}
+      renderTooltip={(point) => (
+        <span>{point.name}: {typeof point.value === 'number' ? `${point.value} units` : point.value}</span>
+      )}
+      renderArcDetails={(arc, { from, to }) => (
+        <span>{arc.name}: {from.name} → {to.name}; {arc.value} units</span>
+      )}
+    />
+  );
+}
+```
+
 ### CommandPalette (global command search, Modal + grouped listbox)
 ```
 CommandPaletteCommand: { key; label; textValue?; group?; shortcut?; icon?; disabled?; keywords?; meta?; onSelect?(event) }
@@ -537,7 +834,7 @@ function useAutoTranslate(config: TranslateConfig): {
 
 ## meta.json — per-component AI metadata (CONTRACTS-V3 §2)
 
-Path: `packages/ui/src/components/<Name>/meta.json` (all 73 source Registry components ship metadata). Consumed by `@zuvi/mcp` tools
+Path: `packages/ui/src/components/<Name>/meta.json` (all 75 current source Registry components ship metadata). Consumed by `@zuvi/mcp` tools
 and the registry generator.
 
 ```json
@@ -566,7 +863,8 @@ Field meaning:
 
 ## Registry & CLI (packages/cli + registry/)
 
-The registry (`registry/registry.json`) contains 73 source components and 16 blocks, generated from sources +
+The current source registry (`registry/registry.json`) contains 75 components and
+16 blocks (91 entries), including the unreleased Globe and Chart, generated from sources +
 `meta.json`; `@zuvi/cli` copies component source into your project (free to edit) with an
 upstream update channel.
 
@@ -586,6 +884,9 @@ pnpm dlx @yeyouyuan/zuvi-cli@1.0.0 list                 # list all components (-
   shared utils/config/styles to `<components>/_zuvi/`, resolves `registryDependencies` recursively,
   rewrites imports and prints npm deps. Registry top-level `exports` maps public symbols to barrels.
 - Published CLI/MCP packages include their registry, source and metadata in `data/`.
+  Rebuild the local CLI/MCP data bundles to include the unreleased Globe and Chart source.
+  Copying Globe renderer TypeScript also requires three and @types/three.
+  Chart uses a lazy native SVG View and needs no new graphics dependency.
 - `diff` outputs `--- a/... +++ b/...` patches (local = a, registry = b).
 - registry entry shape: `{ name, type: 'registry:component' | 'registry:block', title, description,
   dependencies, registryDependencies, files, cssVars, meta }` — `meta` points at the

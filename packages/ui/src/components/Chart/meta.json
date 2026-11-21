@@ -1,0 +1,114 @@
+{
+  "name": "Chart",
+  "description": "原生 SVG 数据图表：13 种类型、17 种形式，支持分类趋势、堆叠与水平柱状、组成、散点与气泡、雷达、热力、矩形树图、漏斗、仪表、瀑布和迷你趋势；交互与 CSV 显式开启",
+  "category": "数据展示",
+  "useCase": [
+    "分类趋势、多系列对比、堆叠面积与柱状或水平柱状",
+    "非负组成、矩形树图、漏斗与多维雷达",
+    "连续 x/y 散点或按可选 value 映射面积的气泡",
+    "有符号热力、增量瀑布、单值仪表与迷你趋势"
+  ],
+  "dontUse": [
+    "地图、地理点位或连接弧线，使用 Globe",
+    "超大规模未聚合数据、金融技术指标或专业图表引擎",
+    "双轴、图像导出或图表编辑器"
+  ],
+  "dependencies": [],
+  "props": {
+    "type": {
+      "type": "'line' | 'area' | 'bar' | 'pie' | 'donut' | 'scatter' | 'radar' | 'heatmap' | 'treemap' | 'funnel' | 'gauge' | 'waterfall' | 'sparkline'",
+      "enum": ["line", "area", "bar", "pie", "donut", "scatter", "radar", "heatmap", "treemap", "funnel", "gauge", "waterfall", "sparkline"],
+      "default": "'line'",
+      "desc": "13 个判别类型、17 种形式：stack 扩展面积/柱状，orientation 扩展水平柱状，bubble 扩展散点。类型决定数据契约，不把 stacked、horizontal 或 bubble 作为新类型"
+    },
+    "categories": {
+      "type": "readonly string[]",
+      "default": "—",
+      "desc": "line/area/bar/radar/sparkline 必填分类标签，values 按索引对齐；radar 至少三个轴。其余类型不接受此字段"
+    },
+    "series": {
+      "type": "readonly ChartSeries[] | readonly ChartScatterSeries[]",
+      "default": "—",
+      "desc": "分类图为 { id, name, color?, values: readonly (number | null)[] }；radar 所有值为非负有限数字、无 null。scatter 为 { id, name, color?, points: readonly ChartScatterPoint[] }，点为 { id, x, y, label?, value? }，x/y 有限，提供的 value 必须非负有限。data 类型不接受此字段"
+    },
+    "data": {
+      "type": "readonly ChartSlice[] | readonly ChartHeatmapCell[] | readonly ChartWaterfallStep[]",
+      "default": "—",
+      "desc": "pie/donut/treemap/funnel 使用 { id, label, value, color? }，value 非负有限；gauge 仅一条有限任意符号的切片且位于 min/max 内；waterfall 相同字段、value 为有符号增量；heatmap 使用 { id, row, col, value, color? }、value 任意有限符号且 row/col 坐标不重复。分类与散点不接受此字段"
+    },
+    "stack": {
+      "type": "boolean",
+      "default": "false",
+      "desc": "仅 area/bar 显式开启堆叠；保留 null 缺口"
+    },
+    "orientation": {
+      "type": "'horizontal'",
+      "enum": ["horizontal"],
+      "default": "—",
+      "desc": "仅 bar 设置水平柱状；省略时保持垂直柱状。其他分类类型忽略"
+    },
+    "bubble": {
+      "type": "boolean",
+      "default": "false",
+      "desc": "仅 scatter 显式开启可选点位 value 的面积气泡映射；没有 value 的点保持普通半径"
+    },
+    "bubbleDomain": {
+      "type": "readonly [number, number]",
+      "default": "—",
+      "desc": "可选有限升序气泡数值域；省略时使用完整原始点位 value 范围"
+    },
+    "min": { "type": "number", "default": "0", "desc": "仅 gauge 的有限下界，必须小于 max；可为负数" },
+    "max": { "type": "number", "default": "max(100, value)", "desc": "仅 gauge 的有限上界，单值必须位于闭区间 [min, max]" },
+    "title": { "type": "React.ReactNode", "default": "—", "desc": "可选图表标题" },
+    "description": { "type": "React.ReactNode", "default": "—", "desc": "可选图表说明" },
+    "height": { "type": "number", "default": "300", "desc": "可选绘图区高度（CSS px），限制在 [180, 800]" },
+    "legend": { "type": "boolean", "default": "true", "desc": "可选系列或数据项图例；Shift 激活仅强调/淡化，不改变 hiddenSeries" },
+    "grid": { "type": "boolean", "default": "true", "desc": "可选坐标网格开关，径向图不使用" },
+    "tooltip": { "type": "boolean", "default": "true", "desc": "可选数据提示开关" },
+    "tooltipMode": {
+      "type": "'datum' | 'crosshair'",
+      "enum": ["datum", "crosshair"],
+      "default": "'datum'",
+      "desc": "默认逐数据项提示；分类图可显式开启十字准线，不改变数据选择回调"
+    },
+    "animated": { "type": "boolean", "default": "false", "desc": "显式开启进入/更新过渡；减少动态效果设置始终优先" },
+    "zoom": { "type": "boolean", "default": "false", "desc": "显式开启分类与散点的滚轮/双指 X 范围缩放；默认不接管页面滚动" },
+    "brush": { "type": "boolean", "default": "false", "desc": "显式开启分类与散点的拖拽框选缩放" },
+    "viewRange": { "type": "readonly [number, number] | null", "default": "—", "desc": "受控可见 X 范围；有限升序且位于轴域内，null 恢复完整范围，不筛除原始数据" },
+    "defaultViewRange": { "type": "readonly [number, number] | null", "default": "null", "desc": "非受控初始可见 X 范围" },
+    "onViewRangeChange": { "type": "(range: readonly [number, number] | null) => void", "default": "—", "desc": "缩放/框选/重置范围回调，独立于 onChange 数据选择" },
+    "csv": { "type": "boolean", "default": "false", "desc": "显式开启完整规范原始数据 CSV 下载；不受隐藏系列或 viewRange 裁剪影响，UTF-8 BOM、CRLF 与文本公式防护" },
+    "showDataTable": { "type": "boolean", "default": "true", "desc": "可选完整数据表入口；隐藏系列或范围缩放不删除原始数据" },
+    "loading": { "type": "boolean", "default": "false", "desc": "可选宿主加载状态" },
+    "disabled": { "type": "boolean", "default": "false", "desc": "可选交互禁用状态" },
+    "loadingContent": { "type": "React.ReactNode", "default": "—", "desc": "自定义加载内容" },
+    "emptyContent": { "type": "React.ReactNode", "default": "—", "desc": "自定义空数据内容" },
+    "error": { "type": "React.ReactNode", "default": "—", "desc": "宿主提供的数据错误；之前的数据仍可通过数据表查看" },
+    "hiddenSeries": { "type": "readonly string[]", "default": "—", "desc": "受控隐藏系列 id；data 类型使用数据项 id，独立于所选数据 value；Shift 强调不会改写该集合" },
+    "defaultHiddenSeries": { "type": "readonly string[]", "default": "[]", "desc": "非受控初始隐藏系列或数据项 id" },
+    "onHiddenSeriesChange": { "type": "(ids: string[]) => void", "default": "—", "desc": "普通图例切换回调；Shift 强调不触发隐藏集合变化" },
+    "value": { "type": "string | null", "default": "—", "desc": "受控所选数据 id" },
+    "defaultValue": { "type": "string | null", "default": "null", "desc": "非受控初始所选数据 id" },
+    "onChange": { "type": "(id: string | null) => void", "default": "—", "desc": "所选数据变化回调，保留既有签名" },
+    "onDataClick": { "type": "(datum: ChartDatum, event: React.MouseEvent<Element>) => void", "default": "—", "desc": "数据激活回调；datum 保留 id、系列、索引、标签、数值、颜色与适用的 x/y/percent" },
+    "renderTooltip": { "type": "(datum: ChartDatum) => React.ReactNode", "default": "—", "desc": "自定义数据提示内容" },
+    "valueFormatter": { "type": "(value: number, context: 'x' | 'y' | 'value') => string", "default": "—", "desc": "仅格式化展示；不会转换数字字符串，普通分类系列可用 null 表示缺口" },
+    "xLabel": { "type": "string", "default": "—", "desc": "可选 x 轴标签" },
+    "yLabel": { "type": "string", "default": "—", "desc": "可选 y 轴标签" },
+    "xDomain": { "type": "readonly [number, number]", "default": "—", "desc": "可选有限、升序数字范围；径向图忽略" },
+    "yDomain": { "type": "readonly [number, number]", "default": "—", "desc": "可选有限、升序数字范围；径向图忽略" },
+    "labels": { "type": "Partial<ChartLabels>", "default": "ConfigProvider locale.chart", "desc": "局部覆盖 21 个图表文案（含 zoomHint、brushHint、resetZoom、downloadCsv），未提供的键沿用语言包" },
+    "onReady": { "type": "() => void", "default": "—", "desc": "图表就绪回调" },
+    "onStatusChange": { "type": "(status: 'loading' | 'ready' | 'empty' | 'error') => void", "default": "—", "desc": "图表状态变化回调" },
+    "onError": { "type": "(error: ChartError) => void", "default": "—", "desc": "加载或数据错误回调；ChartError 为 { code: 'load' | 'data', message, issues?, cause? }" },
+    "classNames": { "type": "{ root?; header?; title?; description?; plot?; svg?; legend?; legendItem?; tooltip?; dataTable?; loading?; empty?; error?; crosshair?; brush?; actions? }", "default": "—", "desc": "可选 slot 级 className 覆盖，所有值为 string" },
+    "ref": { "type": "React.Ref<HTMLDivElement>", "default": "—", "desc": "React 19 原生根 div ref，不是图形引擎实例" }
+  },
+  "a11yNotes": [
+    "使用 title、description 或 aria-label/aria-labelledby 提供可访问名称与上下文",
+    "原生图例按钮与数据点可通过键盘操作；完整语义表格不随隐藏/缩放裁剪；Shift 图例操作仅淡化其他系列",
+    "动画显式开启且服从减少动态效果设置；zoom/brush/CSV 默认关闭",
+    "原生 SVG 绘图按需加载，离线 HTML 使用本地几何，不需要远端图形服务或新增依赖；根 div 透传 ref 与原生属性"
+  ],
+  "related": ["Statistic", "Table", "Globe"]
+}

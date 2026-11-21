@@ -1,0 +1,261 @@
+{
+  "name": "Globe",
+  "description": "3D 地球可视化：离线海陆轮廓、分类图例与点位标签、本地搜索、数值比例标记、独立点位/连接选择、相机定位与 2D 降级",
+  "category": "数据展示",
+  "useCase": ["全球业务节点与城市网络", "跨地区连接和业务分布", "可筛选、搜索与定位的地理仪表盘"],
+  "dontUse": [
+    "精确地图测量、导航或行政边界分析",
+    "高密度 GIS 与地图瓦片",
+    "超大规模未聚合数据直接渲染"
+  ],
+  "dependencies": ["@zuvi/icons", "three", "@types/three"],
+  "props": {
+    "points": {
+      "type": "readonly GlobePoint[]",
+      "default": "[]",
+      "desc": "id、latitude、longitude、name/value/category/color/size；category 引用分类 id，经纬度为度，非法点跳过，重复 id 首个有效项生效；显式 color/size 优先于分类颜色/数值比例"
+    },
+    "arcs": {
+      "type": "readonly GlobeArc[]",
+      "default": "[]",
+      "desc": "id、from/to 点位 id、name/value/color/width/altitude/animated；缺失端点、同端点或重复 id 跳过，走短球面路径；name/value 用于连接列表与详情"
+    },
+    "categories": {
+      "type": "readonly GlobeCategory[]",
+      "default": "[]",
+      "desc": "分类 id/name/color；点位按 category id 关联，未分类点位保持可见"
+    },
+    "legend": {
+      "type": "boolean",
+      "default": "categories.length > 0",
+      "desc": "显示分类图例，可逐项隐藏或显示全部分类"
+    },
+    "hiddenCategories": {
+      "type": "readonly string[]",
+      "default": "—",
+      "desc": "受控隐藏分类 id；筛选不清空点位或连接选择，也不重新计算数值比例域"
+    },
+    "defaultHiddenCategories": {
+      "type": "readonly string[]",
+      "default": "[]",
+      "desc": "非受控初始隐藏分类 id"
+    },
+    "onHiddenCategoriesChange": {
+      "type": "(categories: string[]) => void",
+      "default": "—",
+      "desc": "图例操作产生的隐藏分类变更；受控模式由父组件更新 hiddenCategories"
+    },
+    "pointLabels": {
+      "type": "GlobeLabelMode ('none' | 'selected' | 'auto')",
+      "default": "'none'",
+      "desc": "可视点位名称标签；selected 仅显示所选点位，auto 按预算显示；背面或重叠时隐藏标签而非点位"
+    },
+    "maxLabels": {
+      "type": "number",
+      "default": "12",
+      "desc": "auto 模式标签预算，限制 [1, 40]"
+    },
+    "valueScale": {
+      "type": "boolean | GlobeValueScale",
+      "default": "false",
+      "desc": "true 或 { domain?, range? } 启用有限数值到点半径的平方根面积映射；域默认取完整 points 的有限数值（含负数），不随搜索/分类筛选变化；半径范围默认 [0.012, 0.036]、限制 [0.008, 0.06]，等值域按归一化中点映射；显式 point.size 优先，字符串 value 仅展示、不转为数字"
+    },
+    "searchable": {
+      "type": "boolean",
+      "default": "false",
+      "desc": "启用本地点位列表搜索，不产生网络请求"
+    },
+    "searchValue": {
+      "type": "string",
+      "default": "—",
+      "desc": "受控搜索文本；与分类筛选共同作用，不改变所选 id 或相机视角"
+    },
+    "defaultSearchValue": {
+      "type": "string",
+      "default": "''",
+      "desc": "非受控初始搜索文本"
+    },
+    "onSearchValueChange": {
+      "type": "(value: string) => void",
+      "default": "—",
+      "desc": "输入或清除搜索回调；受控模式由父组件更新 searchValue"
+    },
+    "focus": {
+      "type": "GlobeFocusRequest | null",
+      "default": "null",
+      "desc": "{ pointId, key?, zoom? } 请求相机定位，不改变 value/arcValue；key 改变可再次定位同一点，zoom 缺省保留当前倍率；受控 view 发出请求并需父组件更新"
+    },
+    "transitionDuration": {
+      "type": "number",
+      "default": "0",
+      "desc": "点击点位或 focus 定位的飞行时长（ms），如 700；0 保留瞬时行为，减少动效时始终瞬时；每次只报告目标视角，不按动画帧回调"
+    },
+    "arcValue": {
+      "type": "string | null",
+      "default": "—",
+      "desc": "受控所选连接 id，与点位 value 独立；连接选择不改变点位选择或相机"
+    },
+    "defaultArcValue": {
+      "type": "string | null",
+      "default": "null",
+      "desc": "非受控初始连接选择"
+    },
+    "onArcChange": {
+      "type": "(id: string | null) => void",
+      "default": "—",
+      "desc": "连接选择回调，点击所选连接取消选中；受控模式由父组件更新 arcValue"
+    },
+    "onArcClick": {
+      "type": "(arc: GlobeArc, event: React.MouseEvent<HTMLElement>) => void",
+      "default": "—",
+      "desc": "连接点击；preventDefault 可取消默认连接选择"
+    },
+    "showArcList": {
+      "type": "boolean",
+      "default": "false",
+      "desc": "显示可访问的连接列表，供独立连接选择；不依赖 WebGL"
+    },
+    "renderArcDetails": {
+      "type": "(arc: GlobeArc, endpoints: { from: GlobePoint; to: GlobePoint }) => ReactNode",
+      "default": "—",
+      "desc": "所选连接详情，提供连接与解析后的两个端点；默认展示名称、端点与 value"
+    },
+    "value": {
+      "type": "string | null",
+      "default": "—",
+      "desc": "受控所选点位 id；程序化改变 value 不隐式移动相机，需要定位时另传 focus"
+    },
+    "defaultValue": {
+      "type": "string | null",
+      "default": "null",
+      "desc": "非受控初始点位选择，不隐式移动相机"
+    },
+    "onChange": {
+      "type": "(value: string | null) => void",
+      "default": "—",
+      "desc": "点位选择回调，点击所选点位取消选中；受控模式由父组件更新 value"
+    },
+    "onPointClick": {
+      "type": "(point: GlobePoint, event: React.MouseEvent<HTMLElement>) => void",
+      "default": "—",
+      "desc": "点位点击，默认选中并请求定位；preventDefault 可取消默认选择与定位"
+    },
+    "view": {
+      "type": "GlobeView",
+      "default": "—",
+      "desc": "受控视野中心与倍率；zoom 限制 [0.75, 2]，不隐式自动旋转；定位/用户操作需父组件响应 onViewChange 更新 view"
+    },
+    "defaultView": {
+      "type": "Partial<GlobeView>",
+      "default": "{ latitude: 20, longitude: 105, zoom: 1 }",
+      "desc": "非受控初始视野中心与倍率"
+    },
+    "onViewChange": {
+      "type": "(view: GlobeView, details: { reason: GlobeViewChangeReason }) => void",
+      "default": "—",
+      "desc": "reason 为 drag/zoom/keyboard/reset/point/focus；点位与 focus 飞行只报告一次目标视角，不按动画帧触发业务回调"
+    },
+    "autoRotate": {
+      "type": "boolean",
+      "default": "true",
+      "desc": "自动旋转；悬停、聚焦、交互、离屏、页面隐藏或减少动效时暂停"
+    },
+    "rotationSpeed": { "type": "number", "default": "6", "desc": "每秒角度，限制 [-60, 60]" },
+    "animateArcs": {
+      "type": "boolean",
+      "default": "true",
+      "desc": "弧线上的流动光点，遵循减少动效与可见性"
+    },
+    "interactive": {
+      "type": "boolean",
+      "default": "true",
+      "desc": "启用拖拽、缩放、键盘与点位/连接操作"
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": "false",
+      "desc": "禁用时停止操作与动画，但保留地图和可读数据"
+    },
+    "controls": { "type": "boolean", "default": "true", "desc": "旋转暂停、放大、缩小、重置按钮" },
+    "wheelZoom": {
+      "type": "boolean",
+      "default": "false",
+      "desc": "显式启用滚轮缩放，默认保留页面滚动"
+    },
+    "showPointList": {
+      "type": "boolean",
+      "default": "true",
+      "desc": "可展开的点位列表，不依赖图形渲染器"
+    },
+    "renderMode": {
+      "type": "'auto' | '2d'",
+      "default": "'auto'",
+      "desc": "auto 按需初始化 WebGL，失败降级；2d 显式使用 SVG，不加载 Three.js"
+    },
+    "height": {
+      "type": "number | string",
+      "default": "420",
+      "desc": "绘制区域高度，数字按 px；可覆盖 --zuvi-globe-height"
+    },
+    "loading": { "type": "ReactNode", "default": "—", "desc": "按需加载中的自定义状态内容" },
+    "renderTooltip": {
+      "type": "(point: GlobePoint) => ReactNode",
+      "default": "—",
+      "desc": "鼠标悬停与键盘聚焦显示的点位详情；数值展示格式可在此自定义，原始 numeric value 用于 valueScale"
+    },
+    "labels": {
+      "type": "Partial<GlobeLabels>",
+      "default": "ConfigProvider locale.globe",
+      "desc": "覆盖内置 28 个字符串文案（10 语言）；searchResults 保留 {count}，focusPoint 保留 {name}；未覆盖字段沿用 locale"
+    },
+    "onReady": {
+      "type": "(details: { renderer: 'webgl' | '2d' }) => void",
+      "default": "—",
+      "desc": "真实首次绘制就绪回调"
+    },
+    "onError": {
+      "type": "(error: GlobeError) => void",
+      "default": "—",
+      "desc": "load/unsupported/render/context-lost 错误与 message/cause"
+    },
+    "onStatusChange": {
+      "type": "(status: GlobeStatus) => void",
+      "default": "—",
+      "desc": "loading/ready/fallback/error 状态回调"
+    },
+    "aria-label": {
+      "type": "string",
+      "default": "locale.globe.label",
+      "desc": "可视化 group 的可访问名称"
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "default": "—",
+      "desc": "引用已有标题作为 group 名称，ARIA 名称计算优先于 aria-label"
+    },
+    "classNames": {
+      "type": "{ root?, stage?, canvas?, controls?, control?, point?, tooltip?, pointList?, pointItem?, loading?, fallback?, error?, label?, legend?, legendItem?, search?, arcList?, arcItem?, arcDetails? }",
+      "default": "—",
+      "desc": "语义 slot 类名追加；驼峰 slot 对应连字符 data-part（pointList/point-list、legendItem/legend-item 等）；根原生属性和 React 19 ref 透传"
+    }
+  },
+  "a11yNotes": [
+    "具名 group，不使用 role=application；stage 可聚焦，方向键旋转，Shift 放大步长，+/- 缩放，Home 重置，Escape 仅在取消交互或关闭提示时消费",
+    "标记、点位列表、分类图例与连接列表使用原生按钮和 aria-pressed；背面标记不可聚焦，标签隐藏不隐藏点位按钮",
+    "本地搜索输入与清除按钮独立具名，搜索结果数与无结果文案来自 locale；筛选隐藏所选点位时保留选择并提示 hiddenSelection",
+    "连接列表与详情提供 name/value 和两个端点，连接选择与点位选择独立；点位/连接 value 为数字或原样字符串展示，比例映射只读取有限数字",
+    "focus 只请求相机定位，不改变选择；程序化 value 变化不移动相机，受控 view 需父组件更新；定位按钮名称使用 focusPoint 的 {name} 模板",
+    "Canvas 装饰性 aria-hidden，SVG 降级使用同一真实海陆轮廓、图例、搜索与可访问列表",
+    "动画遵循 prefers-reduced-motion 并在离屏/后台/悬停/聚焦/操作期间暂停；相机飞行默认 0，减少动效时瞬时完成",
+    "WebGL 不可用、上下文丢失和重试有状态提示，不把空业务数据或零搜索结果视为渲染错误",
+    "data-part: root/stage/canvas/controls/control/point/tooltip/point-list/point-item/loading/fallback/error/label/legend/legend-item/search/arc-list/arc-item/arc-details"
+  ],
+  "related": ["Statistic", "Table", "Tooltip", "Skeleton"],
+  "geography": {
+    "source": "Natural Earth 1:110m physical land 4.1.0",
+    "url": "https://naturalearth.s3.amazonaws.com/110m_physical/ne_110m_land.zip",
+    "license": "Public domain",
+    "terms": "https://www.naturalearthdata.com/about/terms-of-use/",
+    "scope": "Low-resolution physical land, no administrative boundaries; not for navigation."
+  }
+}

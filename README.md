@@ -1,7 +1,7 @@
 <div align="center">
   <h1>ZUVI</h1>
   <p><strong>面向 React 19 的现代组件库与产品界面工具集</strong></p>
-  <p>73 个组件、16 个业务区块、OfficeStudio、页面搭建器，以及可供 CLI / MCP 消费的机器可读 Registry。</p>
+  <p>76 个组件、16 个业务区块、OfficeStudio、页面搭建器，以及可供 CLI / MCP 消费的机器可读 Registry。</p>
 
   <p>
     <a href="https://github.com/Starweave-Labs/zuvi/releases/tag/v1.0.0"><img alt="Release" src="https://img.shields.io/github/v/release/Starweave-Labs/zuvi?display_name=tag&sort=semver"></a>
@@ -32,11 +32,13 @@ ZUVI 以设计令牌连接设计与代码。组件使用原生 CSS、CSS 变量�
 
 | 能力       | 当前范围                                                                 | 入口                                                                                                                                                    |
 | ---------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| React 组件 | 73 个 Registry 组件、142 枚图标、10 套语言包                             | [组件文档](https://starweave-labs.github.io/zuvi/#/components/button)                                                                                         |
+| React 组件 | 76 个 Registry 组件、142 枚图标、10 套语言包                             | [组件文档](https://starweave-labs.github.io/zuvi/#/components/button)                                                                                         |
 | 业务区块   | 16 个页面级区块，覆盖数据展示、表单与账户、系统管理                      | [业务区块](https://starweave-labs.github.io/zuvi/#/blocks)                                                                                                    |
 | 文档编辑   | `OfficeEditor` 接入 ONLYOFFICE；`OfficeStudio` 原生编辑 Word、Excel、PDF | [OfficeEditor](https://starweave-labs.github.io/zuvi/#/components/office-editor) · [OfficeStudio](https://starweave-labs.github.io/zuvi/#/components/office-studio) |
 | 页面设计   | 多页、拖拽、图层、响应式样式、主组件、数据源与离线 HTML 导出             | [页面搭建器](https://starweave-labs.github.io/zuvi/#/builder)                                                                                                 |
-| AI 工具链  | Registry、CLI、MCP、`llms.txt`、机器可读 API 契约                        | [Registry 说明](./registry/README.md)                                                                                                                   |
+| AI 工具链  | Registry、CLI、MCP、`llms.txt`、机器可读 API 契约（92 个 Registry 条目） | [Registry 说明](./registry/README.md)                                                                                                                   |
+
+当前源码新增 `Globe` 地球可视化（分类图例、点位标签与搜索、数值比例标记、独立点位/连接选择与相机定位、可访问列表、2D 回退）与 `Chart` 原生 SVG 数据图表（13 个 API 类型、17 种形态，含堆叠、横向条形、气泡、雷达、热力、矩形树图、漏斗、仪表、瀑布与迷你趋势）以及 `DataGrid` 数据网格（10k+ 行虚拟滚动、单列排序、行选择与完整 role="grid" 键盘模型，实现层按需加载），共 76 个组件、16 个区块、92 个 Registry 条目；这些源码增量尚未发布，不改变既有版本或安装示例。文档源码新增独立的数据可视化板块：图表画廊、交互与联动、可视化实验室，共 86 个导航入口。Chart 提供十字准线、受控缩放与框选、双指触控、Shift 图例强调、减少动效兼容与完整数据 CSV 导出。Globe 的 `value` 变更不隐式移动相机，定位使用独立 `focus`；`valueScale` 保留原始数字做平方根面积映射，展示单位用详情渲染器格式化。
 
 ## 设计取向
 
@@ -143,13 +145,13 @@ export default function App() {
 ## 组件范围
 
 <details>
-<summary><strong>查看 v1.0.0 的 73 个组件</strong></summary>
+<summary><strong>查看当前源码的 76 个组件</strong></summary>
 
 - **基础与录入**：Button、Input、InputNumber、Checkbox、Radio/RadioGroup、Switch、Select、Combobox、MultiCombobox、Cascader、Transfer、Mentions、Form、Rate、Slider、ColorPicker、Upload
 - **布局**：Row、Col、Flex、Space、Divider、Splitter
 - **导航**：Tabs、Pagination、Breadcrumb、SideNav、CommandPalette、Steps、Anchor、Affix、BackTop、FloatButton
 - **浮层与反馈**：Modal、Drawer、Tooltip、Popover、Popconfirm、DropdownMenu、Message、Notification、Tour、Alert、Spin、Progress、Result
-- **数据展示**：Table、VirtualTable、Tree、TreeSelect、List、Card、Avatar、Badge、Tag、Empty、Skeleton、Image、QRCode、Watermark、Descriptions、Statistic、Timeline
+- **数据展示**：Table、VirtualTable、DataGrid、Tree、TreeSelect、List、Card、Avatar、Badge、Tag、Empty、Skeleton、Image、QRCode、Watermark、Descriptions、Statistic、Timeline、Chart、Globe
 - **日期与其他**：DatePicker、DateRangePicker、Calendar、TimePicker、Collapse、Segmented、Typography、App
 - **文档编辑**：OfficeEditor、OfficeStudio
 - **全局配置**：ConfigProvider

@@ -2,7 +2,9 @@
 
 状态：2026-11-09 实施后复核。Combobox、MultiCombobox、SideNav、Splitter、CommandPalette 均已实现并进入 Registry（71 个组件 + 16 个业务块，共 87 个条目），已随 v0.3.0 发布。DataGrid 立项前置已完成：性能原型已复测（10k 行：排序 30.9ms / 全选 21.8ms / 列宽更新到下一帧 34.3ms；列宽测量已排除指针输入间隔），独立大型 RFC 已起草（rfcs/datagrid.md），待评审后分期实现。
 
-2026-11-13 发布补充：`OfficeEditor` 与独立 `OfficeStudio` 已进入 v0.4.0，当前 Registry 为 73 个组件和 16 个业务块，共 89 条目。上面的性能数值与首轮组件状态保留为 2026-11-09 记录。
+2026-11-13 发布补充：`OfficeEditor` 与独立 `OfficeStudio` 已进入 v0.4.0，该次 Registry 为 73 个组件和 16 个业务块，共 89 条目。上面的性能数值与首轮组件状态保留为 2026-11-09 记录。
+
+当前源码补充：`Globe` 地球可视化新增点位、连接弧线、可访问点位列表与 2D 回退；`Chart` 原生 SVG 组件提供 13 个 API 类型、17 种形态，并具备十字准线、缩放框选、双指触控、图例强调、动画与完整 CSV 导出。文档新增独立「数据可视化」板块（画廊 / 交互与联动 / 实验室）。2026-11-21 补充：`DataGrid` 数据网格（RFC-005 v1.0）进入源码：10k+ 行虚拟滚动、单列排序、行选择与完整 role="grid" 键盘模型；列宽与固定列（v1.1）、枚举筛选与服务端模式接口（v1.2）已按 RFC 分期落地（决策记录见 RFC §15）。2026-11-22 补充：`ContextMenu` 按「在 DropdownMenu 上扩展而非复制」的既定判断落地为 `DropdownMenu.ContextTrigger`（指针坐标锚点 + 菜单键/Shift+F10 等价手势 + FloatingPanel 坐标锚点），不新增独立组件，组件计数不变。源码基线为 76 个组件、16 个业务块，共 92 个 Registry 条目，文档公开导航 86 个。这些增量尚未发布，不更改上述历史计数或测试记录。
 
 ## 现状与判断标准
 
@@ -86,7 +88,7 @@ DataGrid 价值高，但不能把功能继续堆入 `Table`：
 - `DateTimePicker` / `TimeRangePicker`：先验证 DatePicker 与 TimePicker 的组合方案。
 - `Textarea`、`Input.Search`、`Input.Password`、`AvatarGroup`、`PageHeader`、`Toolbar`：优先作为现有组件子 API 或组合示例。
 - `Carousel`：更偏营销展示，不是当前企业后台核心缺口。
-- 富文本编辑器和图表：依赖与维护面过大，不进入基础 UI 包。
+- 外部专业图表引擎、超大数据图形与金融图表编辑器：依赖与维护面过大，不进入基础 UI 包。当前源码的 `Chart` 以原生 SVG 提供已实现的 17 种形态、图例、独立选择、提示、X 范围缩放/框选和可访问数据表；不承诺双轴、任意平移、层级树钻取或图片导出。独立板块仅拆分文档导航，不拆成新的 npm 包；`OfficeStudio` 文档编辑能力按上面的独立工作台边界维护。
 
 ## 新组件统一 Definition of Done
 
@@ -112,4 +114,4 @@ DataGrid 价值高，但不能把功能继续堆入 `Table`：
 
 同日按用户选择新增并深化 [OfficeStudio 独立文档工作台](office-studio.md)：直接使用 ZUVI 控件，Word 提供本地图片、默认页眉页脚、原生页码域、查找替换与大纲；Excel 提供公式、工作表与行列增删、合并拆分、冻结、筛选排序和原生柱状/折线图；PDF 提供缩略图、全文查找、文字/高亮/矩形/手写笔迹及普通表单。三种编辑器都支持撤销重做，示例提供真实文件导入导出、打印、本地恢复、最近 20 次历史版本及恢复为新文件。`#/components/office-studio` 无需 ONLYOFFICE 服务。
 
-这些能力仍有明确格式边界：Word 不具备完整自动分页或多节版式兼容，Excel 拒绝透视和不支持的复杂对象，PDF 不提供任意原文修改与 OCR；PDF 查找依赖可提取文字和宿主 renderer。`OfficeStudio` 是公共 UI 组件，文件 codec、worker/字体、打印和历史版本存储由宿主适配。当前正式组件数为 73，OfficeStudio 随 v0.4.0 发布；本轮 Node 验证及浏览器验收边界见 [验证记录](office-verification-2026-11-12.md)。
+这些能力仍有明确格式边界：Word 不具备完整自动分页或多节版式兼容，Excel 拒绝透视和不支持的复杂对象，PDF 不提供任意原文修改与 OCR；PDF 查找依赖可提取文字和宿主 renderer。`OfficeStudio` 是公共 UI 组件，文件 codec、worker/字体、打印和历史版本存储由宿主适配。该次正式组件数为 73，OfficeStudio 随 v0.4.0 发布；本轮 Node 验证及浏览器验收边界见 [验证记录](office-verification-2026-11-12.md)。

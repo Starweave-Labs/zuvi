@@ -1,0 +1,167 @@
+{
+  "name": "DataGrid",
+  "description": "交互式虚拟化数据网格：10k+ 行固定行高虚拟滚动、单列排序、行选择与全选，列宽拖拽与键盘调整、sticky 固定列（≤左 2），完整 role=\"grid\" 键盘模型与焦点恢复；筛选与服务端模式接口按 RFC-005 在 v1.2 交付",
+  "category": "数据展示",
+  "useCase": [
+    "大数据量后台列表：10k+ 行虚拟滚动浏览",
+    "单列排序比较与行级选择（复选框 + 全选/半选）",
+    "受控排序与选择接入外部状态或服务端流程",
+    "键盘用户完整可达的网格操作（方向键/Home/End/PageUp/PageDown/Space）"
+  ],
+  "dontUse": [
+    "小型静态语义表格，使用 Table",
+    "只读虚拟滚动、无排序选择需求，使用 VirtualTable",
+    "单元格编辑、分组树、列隐藏/拖拽排序与内置请求编排（v1 不做）"
+  ],
+  "dependencies": [],
+  "props": {
+    "columns": {
+      "type": "readonly DataGridColumn<T>[]",
+      "default": "—",
+      "desc": "列定义：key 唯一（重复保留第一个并告警）、dataIndex 用于排序与默认单元格文本、header、textValue 供可访问名、width/minWidth/maxWidth 钳制（默认 120/60）、align 'start'|'center'|'end'、sortable、sticky（最多前两列固定，超出告警）、render(row, { rowIndex }) 与 headerRender；filterable/filterValues 启用表头枚举筛选面板"
+    },
+    "rows": {
+      "type": "readonly T[]",
+      "default": "—",
+      "desc": "源数据行；排序返回视图顺序索引，不修改原数组，nullish 值始终排在末尾"
+    },
+    "rowKey": {
+      "type": "keyof T | ((row: T, index: number) => string)",
+      "default": "'id'",
+      "desc": "行身份，用于选择注册与 React key；重复或缺失的行保留渲染但跳过选择注册并告警"
+    },
+    "height": {
+      "type": "number",
+      "default": "320",
+      "desc": "正文视口高度（px），虚拟化窗口数学的输入"
+    },
+    "rowHeight": {
+      "type": "number",
+      "default": "40",
+      "desc": "固定行高（px），虚拟化的硬性要求"
+    },
+    "overscan": {
+      "type": "number",
+      "default": "6",
+      "desc": "视口上下额外渲染的行数"
+    },
+    "sort": {
+      "type": "DataGridSortState | null",
+      "default": "—",
+      "desc": "受控排序 { key, dir: 'asc' | 'desc' }；与 Table 的 ascend/descend 词表不同。无效列或未声明 sortable 时忽略并告警"
+    },
+    "defaultSort": {
+      "type": "DataGridSortState | null",
+      "default": "null",
+      "desc": "非受控初始排序"
+    },
+    "onSortChange": {
+      "type": "(sort: DataGridSortState | null) => void",
+      "default": "—",
+      "desc": "排序三态循环 asc → desc → 清除回调"
+    },
+    "filters": {
+      "type": "DataGridFilters | null",
+      "default": "null",
+      "desc": "受控筛选（columnKey → 选中值）；空选择=无约束，全部清空回调 null；未声明/未 filterable 的列忽略并告警；服务端模式与受控 sort 配合使用"
+    },
+    "defaultFilters": {
+      "type": "DataGridFilters | null",
+      "default": "null",
+      "desc": "非受控初始筛选"
+    },
+    "onFiltersChange": {
+      "type": "(filters: DataGridFilters | null) => void",
+      "default": "—",
+      "desc": "筛选变更回调；过滤后的 aria-rowcount 与选择范围随之收缩"
+    },
+    "selectedKeys": {
+      "type": "readonly string[]",
+      "default": "—",
+      "desc": "受控选中行 key 集合；与 hidden 系列无关，受控时不乐观更新"
+    },
+    "defaultSelectedKeys": {
+      "type": "readonly string[]",
+      "default": "[]",
+      "desc": "非受控初始选中集合"
+    },
+    "onSelectedKeysChange": {
+      "type": "(keys: string[], reason: 'row' | 'all') => void",
+      "default": "—",
+      "desc": "选择变更回调，reason 区分单行勾选与全选切换"
+    },
+    "isRowSelectable": {
+      "type": "(row: T) => boolean",
+      "default": "—",
+      "desc": "行级可选过滤；不可选行不渲染复选框且不参与全选/半选计算"
+    },
+    "loading": {
+      "type": "boolean",
+      "default": "false",
+      "desc": "加载态（服务端模式）：正文显示 loadingContent 或文案；排序与筛选保持可用，选择输入禁用"
+    },
+    "emptyContent": {
+      "type": "React.ReactNode",
+      "default": "—",
+      "desc": "空数据正文自定义内容"
+    },
+    "loadingContent": {
+      "type": "React.ReactNode",
+      "default": "—",
+      "desc": "加载正文自定义内容"
+    },
+    "labels": {
+      "type": "Partial<DataGridLabels>",
+      "default": "—",
+      "desc": "局部覆盖 11 个文案，默认取 ConfigProvider locale.dataGrid"
+    },
+    "onReady": {
+      "type": "() => void",
+      "default": "—",
+      "desc": "网格模块加载并进入就绪态后回调"
+    },
+    "onStatusChange": {
+      "type": "(status: 'loading' | 'ready' | 'empty' | 'error') => void",
+      "default": "—",
+      "desc": "组件状态变化回调"
+    },
+    "onError": {
+      "type": "(error: { code: 'load'; message: string; cause?: unknown }) => void",
+      "default": "—",
+      "desc": "网格实现模块加载失败回调；错误态提供重试"
+    },
+    "classNames": {
+      "type": "Partial<Record<DataGridPart, string>>",
+      "default": "—",
+      "desc": "slot 级类名追加：root/header/headerRow/headerCell/viewport/row/cell/stickyCell/selectCell/resizeHandle/filterTrigger/filterPanel/empty/loading/error"
+    },
+    "columnWidths": {
+      "type": "Record<string, number>",
+      "default": "—",
+      "desc": "受控列宽（按列 key）；未知 key 忽略并告警，每个值重新钳制到 [minWidth, maxWidth]"
+    },
+    "defaultColumnWidths": {
+      "type": "Record<string, number>",
+      "default": "{}",
+      "desc": "非受控初始列宽"
+    },
+    "onColumnWidthsChange": {
+      "type": "(widths: Record<string, number>) => void",
+      "default": "—",
+      "desc": "列宽变更回调（拖拽按次提交，键盘每次提交）"
+    }
+  },
+  "a11yNotes": [
+    "role=\"grid\" + aria-rowcount 为真实总行数，虚拟窗口内的行携带原始序号 aria-rowindex",
+    "root tabIndex=0 + aria-activedescendant 指向当前 cell id；窗口重组时 id 不变焦点不丢，行滚出窗口回退 root",
+    "方向键移动（列保持）、Home/End 行首尾、Ctrl+Home/End 虚拟跳转并同步 scrollTop、PageUp/PageDown 按可见行数、Space 勾选当前行；输入法组合期间不拦截确认键",
+    "可排序表头为 button 语义，激活列携带 aria-sort=\"ascending|descending\"；全选为 aria-checked=\"true|mixed|false\" 的原生 checkbox",
+    "筛选为表头内 disclosure：触发钮 aria-expanded，面板为原生 checkbox 列表，Esc 关闭并把焦点还给触发钮；过滤到 0 行时 data-filtered-empty 标注并播报 filterEmpty 文案",
+    "列宽 resize handle 为可聚焦 role=\"separator\"，携带 aria-valuemin/max/now 与调整列宽播报；方向键 ±16px，Home/End 到 min/max",
+    "reduced motion 下过渡禁用；forced-colors 使用系统高对比描边"
+  ],
+  "related": [
+    "Table",
+    "VirtualTable"
+  ]
+}
