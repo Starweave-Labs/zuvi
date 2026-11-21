@@ -85,7 +85,7 @@ DataGrid 价值高，但不能把功能继续堆入 `Table`：
 ## 暂不独立立项
 
 - `ContextMenu`：优先评估在 `DropdownMenu` 上增加右键触发和坐标锚点，而不是复制菜单实现。
-- `DateTimePicker` / `TimeRangePicker`：先验证 DatePicker 与 TimePicker 的组合方案。
+- `DateTimePicker` / `TimeRangePicker`：组合验证已于 2026-11-22 完成（原型 `#/prototype/datetime-picker` + `e2e/datetime-picker-prototype.spec.ts` 四条用例）：受控拼装、空值语义、边界联动与同日范围交换在调用方层成立；浮层互斥由各组件外点关闭兜底。结论：保持组合示例不立项正式组件，若真实场景出现双触发器视觉/焦点手写负担再按正式化流程推进。
 - `Textarea`、`Input.Search`、`Input.Password`、`AvatarGroup`、`PageHeader`、`Toolbar`：优先作为现有组件子 API 或组合示例。
 - `Carousel`：更偏营销展示，不是当前企业后台核心缺口。
 - 外部专业图表引擎、超大数据图形与金融图表编辑器：依赖与维护面过大，不进入基础 UI 包。当前源码的 `Chart` 以原生 SVG 提供已实现的 17 种形态、图例、独立选择、提示、X 范围缩放/框选和可访问数据表；不承诺双轴、任意平移、层级树钻取或图片导出。独立板块仅拆分文档导航，不拆成新的 npm 包；`OfficeStudio` 文档编辑能力按上面的独立工作台边界维护。

@@ -7,12 +7,14 @@ import { GROUP_LABELS, GROUP_ORDER, navItems, routeComponents, type NavItem } fr
 import { ADMIN_SHELL_ROUTE_PREFIX } from './prototypes/admin-shell/routes';
 import { SPLITTER_DETAIL_ROUTE, SPLITTER_IDE_ROUTE } from './prototypes/splitter/routes';
 import { DATAGRID_ROUTE } from './prototypes/datagrid/routes';
+import { DATETIME_PICKER_ROUTE } from './prototypes/datetime-picker/routes';
 import { catalog } from './site';
 import { CommandPalette, type CommandPaletteCommand, type SideNavSection } from '@zuvi/react';
 
 const AdminShellPrototype = lazy(() => import('./prototypes/admin-shell/AdminShellPrototype'));
 const SplitterPrototype = lazy(() => import('./prototypes/splitter/SplitterPrototype'));
 const DataGridPrototype = lazy(() => import('./prototypes/datagrid/DataGridPrototype'));
+const DateTimePickerPrototype = lazy(() => import('./prototypes/datetime-picker/DateTimePickerPrototype'));
 const DocsNavigationDrawer = lazy(() => import('./components/DocsNavigationDrawer'));
 const SideNav = lazy(async () => {
   const module = await import('@zuvi/react');
@@ -236,6 +238,7 @@ export default function App(): React.ReactNode {
   const splitterPrototypeVariant =
     route === SPLITTER_IDE_ROUTE ? 'ide' : route === SPLITTER_DETAIL_ROUTE ? 'detail' : null;
   const isDatagridRoute = route === DATAGRID_ROUTE;
+  const isDatetimePickerRoute = route === DATETIME_PICKER_ROUTE;
   const current = navItems.find((item) => item.path === route);
   const Page = routeComponents[displayedRoute];
 
@@ -347,6 +350,22 @@ export default function App(): React.ReactNode {
           }
         >
           <SplitterPrototype variant={splitterPrototypeVariant} />
+        </Suspense>
+      </PageErrorBoundary>
+    );
+  }
+
+  if (isDatetimePickerRoute) {
+    return (
+      <PageErrorBoundary key="datetime-picker-prototype">
+        <Suspense
+          fallback={
+            <p className="doc-p" role="status">
+              正在加载 DateTimePicker 组合验证原型…
+            </p>
+          }
+        >
+          <DateTimePickerPrototype />
         </Suspense>
       </PageErrorBoundary>
     );
