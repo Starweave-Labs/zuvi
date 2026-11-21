@@ -41,14 +41,20 @@ async function nextFrame(time = 1000) {
   });
 }
 async function ready(container: HTMLElement, mode: 'webgl' | '2d' = '2d') {
-  await waitFor(() =>
-    expect(container.querySelector('.zuvi-globe-stage canvas')).toBeInTheDocument()
+  // 懒加载视图模块在冷 worker 中转译，整包并行跑时可能超过 waitFor 默认 1s。
+  const budget = { timeout: 8000 };
+  await waitFor(
+    () => expect(container.querySelector('.zuvi-globe-stage canvas')).toBeInTheDocument(),
+    budget
   );
-  if (mode === 'webgl') await waitFor(() => expect(rendererMock.create).toHaveBeenCalled());
-  await waitFor(async () => {
-    await nextFrame();
-    expect(root(container)).toHaveAttribute('data-renderer', mode);
-  });
+  if (mode === 'webgl') await waitFor(() => expect(rendererMock.create).toHaveBeenCalled(), budget);
+  await waitFor(
+    async () => {
+      await nextFrame();
+      expect(root(container)).toHaveAttribute('data-renderer', mode);
+    },
+    budget
+  );
 }
 async function openPoints(container: HTMLElement) {
   const details = container.querySelector<HTMLDetailsElement>('[data-part="point-list"]')!;

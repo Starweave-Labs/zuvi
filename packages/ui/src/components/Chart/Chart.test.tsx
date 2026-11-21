@@ -19,10 +19,11 @@ let frames: Map<number, FrameRequestCallback>;
 let nextId: number;
 
 async function ready(container: HTMLElement) {
-  // The first real lazy import also transforms its plotting modules in a cold test worker.
+  // The first real lazy import also transforms its plotting modules in a cold
+  // test worker; the full parallel suite can push this past a 3s budget.
   await waitFor(
     () => expect(container.querySelector('.zuvi-chart')).toHaveAttribute('data-status', 'ready'),
-    { timeout: 3000 }
+    { timeout: 8000 }
   );
 }
 async function flushFrame() {
