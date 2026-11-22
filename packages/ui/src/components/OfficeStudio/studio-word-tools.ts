@@ -245,14 +245,49 @@ export interface WordMatch {
   to: number;
   text: string;
 }
-export interface WordHeading {
-  position: number;
-  level: number;
-  text: string;
+/** 限制匹配范围的字符格式；true 的维度要求匹配区间内每个字符都携带该格式。 */
+export interface WordFormatCriteria {
+  bold?: boolean;
+  italic?: boolean;
+  underline?: boolean;
+  strike?: boolean;
+}
+
+/** 校验 [from, to) 内的每段文本都满足格式条件；区间无文本节点视为不满足。 */
+function rangeHasFormat(
+  doc: Editor['state']['doc'],
+  from: number,
+  to: number,
+  criteria: WordFormatCriteria
+): boolean {
+  const active = Object.entries(criteria).filter(([, required]) => required);
+  if (active.length === 0) return true;
+  let sawText = false;
+  let satisfied = true;
+  doc.nodesBetween(from, to, (node) => {
+    if (!satisfied) return false;
+    if (!node.isText) return true;
+    sawText = true;
+    const has = (name: string) => node.marks.some((mark) => mark.type.name === name);
+    if (
+      (criteria.bold && !has('bold')) ||
+      (criteria.italic && !has('italic')) ||
+      (criteria.underline && !has('underline')) ||
+      (criteria.strike && !has('strike'))
+    )
+      satisfied = false;
+    return false;
+  });
+  return sawText && satisfied;
 }
 
 /** Textblock offsets include inline atoms, so matches span styled runs without losing positions. */
-export function wordFindMatches(editor: Editor, query: string, matchCase = false): WordMatch[] {
+export function wordFindMatches(
+  editor: Editor,
+  query: string,
+  matchCase = false,
+  format?: WordFormatCriteria
+): WordMatch[] {
   if (!query || query.length > 5000) return [];
   const pattern = new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), matchCase ? 'g' : 'gi');
   const matches: WordMatch[] = [];
@@ -265,15 +300,20 @@ export function wordFindMatches(editor: Editor, query: string, matchCase = false
       match && matches.length <= WORD_SEARCH_LIMIT;
       match = pattern.exec(text)
     ) {
-      matches.push({
-        from: position + 1 + match.index,
-        to: position + 1 + match.index + match[0].length,
-        text: match[0],
-      });
+      const from = position + 1 + match.index;
+      const to = from + match[0].length;
+      if (format && !rangeHasFormat(editor.state.doc, from, to, format)) continue;
+      matches.push({ from, to, text: match[0] });
     }
     return false;
   });
   return matches;
+}
+
+export interface WordHeading {
+  position: number;
+  level: number;
+  text: string;
 }
 
 export function wordHeadings(editor: Editor): WordHeading[] {

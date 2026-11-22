@@ -897,6 +897,36 @@ describe('StudioWord structured editing', () => {
     expect(window.getSelection()?.anchorNode?.parentElement?.closest('h2')).not.toBeNull();
   });
 
+  it('filters matches by character format criteria', async () => {
+    const model = documentModel();
+    model.content.content = [
+      {
+        type: 'paragraph',
+        content: [
+          { type: 'text', text: '预算预算', marks: [{ type: 'bold' }] },
+          { type: 'text', text: '预算' },
+          { type: 'text', text: '斜体预算', marks: [{ type: 'italic' }] },
+        ],
+      },
+    ];
+    const { textbox } = await mount({ document: model });
+    fireEvent.keyDown(textbox, { key: 'f', ctrlKey: true });
+    const query = await screen.findByRole('textbox', { name: '查找内容' });
+    fireEvent.change(query, { target: { value: '预算' } });
+    expect(await screen.findByText('4 处匹配')).toBeInTheDocument();
+
+    // 粗体：只有完整落在粗体区间的两处保留；跨粗体/普通边界的匹配被排除
+    fireEvent.click(screen.getByRole('checkbox', { name: '粗体' }));
+    expect(await screen.findByText('2 处匹配')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('checkbox', { name: '粗体' }));
+    // 斜体：仅斜体区间一处
+    fireEvent.click(screen.getByRole('checkbox', { name: '斜体' }));
+    expect(await screen.findByText('1 处匹配')).toBeInTheDocument();
+    // 同时要求粗体+斜体：无区间同时满足 → 0
+    fireEvent.click(screen.getByRole('checkbox', { name: '粗体' }));
+    expect(await screen.findByText('0 处匹配')).toBeInTheDocument();
+  });
+
   it('inserts current and total page fields into the active footer and saves region distances', async () => {
     const { textbox, onChange } = await mount();
     fireEvent.click(screen.getByRole('tab', { name: '插入' }));

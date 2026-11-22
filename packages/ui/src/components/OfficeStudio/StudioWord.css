@@ -990,3 +990,12 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.zuvi-studio-word-format-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--zuvi-space-2) var(--zuvi-space-3);
+  align-items: center;
+  padding: var(--zuvi-space-1) 0;
+  border-block: 1px dashed var(--zuvi-studio-word-border);
+}

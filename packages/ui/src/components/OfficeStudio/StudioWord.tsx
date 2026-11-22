@@ -55,6 +55,7 @@ import {
   wordApplyFormat,
   wordCaptureFormat,
   wordFindMatches,
+  type WordFormatCriteria,
   wordHeadings,
   wordReadImage,
   wordReplaceMatches,
@@ -413,6 +414,7 @@ export function StudioWord({
   const [searchQuery, setSearchQuery] = React.useState('');
   const [replacement, setReplacement] = React.useState('');
   const [matchCase, setMatchCase] = React.useState(false);
+  const [formatCriteria, setFormatCriteria] = React.useState<WordFormatCriteria>({});
   const [matchIndex, setMatchIndex] = React.useState(-1);
   const [imageBusy, setImageBusy] = React.useState(false);
   const [notice, setNotice] = React.useState('');
@@ -521,7 +523,10 @@ export function StudioWord({
   React.useEffect(() => {
     if (sidePanel === 'search') searchInputRef.current?.focus();
   }, [sidePanel]);
-  React.useEffect(() => setMatchIndex(-1), [editor, searchQuery, matchCase]);
+  React.useEffect(
+    () => setMatchIndex(-1),
+    [editor, searchQuery, matchCase, formatCriteria]
+  );
 
   const selection = useEditorState({
     editor,
@@ -537,7 +542,7 @@ export function StudioWord({
         superscript: current.isActive('superscript'),
         subscript: current.isActive('subscript'),
         image: current.isActive('image') ? current.getAttributes('image') : null,
-        matches: wordFindMatches(current, searchQuery, matchCase),
+        matches: wordFindMatches(current, searchQuery, matchCase, formatCriteria),
         bullet: current.isActive('bulletList'),
         ordered: current.isActive('orderedList'),
         canSinkList: current.can().sinkListItem('listItem'),
@@ -2239,6 +2244,26 @@ export function StudioWord({
                   }}
                 />
                 <Checkbox label="区分大小写" checked={matchCase} onChange={setMatchCase} />
+                <div className="zuvi-studio-word-format-filter" role="group" aria-label="按格式查找">
+                  <span className="zuvi-studio-word-sidebar-note">按格式筛选：</span>
+                  {(
+                    [
+                      ['bold', '粗体'],
+                      ['italic', '斜体'],
+                      ['underline', '下划线'],
+                      ['strike', '删除线'],
+                    ] as const
+                  ).map(([key, label]) => (
+                    <Checkbox
+                      key={key}
+                      label={label}
+                      checked={formatCriteria[key] === true}
+                      onChange={(checked) =>
+                        setFormatCriteria((previous) => ({ ...previous, [key]: checked }))
+                      }
+                    />
+                  ))}
+                </div>
                 <div className="zuvi-studio-word-search-actions">
                   <span role="status">
                     {(selection?.matches.length || 0) > WORD_SEARCH_LIMIT
