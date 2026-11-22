@@ -509,6 +509,40 @@
   width: min(390px, calc(100vw - 24px));
 }
 
+.zuvi-studio-sheet-sort-dialog {
+  width: min(560px, calc(100vw - 32px));
+}
+
+.zuvi-studio-sheet-sort-dialog .zuvi-modal-body form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--zuvi-space-3);
+}
+
+.zuvi-studio-sheet-sort-level {
+  display: flex;
+  align-items: center;
+  gap: var(--zuvi-space-2);
+}
+
+.zuvi-studio-sheet-sort-level-index {
+  flex: 0 0 auto;
+  min-width: 18px;
+  color: var(--zuvi-color-fg-muted);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.zuvi-studio-sheet-sort-level .zuvi-select {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.zuvi-studio-sheet-sort-actions {
+  display: flex;
+  justify-content: flex-start;
+}
+
 .zuvi-studio-sheet-link-dialog .zuvi-modal-body {
   display: flex;
   flex-direction: column;

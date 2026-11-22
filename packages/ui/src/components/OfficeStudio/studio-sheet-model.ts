@@ -1930,6 +1930,12 @@ function sortFormula(
   );
 }
 
+export interface StudioSortKey {
+  /** Column index within the sorted selection (1-based). */
+  column: number;
+  direction: 'asc' | 'desc';
+}
+
 export function studioSortRange(
   document: StudioExcelDocument,
   sheetId: string,
@@ -1938,23 +1944,48 @@ export function studioSortRange(
   direction: 'asc' | 'desc',
   header = true
 ): StudioExcelDocument {
+  return studioSortRangeByKeys(document, sheetId, selection, [{ column, direction }], header);
+}
+
+/**
+ * Multi-key sort of the selection rows: the first key whose computed values
+ * differ decides the order, later keys break ties. Empty cells stay last for
+ * every key regardless of direction; ties fall back to the original row order
+ * so sorting is stable.
+ */
+export function studioSortRangeByKeys(
+  document: StudioExcelDocument,
+  sheetId: string,
+  selection: SheetSelection,
+  keys: readonly StudioSortKey[],
+  header = true
+): StudioExcelDocument {
   const sheet = document.sheets.find((item) => item.id === sheetId);
   if (!sheet) throw new Error('工作表不存在。');
+  if (keys.length === 0) throw new Error('请至少添加一个排序键。');
   const range = studioSelectionBounds(selection);
+  const keysInSelection = keys.every(
+    (key) => key.column >= range.firstCol && key.column <= range.lastCol
+  );
   if (
     !rangeWithin(sheet, range) ||
-    column < range.firstCol ||
-    column > range.lastCol ||
+    !keysInSelection ||
     range.lastRow <= range.firstRow
   )
-    throw new Error('请选择至少两行数据，排序列应位于选区内。');
+    throw new Error('请选择至少两行数据，排序键应位于选区内。');
+  const seenColumns = new Set<number>();
+  for (const key of keys) {
+    if (seenColumns.has(key.column))
+      throw new Error('排序键的列重复，请合并或删除重复的层级。');
+    seenColumns.add(key.column);
+  }
   studioSelectionAddresses(selection);
   if (sheet.merges?.some((entry) => intersects(studioParseRange(entry)!, range)))
     throw new Error('排序区域包含合并单元格，请先拆分。');
   const calculation = studioCalculate(document);
   const first = range.firstRow + (header ? 1 : 0);
   const rows = Array.from({ length: range.lastRow - first + 1 }, (_, index) => first + index);
-  const valueAt = (row: number) => {
+  const valueAt = (row: number, column: number) => {
     const address = studioCellAddress(row, column);
     const cell = sheet.cells[address];
     if (calculation.errors.has(`${sheetId}:${address}`))
@@ -1965,15 +1996,18 @@ export function studioSortRange(
     );
   };
   rows.sort((a, b) => {
-    const left = valueAt(a);
-    const right = valueAt(b);
-    // Empty cells remain last for both directions.
-    if (left === '' || right === '') return left === right ? a - b : left === '' ? 1 : -1;
-    const compared =
-      typeof left === 'number' && typeof right === 'number'
-        ? left - right
-        : String(left).localeCompare(String(right), 'zh-CN', { numeric: true });
-    return (direction === 'asc' ? compared : -compared) || a - b;
+    for (const key of keys) {
+      const left = valueAt(a, key.column);
+      const right = valueAt(b, key.column);
+      if (left === '' && right === '') continue;
+      if (left === '' || right === '') return left === '' ? 1 : -1;
+      const compared =
+        typeof left === 'number' && typeof right === 'number'
+          ? left - right
+          : String(left).localeCompare(String(right), 'zh-CN', { numeric: true });
+      if (compared !== 0) return key.direction === 'asc' ? compared : -compared;
+    }
+    return a - b;
   });
   const updates: Record<string, Partial<StudioCell>> = {};
   const hyperlinks: Record<string, StudioSheetHyperlink[] | null> = {};

@@ -1330,6 +1330,73 @@ describe('StudioSheet', () => {
     expect(title).toHaveAttribute('readonly');
     expect(screen.getByRole('button', { name: '删除图表 预算图表' })).toBeDisabled();
   });
+
+  it('sorts by multiple keys with per-level directions from the sort dialog', async () => {
+    const user = userEvent.setup();
+    const document = documentFixture();
+    document.sheets[0].cells = {
+      A1: { input: '部门' },
+      B1: { input: '小组' },
+      C1: { input: '分数' },
+      A2: { input: '华东' },
+      B2: { input: '乙' },
+      C2: { input: '70' },
+      A3: { input: '华北' },
+      B3: { input: '甲' },
+      C3: { input: '90' },
+      A4: { input: '华东' },
+      B4: { input: '甲' },
+      C4: { input: '85' },
+      A5: { input: '华北' },
+      B5: { input: '乙' },
+      C5: { input: '60' },
+    };
+    const state = setup({ document });
+    const address = screen.getByRole('textbox', { name: '单元格地址' });
+    fireEvent.change(address, { target: { value: 'A1:C5' } });
+    fireEvent.keyDown(address, { key: 'Enter' });
+    await user.click(screen.getByRole('tab', { name: '数据' }));
+    await user.click(screen.getByRole('button', { name: '多关键字排序' }));
+
+    const dialog = screen.getByRole('dialog', { name: '多关键字排序' });
+    // 首键默认活动列；添加键依次取选区内未用列，达到上限后按钮禁用。
+    await user.click(within(dialog).getByRole('button', { name: '添加排序键' }));
+    await user.click(within(dialog).getByRole('button', { name: '添加排序键' }));
+    expect(within(dialog).getByRole('button', { name: '添加排序键' })).toBeDisabled();
+
+    // 显式把三层键设为 A 升序 → B 升序 → C 降序（避免依赖活动列默认值）。
+    // Select 是自定义 listbox：触发器可访问名 = aria-label + 当前值（labelledby 组合），
+    // listbox 经 Portal 常驻 DOM（data-open 切换显隐），锁定当前展开的那个。
+    const pickColumn = async (level: number, label: string) => {
+      await user.click(
+        within(dialog).getByRole('button', { name: new RegExp(`^排序键 ${level} 的列`) })
+      );
+      const openListbox = screen
+        .getAllByRole('listbox')
+        .find((element) => element.getAttribute('data-open') === 'true')!;
+      await user.click(within(openListbox).getByRole('option', { name: label }));
+    };
+    await pickColumn(1, 'A 列');
+    // 初始键来自活动列与 addKey 的未用列（C、A、B），逐层显式改成 A、B、C 避免重复键。
+    await pickColumn(2, 'B 列');
+    await pickColumn(3, 'C 列');
+    await user.click(within(dialog).getByRole('button', { name: /^排序键 3 的方向/ }));
+    const listbox = screen
+      .getAllByRole('listbox')
+      .find((element) => element.getAttribute('data-open') === 'true')!;
+    await user.click(within(listbox).getByRole('option', { name: '降序' }));
+    await user.click(within(dialog).getByRole('button', { name: '应用排序' }));
+
+    // zh-CN 拼音序：华北 < 华东；组内小组升序、分数降序。
+    expect(state.current().sheets[0].cells.A2.input).toBe('华北');
+    expect(state.current().sheets[0].cells.C2.input).toBe('90');
+    expect(state.current().sheets[0].cells.A3.input).toBe('华北');
+    expect(state.current().sheets[0].cells.C3.input).toBe('60');
+    expect(state.current().sheets[0].cells.A4.input).toBe('华东');
+    expect(state.current().sheets[0].cells.C4.input).toBe('85');
+    expect(state.current().sheets[0].cells.A1.input).toBe('部门');
+    expect(screen.queryByRole('dialog', { name: '多关键字排序' })).toBeNull();
+  });
 });
 
 describe('StudioSheet row sizes and font drafts', () => {

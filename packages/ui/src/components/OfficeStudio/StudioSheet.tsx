@@ -65,6 +65,8 @@ import {
   studioSetFreeze,
   studioSetRowHeight,
   studioSortRange,
+  studioSortRangeByKeys,
+  type StudioSortKey,
 } from './studio-sheet-model';
 import { studioChangeSheetStructure } from './studio-sheet-structure';
 import {
@@ -78,6 +80,7 @@ import {
 import { studioFillCells, studioFillSeries, studioInferFillType } from './studio-sheet-fill';
 import { studioHiddenColumns, studioSetColumnsHidden } from './studio-sheet-model';
 import { StudioSheetRuleDialog } from './StudioSheetRuleDialog';
+import { StudioSheetSortDialog, type StudioSortDialogState } from './StudioSheetSortDialog';
 import { StudioRibbonTabs } from './StudioRibbon';
 import { StudioSheetHyperlinkDialog } from './StudioSheetHyperlinkDialog';
 import type { SheetHyperlinkDialogState } from './StudioSheetHyperlinkDialog';
@@ -216,6 +219,7 @@ export function StudioSheet({
   const [pasteMode, setPasteMode] = React.useState<StudioSheetPasteMode>('all');
   const [pasteAvailable, setPasteAvailable] = React.useState(false);
   const [ruleDialog, setRuleDialog] = React.useState<SheetRuleDialogMode | null>(null);
+  const [sortDialog, setSortDialog] = React.useState<StudioSortDialogState | null>(null);
   const [linkDialog, setLinkDialog] = React.useState<SheetHyperlinkDialogState | null>(null);
   const [heightDialog, setHeightDialog] = React.useState<{
     firstRow: number;
@@ -2607,8 +2611,22 @@ export function StudioSheet({
                 >
                   降序排序
                 </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled={blocked}
+                  onClick={() =>
+                    setSortDialog({
+                      firstCol: bounds.firstCol,
+                      lastCol: bounds.lastCol,
+                      activeColumn: selection.focus.col,
+                    })
+                  }
+                >
+                  多关键字排序
+                </Button>
               </div>
-              <span>排序当前选区，活动列为排序列</span>
+              <span>排序当前选区：单击按键按活动列升降序，多关键字排序可配置逐级键</span>
             </div>
             <div className="zuvi-studio-sheet-toolgroup">
               <div className="zuvi-studio-sheet-toolrow">
@@ -3747,6 +3765,22 @@ export function StudioSheet({
             );
             replaceDocument(next);
             setNotice(message);
+          }}
+        />
+      )}
+      {sortDialog && sheet && (
+        <StudioSheetSortDialog
+          state={sortDialog}
+          sheetName={sheet.name}
+          blocked={!!blocked}
+          onClose={() => setSortDialog(null)}
+          onApply={(keys: StudioSortKey[], header: boolean) => {
+            setSortDialog(null);
+            transform(
+              (current) => studioSortRangeByKeys(current, sheet.id, selection, keys, header),
+              `已按 ${keys.length} 个关键字排序${header ? '，首行保留为标题' : ''}。`,
+              () => fillAddresses('down')
+            );
           }}
         />
       )}

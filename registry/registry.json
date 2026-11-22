@@ -2004,6 +2004,7 @@
         "packages/ui/src/components/OfficeStudio/StudioSheetHyperlinkDialog.tsx",
         "packages/ui/src/components/OfficeStudio/StudioSheetRuleDialog.tsx",
         "packages/ui/src/components/OfficeStudio/StudioSheetSearch.tsx",
+        "packages/ui/src/components/OfficeStudio/StudioSheetSortDialog.tsx",
         "packages/ui/src/components/OfficeStudio/StudioWord.css",
         "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
         "packages/ui/src/components/OfficeStudio/index.ts",

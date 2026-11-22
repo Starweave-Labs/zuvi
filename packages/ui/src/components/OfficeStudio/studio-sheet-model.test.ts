@@ -21,6 +21,7 @@ import {
   studioSetFilter,
   studioFilteredRows,
   studioSortRange,
+  studioSortRangeByKeys,
   studioTranslateFormula,
   studioAddChart,
   studioChartData,
@@ -1106,5 +1107,125 @@ describe('Office Studio rule calculation and guarded changes', () => {
     ).toThrow('不能安全移动');
     expect(original.sheets[0].cells.A2.input).toBe('20');
     expect(original.sheets[0].cells.B2.input).toBe('=AVERAGE(A1:A2)');
+  });
+});
+
+describe('studioSortRangeByKeys 多关键字排序', () => {
+  function sortFixture(): StudioExcelDocument {
+    return {
+      version: 1,
+      id: 'book',
+      name: '排序.xlsx',
+      kind: 'excel',
+      activeSheetId: 'main',
+      sheets: [
+        {
+          id: 'main',
+          name: 'Sheet1',
+          rowCount: 200,
+          columnCount: 26,
+          cells: {
+            A1: { input: '部门' },
+            B1: { input: '小组' },
+            C1: { input: '分数' },
+            A2: { input: '华东' },
+            B2: { input: '乙' },
+            C2: { input: '70' },
+            A3: { input: '华北' },
+            B3: { input: '甲' },
+            C3: { input: '90' },
+            A4: { input: '华东' },
+            B4: { input: '甲' },
+            C4: { input: '85' },
+            A5: { input: '华北' },
+            B5: { input: '乙' },
+            C5: { input: '60' },
+          },
+        },
+      ],
+    };
+  }
+  const selection = { anchor: { row: 1, col: 1 }, focus: { row: 5, col: 3 } };
+
+  it('主键相同由次键决定，方向可逐键独立', () => {
+    const document = sortFixture();
+    const result = studioSortRangeByKeys(document, 'main', selection, [
+      { column: 1, direction: 'asc' },
+      { column: 2, direction: 'asc' },
+      { column: 3, direction: 'desc' },
+    ]);
+    const rows = [2, 3, 4, 5].map((row) =>
+      ['A', 'B', 'C'].map((col) => result.sheets[0].cells[`${col}${row}`]?.input)
+    );
+    // zh-CN 拼音序：华北(huabei) < 华东(huadong)；组内小组升序、分数降序。
+    expect(rows).toEqual([
+      ['华北', '甲', '90'],
+      ['华北', '乙', '60'],
+      ['华东', '甲', '85'],
+      ['华东', '乙', '70'],
+    ]);
+    expect(result.sheets[0].cells.A1.input).toBe('部门');
+  });
+
+  it('空单元格在每个键上恒沉底且不阻断次键比较', () => {
+    const document = sortFixture();
+    document.sheets[0].cells.A2 = { input: '' };
+    const result = studioSortRangeByKeys(document, 'main', selection, [
+      { column: 1, direction: 'asc' },
+    ]);
+    // A2 空值行沉到末尾；其余按拼音序：华北(r3)、华北(r5)、华东(r4)。
+    expect(result.sheets[0].cells.A2.input).toBe('华北');
+    expect(result.sheets[0].cells.A3.input).toBe('华北');
+    expect(result.sheets[0].cells.A4.input).toBe('华东');
+    expect(result.sheets[0].cells.A5.input).toBe('');
+  });
+
+  it('完全相等的行保持原始顺序（稳定排序）', () => {
+    const document = sortFixture();
+    document.sheets[0].cells.A3 = { input: '华东' };
+    const result = studioSortRangeByKeys(document, 'main', selection, [
+      { column: 1, direction: 'asc' },
+    ]);
+    // 拼音序华北在前；三个华东行保持原始相对顺序（稳定）。
+    expect(result.sheets[0].cells.A2.input).toBe('华北');
+    expect(result.sheets[0].cells.A3.input).toBe('华东');
+    expect(result.sheets[0].cells.A4.input).toBe('华东');
+    expect(result.sheets[0].cells.A5.input).toBe('华东');
+  });
+
+  it('相对引用公式随行置换重写', () => {
+    const document = sortFixture();
+    document.sheets[0].cells.D2 = { input: '=C2*2' };
+    // 选区扩到 D 列，排序键仍是 C；选区外列保持不动。
+    const wideSelection = { anchor: { row: 1, col: 1 }, focus: { row: 5, col: 4 } };
+    const result = studioSortRangeByKeys(document, 'main', wideSelection, [
+      { column: 3, direction: 'desc' },
+    ]);
+    // 分数降序：行序 r3,r4,r2,r5 → 目标行 2,3,4,5；原 D2(=C2*2) 随第 2 行迁移到第 4 行。
+    expect(result.sheets[0].cells.C2.input).toBe('90');
+    expect(result.sheets[0].cells.D4.input).toBe('=C4*2');
+  });
+
+  it('拒绝空键列表、选区外键与重复键列', () => {
+    const document = sortFixture();
+    expect(() => studioSortRangeByKeys(document, 'main', selection, [])).toThrow('至少添加一个排序键');
+    expect(() =>
+      studioSortRangeByKeys(document, 'main', selection, [{ column: 4, direction: 'asc' }])
+    ).toThrow('位于选区内');
+    expect(() =>
+      studioSortRangeByKeys(document, 'main', selection, [
+        { column: 1, direction: 'asc' },
+        { column: 1, direction: 'desc' },
+      ])
+    ).toThrow('重复');
+  });
+
+  it('单键委托与 studioSortRange 结果一致', () => {
+    const document = sortFixture();
+    const byKeys = studioSortRangeByKeys(document, 'main', selection, [
+      { column: 3, direction: 'asc' },
+    ]);
+    const single = studioSortRange(document, 'main', selection, 3, 'asc');
+    expect(JSON.stringify(byKeys)).toBe(JSON.stringify(single));
   });
 });
