@@ -28,6 +28,7 @@ import {
   type Editor,
 } from '@tiptap/react';
 import { StarterKit } from '@tiptap/starter-kit';
+import { ListItem } from '@tiptap/extension-list';
 import { TextAlign } from '@tiptap/extension-text-align';
 import { TextStyleKit, FontFamily } from '@tiptap/extension-text-style';
 import { DropdownMenu } from '../DropdownMenu';
@@ -42,7 +43,24 @@ import { Modal } from '../Modal';
 import { Select } from '../Select';
 import { Tabs } from '../Tabs';
 import { StudioRibbonTabs } from './StudioRibbon';
-import type { StudioEditorProps, StudioRichNode, StudioWordDocument } from './studio-types';
+import type {
+  StudioEditorProps,
+  StudioRichNode,
+  StudioWordDocument,
+  StudioWordParagraphStyle,
+} from './studio-types';
+import { StudioWordStyleDialog } from './StudioWordStyleDialog';
+import {
+  WordParagraphStyles,
+  wordApplyParagraphStyle,
+  wordSetParagraphStyles,
+} from './studio-word-style-extension';
+import {
+  getStudioWordParagraphStyles,
+  materializeStudioWordStyles,
+  reconcileStudioWordStyles,
+  validateStudioWordParagraphStyles,
+} from './studio-word-styles';
 import {
   WORD_HIGHLIGHT_COLORS,
   WORD_SEARCH_LIMIT,
@@ -138,7 +156,9 @@ const EXTENSIONS = [
     codeBlock: false,
     code: false,
     trailingNode: false,
+    listItem: false,
   }),
+  ListItem.extend({ content: '(paragraph | heading) block*' }),
   TextStyleKit.configure({ fontFamily: false }),
   FontFamily.extend({
     addGlobalAttributes() {
@@ -275,6 +295,7 @@ function RegionEditor({
   onReady,
   onActive,
   onImagePaste,
+  paragraphStyles,
 }: {
   region: WordRegion;
   documentId: string;
@@ -284,14 +305,28 @@ function RegionEditor({
   onReady(region: WordRegion, editor: Editor | null): void;
   onActive(region: WordRegion): void;
   onImagePaste(file: File, editor: Editor | null): void;
+  paragraphStyles: StudioWordParagraphStyle[];
 }) {
-  const latest = React.useRef({ editable, onChange, onReady, onActive, onImagePaste });
-  latest.current = { editable, onChange, onReady, onActive, onImagePaste };
+  const latest = React.useRef({
+    editable,
+    onChange,
+    onReady,
+    onActive,
+    onImagePaste,
+    paragraphStyles,
+  });
+  latest.current = { editable, onChange, onReady, onActive, onImagePaste, paragraphStyles };
   const [request, setRequest] = React.useState(0);
   const editor: Editor | null = useEditor(
     {
-      extensions: EXTENSIONS,
-      content,
+      extensions: [
+        ...EXTENSIONS,
+        WordParagraphStyles.configure({
+          autoUpdate: false,
+          getStyles: () => latest.current.paragraphStyles,
+        }),
+      ],
+      content: materializeStudioWordStyles(content, paragraphStyles),
       editable,
       immediatelyRender: false,
       shouldRerenderOnTransaction: false,
@@ -354,12 +389,18 @@ function RegionEditor({
     if (
       editor &&
       !editor.isDestroyed &&
-      JSON.stringify(editor.getJSON()) !== JSON.stringify(content)
+      JSON.stringify(editor.getJSON()) !==
+        JSON.stringify(materializeStudioWordStyles(content, paragraphStyles))
     )
-      editor.commands.setContent(content, { emitUpdate: false });
-  }, [editor, content, request]);
+      editor.commands.setContent(materializeStudioWordStyles(content, paragraphStyles), {
+        emitUpdate: false,
+      });
+  }, [editor, content, request, paragraphStyles]);
   return (
-    <EditorContent editor={editor} className="zuvi-studio-word-content zuvi-studio-word-region-content" />
+    <EditorContent
+      editor={editor}
+      className="zuvi-studio-word-content zuvi-studio-word-region-content"
+    />
   );
 }
 
@@ -415,6 +456,16 @@ export function StudioWord({
   const [replacement, setReplacement] = React.useState('');
   const [matchCase, setMatchCase] = React.useState(false);
   const [formatCriteria, setFormatCriteria] = React.useState<WordFormatCriteria>({});
+  const [styleDialog, setStyleDialog] = React.useState<StudioWordParagraphStyle | null>(null);
+  const styleDefinitions = document.content.attrs?.paragraphStyles;
+  const paragraphStyles = React.useMemo(
+    () => validateStudioWordParagraphStyles(styleDefinitions),
+    [styleDefinitions]
+  );
+  const styleOptions = [
+    ...STYLE_OPTIONS,
+    ...paragraphStyles.map((style) => ({ value: style.id, label: style.name })),
+  ];
   const [matchIndex, setMatchIndex] = React.useState(-1);
   const [imageBusy, setImageBusy] = React.useState(false);
   const [notice, setNotice] = React.useState('');
@@ -438,8 +489,8 @@ export function StudioWord({
   const focusRegionRef = React.useRef<WordRegion | null>(null);
   const bodyEditor: Editor | null = useEditor(
     {
-      extensions: EXTENSIONS,
-      content: document.content,
+      extensions: [...EXTENSIONS, WordParagraphStyles],
+      content: materializeStudioWordStyles(document.content, paragraphStyles),
       editable: editable && region === 'content',
       immediatelyRender: false,
       shouldRerenderOnTransaction: false,
@@ -468,7 +519,34 @@ export function StudioWord({
       onUpdate: ({ editor: current }) => {
         const state = latest.current;
         if (!state.editable) return;
-        state.onChange({ ...state.document, content: current.getJSON() as StudioRichNode });
+        const content = current.getJSON() as StudioRichNode;
+        const previousStyles = getStudioWordParagraphStyles(state.document.content);
+        const nextStyles = getStudioWordParagraphStyles(content);
+        const changedStyles = JSON.stringify(previousStyles) !== JSON.stringify(nextStyles);
+        const nextDocument: StudioWordDocument = {
+          ...state.document,
+          content,
+          ...(changedStyles && state.document.header
+            ? {
+                header: reconcileStudioWordStyles(
+                  state.document.header,
+                  previousStyles,
+                  nextStyles
+                ),
+              }
+            : {}),
+          ...(changedStyles && state.document.footer
+            ? {
+                footer: reconcileStudioWordStyles(
+                  state.document.footer,
+                  previousStyles,
+                  nextStyles
+                ),
+              }
+            : {}),
+        };
+        latest.current.document = nextDocument;
+        state.onChange(nextDocument);
         setContentRequest((request) => request + 1);
       },
     },
@@ -494,6 +572,7 @@ export function StudioWord({
     setSidePanel(null);
     setStatisticsOpen(false);
     setLinkOpen(false);
+    setStyleDialog(null);
     setNotice('');
   }, [document.id]);
   React.useEffect(() => {
@@ -523,10 +602,7 @@ export function StudioWord({
   React.useEffect(() => {
     if (sidePanel === 'search') searchInputRef.current?.focus();
   }, [sidePanel]);
-  React.useEffect(
-    () => setMatchIndex(-1),
-    [editor, searchQuery, matchCase, formatCriteria]
-  );
+  React.useEffect(() => setMatchIndex(-1), [editor, searchQuery, matchCase, formatCriteria]);
 
   const selection = useEditorState({
     editor,
@@ -556,11 +632,16 @@ export function StudioWord({
         fontSize: (style.fontSize || '12pt') as string,
         color: (style.color || '#000000') as string,
         highlight: (style.backgroundColor || '') as string,
-        style: current.isActive('heading')
-          ? `heading-${current.getAttributes('heading').level}`
-          : paragraph.lineHeight === 1 && paragraph.spaceBefore === 0 && paragraph.spaceAfter === 0
-            ? 'no-spacing'
-            : 'paragraph',
+        style:
+          ((current.getAttributes('heading').paragraphStyle ||
+            paragraph.paragraphStyle) as string) ||
+          (current.isActive('heading')
+            ? `heading-${current.getAttributes('heading').level}`
+            : paragraph.lineHeight === 1 &&
+                paragraph.spaceBefore === 0 &&
+                paragraph.spaceAfter === 0
+              ? 'no-spacing'
+              : 'paragraph'),
         selectedText: current.state.doc.textBetween(
           current.state.selection.from,
           current.state.selection.to,
@@ -631,10 +712,11 @@ export function StudioWord({
     if (!bodyEditor || bodyEditor.isDestroyed) return;
     // A host can reject an update without changing the content reference. Accepted
     // content already matches the editor, so leave its selection and history alone.
-    if (JSON.stringify(bodyEditor.getJSON()) !== JSON.stringify(document.content)) {
-      bodyEditor.commands.setContent(document.content, { emitUpdate: false });
+    const content = materializeStudioWordStyles(document.content, paragraphStyles);
+    if (JSON.stringify(bodyEditor.getJSON()) !== JSON.stringify(content)) {
+      bodyEditor.commands.setContent(content, { emitUpdate: false });
     }
-  }, [bodyEditor, document.content, contentRequest]);
+  }, [bodyEditor, document.content, contentRequest, paragraphStyles]);
 
   const [portraitWidth, portraitHeight] =
     document.page.size === 'Letter' ? [215.9, 279.4] : [210, 297];
@@ -857,6 +939,17 @@ export function StudioWord({
   const toolsDisabled = !editor || !editable;
   const applyParagraphStyle = (value: string) => {
     if (!editor || !editable) return;
+    if (
+      paragraphStyles.some((style) => style.id === value) ||
+      editor.state.selection.$from.parent.attrs.paragraphStyle
+    ) {
+      try {
+        wordApplyParagraphStyle(editor, value, paragraphStyles);
+      } catch (cause) {
+        setNotice(cause instanceof Error ? cause.message : '样式无法应用。');
+      }
+      return;
+    }
     const chain = editor.chain().focus();
     if (value === 'no-spacing')
       chain
@@ -888,7 +981,7 @@ export function StudioWord({
   formatPainterRef.current = formatPainter;
   const stepFontSize = (delta: number) => {
     if (!editor || !editable) return;
-    wordStepFontSize(editor, delta, 0.5, 300);
+    wordStepFontSize(editor, delta, 0.5, 409);
   };
   const setHighlight = (color: string | null) => {
     if (!editor || !editable) return;
@@ -1038,7 +1131,11 @@ export function StudioWord({
         }
       }}
     >
-      <Tabs value={tab} onValueChange={changeTab} className="zuvi-studio-word-ribbon zuvi-studio-ribbon">
+      <Tabs
+        value={tab}
+        onValueChange={changeTab}
+        className="zuvi-studio-word-ribbon zuvi-studio-ribbon"
+      >
         <StudioRibbonTabs>
           <Tabs.List aria-label="Word 工具">
             <Tabs.Trigger value="home">开始</Tabs.Trigger>
@@ -1146,7 +1243,7 @@ export function StudioWord({
               <StudioFontControl
                 label="字号"
                 kind="size"
-                maxSize={300}
+                maxSize={409}
                 sizeStep={0.5}
                 options={sizeOptions}
                 value={(selection?.fontSize || '12pt').replace(/pt$/i, '')}
@@ -1493,12 +1590,46 @@ export function StudioWord({
             <Select
               aria-label="段落样式"
               className="zuvi-studio-word-style-list"
-              options={STYLE_OPTIONS}
+              options={styleOptions}
               value={selection?.style || 'paragraph'}
               disabled={toolsDisabled}
               size="sm"
               onChange={applyParagraphStyle}
             />
+            <RibbonRow>
+              <Button
+                variant="ghost"
+                size="sm"
+                aria-label="新建段落样式"
+                disabled={toolsDisabled}
+                onMouseDown={keepSelection}
+                onClick={() =>
+                  setStyleDialog({
+                    id: `style-${globalThis.crypto.randomUUID()}`,
+                    name: '',
+                    basedOn: selection?.style || 'paragraph',
+                  })
+                }
+              >
+                新建样式
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                aria-label="修改段落样式"
+                disabled={
+                  toolsDisabled || !paragraphStyles.some((style) => style.id === selection?.style)
+                }
+                onMouseDown={keepSelection}
+                onClick={() =>
+                  setStyleDialog(
+                    paragraphStyles.find((style) => style.id === selection?.style) || null
+                  )
+                }
+              >
+                修改样式
+              </Button>
+            </RibbonRow>
           </RibbonGroup>
           <RibbonGroup label="编辑" className="zuvi-studio-word-navigation-group">
             <Button
@@ -2244,7 +2375,11 @@ export function StudioWord({
                   }}
                 />
                 <Checkbox label="区分大小写" checked={matchCase} onChange={setMatchCase} />
-                <div className="zuvi-studio-word-format-filter" role="group" aria-label="按格式查找">
+                <div
+                  className="zuvi-studio-word-format-filter"
+                  role="group"
+                  aria-label="按格式查找"
+                >
                   <span className="zuvi-studio-word-sidebar-note">按格式筛选：</span>
                   {(
                     [
@@ -2368,7 +2503,9 @@ export function StudioWord({
             ) : (
               <div className="zuvi-studio-word-navigation-list">
                 {!outline.length && (
-                  <p className="zuvi-studio-word-sidebar-note">应用标题样式后，可在这里快速跳转。</p>
+                  <p className="zuvi-studio-word-sidebar-note">
+                    应用标题样式后，可在这里快速跳转。
+                  </p>
                 )}
                 {outline.map((heading, index) => (
                   <Button
@@ -2451,6 +2588,7 @@ export function StudioWord({
                     region="header"
                     documentId={document.id}
                     content={document.header}
+                    paragraphStyles={paragraphStyles}
                     editable={editable && region === 'header'}
                     onReady={registerRegion}
                     onActive={setRegion}
@@ -2478,6 +2616,7 @@ export function StudioWord({
                     region="footer"
                     documentId={document.id}
                     content={document.footer}
+                    paragraphStyles={paragraphStyles}
                     editable={editable && region === 'footer'}
                     onReady={registerRegion}
                     onActive={setRegion}
@@ -2521,6 +2660,21 @@ export function StudioWord({
           />
         </div>
       </div>
+      {styleDialog && editable && (
+        <StudioWordStyleDialog
+          key={styleDialog.id}
+          value={styleDialog}
+          styles={paragraphStyles}
+          onClose={() => setStyleDialog(null)}
+          onChange={(styles, message) => {
+            if (!bodyEditor || !editable || !wordSetParagraphStyles(bodyEditor, styles))
+              throw new Error('当前编辑器无法修改样式。');
+            setStyleDialog(null);
+            setRegion('content');
+            setNotice(message);
+          }}
+        />
+      )}
       <Modal open={statisticsOpen} onOpenChange={setStatisticsOpen}>
         <Modal.Content size="sm">
           <Modal.Header>

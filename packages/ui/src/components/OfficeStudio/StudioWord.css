@@ -491,8 +491,10 @@
 }
 
 .zuvi-studio-word-paper[data-editing-region] .zuvi-studio-word-body,
-.zuvi-studio-word-paper[data-editing-region='header'] .zuvi-studio-word-region[data-region='footer'],
-.zuvi-studio-word-paper[data-editing-region='footer'] .zuvi-studio-word-region[data-region='header'] {
+.zuvi-studio-word-paper[data-editing-region='header']
+  .zuvi-studio-word-region[data-region='footer'],
+.zuvi-studio-word-paper[data-editing-region='footer']
+  .zuvi-studio-word-region[data-region='header'] {
   opacity: 0.48;
 }
 
@@ -525,7 +527,10 @@
   .tiptap
   .zuvi-studio-word-image-node.ProseMirror-selectednode
   .zuvi-studio-word-image,
-.zuvi-studio-word-content .tiptap .zuvi-studio-word-image-node[data-selected] .zuvi-studio-word-image {
+.zuvi-studio-word-content
+  .tiptap
+  .zuvi-studio-word-image-node[data-selected]
+  .zuvi-studio-word-image {
   outline: 3px solid var(--zuvi-color-primary);
   outline-offset: 3px;
 }
@@ -998,4 +1003,59 @@
   align-items: center;
   padding: var(--zuvi-space-1) 0;
   border-block: 1px dashed var(--zuvi-studio-word-border);
+}
+/* Named styles materialize run formatting, so removing a run mark also works in headings. */
+.zuvi-studio-word-content :is(p, h1, h2, h3, h4, h5, h6)[data-word-style] {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: normal;
+  font-style: normal;
+  color: inherit;
+}
+
+.zuvi-studio-word-style-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 16px;
+}
+
+.zuvi-studio-word-style-form > label,
+.zuvi-studio-word-style-background > label:not(.zuvi-checkbox) {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 12px;
+}
+
+.zuvi-studio-word-style-background {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.zuvi-studio-word-style-hint {
+  font-size: 12px;
+  color: var(--zuvi-color-fg-muted);
+}
+
+.zuvi-studio-word-style-live-preview {
+  margin-top: 16px;
+  padding: 16px;
+  min-height: 72px;
+  border: 1px solid var(--zuvi-color-border);
+  border-radius: var(--zuvi-radius-md);
+  background: white;
+  overflow-wrap: anywhere;
+}
+
+.zuvi-studio-word-style-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+@media (max-width: 480px) {
+  .zuvi-studio-word-style-form {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }

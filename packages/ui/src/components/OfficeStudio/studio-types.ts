@@ -16,6 +16,44 @@ interface StudioDocumentBase {
   name: string;
 }
 
+export interface StudioWordCharacterStyle {
+  fontFamily?: string;
+  /** Font size in points. */
+  fontSize?: number;
+  bold?: boolean;
+  italic?: boolean;
+  underline?: boolean;
+  strike?: boolean;
+  color?: string;
+  /** null explicitly clears an inherited text background. */
+  backgroundColor?: string | null;
+}
+
+export interface StudioWordParagraphFormat {
+  textAlign?: 'left' | 'center' | 'right' | 'justify';
+  indentLeft?: number;
+  indentRight?: number;
+  indentFirstLine?: number;
+  spaceBefore?: number;
+  spaceAfter?: number;
+  lineHeight?: number;
+}
+
+/** Definitions live in content.attrs.paragraphStyles; paragraphs link via attrs.paragraphStyle. */
+export interface StudioWordParagraphStyle {
+  id: string;
+  name: string;
+  /** Another definition, or paragraph / no-spacing / heading-1 through heading-6. */
+  basedOn?: string;
+  /** The style applied when Enter creates the next paragraph. Missing retains this style. */
+  next?: string;
+  /** 0 is body text, 1–6 are outline heading levels. Missing inherits the base. */
+  headingLevel?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  autoUpdate?: boolean;
+  run?: StudioWordCharacterStyle;
+  paragraph?: StudioWordParagraphFormat;
+}
+
 export interface StudioWordDocument extends StudioDocumentBase {
   kind: 'word';
   content: StudioRichNode;

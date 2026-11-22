@@ -22,11 +22,27 @@ import {
   UnderlineType,
   WidthType,
   type IParagraphOptions,
+  type IParagraphStyleOptions,
   type IRunOptions,
   type NumberingDefinition,
   type ParagraphChild,
 } from 'docx';
-import type { StudioRichNode, StudioWordDocument } from '@zuvi/react';
+import type {
+  StudioRichNode,
+  StudioWordDocument,
+  StudioWordCharacterStyle,
+  StudioWordParagraphFormat,
+  StudioWordParagraphStyle,
+} from '@zuvi/react';
+import {
+  WORD_BODY_RUN,
+  WORD_BUILTIN_STYLES,
+  getStudioWordParagraphStyles,
+  materializeStudioWordStyles,
+  resolveStudioWordParagraphStyle,
+  studioWordNodeRun,
+  validateStudioWordParagraphStyles,
+} from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-styles';
 
 const W = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';
 const R = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships';
@@ -129,6 +145,8 @@ type ImportContext = {
   relationships: Map<string, string>;
   numbering: Map<string, Map<number, NumberLevel>>;
   images: Map<string, string>;
+  styleModels: Map<string, StudioWordParagraphStyle>;
+  usedStyles: Set<string>;
 };
 
 function unsupported(feature: string): never {
@@ -359,6 +377,15 @@ function paragraphProperties(
     child(properties, 'tabs')
   )
     unsupported('段落定位、方向或制表位');
+  const outline = value(properties, 'outlineLvl');
+  if (
+    outline &&
+    (!Number.isInteger(Number(outline)) ||
+      Number(outline) < 0 ||
+      Number(outline) > 9 ||
+      (Number(outline) >= 6 && Number(outline) < 9))
+  )
+    unsupported('超过当前范围的段落大纲级别');
   const alignment = value(properties, 'jc');
   if (alignment) {
     if (!['left', 'start', 'center', 'right', 'end', 'both', 'distribute'].includes(alignment))
@@ -403,7 +430,11 @@ function paragraphProperties(
   return result;
 }
 
-function parseStyles(xml?: XMLDocument): { defaults: Style; styles: Map<string, Style> } {
+function parseStyles(xml?: XMLDocument): {
+  defaults: Style;
+  styles: Map<string, Style>;
+  styleModels: Map<string, StudioWordParagraphStyle>;
+} {
   const root = xml?.documentElement;
   const defaults: Style = {
     run: runProperties(
@@ -435,10 +466,12 @@ function parseStyles(xml?: XMLDocument): { defaults: Style; styles: Map<string, 
       /^(?:Heading|heading|标题)\s*([1-6])$/i.exec(styleName)?.[1] ||
       /^(?:Heading|标题)([1-6])$/i.exec(id)?.[1];
     const outline = value(child(source, 'pPr'), 'outlineLvl');
-    const level = heading
-      ? Number(heading)
-      : outline && Number(outline) < 6
+    const level = outline
+      ? Number(outline) < 6
         ? Number(outline) + 1
+        : undefined
+      : heading
+        ? Number(heading)
         : base.heading;
     const result: Style = {
       run: runProperties(child(source, 'rPr'), base.run),
@@ -469,7 +502,116 @@ function parseStyles(xml?: XMLDocument): { defaults: Style; styles: Map<string, 
       }
     } else styles.set(id, { ...simple, paragraph: { studioUnsupported: true } });
   }
-  return { defaults, styles };
+  const candidates = [...definitions]
+    .filter(
+      ([id, source]) =>
+        attr(source, 'type') === 'paragraph' &&
+        !['Normal', 'ZuviQuote', 'ZuviRule', 'ZuviNoSpacing'].includes(id) &&
+        !/^Heading[1-6]$/i.test(id) &&
+        !styles.get(id)?.paragraph.studioUnsupported
+    )
+    .sort(([a], [b]) => Number(b.startsWith('ZuviStyle_')) - Number(a.startsWith('ZuviStyle_')));
+  const modelIds = new Map<string, string>();
+  const reserved = new Set(WORD_BUILTIN_STYLES.map((style) => style.id));
+  for (const [id] of candidates)
+    if (id.startsWith('ZuviStyle_') && /^[a-zA-Z][\w-]{0,95}$/.test(id.slice(10))) {
+      modelIds.set(id, id.slice(10));
+      reserved.add(id.slice(10));
+    }
+  let importedIndex = 1;
+  for (const [id] of candidates)
+    if (!modelIds.has(id)) {
+      while (reserved.has(`imported-${importedIndex}`)) importedIndex++;
+      const modelId = `imported-${importedIndex++}`;
+      modelIds.set(id, modelId);
+      reserved.add(modelId);
+    }
+  const builtinId = (id: string) =>
+    id === 'Normal'
+      ? 'paragraph'
+      : id === 'ZuviNoSpacing'
+        ? 'no-spacing'
+        : /^Heading([1-6])$/i.test(id)
+          ? `heading-${/([1-6])$/.exec(id)![1]}`
+          : undefined;
+  const appearance = (run: Appearance): StudioWordCharacterStyle => ({
+    ...Object.fromEntries(
+      ['bold', 'italic', 'underline', 'strike', 'fontFamily', 'color']
+        .filter((key) => run[key as keyof Appearance] !== undefined)
+        .map((key) => [key, run[key as keyof Appearance]])
+    ),
+    ...(Object.prototype.hasOwnProperty.call(run, 'backgroundColor')
+      ? { backgroundColor: run.backgroundColor || null }
+      : {}),
+    ...(run.fontSize ? { fontSize: Number(run.fontSize.replace(/pt$/, '')) } : {}),
+  });
+  const paragraphKeys = [
+    'textAlign',
+    'indentLeft',
+    'indentRight',
+    'indentFirstLine',
+    'spaceBefore',
+    'spaceAfter',
+    'lineHeight',
+  ];
+  const paragraphFormat = (input: Record<string, unknown>): StudioWordParagraphFormat =>
+    Object.fromEntries(
+      paragraphKeys.filter((key) => input[key] !== undefined).map((key) => [key, input[key]])
+    );
+  const names = new Set(WORD_BUILTIN_STYLES.map((style) => style.name.toLocaleLowerCase()));
+  const styleModels = new Map<string, StudioWordParagraphStyle>();
+  for (const [id, source] of candidates) {
+    const resolved = styles.get(id)!;
+    const baseId = value(source, 'basedOn');
+    const baseModel = modelIds.get(baseId);
+    const baseBuiltin = builtinId(baseId) || 'paragraph';
+    const base = resolveStudioWordParagraphStyle([], baseBuiltin);
+    const nativeBase = styles.get(baseId) || defaults;
+    const inheritedLevel = baseModel ? nativeBase.heading || 0 : base.headingLevel;
+    const directRun = appearance(runProperties(child(source, 'rPr')));
+    const directParagraph = paragraphFormat(paragraphProperties(child(source, 'pPr')));
+    const inheritedRun = { ...WORD_BODY_RUN, ...appearance(nativeBase.run) };
+    const inheritedParagraph = { ...base.paragraph, ...paragraphFormat(nativeBase.paragraph) };
+    let name = value(source, 'name', id);
+    if (names.has(name.toLocaleLowerCase())) name += '（导入）';
+    let suffix = 2;
+    const originalName = name;
+    while (names.has(name.toLocaleLowerCase())) name = `${originalName}（${suffix++}）`;
+    names.add(name.toLocaleLowerCase());
+    const nextId = value(source, 'next');
+    const next = modelIds.get(nextId) || builtinId(nextId);
+    styleModels.set(id, {
+      id: modelIds.get(id)!,
+      name,
+      basedOn: baseModel || baseBuiltin,
+      ...(next ? { next } : {}),
+      ...((resolved.heading || 0) !== inheritedLevel || value(child(source, 'pPr'), 'outlineLvl')
+        ? { headingLevel: (resolved.heading || 0) as StudioWordParagraphStyle['headingLevel'] }
+        : {}),
+      autoUpdate: enabled(child(source, 'autoRedefine')),
+      run: {
+        ...(!baseModel
+          ? Object.fromEntries(
+              Object.entries(inheritedRun).filter(
+                ([key, input]) => input !== base.run[key as keyof StudioWordCharacterStyle]
+              )
+            )
+          : {}),
+        ...directRun,
+      },
+      paragraph: {
+        ...(!baseModel
+          ? Object.fromEntries(
+              Object.entries(inheritedParagraph).filter(
+                ([key, input]) => input !== base.paragraph[key as keyof StudioWordParagraphFormat]
+              )
+            )
+          : {}),
+        ...directParagraph,
+      },
+    });
+  }
+  return { defaults, styles, styleModels };
 }
 
 function parseNumbering(xml?: XMLDocument): Map<string, Map<number, NumberLevel>> {
@@ -718,6 +860,18 @@ function parseParagraph(element: Element, context: ImportContext): ParsedParagra
   const style = context.styles.get(styleId) || context.defaults;
   if (style.paragraph.studioUnsupported) unsupported('段落样式');
   const attrs = paragraphProperties(properties, style.paragraph);
+  const directOutline = value(properties, 'outlineLvl');
+  const headingLevel = directOutline
+    ? Number(directOutline) < 6
+      ? Number(directOutline) + 1
+      : undefined
+    : style.heading;
+  const namedStyle = context.styleModels.get(styleId);
+  if (namedStyle) {
+    attrs.paragraphStyle = namedStyle.id;
+    attrs.paragraphStyleMaterialized = true;
+    context.usedStyles.add(namedStyle.id);
+  } else if (styleId === 'ZuviNoSpacing') attrs.paragraphStyle = 'no-spacing';
   const appearance = runProperties(child(properties, 'rPr'), style.run);
   const inline: StudioRichNode[] = [];
   const paragraphItems = elements(element);
@@ -789,13 +943,21 @@ function parseParagraph(element: Element, context: ImportContext): ParsedParagra
     };
   }
   const border = child(properties, 'pBdr');
+  const leftBorder = child(border, 'left');
+  const quoteBorder =
+    !!leftBorder &&
+    elements(border).length === 1 &&
+    attr(leftBorder) === 'single' &&
+    attr(leftBorder, 'sz') === '18' &&
+    colour(attr(leftBorder, 'color')) === '#1f2937' &&
+    (!attr(leftBorder, 'space') || attr(leftBorder, 'space') === '0');
   if (styleId === 'ZuviRule' || (border && child(border, 'bottom') && !inline.length))
     return { nodes: [{ type: 'horizontalRule' }] };
-  if (border && styleId !== 'ZuviQuote') unsupported('段落边框');
+  if (border && styleId !== 'ZuviQuote' && !quoteBorder) unsupported('段落边框');
   const base: StudioRichNode = {
-    type: style.heading ? 'heading' : 'paragraph',
-    ...(Object.keys(attrs).length || style.heading
-      ? { attrs: { ...attrs, ...(style.heading ? { level: style.heading } : {}) } }
+    type: headingLevel ? 'heading' : 'paragraph',
+    ...(Object.keys(attrs).length || headingLevel
+      ? { attrs: { ...attrs, ...(headingLevel ? { level: headingLevel } : {}) } }
       : {}),
   };
   const nodes: StudioRichNode[] = [];
@@ -812,7 +974,7 @@ function parseParagraph(element: Element, context: ImportContext): ParsedParagra
     nodes.push({ ...base, ...(segment.length ? { content: segment } : {}) });
   if (list && (nodes.length !== 1 || !['paragraph', 'heading'].includes(nodes[0].type)))
     unsupported('列表内分页符');
-  return { nodes, list, quote: style.quote };
+  return { nodes, list, quote: style.quote || quoteBorder };
 }
 
 function parseBlocks(parent: Element, context: ImportContext): StudioRichNode[] {
@@ -1086,6 +1248,7 @@ export async function importStudioWord(source: Blob, name: string): Promise<Stud
     relationships: mainRelationships.relationships,
     images: mainRelationships.images,
     numbering: parseNumbering(numberingXml),
+    usedStyles: new Set(),
   };
   const content = parseBlocks(body, context);
   const regionDocuments: Pick<StudioWordDocument, 'header' | 'footer' | 'pageNumbers'> = {};
@@ -1123,12 +1286,29 @@ export async function importStudioWord(source: Blob, name: string): Promise<Stud
     regionDocuments[region] = model;
     if (region === 'footer' && containsCurrentPageNumber(model)) regionDocuments.pageNumbers = true;
   }
+  const definitions = [...context.styleModels.values()];
+  for (const [nativeId, style] of context.styleModels)
+    if (nativeId.startsWith('ZuviStyle_')) context.usedStyles.add(style.id);
+  let previousSize = -1;
+  while (context.usedStyles.size !== previousSize) {
+    previousSize = context.usedStyles.size;
+    for (const style of definitions.filter((item) => context.usedStyles.has(item.id)))
+      for (const id of [style.basedOn, style.next])
+        if (id && definitions.some((item) => item.id === id)) context.usedStyles.add(id);
+  }
+  const paragraphStyles = validateStudioWordParagraphStyles(
+    definitions.filter((item) => context.usedStyles.has(item.id))
+  );
   return {
     version: 1,
     id: `studio-word-${globalThis.crypto.randomUUID()}`,
     name: name || '未命名.docx',
     kind: 'word',
-    content: { type: 'doc', content: content.length ? content : [{ type: 'paragraph' }] },
+    content: {
+      type: 'doc',
+      ...(paragraphStyles.length ? { attrs: { paragraphStyles } } : {}),
+      content: content.length ? content : [{ type: 'paragraph' }],
+    },
     page,
     ...regionDocuments,
   };
@@ -1141,7 +1321,10 @@ function checkAttrs(node: StudioRichNode, allowed: string[]) {
   }
 }
 
-function runOptions(node: StudioRichNode): { options: IRunOptions; href?: string } {
+function runOptions(
+  node: StudioRichNode,
+  inherited?: Required<StudioWordCharacterStyle>
+): { options: IRunOptions; href?: string } {
   let href: string | undefined;
   let options: IRunOptions = { text: node.text || '' };
   for (const mark of node.marks || []) {
@@ -1178,17 +1361,45 @@ function runOptions(node: StudioRichNode): { options: IRunOptions; href?: string
         };
     } else throw new Error(`DOCX 导出尚未支持 ${mark.type} 文字格式。`);
   }
+  if (inherited) {
+    const actual = studioWordNodeRun(node);
+    options = {
+      ...options,
+      bold: actual.bold === inherited.bold ? undefined : actual.bold,
+      italics: actual.italic === inherited.italic ? undefined : actual.italic,
+      strike: actual.strike === inherited.strike ? undefined : actual.strike,
+      underline:
+        actual.underline === inherited.underline
+          ? undefined
+          : { type: actual.underline ? UnderlineType.SINGLE : UnderlineType.NONE },
+      font: actual.fontFamily === inherited.fontFamily ? undefined : safeFont(actual.fontFamily),
+      size: actual.fontSize === inherited.fontSize ? undefined : actual.fontSize * 2,
+      color:
+        actual.color.toLowerCase() === inherited.color.toLowerCase()
+          ? undefined
+          : actual.color.slice(1),
+      shading:
+        actual.backgroundColor === inherited.backgroundColor
+          ? undefined
+          : actual.backgroundColor
+            ? { type: ShadingType.CLEAR, fill: actual.backgroundColor.slice(1) }
+            : { type: ShadingType.NIL },
+    };
+  }
   return { options, href };
 }
 
-function inlineChildren(nodes: StudioRichNode[] = []): ParagraphChild[] {
+function inlineChildren(
+  nodes: StudioRichNode[] = [],
+  inherited?: Required<StudioWordCharacterStyle>
+): ParagraphChild[] {
   return nodes.map((node) => {
     if (node.type === 'hardBreak') return new TextRun({ break: 1 });
     if (node.type === 'pageNumber') {
       checkAttrs(node, ['kind']);
       if (node.attrs?.kind != null && !['current', 'total'].includes(String(node.attrs.kind)))
         unsupported('页码域');
-      const { options, href } = runOptions({ ...node, text: '' });
+      const { options, href } = runOptions({ ...node, text: '' }, inherited);
       if (href) unsupported('包含超链接的页码域');
       return new TextRun({
         ...options,
@@ -1198,7 +1409,7 @@ function inlineChildren(nodes: StudioRichNode[] = []): ParagraphChild[] {
     if (node.type === 'image') {
       checkAttrs(node, ['src', 'width', 'height', 'alt']);
       const { data, type } = embeddedImageData(node.attrs?.src);
-      const { options, href } = runOptions({ ...node, text: '' });
+      const { options, href } = runOptions({ ...node, text: '' }, inherited);
       const run = new ImageRun({
         type,
         data,
@@ -1216,7 +1427,7 @@ function inlineChildren(nodes: StudioRichNode[] = []): ParagraphChild[] {
       return href ? new ExternalHyperlink({ link: href, children: [run] }) : run;
     }
     if (node.type !== 'text') throw new Error(`DOCX 导出尚未支持 ${node.type} 行内元素。`);
-    const { options, href } = runOptions(node);
+    const { options, href } = runOptions(node, inherited);
     const run = new TextRun(options);
     return href ? new ExternalHyperlink({ link: href, children: [run] }) : run;
   });
@@ -1256,6 +1467,80 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
   )
     throw new Error('Word 页面配置无效。');
   const margin = Math.round(number(document.page.margin, '页边距', 5, 60) * TWIPS_PER_MM);
+  const paragraphStyles = getStudioWordParagraphStyles(document.content);
+  document = {
+    ...document,
+    content: materializeStudioWordStyles(document.content, paragraphStyles),
+    ...(document.header
+      ? { header: materializeStudioWordStyles(document.header, paragraphStyles) }
+      : {}),
+    ...(document.footer
+      ? { footer: materializeStudioWordStyles(document.footer, paragraphStyles) }
+      : {}),
+  };
+  const nativeStyleId = (id: string) =>
+    id === 'paragraph'
+      ? 'Normal'
+      : id === 'no-spacing'
+        ? 'ZuviNoSpacing'
+        : /^heading-[1-6]$/.test(id)
+          ? `Heading${id.slice(-1)}`
+          : `ZuviStyle_${id}`;
+  const customStyles: IParagraphStyleOptions[] = paragraphStyles.map((style) => ({
+    id: nativeStyleId(style.id),
+    name: style.name,
+    basedOn: nativeStyleId(style.basedOn || 'paragraph'),
+    next: nativeStyleId(style.next || style.id),
+    quickFormat: true,
+    run: {
+      ...(style.run?.fontFamily ? { font: safeFont(style.run.fontFamily) } : {}),
+      ...(style.run?.fontSize !== undefined ? { size: style.run.fontSize * 2 } : {}),
+      ...(style.run?.bold !== undefined ? { bold: style.run.bold } : {}),
+      ...(style.run?.italic !== undefined ? { italics: style.run.italic } : {}),
+      ...(style.run?.strike !== undefined ? { strike: style.run.strike } : {}),
+      ...(style.run?.underline !== undefined
+        ? { underline: { type: style.run.underline ? UnderlineType.SINGLE : UnderlineType.NONE } }
+        : {}),
+      ...(style.run?.color ? { color: style.run.color.slice(1) } : {}),
+      ...(style.run?.backgroundColor !== undefined
+        ? {
+            shading: style.run.backgroundColor
+              ? { type: ShadingType.CLEAR, fill: style.run.backgroundColor.slice(1) }
+              : { type: ShadingType.NIL },
+          }
+        : {}),
+    },
+    paragraph: {
+      ...(style.headingLevel !== undefined
+        ? { outlineLevel: style.headingLevel ? style.headingLevel - 1 : 9 }
+        : {}),
+      ...(style.paragraph?.textAlign ? { alignment: ALIGN[style.paragraph.textAlign] } : {}),
+      indent: {
+        ...(style.paragraph?.indentLeft !== undefined
+          ? { left: Math.round(style.paragraph.indentLeft * 20) }
+          : {}),
+        ...(style.paragraph?.indentRight !== undefined
+          ? { right: Math.round(style.paragraph.indentRight * 20) }
+          : {}),
+        ...(style.paragraph?.indentFirstLine !== undefined
+          ? style.paragraph.indentFirstLine < 0
+            ? { hanging: Math.round(-style.paragraph.indentFirstLine * 20) }
+            : { firstLine: Math.round(style.paragraph.indentFirstLine * 20) }
+          : {}),
+      },
+      spacing: {
+        ...(style.paragraph?.spaceBefore !== undefined
+          ? { before: Math.round(style.paragraph.spaceBefore * 20) }
+          : {}),
+        ...(style.paragraph?.spaceAfter !== undefined
+          ? { after: Math.round(style.paragraph.spaceAfter * 20) }
+          : {}),
+        ...(style.paragraph?.lineHeight !== undefined
+          ? { line: Math.round(style.paragraph.lineHeight * 240) }
+          : {}),
+      },
+    },
+  }));
   const numbering: NumberingDefinition[] = [];
   const paragraph = (node: StudioRichNode, options: IParagraphOptions = {}) => {
     checkAttrs(node, [
@@ -1267,8 +1552,18 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
       'spaceBefore',
       'spaceAfter',
       'lineHeight',
+      'paragraphStyle',
+      'paragraphStyleFallback',
+      'paragraphStyleMaterialized',
+      'paragraphStyleSnapshot',
     ]);
     const attrs = node.attrs || {};
+    const linkedStyle =
+      typeof attrs.paragraphStyle === 'string'
+        ? resolveStudioWordParagraphStyle(paragraphStyles, attrs.paragraphStyle)
+        : undefined;
+    const nodeLevel = node.type === 'heading' ? number(attrs.level, '标题级别', 1, 6) : 0;
+    if (!Number.isInteger(nodeLevel)) unsupported('非整数标题级别');
     const left =
       attrs.indentLeft == null
         ? undefined
@@ -1285,8 +1580,12 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
     if (attrs.textAlign != null && !align) unsupported('段落对齐');
     return new Paragraph({
       ...options,
+      ...(linkedStyle ? { style: nativeStyleId(linkedStyle.id) } : {}),
+      ...(linkedStyle && nodeLevel !== linkedStyle.headingLevel
+        ? { outlineLevel: nodeLevel ? nodeLevel - 1 : 9 }
+        : {}),
       heading:
-        node.type === 'heading'
+        !linkedStyle && node.type === 'heading'
           ? HEADING_LEVELS[number(attrs.level, '标题级别', 1, 6) - 1]
           : options.heading,
       alignment: align || options.alignment,
@@ -1316,7 +1615,7 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
             ? undefined
             : Math.round(number(attrs.lineHeight, '行距', 0.5, 10) * 240),
       },
-      children: inlineChildren(node.content),
+      children: inlineChildren(node.content, linkedStyle?.run),
     });
   };
   const blocks = (nodes: StudioRichNode[], depth = 0): (Paragraph | Table)[] => {
@@ -1338,7 +1637,12 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
         for (const item of node.content || []) {
           if (!['paragraph', 'heading'].includes(item.type))
             throw new Error('DOCX 首版支持由段落组成的引用。');
-          result.push(paragraph(item, { style: 'ZuviQuote' }));
+          result.push(
+            paragraph(item, {
+              style: 'ZuviQuote',
+              border: { left: { style: BorderStyle.SINGLE, size: 18, color: '1F2937' } },
+            })
+          );
         }
       } else if (node.type === 'bulletList' || node.type === 'orderedList') {
         const renderList = (list: StudioRichNode, level: number) => {
@@ -1486,6 +1790,13 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
       },
       paragraphStyles: [
         {
+          id: 'ZuviNoSpacing',
+          name: 'ZUVI No Spacing',
+          basedOn: 'Normal',
+          paragraph: { spacing: { line: 240, before: 0, after: 0 } },
+        },
+        ...customStyles,
+        {
           id: 'ZuviQuote',
           name: 'ZUVI Quote',
           basedOn: 'Normal',
@@ -1547,5 +1858,15 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
       },
     ],
   });
-  return new Blob([await Packer.toArrayBuffer(file)], { type: MIME });
+  const bytes = await Packer.toArrayBuffer(file);
+  if (!paragraphStyles.some((style) => style.autoUpdate)) return new Blob([bytes], { type: MIME });
+  const zip = await JSZip.loadAsync(bytes);
+  let stylesXml = await zip.file('word/styles.xml')!.async('string');
+  for (const style of paragraphStyles.filter((item) => item.autoUpdate))
+    stylesXml = stylesXml.replace(
+      new RegExp(`(<w:style\\b[^>]*\\bw:styleId="${nativeStyleId(style.id)}"[^>]*>)`),
+      '$1<w:autoRedefine/>'
+    );
+  zip.file('word/styles.xml', stylesXml);
+  return new Blob([await zip.generateAsync({ type: 'arraybuffer' })], { type: MIME });
 }

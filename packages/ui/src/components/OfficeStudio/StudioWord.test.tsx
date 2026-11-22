@@ -11,6 +11,46 @@ import type {
   StudioWordDocument,
 } from './studio-types';
 
+const namedStyleDocument = (autoUpdate = false): StudioWordDocument => ({
+  version: 1,
+  id: 'named-style-test',
+  name: '样式.docx',
+  kind: 'word',
+  page: { size: 'A4', orientation: 'portrait', margin: 20 },
+  content: {
+    type: 'doc',
+    attrs: {
+      paragraphStyles: [
+        {
+          id: 'review',
+          name: '评审正文',
+          run: { fontSize: 14, bold: true },
+          paragraph: { lineHeight: 1.5 },
+          next: 'paragraph',
+          autoUpdate,
+        },
+      ],
+    },
+    content: ['第一段', '第二段'].map((text) => ({
+      type: 'paragraph',
+      attrs: { paragraphStyle: 'review', paragraphStyleMaterialized: true, lineHeight: 1.5 },
+      content: [
+        {
+          type: 'text',
+          text,
+          marks: [
+            { type: 'bold' },
+            {
+              type: 'textStyle',
+              attrs: { fontFamily: 'Noto Sans SC', fontSize: '14pt', color: '#1f2937' },
+            },
+          ],
+        },
+      ],
+    })),
+  },
+});
+
 const documentModel = (text = '项目评审内容'): StudioWordDocument => ({
   version: 1,
   id: 'word-ui-test',
@@ -353,6 +393,189 @@ async function mount(
   return { ...view, textbox, onChange, document };
 }
 
+describe('StudioWord named paragraph styles', () => {
+  it('creates, applies, modifies and deletes a named style with real undo and redo', async () => {
+    const { textbox, onChange } = await mount();
+    selectNodeContents(textbox, textbox.querySelector('p')!);
+    fireEvent.click(screen.getByRole('button', { name: '新建段落样式' }));
+    const dialog = await screen.findByRole('dialog');
+    fireEvent.change(within(dialog).getByLabelText('样式名称'), { target: { value: '复核格式' } });
+    fireEvent.change(within(dialog).getByLabelText('样式字号'), { target: { value: '14' } });
+    fireEvent.change(within(dialog).getByLabelText('样式文字颜色'), {
+      target: { value: '#185adb' },
+    });
+    fireEvent.click(within(dialog).getByRole('button', { name: '保存样式' }));
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+    const id = onChange.mock.lastCall?.[0].content.attrs.paragraphStyles[0].id;
+    expect(id).toMatch(/^style-/);
+    fireEvent.click(screen.getByRole('button', { name: /^段落样式/ }));
+    fireEvent.click(await screen.findByRole('option', { name: '复核格式' }));
+    await waitFor(() => expect(textbox.querySelector('p')).toHaveAttribute('data-word-style', id));
+    expect(textbox.querySelector('span')).toHaveStyle({ fontSize: '14pt', color: '#185adb' });
+    expect(textbox).toHaveTextContent('项目评审内容');
+    fireEvent.click(screen.getByRole('button', { name: '修改段落样式' }));
+    fireEvent.change(await screen.findByLabelText('样式字号'), { target: { value: '20' } });
+    fireEvent.click(screen.getByRole('button', { name: '保存样式' }));
+    await waitFor(() => expect(textbox.querySelector('span')).toHaveStyle({ fontSize: '20pt' }));
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(textbox.querySelector('span')).toHaveStyle({ fontSize: '14pt' }));
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    await waitFor(() => expect(textbox.querySelector('span')).toHaveStyle({ fontSize: '20pt' }));
+    fireEvent.click(screen.getByRole('button', { name: '修改段落样式' }));
+    fireEvent.click(await screen.findByRole('button', { name: '删除样式' }));
+    await waitFor(() =>
+      expect(textbox.querySelector('p')).toHaveAttribute('data-word-style', 'paragraph')
+    );
+    expect(onChange.mock.lastCall?.[0].content.attrs.paragraphStyles).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(textbox.querySelector('p')).toHaveAttribute('data-word-style', id));
+    expect(textbox.querySelector('span')).toHaveStyle({ fontSize: '20pt' });
+  });
+
+  it('updates body and header bindings while preserving direct formatting in another paragraph', async () => {
+    const model = namedStyleDocument();
+    model.header = {
+      type: 'doc',
+      content: [JSON.parse(JSON.stringify(model.content.content![0]))],
+    };
+    model.content.content![1].content![0].marks = [
+      {
+        type: 'textStyle',
+        attrs: { fontFamily: 'Noto Sans SC', fontSize: '18pt', color: '#1f2937' },
+      },
+    ];
+    const { textbox } = await mount({ document: model });
+    const header = await screen.findByRole('textbox', { name: 'Word 页眉' });
+    selectNodeContents(textbox, textbox.querySelector('p')!);
+    fireEvent.click(screen.getByRole('button', { name: '修改段落样式' }));
+    fireEvent.change(await screen.findByLabelText('样式字号'), { target: { value: '20' } });
+    fireEvent.click(screen.getByRole('button', { name: '保存样式' }));
+    await waitFor(() =>
+      expect(textbox.querySelectorAll('p')[0].querySelector('span')).toHaveStyle({
+        fontSize: '20pt',
+      })
+    );
+    expect(textbox.querySelectorAll('p')[1].querySelector('span')).toHaveStyle({
+      fontSize: '18pt',
+    });
+    expect(textbox.querySelectorAll('p')[1].querySelector('strong')).toBeNull();
+    expect(header.querySelector('span')).toHaveStyle({ fontSize: '20pt' });
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(header.querySelector('span')).toHaveStyle({ fontSize: '14pt' }));
+    expect(textbox.querySelectorAll('p')[1].querySelector('span')).toHaveStyle({
+      fontSize: '18pt',
+    });
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    await waitFor(() => expect(header.querySelector('span')).toHaveStyle({ fontSize: '20pt' }));
+  });
+
+  it('uses the configured next paragraph style on Enter without deleting the preceding text', async () => {
+    const model = namedStyleDocument();
+    model.content.content = model.content.content!.slice(0, 1);
+    const { textbox, onChange } = await mount({ document: model });
+    selectNodeContents(textbox, textbox.querySelector('p')!);
+    act(() => {
+      window.getSelection()!.collapseToEnd();
+      document.dispatchEvent(new Event('selectionchange'));
+    });
+    fireEvent.keyDown(textbox, { key: 'Enter', code: 'Enter' });
+    await waitFor(() => expect(textbox.querySelectorAll('p')).toHaveLength(2));
+    expect(textbox.querySelectorAll('p')[0]).toHaveTextContent('第一段');
+    expect(textbox.querySelectorAll('p')[1]).toHaveAttribute('data-word-style', 'paragraph');
+    expect(onChange.mock.lastCall?.[0].content.content.at(-1).attrs.paragraphStyle).toBe(
+      'paragraph'
+    );
+  });
+
+  it('automatically updates the definition and linked paragraphs in the same undoable formatting action', async () => {
+    const { textbox, onChange } = await mount({ document: namedStyleDocument(true) });
+    selectNodeContents(textbox, textbox.querySelector('p')!);
+    fireEvent.focus(screen.getByRole('combobox', { name: '字号' }));
+    fireEvent.keyDown(screen.getByRole('combobox', { name: '字号' }), { key: 'ArrowDown' });
+    fireEvent.click(await screen.findByRole('option', { name: '20' }));
+    await waitFor(() =>
+      expect(textbox.querySelectorAll('p')[1].querySelector('span')).toHaveStyle({
+        fontSize: '20pt',
+      })
+    );
+    expect(onChange.mock.lastCall?.[0].content.attrs.paragraphStyles[0].run.fontSize).toBe(20);
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() =>
+      expect(textbox.querySelectorAll('p')[1].querySelector('span')).toHaveStyle({
+        fontSize: '14pt',
+      })
+    );
+    expect(textbox.querySelectorAll('p')[0].querySelector('span')).toHaveStyle({
+      fontSize: '14pt',
+    });
+    expect(onChange.mock.lastCall?.[0].content.attrs.paragraphStyles[0].run.fontSize).toBe(14);
+  });
+
+  it('keeps heading styles inside list items and creates the next item once with its configured style', async () => {
+    const model = namedStyleDocument();
+    model.content.attrs!.paragraphStyles = [
+      { id: 'review', name: '评审正文', basedOn: 'heading-2', next: 'paragraph' },
+    ];
+    model.content.content = [
+      {
+        type: 'orderedList',
+        attrs: { start: 1 },
+        content: [
+          {
+            type: 'listItem',
+            content: [
+              {
+                type: 'heading',
+                attrs: { level: 2, paragraphStyle: 'review' },
+                content: [{ type: 'text', text: '列表标题' }],
+              },
+            ],
+          },
+        ],
+      },
+    ];
+    const { textbox, onChange } = await mount({ document: model });
+    expect(textbox.querySelector('li h2')).toHaveTextContent('列表标题');
+    selectNodeContents(textbox, textbox.querySelector('h2')!);
+    act(() => {
+      window.getSelection()!.collapseToEnd();
+      document.dispatchEvent(new Event('selectionchange'));
+    });
+    fireEvent.keyDown(textbox, { key: 'Enter', code: 'Enter' });
+    await waitFor(() => expect(textbox.querySelectorAll('li')).toHaveLength(2));
+    expect(textbox.querySelectorAll('li')[1].querySelector('p')).toHaveAttribute(
+      'data-word-style',
+      'paragraph'
+    );
+    expect(onChange.mock.lastCall?.[0].content.content[0].content).toHaveLength(2);
+  });
+
+  it('preserves a composing paragraph until IME has completed before using the next style', async () => {
+    const model = namedStyleDocument();
+    model.content.content = model.content.content!.slice(0, 1);
+    const { textbox } = await mount({ document: model });
+    selectNodeContents(textbox, textbox.querySelector('p')!);
+    act(() => {
+      window.getSelection()!.collapseToEnd();
+      document.dispatchEvent(new Event('selectionchange'));
+    });
+    fireEvent.compositionStart(textbox);
+    fireEvent.keyDown(textbox, { key: 'Enter', code: 'Enter', isComposing: true, keyCode: 229 });
+    expect(textbox.querySelectorAll('p')).toHaveLength(1);
+    fireEvent.compositionEnd(textbox);
+  });
+
+  it.each([{ readOnly: true }, { disabled: true }])(
+    'disables named style mutations in %j',
+    async (options) => {
+      const { onChange } = await mount({ ...options, document: namedStyleDocument() });
+      expect(screen.getByRole('button', { name: '新建段落样式' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: '修改段落样式' })).toBeDisabled();
+      expect(onChange).not.toHaveBeenCalled();
+    }
+  );
+});
+
 describe('StudioWord structured editing', () => {
   it('nests ordered list items via Tab and the list indent tools', async () => {
     const listDocument: StudioWordDocument = {
@@ -423,7 +646,9 @@ describe('StudioWord structured editing', () => {
       expectZuviButtons();
     }
     fireEvent.click(within(tabs).getByRole('tab', { name: '开始' }));
-    expect(container.querySelector('[data-part="word-stage"]')).toHaveClass('zuvi-studio-word-stage');
+    expect(container.querySelector('[data-part="word-stage"]')).toHaveClass(
+      'zuvi-studio-word-stage'
+    );
     expect(container.querySelector('[data-part="word-paper"]')).toHaveStyle({
       width: `${(210 * 96) / 25.4}px`,
     });
@@ -1046,7 +1271,7 @@ describe('StudioWord typed font details', () => {
     await waitFor(() => expect(textbox.querySelector('span')).toHaveStyle({ fontSize: '17.5pt' }));
     expect(textbox).toHaveTextContent('项目评审内容');
     fireEvent.focus(size);
-    fireEvent.change(size, { target: { value: '301' } });
+    fireEvent.change(size, { target: { value: '410' } });
     fireEvent.keyDown(size, { key: 'Enter' });
     expect(size).toHaveAttribute('aria-invalid', 'true');
     fireEvent.keyDown(size, { key: 'Escape' });

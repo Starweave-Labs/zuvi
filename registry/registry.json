@@ -303,6 +303,9 @@
     "StudioSheetHyperlink": "packages/ui/src/components/OfficeStudio/index.ts",
     "StudioSheetStructureEdit": "packages/ui/src/components/OfficeStudio/index.ts",
     "StudioWordDocument": "packages/ui/src/components/OfficeStudio/index.ts",
+    "StudioWordCharacterStyle": "packages/ui/src/components/OfficeStudio/index.ts",
+    "StudioWordParagraphFormat": "packages/ui/src/components/OfficeStudio/index.ts",
+    "StudioWordParagraphStyle": "packages/ui/src/components/OfficeStudio/index.ts",
     "Pagination": "packages/ui/src/components/Pagination/index.ts",
     "PaginationProps": "packages/ui/src/components/Pagination/index.ts",
     "Popconfirm": "packages/ui/src/components/Popconfirm/index.ts",
@@ -1967,9 +1970,11 @@
       "title": "OfficeStudio 独立文档工作台",
       "description": "以 ZUVI 控件构建的独立文档工作台：Word 富文本页面、Excel 单元格和公式、PDF 分页批注与表单，支持文件适配、保存反馈、只读预览和全屏，不依赖 ONLYOFFICE 服务",
       "dependencies": [
+        "@tiptap/extension-list",
         "@tiptap/extension-table",
         "@tiptap/extension-text-align",
         "@tiptap/extension-text-style",
+        "@tiptap/pm",
         "@tiptap/react",
         "@tiptap/starter-kit",
         "@zuvi/icons",
@@ -2007,6 +2012,7 @@
         "packages/ui/src/components/OfficeStudio/StudioSheetSortDialog.tsx",
         "packages/ui/src/components/OfficeStudio/StudioWord.css",
         "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "packages/ui/src/components/OfficeStudio/StudioWordStyleDialog.tsx",
         "packages/ui/src/components/OfficeStudio/index.ts",
         "packages/ui/src/components/OfficeStudio/studio-cell-style.ts",
         "packages/ui/src/components/OfficeStudio/studio-font-input.ts",
@@ -2020,6 +2026,8 @@
         "packages/ui/src/components/OfficeStudio/studio-sheet-rules.ts",
         "packages/ui/src/components/OfficeStudio/studio-sheet-structure.ts",
         "packages/ui/src/components/OfficeStudio/studio-types.ts",
+        "packages/ui/src/components/OfficeStudio/studio-word-style-extension.ts",
+        "packages/ui/src/components/OfficeStudio/studio-word-styles.ts",
         "packages/ui/src/components/OfficeStudio/studio-word-tools.ts"
       ],
       "cssVars": {

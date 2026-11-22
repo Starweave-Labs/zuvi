@@ -14,6 +14,32 @@ const JSZip = require('jszip');
 const ts = require('typescript');
 const xml = new JSDOM().window;
 const exports = {};
+const styleExports = {};
+const fontExports = {};
+for (const [file, target] of [
+  ['studio-font-input.ts', fontExports],
+  ['studio-word-styles.ts', styleExports],
+]) {
+  runInNewContext(
+    ts.transpileModule(
+      readFileSync(
+        new URL(`../../packages/ui/src/components/OfficeStudio/${file}`, import.meta.url),
+        'utf8'
+      ),
+      {
+        compilerOptions: {
+          module: ts.ModuleKind.CommonJS,
+          target: ts.ScriptTarget.ES2022,
+          esModuleInterop: true,
+        },
+      }
+    ).outputText,
+    {
+      exports: target,
+      require: (id) => (id === './studio-font-input' ? fontExports : uiRequire(id)),
+    }
+  );
+}
 runInNewContext(
   ts.transpileModule(
     readFileSync(
@@ -30,7 +56,7 @@ runInNewContext(
   ).outputText,
   {
     exports,
-    require,
+    require: (id) => (id.endsWith('/studio-word-styles') ? styleExports : require(id)),
     Blob,
     crypto: webcrypto,
     DOMParser: xml.DOMParser,
@@ -78,6 +104,220 @@ const find = (node, type) => [
 const findText = (node, value) => find(node, 'text').find((item) => item.text === value);
 const attrs = (node, mark) => node.marks?.find((item) => item.type === mark)?.attrs;
 const parse = (value) => new xml.DOMParser().parseFromString(value, 'application/xml');
+
+test('named paragraph styles preserve inheritance, native links, automatic update and direct overrides over repeated saves', async () => {
+  let current = model([
+    {
+      type: 'paragraph',
+      attrs: { paragraphStyle: 'summary', paragraphStyleMaterialized: true, lineHeight: 1.5 },
+      content: [
+        text('继承格式', [
+          { type: 'bold' },
+          { type: 'italic' },
+          {
+            type: 'textStyle',
+            attrs: { fontFamily: 'Noto Sans SC', fontSize: '14pt', color: '#185adb' },
+          },
+        ]),
+        text('单独取消粗体', [
+          { type: 'italic' },
+          {
+            type: 'textStyle',
+            attrs: { fontFamily: 'Noto Sans SC', fontSize: '14pt', color: '#185adb' },
+          },
+        ]),
+      ],
+    },
+  ]);
+  current.content.attrs = {
+    paragraphStyles: [
+      {
+        id: 'review',
+        name: '评审正文',
+        run: { fontSize: 14, bold: true, color: '#185adb', backgroundColor: '#ffff00' },
+        paragraph: { lineHeight: 1.5 },
+        autoUpdate: true,
+      },
+      {
+        id: 'summary',
+        name: '评审摘要',
+        basedOn: 'review',
+        next: 'review',
+        run: { italic: true, backgroundColor: null },
+      },
+      { id: 'unused', name: '尚未应用', basedOn: 'summary', run: { underline: true } },
+    ],
+  };
+  for (let round = 0; round < 3; round++) {
+    const blob = await exportStudioWord(current);
+    const zip = await JSZip.loadAsync(await blob.arrayBuffer());
+    const nativeStyles = parse(await zip.file('word/styles.xml').async('string'));
+    const nativeSummary = [...nativeStyles.getElementsByTagNameNS(W, 'style')].find(
+      (style) => style.getAttributeNS(W, 'styleId') === 'ZuviStyle_summary'
+    );
+    assert.equal(
+      nativeSummary.getElementsByTagNameNS(W, 'basedOn')[0].getAttributeNS(W, 'val'),
+      'ZuviStyle_review'
+    );
+    assert.equal(
+      nativeSummary.getElementsByTagNameNS(W, 'next')[0].getAttributeNS(W, 'val'),
+      'ZuviStyle_review'
+    );
+    assert.equal(nativeStyles.getElementsByTagNameNS(W, 'autoRedefine').length, 1);
+    const native = parse(await zip.file('word/document.xml').async('string'));
+    assert.equal(
+      native.getElementsByTagNameNS(W, 'pStyle')[0].getAttributeNS(W, 'val'),
+      'ZuviStyle_summary'
+    );
+    current = await importStudioWord(blob, current.name);
+    const definitions = current.content.attrs.paragraphStyles;
+    assert.deepEqual(
+      JSON.parse(JSON.stringify(definitions.map((style) => [style.id, style.name]))),
+      [
+        ['review', '评审正文'],
+        ['summary', '评审摘要'],
+        ['unused', '尚未应用'],
+      ]
+    );
+    assert.equal(definitions[0].autoUpdate, true);
+    assert.equal(definitions[1].basedOn, 'review');
+    assert.equal(definitions[1].run.backgroundColor, null);
+    assert.equal(find(current.content, 'paragraph')[0].attrs.paragraphStyle, 'summary');
+    assert.ok(findText(current.content, '继承格式').marks.some((mark) => mark.type === 'bold'));
+    assert.ok(
+      !findText(current.content, '单独取消粗体').marks.some((mark) => mark.type === 'bold')
+    );
+    assert.equal(attrs(findText(current.content, '继承格式'), 'textStyle').fontSize, '14pt');
+    assert.equal(
+      attrs(findText(current.content, '继承格式'), 'textStyle').backgroundColor,
+      undefined
+    );
+  }
+});
+
+test('native custom styles remain editable definitions with parent and next-style links', async () => {
+  const blob = await fixture(
+    '<w:p><w:pPr><w:pStyle w:val="ReviewChild"/></w:pPr><w:r><w:t>导入内容</w:t></w:r></w:p>',
+    {
+      'word/styles.xml': `<w:styles xmlns:w="${W}">
+      <w:style w:type="paragraph" w:styleId="Normal"><w:name w:val="Normal"/><w:rPr><w:rFonts w:ascii="Calibri"/><w:sz w:val="22"/></w:rPr><w:pPr><w:spacing w:after="0"/></w:pPr></w:style>
+      <w:style w:type="paragraph" w:styleId="ReviewBase"><w:name w:val="Review Base"/><w:basedOn w:val="Normal"/><w:rPr><w:i/><w:sz w:val="28"/></w:rPr><w:pPr><w:spacing w:line="360"/></w:pPr></w:style>
+      <w:style w:type="paragraph" w:styleId="ReviewChild"><w:name w:val="Review Child"/><w:basedOn w:val="ReviewBase"/><w:next w:val="ReviewBase"/><w:rPr><w:b w:val="0"/></w:rPr></w:style>
+    </w:styles>`,
+    }
+  );
+  const imported = await importStudioWord(blob, '原生样式.docx');
+  const definitions = imported.content.attrs.paragraphStyles;
+  const parent = definitions.find((style) => style.name === 'Review Base');
+  const child = definitions.find((style) => style.name === 'Review Child');
+  assert.equal(child.basedOn, parent.id);
+  assert.equal(child.next, parent.id);
+  const resolved = styleExports.resolveStudioWordParagraphStyle(definitions, child.id);
+  assert.equal(resolved.run.fontFamily, 'Calibri');
+  assert.equal(resolved.run.fontSize, 14);
+  assert.equal(resolved.run.italic, true);
+  assert.equal(resolved.run.bold, false);
+  assert.equal(resolved.paragraph.lineHeight, 1.5);
+  assert.equal(resolved.paragraph.spaceAfter, 0);
+  const reopened = await importStudioWord(await exportStudioWord(imported), imported.name);
+  assert.equal(
+    reopened.content.attrs.paragraphStyles.find((style) => style.name === 'Review Child').basedOn,
+    parent.id
+  );
+  assert.equal(flatten(reopened.content), '导入内容');
+});
+
+test('a named body style can explicitly remove an inherited heading outline level', async () => {
+  const source = model([
+    { type: 'paragraph', attrs: { paragraphStyle: 'plain' }, content: [text('正文提示')] },
+  ]);
+  source.content.attrs = {
+    paragraphStyles: [{ id: 'plain', name: '普通提示', basedOn: 'heading-1', headingLevel: 0 }],
+  };
+  const restored = await importStudioWord(await exportStudioWord(source), source.name);
+  assert.equal(restored.content.content[0].type, 'paragraph');
+  assert.equal(restored.content.attrs.paragraphStyles[0].headingLevel, 0);
+  assert.equal(attrs(findText(restored.content, '正文提示'), 'textStyle').fontSize, '24pt');
+  assert.ok(findText(restored.content, '正文提示').marks.some((mark) => mark.type === 'bold'));
+});
+
+test('invalid style graphs cannot be exported or partially change the source document', async () => {
+  const source = model([p(text('保留正文'))]);
+  source.content.attrs = {
+    paragraphStyles: [
+      { id: 'a', name: '甲', basedOn: 'b' },
+      { id: 'b', name: '乙', basedOn: 'a' },
+    ],
+  };
+  const before = JSON.stringify(source);
+  await assert.rejects(exportStudioWord(source), /循环/);
+  assert.equal(JSON.stringify(source), before);
+});
+
+test('derived styles retain inherited heading levels instead of freezing the parent level on import', async () => {
+  const source = model([
+    { type: 'paragraph', attrs: { paragraphStyle: 'child' }, content: [text('继承标题')] },
+  ]);
+  source.content.attrs = {
+    paragraphStyles: [
+      { id: 'parent', name: '基础标题', basedOn: 'heading-2' },
+      { id: 'child', name: '继承标题', basedOn: 'parent' },
+    ],
+  };
+  const restored = await importStudioWord(await exportStudioWord(source), source.name);
+  const definitions = restored.content.attrs.paragraphStyles;
+  assert.equal(definitions.find((style) => style.id === 'child').headingLevel, undefined);
+  assert.equal(styleExports.resolveStudioWordParagraphStyle(definitions, 'child').headingLevel, 2);
+  const changed = definitions.map((style) =>
+    style.id === 'parent' ? { ...style, headingLevel: 0 } : style
+  );
+  assert.equal(styleExports.resolveStudioWordParagraphStyle(changed, 'child').headingLevel, 0);
+});
+
+test('paragraph-level outline overrides survive saving without changing the linked style definition', async () => {
+  const blob = await fixture(
+    '<w:p><w:pPr><w:pStyle w:val="CustomHead"/><w:outlineLvl w:val="9"/></w:pPr><w:r><w:t>正文中的标题格式</w:t></w:r></w:p>',
+    {
+      'word/styles.xml': `<w:styles xmlns:w="${W}"><w:style w:type="paragraph" w:styleId="Heading1"><w:name w:val="heading 1"/><w:pPr><w:outlineLvl w:val="0"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="CustomHead"><w:name w:val="Custom Head"/><w:basedOn w:val="Heading1"/></w:style></w:styles>`,
+    }
+  );
+  const imported = await importStudioWord(blob, '大纲覆盖.docx');
+  assert.equal(imported.content.content[0].type, 'paragraph');
+  assert.equal(
+    styleExports.resolveStudioWordParagraphStyle(
+      imported.content.attrs.paragraphStyles,
+      imported.content.content[0].attrs.paragraphStyle
+    ).headingLevel,
+    1
+  );
+  const restored = await importStudioWord(await exportStudioWord(imported), imported.name);
+  assert.equal(restored.content.content[0].type, 'paragraph');
+  assert.equal(
+    styleExports.resolveStudioWordParagraphStyle(
+      restored.content.attrs.paragraphStyles,
+      restored.content.content[0].attrs.paragraphStyle
+    ).headingLevel,
+    1
+  );
+});
+
+test('named styles inside a quote retain the existing quote border and structure after saving', async () => {
+  const blob = await fixture(
+    '<w:p><w:pPr><w:pStyle w:val="DerivedQuote"/></w:pPr><w:r><w:t>保留引用样式</w:t></w:r></w:p>',
+    {
+      'word/styles.xml': `<w:styles xmlns:w="${W}"><w:style w:type="paragraph" w:styleId="ZuviQuote"><w:name w:val="ZUVI Quote"/><w:basedOn w:val="Normal"/><w:pPr><w:ind w:left="360"/><w:pBdr><w:left w:val="single" w:sz="18" w:color="1F2937"/></w:pBdr></w:pPr></w:style><w:style w:type="paragraph" w:styleId="DerivedQuote"><w:name w:val="Derived Quote"/><w:basedOn w:val="ZuviQuote"/></w:style></w:styles>`,
+    }
+  );
+  const imported = await importStudioWord(blob, '引用样式.docx');
+  assert.equal(find(imported.content, 'blockquote').length, 1);
+  const saved = await exportStudioWord(imported);
+  const zip = await JSZip.loadAsync(await saved.arrayBuffer());
+  const native = parse(await zip.file('word/document.xml').async('string'));
+  assert.equal(native.getElementsByTagNameNS(W, 'pBdr').length, 1);
+  const restored = await importStudioWord(saved, imported.name);
+  assert.equal(find(restored.content, 'blockquote').length, 1);
+  assert.equal(flatten(restored.content), '保留引用样式');
+});
 
 async function fixture(body, parts = {}) {
   const zip = new JSZip();
