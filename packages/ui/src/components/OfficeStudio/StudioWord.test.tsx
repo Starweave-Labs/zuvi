@@ -354,6 +354,47 @@ async function mount(
 }
 
 describe('StudioWord structured editing', () => {
+  it('nests ordered list items via Tab and the list indent tools', async () => {
+    const listDocument: StudioWordDocument = {
+      ...documentModel(),
+      content: {
+        type: 'doc',
+        content: [
+          {
+            type: 'orderedList',
+            content: [
+              {
+                type: 'listItem',
+                content: [{ type: 'paragraph', content: [{ type: 'text', text: '第一项' }] }],
+              },
+              {
+                type: 'listItem',
+                content: [{ type: 'paragraph', content: [{ type: 'text', text: '第二项' }] }],
+              },
+            ],
+          },
+        ],
+      },
+    };
+    const { textbox } = await mount({ document: listDocument });
+    const items = () => textbox.querySelectorAll('ol li');
+    expect(items()).toHaveLength(2);
+    // 单项无前兄弟项时 sink 不可用；有前兄弟项的第二项可下沉（Tab 或按钮）
+    const sink = screen.getByRole('button', { name: '列表下沉缩进' });
+    const lift = screen.getByRole('button', { name: '列表上提缩进' });
+    selectNodeContents(textbox, items()[0].querySelector('p')!);
+    await waitFor(() => expect(sink).toBeDisabled());
+    selectNodeContents(textbox, items()[1].querySelector('p')!);
+    await waitFor(() => expect(sink).not.toBeDisabled());
+    fireEvent.keyDown(items()[1], { key: 'Tab' });
+    await waitFor(() => expect(textbox.querySelector('ol li ol')).not.toBeNull());
+    // 上提恢复顶层
+    fireEvent.click(lift);
+    await waitFor(() => expect(textbox.querySelector('ol li ol')).toBeNull());
+    fireEvent.click(sink);
+    await waitFor(() => expect(textbox.querySelector('ol li ol')).not.toBeNull());
+  });
+
   it('renders an editable document, ZUVI ribbon and a scrollable paper stage', async () => {
     const { textbox, container, onChange } = await mount();
     expect(textbox).toHaveTextContent('项目评审内容');

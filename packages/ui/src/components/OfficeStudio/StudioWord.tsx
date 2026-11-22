@@ -540,6 +540,8 @@ export function StudioWord({
         matches: wordFindMatches(current, searchQuery, matchCase),
         bullet: current.isActive('bulletList'),
         ordered: current.isActive('orderedList'),
+        canSinkList: current.can().sinkListItem('listItem'),
+        canLiftList: current.can().liftListItem('listItem'),
         align: (current.getAttributes('heading').textAlign ||
           current.getAttributes('paragraph').textAlign ||
           'left') as string,
@@ -1370,6 +1372,28 @@ export function StudioWord({
                 onClick={() => editor?.chain().focus().toggleOrderedList().run()}
               >
                 <span aria-hidden="true">1. ≡</span>
+              </Button>
+              <Button
+                aria-label="列表下沉缩进"
+                title="列表下沉缩进（Tab）：编号变为下一级，如 1.1"
+                variant="ghost"
+                size="sm"
+                disabled={toolsDisabled || !selection?.canSinkList}
+                onMouseDown={keepSelection}
+                onClick={() => editor?.chain().focus().sinkListItem('listItem').run()}
+              >
+                <span aria-hidden="true">1.1 →</span>
+              </Button>
+              <Button
+                aria-label="列表上提缩进"
+                title="列表上提缩进（Shift+Tab）：回到上一级编号"
+                variant="ghost"
+                size="sm"
+                disabled={toolsDisabled || !selection?.canLiftList}
+                onMouseDown={keepSelection}
+                onClick={() => editor?.chain().focus().liftListItem('listItem').run()}
+              >
+                <span aria-hidden="true">← 1.1</span>
               </Button>
               <Button
                 aria-label="减少缩进"

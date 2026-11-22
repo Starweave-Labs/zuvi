@@ -639,6 +639,30 @@
   margin: 0.5em 0;
 }
 
+/* 多级编号：嵌套有序列表显示 1.1.1，与 DOCX 导出的 %1.%2. 层级一致。
+   ul 重置计数器，避免无序层级混入编号链。 */
+.zuvi-studio-word-content .tiptap ul {
+  list-style: disc;
+  counter-reset: zuvi-ol;
+}
+
+.zuvi-studio-word-content .tiptap ol {
+  list-style: none;
+  counter-reset: zuvi-ol;
+}
+
+.zuvi-studio-word-content .tiptap ol > li {
+  counter-increment: zuvi-ol;
+}
+
+.zuvi-studio-word-content .tiptap ol > li::before {
+  content: counters(zuvi-ol, '.', decimal) '. ';
+}
+
+.zuvi-studio-word-content .tiptap li > ol {
+  padding-inline-start: 1.6em;
+}
+
 .zuvi-studio-word-content .tiptap li p {
   margin-bottom: 0.2em;
 }
