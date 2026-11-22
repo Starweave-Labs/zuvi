@@ -120,7 +120,20 @@ export interface StudioSheetChart {
 
 export interface StudioSheetFilter {
   range: string;
-  columns: Record<string, { operator: 'contains' | 'equals' | 'greater' | 'less'; value: string }>;
+  columns: Record<
+    string,
+    {
+      operator:
+        | 'contains'
+        | 'equals'
+        | 'greater'
+        | 'less'
+        /** 按单元格字体颜色/填充颜色筛选；value 为 #hex，缺失颜色的行不匹配。 */
+        | 'fontColor'
+        | 'fillColor';
+      value: string;
+    }
+  >;
 }
 
 export interface StudioSheetStructureEdit {

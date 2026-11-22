@@ -910,6 +910,41 @@ describe('Office Studio advanced sheet operations', () => {
     );
   });
 
+  it('按字体/填充颜色筛选：归一化十六进制比较，缺失颜色的行不匹配', () => {
+    let document = dataFixture();
+    document.sheets[0].cells = {
+      A1: { input: '名称', background: '#EEF4FF' },
+      B1: { input: '备注' },
+      A2: { input: '开发', background: '#eef4ff' },
+      A3: { input: '设计', background: '#fff' },
+      A4: { input: '验证' },
+    };
+    document = studioSetFilter(document, 'main', {
+      range: 'A1:B4',
+      columns: { A: { operator: 'fillColor', value: '#EEF4FF' } },
+    });
+    const calculation = studioCalculate(document);
+    // 颜色不等或缺失 → 行隐藏：A3(#fff≠#eef4ff) 与 A4(无填充) 都被隐藏。
+    expect([...studioFilteredRows(document.sheets[0], calculation)]).toEqual([3, 4]);
+
+    // 字体颜色算子：#fff 与 #ffffff 归一化后相等，A2 保留；其余行无字体色隐藏。
+    document = studioSetFilter(document, 'main', {
+      range: 'A1:B4',
+      columns: { A: { operator: 'fontColor', value: '#fff' } },
+    });
+    document.sheets[0].cells.A2 = { input: '开发', color: '#ffffff' };
+    expect([
+      ...studioFilteredRows(document.sheets[0], studioCalculate(document)),
+    ]).toEqual([3, 4]);
+    // 颜色值非法时拒绝
+    expect(() =>
+      studioSetFilter(document, 'main', {
+        range: 'A1:B4',
+        columns: { A: { operator: 'fillColor', value: 'blue' } },
+      })
+    ).toThrow('#hex');
+  });
+
   it('sorts complete rows by calculated values, relocates relative formulas, and preserves absolute references and formula strings', () => {
     const original = dataFixture();
     const sorted = studioSortRange(original, 'main', selection, 2, 'asc');

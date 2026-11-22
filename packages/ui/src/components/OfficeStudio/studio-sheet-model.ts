@@ -1706,6 +1706,15 @@ export function studioSetFreeze(
   };
 }
 
+/** 归一化 #hex 颜色用于比较：小写、3 位展开为 6 位；非法或缺省返回 null。 */
+function studioHexColor(value: string | undefined): string | null {
+  if (!value || value === 'none') return null;
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(value.trim());
+  if (!match) return null;
+  const hex = match[1].toLowerCase();
+  return hex.length === 3 ? hex.replace(/(.)/g, '$1$1') : hex;
+}
+
 export function studioSetFilter(
   document: StudioExcelDocument,
   sheetId: string,
@@ -1721,16 +1730,20 @@ export function studioSetFilter(
       throw new Error('筛选区域不能包含合并单元格，请先拆分。');
     for (const [label, condition] of Object.entries(filter.columns)) {
       const col = studioParseAddress(`${label}1`)?.col;
+      const colorOperator = condition.operator === 'fontColor' || condition.operator === 'fillColor';
       if (
         !col ||
         col < range.firstCol ||
         col > range.lastCol ||
-        !['contains', 'equals', 'greater', 'less'].includes(condition.operator) ||
+        !['contains', 'equals', 'greater', 'less', 'fontColor', 'fillColor'].includes(
+          condition.operator
+        ) ||
         typeof condition.value !== 'string' ||
         condition.value.length > 1000 ||
+        (colorOperator && !/^#(?:[0-9a-f]{3}|[0-9a-f]{6})$/i.test(condition.value)) ||
         (['greater', 'less'].includes(condition.operator) && !numericInput.test(condition.value))
       )
-        throw new Error('筛选条件无效，数值比较需填写有效数字。');
+        throw new Error('筛选条件无效，数值比较需填写有效数字，颜色筛选需填写 #hex 颜色。');
     }
   }
   return {
@@ -1762,15 +1775,23 @@ export function studioFilteredRows(sheet: StudioSheet, calculation: SheetCalcula
         studioInputValue(cell?.input ?? '', cell?.numberFormat);
       const text = String(result).toLocaleLowerCase();
       const expected = condition.value.toLocaleLowerCase();
+      const colorOperator =
+        condition.operator === 'fontColor'
+          ? studioHexColor(cell?.color)
+          : condition.operator === 'fillColor'
+            ? studioHexColor(cell?.background)
+            : null;
       const matches =
-        condition.operator === 'contains'
-          ? text.includes(expected)
-          : condition.operator === 'equals'
-            ? text === expected
-            : typeof result === 'number' &&
-              (condition.operator === 'greater'
-                ? result > Number(condition.value)
-                : result < Number(condition.value));
+        colorOperator !== null
+          ? colorOperator === studioHexColor(expected)
+          : condition.operator === 'contains'
+            ? text.includes(expected)
+            : condition.operator === 'equals'
+              ? text === expected
+              : typeof result === 'number' &&
+                (condition.operator === 'greater'
+                  ? result > Number(condition.value)
+                  : result < Number(condition.value));
       if (!matches || calculation.errors.has(`${sheet.id}:${address}`)) {
         hidden.add(row);
         break;

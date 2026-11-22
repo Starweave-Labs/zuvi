@@ -1397,6 +1397,43 @@ describe('StudioSheet', () => {
     expect(state.current().sheets[0].cells.A1.input).toBe('部门');
     expect(screen.queryByRole('dialog', { name: '多关键字排序' })).toBeNull();
   });
+
+  it('filters rows by fill color through the color criterion picker', async () => {
+    const user = userEvent.setup();
+    const document = documentFixture();
+    document.sheets[0].cells = {
+      A1: { input: '名称' },
+      B1: { input: '状态' },
+      A2: { input: '开发', background: '#eef4ff' },
+      B2: { input: '20' },
+      A3: { input: '设计' },
+      B3: { input: '10' },
+    };
+    const state = setup({ document });
+    const address = screen.getByRole('textbox', { name: '单元格地址' });
+    fireEvent.change(address, { target: { value: 'A1:B3' } });
+    fireEvent.keyDown(address, { key: 'Enter' });
+    await user.click(screen.getByRole('tab', { name: '数据' }));
+
+    // 筛选条件切到「填充颜色」后，值控件变为取色器
+    const operatorTrigger = screen.getByRole('button', { name: /^筛选条件/ });
+    await user.click(operatorTrigger);
+    const openListbox = screen
+      .getAllByRole('listbox')
+      .find((element) => element.getAttribute('data-open') === 'true')!;
+    await user.click(within(openListbox).getByRole('option', { name: '填充颜色' }));
+    const picker = screen.getByRole('group', { name: '筛选颜色' });
+    expect(picker).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: '应用筛选' }));
+    // A3 无填充色 → 行被筛选隐藏；A2 保留
+    expect(state.current().sheets[0].filter?.columns.A).toEqual({
+      operator: 'fillColor',
+      value: '#eef4ff',
+    });
+    expect(screen.queryByRole('gridcell', { name: 'A3' })).toBeNull();
+    expect(screen.getByRole('gridcell', { name: 'A2' })).toBeInTheDocument();
+  });
 });
 
 describe('StudioSheet row sizes and font drafts', () => {

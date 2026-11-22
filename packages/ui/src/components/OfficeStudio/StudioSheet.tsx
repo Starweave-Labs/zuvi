@@ -209,7 +209,7 @@ export function StudioSheet({
   const [filterRange, setFilterRange] = React.useState('');
   const [filterColumn, setFilterColumn] = React.useState('A');
   const [filterOperator, setFilterOperator] = React.useState<
-    'contains' | 'equals' | 'greater' | 'less'
+    StudioSheetFilter['columns'][string]['operator']
   >('contains');
   const [filterValue, setFilterValue] = React.useState('');
   const [chartRange, setChartRange] = React.useState('');
@@ -2664,22 +2664,50 @@ export function StudioSheet({
                     { value: 'equals', label: '等于' },
                     { value: 'greater', label: '大于' },
                     { value: 'less', label: '小于' },
+                    { value: 'fontColor', label: '字体颜色' },
+                    { value: 'fillColor', label: '填充颜色' },
                   ]}
-                  onChange={(value) =>
-                    setFilterOperator(value as StudioSheetFilter['columns'][string]['operator'])
-                  }
-                />
-                <Input
-                  size="sm"
-                  aria-label="筛选值"
-                  placeholder="留空清除此列条件"
-                  value={filterValue}
-                  disabled={blocked}
-                  onChange={(event) => setFilterValue(event.target.value)}
-                  onKeyDown={(event) => {
-                    if (event.key === 'Enter' && !event.nativeEvent.isComposing) applyFilter();
+                  onChange={(value) => {
+                    const next = value as StudioSheetFilter['columns'][string]['operator'];
+                    setFilterOperator(next);
+                    // 切到颜色算子时给出默认色，切回文本算子时清空颜色值。
+                    setFilterValue((previous) =>
+                      value === 'fontColor'
+                        ? previous || '#253044'
+                        : value === 'fillColor'
+                          ? previous || '#eef4ff'
+                          : ''
+                    );
                   }}
                 />
+                {filterOperator === 'fontColor' || filterOperator === 'fillColor' ? (
+                  <ColorPicker
+                    size="sm"
+                    role="group"
+                    aria-label="筛选颜色"
+                    value={
+                      /^#(?:[0-9a-f]{3}|[0-9a-f]{6})$/i.test(filterValue)
+                        ? filterValue
+                        : filterOperator === 'fontColor'
+                          ? '#253044'
+                          : '#eef4ff'
+                    }
+                    disabled={blocked}
+                    onChange={(color) => setFilterValue(color)}
+                  />
+                ) : (
+                  <Input
+                    size="sm"
+                    aria-label="筛选值"
+                    placeholder="留空清除此列条件"
+                    value={filterValue}
+                    disabled={blocked}
+                    onChange={(event) => setFilterValue(event.target.value)}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter' && !event.nativeEvent.isComposing) applyFilter();
+                    }}
+                  />
+                )}
                 <Button size="sm" disabled={blocked} onClick={applyFilter}>
                   应用筛选
                 </Button>
