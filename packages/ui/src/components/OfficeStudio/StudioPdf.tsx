@@ -343,6 +343,7 @@ export default function StudioPdf({
   const [highlight, setHighlight] = useState('#f5c542');
   const [lineWidth, setLineWidth] = useState(2);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [replyDraft, setReplyDraft] = useState('');
   const [inspector, setInspector] = useState(true);
   const [panel, setPanel] = useState<Panel>('marks');
   const [query, setQuery] = useState('');
@@ -618,6 +619,45 @@ export default function StudioPdf({
     const current = documentRef.current;
     commit({ ...current, marks: current.marks.filter((entry) => entry.id !== id) });
     if (selectedId === id) setSelectedId(null);
+  };
+  const addReply = (markId: string) => {
+    if (!canModify) return;
+    const draft = replyDraft.trim();
+    if (!draft) return;
+    const current = documentRef.current;
+    const mark = current.marks.find((entry) => entry.id === markId);
+    if (!mark) return;
+    if ((mark.replies?.length ?? 0) >= 99) {
+      setNotice('每个标注最多 99 条回复，请先删除部分回复。');
+      return;
+    }
+    commit({
+      ...current,
+      marks: current.marks.map((entry) =>
+        entry.id === markId
+          ? {
+              ...entry,
+              replies: [
+                ...(entry.replies ?? []),
+                { id: crypto.randomUUID(), text: draft.slice(0, 2000) },
+              ],
+            }
+          : entry
+      ),
+    });
+    setReplyDraft('');
+  };
+  const removeReply = (markId: string, replyId: string) => {
+    if (!canModify) return;
+    const current = documentRef.current;
+    commit({
+      ...current,
+      marks: current.marks.map((entry) =>
+        entry.id === markId
+          ? { ...entry, replies: (entry.replies ?? []).filter((reply) => reply.id !== replyId) }
+          : entry
+      ),
+    });
   };
   const eventPoint = (clientX: number, clientY: number): [number, number] | undefined => {
     if (!view || !paper.current) return;
@@ -1675,6 +1715,53 @@ export default function StudioPdf({
                 </div>
                 {selected ? (
                   <>
+                    <div className="zuvi-studio-pdf-replies" aria-label="PDF 标注回复">
+                      <span className="zuvi-studio-pdf-replies-title">
+                        回复（{selected.replies?.length ?? 0}）
+                      </span>
+                      {(selected.replies ?? []).map((reply) => (
+                        <div className="zuvi-studio-pdf-reply" key={reply.id}>
+                          <span className="zuvi-studio-pdf-reply-text">{reply.text}</span>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            aria-label={`删除回复 ${reply.text.slice(0, 16)}`}
+                            disabled={!canModify}
+                            onClick={() => removeReply(selected.id, reply.id)}
+                          >
+                            删除
+                          </Button>
+                        </div>
+                      ))}
+                      {(selected.replies?.length ?? 0) === 0 ? (
+                        <p className="zuvi-studio-pdf-hint">还没有回复，针对此标注展开讨论。</p>
+                      ) : null}
+                      <div className="zuvi-studio-pdf-reply-input">
+                        <Input
+                          size="sm"
+                          aria-label="PDF 回复内容"
+                          placeholder="写下回复，Enter 发送"
+                          maxLength={2000}
+                          value={replyDraft}
+                          disabled={!canModify}
+                          onChange={(event) => setReplyDraft(event.target.value)}
+                          onKeyDown={(event) => {
+                            if (event.key === 'Enter' && !event.nativeEvent.isComposing) {
+                              event.preventDefault();
+                              addReply(selected.id);
+                            }
+                          }}
+                        />
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          disabled={!canModify || !replyDraft.trim()}
+                          onClick={() => addReply(selected.id)}
+                        >
+                          回复
+                        </Button>
+                      </div>
+                    </div>
                     <p className="zuvi-studio-pdf-hint">
                       拖动页面上的标注调整位置。方向键微调，Delete 删除。
                     </p>

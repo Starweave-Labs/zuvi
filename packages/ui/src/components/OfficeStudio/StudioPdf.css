@@ -720,3 +720,44 @@
     display: none;
   }
 }
+
+.zuvi-studio-pdf-replies {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--zuvi-space-2);
+  padding: var(--zuvi-space-2);
+  border: 1px solid var(--zuvi-color-border-subtle);
+  border-radius: var(--zuvi-radius-md);
+  background: var(--zuvi-color-bg-subtle);
+}
+
+.zuvi-studio-pdf-replies-title {
+  font-size: var(--zuvi-text-xs);
+  font-weight: var(--zuvi-weight-medium);
+  color: var(--zuvi-color-fg-muted);
+}
+
+.zuvi-studio-pdf-reply {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--zuvi-space-2);
+}
+
+.zuvi-studio-pdf-reply-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: var(--zuvi-text-sm);
+  line-height: var(--zuvi-leading-normal);
+}
+
+.zuvi-studio-pdf-reply-input {
+  display: flex;
+  gap: var(--zuvi-space-2);
+}
+
+.zuvi-studio-pdf-reply-input .zuvi-input {
+  flex: 1 1 auto;
+  min-width: 0;
+}

@@ -208,6 +208,32 @@ describe('StudioPdf document editing', () => {
     expect(f.renderPage).toHaveBeenCalledTimes(1);
   });
 
+  it('adds and removes replies on the selected mark with Enter to submit', async () => {
+    const f = host();
+    await ready();
+    fireEvent.click(mark());
+    const input = screen.getByLabelText('PDF 回复内容');
+    expect(screen.getByText('还没有回复，针对此标注展开讨论。')).toBeInTheDocument();
+
+    fireEvent.change(input, { target: { value: '同意，照此修改' } });
+    fireEvent.click(screen.getByRole('button', { name: /^回复$/ }));
+    expect(f.document().marks[0].replies).toHaveLength(1);
+    expect(f.document().marks[0].replies![0].text).toBe('同意，照此修改');
+    expect(input).toHaveValue('');
+
+    // Enter 直接提交第二条
+    fireEvent.change(input, { target: { value: '第二条' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+    expect(f.document().marks[0].replies).toHaveLength(2);
+
+    fireEvent.click(screen.getByRole('button', { name: '删除回复 同意，照此修改' }));
+    expect(f.document().marks[0].replies).toHaveLength(1);
+    expect(f.document().marks[0].replies![0].text).toBe('第二条');
+
+    // 空草稿不可提交
+    expect(screen.getByRole('button', { name: /^回复$/ })).toBeDisabled();
+  });
+
   it('controls ZUVI radio groups independently, mirrors sidebar edits and history, and carries checkbox values between pages', async () => {
     const model = document();
     model.fields.push({

@@ -207,6 +207,12 @@ export interface StudioExcelDocument extends StudioDocumentBase {
   activeSheetId: string;
 }
 
+/** A reply in a PDF annotation discussion thread; order within `replies` is display order. */
+export interface StudioPdfMarkReply {
+  id: string;
+  text: string;
+}
+
 export interface StudioPdfMark {
   id: string;
   page: number;
@@ -222,6 +228,8 @@ export interface StudioPdfMark {
   /** Absolute points in the same PDF coordinates as x/y. */
   points?: [number, number][];
   lineWidth?: number;
+  /** Discussion thread attached to this annotation; rendered below the mark inspector. */
+  replies?: StudioPdfMarkReply[];
 }
 
 export interface StudioPdfField {
