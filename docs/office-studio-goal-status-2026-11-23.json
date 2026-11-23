@@ -1,0 +1,3791 @@
+{
+  "schemaVersion": 1,
+  "goal": "Complete the existing Word, Excel and PDF plan against the original repository feature ledger.",
+  "sourceLedger": "docs/onlyoffice-feature-ledger-2026-11-13.json",
+  "historicalLedgerDate": "2026-11-13",
+  "auditStarted": "2026-11-23",
+  "products": [
+    "Word",
+    "Excel",
+    "PDF"
+  ],
+  "requiredItems": 159,
+  "completionProven": false,
+  "items": [
+    {
+      "id": "W001",
+      "product": "Word",
+      "group": "字符",
+      "feature": "字体与小数字号",
+      "phase": 1,
+      "acceptance": "选区与插入点分别应用，保留原选区",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "基础已有",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W002",
+      "product": "Word",
+      "group": "字符",
+      "feature": "增大与缩小字号",
+      "phase": 1,
+      "acceptance": "按字号阶梯处理混合字号及上下限",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W003",
+      "product": "Word",
+      "group": "字符",
+      "feature": "粗体斜体下划线删除线",
+      "phase": 1,
+      "acceptance": "混合选区状态、取消格式、撤销重做",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "基础已有",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W004",
+      "product": "Word",
+      "group": "字符",
+      "feature": "上标与下标",
+      "phase": 1,
+      "acceptance": "互斥切换、取消后恢复基线",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "基础已有",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W005",
+      "product": "Word",
+      "group": "字符",
+      "feature": "字体颜色与主题颜色",
+      "phase": 1,
+      "acceptance": "自动颜色、主题色及透明度保存",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W006",
+      "product": "Word",
+      "group": "字符",
+      "feature": "文本高亮与清除高亮",
+      "phase": 1,
+      "acceptance": "选中文字和后续输入均可应用及清除",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W007",
+      "product": "Word",
+      "group": "字符",
+      "feature": "大小写转换",
+      "phase": 1,
+      "acceptance": "句首大写、大小写、词首大写及切换",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W008",
+      "product": "Word",
+      "group": "字符",
+      "feature": "格式刷单次与连续",
+      "phase": 1,
+      "acceptance": "复制字符和段落格式，单次结束或连续刷，Esc退出",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W009",
+      "product": "Word",
+      "group": "字符",
+      "feature": "清除字符与段落格式",
+      "phase": 1,
+      "acceptance": "保留文字、结构和链接，明确清除范围",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W010",
+      "product": "Word",
+      "group": "字符",
+      "feature": "字符间距与位置",
+      "phase": 2,
+      "acceptance": "加宽紧缩、提升降低并按度量显示",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W011",
+      "product": "Word",
+      "group": "段落",
+      "feature": "对齐与缩进",
+      "phase": 1,
+      "acceptance": "左右居中两端，首行悬挂缩进",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "基础已有",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W012",
+      "product": "Word",
+      "group": "段落",
+      "feature": "行距段前段后",
+      "phase": 1,
+      "acceptance": "单倍多倍固定值最小值及单位转换",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W013",
+      "product": "Word",
+      "group": "段落",
+      "feature": "制表位与前导符",
+      "phase": 2,
+      "acceptance": "左中右小数点制表位，点线前导符",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W014",
+      "product": "Word",
+      "group": "段落",
+      "feature": "项目符号与编号",
+      "phase": 1,
+      "acceptance": "续编号、重新开始、层级与编号格式",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W015",
+      "product": "Word",
+      "group": "段落",
+      "feature": "完整多级编号",
+      "phase": 2,
+      "acceptance": "层级定义、标题联动与编号重启",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "known-incomplete",
+      "evidence": [],
+      "gaps": [
+        "Current UI provides nesting and composite counters; native DOCX list templates still need alignment with composite numbering.",
+        "Original acceptance also requires level definitions, heading association and restart controls."
+      ]
+    },
+    {
+      "id": "W016",
+      "product": "Word",
+      "group": "段落",
+      "feature": "段落边框与底纹",
+      "phase": 2,
+      "acceptance": "边框每边、线型、距离、底纹及取消",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W017",
+      "product": "Word",
+      "group": "段落",
+      "feature": "孤行控制与同下段",
+      "phase": 3,
+      "acceptance": "分页后不拆分指定段落及标题",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W018",
+      "product": "Word",
+      "group": "段落",
+      "feature": "显示非打印字符",
+      "phase": 1,
+      "acceptance": "显示空格制表与段落结束，导出不写入可见符号",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W019",
+      "product": "Word",
+      "group": "样式",
+      "feature": "标题与正文样式",
+      "phase": 1,
+      "acceptance": "样式应用与当前状态回显",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "implemented-slice-verified-full-acceptance-audit-pending",
+      "evidence": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx: named paragraph style interactions",
+        "packages/ui/src/components/OfficeStudio/studio-word-styles.test.ts: inheritance and direct overrides",
+        "docs/tests/office-studio-word.test.mjs: native style definitions and repeated DOCX saves",
+        "commit 2ca8929",
+        "e2e/office-studio-word-styles.spec.ts: three real browser workflows passed",
+        "docs/audits/2026-11-23/word-styles/: seven reviewed browser screenshots"
+      ],
+      "remainingVerification": [
+        "requirement-by-requirement full-plan audit"
+      ]
+    },
+    {
+      "id": "W020",
+      "product": "Word",
+      "group": "样式",
+      "feature": "新增修改继承样式",
+      "phase": 2,
+      "acceptance": "基于样式、后续样式、自动更新与保存",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "implemented-slice-verified-full-acceptance-audit-pending",
+      "evidence": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx: named paragraph style interactions",
+        "packages/ui/src/components/OfficeStudio/studio-word-styles.test.ts: inheritance and direct overrides",
+        "docs/tests/office-studio-word.test.mjs: native style definitions and repeated DOCX saves",
+        "commit 2ca8929",
+        "e2e/office-studio-word-styles.spec.ts: three real browser workflows passed",
+        "docs/audits/2026-11-23/word-styles/: seven reviewed browser screenshots"
+      ],
+      "remainingVerification": [
+        "requirement-by-requirement full-plan audit"
+      ]
+    },
+    {
+      "id": "W021",
+      "product": "Word",
+      "group": "样式",
+      "feature": "主题字体与颜色",
+      "phase": 3,
+      "acceptance": "文档主题修改同时影响主题引用",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W022",
+      "product": "Word",
+      "group": "表格",
+      "feature": "建表与行列增删",
+      "phase": 1,
+      "acceptance": "跨行列选区、取消与一次撤销",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "基础已有",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W023",
+      "product": "Word",
+      "group": "表格",
+      "feature": "合并与拆分单元格",
+      "phase": 1,
+      "acceptance": "矩形合并，拆分后内容分配明确",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "基础已有",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W024",
+      "product": "Word",
+      "group": "表格",
+      "feature": "表格边框底纹样式",
+      "phase": 2,
+      "acceptance": "内外单边边框、主题样式与保存",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W025",
+      "product": "Word",
+      "group": "表格",
+      "feature": "行高列宽与分布",
+      "phase": 2,
+      "acceptance": "固定最小行高、拖动及平均分布",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W026",
+      "product": "Word",
+      "group": "表格",
+      "feature": "单元格对齐与边距",
+      "phase": 2,
+      "acceptance": "九宫格对齐、间距及内边距",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W027",
+      "product": "Word",
+      "group": "表格",
+      "feature": "跨页重复标题行",
+      "phase": 3,
+      "acceptance": "自动分页后重复标题，避免重复写入正文",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W028",
+      "product": "Word",
+      "group": "表格",
+      "feature": "表格跨页与环绕",
+      "phase": 3,
+      "acceptance": "行允许跨页、表格定位与环绕",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W029",
+      "product": "Word",
+      "group": "表格",
+      "feature": "文本与表格互转",
+      "phase": 2,
+      "acceptance": "分隔符与段落选择，反向转换保留内容",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W030",
+      "product": "Word",
+      "group": "表格",
+      "feature": "表格公式",
+      "phase": 3,
+      "acceptance": "单元格引用、SUM方向与域刷新",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W031",
+      "product": "Word",
+      "group": "对象",
+      "feature": "内嵌图片插入与尺寸",
+      "phase": 1,
+      "acceptance": "比例锁定、替换图片及文件保存",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "基础已有",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W032",
+      "product": "Word",
+      "group": "对象",
+      "feature": "图片裁剪",
+      "phase": 2,
+      "acceptance": "可视裁剪区域与重置，保留原图",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W033",
+      "product": "Word",
+      "group": "对象",
+      "feature": "浮动图片环绕锚点",
+      "phase": 3,
+      "acceptance": "随文字移动、固定页位置、环绕与层级",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W034",
+      "product": "Word",
+      "group": "对象",
+      "feature": "形状与文本框",
+      "phase": 3,
+      "acceptance": "绘制、选择、文字、填充、线条与排列",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W035",
+      "product": "Word",
+      "group": "对象",
+      "feature": "WordArt与SmartArt",
+      "phase": 4,
+      "acceptance": "图形类型、文字结构与原生保存",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W036",
+      "product": "Word",
+      "group": "对象",
+      "feature": "图表与嵌入对象",
+      "phase": 4,
+      "acceptance": "图表数据编辑、对象激活与保存",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W037",
+      "product": "Word",
+      "group": "对象",
+      "feature": "数学公式",
+      "phase": 3,
+      "acceptance": "公式结构编辑、上下标、分式矩阵与保存",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W038",
+      "product": "Word",
+      "group": "对象",
+      "feature": "超链接",
+      "phase": 1,
+      "acceptance": "显示文字、外部地址、内部书签及移除",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "基础已有",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W039",
+      "product": "Word",
+      "group": "页面",
+      "feature": "纸张方向页边距",
+      "phase": 2,
+      "acceptance": "按节应用、不同纸张尺寸及单位",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W040",
+      "product": "Word",
+      "group": "页面",
+      "feature": "分页符与空白页",
+      "phase": 1,
+      "acceptance": "显式分页、删除分页符与空白页行为",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W041",
+      "product": "Word",
+      "group": "页面",
+      "feature": "分节符四种类型",
+      "phase": 3,
+      "acceptance": "下一页连续奇数偶数，页设置独立",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W042",
+      "product": "Word",
+      "group": "页面",
+      "feature": "分栏与栏宽间距",
+      "phase": 3,
+      "acceptance": "等宽非等宽栏、分隔线与栏间分页",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W043",
+      "product": "Word",
+      "group": "页面",
+      "feature": "不同首页奇偶页页眉页脚",
+      "phase": 3,
+      "acceptance": "分节继承、取消链接到前节、奇偶页",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W044",
+      "product": "Word",
+      "group": "页面",
+      "feature": "页码格式与起始页码",
+      "phase": 3,
+      "acceptance": "起始值、续前节、编号格式与域更新",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W045",
+      "product": "Word",
+      "group": "页面",
+      "feature": "水印与页面背景",
+      "phase": 3,
+      "acceptance": "文字图片水印、透明度及各节范围",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W046",
+      "product": "Word",
+      "group": "页面",
+      "feature": "自动分页与布局重算",
+      "phase": 3,
+      "acceptance": "编辑后分页、图片表格脚注均参与布局",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W047",
+      "product": "Word",
+      "group": "页面",
+      "feature": "标尺与页缩略图",
+      "phase": 2,
+      "acceptance": "可拖缩进与边距，页面导航跟随光标",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W048",
+      "product": "Word",
+      "group": "页面",
+      "feature": "打印预览与真实分页",
+      "phase": 3,
+      "acceptance": "与文档分页一致，页范围、纸张及页码",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W049",
+      "product": "Word",
+      "group": "引用",
+      "feature": "大纲导航",
+      "phase": 1,
+      "acceptance": "标题层级、光标定位与修改后更新",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "基础已有",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W050",
+      "product": "Word",
+      "group": "引用",
+      "feature": "自动目录域",
+      "phase": 3,
+      "acceptance": "从标题生成，页码链接，更新或删除目录",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W051",
+      "product": "Word",
+      "group": "引用",
+      "feature": "脚注与尾注",
+      "phase": 3,
+      "acceptance": "位置编号重启、转换、删除与正文同步",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W052",
+      "product": "Word",
+      "group": "引用",
+      "feature": "书签",
+      "phase": 2,
+      "acceptance": "名称校验、添加删除、跳转与原生保存",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W053",
+      "product": "Word",
+      "group": "引用",
+      "feature": "交叉引用",
+      "phase": 3,
+      "acceptance": "引用标题书签题注脚注，目标变化后更新",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W054",
+      "product": "Word",
+      "group": "引用",
+      "feature": "题注与图表目录",
+      "phase": 3,
+      "acceptance": "标签编号、章节号、生成图表目录",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W055",
+      "product": "Word",
+      "group": "引用",
+      "feature": "域代码与更新",
+      "phase": 3,
+      "acceptance": "显示代码与结果、锁定、选区或全文刷新",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W056",
+      "product": "Word",
+      "group": "审阅",
+      "feature": "查找与替换",
+      "phase": 1,
+      "acceptance": "大小写、整词、特殊字符与各正文区域",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W057",
+      "product": "Word",
+      "group": "审阅",
+      "feature": "拼写与语言设置",
+      "phase": 2,
+      "acceptance": "波浪线、建议、忽略、词典及语言切换",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W058",
+      "product": "Word",
+      "group": "审阅",
+      "feature": "批注回复与解决",
+      "phase": 3,
+      "acceptance": "文字锚点、回复线程、解决与重新打开",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W059",
+      "product": "Word",
+      "group": "审阅",
+      "feature": "修订记录",
+      "phase": 3,
+      "acceptance": "插入删除及格式修改，作者和时间",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W060",
+      "product": "Word",
+      "group": "审阅",
+      "feature": "接受拒绝与修订视图",
+      "phase": 3,
+      "acceptance": "单项全部处理，原始最终与标记视图",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W061",
+      "product": "Word",
+      "group": "审阅",
+      "feature": "比较与合并文档",
+      "phase": 4,
+      "acceptance": "识别结构与格式差异，生成可审阅修订",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W062",
+      "product": "Word",
+      "group": "审阅",
+      "feature": "邮件合并",
+      "phase": 4,
+      "acceptance": "数据源、字段、结果预览与逐记录导出",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W063",
+      "product": "Word",
+      "group": "表单",
+      "feature": "内容控件与占位符",
+      "phase": 3,
+      "acceptance": "富文本纯文本日期下拉，控件边界",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W064",
+      "product": "Word",
+      "group": "表单",
+      "feature": "表单字段与属性",
+      "phase": 3,
+      "acceptance": "必填只读提示、字段类型及保存",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "W065",
+      "product": "Word",
+      "group": "表单",
+      "feature": "表单角色与填写模式",
+      "phase": 4,
+      "acceptance": "字段分配、角色颜色与填写验证",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "docs/tests/office-studio-word.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X001",
+      "product": "Excel",
+      "group": "编辑",
+      "feature": "单格公式栏与矩形选区",
+      "phase": 1,
+      "acceptance": "编辑提交取消、地址导航与选区保持",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "基础已有",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X002",
+      "product": "Excel",
+      "group": "编辑",
+      "feature": "普通复制剪切粘贴",
+      "phase": 1,
+      "acceptance": "文本内部格式、剪切移动与公式引用迁移",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X003",
+      "product": "Excel",
+      "group": "编辑",
+      "feature": "仅公式粘贴",
+      "phase": 1,
+      "acceptance": "常量一起粘贴，公式相对引用正确调整",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.test.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx"
+      ],
+      "historicalStatus": "基础已有",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X004",
+      "product": "Excel",
+      "group": "编辑",
+      "feature": "仅值粘贴",
+      "phase": 1,
+      "acceptance": "公式变成复制时结果，文本数字布尔类型保留",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.test.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx"
+      ],
+      "historicalStatus": "基础已有",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X005",
+      "product": "Excel",
+      "group": "编辑",
+      "feature": "仅格式粘贴",
+      "phase": 1,
+      "acceptance": "保留目标内容，覆盖源格式的默认值",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.test.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx"
+      ],
+      "historicalStatus": "基础已有",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X006",
+      "product": "Excel",
+      "group": "编辑",
+      "feature": "公式或值加数字格式",
+      "phase": 1,
+      "acceptance": "只复制对应内容和数字格式",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.test.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx"
+      ],
+      "historicalStatus": "基础已有",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X007",
+      "product": "Excel",
+      "group": "编辑",
+      "feature": "保留源格式粘贴",
+      "phase": 1,
+      "acceptance": "格式及内容一致，目标旧格式不残留",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.test.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx"
+      ],
+      "historicalStatus": "基础已有",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X008",
+      "product": "Excel",
+      "group": "编辑",
+      "feature": "无边框粘贴",
+      "phase": 1,
+      "acceptance": "复制其他格式内容，保留目标边框",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.test.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx"
+      ],
+      "historicalStatus": "基础已有",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X009",
+      "product": "Excel",
+      "group": "编辑",
+      "feature": "列宽粘贴",
+      "phase": 1,
+      "acceptance": "源列宽与目标列映射，内容保持",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.test.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx"
+      ],
+      "historicalStatus": "基础已有",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X010",
+      "product": "Excel",
+      "group": "编辑",
+      "feature": "转置粘贴",
+      "phase": 1,
+      "acceptance": "行列互换，公式与合并映射正确",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.test.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx"
+      ],
+      "historicalStatus": "基础已有",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X011",
+      "product": "Excel",
+      "group": "编辑",
+      "feature": "粘贴链接图片与条件规则",
+      "phase": 4,
+      "acceptance": "链接源定位、图片关系及规则重定位",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X012",
+      "product": "Excel",
+      "group": "编辑",
+      "feature": "跳过空格与运算粘贴",
+      "phase": 2,
+      "acceptance": "跳过真正空格，加减乘除，失败整批撤销",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X013",
+      "product": "Excel",
+      "group": "编辑",
+      "feature": "查找替换与通配符",
+      "phase": 1,
+      "acceptance": "范围、大小写、整格、公式和值；格式搜索另补",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X014",
+      "product": "Excel",
+      "group": "编辑",
+      "feature": "多段不连续选区",
+      "phase": 2,
+      "acceptance": "Ctrl追加范围，批量命令适用范围明确",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X015",
+      "product": "Excel",
+      "group": "编辑",
+      "feature": "Ctrl方向键与数据块选择",
+      "phase": 1,
+      "acceptance": "连续与空白边界，Shift组合扩展选区",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X016",
+      "product": "Excel",
+      "group": "编辑",
+      "feature": "可拖动填充柄",
+      "phase": 1,
+      "acceptance": "复制或序列、预览范围、取消与一次撤销",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X017",
+      "product": "Excel",
+      "group": "编辑",
+      "feature": "向下向右与序列填充",
+      "phase": 1,
+      "acceptance": "相对公式、日期步长、文本数字及停止值",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X018",
+      "product": "Excel",
+      "group": "编辑",
+      "feature": "格式刷",
+      "phase": 1,
+      "acceptance": "单次连续、复制矩形格式、Esc退出",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X019",
+      "product": "Excel",
+      "group": "格式",
+      "feature": "字体字号与常用文字格式",
+      "phase": 1,
+      "acceptance": "混合格式回显、小数、默认字体与保存",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "基础已有",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X020",
+      "product": "Excel",
+      "group": "格式",
+      "feature": "数字格式与自定义格式",
+      "phase": 2,
+      "acceptance": "分节规则、日期时间地区、小数与文本",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X021",
+      "product": "Excel",
+      "group": "格式",
+      "feature": "完整边框与斜线",
+      "phase": 2,
+      "acceptance": "所有单边内横内竖线型颜色及合并边界",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X022",
+      "product": "Excel",
+      "group": "格式",
+      "feature": "填充与主题颜色",
+      "phase": 2,
+      "acceptance": "无填充、主题和色调，保存不失真",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X023",
+      "product": "Excel",
+      "group": "格式",
+      "feature": "对齐缩进旋转文字",
+      "phase": 2,
+      "acceptance": "常规、分散、跨选区居中、缩进与旋转",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X024",
+      "product": "Excel",
+      "group": "格式",
+      "feature": "换行缩小字体",
+      "phase": 2,
+      "acceptance": "显示适配与导出一致，自动行高联动",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X025",
+      "product": "Excel",
+      "group": "格式",
+      "feature": "合并拆分",
+      "phase": 1,
+      "acceptance": "合并范围冲突、非空警告、文件重开",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "基础已有",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X026",
+      "product": "Excel",
+      "group": "格式",
+      "feature": "清除分项菜单",
+      "phase": 2,
+      "acceptance": "内容格式批注链接规则分别清除",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X027",
+      "product": "Excel",
+      "group": "结构",
+      "feature": "行列插入删除",
+      "phase": 1,
+      "acceptance": "公式、尺寸、合并、规则、图表引用同步",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "基础已有",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X028",
+      "product": "Excel",
+      "group": "结构",
+      "feature": "单元格插入删除并移位",
+      "phase": 2,
+      "acceptance": "右移下移左移上移引用变更与越界",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X029",
+      "product": "Excel",
+      "group": "结构",
+      "feature": "行高列宽自动适配",
+      "phase": 1,
+      "acceptance": "拖动、合并、字体测量和尺寸限制",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X030",
+      "product": "Excel",
+      "group": "结构",
+      "feature": "独立隐藏显示行列",
+      "phase": 1,
+      "acceptance": "隐藏列、选区显示、全表显示与键盘导航",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X031",
+      "product": "Excel",
+      "group": "结构",
+      "feature": "工作表复制移动隐藏",
+      "phase": 2,
+      "acceptance": "顺序、重名、跨表公式、隐藏恢复",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X032",
+      "product": "Excel",
+      "group": "结构",
+      "feature": "分组与分级显示",
+      "phase": 2,
+      "acceptance": "嵌套层级、汇总位置、展开折叠",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X033",
+      "product": "Excel",
+      "group": "公式",
+      "feature": "公式解析与计算错误",
+      "phase": 3,
+      "acceptance": "引用、错误传播、循环与计算预算",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X034",
+      "product": "Excel",
+      "group": "公式",
+      "feature": "名称管理器",
+      "phase": 2,
+      "acceptance": "工作簿表作用域、冲突、引用更新",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X035",
+      "product": "Excel",
+      "group": "公式",
+      "feature": "结构化表引用",
+      "phase": 3,
+      "acceptance": "列名、当前行、汇总行与自动扩展",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X036",
+      "product": "Excel",
+      "group": "公式",
+      "feature": "数组与动态溢出",
+      "phase": 3,
+      "acceptance": "矩阵结果、溢出冲突、数组编辑限制",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X037",
+      "product": "Excel",
+      "group": "公式",
+      "feature": "函数向导与分类帮助",
+      "phase": 2,
+      "acceptance": "参数校验、引用选择、结果预览",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X038",
+      "product": "Excel",
+      "group": "公式",
+      "feature": "数学统计逻辑函数",
+      "phase": 3,
+      "acceptance": "逐函数核对参数类型、空值、数组与错误",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X039",
+      "product": "Excel",
+      "group": "公式",
+      "feature": "文本日期查询函数",
+      "phase": 3,
+      "acceptance": "地区日期、查找匹配、引用与字符语义",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X040",
+      "product": "Excel",
+      "group": "公式",
+      "feature": "财务工程数据库函数",
+      "phase": 4,
+      "acceptance": "逐函数验证精度、边界和原文件缓存",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X041",
+      "product": "Excel",
+      "group": "公式",
+      "feature": "追踪引用与显示公式",
+      "phase": 2,
+      "acceptance": "前置后置箭头、跨表导航、切换不改值",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X042",
+      "product": "Excel",
+      "group": "公式",
+      "feature": "计算设置与单变量求解",
+      "phase": 4,
+      "acceptance": "自动手动计算、迭代及求解过程控制",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X043",
+      "product": "Excel",
+      "group": "数据",
+      "feature": "多关键字排序",
+      "phase": 2,
+      "acceptance": "优先级、升降序、扩展选区和稳定排序",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X044",
+      "product": "Excel",
+      "group": "数据",
+      "feature": "完整自动筛选",
+      "phase": 2,
+      "acceptance": "值列表、日期层级、多条件、颜色和清除",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "implemented-color-slice-verified-full-filter-acceptance-pending",
+      "evidence": [
+        "commit 09ce65e integrates original ef00c22",
+        "docs/tests/studio-excel.test.mjs: native color filters, DXF pooling, repeated saves and clear",
+        "e2e/office-studio-sheet-colors.spec.ts: import/filter/export/clear/undo/reimport passed"
+      ],
+      "remainingVerification": [
+        "complete original X044 acceptance"
+      ],
+      "gaps": [
+        "Original complete-auto-filter acceptance still includes value lists, date hierarchies and multiple criteria."
+      ]
+    },
+    {
+      "id": "X045",
+      "product": "Excel",
+      "group": "数据",
+      "feature": "文本分列",
+      "phase": 2,
+      "acceptance": "分隔固定宽度、引号、预览与列类型",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X046",
+      "product": "Excel",
+      "group": "数据",
+      "feature": "删除重复项",
+      "phase": 2,
+      "acceptance": "表头与比较列、空值类型及删除计数",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X047",
+      "product": "Excel",
+      "group": "数据",
+      "feature": "数据验证完整管理",
+      "phase": 2,
+      "acceptance": "规则范围、下拉来源、忽略空格、输入错误提示",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X048",
+      "product": "Excel",
+      "group": "数据",
+      "feature": "条件格式完整管理",
+      "phase": 2,
+      "acceptance": "数据条图标集、颜色刻度、公式、优先级与停止",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X049",
+      "product": "Excel",
+      "group": "数据",
+      "feature": "外部链接与导入",
+      "phase": 4,
+      "acceptance": "引用来源、更新权限、失败保留旧值",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X050",
+      "product": "Excel",
+      "group": "结构化表",
+      "feature": "表样式与汇总行",
+      "phase": 3,
+      "acceptance": "表头、筛选、带状行、汇总和自动扩展",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X051",
+      "product": "Excel",
+      "group": "结构化表",
+      "feature": "表范围重命名与转普通区域",
+      "phase": 3,
+      "acceptance": "保留内容样式并迁移结构引用",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X052",
+      "product": "Excel",
+      "group": "透视",
+      "feature": "创建透视表与字段布局",
+      "phase": 3,
+      "acceptance": "缓存、行列值筛选、拖放与汇总",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X053",
+      "product": "Excel",
+      "group": "透视",
+      "feature": "值汇总与显示方式",
+      "phase": 3,
+      "acceptance": "求和计数百分比累计差异及格式",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X054",
+      "product": "Excel",
+      "group": "透视",
+      "feature": "分组排序筛选刷新",
+      "phase": 3,
+      "acceptance": "日期数字组、展开折叠、数据源变更",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X055",
+      "product": "Excel",
+      "group": "透视",
+      "feature": "钻取明细与计算字段",
+      "phase": 4,
+      "acceptance": "明细新表、计算字段和缓存一致性",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X056",
+      "product": "Excel",
+      "group": "透视",
+      "feature": "切片器与时间线",
+      "phase": 4,
+      "acceptance": "对象样式、多选、连接透视表与保存",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X057",
+      "product": "Excel",
+      "group": "图表",
+      "feature": "原生柱状与折线图",
+      "phase": 2,
+      "acceptance": "系列分类编辑、选区范围、保存重开",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X058",
+      "product": "Excel",
+      "group": "图表",
+      "feature": "饼散点面积雷达组合图",
+      "phase": 3,
+      "acceptance": "坐标轴、系列类型、次轴、图例标签与保存",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X059",
+      "product": "Excel",
+      "group": "图表",
+      "feature": "图表布局格式与数据标签",
+      "phase": 3,
+      "acceptance": "标题轴格式、标签定位、趋势线误差线",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X060",
+      "product": "Excel",
+      "group": "图表",
+      "feature": "迷你图",
+      "phase": 3,
+      "acceptance": "数据范围、位置、分组与坐标边界",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X061",
+      "product": "Excel",
+      "group": "图表",
+      "feature": "图片形状与嵌入对象",
+      "phase": 3,
+      "acceptance": "锚点、裁剪、移动尺寸与排列",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X062",
+      "product": "Excel",
+      "group": "视图",
+      "feature": "冻结窗格",
+      "phase": 1,
+      "acceptance": "滚动定位、首行首列及取消",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "基础已有",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X063",
+      "product": "Excel",
+      "group": "视图",
+      "feature": "拆分窗格与命名视图",
+      "phase": 3,
+      "acceptance": "独立滚动、视图筛选隔离与保存",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X064",
+      "product": "Excel",
+      "group": "视图",
+      "feature": "缩放网格线与标题",
+      "phase": 1,
+      "acceptance": "25至400缩放、隐藏标题网格与文件属性",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X065",
+      "product": "Excel",
+      "group": "打印",
+      "feature": "打印区域与标题行列",
+      "phase": 2,
+      "acceptance": "多个区域、重复标题、当前表或全书",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X066",
+      "product": "Excel",
+      "group": "打印",
+      "feature": "页面布局与分页预览",
+      "phase": 3,
+      "acceptance": "纸张边距方向、断页、缩放至页与预览",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X067",
+      "product": "Excel",
+      "group": "打印",
+      "feature": "页眉页脚与打印选项",
+      "phase": 3,
+      "acceptance": "页码日期文件名、网格线、居中与黑白",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "X068",
+      "product": "Excel",
+      "group": "保护",
+      "feature": "工作表工作簿与范围保护",
+      "phase": 4,
+      "acceptance": "可编辑范围、结构锁、密码及文件往返",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "P001",
+      "product": "PDF",
+      "group": "阅读",
+      "feature": "分页缩略图缩放导航",
+      "phase": 1,
+      "acceptance": "页码校验、懒渲染、旋转和当前页同步",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+        "docs/tests/studio-pdf-codec.test.mjs"
+      ],
+      "historicalStatus": "基础已有",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "P002",
+      "product": "PDF",
+      "group": "阅读",
+      "feature": "选择复制与全文搜索",
+      "phase": 1,
+      "acceptance": "逐页文本、命中坐标、选区复制与空文本页",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+        "docs/tests/studio-pdf-codec.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "P003",
+      "product": "PDF",
+      "group": "阅读",
+      "feature": "目录书签导航",
+      "phase": 2,
+      "acceptance": "读取原目录、层级导航与修改保存",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+        "docs/tests/studio-pdf-codec.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "P004",
+      "product": "PDF",
+      "group": "页面",
+      "feature": "插入空白页",
+      "phase": 2,
+      "acceptance": "尺寸方向、插入位置、撤销与保存",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+        "docs/tests/studio-pdf-codec.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "P005",
+      "product": "PDF",
+      "group": "页面",
+      "feature": "删除页面",
+      "phase": 2,
+      "acceptance": "多页选择、最后一页限制、引用与批注同步",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+        "docs/tests/studio-pdf-codec.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "P006",
+      "product": "PDF",
+      "group": "页面",
+      "feature": "复制移动重排页面",
+      "phase": 2,
+      "acceptance": "缩略图拖动、页面引用映射与撤销",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+        "docs/tests/studio-pdf-codec.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "P007",
+      "product": "PDF",
+      "group": "页面",
+      "feature": "旋转与页面尺寸",
+      "phase": 2,
+      "acceptance": "单页选区旋转、保存不重复旋转",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+        "docs/tests/studio-pdf-codec.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "P008",
+      "product": "PDF",
+      "group": "页面",
+      "feature": "合并文件与提取页面",
+      "phase": 3,
+      "acceptance": "页面资源、链接表单与重复字段处理",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+        "docs/tests/studio-pdf-codec.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "P009",
+      "product": "PDF",
+      "group": "文字",
+      "feature": "原页面转换为可编辑对象",
+      "phase": 4,
+      "acceptance": "字体图片路径、阅读顺序及失败保留原页",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+        "docs/tests/studio-pdf-codec.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "P010",
+      "product": "PDF",
+      "group": "文字",
+      "feature": "原文文字编辑",
+      "phase": 4,
+      "acceptance": "文本段重排、字体映射与实际PDF内容更新",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+        "docs/tests/studio-pdf-codec.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "P011",
+      "product": "PDF",
+      "group": "文字",
+      "feature": "字体段落与对象排列",
+      "phase": 4,
+      "acceptance": "文本框度量、层级、分组和图像裁剪",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+        "docs/tests/studio-pdf-codec.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "P012",
+      "product": "PDF",
+      "group": "文字",
+      "feature": "新增自由文本",
+      "phase": 1,
+      "acceptance": "文本格式、位置大小、原生注释保存",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+        "docs/tests/studio-pdf-codec.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "P013",
+      "product": "PDF",
+      "group": "文字",
+      "feature": "插入图片与超链接",
+      "phase": 3,
+      "acceptance": "页面坐标、目标页链接及资源保存",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+        "docs/tests/studio-pdf-codec.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "P014",
+      "product": "PDF",
+      "group": "批注",
+      "feature": "高亮下划线删除线波浪线",
+      "phase": 2,
+      "acceptance": "文字QuadPoints、颜色透明度及移除",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+        "docs/tests/studio-pdf-codec.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "P015",
+      "product": "PDF",
+      "group": "批注",
+      "feature": "便利贴与回复解决",
+      "phase": 2,
+      "acceptance": "原生批注读取、回复作者时间与状态",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+        "docs/tests/studio-pdf-codec.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "P016",
+      "product": "PDF",
+      "group": "批注",
+      "feature": "墨迹矩形椭圆箭头多边形",
+      "phase": 2,
+      "acceptance": "几何拖动、线型填充、透明度与原生保存",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+        "docs/tests/studio-pdf-codec.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "P017",
+      "product": "PDF",
+      "group": "批注",
+      "feature": "图章与签名图片",
+      "phase": 3,
+      "acceptance": "预设自定义图章，尺寸及原生外观流",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+        "docs/tests/studio-pdf-codec.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "P018",
+      "product": "PDF",
+      "group": "表单",
+      "feature": "已有字段填写",
+      "phase": 1,
+      "acceptance": "原名选项只读、多控件同步和导出",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+        "docs/tests/studio-pdf-codec.test.mjs"
+      ],
+      "historicalStatus": "部分",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "P019",
+      "product": "PDF",
+      "group": "表单",
+      "feature": "创建文本日期图片字段",
+      "phase": 3,
+      "acceptance": "字段放置、重复名称规则和格式",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+        "docs/tests/studio-pdf-codec.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "P020",
+      "product": "PDF",
+      "group": "表单",
+      "feature": "创建复选单选下拉列表",
+      "phase": 3,
+      "acceptance": "导出值、组名、多选及默认值",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+        "docs/tests/studio-pdf-codec.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "P021",
+      "product": "PDF",
+      "group": "表单",
+      "feature": "字段布局外观与限制",
+      "phase": 3,
+      "acceptance": "必填只读多行字符上限提示与边框",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+        "docs/tests/studio-pdf-codec.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "P022",
+      "product": "PDF",
+      "group": "表单",
+      "feature": "字段计算与验证",
+      "phase": 4,
+      "acceptance": "数字日期格式、范围、动作和计算顺序",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+        "docs/tests/studio-pdf-codec.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "P023",
+      "product": "PDF",
+      "group": "表单",
+      "feature": "签名字段与角色",
+      "phase": 4,
+      "acceptance": "字段角色、签名状态与外观",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+        "docs/tests/studio-pdf-codec.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "P024",
+      "product": "PDF",
+      "group": "安全",
+      "feature": "选区搜索页面脱敏",
+      "phase": 4,
+      "acceptance": "实际删除内容、图片和元数据，不能仅盖色块",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+        "docs/tests/studio-pdf-codec.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "P025",
+      "product": "PDF",
+      "group": "安全",
+      "feature": "密码与权限",
+      "phase": 4,
+      "acceptance": "加密读写、修改打印复制权限",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+        "docs/tests/studio-pdf-codec.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    },
+    {
+      "id": "P026",
+      "product": "PDF",
+      "group": "安全",
+      "feature": "证书数字签名",
+      "phase": 4,
+      "acceptance": "签名有效性、证书与文件修改状态",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "targetFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+        "docs/tests/studio-pdf-codec.test.mjs"
+      ],
+      "historicalStatus": "缺失",
+      "status": "requires-current-audit",
+      "evidence": []
+    }
+  ]
+}
