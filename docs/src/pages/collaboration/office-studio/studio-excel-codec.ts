@@ -1108,14 +1108,30 @@ async function readMetadata(zip: JSZip): Promise<Map<number, SheetMetadata>> {
       for (const column of xmlElements(autoFilter, S, 'filterColumn')) {
         const filters = xmlElements(column, S, 'filter');
         const customs = xmlElements(column, S, 'customFilter');
+        const colors = xmlElements(column, S, 'colorFilter');
+        const id = ruleInteger(column, 'colId');
+        if (id > range.lastCol - range.firstCol) throw new Error('工作表筛选列超出筛选范围。');
+        const label = studioColumnLabel(range.firstCol + id);
+        if (filter.columns[label]) throw new Error('工作表包含重复的筛选列。');
         if (
-          filters.length + customs.length !== 1 ||
+          filters.length + customs.length + colors.length !== 1 ||
           first(column, S, 'top10') ||
           first(column, S, 'dynamicFilter') ||
-          first(column, S, 'colorFilter') ||
           first(column, S, 'iconFilter')
         )
-          throw new Error('当前支持每列单一文字或数字条件，暂不支持多值、颜色或动态筛选。');
+          throw new Error('当前支持每列单一文字、数字或颜色条件，暂不支持多值或动态筛选。');
+        if (colors.length) {
+          const color = colors[0];
+          ruleShape(color, [], ['dxfId', 'cellColor']);
+          const definition = styles[ruleInteger(color, 'dxfId')];
+          if (!definition) throw new Error('颜色筛选引用的差异样式不存在。');
+          const style = importedRuleStyle(definition);
+          const fill = ruleBoolean(color, 'cellColor', true);
+          const value = fill ? style.background : style.color;
+          if (!value) throw new Error('颜色筛选缺少字体或填充颜色。');
+          filter.columns[label] = { operator: fill ? 'fillColor' : 'fontColor', value };
+          continue;
+        }
         const condition = filters[0] ?? customs[0];
         const value = condition.getAttribute('val') ?? '';
         let operator: 'contains' | 'equals' | 'greater' | 'less' = 'equals';
@@ -1132,7 +1148,7 @@ async function readMetadata(zip: JSZip): Promise<Map<number, SheetMetadata>> {
             throw new Error('暂不支持复杂通配符筛选。');
           else comparison = value.replace(/~([~*?])/g, '$1');
         }
-        filter.columns[studioColumnLabel(range.firstCol + Number(column.getAttribute('colId')))] = {
+        filter.columns[label] = {
           operator,
           value: comparison,
         };
@@ -1944,7 +1960,8 @@ export async function exportStudioExcel(
     if (existing) matched.set(sheet.id, existing);
   }
   // Temporary names allow host-controlled renames without intermediate collisions.
-  for (const [id, sheet] of matched) sheet.name = `_zuvi_${id.replace(/[^\da-z]/gi, '').slice(-20)}`;
+  for (const [id, sheet] of matched)
+    sheet.name = `_zuvi_${id.replace(/[^\da-z]/gi, '').slice(-20)}`;
   const retainedIds = new Set([...matched.values()].map((sheet) => sheet.id));
   const pageBreaks = new Map(
     [...matched].map(([id, target]) => [id, loaded!.metadata.get(target.id)!.pageBreaks])
@@ -2130,12 +2147,19 @@ export async function exportStudioExcel(
   );
 }
 
-function filterXml(sheet: StudioSheet): string {
+type SheetColorFilter = NonNullable<StudioSheet['filter']>['columns'][string];
+
+function filterXml(sheet: StudioSheet, colors: Map<SheetColorFilter, number>): string {
   if (!sheet.filter) return '';
   const range = studioParseRange(sheet.filter.range)!;
   const conditions = Object.entries(sheet.filter.columns)
     .map(([label, condition]) => {
       const id = studioParseAddress(`${label}1`)!.col - range.firstCol;
+      if (condition.operator === 'fontColor' || condition.operator === 'fillColor') {
+        const style = colors.get(condition);
+        if (style === undefined) throw new Error('导出的颜色筛选缺少差异样式。');
+        return `<filterColumn colId="${id}"><colorFilter dxfId="${style}" cellColor="${condition.operator === 'fillColor' ? 1 : 0}"/></filterColumn>`;
+      }
       const escaped = condition.value.replace(/[~*?]/g, '~$&');
       const operator =
         condition.operator === 'greater'
@@ -2244,6 +2268,7 @@ async function writeRuleStyles(zip: JSZip, document: StudioExcelDocument) {
   const differentials: string[] = [];
   const pooled = new Map<string, number>();
   const ids = new Map<StudioSheetConditionalFormat, number>();
+  const filterIds = new Map<SheetColorFilter, number>();
   for (const sheet of document.sheets)
     for (const rule of sheet.conditionalFormats ?? []) {
       const style = rule.style;
@@ -2278,6 +2303,24 @@ async function writeRuleStyles(zip: JSZip, document: StudioExcelDocument) {
       }
       ids.set(rule, id);
     }
+  for (const sheet of document.sheets)
+    for (const condition of Object.values(sheet.filter?.columns ?? {})) {
+      if (condition.operator !== 'fontColor' && condition.operator !== 'fillColor') continue;
+      const expanded = condition.value.replace(/^#([\da-f])([\da-f])([\da-f])$/i, '#$1$1$2$2$3$3');
+      const color = argb(expanded);
+      if (!color) throw new Error('颜色筛选需要有效的不透明 RGB 颜色。');
+      const dxf =
+        condition.operator === 'fontColor'
+          ? `<dxf><font><color rgb="${color}"/></font></dxf>`
+          : `<dxf><fill><patternFill patternType="solid"><fgColor rgb="${color}"/><bgColor indexed="64"/></patternFill></fill></dxf>`;
+      let id = pooled.get(dxf);
+      if (id === undefined) {
+        id = differentials.length;
+        pooled.set(dxf, id);
+        differentials.push(dxf);
+      }
+      filterIds.set(condition, id);
+    }
   if (newFormats.length) {
     const existing = formats ? Array.from(formats.children).length : 0;
     const extras = newFormats.join('');
@@ -2298,7 +2341,7 @@ async function writeRuleStyles(zip: JSZip, document: StudioExcelDocument) {
     source = source.replace(/<dxfs\b[^>]*(?:\/>|>[\s\S]*?<\/dxfs>)/, dxfs);
   else source = source.replace(/(?=<(?:tableStyles|colors|extLst)\b|<\/styleSheet>)/, dxfs);
   zip.file('xl/styles.xml', source);
-  return ids;
+  return { rules: ids, filters: filterIds };
 }
 
 function ruleAttribute(name: string, value: string | boolean | number | undefined): string {
@@ -2474,7 +2517,7 @@ async function writeAdvancedParts(
       ''
     );
     // Rules already carry the current model coordinates; never replay structure logs here.
-    const rules = conditionalFormatsXml(sheet, ruleStyles) + dataValidationsXml(sheet);
+    const rules = conditionalFormatsXml(sheet, ruleStyles.rules) + dataValidationsXml(sheet);
     if (rules)
       worksheet = worksheet.replace(
         /(?=<(?:hyperlinks|printOptions|pageMargins|pageSetup|headerFooter|rowBreaks|colBreaks|customProperties|cellWatches|ignoredErrors|smartTags|drawing|legacyDrawing|legacyDrawingHF|picture|oleObjects|controls|webPublishItems|tableParts|extLst)\b|<\/worksheet>)/,
@@ -2496,7 +2539,7 @@ async function writeAdvancedParts(
           breaks
         );
     }
-    const filters = filterXml(sheet);
+    const filters = filterXml(sheet, ruleStyles.filters);
     if (/<autoFilter\b/.test(worksheet))
       worksheet = worksheet.replace(/<autoFilter\b[^>]*(?:\/>|>[\s\S]*?<\/autoFilter>)/g, filters);
     else if (filters)

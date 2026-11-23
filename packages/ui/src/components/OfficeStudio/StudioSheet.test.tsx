@@ -1416,6 +1416,7 @@ describe('StudioSheet', () => {
     await user.click(screen.getByRole('tab', { name: '数据' }));
 
     // 筛选条件切到「填充颜色」后，值控件变为取色器
+    await user.type(screen.getByRole('textbox', { name: '筛选值' }), '旧文字条件');
     const operatorTrigger = screen.getByRole('button', { name: /^筛选条件/ });
     await user.click(operatorTrigger);
     const openListbox = screen
@@ -1433,6 +1434,15 @@ describe('StudioSheet', () => {
     });
     expect(screen.queryByRole('gridcell', { name: 'A3' })).toBeNull();
     expect(screen.getByRole('gridcell', { name: 'A2' })).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: '清除筛选' }));
+    expect(screen.getByRole('gridcell', { name: 'A3' })).toBeInTheDocument();
+    await user.click(screen.getByRole('tab', { name: '开始' }));
+    await user.click(screen.getByRole('button', { name: '撤销表格修改' }));
+    expect(screen.queryByRole('gridcell', { name: 'A3' })).toBeNull();
+    state.setPermissions({ readOnly: true });
+    await user.click(screen.getByRole('tab', { name: '数据' }));
+    expect(screen.getByRole('button', { name: '应用筛选' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: '清除筛选' })).toBeDisabled();
   });
 });
 

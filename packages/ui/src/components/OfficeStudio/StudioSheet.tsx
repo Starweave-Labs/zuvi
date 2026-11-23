@@ -208,9 +208,8 @@ export function StudioSheet({
   const [viewport, setViewport] = React.useState({ top: 0, left: 0, width: 900, height: 420 });
   const [filterRange, setFilterRange] = React.useState('');
   const [filterColumn, setFilterColumn] = React.useState('A');
-  const [filterOperator, setFilterOperator] = React.useState<
-    StudioSheetFilter['columns'][string]['operator']
-  >('contains');
+  const [filterOperator, setFilterOperator] =
+    React.useState<StudioSheetFilter['columns'][string]['operator']>('contains');
   const [filterValue, setFilterValue] = React.useState('');
   const [chartRange, setChartRange] = React.useState('');
   const [chartPanel, setChartPanel] = React.useState(false);
@@ -2673,9 +2672,13 @@ export function StudioSheet({
                     // 切到颜色算子时给出默认色，切回文本算子时清空颜色值。
                     setFilterValue((previous) =>
                       value === 'fontColor'
-                        ? previous || '#253044'
+                        ? /^#(?:[\da-f]{3}|[\da-f]{6})$/i.test(previous)
+                          ? previous
+                          : '#253044'
                         : value === 'fillColor'
-                          ? previous || '#eef4ff'
+                          ? /^#(?:[\da-f]{3}|[\da-f]{6})$/i.test(previous)
+                            ? previous
+                            : '#eef4ff'
                           : ''
                     );
                   }}

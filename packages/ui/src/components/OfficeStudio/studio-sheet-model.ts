@@ -12,6 +12,7 @@ import {
 } from './studio-sheet-hyperlinks';
 import {
   studioCellValidation,
+  studioConditionalCellStyle,
   studioMapSheetRuleFormulae,
   studioNormalizeValidationInput,
   studioSheetRuleFormulae,
@@ -1730,7 +1731,8 @@ export function studioSetFilter(
       throw new Error('筛选区域不能包含合并单元格，请先拆分。');
     for (const [label, condition] of Object.entries(filter.columns)) {
       const col = studioParseAddress(`${label}1`)?.col;
-      const colorOperator = condition.operator === 'fontColor' || condition.operator === 'fillColor';
+      const colorOperator =
+        condition.operator === 'fontColor' || condition.operator === 'fillColor';
       if (
         !col ||
         col < range.firstCol ||
@@ -1775,11 +1777,15 @@ export function studioFilteredRows(sheet: StudioSheet, calculation: SheetCalcula
         studioInputValue(cell?.input ?? '', cell?.numberFormat);
       const text = String(result).toLocaleLowerCase();
       const expected = condition.value.toLocaleLowerCase();
+      const isColor = condition.operator === 'fontColor' || condition.operator === 'fillColor';
+      const displayStyle = isColor
+        ? { ...cell, ...studioConditionalCellStyle(sheet, address, calculation) }
+        : cell;
       const colorOperator =
         condition.operator === 'fontColor'
-          ? studioHexColor(cell?.color)
+          ? studioHexColor(displayStyle?.color)
           : condition.operator === 'fillColor'
-            ? studioHexColor(cell?.background)
+            ? studioHexColor(displayStyle?.background)
             : null;
       const matches =
         colorOperator !== null
@@ -1792,7 +1798,7 @@ export function studioFilteredRows(sheet: StudioSheet, calculation: SheetCalcula
                 (condition.operator === 'greater'
                   ? result > Number(condition.value)
                   : result < Number(condition.value));
-      if (!matches || calculation.errors.has(`${sheet.id}:${address}`)) {
+      if (!matches || (!isColor && calculation.errors.has(`${sheet.id}:${address}`))) {
         hidden.add(row);
         break;
       }
@@ -1988,16 +1994,11 @@ export function studioSortRangeByKeys(
   const keysInSelection = keys.every(
     (key) => key.column >= range.firstCol && key.column <= range.lastCol
   );
-  if (
-    !rangeWithin(sheet, range) ||
-    !keysInSelection ||
-    range.lastRow <= range.firstRow
-  )
+  if (!rangeWithin(sheet, range) || !keysInSelection || range.lastRow <= range.firstRow)
     throw new Error('请选择至少两行数据，排序键应位于选区内。');
   const seenColumns = new Set<number>();
   for (const key of keys) {
-    if (seenColumns.has(key.column))
-      throw new Error('排序键的列重复，请合并或删除重复的层级。');
+    if (seenColumns.has(key.column)) throw new Error('排序键的列重复，请合并或删除重复的层级。');
     seenColumns.add(key.column);
   }
   studioSelectionAddresses(selection);

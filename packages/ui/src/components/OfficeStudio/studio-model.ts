@@ -761,9 +761,13 @@ function sheetFeatures(sheet: Record<string, unknown>, rows: number, columns: nu
           position.column >= range.firstColumn &&
           position.column <= range.lastColumn &&
           record(rule) &&
-          ['contains', 'equals', 'greater', 'less'].includes(String(rule.operator)) &&
+          ['contains', 'equals', 'greater', 'less', 'fontColor', 'fillColor'].includes(
+            String(rule.operator)
+          ) &&
           typeof rule.value === 'string' &&
           rule.value.length <= 32767 &&
+          (!['fontColor', 'fillColor'].includes(String(rule.operator)) ||
+            /^#(?:[\da-f]{3}|[\da-f]{6})$/i.test(rule.value)) &&
           (!['greater', 'less'].includes(String(rule.operator)) ||
             (rule.value.trim() !== '' && Number.isFinite(Number(rule.value))))
         );

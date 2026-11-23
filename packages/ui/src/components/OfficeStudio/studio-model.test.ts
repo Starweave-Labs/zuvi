@@ -186,6 +186,25 @@ describe('persisted OfficeStudio models', () => {
     expect(isOfficeStudioDocument(document)).toBe(false);
   });
 
+  it('accepts persisted font and fill color filters and refuses malformed color values', () => {
+    const document = createOfficeStudioDocument('excel') as StudioExcelDocument;
+    const sheet = document.sheets[0];
+    sheet.filter = {
+      range: 'A3:D6',
+      columns: {
+        A: { operator: 'fontColor', value: '#f00' },
+        D: { operator: 'fillColor', value: '#EeFf00' },
+      },
+    };
+    expect(isOfficeStudioDocument(document)).toBe(true);
+    sheet.filter.columns.A.value = 'red';
+    expect(isOfficeStudioDocument(document)).toBe(false);
+    sheet.filter.columns.A.value = '#ff000080';
+    expect(isOfficeStudioDocument(document)).toBe(false);
+    sheet.filter.columns.A.value = '#ff0000';
+    expect(isOfficeStudioDocument(document)).toBe(true);
+  });
+
   it('rejects persisted frozen panes that exceed codec limits or cut through merged cells', () => {
     const document = createOfficeStudioDocument('excel') as StudioExcelDocument;
     const sheet = document.sheets[0];

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { Blob } from 'node:buffer';
+import { Blob, Buffer } from 'node:buffer';
 import { webcrypto } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
@@ -66,6 +66,120 @@ const codec = compiledModule(
   new URL('../src/pages/collaboration/office-studio/studio-excel-codec.ts', import.meta.url),
   resolveStudioModule
 );
+
+test('font and fill color filters retain native DXF references, conditional colors and clear behavior across XLSX saves', async () => {
+  const workbook = new ExcelJS.Workbook();
+  const sheet = workbook.addWorksheet('颜色筛选');
+  sheet.addRows([
+    ['项目', '金额'],
+    ['开发', 10],
+    ['设计', 20],
+    ['验证', 25],
+    [{ formula: '1/0', result: { error: '#DIV/0!' } }, 30],
+  ]);
+  for (const row of [2, 4, 5]) sheet.getCell(`A${row}`).font = { color: { argb: 'FFFF0000' } };
+  sheet.getCell('A3').font = { color: { argb: 'FF0000FF' } };
+  for (const row of [2, 3, 5])
+    sheet.getCell(`B${row}`).fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: 'FFFFFF00' },
+    };
+  sheet.getCell('B4').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF00AA00' } };
+  sheet.getCell('C6').value = '手动隐藏';
+  sheet.getRow(6).hidden = true;
+  let source = await asBlob(workbook);
+  let document = await codec.importStudioExcel(source, '颜色筛选.xlsx');
+  const id = document.sheets[0].id;
+  document.sheets[0].conditionalFormats = [
+    {
+      id: 'font-rule',
+      type: 'expression',
+      range: 'A2:A5',
+      formula: '=B2>=20',
+      priority: 1,
+      style: { color: '#ff0000' },
+    },
+  ];
+  document = model.studioSetFilter(document, id, {
+    range: 'A1:B5',
+    columns: {
+      A: { operator: 'fontColor', value: '#f00' },
+      B: { operator: 'fillColor', value: '#ffff00' },
+    },
+  });
+  for (let round = 0; round < 2; round++) {
+    assert.deepEqual(
+      Array.from(model.studioFilteredRows(document.sheets[0], model.studioCalculate(document))),
+      [4]
+    );
+    source = await codec.exportStudioExcel(document, source);
+    const zip = await JSZip.loadAsync(await source.arrayBuffer());
+    const xml = new dom.window.DOMParser().parseFromString(
+      await zip.file('xl/worksheets/sheet1.xml').async('string'),
+      'application/xml'
+    );
+    const styles = new dom.window.DOMParser().parseFromString(
+      await zip.file('xl/styles.xml').async('string'),
+      'application/xml'
+    );
+    const filters = [...xml.getElementsByTagName('colorFilter')];
+    assert.equal(filters.length, 2);
+    assert.deepEqual(
+      filters.map((filter) => filter.getAttribute('cellColor')),
+      ['0', '1']
+    );
+    const dxfs = styles.getElementsByTagName('dxfs')[0];
+    assert.equal(
+      dxfs.children.length,
+      2,
+      'The font-only conditional format and color filter share a native style.'
+    );
+    const reopened = await readWorkbook(source);
+    assert.equal(reopened.worksheets[0].getRow(3).hidden, false);
+    assert.equal(reopened.worksheets[0].getRow(4).hidden, true);
+    assert.equal(
+      reopened.worksheets[0].getRow(5).hidden,
+      false,
+      'A formula error does not change its display color.'
+    );
+    assert.equal(reopened.worksheets[0].getRow(6).hidden, true);
+    document = await codec.importStudioExcel(source, document.name);
+    assert.equal(document.sheets[0].filter.columns.A.operator, 'fontColor');
+    assert.equal(document.sheets[0].filter.columns.A.value, '#ff0000');
+    assert.equal(document.sheets[0].filter.columns.B.operator, 'fillColor');
+    assert.equal(document.sheets[0].conditionalFormats.length, 1);
+  }
+  const cleared = model.studioSetFilter(document, id);
+  const saved = await codec.exportStudioExcel(cleared, source);
+  const reopened = await readWorkbook(saved);
+  assert.equal(reopened.worksheets[0].getRow(4).hidden, false);
+  assert.equal(reopened.worksheets[0].getRow(6).hidden, true);
+  assert.equal((await codec.importStudioExcel(saved, document.name)).sheets[0].filter, undefined);
+});
+
+test('invalid native color filter references and duplicate columns are rejected without rewriting the source file', async () => {
+  const workbook = new ExcelJS.Workbook();
+  const sheet = workbook.addWorksheet('无效筛选');
+  sheet.addRows([['标题'], ['内容']]);
+  const source = await asBlob(workbook);
+  for (const filters of [
+    '<filterColumn colId="0"><colorFilter dxfId="999" cellColor="1"/></filterColumn>',
+    '<filterColumn colId="1"><filters><filter val="内容"/></filters></filterColumn>',
+    '<filterColumn colId="0"><filters><filter val="内容"/></filters></filterColumn><filterColumn colId="0"><filters><filter val="内容"/></filters></filterColumn>',
+  ]) {
+    const zip = await JSZip.loadAsync(await source.arrayBuffer());
+    const xml = await zip.file('xl/worksheets/sheet1.xml').async('string');
+    zip.file(
+      'xl/worksheets/sheet1.xml',
+      xml.replace('</worksheet>', `<autoFilter ref="A1:A2">${filters}</autoFilter></worksheet>`)
+    );
+    const invalid = new Blob([await zip.generateAsync({ type: 'uint8array' })]);
+    const before = Buffer.from(await invalid.arrayBuffer());
+    await assert.rejects(codec.importStudioExcel(invalid, '无效筛选.xlsx'), /筛选|差异样式/);
+    assert.deepEqual(Buffer.from(await invalid.arrayBuffer()), before);
+  }
+});
 
 async function asBlob(workbook) {
   return new Blob([await workbook.xlsx.writeBuffer()]);
