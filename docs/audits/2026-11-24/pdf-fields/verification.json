@@ -11,10 +11,6 @@
   "nativePdfAndRenderer": {
     "passed": 23
   },
-  "fullUIBaseline": {
-    "passed": 2248,
-    "note": "before final asynchronous image-read regression; focused final checks above include it"
-  },
   "repoUnitTests": "passed; docs original Chart integration skip retained",
   "typecheck": "passed",
   "lint": "passed",
@@ -35,5 +31,9 @@
     "P022 calculation/validation actions",
     "P023 roles/signature fields",
     "P026 certificate signatures"
-  ]
+  ],
+  "fullUI": {
+    "passed": 2249,
+    "note": "final full run passed after waiting for the DataGrid warning effect"
+  }
 }
