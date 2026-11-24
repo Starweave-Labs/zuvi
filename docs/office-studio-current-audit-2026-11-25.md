@@ -2,7 +2,7 @@
 
 源码基线：`2382530`。本次逐项核对 Word 65、Excel 68、PDF 26 项。历史状态保留；本页表示当前源码实现范围，全部条目仍需按原共通验收逐项闭环。
 
-实现分类：基础实现 22 项、切片验证 12 项、部分实现 59 项、未实现 66 项。这不是完整验收完成率。
+实现分类：基础实现 22 项、切片验证 13 项、部分实现 58 项、未实现 66 项。这不是完整验收完成率。
 
 验收要求：模型与编辑入口、只读/禁用、一次撤销重做、导入编辑导出重开、适用的明暗/320px 浏览器检查及失败原数据不变。已有测试文件不能自动替代每项六维证据。
 
@@ -80,74 +80,74 @@
 
 | ID   | 功能                     | 当前实现 | 已有行为                                                   | 功能缺口或未闭环验证                                      | 源码证据                                            |
 | ---- | ------------------------ | -------- | ---------------------------------------------------------- | --------------------------------------------------------- | --------------------------------------------------- |
-| X001 | 单格公式栏与矩形选区 | 基础实现 | 矩形选区、地址导航、公式栏提交取消、IME/草稿守卫 | 完整共通验收矩阵与窄屏文件编辑证据待补 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X002 | 普通复制剪切粘贴 | 部分实现 | 普通 TSV/内部富剪贴板复制粘贴和公式重定位 | 无 onCut/剪切移动引用迁移；普通剪切语义未实现 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X003 | 仅公式粘贴 | 基础实现 | 仅公式含常量与相对引用平移 | 独立浏览器原生文件链路和共通边界待补 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X004 | 仅值粘贴 | 基础实现 | 冻结复制时公式值，保留标量类型 | 独立浏览器 XLSX 往返与空白/错误类型验收待补 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X005 | 仅格式粘贴 | 基础实现 | 目标内容保留、格式默认覆盖 | 完整默认/混合格式和原生浏览器往返待补 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X006 | 公式或值加数字格式 | 基础实现 | 公式或值与数字格式两种粘贴 | 完整函数缓存类型及浏览器往返待补 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X007 | 保留源格式粘贴 | 基础实现 | 源格式快照覆盖目标旧格式 | 主题/复杂样式仍不支持；完整支持契约验收待补 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X008 | 无边框粘贴 | 基础实现 | 复制内容/其他格式而保留目标边框 | 合并区域复杂边界与浏览器文件链路待补 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X009 | 列宽粘贴 | 基础实现 | 源列宽映射且目标内容保留 | 窄屏入口和原生导出后的独立列宽验收待补 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X010 | 转置粘贴 | 基础实现 | 转置引用、合并与超链接映射 | 完整合并冲突、取消/IME与原生浏览器链路待补 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X011 | 粘贴链接图片与条件规则 | 部分实现 | 内部复制可保留原生超链接 | 缺链接源单元格、图片与条件规则重定位粘贴 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X012 | 跳过空格与运算粘贴 | 未实现 | 现有十种选择性粘贴模式 | 缺跳过空格/运算粘贴及失败整批撤销 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X013 | 查找替换与通配符 | 基础实现 | 范围/工作簿、通配符、大小写整格、公式/值查找替换 | 按格式搜索不在本项当前支持范围；原生浏览器全矩阵待补 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X014 | 多段不连续选区 | 未实现 | 单一 anchor/focus 矩形 | 缺 Ctrl 追加非连续范围模型及批量命令 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X015 | Ctrl方向键与数据块选择 | 部分实现 | Ctrl 方向键数据块导航 | Ctrl+Shift 扩展未走数据块，仍按一格移动 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X016 | 可拖动填充柄 | 部分实现 | 填充柄预览、数字日期/文本、取消与单事务 | 复杂滚动/冻结/合并坐标、公式种子和原生浏览器链路待核对 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X017 | 向下向右与序列填充 | 部分实现 | 向下向右复制、数字日期文本序列和步长 | 缺停止值；更多序列策略和原生 UI 文件链路待补 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X018 | 格式刷 | 未实现 | 没有 Sheet 格式刷入口 | 缺矩形格式取用、单次连续与 Esc | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X019 | 字体字号与常用文字格式 | 部分实现 | 字体小数、加粗斜体下划线与颜色保存 | 混合选区回显/默认字体契约及更多文字格式待补 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X020 | 数字格式与自定义格式 | 部分实现 | 数字预设与导入自定义格式显示 | 缺新建编辑自定义格式/地区 UI、分节规则完整解析验收 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X021 | 完整边框与斜线 | 部分实现 | 所有/外侧/无边框、六线型与颜色 | 缺单边/内横内竖/斜线；复杂合并边界待补 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X022 | 填充与主题颜色 | 部分实现 | 直接 RGB 填充/无填充 | 缺主题引用和色调往返；普通源样式保留不代表编辑支持 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X023 | 对齐缩进旋转文字 | 部分实现 | 左中右、顶中底对齐 | 缺分散、跨选区居中、缩进与旋转模型/入口 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X024 | 换行缩小字体 | 部分实现 | 自动换行和手动自动行高 | 缺 shrinkToFit 与编辑后自动行高联动 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X025 | 合并拆分 | 基础实现 | 合并冲突/非空拒绝、拆分和 XLSX 保存 | 完整浏览器失败恢复/历史/原生重开矩阵待补 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X026 | 清除分项菜单 | 部分实现 | 清空内容、清除格式和链接/规则独立管理 | 缺统一清除分项菜单、批注管理/选择性清除 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X027 | 行列插入删除 | 基础实现 | 行列结构日志、公式尺寸合并规则图表链接迁移 | 数组新增边界及全原生浏览器矩阵待完整审计 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X028 | 单元格插入删除并移位 | 未实现 | 只支持整行/整列结构编辑 | 缺单元格右下左上移位及引用变更 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X029 | 行高列宽自动适配 | 部分实现 | 行高列宽拖动/键盘/自动适配 | 复杂合并字体测量、读入隐藏尺寸和文件链路待补 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X030 | 独立隐藏显示行列 | 部分实现 | 手动隐藏行列、全列恢复、导航跳隐藏 | 行选区显示/隐藏独立入口不完整，隐藏列仅活动列操作 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X031 | 工作表复制移动隐藏 | 部分实现 | 新增删除重命名/选表和跨表引用迁移 | 缺工作表复制移动隐藏及恢复；隐藏工作表原文件拒绝 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X032 | 分组与分级显示 | 未实现 | 源结构保存时部分保留 outlineLevel | 无分组/层级 UI 和独立模型，不能按透传视为实现 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X033 | 公式解析与计算错误 | 部分实现 | 解析器、跨表引用、循环/预算/错误传播 | 支持函数/引用子集及导入缓存边界仍需逐函数审计 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X034 | 名称管理器 | 未实现 | 无名称模型和管理器 | 命名区域文件拒绝；作用域/冲突/引用更新缺失 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X035 | 结构化表引用 | 未实现 | 普通单元格引用 | 原生数据表拒绝，缺结构化引用和自动扩展 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X036 | 数组与动态溢出 | 切片验证 | 固定/动态数组、矩阵、溢出/保护冲突、结果格限制和 XLSX 往返 | 更多动态函数/外部应用重算及完整共通验收仍待完成 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X037 | 函数向导与分类帮助 | 部分实现 | SUM/AVERAGE/COUNT/IF 插入按钮和简短提示 | 缺分类向导、参数校验、引用选择/预览 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X038 | 数学统计逻辑函数 | 部分实现 | 解析器提供数学统计逻辑，数组支持已补 | 没有逐函数完整参数/空值/数组/误差证据 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X039 | 文本日期查询函数 | 部分实现 | 日期 1900 日历与 HYPERLINK/IF 语义专项修正 | 其他文本查询函数、地区语义仍需逐函数核对 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X040 | 财务工程数据库函数 | 部分实现 | 依赖解析器可调用部分财务工程统计函数 | 未证明全部函数精度/边界和原生缓存一致 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X041 | 追踪引用与显示公式 | 未实现 | 公式栏可看活动公式 | 无前后依赖箭头、跨表追踪与全表显示公式 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X042 | 计算设置与单变量求解 | 未实现 | 当前自动计算、全量加载重算 | 缺手动/迭代设置和单变量求解控制 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X043 | 多关键字排序 | 基础实现 | 多键优先级/方向、稳定排序、引用调整 | 扩展选区询问、浏览器原生排序链路和全边界待补 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X044 | 完整自动筛选 | 切片验证 | 文字/数字单条件和字体填充颜色原生保存 | 缺值列表、日期层级、同列多个条件 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X045 | 文本分列 | 未实现 | TSV 解析用于粘贴 | 缺分隔/固定宽度分列、预览与列类型 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X046 | 删除重复项 | 未实现 | 没有去重命令 | 缺表头/比较列、类型空值语义及计数 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X047 | 数据验证完整管理 | 部分实现 | 七类规则管理、来源/空白/提示/严重度、事务校验 | 命名来源/复杂范围/扩展 XML 不支持；完整原要求逐项闭环待补 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X048 | 条件格式完整管理 | 部分实现 | 八类条件格式、色阶、优先级/停止和原生保存 | 缺数据条/图标集、完整阈值与复杂差异样式 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X049 | 外部链接与导入 | 未实现 | 普通工作簿内公式和原生超链接 | 外部计算链接/连接文件拒绝；来源更新和权限失败恢复缺失 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X050 | 表样式与汇总行 | 未实现 | 普通区域可筛选排序 | 原生 Table 对象拒绝，缺表样式/汇总/自动扩展 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X051 | 表范围重命名与转普通区域 | 未实现 | 没有原生 Table 模型 | 缺范围重命名/转普通区域和结构引用迁移 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X052 | 创建透视表与字段布局 | 未实现 | 没有透视缓存或字段模型 | 透视文件拒绝，创建/字段拖放/汇总缺失 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X053 | 值汇总与显示方式 | 未实现 | 普通单元格求和/计数 | 透视值汇总及显示方式缺失 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X054 | 分组排序筛选刷新 | 未实现 | 普通区域排序筛选 | 透视分组/展开/刷新缺失 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X055 | 钻取明细与计算字段 | 未实现 | 没有透视模型 | 钻取/新表明细/计算字段缺失 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X056 | 切片器与时间线 | 未实现 | 没有切片器/时间线对象 | 原生对象拒绝，多选/连接和保存缺失 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X057 | 原生柱状与折线图 | 部分实现 | 原生二维柱状/折线、标题/数据范围保存 | 系列分类独立编辑入口不完整，完整浏览器链路待补 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X058 | 饼散点面积雷达组合图 | 未实现 | 图表类型限 bar/line | 缺饼散点面积雷达组合/次轴等，复杂原生图表拒绝 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X059 | 图表布局格式与数据标签 | 部分实现 | 图表标题可修改，基本 SVG 轴/图例 | 缺轴格式、数据标签、趋势线/误差线与布局编辑 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X060 | 迷你图 | 未实现 | 无 Sparkline 模型 | 缺数据范围/分组/坐标与原生保存 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X061 | 图片形状与嵌入对象 | 未实现 | Sheet 没有图片形状对象 | 图片/绘图/嵌入文件拒绝，锚点裁剪排列缺失 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X062 | 冻结窗格 | 基础实现 | 冻结首行首列/指定模型边界、取消与原生保存 | 全部滚动/合并/隐藏/只读浏览器矩阵待补 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X063 | 拆分窗格与命名视图 | 未实现 | 仅冻结窗格 | 拆分窗格文件拒绝，缺命名视图和独立滚动 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X064 | 缩放网格线与标题 | 未实现 | 固定画布网格/标题 | 缺 25–400% 缩放、网格标题显示和文件属性编辑 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X065 | 打印区域与标题行列 | 部分实现 | 原文件打印范围可透传/结构迁移 | 无多个区域/标题行列编辑与当前表/全书打印选择 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X066 | 页面布局与分页预览 | 部分实现 | 原文件页面设置和断页可保留 | 缺编辑纸张边距/断页/缩放到页和分页预览 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X067 | 页眉页脚与打印选项 | 部分实现 | 普通源页眉页脚与打印选项保留 | 缺字段编辑、打印居中/黑白/网格选项 UI 与准确预览 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
-| X068 | 工作表工作簿与范围保护 | 部分实现 | 本地范围保护/取消和无密码原生保存 | 完整工作表/工作簿结构锁、密码/可编辑范围互操作未实现 | `StudioSheet.tsx:283`；`studio-excel-codec.ts:1267` |
+| X001 | 单格公式栏与矩形选区 | 基础实现 | 矩形选区、地址导航、公式栏提交取消、IME/草稿守卫 | 完整共通验收矩阵与窄屏文件编辑证据待补 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X002 | 普通复制剪切粘贴 | 部分实现 | 普通 TSV/内部富剪贴板复制粘贴和公式重定位 | 无 onCut/剪切移动引用迁移；普通剪切语义未实现 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X003 | 仅公式粘贴 | 基础实现 | 仅公式含常量与相对引用平移 | 独立浏览器原生文件链路和共通边界待补 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X004 | 仅值粘贴 | 基础实现 | 冻结复制时公式值，保留标量类型 | 独立浏览器 XLSX 往返与空白/错误类型验收待补 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X005 | 仅格式粘贴 | 基础实现 | 目标内容保留、格式默认覆盖 | 完整默认/混合格式和原生浏览器往返待补 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X006 | 公式或值加数字格式 | 基础实现 | 公式或值与数字格式两种粘贴 | 完整函数缓存类型及浏览器往返待补 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X007 | 保留源格式粘贴 | 基础实现 | 源格式快照覆盖目标旧格式 | 主题/复杂样式仍不支持；完整支持契约验收待补 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X008 | 无边框粘贴 | 基础实现 | 复制内容/其他格式而保留目标边框 | 合并区域复杂边界与浏览器文件链路待补 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X009 | 列宽粘贴 | 基础实现 | 源列宽映射且目标内容保留 | 窄屏入口和原生导出后的独立列宽验收待补 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X010 | 转置粘贴 | 基础实现 | 转置引用、合并与超链接映射 | 完整合并冲突、取消/IME与原生浏览器链路待补 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X011 | 粘贴链接图片与条件规则 | 部分实现 | 内部复制可保留原生超链接 | 缺链接源单元格、图片与条件规则重定位粘贴 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X012 | 跳过空格与运算粘贴 | 未实现 | 现有十种选择性粘贴模式 | 缺跳过空格/运算粘贴及失败整批撤销 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X013 | 查找替换与通配符 | 基础实现 | 范围/工作簿、通配符、大小写整格、公式/值查找替换 | 按格式搜索不在本项当前支持范围；原生浏览器全矩阵待补 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X014 | 多段不连续选区 | 未实现 | 单一 anchor/focus 矩形 | 缺 Ctrl 追加非连续范围模型及批量命令 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X015 | Ctrl方向键与数据块选择 | 切片验证 | Ctrl/Command 方向键跨数据块导航，Shift 保留起点扩展；隐藏行列、合并与数组结果参与导航 | 全部合并/冻结/滚动组合及完整原始共通验收仍待审计 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X016 | 可拖动填充柄 | 部分实现 | 填充柄预览、数字日期/文本、取消与单事务 | 复杂滚动/冻结/合并坐标、公式种子和原生浏览器链路待核对 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X017 | 向下向右与序列填充 | 部分实现 | 向下向右复制、数字日期文本序列和步长 | 缺停止值；更多序列策略和原生 UI 文件链路待补 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X018 | 格式刷 | 未实现 | 没有 Sheet 格式刷入口 | 缺矩形格式取用、单次连续与 Esc | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X019 | 字体字号与常用文字格式 | 部分实现 | 字体小数、加粗斜体下划线与颜色保存 | 混合选区回显/默认字体契约及更多文字格式待补 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X020 | 数字格式与自定义格式 | 部分实现 | 数字预设与导入自定义格式显示 | 缺新建编辑自定义格式/地区 UI、分节规则完整解析验收 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X021 | 完整边框与斜线 | 部分实现 | 所有/外侧/无边框、六线型与颜色 | 缺单边/内横内竖/斜线；复杂合并边界待补 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X022 | 填充与主题颜色 | 部分实现 | 直接 RGB 填充/无填充 | 缺主题引用和色调往返；普通源样式保留不代表编辑支持 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X023 | 对齐缩进旋转文字 | 部分实现 | 左中右、顶中底对齐 | 缺分散、跨选区居中、缩进与旋转模型/入口 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X024 | 换行缩小字体 | 部分实现 | 自动换行和手动自动行高 | 缺 shrinkToFit 与编辑后自动行高联动 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X025 | 合并拆分 | 基础实现 | 合并冲突/非空拒绝、拆分和 XLSX 保存 | 完整浏览器失败恢复/历史/原生重开矩阵待补 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X026 | 清除分项菜单 | 部分实现 | 清空内容、清除格式和链接/规则独立管理 | 缺统一清除分项菜单、批注管理/选择性清除 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X027 | 行列插入删除 | 基础实现 | 行列结构日志、公式尺寸合并规则图表链接迁移 | 数组新增边界及全原生浏览器矩阵待完整审计 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X028 | 单元格插入删除并移位 | 未实现 | 只支持整行/整列结构编辑 | 缺单元格右下左上移位及引用变更 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X029 | 行高列宽自动适配 | 部分实现 | 行高列宽拖动/键盘/自动适配 | 复杂合并字体测量、读入隐藏尺寸和文件链路待补 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X030 | 独立隐藏显示行列 | 部分实现 | 手动隐藏行列、全列恢复、导航跳隐藏 | 行选区显示/隐藏独立入口不完整，隐藏列仅活动列操作 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X031 | 工作表复制移动隐藏 | 部分实现 | 新增删除重命名/选表和跨表引用迁移 | 缺工作表复制移动隐藏及恢复；隐藏工作表原文件拒绝 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X032 | 分组与分级显示 | 未实现 | 源结构保存时部分保留 outlineLevel | 无分组/层级 UI 和独立模型，不能按透传视为实现 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X033 | 公式解析与计算错误 | 部分实现 | 解析器、跨表引用、循环/预算/错误传播 | 支持函数/引用子集及导入缓存边界仍需逐函数审计 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X034 | 名称管理器 | 未实现 | 无名称模型和管理器 | 命名区域文件拒绝；作用域/冲突/引用更新缺失 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X035 | 结构化表引用 | 未实现 | 普通单元格引用 | 原生数据表拒绝，缺结构化引用和自动扩展 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X036 | 数组与动态溢出 | 切片验证 | 固定/动态数组、矩阵、溢出/保护冲突、结果格限制和 XLSX 往返 | 更多动态函数/外部应用重算及完整共通验收仍待完成 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X037 | 函数向导与分类帮助 | 部分实现 | SUM/AVERAGE/COUNT/IF 插入按钮和简短提示 | 缺分类向导、参数校验、引用选择/预览 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X038 | 数学统计逻辑函数 | 部分实现 | 解析器提供数学统计逻辑，数组支持已补 | 没有逐函数完整参数/空值/数组/误差证据 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X039 | 文本日期查询函数 | 部分实现 | 日期 1900 日历与 HYPERLINK/IF 语义专项修正 | 其他文本查询函数、地区语义仍需逐函数核对 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X040 | 财务工程数据库函数 | 部分实现 | 依赖解析器可调用部分财务工程统计函数 | 未证明全部函数精度/边界和原生缓存一致 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X041 | 追踪引用与显示公式 | 未实现 | 公式栏可看活动公式 | 无前后依赖箭头、跨表追踪与全表显示公式 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X042 | 计算设置与单变量求解 | 未实现 | 当前自动计算、全量加载重算 | 缺手动/迭代设置和单变量求解控制 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X043 | 多关键字排序 | 基础实现 | 多键优先级/方向、稳定排序、引用调整 | 扩展选区询问、浏览器原生排序链路和全边界待补 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X044 | 完整自动筛选 | 切片验证 | 文字/数字单条件和字体填充颜色原生保存 | 缺值列表、日期层级、同列多个条件 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X045 | 文本分列 | 未实现 | TSV 解析用于粘贴 | 缺分隔/固定宽度分列、预览与列类型 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X046 | 删除重复项 | 未实现 | 没有去重命令 | 缺表头/比较列、类型空值语义及计数 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X047 | 数据验证完整管理 | 部分实现 | 七类规则管理、来源/空白/提示/严重度、事务校验 | 命名来源/复杂范围/扩展 XML 不支持；完整原要求逐项闭环待补 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X048 | 条件格式完整管理 | 部分实现 | 八类条件格式、色阶、优先级/停止和原生保存 | 缺数据条/图标集、完整阈值与复杂差异样式 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X049 | 外部链接与导入 | 未实现 | 普通工作簿内公式和原生超链接 | 外部计算链接/连接文件拒绝；来源更新和权限失败恢复缺失 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X050 | 表样式与汇总行 | 未实现 | 普通区域可筛选排序 | 原生 Table 对象拒绝，缺表样式/汇总/自动扩展 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X051 | 表范围重命名与转普通区域 | 未实现 | 没有原生 Table 模型 | 缺范围重命名/转普通区域和结构引用迁移 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X052 | 创建透视表与字段布局 | 未实现 | 没有透视缓存或字段模型 | 透视文件拒绝，创建/字段拖放/汇总缺失 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X053 | 值汇总与显示方式 | 未实现 | 普通单元格求和/计数 | 透视值汇总及显示方式缺失 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X054 | 分组排序筛选刷新 | 未实现 | 普通区域排序筛选 | 透视分组/展开/刷新缺失 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X055 | 钻取明细与计算字段 | 未实现 | 没有透视模型 | 钻取/新表明细/计算字段缺失 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X056 | 切片器与时间线 | 未实现 | 没有切片器/时间线对象 | 原生对象拒绝，多选/连接和保存缺失 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X057 | 原生柱状与折线图 | 部分实现 | 原生二维柱状/折线、标题/数据范围保存 | 系列分类独立编辑入口不完整，完整浏览器链路待补 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X058 | 饼散点面积雷达组合图 | 未实现 | 图表类型限 bar/line | 缺饼散点面积雷达组合/次轴等，复杂原生图表拒绝 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X059 | 图表布局格式与数据标签 | 部分实现 | 图表标题可修改，基本 SVG 轴/图例 | 缺轴格式、数据标签、趋势线/误差线与布局编辑 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X060 | 迷你图 | 未实现 | 无 Sparkline 模型 | 缺数据范围/分组/坐标与原生保存 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X061 | 图片形状与嵌入对象 | 未实现 | Sheet 没有图片形状对象 | 图片/绘图/嵌入文件拒绝，锚点裁剪排列缺失 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X062 | 冻结窗格 | 基础实现 | 冻结首行首列/指定模型边界、取消与原生保存 | 全部滚动/合并/隐藏/只读浏览器矩阵待补 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X063 | 拆分窗格与命名视图 | 未实现 | 仅冻结窗格 | 拆分窗格文件拒绝，缺命名视图和独立滚动 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X064 | 缩放网格线与标题 | 未实现 | 固定画布网格/标题 | 缺 25–400% 缩放、网格标题显示和文件属性编辑 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X065 | 打印区域与标题行列 | 部分实现 | 原文件打印范围可透传/结构迁移 | 无多个区域/标题行列编辑与当前表/全书打印选择 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X066 | 页面布局与分页预览 | 部分实现 | 原文件页面设置和断页可保留 | 缺编辑纸张边距/断页/缩放到页和分页预览 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X067 | 页眉页脚与打印选项 | 部分实现 | 普通源页眉页脚与打印选项保留 | 缺字段编辑、打印居中/黑白/网格选项 UI 与准确预览 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X068 | 工作表工作簿与范围保护 | 部分实现 | 本地范围保护/取消和无密码原生保存 | 完整工作表/工作簿结构锁、密码/可编辑范围互操作未实现 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
 
 ## PDF
 

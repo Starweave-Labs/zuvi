@@ -1,0 +1,42 @@
+{
+  "cells": [
+    {
+      "address": "A1",
+      "value": "1",
+      "bold": true
+    },
+    {
+      "address": "A2",
+      "value": "2",
+      "bold": true
+    },
+    {
+      "address": "A3",
+      "value": "3",
+      "bold": true
+    },
+    {
+      "address": "A4",
+      "value": null,
+      "bold": true
+    },
+    {
+      "address": "A5",
+      "value": null,
+      "bold": true
+    },
+    {
+      "address": "A6",
+      "value": "6",
+      "bold": true
+    },
+    {
+      "address": "A7",
+      "value": "7",
+      "bold": false
+    }
+  ],
+  "hiddenRowPreserved": 2,
+  "hiddenColumnPreserved": "B",
+  "blankCellsRemainBlank": true
+}

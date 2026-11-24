@@ -1,0 +1,35 @@
+{
+  "date": "2026-11-25",
+  "scope": "X015",
+  "focusedModelUI": 76,
+  "fullUI": 2283,
+  "allE2EBaseline": 230,
+  "finalFocusedE2E": "passed including merged active descendant/formula bar",
+  "docSiteTests": {
+    "passed": 277,
+    "skipped": 1,
+    "note": "original Chart integration skip"
+  },
+  "typecheck": "passed",
+  "lint": "passed",
+  "registry": "passed",
+  "consumerSourceFiles": 330,
+  "distribution": "passed",
+  "build": "passed",
+  "esmEntryGzipBytes": 124906,
+  "esmEntryBudgetBytes": 124928,
+  "nativeAudit": "native-xlsx-audit.json confirms A1:A6 formatting, A7 unchanged, blank values and hidden row/column flags",
+  "browser": [
+    "Ctrl/Command+Shift selection and shrink",
+    "blank gaps",
+    "hidden rows/columns",
+    "merged master focus",
+    "range formatting and undo/redo",
+    "XLSX export/reopen",
+    "readonly",
+    "light/dark/320px"
+  ],
+  "remaining": [
+    "full merged/frozen/scroll combinations and original common acceptance audit"
+  ]
+}

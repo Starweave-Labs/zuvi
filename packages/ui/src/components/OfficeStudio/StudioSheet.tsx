@@ -70,6 +70,7 @@ import {
   type StudioSortKey,
 } from './studio-sheet-model';
 import { studioChangeSheetStructure } from './studio-sheet-structure';
+import { studioDataBlockTarget } from './studio-sheet-navigation';
 import {
   studioCellValidation,
   studioConditionalCellStyle,
@@ -293,7 +294,11 @@ export function StudioSheet({
     STUDIO_SHEET_LIMITS.columns,
     Math.max(1, sheet?.columnCount ?? 1, extent?.col ?? 1)
   );
-  const address = studioCellAddress(selection.focus.row, selection.focus.col);
+  const activeMerge = sheet && studioMergedRange(sheet, selection.focus);
+  const address = studioCellAddress(
+    activeMerge?.firstRow ?? selection.focus.row,
+    activeMerge?.firstCol ?? selection.focus.col
+  );
   const cell = sheet?.cells[address];
   const calculated = React.useMemo(() => studioCalculate(document), [document]);
   const activeLink = sheet
@@ -643,57 +648,6 @@ export function StudioSheet({
       setNotice(error instanceof Error ? error.message : '单元格修改失败。');
       return false;
     }
-  }
-
-  function dataBlockTarget(direction: 'up' | 'down' | 'left' | 'right'): SheetPosition | null {
-    if (!sheet) return null;
-    const start = { ...selection.focus };
-    // 数据块 = 输入非空的单元格（公式错误也算数据）
-    const has = (row: number, col: number) =>
-      (sheet.cells[studioCellAddress(row, col)]?.input ?? '') !== '';
-    const lastRow = sheet.rowCount;
-    const lastCol = sheet.columnCount;
-    const stepRow = direction === 'down' ? 1 : direction === 'up' ? -1 : 0;
-    const stepCol = direction === 'right' ? 1 : direction === 'left' ? -1 : 0;
-
-    // 沿方向逐格推进；遇到合并格按其范围越过
-    const advance = (row: number, col: number): { row: number; col: number } | null => {
-      let nextRow = row + stepRow;
-      let nextCol = col + stepCol;
-      if (nextRow < 1 || nextRow > lastRow || nextCol < 1 || nextCol > lastCol) return null;
-      const merge = studioMergedRange(sheet, { row: nextRow, col: nextCol });
-      if (merge) {
-        // 跳过整个合并格
-        nextRow = stepRow > 0 ? merge.lastRow : stepRow < 0 ? merge.firstRow : row;
-        nextCol = stepCol > 0 ? merge.lastCol : stepCol < 0 ? merge.firstCol : col;
-        if (nextRow === row && nextCol === col) return null;
-        if (nextRow < 1 || nextRow > lastRow || nextCol < 1 || nextCol > lastCol) return null;
-      }
-      return { row: nextRow, col: nextCol };
-    };
-
-    const startHasValue = has(start.row, start.col);
-    let current = start;
-    let lastWithValue: SheetPosition | null = startHasValue ? start : null;
-    // 连续推进：有值块走到底；空白段找第一个有值格；均无则落到边界
-    for (let guard = 0; guard < lastRow * lastCol + 1; guard += 1) {
-      const next = advance(current.row, current.col);
-      if (!next) break;
-      const nextHas = has(next.row, next.col);
-      if (startHasValue) {
-        if (!nextHas) break;
-        lastWithValue = next;
-      } else if (nextHas) {
-        return next;
-      }
-      current = next;
-    }
-    if (startHasValue && lastWithValue && lastWithValue !== start) return lastWithValue;
-    // 已在块边缘或空白起始：落到声明维度的边界（Office 行为）
-    return {
-      row: stepRow > 0 ? lastRow : stepRow < 0 ? 1 : start.row,
-      col: stepCol > 0 ? lastCol : stepCol < 0 ? 1 : start.col,
-    };
   }
 
   function moveSelection(rowDelta: number, colDelta: number, extend = false) {
@@ -1765,7 +1719,7 @@ export function StudioSheet({
       ArrowLeft: [0, -1],
       ArrowRight: [0, 1],
     };
-    if (command && movement0[event.key] && !event.shiftKey) {
+    if (command && movement0[event.key]) {
       event.preventDefault();
       const direction =
         event.key === 'ArrowUp'
@@ -1775,13 +1729,14 @@ export function StudioSheet({
             : event.key === 'ArrowLeft'
               ? 'left'
               : 'right';
-      const target = dataBlockTarget(direction);
-      if (!target) return;
+      if (!sheet) return;
+      const target = studioDataBlockTarget(sheet, selection.focus, direction, calculated);
       const destination = sheet && studioMergedRange(sheet, target);
-      const position = destination
-        ? { row: destination.firstRow, col: destination.firstCol }
-        : target;
-      setSelection({ anchor: position, focus: position });
+      const position =
+        destination && !event.shiftKey
+          ? { row: destination.firstRow, col: destination.firstCol }
+          : target;
+      setSelection({ anchor: event.shiftKey ? selection.anchor : position, focus: position });
       ensureVisible(position);
       return;
     }

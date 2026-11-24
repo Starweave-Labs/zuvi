@@ -1832,6 +1832,84 @@ describe('StudioSheet Ctrl+方向键数据块导航', () => {
     expect(nav.active()).toBe('Z3');
   });
 
+  it('Ctrl+Shift preserves the anchor across blocks and formatting applies to the full selection in one transaction', () => {
+    const nav = navSetup({
+      A1: { input: '1' },
+      A2: { input: '2' },
+      A3: { input: '3' },
+      A6: { input: '6' },
+      A7: { input: '7' },
+      B1: { input: 'b' },
+      C1: { input: 'c' },
+    });
+    nav.go('A1');
+    fireEvent.keyDown(screen.getByRole('grid'), {
+      key: 'ArrowDown',
+      ctrlKey: true,
+      shiftKey: true,
+    });
+    expect(nav.active()).toBe('A3');
+    expect(screen.getByRole('gridcell', { name: 'A1' })).toHaveAttribute('aria-selected', 'true');
+    fireEvent.keyDown(screen.getByRole('grid'), {
+      key: 'ArrowDown',
+      ctrlKey: true,
+      shiftKey: true,
+    });
+    expect(nav.active()).toBe('A6');
+    expect(screen.getByRole('gridcell', { name: 'A4' })).toHaveAttribute('aria-selected', 'true');
+    fireEvent.keyDown(screen.getByRole('grid'), { key: 'b', ctrlKey: true });
+    for (const address of ['A1', 'A2', 'A3', 'A4', 'A5', 'A6'])
+      expect(nav.state.current().sheets[0].cells[address]?.bold).toBe(true);
+    fireEvent.click(screen.getByRole('button', { name: '撤销表格修改' }));
+    expect(nav.state.current().sheets[0].cells.A1.bold).toBeUndefined();
+  });
+
+  it('Command+Shift works in readonly mode and disabled/composing events leave selection unchanged', () => {
+    const nav = navSetup({ A1: { input: '1' }, B1: { input: 'b' }, C1: { input: 'c' } });
+    nav.go('A1');
+    nav.state.setPermissions({ readOnly: true });
+    fireEvent.keyDown(screen.getByRole('grid'), {
+      key: 'ArrowRight',
+      metaKey: true,
+      shiftKey: true,
+    });
+    expect(nav.active()).toBe('C1');
+    expect(nav.state.changed).not.toHaveBeenCalled();
+    fireEvent.keyDown(screen.getByRole('grid'), {
+      key: 'ArrowLeft',
+      ctrlKey: true,
+      shiftKey: true,
+      isComposing: true,
+    });
+    expect(nav.active()).toBe('C1');
+    nav.state.setPermissions({ disabled: true });
+    fireEvent.keyDown(screen.getByRole('grid'), {
+      key: 'ArrowLeft',
+      ctrlKey: true,
+      shiftKey: true,
+    });
+    expect(nav.active()).toBe('C1');
+  });
+
+  it('exposes the merged master as the active descendant while extending through the whole merged range', () => {
+    const doc = documentFixture();
+    doc.sheets[0].cells = { A1: { input: 'start' }, C1: { input: 'merged' } };
+    doc.sheets[0].merges = ['C1:D1'];
+    const f = setup({ document: doc });
+    fireEvent.keyDown(screen.getByRole('grid'), {
+      key: 'ArrowRight',
+      ctrlKey: true,
+      shiftKey: true,
+    });
+    const master = screen.getByRole('gridcell', { name: 'C1' });
+    expect(master).toHaveAttribute('data-active', 'true');
+    expect(master).toHaveAttribute('aria-colspan', '2');
+    expect(screen.getByRole('grid')).toHaveAttribute('aria-activedescendant', master.id);
+    expect(screen.getByLabelText('表格公式栏')).toHaveValue('merged');
+    expect(screen.getByRole('gridcell', { name: 'A1' })).toHaveAttribute('aria-selected', 'true');
+    expect(f.changed).not.toHaveBeenCalled();
+  });
+
   it('空白段跳到下一个有值格', () => {
     const nav = navSetup({
       A1: { input: '1' },

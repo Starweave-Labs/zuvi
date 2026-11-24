@@ -2030,6 +2030,7 @@
         "packages/ui/src/components/OfficeStudio/studio-sheet-hyperlinks.ts",
         "packages/ui/src/components/OfficeStudio/studio-sheet-layout.ts",
         "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-navigation.ts",
         "packages/ui/src/components/OfficeStudio/studio-sheet-rules.ts",
         "packages/ui/src/components/OfficeStudio/studio-sheet-structure.ts",
         "packages/ui/src/components/OfficeStudio/studio-types.ts",
