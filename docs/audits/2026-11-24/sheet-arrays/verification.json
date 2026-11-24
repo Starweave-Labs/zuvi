@@ -1,0 +1,33 @@
+{
+  "date": "2026-11-25",
+  "scope": "X036 array formulas implemented slice",
+  "modelUIAndStructure": {
+    "passed": 198
+  },
+  "nativeXlsxAndPrint": {
+    "passed": 63
+  },
+  "fullUI": {
+    "passed": 2265
+  },
+  "repoTests": "passed; docs 276 passed with one existing Chart integration skip",
+  "typecheck": "passed",
+  "lint": "passed",
+  "registry": "passed",
+  "consumerFiles": 329,
+  "distribution": "passed",
+  "esmEntryGzipBytes": 124905,
+  "esmEntryBudgetBytes": 124928,
+  "browser": "import fixed native array, edit anchor, create dynamic array, protect result cells, undo/redo, resize, conflict and recovery, native protection, two reopen cycles, light/dark/320px passed",
+  "independentAudit": "native-xlsx-audit.json confirms ranges, cache values, metadata, single ANCHORARRAY prefix and sheetProtection",
+  "allE2E": {
+    "passedInitial": 226,
+    "passedFailureRerun": 1,
+    "note": "DataGrid 320px theme button timing failure passed on isolated rerun; no component behavior change"
+  },
+  "remaining": [
+    "full original feature acceptance audit",
+    "additional dynamic functions",
+    "external Excel/WPS recalculation validation"
+  ]
+}

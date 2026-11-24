@@ -617,6 +617,15 @@ function sheetValidationSources(sheets: unknown[]): boolean {
 
 function sheetFeatures(sheet: Record<string, unknown>, rows: number, columns: number) {
   if (!sheetRules(sheet, rows, columns)) return false;
+  if (
+    sheet.protectedRanges !== undefined &&
+    (!Array.isArray(sheet.protectedRanges) ||
+      sheet.protectedRanges.length > 100 ||
+      sheet.protectedRanges.some(
+        (range) => typeof range !== 'string' || !cellRange(range, rows, columns)
+      ))
+  )
+    return false;
   if (sheet.structureEdits !== undefined) {
     if (!Array.isArray(sheet.structureEdits) || sheet.structureEdits.length > 500) return false;
     const dimensions = { row: rows, column: columns };
@@ -936,6 +945,15 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
               record(cell) &&
               typeof cell.input === 'string' &&
               cell.input.length <= 32767 &&
+              (cell.array === undefined ||
+                (record(cell.array) &&
+                  cell.input.startsWith('=') &&
+                  (cell.array.type === 'dynamic'
+                    ? Object.keys(cell.array).every((key) => key === 'type')
+                    : cell.array.type === 'fixed' &&
+                      typeof cell.array.range === 'string' &&
+                      !!cellRange(cell.array.range, rows, columns) &&
+                      cell.array.range.split(':')[0] === address))) &&
               [cell.bold, cell.italic, cell.underline, cell.wrap].every(optionalBoolean) &&
               !studioCellFontIssue(cell) &&
               !studioCellStyleIssue(cell) &&

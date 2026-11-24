@@ -325,6 +325,11 @@ function sheetTable(
 ) {
   let rows = 1;
   let columns = 1;
+  for (const [owner, array] of calculation.arrays) {
+    if (!owner.startsWith(`${sheet.id}:`)) continue;
+    rows = Math.max(rows, array.range.lastRow);
+    columns = Math.max(columns, array.range.lastCol);
+  }
   for (const [address, cell] of Object.entries(sheet.cells)) {
     if (!cell.input && !cell.background && !Object.keys(cell.borders ?? {}).length) continue;
     const position = studioParseAddress(address)!;

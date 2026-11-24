@@ -42,7 +42,7 @@ function compiledModule(url, resolve = require) {
 const studioModules = new Map();
 function resolveStudioModule(id) {
   const name =
-    /(?:^|\/)(studio-model|studio-word-images|studio-cell-style|studio-sheet-(?:model|structure|rules|fill|hyperlinks|editing))$/.exec(
+    /(?:^|\/)(studio-model|studio-word-images|studio-cell-style|studio-sheet-(?:model|structure|rules|fill|hyperlinks|editing|arrays))$/.exec(
       id
     )?.[1];
   if (!name) return require(id);
@@ -3012,4 +3012,74 @@ test('隐藏列往返：隐藏 B 后保存重开仍隐藏，结构编辑重映�
   };
   const cleared = await codec.exportStudioExcel(shown, saved);
   assert.equal((await readWorkbook(cleared)).worksheets[0].getColumn(3).hidden, false);
+});
+
+test('fixed and dynamic arrays save native formulas/caches, reopen, resize, clear and retain protection conflicts', async () => {
+  const workbook = new ExcelJS.Workbook();
+  const sheet = workbook.addWorksheet('Arrays');
+  sheet.addRows([
+    [1, 2],
+    [3, 4],
+  ]);
+  sheet.getCell('E1').value = { formula: 'A1:B2*2', shareType: 'array', ref: 'E1:F2', result: 2 };
+  sheet.getCell('F1').value = 4;
+  sheet.getCell('E2').value = 6;
+  sheet.getCell('F2').value = 8;
+  let source = await asBlob(workbook);
+  let document = await codec.importStudioExcel(source, 'Arrays.xlsx');
+  const id = document.sheets[0].id;
+  assert.deepEqual(JSON.parse(JSON.stringify(document.sheets[0].cells.E1.array)), {
+    type: 'fixed',
+    range: 'E1:F2',
+  });
+  assert.equal(document.sheets[0].cells.F2?.input || '', '');
+  assert.equal(model.studioCalculate(document).values.get(`${id}:F2`), 8);
+  document = model.studioSetArrayFormula(
+    document,
+    id,
+    { anchor: { row: 5, col: 5 }, focus: { row: 5, col: 5 } },
+    '=SEQUENCE(2,3,10,2)',
+    'dynamic'
+  );
+  document.sheets[0].cells.J1 = { input: '=SUM(E5#)' };
+  document.sheets[0].cells.J2 = { input: '=F2+1' };
+  for (let pass = 0; pass < 2; pass++) {
+    source = await codec.exportStudioExcel(document, source);
+    const zip = await JSZip.loadAsync(await source.arrayBuffer());
+    const xml = await zip.file('xl/worksheets/sheet1.xml').async('string');
+    assert.match(xml, /<f[^>]*t="array"[^>]*ref="E1:F2"/);
+    assert.match(xml, /<c[^>]*r="E5"[^>]*cm="1"/);
+    assert.match(await zip.file('xl/metadata.xml').async('string'), /dynamicArrayProperties/);
+    const native = new ExcelJS.Workbook();
+    await native.xlsx.load(await source.arrayBuffer());
+    assert.equal(native.getWorksheet('Arrays').getCell('F2').value, 8);
+    assert.equal(native.getWorksheet('Arrays').getCell('G6').value, 20);
+    assert.equal(native.getWorksheet('Arrays').getCell('J1').result, 90);
+    assert.equal(native.getWorksheet('Arrays').getCell('J1').formula, 'SUM(_xlfn.ANCHORARRAY(E5))');
+    document = await codec.importStudioExcel(source, 'Reopened.xlsx');
+    assert.equal(document.sheets[0].cells.E5.array.type, 'dynamic');
+    assert.equal(document.sheets[0].cells.F2?.input || '', '');
+    assert.equal(model.studioCalculate(document).values.get(`${id}:G6`), 20);
+  }
+  document = model.studioPatchCells(document, id, { E5: { input: '=SEQUENCE(1,1,7)' } });
+  source = await codec.exportStudioExcel(document, source);
+  const native = new ExcelJS.Workbook();
+  await native.xlsx.load(await source.arrayBuffer());
+  assert.equal(
+    native.getWorksheet('Arrays').getCell('G6').value,
+    null,
+    'Shrinking an array clears its old native result cache.'
+  );
+  document.sheets[0].protectedRanges = ['F5:F5'];
+  document = model.studioPatchCells(document, id, { E5: { input: '=SEQUENCE(2,2)' } });
+  assert.equal(model.studioCalculate(document).errors.get(`${id}:E5`), '#SPILL!');
+  source = await codec.exportStudioExcel(document, source);
+  const protectedZip = await JSZip.loadAsync(await source.arrayBuffer());
+  assert.match(
+    await protectedZip.file('xl/worksheets/sheet1.xml').async('string'),
+    /<sheetProtection/
+  );
+  document = await codec.importStudioExcel(source, 'Protected spill.xlsx');
+  assert.deepEqual(Array.from(document.sheets[0].protectedRanges), ['F5:F5']);
+  assert.equal(model.studioCalculate(document).errors.get(`${id}:E5`), '#SPILL!');
 });

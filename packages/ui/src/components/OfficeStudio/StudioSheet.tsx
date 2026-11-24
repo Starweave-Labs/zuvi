@@ -39,6 +39,7 @@ import {
   STUDIO_SHEET_LIMITS,
   STUDIO_SHEET_CLIPBOARD_TYPE,
   studioCalculate,
+  studioSetArrayFormula,
   studioAddChart,
   studioChartData,
   studioCellAddress,
@@ -215,6 +216,10 @@ export function StudioSheet({
   const [chartPanel, setChartPanel] = React.useState(false);
   const [selectedChart, setSelectedChart] = React.useState('');
   const [pasteDialog, setPasteDialog] = React.useState(false);
+  const [arrayDialog, setArrayDialog] = React.useState(false);
+  const [arrayFormula, setArrayFormula] = React.useState('');
+  const [arrayType, setArrayType] = React.useState<'fixed' | 'dynamic'>('dynamic');
+  const [arrayError, setArrayError] = React.useState('');
   const [pasteMode, setPasteMode] = React.useState<StudioSheetPasteMode>('all');
   const [pasteAvailable, setPasteAvailable] = React.useState(false);
   const [ruleDialog, setRuleDialog] = React.useState<SheetRuleDialogMode | null>(null);
@@ -430,6 +435,7 @@ export function StudioSheet({
       setSelectedChart('');
       setRuleDialog(null);
       setLinkDialog(null);
+      setArrayDialog(false);
       setSearch(null);
       setSearchReveal(null);
       resizeCleanup.current?.();
@@ -561,6 +567,7 @@ export function StudioSheet({
       return;
     const position = studioParseAddress(editing.address);
     if (position) ensureVisible(position);
+    if (editing.origin === 'formula') return;
     const input = editing.origin === 'cell' ? cellInputRef.current : formulaRef.current;
     input?.focus();
     input?.setSelectionRange(input.value.length, input.value.length);
@@ -748,6 +755,11 @@ export function StudioSheet({
 
   function beginEditing(origin: CellEditing['origin'], value?: string, targetAddress = address) {
     if (blocked || !sheet) return;
+    const owner = calculated.arrayOwners.get(`${sheet.id}:${targetAddress}`);
+    if (owner && owner !== `${sheet.id}:${targetAddress}`) {
+      setNotice(`数组结果不能单独修改，请编辑 ${owner.slice(sheet.id.length + 1)}。`);
+      return;
+    }
     setEdit({
       sheetId: sheet.id,
       address: targetAddress,
@@ -1813,6 +1825,28 @@ export function StudioSheet({
 
   function onEditorKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     if (blocked || event.nativeEvent.isComposing || event.keyCode === 229) return;
+    if ((event.ctrlKey || event.metaKey) && event.shiftKey && event.key === 'Enter') {
+      event.preventDefault();
+      const current = editingRef.current;
+      if (!blocked && current && sheet) {
+        try {
+          const next = studioSetArrayFormula(
+            latestRef.current,
+            sheet.id,
+            selection,
+            current.value,
+            'fixed'
+          );
+          replaceDocument(next);
+          setEdit(null);
+          gridRef.current?.focus();
+          setNotice('固定数组已设置，可撤销。');
+        } catch (error) {
+          setInputError(error instanceof Error ? error.message : '数组公式无效。');
+        }
+      }
+      return;
+    }
     if (event.key === 'Escape') {
       event.preventDefault();
       setEdit(null);
@@ -1869,7 +1903,7 @@ export function StudioSheet({
   function onCopy(event: React.ClipboardEvent<HTMLDivElement>) {
     if (disabled || !sheet || event.target !== event.currentTarget) return;
     try {
-      const text = studioCopyTsv(sheet, selection);
+      const text = studioCopyTsv(sheet, selection, calculated);
       event.clipboardData.setData('text/plain', text);
       event.preventDefault();
       try {
@@ -2444,7 +2478,77 @@ export function StudioSheet({
               >
                 Σ 自动求和
               </Button>
+              <Button
+                size="sm"
+                variant="ghost"
+                disabled={blocked}
+                onClick={() => {
+                  if (!commitEditing()) return;
+                  setArrayFormula(sheet?.cells[address]?.input || '=SEQUENCE(2,2)');
+                  setArrayType(sheet?.cells[address]?.array?.type || 'dynamic');
+                  const definition = sheet?.cells[address]?.array;
+                  if (definition?.type === 'fixed') {
+                    const range = studioParseRange(definition.range)!;
+                    setSelection({
+                      anchor: { row: range.firstRow, col: range.firstCol },
+                      focus: { row: range.lastRow, col: range.lastCol },
+                    });
+                  }
+                  setArrayError('');
+                  setArrayDialog(true);
+                }}
+              >
+                数组公式
+              </Button>
               <span>公式</span>
+              <Button
+                size="sm"
+                variant="ghost"
+                disabled={blocked}
+                onClick={() => {
+                  if (!sheet || !commitEditing()) return;
+                  transform(
+                    (current) => ({
+                      ...current,
+                      sheets: current.sheets.map((entry) =>
+                        entry.id === sheet.id
+                          ? {
+                              ...entry,
+                              protectedRanges: [
+                                ...new Set([
+                                  ...(entry.protectedRanges || []),
+                                  studioRangeAddress(bounds),
+                                ]),
+                              ],
+                            }
+                          : entry
+                      ),
+                    }),
+                    '所选区域已保护，可撤销。'
+                  );
+                }}
+              >
+                保护所选区域
+              </Button>
+              <Button
+                size="sm"
+                variant="ghost"
+                disabled={blocked || !sheet?.protectedRanges?.length}
+                onClick={() => {
+                  if (!sheet || !commitEditing()) return;
+                  transform(
+                    (current) => ({
+                      ...current,
+                      sheets: current.sheets.map((entry) =>
+                        entry.id === sheet.id ? { ...entry, protectedRanges: [] } : entry
+                      ),
+                    }),
+                    '已取消区域保护，可撤销。'
+                  );
+                }}
+              >
+                取消区域保护
+              </Button>
             </div>
             <div className="zuvi-studio-sheet-toolgroup">
               <div className="zuvi-studio-sheet-toolrow">
@@ -2929,7 +3033,11 @@ export function StudioSheet({
           value={formulaValue}
           placeholder="输入内容或公式"
           disabled={disabled}
-          readOnly={readOnly}
+          readOnly={
+            readOnly ||
+            (!!calculated.arrayOwners.get(`${sheet.id}:${address}`) &&
+              calculated.arrayOwners.get(`${sheet.id}:${address}`) !== `${sheet.id}:${address}`)
+          }
           status={inputError ? 'error' : 'default'}
           aria-invalid={!!inputError || undefined}
           aria-describedby={
@@ -2937,7 +3045,7 @@ export function StudioSheet({
           }
           onFocus={() => {
             if (editingRef.current?.origin !== 'formula' || editingRef.current.sheetId !== sheet.id)
-              beginEditing('formula');
+              flushSync(() => beginEditing('formula'));
           }}
           onChange={(event) => {
             if (blocked) return;
@@ -3284,6 +3392,7 @@ export function StudioSheet({
                       data-active={active || undefined}
                       data-selected={selected || undefined}
                       data-error={!!currentError || undefined}
+                      data-array-owner={calculated.arrayOwners.get(key)?.slice(sheet.id.length + 1)}
                       data-invalid={(validation && !validation.valid) || undefined}
                       data-conditional={Object.keys(conditionalStyle).length > 0 || undefined}
                       data-merged={!!merge || undefined}
@@ -3387,7 +3496,7 @@ export function StudioSheet({
                         />
                       ) : (
                         <span>
-                          {currentCell?.input
+                          {currentCell?.input || calculated.arrayOwners.has(key)
                             ? studioDisplayCell(
                                 displayCell,
                                 calculated.values.get(key),
@@ -3573,6 +3682,63 @@ export function StudioSheet({
             取消
           </Button>
         </div>
+      )}
+      {arrayDialog && !blocked && (
+        <Modal open onOpenChange={setArrayDialog}>
+          <Modal.Content size="sm">
+            <Modal.Header>
+              <Modal.Title>数组公式</Modal.Title>
+              <Modal.Close />
+            </Modal.Header>
+            <Modal.Body>
+              <label>
+                公式
+                <Input.Textarea
+                  aria-label="数组公式表达式"
+                  value={arrayFormula}
+                  rows={3}
+                  onChange={(event) => setArrayFormula(event.target.value)}
+                />
+              </label>
+              <Select
+                aria-label="数组公式模式"
+                value={arrayType}
+                onChange={(value) => setArrayType(value as 'fixed' | 'dynamic')}
+                options={[
+                  { value: 'dynamic', label: '动态溢出' },
+                  { value: 'fixed', label: '固定数组' },
+                ]}
+              />
+              <p>固定数组使用完整选区；动态溢出从选区左上角开始。结果单元格不能单独修改。</p>
+              {arrayError && <p role="alert">{arrayError}</p>}
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="ghost" onClick={() => setArrayDialog(false)}>
+                取消
+              </Button>
+              <Button
+                onClick={() => {
+                  try {
+                    const next = studioSetArrayFormula(
+                      latestRef.current,
+                      sheet!.id,
+                      selection,
+                      arrayFormula,
+                      arrayType
+                    );
+                    replaceDocument(next);
+                    setArrayDialog(false);
+                    setNotice('数组公式已设置，可撤销。');
+                  } catch (error) {
+                    setArrayError(error instanceof Error ? error.message : '数组公式无效。');
+                  }
+                }}
+              >
+                应用数组公式
+              </Button>
+            </Modal.Footer>
+          </Modal.Content>
+        </Modal>
       )}
       {pasteDialog && (
         <Modal

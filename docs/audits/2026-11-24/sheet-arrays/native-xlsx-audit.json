@@ -1,0 +1,220 @@
+[
+  {
+    "file": "arrays-roundtrip-1.xlsx",
+    "cells": {
+      "E1": {
+        "formula": "A1:B2*3",
+        "formulaAttrs": {
+          "t": "array",
+          "ref": "E1:F2"
+        },
+        "value": "3",
+        "cellAttrs": {
+          "r": "E1"
+        }
+      },
+      "F2": {
+        "formula": null,
+        "formulaAttrs": {},
+        "value": "12",
+        "cellAttrs": {
+          "r": "F2"
+        }
+      },
+      "E5": {
+        "formula": "_xlfn.SEQUENCE(2,3,10,2)",
+        "formulaAttrs": {
+          "t": "array",
+          "ref": "E5:G6"
+        },
+        "value": "10",
+        "cellAttrs": {
+          "r": "E5",
+          "cm": "1"
+        }
+      },
+      "F6": {
+        "formula": null,
+        "formulaAttrs": {},
+        "value": "18",
+        "cellAttrs": {
+          "r": "F6"
+        }
+      },
+      "G6": {
+        "formula": null,
+        "formulaAttrs": {},
+        "value": "20",
+        "cellAttrs": {
+          "r": "G6"
+        }
+      },
+      "J1": {
+        "formula": "F2+1",
+        "formulaAttrs": {},
+        "value": "13",
+        "cellAttrs": {
+          "r": "J1"
+        }
+      },
+      "J2": {
+        "formula": "SUM(_xlfn.ANCHORARRAY(E5))",
+        "formulaAttrs": {},
+        "value": "90",
+        "cellAttrs": {
+          "r": "J2"
+        }
+      }
+    },
+    "sheetProtected": false,
+    "metadataPresent": true
+  },
+  {
+    "file": "arrays-roundtrip-2.xlsx",
+    "cells": {
+      "E1": {
+        "formula": "A1:B2*3",
+        "formulaAttrs": {
+          "t": "array",
+          "ref": "E1:F2"
+        },
+        "value": "3",
+        "cellAttrs": {
+          "r": "E1"
+        }
+      },
+      "F2": {
+        "formula": null,
+        "formulaAttrs": {},
+        "value": "12",
+        "cellAttrs": {
+          "r": "F2"
+        }
+      },
+      "E5": {
+        "formula": "_xlfn.SEQUENCE(2,3,10,2)",
+        "formulaAttrs": {
+          "t": "array",
+          "ref": "E5:G6"
+        },
+        "value": "10",
+        "cellAttrs": {
+          "r": "E5",
+          "cm": "1"
+        }
+      },
+      "F6": {
+        "formula": null,
+        "formulaAttrs": {},
+        "value": "18",
+        "cellAttrs": {
+          "r": "F6"
+        }
+      },
+      "G6": {
+        "formula": null,
+        "formulaAttrs": {},
+        "value": "20",
+        "cellAttrs": {
+          "r": "G6"
+        }
+      },
+      "J1": {
+        "formula": "F2+1",
+        "formulaAttrs": {},
+        "value": "13",
+        "cellAttrs": {
+          "r": "J1"
+        }
+      },
+      "J2": {
+        "formula": "SUM(_xlfn.ANCHORARRAY(E5))",
+        "formulaAttrs": {},
+        "value": "90",
+        "cellAttrs": {
+          "r": "J2"
+        }
+      }
+    },
+    "sheetProtected": false,
+    "metadataPresent": true
+  },
+  {
+    "file": "arrays-protected.xlsx",
+    "cells": {
+      "E1": {
+        "formula": "A1:B2*3",
+        "formulaAttrs": {
+          "t": "array",
+          "ref": "E1:F2"
+        },
+        "value": "3",
+        "cellAttrs": {
+          "r": "E1",
+          "s": "1"
+        }
+      },
+      "F2": {
+        "formula": null,
+        "formulaAttrs": {},
+        "value": "12",
+        "cellAttrs": {
+          "r": "F2",
+          "s": "1"
+        }
+      },
+      "E5": {
+        "formula": "_xlfn.SEQUENCE(2,2)",
+        "formulaAttrs": {
+          "t": "array",
+          "ref": "E5"
+        },
+        "value": "#SPILL!",
+        "cellAttrs": {
+          "r": "E5",
+          "s": "1",
+          "t": "e",
+          "cm": "1"
+        }
+      },
+      "F6": {
+        "formula": null,
+        "formulaAttrs": {},
+        "value": null,
+        "cellAttrs": {
+          "r": "F6",
+          "s": "2"
+        }
+      },
+      "G6": {
+        "formula": null,
+        "formulaAttrs": {},
+        "value": null,
+        "cellAttrs": {
+          "r": "G6",
+          "s": "1"
+        }
+      },
+      "J1": {
+        "formula": "F2+1",
+        "formulaAttrs": {},
+        "value": "13",
+        "cellAttrs": {
+          "r": "J1",
+          "s": "1"
+        }
+      },
+      "J2": {
+        "formula": "SUM(_xlfn.ANCHORARRAY(E5))",
+        "formulaAttrs": {},
+        "value": null,
+        "cellAttrs": {
+          "r": "J2",
+          "s": "1"
+        }
+      }
+    },
+    "sheetProtected": true,
+    "metadataPresent": true
+  }
+]

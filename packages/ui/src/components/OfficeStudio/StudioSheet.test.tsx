@@ -70,6 +70,93 @@ function setup({
 }
 
 describe('StudioSheet Office editing details', () => {
+  it('creates dynamic and fixed arrays through the dialog, protects results and restores one transaction with undo/redo', async () => {
+    const f = setup();
+    const address = screen.getByLabelText('单元格地址');
+    fireEvent.change(address, { target: { value: 'E1' } });
+    fireEvent.keyDown(address, { key: 'Enter' });
+    fireEvent.click(screen.getByRole('button', { name: '数组公式' }));
+    const dialog = await screen.findByRole('dialog', { name: '数组公式' });
+    fireEvent.change(within(dialog).getByLabelText('数组公式表达式'), {
+      target: { value: '=SEQUENCE(2,2,10,2)' },
+    });
+    fireEvent.click(within(dialog).getByRole('button', { name: '应用数组公式' }));
+    expect(screen.getByRole('gridcell', { name: 'F2' })).toHaveTextContent('16');
+    expect(f.current().sheets[0].cells.E1.array).toEqual({ type: 'dynamic' });
+    fireEvent.doubleClick(screen.getByRole('gridcell', { name: 'F2' }));
+    expect(screen.queryByRole('textbox', { name: '编辑 F2' })).toBeNull();
+    expect(screen.getByLabelText('表格公式栏')).toHaveAttribute('readonly');
+    fireEvent.click(screen.getByRole('button', { name: '撤销表格修改' }));
+    expect(f.current().sheets[0].cells.E1).toBeUndefined();
+    fireEvent.click(screen.getByRole('button', { name: '重做表格修改' }));
+    expect(screen.getByRole('gridcell', { name: 'F2' })).toHaveTextContent('16');
+    const input = screen.getByLabelText('单元格地址');
+    fireEvent.change(input, { target: { value: 'E1' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+    fireEvent.focus(screen.getByLabelText('表格公式栏'));
+    fireEvent.change(screen.getByLabelText('表格公式栏'), {
+      target: { value: '=SEQUENCE(1,1,7)' },
+    });
+    fireEvent.keyDown(screen.getByLabelText('表格公式栏'), { key: 'Enter' });
+    expect(screen.getByRole('gridcell', { name: 'E1' })).toHaveTextContent('7');
+    expect(screen.getByRole('gridcell', { name: 'F2' })).toHaveTextContent('');
+  });
+
+  it('creates a fixed array with Ctrl+Shift+Enter, ignores IME Enter and cancels the dialog without a transaction', () => {
+    const f = setup();
+    const address = screen.getByLabelText('单元格地址');
+    fireEvent.change(address, { target: { value: 'E1' } });
+    fireEvent.keyDown(address, { key: 'Enter' });
+    const grid = screen.getByRole('grid');
+    fireEvent.keyDown(grid, { key: 'ArrowRight', shiftKey: true });
+    fireEvent.keyDown(grid, { key: 'ArrowDown', shiftKey: true });
+    const formula = screen.getByLabelText('表格公式栏');
+    fireEvent.focus(formula);
+    fireEvent.change(formula, { target: { value: '={1,2;3,4}' } });
+    fireEvent.keyDown(formula, { key: 'Enter', ctrlKey: true, shiftKey: true, isComposing: true });
+    expect(f.changed).not.toHaveBeenCalled();
+    fireEvent.keyDown(formula, { key: 'Enter', ctrlKey: true, shiftKey: true });
+    expect(f.current().sheets[0].cells.E1.array).toEqual({ type: 'fixed', range: 'E1:F2' });
+    expect(screen.getByRole('gridcell', { name: 'F2' })).toHaveTextContent('4');
+    fireEvent.click(screen.getByRole('button', { name: '数组公式' }));
+    const dialog = screen.getByRole('dialog', { name: '数组公式' });
+    fireEvent.change(within(dialog).getByLabelText('数组公式表达式'), {
+      target: { value: '=SEQUENCE(2,2)' },
+    });
+    fireEvent.click(within(dialog).getByRole('button', { name: '取消' }));
+    expect(f.changed).toHaveBeenCalledTimes(1);
+  });
+
+  it('protects a selected range, rejects a spill through it and restores the array after unprotecting', () => {
+    const f = setup();
+    const address = screen.getByLabelText('单元格地址');
+    fireEvent.change(address, { target: { value: 'F2' } });
+    fireEvent.keyDown(address, { key: 'Enter' });
+    fireEvent.click(screen.getByRole('button', { name: '保护所选区域' }));
+    expect(f.current().sheets[0].protectedRanges).toEqual(['F2:F2']);
+    fireEvent.change(address, { target: { value: 'E1' } });
+    fireEvent.keyDown(address, { key: 'Enter' });
+    fireEvent.click(screen.getByRole('button', { name: '数组公式' }));
+    const dialog = screen.getByRole('dialog', { name: '数组公式' });
+    fireEvent.change(within(dialog).getByLabelText('数组公式表达式'), {
+      target: { value: '=SEQUENCE(2,2)' },
+    });
+    fireEvent.click(within(dialog).getByRole('button', { name: '应用数组公式' }));
+    expect(screen.getByRole('gridcell', { name: 'E1 #SPILL!' })).toHaveTextContent('#SPILL!');
+    fireEvent.click(screen.getByRole('button', { name: '取消区域保护' }));
+    expect(screen.getByRole('gridcell', { name: 'F2' })).toHaveTextContent('4');
+    fireEvent.click(screen.getByRole('button', { name: '撤销表格修改' }));
+    expect(screen.getByRole('gridcell', { name: 'E1 #SPILL!' })).toHaveTextContent('#SPILL!');
+  });
+
+  it.each([{ readOnly: true }, { disabled: true }])(
+    'disables array formula entry in %j',
+    (permissions) => {
+      setup(permissions);
+      expect(screen.getByRole('button', { name: '数组公式' })).toBeDisabled();
+    }
+  );
+
   it('uses ZUVI controls for every ribbon action and exposes pressed state without native button chrome', () => {
     const document = documentFixture();
     document.sheets[0].cells.A1 = { input: 'Alpha', bold: true, wrap: true };

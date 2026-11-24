@@ -1,6 +1,12 @@
 import ExcelJS from 'exceljs';
 import JSZip from 'jszip';
 import {
+  studioArrayRange,
+  studioArrayContains,
+  studioSheetArraysIssue,
+  studioRewriteSpillReferences,
+} from '../../../../../packages/ui/src/components/OfficeStudio/studio-sheet-arrays';
+import {
   studioBorderSides,
   studioBorderStyles,
 } from '../../../../../packages/ui/src/components/OfficeStudio/studio-cell-style';
@@ -203,6 +209,8 @@ interface NativeSheetFonts {
 interface SheetMetadata {
   name: string;
   numericInputs: Map<string, string>;
+  arrays: Map<string, { formula: string; array: NonNullable<StudioCell['array']>; range: string }>;
+  protectedRanges?: string[];
   fonts: NativeSheetFonts;
   rowLayout: NativeRowLayout;
   hyperlinks: StudioSheetHyperlink[];
@@ -1024,6 +1032,8 @@ async function readMetadata(zip: JSZip): Promise<Map<number, SheetMetadata>> {
   const workbook = xmlDocument(await zip.file('xl/workbook.xml')!.async('string'));
   const workbookRels = await relationships(zip, 'xl/workbook.xml');
   const metadata = new Map<number, SheetMetadata>();
+  const metadataEntry = zip.file('xl/metadata.xml');
+  const dynamicMetadata = metadataEntry && (await metadataEntry.async('string')).includes('XLDAPR');
   const stylesEntry = zip.file('xl/styles.xml');
   const stylesXml = stylesEntry ? xmlDocument(await stylesEntry.async('string')) : undefined;
   const fontStyles = nativeFontStyles(stylesXml);
@@ -1056,6 +1066,51 @@ async function readMetadata(zip: JSZip): Promise<Map<number, SheetMetadata>> {
     if (storedCells > STUDIO_SHEET_LIMITS.storedCells)
       throw new Error('工作簿包含超过 100,000 个已使用单元格。');
     const numericInputs = new Map<string, string>();
+    const arrays: SheetMetadata['arrays'] = new Map();
+    let arrayArea = 0;
+    const arrayRanges: ReturnType<typeof studioArrayRange>[] = [];
+    for (const cell of nativeCells) {
+      const formula = first(cell, S, 'f');
+      if (formula?.getAttribute('t') !== 'array') continue;
+      const address = cell.getAttribute('r') || '';
+      const rangeText = formula.getAttribute('ref') || address;
+      const range = studioArrayRange(rangeText);
+      const position = studioParseAddress(address);
+      if (
+        !range ||
+        !position ||
+        range.firstRow !== position.row ||
+        range.firstCol !== position.col ||
+        !formula.textContent
+      )
+        throw new Error('数组公式范围或起始单元格无效。');
+      const dynamic = cell.hasAttribute('cm');
+      if (dynamic && !dynamicMetadata) throw new Error('数组公式使用无法保留的单元格元数据。');
+      arrayArea += (range.lastRow - range.firstRow + 1) * (range.lastCol - range.firstCol + 1);
+      if (
+        arrayArea > 100000 ||
+        arrayRanges.some(
+          (entry) =>
+            entry &&
+            range.firstRow <= entry.lastRow &&
+            range.lastRow >= entry.firstRow &&
+            range.firstCol <= entry.lastCol &&
+            range.lastCol >= entry.firstCol
+        )
+      )
+        throw new Error('数组结果范围过大或重叠。');
+      arrayRanges.push(range);
+      arrays.set(address, {
+        formula: '=' + formula.textContent,
+        array: dynamic ? { type: 'dynamic' } : { type: 'fixed', range: rangeText },
+        range: rangeText,
+      });
+    }
+    const protectedRangesText = xml.documentElement.getAttributeNS(
+      'urn:zuvi:office-studio',
+      'protectedRanges'
+    );
+    const protectedRanges = protectedRangesText ? protectedRangesText.split(' ') : undefined;
     for (const cell of nativeCells) {
       if (first(cell, S, 'f')) continue;
       const address = cell.getAttribute('r');
@@ -1183,6 +1238,8 @@ async function readMetadata(zip: JSZip): Promise<Map<number, SheetMetadata>> {
     metadata.set(sheetId, {
       name: sheet.getAttribute('name') ?? '',
       numericInputs,
+      arrays,
+      protectedRanges,
       fonts: nativeSheetFonts(xml, fontStyles),
       rowLayout: nativeRowLayout(xml),
       hyperlinks,
@@ -1246,11 +1303,14 @@ async function checkSupportedWorkbook(source: Blob) {
   for (const name of names) {
     if (!/^xl\/worksheets\/[^/]+\.xml$/.test(name)) continue;
     const xml = await zip.file(name)!.async('string');
-    if (/<sheetProtection\b/.test(xml)) throw new Error('受保护的工作表暂不支持在线修改。');
-    if (/<f\b[^>]*\bt="(?:array|dataTable)"/.test(xml))
-      throw new Error(
-        '此工作簿含数组公式或模拟运算表，首版尚不支持。请在 Excel 或 WPS 中打开原文件。'
-      );
+    if (
+      /<sheetProtection\b/.test(xml) &&
+      (!/protectedRanges=/.test(xml) ||
+        /<sheetProtection\b[^>]*(?:password|hashValue|algorithmName)=/.test(xml))
+    )
+      throw new Error('此受保护工作表的密码或可编辑范围尚不能完整保留。');
+    if (/<f\b[^>]*\bt="dataTable"/.test(xml))
+      throw new Error('此工作簿含模拟运算表，当前尚不支持。请在 Excel 或 WPS 中打开原文件。');
   }
   return readMetadata(zip);
 }
@@ -1354,6 +1414,8 @@ function validateDocument(document: StudioExcelDocument) {
       if (++count > STUDIO_SHEET_LIMITS.storedCells)
         throw new Error('首版支持一个工作簿最多 100,000 个已使用单元格。');
     }
+    const arrayIssue = studioSheetArraysIssue(sheet);
+    if (arrayIssue) throw new Error(arrayIssue);
     if (sheet.merges && (!Array.isArray(sheet.merges) || sheet.merges.length > 1000))
       throw new Error('合并区域数量超出支持范围。');
     if (
@@ -1460,7 +1522,21 @@ function importedDocument(
     sheet.eachRow({ includeEmpty: true }, (row) =>
       row.eachCell({ includeEmpty: true }, (cell) => {
         if (cell.type === ExcelJS.ValueType.Merge) return;
-        const value = importedCell(cell, advanced?.numericInputs.get(cell.address));
+        const array = advanced?.arrays.get(cell.address);
+        const resultCell = [...(advanced?.arrays.entries() || [])].some(([anchor, entry]) => {
+          const position = studioParseAddress(cell.address)!;
+          return (
+            anchor !== cell.address &&
+            studioArrayContains(studioArrayRange(entry.range)!, position.row, position.col)
+          );
+        });
+        const value = resultCell
+          ? { ...importedCell(cell, advanced?.numericInputs.get(cell.address)), input: '' }
+          : importedCell(cell, advanced?.numericInputs.get(cell.address));
+        if (array) {
+          value.input = array.formula;
+          value.array = array.array;
+        }
         if (value.input === '' && Object.keys(value).length === 1) return;
         if (++count > STUDIO_SHEET_LIMITS.storedCells)
           throw new Error('首版支持一个工作簿最多 100,000 个已使用单元格。');
@@ -1529,6 +1605,7 @@ function importedDocument(
         STUDIO_SHEET_LIMITS.defaultRowHeight,
       rowHeights: { ...rowLayout?.rowHeights },
       hiddenRows: [...(rowLayout?.hiddenRows ?? [])],
+      ...(advanced?.protectedRanges ? { protectedRanges: advanced.protectedRanges } : {}),
       ...(advanced
         ? {
             merges: advanced.merges,
@@ -2105,10 +2182,31 @@ export async function exportStudioExcel(
       for (let row = previouslyFilteredRows.firstRow; row <= previouslyFilteredRows.lastRow; row++)
         target.getRow(row).hidden = false;
     target.autoFilter = sheet.filter?.range;
+    if (sheet.protectedRanges?.length) {
+      for (const column of target.columns) column.protection = { locked: false };
+      target.eachRow({ includeEmpty: true }, (row) =>
+        row.eachCell({ includeEmpty: true }, (cell) => {
+          cell.protection = { locked: false };
+        })
+      );
+      for (const reference of sheet.protectedRanges) {
+        const range = studioArrayRange(reference)!;
+        for (let row = range.firstRow; row <= range.lastRow; row++)
+          for (let col = range.firstCol; col <= range.lastCol; col++)
+            target.getCell(row, col).protection = { locked: true };
+      }
+      await target.protect('', { selectLockedCells: true, selectUnlockedCells: true });
+    } else target.unprotect();
   }
   const calculated = studioCalculate(document);
   for (const sheet of document.sheets) {
     const target = workbook.getWorksheet(sheet.name)!;
+    for (const [key, owner] of calculated.arrayOwners) {
+      if (!key.startsWith(`${sheet.id}:`) || key === owner) continue;
+      target.getCell(key.slice(sheet.id.length + 1)).value = calculated.errors.has(key)
+        ? { error: calculated.errors.get(key)! as ExcelJS.CellErrorValue['error'] }
+        : (calculated.values.get(key) ?? 0);
+    }
     for (const row of studioHiddenRows(sheet, calculated)) target.getRow(row).hidden = true;
     for (const [address, cell] of Object.entries(sheet.cells)) {
       if (!cell.input.startsWith('=')) continue;
@@ -2116,13 +2214,32 @@ export async function exportStudioExcel(
       const result = calculated.values.get(key);
       const error = calculated.errors.get(key);
       target.getCell(address).value = {
-        formula: cell.input.slice(1),
+        formula: studioRewriteSpillReferences(cell.input.slice(1)).replace(
+          /(?:_xlfn\.)*\bANCHORARRAY\(/g,
+          '_xlfn.ANCHORARRAY('
+        ),
         ...(error && excelErrors.includes(error as (typeof excelErrors)[number])
           ? { result: { error: error as ExcelJS.CellErrorValue['error'] } }
           : result !== undefined
             ? { result }
             : {}),
       };
+      if (cell.array) {
+        const array = calculated.arrays.get(key);
+        target.getCell(address).value = {
+          formula: studioRewriteSpillReferences(cell.input.slice(1)).replace(
+            /(?:_xlfn\.)*\bANCHORARRAY\(/g,
+            '_xlfn.ANCHORARRAY('
+          ),
+          result: error ? { error: error as ExcelJS.CellErrorValue['error'] } : (result ?? 0),
+          shareType: 'array',
+          ref: array
+            ? studioRangeAddress(array.range)
+            : cell.array.type === 'fixed'
+              ? cell.array.range
+              : address,
+        } as ExcelJS.CellFormulaValue;
+      }
     }
   }
   workbook.calcProperties.fullCalcOnLoad = true;
@@ -2511,6 +2628,47 @@ async function writeAdvancedParts(
     const path = sheetPaths.get(sheet.name);
     if (!path) throw new Error('导出工作表关系无效。');
     let worksheet = await zip.file(path)!.async('string');
+    if (sheet.protectedRanges?.length) {
+      worksheet = worksheet.replace(/<worksheet\b([^>]*)>/, (_match, attributes: string) => {
+        const cleaned = attributes.replace(
+          /\s(?:xmlns:mc|xmlns:zuvi|mc:Ignorable|zuvi:protectedRanges)="[^"]*"/g,
+          ''
+        );
+        return `<worksheet${cleaned} xmlns:zuvi="urn:zuvi:office-studio" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="zuvi" zuvi:protectedRanges="${escapeXml(sheet.protectedRanges!.join(' '))}">`;
+      });
+    }
+    let dynamicMetadata = false;
+    for (const [address, cell] of Object.entries(sheet.cells)) {
+      if (cell.array?.type !== 'dynamic') continue;
+      dynamicMetadata = true;
+      worksheet = worksheet.replace(
+        new RegExp(`(<f\\b[^>]*>)(SEQUENCE|FILTER|UNIQUE|SORT)(\\()`, 'g'),
+        '$1_xlfn.$2$3'
+      );
+      worksheet = worksheet.replace(
+        new RegExp(`<c\\b([^>]*\\br="${address}"[^>]*)>`),
+        (_match, attributes) => `<c${attributes} cm="1">`
+      );
+    }
+    if (dynamicMetadata) {
+      zip.file(
+        'xl/metadata.xml',
+        `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><metadata xmlns="${S}" xmlns:xda="http://schemas.microsoft.com/office/spreadsheetml/2017/dynamicarray"><metadataTypes count="1"><metadataType name="XLDAPR" minSupportedVersion="120000" copy="1" pasteAll="1" pasteValues="1" merge="1" splitFirst="1" rowColShift="1" clearFormats="1" clearComments="1" assign="1" coerce="1" cellMeta="1"/></metadataTypes><futureMetadata name="XLDAPR" count="1"><bk><extLst><ext uri="{bdbb8cdc-fa1e-496e-a857-3c3f30c029c3}"><xda:dynamicArrayProperties fDynamic="1" fCollapsed="0"/></ext></extLst></bk></futureMetadata><cellMetadata count="1"><bk><rc t="1" v="0"/></bk></cellMetadata></metadata>`
+      );
+      const relPath = 'xl/_rels/workbook.xml.rels';
+      let relations = await zip.file(relPath)!.async('string');
+      if (!relations.includes('/sheetMetadata'))
+        relations = relations.replace(
+          '</Relationships>',
+          `<Relationship Id="rIdZuviArrayMetadata" Type="${R}/sheetMetadata" Target="metadata.xml"/></Relationships>`
+        );
+      zip.file(relPath, relations);
+      if (!contentTypes.includes('/xl/metadata.xml'))
+        contentTypes = contentTypes.replace(
+          '</Types>',
+          '<Override PartName="/xl/metadata.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheetMetadata+xml"/></Types>'
+        );
+    }
     worksheet = worksheet.replace(/<drawing\b[^>]*\/>/g, '');
     worksheet = worksheet.replace(
       /<(?:conditionalFormatting|dataValidations)\b[^>]*(?:\/>|>[\s\S]*?<\/(?:conditionalFormatting|dataValidations)>)/g,

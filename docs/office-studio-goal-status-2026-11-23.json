@@ -2417,8 +2417,20 @@
         "docs/tests/studio-excel.test.mjs"
       ],
       "historicalStatus": "缺失",
-      "status": "requires-current-audit",
-      "evidence": []
+      "status": "implemented-array-slice-verified-full-acceptance-audit-pending",
+      "evidence": [
+        "packages/ui/src/components/OfficeStudio/studio-sheet-arrays.test.ts: matrices, arithmetic, IF, SEQUENCE, transpose, MMULT, cycles, conflicts and result edit guards",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx: dialogs, shortcut, IME, cancellation, permissions and transaction history",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-structure.ts: fixed-array split refusal and native range migration",
+        "docs/tests/studio-excel.test.mjs: real fixed/dynamic XLSX import/export, repeated reopen, shrink clearing, metadata and protection",
+        "docs/tests/studio-print.test.mjs: complete computed result region",
+        "e2e/office-studio-sheet-arrays.spec.ts: real browser native XLSX workflows and light/dark/320px checks",
+        "docs/audits/2026-11-24/sheet-arrays/: screenshots, XLSX files and independent OOXML audit"
+      ],
+      "remainingVerification": [
+        "full original X036 acceptance audit and external Excel/WPS calculation compatibility",
+        "additional dynamic functions and per-function edge cases remain subject to X038-X040 audit"
+      ]
     },
     {
       "id": "X037",

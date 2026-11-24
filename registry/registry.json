@@ -2024,6 +2024,7 @@
         "packages/ui/src/components/OfficeStudio/studio-formula-parser.d.ts",
         "packages/ui/src/components/OfficeStudio/studio-model.ts",
         "packages/ui/src/components/OfficeStudio/studio-pdf-fields.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-arrays.ts",
         "packages/ui/src/components/OfficeStudio/studio-sheet-editing.ts",
         "packages/ui/src/components/OfficeStudio/studio-sheet-fill.ts",
         "packages/ui/src/components/OfficeStudio/studio-sheet-hyperlinks.ts",

@@ -93,6 +93,8 @@ export interface StudioWordDocument extends StudioDocumentBase {
 
 export interface StudioCell {
   input: string;
+  /** Only the anchor stores an array formula. Fixed arrays also store their A1 result range. */
+  array?: { type: 'fixed'; range: string } | { type: 'dynamic' };
   bold?: boolean;
   italic?: boolean;
   underline?: boolean;
@@ -267,6 +269,8 @@ export interface StudioSheet {
   charts?: StudioSheetChart[];
   conditionalFormats?: StudioSheetConditionalFormat[];
   dataValidations?: StudioSheetDataValidation[];
+  /** Locally protected regions participate in editing and spill conflict checks. */
+  protectedRanges?: string[];
   /** Undefined retains legacy source metadata; [] explicitly removes all links. */
   hyperlinks?: StudioSheetHyperlink[];
   /** Replayed against the original XLSX to retain row, column and cell styling. */

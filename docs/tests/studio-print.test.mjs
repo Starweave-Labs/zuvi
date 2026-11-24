@@ -893,3 +893,21 @@ test('Sheet print uses actual row sizes and keeps merged content whose original 
     `${((44.5 + 27) * 4) / 3 - 4}px`
   );
 });
+
+test('array print includes the entire computed region without persisting synthetic result cells', () => {
+  const document = models.createOfficeStudioDocument('excel');
+  document.sheets = [
+    {
+      id: 'array',
+      name: 'Array',
+      rowCount: 10,
+      columnCount: 10,
+      cells: { A1: { input: '=SEQUENCE(2,3,10,2)', array: { type: 'dynamic' } } },
+    },
+  ];
+  document.activeSheetId = 'array';
+  const markup = print.createStudioPrintHtml(document);
+  const view=new JSDOM(markup).window.document;
+  assert.deepEqual([...view.querySelectorAll('td')].map((cell)=>cell.textContent),['10','12','14','16','18','20']);
+  assert.deepEqual(Object.keys(document.sheets[0].cells), ['A1']);
+});
