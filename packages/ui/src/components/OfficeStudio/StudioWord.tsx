@@ -65,6 +65,7 @@ import {
 } from './studio-word-styles';
 import {
   WORD_HIGHLIGHT_COLORS,
+  WORD_FONT_SIZE_STEPS,
   WORD_SEARCH_LIMIT,
   WordImage,
   WordPageNumber,
@@ -198,7 +199,7 @@ const FONT_OPTIONS = [
   { value: 'Arial', label: 'Arial' },
   { value: 'Times New Roman', label: 'Times New Roman' },
 ];
-const SIZE_OPTIONS = [10, 11, 12, 14, 16, 18, 20, 24, 28, 36, 48].map((size) => ({
+const SIZE_OPTIONS = WORD_FONT_SIZE_STEPS.map((size) => ({
   value: `${size}pt`,
   label: `${size}`,
 }));
@@ -999,7 +1000,7 @@ export function StudioWord({
   formatPainterRef.current = formatPainter;
   const stepFontSize = (delta: number) => {
     if (!editor || !editable) return;
-    wordStepFontSize(editor, delta, 0.5, 409);
+    wordStepFontSize(editor, delta);
   };
   const setHighlight = (color: string | null) => {
     if (!editor || !editable) return;
@@ -1008,7 +1009,11 @@ export function StudioWord({
   };
   const transformCase = (mode: WordCaseMode) => {
     if (!editor || !editable) return;
-    if (wordTransformSelectionCase(editor, mode)) setCaseMenuOpen(false);
+    try {
+      if (wordTransformSelectionCase(editor, mode)) setCaseMenuOpen(false);
+    } catch (error) {
+      setNotice(error instanceof Error ? error.message : '大小写转换失败，请缩小选区后重试。');
+    }
   };
   const armFormatPainter = (continuous = false) => {
     if (!editor || !editable || !selection?.selectedText) return;
@@ -1473,6 +1478,12 @@ export function StudioWord({
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Content className="zuvi-studio-word-case-menu">
                   <DropdownMenu.Label>变更大小写</DropdownMenu.Label>
+                  <DropdownMenu.Item onSelect={() => transformCase('sentence')}>
+                    句首字母大写
+                  </DropdownMenu.Item>
+                  <DropdownMenu.Item onSelect={() => transformCase('title')}>
+                    每个单词首字母大写
+                  </DropdownMenu.Item>
                   <DropdownMenu.Item onSelect={() => transformCase('upper')}>
                     全部大写
                   </DropdownMenu.Item>

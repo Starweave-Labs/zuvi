@@ -46,7 +46,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -90,21 +90,26 @@
         "docs/tests/office-studio-word.test.mjs"
       ],
       "historicalStatus": "缺失",
-      "status": "audited-partial-acceptance-pending",
-      "evidence": [],
+      "status": "implemented-case-size-slice-verified-full-acceptance-audit-pending",
+      "evidence": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx: mixed font sizes, bounds, caret input, five case modes, Unicode selections, history and permissions",
+        "packages/ui/src/components/OfficeStudio/studio-word-tools.ts: per-run font ladder and mark-preserving case transformation",
+        "e2e/office-studio-word-case-size.spec.ts: native DOCX import/edit/export/reopen twice and light/dark/320px workflow",
+        "docs/audits/2026-11-25/word-case-size/: native DOCX files and browser screenshots"
+      ],
       "currentAudit": {
         "date": "2026-11-25",
         "sourceCommit": "2382530",
-        "implementation": "部分实现",
-        "implementedBehavior": "增减字号入口，当前按 0.5pt 步进",
+        "implementation": "切片验证",
+        "implementedBehavior": "常用字号阶梯、混合字号分别调整、上下限和插入点后续输入，单事务撤销重做",
         "functionalGaps": [
-          "缺字号阶梯和混合字号处理；不能按现有步进测试视为全部达标"
+          "完整共通验收矩阵、复杂样式继承及外部排版软件字号行为仍待核对"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -119,18 +124,24 @@
           },
           {
             "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
-            "line": 712,
+            "line": 739,
             "anchor": "wordStepFontSize"
+          },
+          {
+            "path": "e2e/office-studio-word-case-size.spec.ts",
+            "line": 25,
+            "anchor": "test("
           }
         ],
         "existingTestFiles": [
           "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
-          "docs/tests/office-studio-word.test.mjs"
+          "docs/tests/office-studio-word.test.mjs",
+          "e2e/office-studio-word-case-size.spec.ts"
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
       "gaps": [
-        "缺字号阶梯和混合字号处理；不能按现有步进测试视为全部达标"
+        "完整共通验收矩阵、复杂样式继承及外部排版软件字号行为仍待核对"
       ]
     },
     {
@@ -167,7 +178,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -225,7 +236,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -240,7 +251,7 @@
           },
           {
             "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
-            "line": 510,
+            "line": 516,
             "anchor": "WordSubscript"
           }
         ],
@@ -288,7 +299,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -346,7 +357,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -361,7 +372,7 @@
           },
           {
             "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
-            "line": 766,
+            "line": 926,
             "anchor": "wordSetHighlight"
           }
         ],
@@ -395,21 +406,26 @@
         "docs/tests/office-studio-word.test.mjs"
       ],
       "historicalStatus": "缺失",
-      "status": "audited-partial-acceptance-pending",
-      "evidence": [],
+      "status": "implemented-case-size-slice-verified-full-acceptance-audit-pending",
+      "evidence": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx: mixed font sizes, bounds, caret input, five case modes, Unicode selections, history and permissions",
+        "packages/ui/src/components/OfficeStudio/studio-word-tools.ts: per-run font ladder and mark-preserving case transformation",
+        "e2e/office-studio-word-case-size.spec.ts: native DOCX import/edit/export/reopen twice and light/dark/320px workflow",
+        "docs/audits/2026-11-25/word-case-size/: native DOCX files and browser screenshots"
+      ],
       "currentAudit": {
         "date": "2026-11-25",
         "sourceCommit": "2382530",
-        "implementation": "部分实现",
-        "implementedBehavior": "大写、小写、切换大小写与单事务",
+        "implementation": "切片验证",
+        "implementedBehavior": "句首/词首大写、全部大小写/切换，跨文字格式保留链接，Unicode 变长选区和光标所在单词",
         "functionalGaps": [
-          "缺句首/词首大写；链接文字被跳过，选区长度变化行为待补"
+          "完整共通验收矩阵及地区语言特殊大小写/句子边界规则仍待核对"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -424,18 +440,24 @@
           },
           {
             "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
-            "line": 739,
+            "line": 791,
             "anchor": "wordTransformSelectionCase"
+          },
+          {
+            "path": "e2e/office-studio-word-case-size.spec.ts",
+            "line": 25,
+            "anchor": "test("
           }
         ],
         "existingTestFiles": [
           "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
-          "docs/tests/office-studio-word.test.mjs"
+          "docs/tests/office-studio-word.test.mjs",
+          "e2e/office-studio-word-case-size.spec.ts"
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
       "gaps": [
-        "缺句首/词首大写；链接文字被跳过，选区长度变化行为待补"
+        "完整共通验收矩阵及地区语言特殊大小写/句子边界规则仍待核对"
       ]
     },
     {
@@ -474,7 +496,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -489,7 +511,7 @@
           },
           {
             "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
-            "line": 815,
+            "line": 975,
             "anchor": "wordCaptureFormat"
           },
           {
@@ -545,7 +567,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -609,7 +631,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -664,7 +686,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -722,7 +744,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -780,7 +802,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -835,7 +857,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -898,7 +920,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -953,7 +975,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -1011,7 +1033,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -1066,7 +1088,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -1131,7 +1153,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -1206,7 +1228,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -1271,7 +1293,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -1326,7 +1348,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -1384,7 +1406,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -1442,7 +1464,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -1500,7 +1522,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -1558,7 +1580,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -1616,7 +1638,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -1674,7 +1696,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -1729,7 +1751,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -1784,7 +1806,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -1839,7 +1861,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -1854,7 +1876,7 @@
           },
           {
             "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
-            "line": 11,
+            "line": 17,
             "anchor": "WordImage"
           }
         ],
@@ -1902,7 +1924,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -1917,7 +1939,7 @@
           },
           {
             "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
-            "line": 11,
+            "line": 17,
             "anchor": "WordImage"
           }
         ],
@@ -1971,7 +1993,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -1986,7 +2008,7 @@
           },
           {
             "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
-            "line": 11,
+            "line": 17,
             "anchor": "WordImage"
           }
         ],
@@ -2036,7 +2058,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -2091,7 +2113,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -2146,7 +2168,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -2201,7 +2223,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -2256,7 +2278,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -2314,7 +2336,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -2372,7 +2394,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -2430,7 +2452,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -2485,7 +2507,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -2540,7 +2562,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -2598,7 +2620,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -2613,7 +2635,7 @@
           },
           {
             "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
-            "line": 477,
+            "line": 483,
             "anchor": "WordPageNumber"
           }
         ],
@@ -2661,7 +2683,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -2716,7 +2738,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -2771,7 +2793,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -2829,7 +2851,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -2887,7 +2909,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -2902,7 +2924,7 @@
           },
           {
             "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
-            "line": 593,
+            "line": 599,
             "anchor": "wordHeadings"
           }
         ],
@@ -2950,7 +2972,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -3005,7 +3027,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -3060,7 +3082,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -3115,7 +3137,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -3170,7 +3192,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -3225,7 +3247,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -3240,7 +3262,7 @@
           },
           {
             "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
-            "line": 477,
+            "line": 483,
             "anchor": "WordPageNumber"
           }
         ],
@@ -3288,7 +3310,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -3303,7 +3325,7 @@
           },
           {
             "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
-            "line": 559,
+            "line": 565,
             "anchor": "wordFindMatches"
           }
         ],
@@ -3351,7 +3373,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -3406,7 +3428,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -3461,7 +3483,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -3516,7 +3538,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -3571,7 +3593,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -3626,7 +3648,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -3681,7 +3703,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -3736,7 +3758,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -3791,7 +3813,7 @@
         "evidence": [
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 155,
+            "line": 156,
             "anchor": "const EXTENSIONS"
           },
           {
@@ -9936,8 +9958,8 @@
   "currentAuditItems": 159,
   "currentImplementationCounts": {
     "基础实现": 22,
-    "部分实现": 61,
-    "切片验证": 10,
+    "切片验证": 12,
+    "部分实现": 59,
     "未实现": 66
   }
 }

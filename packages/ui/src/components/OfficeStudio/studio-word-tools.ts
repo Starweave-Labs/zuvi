@@ -1,5 +1,11 @@
 import { Mark, Node, type Editor } from '@tiptap/react';
 import { closeHistory } from '@tiptap/pm/history';
+import { TextSelection } from '@tiptap/pm/state';
+import {
+  resolveStudioWordParagraphStyle,
+  getStudioWordParagraphStyles,
+} from './studio-word-styles';
+import type { StudioRichNode } from './studio-types';
 import { wordDefaultImageLayout, wordImageCss } from './studio-word-image-preview';
 import { wordImageLayout } from './studio-word-images';
 
@@ -708,58 +714,212 @@ export const WORD_HIGHLIGHT_COLORS: { label: string; value: string }[] = [
   { label: '白色', value: '#ffffff' },
 ];
 
-/** 按 sizeStep 步进选区字号；sizeStep 为 0（Excel/未配置）时按 1 磅步进。 */
-export function wordStepFontSize(editor: Editor, delta: number, sizeStep = 1, max = 300): boolean {
-  if (!editor || editor.isDestroyed) return false;
-  const current = Number.parseFloat(editor.getAttributes('textStyle').fontSize) || 12;
-  const step = sizeStep > 0 ? sizeStep : 1;
-  const next = Math.min(max, Math.max(WORD_FONT_SIZE_MIN, current + delta * step));
-  if (next === current) return false;
-  return editor.chain().focus().setFontSize(`${next}pt`).run();
+export const WORD_FONT_SIZE_STEPS = [
+  8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72,
+] as const;
+const WORD_FONT_SIZE_MAX = 409;
+
+export function wordNextFontSize(current: number, increase: boolean): number {
+  if (!Number.isFinite(current)) current = 12;
+  if (current < 8) return Math.max(1, increase ? Math.floor(current) + 1 : Math.ceil(current) - 1);
+  if (increase)
+    return Math.min(
+      WORD_FONT_SIZE_MAX,
+      WORD_FONT_SIZE_STEPS.find((size) => size > current) ?? (Math.floor(current / 10) + 1) * 10
+    );
+  return Math.max(
+    WORD_FONT_SIZE_MIN,
+    current > 72
+      ? Math.max(72, (Math.ceil(current / 10) - 1) * 10)
+      : ([...WORD_FONT_SIZE_STEPS].reverse().find((size) => size < current) ?? 7)
+  );
 }
 
-export type WordCaseMode = 'upper' | 'lower' | 'toggle';
+/** Each selected run keeps its own size and other marks; a caret changes only subsequent input. */
+export function wordStepFontSize(editor: Editor, delta: number): boolean {
+  if (!editor || editor.isDestroyed || !editor.isEditable || editor.view.composing || !delta)
+    return false;
+  editor.view.focus();
+  const { from, to, empty } = editor.state.selection;
+  const styles = getStudioWordParagraphStyles(editor.getJSON() as StudioRichNode);
+  const defaultSize = (position: number) => {
+    const node = editor.state.doc.resolve(position).parent;
+    const id =
+      typeof node.attrs.paragraphStyle === 'string'
+        ? node.attrs.paragraphStyle
+        : node.type.name === 'heading'
+          ? `heading-${node.attrs.level}`
+          : 'paragraph';
+    return resolveStudioWordParagraphStyle(styles, id).run.fontSize;
+  };
+  const markType = editor.schema.marks.textStyle;
+  const sizedMark = (marks: readonly import('@tiptap/pm/model').Mark[], position: number) => {
+    const attrs = marks.find((mark) => mark.type === markType)?.attrs || {};
+    const raw = /^(\d+(?:\.\d+)?)(pt|px)$/.exec(String(attrs.fontSize || ''));
+    const current = raw ? Number(raw[1]) * (raw[2] === 'px' ? 0.75 : 1) : defaultSize(position);
+    const next = wordNextFontSize(current, delta > 0);
+    return next === current ? undefined : markType.create({ ...attrs, fontSize: `${next}pt` });
+  };
+  const tr = closeHistory(editor.state.tr);
+  let changed = false;
+  if (empty) {
+    const mark = sizedMark(editor.state.storedMarks || editor.state.selection.$from.marks(), from);
+    if (!mark) return false;
+    tr.addStoredMark(mark);
+    changed = true;
+  } else
+    editor.state.doc.nodesBetween(from, to, (node, position) => {
+      if (!node.isText) return;
+      const start = Math.max(from, position);
+      const end = Math.min(to, position + node.nodeSize);
+      const mark = sizedMark(node.marks, start);
+      if (!mark || end <= start) return;
+      tr.removeMark(start, end, markType).addMark(start, end, mark);
+      changed = true;
+    });
+  if (!changed) return false;
+  editor.view.dispatch(tr);
+  return true;
+}
 
-function transformCase(text: string, mode: WordCaseMode): string {
-  if (mode === 'upper') return text.toLocaleUpperCase('zh-Hans-CN');
-  if (mode === 'lower') return text.toLocaleLowerCase('zh-Hans-CN');
-  return Array.from(text)
-    .map((char) => {
+export type WordCaseMode = 'sentence' | 'lower' | 'upper' | 'title' | 'toggle';
+const wordSegments = new Intl.Segmenter('en', { granularity: 'word' });
+const cased = (char: string) =>
+  char.toLocaleUpperCase('zh-Hans-CN') !== char.toLocaleLowerCase('zh-Hans-CN');
+
+/** Transform across mark boundaries, retaining each character's original marks and selection. */
+export function wordTransformSelectionCase(editor: Editor, mode: WordCaseMode): boolean {
+  if (!editor || editor.isDestroyed || !editor.isEditable || editor.view.composing) return false;
+  const selection = editor.state.selection;
+  let { from, to } = selection;
+  if (selection.empty) {
+    const parent = selection.$from.parent;
+    if (!parent.isTextblock) return false;
+    const text = parent.textBetween(0, parent.content.size, '', '\ufffc');
+    const offset = selection.$from.parentOffset;
+    const segment = [...wordSegments.segment(text)].find(
+      (segment) =>
+        segment.isWordLike &&
+        segment.index <= offset &&
+        segment.index + segment.segment.length >= offset
+    );
+    if (!segment) return false;
+    from = selection.$from.start() + segment.index;
+    to = from + segment.segment.length;
+  }
+  const changes: {
+    from: number;
+    to: number;
+    text: string;
+    marks: readonly import('@tiptap/pm/model').Mark[];
+    caretOffset?: number;
+  }[] = [];
+  editor.state.doc.nodesBetween(from, to, (block, position) => {
+    if (!block.isTextblock) return;
+    const text = block.textBetween(0, block.content.size, '', '\ufffc');
+    const wordStarts = new Set<number>();
+    for (const segment of wordSegments.segment(text)) {
+      if (!segment.isWordLike) continue;
+      let offset = segment.index;
+      for (const char of segment.segment) {
+        if (cased(char)) {
+          wordStarts.add(offset);
+          break;
+        }
+        offset += char.length;
+      }
+    }
+    const transformed = new Map<number, string>();
+    let offset = 0;
+    let sentenceStart = true;
+    for (const char of text) {
       const upper = char.toLocaleUpperCase('zh-Hans-CN');
       const lower = char.toLocaleLowerCase('zh-Hans-CN');
-      return char === upper ? lower : upper;
-    })
-    .join('');
-}
-
-/**
- * 将选区文本转换为指定大小写；单事务提交（一次撤销），不改链接内文本。
- * 转换完成后恢复原选区（Office 行为），便于连续调整。
- */
-export function wordTransformSelectionCase(editor: Editor, mode: WordCaseMode): boolean {
-  if (!editor || editor.isDestroyed) return false;
-  const { from, to, empty } = editor.state.selection;
-  if (empty) return false;
-  const changes: { from: number; to: number; text: string }[] = [];
-  editor.state.doc.nodesBetween(from, to, (node, position) => {
-    // 容器节点必须继续下钻（返回 false 会连文本节点一起跳过）
-    if (!node.isText || !node.text) return true;
-    if (node.marks.some((mark) => mark.type.name === 'link')) return false;
-    // 文本节点 position 即首字符前界；选区边界裁剪到本节点文本范围
-    const start = Math.max(from, position);
-    const end = Math.min(to, position + node.nodeSize);
-    if (end <= start) return true;
-    const slice = node.text.slice(start - position, end - position);
-    const converted = transformCase(slice, mode);
-    if (converted !== slice) changes.push({ from: start, to: end, text: converted });
-    return true;
+      transformed.set(
+        offset,
+        mode === 'upper'
+          ? upper
+          : mode === 'lower'
+            ? lower
+            : mode === 'toggle'
+              ? char === upper
+                ? lower
+                : upper
+              : mode === 'title'
+                ? wordStarts.has(offset)
+                  ? upper
+                  : lower
+                : sentenceStart && cased(char)
+                  ? upper
+                  : lower
+      );
+      if (cased(char)) sentenceStart = false;
+      if (/[.!?。！？\n]/u.test(char)) sentenceStart = true;
+      offset += char.length;
+    }
+    block.descendants((node, inner) => {
+      if (!node.isText || !node.text) return;
+      let cursor = inner;
+      let start = -1;
+      let end = -1;
+      let original = '';
+      let converted = '';
+      let caretOffset = 0;
+      for (const char of node.text) {
+        const charStart = position + 1 + cursor;
+        const charEnd = charStart + char.length;
+        if (charStart >= from && charEnd <= to) {
+          if (start < 0) start = charStart;
+          end = charEnd;
+          original += char;
+          converted += transformed.get(cursor)!;
+          if (charEnd <= selection.from) caretOffset = converted.length;
+        }
+        cursor += char.length;
+      }
+      if (start >= 0 && original !== converted)
+        changes.push({
+          from: start,
+          to: end,
+          text: converted,
+          marks: node.marks,
+          ...(selection.empty && selection.from >= start && selection.from <= end
+            ? { caretOffset }
+            : {}),
+        });
+    });
+    return false;
   });
-  if (changes.length === 0) return false;
-  // 与 wordReplaceMatches 一致：直接派发事务（chain().command 在部分环境下不派发）
-  const transaction = editor.state.tr;
+  if (!changes.length) return false;
+  if (
+    editor.state.doc.textContent.length +
+      changes.reduce(
+        (length, change) => length + change.text.length - (change.to - change.from),
+        0
+      ) >
+    MAX_REPLACEMENT_DOCUMENT
+  )
+    throw new Error('转换后的文本超过 200 万字符，请缩小选区。');
+  const transaction = closeHistory(editor.state.tr);
   for (const change of [...changes].sort((a, b) => b.from - a.from))
-    transaction.insertText(change.text, change.from, change.to);
+    transaction.replaceWith(change.from, change.to, editor.schema.text(change.text, change.marks));
+  const caretChange = changes.find((change) => change.caretOffset !== undefined);
+  transaction.setSelection(
+    selection.empty
+      ? TextSelection.create(
+          transaction.doc,
+          caretChange
+            ? transaction.mapping.map(caretChange.from, -1) + caretChange.caretOffset!
+            : transaction.mapping.map(selection.from, 1)
+        )
+      : TextSelection.create(
+          transaction.doc,
+          transaction.mapping.map(selection.anchor, selection.anchor === from ? -1 : 1),
+          transaction.mapping.map(selection.head, selection.head === from ? -1 : 1)
+        )
+  );
   editor.view.dispatch(transaction);
+  editor.commands.focus(null, { scrollIntoView: false });
   return true;
 }
 

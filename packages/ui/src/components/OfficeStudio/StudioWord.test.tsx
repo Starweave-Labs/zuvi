@@ -3,6 +3,7 @@ import { renderToString } from 'react-dom/server';
 import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 import { StudioWord } from './StudioWord';
+import { wordNextFontSize } from './studio-word-tools';
 import { OfficeStudio } from './OfficeStudio';
 import type {
   OfficeStudioHandle,
@@ -1423,6 +1424,60 @@ const twoParagraphDoc = (): StudioWordDocument => ({
 });
 
 describe('StudioWord 第一轮编辑能力', () => {
+  it('uses the common size ladder for decimal, small and large sizes and clamps at 1 and 409pt', () => {
+    const cases = [
+      [1, false, 1],
+      [1, true, 2],
+      [7.5, true, 8],
+      [8, false, 7],
+      [12, true, 14],
+      [17.5, true, 18],
+      [17.5, false, 16],
+      [72, true, 80],
+      [73, false, 72],
+      [80, true, 90],
+      [408, true, 409],
+      [409, true, 409],
+      [409, false, 400],
+    ] as const;
+    for (const [current, increase, expected] of cases)
+      expect(wordNextFontSize(current, increase)).toBe(expected);
+  });
+
+  it.each([{ readOnly: true }, { disabled: true }])(
+    'disables font step and case actions in %j',
+    async (permissions) => {
+      await mount(permissions);
+      for (const name of ['增大字号', '减小字号', '变更大小写'])
+        expect(screen.getByRole('button', { name })).toBeDisabled();
+    }
+  );
+
+  it('keeps paragraph boundaries and reversed Unicode selections after case conversion', async () => {
+    const model = twoParagraphDoc();
+    model.content.content = [
+      { type: 'paragraph', content: [{ type: 'text', text: 'straße.' }] },
+      { type: 'paragraph', content: [{ type: 'text', text: 'next WORD' }] },
+    ];
+    const view = await mount({ document: model });
+    const box = view.textbox;
+    act(() => {
+      box.focus();
+      const p = box.querySelectorAll('p');
+      const s = window.getSelection()!;
+      s.setBaseAndExtent(p[1].firstChild!, 9, p[0].firstChild!, 0);
+      document.dispatchEvent(new Event('selectionchange'));
+    });
+    fireEvent.click(screen.getByRole('button', { name: '变更大小写' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: '全部大写' }));
+    await waitFor(() => expect(box.querySelectorAll('p')[0]).toHaveTextContent('STRASSE.'));
+    expect(box.querySelectorAll('p')[1]).toHaveTextContent('NEXT WORD');
+    await waitFor(() => expect(window.getSelection()?.toString()).toContain('STRASSE.'));
+    expect(window.getSelection()?.isCollapsed).toBe(false);
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    expect(box.querySelectorAll('p')[0]).toHaveTextContent('straße.');
+  });
+
   it('clears direct formatting while preserving headings, list structure, links and one-step undo/redo', async () => {
     const model = twoParagraphDoc();
     model.content.content = [
@@ -1530,15 +1585,145 @@ describe('StudioWord 第一轮编辑能力', () => {
     expect(box.querySelectorAll('p')[1].querySelector('strong')).toBeInTheDocument();
   });
 
-  it('字号步进：12pt 增大 → 12.5pt，减小回到 12pt', async () => {
+  it('字号阶梯：12pt 增大到 14pt，减小回到 12pt', async () => {
     const view = await mount();
     const textbox = view.textbox;
     selectNodeContents(textbox, textbox.querySelector('p')!);
     fireEvent.click(screen.getByRole('button', { name: '增大字号' }));
-    expect(textbox.querySelector('p span')).toHaveStyle({ fontSize: '12.5pt' });
+    expect(textbox.querySelector('p span')).toHaveStyle({ fontSize: '14pt' });
     fireEvent.click(screen.getByRole('button', { name: '减小字号' }));
     expect(textbox.querySelector('p span')).toHaveStyle({ fontSize: '12pt' });
     view.unmount();
+  });
+
+  it('steps mixed sizes independently, keeps links/colors and restores the entire selection in one undo', async () => {
+    const model = documentModel();
+    model.content.content![0].content = [
+      {
+        type: 'text',
+        text: 'Small ',
+        marks: [
+          { type: 'textStyle', attrs: { fontSize: '12pt', color: '#0055aa' } },
+          { type: 'bold' },
+        ],
+      },
+      {
+        type: 'text',
+        text: 'Large',
+        marks: [
+          { type: 'textStyle', attrs: { fontSize: '17.5pt' } },
+          { type: 'link', attrs: { href: 'https://example.com' } },
+        ],
+      },
+    ];
+    const view = await mount({ document: model });
+    const box = view.textbox;
+    selectNodeContents(box, box.querySelector('p')!);
+    fireEvent.click(screen.getByRole('button', { name: '增大字号' }));
+    const nodes = view.onChange.mock.lastCall?.[0].content.content[0].content;
+    expect(
+      nodes[0].marks.find((mark: { type: string }) => mark.type === 'textStyle').attrs.fontSize
+    ).toBe('14pt');
+    expect(
+      nodes[1].marks.find((mark: { type: string }) => mark.type === 'textStyle').attrs.fontSize
+    ).toBe('18pt');
+    expect(box.querySelector('a')).toHaveAttribute('href', 'https://example.com');
+    expect(window.getSelection()?.toString()).toBe('Small Large');
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    expect(box.querySelector('span')).toHaveStyle({ fontSize: '12pt' });
+    expect(box.querySelector('a span')).toHaveStyle({ fontSize: '17.5pt' });
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    expect(box.querySelector('a span')).toHaveStyle({ fontSize: '18pt' });
+  });
+
+  it.each([
+    ['句首字母大写', 'Hello world. Next sentence!'],
+    ['每个单词首字母大写', 'Hello World. Next Sentence!'],
+  ])('converts %s across marks while preserving a link and undo', async (label, result) => {
+    const model = documentModel();
+    model.content.content![0].content = [
+      { type: 'text', text: 'hE', marks: [{ type: 'bold' }] },
+      {
+        type: 'text',
+        text: 'LLO wORLD. nEXT sENTENCE!',
+        marks: [{ type: 'link', attrs: { href: 'https://example.com' } }],
+      },
+    ];
+    const view = await mount({ document: model });
+    const box = view.textbox;
+    selectNodeContents(box, box.querySelector('p')!);
+    fireEvent.click(screen.getByRole('button', { name: '变更大小写' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: label }));
+    expect(box.textContent).toBe(result);
+    expect(box.querySelector('a')).toHaveAttribute('href', 'https://example.com');
+    expect(box.querySelector('strong')).toHaveTextContent('He');
+    await waitFor(() => expect(window.getSelection()?.toString()).toBe(result));
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    expect(box.textContent).toBe('hELLO wORLD. nEXT sENTENCE!');
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    expect(box.textContent).toBe(result);
+  });
+
+  it('preserves expanded Unicode selection and link marks when uppercase changes the text length', async () => {
+    const model = documentModel();
+    model.content.content![0].content = [
+      {
+        type: 'text',
+        text: 'straße ﬁ',
+        marks: [{ type: 'link', attrs: { href: 'https://example.com' } }, { type: 'italic' }],
+      },
+    ];
+    const view = await mount({ document: model });
+    const box = view.textbox;
+    selectNodeContents(box, box.querySelector('p')!);
+    fireEvent.click(screen.getByRole('button', { name: '变更大小写' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: '全部大写' }));
+    expect(box.textContent).toBe('STRASSE FI');
+    await waitFor(() => expect(window.getSelection()?.toString()).toBe('STRASSE FI'));
+    expect(box.querySelector('a')).toHaveTextContent('STRASSE FI');
+    expect(box.querySelector('em')).toHaveTextContent('STRASSE FI');
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    expect(box.textContent).toBe('straße ﬁ');
+  });
+
+  it('changes the caret word while preserving its mapped caret and applies a font step only to new input', async () => {
+    const view = await mount({ document: documentModel('straße tail') });
+    const box = view.textbox;
+    act(() => {
+      box.focus();
+      const range = document.createRange();
+      range.setStart(box.querySelector('p')!.firstChild!, 5);
+      range.collapse(true);
+      const selection = window.getSelection()!;
+      selection.removeAllRanges();
+      selection.addRange(range);
+      document.dispatchEvent(new Event('selectionchange'));
+    });
+    fireEvent.click(screen.getByRole('button', { name: '变更大小写' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: '全部大写' }));
+    expect(box.textContent).toBe('STRASSE tail');
+    await waitFor(() => expect(window.getSelection()?.anchorOffset).toBe(6));
+    expect(window.getSelection()?.isCollapsed).toBe(true);
+    fireEvent.click(screen.getByRole('button', { name: '增大字号' }));
+    expect(box.textContent).toBe('STRASSE tail');
+    expect(box.querySelector('[style*=font-size]')).toBeNull();
+    const user = (await import('@testing-library/user-event')).default.setup();
+    await user.keyboard('X');
+    await waitFor(() => expect(box.textContent).toBe('STRASSXE tail'));
+    expect(box.querySelector('span')).toHaveStyle({ fontSize: '14pt' });
+  });
+
+  it('respects min/max font bounds and skips immutable or composing actions', async () => {
+    const model = documentModel('Limit');
+    model.content.content![0].content![0].marks = [
+      { type: 'textStyle', attrs: { fontSize: '409pt' } },
+    ];
+    const view = await mount({ document: model });
+    selectNodeContents(view.textbox, view.textbox.querySelector('p')!);
+    fireEvent.click(screen.getByRole('button', { name: '增大字号' }));
+    expect(view.onChange).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: '减小字号' }));
+    expect(view.textbox.querySelector('span')).toHaveStyle({ fontSize: '400pt' });
   });
 
   it('文字高亮：选色写入 backgroundColor，无颜色清除', async () => {
