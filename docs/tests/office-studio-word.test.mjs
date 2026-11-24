@@ -16,9 +16,12 @@ const xml = new JSDOM().window;
 const exports = {};
 const styleExports = {};
 const fontExports = {};
+const imageExports = {};
 for (const [file, target] of [
   ['studio-font-input.ts', fontExports],
   ['studio-word-styles.ts', styleExports],
+  ['studio-word-images.ts', imageExports],
+  ['studio-word-image-preview.ts', imageExports],
 ]) {
   runInNewContext(
     ts.transpileModule(
@@ -56,7 +59,12 @@ runInNewContext(
   ).outputText,
   {
     exports,
-    require: (id) => (id.endsWith('/studio-word-styles') ? styleExports : require(id)),
+    require: (id) =>
+      id.endsWith('/studio-word-styles')
+        ? styleExports
+        : id.endsWith('/studio-word-images')
+          ? imageExports
+          : require(id),
     Blob,
     crypto: webcrypto,
     DOMParser: xml.DOMParser,
@@ -784,6 +792,126 @@ test('DOCX embeds JPEG bytes unchanged and retains configured header/footer dist
   assert.equal(restored.footer, undefined);
   assert.equal(restored.page.headerDistance, 8.5);
   assert.equal(restored.page.footerDistance, 6);
+});
+
+test('floating images preserve wrapping, position, anchor flags, distances and custom contours across native DOCX saves', async () => {
+  const layouts = [
+    {
+      ...imageExports.wordDefaultImageLayout('square'),
+      horizontal: { relative: 'margin', align: 'right' },
+      vertical: { relative: 'paragraph', offset: 12.5 },
+      lockAnchor: true,
+      allowOverlap: false,
+    },
+    {
+      ...imageExports.wordDefaultImageLayout('tight'),
+      polygon: [
+        [0, 0],
+        [0, 21600],
+        [10000, 21600],
+        [21600, 10000],
+        [21600, 0],
+        [0, 0],
+      ],
+      wrapSide: 'left',
+    },
+    {
+      ...imageExports.wordDefaultImageLayout('through'),
+      horizontal: { relative: 'column', offset: -12.5 },
+      wrapSide: 'largest',
+    },
+    {
+      ...imageExports.wordDefaultImageLayout('topBottom'),
+      horizontal: { relative: 'page', align: 'center' },
+      vertical: { relative: 'page', align: 'bottom' },
+      layoutInCell: false,
+    },
+    {
+      ...imageExports.wordDefaultImageLayout('front'),
+      horizontal: { relative: 'character', offset: 25 },
+      vertical: { relative: 'line', offset: -5 },
+      zIndex: 0,
+    },
+    {
+      ...imageExports.wordDefaultImageLayout('behind'),
+      horizontal: { relative: 'page', offset: 100 },
+      vertical: { relative: 'page', offset: 80 },
+      zIndex: 72,
+    },
+  ];
+  let current = model(layouts.map((layout) => p(image({ layout }), text('保留锚点后的正文'))));
+  current.header = { type: 'doc', content: [p(image({ layout: layouts[1] }))] };
+  current.footer = { type: 'doc', content: [p(image({ layout: layouts[4] }))] };
+  for (let pass = 0; pass < 3; pass++) {
+    const saved = await exportStudioWord(current);
+    const zip = await JSZip.loadAsync(await saved.arrayBuffer());
+    const native = parse(await zip.file('word/document.xml').async('string'));
+    assert.equal(native.getElementsByTagName('wp:anchor').length, 6);
+    assert.equal(native.getElementsByTagName('wp:inline').length, 0);
+    const anchors = native.getElementsByTagName('wp:anchor');
+    assert.equal(anchors[0].getAttribute('locked'), '1');
+    assert.equal(anchors[0].getAttribute('allowOverlap'), '0');
+    assert.equal(anchors[4].getAttribute('relativeHeight'), '0');
+    assert.equal(anchors[5].getAttribute('behindDoc'), '1');
+    current = await importStudioWord(saved, current.name);
+    const restored = find(current.content, 'image');
+    for (let index = 0; index < layouts.length; index++) {
+      const actual = restored[index].attrs.layout;
+      const expected = layouts[index];
+      assert.equal(actual.wrap, expected.wrap);
+      for (const axis of ['horizontal', 'vertical']) {
+        assert.equal(actual[axis].relative, expected[axis].relative);
+        assert.equal(actual[axis].align, expected[axis].align);
+        if (expected[axis].offset !== undefined)
+          assert.ok(
+            Math.abs(actual[axis].offset - expected[axis].offset) <= 1 / 9525,
+            'Native EMU rounding stays below one EMU.'
+          );
+      }
+      assert.deepEqual(
+        JSON.parse(JSON.stringify(actual.distance)),
+        JSON.parse(JSON.stringify(expected.distance))
+      );
+      assert.equal(actual.lockAnchor, expected.lockAnchor);
+      assert.equal(actual.allowOverlap, expected.allowOverlap);
+      assert.equal(actual.layoutInCell, expected.layoutInCell);
+      assert.equal(actual.zIndex, expected.zIndex);
+      if (expected.polygon)
+        assert.deepEqual(JSON.parse(JSON.stringify(actual.polygon)), expected.polygon);
+    }
+    assert.deepEqual(
+      JSON.parse(JSON.stringify(find(current.header, 'image')[0].attrs.layout.polygon)),
+      layouts[1].polygon
+    );
+    assert.equal(find(current.footer, 'image')[0].attrs.layout.zIndex, 0);
+    assert.match(flatten(current.content), /保留锚点后的正文/);
+  }
+});
+
+test('invalid floating images are rejected before changing the source model', async () => {
+  for (const patch of [
+    { horizontal: { relative: 'unknown', offset: 0 } },
+    { vertical: { relative: 'page', offset: Infinity } },
+    { zIndex: -1 },
+    { wrap: 'unsupported' },
+    { distance: { left: -5 } },
+    {
+      wrap: 'tight',
+      polygon: [
+        [0, 0],
+        [0, 21600],
+        [21600, 0],
+        [500, 500],
+      ],
+    },
+  ]) {
+    const source = model([
+      p(image({ layout: { ...imageExports.wordDefaultImageLayout(), ...patch } })),
+    ]);
+    const before = JSON.stringify(source);
+    await assert.rejects(exportStudioWord(source), /图片|环绕/);
+    assert.equal(JSON.stringify(source), before);
+  }
 });
 
 test('DOCX refuses image layout that cannot be preserved and external image links', async () => {

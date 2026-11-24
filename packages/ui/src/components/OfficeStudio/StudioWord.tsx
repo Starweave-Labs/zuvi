@@ -29,6 +29,7 @@ import {
 } from '@tiptap/react';
 import { StarterKit } from '@tiptap/starter-kit';
 import { ListItem } from '@tiptap/extension-list';
+import { closeHistory } from '@tiptap/pm/history';
 import { TextAlign } from '@tiptap/extension-text-align';
 import { TextStyleKit, FontFamily } from '@tiptap/extension-text-style';
 import { DropdownMenu } from '../DropdownMenu';
@@ -50,6 +51,7 @@ import type {
   StudioWordParagraphStyle,
 } from './studio-types';
 import { StudioWordStyleDialog } from './StudioWordStyleDialog';
+import { StudioWordImageLayoutTools } from './StudioWordImageLayoutTools';
 import {
   WordParagraphStyles,
   wordApplyParagraphStyle,
@@ -840,7 +842,15 @@ export function StudioWord({
   const updateImage = (patch: Record<string, unknown>) => {
     if (!editor || !editable || !selection?.image) return;
     const position = editor.state.selection.from;
-    editor.chain().updateAttributes('image', patch).setNodeSelection(position).run();
+    editor
+      .chain()
+      .command(({ tr }) => {
+        closeHistory(tr);
+        return true;
+      })
+      .updateAttributes('image', patch)
+      .setNodeSelection(position)
+      .run();
   };
 
   const resizeImage = (dimension: 'width' | 'height', value: string) => {
@@ -1797,6 +1807,12 @@ export function StudioWord({
                 >
                   删除图片
                 </Button>
+                <StudioWordImageLayoutTools
+                  key={`${document.id}:${region}:${selection.from}`}
+                  layout={selection.image.layout}
+                  disabled={toolsDisabled}
+                  onChange={(layout) => updateImage({ layout })}
+                />
               </>
             )}
           </RibbonGroup>
@@ -2552,6 +2568,7 @@ export function StudioWord({
                   paddingInline: margin,
                   transform: `scale(${scale})`,
                   '--zuvi-studio-word-page-margin': `${margin}px`,
+                  '--zuvi-studio-word-page-height': `${pageHeight}px`,
                   '--zuvi-studio-word-header-distance': `${headerDistance * MM_TO_PX}px`,
                   '--zuvi-studio-word-footer-distance': `${footerDistance * MM_TO_PX}px`,
                 } as React.CSSProperties

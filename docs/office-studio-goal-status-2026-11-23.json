@@ -792,8 +792,17 @@
         "docs/tests/office-studio-word.test.mjs"
       ],
       "historicalStatus": "缺失",
-      "status": "requires-current-audit",
-      "evidence": []
+      "status": "implemented-slice-verified-full-layout-acceptance-pending",
+      "evidence": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx: pointer preview/cancel, keyboard move, permissions and history",
+        "docs/tests/office-studio-word.test.mjs: six wrap modes, anchor flags, contours and repeated DOCX saves",
+        "docs/tests/studio-print.test.mjs: wrapping and fixed-page image placement",
+        "e2e/office-studio-word-images.spec.ts: real export/reimport and dark/320px dialog QA"
+      ],
+      "remainingVerification": [
+        "complete pagination, collision and cross-page layout acceptance",
+        "full Word feature-ledger audit"
+      ]
     },
     {
       "id": "W034",

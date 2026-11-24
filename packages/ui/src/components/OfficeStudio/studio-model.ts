@@ -1,6 +1,7 @@
 import type { OfficeStudioDocument, OfficeStudioKind, StudioRichNode } from './studio-types';
 import { studioIsSheetHyperlink } from './studio-sheet-hyperlinks';
 import { studioCellStyleIssue } from './studio-cell-style';
+import { wordImageLayoutIssue } from './studio-word-images';
 
 function newId() {
   return (
@@ -846,7 +847,8 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
           !/^data:image\/(?:png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$/.test(node.attrs.src) ||
           !optionalPositive(node.attrs.width, 10000) ||
           !optionalPositive(node.attrs.height, 10000) ||
-          !optionalText(node.attrs.alt, 1000)
+          !optionalText(node.attrs.alt, 1000) ||
+          wordImageLayoutIssue(node.attrs.layout) !== undefined
         )
           return false;
       }

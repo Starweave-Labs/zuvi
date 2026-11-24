@@ -425,6 +425,8 @@
 
 .zuvi-studio-word-body {
   flex: 1 0 auto;
+  position: relative;
+  z-index: 2;
 }
 
 .zuvi-studio-word-region {
@@ -453,6 +455,7 @@
 
 .zuvi-studio-word-region[data-active='true'] {
   border-color: var(--zuvi-color-primary);
+  z-index: 3;
 }
 
 .zuvi-studio-word-region-label {
@@ -554,6 +557,81 @@
 
 .zuvi-studio-word-image-node[data-selected] .zuvi-studio-word-image-resize {
   display: block;
+}
+
+.zuvi-studio-word-content .tiptap {
+  isolation: isolate;
+}
+.zuvi-studio-word-content .tiptap :is(p, h1, h2, h3, h4, h5, h6) {
+  position: relative;
+}
+.zuvi-studio-word-content .tiptap .zuvi-studio-word-image-node[data-wrap='front'],
+.zuvi-studio-word-content .tiptap .zuvi-studio-word-image-node[data-wrap='behind'] {
+  position: absolute;
+}
+.zuvi-studio-word-content .tiptap .zuvi-studio-word-image-node[data-selected][data-wrap='behind'] {
+  z-index: 100 !important;
+}
+.zuvi-studio-word-image-move {
+  position: absolute;
+  left: -8px;
+  top: -8px;
+  display: none;
+  width: 20px;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background: var(--zuvi-color-primary);
+  color: white;
+  cursor: move;
+  touch-action: none;
+  font: 16px/1 sans-serif;
+}
+.zuvi-studio-word-image-node[data-selected][data-wrap] .zuvi-studio-word-image-move {
+  display: flex;
+}
+.zuvi-studio-word-image-move:focus-visible {
+  outline: 2px solid var(--zuvi-color-focus-ring);
+  outline-offset: 3px;
+}
+.zuvi-studio-word-image-layout {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-width: 920px;
+}
+.zuvi-studio-word-image-position-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.zuvi-studio-word-image-position-axis {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--zuvi-color-border);
+  padding: 12px;
+  border-radius: var(--zuvi-radius-md);
+  min-width: 0;
+  width: 100%;
+}
+.zuvi-studio-word-image-position-axis > legend {
+  color: var(--zuvi-color-fg-muted);
+  font-size: 12px;
+  padding-inline: 4px;
+}
+.zuvi-studio-word-image-number-label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+}
+.zuvi-studio-word-image-number-label > .zuvi-input {
+  width: 100px;
 }
 
 .zuvi-studio-word-page-number {

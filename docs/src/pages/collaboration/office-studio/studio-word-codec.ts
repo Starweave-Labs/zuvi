@@ -8,6 +8,8 @@ import {
   Header,
   HeadingLevel,
   ImageRun,
+  TextWrappingType,
+  type IFloating,
   LevelFormat,
   Packer,
   PageBreak as DocxPageBreak,
@@ -33,7 +35,9 @@ import type {
   StudioWordCharacterStyle,
   StudioWordParagraphFormat,
   StudioWordParagraphStyle,
+  StudioWordImageLayout,
 } from '@zuvi/react';
+import { wordImageLayout } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-images';
 import {
   WORD_BODY_RUN,
   WORD_BUILTIN_STYLES,
@@ -732,9 +736,98 @@ function parseComplexField(
 
 function parseDrawing(drawing: Element, context: ImportContext): StudioRichNode {
   const inlines = drawing.getElementsByTagNameNS(WP, 'inline');
-  if (drawing.getElementsByTagNameNS(WP, 'anchor').length || inlines.length !== 1)
-    unsupported('浮动、锚定或非图片绘图');
-  const inline = inlines[0];
+  const anchors = drawing.getElementsByTagNameNS(WP, 'anchor');
+  if (inlines.length + anchors.length !== 1) unsupported('浮动、锚定或非图片绘图');
+  const inline = inlines[0] || anchors[0];
+  let layout: StudioWordImageLayout | undefined;
+  if (anchors.length) {
+    const anchor = anchors[0];
+    const wpChild = (parent: Element, name: string) =>
+      Array.from(parent.children).find(
+        (node) => node.namespaceURI === WP && node.localName === name
+      );
+    const boolean = (name: string, fallback: boolean) => {
+      const value = anchor.getAttribute(name);
+      if (value === null) return fallback;
+      if (value === '1' || value === 'true') return true;
+      if (value === '0' || value === 'false') return false;
+      unsupported('浮动图片布尔属性');
+    };
+    if (boolean('simplePos', false) || boolean('hidden', false))
+      unsupported('浮动图片隐藏或简单定位');
+    const position = (name: string) => {
+      const node = wpChild(anchor, name);
+      if (!node) unsupported('浮动图片缺少位置');
+      const offset = wpChild(node, 'posOffset');
+      const align = wpChild(node, 'align');
+      if (Number(!!offset) + Number(!!align) !== 1) unsupported('浮动图片定位');
+      return {
+        relative: node.getAttribute('relativeFrom') || '',
+        ...(offset
+          ? { offset: number(offset.textContent, '图片偏移量', -95250000, 95250000) / 9525 }
+          : { align: align!.textContent || '' }),
+      };
+    };
+    const wraps = Array.from(anchor.children).filter(
+      (node) => node.namespaceURI === WP && /^wrap/.test(node.localName)
+    );
+    if (wraps.length !== 1) unsupported('浮动图片环绕');
+    const wrap = wraps[0];
+    const kind = (
+      {
+        wrapSquare: 'square',
+        wrapTight: 'tight',
+        wrapThrough: 'through',
+        wrapTopAndBottom: 'topBottom',
+        wrapNone: boolean('behindDoc', false) ? 'behind' : 'front',
+      } as Record<string, StudioWordImageLayout['wrap']>
+    )[wrap.localName];
+    if (!kind || (boolean('behindDoc', false) && kind !== 'behind'))
+      unsupported('浮动图片层级或环绕');
+    const distance = Object.fromEntries(
+      (['top', 'right', 'bottom', 'left'] as const).map((side) => {
+        const name = `dist${side[0].toUpperCase()}`;
+        return [
+          side,
+          number(
+            wrap.getAttribute(name) || anchor.getAttribute(name) || '0',
+            '图片文字间距',
+            0,
+            9525000
+          ) / 9525,
+        ];
+      })
+    );
+    const polygon = wpChild(wrap, 'wrapPolygon');
+    const points = polygon
+      ? Array.from(polygon.children).map((point) => {
+          if (point.namespaceURI !== WP || !['start', 'lineTo'].includes(point.localName))
+            unsupported('浮动图片环绕轮廓');
+          return [
+            number(point.getAttribute('x'), '环绕轮廓', -216000, 216000),
+            number(point.getAttribute('y'), '环绕轮廓', -216000, 216000),
+          ] as [number, number];
+        })
+      : undefined;
+    const relativeHeight = number(
+      anchor.getAttribute('relativeHeight') || 0,
+      '图片层级',
+      0,
+      4294967295
+    );
+    layout = wordImageLayout({
+      wrap: kind,
+      horizontal: position('positionH'),
+      vertical: position('positionV'),
+      distance,
+      wrapSide: wrap.getAttribute('wrapText') || 'bothSides',
+      ...(points ? { polygon: points } : {}),
+      allowOverlap: boolean('allowOverlap', true),
+      lockAnchor: boolean('locked', false),
+      layoutInCell: boolean('layoutInCell', true),
+      zIndex: relativeHeight,
+    });
+  }
   const pictures = inline.getElementsByTagNameNS(PIC, 'pic');
   const blips = inline.getElementsByTagNameNS(A, 'blip');
   if (pictures.length !== 1 || blips.length !== 1) unsupported('绘图、组合对象或非图片图形');
@@ -799,6 +892,7 @@ function parseDrawing(drawing: Element, context: ImportContext): StudioRichNode 
         0,
         1000
       ),
+      ...(layout ? { layout } : {}),
     },
     ...(drawingLink ? { marks: [{ type: 'link', attrs: { href: drawingLink } }] } : {}),
   };
@@ -1407,12 +1501,53 @@ function inlineChildren(
       });
     }
     if (node.type === 'image') {
-      checkAttrs(node, ['src', 'width', 'height', 'alt']);
+      checkAttrs(node, ['src', 'width', 'height', 'alt', 'layout']);
+      const layout = wordImageLayout(node.attrs?.layout);
       const { data, type } = embeddedImageData(node.attrs?.src);
       const { options, href } = runOptions({ ...node, text: '' }, inherited);
       const run = new ImageRun({
         type,
         data,
+        ...(layout
+          ? {
+              floating: {
+                horizontalPosition: {
+                  relative: layout.horizontal.relative,
+                  ...(layout.horizontal.align
+                    ? { align: layout.horizontal.align }
+                    : { offset: Math.round((layout.horizontal.offset || 0) * 9525) }),
+                },
+                verticalPosition: {
+                  relative: layout.vertical.relative,
+                  ...(layout.vertical.align
+                    ? { align: layout.vertical.align }
+                    : { offset: Math.round((layout.vertical.offset || 0) * 9525) }),
+                },
+                behindDocument: layout.wrap === 'behind',
+                allowOverlap: layout.allowOverlap !== false,
+                lockAnchor: layout.lockAnchor || false,
+                layoutInCell: layout.layoutInCell !== false,
+                zIndex: layout.zIndex || 1,
+                margins: Object.fromEntries(
+                  Object.entries(layout.distance || {}).map(([side, value]) => [
+                    side,
+                    Math.round(value * 9525),
+                  ])
+                ),
+                wrap: {
+                  type: {
+                    square: TextWrappingType.SQUARE,
+                    tight: TextWrappingType.TIGHT,
+                    through: TextWrappingType.THROUGH,
+                    topBottom: TextWrappingType.TOP_AND_BOTTOM,
+                    front: TextWrappingType.NONE,
+                    behind: TextWrappingType.NONE,
+                  }[layout.wrap],
+                  side: layout.wrapSide || 'bothSides',
+                },
+              } as IFloating,
+            }
+          : {}),
         transformation: {
           width: number(node.attrs?.width ?? 320, '图片宽度', 1, 2000),
           height: number(node.attrs?.height ?? 180, '图片高度', 1, 2000),
@@ -1859,7 +1994,22 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
     ],
   });
   const bytes = await Packer.toArrayBuffer(file);
-  if (!paragraphStyles.some((style) => style.autoUpdate)) return new Blob([bytes], { type: MIME });
+  const imageLayouts = [document.content, document.header, document.footer].flatMap((root) => {
+    const result: StudioWordImageLayout[] = [];
+    const walk = (node?: StudioRichNode) => {
+      if (!node) return;
+      if (node.type === 'image' && node.attrs?.layout)
+        result.push(wordImageLayout(node.attrs.layout)!);
+      for (const child of node.content || []) walk(child);
+    };
+    walk(root);
+    return result;
+  });
+  if (
+    !paragraphStyles.some((style) => style.autoUpdate) &&
+    !imageLayouts.some((layout) => layout.polygon || layout.zIndex === 0)
+  )
+    return new Blob([bytes], { type: MIME });
   const zip = await JSZip.loadAsync(bytes);
   let stylesXml = await zip.file('word/styles.xml')!.async('string');
   for (const style of paragraphStyles.filter((item) => item.autoUpdate))
@@ -1868,5 +2018,36 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
       '$1<w:autoRedefine/>'
     );
   zip.file('word/styles.xml', stylesXml);
+  for (const [path, root] of [
+    ['word/document.xml', document.content],
+    ['word/header1.xml', document.header],
+    ['word/footer1.xml', document.footer],
+  ] as const) {
+    if (!root || !zip.file(path)) continue;
+    const layouts: StudioWordImageLayout[] = [];
+    const walk = (node: StudioRichNode) => {
+      if (node.type === 'image' && node.attrs?.layout)
+        layouts.push(wordImageLayout(node.attrs.layout)!);
+      for (const child of node.content || []) walk(child);
+    };
+    walk(root);
+    let index = 0;
+    const native = await zip.file(path)!.async('string');
+    zip.file(
+      path,
+      native.replace(/<wp:anchor\b[\s\S]*?<\/wp:anchor>/g, (anchor) => {
+        const layout = layouts[index++];
+        if (!layout) return anchor;
+        if (layout.zIndex === 0)
+          anchor = anchor.replace(/relativeHeight="\d+"/, 'relativeHeight="0"');
+        if (layout.polygon)
+          anchor = anchor.replace(
+            /<wp:wrapPolygon\b[\s\S]*?<\/wp:wrapPolygon>/g,
+            `<wp:wrapPolygon edited="1">${layout.polygon.map(([x, y], i) => `<wp:${i ? 'lineTo' : 'start'} x="${x}" y="${y}"/>`).join('')}</wp:wrapPolygon>`
+          );
+        return anchor;
+      })
+    );
+  }
   return new Blob([await zip.generateAsync({ type: 'arraybuffer' })], { type: MIME });
 }

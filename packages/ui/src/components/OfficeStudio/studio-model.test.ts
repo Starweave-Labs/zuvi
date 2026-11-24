@@ -154,6 +154,28 @@ describe('persisted OfficeStudio models', () => {
     expect(isOfficeStudioDocument(document)).toBe(false);
   });
 
+  it('validates persisted floating image coordinates and anchor flags', () => {
+    const document = createOfficeStudioDocument('word') as StudioWordDocument;
+    const image = {
+      type: 'image',
+      attrs: {
+        src: 'data:image/png;base64,aGVsbG8=',
+        width: 100,
+        height: 50,
+        layout: {
+          wrap: 'square',
+          horizontal: { relative: 'column', offset: 0 },
+          vertical: { relative: 'paragraph', offset: 10 },
+          lockAnchor: true,
+        },
+      },
+    };
+    document.content.content!.push({ type: 'paragraph', content: [image] });
+    expect(isOfficeStudioDocument(document)).toBe(true);
+    image.attrs.layout.vertical.offset = Infinity;
+    expect(isOfficeStudioDocument(document)).toBe(false);
+  });
+
   it('preserves merged regions, frozen panes, filter rules, charts and supported cell formatting', () => {
     const document = createOfficeStudioDocument('excel') as StudioExcelDocument;
     const sheet = document.sheets[0];

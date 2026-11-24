@@ -1,4 +1,7 @@
 import { Mark, Node, type Editor } from '@tiptap/react';
+import { closeHistory } from '@tiptap/pm/history';
+import { wordDefaultImageLayout, wordImageCss } from './studio-word-image-preview';
+import { wordImageLayout } from './studio-word-images';
 
 const MAX_IMAGE_BYTES = 8 * 1024 * 1024;
 const MAX_IMAGE_SOURCE = Math.ceil((MAX_IMAGE_BYTES * 4) / 3) + 40;
@@ -26,6 +29,7 @@ export const WordImage = Node.create({
       width: { default: 320 },
       height: { default: 180 },
       alt: { default: '' },
+      layout: { default: null, rendered: false },
     };
   },
   parseHTML: () => [
@@ -36,11 +40,20 @@ export const WordImage = Node.create({
           return false;
         const width = Number(element.getAttribute('width') || 320);
         const height = Number(element.getAttribute('height') || 180);
+        let layout;
+        try {
+          layout = wordImageLayout(
+            JSON.parse(element.getAttribute('data-word-image-layout') || 'null')
+          );
+        } catch {
+          return false;
+        }
         return {
           src: element.getAttribute('src'),
           width: Math.max(1, Math.min(2000, Number.isFinite(width) ? width : 320)),
           height: Math.max(1, Math.min(2000, Number.isFinite(height) ? height : 180)),
           alt: (element.getAttribute('alt') || '').slice(0, 1000),
+          layout: layout || null,
         };
       },
     },
@@ -55,6 +68,23 @@ export const WordImage = Node.create({
       alt: String(node.attrs.alt || '').slice(0, 1000),
       class: 'zuvi-studio-word-image',
       'data-word-image': '',
+      ...(node.attrs.layout
+        ? {
+            'data-word-image-layout': JSON.stringify(wordImageLayout(node.attrs.layout)),
+            style: `aspect-ratio: ${Number(node.attrs.width) || 320} / ${Number(node.attrs.height) || 180};${Object.entries(
+              wordImageCss(
+                wordImageLayout(node.attrs.layout),
+                Number(node.attrs.width) || 320,
+                Number(node.attrs.height) || 180
+              )
+            )
+              .map(
+                ([key, value]) =>
+                  `${key.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`)}:${value}`
+              )
+              .join(';')}`,
+          }
+        : {}),
     },
   ],
   addNodeView() {
@@ -62,8 +92,62 @@ export const WordImage = Node.create({
       const dom = document.createElement('span');
       const image = document.createElement('img');
       const handle = document.createElement('span');
+      const mover = document.createElement('span');
       let current = node;
       let dragCleanup: (() => void) | null = null;
+      let geometryFrame = 0;
+      let destroyed = false;
+      const previewGeometry = () => {
+        const paper = dom.closest<HTMLElement>('[data-part="word-paper"]');
+        const paragraph = dom.parentElement?.closest<HTMLElement>('p,h1,h2,h3,h4,h5,h6');
+        const body = dom.closest<HTMLElement>('.tiptap');
+        if (!paper || !paragraph || !body || paper.offsetWidth <= 0) return;
+        const page = paper.getBoundingClientRect();
+        const box = paragraph.getBoundingClientRect();
+        const bodyBox = body.getBoundingClientRect();
+        const scale = page.width / paper.offsetWidth || 1;
+        const margin =
+          parseFloat(getComputedStyle(paper).getPropertyValue('--zuvi-studio-word-page-margin')) ||
+          0;
+        const pageHeight =
+          parseFloat(getComputedStyle(paper).getPropertyValue('--zuvi-studio-word-page-height')) ||
+          paper.offsetHeight;
+        const originX = (page.left - box.left) / scale;
+        const originY = (page.top - box.top) / scale;
+        const columnX = (bodyBox.left - box.left) / scale;
+        const columnWidth = bodyBox.width / scale;
+        const textRange = document.createRange();
+        textRange.setStart(paragraph, 0);
+        textRange.setEndBefore(dom);
+        const textBox = textRange.getBoundingClientRect();
+        const character = textRange.toString() ? (textBox.right - box.left) / scale : 0;
+        const line = textRange.toString()
+          ? (textBox.bottom - box.top) / scale -
+            (parseFloat(getComputedStyle(paragraph).lineHeight) || 24)
+          : 0;
+        return {
+          horizontal: {
+            page: { start: originX, size: paper.offsetWidth },
+            margin: { start: originX + margin, size: Math.max(0, paper.offsetWidth - margin * 2) },
+            column: { start: columnX, size: columnWidth },
+            character: { start: character, size: 0 },
+            leftMargin: { start: originX, size: margin },
+            insideMargin: { start: originX, size: margin },
+            rightMargin: { start: originX + paper.offsetWidth - margin, size: margin },
+            outsideMargin: { start: originX + paper.offsetWidth - margin, size: margin },
+          },
+          vertical: {
+            page: { start: originY, size: pageHeight },
+            margin: { start: originY + margin, size: Math.max(0, pageHeight - margin * 2) },
+            paragraph: { start: 0, size: box.height / scale },
+            line: { start: line, size: 0 },
+            topMargin: { start: originY, size: margin },
+            insideMargin: { start: originY, size: margin },
+            bottomMargin: { start: originY + pageHeight - margin, size: margin },
+            outsideMargin: { start: originY + pageHeight - margin, size: margin },
+          },
+        };
+      };
 
       dom.className = 'zuvi-studio-word-image-node';
       dom.dataset.wordImageNode = '';
@@ -76,7 +160,14 @@ export const WordImage = Node.create({
       handle.dataset.wordImageResize = '';
       handle.title = '拖动调整图片大小';
       handle.setAttribute('aria-hidden', 'true');
-      dom.append(image, handle);
+      mover.className = 'zuvi-studio-word-image-move';
+      mover.dataset.wordImageMove = '';
+      mover.setAttribute('role', 'button');
+      mover.setAttribute('aria-label', '移动浮动图片');
+      mover.title = '拖动移动图片；方向键微调，Shift+方向键移动 10 像素';
+      mover.textContent = '✥';
+      mover.tabIndex = -1;
+      dom.append(image, handle, mover);
 
       const render = (attrs: Record<string, unknown>) => {
         const width = Math.max(1, Math.min(2000, Number(attrs.width) || 320));
@@ -86,8 +177,42 @@ export const WordImage = Node.create({
         image.height = height;
         image.alt = String(attrs.alt || '').slice(0, 1000);
         image.style.aspectRatio = `${width} / ${height}`;
+        const layout = wordImageLayout(attrs.layout);
+        dom.removeAttribute('style');
+        dom.draggable = !layout?.lockAnchor;
+        if (layout) {
+          dom.dataset.wordImageLayout = JSON.stringify(layout);
+          dom.dataset.wrap = layout.wrap;
+          Object.assign(dom.style, wordImageCss(layout, width, height, previewGeometry()));
+          if (dom.dataset.selected !== undefined) mover.tabIndex = editor.isEditable ? 0 : -1;
+          mover.setAttribute('aria-disabled', String(!editor.isEditable));
+        } else {
+          delete dom.dataset.wordImageLayout;
+          delete dom.dataset.wrap;
+          mover.tabIndex = -1;
+        }
       };
       render(current.attrs);
+      const refreshGeometry = () => {
+        if (geometryFrame || typeof requestAnimationFrame !== 'function') return;
+        geometryFrame = requestAnimationFrame(() => {
+          geometryFrame = 0;
+          if (!destroyed && !dragCleanup) render(current.attrs);
+        });
+      };
+      const resizeObserver =
+        typeof ResizeObserver === 'function' ? new ResizeObserver(refreshGeometry) : undefined;
+      refreshGeometry();
+      editor.on('transaction', refreshGeometry);
+      window.addEventListener('resize', refreshGeometry);
+      const observeGeometry = () => {
+        if (destroyed) return;
+        const paper = dom.closest<HTMLElement>('[data-part="word-paper"]');
+        const paragraph = dom.parentElement;
+        if (paper) resizeObserver?.observe(paper);
+        if (paragraph) resizeObserver?.observe(paragraph);
+      };
+      queueMicrotask(observeGeometry);
 
       const startResize = (event: PointerEvent) => {
         if (!editor.isEditable || event.button !== 0) return;
@@ -98,6 +223,7 @@ export const WordImage = Node.create({
         if (typeof position !== 'number') return;
         const width = Math.max(1, Math.min(2000, Number(current.attrs.width) || 320));
         const height = Math.max(1, Math.min(2000, Number(current.attrs.height) || 180));
+        const original = current;
         const ratio = width / height;
         const box = image.getBoundingClientRect();
         const scaleX = box.width > 0 ? box.width / width : 1;
@@ -137,7 +263,14 @@ export const WordImage = Node.create({
           if (upEvent.pointerId !== pointerId) return;
           move(upEvent);
           cleanup();
-          if (!editor.isEditable || (nextWidth === width && nextHeight === height)) return;
+          if (
+            !editor.isEditable ||
+            current !== original ||
+            (nextWidth === width && nextHeight === height)
+          ) {
+            render(current.attrs);
+            return;
+          }
           const nextPosition = getPos();
           if (
             typeof nextPosition !== 'number' ||
@@ -145,7 +278,7 @@ export const WordImage = Node.create({
           )
             return;
           editor.view.dispatch(
-            editor.state.tr.setNodeMarkup(nextPosition, undefined, {
+            closeHistory(editor.state.tr).setNodeMarkup(nextPosition, undefined, {
               ...current.attrs,
               width: nextWidth,
               height: nextHeight,
@@ -170,6 +303,138 @@ export const WordImage = Node.create({
         dragCleanup = cancel;
       };
       handle.addEventListener('pointerdown', startResize);
+      const moveBy = (x: number, y: number) => {
+        const position = getPos();
+        if (!editor.isEditable || typeof position !== 'number') return;
+        const layout = wordImageLayout(current.attrs.layout) || wordDefaultImageLayout();
+        const patch = {
+          ...layout,
+          horizontal: {
+            relative: layout.horizontal.relative,
+            offset: Math.max(-10000, Math.min(10000, (layout.horizontal.offset || 0) + x)),
+          },
+          vertical: {
+            relative: layout.vertical.relative,
+            offset: Math.max(-10000, Math.min(10000, (layout.vertical.offset || 0) + y)),
+          },
+        };
+        editor.view.dispatch(
+          closeHistory(editor.state.tr).setNodeMarkup(position, undefined, {
+            ...current.attrs,
+            layout: patch,
+          })
+        );
+        editor.commands.setNodeSelection(position);
+      };
+      const startMove = (event: PointerEvent) => {
+        if (!editor.isEditable || event.button !== 0 || !current.attrs.layout) return;
+        event.preventDefault();
+        event.stopPropagation();
+        dragCleanup?.();
+        const initial = current;
+        const layout = wordImageLayout(initial.attrs.layout)!;
+        const width = Number(initial.attrs.width) || 320;
+        const height = Number(initial.attrs.height) || 180;
+        const rect = image.getBoundingClientRect();
+        const scaleX = rect.width > 0 ? rect.width / width : 1;
+        const scaleY = rect.height > 0 ? rect.height / height : scaleX;
+        let next = layout;
+        const move = (input: PointerEvent) => {
+          if (input.pointerId !== event.pointerId) return;
+          next = {
+            ...layout,
+            horizontal: {
+              relative: layout.horizontal.relative,
+              offset: Math.max(
+                -10000,
+                Math.min(
+                  10000,
+                  (layout.horizontal.offset || 0) + (input.clientX - event.clientX) / scaleX
+                )
+              ),
+            },
+            vertical: {
+              relative: layout.vertical.relative,
+              offset: Math.max(
+                -10000,
+                Math.min(
+                  10000,
+                  (layout.vertical.offset || 0) + (input.clientY - event.clientY) / scaleY
+                )
+              ),
+            },
+          };
+          render({ ...initial.attrs, layout: next });
+        };
+        const cleanup = () => {
+          window.removeEventListener('pointermove', move);
+          window.removeEventListener('pointerup', finish);
+          window.removeEventListener('pointercancel', cancel);
+          window.removeEventListener('keydown', escape);
+          window.removeEventListener('blur', cancel);
+          dragCleanup = null;
+        };
+        const cancel = () => {
+          cleanup();
+          render(current.attrs);
+        };
+        const finish = (input: PointerEvent) => {
+          if (input.pointerId !== event.pointerId) return;
+          move(input);
+          cleanup();
+          const position = getPos();
+          if (
+            !editor.isEditable ||
+            !current.eq(initial) ||
+            typeof position !== 'number' ||
+            !editor.state.doc.nodeAt(position)?.eq(initial)
+          ) {
+            render(current.attrs);
+            return;
+          }
+          if (
+            Math.abs(input.clientX - event.clientX) < 1 &&
+            Math.abs(input.clientY - event.clientY) < 1
+          ) {
+            render(current.attrs);
+            return;
+          }
+          editor.view.dispatch(
+            closeHistory(editor.state.tr).setNodeMarkup(position, undefined, {
+              ...initial.attrs,
+              layout: next,
+            })
+          );
+          editor.commands.setNodeSelection(position);
+        };
+        const escape = (input: KeyboardEvent) => {
+          if (input.key === 'Escape') {
+            input.preventDefault();
+            cancel();
+          }
+        };
+        window.addEventListener('pointermove', move);
+        window.addEventListener('pointerup', finish);
+        window.addEventListener('pointercancel', cancel);
+        window.addEventListener('keydown', escape);
+        window.addEventListener('blur', cancel);
+        dragCleanup = cancel;
+      };
+      const keyMove = (event: KeyboardEvent) => {
+        const directions: Record<string, [number, number]> = {
+          ArrowLeft: [-1, 0],
+          ArrowRight: [1, 0],
+          ArrowUp: [0, -1],
+          ArrowDown: [0, 1],
+        };
+        const amount = directions[event.key];
+        if (!amount || event.isComposing) return;
+        event.preventDefault();
+        event.stopPropagation();
+        moveBy(amount[0] * (event.shiftKey ? 10 : 1), amount[1] * (event.shiftKey ? 10 : 1));
+      };
+      mover.addEventListener('pointerdown', startMove);
+      mover.addEventListener('keydown', keyMove);
 
       return {
         dom,
@@ -181,19 +446,28 @@ export const WordImage = Node.create({
         },
         selectNode() {
           dom.dataset.selected = '';
+          mover.tabIndex = current.attrs.layout && editor.isEditable ? 0 : -1;
         },
         deselectNode() {
           delete dom.dataset.selected;
+          mover.tabIndex = -1;
         },
         stopEvent(event) {
-          return event.target === handle;
+          return event.target === handle || event.target === mover;
         },
         ignoreMutation() {
           return true;
         },
         destroy() {
+          destroyed = true;
           dragCleanup?.();
           handle.removeEventListener('pointerdown', startResize);
+          mover.removeEventListener('pointerdown', startMove);
+          mover.removeEventListener('keydown', keyMove);
+          resizeObserver?.disconnect();
+          if (geometryFrame) cancelAnimationFrame(geometryFrame);
+          editor.off('transaction', refreshGeometry);
+          window.removeEventListener('resize', refreshGeometry);
         },
       };
     };

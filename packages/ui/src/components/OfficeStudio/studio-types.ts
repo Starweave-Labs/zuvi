@@ -10,6 +10,27 @@ export interface StudioRichNode {
   content?: StudioRichNode[];
 }
 
+export interface StudioWordImagePosition {
+  relative: string;
+  /** Pixel offsets are converted to native DOCX EMUs. Use either offset or align. */
+  offset?: number;
+  align?: string;
+}
+
+export interface StudioWordImageLayout {
+  wrap: 'square' | 'tight' | 'through' | 'topBottom' | 'front' | 'behind';
+  horizontal: StudioWordImagePosition;
+  vertical: StudioWordImagePosition;
+  wrapSide?: 'bothSides' | 'left' | 'right' | 'largest';
+  distance?: { top?: number; right?: number; bottom?: number; left?: number };
+  /** Native wrap paths use a 21600-unit coordinate space and do not crop the image. */
+  polygon?: [number, number][];
+  allowOverlap?: boolean;
+  lockAnchor?: boolean;
+  layoutInCell?: boolean;
+  zIndex?: number;
+}
+
 interface StudioDocumentBase {
   version: 1;
   id: string;

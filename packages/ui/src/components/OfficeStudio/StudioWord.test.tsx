@@ -969,6 +969,132 @@ describe('StudioWord structured editing', () => {
     });
   });
 
+  it('changes picture wrapping, position and anchor flags and restores them with undo', async () => {
+    const model = documentModel();
+    model.content.content![0].content!.unshift({
+      type: 'image',
+      attrs: { src: `data:image/png;base64,${PNG}`, width: 320, height: 160, alt: '浮动示意图' },
+    });
+    const { textbox, onChange } = await mount({ document: model });
+    fireEvent.click(textbox.querySelector('img[data-word-image]')!);
+    fireEvent.click(await screen.findByRole('button', { name: /^图片文字环绕/ }));
+    fireEvent.click(await screen.findByRole('option', { name: '四周环绕' }));
+    await waitFor(() =>
+      expect(textbox.querySelector('[data-word-image-node]')).toHaveAttribute('data-wrap', 'square')
+    );
+    expect(textbox.querySelector('[data-word-image-node]')).toHaveStyle({ float: 'right' });
+    fireEvent.click(screen.getByRole('button', { name: '图片位置与环绕' }));
+    await screen.findByRole('dialog', { name: '图片位置与环绕' });
+    fireEvent.change(screen.getByRole('spinbutton', { name: '图片垂直偏移' }), {
+      target: { value: '24' },
+    });
+    fireEvent.keyDown(screen.getByRole('spinbutton', { name: '图片垂直偏移' }), { key: 'Enter' });
+    await waitFor(() =>
+      expect(
+        onChange.mock.lastCall?.[0].content.content[0].content[0].attrs.layout.vertical.offset
+      ).toBe(24)
+    );
+    fireEvent.click(screen.getByRole('checkbox', { name: '锁定锚点' }));
+    await waitFor(() =>
+      expect(textbox.querySelector('[data-word-image-node]')).toHaveAttribute('draggable', 'false')
+    );
+    fireEvent.click(screen.getByRole('checkbox', { name: '随文字移动' }));
+    expect(
+      onChange.mock.lastCall?.[0].content.content[0].content[0].attrs.layout.vertical.relative
+    ).toBe('page');
+    fireEvent.click(screen.getByRole('button', { name: '完成' }));
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+    fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() =>
+      expect(
+        onChange.mock.lastCall?.[0].content.content[0].content[0].attrs.layout.vertical.relative
+      ).toBe('paragraph')
+    );
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    await waitFor(() =>
+      expect(
+        onChange.mock.lastCall?.[0].content.content[0].content[0].attrs.layout.vertical.relative
+      ).toBe('page')
+    );
+  });
+
+  it('moves a floating picture with a preview, cancels it without a write and commits a complete gesture once', async () => {
+    const model = documentModel();
+    model.content.content![0].content!.unshift({
+      type: 'image',
+      attrs: {
+        src: `data:image/png;base64,${PNG}`,
+        width: 320,
+        height: 160,
+        alt: '浮动示意图',
+        layout: {
+          wrap: 'front',
+          horizontal: { relative: 'column', offset: 10 },
+          vertical: { relative: 'paragraph', offset: 15 },
+          zIndex: 1,
+        },
+      },
+    });
+    const { textbox, onChange } = await mount({ document: model });
+    fireEvent.click(textbox.querySelector('img[data-word-image]')!);
+    const imageNode = textbox.querySelector<HTMLElement>('[data-word-image-node]')!;
+    const mover = imageNode.querySelector<HTMLElement>('[data-word-image-move]')!;
+    await waitFor(() => expect(mover).toHaveAttribute('tabindex', '0'));
+    const pointer = (target: Element | Window, type: string, clientX: number, clientY: number) => {
+      const event = new MouseEvent(type, { bubbles: true, button: 0, clientX, clientY });
+      Object.defineProperty(event, 'pointerId', { value: 20 });
+      fireEvent(target, event);
+    };
+    pointer(mover, 'pointerdown', 100, 100);
+    pointer(window, 'pointermove', 120, 130);
+    expect(imageNode).toHaveStyle({ left: '30px', top: '45px' });
+    expect(onChange).not.toHaveBeenCalled();
+    fireEvent.keyDown(window, { key: 'Escape' });
+    expect(imageNode).toHaveStyle({ left: '10px', top: '15px' });
+    expect(onChange).not.toHaveBeenCalled();
+    pointer(mover, 'pointerdown', 100, 100);
+    pointer(window, 'pointermove', 150, 120);
+    pointer(window, 'pointerup', 150, 120);
+    await waitFor(() => expect(onChange).toHaveBeenCalledTimes(1));
+    expect(onChange.mock.lastCall?.[0].content.content[0].content[0].attrs.layout).toMatchObject({
+      horizontal: { offset: 60 },
+      vertical: { offset: 35 },
+    });
+    fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(imageNode).toHaveStyle({ left: '10px', top: '15px' }));
+    fireEvent.keyDown(mover, { key: 'ArrowRight', shiftKey: true });
+    await waitFor(() => expect(imageNode).toHaveStyle({ left: '20px', top: '15px' }));
+  });
+
+  it.each([{ readOnly: true }, { disabled: true }])(
+    'keeps floating image controls locked in %j',
+    async (options) => {
+      const model = documentModel();
+      model.content.content![0].content!.unshift({
+        type: 'image',
+        attrs: {
+          src: `data:image/png;base64,${PNG}`,
+          width: 320,
+          height: 160,
+          alt: '浮动示意图',
+          layout: {
+            wrap: 'front',
+            horizontal: { relative: 'page', offset: 5 },
+            vertical: { relative: 'page', offset: 5 },
+          },
+        },
+      });
+      const { textbox, onChange } = await mount({ ...options, document: model });
+      fireEvent.click(textbox.querySelector('img[data-word-image]')!);
+      expect(await screen.findByRole('button', { name: /^图片文字环绕/ })).toBeDisabled();
+      expect(screen.getByRole('button', { name: '图片位置与环绕' })).toBeDisabled();
+      fireEvent.keyDown(textbox.querySelector('[data-word-image-move]')!, { key: 'ArrowRight' });
+      expect(onChange).not.toHaveBeenCalled();
+    }
+  );
+
   it('pastes a local JPEG and retains its real pixel dimensions', async () => {
     const { textbox, onChange } = await mount();
     const file = new File(

@@ -26,6 +26,8 @@ export type {
   StudioSheetHyperlink,
   StudioSheetStructureEdit,
   StudioWordDocument,
+  StudioWordImageLayout,
+  StudioWordImagePosition,
   StudioWordCharacterStyle,
   StudioWordParagraphFormat,
   StudioWordParagraphStyle,

@@ -20,6 +20,12 @@ import {
   type SheetCalculation,
 } from '../../../../../packages/ui/src/components/OfficeStudio/studio-sheet-model';
 import { studioConditionalCellStyle } from '../../../../../packages/ui/src/components/OfficeStudio/studio-sheet-rules';
+import { wordImageLayout } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-images';
+import { wordImageCss } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-image-preview';
+import {
+  getStudioWordParagraphStyles,
+  materializeStudioWordStyles,
+} from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-styles';
 import {
   studioBorderCss,
   studioBorderSides,
@@ -49,11 +55,30 @@ const alignment = (value: unknown) =>
 const fontFamily = (value: string) =>
   `"${value.replace(/["\\\t\n\r]/g, (character) => `\\${character.charCodeAt(0).toString(16)} `)}"`;
 
-function rich(node: StudioRichNode, page: number, total: number): string {
+type PrintedFloatingImage = { node: StudioRichNode; axes: ('horizontal' | 'vertical')[] };
+
+function rich(
+  node: StudioRichNode,
+  page: number,
+  total: number,
+  floating?: PrintedFloatingImage[]
+): string {
+  if (node.type === 'image' && floating) {
+    const layout = wordImageLayout(node.attrs?.layout);
+    if (layout && ['front', 'behind'].includes(layout.wrap)) {
+      const axes = (['horizontal', 'vertical'] as const).filter(
+        (axis) => !['character', 'line', 'paragraph'].includes(layout[axis].relative)
+      );
+      if (axes.length) {
+        floating.push({ node, axes: [...axes] });
+        return '';
+      }
+    }
+  }
   let text =
     node.type === 'text'
       ? escape(node.text)
-      : (node.content ?? []).map((child) => rich(child, page, total)).join('');
+      : (node.content ?? []).map((child) => rich(child, page, total, floating)).join('');
   for (const mark of node.marks ?? []) {
     const tag = (
       {
@@ -113,7 +138,19 @@ function rich(node: StudioRichNode, page: number, total: number): string {
         ? attrs.src
         : '';
     if (!source) throw new Error('打印仅支持已嵌入文档的 PNG/JPEG 图片。');
-    return `<img src="${escape(source)}" alt="${escape(attrs.alt)}"${amount(attrs.width, '', 1, 10000) ? ` width="${attrs.width}"` : ''}${amount(attrs.height, '', 1, 10000) ? ` height="${attrs.height}"` : ''}>`;
+    const layout = wordImageLayout(attrs.layout);
+    const css = Object.entries(
+      wordImageCss(layout, Number(attrs.width) || 320, Number(attrs.height) || 180)
+    )
+      .map(
+        ([key, value]) =>
+          `${key.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`)}:${value}`
+      )
+      .join(';');
+    const printed = `<img src="${escape(source)}" alt="${escape(attrs.alt)}"${amount(attrs.width, '', 1, 10000) ? ` width="${attrs.width}"` : ''}${amount(attrs.height, '', 1, 10000) ? ` height="${attrs.height}"` : ''}${css ? ` style="${escape(css)}"` : ''}>`;
+    return layout && ['front', 'behind'].includes(layout.wrap)
+      ? `<span class="studio-print-image-anchor">${printed}</span>`
+      : printed;
   }
   if (node.type === 'pageNumber') return String(attrs.kind === 'total' ? total : page);
   if (node.type === 'hardBreak') return '<br>';
@@ -154,6 +191,13 @@ function rich(node: StudioRichNode, page: number, total: number): string {
 }
 
 function wordPages(document: StudioWordDocument) {
+  const styles = getStudioWordParagraphStyles(document.content);
+  document = {
+    ...document,
+    content: materializeStudioWordStyles(document.content, styles),
+    ...(document.header ? { header: materializeStudioWordStyles(document.header, styles) } : {}),
+    ...(document.footer ? { footer: materializeStudioWordStyles(document.footer, styles) } : {}),
+  };
   const pages: StudioRichNode[][] = [[]];
   for (const node of document.content.content ?? []) {
     if (node.type === 'pageBreak') pages.push([]);
@@ -162,11 +206,57 @@ function wordPages(document: StudioWordDocument) {
   return pages
     .map((nodes, index) => {
       const total = pages.length;
-      const render = (node?: StudioRichNode) => (node ? rich(node, index + 1, total) : '');
+      const floating: PrintedFloatingImage[] = [];
+      const render = (node?: StudioRichNode) =>
+        node ? rich(node, index + 1, total, floating) : '';
       const footer = render(document.footer);
       const containsPage = (node?: StudioRichNode): boolean =>
         !!node && (node.type === 'pageNumber' || (node.content ?? []).some(containsPage));
-      return `<section class="studio-print-page"><header>${render(document.header)}</header><article>${nodes.map(render).join('')}</article><footer>${footer}${document.pageNumbers && !containsPage(document.footer) ? `<p class="studio-print-number">${index + 1}</p>` : ''}</footer></section>`;
+      const header = render(document.header);
+      const body = nodes.map(render).join('');
+      const pageMm = document.page.size === 'Letter' ? [215.9, 279.4] : [210, 297];
+      if (document.page.orientation === 'landscape') pageMm.reverse();
+      const margin = (document.page.margin * 96) / 25.4;
+      const width = (pageMm[0] * 96) / 25.4;
+      const height = (pageMm[1] * 96) / 25.4;
+      const extra = floating
+        .map(({ node, axes }) => {
+          const layout = wordImageLayout(node.attrs?.layout)!;
+          const horizontal = {
+            page: { start: -margin, size: width },
+            margin: { start: 0, size: width - margin * 2 },
+            column: { start: 0, size: width - margin * 2 },
+            leftMargin: { start: -margin, size: margin },
+            insideMargin: { start: -margin, size: margin },
+            rightMargin: { start: width - margin * 2, size: margin },
+            outsideMargin: { start: width - margin * 2, size: margin },
+            character: { start: 0, size: 0 },
+          };
+          const vertical = {
+            page: { start: -margin, size: height },
+            margin: { start: 0, size: height - margin * 2 },
+            paragraph: { start: 0, size: 0 },
+            line: { start: 0, size: 0 },
+            topMargin: { start: -margin, size: margin },
+            insideMargin: { start: -margin, size: margin },
+            bottomMargin: { start: height - margin * 2, size: margin },
+            outsideMargin: { start: height - margin * 2, size: margin },
+          };
+          const css = wordImageCss(
+            layout,
+            Number(node.attrs?.width) || 320,
+            Number(node.attrs?.height) || 180,
+            { horizontal, vertical }
+          );
+          let html = rich(node, index + 1, total);
+          for (const axis of axes) {
+            const property = axis === 'horizontal' ? 'left' : 'top';
+            html = html.replace(new RegExp(`${property}:[^;"&]+`), `${property}:${css[property]}`);
+          }
+          return `<div class="studio-print-page-picture">${html}</div>`;
+        })
+        .join('');
+      return `<section class="studio-print-page"><header>${header}</header><article>${body}</article><footer>${footer}${document.pageNumbers && !containsPage(document.footer) ? `<p class="studio-print-number">${index + 1}</p>` : ''}</footer>${extra}</section>`;
     })
     .join('');
 }
@@ -366,6 +456,7 @@ export function createStudioPrintHtml(document: OfficeStudioDocument): string {
   return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; style-src 'unsafe-inline'; base-uri 'none'"><title>${escape(document.name)}</title><style>
 @page{size:${paper};margin:${margin}mm}*{box-sizing:border-box}body{margin:0;color:#253044;background:white;font:12pt/1.6 "Microsoft YaHei","Noto Sans SC",Arial,sans-serif}h1,h2,h3,h4,h5,h6{line-height:1.3;break-after:avoid}h1{font-size:25pt}h2{font-size:19pt}p{margin:0 0 8pt}table{border-collapse:collapse;width:100%;font-size:10pt;table-layout:fixed}td,th{border:1px solid #b8c2bc;padding:5pt;overflow-wrap:anywhere;vertical-align:top}th{background:#edf3ee;text-align:left}tr{break-inside:avoid}img{max-width:100%;height:auto;vertical-align:middle}blockquote{margin:10pt 0;padding-left:12pt;border-left:3px solid #90a59a}a{color:inherit}header,footer{font-size:9pt;color:#5a6c61}header{margin-bottom:12pt}footer{margin-top:14pt}.studio-print-page,.studio-print-sheet{break-after:page}.studio-print-page:last-child,.studio-print-sheet:last-child{break-after:auto}.studio-print-break{break-before:page}.studio-print-number{text-align:center}.studio-print-chart{margin:18pt 0;break-inside:avoid}.studio-print-chart svg{width:100%;max-height:240pt}.studio-print-chart figcaption{font-weight:700}.studio-print-chart p{font-size:9pt}body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 ${document.kind === 'excel' ? '.studio-print-sheet table{font-family:Calibri,Arial,sans-serif;font-size:11pt;line-height:1.15}.studio-print-sheet td{padding:2px 5px;vertical-align:middle}.studio-print-cell{overflow:hidden}' : ''}
+${document.kind === 'word' ? '.studio-print-page{position:relative;isolation:isolate;min-height:50mm}.studio-print-page p,.studio-print-page h1,.studio-print-page h2,.studio-print-page h3,.studio-print-page h4,.studio-print-page h5,.studio-print-page h6{position:relative}.studio-print-image-anchor{display:inline-block;position:relative;width:0;height:0}.studio-print-page-picture{position:absolute;inset:0;pointer-events:none}' : ''}
 </style></head><body>${content}</body></html>`;
 }
 

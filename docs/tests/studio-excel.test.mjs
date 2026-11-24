@@ -42,7 +42,7 @@ function compiledModule(url, resolve = require) {
 const studioModules = new Map();
 function resolveStudioModule(id) {
   const name =
-    /(?:^|\/)(studio-model|studio-cell-style|studio-sheet-(?:model|structure|rules|fill|hyperlinks|editing))$/.exec(
+    /(?:^|\/)(studio-model|studio-word-images|studio-cell-style|studio-sheet-(?:model|structure|rules|fill|hyperlinks|editing))$/.exec(
       id
     )?.[1];
   if (!name) return require(id);

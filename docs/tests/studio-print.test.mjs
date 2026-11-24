@@ -71,6 +71,72 @@ const print = compiled('../src/pages/collaboration/office-studio/studio-print.ts
   },
 });
 
+test('Word print keeps floating images, wrap contours and page-coordinate placement in the printed document', () => {
+  const document = models.createOfficeStudioDocument('word');
+  const picture = (layout, alt) => ({
+    type: 'image',
+    attrs: { src: 'data:image/png;base64,aGVsbG8=', width: 100, height: 80, alt, layout },
+  });
+  const square = {
+    wrap: 'square',
+    horizontal: { relative: 'column', align: 'right' },
+    vertical: { relative: 'paragraph', offset: 0 },
+    distance: { left: 10, right: 5, top: 2, bottom: 3 },
+  };
+  const page = {
+    wrap: 'front',
+    horizontal: { relative: 'page', offset: 100 },
+    vertical: { relative: 'page', offset: 120 },
+  };
+  const contour = {
+    ...square,
+    wrap: 'tight',
+    polygon: [
+      [0, 0],
+      [0, 21600],
+      [21600, 21600],
+      [0, 0],
+    ],
+  };
+  document.content = {
+    type: 'doc',
+    content: [
+      {
+        type: 'paragraph',
+        content: [
+          picture(square, '环绕图片'),
+          { type: 'text', text: '保持正文' },
+          picture(page, '页面图片'),
+          picture(contour, '轮廓图片'),
+        ],
+      },
+    ],
+  };
+  const before = JSON.stringify(document);
+  const html = new JSDOM(print.createStudioPrintHtml(document)).window.document;
+  {
+    assert.equal(html.querySelectorAll('img').length, 3);
+    const images = [...html.querySelectorAll('img')];
+    assert.equal(images.find((image) => image.alt === '环绕图片').style.cssFloat, 'right');
+    assert.ok(
+      images
+        .find((image) => image.alt === '轮廓图片')
+        .getAttribute('style')
+        .includes('shape-outside:polygon')
+    );
+    const pinned = images.find((image) => image.alt === '页面图片');
+    assert.ok(pinned.closest('.studio-print-page-picture'));
+    assert.ok(
+      Math.abs(parseFloat(pinned.style.left) - (100 - (document.page.margin * 96) / 25.4)) < 0.001
+    );
+    assert.ok(
+      Math.abs(parseFloat(pinned.style.top) - (120 - (document.page.margin * 96) / 25.4)) < 0.001
+    );
+    assert.ok(html.querySelector('article').textContent.includes('保持正文'));
+  }
+  assert.equal(JSON.stringify(document), before);
+});
+
 test('sheet print respects widths, vertical alignment, blank border-only cells and merged outer edges', () => {
   const document = {
     version: 1,
