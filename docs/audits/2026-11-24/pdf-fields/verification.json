@@ -1,0 +1,39 @@
+{
+  "date": "2026-11-24",
+  "scope": [
+    "P019",
+    "P020",
+    "P021"
+  ],
+  "focusedUIModelHost": {
+    "passed": 35
+  },
+  "nativePdfAndRenderer": {
+    "passed": 23
+  },
+  "fullUIBaseline": {
+    "passed": 2248,
+    "note": "before final asynchronous image-read regression; focused final checks above include it"
+  },
+  "repoUnitTests": "passed; docs original Chart integration skip retained",
+  "typecheck": "passed",
+  "lint": "passed",
+  "registry": "passed",
+  "consumerSourceFiles": 328,
+  "distribution": "passed",
+  "esmEntryGzipBytes": 124816,
+  "esmEntryBudgetBytes": 124928,
+  "browser": "seven fields, repeated controls, date input guard, readonly, properties, undo/redo, two export/reopen cycles, light/dark/320px passed",
+  "allE2E": {
+    "passedInitial": 216,
+    "passedFailureReruns": 10,
+    "note": "first run used existing old preview service and lacked browser bundle; reruns used updated bundle and dedicated port 5189"
+  },
+  "nativeExternalAudit": "pypdf field tree/widget values and states; Poppler rendered final form; display labels, selections and image verified",
+  "remaining": [
+    "full original ledger audit",
+    "P022 calculation/validation actions",
+    "P023 roles/signature fields",
+    "P026 certificate signatures"
+  ]
+}

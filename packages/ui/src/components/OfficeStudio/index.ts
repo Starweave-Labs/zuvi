@@ -10,6 +10,7 @@ export type {
   StudioExcelDocument,
   StudioPdfDocument,
   StudioPdfField,
+  StudioPdfFieldDesign,
   StudioPdfMark,
   StudioPdfRenderer,
   StudioPdfRenderResult,

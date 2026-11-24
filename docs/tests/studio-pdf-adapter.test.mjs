@@ -59,6 +59,7 @@ function fixture(options = {}) {
       options.noDestinationContext ? null : { drawImage: (image) => draws.push(image) },
   };
   const page = {
+    view: [40, 20, 340, 420],
     rotate: options.pageRotation ?? 90,
     getViewport: ({ scale, rotation }) => {
       viewports.push({ scale, rotation });
@@ -473,4 +474,20 @@ test('searches actual PDF.js extracted page text from a real generated PDF', asy
   assert.ok(results[0].rect.width > 20 && results[0].rect.height > 10);
   assert.ok(results[1].rect.y < 300 && results[1].rect.y + results[1].rect.height > 300);
   await session.destroy();
+});
+
+test('reads visible page bounds without painting or applying page rotation', async () => {
+  const f = fixture();
+  const session = await f.studioPdfRenderer.load(source());
+  assert.deepEqual(JSON.parse(JSON.stringify(await session.getPageBounds(1))), {
+    left: 40,
+    bottom: 20,
+    right: 340,
+    top: 420,
+  });
+  assert.deepEqual(f.getPages, [2]);
+  assert.equal(f.renders.length, 0);
+  await assert.rejects(() => session.getPageBounds(-1), /页码/);
+  await session.destroy();
+  await assert.rejects(() => session.getPageBounds(0), /关闭/);
 });

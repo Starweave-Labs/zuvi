@@ -27,6 +27,14 @@ import { RadioGroup } from '../Radio/RadioGroup';
 import { Select } from '../Select/Select';
 import { Tabs } from '../Tabs/Tabs';
 import { StudioRibbonTabs } from './StudioRibbon';
+import { StudioPdfFieldDialog } from './StudioPdfFieldDialog';
+import {
+  pdfFieldDesign,
+  pdfFieldIssue,
+  pdfFieldKind,
+  pdfRemoveDesignedField,
+  pdfSetDesignedField,
+} from './studio-pdf-fields';
 import type {
   StudioEditorProps,
   StudioPdfDocument,
@@ -38,6 +46,7 @@ import type {
   StudioPdfSearchResult,
 } from './studio-types';
 import './StudioPdf.css';
+import { isImeComposing } from '../../utils';
 
 type Tool = 'select' | 'text' | 'highlight' | 'rectangle' | 'ink';
 type Panel = 'marks' | 'fields' | 'search' | 'pages';
@@ -357,6 +366,11 @@ export default function StudioPdf({
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
   const [retry, setRetry] = useState(0);
+  const [fieldDialog, setFieldDialog] = useState<{ field?: StudioPdfField } | null>(null);
+  const [dateDrafts, setDateDrafts] = useState<Record<string, string>>({});
+  const dateDraftRef = useRef(dateDrafts);
+  dateDraftRef.current = dateDrafts;
+  const fieldEdit = useRef<{ name: string; saved: boolean } | null>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
   const paper = useRef<HTMLDivElement>(null);
   const searchInput = useRef<HTMLInputElement>(null);
@@ -395,6 +409,8 @@ export default function StudioPdf({
       ? rendered.result
       : null;
   const canModify = !disabled && !readOnly && !!activeLoaded;
+  const canModifyRef = useRef(canModify);
+  canModifyRef.current = canModify;
   const selected = pdfDocument.marks.find((mark) => mark.id === selectedId);
 
   useEffect(() => {
@@ -402,9 +418,17 @@ export default function StudioPdf({
       pastRef.current = [];
       futureRef.current = [];
       setHistoryVersion((value) => value + 1);
+      setDateDrafts({});
+      setFieldDialog(null);
+      fieldEdit.current = null;
     }
     expectedRef.current = pdfDocument;
   }, [pdfDocument]);
+
+  useEffect(() => {
+    setDateDrafts({});
+    fieldEdit.current = null;
+  }, [disabled, readOnly, source]);
 
   useEffect(() => {
     drawingRef.current = null;
@@ -563,7 +587,7 @@ export default function StudioPdf({
     setHistoryVersion((value) => value + 1);
   };
   const commit = (next: StudioPdfDocument, addHistory = true) => {
-    if (!canModify) return;
+    if (!canModifyRef.current) return;
     if (addHistory) remember(documentRef.current);
     documentRef.current = next;
     expectedRef.current = next;
@@ -578,17 +602,123 @@ export default function StudioPdf({
     if (!next) return;
     to.current = [...to.current.slice(-39), documentRef.current];
     commit(next, false);
+    setDateDrafts({});
+    fieldEdit.current = null;
     setSelectedId(null);
     setHistoryVersion((value) => value + 1);
   };
   const changeField = (name: string, value: string | boolean) => {
     const current = documentRef.current;
     const field = current.fields.find((entry) => entry.name === name);
-    if (!canModify || !field || field.readOnly) return;
-    commit({
-      ...current,
-      fields: current.fields.map((entry) => (entry.name === name ? { ...entry, value } : entry)),
+    if (!canModify || !field || field.readOnly || field.value === value) return;
+    const nextField = { ...field, value };
+    if (field.design) {
+      const issue = pdfFieldIssue(nextField, current.pageCount);
+      if (issue) {
+        setNotice(issue);
+        return;
+      }
+    }
+    const editing = fieldEdit.current?.name === name ? fieldEdit.current : null;
+    commit(
+      {
+        ...current,
+        fields: current.fields.map((entry) => (entry.name === name ? nextField : entry)),
+      },
+      !editing?.saved
+    );
+    if (editing) editing.saved = true;
+  };
+  const clearDateDraft = (name: string) => {
+    setDateDrafts((current) => {
+      const next = { ...current };
+      delete next[name];
+      return next;
     });
+  };
+  const commitDate = (name: string) => {
+    const value = dateDraftRef.current[name];
+    const field = documentRef.current.fields.find((entry) => entry.name === name);
+    if (value === undefined || !field || !canModify || field.readOnly) return;
+    const issue = pdfFieldIssue({ ...field, value }, documentRef.current.pageCount);
+    if (issue) {
+      setNotice(issue);
+      return;
+    }
+    changeField(name, value);
+    clearDateDraft(name);
+  };
+  const dateInput = (field: StudioPdfField, label: string, overlay = false) => {
+    const value = dateDrafts[field.name] ?? String(field.value);
+    const issue = pdfFieldIssue({ ...field, value }, pdfDocument.pageCount);
+    return (
+      <Input
+        className={overlay ? 'zuvi-studio-pdf-widget-input' : undefined}
+        classNames={overlay ? { input: 'zuvi-studio-pdf-widget-value' } : undefined}
+        size="sm"
+        aria-label={label}
+        placeholder="YYYY-MM-DD"
+        inputMode="numeric"
+        value={value}
+        disabled={!canModify || field.readOnly}
+        maxLength={10}
+        aria-invalid={!!issue}
+        data-studio-input-error={issue}
+        onChange={(event) => {
+          if (!canModify || field.readOnly) return;
+          const next = { ...dateDraftRef.current, [field.name]: event.target.value };
+          dateDraftRef.current = next;
+          setDateDrafts(next);
+        }}
+        onBlur={() => commitDate(field.name)}
+        onKeyDown={(event) => {
+          if (isImeComposing(event.nativeEvent)) return;
+          if (event.key === 'Enter') {
+            event.preventDefault();
+            commitDate(field.name);
+          }
+          if (event.key === 'Escape') {
+            event.preventDefault();
+            event.stopPropagation();
+            clearDateDraft(field.name);
+            setNotice('');
+          }
+        }}
+      />
+    );
+  };
+  const changeSelections = (field: StudioPdfField, selectedValues: string[]) => {
+    if (!canModify || field.readOnly) return;
+    const next = { ...field, selectedValues, value: selectedValues[0] || '' };
+    const issue = pdfFieldIssue(next, pdfDocument.pageCount);
+    if (issue) {
+      setNotice(issue);
+      return;
+    }
+    commit({
+      ...documentRef.current,
+      fields: documentRef.current.fields.map((entry) => (entry.name === field.name ? next : entry)),
+    });
+  };
+  const readFieldImage = (field: StudioPdfField, file?: File) => {
+    if (!file || !canModify || field.readOnly) return;
+    if (!/^image\/(png|jpeg)$/.test(file.type) || file.size > 8 * 1024 * 1024) {
+      setNotice('图片字段支持 8 MiB 以内的 PNG/JPEG。');
+      return;
+    }
+    const documentId = pdfDocument.id;
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (
+        documentRef.current.id !== documentId ||
+        !canModifyRef.current ||
+        documentRef.current.fields.find((entry) => entry.name === field.name)?.readOnly
+      )
+        return;
+      changeField(field.name, String(reader.result));
+    };
+    reader.onerror = () => setNotice('图片读取失败。');
+    reader.readAsDataURL(file);
   };
   const changeMark = (
     id: string,
@@ -784,6 +914,7 @@ export default function StudioPdf({
     const matrix = pdfMatrix(view, widget.x, widget.y + widget.height);
     const locked = !canModify || field.readOnly;
     const label = `PDF 页面表单 ${field.name}${widget.option === undefined ? '' : ` ${widget.option}`}`;
+    const kind = pdfFieldKind(field);
     return (
       <div
         key={`${field.name}-${index}`}
@@ -797,7 +928,22 @@ export default function StudioPdf({
         onClick={(event) => event.stopPropagation()}
         onPointerDown={(event) => event.stopPropagation()}
       >
-        <div className="zuvi-studio-pdf-widget-content" style={widgetContentStyle(widget)}>
+        <div
+          className="zuvi-studio-pdf-widget-content"
+          data-designed={!!field.design || undefined}
+          style={{
+            ...widgetContentStyle(widget),
+            ...(field.design
+              ? {
+                  fontSize: field.design.fontSize,
+                  color: field.design.textColor,
+                  background: field.design.background,
+                  border: `${field.design.borderWidth ?? 1}px solid ${field.design.borderColor || '#8898a3'}`,
+                }
+              : {}),
+          }}
+          title={field.design?.tooltip}
+        >
           {widget.option !== undefined ? (
             <Radio
               className="zuvi-studio-pdf-widget-check"
@@ -814,6 +960,46 @@ export default function StudioPdf({
               disabled={locked}
               onChange={(checked) => changeField(field.name, checked)}
             />
+          ) : kind === 'image' ? (
+            <label className="zuvi-studio-pdf-image-field">
+              {field.value ? (
+                <img src={String(field.value)} alt={field.name} />
+              ) : (
+                <span>选择图片</span>
+              )}
+              <input
+                type="file"
+                accept="image/png,image/jpeg"
+                aria-label={label}
+                disabled={locked}
+                onChange={(event) => readFieldImage(field, event.target.files?.[0])}
+              />
+            </label>
+          ) : kind === 'list' ? (
+            <div className="zuvi-studio-pdf-list-field" role="group" aria-label={label}>
+              {(field.options || []).map((option) => (
+                <Checkbox
+                  key={option}
+                  label={field.design?.optionLabels?.[option] ?? option}
+                  checked={(
+                    field.selectedValues || (field.value ? [String(field.value)] : [])
+                  ).includes(option)}
+                  disabled={locked}
+                  onChange={(checked) =>
+                    changeSelections(
+                      field,
+                      field.design?.multiSelect
+                        ? checked
+                          ? [...(field.selectedValues || []), option]
+                          : (field.selectedValues || []).filter((value) => value !== option)
+                        : checked
+                          ? [option]
+                          : []
+                    )
+                  }
+                />
+              ))}
+            </div>
           ) : field.type === 'choice' ? (
             <Select
               className="zuvi-studio-pdf-widget-input"
@@ -826,10 +1012,15 @@ export default function StudioPdf({
               placeholder="未选择"
               options={[
                 { value: '', label: '未选择' },
-                ...(field.options ?? []).map((option) => ({ value: option, label: option })),
+                ...(field.options ?? []).map((option) => ({
+                  value: option,
+                  label: field.design?.optionLabels?.[option] ?? option,
+                })),
               ]}
               onChange={(value) => changeField(field.name, value)}
             />
+          ) : kind === 'date' ? (
+            dateInput(field, label, true)
           ) : field.multiline ? (
             <Input.Textarea
               className="zuvi-studio-pdf-widget-input"
@@ -838,7 +1029,13 @@ export default function StudioPdf({
               aria-label={label}
               disabled={locked}
               value={String(field.value)}
-              maxLength={10_000}
+              maxLength={field.design?.maxLength ?? 10_000}
+              onFocus={() => {
+                fieldEdit.current = { name: field.name, saved: false };
+              }}
+              onBlur={() => {
+                fieldEdit.current = null;
+              }}
               onChange={(event) => changeField(field.name, event.target.value)}
             />
           ) : (
@@ -849,7 +1046,13 @@ export default function StudioPdf({
               aria-label={label}
               disabled={locked}
               value={String(field.value)}
-              maxLength={10_000}
+              maxLength={field.design?.maxLength ?? 10_000}
+              onFocus={() => {
+                fieldEdit.current = { name: field.name, saved: false };
+              }}
+              onBlur={() => {
+                fieldEdit.current = null;
+              }}
               onChange={(event) => changeField(field.name, event.target.value)}
             />
           )}
@@ -905,6 +1108,11 @@ export default function StudioPdf({
         }
       }}
     >
+      {Object.entries(dateDrafts).map(([name, value]) => {
+        const field = pdfDocument.fields.find((entry) => entry.name === name);
+        const issue = field && pdfFieldIssue({ ...field, value }, pdfDocument.pageCount);
+        return issue ? <span key={name} hidden data-studio-input-error={issue} /> : null;
+      })}
       <Tabs
         value={ribbon}
         onValueChange={setRibbon}
@@ -962,6 +1170,19 @@ export default function StudioPdf({
               <div className="zuvi-studio-pdf-ribbon-group-body">
                 {markToolButton('text')}
                 {markToolButton('rectangle')}
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="zuvi-studio-pdf-ribbon-tool"
+                  disabled={!canModify || !view}
+                  onClick={() => {
+                    setFieldDialog({});
+                    setPanel('fields');
+                    setInspector(true);
+                  }}
+                >
+                  新建表单字段
+                </Button>
               </div>
               <span className="zuvi-studio-pdf-ribbon-caption" aria-hidden="true">
                 插入
@@ -1852,12 +2073,58 @@ export default function StudioPdf({
                 <p className="zuvi-studio-pdf-hint">
                   直接点击页面上的表单填写，或在这里修改。保存后仍是可填写的 PDF 表单。
                 </p>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled={!canModify || !view}
+                  onClick={() => setFieldDialog({})}
+                >
+                  新建 PDF 字段
+                </Button>
                 {pdfDocument.fields.length === 0 ? (
                   <p className="zuvi-studio-pdf-hint">此文件没有可填写的 PDF 表单。</p>
                 ) : (
                   pdfDocument.fields.map((field) => (
                     <div className="zuvi-studio-pdf-field" key={field.name}>
-                      {field.type === 'checkbox' ? (
+                      {field.type === 'image' ? (
+                        <label>
+                          {field.name}
+                          <input
+                            type="file"
+                            accept="image/png,image/jpeg"
+                            aria-label={`PDF 表单 ${field.name}`}
+                            disabled={!canModify || field.readOnly}
+                            onChange={(event) => readFieldImage(field, event.target.files?.[0])}
+                          />
+                        </label>
+                      ) : pdfFieldKind(field) === 'list' ? (
+                        <div role="group" aria-label={`PDF 表单 ${field.name}`}>
+                          {(field.options || []).map((option) => (
+                            <Checkbox
+                              key={option}
+                              label={field.design?.optionLabels?.[option] ?? option}
+                              disabled={!canModify || field.readOnly}
+                              checked={(
+                                field.selectedValues || (field.value ? [String(field.value)] : [])
+                              ).includes(option)}
+                              onChange={(checked) =>
+                                changeSelections(
+                                  field,
+                                  field.design?.multiSelect
+                                    ? checked
+                                      ? [...(field.selectedValues || []), option]
+                                      : (field.selectedValues || []).filter(
+                                          (value) => value !== option
+                                        )
+                                    : checked
+                                      ? [option]
+                                      : []
+                                )
+                              }
+                            />
+                          ))}
+                        </div>
+                      ) : field.type === 'checkbox' ? (
                         <Checkbox
                           label={field.name}
                           aria-label={`PDF 表单 ${field.name}`}
@@ -1876,33 +2143,62 @@ export default function StudioPdf({
                               disabled={!canModify || field.readOnly}
                               options={[
                                 { value: '', label: '未选择' },
-                                ...(field.options ?? []).map((value) => ({ value, label: value })),
+                                ...(field.options ?? []).map((value) => ({
+                                  value,
+                                  label: field.design?.optionLabels?.[value] ?? value,
+                                })),
                               ]}
                               onChange={(value) => changeField(field.name, value)}
                             />
+                          ) : pdfFieldKind(field) === 'date' ? (
+                            dateInput(field, `PDF 表单 ${field.name}`)
                           ) : field.multiline ? (
                             <Input.Textarea
                               size="sm"
                               aria-label={`PDF 表单 ${field.name}`}
                               rows={3}
-                              maxLength={10_000}
+                              maxLength={field.design?.maxLength ?? 10_000}
                               value={String(field.value)}
                               disabled={!canModify || field.readOnly}
+                              onFocus={() => {
+                                fieldEdit.current = { name: field.name, saved: false };
+                              }}
+                              onBlur={() => {
+                                fieldEdit.current = null;
+                              }}
                               onChange={(event) => changeField(field.name, event.target.value)}
                             />
                           ) : (
                             <Input
                               size="sm"
                               aria-label={`PDF 表单 ${field.name}`}
-                              maxLength={10_000}
+                              maxLength={field.design?.maxLength ?? 10_000}
                               value={String(field.value)}
                               disabled={!canModify || field.readOnly}
+                              onFocus={() => {
+                                fieldEdit.current = { name: field.name, saved: false };
+                              }}
+                              onBlur={() => {
+                                fieldEdit.current = null;
+                              }}
                               onChange={(event) => changeField(field.name, event.target.value)}
                             />
                           )}
                         </label>
                       )}
                       {field.readOnly && <small>只读字段</small>}
+                      {field.design?.required && <small>必填</small>}
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        disabled={!canModify || !view}
+                        aria-label={`设计 PDF 字段 ${field.name}`}
+                        onClick={() =>
+                          setFieldDialog({ field: { ...field, design: pdfFieldDesign(field) } })
+                        }
+                      >
+                        字段属性
+                      </Button>
                     </div>
                   ))
                 )}
@@ -2005,6 +2301,29 @@ export default function StudioPdf({
           />
         </div>
       </div>
+      {fieldDialog && canModify && view && (
+        <StudioPdfFieldDialog
+          key={fieldDialog.field?.name || 'new'}
+          field={fieldDialog.field}
+          document={pdfDocument}
+          page={page}
+          bounds={visibleBounds(view)}
+          getPageBounds={activeLoaded?.session.getPageBounds}
+          onClose={() => setFieldDialog(null)}
+          onSave={(field) => {
+            if (documentRef.current !== pdfDocument)
+              throw new Error('文档已更新，请重新打开字段设计。');
+            commit(pdfSetDesignedField(documentRef.current, field, fieldDialog.field?.name));
+            setFieldDialog(null);
+            setPanel('fields');
+            setInspector(true);
+          }}
+          onDelete={(name) => {
+            commit(pdfRemoveDesignedField(documentRef.current, name));
+            setFieldDialog(null);
+          }}
+        />
+      )}
     </div>
   );
 }

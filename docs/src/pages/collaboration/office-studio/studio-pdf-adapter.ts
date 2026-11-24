@@ -92,6 +92,15 @@ export const studioPdfRenderer: StudioPdfRenderer = {
 
     return {
       pageCount: pdf.numPages,
+      async getPageBounds(index) {
+        if (destroyed) throw new Error('PDF 渲染会话已关闭。');
+        if (!Number.isInteger(index) || index < 0 || index >= pdf.numPages)
+          throw new Error('PDF 页码无效。');
+        const page = await pdf.getPage(index + 1);
+        if (destroyed) throw new Error('PDF 渲染会话已关闭。');
+        const [left, bottom, right, top] = page.view;
+        return { left, bottom, right, top };
+      },
       async search(query, options = {}) {
         const assertCurrent = () => {
           if (destroyed || options.signal?.aborted) throw abortError();

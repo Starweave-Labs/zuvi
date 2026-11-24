@@ -1017,7 +1017,7 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
         typeof field.name === 'string' &&
         !!field.name &&
         !fieldNames.has(field.name) &&
-        ['text', 'checkbox', 'choice'].includes(String(field.type)) &&
+        ['text', 'checkbox', 'choice', 'image'].includes(String(field.type)) &&
         (typeof field.value === 'string' || typeof field.value === 'boolean') &&
         typeof field.readOnly === 'boolean'
       ))
@@ -1031,6 +1031,23 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
       )
         return false;
       if (!optionalBoolean(field.multiline)) return false;
+      if (
+        field.design !== undefined &&
+        (!record(field.design) ||
+          !['text', 'date', 'image', 'checkbox', 'radio', 'dropdown', 'list'].includes(
+            String(field.design.kind)
+          ))
+      )
+        return false;
+      if (
+        field.selectedValues !== undefined &&
+        (!Array.isArray(field.selectedValues) ||
+          !field.selectedValues.every(
+            (entry) =>
+              typeof entry === 'string' && (field.options as string[] | undefined)?.includes(entry)
+          ))
+      )
+        return false;
       return (
         field.widgets === undefined ||
         (Array.isArray(field.widgets) &&
@@ -1054,6 +1071,10 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
           ))
       );
     }) &&
+    (value.removedFields === undefined ||
+      (Array.isArray(value.removedFields) &&
+        value.removedFields.length <= 2000 &&
+        value.removedFields.every((name) => typeof name === 'string' && !!name))) &&
     Object.entries(value.rotations).every(
       ([page, rotation]) =>
         /^\d+$/.test(page) && Number(page) < pageCount && finite(rotation) && rotation % 90 === 0

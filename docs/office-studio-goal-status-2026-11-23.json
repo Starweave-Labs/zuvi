@@ -3632,8 +3632,19 @@
         "docs/tests/studio-pdf-codec.test.mjs"
       ],
       "historicalStatus": "缺失",
-      "status": "requires-current-audit",
-      "evidence": []
+      "status": "implemented-field-design-verified-full-acceptance-audit-pending",
+      "evidence": [
+        "packages/ui/src/components/OfficeStudio/StudioPdf.test.tsx: field design, duplicate controls, history, permissions, date drafts and layout",
+        "packages/ui/src/components/OfficeStudio/StudioPdf.integration.test.tsx: real file-operation draft guards",
+        "packages/ui/src/components/OfficeStudio/studio-pdf-fields.test.ts: naming, defaults and removal validation",
+        "docs/tests/studio-pdf-codec.test.mjs: seven native field kinds, defaults, labels, appearances and repeated save/reopen",
+        "docs/tests/studio-pdf-adapter.test.mjs: visible crop-box bounds",
+        "e2e/office-studio-pdf-fields.spec.ts: real browser import/edit/export and two reopen cycles",
+        "docs/audits/2026-11-24/pdf-fields/: reviewed light/dark/320px screenshots and native PDF artifacts"
+      ],
+      "remainingVerification": [
+        "full original feature-ledger acceptance audit; broader PDF field calculation and roles remain P022-P023"
+      ]
     },
     {
       "id": "P020",
@@ -3655,8 +3666,19 @@
         "docs/tests/studio-pdf-codec.test.mjs"
       ],
       "historicalStatus": "缺失",
-      "status": "requires-current-audit",
-      "evidence": []
+      "status": "implemented-field-design-verified-full-acceptance-audit-pending",
+      "evidence": [
+        "packages/ui/src/components/OfficeStudio/StudioPdf.test.tsx: field design, duplicate controls, history, permissions, date drafts and layout",
+        "packages/ui/src/components/OfficeStudio/StudioPdf.integration.test.tsx: real file-operation draft guards",
+        "packages/ui/src/components/OfficeStudio/studio-pdf-fields.test.ts: naming, defaults and removal validation",
+        "docs/tests/studio-pdf-codec.test.mjs: seven native field kinds, defaults, labels, appearances and repeated save/reopen",
+        "docs/tests/studio-pdf-adapter.test.mjs: visible crop-box bounds",
+        "e2e/office-studio-pdf-fields.spec.ts: real browser import/edit/export and two reopen cycles",
+        "docs/audits/2026-11-24/pdf-fields/: reviewed light/dark/320px screenshots and native PDF artifacts"
+      ],
+      "remainingVerification": [
+        "full original feature-ledger acceptance audit; broader PDF field calculation and roles remain P022-P023"
+      ]
     },
     {
       "id": "P021",
@@ -3678,8 +3700,19 @@
         "docs/tests/studio-pdf-codec.test.mjs"
       ],
       "historicalStatus": "缺失",
-      "status": "requires-current-audit",
-      "evidence": []
+      "status": "implemented-field-design-verified-full-acceptance-audit-pending",
+      "evidence": [
+        "packages/ui/src/components/OfficeStudio/StudioPdf.test.tsx: field design, duplicate controls, history, permissions, date drafts and layout",
+        "packages/ui/src/components/OfficeStudio/StudioPdf.integration.test.tsx: real file-operation draft guards",
+        "packages/ui/src/components/OfficeStudio/studio-pdf-fields.test.ts: naming, defaults and removal validation",
+        "docs/tests/studio-pdf-codec.test.mjs: seven native field kinds, defaults, labels, appearances and repeated save/reopen",
+        "docs/tests/studio-pdf-adapter.test.mjs: visible crop-box bounds",
+        "e2e/office-studio-pdf-fields.spec.ts: real browser import/edit/export and two reopen cycles",
+        "docs/audits/2026-11-24/pdf-fields/: reviewed light/dark/320px screenshots and native PDF artifacts"
+      ],
+      "remainingVerification": [
+        "full original feature-ledger acceptance audit; broader PDF field calculation and roles remain P022-P023"
+      ]
     },
     {
       "id": "P022",

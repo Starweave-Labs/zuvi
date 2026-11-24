@@ -106,7 +106,12 @@ function renderer() {
     viewport(options.scale, options.rotation)
   );
   const destroy = vi.fn();
-  const session: StudioPdfSession = { pageCount: 2, render: renderPage, destroy };
+  const session: StudioPdfSession = {
+    pageCount: 2,
+    render: renderPage,
+    destroy,
+    getPageBounds: vi.fn(async () => ({ left: 40, bottom: 20, right: 340, top: 420 })),
+  };
   const load = vi.fn<StudioPdfRenderer['load']>(async () => session);
   return { renderer: { load }, session, load, renderPage, destroy };
 }
@@ -178,6 +183,249 @@ afterEach(() => {
 });
 
 describe('StudioPdf document editing', () => {
+  it('creates repeated text widgets, validates duplicate names and edits or deletes fields with undo', async () => {
+    const f = host();
+    await ready();
+    fireEvent.click(screen.getByRole('button', { name: '新建表单字段' }));
+    const dialog = await screen.findByRole('dialog', { name: '新建 PDF 字段' });
+    fireEvent.change(within(dialog).getByLabelText('PDF 字段名称'), { target: { value: 'name' } });
+    fireEvent.click(within(dialog).getByRole('button', { name: '保存字段' }));
+    expect(await within(dialog).findByRole('alert')).toHaveTextContent('名称已存在');
+    fireEvent.change(within(dialog).getByLabelText('PDF 字段名称'), {
+      target: { value: 'customer' },
+    });
+    fireEvent.change(within(dialog).getByLabelText('PDF 字符上限'), { target: { value: '12' } });
+    fireEvent.change(within(dialog).getByLabelText('PDF 字段当前值'), {
+      target: { value: 'Alice' },
+    });
+    fireEvent.click(within(dialog).getByRole('checkbox', { name: '必填字段' }));
+    fireEvent.click(within(dialog).getByRole('button', { name: '添加控件' }));
+    fireEvent.click(within(dialog).getByRole('button', { name: '保存字段' }));
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+    const customer = f.document().fields.find((field) => field.name === 'customer')!;
+    expect(customer.widgets).toHaveLength(2);
+    expect(customer.design).toMatchObject({ required: true, maxLength: 12 });
+    expect(isOfficeStudioDocument(f.document())).toBe(true);
+    const controls = screen.getAllByLabelText('PDF 页面表单 customer');
+    expect(controls).toHaveLength(2);
+    fireEvent.change(controls[0], { target: { value: 'Bob' } });
+    expect(controls[1]).toHaveValue('Bob');
+    fireEvent.click(screen.getByRole('button', { name: '设计 PDF 字段 customer' }));
+    const edit = await screen.findByRole('dialog', { name: '编辑 PDF 字段' });
+    fireEvent.change(within(edit).getByLabelText('PDF 字段名称'), { target: { value: 'client' } });
+    fireEvent.change(within(edit).getByLabelText('控件 1 X'), { target: { value: '85' } });
+    fireEvent.click(within(edit).getByRole('button', { name: '保存字段' }));
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+    expect(f.document().fields.find((field) => field.name === 'client')?.widgets?.[0].x).toBe(85);
+    fireEvent.click(screen.getByRole('button', { name: '设计 PDF 字段 client' }));
+    fireEvent.click(await screen.findByRole('button', { name: '删除字段' }));
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+    expect(f.document().fields.some((field) => field.name === 'client')).toBe(false);
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    expect(f.document().fields.some((field) => field.name === 'client')).toBe(true);
+    expect(f.load).toHaveBeenCalledTimes(1);
+  });
+
+  it('keeps date drafts editable, commits once, cancels invalid input and synchronizes repeated controls', async () => {
+    const model = document();
+    model.fields.push({
+      name: 'date',
+      type: 'text',
+      value: '',
+      readOnly: false,
+      design: { kind: 'date' },
+      widgets: [
+        { page: 0, x: 60, y: 200, width: 160, height: 26 },
+        { page: 0, x: 60, y: 240, width: 160, height: 26 },
+      ],
+    });
+    const f = host(model);
+    await ready();
+    const controls = screen.getAllByLabelText('PDF 页面表单 date');
+    for (const value of ['2', '2026-', '2026-11-', '2026-11-24']) {
+      fireEvent.change(controls[0], { target: { value } });
+      expect(controls[1]).toHaveValue(value);
+      expect(f.document().fields.find((field) => field.name === 'date')?.value).toBe('');
+    }
+    fireEvent.keyDown(controls[0], { key: 'Enter', isComposing: true });
+    expect(f.changed).not.toHaveBeenCalled();
+    fireEvent.keyDown(controls[0], { key: 'Enter' });
+    expect(f.document().fields.find((field) => field.name === 'date')?.value).toBe('2026-11-24');
+    expect(f.changed).toHaveBeenCalledTimes(1);
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    expect(controls[0]).toHaveValue('');
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    expect(controls[0]).toHaveValue('2026-11-24');
+    fireEvent.change(controls[0], { target: { value: '2026-02-30' } });
+    fireEvent.blur(controls[0]);
+    expect(controls[0]).toHaveAttribute('data-studio-input-error');
+    expect(f.document().fields.find((field) => field.name === 'date')?.value).toBe('2026-11-24');
+    fireEvent.keyDown(controls[0], { key: 'Escape' });
+    expect(controls[0]).toHaveValue('2026-11-24');
+    expect(controls[0]).not.toHaveAttribute('data-studio-input-error');
+  });
+
+  it('treats consecutive text input during one focus as a single undo transaction', async () => {
+    const f = host();
+    await ready();
+    const input = screen.getByLabelText('PDF 页面表单 name');
+    fireEvent.focus(input);
+    for (const value of ['A', 'Al', 'Alice']) fireEvent.change(input, { target: { value } });
+    fireEvent.blur(input);
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    expect(input).toHaveValue('Original');
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    expect(input).toHaveValue('Alice');
+    expect(f.document().fields.find((field) => field.name === 'name')?.value).toBe('Alice');
+  });
+
+  it('preserves unsaved widget coordinates when another widget is removed and validates other page bounds', async () => {
+    const f = host();
+    await ready();
+    fireEvent.click(screen.getByRole('button', { name: '新建表单字段' }));
+    const dialog = await screen.findByRole('dialog');
+    fireEvent.click(within(dialog).getByRole('button', { name: '添加控件' }));
+    fireEvent.change(within(dialog).getByLabelText('控件 2 X'), { target: { value: '120' } });
+    fireEvent.click(within(dialog).getByRole('button', { name: '删除控件 1' }));
+    expect(within(dialog).getByLabelText('控件 1 X')).toHaveValue(120);
+    fireEvent.change(within(dialog).getByLabelText('控件 1 页码'), { target: { value: '2' } });
+    fireEvent.change(within(dialog).getByLabelText('控件 1 X'), { target: { value: '300' } });
+    fireEvent.click(within(dialog).getByRole('button', { name: '保存字段' }));
+    expect(await within(dialog).findByRole('alert')).toHaveTextContent('第 2 页可见范围');
+    expect(f.changed).not.toHaveBeenCalled();
+    fireEvent.change(within(dialog).getByLabelText('控件 1 X'), { target: { value: '120' } });
+    fireEvent.click(within(dialog).getByRole('button', { name: '保存字段' }));
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+    expect(f.document().fields.at(-1)?.widgets?.[0]).toMatchObject({ page: 1, x: 120 });
+    expect(f.renderPage).toHaveBeenCalledTimes(1);
+  });
+
+  it('creates a multiselect list with distinct export labels and synchronized selections', async () => {
+    const f = host();
+    await ready();
+    fireEvent.click(screen.getByRole('button', { name: '新建表单字段' }));
+    const dialog = await screen.findByRole('dialog', { name: '新建 PDF 字段' });
+    fireEvent.click(within(dialog).getByRole('button', { name: /^PDF 字段类型/ }));
+    fireEvent.click(await screen.findByRole('option', { name: '列表框' }));
+    fireEvent.change(within(dialog).getByLabelText('PDF 字段名称'), { target: { value: 'tags' } });
+    fireEvent.change(within(dialog).getByLabelText('PDF 字段选项'), {
+      target: { value: 'a|Alpha\nb|Beta\nc|Gamma' },
+    });
+    fireEvent.click(within(dialog).getByRole('checkbox', { name: '允许多选' }));
+    fireEvent.change(within(dialog).getByLabelText('PDF 字段当前值'), {
+      target: { value: 'a\nc' },
+    });
+    fireEvent.change(within(dialog).getByLabelText('PDF 字段默认值'), { target: { value: 'b' } });
+    fireEvent.click(within(dialog).getByRole('button', { name: '保存字段' }));
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+    expect(f.document().fields.find((field) => field.name === 'tags')).toMatchObject({
+      selectedValues: ['a', 'c'],
+      design: { multiSelect: true, defaultSelections: ['b'] },
+    });
+    const pageList = screen.getByRole('group', { name: 'PDF 页面表单 tags' });
+    expect(within(pageList).getByRole('checkbox', { name: 'Alpha' })).toBeChecked();
+    fireEvent.click(within(pageList).getByRole('checkbox', { name: 'Beta' }));
+    expect(f.document().fields.find((field) => field.name === 'tags')?.selectedValues).toEqual([
+      'a',
+      'c',
+      'b',
+    ]);
+    expect(isOfficeStudioDocument(f.document())).toBe(true);
+  });
+
+  it.each([{ readOnly: true }, { disabled: true }])(
+    'blocks form design operations in %j',
+    async (permissions) => {
+      host(document(), permissions);
+      await ready();
+      expect(screen.getByRole('button', { name: '新建表单字段' })).toBeDisabled();
+      fireEvent.click(screen.getByRole('button', { name: '表单 4' }));
+      for (const button of screen.queryAllByRole('button', { name: /^设计 PDF 字段/ }))
+        expect(button).toBeDisabled();
+    }
+  );
+
+  it('creates a readonly multiline field with current/default text and restores its creation with redo', async () => {
+    const f = host();
+    await ready();
+    fireEvent.click(screen.getByRole('button', { name: '新建表单字段' }));
+    const dialog = await screen.findByRole('dialog');
+    fireEvent.change(within(dialog).getByLabelText('PDF 字段名称'), { target: { value: 'notes' } });
+    fireEvent.click(within(dialog).getByRole('checkbox', { name: '多行文本' }));
+    fireEvent.click(within(dialog).getByRole('checkbox', { name: '只读字段' }));
+    fireEvent.change(within(dialog).getByLabelText('PDF 字段当前值'), {
+      target: { value: 'Line 1\nLine 2' },
+    });
+    fireEvent.change(within(dialog).getByLabelText('PDF 字段默认值'), {
+      target: { value: 'Default\nText' },
+    });
+    fireEvent.click(within(dialog).getByRole('button', { name: '保存字段' }));
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+    expect(screen.getByLabelText('PDF 页面表单 notes')).toHaveValue('Line 1\nLine 2');
+    expect(screen.getByLabelText('PDF 页面表单 notes')).toBeDisabled();
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    expect(screen.queryByLabelText('PDF 页面表单 notes')).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    expect(f.document().fields.at(-1)).toMatchObject({
+      readOnly: true,
+      multiline: true,
+      design: { defaultValue: 'Default\nText' },
+    });
+  });
+
+  it('discards an image read that completes after the editor becomes readonly', async () => {
+    const model = document();
+    model.fields.push({
+      name: 'photo',
+      type: 'image',
+      value: '',
+      readOnly: false,
+      design: { kind: 'image' },
+      widgets: [{ page: 0, x: 60, y: 200, width: 160, height: 60 }],
+    });
+    const readers: { result: string; onload?: () => void }[] = [];
+    vi.stubGlobal(
+      'FileReader',
+      class {
+        result = 'data:image/png;base64,AAAA';
+        onload?: () => void;
+        constructor() {
+          readers.push(this);
+        }
+        readAsDataURL() {}
+      }
+    );
+    const f = renderer();
+    const changed = vi.fn();
+    const source = new Blob(['%PDF-source']);
+    const view = render(
+      <StudioPdf
+        document={model}
+        source={source}
+        pdfRenderer={f.renderer}
+        onChange={changed}
+        readOnly={false}
+        disabled={false}
+      />
+    );
+    await ready();
+    fireEvent.change(screen.getByLabelText('PDF 页面表单 photo'), {
+      target: { files: [new File(['png'], 'photo.png', { type: 'image/png' })] },
+    });
+    view.rerender(
+      <StudioPdf
+        document={model}
+        source={source}
+        pdfRenderer={f.renderer}
+        onChange={changed}
+        readOnly
+        disabled={false}
+      />
+    );
+    await act(() => readers[0].onload?.());
+    expect(changed).not.toHaveBeenCalled();
+  });
+
   it('edits actual page fields and radio widgets, mirrors the sidebar, and never reloads or rerenders original pages for value/mark changes', async () => {
     const f = host();
     await ready();

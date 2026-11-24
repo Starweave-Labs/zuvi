@@ -13,6 +13,7 @@ const ts = require('typescript');
 const {
   PDFDocument,
   PDFArray,
+  PDFDict,
   PDFRawStream,
   PDFName,
   PDFString,
@@ -34,6 +35,26 @@ const compiled = ts.transpileModule(
     },
   }
 ).outputText;
+const fieldExports = {};
+runInNewContext(
+  ts.transpileModule(
+    readFileSync(
+      new URL(
+        '../../packages/ui/src/components/OfficeStudio/studio-pdf-fields.ts',
+        import.meta.url
+      ),
+      'utf8'
+    ),
+    {
+      compilerOptions: {
+        target: ts.ScriptTarget.ES2022,
+        module: ts.ModuleKind.CommonJS,
+        esModuleInterop: true,
+      },
+    }
+  ).outputText,
+  { exports: fieldExports, require }
+);
 
 function codec(
   fetch = async () => {
@@ -42,9 +63,14 @@ function codec(
 ) {
   const exports = {};
   const requests = [];
-  runInNewContext(compiled, {
+  const execute = new Function(
+    'scope',
+    'const { exports, require, Blob, Uint8Array, ArrayBuffer, Error, crypto, fetch } = scope;\n' +
+      compiled
+  );
+  execute({
     exports,
-    require,
+    require: (id) => (id.endsWith('/studio-pdf-fields') ? fieldExports : require(id)),
     Blob,
     Uint8Array,
     ArrayBuffer,
@@ -117,6 +143,218 @@ const pageInstructions = (pdf, index) =>
   streams(pdf, index)
     .map((stream) => Buffer.from(decodePDFRawStream(stream).decode()).toString())
     .join('\n');
+
+test('creates every designed field kind as native AcroForm data with original page streams unchanged', async () => {
+  const c = codec();
+  const source = await original();
+  const originalPdf = await PDFDocument.load(await source.arrayBuffer());
+  let document = await c.importStudioPdf(source, 'Designed.pdf');
+  const widget = (y, extra = {}) => ({ page: 1, x: 40, y, width: 160, height: 24, ...extra });
+  const text = (name, y, design, value = '') => ({
+    name,
+    type: 'text',
+    value,
+    readOnly: false,
+    widgets: [widget(y)],
+    design: { kind: 'text', fontSize: 12, borderWidth: 1, ...design },
+  });
+  const additions = [
+    text(
+      'designed_name',
+      200,
+      { required: true, tooltip: 'Your name', maxLength: 20, defaultValue: 'Guest' },
+      'Alice'
+    ),
+    text('date', 160, { kind: 'date', defaultValue: '2026-11-24' }, '2026-11-24'),
+    {
+      name: 'accept',
+      type: 'checkbox',
+      value: true,
+      readOnly: false,
+      widgets: [widget(120, { width: 20, height: 20 })],
+      design: { kind: 'checkbox', exportValue: 'Approved', defaultValue: true },
+    },
+    {
+      name: 'level',
+      type: 'choice',
+      value: 'B',
+      options: ['A', 'B'],
+      readOnly: false,
+      widgets: [
+        widget(80, { width: 18, height: 18, option: 'A' }),
+        widget(80, { x: 80, width: 18, height: 18, option: 'B' }),
+      ],
+      design: { kind: 'radio', defaultValue: 'A' },
+    },
+    {
+      name: 'state',
+      type: 'choice',
+      value: 'approved',
+      options: ['draft', 'approved'],
+      readOnly: false,
+      widgets: [widget(40)],
+      design: {
+        kind: 'dropdown',
+        optionLabels: { draft: 'Draft label', approved: 'Approved label' },
+        defaultValue: 'draft',
+      },
+    },
+    {
+      name: 'tags',
+      type: 'choice',
+      value: 'a',
+      options: ['a', 'b', 'c'],
+      selectedValues: ['a', 'c'],
+      readOnly: false,
+      widgets: [widget(270, { x: 200, width: 80, height: 60 })],
+      design: {
+        kind: 'list',
+        multiSelect: true,
+        defaultSelections: ['b'],
+        optionLabels: { a: 'Alpha', b: 'Beta', c: 'Gamma' },
+      },
+    },
+    {
+      name: 'photo',
+      type: 'image',
+      value:
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Y3nRmwAAAAASUVORK5CYII=',
+      readOnly: false,
+      widgets: [widget(200, { x: 210, width: 60, height: 50 })],
+      design: { kind: 'image', tooltip: 'Profile image' },
+    },
+  ];
+  document.fields.push(...additions);
+  for (let pass = 0; pass < 2; pass++) {
+    const output = await c.exportStudioPdf(document, source);
+    const pdf = await PDFDocument.load(await output.arrayBuffer());
+    const form = pdf.getForm();
+    assert.equal(form.getTextField('designed_name').getText(), 'Alice');
+    assert.equal(form.getTextField('designed_name').getMaxLength(), 20);
+    assert.equal(form.getTextField('designed_name').isRequired(), true);
+    assert.equal(
+      form.getTextField('designed_name').acroField.dict.lookup(PDFName.of('TU')).decodeText(),
+      'Your name'
+    );
+    assert.equal(form.getTextField('date').getText(), '2026-11-24');
+    assert.equal(form.getCheckBox('accept').isChecked(), true);
+    assert.equal(form.getCheckBox('accept').acroField.getOnValue().decodeText(), 'Approved');
+    for (const widget of form.getCheckBox('accept').acroField.getWidgets()) {
+      const ap = widget.dict.lookup(PDFName.of('AP'), PDFDict);
+      for (const key of ['N', 'D']) {
+        const appearances = ap.lookup(PDFName.of(key), PDFDict);
+        assert.ok(
+          appearances.has(PDFName.of('Approved')),
+          'Every checkbox appearance uses the export value.'
+        );
+        assert.equal(appearances.has(PDFName.of('Yes')), false);
+      }
+    }
+    assert.equal(form.getRadioGroup('level').getSelected(), 'B');
+    assert.equal(
+      form.getRadioGroup('level').acroField.dict.lookup(PDFName.of('DV')),
+      form.getRadioGroup('level').acroField.getWidgets()[0].getOnValue()
+    );
+    assert.deepEqual(form.getDropdown('state').getSelected(), ['approved']);
+    assert.deepEqual(form.getOptionList('tags').getSelected(), ['a', 'c']);
+    const stateAppearance = form
+      .getDropdown('state')
+      .acroField.getWidgets()[0]
+      .getAppearances().normal;
+    const listAppearance = form
+      .getOptionList('tags')
+      .acroField.getWidgets()[0]
+      .getAppearances().normal;
+    const stateCommands = Buffer.from(decodePDFRawStream(stateAppearance).decode()).toString();
+    const listCommands = Buffer.from(decodePDFRawStream(listAppearance).decode()).toString();
+    assert.ok(
+      stateCommands.includes(Buffer.from('Approved label').toString('hex').toUpperCase()),
+      'Dropdown renders the display label.'
+    );
+    assert.ok(
+      listCommands.includes('0.6 0.7568627450980392 0.8549019607843137 rg'),
+      'Selected display labels have a native highlight.'
+    );
+    assert.equal(form.getButton('photo').acroField.getWidgets().length, 1);
+    for (const index of [0, 1])
+      for (const hash of streamHashes(originalPdf, index))
+        assert.ok(streamHashes(pdf, index).includes(hash));
+    document = await c.importStudioPdf(output, 'Designed-reopened.pdf');
+    assert.equal(document.fields.length, 13);
+    assert.equal(document.fields.find((field) => field.name === 'state').value, 'approved');
+    assert.deepEqual(Array.from(document.fields.find((field) => field.name === 'state').options), [
+      'draft',
+      'approved',
+    ]);
+    assert.equal(
+      document.fields.find((field) => field.name === 'state').design.optionLabels.approved,
+      'Approved label'
+    );
+    assert.deepEqual(
+      Array.from(document.fields.find((field) => field.name === 'tags').selectedValues),
+      ['a', 'c']
+    );
+    assert.equal(document.fields.find((field) => field.name === 'photo').value, additions[6].value);
+    assert.deepEqual(
+      JSON.parse(JSON.stringify(document.fields.find((field) => field.name === 'date').widgets[0])),
+      { ...widget(160), rotation: 0 }
+    );
+    assert.equal(
+      await c.exportStudioPdf(document, output),
+      output,
+      'An unchanged designed PDF can retain its exact original bytes.'
+    );
+    document.fields = document.fields.map((field) =>
+      additions.some((entry) => entry.name === field.name)
+        ? { ...field, design: { ...field.design, sourceName: undefined } }
+        : field
+    );
+  }
+});
+
+test('explicit design edits rename, reposition and delete fields while retaining untouched readonly data', async () => {
+  const c = codec();
+  const source = await original();
+  const document = await c.importStudioPdf(source, 'Field-design.pdf');
+  const initial = document.fields.find((field) => field.name === 'name');
+  document.fields = document.fields
+    .filter((field) => field.name !== 'status')
+    .map((field) =>
+      field.name === 'name'
+        ? {
+            ...field,
+            name: 'customer',
+            value: 'New Name',
+            readOnly: true,
+            widgets: initial.widgets.map((widget) => ({ ...widget, x: widget.x + 20 })),
+            design: {
+              kind: 'text',
+              sourceName: 'name',
+              required: true,
+              maxLength: 30,
+              defaultValue: 'Default',
+            },
+          }
+        : field
+    );
+  document.removedFields = ['status'];
+  const saved = await c.exportStudioPdf(document, source);
+  const reopened = await PDFDocument.load(await saved.arrayBuffer());
+  assert.equal(reopened.getForm().getTextField('customer').getText(), 'New Name');
+  assert.equal(reopened.getForm().getTextField('customer').isReadOnly(), true);
+  assert.equal(
+    reopened.getForm().getTextField('customer').acroField.getWidgets()[0].getRectangle().x,
+    initial.widgets[0].x + 20
+  );
+  assert.equal(reopened.getForm().getTextField('reference').getText(), 'LOCKED');
+  assert.equal(
+    reopened
+      .getForm()
+      .getFields()
+      .some((field) => ['name', 'status'].includes(field.getName())),
+    false
+  );
+});
 
 test('imports original AcroForm values, real widget rectangles, pages, radio options and read-only metadata', async () => {
   const c = codec();
@@ -569,4 +807,58 @@ test('rejects invalid signature points, drawing widths and strokes extending out
     points: Array.from({ length: 10000 }, () => [70, 180]),
   }));
   await assert.rejects(c.exportStudioPdf({ ...document, marks: tooMany }, source), /100,000/);
+});
+
+test('deletes a source field and creates a replacement with the same name without duplicate native widgets', async () => {
+  const c = codec();
+  const source = await original();
+  const document = await c.importStudioPdf(source, 'Replaced.pdf');
+  const initial = document.fields.find((field) => field.name === 'name');
+  document.fields = document.fields.filter((field) => field.name !== 'name');
+  document.removedFields = ['name'];
+  document.fields.push({ ...initial, value: 'Replacement', design: { kind: 'text' } });
+  const output = await c.exportStudioPdf(document, source);
+  const pdf = await PDFDocument.load(await output.arrayBuffer());
+  assert.equal(pdf.getForm().getTextField('name').getText(), 'Replacement');
+  assert.equal(pdf.getForm().getTextField('name').acroField.getWidgets().length, 1);
+  assert.equal(
+    pdf
+      .getForm()
+      .getFields()
+      .filter((field) => field.getName() === 'name').length,
+    1
+  );
+  const reopened = await c.importStudioPdf(output, 'Reopened.pdf');
+  assert.equal(await c.exportStudioPdf(reopened, output), output);
+});
+
+test('repeated radio export options stay synchronized across pages and survive repeated reopens', async () => {
+  const c = codec();
+  let source = await original();
+  let document = await c.importStudioPdf(source, 'Radio.pdf');
+  document.fields.push({
+    name: 'repeated',
+    type: 'choice',
+    value: 'A',
+    readOnly: false,
+    options: ['A', 'B'],
+    design: { kind: 'radio', defaultValue: 'A' },
+    widgets: [
+      { page: 0, x: 300, y: 180, width: 20, height: 20, option: 'A' },
+      { page: 1, x: 200, y: 300, width: 20, height: 20, option: 'A' },
+      { page: 1, x: 240, y: 300, width: 20, height: 20, option: 'B' },
+    ],
+  });
+  for (let pass = 0; pass < 2; pass++) {
+    source = await c.exportStudioPdf(document, source);
+    document = await c.importStudioPdf(source, 'Reopened.pdf');
+    const field = document.fields.find((entry) => entry.name === 'repeated');
+    assert.deepEqual(field.options, ['A', 'B']);
+    assert.equal(field.value, 'A');
+    assert.equal(field.widgets.length, 3);
+    const native = await PDFDocument.load(await source.arrayBuffer());
+    const widgets = native.getForm().getRadioGroup('repeated').acroField.getWidgets();
+    assert.equal(widgets[0].getAppearanceState(), widgets[0].getOnValue());
+    assert.equal(widgets[1].getAppearanceState(), widgets[1].getOnValue());
+  }
 });

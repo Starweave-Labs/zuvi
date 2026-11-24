@@ -304,13 +304,34 @@ export interface StudioPdfMark {
   replies?: StudioPdfMarkReply[];
 }
 
+export interface StudioPdfFieldDesign {
+  kind: 'text' | 'date' | 'image' | 'checkbox' | 'radio' | 'dropdown' | 'list';
+  /** Existing source field replaced by an explicit design edit. Missing denotes a new field. */
+  sourceName?: string;
+  required?: boolean;
+  tooltip?: string;
+  maxLength?: number;
+  multiSelect?: boolean;
+  optionLabels?: Record<string, string>;
+  exportValue?: string;
+  defaultValue?: string | boolean;
+  defaultSelections?: string[];
+  fontSize?: number;
+  textColor?: string;
+  background?: string;
+  borderColor?: string;
+  borderWidth?: number;
+}
+
 export interface StudioPdfField {
   name: string;
-  type: 'text' | 'checkbox' | 'choice';
+  type: 'text' | 'checkbox' | 'choice' | 'image';
   value: string | boolean;
   options?: string[];
   readOnly: boolean;
   multiline?: boolean;
+  selectedValues?: string[];
+  design?: StudioPdfFieldDesign;
   widgets?: {
     page: number;
     x: number;
@@ -328,6 +349,8 @@ export interface StudioPdfDocument extends StudioDocumentBase {
   marks: StudioPdfMark[];
   rotations: Record<string, number>;
   fields: StudioPdfField[];
+  /** Source fields removed through a design action, independently of value-only edits. */
+  removedFields?: string[];
 }
 
 export type OfficeStudioDocument = StudioWordDocument | StudioExcelDocument | StudioPdfDocument;
@@ -341,6 +364,10 @@ export interface StudioPdfRenderResult {
 
 export interface StudioPdfSession {
   pageCount: number;
+  /** Visible crop box in absolute PDF points; avoids rendering pages just to place fields. */
+  getPageBounds?(
+    page: number
+  ): Promise<{ left: number; bottom: number; right: number; top: number }>;
   render(
     page: number,
     canvas: HTMLCanvasElement,

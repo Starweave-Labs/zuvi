@@ -6,9 +6,16 @@ import {
   PDFCheckBox,
   PDFDropdown,
   PDFRadioGroup,
+  PDFOptionList,
+  PDFButton,
+  PDFHexString,
+  PDFString,
+  PDFDict,
   PDFName,
   EncryptedPDFError,
   StandardFonts,
+  defaultDropdownAppearanceProvider,
+  defaultOptionListAppearanceProvider,
   LineCapStyle,
   LineJoinStyle,
   degrees,
@@ -28,9 +35,31 @@ import {
 } from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
 import type { StudioPdfDocument, StudioPdfField, StudioPdfMark } from '@zuvi/react';
+import {
+  pdfFieldIssue,
+  pdfFieldKind,
+} from '../../../../../packages/ui/src/components/OfficeStudio/studio-pdf-fields';
 
 const MAX_PAGES = 200;
 const quarterTurn = (angle: number) => ((angle % 360) + 360) % 360;
+const DESIGN_KEY = PDFName.of('ZuviFieldDesign');
+const IMAGE_KEY = PDFName.of('ZuviFieldImage');
+
+function nativeDesign(field: PDFField): StudioPdfField['design'] {
+  const value = field.acroField.dict.lookup(DESIGN_KEY);
+  if (!(value instanceof PDFString || value instanceof PDFHexString)) return;
+  try {
+    const design = JSON.parse(value.decodeText()) as NonNullable<StudioPdfField['design']>;
+    return {
+      ...design,
+      sourceName: field.getName(),
+      required: field.isRequired(),
+      ...(field instanceof PDFTextField ? { maxLength: field.getMaxLength() } : {}),
+    };
+  } catch {
+    throw new Error('PDF 字段设计属性损坏。');
+  }
+}
 let fontBytes: Promise<ArrayBuffer> | undefined;
 
 async function loadSource(source: Blob) {
@@ -122,7 +151,8 @@ function readFields(pdf: PDFDocument): StudioPdfField[] {
       const name = field.getName();
       if (!name || names.has(name)) throw new Error('PDF 含有重复或空的表单字段名称。');
       names.add(name);
-      const base = { name, readOnly: field.isReadOnly() };
+      const design = nativeDesign(field);
+      const base = { name, readOnly: field.isReadOnly(), ...(design ? { design } : {}) };
       let result: StudioPdfField;
       if (field instanceof PDFTextField) {
         if (field.isRichFormatted() || field.isPassword() || field.isFileSelector())
@@ -142,6 +172,7 @@ function readFields(pdf: PDFDocument): StudioPdfField[] {
         if (field.isMultiselect() || field.isEditable() || field.getSelected().length > 1)
           throw new Error(`表单“${name}”使用多选或可编辑下拉框，当前编辑器暂不支持。`);
         if (
+          !design &&
           field.acroField
             .getOptions()
             .some(
@@ -150,25 +181,49 @@ function readFields(pdf: PDFDocument): StudioPdfField[] {
             )
         )
           throw new Error(`表单“${name}”的显示标签与存储值不同，当前编辑器暂不支持完整编辑。`);
-        if (field.getSelected().some((value) => !field.getOptions().includes(value)))
+        const options = design
+          ? field.acroField.getOptions().map((option) => option.value.decodeText())
+          : field.getOptions();
+        if (field.getSelected().some((value) => !options.includes(value)))
           throw new Error(`表单“${name}”包含未定义的选中值，当前编辑器暂不支持完整编辑。`);
         result = {
           ...base,
           type: 'choice',
           value: field.getSelected()[0] ?? '',
-          options: field.getOptions(),
+          options,
+        };
+      } else if (field instanceof PDFOptionList && design?.kind === 'list') {
+        const values = field.getSelected();
+        result = {
+          ...base,
+          type: 'choice',
+          value: values[0] || '',
+          selectedValues: values,
+          options: field.acroField.getOptions().map((option) => option.value.decodeText()),
+        };
+      } else if (field instanceof PDFButton && design?.kind === 'image') {
+        const value = field.acroField.dict.lookup(IMAGE_KEY);
+        result = {
+          ...base,
+          type: 'image',
+          value:
+            value instanceof PDFString || value instanceof PDFHexString ? value.decodeText() : '',
         };
       } else if (field instanceof PDFRadioGroup) {
         result = {
           ...base,
           type: 'choice',
           value: field.getSelected() ?? '',
-          options: field.getOptions(),
+          options: [...new Set(field.getOptions())],
         };
       } else {
         throw new Error(`表单“${name}”包含签名、按钮或列表等不受支持的字段，无法完整编辑此 PDF。`);
       }
       result.widgets = readWidgets(pdf, field);
+      if (design) {
+        const issue = pdfFieldIssue(result, pdf.getPageCount());
+        if (issue) throw new Error(issue);
+      }
       return result;
     });
 }
@@ -322,6 +377,179 @@ function sameWidgets(left: StudioPdfField['widgets'], right: StudioPdfField['wid
   );
 }
 
+function sameDesignedField(left: StudioPdfField, right: StudioPdfField) {
+  const normalize = (field: StudioPdfField) => {
+    const design = { ...field.design };
+    delete design.sourceName;
+    return {
+      name: field.name,
+      type: field.type,
+      readOnly: field.readOnly,
+      multiline: !!field.multiline,
+      options: field.options || [],
+      value: field.value,
+      selectedValues: field.selectedValues || [],
+      design,
+    };
+  };
+  return (
+    JSON.stringify(normalize(left)) === JSON.stringify(normalize(right)) &&
+    sameWidgets(left.widgets, right.widgets)
+  );
+}
+
+async function writeDesignedField(pdf: PDFDocument, field: StudioPdfField, font: PDFFont) {
+  const form = pdf.getForm();
+  const design = field.design!;
+  const kind = pdfFieldKind(field);
+  const native =
+    kind === 'checkbox'
+      ? form.createCheckBox(field.name)
+      : kind === 'radio'
+        ? form.createRadioGroup(field.name)
+        : kind === 'dropdown'
+          ? form.createDropdown(field.name)
+          : kind === 'list'
+            ? form.createOptionList(field.name)
+            : kind === 'image'
+              ? form.createButton(field.name)
+              : form.createTextField(field.name);
+  if (native instanceof PDFTextField) {
+    if (field.multiline) native.enableMultiline();
+    if (design.maxLength !== undefined) native.setMaxLength(design.maxLength);
+  }
+  if (native instanceof PDFDropdown || native instanceof PDFOptionList) {
+    native.setOptions(field.options || []);
+    if (native instanceof PDFOptionList && design.multiSelect) native.enableMultiselect();
+  }
+  const borderWidth = design.borderWidth ?? 1;
+  if (native instanceof PDFRadioGroup) native.disableMutualExclusion();
+  for (const widget of field.widgets || []) {
+    const page = pdf.getPages()[widget.page];
+    const options = {
+      x: widget.x + borderWidth / 2,
+      y: widget.y + borderWidth / 2,
+      width: Math.max(0.01, widget.width - borderWidth),
+      height: Math.max(0.01, widget.height - borderWidth),
+      borderWidth,
+      textColor: color(design.textColor, '#253044'),
+      backgroundColor: color(design.background, '#ffffff'),
+      borderColor: color(design.borderColor, '#8898a3'),
+      rotate: degrees(widget.rotation || 0),
+      font,
+    };
+    if (native instanceof PDFRadioGroup) native.addOptionToPage(widget.option!, page, options);
+    else if (native instanceof PDFButton) native.addToPage('', page, options);
+    else native.addToPage(page, options);
+    const created = native.acroField.getWidgets().at(-1)!;
+    created.setRectangle({ x: widget.x, y: widget.y, width: widget.width, height: widget.height });
+  }
+  if (native instanceof PDFTextField) {
+    native.setText(String(field.value));
+    native.setFontSize(design.fontSize ?? 12);
+    native.updateAppearances(font);
+  } else if (native instanceof PDFCheckBox) {
+    const exportValue = PDFName.of(design.exportValue || 'Yes');
+    for (const widget of native.acroField.getWidgets()) {
+      const ap = widget.dict.lookup(PDFName.of('AP'), PDFDict);
+      const previous = widget.getOnValue();
+      for (const key of ['N', 'D', 'R']) {
+        const appearances = ap.lookup(PDFName.of(key));
+        if (!(appearances instanceof PDFDict)) continue;
+        if (previous && previous !== exportValue) {
+          const stream = appearances.get(previous);
+          if (stream) {
+            appearances.delete(previous);
+            appearances.set(exportValue, stream);
+          }
+        }
+      }
+    }
+    if (field.value) native.check();
+    else native.uncheck();
+  } else if (native instanceof PDFDropdown || native instanceof PDFOptionList) {
+    const selected =
+      native instanceof PDFOptionList
+        ? field.selectedValues || (field.value ? [String(field.value)] : [])
+        : field.value
+          ? [String(field.value)]
+          : [];
+    native.acroField.setValues(selected.map((value) => PDFHexString.fromText(value)));
+    if (design.optionLabels)
+      native.acroField.setOptions(
+        (field.options || []).map((value) => ({
+          value: PDFHexString.fromText(value),
+          display: PDFHexString.fromText(design.optionLabels?.[value] ?? value),
+        }))
+      );
+    native.setFontSize(design.fontSize ?? 12);
+    const label = (value: string) => design.optionLabels?.[value] ?? value;
+    native.updateAppearances(font, (nativeField, widget, appearanceFont) => {
+      if (nativeField instanceof PDFDropdown) {
+        const display = new Proxy(nativeField, {
+          get(target, key, receiver) {
+            if (key === 'getSelected') return () => selected.map(label);
+            return Reflect.get(target, key, receiver);
+          },
+        });
+        return defaultDropdownAppearanceProvider(display, widget, appearanceFont);
+      }
+      const display = new Proxy(nativeField, {
+        get(target, key, receiver) {
+          if (key === 'getOptions') return () => (field.options || []).map(label);
+          if (key === 'getSelected') return () => selected.map(label);
+          return Reflect.get(target, key, receiver);
+        },
+      });
+      return defaultOptionListAppearanceProvider(display, widget, appearanceFont);
+    });
+  } else if (native instanceof PDFRadioGroup) {
+    if (field.value) native.select(String(field.value));
+    else native.clear();
+    if (native.needsAppearancesUpdate()) native.updateAppearances();
+  } else if (native instanceof PDFButton && field.value) {
+    const match = /^data:image\/(png|jpeg);base64,([a-z\d+/]+={0,2})$/i.exec(String(field.value));
+    if (!match) throw new Error('PDF 图片字段的数据无效。');
+    const image =
+      match[1].toLowerCase() === 'png'
+        ? await pdf.embedPng(String(field.value))
+        : await pdf.embedJpg(String(field.value));
+    native.setImage(image);
+    native.acroField.dict.set(IMAGE_KEY, PDFHexString.fromText(String(field.value)));
+  }
+  if (design.required) native.enableRequired();
+  else native.disableRequired();
+  if (field.readOnly) native.enableReadOnly();
+  else native.disableReadOnly();
+  if (design.tooltip)
+    native.acroField.dict.set(PDFName.of('TU'), PDFHexString.fromText(design.tooltip));
+  if (design.defaultSelections)
+    native.acroField.dict.set(
+      PDFName.of('DV'),
+      pdf.context.obj(design.defaultSelections.map((value) => PDFHexString.fromText(value)))
+    );
+  else if (design.defaultValue !== undefined) {
+    const defaultRadio =
+      native instanceof PDFRadioGroup && design.defaultValue
+        ? native.acroField
+            .getWidgets()
+            .at(field.widgets!.findIndex((widget) => widget.option === design.defaultValue))
+            ?.getOnValue()
+        : undefined;
+    native.acroField.dict.set(
+      PDFName.of('DV'),
+      kind === 'checkbox'
+        ? PDFName.of(design.defaultValue ? design.exportValue || 'Yes' : 'Off')
+        : kind === 'radio'
+          ? defaultRadio || PDFName.of('Off')
+          : PDFHexString.fromText(String(design.defaultValue))
+    );
+  }
+  const savedDesign = { ...design };
+  delete savedDesign.sourceName;
+  native.acroField.dict.set(DESIGN_KEY, PDFHexString.fromText(JSON.stringify(savedDesign)));
+}
+
 /** Apply changes to the original PDF's page streams and original AcroForm. */
 export async function exportStudioPdf(document: StudioPdfDocument, source: Blob): Promise<Blob> {
   const pdf = await loadSource(source);
@@ -333,7 +561,7 @@ export async function exportStudioPdf(document: StudioPdfDocument, source: Blob)
     !Array.isArray(document.marks) ||
     document.marks.length > 2000 ||
     !Array.isArray(document.fields) ||
-    document.fields.length !== originalFields.length ||
+    document.fields.length > 2000 ||
     !document.rotations ||
     typeof document.rotations !== 'object' ||
     Array.isArray(document.rotations)
@@ -359,8 +587,53 @@ export async function exportStudioPdf(document: StudioPdfDocument, source: Blob)
   });
 
   const changedFields: StudioPdfField[] = [];
+  const designedFields: StudioPdfField[] = [];
   const fieldNames = new Set<string>();
+  const handledSources = new Set<string>();
+  const removed = document.removedFields || [];
+  if (
+    !Array.isArray(removed) ||
+    new Set(removed).size !== removed.length ||
+    removed.some((name) => !originalFields.some((field) => field.name === name))
+  )
+    throw new Error('PDF 删除字段记录与原文件不匹配。');
+  for (const name of removed) handledSources.add(name);
   for (const field of document.fields) {
+    if (fieldNames.has(field.name)) throw new Error('PDF 草稿包含重复字段名称。');
+    if (field.design) {
+      const issue = pdfFieldIssue(field, pdf.getPageCount());
+      if (issue) throw new Error(issue);
+      const sourceName = field.design.sourceName;
+      const original = sourceName
+        ? originalFields.find((entry) => entry.name === sourceName)
+        : originalFields.find(
+            (entry) => entry.name === field.name && entry.design && !removed.includes(entry.name)
+          );
+      if (sourceName && !original) throw new Error('PDF 设计字段的来源不存在。');
+      if (original) {
+        if (handledSources.has(original.name))
+          throw new Error('PDF 同一来源字段被重复编辑或删除。');
+        handledSources.add(original.name);
+      } else if (
+        originalFields.some((entry) => entry.name === field.name && !removed.includes(entry.name))
+      )
+        throw new Error('新增 PDF 字段与原字段重名。');
+      for (const widget of field.widgets || []) {
+        const bounds = pageBounds(pdf.getPages()[widget.page]);
+        if (
+          widget.x < bounds.left - 0.01 ||
+          widget.y < bounds.bottom - 0.01 ||
+          widget.x + widget.width > bounds.right + 0.01 ||
+          widget.y + widget.height > bounds.top + 0.01 ||
+          widget.width <= (field.design.borderWidth ?? 1) ||
+          widget.height <= (field.design.borderWidth ?? 1)
+        )
+          throw new Error('PDF 字段控件超出可见页面或尺寸过小。');
+      }
+      if (!original || !sameDesignedField(field, original)) designedFields.push(field);
+      fieldNames.add(field.name);
+      continue;
+    }
     const original = originalFields.find((entry) => entry.name === field.name);
     if (
       !original ||
@@ -375,6 +648,7 @@ export async function exportStudioPdf(document: StudioPdfDocument, source: Blob)
     )
       throw new Error('PDF 草稿的表单结构或字段值与原文件不匹配。');
     fieldNames.add(field.name);
+    handledSources.add(field.name);
     if (field.value !== original.value) {
       if (original.readOnly) throw new Error(`表单“${field.name}”为只读，不能修改。`);
       if (
@@ -393,8 +667,16 @@ export async function exportStudioPdf(document: StudioPdfDocument, source: Blob)
       changedFields.push(field);
     }
   }
+  if (originalFields.some((field) => !handledSources.has(field.name)))
+    throw new Error('PDF 原有字段缺失，请通过表单设计操作删除。');
 
-  if (!document.marks.length && !rotations.some((entry) => entry.angle) && !changedFields.length)
+  if (
+    !document.marks.length &&
+    !rotations.some((entry) => entry.angle) &&
+    !changedFields.length &&
+    !designedFields.length &&
+    !removed.length
+  )
     return source;
   const form = pdf.getForm();
   const texts = [
@@ -405,8 +687,27 @@ export async function exportStudioPdf(document: StudioPdfDocument, source: Blob)
         return native instanceof PDFTextField || native instanceof PDFDropdown;
       })
       .map((field) => String(field.value)),
+    ...designedFields.flatMap((field) => [
+      field.type === 'image' ? '' : String(field.value),
+      ...(field.options || []).map((value) => field.design?.optionLabels?.[value] ?? value),
+    ]),
   ];
   const font = await annotationFont(pdf, texts);
+  for (const name of removed) form.removeField(form.getField(name));
+  for (const field of designedFields) {
+    const sourceName =
+      field.design?.sourceName ||
+      (originalFields.some(
+        (entry) => entry.name === field.name && entry.design && !removed.includes(entry.name)
+      )
+        ? field.name
+        : undefined);
+    if (sourceName) form.removeField(form.getField(sourceName));
+  }
+  if (designedFields.length) {
+    const fieldFont = font || (await pdf.embedFont(StandardFonts.Helvetica));
+    for (const field of designedFields) await writeDesignedField(pdf, field, fieldFont);
+  }
   for (const entry of rotations) {
     const page = pdf.getPages()[entry.page];
     page.setRotation(degrees(quarterTurn(page.getRotation().angle + entry.angle)));
