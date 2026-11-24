@@ -966,6 +966,10 @@ function parseParagraph(element: Element, context: ImportContext): ParsedParagra
     attrs.paragraphStyleMaterialized = true;
     context.usedStyles.add(namedStyle.id);
   } else if (styleId === 'ZuviNoSpacing') attrs.paragraphStyle = 'no-spacing';
+  else if (styleId === 'Normal' && headingLevel) {
+    attrs.paragraphStyle = 'paragraph';
+    attrs.paragraphStyleMaterialized = true;
+  }
   const appearance = runProperties(child(properties, 'rPr'), style.run);
   const inline: StudioRichNode[] = [];
   const paragraphItems = elements(element);

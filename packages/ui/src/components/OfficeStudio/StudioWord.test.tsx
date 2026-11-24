@@ -1423,6 +1423,113 @@ const twoParagraphDoc = (): StudioWordDocument => ({
 });
 
 describe('StudioWord 第一轮编辑能力', () => {
+  it('clears direct formatting while preserving headings, list structure, links and one-step undo/redo', async () => {
+    const model = twoParagraphDoc();
+    model.content.content = [
+      {
+        type: 'heading',
+        attrs: { level: 2, textAlign: 'right', indentLeft: 18 },
+        content: [
+          {
+            type: 'text',
+            text: 'Linked title',
+            marks: [{ type: 'bold' }, { type: 'link', attrs: { href: 'https://example.com' } }],
+          },
+        ],
+      },
+      {
+        type: 'bulletList',
+        content: [
+          {
+            type: 'listItem',
+            content: [
+              {
+                type: 'paragraph',
+                content: [{ type: 'text', text: 'Keep list', marks: [{ type: 'italic' }] }],
+              },
+            ],
+          },
+        ],
+      },
+    ];
+    const view = await mount({ document: model });
+    const box = view.textbox;
+    selectNodeContents(box, box.querySelector('h2')!);
+    fireEvent.click(screen.getByRole('button', { name: '清除格式' }));
+    expect(box.querySelector('h2')).toBeInTheDocument();
+    expect(box.querySelector('h2 a')).toHaveAttribute('href', 'https://example.com');
+    expect(box.querySelector('h2 strong')).toBeNull();
+    expect(box.querySelector('ul li')).toHaveTextContent('Keep list');
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    expect(box.querySelector('h2 strong')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    expect(box.querySelector('h2 strong')).toBeNull();
+  });
+
+  it('copies exact character and paragraph formats with continuous painting and does not toggle existing marks off', async () => {
+    const model = twoParagraphDoc();
+    model.content.content = [
+      {
+        type: 'paragraph',
+        attrs: { textAlign: 'right', indentLeft: 18 },
+        content: [
+          {
+            type: 'text',
+            text: 'Source',
+            marks: [
+              { type: 'bold' },
+              { type: 'textStyle', attrs: { fontSize: '18pt', color: '#0055aa' } },
+            ],
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        content: [{ type: 'text', text: 'Target one', marks: [{ type: 'bold' }] }],
+      },
+      {
+        type: 'paragraph',
+        content: [
+          {
+            type: 'text',
+            text: 'Target two',
+            marks: [{ type: 'italic' }, { type: 'link', attrs: { href: 'https://example.com' } }],
+          },
+        ],
+      },
+    ];
+    const view = await mount({ document: model });
+    const box = view.textbox;
+    selectNodeContents(box, box.querySelectorAll('p')[0]);
+    fireEvent.doubleClick(screen.getByRole('button', { name: '格式刷' }));
+    selectNodeContents(box, box.querySelectorAll('p')[1]);
+    await waitFor(() =>
+      expect(box.querySelectorAll('p')[1].querySelector('strong')).toBeInTheDocument()
+    );
+    expect(box.querySelectorAll('p')[1]).toHaveStyle({ textAlign: 'right', marginLeft: '18pt' });
+    expect(box.querySelectorAll('p')[1].querySelector('span')).toHaveStyle({
+      fontSize: '18pt',
+      color: '#0055aa',
+    });
+    expect(screen.getByRole('button', { name: '格式刷' })).toHaveAttribute('aria-pressed', 'true');
+    selectNodeContents(box, box.querySelectorAll('p')[2]);
+    await waitFor(() =>
+      expect(box.querySelectorAll('p')[2].querySelector('strong')).toBeInTheDocument()
+    );
+    expect(box.querySelectorAll('p')[2].querySelector('em')).toBeNull();
+    expect(box.querySelectorAll('p')[2].querySelector('a')).toHaveAttribute(
+      'href',
+      'https://example.com'
+    );
+    fireEvent.keyDown(box, { key: 'Escape', isComposing: true });
+    expect(screen.getByRole('button', { name: '格式刷' })).toHaveAttribute('aria-pressed', 'true');
+    fireEvent.keyDown(box, { key: 'Escape' });
+    expect(screen.getByRole('button', { name: '格式刷' })).not.toHaveAttribute('aria-pressed');
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    expect(box.querySelectorAll('p')[2].querySelector('em')).toBeInTheDocument();
+    expect(box.querySelectorAll('p')[1].querySelector('strong')).toBeInTheDocument();
+  });
+
   it('字号步进：12pt 增大 → 12.5pt，减小回到 12pt', async () => {
     const view = await mount();
     const textbox = view.textbox;

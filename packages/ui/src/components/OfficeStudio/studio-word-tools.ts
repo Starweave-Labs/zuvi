@@ -772,9 +772,44 @@ export function wordSetHighlight(editor: Editor, color: string | null): boolean 
 export interface WordFormatSnapshot {
   marks: Record<string, unknown>;
   textStyle: Record<string, string | null>;
+  paragraph: Record<string, unknown>;
 }
 
 const WORD_TEXT_STYLE_ATTRS = ['fontFamily', 'fontSize', 'color', 'backgroundColor'] as const;
+const WORD_PARAGRAPH_FORMAT_ATTRS = [
+  'textAlign',
+  'indentLeft',
+  'indentRight',
+  'indentFirstLine',
+  'spaceBefore',
+  'spaceAfter',
+  'lineHeight',
+] as const;
+
+/** Clear direct character/paragraph formatting without changing links, list/table structure or heading levels. */
+export function wordClearFormat(editor: Editor): boolean {
+  if (!editor || editor.isDestroyed || !editor.isEditable) return false;
+  const { from, to } = editor.state.selection;
+  const transaction = closeHistory(editor.state.tr);
+  for (const type of Object.values(editor.schema.marks)) {
+    if (type.name === 'link') continue;
+    transaction.removeMark(from, to, type);
+    transaction.removeStoredMark(type);
+  }
+  editor.state.doc.nodesBetween(from, to, (node, position) => {
+    if (!['paragraph', 'heading'].includes(node.type.name)) return;
+    transaction.setNodeMarkup(position, undefined, {
+      ...node.attrs,
+      ...Object.fromEntries(WORD_PARAGRAPH_FORMAT_ATTRS.map((key) => [key, null])),
+      paragraphStyle: 'paragraph',
+      paragraphStyleMaterialized: true,
+      paragraphStyleFallback: null,
+      paragraphStyleSnapshot: null,
+    });
+  });
+  editor.view.dispatch(transaction);
+  return true;
+}
 
 /** 捕获选区锚点的字符格式快照，供格式刷应用。 */
 export function wordCaptureFormat(editor: Editor): WordFormatSnapshot | null {
@@ -786,20 +821,41 @@ export function wordCaptureFormat(editor: Editor): WordFormatSnapshot | null {
   const textStyle: Record<string, string | null> = {};
   for (const attr of WORD_TEXT_STYLE_ATTRS)
     textStyle[attr] = typeof style[attr] === 'string' ? (style[attr] as string) : null;
-  return { marks, textStyle };
+  const node = editor.state.selection.$from.parent;
+  const paragraph = Object.fromEntries(
+    WORD_PARAGRAPH_FORMAT_ATTRS.map((key) => [key, node.attrs[key] ?? null])
+  );
+  return { marks, textStyle, paragraph };
 }
 
 /** 将格式刷快照应用到当前选区；无快照或文档失配返回 false。 */
 export function wordApplyFormat(editor: Editor, snapshot: WordFormatSnapshot | null): boolean {
-  if (!editor || editor.isDestroyed || !snapshot) return false;
-  const chain = editor.chain().focus();
+  if (
+    !editor ||
+    editor.isDestroyed ||
+    !editor.isEditable ||
+    !snapshot ||
+    editor.state.selection.empty
+  )
+    return false;
+  const { from, to } = editor.state.selection;
+  const transaction = closeHistory(editor.state.tr);
   for (const [name, active] of Object.entries(snapshot.marks)) {
-    if (active) chain.toggleMark(name, undefined, { extendEmptyMarkRange: true });
-    else chain.unsetMark(name, { extendEmptyMarkRange: true });
+    const type = editor.schema.marks[name];
+    if (!type) continue;
+    transaction.removeMark(from, to, type);
+    if (active) transaction.addMark(from, to, type.create());
   }
-  for (const [attr, value] of Object.entries(snapshot.textStyle)) {
-    if (value == null) chain.unsetMark('textStyle', { extendEmptyMarkRange: true });
-    else chain.setMark('textStyle', { [attr]: value });
-  }
-  return chain.removeEmptyTextStyle().run();
+  const textStyle = editor.schema.marks.textStyle;
+  transaction.removeMark(from, to, textStyle);
+  const attributes = Object.fromEntries(
+    Object.entries(snapshot.textStyle).filter(([, value]) => value !== null)
+  );
+  if (Object.keys(attributes).length) transaction.addMark(from, to, textStyle.create(attributes));
+  editor.state.doc.nodesBetween(from, to, (node, position) => {
+    if (!['paragraph', 'heading'].includes(node.type.name)) return;
+    transaction.setNodeMarkup(position, undefined, { ...node.attrs, ...snapshot.paragraph });
+  });
+  editor.view.dispatch(transaction);
+  return true;
 }

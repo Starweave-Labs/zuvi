@@ -1,0 +1,68 @@
+[
+  {
+    "file": "formats-roundtrip-1.docx",
+    "paragraphs": [
+      {
+        "text": "Source format",
+        "properties": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:spacing /><ns0:ind ns0:left=\"360\" /><ns0:jc ns0:val=\"right\" /></ns0:pPr>",
+        "runProperties": [
+          "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:b /><ns0:bCs /><ns0:color ns0:val=\"0055aa\" /><ns0:sz ns0:val=\"36\" /><ns0:szCs ns0:val=\"36\" /></ns0:rPr>"
+        ]
+      },
+      {
+        "text": "Target one",
+        "properties": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:spacing /><ns0:ind ns0:left=\"360\" /><ns0:jc ns0:val=\"right\" /></ns0:pPr>",
+        "runProperties": [
+          "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:b /><ns0:bCs /><ns0:color ns0:val=\"0055aa\" /><ns0:sz ns0:val=\"36\" /><ns0:szCs ns0:val=\"36\" /></ns0:rPr>"
+        ]
+      },
+      {
+        "text": "Linked heading",
+        "properties": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"Normal\" /><ns0:spacing /><ns0:outlineLvl ns0:val=\"1\" /></ns0:pPr>",
+        "runProperties": []
+      },
+      {
+        "text": "Keep list structure",
+        "properties": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"ZuviStyle_imported-3\" /><ns0:numPr><ns0:ilvl ns0:val=\"0\" /><ns0:numId ns0:val=\"2\" /></ns0:numPr><ns0:spacing /></ns0:pPr>",
+        "runProperties": [
+          "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:b /><ns0:bCs /></ns0:rPr>"
+        ]
+      }
+    ],
+    "linkPreserved": true,
+    "titleLevelPreserved": true
+  },
+  {
+    "file": "formats-roundtrip-2.docx",
+    "paragraphs": [
+      {
+        "text": "Source format",
+        "properties": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:spacing ns0:after=\"156\" ns0:line=\"420\" /><ns0:ind ns0:left=\"360\" /><ns0:jc ns0:val=\"right\" /></ns0:pPr>",
+        "runProperties": [
+          "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:ascii=\"Noto Sans SC\" ns0:cs=\"Noto Sans SC\" ns0:eastAsia=\"Noto Sans SC\" ns0:hAnsi=\"Noto Sans SC\" /><ns0:b /><ns0:bCs /><ns0:color ns0:val=\"0055aa\" /><ns0:sz ns0:val=\"36\" /><ns0:szCs ns0:val=\"36\" /></ns0:rPr>"
+        ]
+      },
+      {
+        "text": "Target one",
+        "properties": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:spacing ns0:after=\"156\" ns0:line=\"420\" /><ns0:ind ns0:left=\"360\" /><ns0:jc ns0:val=\"right\" /></ns0:pPr>",
+        "runProperties": [
+          "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:rFonts ns0:ascii=\"Noto Sans SC\" ns0:cs=\"Noto Sans SC\" ns0:eastAsia=\"Noto Sans SC\" ns0:hAnsi=\"Noto Sans SC\" /><ns0:b /><ns0:bCs /><ns0:color ns0:val=\"0055aa\" /><ns0:sz ns0:val=\"36\" /><ns0:szCs ns0:val=\"36\" /></ns0:rPr>"
+        ]
+      },
+      {
+        "text": "Linked heading",
+        "properties": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"Normal\" /><ns0:spacing ns0:after=\"156\" ns0:line=\"420\" /><ns0:outlineLvl ns0:val=\"1\" /></ns0:pPr>",
+        "runProperties": []
+      },
+      {
+        "text": "Keep list structure",
+        "properties": "<ns0:pPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:pStyle ns0:val=\"ZuviStyle_imported-3\" /><ns0:numPr><ns0:ilvl ns0:val=\"0\" /><ns0:numId ns0:val=\"2\" /></ns0:numPr><ns0:spacing ns0:after=\"156\" ns0:line=\"420\" /></ns0:pPr>",
+        "runProperties": [
+          "<ns0:rPr xmlns:ns0=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><ns0:b /><ns0:bCs /></ns0:rPr>"
+        ]
+      }
+    ],
+    "linkPreserved": true,
+    "titleLevelPreserved": true
+  }
+]

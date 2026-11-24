@@ -1025,3 +1025,30 @@ test('typed Word font names and 1pt to 300pt half-point sizes survive repeated D
     }
   }
 });
+
+test('a cleared heading keeps its level and hyperlink without reintroducing default heading bold on reopen', async () => {
+  let document = model([
+    {
+      type: 'heading',
+      attrs: { level: 2, paragraphStyle: 'paragraph', paragraphStyleMaterialized: true },
+      content: [
+        text('Cleared heading', [{ type: 'link', attrs: { href: 'https://example.com/linked' } }]),
+      ],
+    },
+  ]);
+  for (let pass = 0; pass < 2; pass++) {
+    const source = await exportStudioWord(document);
+    document = await importStudioWord(source, 'Cleared.docx');
+    const heading = document.content.content[0];
+    assert.equal(heading.type, 'heading');
+    assert.equal(heading.attrs.level, 2);
+    assert.equal(
+      heading.content[0].marks.some((mark) => mark.type === 'bold'),
+      false
+    );
+    assert.equal(
+      heading.content[0].marks.find((mark) => mark.type === 'link').attrs.href,
+      'https://example.com/linked'
+    );
+  }
+});

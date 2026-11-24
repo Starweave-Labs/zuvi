@@ -74,6 +74,7 @@ import {
   type WordFormatSnapshot,
   wordApplyFormat,
   wordCaptureFormat,
+  wordClearFormat,
   wordFindMatches,
   type WordFormatCriteria,
   wordHeadings,
@@ -987,6 +988,13 @@ export function StudioWord({
   const [highlightOpen, setHighlightOpen] = React.useState(false);
   const [caseMenuOpen, setCaseMenuOpen] = React.useState(false);
   const [formatPainter, setFormatPainter] = React.useState<WordFormatSnapshot | null>(null);
+  const [continuousPainter, setContinuousPainter] = React.useState(false);
+  const painterTargetRef = React.useRef('');
+  React.useEffect(() => {
+    setFormatPainter(null);
+    setContinuousPainter(false);
+    painterTargetRef.current = '';
+  }, [document.id, editable]);
   const formatPainterRef = React.useRef<WordFormatSnapshot | null>(null);
   formatPainterRef.current = formatPainter;
   const stepFontSize = (delta: number) => {
@@ -1002,30 +1010,46 @@ export function StudioWord({
     if (!editor || !editable) return;
     if (wordTransformSelectionCase(editor, mode)) setCaseMenuOpen(false);
   };
-  const armFormatPainter = () => {
+  const armFormatPainter = (continuous = false) => {
     if (!editor || !editable || !selection?.selectedText) return;
     setFormatPainter(wordCaptureFormat(editor));
+    setContinuousPainter(continuous);
+    painterTargetRef.current = `${region}:${editor.state.selection.from}:${editor.state.selection.to}`;
   };
-  const disarmFormatPainter = () => setFormatPainter(null);
-  // armed 状态下选区变化：非空选区应用格式并解除
+  const disarmFormatPainter = () => {
+    setFormatPainter(null);
+    setContinuousPainter(false);
+  };
+  // Apply each new selection once; continuous mode remains armed until Escape.
   React.useEffect(() => {
     const snapshot = formatPainterRef.current;
     if (!snapshot || !editor || !editable) return;
     if (editor.state.selection.empty) return;
+    const target = `${region}:${editor.state.selection.from}:${editor.state.selection.to}`;
+    if (painterTargetRef.current === target) return;
+    painterTargetRef.current = target;
     if (wordApplyFormat(editor, snapshot)) {
-      setFormatPainter(null);
-      setNotice('已应用格式刷。');
+      if (!continuousPainter) setFormatPainter(null);
+      setNotice(continuousPainter ? '已应用格式刷；继续选择目标，Esc 结束。' : '已应用格式刷。');
     }
-  }, [editor?.state.selection.from, editor?.state.selection.to, editor, editable]);
+  }, [
+    editor?.state.selection.from,
+    editor?.state.selection.to,
+    editor,
+    editable,
+    region,
+    continuousPainter,
+  ]);
   React.useEffect(() => {
     if (!formatPainter) return;
     const onKey = (event: KeyboardEvent) => {
-      if (event.key !== 'Escape' || event.defaultPrevented) return;
+      if (event.key !== 'Escape' || event.isComposing || event.keyCode === 229) return;
+      event.preventDefault();
       disarmFormatPainter();
       setNotice('已取消格式刷。');
     };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    window.addEventListener('keydown', onKey, true);
+    return () => window.removeEventListener('keydown', onKey, true);
   }, [formatPainter]);
 
   const handleClipboard = async (action: 'copy' | 'cut' | 'paste') => {
@@ -1205,11 +1229,12 @@ export function StudioWord({
             size="sm"
             className="zuvi-studio-word-large-tool"
             aria-label="格式刷"
-            title="格式刷：先选中带格式的文本单击取用，再选中目标文本应用；Esc 取消"
+            title="格式刷：单击应用一次，双击连续应用；复制文字和段落格式，Esc 结束"
             aria-pressed={formatPainter ? true : undefined}
             disabled={toolsDisabled || !selection?.selectedText}
             onMouseDown={keepSelection}
-            onClick={armFormatPainter}
+            onClick={() => armFormatPainter()}
+            onDoubleClick={() => armFormatPainter(true)}
           >
             <Droplet size={24} />
             <span>格式刷</span>
@@ -1371,7 +1396,9 @@ export function StudioWord({
                 size="sm"
                 disabled={toolsDisabled}
                 onMouseDown={keepSelection}
-                onClick={() => editor?.chain().focus().unsetAllMarks().clearNodes().run()}
+                onClick={() => {
+                  if (editor) wordClearFormat(editor);
+                }}
               >
                 <span aria-hidden="true" className="zuvi-studio-word-clear-format">
                   A
