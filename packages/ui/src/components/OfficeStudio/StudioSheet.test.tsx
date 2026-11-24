@@ -70,6 +70,141 @@ function setup({
 }
 
 describe('StudioSheet Office editing details', () => {
+  it('clears displayed fill and keeps the full painted selection when its last row is hidden', () => {
+    const doc = documentFixture();
+    doc.sheets[0].cells.A1.bold = true;
+    doc.sheets[0].cells.D3 = { input: 'target', background: '#00ff00' };
+    doc.sheets[0].hiddenRows = [4];
+    const f = setup({ document: doc });
+    const grid = screen.getByRole('grid');
+    fireEvent.keyDown(grid, { key: 'ArrowDown', shiftKey: true });
+    fireEvent.click(screen.getByRole('button', { name: '格式刷' }));
+    fireEvent.pointerDown(screen.getByRole('gridcell', { name: 'D3' }), { button: 0 });
+    fireEvent.pointerUp(window);
+    expect(screen.getByRole('gridcell', { name: 'D3' }).style.backgroundColor).toBe('');
+    expect(screen.getByRole('gridcell', { name: 'D3' })).toHaveAttribute('data-active', 'true');
+    fireEvent.click(screen.getByRole('button', { name: '清除格式' }));
+    expect(f.current().sheets[0].cells.D3.bold).toBe(false);
+    expect(f.current().sheets[0].cells.D4.italic).toBe(false);
+    expect(f.current().sheets[0].cells.D3.input).toBe('target');
+  });
+
+  it('paints a complete pointer selection once, and restores the whole operation with undo/redo', () => {
+    const doc = documentFixture();
+    doc.sheets[0].cells.A1.bold = true;
+    doc.sheets[0].cells.A2.italic = true;
+    const f = setup({ document: doc });
+    const grid = screen.getByRole('grid');
+    fireEvent.keyDown(grid, { key: 'ArrowDown', shiftKey: true });
+    fireEvent.click(screen.getByRole('button', { name: '格式刷' }));
+    const cell = (name: string) => screen.getByRole('gridcell', { name });
+    fireEvent.pointerDown(cell('D1'), { button: 0 });
+    fireEvent.pointerEnter(cell('D4'));
+    expect(f.changed).not.toHaveBeenCalled();
+    fireEvent.pointerUp(window);
+    expect(f.changed).toHaveBeenCalledTimes(1);
+    expect(f.current().sheets[0].cells.D1.bold).toBe(true);
+    expect(f.current().sheets[0].cells.D4.italic).toBe(true);
+    expect(screen.getByRole('button', { name: '格式刷' })).toHaveAttribute('aria-pressed', 'false');
+    fireEvent.click(screen.getByRole('button', { name: '撤销表格修改' }));
+    expect(f.current().sheets[0].cells.D1).toBeUndefined();
+    expect(f.current().sheets[0].cells.D4).toBeUndefined();
+    fireEvent.click(screen.getByRole('button', { name: '重做表格修改' }));
+    expect(f.current().sheets[0].cells.D4.italic).toBe(true);
+  });
+
+  it('keeps a frozen source in continuous mode, cancels previews and stops on Escape or permission changes', () => {
+    const doc = documentFixture();
+    doc.sheets[0].cells.A1.bold = true;
+    const f = setup({ document: doc });
+    const brush = screen.getByRole('button', { name: '格式刷' });
+    const grid = screen.getByRole('grid');
+    const cell = (name: string) => screen.getByRole('gridcell', { name });
+    fireEvent.doubleClick(brush);
+    fireEvent.pointerDown(cell('C1'), { button: 0 });
+    fireEvent.pointerUp(window);
+    fireEvent.click(screen.getByRole('button', { name: '清除格式' }));
+    expect(f.current().sheets[0].cells.C1.bold).toBe(false);
+    fireEvent.pointerDown(cell('D1'), { button: 0 });
+    fireEvent.pointerUp(window);
+    expect(f.current().sheets[0].cells.D1.bold).toBe(true);
+    const beforeCancel = f.current();
+    fireEvent.pointerDown(cell('E1'), { button: 0 });
+    fireEvent.pointerEnter(cell('F2'));
+    fireEvent.pointerCancel(window);
+    expect(f.current()).toBe(beforeCancel);
+    expect(brush).toHaveAttribute('aria-pressed', 'true');
+    fireEvent.keyDown(grid, { key: 'Escape', isComposing: true });
+    expect(brush).toHaveAttribute('aria-pressed', 'true');
+    fireEvent.keyDown(grid, { key: 'Escape' });
+    expect(brush).toHaveAttribute('aria-pressed', 'false');
+    fireEvent.pointerUp(window);
+    expect(f.current()).toBe(beforeCancel);
+    fireEvent.doubleClick(brush);
+    fireEvent.pointerDown(cell('G1'), { button: 0 });
+    f.setPermissions({ readOnly: true });
+    fireEvent.pointerUp(window);
+    expect(f.current()).toBe(beforeCancel);
+    expect(brush).toBeDisabled();
+    expect(brush).toHaveAttribute('aria-pressed', 'false');
+    f.setPermissions({ disabled: true });
+    expect(brush).toBeDisabled();
+  });
+
+  it('applies a keyboard-selected target on Enter and retains the brush after an atomic failure', () => {
+    const doc = documentFixture();
+    doc.sheets[0].cells.A1.bold = true;
+    doc.sheets[0].protectedRanges = ['C1'];
+    const f = setup({ document: doc });
+    const grid = screen.getByRole('grid');
+    const brush = screen.getByRole('button', { name: '格式刷' });
+    fireEvent.click(brush);
+    fireEvent.keyDown(grid, { key: 'ArrowRight' });
+    fireEvent.keyDown(grid, { key: 'ArrowRight', shiftKey: true });
+    fireEvent.keyDown(grid, { key: 'Enter' });
+    expect(f.changed).not.toHaveBeenCalled();
+    expect(screen.getByText(/格式刷目标包含受保护区域/)).toBeInTheDocument();
+    expect(brush).toHaveAttribute('aria-pressed', 'true');
+    fireEvent.keyDown(grid, { key: 'ArrowRight' });
+    fireEvent.keyDown(grid, { key: 'Enter' });
+    expect(f.current().sheets[0].cells.D1.bold).toBe(true);
+    expect(brush).toHaveAttribute('aria-pressed', 'false');
+  });
+
+  it('blocks invalid input before copying and cancels the painter when changing sheets or importing another document', () => {
+    const doc = documentFixture();
+    doc.sheets[0].cells.A1.bold = true;
+    const f = setup({ document: doc });
+    const formula = screen.getByLabelText('表格公式栏');
+    fireEvent.focus(formula);
+    fireEvent.change(formula, { target: { value: 'x'.repeat(32768) } });
+    fireEvent.click(screen.getByRole('button', { name: '格式刷' }));
+    expect(f.changed).not.toHaveBeenCalled();
+    expect(screen.getByRole('button', { name: '格式刷' })).toHaveAttribute('aria-pressed', 'false');
+    fireEvent.keyDown(formula, { key: 'Escape' });
+    fireEvent.doubleClick(screen.getByRole('button', { name: '格式刷' }));
+    fireEvent.click(screen.getByRole('tab', { name: '汇总' }));
+    expect(screen.getByRole('button', { name: '格式刷' })).toHaveAttribute('aria-pressed', 'false');
+    cleanup();
+    const changed = vi.fn();
+    const view = render(
+      <StudioSheet document={doc} onChange={changed} disabled={false} readOnly={false} />
+    );
+    fireEvent.doubleClick(screen.getByRole('button', { name: '格式刷' }));
+    view.rerender(
+      <StudioSheet
+        document={{ ...doc, id: 'imported' }}
+        onChange={changed}
+        disabled={false}
+        readOnly={false}
+      />
+    );
+    expect(screen.getByRole('button', { name: '格式刷' })).toHaveAttribute('aria-pressed', 'false');
+    fireEvent.pointerDown(screen.getByRole('gridcell', { name: 'D1' }), { button: 0 });
+    fireEvent.pointerUp(window);
+    expect(changed).not.toHaveBeenCalled();
+  });
+
   it('creates dynamic and fixed arrays through the dialog, protects results and restores one transaction with undo/redo', async () => {
     const f = setup();
     const address = screen.getByLabelText('单元格地址');

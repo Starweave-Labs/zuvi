@@ -5037,44 +5037,58 @@
         "docs/tests/studio-excel.test.mjs"
       ],
       "historicalStatus": "缺失",
-      "status": "audited-not-implemented",
-      "evidence": [],
+      "status": "implemented-format-painter-slice-verified-full-acceptance-audit-pending",
+      "evidence": [
+        "2026-11-25：矩形格式快照、单次/双击连续、鼠标完整选择后事务应用、键盘 Enter、Escape/指针取消、只读/禁用/导入/换表取消已验证。",
+        "原生 XLSX 导入→格式刷→导出→两次重开，保留公式、链接、验证、隐藏行、数字格式和边框；浅色/暗色/320px 浏览器证据见 docs/audits/2026-11-25/sheet-painter/。"
+      ],
       "currentAudit": {
         "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "未实现",
-        "implementedBehavior": "没有 Sheet 格式刷入口",
+        "sourceCommit": "af522d6",
+        "implementation": "切片验证",
+        "implementedBehavior": "矩形直接格式快照；单格按来源大小扩展，整数倍矩形平铺；单次/连续/键盘应用，Escape/拖动取消，每次原子撤销；保留目标数据、公式、数组、链接与规则；默认格式显式清除旧样式；同拓扑合并与受保护区域守卫；原生 XLSX 两次重开和明暗/320px。",
         "functionalGaps": [
-          "缺矩形格式取用、单次连续与 Esc"
+          "跨工作表连续刷与所有冻结/滚动/合并组合的完整共通验收仍待审计；当前换表取消，合并布局不一致时整次拒绝。"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
+            "path": "packages/ui/src/components/OfficeStudio/studio-sheet-painter.ts",
+            "line": 63,
+            "anchor": "export function studioCopySheetFormat"
+          },
+          {
+            "path": "packages/ui/src/components/OfficeStudio/studio-sheet-painter.ts",
+            "line": 85,
+            "anchor": "export function studioPaintSheetFormat"
+          },
+          {
             "path": "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
-            "line": 284,
-            "anchor": "const blocked"
+            "line": 770,
+            "anchor": "function startPainter"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts",
-            "line": 1267,
-            "anchor": "async function checkSupportedWorkbook"
+            "path": "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+            "line": 795,
+            "anchor": "function applyPainter"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 136,
-            "anchor": "export interface StudioSheet"
-          },
-          {
-            "path": "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
-            "line": 401,
-            "anchor": "studioPatchCells"
+            "path": "e2e/office-studio-sheet-painter.spec.ts",
+            "line": 7,
+            "anchor": "format painter applies rectangular snapshots"
           }
         ],
-        "existingTestFiles": [],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "existingTestFiles": [
+          "packages/ui/src/components/OfficeStudio/studio-sheet-painter.test.ts",
+          "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx",
+          "docs/tests/studio-excel.test.mjs",
+          "e2e/office-studio-sheet-painter.spec.ts"
+        ],
+        "testEvidenceNote": "82 focused model/Sheet UI tests, 41 native XLSX codec tests, two browser roundtrips and light/dark/320px verified. Full repository UI 2292 and E2E 231 passed; full original acceptance remains pending for the stated combinations.",
+        "sourceState": "Includes the X018 continuation changes committed with this audit."
       },
       "gaps": [
-        "缺矩形格式取用、单次连续与 Esc"
+        "跨工作表连续刷与所有冻结/滚动/合并组合的完整共通验收仍待审计；当前换表取消，合并布局不一致时整次拒绝。"
       ]
     },
     {

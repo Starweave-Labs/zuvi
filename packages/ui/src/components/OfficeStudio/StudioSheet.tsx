@@ -72,6 +72,11 @@ import {
 import { studioChangeSheetStructure } from './studio-sheet-structure';
 import { studioDataBlockTarget } from './studio-sheet-navigation';
 import {
+  studioCopySheetFormat,
+  studioPaintSheetFormat,
+  type StudioSheetFormatSnapshot,
+} from './studio-sheet-painter';
+import {
   studioCellValidation,
   studioConditionalCellStyle,
   studioRemoveConditionalFormat,
@@ -201,6 +206,15 @@ export function StudioSheet({
 }: StudioEditorProps<StudioExcelDocument>) {
   const [activeId, setActiveId] = React.useState(document.activeSheetId);
   const [selection, setSelection] = React.useState<SheetSelection>(INITIAL_SELECTION);
+  const [painterMode, setPainterMode] = React.useState<'single' | 'continuous' | null>(null);
+  const painterRef = React.useRef<{
+    documentId: string;
+    sheetId: string;
+    snapshot: StudioSheetFormatSnapshot;
+    continuous: boolean;
+  } | null>(null);
+  const painterTargetRef = React.useRef<SheetSelection | null>(null);
+  const finishSelectionRef = React.useRef<(cancel: boolean) => void>(() => {});
   const [editing, setEditing] = React.useState<CellEditing | null>(null);
   const [ribbon, setRibbon] = React.useState('home');
   const [notice, setNotice] = React.useState('双击或直接输入编辑，Shift + 方向键选择区域。');
@@ -424,11 +438,13 @@ export function StudioSheet({
 
   React.useEffect(() => {
     if (document !== expectedRef.current) {
+      cancelPainter();
       pastRef.current = [];
       futureRef.current = [];
       setHistoryVersion((version) => version + 1);
     }
     if (document.id !== lastIdRef.current) {
+      cancelPainter();
       lastIdRef.current = document.id;
       setActiveId(document.activeSheetId);
       setSelection(INITIAL_SELECTION);
@@ -461,6 +477,7 @@ export function StudioSheet({
 
   React.useEffect(() => {
     setChartRange('');
+    cancelPainter();
     setFilterColumn('A');
     setFilterValue('');
     setSelectedChart('');
@@ -502,6 +519,7 @@ export function StudioSheet({
 
   React.useEffect(() => {
     if (blocked) {
+      cancelPainter();
       setRename(null);
       return;
     }
@@ -553,12 +571,17 @@ export function StudioSheet({
   React.useEffect(() => {
     const finishDrag = () => {
       draggingRef.current = false;
+      finishSelectionRef.current(false);
+    };
+    const cancelDrag = () => {
+      draggingRef.current = false;
+      finishSelectionRef.current(true);
     };
     window.addEventListener('pointerup', finishDrag);
-    window.addEventListener('pointercancel', finishDrag);
+    window.addEventListener('pointercancel', cancelDrag);
     return () => {
       window.removeEventListener('pointerup', finishDrag);
-      window.removeEventListener('pointercancel', finishDrag);
+      window.removeEventListener('pointercancel', cancelDrag);
     };
   }, []);
 
@@ -732,9 +755,70 @@ export function StudioSheet({
     const merge = sheet && studioMergedRange(sheet, position);
     if (merge && !extend) position = { row: merge.firstRow, col: merge.firstCol };
     setSelection({ anchor: extend ? selection.anchor : position, focus: position });
+    if (painterRef.current)
+      painterTargetRef.current = { anchor: extend ? selection.anchor : position, focus: position };
     gridRef.current?.focus();
     return true;
   }
+
+  function cancelPainter() {
+    painterRef.current = null;
+    painterTargetRef.current = null;
+    setPainterMode(null);
+  }
+
+  function startPainter(continuous = false) {
+    if (blocked || !sheet || !commitEditing()) return;
+    try {
+      if (!painterRef.current) {
+        const source = latestRef.current.sheets.find((item) => item.id === sheet.id)!;
+        painterRef.current = {
+          documentId: latestRef.current.id,
+          sheetId: sheet.id,
+          snapshot: studioCopySheetFormat(source, selection),
+          continuous,
+        };
+      } else painterRef.current.continuous = continuous;
+      painterTargetRef.current = null;
+      setPainterMode(continuous ? 'continuous' : 'single');
+      setNotice(
+        continuous
+          ? '连续格式刷：选择目标后应用，按 Escape 退出。'
+          : '格式刷：点击或拖选目标应用；方向键选择后按 Enter，Escape 取消。'
+      );
+      gridRef.current?.focus();
+    } catch (error) {
+      setNotice(error instanceof Error ? error.message : '格式复制失败。');
+    }
+  }
+
+  function applyPainter(target: SheetSelection) {
+    const painter = painterRef.current;
+    if (!painter || blocked || !sheet) return;
+    if (painter.documentId !== latestRef.current.id || painter.sheetId !== sheet.id) {
+      cancelPainter();
+      return;
+    }
+    if (!commitEditing()) return;
+    try {
+      const result = studioPaintSheetFormat(latestRef.current, sheet.id, target, painter.snapshot);
+      replaceDocument(result.document);
+      // Keep the clicked cell active even when the expanded rectangle ends in a hidden row.
+      setSelection({ anchor: result.selection.focus, focus: result.selection.anchor });
+      setNotice(
+        `格式刷已应用到 ${result.count} 个单元格，可撤销整个操作。${painter.continuous ? '继续选择目标，Escape 退出。' : ''}`
+      );
+      if (!painter.continuous) cancelPainter();
+    } catch (error) {
+      setNotice(error instanceof Error ? error.message : '格式刷应用失败。');
+    }
+  }
+
+  finishSelectionRef.current = (cancel) => {
+    const target = painterTargetRef.current;
+    painterTargetRef.current = null;
+    if (!cancel && target) applyPainter(target);
+  };
 
   function formatSelection(update: Partial<StudioCell>) {
     if (blocked || !commitEditing()) return false;
@@ -1663,6 +1747,12 @@ export function StudioSheet({
     )
       return;
     const command = event.ctrlKey || event.metaKey;
+    if (painterRef.current && event.key === 'Enter' && !command) {
+      event.preventDefault();
+      painterTargetRef.current = null;
+      applyPainter(selection);
+      return;
+    }
     if (command && event.key === 'Enter' && activeLink) {
       event.preventDefault();
       openHyperlink();
@@ -1958,8 +2048,21 @@ export function StudioSheet({
       className="zuvi-studio-sheet"
       data-disabled={disabled || undefined}
       data-readonly={readOnly || undefined}
+      data-format-painter={painterMode ?? undefined}
       data-studio-input-error={inputError ?? undefined}
       onKeyDownCapture={(event) => {
+        if (
+          painterRef.current &&
+          event.key === 'Escape' &&
+          !event.nativeEvent.isComposing &&
+          event.keyCode !== 229
+        ) {
+          event.preventDefault();
+          event.stopPropagation();
+          cancelPainter();
+          setNotice('已退出格式刷。');
+          return;
+        }
         if (
           !disabled &&
           !event.nativeEvent.isComposing &&
@@ -2066,6 +2169,23 @@ export function StudioSheet({
                   onClick={() => formatSelection(studioDefaultCellFormat())}
                 >
                   清除格式
+                </Button>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  disabled={blocked}
+                  aria-pressed={!!painterMode}
+                  title="单击使用一次，双击连续应用；Escape 退出"
+                  onClick={(event) => {
+                    if (event.detail >= 2) startPainter(true);
+                    else if (painterRef.current) {
+                      cancelPainter();
+                      setNotice('已退出格式刷。');
+                    } else startPainter();
+                  }}
+                  onDoubleClick={() => startPainter(true)}
+                >
+                  格式刷
                 </Button>
               </div>
               <div className="zuvi-studio-sheet-toolrow">
@@ -3371,7 +3491,8 @@ export function StudioSheet({
                           displayCell.underline || currentLink ? 'underline' : undefined,
                         color:
                           displayCell.color ?? (currentLink ? 'var(--zuvi-color-link)' : undefined),
-                        backgroundColor: displayCell.background,
+                        backgroundColor:
+                          displayCell.background === 'none' ? undefined : displayCell.background,
                         alignItems:
                           (currentCell?.verticalAlign ?? 'bottom') === 'top'
                             ? 'flex-start'
@@ -3415,11 +3536,17 @@ export function StudioSheet({
                         draggingRef.current = true;
                       }}
                       onPointerEnter={() => {
-                        if (!disabled && draggingRef.current)
+                        if (!disabled && draggingRef.current) {
+                          if (painterTargetRef.current)
+                            painterTargetRef.current = {
+                              ...painterTargetRef.current,
+                              focus: { row, col },
+                            };
                           setSelection((current) => ({ ...current, focus: { row, col } }));
+                        }
                       }}
                       onDoubleClick={() => {
-                        if (blocked) return;
+                        if (blocked || painterRef.current) return;
                         if (editingRef.current?.address !== currentAddress && !commitEditing())
                           return;
                         const position = { row, col };

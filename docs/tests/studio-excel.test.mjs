@@ -42,7 +42,7 @@ function compiledModule(url, resolve = require) {
 const studioModules = new Map();
 function resolveStudioModule(id) {
   const name =
-    /(?:^|\/)(studio-model|studio-word-images|studio-cell-style|studio-sheet-(?:model|structure|rules|fill|hyperlinks|editing|arrays))$/.exec(
+    /(?:^|\/)(studio-model|studio-word-images|studio-cell-style|studio-sheet-(?:model|structure|rules|fill|hyperlinks|editing|arrays|painter))$/.exec(
       id
     )?.[1];
   if (!name) return require(id);
@@ -62,10 +62,86 @@ const structure = resolveStudioModule('studio-sheet-structure');
 const hyperlinks = resolveStudioModule('studio-sheet-hyperlinks');
 const fill = resolveStudioModule('studio-sheet-fill');
 const editing = resolveStudioModule('studio-sheet-editing');
+const painter = resolveStudioModule('studio-sheet-painter');
 const codec = compiledModule(
   new URL('../src/pages/collaboration/office-studio/studio-excel-codec.ts', import.meta.url),
   resolveStudioModule
 );
+
+test('format painter keeps direct styles, default resets, formulas, hyperlinks and rules through repeated native XLSX saves', async () => {
+  const workbook = new ExcelJS.Workbook();
+  const sheet = workbook.addWorksheet('Painter');
+  sheet.getCell('A1').value = 2;
+  sheet.getCell('A1').font = { name: 'Arial', size: 16, bold: true, color: { argb: 'FFFF0000' } };
+  sheet.getCell('A1').numFmt = '0.00';
+  sheet.getCell('A1').border = { bottom: { style: 'double', color: { argb: 'FF0000FF' } } };
+  sheet.getCell('A2').value = 3;
+  sheet.getCell('A2').font = { italic: true };
+  sheet.getCell('B2').alignment = { wrapText: true, horizontal: 'center', vertical: 'top' };
+  sheet.getCell('D3').value = { formula: 'A1+A2', result: 5 };
+  sheet.getCell('E3').value = { text: 'target', hyperlink: 'https://example.com', tooltip: 'keep' };
+  sheet.getCell('E3').font = { bold: true, underline: true };
+  sheet.getCell('E3').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF00FF00' } };
+  sheet.getCell('E3').border = { top: { style: 'thick' } };
+  sheet.getCell('E3').dataValidation = {
+    type: 'list',
+    formulae: ['"target,other"'],
+    allowBlank: true,
+  };
+  sheet.addConditionalFormatting({
+    ref: 'D3',
+    rules: [
+      {
+        type: 'cellIs',
+        operator: 'greaterThan',
+        formulae: ['0'],
+        priority: 1,
+        style: { font: { italic: true } },
+      },
+    ],
+  });
+  sheet.getCell('F4').value = 'hidden row retained';
+  sheet.getRow(4).hidden = true;
+  let source = new Blob([await workbook.xlsx.writeBuffer()]);
+  let document = await codec.importStudioExcel(source, 'painter.xlsx');
+  const selection = (a, b = a) => ({
+    anchor: model.studioParseAddress(a),
+    focus: model.studioParseAddress(b),
+  });
+  for (let pass = 0; pass < 2; pass++) {
+    const snapshot = painter.studioCopySheetFormat(document.sheets[0], selection('A1', 'B2'));
+    document = painter.studioPaintSheetFormat(
+      document,
+      document.sheets[0].id,
+      selection('D3'),
+      snapshot
+    ).document;
+    source = await codec.exportStudioExcel(document, source);
+    const native = new ExcelJS.Workbook();
+    await native.xlsx.load(Buffer.from(await source.arrayBuffer()));
+    const opened = native.getWorksheet('Painter');
+    assert.equal(opened.getCell('D3').value.formula, 'A1+A2');
+    assert.equal(opened.getCell('D3').font.bold, true);
+    assert.equal(opened.getCell('D3').font.name, 'Arial');
+    assert.equal(opened.getCell('D3').font.size, 16);
+    assert.equal(opened.getCell('D3').numFmt, '0.00');
+    assert.equal(opened.getCell('D3').border.bottom.style, 'double');
+    assert.equal(opened.getCell('E3').value.hyperlink, 'https://example.com');
+    assert.equal(opened.getCell('E3').value.text, 'target');
+    assert.ok(!opened.getCell('E3').font.bold && !opened.getCell('E3').font.underline);
+    assert.deepEqual(opened.getCell('E3').border, {});
+    assert.equal(opened.getCell('E3').fill.pattern, 'none');
+    assert.equal(opened.getCell('E3').dataValidation.type, 'list');
+    assert.equal(opened.getCell('D4').font.italic, true);
+    assert.equal(opened.getCell('E4').alignment.wrapText, true);
+    assert.equal(opened.getRow(4).hidden, true);
+    assert.equal(opened.conditionalFormattings.length, 1);
+    document = await codec.importStudioExcel(source, document.name);
+    assert.equal(document.sheets[0].cells.D3.input, '=A1+A2');
+    assert.equal(document.sheets[0].cells.D3.bold, true);
+    assert.equal(document.sheets[0].cells.E3.input, 'target');
+  }
+});
 
 test('font and fill color filters retain native DXF references, conditional colors and clear behavior across XLSX saves', async () => {
   const workbook = new ExcelJS.Workbook();
