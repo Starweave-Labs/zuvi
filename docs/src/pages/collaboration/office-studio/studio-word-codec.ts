@@ -20,6 +20,7 @@ import {
   Table,
   TableCell,
   TableRow,
+  Tab,
   TextRun,
   UnderlineType,
   WidthType,
@@ -1567,7 +1568,15 @@ function inlineChildren(
     }
     if (node.type !== 'text') throw new Error(`DOCX 导出尚未支持 ${node.type} 行内元素。`);
     const { options, href } = runOptions(node, inherited);
-    const run = new TextRun(options);
+    const run = node.text?.includes('\t')
+      ? new TextRun({
+          ...options,
+          text: undefined,
+          children: node.text
+            .split('\t')
+            .flatMap((part, index) => (index ? [new Tab(), part] : [part])),
+        })
+      : new TextRun(options);
     return href ? new ExternalHyperlink({ link: href, children: [run] }) : run;
   });
 }

@@ -115,6 +115,94 @@ afterEach(() => {
 });
 
 describe('StudioWord Office ribbon actions', () => {
+  it('shows nonprinting characters in the body, table, header and footer without changing data, selection or document history', async () => {
+    const doc = documentModel('A  \tB');
+    doc.header = {
+      type: 'doc',
+      content: [{ type: 'paragraph', content: [{ type: 'text', text: 'Header text' }] }],
+    };
+    doc.footer = {
+      type: 'doc',
+      content: [{ type: 'paragraph', content: [{ type: 'text', text: 'Footer\ttext' }] }],
+    };
+    doc.content.content!.push({
+      type: 'table',
+      content: [
+        {
+          type: 'tableRow',
+          content: [
+            {
+              type: 'tableCell',
+              content: [{ type: 'paragraph', content: [{ type: 'text', text: 'Table text' }] }],
+            },
+          ],
+        },
+      ],
+    });
+    const { textbox, onChange } = await mount({ document: doc });
+    const paragraph = textbox.querySelector('p')!;
+    selectNodeContents(textbox, paragraph);
+    const text = textbox.textContent;
+    const undoDisabled = screen.getByRole('button', { name: '撤销' }).hasAttribute('disabled');
+    const toggle = screen.getByRole('button', { name: '显示非打印字符' });
+    fireEvent.mouseDown(toggle);
+    fireEvent.click(toggle);
+    await waitFor(() =>
+      expect(textbox.querySelectorAll('[data-word-nonprinting="paragraph"]')).toHaveLength(2)
+    );
+    expect(textbox.querySelector('[data-word-nonprinting="tab"]')).not.toBeNull();
+    expect(
+      screen
+        .getByRole('textbox', { name: 'Word 页眉' })
+        .querySelector('[data-word-nonprinting="space"]')
+    ).not.toBeNull();
+    expect(
+      screen
+        .getByRole('textbox', { name: 'Word 页脚' })
+        .querySelector('[data-word-nonprinting="tab"]')
+    ).not.toBeNull();
+    expect(textbox.textContent).toBe(text);
+    expect(window.getSelection()?.toString()).toBe('A  \tB');
+    expect(onChange).not.toHaveBeenCalled();
+    expect(screen.getByRole('button', { name: '撤销' }).hasAttribute('disabled')).toBe(
+      undoDisabled
+    );
+    fireEvent.click(screen.getByRole('button', { name: '粗体' }));
+    await waitFor(() => expect(textbox.querySelector('strong')).not.toBeNull());
+    fireEvent.click(toggle);
+    expect(textbox.querySelector('[data-word-nonprinting]')).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(textbox.querySelector('strong')).toBeNull());
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    await waitFor(() => expect(textbox.querySelector('strong')).not.toBeNull());
+    fireEvent.click(screen.getByRole('tab', { name: '视图' }));
+    fireEvent.click(screen.getByRole('checkbox', { name: '非打印字符' }));
+    await waitFor(() => expect(textbox.querySelector('[data-word-nonprinting]')).not.toBeNull());
+  });
+
+  it('allows nonprinting view changes in read-only mode, blocks disabled and IME shortcuts, and ignores editable control drafts', async () => {
+    const { textbox, rerender, onChange, document: doc } = await mount({ readOnly: true });
+    const toggle = screen.getByRole('button', { name: '显示非打印字符' });
+    expect(toggle).not.toBeDisabled();
+    fireEvent.keyDown(textbox, { key: '*', ctrlKey: true, shiftKey: true, isComposing: true });
+    expect(toggle).toHaveAttribute('aria-pressed', 'false');
+    fireEvent.keyDown(textbox, { key: '8', ctrlKey: true, shiftKey: true });
+    await waitFor(() => expect(toggle).toHaveAttribute('aria-pressed', 'true'));
+    fireEvent.keyDown(textbox, { key: '8', metaKey: true });
+    await waitFor(() => expect(toggle).toHaveAttribute('aria-pressed', 'false'));
+    fireEvent.keyDown(screen.getByRole('combobox', { name: '字体' }), {
+      key: '8',
+      ctrlKey: true,
+      shiftKey: true,
+    });
+    expect(toggle).toHaveAttribute('aria-pressed', 'false');
+    rerender(<WordHost document={doc} onChange={onChange} disabled={true} readOnly={false} />);
+    expect(toggle).toBeDisabled();
+    fireEvent.keyDown(textbox, { key: '8', ctrlKey: true, shiftKey: true });
+    expect(toggle).toHaveAttribute('aria-pressed', 'false');
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
   it('applies font family and size to the selected range and restores them with undo and redo', async () => {
     const { textbox, onChange } = await mount();
     selectNodeContents(textbox, textbox.querySelector('p')!);

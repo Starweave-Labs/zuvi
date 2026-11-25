@@ -2037,6 +2037,7 @@
         "packages/ui/src/components/OfficeStudio/studio-types.ts",
         "packages/ui/src/components/OfficeStudio/studio-word-image-preview.ts",
         "packages/ui/src/components/OfficeStudio/studio-word-images.ts",
+        "packages/ui/src/components/OfficeStudio/studio-word-nonprinting.ts",
         "packages/ui/src/components/OfficeStudio/studio-word-style-extension.ts",
         "packages/ui/src/components/OfficeStudio/studio-word-styles.ts",
         "packages/ui/src/components/OfficeStudio/studio-word-tools.ts"

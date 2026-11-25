@@ -71,6 +71,29 @@ const print = compiled('../src/pages/collaboration/office-studio/studio-print.ts
   },
 });
 
+test('Word printing retains whitespace and line breaks without any nonprinting view glyphs or decorations', () => {
+  const document = models.createOfficeStudioDocument('word');
+  document.content = {
+    type: 'doc',
+    content: [
+      {
+        type: 'paragraph',
+        content: [
+          { type: 'text', text: '  😀 A\tB\u00a0Z  ' },
+          { type: 'hardBreak' },
+          { type: 'text', text: 'Next line' },
+        ],
+      },
+    ],
+  };
+  const html = print.createStudioPrintHtml(document);
+  const printed = new JSDOM(html).window.document;
+  assert.equal(printed.querySelector('p').textContent, '  😀 A\tB\u00a0Z  Next line');
+  assert.equal(printed.querySelectorAll('br').length, 1);
+  assert.ok(html.includes('white-space:pre-wrap'));
+  assert.ok(!html.includes('data-word-nonprinting') && !html.includes('¶'));
+});
+
 test('Word print keeps floating images, wrap contours and page-coordinate placement in the printed document', () => {
   const document = models.createOfficeStudioDocument('word');
   const picture = (layout, alt) => ({
@@ -907,7 +930,10 @@ test('array print includes the entire computed region without persisting synthet
   ];
   document.activeSheetId = 'array';
   const markup = print.createStudioPrintHtml(document);
-  const view=new JSDOM(markup).window.document;
-  assert.deepEqual([...view.querySelectorAll('td')].map((cell)=>cell.textContent),['10','12','14','16','18','20']);
+  const view = new JSDOM(markup).window.document;
+  assert.deepEqual(
+    [...view.querySelectorAll('td')].map((cell) => cell.textContent),
+    ['10', '12', '14', '16', '18', '20']
+  );
   assert.deepEqual(Object.keys(document.sheets[0].cells), ['A1']);
 });

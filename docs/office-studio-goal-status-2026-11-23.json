@@ -1074,39 +1074,59 @@
         "docs/tests/office-studio-word.test.mjs"
       ],
       "historicalStatus": "缺失",
-      "status": "audited-not-implemented",
-      "evidence": [],
+      "status": "implemented-nonprinting-slice-verified-full-acceptance-audit-pending",
+      "evidence": [
+        "2026-11-25：空格/制表/NBSP/段落/手动换行采用非文档装饰显示，开始工具栏、视图复选与 Ctrl+Shift+8 / Command+8；正文、表格、页眉页脚联动。",
+        "75 项模型/Word UI、29 项 DOCX 和 24 项打印测试通过；浏览器导入→开启→编辑→撤销重做→两次导出重开、明暗/320px、只读及打印隐藏已验证，证据见 docs/audits/2026-11-25/word-nonprinting/。"
+      ],
       "currentAudit": {
         "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "未实现",
-        "implementedBehavior": "没有非打印字符显示命令",
+        "sourceCommit": "f840667",
+        "implementation": "切片验证",
+        "implementedBehavior": "空格·、制表→、NBSP°、段落¶、换行↵的视图装饰；工具栏/视图复选/快捷键，正文与表格、页眉页脚联动；不改变文本、选区、字符格式、文档序列化和历史。只读可查看，禁用不可切换，组合输入/控件草稿快捷键隔离。DOCX 原生 w:tab 往返及打印空白保留，打印隐藏视图标记。",
         "functionalGaps": [
-          "缺空格/制表/段落标记显示且不导出符号的验证"
+          "超长文稿及全部分页/字号/文字方向组合的完整共通验收仍待审计；现有自定义 DOCX 制表位导入限制保留。"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
+            "path": "packages/ui/src/components/OfficeStudio/studio-word-nonprinting.ts",
+            "line": 59,
+            "anchor": "export const WordNonprinting"
+          },
+          {
+            "path": "packages/ui/src/components/OfficeStudio/studio-word-nonprinting.ts",
+            "line": 82,
+            "anchor": "export function wordSetNonprinting"
+          },
+          {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 156,
-            "anchor": "const EXTENSIONS"
+            "line": 1640,
+            "anchor": "aria-label=\"显示非打印字符\""
           },
           {
             "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
-            "line": 60,
-            "anchor": "const UNSUPPORTED_CONTENT"
+            "line": 1571,
+            "anchor": "const run = node.text?.includes"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 78,
-            "anchor": "export interface StudioWordDocument"
+            "path": "e2e/office-studio-word-nonprinting.spec.ts",
+            "line": 19,
+            "anchor": "Word nonprinting markers preserve"
           }
         ],
-        "existingTestFiles": [],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "existingTestFiles": [
+          "packages/ui/src/components/OfficeStudio/studio-word-nonprinting.test.ts",
+          "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+          "docs/tests/office-studio-word.test.mjs",
+          "docs/tests/studio-print.test.mjs",
+          "e2e/office-studio-word-nonprinting.spec.ts"
+        ],
+        "testEvidenceNote": "75 focused plugin/Word UI tests, 53 native DOCX/print tests and two browser DOCX roundtrips verified. Full repository checks are recorded in the accompanying completion log. View preference resets on opening a new editor and is not stored in DOCX.",
+        "sourceState": "Includes the W018 continuation changes committed with this audit."
       },
       "gaps": [
-        "缺空格/制表/段落标记显示且不导出符号的验证"
+        "超长文稿及全部分页/字号/文字方向组合的完整共通验收仍待审计；现有自定义 DOCX 制表位导入限制保留。"
       ]
     },
     {

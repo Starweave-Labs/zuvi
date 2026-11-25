@@ -75,6 +75,37 @@ runInNewContext(
 );
 const { importStudioWord, exportStudioWord } = exports;
 const W = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';
+
+test('native tabs, repeated spaces, nonbreaking spaces and line breaks retain their original characters and formatting across DOCX edits and repeated saves', async () => {
+  const source = await fixture(
+    '<w:p><w:r><w:rPr><w:b/></w:rPr><w:t xml:space="preserve">  😀 A </w:t><w:tab/><w:tab/><w:t xml:space="preserve"> B\u00a0Z  </w:t><w:br/><w:t>Next line</w:t></w:r></w:p><w:p/>'
+  );
+  let document = await importStudioWord(source, 'nonprinting.docx');
+  const text = (node) =>
+    node.type === 'hardBreak'
+      ? '\n'
+      : node.type === 'text'
+        ? node.text
+        : (node.content || []).map(text).join('');
+  assert.equal(text(document.content), '  😀 A \t\t B\u00a0Z  \nNext line');
+  document.content.content[0].content[0].text = '  😀 A edited ';
+  for (let pass = 0; pass < 2; pass++) {
+    const saved = await exportStudioWord(document);
+    const zip = await JSZip.loadAsync(await saved.arrayBuffer());
+    const sourceXml = await zip.file('word/document.xml').async('string');
+    const native = parse(sourceXml);
+    assert.equal(native.getElementsByTagNameNS(W, 'tab').length, 2);
+    assert.equal(native.getElementsByTagNameNS(W, 'br').length, 1);
+    assert.ok(!sourceXml.includes('data-word-nonprinting') && !sourceXml.includes('¶'));
+    document = await importStudioWord(saved, document.name);
+    assert.equal(text(document.content), '  😀 A edited \t\t B\u00a0Z  \nNext line');
+    assert.equal(document.content.content.length, 2);
+    for (const run of find(document.content, 'text').filter(
+      (node) => node.text.includes('😀') || node.text.includes('\t')
+    ))
+      assert.ok(run.marks.some((mark) => mark.type === 'bold'));
+  }
+});
 const PNG =
   'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Y3nRmwAAAAASUVORK5CYII=';
 const JPEG =

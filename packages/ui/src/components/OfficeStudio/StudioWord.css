@@ -686,6 +686,44 @@
   margin: 0 0 0.65em;
 }
 
+.zuvi-studio-word-nonprinting-space,
+.zuvi-studio-word-nonprinting-end {
+  position: relative;
+}
+
+.zuvi-studio-word-nonprinting-space::before,
+.zuvi-studio-word-nonprinting-end::before {
+  position: absolute;
+  inset-inline-start: 0;
+  color: var(--zuvi-color-primary);
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: none;
+  pointer-events: none;
+  user-select: none;
+}
+
+.zuvi-studio-word-nonprinting-space::before {
+  width: 100%;
+  text-align: center;
+}
+
+[data-word-nonprinting='space']::before {
+  content: '·';
+}
+[data-word-nonprinting='tab']::before {
+  content: '→';
+}
+[data-word-nonprinting='nbsp']::before {
+  content: '°';
+}
+[data-word-nonprinting='paragraph']::before {
+  content: '¶';
+}
+[data-word-nonprinting='line-break']::before {
+  content: '↵';
+}
+
 .zuvi-studio-word-content .tiptap h1,
 .zuvi-studio-word-content .tiptap h2,
 .zuvi-studio-word-content .tiptap h3,
@@ -937,6 +975,9 @@
 }
 
 @media print {
+  [data-word-nonprinting]::before {
+    display: none;
+  }
   .zuvi-studio-word-ribbon,
   .zuvi-studio-word-status {
     display: none;

@@ -86,6 +86,7 @@ import {
   wordTransformSelectionCase,
 } from './studio-word-tools';
 import { StudioFontControl, type StudioFontCommitReason } from './StudioFontControl';
+import { WordNonprinting, wordSetNonprinting } from './studio-word-nonprinting';
 import './StudioWord.css';
 
 const PageBreak = Node.create({
@@ -189,6 +190,7 @@ const EXTENSIONS = [
   WordPageNumber,
   WordSubscript,
   WordSuperscript,
+  WordNonprinting,
 ];
 
 const MM_TO_PX = 96 / 25.4;
@@ -444,6 +446,7 @@ export function StudioWord({
   const [stageWidth, setStageWidth] = React.useState(900);
   const [paperHeight, setPaperHeight] = React.useState(0);
   const [showRuler, setShowRuler] = React.useState(true);
+  const [showNonprinting, setShowNonprinting] = React.useState(false);
   const [statisticsOpen, setStatisticsOpen] = React.useState(false);
   const [clipboardBusy, setClipboardBusy] = React.useState(false);
   const [tableRows, setTableRows] = React.useState('3');
@@ -570,6 +573,10 @@ export function StudioWord({
       return next;
     });
   }, []);
+  React.useLayoutEffect(() => {
+    for (const current of [bodyEditor, regions.header, regions.footer])
+      if (current) wordSetNonprinting(current, showNonprinting);
+  }, [bodyEditor, regions, showNonprinting]);
   React.useEffect(() => {
     setRegion('content');
     setTab((current) => (current === 'header-footer' ? 'home' : current));
@@ -1132,6 +1139,7 @@ export function StudioWord({
       className="zuvi-studio-word"
       data-part="word"
       data-readonly={!editable || undefined}
+      data-nonprinting={showNonprinting || undefined}
       onClick={(event) => {
         const image =
           event.target instanceof HTMLElement ? event.target.closest('img[data-word-image]') : null;
@@ -1152,6 +1160,24 @@ export function StudioWord({
         }
       }}
       onKeyDownCapture={(event) => {
+        if (
+          !disabled &&
+          (event.ctrlKey || event.metaKey) &&
+          !event.altKey &&
+          !event.nativeEvent.isComposing &&
+          event.keyCode !== 229 &&
+          ((event.shiftKey && ['8', '*'].includes(event.key)) ||
+            (event.metaKey && event.key === '8')) &&
+          !(
+            event.target instanceof Element &&
+            event.target.closest('input, textarea, select, [role="combobox"], [role="dialog"]')
+          )
+        ) {
+          event.preventDefault();
+          event.stopPropagation();
+          setShowNonprinting((value) => !value);
+          return;
+        }
         if (
           (event.ctrlKey || event.metaKey) &&
           !event.altKey &&
@@ -1610,6 +1636,18 @@ export function StudioWord({
                   <Icon size={16} />
                 </Button>
               ))}
+              <Button
+                aria-label="显示非打印字符"
+                title="显示非打印字符（Ctrl+Shift+8 / ⌘+8）"
+                aria-pressed={showNonprinting}
+                variant="ghost"
+                size="sm"
+                disabled={disabled || !bodyEditor}
+                onMouseDown={keepSelection}
+                onClick={() => setShowNonprinting((value) => !value)}
+              >
+                <span aria-hidden="true">¶</span>
+              </Button>
             </RibbonRow>
           </RibbonGroup>
           <RibbonGroup label="样式" className="zuvi-studio-word-styles-group">
@@ -2222,6 +2260,12 @@ export function StudioWord({
         <Tabs.Panel value="view" className="zuvi-studio-word-tool-row">
           <RibbonGroup label="显示" className="zuvi-studio-word-view-group">
             <Checkbox label="标尺" checked={showRuler} onChange={setShowRuler} />
+            <Checkbox
+              label="非打印字符"
+              checked={showNonprinting}
+              onChange={setShowNonprinting}
+              disabled={disabled}
+            />
             <Checkbox
               label="导航窗格"
               checked={!!sidePanel}
