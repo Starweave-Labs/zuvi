@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { flushSync } from 'react-dom';
 import {
   AlignCenter,
   AlignJustify,
@@ -51,6 +52,12 @@ import type {
   StudioWordParagraphStyle,
 } from './studio-types';
 import { StudioWordStyleDialog } from './StudioWordStyleDialog';
+import { StudioWordCharacterDialog } from './StudioWordCharacterDialog';
+import {
+  WordCharacterLayout,
+  wordSelectionMetrics,
+  wordSetCharacterLayout,
+} from './studio-word-character-layout';
 import { StudioWordImageLayoutTools } from './StudioWordImageLayoutTools';
 import {
   WordParagraphStyles,
@@ -165,6 +172,7 @@ const EXTENSIONS = [
   }),
   ListItem.extend({ content: '(paragraph | heading) block*' }),
   TextStyleKit.configure({ fontFamily: false }),
+  WordCharacterLayout,
   FontFamily.extend({
     addGlobalAttributes() {
       return (this.parent?.() ?? []).map((group) => ({
@@ -464,6 +472,13 @@ export function StudioWord({
   const [matchCase, setMatchCase] = React.useState(false);
   const [formatCriteria, setFormatCriteria] = React.useState<WordFormatCriteria>({});
   const [styleDialog, setStyleDialog] = React.useState<StudioWordParagraphStyle | null>(null);
+  const [characterDialog, setCharacterDialog] = React.useState<{
+    editor: Editor;
+    doc: Editor['state']['doc'];
+    selection: Editor['state']['selection'];
+    values: ReturnType<typeof wordSelectionMetrics>;
+    text: string;
+  } | null>(null);
   const styleDefinitions = document.content.attrs?.paragraphStyles;
   const paragraphStyles = React.useMemo(
     () => validateStudioWordParagraphStyles(styleDefinitions),
@@ -584,6 +599,7 @@ export function StudioWord({
     setStatisticsOpen(false);
     setLinkOpen(false);
     setStyleDialog(null);
+    setCharacterDialog(null);
     setNotice('');
   }, [document.id]);
   React.useEffect(() => {
@@ -1343,6 +1359,40 @@ export function StudioWord({
                 <Minus size={14} />
               </Button>
             </RibbonRow>
+            <Button
+              size="sm"
+              variant="ghost"
+              disabled={toolsDisabled}
+              onMouseDown={keepSelection}
+              onClick={() => {
+                if (!editor || !editable || editor.view.composing) return;
+                const root = editor.view.dom.closest('.zuvi-studio-word');
+                const focused = window.document.activeElement;
+                if (
+                  focused instanceof HTMLElement &&
+                  root?.contains(focused) &&
+                  focused.matches('input,textarea')
+                )
+                  flushSync(() => focused.blur());
+                if (root?.querySelector('[data-studio-input-error]')) {
+                  setNotice('请先修正当前输入，或按 Esc 取消。');
+                  return;
+                }
+                setCharacterDialog({
+                  editor,
+                  doc: editor.state.doc,
+                  selection: editor.state.selection,
+                  values: wordSelectionMetrics(editor),
+                  text: editor.state.doc.textBetween(
+                    editor.state.selection.from,
+                    editor.state.selection.to,
+                    ' '
+                  ),
+                });
+              }}
+            >
+              字符间距与位置
+            </Button>
             <RibbonRow>
               <Button
                 aria-label="粗体"
@@ -2759,6 +2809,32 @@ export function StudioWord({
           />
         </div>
       </div>
+      {characterDialog && (
+        <StudioWordCharacterDialog
+          values={characterDialog.values}
+          text={characterDialog.text}
+          blocked={!editable}
+          onClose={() => {
+            setCharacterDialog(null);
+            if (!characterDialog.editor.isDestroyed) characterDialog.editor.commands.focus();
+          }}
+          onSave={(values) => {
+            const target = characterDialog.editor;
+            if (
+              !latest.current.editable ||
+              target.isDestroyed ||
+              target !== editor ||
+              target.state.doc !== characterDialog.doc
+            )
+              throw new Error('文档或编辑区域已变化，请重新选择文字。');
+            target.view.dispatch(
+              target.state.tr.setSelection(characterDialog.selection).setMeta('addToHistory', false)
+            );
+            const changed = wordSetCharacterLayout(target, values);
+            setNotice(changed ? '已应用字符间距与位置，可撤销恢复。' : '字符格式保持原样。');
+          }}
+        />
+      )}
       {styleDialog && editable && (
         <StudioWordStyleDialog
           key={styleDialog.id}

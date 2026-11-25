@@ -41,6 +41,9 @@ export interface StudioWordCharacterStyle {
   fontFamily?: string;
   /** Font size in points. */
   fontSize?: number;
+  /** Signed points: spacing uses 0.05pt, baseline position uses 0.5pt. */
+  letterSpacing?: number;
+  baselineShift?: number;
   bold?: boolean;
   italic?: boolean;
   underline?: boolean;

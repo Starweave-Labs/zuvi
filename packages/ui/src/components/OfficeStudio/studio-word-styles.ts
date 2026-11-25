@@ -5,6 +5,7 @@ import type {
   StudioWordParagraphStyle,
 } from './studio-types';
 import { studioFontFamilyInput } from './studio-font-input';
+import { wordMetricPoints } from './studio-word-metrics';
 
 export const WORD_STYLE_LIMIT = 100;
 export const WORD_BUILTIN_STYLES: StudioWordParagraphStyle[] = [
@@ -32,6 +33,8 @@ export const WORD_BUILTIN_STYLES: StudioWordParagraphStyle[] = [
 export const WORD_BODY_RUN = {
   fontFamily: 'Noto Sans SC',
   fontSize: 12,
+  letterSpacing: 0,
+  baselineShift: 0,
   bold: false,
   italic: false,
   underline: false,
@@ -140,7 +143,10 @@ export function validateStudioWordParagraphStyles(value: unknown): StudioWordPar
         if (FLAGS.includes(key as (typeof FLAGS)[number])) {
           if (typeof input !== 'boolean') throw new Error('样式文字格式标记无效。');
         } else if (key === 'fontSize') finite(input, '样式字号', 1, 409);
-        else if (key === 'fontFamily') {
+        else if (key === 'letterSpacing' || key === 'baselineShift') {
+          if (typeof input !== 'number' || wordMetricPoints(input, key) === null)
+            throw new Error('样式字符间距/位置度量无效。');
+        } else if (key === 'fontFamily') {
           if (typeof input !== 'string' || studioFontFamilyInput(input) !== input)
             throw new Error('样式字体名称无效。');
         } else if (
@@ -228,6 +234,10 @@ export function studioWordNodeRun(
         ? attrs.fontFamily
         : inherited.fontFamily,
     fontSize: rawSize ? Number(rawSize[1]) * (rawSize[2] === 'px' ? 0.75 : 1) : inherited.fontSize,
+    letterSpacing:
+      wordMetricPoints(attrs.letterSpacing, 'letterSpacing') ?? inherited.letterSpacing,
+    baselineShift:
+      wordMetricPoints(attrs.baselineShift, 'baselineShift') ?? inherited.baselineShift,
     color:
       typeof attrs.color === 'string' && attrs.color ? attrs.color.toLowerCase() : inherited.color,
     backgroundColor:
@@ -258,6 +268,8 @@ export function studioWordRunMarks(
     ...old,
     fontFamily: appearance.fontFamily,
     fontSize: `${appearance.fontSize}pt`,
+    letterSpacing: `${appearance.letterSpacing}pt`,
+    baselineShift: `${appearance.baselineShift}pt`,
     color: appearance.color,
     backgroundColor: appearance.backgroundColor,
   };

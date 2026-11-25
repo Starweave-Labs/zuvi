@@ -1,3 +1,25 @@
+.zuvi-studio-word-character-field {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 90px;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.zuvi-studio-word-character-field > span {
+  grid-column: 1 / -1;
+}
+.zuvi-studio-word-character-field .zuvi-input {
+  width: 100%;
+}
+.zuvi-studio-word-character-preview {
+  border: 1px solid var(--zuvi-color-border);
+  padding: 20px 12px;
+  min-height: 72px;
+  overflow: auto;
+}
+.zuvi-studio-word-character-error {
+  color: var(--zuvi-color-danger);
+}
+
 .zuvi-studio-word {
   --zuvi-studio-word-stage-bg: var(--zuvi-office-studio-canvas-bg, var(--zuvi-color-bg-muted));
   --zuvi-studio-word-border: var(--zuvi-color-border);

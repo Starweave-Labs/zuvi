@@ -71,6 +71,70 @@ const print = compiled('../src/pages/collaboration/office-studio/studio-print.ts
   },
 });
 
+test('Word prints character spacing and baseline movement without changing point size or source text', () => {
+  const document = models.createOfficeStudioDocument('word');
+  document.content = {
+    type: 'doc',
+    content: [
+      {
+        type: 'paragraph',
+        content: [
+          {
+            type: 'text',
+            text: 'Raised',
+            marks: [
+              {
+                type: 'textStyle',
+                attrs: { fontSize: '14pt', letterSpacing: '1.2pt', baselineShift: '2pt' },
+              },
+            ],
+          },
+          {
+            type: 'text',
+            text: 'Lowered',
+            marks: [
+              {
+                type: 'textStyle',
+                attrs: { fontSize: '30pt', letterSpacing: '-0.2pt', baselineShift: '-2.5pt' },
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  };
+  const html = new JSDOM(print.createStudioPrintHtml(document)).window.document;
+  const spans = html.querySelectorAll('p > span');
+  assert.equal(spans[0].style.letterSpacing, '1.2pt');
+  assert.equal(spans[0].style.top, '-2pt');
+  assert.equal(spans[0].style.fontSize, '14pt');
+  assert.equal(spans[1].style.letterSpacing, '-0.2pt');
+  assert.equal(spans[1].style.top, '2.5pt');
+  assert.equal(spans[1].style.fontSize, '30pt');
+  assert.equal(html.querySelector('p').textContent, 'RaisedLowered');
+  document.content.content.push({
+    type: 'paragraph',
+    content: [
+      {
+        type: 'pageNumber',
+        attrs: { kind: 'current' },
+        marks: [
+          {
+            type: 'textStyle',
+            attrs: { fontSize: '20pt', letterSpacing: '0.3pt', baselineShift: '1.5pt' },
+          },
+        ],
+      },
+    ],
+  });
+  const field = new JSDOM(print.createStudioPrintHtml(document)).window.document
+    .querySelectorAll('article p')[1]
+    .querySelector('span');
+  assert.equal(field.textContent, '1');
+  assert.equal(field.style.top, '-1.5pt');
+  assert.equal(field.style.fontSize, '20pt');
+});
+
 test('custom number format text, Chinese dates and selected color sections print with conditional color taking priority', () => {
   const document = models.createOfficeStudioDocument('excel');
   const sheet = document.sheets[0];

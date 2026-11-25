@@ -79,6 +79,155 @@ function selectNodeContents(textbox: HTMLElement, node: Node) {
 }
 
 const restore: (() => void)[] = [];
+
+describe('Word character metrics dialog', () => {
+  function metricsSetup(initial = documentModel()) {
+    let current = initial;
+    const changed = vi.fn();
+    function Harness(props: { readOnly: boolean; disabled: boolean }) {
+      const [doc, setDoc] = useState(initial);
+      return (
+        <StudioWord
+          document={doc}
+          {...props}
+          onChange={(next) => {
+            current = next;
+            changed(next);
+            setDoc(next);
+          }}
+        />
+      );
+    }
+    const view = render(<Harness readOnly={false} disabled={false} />);
+    return {
+      current: () => current,
+      changed,
+      permissions: (props: { readOnly: boolean; disabled: boolean }) =>
+        view.rerender(<Harness {...props} />),
+    };
+  }
+  const choose = (label: string, mode: string) => {
+    const dialog = screen.getByRole('dialog');
+    fireEvent.click(within(dialog).getByRole('button', { name: new RegExp(`^${label}`) }));
+    fireEvent.click(screen.getByRole('option', { name: mode }));
+  };
+  const layoutAttrs = (doc: StudioWordDocument) =>
+    doc.content.content![0].content!.map(
+      (n) => n.marks?.find((m) => m.type === 'textStyle')?.attrs
+    );
+  it('preserves mixed fonts and links, previews point measurements and applies one undoable operation', async () => {
+    const doc = documentModel();
+    doc.content.content![0].content = [
+      {
+        type: 'text',
+        text: 'A',
+        marks: [
+          { type: 'bold' },
+          {
+            type: 'textStyle',
+            attrs: { fontSize: '14pt', letterSpacing: '1pt', baselineShift: '2pt' },
+          },
+        ],
+      },
+      {
+        type: 'text',
+        text: 'B',
+        marks: [
+          { type: 'link', attrs: { href: 'https://example.com' } },
+          {
+            type: 'textStyle',
+            attrs: { fontSize: '30pt', letterSpacing: '-0.1pt', baselineShift: '0pt' },
+          },
+        ],
+      },
+    ];
+    const f = metricsSetup(doc);
+    const body = await screen.findByRole('textbox', { name: 'Word 文档正文' });
+    selectNodeContents(body, body.querySelector('p')!);
+    fireEvent.click(screen.getByRole('button', { name: '字符间距与位置' }));
+    expect(within(screen.getByRole('dialog')).getAllByText('混合（保持原值）')).toHaveLength(2);
+    choose('字符间距', '加宽');
+    fireEvent.change(screen.getByLabelText('字符间距量（pt）'), { target: { value: '1.2' } });
+    choose('字符位置', '降低');
+    fireEvent.change(screen.getByLabelText('字符位置量（pt）'), { target: { value: '2.5' } });
+    expect(screen.getByText('预览：间距 1.2pt，位置 -2.5pt')).toBeVisible();
+    fireEvent.click(screen.getByRole('button', { name: '应用字符格式' }));
+    expect(f.changed).toHaveBeenCalledTimes(1);
+    expect(layoutAttrs(f.current())).toEqual([
+      expect.objectContaining({
+        fontSize: '14pt',
+        letterSpacing: '1.2pt',
+        baselineShift: '-2.5pt',
+      }),
+      expect.objectContaining({
+        fontSize: '30pt',
+        letterSpacing: '1.2pt',
+        baselineShift: '-2.5pt',
+      }),
+    ]);
+    expect(body.querySelector('a')).toHaveAttribute('href', 'https://example.com');
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    expect(layoutAttrs(f.current())[0]?.letterSpacing).toBe('1pt');
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    expect(layoutAttrs(f.current())[0]?.letterSpacing).toBe('1.2pt');
+  });
+  it('retains invalid drafts, disables an open dialog on permission changes and cancels without writing', async () => {
+    const f = metricsSetup();
+    const body = await screen.findByRole('textbox', { name: 'Word 文档正文' });
+    selectNodeContents(body, body.firstChild!);
+    fireEvent.click(screen.getByRole('button', { name: '字符间距与位置' }));
+    choose('字符位置', '提升');
+    const input = screen.getByLabelText('字符位置量（pt）');
+    fireEvent.change(input, { target: { value: '1.25' } });
+    expect(screen.getByRole('alert')).toHaveTextContent('0.5pt');
+    expect(screen.getByRole('button', { name: '应用字符格式' })).toBeDisabled();
+    f.permissions({ readOnly: true, disabled: false });
+    expect(input).toHaveValue('1.25');
+    expect(input).toBeDisabled();
+    fireEvent.click(screen.getByRole('button', { name: '取消' }));
+    expect(f.changed).not.toHaveBeenCalled();
+    expect(screen.getByRole('button', { name: '字符间距与位置' })).toBeDisabled();
+    f.permissions({ readOnly: false, disabled: true });
+    expect(screen.getByRole('button', { name: '字符间距与位置' })).toBeDisabled();
+  });
+  it('blocks an invalid font draft before opening and preserves an unchanged metrics dialog without history', async () => {
+    const f = metricsSetup();
+    const body = await screen.findByRole('textbox', { name: 'Word 文档正文' });
+    selectNodeContents(body, body.firstChild!);
+    const size = screen.getByRole('combobox', { name: '字号' });
+    act(() => size.focus());
+    fireEvent.change(size, { target: { value: '9999' } });
+    fireEvent.click(screen.getByRole('button', { name: '字符间距与位置' }));
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    fireEvent.keyDown(size, { key: 'Escape' });
+    fireEvent.click(screen.getByRole('button', { name: '字符间距与位置' }));
+    fireEvent.click(screen.getByRole('button', { name: '应用字符格式' }));
+    expect(f.changed).not.toHaveBeenCalled();
+  });
+  it('applies metrics in the header editor while preserving the body', async () => {
+    const doc = documentModel();
+    doc.header = {
+      type: 'doc',
+      content: [{ type: 'paragraph', content: [{ type: 'text', text: 'Header' }] }],
+    };
+    const f = metricsSetup(doc);
+    await screen.findByRole('textbox', { name: 'Word 文档正文' });
+    fireEvent.doubleClick(screen.getByLabelText('页眉区域'));
+    const header = await screen.findByRole('textbox', { name: 'Word 页眉' });
+    await waitFor(() => expect(header).toHaveAttribute('contenteditable', 'true'));
+    selectNodeContents(header, header.firstChild!);
+    fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+    fireEvent.click(screen.getByRole('button', { name: '字符间距与位置' }));
+    choose('字符间距', '紧缩');
+    fireEvent.change(screen.getByLabelText('字符间距量（pt）'), { target: { value: '0.2' } });
+    fireEvent.click(screen.getByRole('button', { name: '应用字符格式' }));
+    expect(
+      f.current().header!.content![0].content![0].marks?.find((m) => m.type === 'textStyle')?.attrs
+        ?.letterSpacing
+    ).toBe('-0.2pt');
+    expect(f.current().content.content![0].content![0].text).toBe('项目评审内容');
+  });
+});
 let restoreClipboard: (() => void) | undefined;
 
 function mockClipboard(api: Partial<Pick<Clipboard, 'readText' | 'writeText'>>) {

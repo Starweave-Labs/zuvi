@@ -1,0 +1,50 @@
+{
+  "date": "2026-11-25",
+  "baselineCommit": "3c67dac",
+  "wholeGoalComplete": false,
+  "ui": {
+    "files": 124,
+    "passed": 2344
+  },
+  "docs": {
+    "passed": 289,
+    "skipped": 1
+  },
+  "dedicatedModel": {
+    "passed": 7
+  },
+  "newUiCases": {
+    "passed": 4
+  },
+  "nativeDocx": {
+    "passed": 33
+  },
+  "printing": {
+    "passed": 26
+  },
+  "e2e": {
+    "fullPassed": 236,
+    "failed": 0,
+    "workers": 1,
+    "featureAndRelatedWordPassed": 5,
+    "screenshotsReviewed": true
+  },
+  "checks": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "registryItems": 92,
+    "consumerSourceFiles": 337,
+    "distribution": "passed",
+    "uiBuild": "passed",
+    "browserBuild": "passed",
+    "docsBuild": "passed",
+    "entryGzipBytes": 124927,
+    "entryGzipBudgetBytes": 124928
+  },
+  "currentImplementationCounts": {
+    "基础实现": 22,
+    "部分实现": 56,
+    "未实现": 62,
+    "切片验证": 19
+  }
+}

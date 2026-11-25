@@ -935,7 +935,14 @@ export interface WordFormatSnapshot {
   paragraph: Record<string, unknown>;
 }
 
-const WORD_TEXT_STYLE_ATTRS = ['fontFamily', 'fontSize', 'color', 'backgroundColor'] as const;
+const WORD_TEXT_STYLE_ATTRS = [
+  'fontFamily',
+  'fontSize',
+  'color',
+  'backgroundColor',
+  'letterSpacing',
+  'baselineShift',
+] as const;
 const WORD_PARAGRAPH_FORMAT_ATTRS = [
   'textAlign',
   'indentLeft',

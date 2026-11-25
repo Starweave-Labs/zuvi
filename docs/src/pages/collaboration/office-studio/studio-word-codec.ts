@@ -1,5 +1,9 @@
 import JSZip from 'jszip';
 import {
+  wordMetricPoints,
+  type WordMetric,
+} from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-metrics';
+import {
   AlignmentType,
   BorderStyle,
   Document as DocxDocument,
@@ -8,6 +12,7 @@ import {
   Header,
   HeadingLevel,
   ImageRun,
+  ImportedXmlComponent,
   TextWrappingType,
   type IFloating,
   LevelFormat,
@@ -22,11 +27,13 @@ import {
   TableRow,
   Tab,
   TextRun,
+  RunProperties,
   UnderlineType,
   WidthType,
   type IParagraphOptions,
   type IParagraphStyleOptions,
   type IRunOptions,
+  type IImageOptions,
   type NumberingDefinition,
   type ParagraphChild,
 } from 'docx';
@@ -75,8 +82,6 @@ const UNSUPPORTED_CONTENT = new Set([
   'commentReference',
 ]);
 const UNSUPPORTED_RUN = new Set([
-  'position',
-  'spacing',
   'w',
   'caps',
   'smallCaps',
@@ -131,6 +136,8 @@ type Appearance = {
   strike?: boolean;
   fontFamily?: string;
   fontSize?: string;
+  letterSpacing?: string;
+  baselineShift?: string;
   color?: string;
   backgroundColor?: string;
   script?: 'superscript' | 'subscript';
@@ -346,6 +353,24 @@ function runProperties(properties?: Element, base: Appearance = {}): Appearance 
   if (family) result.fontFamily = safeFont(family);
   const size = value(properties, 'sz');
   if (size) result.fontSize = `${number(size, '字号', 2, 818) / 2}pt`;
+  for (const [tag, key, units] of [
+    ['spacing', 'letterSpacing', 20],
+    ['position', 'baselineShift', 2],
+  ] as const) {
+    const property = child(properties, tag);
+    if (!property) continue;
+    const raw = attr(property);
+    const measured = /^([+-]?(?:\d+(?:\.\d*)?|\.\d+))(pt|in|cm|mm|pc|pi)$/i.exec(raw);
+    const amount = measured
+      ? Number(measured[1]) *
+        { pt: 1, in: 72, cm: 72 / 2.54, mm: 72 / 25.4, pc: 12, pi: 12 }[measured[2].toLowerCase()]!
+      : /^[+-]?\d+$/.test(raw)
+        ? Number(raw) / units
+        : NaN;
+    const value = wordMetricPoints(amount, key);
+    if (value === null) unsupported('字符间距或位置的范围/精度');
+    result[key] = `${value}pt`;
+  }
   const vertical = value(properties, 'vertAlign');
   if (vertical && !['baseline', 'superscript', 'subscript'].includes(vertical))
     unsupported('文字上下标');
@@ -549,6 +574,8 @@ function parseStyles(xml?: XMLDocument): {
       ? { backgroundColor: run.backgroundColor || null }
       : {}),
     ...(run.fontSize ? { fontSize: Number(run.fontSize.replace(/pt$/, '')) } : {}),
+    ...(run.letterSpacing !== undefined ? { letterSpacing: parseFloat(run.letterSpacing) } : {}),
+    ...(run.baselineShift !== undefined ? { baselineShift: parseFloat(run.baselineShift) } : {}),
   });
   const paragraphKeys = [
     'textAlign',
@@ -660,8 +687,15 @@ function marks(appearance: Appearance): NonNullable<StudioRichNode['marks']> {
     if (appearance[key]) result.push({ type: key });
   if (appearance.script) result.push({ type: appearance.script });
   const attrs: Record<string, unknown> = {};
-  for (const key of ['fontFamily', 'fontSize', 'color', 'backgroundColor'] as const)
-    if (appearance[key]) attrs[key] = appearance[key];
+  for (const key of [
+    'fontFamily',
+    'fontSize',
+    'color',
+    'backgroundColor',
+    'letterSpacing',
+    'baselineShift',
+  ] as const)
+    if (appearance[key] !== undefined) attrs[key] = appearance[key];
   if (Object.keys(attrs).length) result.push({ type: 'textStyle', attrs });
   return result;
 }
@@ -691,7 +725,11 @@ function parseComplexField(
     const properties = child(run, 'rPr');
     const characterStyle = context.styles.get(value(properties, 'rStyle'));
     if (characterStyle?.paragraph.studioUnsupported) unsupported('文字样式');
-    if (properties && (separated || index === firstIndex))
+    // Field terminators have no visible text and must not replace a zero run override.
+    if (
+      properties &&
+      (index === firstIndex || (separated && elements(run).some((item) => item.localName === 't')))
+    )
       appearance = runProperties(properties, { ...inherited, ...characterStyle?.run });
     const runItems = elements(run);
     for (let runIndex = 0; runIndex < runItems.length; runIndex++) {
@@ -1441,8 +1479,18 @@ function runOptions(
         'fontSize',
         'color',
         'backgroundColor',
+        'letterSpacing',
+        'baselineShift',
       ]);
       const attrs = mark.attrs || {};
+      for (const key of ['letterSpacing', 'baselineShift'] as WordMetric[]) {
+        if (attrs[key] === undefined || attrs[key] === null) continue;
+        const metric = wordMetricPoints(attrs[key], key);
+        if (metric === null) unsupported('字符间距或位置的范围/精度');
+        if (key === 'letterSpacing')
+          options = { ...options, characterSpacing: Math.round(metric * 20) };
+        else options = { ...options, position: `${metric}pt` };
+      }
       if (attrs.fontFamily) options = { ...options, font: safeFont(String(attrs.fontFamily)) };
       if (attrs.fontSize) {
         const match = /^(\d+(?:\.\d+)?)(pt|px)$/.exec(String(attrs.fontSize));
@@ -1473,6 +1521,12 @@ function runOptions(
           : { type: actual.underline ? UnderlineType.SINGLE : UnderlineType.NONE },
       font: actual.fontFamily === inherited.fontFamily ? undefined : safeFont(actual.fontFamily),
       size: actual.fontSize === inherited.fontSize ? undefined : actual.fontSize * 2,
+      characterSpacing:
+        actual.letterSpacing === inherited.letterSpacing
+          ? undefined
+          : Math.round(actual.letterSpacing * 20),
+      position:
+        actual.baselineShift === inherited.baselineShift ? undefined : `${actual.baselineShift}pt`,
       color:
         actual.color.toLowerCase() === inherited.color.toLowerCase()
           ? undefined
@@ -1488,6 +1542,25 @@ function runOptions(
   return { options, href };
 }
 
+class MetricTextRun extends TextRun {
+  constructor(options: IRunOptions) {
+    super(options);
+    // docx omits numeric zero; a zero override must cancel inherited spacing.
+    if (options.characterSpacing === 0)
+      this.properties.push(new ImportedXmlComponent('w:spacing', { 'w:val': '0' }));
+  }
+}
+
+class MetricImageRun extends ImageRun {
+  constructor(options: IImageOptions) {
+    super(options);
+    if (options.run?.characterSpacing === 0)
+      this.root
+        .find((child): child is RunProperties => child instanceof RunProperties)
+        ?.push(new ImportedXmlComponent('w:spacing', { 'w:val': '0' }));
+  }
+}
+
 function inlineChildren(
   nodes: StudioRichNode[] = [],
   inherited?: Required<StudioWordCharacterStyle>
@@ -1500,7 +1573,7 @@ function inlineChildren(
         unsupported('页码域');
       const { options, href } = runOptions({ ...node, text: '' }, inherited);
       if (href) unsupported('包含超链接的页码域');
-      return new TextRun({
+      return new MetricTextRun({
         ...options,
         children: [node.attrs?.kind === 'total' ? PageNumber.TOTAL_PAGES : PageNumber.CURRENT],
       });
@@ -1510,7 +1583,7 @@ function inlineChildren(
       const layout = wordImageLayout(node.attrs?.layout);
       const { data, type } = embeddedImageData(node.attrs?.src);
       const { options, href } = runOptions({ ...node, text: '' }, inherited);
-      const run = new ImageRun({
+      const run = new MetricImageRun({
         type,
         data,
         ...(layout
@@ -1569,14 +1642,14 @@ function inlineChildren(
     if (node.type !== 'text') throw new Error(`DOCX 导出尚未支持 ${node.type} 行内元素。`);
     const { options, href } = runOptions(node, inherited);
     const run = node.text?.includes('\t')
-      ? new TextRun({
+      ? new MetricTextRun({
           ...options,
           text: undefined,
           children: node.text
             .split('\t')
             .flatMap((part, index) => (index ? [new Tab(), part] : [part])),
         })
-      : new TextRun(options);
+      : new MetricTextRun(options);
     return href ? new ExternalHyperlink({ link: href, children: [run] }) : run;
   });
 }
@@ -1643,6 +1716,12 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
     run: {
       ...(style.run?.fontFamily ? { font: safeFont(style.run.fontFamily) } : {}),
       ...(style.run?.fontSize !== undefined ? { size: style.run.fontSize * 2 } : {}),
+      ...(style.run?.letterSpacing !== undefined
+        ? { characterSpacing: Math.round(style.run.letterSpacing * 20) }
+        : {}),
+      ...(style.run?.baselineShift !== undefined
+        ? { position: `${style.run.baselineShift}pt` as const }
+        : {}),
       ...(style.run?.bold !== undefined ? { bold: style.run.bold } : {}),
       ...(style.run?.italic !== undefined ? { italics: style.run.italic } : {}),
       ...(style.run?.strike !== undefined ? { strike: style.run.strike } : {}),
@@ -2020,6 +2099,7 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
   });
   if (
     !paragraphStyles.some((style) => style.autoUpdate) &&
+    !paragraphStyles.some((style) => style.run?.letterSpacing === 0) &&
     !imageLayouts.some((layout) => layout.polygon || layout.zIndex === 0)
   )
     return new Blob([bytes], { type: MIME });
@@ -2030,6 +2110,18 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
       new RegExp(`(<w:style\\b[^>]*\\bw:styleId="${nativeStyleId(style.id)}"[^>]*>)`),
       '$1<w:autoRedefine/>'
     );
+  zip.file('word/styles.xml', stylesXml);
+  for (const style of paragraphStyles.filter((item) => item.run?.letterSpacing === 0)) {
+    stylesXml = stylesXml.replace(
+      new RegExp(
+        `<w:style\\b[^>]*\\bw:styleId="${nativeStyleId(style.id)}"[^>]*>[\\s\\S]*?<\\/w:style>`
+      ),
+      (native) =>
+        native.includes('<w:rPr>')
+          ? native.replace('</w:rPr>', '<w:spacing w:val="0"/></w:rPr>')
+          : native.replace('</w:style>', '<w:rPr><w:spacing w:val="0"/></w:rPr></w:style>')
+    );
+  }
   zip.file('word/styles.xml', stylesXml);
   for (const [path, root] of [
     ['word/document.xml', document.content],

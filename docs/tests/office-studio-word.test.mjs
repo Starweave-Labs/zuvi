@@ -16,9 +16,11 @@ const xml = new JSDOM().window;
 const exports = {};
 const styleExports = {};
 const fontExports = {};
+const metricExports = {};
 const imageExports = {};
 for (const [file, target] of [
   ['studio-font-input.ts', fontExports],
+  ['studio-word-metrics.ts', metricExports],
   ['studio-word-styles.ts', styleExports],
   ['studio-word-images.ts', imageExports],
   ['studio-word-image-preview.ts', imageExports],
@@ -39,7 +41,12 @@ for (const [file, target] of [
     ).outputText,
     {
       exports: target,
-      require: (id) => (id === './studio-font-input' ? fontExports : uiRequire(id)),
+      require: (id) =>
+        id === './studio-word-metrics'
+          ? metricExports
+          : id === './studio-font-input'
+            ? fontExports
+            : uiRequire(id),
     }
   );
 }
@@ -60,11 +67,13 @@ runInNewContext(
   {
     exports,
     require: (id) =>
-      id.endsWith('/studio-word-styles')
-        ? styleExports
-        : id.endsWith('/studio-word-images')
-          ? imageExports
-          : require(id),
+      id.endsWith('/studio-word-metrics')
+        ? metricExports
+        : id.endsWith('/studio-word-styles')
+          ? styleExports
+          : id.endsWith('/studio-word-images')
+            ? imageExports
+            : require(id),
     Blob,
     crypto: webcrypto,
     DOMParser: xml.DOMParser,
@@ -75,6 +84,172 @@ runInNewContext(
 );
 const { importStudioWord, exportStudioWord } = exports;
 const W = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';
+
+test('signed native run spacing and position preserve fonts, scripts, header/footer and repeated DOCX edits', async () => {
+  const source = await fixture(
+    '<w:p><w:r><w:rPr><w:b/><w:sz w:val="28"/><w:spacing w:val="24"/><w:position w:val="4"/><w:vertAlign w:val="superscript"/></w:rPr><w:t>A</w:t></w:r><w:r><w:rPr><w:i/><w:sz w:val="60"/><w:spacing w:val="-10"/><w:position w:val="-5"/></w:rPr><w:t>B</w:t></w:r></w:p>'
+  );
+  let document = await importStudioWord(source, 'metrics.docx');
+  const style = (node) => node.marks?.find((mark) => mark.type === 'textStyle')?.attrs;
+  const runs = () => find(document.content, 'text');
+  assert.equal(style(runs()[0]).letterSpacing, '1.2pt');
+  assert.equal(style(runs()[0]).baselineShift, '2pt');
+  assert.equal(style(runs()[1]).letterSpacing, '-0.5pt');
+  assert.equal(style(runs()[1]).baselineShift, '-2.5pt');
+  document.content.content[0].content[0].text = 'edited A';
+  document.header = {
+    type: 'doc',
+    content: [
+      {
+        type: 'paragraph',
+        content: [
+          text('Header', [
+            { type: 'textStyle', attrs: { letterSpacing: '0.3pt', baselineShift: '1.5pt' } },
+          ]),
+        ],
+      },
+    ],
+  };
+  document.footer = {
+    type: 'doc',
+    content: [
+      {
+        type: 'paragraph',
+        content: [
+          text('Footer', [
+            { type: 'textStyle', attrs: { letterSpacing: '0pt', baselineShift: '-1.5pt' } },
+          ]),
+        ],
+      },
+    ],
+  };
+  for (let pass = 0; pass < 2; pass++) {
+    const saved = await exportStudioWord(document);
+    const zip = await JSZip.loadAsync(await saved.arrayBuffer());
+    const native = parse(await zip.file('word/document.xml').async('string'));
+    assert.equal(
+      [...native.getElementsByTagNameNS(W, 'spacing')]
+        .find((p) => p.parentElement.localName === 'rPr')
+        .getAttributeNS(W, 'val'),
+      '24'
+    );
+    assert.equal(native.getElementsByTagNameNS(W, 'position')[0].getAttributeNS(W, 'val'), '2pt');
+    document = await importStudioWord(saved, 'Reopened.docx');
+    assert.equal(runs()[0].text, 'edited A');
+    assert.equal(style(runs()[0]).fontSize, '14pt');
+    assert.ok(runs()[0].marks.some((mark) => mark.type === 'superscript'));
+    assert.equal(style(runs()[1]).fontSize, '30pt');
+    assert.equal(style(runs()[0]).letterSpacing, '1.2pt');
+    assert.equal(style(runs()[1]).baselineShift, '-2.5pt');
+    assert.equal(style(find(document.header, 'text')[0]).baselineShift, '1.5pt');
+    assert.equal(style(find(document.footer, 'text')[0]).baselineShift, '-1.5pt');
+  }
+});
+
+test('style inheritance and explicit zero spacing/position overrides survive native DOCX serialization', async () => {
+  const source = await fixture(
+    '<w:p><w:pPr><w:pStyle w:val="wide"/></w:pPr><w:r><w:t>inherit</w:t></w:r><w:r><w:rPr><w:spacing w:val="0"/><w:position w:val="0"/></w:rPr><w:t>direct zero</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="reset"/></w:pPr><w:r><w:t>child zero</w:t></w:r></w:p>',
+    {
+      'word/styles.xml': `<w:styles xmlns:w="${W}"><w:style w:type="paragraph" w:styleId="wide"><w:name w:val="Wide"/><w:rPr><w:spacing w:val="40"/><w:position w:val="6"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="reset"><w:name w:val="Reset"/><w:basedOn w:val="wide"/><w:rPr><w:spacing w:val="0"/><w:position w:val="0"/></w:rPr></w:style></w:styles>`,
+    }
+  );
+  let document = await importStudioWord(source, 'Inherited.docx');
+  for (let pass = 0; pass < 2; pass++) {
+    const saved = await exportStudioWord(document);
+    const zip = await JSZip.loadAsync(await saved.arrayBuffer());
+    const native = parse(await zip.file('word/document.xml').async('string'));
+    assert.ok(
+      [...native.getElementsByTagNameNS(W, 'spacing')].some(
+        (p) => p.getAttributeNS(W, 'val') === '0'
+      )
+    );
+    const styles = parse(await zip.file('word/styles.xml').async('string'));
+    const zero = [...styles.getElementsByTagNameNS(W, 'style')].find(
+      (s) => s.getElementsByTagNameNS(W, 'name')[0]?.getAttributeNS(W, 'val') === 'Reset'
+    );
+    assert.equal(
+      [...zero.getElementsByTagNameNS(W, 'spacing')]
+        .find((p) => p.parentElement.localName === 'rPr')
+        .getAttributeNS(W, 'val'),
+      '0'
+    );
+    document = await importStudioWord(saved, 'Inherited.docx');
+    const runs = find(document.content, 'text');
+    const attrs = runs.map((n) => n.marks.find((m) => m.type === 'textStyle').attrs);
+    assert.deepEqual(
+      attrs.map((a) => [a.letterSpacing, a.baselineShift]),
+      [
+        ['2pt', '3pt'],
+        ['0pt', '0pt'],
+        ['0pt', '0pt'],
+      ]
+    );
+  }
+});
+
+test('explicit zero run metrics also cancel inherited values on images and page fields', async () => {
+  const source = model([
+    {
+      type: 'paragraph',
+      attrs: { paragraphStyle: 'wide', paragraphStyleMaterialized: true },
+      content: [
+        {
+          type: 'image',
+          attrs: {
+            src: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Y3nRmwAAAAASUVORK5CYII=',
+            width: 10,
+            height: 10,
+            alt: 'zero',
+          },
+          marks: [{ type: 'textStyle', attrs: { letterSpacing: '0pt', baselineShift: '0pt' } }],
+        },
+        {
+          type: 'pageNumber',
+          attrs: { kind: 'current' },
+          marks: [{ type: 'textStyle', attrs: { letterSpacing: '0pt', baselineShift: '0pt' } }],
+        },
+      ],
+    },
+  ]);
+  source.content.attrs = {
+    paragraphStyles: [{ id: 'wide', name: 'Wide', run: { letterSpacing: 2, baselineShift: 3 } }],
+  };
+  const file = await exportStudioWord(source);
+  const zip = await JSZip.loadAsync(await file.arrayBuffer());
+  const native = parse(await zip.file('word/document.xml').async('string'));
+  const resets = [...native.getElementsByTagNameNS(W, 'spacing')].filter(
+    (p) => p.parentElement.localName === 'rPr' && p.getAttributeNS(W, 'val') === '0'
+  );
+  assert.equal(resets.length, 2);
+  const reopened = await importStudioWord(file, 'Reset.docx');
+  for (const node of [
+    ...find(reopened.content, 'image'),
+    ...find(reopened.content, 'pageNumber'),
+  ]) {
+    const attrs = node.marks.find((mark) => mark.type === 'textStyle').attrs;
+    assert.equal(attrs.letterSpacing, '0pt', node.type);
+    assert.equal(attrs.baselineShift, '0pt', node.type);
+  }
+});
+
+test('invalid character metrics are refused without changing the original model', async () => {
+  await assert.rejects(
+    importStudioWord(
+      await fixture('<w:p><w:r><w:rPr><w:spacing w:val="1.5"/></w:rPr><w:t>A</w:t></w:r></w:p>'),
+      'Invalid.docx'
+    ),
+    /字符间距/
+  );
+  const doc = model([
+    {
+      type: 'paragraph',
+      content: [text('safe', [{ type: 'textStyle', attrs: { letterSpacing: '0.01pt' } }])],
+    },
+  ]);
+  const before = JSON.stringify(doc);
+  await assert.rejects(exportStudioWord(doc), /字符间距/);
+  assert.equal(JSON.stringify(doc), before);
+});
 
 test('native tabs, repeated spaces, nonbreaking spaces and line breaks retain their original characters and formatting across DOCX edits and repeated saves', async () => {
   const source = await fixture(

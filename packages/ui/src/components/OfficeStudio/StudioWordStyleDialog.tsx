@@ -86,7 +86,7 @@ export function StudioWordStyleDialog({
         .filter(([, input]) => input !== '')
         .map(([key, input]) => [
           key,
-          key === 'fontSize'
+          ['fontSize', 'letterSpacing', 'baselineShift'].includes(key)
             ? Number(input)
             : key === 'backgroundColor' && input === '__clear'
               ? null
@@ -201,6 +201,18 @@ export function StudioWordStyleDialog({
                 onChange={(event) => changeRun('fontSize', event.target.value)}
               />
             </label>
+            {(['letterSpacing', 'baselineShift'] as const).map((key) => (
+              <label key={key}>
+                {key === 'letterSpacing' ? '字符间距（pt）' : '字符位置（pt）'}
+                <Input
+                  aria-label={`样式${key === 'letterSpacing' ? '字符间距' : '字符位置'}`}
+                  inputMode="decimal"
+                  value={run[key] ?? ''}
+                  placeholder={`继承：${base.run[key]}`}
+                  onChange={(event) => changeRun(key, event.target.value)}
+                />
+              </label>
+            ))}
             {FLAGS.map(([key, label]) => (
               <label key={key}>
                 {label}
@@ -289,6 +301,9 @@ export function StudioWordStyleDialog({
             style={{
               fontFamily: studioFontFamilyCss(preview.run.fontFamily),
               fontSize: `${preview.run.fontSize}pt`,
+              letterSpacing: `${preview.run.letterSpacing}pt`,
+              position: 'relative',
+              top: `${-preview.run.baselineShift}pt`,
               fontWeight: preview.run.bold ? 'bold' : 'normal',
               fontStyle: preview.run.italic ? 'italic' : 'normal',
               textDecoration:

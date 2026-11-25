@@ -22,6 +22,7 @@ import {
 } from '../../../../../packages/ui/src/components/OfficeStudio/studio-sheet-model';
 import { studioConditionalCellStyle } from '../../../../../packages/ui/src/components/OfficeStudio/studio-sheet-rules';
 import { studioNumberFormatColor } from '../../../../../packages/ui/src/components/OfficeStudio/studio-number-format';
+import { wordMetricCss } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-metrics';
 import { wordImageLayout } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-images';
 import { wordImageCss } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-image-preview';
 import {
@@ -80,7 +81,9 @@ function rich(
   let text =
     node.type === 'text'
       ? escape(node.text)
-      : (node.content ?? []).map((child) => rich(child, page, total, floating)).join('');
+      : node.type === 'pageNumber'
+        ? String(node.attrs?.kind === 'total' ? total : page)
+        : (node.content ?? []).map((child) => rich(child, page, total, floating)).join('');
   for (const mark of node.marks ?? []) {
     const tag = (
       {
@@ -96,6 +99,9 @@ function rich(
     else if (mark.type === 'textStyle') {
       const attrs = mark.attrs ?? {};
       const styles: string[] = [];
+      const metric = wordMetricCss(attrs);
+      if (metric.letterSpacing) styles.push(`letter-spacing:${metric.letterSpacing}`);
+      if (metric.top) styles.push(`position:relative;top:${metric.top}`);
       if (color(attrs.color)) styles.push(`color:${color(attrs.color)}`);
       if (color(attrs.backgroundColor))
         styles.push(`background-color:${color(attrs.backgroundColor)}`);
@@ -154,7 +160,7 @@ function rich(
       ? `<span class="studio-print-image-anchor">${printed}</span>`
       : printed;
   }
-  if (node.type === 'pageNumber') return String(attrs.kind === 'total' ? total : page);
+  if (node.type === 'pageNumber') return text;
   if (node.type === 'hardBreak') return '<br>';
   if (node.type === 'horizontalRule') return '<hr>';
   if (node.type === 'pageBreak') return '<div class="studio-print-break"></div>';
