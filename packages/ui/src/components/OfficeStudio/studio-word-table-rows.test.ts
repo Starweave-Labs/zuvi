@@ -8,12 +8,115 @@ import { wordMergedRowHeight, wordRowCss, wordRowProperties } from './studio-wor
 import {
   WordTableRowProperties,
   wordDistributeRows,
+  wordResizeRow,
   wordDistributeColumns,
   wordSelectedRows,
   wordSetRowProperties,
 } from './studio-word-table-row-extension';
 
 describe('Word table row properties', () => {
+  it('cancels active drag on document replacement and loss of edit permission', () => {
+    const editor = new Editor({
+      extensions: [StarterKit, TableKit, WordTableRowProperties],
+      content: {
+        type: 'doc',
+        content: [
+          {
+            type: 'table',
+            content: [
+              {
+                type: 'tableRow',
+                attrs: { rowHeight: 24, rowHeightRule: 'exact' },
+                content: [
+                  {
+                    type: 'tableCell',
+                    content: [{ type: 'paragraph', content: [{ type: 'text', text: 'row' }] }],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    });
+    try {
+      editor.commands.setTextSelection(4);
+      const row = editor.view.nodeDOM(1) as HTMLElement;
+      row.getBoundingClientRect = () =>
+        ({ top: 0, bottom: 32, height: 32, left: 0, width: 300 }) as DOMRect;
+      const start = () =>
+        row.dispatchEvent(new MouseEvent('pointerdown', { bubbles: true, button: 0, clientY: 31 }));
+      start();
+      expect(document.querySelector('[data-word-row-resize-guide]')).not.toBeNull();
+      editor.view.dispatch(editor.state.tr.insertText('changed', 4));
+      expect(document.querySelector('[data-word-row-resize-guide]')).toBeNull();
+      document.dispatchEvent(new MouseEvent('pointerup', { bubbles: true, clientY: 63 }));
+      expect(editor.state.doc.nodeAt(1)!.attrs.rowHeight).toBe(24);
+      start();
+      expect(document.querySelector('[data-word-row-resize-guide]')).not.toBeNull();
+      editor.view.dom.dispatchEvent(new CompositionEvent('compositionstart', { bubbles: true }));
+      expect(document.querySelector('[data-word-row-resize-guide]')).toBeNull();
+      document.dispatchEvent(new MouseEvent('pointerup', { bubbles: true, clientY: 63 }));
+      expect(editor.state.doc.nodeAt(1)!.attrs.rowHeight).toBe(24);
+      editor.view.dom.dispatchEvent(new CompositionEvent('compositionend', { bubbles: true }));
+      vi.spyOn(editor.view, 'composing', 'get').mockReturnValue(false);
+      start();
+      editor.setEditable(false);
+      expect(document.querySelector('[data-word-row-resize-guide]')).toBeNull();
+      document.dispatchEvent(new MouseEvent('pointerup', { bubbles: true, clientY: 63 }));
+      expect(editor.state.doc.nodeAt(1)!.attrs.rowHeight).toBe(24);
+    } finally {
+      editor.destroy();
+    }
+  });
+
+  it('commits resized row height once while retaining exact rule, split policy and text', () => {
+    const editor = new Editor({
+      extensions: [StarterKit, TableKit, WordTableRowProperties],
+      content: {
+        type: 'doc',
+        content: [
+          {
+            type: 'table',
+            content: [
+              {
+                type: 'tableRow',
+                attrs: { rowHeight: 24, rowHeightRule: 'exact', allowSplit: false },
+                content: [
+                  {
+                    type: 'tableCell',
+                    content: [{ type: 'paragraph', content: [{ type: 'text', text: 'Retained' }] }],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    });
+    try {
+      editor.commands.setTextSelection(4);
+      const original = JSON.stringify(editor.getJSON());
+      expect(wordResizeRow(editor, 1, 48)).toBe(true);
+      expect(wordRowProperties(editor.state.doc.nodeAt(1)!.attrs)).toEqual({
+        rowHeight: 48,
+        rowHeightRule: 'exact',
+        allowSplit: false,
+      });
+      expect(editor.commands.undo()).toBe(true);
+      expect(JSON.stringify(editor.getJSON())).toBe(original);
+      expect(editor.commands.redo()).toBe(true);
+      expect(editor.getText()).toContain('Retained');
+      const saved = JSON.stringify(editor.getJSON());
+      expect(() => wordResizeRow(editor, 1, NaN)).toThrow();
+      expect(JSON.stringify(editor.getJSON())).toBe(saved);
+      editor.setEditable(false);
+      expect(wordResizeRow(editor, 1, 36)).toBe(false);
+    } finally {
+      editor.destroy();
+    }
+  });
+
   it('rejects distribution during editor composition without changing history or document', () => {
     const editor = new Editor({
       extensions: [StarterKit, TableKit, WordTableRowProperties],

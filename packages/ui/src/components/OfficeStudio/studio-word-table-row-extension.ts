@@ -179,9 +179,30 @@ export function wordDistributeColumns(editor: Editor): boolean {
   editor.view.dispatch(transaction);
   return true;
 }
+export function wordResizeRow(editor: Editor, position: number, height: number): boolean {
+  if (editor.isDestroyed || !editor.isEditable || editor.view.composing) return false;
+  const node = editor.state.doc.nodeAt(position);
+  if (node?.type.name !== 'tableRow') return false;
+  const old = wordRowProperties(node.attrs);
+  const properties = wordRowProperties({
+    ...old,
+    rowHeight: height,
+    rowHeightRule: old.rowHeightRule === 'exact' ? 'exact' : 'atLeast',
+  });
+  if (JSON.stringify(old) === JSON.stringify(properties)) return false;
+  editor.view.dispatch(
+    closeHistory(editor.state.tr).setNodeMarkup(position, undefined, {
+      ...node.attrs,
+      ...properties,
+    })
+  );
+  return true;
+}
+
 export const WordTableRowProperties = Extension.create({
   name: 'studioWordTableRowProperties',
   addProseMirrorPlugins() {
+    const editor = this.editor;
     return [
       new Plugin({
         key: fixedCellKey,
@@ -191,6 +212,136 @@ export const WordTableRowProperties = Extension.create({
             transaction.docChanged ? fixedCells(transaction.doc) : previous,
         },
         props: { decorations: (state) => fixedCellKey.getState(state) ?? DecorationSet.empty },
+        view: (view) => {
+          const owner = view.dom.ownerDocument;
+          const win = owner.defaultView!;
+          let drag: {
+            position: number;
+            document: ProseMirrorNode;
+            pointer: number;
+            startY: number;
+            height: number;
+            scale: number;
+            value: number;
+            guide: HTMLElement;
+          } | null = null;
+          const cancel = () => {
+            drag?.guide.remove();
+            drag = null;
+            view.dom.removeAttribute('data-word-row-resizing');
+          };
+          const targetRow = (event: PointerEvent) => {
+            const target = event.target;
+            if (!(target instanceof win.HTMLElement)) return null;
+            const row = target.closest<HTMLElement>('tr:not([data-word-auto-page-row])');
+            if (!row || !view.dom.contains(row) || row.closest('[data-word-repeated-header]'))
+              return null;
+            const rect = row.getBoundingClientRect();
+            return Math.abs(event.clientY - rect.bottom) <= 5 ? row : null;
+          };
+          const down = (event: PointerEvent) => {
+            if (event.button !== 0 || drag || !view.editable || view.composing) return;
+            const row = targetRow(event);
+            if (!row) return;
+            const position = view.posAtDOM(row, 0) - 1;
+            if (view.state.doc.nodeAt(position)?.type.name !== 'tableRow') return;
+            const scale =
+              view.dom.offsetWidth > 0
+                ? view.dom.getBoundingClientRect().width / view.dom.offsetWidth
+                : 1;
+            if (!Number.isFinite(scale) || scale <= 0) return;
+            const rect = row.getBoundingClientRect();
+            const gaps = Array.from(
+              row.querySelectorAll<HTMLElement>('[data-word-auto-page-gap]')
+            ).reduce((sum, gap) => sum + gap.getBoundingClientRect().height, 0);
+            const height = ((rect.height - gaps) / scale) * 0.75;
+            if (height <= 0 || height > 2000) return;
+            const guide = owner.createElement('div');
+            guide.dataset.wordRowResizeGuide = '';
+            guide.setAttribute('role', 'status');
+            guide.setAttribute('aria-live', 'polite');
+            guide.style.cssText = `position:fixed;pointer-events:none;z-index:10000;border-top:2px solid var(--zuvi-color-primary,#1677ff);left:${rect.left}px;top:${rect.bottom}px;width:${rect.width}px;font:12px sans-serif;color:var(--zuvi-color-primary,#1677ff);`;
+            guide.textContent = `${height.toFixed(1)} 磅`;
+            owner.body.append(guide);
+            drag = {
+              position,
+              document: view.state.doc,
+              pointer: event.pointerId,
+              startY: event.clientY,
+              height,
+              scale,
+              value: height,
+              guide,
+            };
+            view.dom.dataset.wordRowResizing = 'true';
+            event.preventDefault();
+            event.stopPropagation();
+          };
+          const move = (event: PointerEvent) => {
+            if (!drag || event.pointerId !== drag.pointer) return;
+            if (!view.editable || view.composing || view.state.doc !== drag.document) {
+              cancel();
+              return;
+            }
+            drag.value =
+              Math.round(
+                Math.max(
+                  0,
+                  Math.min(2000, drag.height + ((event.clientY - drag.startY) / drag.scale) * 0.75)
+                ) * 2
+              ) / 2;
+            drag.guide.style.top = `${drag.startY + ((drag.value - drag.height) / 0.75) * drag.scale}px`;
+            drag.guide.textContent = `${drag.value.toFixed(1)} 磅`;
+            event.preventDefault();
+          };
+          const up = (event: PointerEvent) => {
+            if (!drag || event.pointerId !== drag.pointer) return;
+            // Pointerup may arrive at a new coordinate without a preceding move.
+            move(event);
+            if (!drag) return;
+            const current = drag;
+            cancel();
+            if (Math.abs(event.clientY - current.startY) < 2 || view.state.doc !== current.document)
+              return;
+            wordResizeRow(editor, current.position, current.value);
+          };
+          const keydown = (event: KeyboardEvent) => {
+            if (drag && event.key === 'Escape') {
+              cancel();
+              event.preventDefault();
+              event.stopPropagation();
+            }
+          };
+          const pointerCancel = (event: PointerEvent) => {
+            if (drag?.pointer === event.pointerId) cancel();
+          };
+          view.dom.addEventListener('pointerdown', down, true);
+          view.dom.addEventListener('compositionstart', cancel, true);
+          owner.addEventListener('pointermove', move);
+          owner.addEventListener('pointerup', up);
+          owner.addEventListener('pointercancel', pointerCancel);
+          owner.addEventListener('keydown', keydown, true);
+          win.addEventListener('blur', cancel);
+          owner.addEventListener('scroll', cancel, true);
+          win.addEventListener('resize', cancel);
+          return {
+            update: () => {
+              if (drag && (!view.editable || view.state.doc !== drag.document)) cancel();
+            },
+            destroy: () => {
+              cancel();
+              view.dom.removeEventListener('pointerdown', down, true);
+              view.dom.removeEventListener('compositionstart', cancel, true);
+              owner.removeEventListener('pointermove', move);
+              owner.removeEventListener('pointerup', up);
+              owner.removeEventListener('pointercancel', pointerCancel);
+              owner.removeEventListener('keydown', keydown, true);
+              win.removeEventListener('blur', cancel);
+              owner.removeEventListener('scroll', cancel, true);
+              win.removeEventListener('resize', cancel);
+            },
+          };
+        },
       }),
     ];
   },

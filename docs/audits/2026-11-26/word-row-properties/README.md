@@ -82,3 +82,26 @@ ZUVI“平均分布表格列”入口作用于光标所在最内层表格的全�
 后续全UI134文件/2425项通过；docs306项无跳过通过；其余包tokens3/icons7/i18n37/blocks68/CLI26/MCP13通过。入口gzip124925字节通过。全仓E2E仍在运行，未视为通过；前述27caa5e结果与当前后续验证分开记录。
 
 平均分布后续最终全仓E2E255项全部通过；UI2425/docs306无跳过/其余包/类型/lint/构建/browser/Registry92/消费者358/分发/体积全部通过。恢复本轮自动重写的历史证据文件，保留新增分布及间距证据。本批提交不代表W025完整完成，行高拖动及极端复杂布局/完整键盘IME浏览器矩阵仍未闭环。
+
+
+## 行高边界拖动初始切片（007b80f之后，未提交）
+
+行底部5px命中区域启动指针拖动，固定定位预览线显示行高；拖动期间模型和实际行布局不变。Escape/pointercancel/窗口失焦/文档变化取消；松开写一次行高事务，固定规则及allowSplit保留，其余规则使用最小高度；0–2000磅范围按0.5磅吸附。模型11项、类型/lint通过。真实边界拖动24→48磅、预览不写模型、Escape取消、一次撤销重做和 `drag-source.docx` → `drag-roundtrip.docx` 重开通过。首次浏览器48.03误差通过0.5磅吸附修复；导入等待检查已改为等待正文确认。
+
+此切片尚未完整验证pointercancel/只读/受控拒绝/IME/主题320px/缩放/合并及多页行边界、键盘可操作入口与重复保存。W025仍部分实现，前述007b80f全仓结果不覆盖本轮拖动。
+
+行高拖动补充：真实pointercancel取消后保持24磅，readonly拖动不产生预览或修改。320px适应宽度视图用实际比例拖动48→60磅通过，暗色69磅预览Escape取消后仍60磅，明暗截图 `drag-preview-*-320.png` 已检查预览线与行底边一致。当前拖动专项仍只有一次原生保存重开，未完成合并/跨页行、受控拒绝/文档切换/IME/键盘矩阵及最终全仓回归。
+
+拖动守卫补充：正文改变或只读切换立即取消，后续pointerup不写原行高，真实插件模型12项通过。滚动/窗口resize取消；pointerup先按最终坐标刷新候选值，避免缺末次pointermove的过期提交。完整拖动浏览器专项复验通过，`drag-roundtrip-2.docx` 第二次原生重开保留48磅，明暗320px/缩放/取消/只读检查仍通过。类型/lint通过。本轮仍未提交与全仓回归，合并/分页行及键盘/IME浏览器矩阵继续未闭环。
+
+合并行拖动专项通过：首行24→48磅，次行36保持；纵向合并累计高度60→84磅，单事务撤销重做恢复60/84，正文不丢失。`merged-drag-source.docx` → `merged-drag-roundtrip-1.docx` → `merged-drag-roundtrip-2.docx` 两次真实导入保留rowspan2及48/36磅，浏览器专项1项通过。输入法启动即时取消预览新增守卫，模型12项通过；浏览器复验与本批最终全仓检查进行中。W025仍部分实现。
+
+本批输入法浏览器取消已复验：真实拖动预览期间触发compositionstart立即撤掉预览，pointerup后仍24磅，compositionend后再次拖动可正常提交。整组行属性12项通过（48.1秒）。类型/lint、全仓build/browser、Registry、消费者源码编译、分发与体积已通过，入口gzip124926字节，预算124928未调整。全仓包测试和全仓E2E尚在运行，未计为通过。
+
+W028下一步源码核对：当前行内分片明确只允许无重复表头、单个非纵向合并单元格、单文字段落且非固定高度；多单元格尚无同步分片模型。页间widget只在一个文档位置插入空隙，直接放宽childCount守卫会造成各列不同步，不能视为多列跨页实现。下一批需同时记录各cell分片位置、共同纵坐标和页间高度，并验证正文可编辑、选区、表头及打印。
+
+本批全仓回归首次并发运行：UI2425通过/2个Excel交互超时，E2E253通过/4失败，均保留失败日志。两个Excel用例单独复验通过，完整UI单独重跑134文件2427项通过；docs310项无跳过、blocks68以及其他包通过。E2E单线程复验：DataGrid性能0.3ms、选择性粘贴18.9秒、行分片通过；非打印字符测试原先立即读取打印样式，随后仅等待DOM选区折叠就输入，存在检查时机竞态。现等待样式及编辑器模型选区折叠后继续，真实键盘输入、原文、历史、DOCX往返全部通过。重开分页检查移到确认文档名称并启用分页之后，不依赖旧文档装饰。修正后专项2项通过。完整单线程E2E已启动，未完成；未放宽任何超时或性能/体积预算。
+
+Pinned sdkjs pagination review: commit 9d2138866d929be32f1d107e8b5bfae36156e097, TableRecalculate.js blob a70c723444b9873e2c6239bee19171c87c4cec77. Lines 2930-2964 calculate each cell page and use the maximum content bottom as the shared row bottom; lines 3039-3093 coordinate mixed empty/nonempty first-page cells; lines 3440-3465 apply vertical alignment only on the first cell page. ZUVI still needs per-cell fragments and a shared page bottom, independent of document nodes/history. This reference is implementation guidance, not ZUVI acceptance evidence. Source: https://github.com/ONLYOFFICE/sdkjs/blob/9d2138866d929be32f1d107e8b5bfae36156e097/word/Editor/Table/TableRecalculate.js#L2930
+
+行高拖动批次最终全仓单线程E2E257项全部通过（原并发失败日志保留；不放宽预算）。全UI134文件2427项、docs310项无跳过、其他包、类型/lint/build/browser/Registry/消费者/分发/体积通过。恢复自动重写的历史证据，仅保留本批新增拖动/合并往返与截图。下一批独立分片模型尚未接入，不属于本批257项E2E验收范围；W025/W028及159项完整目标仍未完成。

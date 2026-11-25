@@ -1,0 +1,11 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/StudioSheet.test.tsx (86 tests | 84 skipped) 1320ms
+   ✓ StudioSheet rules and fill > creates, recalculates and deletes a conditional format with undo and rule editing 792ms
+   ✓ StudioSheet rules and fill > uses a numeric validation list and preserves a rejected draft across pointer selection and atomic paste 527ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed | 84 skipped (86)
+   Start at  05:29:23
+   Duration  2.55s (transform 492ms, setup 75ms, collect 720ms, tests 1.32s, environment 211ms, prepare 50ms)

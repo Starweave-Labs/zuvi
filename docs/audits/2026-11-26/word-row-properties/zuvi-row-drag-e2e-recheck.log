@@ -1,0 +1,54 @@
+[WebServer] (node:96178) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:96194) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+[datagrid-perf] resize input-to-frame latency: 0.3ms
+(node:96216) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [chromium] › e2e/datagrid-prototype.spec.ts:90:1 › DataGrid 原型：列宽更新延迟在预算内，按住不动不计入渲染耗时 (2.1s)
+  ✓  2 [chromium] › e2e/office-studio-sheet-paste-options.spec.ts:7:1 › skip blanks and arithmetic Paste Special preserve native data and formulas, cancel errors atomically and distinguish reopened empty text (18.9s)
+  ✘  3 [chromium] › e2e/office-studio-word-nonprinting.spec.ts:19:1 › Word nonprinting markers preserve text, selection, document history, native DOCX whitespace and printing (7.2s)
+  ✓  4 [chromium] › e2e/office-studio-word-rows.spec.ts:332:1 › allowed single-cell row fragments across pages while prohibited row remains intact (3.3s)
+
+
+  1) [chromium] › e2e/office-studio-word-nonprinting.spec.ts:19:1 › Word nonprinting markers preserve text, selection, document history, native DOCX whitespace and printing
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('textbox', { name: 'Word 文档正文', exact: true }).locator('p').first()
+    Expected substring: "Next line edited"
+    Received string:    " edited"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" getByRole('textbox', { name: 'Word 文档正文', exact: true }).locator('p').first() with timeout 5000ms
+      - waiting for getByRole('textbox', { name: 'Word 文档正文', exact: true }).locator('p').first()
+        14 × locator resolved to <p data-word-tabs="[]" data-word-surface="{}" data-word-default-tab="36" data-word-decimal-symbol="." data-word-paragraph-direct="[]">…</p>
+           - unexpected value " edited"
+
+
+      119 |   await expect.poll(() => page.evaluate(() => window.getSelection()?.isCollapsed)).toBe(true);
+      120 |   await body.pressSequentially(' edited');
+    > 121 |   await expect(paragraph).toContainText('Next line edited');
+          |                           ^
+      122 |   await body.press('Control+Shift+8');
+      123 |   await expect(toggle).toHaveAttribute('aria-pressed', 'false');
+      124 |   await page.getByRole('button', { name: '撤销', exact: true }).click();
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-nonprinting.spec.ts:121:27
+
+    Error Context: test-results/office-studio-word-nonprin-d17b9-OCX-whitespace-and-printing-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/office-studio-word-nonprin-d17b9-OCX-whitespace-and-printing-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/office-studio-word-nonprin-d17b9-OCX-whitespace-and-printing-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/office-studio-word-nonprinting.spec.ts:19:1 › Word nonprinting markers preserve text, selection, document history, native DOCX whitespace and printing
+  3 passed (33.9s)

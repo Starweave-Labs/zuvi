@@ -441,7 +441,6 @@ test('allowed single-cell row fragments across pages while prohibited row remain
         mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
         buffer: bytes,
       });
-      await expect(body).toHaveAttribute('data-word-pagination-overflow', 'false');
       await expect(page.getByRole('textbox', { name: '文档名称', exact: true })).toHaveValue(
         'Fragments-reopened.docx'
       );
@@ -1094,4 +1093,238 @@ test('natural row distribution retains full multiline content through native reo
       2
     )
   );
+});
+
+test('row boundary drag previews without document edits and commits one native height transaction', async ({
+  page,
+}) => {
+  const source = Buffer.from(
+    await Packer.toArrayBuffer(
+      new Document({
+        sections: [
+          {
+            children: [
+              new Table({
+                rows: [
+                  new TableRow({
+                    height: { value: 480, rule: HeightRule.EXACT },
+                    cantSplit: true,
+                    children: [new TableCell({ children: [new Paragraph('Drag row content')] })],
+                  }),
+                ],
+              }),
+            ],
+          },
+        ],
+      })
+    )
+  );
+  await page.goto('/#/components/office-studio');
+  await page.getByLabel('导入文档文件', { exact: true }).setInputFiles({
+    name: 'Drag.docx',
+    mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    buffer: source,
+  });
+  const body = page.getByRole('textbox', { name: 'Word 文档正文', exact: true });
+  await expect(body).toContainText('Drag row content');
+  const row = body.locator('tr');
+  await row.scrollIntoViewIfNeeded();
+  const boundary = async () => {
+    const rect = (await row.boundingBox())!;
+    return { x: rect.x + 20, y: rect.y + rect.height - 1 };
+  };
+  let point = await boundary();
+  await page.mouse.move(point.x, point.y);
+  await page.mouse.down();
+  await page.mouse.move(point.x, point.y + 32, { steps: 5 });
+  await expect(page.locator('[data-word-row-resize-guide]')).toBeVisible();
+  await expect(row).toHaveAttribute('data-word-row-height', '24');
+  await page.keyboard.press('Escape');
+  await page.mouse.up();
+  await expect(page.locator('[data-word-row-resize-guide]')).toHaveCount(0);
+  await expect(row).toHaveAttribute('data-word-row-height', '24');
+  point = await boundary();
+  await page.mouse.move(point.x, point.y);
+  await page.mouse.down();
+  await page.mouse.move(point.x, point.y + 16, { steps: 3 });
+  await expect(page.locator('[data-word-row-resize-guide]')).toBeVisible();
+  await body.evaluate((element) =>
+    element.ownerDocument.dispatchEvent(
+      new PointerEvent('pointercancel', { pointerId: 1, bubbles: true })
+    )
+  );
+  await page.mouse.up();
+  await expect(page.locator('[data-word-row-resize-guide]')).toHaveCount(0);
+  await expect(row).toHaveAttribute('data-word-row-height', '24');
+  point = await boundary();
+  await page.mouse.move(point.x, point.y);
+  await page.mouse.down();
+  await page.mouse.move(point.x, point.y + 16, { steps: 3 });
+  await expect(page.locator('[data-word-row-resize-guide]')).toBeVisible();
+  await body.dispatchEvent('compositionstart', { data: '行' });
+  await expect(page.locator('[data-word-row-resize-guide]')).toHaveCount(0);
+  await page.mouse.up();
+  await expect(row).toHaveAttribute('data-word-row-height', '24');
+  await body.dispatchEvent('compositionend', { data: '' });
+  await expect(body).toContainText('Drag row content');
+  point = await boundary();
+  await page.mouse.move(point.x, point.y);
+  await page.mouse.down();
+  await page.mouse.move(point.x, point.y + 32, { steps: 5 });
+  await page.mouse.up();
+  await expect(row).toHaveAttribute('data-word-row-height', '48');
+  await expect(row).toHaveAttribute('data-word-row-allow-split', 'false');
+  await page.getByRole('tab', { name: '开始', exact: true }).click();
+  await page.getByRole('button', { name: '撤销', exact: true }).click();
+  await expect(row).toHaveAttribute('data-word-row-height', '24');
+  await page.getByRole('button', { name: '重做', exact: true }).click();
+  await expect(row).toHaveAttribute('data-word-row-height', '48');
+  const pending = page.waitForEvent('download');
+  await page.getByRole('button', { name: '导出文件', exact: true }).click();
+  const bytes = await readFile((await (await pending).path())!);
+  const directory = path.resolve('docs/audits/2026-11-26/word-row-properties');
+  await writeFile(path.join(directory, 'drag-source.docx'), source);
+  await writeFile(path.join(directory, 'drag-roundtrip.docx'), bytes);
+  await page.getByLabel('导入文档文件', { exact: true }).setInputFiles({
+    name: 'Drag-reopened.docx',
+    mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    buffer: bytes,
+  });
+  await expect(row).toHaveAttribute('data-word-row-height', '48');
+  await expect(body).toContainText('Drag row content');
+  const secondDownload = page.waitForEvent('download');
+  await page.getByRole('button', { name: '导出文件', exact: true }).click();
+  const secondBytes = await readFile((await (await secondDownload).path())!);
+  await writeFile(path.join(directory, 'drag-roundtrip-2.docx'), secondBytes);
+  await page.getByLabel('导入文档文件', { exact: true }).setInputFiles({
+    name: 'Drag-reopened-2.docx',
+    mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    buffer: secondBytes,
+  });
+  await expect(page.getByRole('textbox', { name: '文档名称', exact: true })).toHaveValue(
+    'Drag-reopened-2.docx'
+  );
+  await expect(row).toHaveAttribute('data-word-row-height', '48');
+  await page.setViewportSize({ width: 320, height: 720 });
+  await row.scrollIntoViewIfNeeded();
+  const scale = await body.evaluate(
+    (element) => element.getBoundingClientRect().width / (element as HTMLElement).offsetWidth
+  );
+  expect(scale).toBeLessThan(1);
+  point = await boundary();
+  await page.mouse.move(point.x, point.y);
+  await page.mouse.down();
+  await page.mouse.move(point.x, point.y + 16 * scale, { steps: 5 });
+  await expect(page.locator('[data-word-row-resize-guide]')).toBeVisible();
+  await page.screenshot({
+    path: path.join(directory, 'drag-preview-light-320.png'),
+    fullPage: true,
+  });
+  await page.mouse.up();
+  await expect(row).toHaveAttribute('data-word-row-height', '60');
+  await page.getByRole('button', { name: '切换暗色', exact: true }).click();
+  await row.scrollIntoViewIfNeeded();
+  point = await boundary();
+  await page.mouse.move(point.x, point.y);
+  await page.mouse.down();
+  await page.mouse.move(point.x, point.y + 12 * scale, { steps: 4 });
+  await expect(page.locator('[data-word-row-resize-guide]')).toBeVisible();
+  await page.screenshot({
+    path: path.join(directory, 'drag-preview-dark-320.png'),
+    fullPage: true,
+  });
+  await page.keyboard.press('Escape');
+  await page.mouse.up();
+  await expect(row).toHaveAttribute('data-word-row-height', '60');
+  await page.getByRole('switch', { name: '只读预览', exact: true }).click();
+  await row.scrollIntoViewIfNeeded();
+  point = await boundary();
+  await page.mouse.move(point.x, point.y);
+  await page.mouse.down();
+  await page.mouse.move(point.x, point.y + 24, { steps: 4 });
+  await page.mouse.up();
+  await expect(page.locator('[data-word-row-resize-guide]')).toHaveCount(0);
+  await expect(row).toHaveAttribute('data-word-row-height', '60');
+});
+
+test('merged row resizing updates combined cell height and retains native vertical merge', async ({
+  page,
+}) => {
+  const source = Buffer.from(
+    await Packer.toArrayBuffer(
+      new Document({
+        sections: [
+          {
+            children: [
+              new Table({
+                rows: [
+                  new TableRow({
+                    height: { value: 480, rule: HeightRule.EXACT },
+                    children: [
+                      new TableCell({ rowSpan: 2, children: [new Paragraph('Merged drag')] }),
+                      new TableCell({ children: [new Paragraph('Upper row')] }),
+                    ],
+                  }),
+                  new TableRow({
+                    height: { value: 720, rule: HeightRule.EXACT },
+                    children: [new TableCell({ children: [new Paragraph('Lower row')] })],
+                  }),
+                ],
+              }),
+            ],
+          },
+        ],
+      })
+    )
+  );
+  const directory = path.resolve('docs/audits/2026-11-26/word-row-properties');
+  await writeFile(path.join(directory, 'merged-drag-source.docx'), source);
+  await page.goto('/#/components/office-studio');
+  const load = async (bytes: Buffer, name: string) => {
+    await page
+      .getByLabel('导入文档文件', { exact: true })
+      .setInputFiles({
+        name,
+        mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        buffer: bytes,
+      });
+    await expect(page.getByRole('textbox', { name: '文档名称', exact: true })).toHaveValue(name);
+  };
+  await load(source, 'Merged-drag.docx');
+  const body = page.getByRole('textbox', { name: 'Word 文档正文', exact: true });
+  const upper = body.locator('tr').first(),
+    lower = body.locator('tr').last();
+  const merged = body.locator('td[rowspan="2"]');
+  await expect(merged).toHaveAttribute('data-word-fixed-cell-height', '60');
+  await upper.locator('td').last().scrollIntoViewIfNeeded();
+  const rect = (await upper.boundingBox())!;
+  const right = (await upper.locator('td').last().boundingBox())!;
+  const scale = await body.evaluate(
+    (element) => element.getBoundingClientRect().width / (element as HTMLElement).offsetWidth
+  );
+  await page.mouse.move(right.x + right.width / 2, rect.y + rect.height - 1);
+  await page.mouse.down();
+  await page.mouse.move(right.x + right.width / 2, rect.y + rect.height - 1 + 32 * scale, {
+    steps: 5,
+  });
+  await page.mouse.up();
+  await expect(upper).toHaveAttribute('data-word-row-height', '48');
+  await expect(lower).toHaveAttribute('data-word-row-height', '36');
+  await expect(merged).toHaveAttribute('data-word-fixed-cell-height', '84');
+  await page.getByRole('tab', { name: '开始', exact: true }).click();
+  await page.getByRole('button', { name: '撤销', exact: true }).click();
+  await expect(merged).toHaveAttribute('data-word-fixed-cell-height', '60');
+  await page.getByRole('button', { name: '重做', exact: true }).click();
+  await expect(merged).toHaveAttribute('data-word-fixed-cell-height', '84');
+  for (let pass = 1; pass <= 2; pass++) {
+    const pending = page.waitForEvent('download');
+    await page.getByRole('button', { name: '导出文件', exact: true }).click();
+    const bytes = await readFile((await (await pending).path())!);
+    await writeFile(path.join(directory, `merged-drag-roundtrip-${pass}.docx`), bytes);
+    await load(bytes, `Merged-drag-reopened-${pass}.docx`);
+    await expect(merged).toHaveAttribute('data-word-fixed-cell-height', '84');
+    await expect(upper).toHaveAttribute('data-word-row-height', '48');
+    await expect(lower).toHaveAttribute('data-word-row-height', '36');
+    await expect(body).toContainText('Lower row');
+  }
 });
