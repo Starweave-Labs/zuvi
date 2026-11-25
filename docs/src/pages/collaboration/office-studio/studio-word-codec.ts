@@ -1,5 +1,22 @@
 import JSZip from 'jszip';
-import { wordTabStops, wordMergeTabStops, wordDecimalSymbol, wordDefaultTabStop } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-tabs';
+import {
+  materializeWordNumbering,
+  wordNumberingCatalog,
+  wordNodeNumbering,
+} from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-numbering';
+import {
+  readNativeWordNumbering,
+  nativeWordNumberingConfig,
+  nativeWordParagraphNumbering,
+  patchNativeWordNumbering,
+  type NativeWordNumbering,
+} from './studio-word-numbering-codec';
+import {
+  wordTabStops,
+  wordMergeTabStops,
+  wordDecimalSymbol,
+  wordDefaultTabStop,
+} from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-tabs';
 import {
   wordLineUnits,
   wordParagraphNumber,
@@ -22,7 +39,6 @@ import {
   ImportedXmlComponent,
   TextWrappingType,
   type IFloating,
-  LevelFormat,
   Packer,
   PageBreak as DocxPageBreak,
   PageOrientation,
@@ -155,14 +171,20 @@ type Style = {
   heading?: number;
   quote?: boolean;
 };
-type ListInfo = { id: string; level: number; type: 'bulletList' | 'orderedList'; start: number };
+type ListInfo = {
+  id: string;
+  level: number;
+  type: 'bulletList' | 'orderedList';
+  start: number;
+  instanceId: string;
+  format: string;
+};
 type ParsedParagraph = { nodes: StudioRichNode[]; list?: ListInfo; quote?: boolean };
-type NumberLevel = { format: string; start: number; template: string };
 type ImportContext = {
   styles: Map<string, Style>;
   defaults: Style;
   relationships: Map<string, string>;
-  numbering: Map<string, Map<number, NumberLevel>>;
+  numbering: NativeWordNumbering;
   images: Map<string, string>;
   styleModels: Map<string, StudioWordParagraphStyle>;
   usedStyles: Set<string>;
@@ -416,6 +438,16 @@ function paragraphProperties(
     unsupported('段落定位或方向');
   const tabs = paragraphTabs(properties);
   if (tabs !== undefined) result.tabStops = ownOnly ? tabs : wordMergeTabStops(base.tabStops, tabs);
+  const numbering = child(properties, 'numPr');
+  if (numbering)
+    result.numberingNative = {
+      numId: value(
+        numbering,
+        'numId',
+        String((base.numberingNative as { numId?: string } | undefined)?.numId ?? '')
+      ),
+      level: value(numbering, 'ilvl', '0'),
+    };
   const outline = value(properties, 'outlineLvl');
   if (
     outline &&
@@ -489,20 +521,27 @@ function paragraphProperties(
 function paragraphTabs(properties?: Element) {
   const tabs = child(properties, 'tabs');
   if (!tabs) return undefined;
-  return wordTabStops(elements(tabs).map((tab) => {
-    if (tab.localName !== 'tab') unsupported('制表位子元素');
-    const alignment = attr(tab), leader = attr(tab, 'leader');
-    return {
-      position: number(attr(tab, 'pos'), '制表位位置', 0, 31680) / 20,
-      alignment: ({ start: 'left', end: 'right' } as Record<string, string>)[alignment] || alignment,
-      ...(leader ? { leader } : {}),
-    };
-  }));
+  return wordTabStops(
+    elements(tabs).map((tab) => {
+      if (tab.localName !== 'tab') unsupported('制表位子元素');
+      const alignment = attr(tab),
+        leader = attr(tab, 'leader');
+      return {
+        position: number(attr(tab, 'pos'), '制表位位置', 0, 31680) / 20,
+        alignment:
+          ({ start: 'left', end: 'right' } as Record<string, string>)[alignment] || alignment,
+        ...(leader ? { leader } : {}),
+      };
+    })
+  );
 }
 
-const nativeTabs = (input: unknown) => wordTabStops(input).map((stop) => ({
-  position: Math.round(stop.position * 20), type: stop.alignment, leader: stop.leader,
-}));
+const nativeTabs = (input: unknown) =>
+  wordTabStops(input).map((stop) => ({
+    position: Math.round(stop.position * 20),
+    type: stop.alignment,
+    leader: stop.leader,
+  }));
 
 function parseStyles(xml?: XMLDocument): {
   defaults: Style;
@@ -565,9 +604,7 @@ function parseStyles(xml?: XMLDocument): {
         ? Number(/([1-6])$/.exec(value(source, 'name', id))?.[1])
         : undefined,
     };
-    if (
-      !elements(child(source, 'rPr')).some((element) => UNSUPPORTED_RUN.has(element.localName))
-    ) {
+    if (!elements(child(source, 'rPr')).some((element) => UNSUPPORTED_RUN.has(element.localName))) {
       try {
         resolve(id);
       } catch {
@@ -668,7 +705,9 @@ function parseStyles(xml?: XMLDocument): {
         ? { headingLevel: (resolved.heading || 0) as StudioWordParagraphStyle['headingLevel'] }
         : {}),
       autoUpdate: enabled(child(source, 'autoRedefine')),
-      tabStops: baseModel ? paragraphTabs(child(source, 'pPr')) : wordMergeTabStops(nativeBase.paragraph.tabStops, paragraphTabs(child(source, 'pPr'))),
+      tabStops: baseModel
+        ? paragraphTabs(child(source, 'pPr'))
+        : wordMergeTabStops(nativeBase.paragraph.tabStops, paragraphTabs(child(source, 'pPr'))),
       run: {
         ...(!baseModel
           ? Object.fromEntries(
@@ -692,41 +731,6 @@ function parseStyles(xml?: XMLDocument): {
     });
   }
   return { defaults, styles, styleModels };
-}
-
-function parseNumbering(xml?: XMLDocument): Map<string, Map<number, NumberLevel>> {
-  const result = new Map<string, Map<number, NumberLevel>>();
-  const abstracts = new Map<string, Map<number, NumberLevel>>();
-  const root = xml?.documentElement;
-  for (const definition of elements(root).filter(
-    (element) => element.localName === 'abstractNum'
-  )) {
-    const levels = new Map<number, NumberLevel>();
-    for (const level of elements(definition).filter((element) => element.localName === 'lvl')) {
-      levels.set(Number(attr(level, 'ilvl')), {
-        format: value(level, 'numFmt'),
-        start: Number(value(level, 'start', '1')),
-        template: value(level, 'lvlText'),
-      });
-    }
-    abstracts.set(attr(definition, 'abstractNumId'), levels);
-  }
-  for (const definition of elements(root).filter((element) => element.localName === 'num')) {
-    const levels = new Map(abstracts.get(value(definition, 'abstractNumId')) || []);
-    for (const override of elements(definition).filter(
-      (element) => element.localName === 'lvlOverride'
-    )) {
-      const index = Number(attr(override, 'ilvl'));
-      const base = levels.get(index);
-      if (base)
-        levels.set(index, {
-          ...base,
-          start: Number(value(override, 'startOverride', String(base.start))),
-        });
-    }
-    result.set(attr(definition, 'numId'), levels);
-  }
-  return result;
 }
 
 function marks(appearance: Appearance): NonNullable<StudioRichNode['marks']> {
@@ -1126,21 +1130,35 @@ function parseParagraph(element: Element, context: ImportContext): ParsedParagra
   }
   const listProperties = child(properties, 'numPr');
   let list: ListInfo | undefined;
-  const numId = value(listProperties, 'numId');
+  const inheritedNumbering = attrs.numberingNative as { numId: string; level: string } | undefined;
+  delete attrs.numberingNative;
+  const numId = value(listProperties, 'numId', inheritedNumbering?.numId ?? '');
+  if (numId === '0') attrs.numberingDisabled = true;
   if (numId && numId !== '0') {
-    const level = number(value(listProperties, 'ilvl', '0'), '列表层级', 0, 8);
-    const definition = context.numbering.get(numId)?.get(level);
-    if (!definition || !['bullet', 'decimal'].includes(definition.format))
-      unsupported('列表编号格式');
-    if (definition.format === 'decimal' && definition.template !== `%${level + 1}.`)
-      unsupported('复合列表编号');
-    number(definition.start, '列表起始编号', 1, 100000);
-    list = {
-      id: numId,
-      level,
-      type: definition.format === 'bullet' ? 'bulletList' : 'orderedList',
-      start: definition.start,
-    };
+    const level = number(
+      value(listProperties, 'ilvl', inheritedNumbering?.level ?? '0'),
+      '列表层级',
+      0,
+      8
+    );
+    const reference = context.numbering.references.get(numId);
+    const instance = context.numbering.catalog.instances.find(
+      (entry) => entry.id === reference?.instanceId
+    );
+    const definition = context.numbering.catalog.definitions.find(
+      (entry) => entry.id === reference?.definitionId
+    )?.levels[level];
+    if (!definition || !instance) unsupported('列表编号格式');
+    attrs.numbering = { instanceId: instance.id, level };
+    if (!headingLevel && (definition.format === 'bullet' || definition.text === `%${level + 1}.`))
+      list = {
+        id: numId,
+        level,
+        type: definition.format === 'bullet' ? 'bulletList' : 'orderedList',
+        start: instance.startOverrides?.[level] ?? definition.start,
+        instanceId: instance.id,
+        format: definition.format,
+      };
   }
   const border = child(properties, 'pBdr');
   const leftBorder = child(border, 'left');
@@ -1200,7 +1218,11 @@ function parseBlocks(parent: Element, context: ImportContext): StudioRichNode[] 
       continue;
     }
     const info = parsed.list;
-    if (info.level > stack.length) unsupported('缺少上级的嵌套列表');
+    if (info.level > stack.length) {
+      stack.length = 0;
+      output.push(...parsed.nodes);
+      continue;
+    }
     stack.splice(info.level + 1);
     if (
       !stack[info.level] ||
@@ -1209,7 +1231,23 @@ function parseBlocks(parent: Element, context: ImportContext): StudioRichNode[] 
     ) {
       const list: StudioRichNode = {
         type: info.type,
-        ...(info.type === 'orderedList' ? { attrs: { start: info.start } } : {}),
+        attrs: {
+          numberingInstanceId: info.instanceId,
+          ...(info.type === 'orderedList'
+            ? {
+                start: info.start,
+                type: (
+                  {
+                    decimal: '1',
+                    upperRoman: 'I',
+                    lowerRoman: 'i',
+                    upperLetter: 'A',
+                    lowerLetter: 'a',
+                  } as Record<string, string>
+                )[info.format],
+              }
+            : {}),
+        },
         content: [],
       };
       if (info.level === 0) output.push(list);
@@ -1443,11 +1481,38 @@ export async function importStudioWord(source: Blob, name: string): Promise<Stud
   const page = parsePage(body);
   const budget: ImageBudget = { bytes: 0, sources: new Map() };
   const mainRelationships = await partRelationships(zip, 'word/document.xml', budget);
+  const parsedStyles = parseStyles(stylesXml);
+  const usedNumbers = new Set(
+    [
+      ...xml!.getElementsByTagNameNS(W, 'numId'),
+      ...(stylesXml?.getElementsByTagNameNS(W, 'numId') ?? []),
+    ]
+      .map((entry) => attr(entry))
+      .filter((id) => id !== '0')
+  );
+  for (const path of Object.keys(zip.files).filter((path) =>
+    /^word\/(header|footer)[^/]*\.xml$/.test(path)
+  )) {
+    const part = await readXml(zip, path);
+    for (const entry of part?.getElementsByTagNameNS(W, 'numId') ?? [])
+      if (attr(entry) !== '0') usedNumbers.add(attr(entry));
+  }
+  const nativeNumbering = readNativeWordNumbering(
+    numberingXml,
+    (id) =>
+      parsedStyles.styleModels.get(id)?.id ||
+      (id === 'Normal'
+        ? 'paragraph'
+        : /^Heading[1-6]$/i.test(id)
+          ? `heading-${id.slice(-1)}`
+          : undefined),
+    usedNumbers
+  );
   const context: ImportContext = {
-    ...parseStyles(stylesXml),
+    ...parsedStyles,
     relationships: mainRelationships.relationships,
     images: mainRelationships.images,
-    numbering: parseNumbering(numberingXml),
+    numbering: nativeNumbering,
     usedStyles: new Set(),
   };
   const content = parseBlocks(body, context);
@@ -1487,6 +1552,9 @@ export async function importStudioWord(source: Blob, name: string): Promise<Stud
     if (region === 'footer' && containsCurrentPageNumber(model)) regionDocuments.pageNumbers = true;
   }
   const definitions = [...context.styleModels.values()];
+  for (const definition of nativeNumbering.catalog.definitions)
+    for (const level of definition.levels)
+      if (level.paragraphStyle) context.usedStyles.add(level.paragraphStyle);
   for (const [nativeId, style] of context.styleModels)
     if (nativeId.startsWith('ZuviStyle_')) context.usedStyles.add(style.id);
   let previousSize = -1;
@@ -1504,15 +1572,34 @@ export async function importStudioWord(source: Blob, name: string): Promise<Stud
     id: `studio-word-${globalThis.crypto.randomUUID()}`,
     name: name || '未命名.docx',
     kind: 'word',
-    ...(child(settingsXml?.documentElement, 'decimalSymbol') ? {
-      decimalSymbol: wordDecimalSymbol(value(settingsXml?.documentElement, 'decimalSymbol')),
-    } : {}),
-    ...(child(settingsXml?.documentElement, 'defaultTabStop') ? {
-      defaultTabStop: wordDefaultTabStop(number(value(settingsXml?.documentElement, 'defaultTabStop'), '默认制表位', 1, 31680) / 20),
-    } : {}),
+    ...(child(settingsXml?.documentElement, 'decimalSymbol')
+      ? {
+          decimalSymbol: wordDecimalSymbol(value(settingsXml?.documentElement, 'decimalSymbol')),
+        }
+      : {}),
+    ...(child(settingsXml?.documentElement, 'defaultTabStop')
+      ? {
+          defaultTabStop: wordDefaultTabStop(
+            number(value(settingsXml?.documentElement, 'defaultTabStop'), '默认制表位', 1, 31680) /
+              20
+          ),
+        }
+      : {}),
     content: {
       type: 'doc',
-      ...(paragraphStyles.length ? { attrs: { paragraphStyles } } : {}),
+      ...(paragraphStyles.length || nativeNumbering.catalog.definitions.length
+        ? {
+            attrs: {
+              ...(paragraphStyles.length ? { paragraphStyles } : {}),
+              ...(nativeNumbering.catalog.definitions.length
+                ? {
+                    numberingDefinitions: nativeNumbering.catalog.definitions,
+                    numberingInstances: nativeNumbering.catalog.instances,
+                  }
+                : {}),
+            },
+          }
+        : {}),
       content: content.length ? content : [{ type: 'paragraph' }],
     },
     page,
@@ -1768,6 +1855,30 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
       ? { footer: materializeStudioWordStyles(document.footer, paragraphStyles) }
       : {}),
   };
+  let numbered = materializeWordNumbering(document.content);
+  let numberCatalog = wordNumberingCatalog(
+    numbered.attrs?.numberingDefinitions,
+    numbered.attrs?.numberingInstances
+  );
+  const numberedRegions: Pick<StudioWordDocument, 'header' | 'footer'> = {};
+  for (const region of ['header', 'footer'] as const)
+    if (document[region]) {
+      numberedRegions[region] = materializeWordNumbering(document[region]!, numberCatalog);
+      numberCatalog = wordNumberingCatalog(
+        numberedRegions[region]!.attrs?.numberingDefinitions,
+        numberedRegions[region]!.attrs?.numberingInstances
+      );
+    }
+  if (numberCatalog.definitions.length)
+    numbered = {
+      ...numbered,
+      attrs: {
+        ...numbered.attrs,
+        numberingDefinitions: numberCatalog.definitions,
+        numberingInstances: numberCatalog.instances,
+      },
+    };
+  document = { ...document, content: numbered, ...numberedRegions };
   const nativeStyleId = (id: string) =>
     id === 'paragraph'
       ? 'Normal'
@@ -1846,7 +1957,7 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
       },
     },
   }));
-  const numbering: NumberingDefinition[] = [];
+  const numbering: NumberingDefinition[] = nativeWordNumberingConfig(numberCatalog, nativeStyleId);
   const paragraph = (node: StudioRichNode, options: IParagraphOptions = {}) => {
     checkAttrs(node, [
       'level',
@@ -1865,8 +1976,13 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
       'paragraphStyleMaterialized',
       'paragraphStyleSnapshot',
       'tabStops',
+      'numbering',
+      'numberingDisabled',
     ]);
     const attrs = node.attrs || {};
+    if (attrs.numberingDisabled != null && typeof attrs.numberingDisabled !== 'boolean')
+      unsupported('编号禁用标记');
+    const numberRef = wordNodeNumbering(node, numberCatalog);
     const linkedStyle =
       typeof attrs.paragraphStyle === 'string'
         ? resolveStudioWordParagraphStyle(paragraphStyles, attrs.paragraphStyle)
@@ -1911,6 +2027,11 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
       unsupported('行距单位');
     return new Paragraph({
       ...options,
+      ...(attrs.numberingDisabled
+        ? { numbering: false }
+        : numberRef
+          ? { numbering: nativeWordParagraphNumbering(numberRef, numberCatalog) }
+          : {}),
       ...(attrs.tabStops != null ? { tabStops: nativeTabs(attrs.tabStops) } : {}),
       ...(linkedStyle ? { style: nativeStyleId(linkedStyle.id) } : {}),
       ...(linkedStyle && nodeLevel !== linkedStyle.headingLevel
@@ -1990,24 +2111,7 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
       } else if (node.type === 'bulletList' || node.type === 'orderedList') {
         const renderList = (list: StudioRichNode, level: number) => {
           if (level > 8) throw new Error('DOCX 列表最多支持 9 级。');
-          checkAttrs(list, ['start', 'type']);
-          if (list.attrs?.type != null && list.attrs.type !== '1')
-            unsupported('字母或特殊列表编号');
-          const reference = `zuvi-list-${numbering.length}`;
-          numbering.push({
-            reference,
-            levels: Array.from({ length: 9 }, (_, index) => ({
-              level: index,
-              format: list.type === 'bulletList' ? LevelFormat.BULLET : LevelFormat.DECIMAL,
-              text: list.type === 'bulletList' ? '•' : `%${index + 1}.`,
-              start:
-                list.type === 'orderedList'
-                  ? number(list.attrs?.start ?? 1, '列表起始编号', 1, 100000)
-                  : 1,
-              alignment: AlignmentType.LEFT,
-              style: { paragraph: { indent: { left: (index + 1) * 720, hanging: 360 } } },
-            })),
-          });
+          checkAttrs(list, ['start', 'type', 'numberingInstanceId']);
           for (const item of list.content || []) {
             if (
               item.type !== 'listItem' ||
@@ -2015,8 +2119,12 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
             )
               throw new Error('列表项需要以段落开头。');
             checkAttrs(item, []);
-            result.push(paragraph(item.content![0], { numbering: { reference, level } }));
+            result.push(paragraph(item.content![0]));
             for (const nested of item.content!.slice(1)) {
+              if (['paragraph', 'heading'].includes(nested.type)) {
+                result.push(paragraph(nested));
+                continue;
+              }
               if (!['bulletList', 'orderedList'].includes(nested.type))
                 throw new Error(
                   'DOCX 首版支持每个列表项一个段落及嵌套列表，请用 Shift+Enter 在项目内换行。'
@@ -2202,7 +2310,14 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
       },
     ],
   });
-  file.Settings.addChildElement(ImportedXmlComponent.fromXmlString(`<w:decimalSymbol w:val="${wordDecimalSymbol(document.decimalSymbol)}"/>`));
+  file.Settings.addChildElement(
+    ImportedXmlComponent.fromXmlString(
+      `<w:decimalSymbol w:val="${wordDecimalSymbol(document.decimalSymbol)}"/>`
+    )
+  );
+  numberCatalog.instances.forEach((instance, index) =>
+    file.Numbering.createConcreteNumberingInstance(`zuvi-numbering-${instance.definitionId}`, index)
+  );
   const bytes = await Packer.toArrayBuffer(file);
   const imageLayouts = [document.content, document.header, document.footer].flatMap((root) => {
     const result: StudioWordImageLayout[] = [];
@@ -2216,12 +2331,22 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
     return result;
   });
   if (
+    !numberCatalog.definitions.length &&
     !paragraphStyles.some((style) => style.autoUpdate) &&
     !paragraphStyles.some((style) => style.run?.letterSpacing === 0) &&
     !imageLayouts.some((layout) => layout.polygon || layout.zIndex === 0)
   )
     return new Blob([bytes], { type: MIME });
   const zip = await JSZip.loadAsync(bytes);
+  if (numberCatalog.definitions.length)
+    zip.file(
+      'word/numbering.xml',
+      patchNativeWordNumbering(
+        await zip.file('word/numbering.xml')!.async('string'),
+        numberCatalog,
+        file.Numbering.ConcreteNumbering
+      )
+    );
   let stylesXml = await zip.file('word/styles.xml')!.async('string');
   for (const style of paragraphStyles.filter((item) => item.autoUpdate))
     stylesXml = stylesXml.replace(

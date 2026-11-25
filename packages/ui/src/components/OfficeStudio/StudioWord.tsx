@@ -50,6 +50,9 @@ import { StudioWordParagraphDialog } from './StudioWordParagraphDialog';
 import { StudioWordTabsDialog } from './StudioWordTabsDialog';
 import { WordTabs, wordSelectionTabStops, wordSetTabStops, wordInsertTab, wordRefreshTabLayout } from './studio-word-tab-extension';
 import { StudioWordRuler as WordRuler } from './StudioWordRuler';
+import { WordNumbering, wordSetNumberedContent, wordNumberingContext, wordContinueNumbering, wordRestartNumbering, wordChangeNumberingLevel, wordSetNumberingCatalog, wordToggleNumberingPreset, wordEditorNumbering, wordApplyNumbering } from './studio-word-numbering-extension';
+import { StudioWordNumberingDialog } from './StudioWordNumberingDialog';
+import { materializeWordNumbering, wordNumberingCatalog, type WordNumberingCatalog } from './studio-word-numbering';
 import {
   WordCharacterLayout,
   wordSelectionMetrics,
@@ -110,6 +113,7 @@ const PageBreak = Node.create({
     { 'data-word-page-break': '', class: 'zuvi-studio-word-page-break', 'aria-label': '分页符' },
   ],
 });
+const numberedContent=(root:StudioRichNode,styles:StudioWordParagraphStyle[],catalog?:WordNumberingCatalog)=>materializeWordNumbering(materializeStudioWordStyles(root,styles),catalog);
 
 const EXTENSIONS = [
   StarterKit.configure({
@@ -239,6 +243,7 @@ function RegionEditor({
   paragraphStyles,
   defaultTabStop,
   decimalSymbol,
+  numberingCatalog,
 }: {
   region: WordRegion;
   documentId: string;
@@ -251,6 +256,7 @@ function RegionEditor({
   paragraphStyles: StudioWordParagraphStyle[];
   defaultTabStop?: number;
   decimalSymbol?: '.' | ',';
+  numberingCatalog:WordNumberingCatalog;
 }) {
   const latest = React.useRef({
     editable,
@@ -261,20 +267,22 @@ function RegionEditor({
     paragraphStyles,
     defaultTabStop,
     decimalSymbol,
+    numberingCatalog,
   });
-  latest.current = { editable, onChange, onReady, onActive, onImagePaste, paragraphStyles, defaultTabStop, decimalSymbol };
+  latest.current = { editable, onChange, onReady, onActive, onImagePaste, paragraphStyles, defaultTabStop, decimalSymbol, numberingCatalog };
   const [request, setRequest] = React.useState(0);
   const editor: Editor | null = useEditor(
     {
       extensions: [
         ...EXTENSIONS,
+        WordNumbering.configure({getCatalog:()=>latest.current.numberingCatalog}),
         WordTabs.configure({ getDefaultTabStop: () => latest.current.defaultTabStop ?? 36, getDecimalSymbol: () => latest.current.decimalSymbol }),
         WordParagraphStyles.configure({
           autoUpdate: false,
           getStyles: () => latest.current.paragraphStyles,
         }),
       ],
-      content: materializeStudioWordStyles(content, paragraphStyles),
+      content: numberedContent(content, paragraphStyles, numberingCatalog),
       editable,
       immediatelyRender: false,
       shouldRerenderOnTransaction: false,
@@ -338,12 +346,10 @@ function RegionEditor({
       editor &&
       !editor.isDestroyed &&
       JSON.stringify(editor.getJSON()) !==
-        JSON.stringify(materializeStudioWordStyles(content, paragraphStyles))
+        JSON.stringify(numberedContent(content, paragraphStyles, numberingCatalog))
     )
-      editor.commands.setContent(materializeStudioWordStyles(content, paragraphStyles), {
-        emitUpdate: false,
-      });
-  }, [editor, content, request, paragraphStyles]);
+      wordSetNumberedContent(editor,numberedContent(content, paragraphStyles, numberingCatalog));
+  }, [editor, content, request, paragraphStyles, numberingCatalog]);
   return (
     <EditorContent
       editor={editor}
@@ -392,6 +398,8 @@ export function StudioWord({
   const [statisticsOpen, setStatisticsOpen] = React.useState(false);
   const [clipboardBusy, setClipboardBusy] = React.useState(false);
   const [tableRows, setTableRows] = React.useState('3');
+  const [numberStart,setNumberStart]=React.useState('1');
+  const [numberDialog,setNumberDialog]=React.useState<{editor:Editor;doc:Editor['state']['doc'];selection:Editor['state']['selection'];catalog:WordNumberingCatalog;currentId?:string;level:number}|null>(null);
   const [tableColumns, setTableColumns] = React.useState('3');
   const [tableHeader, setTableHeader] = React.useState(true);
   const [linkOpen, setLinkOpen] = React.useState(false);
@@ -428,6 +436,10 @@ export function StudioWord({
     () => validateStudioWordParagraphStyles(styleDefinitions),
     [styleDefinitions]
   );
+  const numberCatalog=React.useMemo(()=>{
+    const value=numberedContent(document.content,paragraphStyles);
+    return wordNumberingCatalog(value.attrs?.numberingDefinitions,value.attrs?.numberingInstances);
+  },[document.content,paragraphStyles]);
   const styleOptions = [
     ...STYLE_OPTIONS,
     ...paragraphStyles.map((style) => ({ value: style.id, label: style.name })),
@@ -455,9 +467,9 @@ export function StudioWord({
   const focusRegionRef = React.useRef<WordRegion | null>(null);
   const bodyEditor: Editor | null = useEditor(
     {
-      extensions: [...EXTENSIONS, WordParagraphStyles,
+      extensions: [...EXTENSIONS, WordParagraphStyles, WordNumbering,
         WordTabs.configure({ getDefaultTabStop: () => latest.current.document.defaultTabStop ?? 36, getDecimalSymbol: () => latest.current.document.decimalSymbol })],
-      content: materializeStudioWordStyles(document.content, paragraphStyles),
+      content: numberedContent(document.content, paragraphStyles),
       editable: editable && region === 'content',
       immediatelyRender: false,
       shouldRerenderOnTransaction: false,
@@ -547,6 +559,7 @@ export function StudioWord({
     setCharacterDialog(null);
     setParagraphDialog(null);
     setTabsDialog(null);
+    setNumberDialog(null);
     setNotice('');
   }, [document.id]);
   React.useLayoutEffect(() => {
@@ -588,6 +601,7 @@ export function StudioWord({
       if (!current || current.isDestroyed || !current.schema) return null;
       const style = current.getAttributes('textStyle');
       const paragraph = current.getAttributes('paragraph');
+      const numbered=wordNumberingContext(current);
       return {
         bold: current.isActive('bold'),
         italic: current.isActive('italic'),
@@ -597,10 +611,11 @@ export function StudioWord({
         subscript: current.isActive('subscript'),
         image: current.isActive('image') ? current.getAttributes('image') : null,
         matches: wordFindMatches(current, searchQuery, matchCase, formatCriteria),
-        bullet: current.isActive('bulletList'),
-        ordered: current.isActive('orderedList'),
-        canSinkList: current.can().sinkListItem('listItem'),
-        canLiftList: current.can().liftListItem('listItem'),
+        bullet: current.isActive('bulletList') || numbered?.level.format === 'bullet',
+        ordered: current.isActive('orderedList') || (!!numbered && numbered.level.format !== 'bullet'),
+        numbering: numbered,
+        canSinkList: current.isActive('listItem') ? current.can().sinkListItem('listItem') : !!numbered && numbered.ref.level+1<numbered.definition.levels.length,
+        canLiftList: current.isActive('listItem') ? current.can().liftListItem('listItem') : !!numbered && numbered.ref.level>0,
         align: (current.getAttributes('heading').textAlign ||
           current.getAttributes('paragraph').textAlign ||
           'left') as string,
@@ -691,9 +706,9 @@ export function StudioWord({
     if (!bodyEditor || bodyEditor.isDestroyed) return;
     // A host can reject an update without changing the content reference. Accepted
     // content already matches the editor, so leave its selection and history alone.
-    const content = materializeStudioWordStyles(document.content, paragraphStyles);
+    const content = numberedContent(document.content, paragraphStyles);
     if (JSON.stringify(bodyEditor.getJSON()) !== JSON.stringify(content)) {
-      bodyEditor.commands.setContent(content, { emitUpdate: false });
+      wordSetNumberedContent(bodyEditor,content);
     }
   }, [bodyEditor, document.content, contentRequest, paragraphStyles]);
 
@@ -783,6 +798,7 @@ export function StudioWord({
     if (state.editable)
       state.onChange({
         ...state.document,
+        ...(content.attrs?.numberingDefinitions ? {content:{...state.document.content,attrs:{...state.document.content.attrs,numberingDefinitions:content.attrs.numberingDefinitions,numberingInstances:content.attrs.numberingInstances}}}:{}),
         [name]: content,
         ...(name === 'footer' ? { pageNumbers: hasPageNumber(content) } : {}),
       });
@@ -1583,7 +1599,7 @@ export function StudioWord({
                 size="sm"
                 disabled={toolsDisabled}
                 onMouseDown={keepSelection}
-                onClick={() => editor?.chain().focus().toggleBulletList().run()}
+                onClick={() => {if(prepareTabAction()&&editor)try{wordToggleNumberingPreset(editor,'bullet');}catch(error){setNotice(error instanceof Error?error.message:'编号未修改。');}}}
               >
                 <span aria-hidden="true">• ≡</span>
               </Button>
@@ -1595,7 +1611,7 @@ export function StudioWord({
                 size="sm"
                 disabled={toolsDisabled}
                 onMouseDown={keepSelection}
-                onClick={() => editor?.chain().focus().toggleOrderedList().run()}
+                onClick={() => {if(prepareTabAction()&&editor)try{wordToggleNumberingPreset(editor,'decimal');}catch(error){setNotice(error instanceof Error?error.message:'编号未修改。');}}}
               >
                 <span aria-hidden="true">1. ≡</span>
               </Button>
@@ -1606,7 +1622,7 @@ export function StudioWord({
                 size="sm"
                 disabled={toolsDisabled || !selection?.canSinkList}
                 onMouseDown={keepSelection}
-                onClick={() => editor?.chain().focus().sinkListItem('listItem').run()}
+                onClick={() => {if(editor)try{if(editor.isActive('listItem'))editor.chain().focus().sinkListItem('listItem').run();else wordChangeNumberingLevel(editor,1);}catch(error){setNotice(error instanceof Error?error.message:'层级未修改。');}}}
               >
                 <span aria-hidden="true">1.1 →</span>
               </Button>
@@ -1617,7 +1633,7 @@ export function StudioWord({
                 size="sm"
                 disabled={toolsDisabled || !selection?.canLiftList}
                 onMouseDown={keepSelection}
-                onClick={() => editor?.chain().focus().liftListItem('listItem').run()}
+                onClick={() => {if(editor)try{if(editor.isActive('listItem'))editor.chain().focus().liftListItem('listItem').run();else wordChangeNumberingLevel(editor,-1);}catch(error){setNotice(error instanceof Error?error.message:'层级未修改。');}}}
               >
                 <span aria-hidden="true">← 1.1</span>
               </Button>
@@ -1643,6 +1659,32 @@ export function StudioWord({
               >
                 ≡ →
               </Button>
+              <Button size="sm" variant="ghost" disabled={toolsDisabled||!selection?.numbering} onMouseDown={keepSelection} onClick={()=>{
+                if(!prepareTabAction()||!editor)return;
+                try{setNotice(wordContinueNumbering(editor)?'已继续此前编号，可撤销恢复。':'没有可继续的此前编号。');}catch(error){setNotice(error instanceof Error?error.message:'编号未修改。');}
+              }}>继续编号</Button>
+              <Input aria-label="编号起始值" size="sm" value={numberStart} inputMode="numeric" disabled={toolsDisabled||!selection?.numbering} aria-invalid={!/^\d+$/.test(numberStart)||Number(numberStart)<1||Number(numberStart)>100000} onChange={(event)=>setNumberStart(event.target.value)} onKeyDown={(event)=>{
+                if(event.nativeEvent.isComposing||event.keyCode===229)return;
+                if(event.key==='Escape'){event.preventDefault();event.stopPropagation();setNumberStart('1');}
+                else if(event.key==='Enter'&&/^\d+$/.test(numberStart)&&Number(numberStart)>=1&&Number(numberStart)<=100000&&prepareTabAction()&&editor){event.preventDefault();try{wordRestartNumbering(editor,Number(numberStart));}catch(error){setNotice(error instanceof Error?error.message:'编号未修改。');}}
+              }} />
+              <Button size="sm" variant="ghost" disabled={toolsDisabled||!selection?.numbering||!/^\d+$/.test(numberStart)||Number(numberStart)<1||Number(numberStart)>100000} onMouseDown={keepSelection} onClick={()=>{
+                if(!prepareTabAction()||!editor)return;
+                try{wordRestartNumbering(editor,Number(numberStart));setNotice('已重新开始编号，可撤销恢复。');}catch(error){setNotice(error instanceof Error?error.message:'编号未修改。');}
+              }}>重新开始编号</Button>
+              <Select aria-label="编号格式" size="sm" disabled={toolsDisabled||!selection?.numbering} value={selection?.numbering?.level.format ?? 'decimal'}
+                options={[{value:'decimal',label:'1, 2, 3'},{value:'upperRoman',label:'I, II, III'},{value:'lowerRoman',label:'i, ii, iii'},{value:'upperLetter',label:'A, B, C'},{value:'lowerLetter',label:'a, b, c'},{value:'bullet',label:'• 项目符号'}]} onChange={(format)=>{
+                  if(!prepareTabAction()||!editor)return;
+                  const current=wordNumberingContext(editor);if(!current)return;
+                  const next=structuredClone(current.catalog),level=next.definitions.find((entry)=>entry.id===current.definition.id)!.levels[current.ref.level];
+                  level.format=format as typeof level.format;if(format==='bullet')level.text='•';else if(current.level.format==='bullet')level.text=`%${current.ref.level+1}.`;
+                  try{wordSetNumberingCatalog(editor,next);setNotice('已修改编号格式，可撤销恢复。');}catch(error){setNotice(error instanceof Error?error.message:'编号格式未修改。');}
+                }} />
+              <Button size="sm" variant="ghost" disabled={toolsDisabled} onMouseDown={keepSelection} onClick={()=>{
+                if(!prepareTabAction()||!editor)return;
+                const current=wordNumberingContext(editor);
+                setNumberDialog({editor,doc:editor.state.doc,selection:editor.state.selection,catalog:wordEditorNumbering(editor),currentId:current?.definition.id,level:current?.ref.level??0});
+              }}>多级编号定义</Button>
               <Select
                 aria-label="段落行距"
                 size="sm"
@@ -2749,6 +2791,7 @@ export function StudioWord({
                     documentId={document.id}
                     content={document.header}
                     paragraphStyles={paragraphStyles}
+                    numberingCatalog={numberCatalog}
                     defaultTabStop={document.defaultTabStop}
                     decimalSymbol={document.decimalSymbol}
                     editable={editable && region === 'header'}
@@ -2779,6 +2822,7 @@ export function StudioWord({
                     documentId={document.id}
                     content={document.footer}
                     paragraphStyles={paragraphStyles}
+                    numberingCatalog={numberCatalog}
                     defaultTabStop={document.defaultTabStop}
                     decimalSymbol={document.decimalSymbol}
                     editable={editable && region === 'footer'}
@@ -2824,6 +2868,15 @@ export function StudioWord({
           />
         </div>
       </div>
+      {numberDialog&&<StudioWordNumberingDialog catalog={numberDialog.catalog} currentId={numberDialog.currentId} currentLevel={numberDialog.level} styles={paragraphStyles} blocked={!editable}
+        onClose={()=>{setNumberDialog(null);if(!numberDialog.editor.isDestroyed)numberDialog.editor.commands.focus();}}
+        onSave={(value)=>{
+          const target=numberDialog.editor;
+          if(!latest.current.editable||target.isDestroyed||target!==editor||target.state.doc!==numberDialog.doc)throw new Error('文档或编辑区域已变化，请重新打开编号定义。');
+          target.view.dispatch(target.state.tr.setSelection(numberDialog.selection).setMeta('addToHistory',false));
+          const changed=value.apply?wordApplyNumbering(target,value.definitionId,value.level,value.catalog):wordSetNumberingCatalog(target,value.catalog);
+          setNotice(changed?'已保存编号定义，可撤销恢复。':'编号定义保持原样。');
+        }} />}
       {tabsDialog && (
         <StudioWordTabsDialog values={tabsDialog.values} defaultTabStop={document.defaultTabStop} blocked={!editable}
           onClose={() => { setTabsDialog(null); if (!tabsDialog.editor.isDestroyed) tabsDialog.editor.commands.focus(); }}

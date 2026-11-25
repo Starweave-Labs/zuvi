@@ -19,12 +19,15 @@ const fontExports = {};
 const metricExports = {};
 const paragraphExports = {};
 const tabExports = {};
+const numberExports = {};
+const numberCodecExports = {};
 const imageExports = {};
 for (const [file, target] of [
   ['studio-font-input.ts', fontExports],
   ['studio-word-metrics.ts', metricExports],
   ['studio-word-paragraph-format.ts', paragraphExports],
   ['studio-word-tabs.ts', tabExports],
+  ['studio-word-numbering.ts', numberExports],
   ['studio-word-styles.ts', styleExports],
   ['studio-word-images.ts', imageExports],
   ['studio-word-image-preview.ts', imageExports],
@@ -56,6 +59,9 @@ for (const [file, target] of [
     }
   );
 }
+runInNewContext(ts.transpileModule(readFileSync(new URL('../src/pages/collaboration/office-studio/studio-word-numbering-codec.ts',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,esModuleInterop:true}}).outputText,{
+  exports:numberCodecExports, require:(id)=>id.endsWith('/studio-word-numbering')?numberExports:id.endsWith('/studio-word-tabs')?tabExports:require(id), DOMParser:xml.DOMParser, XMLSerializer:xml.XMLSerializer,
+});
 runInNewContext(
   ts.transpileModule(
     readFileSync(
@@ -73,7 +79,7 @@ runInNewContext(
   {
     exports,
     require: (id) =>
-      id.endsWith('/studio-word-tabs') ? tabExports : id.endsWith('/studio-word-paragraph-format')
+      id.endsWith('/studio-word-numbering') ? numberExports : id === './studio-word-numbering-codec' ? numberCodecExports : id.endsWith('/studio-word-tabs') ? tabExports : id.endsWith('/studio-word-paragraph-format')
         ? paragraphExports
         : id.endsWith('/studio-word-metrics')
           ? metricExports
@@ -92,6 +98,23 @@ runInNewContext(
 );
 const { importStudioWord, exportStudioWord } = exports;
 const W = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';
+
+test('full native numbering templates, interrupted sequences and independent starts survive edits and repeated DOCX reopenings',async()=>{
+  const numbered=(level,id,label)=>`<w:p><w:pPr><w:numPr><w:ilvl w:val="${level}"/><w:numId w:val="${id}"/></w:numPr></w:pPr><w:r><w:t>${label}</w:t></w:r></w:p>`;
+  let document=await importStudioWord(await fixture(numbered(0,4,'Chapter')+numbered(1,4,'Child')+'<w:p><w:r><w:t>Gap</w:t></w:r></w:p>'+numbered(1,4,'Next child')+numbered(0,7,'Restart'),{
+    'word/numbering.xml':`<w:numbering xmlns:w="${W}"><w:abstractNum w:abstractNumId="1"><w:lvl w:ilvl="0"><w:start w:val="3"/><w:numFmt w:val="upperRoman"/><w:lvlText w:val="%1."/></w:lvl><w:lvl w:ilvl="1"><w:start w:val="1"/><w:numFmt w:val="lowerLetter"/><w:lvlText w:val="%1.%2."/></w:lvl></w:abstractNum><w:num w:numId="4"><w:abstractNumId w:val="1"/></w:num><w:num w:numId="7"><w:abstractNumId w:val="1"/><w:lvlOverride w:ilvl="0"><w:startOverride w:val="9"/></w:lvlOverride></w:num></w:numbering>`,
+  }),'Numbered.docx');
+  const labels=()=>Array.from(numberExports.wordNumberingLabels(document.content,numberExports.wordNumberingCatalog(document.content.attrs.numberingDefinitions,document.content.attrs.numberingInstances)),(entry)=>entry.text);
+  assert.deepEqual(labels(),['III.','III.a.','III.b.','IX.']);
+  document.content.attrs.numberingDefinitions[0].levels[0].format='decimal';
+  document.content.attrs.numberingDefinitions[0].levels[1].text='%1.%2)';
+  for(let pass=0;pass<2;pass++){
+    const saved=await exportStudioWord(document);document=await importStudioWord(saved,'Reopened.docx');
+    assert.deepEqual(labels(),['3.','3.a)','3.b)','9.']);
+    assert.equal(document.content.attrs.numberingInstances.find((entry)=>entry.id==='native-instance-7').startOverrides['0'],9);
+    assert.equal(find(document.content,'text').map((node)=>node.text).join(''),'ChapterChildGapNext childRestart');
+  }
+});
 
 test('native period and comma decimal symbols persist independently of text grouping separators', async () => {
   for (const [symbol,text] of [['.','1,234.50'],[',','1.234,50']]) {
@@ -977,17 +1000,10 @@ test('DOCX export fails explicitly for unsupported nodes, marks and inline layou
     exportStudioWord(model([p(text('行距', [{ type: 'textStyle', attrs: { lineHeight: '3' } }]))])),
     /lineHeight/
   );
-  await assert.rejects(
-    exportStudioWord(
-      model([
-        {
-          type: 'orderedList',
-          content: [{ type: 'listItem', content: [p(text('首段')), p(text('第二段'))] }],
-        },
-      ])
-    ),
-    /Shift\+Enter/
-  );
+  const continued = await exportStudioWord(model([{type:'orderedList',content:[{type:'listItem',content:[p(text('首段')),p(text('第二段'))]}]}]));
+  const native = parse(await(await JSZip.loadAsync(await continued.arrayBuffer())).file('word/document.xml').async('string'));
+  assert.equal(native.getElementsByTagNameNS(W,'numPr').length,1);
+  assert.equal(native.getElementsByTagNameNS(W,'t')[1].textContent,'第二段');
 });
 
 test('DOCX embeds raster images and retains body, default header/footer, fields and distances over repeated exports', async () => {

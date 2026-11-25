@@ -899,6 +899,16 @@
 .zuvi-studio-word-content .tiptap ol > li::before {
   content: counters(zuvi-ol, '.', decimal) '. ';
 }
+.zuvi-studio-word-content .tiptap :is(ol,ul)[data-word-list-instance] { padding-inline-start:0; list-style:none; }
+.zuvi-studio-word-content .tiptap :is(ol,ul)[data-word-list-instance] > li::before { content:none; }
+.zuvi-studio-word-content [data-word-numbering-label] { position:relative; }
+.zuvi-studio-word-content [data-word-numbering-label]::before { content:attr(data-word-numbering-label); position:absolute; left:var(--zuvi-numbering-hang,-18pt); transform:translateX(var(--zuvi-numbering-shift,0%)); text-indent:0; top:0; pointer-events:none; white-space:pre; font-family:var(--zuvi-numbering-family,inherit); font-size:var(--zuvi-numbering-size,inherit); color:var(--zuvi-numbering-color,inherit); font-weight:var(--zuvi-numbering-weight,inherit); font-style:var(--zuvi-numbering-style,inherit); }
+.zuvi-studio-word-paragraph-group input[aria-label='编号起始值'] { width:64px; }
+.zuvi-studio-word-numbering-fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-block:12px; }
+.zuvi-studio-word-numbering-fields label { display:flex; flex-direction:column; gap:4px; min-width:0; }
+.zuvi-studio-word-numbering-choice,.zuvi-studio-word-numbering-checks { display:flex; flex-wrap:wrap; gap:8px; margin-block:12px; }
+.zuvi-studio-word-numbering-preview { border:1px solid var(--zuvi-color-border); padding:16px; margin-block:12px; }
+@media(max-width:480px) { .zuvi-studio-word-numbering-fields { grid-template-columns:1fr; } }
 
 .zuvi-studio-word-content .tiptap li > ol {
   padding-inline-start: 1.6em;

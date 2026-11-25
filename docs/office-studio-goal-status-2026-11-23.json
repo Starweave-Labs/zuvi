@@ -923,42 +923,61 @@
         "docs/tests/office-studio-word.test.mjs"
       ],
       "historicalStatus": "部分",
-      "status": "audited-partial-acceptance-pending",
-      "evidence": [],
+      "status": "implemented-numbering-slice-verified-full-acceptance-audit-pending",
+      "evidence": [
+        "2026-11-25：实际 ZUVI 续编号/重启/格式/层级/九级定义编辑，关联标题、草稿/取消/权限/IME守卫与单事务；DOCX 定义/实例/起始覆盖原生保存重开及长编号字体测量/打印。",
+        "docs/audits/2026-11-25/word-numbering/: DOCX 原生来源、两次重开与明暗/320px 截图；全仓检查记录待本批次最终结果。"
+      ],
       "currentAudit": {
         "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "部分实现",
-        "implementedBehavior": "项目符号、普通编号和嵌套缩进；原始 start 可保留",
+        "sourceCommit": "6443453",
+        "implementation": "切片验证",
+        "implementedBehavior": "实例计数支持跨段续编号、中途重启、罗马/字母/项目符号、九级模板/起始/重启/标题关联/格式与单事务；实际工具栏和定义弹窗、错误/只读/禁用/IME/取消守卫；原生定义/实例/直接覆盖、连续重开、长编号避让/字体/对齐/后缀及共享打印测量。",
         "functionalGaps": [
-          "缺续编号/重新开始与编号格式编辑入口"
+          "每个文稿最多 100 个定义/1000 个实例、9 级，数值 1–100000；字体半点/缩进 twips 精度。复杂 RTL、浮动对象/真实分页、全部混合列表及跨应用布局仍待完整共通验收；未据此证明整项和 159 项目标完成。"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 156,
-            "anchor": "const EXTENSIONS"
+            "path": "packages/ui/src/components/OfficeStudio/StudioWordNumberingDialog.tsx",
+            "line": 43,
+            "anchor": "export function StudioWordNumberingDialog"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
-            "line": 60,
-            "anchor": "const UNSUPPORTED_CONTENT"
+            "path": "packages/ui/src/components/OfficeStudio/studio-word-numbering.ts",
+            "line": 331,
+            "anchor": "export function wordNumberingLabels"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 78,
-            "anchor": "export interface StudioWordDocument"
+            "path": "packages/ui/src/components/OfficeStudio/studio-word-numbering-extension.ts",
+            "line": 260,
+            "anchor": "export function wordRestartNumbering"
+          },
+          {
+            "path": "docs/src/pages/collaboration/office-studio/studio-word-numbering-codec.ts",
+            "line": 131,
+            "anchor": "export function readNativeWordNumbering"
+          },
+          {
+            "path": "e2e/office-studio-word-numbering.spec.ts",
+            "line": 12,
+            "anchor": "native numbering starts"
           }
         ],
         "existingTestFiles": [
-          "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
-          "docs/tests/office-studio-word.test.mjs"
+          "packages/ui/src/components/OfficeStudio/studio-word-numbering.test.ts",
+          "packages/ui/src/components/OfficeStudio/studio-word-numbering-extension.test.ts",
+          "packages/ui/src/components/OfficeStudio/StudioWordNumberingDialog.test.tsx",
+          "docs/tests/office-studio-word.test.mjs",
+          "docs/tests/studio-word-numbering-codec.test.mjs",
+          "docs/tests/studio-print.test.mjs",
+          "e2e/office-studio-word-numbering.spec.ts"
         ],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "testEvidenceNote": "Current numbering slice has model/UI/native DOCX/browser evidence. Full repository checks are recorded in the completion log. Complex-layout/common acceptance remains pending.",
+        "sourceState": "Includes numbering continuation changes submitted with this audit."
       },
       "gaps": [
-        "缺续编号/重新开始与编号格式编辑入口"
+        "每个文稿最多 100 个定义/1000 个实例、9 级，数值 1–100000；字体半点/缩进 twips 精度。复杂 RTL、浮动对象/真实分页、全部混合列表及跨应用布局仍待完整共通验收；未据此证明整项和 159 项目标完成。"
       ]
     },
     {
@@ -981,44 +1000,61 @@
         "docs/tests/office-studio-word.test.mjs"
       ],
       "historicalStatus": "缺失",
-      "status": "known-incomplete",
-      "evidence": [],
+      "status": "implemented-numbering-slice-verified-full-acceptance-audit-pending",
+      "evidence": [
+        "2026-11-25：实际 ZUVI 续编号/重启/格式/层级/九级定义编辑，关联标题、草稿/取消/权限/IME守卫与单事务；DOCX 定义/实例/起始覆盖原生保存重开及长编号字体测量/打印。",
+        "docs/audits/2026-11-25/word-numbering/: DOCX 原生来源、两次重开与明暗/320px 截图；全仓检查记录待本批次最终结果。"
+      ],
       "gaps": [
-        "Current UI provides nesting and composite counters; native DOCX list templates still need alignment with composite numbering.",
-        "Original acceptance also requires level definitions, heading association and restart controls.",
-        "缺完整层级定义/标题联动/重启，DOCX 复合编号拒绝"
+        "每个文稿最多 100 个定义/1000 个实例、9 级，数值 1–100000；字体半点/缩进 twips 精度。复杂 RTL、浮动对象/真实分页、全部混合列表及跨应用布局仍待完整共通验收；未据此证明整项和 159 项目标完成。"
       ],
       "currentAudit": {
         "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "部分实现",
-        "implementedBehavior": "嵌套层级显示复合编号",
+        "sourceCommit": "6443453",
+        "implementation": "切片验证",
+        "implementedBehavior": "实例计数支持跨段续编号、中途重启、罗马/字母/项目符号、九级模板/起始/重启/标题关联/格式与单事务；实际工具栏和定义弹窗、错误/只读/禁用/IME/取消守卫；原生定义/实例/直接覆盖、连续重开、长编号避让/字体/对齐/后缀及共享打印测量。",
         "functionalGaps": [
-          "缺完整层级定义/标题联动/重启，DOCX 复合编号拒绝"
+          "每个文稿最多 100 个定义/1000 个实例、9 级，数值 1–100000；字体半点/缩进 twips 精度。复杂 RTL、浮动对象/真实分页、全部混合列表及跨应用布局仍待完整共通验收；未据此证明整项和 159 项目标完成。"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 156,
-            "anchor": "const EXTENSIONS"
+            "path": "packages/ui/src/components/OfficeStudio/StudioWordNumberingDialog.tsx",
+            "line": 43,
+            "anchor": "export function StudioWordNumberingDialog"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
-            "line": 60,
-            "anchor": "const UNSUPPORTED_CONTENT"
+            "path": "packages/ui/src/components/OfficeStudio/studio-word-numbering.ts",
+            "line": 331,
+            "anchor": "export function wordNumberingLabels"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 78,
-            "anchor": "export interface StudioWordDocument"
+            "path": "packages/ui/src/components/OfficeStudio/studio-word-numbering-extension.ts",
+            "line": 260,
+            "anchor": "export function wordRestartNumbering"
+          },
+          {
+            "path": "docs/src/pages/collaboration/office-studio/studio-word-numbering-codec.ts",
+            "line": 131,
+            "anchor": "export function readNativeWordNumbering"
+          },
+          {
+            "path": "e2e/office-studio-word-numbering.spec.ts",
+            "line": 12,
+            "anchor": "native numbering starts"
           }
         ],
         "existingTestFiles": [
-          "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
-          "docs/tests/office-studio-word.test.mjs"
+          "packages/ui/src/components/OfficeStudio/studio-word-numbering.test.ts",
+          "packages/ui/src/components/OfficeStudio/studio-word-numbering-extension.test.ts",
+          "packages/ui/src/components/OfficeStudio/StudioWordNumberingDialog.test.tsx",
+          "docs/tests/office-studio-word.test.mjs",
+          "docs/tests/studio-word-numbering-codec.test.mjs",
+          "docs/tests/studio-print.test.mjs",
+          "e2e/office-studio-word-numbering.spec.ts"
         ],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "testEvidenceNote": "Current numbering slice has model/UI/native DOCX/browser evidence. Full repository checks are recorded in the completion log. Complex-layout/common acceptance remains pending.",
+        "sourceState": "Includes numbering continuation changes submitted with this audit."
       }
     },
     {
@@ -10144,8 +10180,8 @@
   "currentAuditItems": 159,
   "currentImplementationCounts": {
     "基础实现": 22,
-    "切片验证": 22,
-    "部分实现": 54,
+    "切片验证": 24,
+    "部分实现": 52,
     "未实现": 61
   }
 }

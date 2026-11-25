@@ -1,5 +1,6 @@
 export { OfficeStudio } from './OfficeStudio';
 export { createOfficeStudioDocument, isOfficeStudioDocument } from './studio-model';
+export type { StudioWordNumberingLevel,StudioWordNumberingDefinition,StudioWordNumberingInstance,StudioWordNumberingRef,WordNumberingCatalog,WordNumberFormat,StudioWordNumberingTabStop } from './studio-word-numbering';
 export type {
   OfficeStudioDocument,
   OfficeStudioHandle,

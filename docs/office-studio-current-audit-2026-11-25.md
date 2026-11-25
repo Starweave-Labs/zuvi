@@ -2,7 +2,7 @@
 
 源码基线：`2382530`。本次逐项核对 Word 65、Excel 68、PDF 26 项。历史状态保留；本页表示当前源码实现范围，全部条目仍需按原共通验收逐项闭环。
 
-实现分类：基础实现 22 项、切片验证 22 项、部分实现 54 项、未实现 61 项。这不是完整验收完成率。
+实现分类：基础实现 22 项、切片验证 24 项、部分实现 52 项、未实现 61 项。这不是完整验收完成率。
 
 验收要求：模型与编辑入口、只读/禁用、一次撤销重做、导入编辑导出重开、适用的明暗/320px 浏览器检查及失败原数据不变。已有测试文件不能自动替代每项六维证据。
 
@@ -23,8 +23,8 @@
 | W011 | 对齐与缩进 | 切片验证 | 对齐/左右/首行/悬挂弹窗、标尺拖动/取消/键盘/单元格坐标、混合值与历史、DOCX 两次重开 | 完整复杂表格/浮动/分页及外部布局验收仍待闭环 | `StudioWordParagraphDialog.tsx`；`StudioWordRuler.tsx`；`office-studio-word-paragraph.spec.ts` |
 | W012 | 行距段前段后 | 切片验证 | 倍数/固定/最小值、段前段后、原始单位继承/直接覆盖和打印，DOCX 两次重开及明暗/320px | 复杂混合字体精确裁切、完整自动分页和外部 Word/WPS 布局仍待验收 | `studio-word-paragraph-layout.ts`；`studio-word-codec.ts`；`office-studio-word-paragraph.spec.ts` |
 | W013 | 制表位与前导符 | 切片验证 | 四种对齐/点线短线实线中点、位置增量/混合保留/清除继承、样式/历史/权限/原生 DOCX 两次重开/明暗/320px和打印 | 长文本、多行、其他段落对齐/RTL及复杂浮动分页组合待验收；bar/num/heavy拒绝 | `StudioWordTabsDialog.tsx`；`studio-word-tab-extension.ts`；`office-studio-word-tabs.spec.ts` |
-| W014 | 项目符号与编号 | 部分实现 | 项目符号、普通编号和嵌套缩进；原始 start 可保留 | 缺续编号/重新开始与编号格式编辑入口 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
-| W015 | 完整多级编号 | 部分实现 | 嵌套层级显示复合编号 | 缺完整层级定义/标题联动/重启，DOCX 复合编号拒绝 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
+| W014 | 项目符号与编号 | 切片验证 | 跨段续编号/中途重启/罗马字母格式/层级、实际 ZUVI 控件和原生 DOCX 两次重开 | 复杂布局与全部混合/跨区域共通验收仍待核对 | `studio-word-numbering-extension.ts`；`office-studio-word-numbering.spec.ts` |
+| W015 | 完整多级编号 | 切片验证 | 九级模板/起始/重启/标题关联/字体对齐后缀编辑、原生定义/实例/覆盖与打印/长编号避让 | RTL/浮动/完整自动分页及全部混合列表与外部排版仍待完整验收 | `StudioWordNumberingDialog.tsx`；`studio-word-numbering-codec.ts`；`office-studio-word-numbering.spec.ts` |
 | W016 | 段落边框与底纹 | 部分实现 | 引用段落边框由内置样式保留 | 缺一般每边线型/距离/底纹编辑及取消，普通段落边框拒绝 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W017 | 孤行控制与同下段 | 未实现 | 当前连续画布没有分页保持约束 | 缺 widow/orphan、keepNext、keepLines 和布局联动 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W018 | 显示非打印字符 | 切片验证 | 空格/制表/NBSP/段落/换行视图标记、区域联动与快捷键；不改模型/选区/历史，DOCX 两次重开及打印隐藏 | 超长文稿和全部字号/文字方向/分页组合仍待完整验收；bar/num/heavy 制表位扩展仍拒绝 | `studio-word-nonprinting.ts`；`StudioWord.tsx`；`office-studio-word-nonprinting.spec.ts` |

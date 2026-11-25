@@ -24,8 +24,23 @@ import { studioConditionalCellStyle } from '../../../../../packages/ui/src/compo
 import { studioNumberFormatColor } from '../../../../../packages/ui/src/components/OfficeStudio/studio-number-format';
 import { wordMetricCss } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-metrics';
 import { wordParagraphLineCss } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-paragraph-format';
-import { wordMergeTabStops, wordDecimalSymbol, wordDefaultTabStop } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-tabs';
+import {
+  wordMergeTabStops,
+  wordDecimalSymbol,
+  wordDefaultTabStop,
+} from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-tabs';
 import { wordLayoutTabElements } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-tabs-dom';
+import {
+  materializeWordNumbering,
+  wordNumberingCatalog,
+  wordNumberingLabels,
+  type WordNumberingCatalog,
+  type WordNumberingLabel,
+} from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-numbering';
+import {
+  wordNumberingStyle,
+  wordLayoutPrintedNumbering,
+} from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-numbering-layout';
 import { wordImageLayout } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-images';
 import { wordImageCss } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-image-preview';
 import {
@@ -85,10 +100,15 @@ function rich(
   }
   let text =
     node.type === 'text'
-      ? escape(node.text).replace(/\t/g, '<span data-word-tab="" class="zuvi-studio-word-tab">\t</span>')
+      ? escape(node.text).replace(
+          /\t/g,
+          '<span data-word-tab="" class="zuvi-studio-word-tab">\t</span>'
+        )
       : node.type === 'pageNumber'
         ? String(node.attrs?.kind === 'total' ? total : page)
-        : (node.content ?? []).map((child) => rich(child, page, total, floating, defaultTab, decimalSymbol)).join('');
+        : (node.content ?? [])
+            .map((child) => rich(child, page, total, floating, defaultTab, decimalSymbol))
+            .join('');
   for (const mark of node.marks ?? []) {
     const tag = (
       {
@@ -130,6 +150,7 @@ function rich(
     }
   }
   const attrs = node.attrs ?? {};
+  const number = attrs.printNumbering as WordNumberingLabel | undefined;
   const styles: string[] = [];
   if (alignment(attrs.textAlign)) styles.push(`text-align:${alignment(attrs.textAlign)}`);
   for (const [attribute, property] of [
@@ -204,9 +225,17 @@ function rich(
   const lineRule = ['auto', 'exact', 'atLeast'].includes(String(attrs.lineHeightRule))
     ? ` data-word-line-rule="${attrs.lineHeightRule}"`
     : '';
-  const tabs = node.type === 'paragraph' || node.type === 'heading'
-    ? ` data-word-tabs="${escape(JSON.stringify(wordMergeTabStops((attrs.paragraphStyleSnapshot as { tabStops?: unknown } | null)?.tabStops, attrs.tabStops)))}" data-word-default-tab="${defaultTab}" data-word-decimal-symbol="${decimalSymbol}"` : '';
-  return `<${tag}${style}${spans}${start}${lineRule}${tabs}>${text || (tag === 'p' ? '<br>' : '')}</${tag}>`;
+  const tabs =
+    node.type === 'paragraph' || node.type === 'heading'
+      ? ` data-word-tabs="${escape(JSON.stringify(wordMergeTabStops((attrs.paragraphStyleSnapshot as { tabStops?: unknown } | null)?.tabStops, attrs.tabStops)))}" data-word-default-tab="${defaultTab}" data-word-decimal-symbol="${decimalSymbol}"`
+      : '';
+  const numbering = number
+    ? ` data-word-numbering-label="${escape(number.text)}" data-word-numbering-layout="${escape(JSON.stringify(number.level))}" data-word-numbering-position="${number.position}"`
+    : '';
+  const numberedStyle = number
+    ? ` style="${escape([...styles, ...Object.entries(wordNumberingStyle(attrs, number.level, number.ref.level)).map(([key, value]) => `${key}:${value}`)].join(';'))}"`
+    : style;
+  return `<${tag}${numberedStyle}${spans}${start}${lineRule}${tabs}${numbering}${(tag === 'ol' || tag === 'ul') && attrs.numberingInstanceId ? ' data-word-list-instance="true"' : ''}>${text || (tag === 'p' ? '<br>' : '')}</${tag}>`;
 }
 
 function wordPages(document: StudioWordDocument) {
@@ -217,6 +246,30 @@ function wordPages(document: StudioWordDocument) {
     ...(document.header ? { header: materializeStudioWordStyles(document.header, styles) } : {}),
     ...(document.footer ? { footer: materializeStudioWordStyles(document.footer, styles) } : {}),
   };
+  document = { ...document, content: materializeWordNumbering(document.content) };
+  let numbering = wordNumberingCatalog(
+    document.content.attrs?.numberingDefinitions,
+    document.content.attrs?.numberingInstances
+  );
+  const present = (root: StudioRichNode, catalog: WordNumberingCatalog) => {
+    const labels = new Map(wordNumberingLabels(root, catalog).map((label) => [label.node, label]));
+    const walk = (node: StudioRichNode): StudioRichNode => ({
+      ...node,
+      attrs: { ...node.attrs, ...(labels.has(node) ? { printNumbering: labels.get(node) } : {}) },
+      ...(node.content ? { content: node.content.map(walk) } : {}),
+    });
+    return walk(root);
+  };
+  for (const region of ['header', 'footer'] as const)
+    if (document[region]) {
+      const ready = materializeWordNumbering(document[region]!, numbering);
+      numbering = wordNumberingCatalog(
+        ready.attrs?.numberingDefinitions,
+        ready.attrs?.numberingInstances
+      );
+      document = { ...document, [region]: present(ready, numbering) };
+    }
+  document = { ...document, content: present(document.content, numbering) };
   const pages: StudioRichNode[][] = [[]];
   for (const node of document.content.content ?? []) {
     if (node.type === 'pageBreak') pages.push([]);
@@ -227,7 +280,16 @@ function wordPages(document: StudioWordDocument) {
       const total = pages.length;
       const floating: PrintedFloatingImage[] = [];
       const render = (node?: StudioRichNode) =>
-        node ? rich(node, index + 1, total, floating, wordDefaultTabStop(document.defaultTabStop), wordDecimalSymbol(document.decimalSymbol)) : '';
+        node
+          ? rich(
+              node,
+              index + 1,
+              total,
+              floating,
+              wordDefaultTabStop(document.defaultTabStop),
+              wordDecimalSymbol(document.decimalSymbol)
+            )
+          : '';
       const footer = render(document.footer);
       const containsPage = (node?: StudioRichNode): boolean =>
         !!node && (node.type === 'pageNumber' || (node.content ?? []).some(containsPage));
@@ -520,6 +582,7 @@ ${document.kind === 'word' ? '.studio-print-page{position:relative;isolation:iso
 .zuvi-studio-word-tab[data-word-leader='heavy']::after { content: ''; bottom: 0.2em; border-bottom: 1px solid currentColor; }
 .zuvi-studio-word-tab[data-word-leader='heavy']::after { border-bottom-width: 2px; }
 
+[data-word-numbering-label]{position:relative}[data-word-numbering-label]::before{content:attr(data-word-numbering-label);position:absolute;left:var(--zuvi-numbering-hang,-18pt);transform:translateX(var(--zuvi-numbering-shift,0%));text-indent:0;top:0;white-space:pre;font-family:var(--zuvi-numbering-family,inherit);font-size:var(--zuvi-numbering-size,inherit);color:var(--zuvi-numbering-color,inherit);font-weight:var(--zuvi-numbering-weight,inherit);font-style:var(--zuvi-numbering-style,inherit)}[data-word-list-instance]{padding-left:0;list-style:none}
 </style></head><body>${content}</body></html>`;
 }
 
@@ -537,8 +600,8 @@ export async function printStudioFile(
   if (document.kind === 'word') {
     const paper = document.page.size === 'Letter' ? [215.9, 279.4] : [210, 297];
     if (document.page.orientation === 'landscape') paper.reverse();
-    frame.style.width = `${Math.max(1, paper[0] - document.page.margin * 2) * 96 / 25.4}px`;
-    frame.style.height = `${paper[1] * 96 / 25.4}px`;
+    frame.style.width = `${(Math.max(1, paper[0] - document.page.margin * 2) * 96) / 25.4}px`;
+    frame.style.height = `${(paper[1] * 96) / 25.4}px`;
     frame.style.visibility = 'hidden';
     frame.style.pointerEvents = 'none';
   }
@@ -582,7 +645,10 @@ export async function printStudioFile(
           );
         }
         if (cleaned) return;
-        if (html && document.kind === 'word') wordLayoutTabElements(view.document.body);
+        if (html && document.kind === 'word') {
+          wordLayoutPrintedNumbering(view.document.body);
+          wordLayoutTabElements(view.document.body);
+        }
         view.addEventListener('afterprint', cleanup, { once: true });
         if (timer) clearTimeout(timer);
         timer = setTimeout(cleanup, 60000);
