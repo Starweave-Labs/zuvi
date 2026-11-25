@@ -908,6 +908,11 @@
 .zuvi-studio-word-numbering-fields label { display:flex; flex-direction:column; gap:4px; min-width:0; }
 .zuvi-studio-word-numbering-choice,.zuvi-studio-word-numbering-checks { display:flex; flex-wrap:wrap; gap:8px; margin-block:12px; }
 .zuvi-studio-word-numbering-preview { border:1px solid var(--zuvi-color-border); padding:16px; margin-block:12px; }
+.zuvi-studio-word-surface-fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-block:12px; }
+.zuvi-studio-word-surface-fields label { display:flex; flex-direction:column; min-width:0; gap:4px; }
+.zuvi-studio-word-surface-presets { display:flex; flex-wrap:wrap; gap:8px; margin-block:12px; }
+.zuvi-studio-word-surface-preview { margin-block:16px; min-height:72px; }
+@media(max-width:480px) { .zuvi-studio-word-surface-fields { grid-template-columns:1fr; } }
 @media(max-width:480px) { .zuvi-studio-word-numbering-fields { grid-template-columns:1fr; } }
 
 .zuvi-studio-word-content .tiptap li > ol {

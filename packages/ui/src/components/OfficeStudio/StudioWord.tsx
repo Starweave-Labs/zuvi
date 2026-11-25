@@ -52,6 +52,8 @@ import { WordTabs, wordSelectionTabStops, wordSetTabStops, wordInsertTab, wordRe
 import { StudioWordRuler as WordRuler } from './StudioWordRuler';
 import { WordNumbering, wordSetNumberedContent, wordNumberingContext, wordContinueNumbering, wordRestartNumbering, wordChangeNumberingLevel, wordSetNumberingCatalog, wordToggleNumberingPreset, wordEditorNumbering, wordApplyNumbering } from './studio-word-numbering-extension';
 import { StudioWordNumberingDialog } from './StudioWordNumberingDialog';
+import {StudioWordSurfaceDialog} from './StudioWordSurfaceDialog';
+import {WordParagraphSurface,wordSelectionSurfaces,wordSetParagraphSurface} from './studio-word-surface-extension';
 import { materializeWordNumbering, wordNumberingCatalog, type WordNumberingCatalog } from './studio-word-numbering';
 import {
   WordCharacterLayout,
@@ -164,6 +166,7 @@ const EXTENSIONS = [
   }).configure({ types: ['heading', 'paragraph'] }),
   TableKit.configure({ table: { resizable: true } }),
   ParagraphLayout,
+  WordParagraphSurface,
   PageBreak,
   WordImage,
   WordPageNumber,
@@ -400,6 +403,7 @@ export function StudioWord({
   const [tableRows, setTableRows] = React.useState('3');
   const [numberStart,setNumberStart]=React.useState('1');
   const [numberDialog,setNumberDialog]=React.useState<{editor:Editor;doc:Editor['state']['doc'];selection:Editor['state']['selection'];catalog:WordNumberingCatalog;currentId?:string;level:number}|null>(null);
+  const [surfaceDialog,setSurfaceDialog]=React.useState<{editor:Editor;doc:Editor['state']['doc'];selection:Editor['state']['selection'];surfaces:ReturnType<typeof wordSelectionSurfaces>}|null>(null);
   const [tableColumns, setTableColumns] = React.useState('3');
   const [tableHeader, setTableHeader] = React.useState(true);
   const [linkOpen, setLinkOpen] = React.useState(false);
@@ -560,6 +564,7 @@ export function StudioWord({
     setParagraphDialog(null);
     setTabsDialog(null);
     setNumberDialog(null);
+    setSurfaceDialog(null);
     setNotice('');
   }, [document.id]);
   React.useLayoutEffect(() => {
@@ -1685,6 +1690,10 @@ export function StudioWord({
                 const current=wordNumberingContext(editor);
                 setNumberDialog({editor,doc:editor.state.doc,selection:editor.state.selection,catalog:wordEditorNumbering(editor),currentId:current?.definition.id,level:current?.ref.level??0});
               }}>多级编号定义</Button>
+              <Button size="sm" variant="ghost" disabled={toolsDisabled} onMouseDown={keepSelection} onClick={()=>{
+                if(!prepareTabAction()||!editor)return;
+                setSurfaceDialog({editor,doc:editor.state.doc,selection:editor.state.selection,surfaces:wordSelectionSurfaces(editor)});
+              }}>段落边框与底纹</Button>
               <Select
                 aria-label="段落行距"
                 size="sm"
@@ -2868,6 +2877,14 @@ export function StudioWord({
           />
         </div>
       </div>
+      {surfaceDialog&&<StudioWordSurfaceDialog surfaces={surfaceDialog.surfaces} blocked={!editable}
+        onClose={()=>{setSurfaceDialog(null);if(!surfaceDialog.editor.isDestroyed)surfaceDialog.editor.commands.focus();}}
+        onSave={(patch)=>{
+          const target=surfaceDialog.editor;
+          if(!latest.current.editable||target.isDestroyed||target!==editor||target.state.doc!==surfaceDialog.doc)throw new Error('文档或编辑区域已变化，请重新打开段落边框。');
+          target.view.dispatch(target.state.tr.setSelection(surfaceDialog.selection).setMeta('addToHistory',false));
+          const changed=wordSetParagraphSurface(target,patch);setNotice(changed?'已应用段落边框和底纹，可撤销恢复。':'段落边框/底纹保持原样。');
+        }} />}
       {numberDialog&&<StudioWordNumberingDialog catalog={numberDialog.catalog} currentId={numberDialog.currentId} currentLevel={numberDialog.level} styles={paragraphStyles} blocked={!editable}
         onClose={()=>{setNumberDialog(null);if(!numberDialog.editor.isDestroyed)numberDialog.editor.commands.focus();}}
         onSave={(value)=>{

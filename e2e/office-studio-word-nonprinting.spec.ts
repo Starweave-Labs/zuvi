@@ -116,6 +116,7 @@ test('Word nonprinting markers preserve text, selection, document history, nativ
   );
   await page.emulateMedia({ media: 'screen' });
   await body.press('ArrowRight');
+  await expect.poll(() => page.evaluate(() => window.getSelection()?.isCollapsed)).toBe(true);
   await body.pressSequentially(' edited');
   await expect(paragraph).toContainText('Next line edited');
   await body.press('Control+Shift+8');

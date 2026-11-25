@@ -101,6 +101,8 @@ export function StudioWordStyleDialog({
       ? { headingLevel: Number(level) as StudioWordParagraphStyle['headingLevel'] }
       : {}),
     autoUpdate,
+    ...(value.tabStops!==undefined?{tabStops:structuredClone(value.tabStops)}:{}),
+    ...(value.surface!==undefined?{surface:structuredClone(value.surface)}:{}),
     run: Object.fromEntries(
       Object.entries(run)
         .filter(([, input]) => input !== '')

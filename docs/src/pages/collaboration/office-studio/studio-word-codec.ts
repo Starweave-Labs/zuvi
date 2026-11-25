@@ -1,4 +1,6 @@
 import JSZip from 'jszip';
+import {wordSurface,wordMergeSurface} from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-surface';
+import {readWordSurface,wordSurfaceXml,patchWordSurfaceStyles} from './studio-word-surface-codec';
 import {
   materializeWordNumbering,
   wordNumberingCatalog,
@@ -44,6 +46,7 @@ import {
   PageOrientation,
   PageNumber,
   Paragraph,
+  ParagraphProperties,
   ShadingType,
   Table,
   TableCell,
@@ -438,6 +441,8 @@ function paragraphProperties(
     unsupported('段落定位或方向');
   const tabs = paragraphTabs(properties);
   if (tabs !== undefined) result.tabStops = ownOnly ? tabs : wordMergeTabStops(base.tabStops, tabs);
+  const surface=readWordSurface(properties);
+  if(surface!==undefined)result.surface=ownOnly?surface:wordMergeSurface(base.surface,surface);
   const numbering = child(properties, 'numPr');
   if (numbering)
     result.numberingNative = {
@@ -705,6 +710,7 @@ function parseStyles(xml?: XMLDocument): {
         ? { headingLevel: (resolved.heading || 0) as StudioWordParagraphStyle['headingLevel'] }
         : {}),
       autoUpdate: enabled(child(source, 'autoRedefine')),
+      surface:baseModel?readWordSurface(child(source,'pPr')):wordMergeSurface(nativeBase.paragraph.surface,readWordSurface(child(source,'pPr'))),
       tabStops: baseModel
         ? paragraphTabs(child(source, 'pPr'))
         : wordMergeTabStops(nativeBase.paragraph.tabStops, paragraphTabs(child(source, 'pPr'))),
@@ -1045,6 +1051,7 @@ function parseParagraph(element: Element, context: ImportContext): ParsedParagra
   const style = context.styles.get(styleId) || context.defaults;
   if (style.paragraph.studioUnsupported) unsupported('段落样式');
   const attrs = paragraphProperties(properties, style.paragraph);
+  if(attrs.surface!==undefined){attrs.paragraphSurface=attrs.surface;delete attrs.surface;}
   const spacing = child(properties, 'spacing'),
     indent = child(properties, 'ind');
   attrs.paragraphStyleDirectAttrs = [
@@ -1065,6 +1072,8 @@ function parseParagraph(element: Element, context: ImportContext): ParsedParagra
     : style.heading;
   const namedStyle = context.styleModels.get(styleId);
   if (namedStyle) {
+    const ownSurface=readWordSurface(properties);
+    if(ownSurface===undefined)delete attrs.paragraphSurface;else attrs.paragraphSurface=ownSurface;
     const ownTabs = paragraphTabs(properties);
     if (ownTabs === undefined) delete attrs.tabStops;
     else attrs.tabStops = ownTabs;
@@ -1171,7 +1180,7 @@ function parseParagraph(element: Element, context: ImportContext): ParsedParagra
     (!attr(leftBorder, 'space') || attr(leftBorder, 'space') === '0');
   if (styleId === 'ZuviRule' || (border && child(border, 'bottom') && !inline.length))
     return { nodes: [{ type: 'horizontalRule' }] };
-  if (border && styleId !== 'ZuviQuote' && !quoteBorder) unsupported('段落边框');
+  if(style.quote || quoteBorder) delete attrs.paragraphSurface;
   const base: StudioRichNode = {
     type: headingLevel ? 'heading' : 'paragraph',
     ...(Object.keys(attrs).length || headingLevel
@@ -1717,6 +1726,15 @@ class MetricImageRun extends ImageRun {
   }
 }
 
+class SurfaceParagraph extends Paragraph {
+  constructor(options:IParagraphOptions,surface?:unknown){
+    super(options);
+    if(surface!==undefined){
+      const properties=this.root.find((entry):entry is ParagraphProperties=>entry instanceof ParagraphProperties)!;
+      const xml=wordSurfaceXml(surface);if(xml)properties.push(ImportedXmlComponent.fromXmlString(xml));
+    }
+  }
+}
 function inlineChildren(
   nodes: StudioRichNode[] = [],
   inherited?: Required<StudioWordCharacterStyle>
@@ -1976,6 +1994,7 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
       'paragraphStyleMaterialized',
       'paragraphStyleSnapshot',
       'tabStops',
+      'paragraphSurface',
       'numbering',
       'numberingDisabled',
     ]);
@@ -2025,8 +2044,14 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
       !['auto', 'points'].includes(String(attrs.lineHeightBasis))
     )
       unsupported('行距单位');
-    return new Paragraph({
+    let surface=attrs.paragraphSurface==null?undefined:wordSurface(attrs.paragraphSurface);
+    if(surface && options.border){
+      const legacy={borders:Object.fromEntries(Object.entries(options.border).filter(([,value])=>value).map(([side,border])=>[side,{style:border!.style,size:(border!.size??4)/8,color:typeof border!.color==='string'?`#${border!.color}`:'auto',space:border!.space}]))};
+      surface=wordMergeSurface(legacy,surface);
+    }
+    return new SurfaceParagraph({
       ...options,
+      ...(surface?{border:undefined}:{}),
       ...(attrs.numberingDisabled
         ? { numbering: false }
         : numberRef
@@ -2080,7 +2105,7 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
             : (attrs.lineHeightRule as WordLineRule),
       },
       children: inlineChildren(node.content, linkedStyle?.run),
-    });
+    },surface);
   };
   const blocks = (nodes: StudioRichNode[], depth = 0): (Paragraph | Table)[] => {
     if (depth > 20) throw new Error('文档嵌套层级过深。');
@@ -2331,7 +2356,7 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
     return result;
   });
   if (
-    !numberCatalog.definitions.length &&
+    !numberCatalog.definitions.length && !paragraphStyles.some((style)=>style.surface) &&
     !paragraphStyles.some((style) => style.autoUpdate) &&
     !paragraphStyles.some((style) => style.run?.letterSpacing === 0) &&
     !imageLayouts.some((layout) => layout.polygon || layout.zIndex === 0)
@@ -2348,6 +2373,7 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
       )
     );
   let stylesXml = await zip.file('word/styles.xml')!.async('string');
+  stylesXml=patchWordSurfaceStyles(stylesXml,paragraphStyles.map((style)=>({id:nativeStyleId(style.id),surface:style.surface})));
   for (const style of paragraphStyles.filter((item) => item.autoUpdate))
     stylesXml = stylesXml.replace(
       new RegExp(`(<w:style\\b[^>]*\\bw:styleId="${nativeStyleId(style.id)}"[^>]*>)`),

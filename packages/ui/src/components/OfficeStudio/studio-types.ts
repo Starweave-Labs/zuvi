@@ -55,6 +55,7 @@ export interface StudioWordCharacterStyle {
 
 export type { StudioWordTabStop } from './studio-word-tabs';
 import type { StudioWordTabStop } from './studio-word-tabs';
+import type { StudioWordParagraphSurface } from './studio-word-surface';
 
 export interface StudioWordParagraphFormat {
   textAlign?: 'left' | 'center' | 'right' | 'justify';
@@ -85,6 +86,7 @@ export interface StudioWordParagraphStyle {
   paragraph?: StudioWordParagraphFormat;
   /** Native paragraph tab deltas; clear removes an inherited position. */
   tabStops?: StudioWordTabStop[];
+  surface?: StudioWordParagraphSurface;
 }
 
 export interface StudioWordDocument extends StudioDocumentBase {

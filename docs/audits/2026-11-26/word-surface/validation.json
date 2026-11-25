@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-26",
+  "baselineCommit": "2d9efe1",
+  "wholeGoalComplete": false,
+  "ui": {
+    "files": 131,
+    "passed": 2401
+  },
+  "docs": {
+    "passed": 302,
+    "skipped": 1
+  },
+  "surfaceModel": {
+    "passed": 7
+  },
+  "surfaceDraftAndStyleUi": {
+    "passed": 4
+  },
+  "nativeDocx": {
+    "passed": 41
+  },
+  "printing": {
+    "passed": 28
+  },
+  "e2e": {
+    "uniqueCasesWithApplicablePassingEvidence": 241,
+    "lastFullRun": {
+      "passed": 240,
+      "failed": 1,
+      "workers": 1,
+      "failure": "Nonprinting test typed before confirming the native selection had collapsed. Standalone reproduction passed; the test now awaits the collapsed selection."
+    },
+    "wordRegressionAfterSelectionAndStyleRepairs": {
+      "passed": 13,
+      "failed": 0
+    },
+    "screenshotsReviewed": true,
+    "note": "Full run predates the style field retention and preview repairs. Thirteen affected Word cases passed after the style repair; the surface case passed again after the preview repair. No single 241/241 full green run is claimed.",
+    "surfacePreviewAfterRepair": {
+      "passed": 1,
+      "failed": 0
+    }
+  },
+  "checks": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "registryItems": 92,
+    "consumerSourceFiles": 352,
+    "distribution": "passed",
+    "uiBuild": "passed",
+    "browserBuild": "passed",
+    "docsBuild": "passed",
+    "entryGzipBytes": 124926,
+    "entryGzipBudgetBytes": 124928
+  },
+  "currentImplementationCounts": {
+    "基础实现": 22,
+    "切片验证": 25,
+    "部分实现": 51,
+    "未实现": 61
+  }
+}

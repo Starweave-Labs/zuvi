@@ -21,12 +21,15 @@ const paragraphExports = {};
 const tabExports = {};
 const numberExports = {};
 const numberCodecExports = {};
+const surfaceExports = {};
+const surfaceCodecExports = {};
 const imageExports = {};
 for (const [file, target] of [
   ['studio-font-input.ts', fontExports],
   ['studio-word-metrics.ts', metricExports],
   ['studio-word-paragraph-format.ts', paragraphExports],
   ['studio-word-tabs.ts', tabExports],
+  ['studio-word-surface.ts', surfaceExports],
   ['studio-word-numbering.ts', numberExports],
   ['studio-word-styles.ts', styleExports],
   ['studio-word-images.ts', imageExports],
@@ -49,7 +52,7 @@ for (const [file, target] of [
     {
       exports: target,
       require: (id) =>
-        id === './studio-word-tabs' ? tabExports : id === './studio-word-paragraph-format'
+        id === './studio-word-surface'?surfaceExports:id === './studio-word-tabs' ? tabExports : id === './studio-word-paragraph-format'
           ? paragraphExports
           : id === './studio-word-metrics'
             ? metricExports
@@ -62,6 +65,7 @@ for (const [file, target] of [
 runInNewContext(ts.transpileModule(readFileSync(new URL('../src/pages/collaboration/office-studio/studio-word-numbering-codec.ts',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,esModuleInterop:true}}).outputText,{
   exports:numberCodecExports, require:(id)=>id.endsWith('/studio-word-numbering')?numberExports:id.endsWith('/studio-word-tabs')?tabExports:require(id), DOMParser:xml.DOMParser, XMLSerializer:xml.XMLSerializer,
 });
+runInNewContext(ts.transpileModule(readFileSync(new URL('../src/pages/collaboration/office-studio/studio-word-surface-codec.ts',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,esModuleInterop:true}}).outputText,{exports:surfaceCodecExports,require:(id)=>id.endsWith('/studio-word-surface')?surfaceExports:require(id)});
 runInNewContext(
   ts.transpileModule(
     readFileSync(
@@ -79,7 +83,7 @@ runInNewContext(
   {
     exports,
     require: (id) =>
-      id.endsWith('/studio-word-numbering') ? numberExports : id === './studio-word-numbering-codec' ? numberCodecExports : id.endsWith('/studio-word-tabs') ? tabExports : id.endsWith('/studio-word-paragraph-format')
+      id.endsWith('/studio-word-surface')?surfaceExports:id==='./studio-word-surface-codec'?surfaceCodecExports:id.endsWith('/studio-word-numbering') ? numberExports : id === './studio-word-numbering-codec' ? numberCodecExports : id.endsWith('/studio-word-tabs') ? tabExports : id.endsWith('/studio-word-paragraph-format')
         ? paragraphExports
         : id.endsWith('/studio-word-metrics')
           ? metricExports
@@ -98,6 +102,34 @@ runInNewContext(
 );
 const { importStudioWord, exportStudioWord } = exports;
 const W = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';
+
+test('native paragraph borders, distance, shadow/frame and patterned shading survive direct edits and two DOCX cycles',async()=>{
+  const source=await fixture('<w:p><w:pPr><w:pBdr><w:top w:val="double" w:sz="8" w:space="3" w:color="112233" w:shadow="1" w:frame="0"/><w:left w:val="dotted" w:sz="4" w:color="auto"/></w:pBdr><w:shd w:val="pct25" w:fill="FFEECC" w:color="123456"/></w:pPr><w:r><w:rPr><w:b/></w:rPr><w:t>Surface</w:t></w:r></w:p>');
+  let document=await importStudioWord(source,'Surface.docx');
+  assert.equal(document.content.content[0].attrs.paragraphSurface.borders.top.size,1);
+  assert.equal(document.content.content[0].attrs.paragraphSurface.shading.pattern,'pct25');
+  document.content.content[0].attrs.paragraphSurface.borders.right={style:'dashed',size:1.5,space:4,color:'#aabbcc'};
+  for(let pass=0;pass<2;pass++){
+    const saved=await exportStudioWord(document),zip=await JSZip.loadAsync(await saved.arrayBuffer()),native=parse(await zip.file('word/document.xml').async('string'));
+    const top=native.getElementsByTagNameNS(W,'top')[0];assert.equal(top.getAttributeNS(W,'shadow'),'1');assert.equal(top.getAttributeNS(W,'frame'),'0');assert.equal(top.getAttributeNS(W,'space'),'3');
+    assert.equal(native.getElementsByTagNameNS(W,'shd')[0].getAttributeNS(W,'val'),'pct25');
+    document=await importStudioWord(saved,'Reopened.docx');
+    assert.equal(document.content.content[0].attrs.paragraphSurface.borders.right.size,1.5);assert.equal(document.content.content[0].attrs.paragraphSurface.borders.top.shadow,true);
+    assert.equal(find(document.content,'text')[0].text,'Surface');assert.ok(find(document.content,'text')[0].marks.some((mark)=>mark.type==='bold'));
+  }
+});
+test('surface styles preserve independent inherited edges and explicit nil overrides across repeated native saves',async()=>{
+  const source=await fixture('<w:p><w:pPr><w:pStyle w:val="Panel"/><w:pBdr><w:top w:val="nil"/></w:pBdr></w:pPr><w:r><w:t>Panel</w:t></w:r></w:p>',{
+    'word/styles.xml':`<w:styles xmlns:w="${W}"><w:style w:type="paragraph" w:styleId="Panel"><w:name w:val="Panel"/><w:pPr><w:pBdr><w:top w:val="single" w:sz="8"/><w:left w:val="double" w:sz="12"/></w:pBdr><w:shd w:val="clear" w:fill="CCEEFF"/></w:pPr></w:style></w:styles>`,
+  });
+  let document=await importStudioWord(source,'Panel.docx');
+  const definition=document.content.attrs.paragraphStyles[0];assert.equal(definition.surface.borders.left.style,'double');
+  assert.deepEqual(JSON.parse(JSON.stringify(document.content.content[0].attrs.paragraphSurface)),{borders:{top:{style:'nil'}}});
+  for(let pass=0;pass<2;pass++){
+    const saved=await exportStudioWord(document);document=await importStudioWord(saved,'Reopened.docx');
+    assert.equal(document.content.attrs.paragraphStyles[0].surface.borders.left.style,'double');assert.equal(document.content.content[0].attrs.paragraphSurface.borders.top.style,'nil');
+  }
+});
 
 test('full native numbering templates, interrupted sequences and independent starts survive edits and repeated DOCX reopenings',async()=>{
   const numbered=(level,id,label)=>`<w:p><w:pPr><w:numPr><w:ilvl w:val="${level}"/><w:numId w:val="${id}"/></w:numPr></w:pPr><w:r><w:t>${label}</w:t></w:r></w:p>`;

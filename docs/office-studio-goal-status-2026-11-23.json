@@ -1077,42 +1077,54 @@
         "docs/tests/office-studio-word.test.mjs"
       ],
       "historicalStatus": "缺失",
-      "status": "audited-partial-acceptance-pending",
-      "evidence": [],
+      "status": "implemented-paragraph-surface-slice-verified-full-acceptance-audit-pending",
+      "evidence": [
+        "2026-11-26：实际 ZUVI 逐边/线型/宽度/距文字/颜色及底纹控件、混合保持、草稿/取消/权限/事务、样式继承/自动更新和格式刷/清除。",
+        "docs/audits/2026-11-26/word-surface/: 真实 DOCX 来源、两次保存重开、打印及明暗/320px 浏览器证据。"
+      ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "部分实现",
-        "implementedBehavior": "引用段落边框由内置样式保留",
+        "date": "2026-11-26",
+        "sourceCommit": "2d9efe1",
+        "implementation": "切片验证",
+        "implementedBehavior": "逐边边框线型/宽度/距文字/颜色/阴影框架及底纹模型，实际 ZUVI 编辑、混合字段保持、取消/错误/只读/禁用/IME守卫及单事务；样式继承/直接覆盖/自动更新、格式刷/清除与未编辑样式字段保留；原生 DOCX pBdr/shd 和两次重开、打印及明暗/320px。",
         "functionalGaps": [
-          "缺一般每边线型/距离/底纹编辑及取消，普通段落边框拒绝"
+          "原生复杂线型（波浪/三线等）预览尚采用 CSS 近似，段间/页间边框连接及复杂样式/浮动/RTL/真实分页组合仍待完整验收。宽度 0.25–12pt（1/8pt）、距离 0–31pt 整数，RGB/auto；完整主题引用仍待验证。"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 156,
-            "anchor": "const EXTENSIONS"
+            "path": "packages/ui/src/components/OfficeStudio/StudioWordSurfaceDialog.tsx",
+            "line": 56,
+            "anchor": "export function StudioWordSurfaceDialog"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
-            "line": 60,
-            "anchor": "const UNSUPPORTED_CONTENT"
+            "path": "packages/ui/src/components/OfficeStudio/studio-word-surface-extension.ts",
+            "line": 23,
+            "anchor": "export function wordSetParagraphSurface"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 78,
-            "anchor": "export interface StudioWordDocument"
+            "path": "docs/src/pages/collaboration/office-studio/studio-word-surface-codec.ts",
+            "line": 19,
+            "anchor": "export function readWordSurface"
+          },
+          {
+            "path": "e2e/office-studio-word-surface.spec.ts",
+            "line": 10,
+            "anchor": "paragraph borders and shading edit"
           }
         ],
         "existingTestFiles": [
-          "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
-          "docs/tests/office-studio-word.test.mjs"
+          "packages/ui/src/components/OfficeStudio/studio-word-surface.test.ts",
+          "packages/ui/src/components/OfficeStudio/StudioWordSurfaceDialog.test.tsx",
+          "docs/tests/office-studio-word.test.mjs",
+          "docs/tests/studio-print.test.mjs",
+          "e2e/office-studio-word-surface.spec.ts"
         ],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "testEvidenceNote": "Current four-edge/direct/style/native/browser/print slice passed. Complex border rendering and the entire original acceptance matrix remain pending.",
+        "sourceState": "Includes paragraph-surface continuation changes committed with this audit."
       },
       "gaps": [
-        "缺一般每边线型/距离/底纹编辑及取消，普通段落边框拒绝"
+        "原生复杂线型（波浪/三线等）预览尚采用 CSS 近似，段间/页间边框连接及复杂样式/浮动/RTL/真实分页组合仍待完整验收。宽度 0.25–12pt（1/8pt）、距离 0–31pt 整数，RGB/auto；完整主题引用仍待验证。"
       ]
     },
     {
@@ -10180,8 +10192,8 @@
   "currentAuditItems": 159,
   "currentImplementationCounts": {
     "基础实现": 22,
-    "切片验证": 24,
-    "部分实现": 52,
+    "切片验证": 25,
+    "部分实现": 51,
     "未实现": 61
   }
 }

@@ -4,6 +4,7 @@ import { closeHistory } from '@tiptap/pm/history';
 import { splitBlock } from '@tiptap/pm/commands';
 import { splitListItem } from '@tiptap/pm/schema-list';
 import { wordMergeTabStops } from './studio-word-tabs';
+import { wordMergeSurface } from './studio-word-surface';
 import type { Node as ProseMirrorNode } from '@tiptap/pm/model';
 import type { StudioRichNode, StudioWordParagraphStyle } from './studio-types';
 import {
@@ -267,10 +268,28 @@ export const WordParagraphStyles = Extension.create<WordStyleExtensionOptions>({
                   ],
               ])
           );
-          const tabStops = JSON.stringify(old.attrs.tabStops) !== JSON.stringify(current.attrs.tabStops)
-            ? wordMergeTabStops(resolveStudioWordParagraphStyle(styles, id).tabStops, current.attrs.tabStops)
-            : undefined;
-          if (!Object.keys(run).length && !Object.keys(paragraph).length && tabStops === undefined) return null;
+          const tabStops =
+            JSON.stringify(old.attrs.tabStops) !== JSON.stringify(current.attrs.tabStops)
+              ? wordMergeTabStops(
+                  resolveStudioWordParagraphStyle(styles, id).tabStops,
+                  current.attrs.tabStops
+                )
+              : undefined;
+          const surface =
+            JSON.stringify(old.attrs.paragraphSurface) !==
+            JSON.stringify(current.attrs.paragraphSurface)
+              ? wordMergeSurface(
+                  resolveStudioWordParagraphStyle(styles, id).surface,
+                  current.attrs.paragraphSurface
+                )
+              : undefined;
+          if (
+            !Object.keys(run).length &&
+            !Object.keys(paragraph).length &&
+            tabStops === undefined &&
+            surface === undefined
+          )
+            return null;
           const next = validateStudioWordParagraphStyles(
             styles.map((style) =>
               style.id === id
@@ -279,19 +298,39 @@ export const WordParagraphStyles = Extension.create<WordStyleExtensionOptions>({
                     run: { ...style.run, ...run },
                     paragraph: { ...style.paragraph, ...paragraph },
                     ...(tabStops !== undefined ? { tabStops } : {}),
+                    ...(surface !== undefined ? { surface } : {}),
                   }
                 : style
             )
           );
           const tr = state.tr;
           setDefinitions(tr, next, styles);
-          if (tabStops !== undefined) state.doc.descendants((node, position) => {
-            if (!isParagraph(node) || node.attrs.paragraphStyle !== id ||
-              JSON.stringify(oldState.doc.nodeAt(position)?.attrs.tabStops) === JSON.stringify(node.attrs.tabStops)) return;
-            const updated = tr.doc.nodeAt(position)!;
-            tr.setNodeMarkup(position, undefined, { ...updated.attrs, tabStops: null });
-            return false;
-          });
+          if (tabStops !== undefined)
+            state.doc.descendants((node, position) => {
+              if (
+                !isParagraph(node) ||
+                node.attrs.paragraphStyle !== id ||
+                JSON.stringify(oldState.doc.nodeAt(position)?.attrs.tabStops) ===
+                  JSON.stringify(node.attrs.tabStops)
+              )
+                return;
+              const updated = tr.doc.nodeAt(position)!;
+              tr.setNodeMarkup(position, undefined, { ...updated.attrs, tabStops: null });
+              return false;
+            });
+          if (surface !== undefined)
+            state.doc.descendants((node, position) => {
+              if (
+                !isParagraph(node) ||
+                node.attrs.paragraphStyle !== id ||
+                JSON.stringify(oldState.doc.nodeAt(position)?.attrs.paragraphSurface) ===
+                  JSON.stringify(node.attrs.paragraphSurface)
+              )
+                return;
+              const updated = tr.doc.nodeAt(position)!;
+              tr.setNodeMarkup(position, undefined, { ...updated.attrs, paragraphSurface: null });
+              return false;
+            });
           return tr;
         },
       }),
