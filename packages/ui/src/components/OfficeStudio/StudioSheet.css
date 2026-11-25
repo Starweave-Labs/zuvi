@@ -780,6 +780,17 @@
   overflow: auto;
 }
 
+.zuvi-studio-sheet-paste-extra {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.zuvi-studio-sheet-paste-extra .zuvi-studio-sheet-paste-help {
+  margin: 0;
+  font-size: 12px;
+}
+
 .zuvi-studio-sheet-paste-option {
   display: flex;
   align-items: flex-start;

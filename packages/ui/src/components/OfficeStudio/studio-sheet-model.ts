@@ -64,6 +64,12 @@ export type StudioSheetPasteMode =
   | 'column-widths'
   | 'transpose';
 
+export type StudioSheetPasteOperation = 'none' | 'add' | 'subtract' | 'multiply' | 'divide';
+export interface StudioSheetPasteOptions {
+  skipBlanks?: boolean;
+  operation?: StudioSheetPasteOperation;
+}
+
 export type StudioSheetClipboardValue =
   | { type: 'blank' }
   | { type: 'number'; value: number }
@@ -719,17 +725,39 @@ function rangeContains(container: StudioRange, candidate: StudioRange): boolean 
 function clearPasteMerges(
   document: StudioExcelDocument,
   sheetId: string,
-  target: StudioRange
+  target: StudioRange,
+  active?: ReadonlySet<string>
 ): StudioExcelDocument {
   const sheet = document.sheets.find((item) => item.id === sheetId);
   if (!sheet) throw new Error('工作表不存在。');
   const retained: string[] = [];
   let changed = false;
+  const positions = active && [...active].map((address) => studioParseAddress(address)!);
   for (const entry of sheet.merges ?? []) {
     const range = studioParseRange(entry)!;
     if (!intersects(range, target)) retained.push(entry);
-    else if (rangeContains(target, range)) changed = true;
-    else throw new Error('粘贴区域与目标合并单元格部分重叠，请先拆分该区域。');
+    else if (
+      positions &&
+      !positions.some(
+        (position) =>
+          position.row >= range.firstRow &&
+          position.row <= range.lastRow &&
+          position.col >= range.firstCol &&
+          position.col <= range.lastCol
+      )
+    )
+      retained.push(entry);
+    else if (rangeContains(target, range)) {
+      if (active) {
+        const count = (range.lastRow - range.firstRow + 1) * (range.lastCol - range.firstCol + 1);
+        if (count > active.size) throw new Error('跳过空白后只能替换完整合并区域，请先拆分。');
+        for (let row = range.firstRow; row <= range.lastRow; row++)
+          for (let col = range.firstCol; col <= range.lastCol; col++)
+            if (!active.has(studioCellAddress(row, col)))
+              throw new Error('跳过空白后只能替换完整合并区域，请先拆分。');
+      }
+      changed = true;
+    } else throw new Error('粘贴区域与目标合并单元格部分重叠，请先拆分该区域。');
   }
   if (!changed) return document;
   return {
@@ -738,6 +766,59 @@ function clearPasteMerges(
       item.id === sheetId ? { ...item, merges: retained } : item
     ),
   };
+}
+
+function pasteOperand(value: StudioSheetClipboardValue | SheetValue, address: string): number {
+  if (value && typeof value === 'object') {
+    if (value.type === 'blank') return 0;
+    if (value.type === 'number' || value.type === 'boolean') return Number(value.value);
+  } else if (typeof value === 'number' && Number.isFinite(value)) return value;
+  else if (typeof value === 'boolean') return Number(value);
+  throw new Error(`${address}：运算粘贴需要数字、布尔值或真正空白，不能使用文本或错误值。`);
+}
+
+function pasteArithmeticInput(
+  operation: Exclude<StudioSheetPasteOperation, 'none'>,
+  target: StudioCell | undefined,
+  source: StudioCell,
+  translated: string,
+  copiedValue: StudioSheetClipboardValue | undefined,
+  valuesOnly: boolean,
+  calculation: SheetCalculation,
+  key: string,
+  address: string
+) {
+  if (calculation.arrayOwners.has(key))
+    throw new Error(`${address} 位于数组区域，不能进行运算粘贴。`);
+  if (calculation.errors.has(key)) throw new Error(`${address} 存在公式错误，整次运算粘贴已取消。`);
+  const left = !target?.input
+    ? 0
+    : pasteOperand(
+        calculation.values.get(key) ?? studioInputValue(target.input, target.numberFormat),
+        address
+      );
+  const sourceFormula = !valuesOnly && translated.startsWith('=');
+  const right = sourceFormula
+    ? undefined
+    : !source.input
+      ? 0
+      : pasteOperand(copiedValue ?? studioInputValue(source.input, source.numberFormat), address);
+  if (operation === 'divide' && right === 0)
+    throw new Error(`${address}：不能除以零，整次运算粘贴已取消。`);
+  const symbol = { add: '+', subtract: '-', multiply: '*', divide: '/' }[operation];
+  if (target?.input.startsWith('=') || sourceFormula)
+    return `=(${target?.input.startsWith('=') ? target.input.slice(1) : left})${symbol}(${sourceFormula ? translated.slice(1) : right})`;
+  const result =
+    operation === 'add'
+      ? left + right!
+      : operation === 'subtract'
+        ? left - right!
+        : operation === 'multiply'
+          ? left * right!
+          : left / right!;
+  if (!Number.isFinite(result))
+    throw new Error(`${address}：运算结果超出有效数字范围，整次粘贴已取消。`);
+  return String(result);
 }
 
 function pastedMerge(merge: StudioRange, start: SheetPosition, transpose: boolean): StudioRange {
@@ -790,9 +871,20 @@ export function studioPasteCells(
   start: SheetPosition,
   text: string,
   source?: StudioSheetClipboardOrigin,
-  mode: StudioSheetPasteMode = 'all'
+  mode: StudioSheetPasteMode = 'all',
+  options: StudioSheetPasteOptions = {}
 ): { document: StudioExcelDocument; selection: SheetSelection; addresses: string[] } {
   const parsedRows = studioParseTsv(text);
+  const operation = options.operation ?? 'none';
+  if (
+    !['none', 'add', 'subtract', 'multiply', 'divide'].includes(operation) ||
+    (options.skipBlanks !== undefined && typeof options.skipBlanks !== 'boolean')
+  )
+    throw new Error('选择性粘贴选项无效。');
+  if (operation !== 'none' && ['formats', 'column-widths'].includes(mode))
+    throw new Error('仅格式和列宽粘贴不能组合数值运算。');
+  if (options.skipBlanks && mode === 'column-widths')
+    throw new Error('列宽粘贴不能按单元格跳过空白。');
   const parsedWidth = Math.max(...parsedRows.map((row) => row.length));
   const rich = !!(
     source?.cells &&
@@ -831,14 +923,48 @@ export function studioPasteCells(
     };
   }
   const copiesMergeState =
-    rich && ['all', 'source-formatting', 'without-borders', 'transpose'].includes(mode);
+    operation === 'none' &&
+    rich &&
+    ['all', 'source-formatting', 'without-borders', 'transpose'].includes(mode);
   const targetRange = {
     firstRow: start.row,
     lastRow: last.row,
     firstCol: start.col,
     lastCol: last.col,
   };
-  let next = copiesMergeState ? clearPasteMerges(document, sheetId, targetRange) : document;
+  const sourceMergeAt = (row: number, col: number) =>
+    rich
+      ? source!.merges!.find(
+          (merge) =>
+            row >= merge.firstRow &&
+            row <= merge.lastRow &&
+            col >= merge.firstCol &&
+            col <= merge.lastCol
+        )
+      : undefined;
+  const skipped = (row: number, col: number) => {
+    if (!options.skipBlanks) return false;
+    const merge = copiesMergeState && sourceMergeAt(row, col);
+    const index = merge
+      ? merge.firstRow * sourceColumns + merge.firstCol
+      : row * sourceColumns + col;
+    return rich ? source!.cells![index].input === '' : parsedRows[row][col] === '';
+  };
+  const destinationAt = (row: number, col: number) =>
+    transpose
+      ? { row: start.row + col, col: start.col + row }
+      : { row: start.row + row, col: start.col + col };
+  const active = new Set<string>();
+  if (options.skipBlanks && copiesMergeState)
+    for (let row = 0; row < sourceRows; row++)
+      for (let col = 0; col < sourceColumns; col++) {
+        const destination = destinationAt(row, col);
+        if (!skipped(row, col)) active.add(studioCellAddress(destination.row, destination.col));
+      }
+  let next = copiesMergeState
+    ? clearPasteMerges(document, sheetId, targetRange, options.skipBlanks ? active : undefined)
+    : document;
+  const calculation = operation !== 'none' ? studioCalculate(document) : undefined;
   const updates: Record<string, Partial<StudioCell>> = {};
   const addresses: string[] = [];
   const hyperlinks: Record<string, StudioSheetHyperlink[] | null> = {};
@@ -852,9 +978,8 @@ export function studioPasteCells(
   for (let row = 0; row < sourceRows; row++) {
     const columns = rich ? sourceColumns : parsedRows[row].length;
     for (let col = 0; col < columns; col++) {
-      const destination = transpose
-        ? { row: start.row + col, col: start.col + row }
-        : { row: start.row + row, col: start.col + col };
+      if (skipped(row, col)) continue;
+      const destination = destinationAt(row, col);
       const address = studioCellAddress(destination.row, destination.col);
       addresses.push(address);
       const sourcePosition = source ? { row: source.row + row, col: source.col + col } : undefined;
@@ -894,6 +1019,28 @@ export function studioPasteCells(
             : undefined,
         };
       } else updates[address] = { ...cloneClipboardCell(sourceCell), input: translated };
+      if (operation !== 'none') {
+        if (sourceMergeAt(row, col) || studioMergedRange(sheet, destination))
+          throw new Error(`${address}：运算粘贴不支持合并单元格，请先拆分。`);
+        const input = pasteArithmeticInput(
+          operation,
+          targetCell,
+          sourceCell,
+          translated,
+          rich ? source!.values![index] : undefined,
+          mode === 'values' || mode === 'values-number-format',
+          calculation!,
+          `${sheetId}:${address}`,
+          address
+        );
+        const numberFormat =
+          updates[address].numberFormat ??
+          (['all', 'source-formatting', 'without-borders', 'transpose'].includes(mode)
+            ? sourceCell.numberFormat
+            : targetCell?.numberFormat);
+        updates[address].input =
+          numberFormat === '@' && !input.startsWith('=') ? `=${input}` : input;
+      }
       if (copiesHyperlinks) {
         hyperlinks[address] =
           clipboardSheet && sourcePosition
@@ -910,17 +1057,39 @@ export function studioPasteCells(
   const replace = ['all', 'source-formatting', 'without-borders', 'transpose'].includes(mode);
   next = studioPatchCells(next, sheetId, updates, {
     replace,
+    deferValidation: operation !== 'none',
     preserveInput: mode === 'formats',
     ...(copiesHyperlinks ? { hyperlinks } : {}),
   });
   if (copiesMergeState)
     for (const merge of source!.merges!) {
+      if (skipped(merge.firstRow, merge.firstCol)) continue;
       const range = pastedMerge(merge, start, transpose);
       next = studioMergeCells(next, sheetId, {
         anchor: { row: range.firstRow, col: range.firstCol },
         focus: { row: range.lastRow, col: range.lastCol },
       });
     }
+  if (operation !== 'none') {
+    const final = studioCalculate(next);
+    const nextSheet = next.sheets.find((item) => item.id === sheetId)!;
+    for (const address of addresses) {
+      const key = `${sheetId}:${address}`;
+      const value =
+        final.values.get(key) ??
+        studioInputValue(
+          nextSheet.cells[address]?.input ?? '',
+          nextSheet.cells[address]?.numberFormat
+        );
+      if (final.errors.has(key) || typeof value !== 'number' || !Number.isFinite(value))
+        throw new Error(
+          `${address}：运算结果无效${final.errors.get(key) ? `（${final.errors.get(key)}）` : ''}，整次粘贴已取消。`
+        );
+      const validation = studioCellValidation(nextSheet, address, final);
+      if (validation?.blocking)
+        throw new Error(`${address}：${validation.message}；整次粘贴已取消。`);
+    }
+  }
   return { document: next, selection: { anchor: start, focus: last }, addresses };
 }
 

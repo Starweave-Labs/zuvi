@@ -11,6 +11,7 @@ import { ColorPicker } from '../ColorPicker';
 import { Collapse } from '../Collapse';
 import { Table } from '../Table';
 import { Modal } from '../Modal';
+import { Checkbox } from '../Checkbox';
 import { StudioFontControl } from './StudioFontControl';
 import { StudioSheetSearch } from './StudioSheetSearch';
 import { studioCellBordersCss } from './studio-cell-style';
@@ -108,6 +109,8 @@ import type {
   SheetSelection,
   StudioSheetClipboardOrigin,
   StudioSheetPasteMode,
+  StudioSheetPasteOperation,
+  StudioSheetPasteOptions,
 } from './studio-sheet-model';
 import type {
   StudioCell,
@@ -167,7 +170,7 @@ const pasteModes: Array<{
   { value: 'all', label: '全部', description: '粘贴内容、公式、格式、链接和合并单元格。' },
   { value: 'formulas', label: '仅公式', description: '粘贴公式和常量，不改变目标格式。' },
   { value: 'values', label: '仅值', description: '使用复制时已经计算好的值。' },
-  { value: 'formats', label: '仅格式', description: '保留目标内容，替换格式和合并状态。' },
+  { value: 'formats', label: '仅格式', description: '保留目标内容和合并结构，替换直接格式。' },
   {
     value: 'formulas-number-format',
     label: '公式与数字格式',
@@ -241,6 +244,9 @@ export function StudioSheet({
   const [arrayType, setArrayType] = React.useState<'fixed' | 'dynamic'>('dynamic');
   const [arrayError, setArrayError] = React.useState('');
   const [pasteMode, setPasteMode] = React.useState<StudioSheetPasteMode>('all');
+  const [pasteSkipBlanks, setPasteSkipBlanks] = React.useState(false);
+  const [pasteOperation, setPasteOperation] = React.useState<StudioSheetPasteOperation>('none');
+  const [pasteError, setPasteError] = React.useState('');
   const [pasteAvailable, setPasteAvailable] = React.useState(false);
   const [ruleDialog, setRuleDialog] = React.useState<SheetRuleDialogMode | null>(null);
   const [sortDialog, setSortDialog] = React.useState<StudioSortDialogState | null>(null);
@@ -1752,6 +1758,11 @@ export function StudioSheet({
     )
       return;
     const command = event.ctrlKey || event.metaKey;
+    if (command && !event.altKey && !event.shiftKey && event.key.toLowerCase() === 'c') {
+      event.preventDefault();
+      copyFromGrid();
+      return;
+    }
     if (painterRef.current && event.key === 'Enter' && !command) {
       event.preventDefault();
       painterTargetRef.current = null;
@@ -1772,6 +1783,9 @@ export function StudioSheet({
       event.preventDefault();
       if (!blocked && pasteAvailable) {
         setPasteMode('all');
+        setPasteSkipBlanks(false);
+        setPasteOperation('none');
+        setPasteError('');
         setPasteDialog(true);
       }
       return;
@@ -1915,7 +1929,8 @@ export function StudioSheet({
   function pasteClipboard(
     text: string,
     source: StudioSheetClipboardOrigin | undefined,
-    mode: StudioSheetPasteMode
+    mode: StudioSheetPasteMode,
+    options: StudioSheetPasteOptions = {}
   ) {
     if (blocked || !sheet) return false;
     try {
@@ -1929,7 +1944,8 @@ export function StudioSheet({
         selection.focus,
         text,
         source,
-        mode
+        mode,
+        options
       );
       const rows = Math.abs(result.selection.focus.row - result.selection.anchor.row) + 1;
       const cols = Math.abs(result.selection.focus.col - result.selection.anchor.col) + 1;
@@ -1938,32 +1954,41 @@ export function StudioSheet({
         mode === 'all'
           ? `已粘贴 ${rows}×${cols}，可撤销整个粘贴操作。`
           : `${label}已应用到 ${rows}×${cols}。`;
-      const message = validationNotice(result.document, sheet.id, result.addresses, success);
+      const operationLabel = { none: '', add: '加', subtract: '减', multiply: '乘', divide: '除' }[
+        options.operation ?? 'none'
+      ];
+      const summary = `${success}${operationLabel ? ` 已对 ${result.addresses.length} 个单元格执行${operationLabel}法。` : ''}${options.skipBlanks ? ' 空白来源已跳过。' : ''}`;
+      const message = validationNotice(result.document, sheet.id, result.addresses, summary);
       replaceDocument(result.document);
+      setPasteError('');
       setSelection(result.selection);
       gridRef.current?.focus();
       setNotice(message);
       return true;
     } catch (error) {
-      setNotice(error instanceof Error ? error.message : '粘贴失败。');
+      const message = error instanceof Error ? error.message : '粘贴失败。';
+      setNotice(message);
+      if (pasteDialog) setPasteError(message);
       return false;
     }
   }
 
-  function onCopy(event: React.ClipboardEvent<HTMLDivElement>) {
-    if (disabled || !sheet || event.target !== event.currentTarget) return;
+  function copySelection(write: (type: string, value: string) => void) {
+    if (disabled || !sheet) return false;
     try {
-      const text = studioCopyTsv(sheet, selection, calculated);
-      event.clipboardData.setData('text/plain', text);
-      event.preventDefault();
+      const current = latestRef.current;
+      const currentSheet = current.sheets.find((item) => item.id === sheet.id)!;
+      const calculation = current === document ? calculated : studioCalculate(current);
+      const text = studioCopyTsv(currentSheet, selection, calculation);
+      write('text/plain', text);
       try {
-        const payload = studioCopySheetClipboard(latestRef.current, sheet.id, selection);
+        const payload = studioCopySheetClipboard(current, sheet.id, selection);
         const source = studioClipboardOrigin(payload, text);
         if (!source) throw new Error('复制元数据无效。');
         clipboardRef.current = { text, payload, source };
         setPasteAvailable(true);
         try {
-          event.clipboardData.setData(STUDIO_SHEET_CLIPBOARD_TYPE, payload);
+          write(STUDIO_SHEET_CLIPBOARD_TYPE, payload);
         } catch {
           /* The in-editor clipboard cache still enables Paste Special. */
         }
@@ -1977,10 +2002,52 @@ export function StudioSheet({
           }`
         );
       }
+      return true;
     } catch (error) {
-      event.preventDefault();
       setNotice(error instanceof Error ? error.message : '复制失败。');
+      return false;
     }
+  }
+
+  function copyFromGrid() {
+    if (!commitEditing()) return;
+    const data = new Map<string, string>();
+    if (!copySelection((type, value) => data.set(type, value))) return;
+    const owner = gridRef.current?.ownerDocument;
+    let copied = false;
+    const handleCopy = (event: ClipboardEvent) => {
+      if (!event.clipboardData) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      for (const [type, value] of data) {
+        try {
+          event.clipboardData.setData(type, value);
+        } catch {
+          /* Internal snapshot remains usable. */
+        }
+      }
+      copied = true;
+    };
+    if (owner && typeof owner.execCommand === 'function') {
+      owner.addEventListener('copy', handleCopy, true);
+      try {
+        owner.execCommand('copy');
+      } catch {
+        /* Modern clipboard fallback below. */
+      } finally {
+        owner.removeEventListener('copy', handleCopy, true);
+      }
+    }
+    if (!copied && typeof globalThis.navigator?.clipboard?.writeText === 'function')
+      void navigator.clipboard.writeText(data.get('text/plain') ?? '').catch(() => {
+        /* A denied system clipboard does not prevent internal Paste Special. */
+      });
+  }
+
+  function onCopy(event: React.ClipboardEvent<HTMLDivElement>) {
+    if (disabled || !sheet || event.target !== event.currentTarget) return;
+    event.preventDefault();
+    copySelection((type, value) => event.clipboardData.setData(type, value));
   }
 
   function onPaste(event: React.ClipboardEvent<HTMLDivElement>) {
@@ -2162,6 +2229,9 @@ export function StudioSheet({
                     if (!commitEditing()) return;
                     setEdit(null);
                     setPasteMode('all');
+                    setPasteSkipBlanks(false);
+                    setPasteOperation('none');
+                    setPasteError('');
                     setPasteDialog(true);
                   }}
                 >
@@ -3858,7 +3928,14 @@ export function StudioSheet({
                       name={`${gridId}-paste-mode`}
                       value={option.value}
                       checked={pasteMode === option.value}
-                      onChange={() => setPasteMode(option.value)}
+                      disabled={blocked}
+                      onChange={() => {
+                        setPasteMode(option.value);
+                        setPasteError('');
+                        if (option.value === 'formats' || option.value === 'column-widths')
+                          setPasteOperation('none');
+                        if (option.value === 'column-widths') setPasteSkipBlanks(false);
+                      }}
                     />
                     <span>
                       <strong>{option.label}</strong>
@@ -3866,6 +3943,44 @@ export function StudioSheet({
                     </span>
                   </label>
                 ))}
+              </div>
+              <div className="zuvi-studio-sheet-paste-extra">
+                <Checkbox
+                  label="跳过空白单元格"
+                  checked={pasteSkipBlanks}
+                  disabled={blocked || pasteMode === 'column-widths'}
+                  onChange={(value) => {
+                    setPasteSkipBlanks(value);
+                    setPasteError('');
+                  }}
+                />
+                <label className="zuvi-studio-sheet-rule-field">
+                  <span>运算</span>
+                  <Select
+                    aria-label="粘贴运算"
+                    value={pasteOperation}
+                    disabled={blocked || pasteMode === 'formats' || pasteMode === 'column-widths'}
+                    options={[
+                      { value: 'none', label: '无运算' },
+                      { value: 'add', label: '加' },
+                      { value: 'subtract', label: '减' },
+                      { value: 'multiply', label: '乘' },
+                      { value: 'divide', label: '除' },
+                    ]}
+                    onChange={(value) => {
+                      setPasteOperation(value as StudioSheetPasteOperation);
+                      setPasteError('');
+                    }}
+                  />
+                </label>
+                <p className="zuvi-studio-sheet-paste-help">
+                  跳过真正为空的来源；零、空白文本和返回空字符串的公式仍会粘贴。运算保留目标公式，仅值模式使用复制时的值；除零或无效结果将取消整次粘贴。
+                </p>
+                {pasteError && (
+                  <p role="alert" className="zuvi-studio-sheet-rule-error">
+                    {pasteError}
+                  </p>
+                )}
               </div>
             </Modal.Body>
             <Modal.Footer>
@@ -3880,7 +3995,13 @@ export function StudioSheet({
                     setNotice('请先在 OfficeStudio 中复制单元格区域。');
                     return;
                   }
-                  if (pasteClipboard(clipboard.text, clipboard.source, pasteMode))
+                  if (!commitEditing()) return;
+                  if (
+                    pasteClipboard(clipboard.text, clipboard.source, pasteMode, {
+                      skipBlanks: pasteSkipBlanks,
+                      operation: pasteOperation,
+                    })
+                  )
                     setPasteDialog(false);
                 }}
               >

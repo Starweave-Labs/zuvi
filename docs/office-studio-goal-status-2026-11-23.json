@@ -3943,9 +3943,9 @@
       "evidence": [],
       "currentAudit": {
         "date": "2026-11-25",
-        "sourceCommit": "2382530",
+        "sourceCommit": "02df344",
         "implementation": "部分实现",
-        "implementedBehavior": "普通 TSV/内部富剪贴板复制粘贴和公式重定位",
+        "implementedBehavior": "普通 TSV/内部富剪贴板复制粘贴和公式重定位；2026-11-25 补齐虚拟选区 Ctrl/Command+C 的真实复制路径、只读/禁用/IME/草稿守卫，选择性粘贴快照已由浏览器实测。普通剪切移动仍未实现。",
         "functionalGaps": [
           "无 onCut/剪切移动引用迁移；普通剪切语义未实现"
         ],
@@ -3975,14 +3975,21 @@
             "path": "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
             "line": 55,
             "anchor": "StudioSheetPasteMode"
+          },
+          {
+            "path": "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+            "line": 2012,
+            "anchor": "function copyFromGrid"
           }
         ],
         "existingTestFiles": [
           "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx",
           "docs/tests/studio-excel.test.mjs",
-          "packages/ui/src/components/OfficeStudio/studio-sheet-model.test.ts"
+          "packages/ui/src/components/OfficeStudio/studio-sheet-model.test.ts",
+          "e2e/office-studio-sheet-paste-options.spec.ts"
         ],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "testEvidenceNote": "Keyboard virtual-range copy, read-only/disabled/IME/draft behavior and browser Paste Special are covered by the X012 continuation; ordinary cut/reference migration remains pending.",
+        "sourceState": "Includes the keyboard-copy prerequisite fix committed with the X012 audit."
       },
       "gaps": [
         "无 onCut/剪切移动引用迁移；普通剪切语义未实现"
@@ -4649,44 +4656,64 @@
         "docs/tests/studio-excel.test.mjs"
       ],
       "historicalStatus": "缺失",
-      "status": "audited-not-implemented",
-      "evidence": [],
+      "status": "implemented-skip-arithmetic-paste-slice-verified-full-acceptance-audit-pending",
+      "evidence": [
+        "2026-11-25：跳过真正空白与加减乘除接入选择性粘贴，零/布尔/显式空串/空串公式不当作空白。保留跳过目标内容、格式、链接、保护及数组；失败整批不变。",
+        "152 项模型/Sheet UI、43 项 XLSX 及真实键盘复制→选择性粘贴→运算/除零修正→一次撤销重做→两次导出重开/明暗/320px 已通过，证据在 docs/audits/2026-11-25/sheet-paste-options/。"
+      ],
       "currentAudit": {
         "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "未实现",
-        "implementedBehavior": "现有十种选择性粘贴模式",
+        "sourceCommit": "02df344",
+        "implementation": "切片验证",
+        "implementedBehavior": "真正空白跳过、零/布尔/空串区分，加减乘除、目标公式保留、源公式重定位或值快照；最终批次计算与验证，除零/溢出/保护/数组/合并冲突整批取消。内部虚拟选区 Ctrl/Command+C 接入复制快照与系统剪贴板路径，草稿/IME/权限守卫；原生显式空串导入保持类型。XLSX 两次重开及明暗/320px 已验证。",
         "functionalGaps": [
-          "缺跳过空格/运算粘贴及失败整批撤销"
+          "算术粘贴实际涉及合并单元格或数组区域时整批拒绝；全部适用混合粘贴/合并/跨应用剪贴板及原始共通验收仍待完整核对。"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
-            "line": 284,
-            "anchor": "const blocked"
-          },
-          {
-            "path": "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts",
-            "line": 1267,
-            "anchor": "async function checkSupportedWorkbook"
-          },
-          {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 136,
-            "anchor": "export interface StudioSheet"
+            "path": "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+            "line": 68,
+            "anchor": "export interface StudioSheetPasteOptions"
           },
           {
             "path": "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
-            "line": 787,
-            "anchor": "studioPasteCells"
+            "line": 780,
+            "anchor": "function pasteArithmeticInput"
+          },
+          {
+            "path": "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+            "line": 2012,
+            "anchor": "function copyFromGrid"
+          },
+          {
+            "path": "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+            "line": 3949,
+            "anchor": "label=\"跳过空白单元格\""
+          },
+          {
+            "path": "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts",
+            "line": 1331,
+            "anchor": "if (cell.type === ExcelJS.ValueType.String && text === '')"
+          },
+          {
+            "path": "e2e/office-studio-sheet-paste-options.spec.ts",
+            "line": 7,
+            "anchor": "skip blanks and arithmetic Paste Special preserve"
           }
         ],
-        "existingTestFiles": [],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "existingTestFiles": [
+          "packages/ui/src/components/OfficeStudio/studio-sheet-paste-options.test.ts",
+          "packages/ui/src/components/OfficeStudio/studio-sheet-model.test.ts",
+          "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx",
+          "docs/tests/studio-excel.test.mjs",
+          "e2e/office-studio-sheet-paste-options.spec.ts"
+        ],
+        "testEvidenceNote": "10 dedicated option tests, 56 existing model tests and 86 Sheet UI tests passed; 43 native XLSX tests and browser tests cover the new options and repeated reopening. Full repository gates are recorded in the completion log; full common-acceptance combinations remain pending.",
+        "sourceState": "Includes the X012 continuation changes committed with this audit."
       },
       "gaps": [
-        "缺跳过空格/运算粘贴及失败整批撤销"
+        "算术粘贴实际涉及合并单元格或数组区域时整批拒绝；全部适用混合粘贴/合并/跨应用剪贴板及原始共通验收仍待完整核对。"
       ]
     },
     {

@@ -70,6 +70,160 @@ function setup({
 }
 
 describe('StudioSheet Office editing details', () => {
+  it('commits a valid cell draft before keyboard copying and blocks invalid drafts without replacing the previous snapshot', async () => {
+    const user = userEvent.setup();
+    const f = setup();
+    const grid = screen.getByRole('grid');
+    const formula = screen.getByLabelText('表格公式栏');
+    fireEvent.focus(formula);
+    fireEvent.change(formula, { target: { value: '9' } });
+    fireEvent.keyDown(grid, { key: 'c', ctrlKey: true });
+    expect(f.current().sheets[0].cells.A1.input).toBe('9');
+    fireEvent.focus(formula);
+    fireEvent.change(formula, { target: { value: 'x'.repeat(32768) } });
+    fireEvent.keyDown(grid, { key: 'c', ctrlKey: true });
+    expect(f.current().sheets[0].cells.A1.input).toBe('9');
+    expect(f.changed).toHaveBeenCalledTimes(1);
+    fireEvent.keyDown(formula, { key: 'Escape' });
+    const address = screen.getByLabelText('单元格地址');
+    fireEvent.change(address, { target: { value: 'C3' } });
+    fireEvent.keyDown(address, { key: 'Enter' });
+    await user.click(screen.getByRole('button', { name: '选择性粘贴' }));
+    const dialog = screen.getByRole('dialog');
+    await user.click(within(dialog).getByRole('radio', { name: /^仅值/ }));
+    await user.click(within(dialog).getByRole('button', { name: '粘贴' }));
+    expect(f.current().sheets[0].cells.C3.input).toBe('9');
+  });
+
+  it('captures a keyboard copy without DOM text selection, allows read-only copying and guards disabled/IME events', async () => {
+    const user = userEvent.setup();
+    const f = setup();
+    const grid = screen.getByRole('grid');
+    fireEvent.keyDown(grid, { key: 'c', ctrlKey: true, isComposing: true });
+    expect(screen.getByRole('button', { name: '选择性粘贴' })).toBeDisabled();
+    f.setPermissions({ disabled: true });
+    fireEvent.keyDown(grid, { key: 'c', ctrlKey: true });
+    f.setPermissions({});
+    expect(screen.getByRole('button', { name: '选择性粘贴' })).toBeDisabled();
+    f.setPermissions({ readOnly: true });
+    fireEvent.keyDown(grid, { key: 'c', metaKey: true });
+    expect(f.changed).not.toHaveBeenCalled();
+    f.setPermissions({});
+    expect(screen.getByRole('button', { name: '选择性粘贴' })).toBeEnabled();
+    const address = screen.getByLabelText('单元格地址');
+    fireEvent.change(address, { target: { value: 'C3' } });
+    fireEvent.keyDown(address, { key: 'Enter' });
+    await user.click(screen.getByRole('button', { name: '选择性粘贴' }));
+    const dialog = screen.getByRole('dialog');
+    await user.click(within(dialog).getByRole('radio', { name: /^仅值/ }));
+    await user.click(within(dialog).getByRole('button', { name: '粘贴' }));
+    expect(f.current().sheets[0].cells.C3.input).toBe('3');
+    expect(f.changed).toHaveBeenCalledTimes(1);
+  });
+
+  it('skips formatted blank sources, multiplies zeros and booleans, and restores the complete paste with one undo/redo', async () => {
+    const user = userEvent.setup();
+    const doc = documentFixture();
+    doc.sheets[0].cells = {
+      A1: { input: '2' },
+      B1: { input: '', bold: true },
+      A2: { input: '0' },
+      B2: { input: 'FALSE' },
+      D4: { input: '10', italic: true },
+      E4: { input: '=3*4', background: '#ffff00' },
+      D5: { input: '4' },
+      E5: { input: '5' },
+    };
+    doc.sheets[0].protectedRanges = ['E4:E4'];
+    doc.sheets[0].hyperlinks = [{ id: 'keep', ref: 'E4', target: 'https://example.com/keep' }];
+    const f = setup({ document: doc });
+    const grid = screen.getByRole('grid');
+    const address = screen.getByLabelText('单元格地址');
+    fireEvent.change(address, { target: { value: 'A1:B2' } });
+    fireEvent.keyDown(address, { key: 'Enter' });
+    fireEvent.copy(grid, { clipboardData: { setData: vi.fn() } });
+    fireEvent.change(address, { target: { value: 'D4' } });
+    fireEvent.keyDown(address, { key: 'Enter' });
+    await user.click(screen.getByRole('button', { name: '选择性粘贴' }));
+    const dialog = screen.getByRole('dialog', { name: '选择性粘贴' });
+    await user.click(within(dialog).getByRole('radio', { name: /^仅值/ }));
+    await user.click(within(dialog).getByRole('checkbox', { name: '跳过空白单元格' }));
+    await user.click(within(dialog).getByRole('button', { name: /^粘贴运算/ }));
+    await user.click(screen.getByRole('option', { name: '乘' }));
+    await user.click(within(dialog).getByRole('button', { name: '粘贴' }));
+    expect(f.changed).toHaveBeenCalledTimes(1);
+    expect(f.current().sheets[0].cells.D4).toEqual({ input: '20', italic: true });
+    expect(f.current().sheets[0].cells.D5.input).toBe('0');
+    expect(f.current().sheets[0].cells.E5.input).toBe('0');
+    expect(f.current().sheets[0].cells.E4).toBe(doc.sheets[0].cells.E4);
+    expect(f.current().sheets[0].hyperlinks).toBe(doc.sheets[0].hyperlinks);
+    await user.click(screen.getByRole('button', { name: '撤销表格修改' }));
+    expect(f.current()).toBe(doc);
+    await user.click(screen.getByRole('button', { name: '重做表格修改' }));
+    expect(f.current().sheets[0].cells.D4.input).toBe('20');
+  });
+
+  it('keeps divide-by-zero failure inside Paste Special and allows correction without a partial write', async () => {
+    const user = userEvent.setup();
+    const doc = documentFixture();
+    doc.sheets[0].cells = {
+      A1: { input: '2' },
+      B1: { input: '0' },
+      D4: { input: '10' },
+      E4: { input: '12' },
+    };
+    const f = setup({ document: doc });
+    const address = screen.getByLabelText('单元格地址');
+    fireEvent.change(address, { target: { value: 'A1:B1' } });
+    fireEvent.keyDown(address, { key: 'Enter' });
+    fireEvent.copy(screen.getByRole('grid'), { clipboardData: { setData: vi.fn() } });
+    fireEvent.change(address, { target: { value: 'D4' } });
+    fireEvent.keyDown(address, { key: 'Enter' });
+    await user.click(screen.getByRole('button', { name: '选择性粘贴' }));
+    const dialog = screen.getByRole('dialog', { name: '选择性粘贴' });
+    await user.click(within(dialog).getByRole('radio', { name: /^仅值/ }));
+    await user.click(within(dialog).getByRole('button', { name: /^粘贴运算/ }));
+    await user.click(screen.getByRole('option', { name: '除' }));
+    await user.click(within(dialog).getByRole('button', { name: '粘贴' }));
+    expect(within(dialog).getByRole('alert')).toHaveTextContent('不能除以零');
+    expect(f.changed).not.toHaveBeenCalled();
+    expect(f.current()).toBe(doc);
+    await user.click(within(dialog).getByRole('button', { name: /^粘贴运算/ }));
+    await user.click(screen.getByRole('option', { name: '加' }));
+    await user.click(within(dialog).getByRole('button', { name: '粘贴' }));
+    expect(f.changed).toHaveBeenCalledTimes(1);
+    expect(f.current().sheets[0].cells.D4.input).toBe('12');
+    expect(screen.queryByRole('dialog')).toBeNull();
+  });
+
+  it('retains Paste Special option drafts across permissions and cancels them without changing the document', async () => {
+    const user = userEvent.setup();
+    const f = setup();
+    fireEvent.copy(screen.getByRole('grid'), { clipboardData: { setData: vi.fn() } });
+    await user.click(screen.getByRole('button', { name: '选择性粘贴' }));
+    const dialog = screen.getByRole('dialog', { name: '选择性粘贴' });
+    await user.click(within(dialog).getByRole('radio', { name: /^仅值/ }));
+    await user.click(within(dialog).getByRole('checkbox', { name: '跳过空白单元格' }));
+    await user.click(within(dialog).getByRole('button', { name: /^粘贴运算/ }));
+    await user.click(screen.getByRole('option', { name: '加' }));
+    f.setPermissions({ readOnly: true });
+    expect(within(dialog).getByRole('checkbox')).toBeDisabled();
+    expect(within(dialog).getByRole('button', { name: '粘贴' })).toBeDisabled();
+    for (const radio of within(dialog).getAllByRole('radio')) expect(radio).toBeDisabled();
+    f.setPermissions({ disabled: true });
+    expect(within(dialog).getByRole('button', { name: /^粘贴运算/ })).toBeDisabled();
+    f.setPermissions({});
+    expect(within(dialog).getByRole('checkbox')).toBeChecked();
+    expect(within(dialog).getByRole('button', { name: /^粘贴运算/ })).toHaveTextContent('加');
+    await user.keyboard('{Escape}');
+    expect(f.changed).not.toHaveBeenCalled();
+    await user.click(screen.getByRole('button', { name: '选择性粘贴' }));
+    expect(screen.getByRole('checkbox', { name: '跳过空白单元格' })).not.toBeChecked();
+    expect(screen.getByRole('button', { name: /^粘贴运算/ })).toHaveTextContent('无运算');
+    await user.click(within(screen.getByRole('dialog')).getByRole('button', { name: '取消' }));
+    expect(f.changed).not.toHaveBeenCalled();
+  });
+
   it('validates stop drafts, fills only through a decimal boundary and undoes the batch without warning about the untouched tail', async () => {
     const user = userEvent.setup();
     const doc = documentFixture();

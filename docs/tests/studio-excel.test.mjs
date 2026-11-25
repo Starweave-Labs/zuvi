@@ -68,6 +68,120 @@ const codec = compiledModule(
   resolveStudioModule
 );
 
+test('skip blanks and arithmetic preserve native values, target formulas, links and explicit empty strings across XLSX saves', async () => {
+  const workbook = new ExcelJS.Workbook();
+  const data = workbook.addWorksheet('Paste');
+  data.getCell('A1').value = 2;
+  data.getCell('B1').font = { bold: true };
+  data.getCell('A2').value = 0;
+  data.getCell('B2').value = false;
+  data.getCell('D4').value = 10;
+  data.getCell('D4').font = { italic: true };
+  data.getCell('D4').numFmt = '0.00';
+  data.getCell('E4').value = { text: 'keep link', hyperlink: 'https://example.com/keep' };
+  data.getCell('E4').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFF00' } };
+  data.getCell('D5').value = 4;
+  data.getCell('E5').value = 5;
+  data.getCell('G4').value = { formula: 'G5+1', result: 5 };
+  data.getCell('G5').value = 4;
+  for (const address of ['H4', 'I4', 'J4']) data.getCell(address).value = 12;
+  data.getCell('H1').value = '';
+  data.getCell('H2').value = ' ';
+  data.getCell('H3').value = { formula: '""', result: '' };
+  let source = new Blob([await workbook.xlsx.writeBuffer()]);
+  let document = await codec.importStudioExcel(source, 'paste.xlsx');
+  const id = document.sheets[0].id;
+  document.sheets[0].protectedRanges = ['E4:E4'];
+  assert.equal(document.sheets[0].cells.H1.input, "'");
+  const copy = (first, last = first) => {
+    const selection = {
+      anchor: model.studioParseAddress(first),
+      focus: model.studioParseAddress(last),
+    };
+    const text = model.studioCopyTsv(document.sheets[0], selection);
+    return {
+      text,
+      origin: model.studioClipboardOrigin(
+        model.studioCopySheetClipboard(document, id, selection),
+        text
+      ),
+    };
+  };
+  const region = copy('A1', 'B2');
+  document = model.studioPasteCells(
+    document,
+    id,
+    { row: 4, col: 4 },
+    region.text,
+    region.origin,
+    'values',
+    { skipBlanks: true, operation: 'multiply' }
+  ).document;
+  const scalar = copy('A1');
+  for (const [col, operation] of [
+    [7, 'add'],
+    [8, 'subtract'],
+    [9, 'divide'],
+    [10, 'multiply'],
+  ])
+    document = model.studioPasteCells(
+      document,
+      id,
+      { row: 4, col },
+      scalar.text,
+      scalar.origin,
+      'values',
+      { operation }
+    ).document;
+  const empties = copy('H1', 'H3');
+  document = model.studioPasteCells(
+    document,
+    id,
+    { row: 1, col: 11 },
+    empties.text,
+    empties.origin,
+    'values',
+    { skipBlanks: true }
+  ).document;
+  const zero = copy('A2');
+  const before = JSON.stringify(document);
+  assert.throws(
+    () =>
+      model.studioPasteCells(document, id, { row: 4, col: 9 }, zero.text, zero.origin, 'values', {
+        operation: 'divide',
+        skipBlanks: true,
+      }),
+    /除以零/
+  );
+  assert.equal(JSON.stringify(document), before);
+  for (let pass = 0; pass < 2; pass++) {
+    source = await codec.exportStudioExcel(document, source);
+    const native = new ExcelJS.Workbook();
+    await native.xlsx.load(Buffer.from(await source.arrayBuffer()));
+    const opened = native.getWorksheet('Paste');
+    assert.equal(opened.getCell('D4').value, 20);
+    assert.equal(opened.getCell('D4').font.italic, true);
+    assert.equal(opened.getCell('D4').numFmt, '0.00');
+    assert.equal(opened.getCell('D5').value, 0);
+    assert.equal(opened.getCell('E5').value, 0);
+    assert.equal(opened.getCell('E4').value.hyperlink, 'https://example.com/keep');
+    assert.equal(opened.getCell('E4').fill.fgColor.argb, 'FFFFFF00');
+    assert.equal(opened.getCell('G4').value.formula, '(G5+1)+(2)');
+    assert.equal(opened.getCell('G4').value.result, 7);
+    assert.equal(opened.getCell('H4').value, 10);
+    assert.equal(opened.getCell('I4').value, 6);
+    assert.equal(opened.getCell('J4').value, 24);
+    assert.equal(opened.getCell('K1').type, ExcelJS.ValueType.String);
+    assert.equal(opened.getCell('K1').value, '');
+    assert.equal(opened.getCell('K2').value, ' ');
+    assert.equal(opened.getCell('K3').type, ExcelJS.ValueType.String);
+    document = await codec.importStudioExcel(source, document.name);
+    assert.equal(document.sheets[0].cells.K1.input, "'");
+    assert.equal(document.sheets[0].cells.K3.input, "'");
+    assert.equal(document.sheets[0].cells.G4.input, '=(G5+1)+(2)');
+  }
+});
+
 test('series stop boundaries preserve untouched contents, styles, merges and hyperlinks across repeated XLSX edits and saves', async () => {
   const workbook = new ExcelJS.Workbook();
   const data = workbook.addWorksheet('Series');

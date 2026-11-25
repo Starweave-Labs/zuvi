@@ -1328,6 +1328,7 @@ function importedInput(cell: ExcelJS.Cell, nativeNumericInput?: string): string 
   if (typeof cell.value === 'object' && cell.value && 'error' in cell.value)
     return String(cell.value.error);
   const text = cell.text;
+  if (cell.type === ExcelJS.ValueType.String && text === '') return "'";
   // Excel text that resembles a value or formula must remain text on round-trip.
   if (typeof studioInputValue(text) !== 'string' || /^[='#]/.test(text)) return `'${text}`;
   return text;
