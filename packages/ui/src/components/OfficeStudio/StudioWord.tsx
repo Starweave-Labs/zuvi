@@ -55,6 +55,8 @@ import { StudioWordNumberingDialog } from './StudioWordNumberingDialog';
 import {StudioWordSurfaceDialog} from './StudioWordSurfaceDialog';
 import { WordTableRowProperties, wordDistributeColumns, wordDistributeRows, wordSelectedRows, wordSetRowProperties } from './studio-word-table-row-extension';
 import { StudioWordRowDialog } from './StudioWordRowDialog';
+import { StudioWordConversionDialog } from './StudioWordConversionDialog';
+import { wordConversionTarget, wordApplyTableConversion, type WordConversionTarget } from './studio-word-table-conversion';
 import { WordTableCell, WordTableHeader } from './studio-word-table-cell';
 import {WordPaginationLayout,wordSetPagination} from './studio-word-pagination-extension';
 import {WordParagraphSurface,wordSelectionSurfaces,wordSetParagraphSurface} from './studio-word-surface-extension';
@@ -411,6 +413,7 @@ export function StudioWord({
   const [numberStart,setNumberStart]=React.useState('1');
   const [numberDialog,setNumberDialog]=React.useState<{editor:Editor;doc:Editor['state']['doc'];selection:Editor['state']['selection'];catalog:WordNumberingCatalog;currentId?:string;level:number}|null>(null);
   const [surfaceDialog,setSurfaceDialog]=React.useState<{editor:Editor;doc:Editor['state']['doc'];selection:Editor['state']['selection'];surfaces:ReturnType<typeof wordSelectionSurfaces>}|null>(null);
+  const [conversionDialog, setConversionDialog] = React.useState<{ editor: Editor; target: WordConversionTarget } | null>(null);
   const [rowDialog, setRowDialog] = React.useState<{ editor: Editor; doc: Editor['state']['doc']; selection: Editor['state']['selection']; rows: ReturnType<typeof wordSelectedRows> } | null>(null);
   const [tableColumns, setTableColumns] = React.useState('3');
   const [tableHeader, setTableHeader] = React.useState(true);
@@ -2103,6 +2106,11 @@ export function StudioWord({
             </Button>
           </RibbonGroup>
           <RibbonGroup label="表格工具" className="zuvi-studio-word-table-tools-group">
+            <Button variant="ghost" size="sm" disabled={toolsDisabled || !editor || !wordConversionTarget(editor)} onMouseDown={keepSelection} onClick={() => {
+              if (!editor || toolsDisabled || editor.view.composing) return;
+              const target = wordConversionTarget(editor);
+              if (target) setConversionDialog({ editor, target });
+            }}>{editor && wordConversionTarget(editor)?.direction === 'tableToText' ? '表格转文本' : '文本转表格'}</Button>
             <Button variant="ghost" size="sm" disabled={toolsDisabled || !selection?.inTable} onMouseDown={keepSelection} onClick={() => {
               if (!editor || toolsDisabled) return;
               const rows = wordSelectedRows(editor);
@@ -2917,6 +2925,19 @@ export function StudioWord({
           if(!latest.current.editable||target.isDestroyed||target!==editor||target.state.doc!==surfaceDialog.doc)throw new Error('文档或编辑区域已变化，请重新打开段落边框。');
           target.view.dispatch(target.state.tr.setSelection(surfaceDialog.selection).setMeta('addToHistory',false));
           const changed=wordSetParagraphSurface(target,patch);setNotice(changed?'已应用段落边框和底纹，可撤销恢复。':'段落边框/底纹保持原样。');
+        }} />}
+      {conversionDialog && <StudioWordConversionDialog target={conversionDialog.target} blocked={!editable}
+        onClose={() => { setConversionDialog(null); if (!conversionDialog.editor.isDestroyed) conversionDialog.editor.commands.focus(); }}
+        onSave={(separator, columns, convertNested) => {
+          const target = conversionDialog.editor;
+          if (!latest.current.editable || target !== editor || target.isDestroyed) throw new Error('编辑区域或权限已变化，请重新打开转换。');
+          if (target.view.composing) throw new Error('请结束输入法组合后重试转换。');
+          if (target.state.doc !== conversionDialog.target.doc) throw new Error('文档已变化，请重新打开转换。');
+          target.view.dispatch(target.state.tr.setSelection(conversionDialog.target.selection).setMeta('addToHistory', false));
+          if (!wordApplyTableConversion(target, conversionDialog.target, separator, columns, convertNested)) throw new Error('请结束输入法组合后重试转换。');
+          setConversionDialog(null);
+          target.commands.focus();
+          setNotice('已转换内容，可撤销恢复。');
         }} />}
       {rowDialog && <StudioWordRowDialog rows={rowDialog.rows.map((row) => row.properties)} blocked={!editable}
         onClose={() => { setRowDialog(null); if (!rowDialog.editor.isDestroyed) rowDialog.editor.commands.focus(); }}

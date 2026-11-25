@@ -2301,3 +2301,71 @@ describe('StudioWord 第一轮编辑能力', () => {
     view.unmount();
   });
 });
+
+describe('Word text and table conversion entry', () => {
+  it('converts through the actual ribbon with a preview and independent undo/redo transactions', async () => {
+    const model = documentModel('A\tB');
+    model.content.content![0].content![0].marks = [{ type: 'bold' }];
+    const { textbox, onChange } = await mount({ document: model });
+    selectNodeContents(textbox, textbox.querySelector('p')!);
+    fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+    fireEvent.click(screen.getByRole('button', { name: '文本转表格' }));
+    expect(screen.getByText('1 行，2 列')).toBeInTheDocument();
+    expect(onChange).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: '转换' }));
+    await waitFor(() => expect(textbox.querySelectorAll('td')).toHaveLength(2));
+    expect(textbox.querySelector('td strong')).toHaveTextContent('A');
+    expect(onChange).toHaveBeenCalledTimes(1);
+    fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(textbox.querySelector('table')).toBeNull());
+    expect(textbox.textContent).toContain('A\tB');
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    await waitFor(() => expect(textbox.querySelectorAll('td')).toHaveLength(2));
+    selectNodeContents(textbox, textbox.querySelector('td p')!);
+    fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+    fireEvent.click(screen.getByRole('button', { name: '表格转文本' }));
+    fireEvent.click(screen.getByRole('button', { name: '转换' }));
+    await waitFor(() => expect(textbox.querySelector('table')).toBeNull());
+    expect(textbox.querySelector('strong')).toHaveTextContent('A');
+    fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(textbox.querySelectorAll('td')).toHaveLength(2));
+  });
+  it('cancels without writes and rejects a stale conversion after an external document replacement', async () => {
+    const { textbox, onChange, rerender } = await mount({ document: documentModel('A\tB') });
+    selectNodeContents(textbox, textbox.querySelector('p')!);
+    fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+    fireEvent.click(screen.getByRole('button', { name: '文本转表格' }));
+    fireEvent.click(screen.getByRole('button', { name: '取消' }));
+    expect(onChange).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: '文本转表格' }));
+    rerender(<WordHost document={documentModel('replacement')} onChange={onChange} disabled={false} readOnly={false} />);
+    await waitFor(() => expect(textbox).toHaveTextContent('replacement'));
+    fireEvent.click(screen.getByRole('button', { name: '转换' }));
+    expect(screen.getByRole('alert')).toHaveTextContent('已变化');
+    expect(textbox.querySelector('table')).toBeNull();
+    expect(onChange).not.toHaveBeenCalled();
+    rerender(<WordHost document={documentModel('replacement')} onChange={onChange} disabled={false} readOnly />);
+    expect(screen.getByRole('button', { name: '转换' })).toBeDisabled();
+  });
+});
+
+it('restores a rejected controlled conversion without changing the saved native model', async () => {
+  const value = documentModel('A\tB');
+  const ref = createRef<OfficeStudioHandle>();
+  const onChange = vi.fn(), onSave = vi.fn();
+  render(<OfficeStudio ref={ref} value={value} onChange={onChange} onSave={onSave} />);
+  const body = await screen.findByRole('textbox', { name: 'Word 文档正文' });
+  selectNodeContents(body, body.querySelector('p')!);
+  fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+  fireEvent.click(screen.getByRole('button', { name: '文本转表格' }));
+  fireEvent.click(screen.getByRole('button', { name: '转换' }));
+  await waitFor(() => expect(onChange).toHaveBeenCalledTimes(1));
+  expect(onChange.mock.lastCall?.[0].content.content[0].type).toBe('table');
+  await waitFor(() => expect(body.querySelector('table')).toBeNull());
+  expect(body).toHaveTextContent('A B', { normalizeWhitespace: true });
+  expect(ref.current?.getDocument()).toBe(value);
+  await act(async () => ref.current?.save());
+  expect(onSave).toHaveBeenCalledWith(value);
+});

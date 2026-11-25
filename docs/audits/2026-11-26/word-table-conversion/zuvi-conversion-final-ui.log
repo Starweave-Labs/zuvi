@@ -1,0 +1,314 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/studio-sheet-structure.test.ts (61 tests) 139ms
+ ✓ src/components/OfficeStudio/studio-sheet-fill.test.ts (35 tests) 169ms
+ ✓ src/components/OfficeStudio/studio-sheet-rules.test.ts (46 tests) 278ms
+ ✓ src/components/OfficeStudio/studio-sheet-hyperlinks.test.ts (47 tests) 431ms
+   ✓ Office Studio hyperlink query indexes > indexes 100,000 overlapping rectangular records once and avoids materializing them for every visible cell 349ms
+ ✓ src/components/OfficeStudio/studio-sheet-model.test.ts (56 tests) 852ms
+   ✓ Office Studio sheet calculations > preserves real parser errors and scalar labels when each source module uses a separate realm 629ms
+stderr | src/components/DataGrid/DataGrid.test.tsx > DataGrid > resizes columns by keyboard across the full contract; coordinate-less moves never emit
+Unknown event handler property `onColumnWidthsChange`. It will be ignored.
+
+stderr | src/components/DataGrid/DataGrid.test.tsx > DataGrid > resizes columns by keyboard across the full contract; coordinate-less moves never emit
+React does not recognize the `columnWidths` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `columnwidths` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+
+ ✓ src/components/Splitter/Splitter.test.tsx (44 tests) 313ms
+ ✓ src/components/OfficeEditor/OfficeEditor.test.tsx (21 tests) 763ms
+ ✓ src/components/Chart/useChartViewport.test.tsx (31 tests) 436ms
+ ✓ src/components/OfficeStudio/studio-word-table-rows.test.ts (13 tests) 347ms
+ ✓ src/components/DataGrid/DataGrid.test.tsx (26 tests) 754ms
+ ✓ src/components/OfficeStudio/studio-model.test.ts (25 tests) 24ms
+stderr | src/components/Combobox/Combobox.test.tsx > Combobox 渲染与 ARIA > 空字符串 value 始终按 disabled option 处理
+[ZUVI Combobox] option.value 不能为空字符串；空字符串保留为 Form 的空值哨兵。
+
+stderr | src/components/Combobox/Combobox.test.tsx > Combobox 渲染与 ARIA > 空字符串 value 始终按 disabled option 处理
+[ZUVI Combobox] option.value 不能为空字符串；空字符串保留为 Form 的空值哨兵。
+
+stderr | src/components/Combobox/Combobox.test.tsx > Combobox 渲染与 ARIA > defaultValue 优先展示提交文本，隐藏字段只序列化 committed value
+[ZUVI Combobox] defaultValue 可解析时会忽略不一致的 defaultInputValue。
+
+ ✓ src/components/Globe/Globe.test.tsx (27 tests) 3075ms
+   ✓ Globe > has SSR-safe loading markup and a native root ref/attributes/style/slots 726ms
+ ✓ src/components/Input/Input.test.tsx (40 tests) 691ms
+ ✓ src/components/Combobox/Combobox.test.tsx (24 tests) 911ms
+ ✓ src/components/SideNav/SideNav.test.tsx (24 tests) 812ms
+ ✓ src/components/Table/Table.test.tsx (24 tests) 1677ms
+   ✓ Table 数据驱动模式 > 隐藏活动排序列时清除排序；字段重置不清除其他排序 338ms
+ ✓ src/components/Upload/Upload.test.tsx (26 tests) 738ms
+ ✓ src/components/DateRangePicker/DateRangePicker.test.tsx (27 tests) 2707ms
+   ✓ DateRangePicker 定制出口 > 今天格 aria-current="date" + data-today 762ms
+ ✓ src/components/MultiCombobox/MultiCombobox.test.tsx (26 tests) 1158ms
+ ✓ src/components/DropdownMenu/DropdownMenu.test.tsx (32 tests) 795ms
+ ✓ src/components/CommandPalette/CommandPalette.test.tsx (19 tests) 2765ms
+   ✓ CommandPalette 导航与选择契约 > 1000 条命令下方向键仍按相邻索引移动并正确执行 2153ms
+ ✓ src/components/Form/Form.test.tsx (24 tests) 721ms
+ ✓ src/components/Chart/Chart.test.tsx (22 tests) 1325ms
+   ✓ Chart > keeps SSR stable and forwards a native root ref, attributes, style and slots 355ms
+ ✓ src/test/a11y.roles.test.tsx (23 tests) 402ms
+ ✓ src/components/DatePicker/DatePicker.test.tsx (29 tests) 2838ms
+   ✓ DatePicker 打开与关闭 > Modal 内日历面板高于遮罩，Esc 逐层关闭 398ms
+   ✓ DatePicker 输入解析与高亮 > 今天高亮 aria-current="date"，选中日 aria-selected 577ms
+ ✓ src/components/QRCode/QRCode.test.tsx (17 tests) 178ms
+ ✓ src/components/OfficeStudio/OfficeStudio.test.tsx (18 tests) 6691ms
+   ✓ OfficeStudio > rejects saving, exporting, printing and replacing a spreadsheet with an invalid pending input 1693ms
+   ✓ OfficeStudio > prints a committed document from the ref and allows printing in read-only preview 356ms
+   ✓ OfficeStudio > updates every item in an open file menu after readOnly changes 745ms
+   ✓ OfficeStudio > updates every item in an open file menu after disabled changes 442ms
+   ✓ OfficeStudio > disables an already open 文件 menu during save without queuing other host callbacks 541ms
+   ✓ OfficeStudio > imperative save and export commit the real focused spreadsheet draft before taking a snapshot 1378ms
+   ✓ OfficeStudio pending font input > commits font drafts before save, export and print and rejects an invalid size snapshot 697ms
+ ✓ src/config/ConfigProvider.test.tsx (14 tests) 176ms
+ ✓ src/components/Tree/Tree.test.tsx (23 tests) 637ms
+ ✓ src/components/Anchor/Anchor.test.tsx (18 tests) 552ms
+ ✓ src/components/Tabs/Tabs.test.tsx (18 tests) 442ms
+ ✓ src/components/Select/Select.test.tsx (34 tests) 848ms
+stdout | src/components/VirtualTable/VirtualTable.test.tsx > VirtualTable > 10000 rows: renders at most 30 DOM rows (virtualized window)
+[VirtualTable 压测] 10000 行渲染耗时 8.9ms，DOM 行数 15
+
+ ✓ src/components/OfficeStudio/StudioPdf.test.tsx (31 tests) 9031ms
+   ✓ StudioPdf document editing > creates repeated text widgets, validates duplicate names and edits or deletes fields with undo 825ms
+   ✓ StudioPdf document editing > keeps date drafts editable, commits once, cancels invalid input and synchronizes repeated controls 355ms
+   ✓ StudioPdf document editing > treats consecutive text input during one focus as a single undo transaction 418ms
+   ✓ StudioPdf document editing > preserves unsaved widget coordinates when another widget is removed and validates other page bounds 362ms
+   ✓ StudioPdf document editing > creates a multiselect list with distinct export labels and synchronized selections 411ms
+   ✓ StudioPdf document editing > creates a readonly multiline field with current/default text and restores its creation with redo 554ms
+   ✓ StudioPdf document editing > edits actual page fields and radio widgets, mirrors the sidebar, and never reloads or rerenders original pages for value/mark changes 370ms
+   ✓ StudioPdf document editing > controls ZUVI radio groups independently, mirrors sidebar edits and history, and carries checkbox values between pages 362ms
+   ✓ StudioPdf document editing > supports keyboard placement and clamps highlights inside the visible crop box 379ms
+   ✓ StudioPdf document editing > blocks readonly field changes and every document modification in readOnly/disabled modes while retaining readOnly page navigation 465ms
+   ✓ StudioPdf document editing > blocks ZUVI choice and multiline edits for intrinsic locks, read-only documents and disabled editors 300ms
+   ✓ StudioPdf Office ribbon and navigation > keeps sidebar search state and permits statusbar navigation and bounded zoom in read-only mode while disabling every control when disabled 407ms
+   ✓ StudioPdf drawing and search > moves all signature points together, treats an entire drag as one undo action, and never commits a cancelled stroke 365ms
+   ✓ StudioPdf drawing and search > searches extracted text, navigates results and marks their original rectangles in read-only mode 314ms
+ ✓ src/components/Chart/ChartExpanded.test.tsx (36 tests) 1000ms
+ ✓ src/components/VirtualTable/VirtualTable.test.tsx (24 tests) 781ms
+ ✓ src/test/a11y.axe.test.tsx (21 tests) 793ms
+ ✓ src/components/OfficeStudio/studio-sheet-paste-options.test.ts (10 tests) 135ms
+ ✓ src/components/OfficeStudio/studio-word-table-conversion.test.ts (13 tests) 192ms
+ ✓ src/components/DataGrid/data-grid-model.test.ts (28 tests) 8ms
+ ✓ src/components/Tour/Tour.test.tsx (18 tests) 458ms
+ ✓ src/components/Statistic/Statistic.test.tsx (34 tests) 138ms
+ ✓ src/components/OfficeStudio/studio-word-paragraph-layout.test.ts (10 tests) 139ms
+ ✓ src/components/Typography/Typography.test.tsx (21 tests) 168ms
+ ✓ src/components/Modal/Modal.test.tsx (29 tests) 5066ms
+   ✓ Modal 开关 > Esc 先关闭浮层，再关闭对话框 544ms
+   ✓ Modal 开关 > 嵌套 Modal 的 Esc 每次只关闭最内层 328ms
+   ✓ Modal 开关 > Modal 中的 Drawer 先响应 Esc 329ms
+   ✓ Modal 开关 > 关闭最内层后把焦点归还给仍打开的外层 329ms
+   ✓ Modal 开关 > Trigger 再次点击关闭（开关切换） 332ms
+   ✓ Modal 开关 > 打开时渲染、关闭后卸载 332ms
+   ✓ Modal 关闭方式 > Esc 关闭并回调 onOpenChange(false) 315ms
+   ✓ Modal 关闭方式 > overlay 点击关闭 318ms
+   ✓ Modal 关闭方式 > Close 按钮关闭 339ms
+   ✓ Modal 焦点管理 > 关闭后焦点归还 Trigger 381ms
+   ✓ Modal 滚动锁 > 打开锁定 body 滚动，关闭恢复 330ms
+   ✓ Modal 透传与定制出口 > Trigger 透传 props 与 className 321ms
+   ✓ Modal 透传与定制出口 > data-state 标记进出场状态 326ms
+ ✓ src/components/OfficeStudio/studio-word-character-layout.test.ts (8 tests) 107ms
+ ✓ src/components/Steps/Steps.test.tsx (14 tests) 296ms
+ ✓ src/components/Cascader/Cascader.test.tsx (17 tests) 843ms
+ ✓ src/components/Pagination/Pagination.test.tsx (21 tests) 398ms
+ ✓ src/test/i18n.test.tsx (32 tests) 241ms
+ ✓ src/test/a11y.keyboard.test.tsx (10 tests) 901ms
+   ✓ Modal 键盘流 > Esc 关闭且焦点归还 Trigger 388ms
+ ✓ src/components/OfficeStudio/studio-word-numbering.test.ts (11 tests) 16ms
+ ✓ src/components/OfficeStudio/studio-sheet-editing.test.ts (13 tests) 106ms
+ ✓ src/components/Popover/Popover.test.tsx (22 tests) 3202ms
+   ✓ Popover 关闭方式 > 双 Popover 叠开 Esc 只关最上层 446ms
+   ✓ Popover 关闭方式 > Popover 在下、Modal 在上时 Esc 关 Modal 而非 Popover 609ms
+ ✓ src/components/TreeSelect/TreeSelect.test.tsx (15 tests) 668ms
+ ✓ src/components/Drawer/Drawer.test.tsx (27 tests) 3942ms
+   ✓ Drawer 开关 > Trigger 再次点击关闭（开关切换） 340ms
+   ✓ Drawer 开关 > 内层 Drawer 在焦点仍留于外层 Drawer 时先响应 Esc 337ms
+   ✓ Drawer 开关 > 打开时渲染、关闭后卸载 333ms
+   ✓ Drawer 关闭方式 > Esc 关闭并回调 onOpenChange(false) 311ms
+   ✓ Drawer 关闭方式 > overlay 点击关闭 319ms
+   ✓ Drawer 关闭方式 > Close 按钮关闭 318ms
+   ✓ Drawer 焦点管理 > 关闭后焦点归还 Trigger 376ms
+   ✓ Drawer 滚动锁 > 打开锁定 body 滚动，关闭恢复 319ms
+   ✓ Drawer 透传与定制出口 > Trigger 透传 props 与 className 314ms
+   ✓ Drawer 透传与定制出口 > data-state 标记进出场状态 328ms
+ ✓ src/components/InputNumber/InputNumber.test.tsx (15 tests) 435ms
+ ✓ src/components/ColorPicker/ColorPicker.test.tsx (14 tests) 759ms
+ ✓ src/components/Message/Message.test.tsx (17 tests) 523ms
+ ✓ src/components/Slider/Slider.test.tsx (14 tests) 339ms
+ ✓ src/components/OfficeStudio/studio-sheet-arrays.test.ts (11 tests) 346ms
+ ✓ src/test/ssr.test.tsx (14 tests) 79ms
+ ✓ src/components/Calendar/Calendar.test.tsx (13 tests) 1005ms
+ ✓ src/components/OfficeStudio/studio-number-format.test.ts (6 tests) 136ms
+ ✓ src/components/Transfer/Transfer.test.tsx (15 tests) 933ms
+ ✓ src/components/App/App.test.tsx (14 tests) 1356ms
+   ✓ App 内置确认框 > 确认框内容中的嵌套 Modal 先响应 Esc 347ms
+   ✓ App 内置确认框 > Modal 在下、确认框在上时 Esc 关闭确认框而非 Modal 355ms
+ ✓ src/components/Notification/Notification.test.tsx (13 tests) 363ms
+ ✓ src/components/TimePicker/TimePicker.test.tsx (13 tests) 1430ms
+ ✓ src/components/OfficeStudio/studio-word-tabs.test.ts (9 tests) 197ms
+ ✓ src/test/a11y.labels.test.tsx (18 tests) 470ms
+ ✓ src/components/OfficeStudio/studio-word-styles.test.ts (7 tests) 6ms
+ ✓ src/components/Mentions/Mentions.test.tsx (18 tests) 850ms
+ ✓ src/components/Rate/Rate.test.tsx (13 tests) 498ms
+ ✓ src/components/OfficeStudio/studio-word-table-row-conversion.test.ts (6 tests) 247ms
+ ✓ src/components/Image/Image.test.tsx (17 tests) 629ms
+ ✓ src/components/Radio/Radio.test.tsx (11 tests) 390ms
+ ✓ src/components/Tooltip/Tooltip.test.tsx (11 tests) 412ms
+ ✓ src/components/Chart/chart-interactions.test.ts (10 tests) 5ms
+ ✓ src/components/OfficeStudio/studio-word-numbering-extension.test.ts (7 tests) 262ms
+ ✓ src/components/Avatar/Avatar.test.tsx (17 tests) 237ms
+ ✓ src/components/OfficeStudio/studio-word-pagination.test.ts (10 tests) 5ms
+ ✓ src/components/Breadcrumb/Breadcrumb.test.tsx (11 tests) 290ms
+ ✓ src/components/OfficeStudio/studio-word-surface.test.ts (7 tests) 186ms
+ ✓ src/components/Collapse/Collapse.test.tsx (10 tests) 458ms
+ ✓ src/components/OfficeStudio/studio-sheet-painter.test.ts (4 tests) 103ms
+ ✓ src/components/Button/Button.test.tsx (13 tests) 290ms
+ ✓ src/components/Popconfirm/Popconfirm.test.tsx (11 tests) 615ms
+ ✓ src/components/Card/Card.test.tsx (12 tests) 200ms
+ ✓ src/components/Affix/Affix.test.tsx (8 tests) 290ms
+ ✓ src/components/OfficeStudio/studio-word-table-fragments.test.ts (8 tests) 5ms
+ ✓ src/components/Descriptions/Descriptions.test.tsx (11 tests) 122ms
+ ✓ src/components/OfficeStudio/StudioFontControl.test.tsx (6 tests) 791ms
+   ✓ editable Office font control > commits typed text with Enter and cancels a later draft with Escape 354ms
+ ✓ src/components/FloatButton/FloatButton.test.tsx (10 tests) 347ms
+ ✓ src/components/Segmented/Segmented.test.tsx (9 tests) 332ms
+ ✓ src/components/OfficeStudio/studio-word-table-row-range.test.ts (7 tests) 247ms
+ ✓ src/components/Alert/Alert.test.tsx (9 tests) 293ms
+ ✓ src/components/Badge/Badge.test.tsx (12 tests) 85ms
+ ✓ src/components/Row/Row.test.tsx (9 tests) 78ms
+ ✓ src/components/Progress/Progress.test.tsx (9 tests) 172ms
+ ✓ src/components/Timeline/Timeline.test.tsx (10 tests) 211ms
+ ✓ src/components/Tag/Tag.test.tsx (11 tests) 237ms
+ ✓ src/components/BackTop/BackTop.test.tsx (8 tests) 297ms
+ ✓ src/components/Skeleton/Skeleton.test.tsx (12 tests) 107ms
+ ✓ src/components/Flex/Flex.test.tsx (9 tests) 224ms
+ ✓ src/components/OfficeStudio/StudioSheetNumberFormat.test.tsx (4 tests) 4787ms
+   ✓ previews mixed selections, preserves raw input, applies one transaction and supports undo/redo and cancellation 1655ms
+   ✓ retains invalid drafts, guards protected selections atomically and disables an open dialog when permissions change 1227ms
+   ✓ commits a valid input draft before capturing preview and keeps invalid cell input from opening the dialog 977ms
+   ✓ changes the native region tag and previews Chinese dates without converting the serial value 928ms
+ ✓ src/components/List/List.test.tsx (9 tests) 222ms
+ ✓ src/components/Spin/Spin.test.tsx (9 tests) 123ms
+ ✓ src/components/OfficeStudio/studio-word-nonprinting.test.ts (3 tests) 176ms
+ ✓ src/components/Col/Col.test.tsx (9 tests) 89ms
+ ✓ src/components/Space/Space.test.tsx (8 tests) 92ms
+ ✓ src/components/Switch/Switch.test.tsx (8 tests) 292ms
+ ✓ src/components/OfficeStudio/StudioSheetSearch.test.tsx (3 tests) 646ms
+   ✓ focuses search, navigates with Enter and closes with Escape without editing content 340ms
+ ✓ src/utils/FloatingPanel.test.tsx (3 tests) 193ms
+ ✓ src/components/Checkbox/Checkbox.test.tsx (8 tests) 310ms
+ ✓ src/components/Watermark/Watermark.test.tsx (9 tests) 103ms
+ ✓ src/components/Result/Result.test.tsx (8 tests) 161ms
+ ✓ src/components/Empty/Empty.test.tsx (9 tests) 178ms
+ ✓ src/components/OfficeStudio/studio-word-cell-measure.test.ts (7 tests) 67ms
+ ✓ src/components/Divider/Divider.test.tsx (8 tests) 72ms
+ ✓ src/components/OfficeStudio/studio-sheet-layout.test.ts (7 tests) 33ms
+ ✓ src/components/OfficeStudio/StudioWordConversionDialog.test.tsx (3 tests) 444ms
+ ✓ src/components/OfficeStudio/StudioWordSurfaceDialog.test.tsx (4 tests) 615ms
+ ✓ src/components/OfficeStudio/studio-sheet-navigation.test.ts (3 tests) 141ms
+ ✓ src/test/icons-loading.test.tsx (3 tests) 45ms
+ ✓ src/components/OfficeStudio/studio-pdf-fields.test.ts (3 tests) 7ms
+ ✓ src/utils/portal.test.tsx (2 tests) 191ms
+ ✓ src/components/OfficeStudio/StudioWordNumberingDialog.test.tsx (2 tests) 771ms
+   ✓ Word numbering definition drafts > keeps invalid drafts per level, supports all nine levels and cancels without saving 515ms
+ ✓ src/components/OfficeStudio/studio-word-images.test.ts (3 tests) 6ms
+ ✓ src/components/DataGrid/data-grid-virtual.test.ts (6 tests) 5ms
+ ✓ src/utils/floatingPosition.test.ts (3 tests) 2ms
+ ✓ src/components/Chart/chart-shapes.test.ts (32 tests) 198ms
+ ✓ src/components/Chart/chart-geometry.test.ts (85 tests) 330ms
+ ✓ src/components/OfficeStudio/StudioWordRowDialog.test.tsx (2 tests) 436ms
+   ✓ applies only edited fields in a mixed selection and retains invalid drafts 321ms
+ ✓ src/components/Globe/globe-data.test.ts (24 tests) 10ms
+ ✓ src/components/OfficeStudio/StudioPdf.integration.test.tsx (1 test) 949ms
+   ✓ commits date drafts before file operations and blocks invalid snapshots until corrected or cancelled 948ms
+ ✓ src/components/Chart/chart-model.test.ts (56 tests) 97ms
+ ✓ src/components/Globe/globe-transition.test.ts (13 tests) 18ms
+ ✓ src/components/Globe/globe-label-layout.test.ts (18 tests) 62ms
+ ✓ src/components/Globe/globe-geometry.test.ts (22 tests) 242ms
+ ✓ src/components/OfficeStudio/StudioWord.test.tsx (87 tests) 33590ms
+   ✓ Word paragraph dialog and ruler > edits inherited tab stops through ZUVI controls with precision checks, cancellation and one history step 1413ms
+   ✓ Word paragraph dialog and ruler > applies mixed paragraph values in one history step and keeps untouched values separate 1036ms
+   ✓ Word paragraph dialog and ruler > retains invalid dialog drafts and disables an open dialog after permission changes 621ms
+   ✓ Word paragraph dialog and ruler > keeps mixed pagination flags unchanged until edited, commits once, and blocks an open dialog after permission changes 1326ms
+   ✓ Word paragraph dialog and ruler > edits a named header style using shared definitions and restores its direct indent in one undo 792ms
+   ✓ Word paragraph dialog and ruler > supports keyboard ruler steps without changing first-line offsets 301ms
+   ✓ Word character metrics dialog > preserves mixed fonts and links, previews point measurements and applies one undoable operation 503ms
+   ✓ Word character metrics dialog > retains invalid drafts, disables an open dialog on permission changes and cancels without writing 670ms
+   ✓ Word character metrics dialog > blocks an invalid font draft before opening and preserves an unchanged metrics dialog without history 377ms
+   ✓ Word character metrics dialog > applies metrics in the header editor while preserving the body 578ms
+   ✓ StudioWord Office ribbon actions > shows nonprinting characters in the body, table, header and footer without changing data, selection or document history 795ms
+   ✓ StudioWord Office ribbon actions > applies font family and size to the selected range and restores them with undo and redo 589ms
+   ✓ StudioWord Office ribbon actions > applies genuine no-spacing and heading styles through the gallery without replacing text 373ms
+   ✓ StudioWord Office ribbon actions > toggles rulers, navigates headings and changes zoom in read-only mode without document edits 366ms
+   ✓ StudioWord Office ribbon actions > copies plain text, cuts only after a successful write and restores the selected text with undo 497ms
+   ✓ StudioWord Office ribbon actions > ignores late clipboard paste after a same-id document replacement 449ms
+   ✓ StudioWord Office ribbon actions > ignores late clipboard paste after a new-id document replacement 803ms
+   ✓ StudioWord Office ribbon actions > ignores late clipboard cut after a same-id document replacement 889ms
+   ✓ StudioWord Office ribbon actions > ignores late clipboard cut after a new-id document replacement 913ms
+   ✓ StudioWord Office ribbon actions > counts Unicode body characters and paragraphs while the header is active 459ms
+   ✓ StudioWord named paragraph styles > creates, applies, modifies and deletes a named style with real undo and redo 2130ms
+   ✓ StudioWord named paragraph styles > updates body and header bindings while preserving direct formatting in another paragraph 966ms
+   ✓ StudioWord named paragraph styles > uses the configured next paragraph style on Enter without deleting the preceding text 333ms
+   ✓ StudioWord named paragraph styles > automatically updates the definition and linked paragraphs in the same undoable formatting action 555ms
+   ✓ StudioWord named paragraph styles > disables named style mutations in {"readOnly":true} 304ms
+   ✓ StudioWord structured editing > nests ordered list items via Tab and the list indent tools 492ms
+   ✓ StudioWord structured editing > renders an editable document, ZUVI ribbon and a scrollable paper stage 554ms
+   ✓ StudioWord structured editing > formats a selected text range and undo restores the original structured content 567ms
+   ✓ StudioWord structured editing > inserts a real table and changes its row count through the ribbon 540ms
+   ✓ StudioWord structured editing > takes an external document replacement without echoing a change event 302ms
+   ✓ StudioWord structured editing > uses the latest host callback and metadata after a parent update 476ms
+   ✓ StudioWord structured editing > restores rejected controlled edits so the canvas and saved model agree 539ms
+   ✓ StudioWord structured editing > keeps the caret and latest text when the controlled host accepts successive input 470ms
+   ✓ StudioWord structured editing > prevents document changes with {"readOnly":true} and still allows zoom 372ms
+   ✓ StudioWord structured editing > prevents document changes with {"disabled":true} and still allows zoom 620ms
+   ✓ StudioWord structured editing > rejects unsafe hyperlink protocols without editing the document 518ms
+   ✓ StudioWord structured editing > changes picture wrapping, position and anchor flags and restores them with undo 712ms
+   ✓ Word text and table conversion entry > converts through the actual ribbon with a preview and independent undo/redo transactions 329ms
+   ✓ Word text and table conversion entry > cancels without writes and rejects a stale conversion after an external document replacement 328ms
+ ✓ src/components/OfficeStudio/StudioSheet.test.tsx (86 tests) 45883ms
+   ✓ StudioSheet Office editing details > commits a valid cell draft before keyboard copying and blocks invalid drafts without replacing the previous snapshot 1284ms
+   ✓ StudioSheet Office editing details > captures a keyboard copy without DOM text selection, allows read-only copying and guards disabled/IME events 1477ms
+   ✓ StudioSheet Office editing details > skips formatted blank sources, multiplies zeros and booleans, and restores the complete paste with one undo/redo 1725ms
+   ✓ StudioSheet Office editing details > keeps divide-by-zero failure inside Paste Special and allows correction without a partial write 1401ms
+   ✓ StudioSheet Office editing details > retains Paste Special option drafts across permissions and cancels them without changing the document 1097ms
+   ✓ StudioSheet Office editing details > validates stop drafts, fills only through a decimal boundary and undoes the batch without warning about the untouched tail 1150ms
+   ✓ StudioSheet Office editing details > fills through an ISO date stop across the leap day and keeps invalid date drafts reviewable 1027ms
+   ✓ StudioSheet Office editing details > preserves stop drafts across read-only and disabled states, cancels without a write, then fills padded text from two seeds 1259ms
+   ✓ StudioSheet Office editing details > clears displayed fill and keeps the full painted selection when its last row is hidden 730ms
+   ✓ StudioSheet Office editing details > paints a complete pointer selection once, and restores the whole operation with undo/redo 696ms
+   ✓ StudioSheet Office editing details > keeps a frozen source in continuous mode, cancels previews and stops on Escape or permission changes 2108ms
+   ✓ StudioSheet Office editing details > applies a keyboard-selected target on Enter and retains the brush after an atomic failure 1152ms
+   ✓ StudioSheet Office editing details > blocks invalid input before copying and cancels the painter when changing sheets or importing another document 2321ms
+   ✓ StudioSheet Office editing details > creates dynamic and fixed arrays through the dialog, protects results and restores one transaction with undo/redo 2460ms
+   ✓ StudioSheet Office editing details > creates a fixed array with Ctrl+Shift+Enter, ignores IME Enter and cancels the dialog without a transaction 1395ms
+   ✓ StudioSheet Office editing details > protects a selected range, rejects a spill through it and restores the array after unprotecting 1708ms
+   ✓ StudioSheet Office editing details > disables array formula entry in {"disabled":true} 332ms
+   ✓ StudioSheet Office editing details > uses ZUVI controls for every ribbon action and exposes pressed state without native button chrome 895ms
+   ✓ StudioSheet Office editing details > opens search with shortcuts, replaces only captured selection and undoes once 1047ms
+   ✓ StudioSheet Office editing details > searches across worksheets and temporarily reveals hidden matches without changing hidden rows 997ms
+   ✓ StudioSheet Office editing details > sets selected column widths, validates inputs, restores default and supports undo 685ms
+   ✓ StudioSheet hyperlinks > preserves numeric input when editing link metadata and undoes display text with its link in one step 520ms
+   ✓ StudioSheet hyperlinks > copies hyperlink ranges in the version 3 clipboard and pastes values and links together 415ms
+   ✓ StudioSheet rules and fill > creates, recalculates and deletes a conditional format with undo and rule editing 802ms
+   ✓ StudioSheet rules and fill > uses a numeric validation list and preserves a rejected draft across pointer selection and atomic paste 590ms
+   ✓ StudioSheet rules and fill > creates a validation rule and permits warning values while marking them invalid 662ms
+   ✓ StudioSheet rules and fill > summarizes actual invalid destinations for warning rules with error prompts true after unchanged fill, series and ragged paste 662ms
+   ✓ StudioSheet rules and fill > summarizes actual invalid destinations for information rules with error prompts true after unchanged fill, series and ragged paste 515ms
+   ✓ StudioSheet rules and fill > summarizes actual invalid destinations for warning rules with error prompts false after unchanged fill, series and ragged paste 749ms
+   ✓ StudioSheet rules and fill > fills a leap-day date series and prevents changes in read-only rule inspection 418ms
+   ✓ StudioSheet > edits selected fonts and sizes, keeps links and values, and restores both with undo 370ms
+   ✓ StudioSheet > edits a cell and recalculates dependencies; blur followed by formatting preserves the new value 623ms
+   ✓ StudioSheet > preserves a staged disabled formula input until editing resumes 435ms
+   ✓ StudioSheet > pastes and copies a rectangular selection, then undoes and redoes the batch 302ms
+   ✓ StudioSheet > opens Paste Special for an internal copy, pastes the copied value once and undoes atomically 449ms
+   ✓ StudioSheet > deletes an unreferenced active sheet with undo and redo while protecting formulas and the final sheet 484ms
+   ✓ StudioSheet > inserts and deletes selected rows and columns with pending input, dependent formulas and full undo snapshots 576ms
+   ✓ StudioSheet > inserts an automatic sum below the selection and preserves the formula when the formula bar gains focus 324ms
+   ✓ StudioSheet > prevents destructive merges, merges empty descendants with editable master, and splits via the same toolbar 654ms
+   ✓ StudioSheet > sorts data with formulas, filters rows without deletion, and creates an editable chart from the same cells 754ms
+   ✓ StudioSheet > filters rows by fill color through the color criterion picker 701ms
+   ✓ StudioSheet row sizes and font drafts > sets selected row heights, rejects malformed input, hides with zero and restores dimensions with undo 714ms
+
+ Test Files  140 passed (140)
+      Tests  2478 passed (2478)
+   Start at  07:47:32
+   Duration  49.28s (transform 8.21s, setup 23.14s, collect 39.25s, tests 172.75s, environment 59.14s, prepare 9.26s)

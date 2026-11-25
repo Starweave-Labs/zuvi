@@ -1,0 +1,9 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/studio-word-table-row-range.test.ts (7 tests) 87ms
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  07:25:52
+   Duration  982ms (transform 37ms, setup 108ms, collect 87ms, tests 87ms, environment 386ms, prepare 69ms)

@@ -1,0 +1,10 @@
+
+> @zuvi/react@1.1.0 typecheck /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+> tsc --noEmit
+
+src/components/OfficeStudio/StudioWordConversionDialog.tsx(70,12): error TS2322: Type '{ children: Element[]; "aria-label": string; value: WordTableSeparator; disabled: boolean; onChange: (event: string) => void; }' is not assignable to type 'IntrinsicAttributes & SelectProps'.
+  Property 'children' does not exist on type 'IntrinsicAttributes & SelectProps'.
+src/components/OfficeStudio/StudioWordConversionDialog.tsx(75,29): error TS2339: Property 'target' does not exist on type 'string'.
+/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @zuvi/react@1.1.0 typecheck: `tsc --noEmit`
+Exit status 2

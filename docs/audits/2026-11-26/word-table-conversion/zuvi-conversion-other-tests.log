@@ -1,0 +1,73 @@
+Scope: 4 of 9 workspace projects
+packages/tokens test$ node --test tests/*.test.mjs
+packages/icons test$ vitest run
+packages/i18n test$ vitest run
+packages/blocks test$ vitest run
+packages/tokens test: TAP version 13
+packages/tokens test: # Subtest: DTCG semantic 令牌只引用存在的 primitive 令牌
+packages/tokens test: ok 1 - DTCG semantic 令牌只引用存在的 primitive 令牌
+packages/tokens test:   ---
+packages/tokens test:   duration_ms: 3.242167
+packages/tokens test:   ...
+packages/tokens test: # Subtest: semantic.css、DTCG color 与 TypeScript tokens.color 暴露同一组变量
+packages/tokens test: ok 2 - semantic.css、DTCG color 与 TypeScript tokens.color 暴露同一组变量
+packages/tokens test:   ---
+packages/tokens test:   duration_ms: 0.808666
+packages/tokens test:   ...
+packages/tokens test: # Subtest: dark.css 仅覆盖全部语义颜色，并保持主动暗色与系统暗色映射一致
+packages/tokens test: ok 3 - dark.css 仅覆盖全部语义颜色，并保持主动暗色与系统暗色映射一致
+packages/tokens test:   ---
+packages/tokens test:   duration_ms: 0.37175
+packages/tokens test:   ...
+packages/tokens test: 1..3
+packages/tokens test: # tests 3
+packages/tokens test: # suites 0
+packages/tokens test: # pass 3
+packages/tokens test: # fail 0
+packages/tokens test: # cancelled 0
+packages/tokens test: # skipped 0
+packages/tokens test: # todo 0
+packages/tokens test: # duration_ms 60.474917
+packages/tokens test: Done
+packages/icons test:  RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/icons
+packages/i18n test:  RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/i18n
+packages/blocks test:  RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/blocks
+packages/i18n test:  ✓ src/providers/deepl.test.ts (1 test) 4ms
+packages/i18n test:  ✓ src/providers/openai.test.ts (4 tests) 58ms
+packages/i18n test:  ✓ src/providers/custom.test.ts (1 test) 4ms
+packages/i18n test:  ✓ src/providers/youdao.test.ts (2 tests) 7ms
+packages/icons test:  ✓ tests/icons.test.mjs (7 tests) 83ms
+packages/icons test:  Test Files  1 passed (1)
+packages/icons test:       Tests  7 passed (7)
+packages/icons test:    Start at  07:26:25
+packages/icons test:    Duration  2.59s (transform 1.10s, setup 0ms, collect 1.91s, tests 83ms, environment 0ms, prepare 226ms)
+packages/icons test: Done
+packages/i18n test:  ✓ src/useAutoTranslate.test.tsx (29 tests) 824ms
+packages/i18n test:  Test Files  5 passed (5)
+packages/i18n test:       Tests  37 passed (37)
+packages/i18n test:    Start at  07:26:25
+packages/i18n test:    Duration  3.18s (transform 142ms, setup 0ms, collect 447ms, tests 898ms, environment 5.82s, prepare 1.33s)
+packages/i18n test: Done
+packages/blocks test:  ✓ tests/permission.test.tsx (5 tests) 327ms
+packages/blocks test:  ✓ tests/kanban.test.tsx (5 tests) 366ms
+packages/blocks test:  ✓ tests/profile-edit.test.tsx (6 tests) 423ms
+packages/blocks test:  ✓ tests/timeline-feed.test.tsx (8 tests) 511ms
+packages/blocks test:  ✓ tests/search-result.test.tsx (4 tests) 515ms
+packages/blocks test:  ✓ tests/settings.test.tsx (5 tests) 535ms
+packages/blocks test:  ✓ tests/wizard.test.tsx (4 tests) 551ms
+packages/blocks test:    ✓ wizard block > walks through all three steps and finishes with aggregated values 305ms
+packages/blocks test:  ✓ tests/order-list.test.tsx (4 tests) 688ms
+packages/blocks test:  ✓ tests/table-page.test.tsx (6 tests) 912ms
+packages/blocks test:    ✓ table-page block > submits the typed keyword and reports the chosen filter field and value 454ms
+packages/blocks test:  ✓ tests/blocks.test.tsx (5 tests) 1412ms
+packages/blocks test:    ✓ business block forms > validates a login before delivering the public values 469ms
+packages/blocks test:    ✓ business block forms > validates required project fields, blocks loading submits, and preserves public values 795ms
+packages/blocks test:  ✓ tests/list-detail.test.tsx (4 tests) 101ms
+packages/blocks test:  ✓ tests/error-pages.test.tsx (4 tests) 144ms
+packages/blocks test:  ✓ tests/data-screen.test.tsx (4 tests) 178ms
+packages/blocks test:  ✓ tests/user-center.test.tsx (4 tests) 252ms
+packages/blocks test:  Test Files  14 passed (14)
+packages/blocks test:       Tests  68 passed (68)
+packages/blocks test:    Start at  07:26:26
+packages/blocks test:    Duration  5.94s (transform 1.58s, setup 3.36s, collect 20.01s, tests 6.92s, environment 13.52s, prepare 2.56s)
+packages/blocks test: Done

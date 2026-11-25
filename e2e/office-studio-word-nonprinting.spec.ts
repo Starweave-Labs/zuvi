@@ -115,14 +115,26 @@ test('Word nonprinting markers preserve text, selection, document history, nativ
     .poll(() => space.evaluate((element) => getComputedStyle(element, '::before').display))
     .toBe('none');
   await page.emulateMedia({ media: 'screen' });
+  await body.focus();
+  await expect
+    .poll(() =>
+      body.evaluate((element) => {
+        const editor = (element as HTMLElement & { editor: { view: { hasFocus(): boolean } } })
+          .editor;
+        return editor.view.hasFocus() && element.ownerDocument.activeElement === element;
+      })
+    )
+    .toBe(true);
   await body.press('ArrowRight');
   await expect.poll(() => page.evaluate(() => window.getSelection()?.isCollapsed)).toBe(true);
   await expect
     .poll(() =>
       body.evaluate((element) => {
-        const editor = (element as HTMLElement & {
-          editor: { state: { selection: { empty: boolean } } };
-        }).editor;
+        const editor = (
+          element as HTMLElement & {
+            editor: { state: { selection: { empty: boolean } } };
+          }
+        ).editor;
         return editor.state.selection.empty;
       })
     )

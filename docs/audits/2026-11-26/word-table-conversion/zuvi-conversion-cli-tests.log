@@ -1,0 +1,13 @@
+
+> @zuvi/cli@1.1.0 test /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/cli
+> vitest run
+
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/cli
+
+ ✓ src/index.test.ts (26 tests) 219ms
+
+ Test Files  1 passed (1)
+      Tests  26 passed (26)
+   Start at  07:26:24
+   Duration  645ms (transform 113ms, setup 0ms, collect 125ms, tests 219ms, environment 0ms, prepare 57ms)
