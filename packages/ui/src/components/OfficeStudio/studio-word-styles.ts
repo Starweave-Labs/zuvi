@@ -6,6 +6,7 @@ import type {
 } from './studio-types';
 import { studioFontFamilyInput } from './studio-font-input';
 import { wordMetricPoints } from './studio-word-metrics';
+import { wordParagraphFormatIssue, wordLineUnits } from './studio-word-paragraph-format';
 
 export const WORD_STYLE_LIMIT = 100;
 export const WORD_BUILTIN_STYLES: StudioWordParagraphStyle[] = [
@@ -51,6 +52,8 @@ const BODY_PARAGRAPH: Required<StudioWordParagraphFormat> = {
   spaceBefore: 0,
   spaceAfter: 7.8,
   lineHeight: 1.75,
+  lineHeightRule: 'auto',
+  lineHeightBasis: 'auto',
 };
 const RUN_KEYS = Object.keys(WORD_BODY_RUN) as (keyof StudioWordCharacterStyle)[];
 const PARAGRAPH_KEYS = Object.keys(BODY_PARAGRAPH) as (keyof StudioWordParagraphFormat)[];
@@ -164,8 +167,13 @@ export function validateStudioWordParagraphStyles(value: unknown): StudioWordPar
         if (key === 'textAlign') {
           if (!['left', 'center', 'right', 'justify'].includes(String(input)))
             throw new Error('样式对齐方式无效。');
-        } else if (key === 'lineHeight') finite(input, '样式行距', 0.5, 10);
-        else if (key.startsWith('space')) finite(input, '样式段落间距', 0, 500);
+        } else if (key === 'lineHeight') finite(input, '样式行距', 0.000001, 500);
+        else if (key === 'lineHeightRule') {
+          if (!['auto', 'exact', 'atLeast'].includes(String(input)))
+            throw new Error('样式行距类型无效。');
+        } else if (key === 'lineHeightBasis') {
+          if (!['auto', 'points'].includes(String(input))) throw new Error('样式行距单位无效。');
+        } else if (key.startsWith('space')) finite(input, '样式段落间距', 0, 500);
         else finite(input, '样式缩进', -500, 500);
       }
     }
@@ -174,7 +182,9 @@ export function validateStudioWordParagraphStyles(value: unknown): StudioWordPar
   for (const style of styles) {
     if (style.basedOn && !ids.has(style.basedOn)) throw new Error('样式继承的基础样式不存在。');
     if (style.next && !ids.has(style.next)) throw new Error('后续段落样式不存在。');
-    resolveStudioWordParagraphStyle(styles, style.id);
+    const resolved = resolveStudioWordParagraphStyle(styles, style.id);
+    const issue = wordParagraphFormatIssue(resolved.paragraph);
+    if (issue) throw new Error(issue);
   }
   return styles;
 }
@@ -195,6 +205,16 @@ export function resolveStudioWordParagraphStyle(
   const base = source.basedOn
     ? resolveStudioWordParagraphStyle(styles, source.basedOn, [...path, id])
     : { headingLevel: 0 as const, run: WORD_BODY_RUN, paragraph: BODY_PARAGRAPH };
+  const paragraph = { ...base.paragraph, ...source.paragraph };
+  const rawLine =
+    source.paragraph?.lineHeight === undefined
+      ? base.paragraph.lineHeight * wordLineUnits(base.paragraph.lineHeightRule)
+      : source.paragraph.lineHeight *
+        wordLineUnits(
+          source.paragraph.lineHeightRule ?? source.paragraph.lineHeightBasis ?? 'auto'
+        );
+  paragraph.lineHeight = rawLine / wordLineUnits(paragraph.lineHeightRule);
+  paragraph.lineHeightBasis = paragraph.lineHeightRule === 'auto' ? 'auto' : 'points';
   return {
     id: source.id,
     name: source.name,
@@ -202,7 +222,7 @@ export function resolveStudioWordParagraphStyle(
     next: source.next ?? source.id,
     autoUpdate: source.autoUpdate ?? false,
     run: { ...base.run, ...source.run },
-    paragraph: { ...base.paragraph, ...source.paragraph },
+    paragraph,
   };
 }
 
@@ -293,14 +313,33 @@ export function applyStudioWordStyleToNode(
     },
   };
   delete attrs.paragraphStyleFallback;
+  const direct = Array.isArray(node.attrs?.paragraphStyleDirectAttrs)
+    ? node.attrs.paragraphStyleDirectAttrs
+    : undefined;
+  const owns = (key: keyof StudioWordParagraphFormat, current: unknown) =>
+    direct ? direct.includes(key) : previous && current !== previous.paragraph[key];
   for (const key of PARAGRAPH_KEYS) {
+    if (['lineHeight', 'lineHeightRule', 'lineHeightBasis'].includes(key)) continue;
     const current =
       node.attrs?.[key] ??
       (node.attrs?.paragraphStyleMaterialized === true
         ? BODY_PARAGRAPH[key]
         : (previous?.paragraph[key] ?? BODY_PARAGRAPH[key]));
-    if (!previous || current === previous.paragraph[key]) attrs[key] = style.paragraph[key];
+    if (!owns(key, current)) attrs[key] = style.paragraph[key];
   }
+  const oldRule = (node.attrs?.lineHeightRule ??
+    previous?.paragraph.lineHeightRule ??
+    'auto') as Required<StudioWordParagraphFormat>['lineHeightRule'];
+  const oldHeight = Number(
+    node.attrs?.lineHeight ?? previous?.paragraph.lineHeight ?? BODY_PARAGRAPH.lineHeight
+  );
+  const rule = owns('lineHeightRule', oldRule) ? oldRule : style.paragraph.lineHeightRule;
+  const raw = owns('lineHeight', oldHeight)
+    ? oldHeight * wordLineUnits(oldRule)
+    : style.paragraph.lineHeight * wordLineUnits(style.paragraph.lineHeightRule);
+  attrs.lineHeightRule = rule;
+  attrs.lineHeight = raw / wordLineUnits(rule);
+  attrs.lineHeightBasis = rule === 'auto' ? 'auto' : 'points';
   const ownHeading = node.type === 'heading' ? Number(node.attrs?.level || 1) : 0;
   const level = !previous || ownHeading === previous.headingLevel ? style.headingLevel : ownHeading;
   if (level) attrs.level = level;

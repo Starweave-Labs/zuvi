@@ -2,7 +2,7 @@
 
 源码基线：`2382530`。本次逐项核对 Word 65、Excel 68、PDF 26 项。历史状态保留；本页表示当前源码实现范围，全部条目仍需按原共通验收逐项闭环。
 
-实现分类：基础实现 22 项、切片验证 19 项、部分实现 56 项、未实现 62 项。这不是完整验收完成率。
+实现分类：基础实现 22 项、切片验证 21 项、部分实现 54 项、未实现 62 项。这不是完整验收完成率。
 
 验收要求：模型与编辑入口、只读/禁用、一次撤销重做、导入编辑导出重开、适用的明暗/320px 浏览器检查及失败原数据不变。已有测试文件不能自动替代每项六维证据。
 
@@ -20,8 +20,8 @@
 | W008 | 格式刷单次与连续 | 切片验证 | 字符和段落格式、单次/连续刷、Esc 结束；幂等设置目标格式且保留链接 | 完整原始验收、跨区域/自动更新样式相互影响和全部混合格式仍需核对 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W009 | 清除字符与段落格式 | 切片验证 | 清除直接字符/段落格式，保留标题级别、列表/表格结构与链接；DOCX 重开保持取消格式 | 空插入点、混合选区与跨区域完整验收仍待补齐 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W010 | 字符间距与位置 | 切片验证 | 加宽/紧缩/提升/降低和 pt 预览，混合值保持、样式继承/格式刷/清除、插入点后续输入、单事务与 DOCX 两次重开 | ±500pt/原生精度限制；复杂字体、浮动对象、自动分页和外部 Word/WPS 排版仍待完整验收 | `studio-word-character-layout.ts`；`StudioWordCharacterDialog.tsx`；`office-studio-word-metrics.spec.ts` |
-| W011 | 对齐与缩进 | 部分实现 | 四种对齐与普通缩进；样式模型带首行缩进 | 缺独立首行/悬挂缩进编辑、标尺交互与完整保存证据 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
-| W012 | 行距段前段后 | 部分实现 | 倍数行距、样式段前段后 | 固定值/最小值行距缺模型和入口，DOCX 固定行距拒绝 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
+| W011 | 对齐与缩进 | 切片验证 | 对齐/左右/首行/悬挂弹窗、标尺拖动/取消/键盘/单元格坐标、混合值与历史、DOCX 两次重开 | 完整复杂表格/浮动/分页及外部布局验收仍待闭环 | `StudioWordParagraphDialog.tsx`；`StudioWordRuler.tsx`；`office-studio-word-paragraph.spec.ts` |
+| W012 | 行距段前段后 | 切片验证 | 倍数/固定/最小值、段前段后、原始单位继承/直接覆盖和打印，DOCX 两次重开及明暗/320px | 复杂混合字体精确裁切、完整自动分页和外部 Word/WPS 布局仍待验收 | `studio-word-paragraph-layout.ts`；`studio-word-codec.ts`；`office-studio-word-paragraph.spec.ts` |
 | W013 | 制表位与前导符 | 未实现 | 无制表位编辑命令 | DOCX tabs 拒绝；缺小数点制表位和前导符 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W014 | 项目符号与编号 | 部分实现 | 项目符号、普通编号和嵌套缩进；原始 start 可保留 | 缺续编号/重新开始与编号格式编辑入口 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W015 | 完整多级编号 | 部分实现 | 嵌套层级显示复合编号 | 缺完整层级定义/标题联动/重启，DOCX 复合编号拒绝 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
@@ -56,7 +56,7 @@
 | W044 | 页码格式与起始页码 | 部分实现 | PAGE/NUMPAGES 域原生保存，画布占位 1 | 缺起始值、格式、续节和编辑器域计算 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W045 | 水印与页面背景 | 未实现 | 纸张背景为界面样式 | 缺文档水印/背景模型、透明度与节范围 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W046 | 自动分页与布局重算 | 未实现 | 连续文稿加显式分页 | 缺文字图片表格脚注的完整分页与布局重算 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
-| W047 | 标尺与页缩略图 | 部分实现 | 只读预览标尺、标题导航与缩放 | 缺标尺拖动缩进/边距、真实页缩略图与光标页同步 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
+| W047 | 标尺与页缩略图 | 部分实现 | 标尺缩进键盘/拖动预览/取消/历史和单元格原点；标题导航与缩放 | 缺页边距编辑、真实页缩略图与光标页同步，完整分页仍未实现 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W048 | 打印预览与真实分页 | 部分实现 | 打印 HTML 与图片定位/环绕 | 精确分页、页范围/纸张/域计算及真实打印验收待实现 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W049 | 大纲导航 | 基础实现 | 标题层级列表与光标跳转，随文档更新 | 全部修改/只读/跨区域浏览器验收矩阵待补 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W050 | 自动目录域 | 未实现 | 目录标签仅提供大纲导航 | 缺 TOC 域生成、页码链接、更新删除 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |

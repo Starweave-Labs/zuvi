@@ -17,10 +17,12 @@ const exports = {};
 const styleExports = {};
 const fontExports = {};
 const metricExports = {};
+const paragraphExports = {};
 const imageExports = {};
 for (const [file, target] of [
   ['studio-font-input.ts', fontExports],
   ['studio-word-metrics.ts', metricExports],
+  ['studio-word-paragraph-format.ts', paragraphExports],
   ['studio-word-styles.ts', styleExports],
   ['studio-word-images.ts', imageExports],
   ['studio-word-image-preview.ts', imageExports],
@@ -42,11 +44,13 @@ for (const [file, target] of [
     {
       exports: target,
       require: (id) =>
-        id === './studio-word-metrics'
-          ? metricExports
-          : id === './studio-font-input'
-            ? fontExports
-            : uiRequire(id),
+        id === './studio-word-paragraph-format'
+          ? paragraphExports
+          : id === './studio-word-metrics'
+            ? metricExports
+            : id === './studio-font-input'
+              ? fontExports
+              : uiRequire(id),
     }
   );
 }
@@ -67,13 +71,15 @@ runInNewContext(
   {
     exports,
     require: (id) =>
-      id.endsWith('/studio-word-metrics')
-        ? metricExports
-        : id.endsWith('/studio-word-styles')
-          ? styleExports
-          : id.endsWith('/studio-word-images')
-            ? imageExports
-            : require(id),
+      id.endsWith('/studio-word-paragraph-format')
+        ? paragraphExports
+        : id.endsWith('/studio-word-metrics')
+          ? metricExports
+          : id.endsWith('/studio-word-styles')
+            ? styleExports
+            : id.endsWith('/studio-word-images')
+              ? imageExports
+              : require(id),
     Blob,
     crypto: webcrypto,
     DOMParser: xml.DOMParser,
@@ -84,6 +90,98 @@ runInNewContext(
 );
 const { importStudioWord, exportStudioWord } = exports;
 const W = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';
+
+test('paragraph indentation and three native line-spacing rules preserve point values and text over repeated DOCX saves', async () => {
+  const source = await fixture(
+    '<w:p><w:pPr><w:jc w:val="both"/><w:ind w:left="240" w:right="120" w:hanging="180"/><w:spacing w:before="120" w:after="180" w:line="440" w:lineRule="exact"/></w:pPr><w:r><w:rPr><w:b/><w:sz w:val="28"/></w:rPr><w:t>Exact</w:t></w:r></w:p><w:p><w:pPr><w:ind w:start="480" w:end="240" w:firstLine="180"/><w:spacing w:line="600" w:lineRule="atLeast"/></w:pPr><w:r><w:t>Minimum</w:t></w:r></w:p><w:p><w:pPr><w:spacing w:line="360" w:lineRule="auto"/></w:pPr><w:r><w:t>Multiple</w:t></w:r></w:p>'
+  );
+  let document = await importStudioWord(source, 'Paragraph.docx');
+  assert.equal(document.content.content[0].attrs.lineHeight, 22);
+  assert.equal(document.content.content[0].attrs.indentFirstLine, -9);
+  assert.equal(document.content.content[1].attrs.lineHeight, 30);
+  assert.equal(document.content.content[1].attrs.indentLeft, 24);
+  assert.equal(document.content.content[1].attrs.indentRight, 12);
+  assert.equal(document.content.content[2].attrs.lineHeight, 1.5);
+  document.content.content[0].attrs = {
+    ...document.content.content[0].attrs,
+    indentLeft: 18,
+    indentFirstLine: -12,
+    lineHeight: 24,
+  };
+  for (let pass = 0; pass < 2; pass++) {
+    const file = await exportStudioWord(document);
+    const zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const xml = parse(await zip.file('word/document.xml').async('string'));
+    const spacing = [...xml.getElementsByTagNameNS(W, 'spacing')].filter(
+      (e) => e.parentElement.localName === 'pPr'
+    );
+    assert.equal(spacing[0].getAttributeNS(W, 'line'), '480');
+    assert.equal(spacing[0].getAttributeNS(W, 'lineRule'), 'exact');
+    assert.equal(spacing[1].getAttributeNS(W, 'lineRule'), 'atLeast');
+    assert.equal(spacing[2].getAttributeNS(W, 'line'), '360');
+    assert.equal(spacing[2].getAttributeNS(W, 'lineRule'), 'auto');
+    const ind = xml.getElementsByTagNameNS(W, 'ind')[0];
+    assert.equal(ind.getAttributeNS(W, 'left'), '360');
+    assert.equal(ind.getAttributeNS(W, 'hanging'), '240');
+    document = await importStudioWord(file, 'Reopened.docx');
+    assert.equal(document.content.content[0].attrs.lineHeight, 24);
+    assert.equal(document.content.content[0].attrs.indentFirstLine, -12);
+    assert.equal(find(document.content, 'text')[0].text, 'Exact');
+    assert.ok(find(document.content, 'text')[0].marks.some((mark) => mark.type === 'bold'));
+  }
+});
+
+test('partial native line properties preserve style raw-unit inheritance and direct paragraph zero overrides', async () => {
+  const source = await fixture(
+    '<w:p><w:pPr><w:pStyle w:val="Base"/><w:ind w:firstLine="0"/><w:spacing w:before="0"/></w:pPr><w:r><w:t>Direct zero</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="OwnRule"/></w:pPr><w:r><w:t>Rule</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="OwnValue"/></w:pPr><w:r><w:t>Value</w:t></w:r></w:p>',
+    {
+      'word/styles.xml': `<w:styles xmlns:w="${W}"><w:style w:type="paragraph" w:styleId="Base"><w:name w:val="Base"/><w:pPr><w:spacing w:line="480" w:lineRule="auto" w:before="120"/><w:ind w:firstLine="240"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="OwnRule"><w:name w:val="Own rule"/><w:basedOn w:val="Base"/><w:pPr><w:spacing w:lineRule="exact"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="OwnValue"><w:name w:val="Own value"/><w:basedOn w:val="Base"/><w:pPr><w:spacing w:line="360"/></w:pPr></w:style></w:styles>`,
+    }
+  );
+  let document = await importStudioWord(source, 'Inheritance.docx');
+  const old = document.content.attrs.paragraphStyles;
+  const changed = old.map((style) =>
+    style.name === 'Base'
+      ? {
+          ...style,
+          paragraph: {
+            ...style.paragraph,
+            lineHeightRule: 'exact',
+            lineHeight: 18,
+            lineHeightBasis: 'points',
+            indentFirstLine: 24,
+            spaceBefore: 12,
+          },
+        }
+      : style
+  );
+  document.content = styleExports.reconcileStudioWordStyles(document.content, old, changed);
+  document.content.attrs.paragraphStyles = changed;
+  assert.deepEqual(
+    Array.from(document.content.content, (p) => p.attrs.lineHeight),
+    [18, 18, 18]
+  );
+  assert.equal(document.content.content[0].attrs.indentFirstLine, 0);
+  assert.equal(document.content.content[0].attrs.spaceBefore, 0);
+  for (let pass = 0; pass < 2; pass++) {
+    const file = await exportStudioWord(document);
+    const zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const xml = parse(await zip.file('word/styles.xml').async('string'));
+    const value = [...xml.getElementsByTagNameNS(W, 'style')].find(
+      (e) => e.getElementsByTagNameNS(W, 'name')[0]?.getAttributeNS(W, 'val') === 'Own value'
+    );
+    const spacing = value.getElementsByTagNameNS(W, 'spacing')[0];
+    assert.equal(spacing.getAttributeNS(W, 'line'), '360');
+    assert.equal(spacing.getAttributeNS(W, 'lineRule'), null);
+    document = await importStudioWord(file, 'Reopened.docx');
+    assert.deepEqual(
+      Array.from(document.content.content, (p) => p.attrs.lineHeight),
+      [18, 18, 18]
+    );
+    assert.equal(document.content.content[0].attrs.indentFirstLine, 0);
+    assert.equal(document.content.content[0].attrs.spaceBefore, 0);
+  }
+});
 
 test('signed native run spacing and position preserve fonts, scripts, header/footer and repeated DOCX edits', async () => {
   const source = await fixture(

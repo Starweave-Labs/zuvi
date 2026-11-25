@@ -1,5 +1,11 @@
 import JSZip from 'jszip';
 import {
+  wordLineUnits,
+  wordParagraphNumber,
+  WORD_PARAGRAPH_KEYS,
+  type WordLineRule,
+} from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-paragraph-format';
+import {
   wordMetricPoints,
   type WordMetric,
 } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-metrics';
@@ -396,9 +402,10 @@ function runProperties(properties?: Element, base: Appearance = {}): Appearance 
 
 function paragraphProperties(
   properties?: Element,
-  base: Record<string, unknown> = {}
+  base: Record<string, unknown> = {},
+  ownOnly = false
 ): Record<string, unknown> {
-  const result = { ...base };
+  const result = ownOnly ? ({} as Record<string, unknown>) : { ...base };
   if (
     child(properties, 'framePr') ||
     child(properties, 'textDirection') ||
@@ -438,10 +445,22 @@ function paragraphProperties(
       if (amount) result[key] = number(amount, '段落间距', 0, 10000) / 20;
     }
     const line = attr(spacing, 'line');
-    if (line) {
-      if (attr(spacing, 'lineRule') && attr(spacing, 'lineRule') !== 'auto')
-        unsupported('固定值行距');
-      result.lineHeight = number(line, '行距', 120, 2400) / 240;
+    const explicitRule = attr(spacing, 'lineRule');
+    const rule = (explicitRule || base.lineHeightRule || 'auto') as WordLineRule;
+    if (!['auto', 'exact', 'atLeast'].includes(rule)) unsupported('行距类型');
+    if (line || explicitRule) {
+      const raw = line
+        ? Number(line)
+        : Number(base.lineHeight ?? 1) *
+          wordLineUnits((base.lineHeightRule ?? 'auto') as WordLineRule);
+      const effective = wordParagraphNumber(raw / wordLineUnits(rule), 'lineHeight', rule);
+      if (!Number.isInteger(raw) || effective === null) unsupported('行距范围或精度');
+      if (!ownOnly || explicitRule) result.lineHeightRule = rule;
+      if (line || !ownOnly) {
+        result.lineHeight = ownOnly && !explicitRule ? raw / 240 : effective;
+        result.lineHeightBasis =
+          ownOnly && !explicitRule ? 'auto' : rule === 'auto' ? 'auto' : 'points';
+      }
     }
   }
   const indent = child(properties, 'ind');
@@ -451,7 +470,12 @@ function paragraphProperties(
       ['right', 'indentRight'],
       ['firstLine', 'indentFirstLine'],
     ] as const) {
-      const amount = attr(indent, attribute);
+      const amount =
+        attribute === 'left'
+          ? attr(indent, 'start') || attr(indent, 'left')
+          : attribute === 'right'
+            ? attr(indent, 'end') || attr(indent, 'right')
+            : attr(indent, attribute);
       if (amount) result[key] = number(amount, '段落缩进', -10000, 10000) / 20;
     }
     const hanging = attr(indent, 'hanging');
@@ -585,6 +609,8 @@ function parseStyles(xml?: XMLDocument): {
     'spaceBefore',
     'spaceAfter',
     'lineHeight',
+    'lineHeightRule',
+    'lineHeightBasis',
   ];
   const paragraphFormat = (input: Record<string, unknown>): StudioWordParagraphFormat =>
     Object.fromEntries(
@@ -601,7 +627,9 @@ function parseStyles(xml?: XMLDocument): {
     const nativeBase = styles.get(baseId) || defaults;
     const inheritedLevel = baseModel ? nativeBase.heading || 0 : base.headingLevel;
     const directRun = appearance(runProperties(child(source, 'rPr')));
-    const directParagraph = paragraphFormat(paragraphProperties(child(source, 'pPr')));
+    const directParagraph = paragraphFormat(
+      paragraphProperties(child(source, 'pPr'), nativeBase.paragraph, true)
+    );
     const inheritedRun = { ...WORD_BODY_RUN, ...appearance(nativeBase.run) };
     const inheritedParagraph = { ...base.paragraph, ...paragraphFormat(nativeBase.paragraph) };
     let name = value(source, 'name', id);
@@ -993,6 +1021,18 @@ function parseParagraph(element: Element, context: ImportContext): ParsedParagra
   const style = context.styles.get(styleId) || context.defaults;
   if (style.paragraph.studioUnsupported) unsupported('段落样式');
   const attrs = paragraphProperties(properties, style.paragraph);
+  const spacing = child(properties, 'spacing'),
+    indent = child(properties, 'ind');
+  attrs.paragraphStyleDirectAttrs = [
+    ...(child(properties, 'jc') ? ['textAlign'] : []),
+    ...(attr(indent, 'left') || attr(indent, 'start') ? ['indentLeft'] : []),
+    ...(attr(indent, 'right') || attr(indent, 'end') ? ['indentRight'] : []),
+    ...(attr(indent, 'firstLine') || attr(indent, 'hanging') ? ['indentFirstLine'] : []),
+    ...(attr(spacing, 'before') ? ['spaceBefore'] : []),
+    ...(attr(spacing, 'after') ? ['spaceAfter'] : []),
+    ...(attr(spacing, 'line') ? ['lineHeight'] : []),
+    ...(attr(spacing, 'lineRule') ? ['lineHeightRule'] : []),
+  ];
   const directOutline = value(properties, 'outlineLvl');
   const headingLevel = directOutline
     ? Number(directOutline) < 6
@@ -1763,8 +1803,16 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
           ? { after: Math.round(style.paragraph.spaceAfter * 20) }
           : {}),
         ...(style.paragraph?.lineHeight !== undefined
-          ? { line: Math.round(style.paragraph.lineHeight * 240) }
+          ? {
+              line: Math.round(
+                style.paragraph.lineHeight *
+                  wordLineUnits(
+                    style.paragraph.lineHeightRule ?? style.paragraph.lineHeightBasis ?? 'auto'
+                  )
+              ),
+            }
           : {}),
+        ...(style.paragraph?.lineHeightRule ? { lineRule: style.paragraph.lineHeightRule } : {}),
       },
     },
   }));
@@ -1779,6 +1827,9 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
       'spaceBefore',
       'spaceAfter',
       'lineHeight',
+      'lineHeightRule',
+      'lineHeightBasis',
+      'paragraphStyleDirectAttrs',
       'paragraphStyle',
       'paragraphStyleFallback',
       'paragraphStyleMaterialized',
@@ -1790,21 +1841,43 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
         ? resolveStudioWordParagraphStyle(paragraphStyles, attrs.paragraphStyle)
         : undefined;
     const nodeLevel = node.type === 'heading' ? number(attrs.level, '标题级别', 1, 6) : 0;
+    const direct = attrs.paragraphStyleDirectAttrs;
+    if (
+      direct != null &&
+      (!Array.isArray(direct) ||
+        direct.some((key) => !(WORD_PARAGRAPH_KEYS as readonly unknown[]).includes(key)))
+    )
+      unsupported('段落直接格式标记');
+    const inherited = (key: string) =>
+      !!linkedStyle && Array.isArray(direct) && !direct.includes(key);
     if (!Number.isInteger(nodeLevel)) unsupported('非整数标题级别');
     const left =
-      attrs.indentLeft == null
+      attrs.indentLeft == null || inherited('indentLeft')
         ? undefined
         : Math.round(number(attrs.indentLeft, '段落缩进', -500, 500) * 20);
     const right =
-      attrs.indentRight == null
+      attrs.indentRight == null || inherited('indentRight')
         ? undefined
         : Math.round(number(attrs.indentRight, '段落缩进', -500, 500) * 20);
     const firstLine =
-      attrs.indentFirstLine == null
+      attrs.indentFirstLine == null || inherited('indentFirstLine')
         ? undefined
         : Math.round(number(attrs.indentFirstLine, '首行缩进', -500, 500) * 20);
-    const align = attrs.textAlign == null ? undefined : ALIGN[String(attrs.textAlign)];
-    if (attrs.textAlign != null && !align) unsupported('段落对齐');
+    const align =
+      attrs.textAlign == null || inherited('textAlign')
+        ? undefined
+        : ALIGN[String(attrs.textAlign)];
+    if (attrs.textAlign != null && !inherited('textAlign') && !align) unsupported('段落对齐');
+    if (
+      attrs.lineHeightRule != null &&
+      !['auto', 'exact', 'atLeast'].includes(String(attrs.lineHeightRule))
+    )
+      unsupported('行距类型');
+    if (
+      attrs.lineHeightBasis != null &&
+      !['auto', 'points'].includes(String(attrs.lineHeightBasis))
+    )
+      unsupported('行距单位');
     return new Paragraph({
       ...options,
       ...(linkedStyle ? { style: nativeStyleId(linkedStyle.id) } : {}),
@@ -1830,17 +1903,28 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
           : options.indent,
       spacing: {
         before:
-          attrs.spaceBefore == null
+          attrs.spaceBefore == null || inherited('spaceBefore')
             ? undefined
             : Math.round(number(attrs.spaceBefore, '段前间距', 0, 500) * 20),
         after:
-          attrs.spaceAfter == null
+          attrs.spaceAfter == null || inherited('spaceAfter')
             ? undefined
             : Math.round(number(attrs.spaceAfter, '段后间距', 0, 500) * 20),
         line:
-          attrs.lineHeight == null
+          attrs.lineHeight == null || inherited('lineHeight')
             ? undefined
-            : Math.round(number(attrs.lineHeight, '行距', 0.5, 10) * 240),
+            : (() => {
+                const rule = (attrs.lineHeightRule ??
+                  linkedStyle?.paragraph.lineHeightRule ??
+                  'auto') as WordLineRule;
+                const height = wordParagraphNumber(attrs.lineHeight, 'lineHeight', rule);
+                if (height === null) unsupported('行距范围或精度');
+                return Math.round(height * wordLineUnits(rule));
+              })(),
+        lineRule:
+          attrs.lineHeightRule == null || inherited('lineHeightRule')
+            ? undefined
+            : (attrs.lineHeightRule as WordLineRule),
       },
       children: inlineChildren(node.content, linkedStyle?.run),
     });

@@ -2019,6 +2019,8 @@
         "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
         "packages/ui/src/components/OfficeStudio/StudioWordCharacterDialog.tsx",
         "packages/ui/src/components/OfficeStudio/StudioWordImageLayoutTools.tsx",
+        "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialog.tsx",
+        "packages/ui/src/components/OfficeStudio/StudioWordRuler.tsx",
         "packages/ui/src/components/OfficeStudio/StudioWordStyleDialog.tsx",
         "packages/ui/src/components/OfficeStudio/index.ts",
         "packages/ui/src/components/OfficeStudio/studio-cell-style.ts",
@@ -2043,6 +2045,8 @@
         "packages/ui/src/components/OfficeStudio/studio-word-images.ts",
         "packages/ui/src/components/OfficeStudio/studio-word-metrics.ts",
         "packages/ui/src/components/OfficeStudio/studio-word-nonprinting.ts",
+        "packages/ui/src/components/OfficeStudio/studio-word-paragraph-format.ts",
+        "packages/ui/src/components/OfficeStudio/studio-word-paragraph-layout.ts",
         "packages/ui/src/components/OfficeStudio/studio-word-style-extension.ts",
         "packages/ui/src/components/OfficeStudio/studio-word-styles.ts",
         "packages/ui/src/components/OfficeStudio/studio-word-tools.ts"

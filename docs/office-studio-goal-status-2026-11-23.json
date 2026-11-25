@@ -697,42 +697,59 @@
         "docs/tests/office-studio-word.test.mjs"
       ],
       "historicalStatus": "基础已有",
-      "status": "audited-partial-acceptance-pending",
-      "evidence": [],
+      "status": "implemented-paragraph-layout-slice-verified-full-acceptance-audit-pending",
+      "evidence": [
+        "2026-11-25：段落弹窗接入对齐、左右/首行/悬挂缩进、段前段后与三种行距；标尺支持拖动预览/取消/一次提交、键盘和表格单元格坐标。原生 DOCX 两次保存重开及明暗/320px 通过。",
+        "2026-11-25：页眉/页脚段落与标尺读取正文共享样式定义，命名页眉的修改、一次撤销重做及原生重开有独立证据。"
+      ],
       "currentAudit": {
         "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "部分实现",
-        "implementedBehavior": "四种对齐与普通缩进；样式模型带首行缩进",
+        "sourceCommit": "b758b19",
+        "implementation": "切片验证",
+        "implementedBehavior": "段落设置、混合值保持、原子事务与权限/草稿守卫；标尺首行、悬挂、左/右缩进的拖动预览/取消/键盘、抓取偏移及单元格坐标。三种行距与段前段后、样式原始单位继承及显式匹配值的直接格式所有权、格式刷/清除/打印联动；真实 DOCX 两次重开和明暗/320px 通过。",
         "functionalGaps": [
-          "缺独立首行/悬挂缩进编辑、标尺交互与完整保存证据"
+          "缩进/段间距范围 ±500pt/0–500pt，步长 0.05pt；倍数行距 0.5–10，固定/最小值 1–500pt。复杂混合字体的精确裁切、完整自动分页与外部 Word/WPS 布局仍待完整验收。"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 156,
-            "anchor": "const EXTENSIONS"
+            "path": "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialog.tsx",
+            "line": 21,
+            "anchor": "export function StudioWordParagraphDialog"
+          },
+          {
+            "path": "packages/ui/src/components/OfficeStudio/StudioWordRuler.tsx",
+            "line": 41,
+            "anchor": "export function StudioWordRuler"
+          },
+          {
+            "path": "packages/ui/src/components/OfficeStudio/studio-word-paragraph-layout.ts",
+            "line": 187,
+            "anchor": "export function wordSetParagraphFormat"
           },
           {
             "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
-            "line": 60,
-            "anchor": "const UNSUPPORTED_CONTENT"
+            "line": 403,
+            "anchor": "function paragraphProperties"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 78,
-            "anchor": "export interface StudioWordDocument"
+            "path": "e2e/office-studio-word-paragraph.spec.ts",
+            "line": 26,
+            "anchor": "paragraph dialog and ruler preserve"
           }
         ],
         "existingTestFiles": [
+          "packages/ui/src/components/OfficeStudio/studio-word-paragraph-layout.test.ts",
           "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
-          "docs/tests/office-studio-word.test.mjs"
+          "docs/tests/office-studio-word.test.mjs",
+          "docs/tests/studio-print.test.mjs",
+          "e2e/office-studio-word-paragraph.spec.ts"
         ],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "testEvidenceNote": "8 dedicated model tests, 5 new UI cases and real browser/native DOCX reopening passed, including shared named header styles and history. Full repository checks are recorded in the completion log; complex-layout acceptance remains pending.",
+        "sourceState": "Includes the paragraph-layout continuation changes committed with this audit."
       },
       "gaps": [
-        "缺独立首行/悬挂缩进编辑、标尺交互与完整保存证据"
+        "缩进/段间距范围 ±500pt/0–500pt，步长 0.05pt；倍数行距 0.5–10，固定/最小值 1–500pt。复杂混合字体的精确裁切、完整自动分页与外部 Word/WPS 布局仍待完整验收。"
       ]
     },
     {
@@ -755,42 +772,59 @@
         "docs/tests/office-studio-word.test.mjs"
       ],
       "historicalStatus": "部分",
-      "status": "audited-partial-acceptance-pending",
-      "evidence": [],
+      "status": "implemented-paragraph-layout-slice-verified-full-acceptance-audit-pending",
+      "evidence": [
+        "2026-11-25：段落弹窗接入对齐、左右/首行/悬挂缩进、段前段后与三种行距；标尺支持拖动预览/取消/一次提交、键盘和表格单元格坐标。原生 DOCX 两次保存重开及明暗/320px 通过。",
+        "2026-11-25：页眉/页脚段落与标尺读取正文共享样式定义，命名页眉的修改、一次撤销重做及原生重开有独立证据。"
+      ],
       "currentAudit": {
         "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "部分实现",
-        "implementedBehavior": "倍数行距、样式段前段后",
+        "sourceCommit": "b758b19",
+        "implementation": "切片验证",
+        "implementedBehavior": "段落设置、混合值保持、原子事务与权限/草稿守卫；标尺首行、悬挂、左/右缩进的拖动预览/取消/键盘、抓取偏移及单元格坐标。三种行距与段前段后、样式原始单位继承及显式匹配值的直接格式所有权、格式刷/清除/打印联动；真实 DOCX 两次重开和明暗/320px 通过。",
         "functionalGaps": [
-          "固定值/最小值行距缺模型和入口，DOCX 固定行距拒绝"
+          "缩进/段间距范围 ±500pt/0–500pt，步长 0.05pt；倍数行距 0.5–10，固定/最小值 1–500pt。复杂混合字体的精确裁切、完整自动分页与外部 Word/WPS 布局仍待完整验收。"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 156,
-            "anchor": "const EXTENSIONS"
+            "path": "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialog.tsx",
+            "line": 21,
+            "anchor": "export function StudioWordParagraphDialog"
+          },
+          {
+            "path": "packages/ui/src/components/OfficeStudio/StudioWordRuler.tsx",
+            "line": 41,
+            "anchor": "export function StudioWordRuler"
+          },
+          {
+            "path": "packages/ui/src/components/OfficeStudio/studio-word-paragraph-layout.ts",
+            "line": 187,
+            "anchor": "export function wordSetParagraphFormat"
           },
           {
             "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
-            "line": 60,
-            "anchor": "const UNSUPPORTED_CONTENT"
+            "line": 403,
+            "anchor": "function paragraphProperties"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 78,
-            "anchor": "export interface StudioWordDocument"
+            "path": "e2e/office-studio-word-paragraph.spec.ts",
+            "line": 26,
+            "anchor": "paragraph dialog and ruler preserve"
           }
         ],
         "existingTestFiles": [
+          "packages/ui/src/components/OfficeStudio/studio-word-paragraph-layout.test.ts",
           "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
-          "docs/tests/office-studio-word.test.mjs"
+          "docs/tests/office-studio-word.test.mjs",
+          "docs/tests/studio-print.test.mjs",
+          "e2e/office-studio-word-paragraph.spec.ts"
         ],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "testEvidenceNote": "8 dedicated model tests, 5 new UI cases and real browser/native DOCX reopening passed, including shared named header styles and history. Full repository checks are recorded in the completion log; complex-layout acceptance remains pending.",
+        "sourceState": "Includes the paragraph-layout continuation changes committed with this audit."
       },
       "gaps": [
-        "固定值/最小值行距缺模型和入口，DOCX 固定行距拒绝"
+        "缩进/段间距范围 ±500pt/0–500pt，步长 0.05pt；倍数行距 0.5–10，固定/最小值 1–500pt。复杂混合字体的精确裁切、完整自动分页与外部 Word/WPS 布局仍待完整验收。"
       ]
     },
     {
@@ -2828,11 +2862,11 @@
       "evidence": [],
       "currentAudit": {
         "date": "2026-11-25",
-        "sourceCommit": "2382530",
+        "sourceCommit": "b758b19",
         "implementation": "部分实现",
-        "implementedBehavior": "只读预览标尺、标题导航与缩放",
+        "implementedBehavior": "水平标尺首行/悬挂/左右缩进支持键盘、拖动预览、取消和单事务提交，按表格单元格计算原点；标题导航与缩放已有。",
         "functionalGaps": [
-          "缺标尺拖动缩进/边距、真实页缩略图与光标页同步"
+          "缺页边距标尺编辑、真实页缩略图与光标页同步；完整分页依赖仍未实现。"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
@@ -2850,16 +2884,22 @@
             "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
             "line": 78,
             "anchor": "export interface StudioWordDocument"
+          },
+          {
+            "path": "packages/ui/src/components/OfficeStudio/StudioWordRuler.tsx",
+            "line": 41,
+            "anchor": "export function StudioWordRuler"
           }
         ],
         "existingTestFiles": [
           "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
           "docs/tests/office-studio-word.test.mjs"
         ],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete.",
+        "sourceState": "Includes paragraph-ruler changes committed with this audit."
       },
       "gaps": [
-        "缺标尺拖动缩进/边距、真实页缩略图与光标页同步"
+        "缺页边距标尺编辑、真实页缩略图与光标页同步；完整分页依赖仍未实现。"
       ]
     },
     {
@@ -10083,8 +10123,8 @@
   "currentAuditItems": 159,
   "currentImplementationCounts": {
     "基础实现": 22,
-    "切片验证": 19,
-    "部分实现": 56,
+    "切片验证": 21,
+    "部分实现": 54,
     "未实现": 62
   }
 }

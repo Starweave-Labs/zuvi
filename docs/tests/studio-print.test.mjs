@@ -71,6 +71,42 @@ const print = compiled('../src/pages/collaboration/office-studio/studio-print.ts
   },
 });
 
+test('Word print preserves point paragraph geometry and exact/minimum line-rule metadata', () => {
+  const document = models.createOfficeStudioDocument('word');
+  document.content = {
+    type: 'doc',
+    content: [
+      {
+        type: 'paragraph',
+        attrs: {
+          indentLeft: 30,
+          indentRight: 10,
+          indentFirstLine: -12,
+          spaceBefore: 6,
+          spaceAfter: 9,
+          lineHeight: 24,
+          lineHeightRule: 'exact',
+        },
+        content: [{ type: 'text', text: 'Exact' }],
+      },
+      {
+        type: 'paragraph',
+        attrs: { lineHeight: 30, lineHeightRule: 'atLeast' },
+        content: [{ type: 'text', text: 'Minimum' }],
+      },
+    ],
+  };
+  const html = new JSDOM(print.createStudioPrintHtml(document)).window.document;
+  const paragraphs = html.querySelectorAll('article p');
+  assert.equal(paragraphs[0].style.marginLeft, '30pt');
+  assert.equal(paragraphs[0].style.textIndent, '-12pt');
+  assert.equal(paragraphs[0].style.lineHeight, '24pt');
+  assert.equal(paragraphs[0].getAttribute('data-word-line-rule'), 'exact');
+  assert.equal(paragraphs[1].style.getPropertyValue('--zuvi-word-min-line'), '30pt');
+  assert.equal(paragraphs[1].getAttribute('data-word-line-rule'), 'atLeast');
+  assert.equal(paragraphs[1].textContent, 'Minimum');
+});
+
 test('Word prints character spacing and baseline movement without changing point size or source text', () => {
   const document = models.createOfficeStudioDocument('word');
   document.content = {

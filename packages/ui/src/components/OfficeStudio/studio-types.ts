@@ -61,6 +61,10 @@ export interface StudioWordParagraphFormat {
   spaceBefore?: number;
   spaceAfter?: number;
   lineHeight?: number;
+  /** auto is a multiplier; exact / atLeast are point distances. */
+  lineHeightRule?: 'auto' | 'exact' | 'atLeast';
+  /** For a style's own value with an inherited rule, retains native measurement units. */
+  lineHeightBasis?: 'auto' | 'points';
 }
 
 /** Definitions live in content.attrs.paragraphStyles; paragraphs link via attrs.paragraphStyle. */

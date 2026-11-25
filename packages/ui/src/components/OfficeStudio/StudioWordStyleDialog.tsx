@@ -1,4 +1,9 @@
 import * as React from 'react';
+import {
+  wordLineUnits,
+  wordParagraphLineCss,
+  type WordLineRule,
+} from './studio-word-paragraph-format';
 import { Button } from '../Button';
 import { Checkbox } from '../Checkbox';
 import { Input } from '../Input';
@@ -24,7 +29,6 @@ const FLAGS = [
   ['strike', '删除线'],
 ] as const;
 const NUMBERS = [
-  ['lineHeight', '样式行距（倍）', 0.5, 10],
   ['spaceBefore', '样式段前（pt）', 0, 500],
   ['spaceAfter', '样式段后（pt）', 0, 500],
   ['indentLeft', '样式左缩进（pt）', -500, 500],
@@ -67,6 +71,22 @@ export function StudioWordStyleDialog({
   const [error, setError] = React.useState('');
   const allStyles = [...WORD_BUILTIN_STYLES, ...styles];
   const base = resolveStudioWordParagraphStyle(styles, basedOn);
+  const effectiveLineRule = (paragraph.lineHeightRule ||
+    base.paragraph.lineHeightRule) as WordLineRule;
+  const lineNumber = Number(paragraph.lineHeight);
+  const displayedLine =
+    paragraph.lineHeight === '' || paragraph.lineHeight === undefined
+      ? ''
+      : Number.isFinite(lineNumber)
+        ? String(
+            (lineNumber *
+              wordLineUnits(
+                (paragraph.lineHeightRule || paragraph.lineHeightBasis || 'auto') as
+                  WordLineRule | 'points'
+              )) /
+              wordLineUnits(effectiveLineRule)
+          )
+        : paragraph.lineHeight;
   const options = allStyles.map((style) => ({ value: style.id, label: style.name }));
   const changeRun = (key: string, input: string) =>
     setRun((current) => ({ ...current, [key]: input }));
@@ -98,7 +118,10 @@ export function StudioWordStyleDialog({
     paragraph: Object.fromEntries(
       Object.entries(paragraph)
         .filter(([, input]) => input !== '')
-        .map(([key, input]) => [key, key === 'textAlign' ? input : Number(input)])
+        .map(([key, input]) => [
+          key,
+          ['textAlign', 'lineHeightRule', 'lineHeightBasis'].includes(key) ? input : Number(input),
+        ])
     ) as StudioWordParagraphFormat,
   });
   let preview = base;
@@ -271,6 +294,53 @@ export function StudioWordStyleDialog({
                 onChange={(input) => changeParagraph('textAlign', input)}
               />
             </label>
+            <label>
+              行距类型
+              <Select
+                aria-label="样式行距类型"
+                value={paragraph.lineHeightRule || ''}
+                options={[
+                  { value: '', label: '继承' },
+                  { value: 'auto', label: '倍数' },
+                  { value: 'exact', label: '固定值' },
+                  { value: 'atLeast', label: '最小值' },
+                ]}
+                onChange={(rule) =>
+                  setParagraph((current) =>
+                    rule
+                      ? {
+                          ...current,
+                          lineHeightRule: rule,
+                          lineHeightBasis: rule === 'auto' ? 'auto' : 'points',
+                          lineHeight:
+                            wordLineUnits(rule as WordLineRule) === wordLineUnits(effectiveLineRule)
+                              ? displayedLine || String(base.paragraph.lineHeight)
+                              : rule === 'auto'
+                                ? '1.75'
+                                : '12',
+                        }
+                      : { ...current, lineHeightRule: '', lineHeight: '', lineHeightBasis: '' }
+                  )
+                }
+              />
+            </label>
+            <label>
+              {effectiveLineRule === 'auto' ? '样式行距（倍）' : '样式行距（pt）'}
+              <Input
+                aria-label="样式行距量"
+                inputMode="decimal"
+                value={displayedLine}
+                placeholder={`继承：${base.paragraph.lineHeight}`}
+                onChange={(event) =>
+                  setParagraph((current) => ({
+                    ...current,
+                    lineHeight: event.target.value,
+                    lineHeightRule: effectiveLineRule,
+                    lineHeightBasis: effectiveLineRule === 'auto' ? 'auto' : 'points',
+                  }))
+                }
+              />
+            </label>
             {NUMBERS.map(([key, label, min, max]) => (
               <label key={key}>
                 {label}
@@ -313,7 +383,7 @@ export function StudioWordStyleDialog({
               color: preview.run.color,
               background: preview.run.backgroundColor || undefined,
               textAlign: preview.paragraph.textAlign,
-              lineHeight: preview.paragraph.lineHeight,
+              ...wordParagraphLineCss(preview.paragraph),
             }}
           >
             让想法，成为下一步。AaBbCc 123

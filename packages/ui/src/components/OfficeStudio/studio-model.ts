@@ -946,7 +946,9 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
               typeof cell.input === 'string' &&
               cell.input.length <= 32767 &&
               (cell.valueType === undefined ||
-                ['number', 'boolean', 'text'].includes(String(cell.valueType))) &&
+                cell.valueType === 'number' ||
+                cell.valueType === 'boolean' ||
+                cell.valueType === 'text') &&
               (cell.array === undefined ||
                 (record(cell.array) &&
                   cell.input.startsWith('=') &&

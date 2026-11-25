@@ -951,6 +951,8 @@ const WORD_PARAGRAPH_FORMAT_ATTRS = [
   'spaceBefore',
   'spaceAfter',
   'lineHeight',
+  'lineHeightRule',
+  'lineHeightBasis',
 ] as const;
 
 /** Clear direct character/paragraph formatting without changing links, list/table structure or heading levels. */
@@ -972,6 +974,7 @@ export function wordClearFormat(editor: Editor): boolean {
       paragraphStyleMaterialized: true,
       paragraphStyleFallback: null,
       paragraphStyleSnapshot: null,
+      paragraphStyleDirectAttrs: null,
     });
   });
   editor.view.dispatch(transaction);
@@ -1021,7 +1024,13 @@ export function wordApplyFormat(editor: Editor, snapshot: WordFormatSnapshot | n
   if (Object.keys(attributes).length) transaction.addMark(from, to, textStyle.create(attributes));
   editor.state.doc.nodesBetween(from, to, (node, position) => {
     if (!['paragraph', 'heading'].includes(node.type.name)) return;
-    transaction.setNodeMarkup(position, undefined, { ...node.attrs, ...snapshot.paragraph });
+    transaction.setNodeMarkup(position, undefined, {
+      ...node.attrs,
+      ...snapshot.paragraph,
+      paragraphStyleDirectAttrs: WORD_PARAGRAPH_FORMAT_ATTRS.filter(
+        (key) => key !== 'lineHeightBasis'
+      ),
+    });
   });
   editor.view.dispatch(transaction);
   return true;

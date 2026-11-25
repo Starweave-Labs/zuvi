@@ -1,3 +1,27 @@
+.zuvi-studio-word-paragraph-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-block: 12px;
+}
+.zuvi-studio-word-paragraph-dialog .zuvi-input {
+  width: 100%;
+}
+.zuvi-studio-word-paragraph-preview {
+  border: 1px solid var(--zuvi-color-border);
+  padding: 12px;
+  overflow: auto;
+  min-height: 80px;
+}
+.zuvi-studio-word-content [data-word-line-rule='atLeast'] :is(span, strong, em, u, s, a),
+.zuvi-studio-word-paragraph-preview [data-word-line-rule='atLeast'] :is(span, strong, em, u, s, a) {
+  line-height: max(var(--zuvi-word-min-line), 1.2em);
+}
+.zuvi-studio-word-content [data-word-line-rule='exact'] :is(span, strong, em, u, s, a) {
+  line-height: inherit;
+  vertical-align: top;
+}
+
 .zuvi-studio-word-character-field {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 90px;
@@ -376,9 +400,54 @@
   position: sticky;
   top: 0;
   z-index: 1;
-  height: 18px;
+  height: 26px;
+  pointer-events: auto;
   margin-inline: auto;
   margin-block-end: 18px;
+}
+.zuvi-studio-word-ruler-handle.zuvi-button {
+  position: absolute;
+  transform: translateX(-50%);
+  width: 12px;
+  min-width: 12px;
+  height: 8px;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--zuvi-color-fg);
+  pointer-events: auto;
+  touch-action: none;
+  z-index: 2;
+}
+.zuvi-studio-word-ruler-handle > span {
+  width: 10px;
+  height: 7px;
+  background: currentColor;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+.zuvi-studio-word-ruler-handle-first {
+  top: 0;
+}
+.zuvi-studio-word-ruler-handle-hanging {
+  top: 9px;
+}
+.zuvi-studio-word-ruler-handle-hanging > span {
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+.zuvi-studio-word-ruler-handle-left {
+  top: 18px;
+}
+.zuvi-studio-word-ruler-handle-left > span {
+  height: 5px;
+  clip-path: none;
+}
+.zuvi-studio-word-ruler-handle-right {
+  top: 14px;
+}
+.zuvi-studio-word-ruler-handle-right > span {
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
 }
 
 .zuvi-studio-word-ruler-vertical {

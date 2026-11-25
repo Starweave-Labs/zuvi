@@ -23,6 +23,7 @@ import {
 import { studioConditionalCellStyle } from '../../../../../packages/ui/src/components/OfficeStudio/studio-sheet-rules';
 import { studioNumberFormatColor } from '../../../../../packages/ui/src/components/OfficeStudio/studio-number-format';
 import { wordMetricCss } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-metrics';
+import { wordParagraphLineCss } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-paragraph-format';
 import { wordImageLayout } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-images';
 import { wordImageCss } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-image-preview';
 import {
@@ -136,7 +137,8 @@ function rich(
   ])
     if (amount(attrs[attribute], 'pt'))
       styles.push(`${property}:${amount(attrs[attribute], 'pt')}`);
-  if (amount(attrs.lineHeight, '', 0.5, 10)) styles.push(`line-height:${attrs.lineHeight}`);
+  for (const [key, value] of Object.entries(wordParagraphLineCss(attrs)))
+    styles.push(`${key.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`)}:${value}`);
   if (color(attrs.backgroundColor)) styles.push(`background-color:${color(attrs.backgroundColor)}`);
   const style = styles.length ? ` style="${styles.join(';')}"` : '';
   if (node.type === 'image') {
@@ -195,7 +197,10 @@ function rich(
     tag === 'ol' && Number.isInteger(attrs.start) && Number(attrs.start) > 0
       ? ` start="${attrs.start}"`
       : '';
-  return `<${tag}${style}${spans}${start}>${text || (tag === 'p' ? '<br>' : '')}</${tag}>`;
+  const lineRule = ['auto', 'exact', 'atLeast'].includes(String(attrs.lineHeightRule))
+    ? ` data-word-line-rule="${attrs.lineHeightRule}"`
+    : '';
+  return `<${tag}${style}${spans}${start}${lineRule}>${text || (tag === 'p' ? '<br>' : '')}</${tag}>`;
 }
 
 function wordPages(document: StudioWordDocument) {
@@ -481,7 +486,7 @@ export function createStudioPrintHtml(document: OfficeStudioDocument): string {
       ? wordPages(document)
       : document.sheets.map((sheet) => sheetTable(document, sheet, calculation!)).join('');
   return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; style-src 'unsafe-inline'; base-uri 'none'"><title>${escape(document.name)}</title><style>
-@page{size:${paper};margin:${margin}mm}*{box-sizing:border-box}body{margin:0;color:#253044;background:white;font:12pt/1.6 "Microsoft YaHei","Noto Sans SC",Arial,sans-serif}h1,h2,h3,h4,h5,h6{line-height:1.3;break-after:avoid}h1{font-size:25pt}h2{font-size:19pt}p{margin:0 0 8pt}table{border-collapse:collapse;width:100%;font-size:10pt;table-layout:fixed}td,th{border:1px solid #b8c2bc;padding:5pt;overflow-wrap:anywhere;vertical-align:top}th{background:#edf3ee;text-align:left}tr{break-inside:avoid}img{max-width:100%;height:auto;vertical-align:middle}blockquote{margin:10pt 0;padding-left:12pt;border-left:3px solid #90a59a}a{color:inherit}header,footer{font-size:9pt;color:#5a6c61}header{margin-bottom:12pt}footer{margin-top:14pt}.studio-print-page,.studio-print-sheet{break-after:page}.studio-print-page:last-child,.studio-print-sheet:last-child{break-after:auto}.studio-print-break{break-before:page}.studio-print-number{text-align:center}.studio-print-chart{margin:18pt 0;break-inside:avoid}.studio-print-chart svg{width:100%;max-height:240pt}.studio-print-chart figcaption{font-weight:700}.studio-print-chart p{font-size:9pt}body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+@page{size:${paper};margin:${margin}mm}*{box-sizing:border-box}body{margin:0;color:#253044;background:white;font:12pt/1.6 "Microsoft YaHei","Noto Sans SC",Arial,sans-serif}h1,h2,h3,h4,h5,h6{line-height:1.3;break-after:avoid}h1{font-size:25pt}h2{font-size:19pt}p{margin:0 0 8pt}table{border-collapse:collapse;width:100%;font-size:10pt;table-layout:fixed}td,th{border:1px solid #b8c2bc;padding:5pt;overflow-wrap:anywhere;vertical-align:top}th{background:#edf3ee;text-align:left}tr{break-inside:avoid}img{max-width:100%;height:auto;vertical-align:middle}blockquote{margin:10pt 0;padding-left:12pt;border-left:3px solid #90a59a}a{color:inherit}header,footer{font-size:9pt;color:#5a6c61}header{margin-bottom:12pt}footer{margin-top:14pt}.studio-print-page,.studio-print-sheet{break-after:page}.studio-print-page:last-child,.studio-print-sheet:last-child{break-after:auto}.studio-print-break{break-before:page}.studio-print-number{text-align:center}.studio-print-chart{margin:18pt 0;break-inside:avoid}.studio-print-chart svg{width:100%;max-height:240pt}.studio-print-chart figcaption{font-weight:700}.studio-print-chart p{font-size:9pt}[data-word-line-rule="exact"] :is(span,strong,em,u,s,a){line-height:inherit;vertical-align:top}[data-word-line-rule="atLeast"] :is(span,strong,em,u,s,a){line-height:max(var(--zuvi-word-min-line),1.2em)}body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 ${document.kind === 'excel' ? '.studio-print-sheet table{font-family:Calibri,Arial,sans-serif;font-size:11pt;line-height:1.15}.studio-print-sheet td{padding:2px 5px;vertical-align:middle}.studio-print-cell{overflow:hidden}' : ''}
 ${document.kind === 'word' ? '.studio-print-page{position:relative;isolation:isolate;min-height:50mm}.studio-print-page p,.studio-print-page h1,.studio-print-page h2,.studio-print-page h3,.studio-print-page h4,.studio-print-page h5,.studio-print-page h6{position:relative;white-space:pre-wrap}.studio-print-image-anchor{display:inline-block;position:relative;width:0;height:0}.studio-print-page-picture{position:absolute;inset:0;pointer-events:none}' : ''}
 </style></head><body>${content}</body></html>`;

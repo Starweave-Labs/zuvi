@@ -80,6 +80,190 @@ function selectNodeContents(textbox: HTMLElement, node: Node) {
 
 const restore: (() => void)[] = [];
 
+describe('Word paragraph dialog and ruler', () => {
+  beforeAll(() =>
+    vi.stubGlobal(
+      'PointerEvent',
+      class extends MouseEvent {
+        pointerId: number;
+        constructor(type: string, init: MouseEventInit & { pointerId?: number } = {}) {
+          super(type, init);
+          this.pointerId = init.pointerId ?? 7;
+        }
+      }
+    )
+  );
+  afterAll(() => vi.unstubAllGlobals());
+  function paragraphSetup() {
+    const initial = documentModel();
+    initial.content.content = [
+      {
+        type: 'paragraph',
+        attrs: { indentLeft: 8, indentFirstLine: 4, lineHeight: 1.5, spaceAfter: 6 },
+        content: [{ type: 'text', text: 'Alpha' }],
+      },
+      {
+        type: 'paragraph',
+        attrs: {
+          indentLeft: 16,
+          indentFirstLine: -4,
+          lineHeight: 18,
+          lineHeightRule: 'exact',
+          spaceAfter: 9,
+        },
+        content: [{ type: 'text', text: 'Beta' }],
+      },
+    ];
+    let current = initial;
+    const changed = vi.fn();
+    function Harness(props: { readOnly: boolean; disabled: boolean }) {
+      const [doc, setDoc] = useState(initial);
+      return (
+        <StudioWord
+          {...props}
+          document={doc}
+          onChange={(next) => {
+            current = next;
+            changed(next);
+            setDoc(next);
+          }}
+        />
+      );
+    }
+    const view = render(<Harness readOnly={false} disabled={false} />);
+    return {
+      changed,
+      current: () => current,
+      permissions: (props: { readOnly: boolean; disabled: boolean }) =>
+        view.rerender(<Harness {...props} />),
+    };
+  }
+  const chooseParagraph = (label: string, value: string) => {
+    fireEvent.click(
+      within(screen.getByRole('dialog')).getByRole('button', { name: new RegExp(`^${label}`) })
+    );
+    fireEvent.click(screen.getByRole('option', { name: value }));
+  };
+  it('applies mixed paragraph values in one history step and keeps untouched values separate', async () => {
+    const f = paragraphSetup();
+    const body = await screen.findByRole('textbox', { name: 'Word 文档正文' });
+    selectNodeContents(body, body);
+    fireEvent.click(screen.getByRole('button', { name: '段落设置' }));
+    fireEvent.change(screen.getByLabelText('左缩进（pt）'), { target: { value: '30' } });
+    fireEvent.change(screen.getByLabelText('右缩进（pt）'), { target: { value: '10' } });
+    chooseParagraph('特殊缩进', '悬挂');
+    fireEvent.change(screen.getByLabelText('特殊缩进量（pt）'), { target: { value: '12' } });
+    chooseParagraph('行距类型', '固定值');
+    fireEvent.change(screen.getByLabelText('行距量'), { target: { value: '24' } });
+    fireEvent.click(screen.getByRole('button', { name: '应用段落设置' }));
+    expect(f.changed).toHaveBeenCalledTimes(1);
+    for (const p of f.current().content.content!)
+      expect(p.attrs).toMatchObject({
+        indentLeft: 30,
+        indentRight: 10,
+        indentFirstLine: -12,
+        lineHeight: 24,
+        lineHeightRule: 'exact',
+      });
+    expect(f.current().content.content!.map((p) => p.attrs?.spaceAfter)).toEqual([6, 9]);
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    expect(f.current().content.content![0].attrs?.indentLeft).toBe(8);
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    expect(f.current().content.content![0].attrs?.indentLeft).toBe(30);
+  });
+  it('retains invalid dialog drafts and disables an open dialog after permission changes', async () => {
+    const f = paragraphSetup();
+    const body = await screen.findByRole('textbox', { name: 'Word 文档正文' });
+    selectNodeContents(body, body.firstChild!);
+    fireEvent.click(screen.getByRole('button', { name: '段落设置' }));
+    const input = screen.getByLabelText('左缩进（pt）');
+    fireEvent.change(input, { target: { value: '1x' } });
+    expect(screen.getByRole('alert')).toBeVisible();
+    expect(screen.getByRole('button', { name: '应用段落设置' })).toBeDisabled();
+    f.permissions({ readOnly: true, disabled: false });
+    expect(input).toHaveValue('1x');
+    expect(input).toBeDisabled();
+    fireEvent.click(screen.getByRole('button', { name: '取消' }));
+    expect(f.changed).not.toHaveBeenCalled();
+    expect(screen.getByRole('button', { name: '段落设置' })).toBeDisabled();
+  });
+  it('edits a named header style using shared definitions and restores its direct indent in one undo', async () => {
+    const model = namedStyleDocument();
+    model.header = { type: 'doc', content: [{
+      type: 'paragraph', attrs: { paragraphStyle: 'review' },
+      content: [{ type: 'text', text: 'Named header' }],
+    }] };
+    const { onChange } = await mount({ document: model });
+    const header = await screen.findByRole('textbox', { name: 'Word 页眉' });
+    fireEvent.doubleClick(screen.getByLabelText('页眉区域'));
+    await waitFor(() => expect(header).toHaveAttribute('contenteditable', 'true'));
+    selectNodeContents(header, header.querySelector('p')!);
+    fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+    fireEvent.click(screen.getByRole('button', { name: '段落设置' }));
+    fireEvent.change(screen.getByLabelText('左缩进（pt）'), { target: { value: '24' } });
+    fireEvent.click(screen.getByRole('button', { name: '应用段落设置' }));
+    expect(header.querySelector('p')).toHaveStyle({ marginLeft: '24pt', lineHeight: '1.5' });
+    expect(onChange.mock.lastCall?.[0].header.content[0].attrs.paragraphStyleDirectAttrs).toContain('indentLeft');
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    expect(header.querySelector('p')).toHaveStyle({ marginLeft: '0pt' });
+  });
+  it('supports keyboard ruler steps without changing first-line offsets', async () => {
+    const f = paragraphSetup();
+    const body = await screen.findByRole('textbox', { name: 'Word 文档正文' });
+    selectNodeContents(body, body.firstChild!);
+    const left = await screen.findByRole('slider', { name: '左缩进标尺' });
+    fireEvent.keyDown(left, { key: 'ArrowRight', shiftKey: true });
+    expect(f.current().content.content![0].attrs).toMatchObject({
+      indentLeft: 18,
+      indentFirstLine: 4,
+    });
+    expect(f.changed).toHaveBeenCalledTimes(1);
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    expect(f.current().content.content![0].attrs?.indentLeft).toBe(8);
+    f.permissions({ readOnly: false, disabled: true });
+    expect(left).toBeDisabled();
+  });
+  it('previews ruler drag, restores cancellation and commits pointer release as one operation', async () => {
+    const f = paragraphSetup();
+    const body = await screen.findByRole('textbox', { name: 'Word 文档正文' });
+    selectNodeContents(body, body.firstChild!);
+    const left = await screen.findByRole('slider', { name: '左缩进标尺' });
+    const ruler = left.closest('[data-part="word-ruler"]')!;
+    vi.spyOn(ruler, 'getBoundingClientRect').mockReturnValue({
+      left: 100,
+      top: 0,
+      width: 794,
+      height: 26,
+      right: 894,
+      bottom: 26,
+      x: 100,
+      y: 0,
+      toJSON: () => ({}),
+    });
+    const origin = parseFloat(left.style.left) - (8 * 4) / 3;
+    fireEvent.pointerDown(left, {
+      button: 0,
+      pointerId: 7,
+      clientX: 100 + parseFloat(left.style.left),
+    });
+    fireEvent.pointerMove(window, { pointerId: 7, clientX: 100 + origin + (30 * 4) / 3 });
+    expect((body.firstChild as HTMLElement).style.marginLeft).toBe('30pt');
+    expect(f.changed).not.toHaveBeenCalled();
+    fireEvent.keyDown(window, { key: 'Escape' });
+    expect((body.firstChild as HTMLElement).style.marginLeft).toBe('8pt');
+    expect(f.changed).not.toHaveBeenCalled();
+    fireEvent.pointerDown(left, {
+      button: 0,
+      pointerId: 7,
+      clientX: 100 + parseFloat(left.style.left),
+    });
+    fireEvent.pointerMove(window, { pointerId: 7, clientX: 100 + origin + (30 * 4) / 3 });
+    fireEvent.pointerUp(window, { pointerId: 7 });
+    expect(f.current().content.content![0].attrs?.indentLeft).toBe(30);
+    expect(f.changed).toHaveBeenCalledTimes(1);
+  });
+});
+
 describe('Word character metrics dialog', () => {
   function metricsSetup(initial = documentModel()) {
     let current = initial;

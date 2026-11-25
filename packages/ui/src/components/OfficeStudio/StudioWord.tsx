@@ -20,14 +20,7 @@ import {
   Scissors,
   Search,
 } from '@zuvi/icons';
-import {
-  EditorContent,
-  Extension,
-  Node,
-  useEditor,
-  useEditorState,
-  type Editor,
-} from '@tiptap/react';
+import { EditorContent, Node, useEditor, useEditorState, type Editor } from '@tiptap/react';
 import { StarterKit } from '@tiptap/starter-kit';
 import { ListItem } from '@tiptap/extension-list';
 import { closeHistory } from '@tiptap/pm/history';
@@ -53,6 +46,8 @@ import type {
 } from './studio-types';
 import { StudioWordStyleDialog } from './StudioWordStyleDialog';
 import { StudioWordCharacterDialog } from './StudioWordCharacterDialog';
+import { StudioWordParagraphDialog } from './StudioWordParagraphDialog';
+import { StudioWordRuler as WordRuler } from './StudioWordRuler';
 import {
   WordCharacterLayout,
   wordSelectionMetrics,
@@ -94,6 +89,12 @@ import {
 } from './studio-word-tools';
 import { StudioFontControl, type StudioFontCommitReason } from './StudioFontControl';
 import { WordNonprinting, wordSetNonprinting } from './studio-word-nonprinting';
+
+import {
+  wordSetParagraphFormat,
+  wordSelectionParagraphFormat,
+  WordParagraphLayout as ParagraphLayout,
+} from './studio-word-paragraph-layout';
 import './StudioWord.css';
 
 const PageBreak = Node.create({
@@ -106,59 +107,6 @@ const PageBreak = Node.create({
     'div',
     { 'data-word-page-break': '', class: 'zuvi-studio-word-page-break', 'aria-label': '分页符' },
   ],
-});
-
-const PARAGRAPH_LAYOUT = {
-  indentLeft: 'margin-left',
-  indentRight: 'margin-right',
-  indentFirstLine: 'text-indent',
-  spaceBefore: 'margin-top',
-  spaceAfter: 'margin-bottom',
-} as const;
-
-const ParagraphLayout = Extension.create({
-  name: 'studioParagraphLayout',
-  addGlobalAttributes() {
-    return [
-      {
-        types: ['paragraph', 'heading'],
-        attributes: {
-          ...Object.fromEntries(
-            Object.entries(PARAGRAPH_LAYOUT).map(([key, css]) => [
-              key,
-              {
-                default: null,
-                renderHTML: (attributes: Record<string, unknown>) =>
-                  typeof attributes[key] === 'number' && Number.isFinite(attributes[key])
-                    ? { style: `${css}: ${attributes[key]}pt` }
-                    : {},
-              },
-            ])
-          ),
-          lineHeight: {
-            default: null,
-            renderHTML: (attributes: Record<string, unknown>) =>
-              typeof attributes.lineHeight === 'number' && Number.isFinite(attributes.lineHeight)
-                ? { style: `line-height: ${attributes.lineHeight}` }
-                : {},
-          },
-        },
-      },
-      {
-        types: ['tableCell', 'tableHeader'],
-        attributes: {
-          backgroundColor: {
-            default: null,
-            renderHTML: (attributes: Record<string, unknown>) =>
-              typeof attributes.backgroundColor === 'string' &&
-              /^#[\da-f]{6}$/i.test(attributes.backgroundColor)
-                ? { style: `background-color: ${attributes.backgroundColor}` }
-                : {},
-          },
-        },
-      },
-    ];
-  },
 });
 
 const EXTENSIONS = [
@@ -190,7 +138,24 @@ const EXTENSIONS = [
       }));
     },
   }),
-  TextAlign.configure({ types: ['heading', 'paragraph'] }),
+  TextAlign.extend({
+    addKeyboardShortcuts() {
+      return Object.fromEntries(
+        [
+          ['l', 'left'],
+          ['e', 'center'],
+          ['r', 'right'],
+          ['j', 'justify'],
+        ].map(([key, value]) => [
+          `Mod-Shift-${key}`,
+          () =>
+            wordSetParagraphFormat(this.editor, {
+              textAlign: value as 'left' | 'center' | 'right' | 'justify',
+            }),
+        ])
+      );
+    },
+  }).configure({ types: ['heading', 'paragraph'] }),
   TableKit.configure({ table: { resizable: true } }),
   ParagraphLayout,
   PageBreak,
@@ -254,46 +219,6 @@ function RibbonGroup({
 
 function RibbonRow({ children }: { children: React.ReactNode }) {
   return <div className="zuvi-studio-word-control-row">{children}</div>;
-}
-
-function WordRuler({
-  length,
-  margin,
-  scale,
-  vertical = false,
-}: {
-  length: number;
-  margin: number;
-  scale: number;
-  vertical?: boolean;
-}) {
-  const unit = MM_TO_PX * 10;
-  const count = Math.floor((length - margin * 2) / unit);
-  const rulerStyle = {
-    '--zuvi-studio-word-ruler-unit': `${unit * scale}px`,
-    '--zuvi-studio-word-ruler-margin': `${margin * scale}px`,
-    [vertical ? 'height' : 'width']: length * scale,
-  } as React.CSSProperties;
-  return (
-    <div
-      className={`zuvi-studio-word-ruler zuvi-studio-word-ruler-${vertical ? 'vertical' : 'horizontal'}`}
-      data-part="word-ruler"
-      data-orientation={vertical ? 'vertical' : 'horizontal'}
-      aria-hidden="true"
-      style={rulerStyle}
-    >
-      <span className="zuvi-studio-word-ruler-text-area" />
-      {Array.from({ length: Math.max(0, count) + 1 }, (_, index) => (
-        <span
-          key={index}
-          className="zuvi-studio-word-ruler-number"
-          style={{ [vertical ? 'top' : 'left']: (margin + index * unit) * scale }}
-        >
-          {index}
-        </span>
-      ))}
-    </div>
-  );
 }
 
 type WordRegion = 'header' | 'footer';
@@ -479,6 +404,12 @@ export function StudioWord({
     values: ReturnType<typeof wordSelectionMetrics>;
     text: string;
   } | null>(null);
+  const [paragraphDialog, setParagraphDialog] = React.useState<{
+    editor: Editor;
+    doc: Editor['state']['doc'];
+    selection: Editor['state']['selection'];
+    values: ReturnType<typeof wordSelectionParagraphFormat>;
+  } | null>(null);
   const styleDefinitions = document.content.attrs?.paragraphStyles;
   const paragraphStyles = React.useMemo(
     () => validateStudioWordParagraphStyles(styleDefinitions),
@@ -600,6 +531,7 @@ export function StudioWord({
     setLinkOpen(false);
     setStyleDialog(null);
     setCharacterDialog(null);
+    setParagraphDialog(null);
     setNotice('');
   }, [document.id]);
   React.useEffect(() => {
@@ -683,6 +615,7 @@ export function StudioWord({
             (current.isActive('heading') ? 1.35 : 1.75)
         ),
         canMerge: current.can().mergeCells(),
+        lineHeightRule: String(current.state.selection.$from.parent.attrs.lineHeightRule ?? 'auto'),
         canSplit: current.can().splitCell(),
       };
     },
@@ -1000,13 +933,47 @@ export function StudioWord({
   };
   const adjustIndent = (amount: number) => {
     if (!editor || !editable) return;
-    editor
-      .chain()
-      .focus()
-      .updateAttributes(editor.isActive('heading') ? 'heading' : 'paragraph', {
-        indentLeft: Math.max(0, Math.min(144, (selection?.indent || 0) + amount)),
-      })
-      .run();
+    wordSetParagraphFormat(editor, (current) => ({
+      indentLeft: Math.max(0, Math.min(500, current.indentLeft + amount)),
+    }));
+  };
+  const lineOptions = [
+    1,
+    1.15,
+    1.5,
+    1.75,
+    2,
+    ...(selection?.lineHeightRule === 'auto' &&
+    selection.lineHeight &&
+    ![1, 1.15, 1.5, 1.75, 2].includes(Number(selection.lineHeight))
+      ? [Number(selection.lineHeight)]
+      : []),
+  ].map((value) => ({ value: String(value), label: `${value} 倍行距` }));
+  if (selection?.lineHeightRule !== 'auto' && selection)
+    lineOptions.push({
+      value: 'current',
+      label: `${selection.lineHeight}pt ${selection.lineHeightRule === 'exact' ? '固定' : '最小'}`,
+    });
+  const openParagraphSettings = () => {
+    if (!editor || !editable || editor.view.composing) return;
+    const root = editor.view.dom.closest('.zuvi-studio-word'),
+      focused = window.document.activeElement;
+    if (
+      focused instanceof HTMLElement &&
+      root?.contains(focused) &&
+      focused.matches('input,textarea')
+    )
+      flushSync(() => focused.blur());
+    if (root?.querySelector('[data-studio-input-error]')) {
+      setNotice('请先修正当前输入，或按 Esc 取消。');
+      return;
+    }
+    setParagraphDialog({
+      editor,
+      doc: editor.state.doc,
+      selection: editor.state.selection,
+      values: wordSelectionParagraphFormat(editor),
+    });
   };
   // ---- 本轮新增：字号步进 / 高亮 / 大小写 / 格式刷 ----
   const [highlightOpen, setHighlightOpen] = React.useState(false);
@@ -1647,28 +1614,27 @@ export function StudioWord({
                 aria-label="段落行距"
                 size="sm"
                 disabled={toolsDisabled}
-                value={selection?.lineHeight || '1.75'}
-                options={[
-                  1,
-                  1.15,
-                  1.5,
-                  1.75,
-                  2,
-                  ...(selection?.lineHeight &&
-                  ![1, 1.15, 1.5, 1.75, 2].includes(Number(selection.lineHeight))
-                    ? [Number(selection.lineHeight)]
-                    : []),
-                ].map((value) => ({ value: String(value), label: `${value} 倍` }))}
-                onChange={(value) =>
-                  editor
-                    ?.chain()
-                    .focus()
-                    .updateAttributes(editor.isActive('heading') ? 'heading' : 'paragraph', {
-                      lineHeight: Number(value),
-                    })
-                    .run()
+                value={
+                  selection?.lineHeightRule === 'auto' ? selection?.lineHeight || '1.75' : 'current'
                 }
+                options={lineOptions}
+                onChange={(value) => {
+                  if (editor && value !== 'current')
+                    wordSetParagraphFormat(editor, {
+                      lineHeight: Number(value),
+                      lineHeightRule: 'auto',
+                    });
+                }}
               />
+              <Button
+                size="sm"
+                variant="ghost"
+                disabled={toolsDisabled}
+                onMouseDown={keepSelection}
+                onClick={openParagraphSettings}
+              >
+                段落设置
+              </Button>
             </RibbonRow>
             <RibbonRow>
               {ALIGNMENTS.map(({ value, label, Icon }) => (
@@ -1681,7 +1647,7 @@ export function StudioWord({
                   size="sm"
                   disabled={toolsDisabled}
                   onMouseDown={keepSelection}
-                  onClick={() => editor?.chain().focus().setTextAlign(value).run()}
+                  onClick={() => editor && wordSetParagraphFormat(editor, { textAlign: value })}
                 >
                   <Icon size={16} />
                 </Button>
@@ -2178,27 +2144,27 @@ export function StudioWord({
               aria-label="段落行距"
               size="sm"
               disabled={toolsDisabled}
-              value={selection?.lineHeight || '1.75'}
-              options={[
-                1,
-                1.15,
-                1.5,
-                1.75,
-                2,
-                ...(selection?.lineHeight &&
-                ![1, 1.15, 1.5, 1.75, 2].includes(Number(selection.lineHeight))
-                  ? [Number(selection.lineHeight)]
-                  : []),
-              ].map((value) => ({ value: String(value), label: `${value} 倍行距` }))}
+              value={
+                selection?.lineHeightRule === 'auto' ? selection?.lineHeight || '1.75' : 'current'
+              }
+              options={lineOptions}
               onChange={(value) => {
-                const node = editor?.isActive('heading') ? 'heading' : 'paragraph';
-                editor
-                  ?.chain()
-                  .focus()
-                  .updateAttributes(node, { lineHeight: Number(value) })
-                  .run();
+                if (editor && value !== 'current')
+                  wordSetParagraphFormat(editor, {
+                    lineHeight: Number(value),
+                    lineHeightRule: 'auto',
+                  });
               }}
             />
+            <Button
+              size="sm"
+              variant="ghost"
+              disabled={toolsDisabled}
+              onMouseDown={keepSelection}
+              onClick={openParagraphSettings}
+            >
+              段落设置
+            </Button>
           </RibbonGroup>
           <RibbonGroup label="页眉页脚" className="zuvi-studio-word-distance-group">
             <label className="zuvi-studio-word-distance-label">
@@ -2679,7 +2645,16 @@ export function StudioWord({
           </aside>
         )}
         <div className="zuvi-studio-word-stage" data-part="word-stage" ref={stageRef}>
-          {showRuler && <WordRuler length={pageWidth} margin={margin} scale={scale} />}
+          {showRuler && (
+            <WordRuler
+              length={pageWidth}
+              margin={margin}
+              scale={scale}
+              editor={editor}
+              blocked={toolsDisabled}
+              onNotice={setNotice}
+            />
+          )}
           <div
             className="zuvi-studio-word-paper-space"
             style={{
@@ -2809,6 +2784,31 @@ export function StudioWord({
           />
         </div>
       </div>
+      {paragraphDialog && (
+        <StudioWordParagraphDialog
+          values={paragraphDialog.values}
+          blocked={!editable}
+          onClose={() => {
+            setParagraphDialog(null);
+            if (!paragraphDialog.editor.isDestroyed) paragraphDialog.editor.commands.focus();
+          }}
+          onSave={(patch) => {
+            const target = paragraphDialog.editor;
+            if (
+              !latest.current.editable ||
+              target.isDestroyed ||
+              target !== editor ||
+              target.state.doc !== paragraphDialog.doc
+            )
+              throw new Error('文档或编辑区域已变化，请重新选择段落。');
+            target.view.dispatch(
+              target.state.tr.setSelection(paragraphDialog.selection).setMeta('addToHistory', false)
+            );
+            const changed = wordSetParagraphFormat(target, patch);
+            setNotice(changed ? '已应用段落设置，可撤销恢复。' : '段落格式保持原样。');
+          }}
+        />
+      )}
       {characterDialog && (
         <StudioWordCharacterDialog
           values={characterDialog.values}

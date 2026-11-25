@@ -1,5 +1,21 @@
 import { describe, expect, it } from 'vitest';
 import { createOfficeStudioDocument, isOfficeStudioDocument } from './studio-model';
+
+it('accepts primitive constant value tags and rejects string-coercing objects or trailing controls', () => {
+  const doc = createOfficeStudioDocument('excel') as StudioExcelDocument;
+  for (const [tag, input] of [
+    ['number', '42'],
+    ['boolean', 'FALSE'],
+    ['text', "'text"],
+  ] as const) {
+    doc.sheets[0].cells.A1 = { input, valueType: tag };
+    expect(isOfficeStudioDocument(doc)).toBe(true);
+  }
+  for (const tag of ['number\n', {}, { toString: () => 'number' }]) {
+    doc.sheets[0].cells.A1 = { input: '42', valueType: tag as never };
+    expect(isOfficeStudioDocument(doc)).toBe(false);
+  }
+});
 import type { StudioExcelDocument, StudioPdfDocument, StudioWordDocument } from './studio-types';
 
 describe('persisted OfficeStudio models', () => {
