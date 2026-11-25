@@ -1,0 +1,39 @@
+[WebServer] (node:72652) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:72689) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium] › e2e/office-studio-word-rows.spec.ts:999:1 › natural row distribution retains full multiline content through native reopening (3.0s)
+
+
+  1) [chromium] › e2e/office-studio-word-rows.spec.ts:999:1 › natural row distribution retains full multiline content through native reopening
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 1
+    Received:   10.328125
+
+      1068 |       elements.map((element) => element.getBoundingClientRect().height)
+      1069 |     );
+    > 1070 |     expect(Math.abs(heights[0] - heights[1])).toBeLessThan(1);
+           |                                               ^
+      1071 |     for (const row of await rows.all())
+      1072 |       await expect(row).toHaveAttribute('data-word-row-height-rule', 'atLeast');
+      1073 |     await expect(body).toContainText('Natural 5 line 5');
+        at assertRows (/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-rows.spec.ts:1070:47)
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-rows.spec.ts:1087:5
+
+    Error Context: test-results/office-studio-word-rows-na-c1c49-nt-through-native-reopening-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/office-studio-word-rows-na-c1c49-nt-through-native-reopening-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/office-studio-word-rows-na-c1c49-nt-through-native-reopening-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/office-studio-word-rows.spec.ts:999:1 › natural row distribution retains full multiline content through native reopening

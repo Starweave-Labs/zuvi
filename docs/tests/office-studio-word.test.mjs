@@ -1495,3 +1495,21 @@ test('a cleared heading keeps its level and hyperlink without reintroducing defa
     );
   }
 });
+
+
+test('table paragraph absent spacing exports zero while explicit spacing survives repeated saves', async () => {
+  let document = await importStudioWord(await fixture('<w:tbl><w:tr><w:tc><w:p><w:r><w:t>No spacing</w:t></w:r></w:p><w:p><w:pPr><w:spacing w:before="120" w:after="240"/></w:pPr><w:r><w:t>Explicit spacing</w:t></w:r></w:p></w:tc></w:tr></w:tbl>'), 'Spacing.docx');
+  for (let pass = 0; pass < 2; pass++) {
+    const file = await exportStudioWord(document);
+    const zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const native = parse(await zip.file('word/document.xml').async('string'));
+    const paragraphs = native.getElementsByTagNameNS(W, 'tc')[0].getElementsByTagNameNS(W, 'p');
+    const zero = paragraphs[0].getElementsByTagNameNS(W, 'spacing')[0];
+    assert.equal(zero.getAttributeNS(W, 'before'), '0');
+    assert.equal(zero.getAttributeNS(W, 'after'), '0');
+    const explicit = paragraphs[1].getElementsByTagNameNS(W, 'spacing')[0];
+    assert.equal(explicit.getAttributeNS(W, 'before'), '120');
+    assert.equal(explicit.getAttributeNS(W, 'after'), '240');
+    document = await importStudioWord(file, 'Spacing-reopened.docx');
+  }
+});

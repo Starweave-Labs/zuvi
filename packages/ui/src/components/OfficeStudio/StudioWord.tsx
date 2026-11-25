@@ -53,7 +53,7 @@ import { StudioWordRuler as WordRuler } from './StudioWordRuler';
 import { WordNumbering, wordSetNumberedContent, wordNumberingContext, wordContinueNumbering, wordRestartNumbering, wordChangeNumberingLevel, wordSetNumberingCatalog, wordToggleNumberingPreset, wordEditorNumbering, wordApplyNumbering } from './studio-word-numbering-extension';
 import { StudioWordNumberingDialog } from './StudioWordNumberingDialog';
 import {StudioWordSurfaceDialog} from './StudioWordSurfaceDialog';
-import { WordTableRowProperties, wordSelectedRows, wordSetRowProperties } from './studio-word-table-row-extension';
+import { WordTableRowProperties, wordDistributeColumns, wordDistributeRows, wordSelectedRows, wordSetRowProperties } from './studio-word-table-row-extension';
 import { StudioWordRowDialog } from './StudioWordRowDialog';
 import { WordTableCell, WordTableHeader } from './studio-word-table-cell';
 import {WordPaginationLayout,wordSetPagination} from './studio-word-pagination-extension';
@@ -2108,6 +2108,20 @@ export function StudioWord({
               const rows = wordSelectedRows(editor);
               if (rows.length) setRowDialog({ editor, doc: editor.state.doc, selection: editor.state.selection, rows });
             }}>表格行属性</Button>
+            <Button variant="ghost" size="sm" disabled={toolsDisabled || !selection?.inTable}
+              onMouseDown={keepSelection} onClick={() => {
+                if (!editor || toolsDisabled) return;
+                const changed = wordDistributeColumns(editor);
+                setNotice(changed ? '已平均分布表格列，可撤销恢复。' : '列宽保持原样或无法测量。');
+              }}>平均分布表格列</Button>
+            <Button variant="ghost" size="sm"
+              disabled={toolsDisabled || !editor || wordSelectedRows(editor).length < 2}
+              onMouseDown={keepSelection}
+              onClick={() => {
+                if (!editor || toolsDisabled) return;
+                const changed = wordDistributeRows(editor);
+                setNotice(changed ? '已平均分布所选行，可撤销恢复。' : '行高度保持原样或无法测量。');
+              }}>平均分布行</Button>
             <Button
               variant="ghost"
               size="sm"

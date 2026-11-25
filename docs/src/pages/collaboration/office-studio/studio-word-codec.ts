@@ -1993,7 +1993,7 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
     },
   }));
   const numbering: NumberingDefinition[] = nativeWordNumberingConfig(numberCatalog, nativeStyleId);
-  const paragraph = (node: StudioRichNode, options: IParagraphOptions = {}) => {
+  const paragraph = (node: StudioRichNode, options: IParagraphOptions = {}, inCell = false) => {
     checkAttrs(node, [
       'level',
       'textAlign',
@@ -2104,11 +2104,11 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
       spacing: {
         before:
           attrs.spaceBefore == null || inherited('spaceBefore')
-            ? undefined
+            ? inCell && !linkedStyle && attrs.spaceBefore == null ? 0 : undefined
             : Math.round(number(attrs.spaceBefore, '段前间距', 0, 500) * 20),
         after:
           attrs.spaceAfter == null || inherited('spaceAfter')
-            ? undefined
+            ? inCell && !linkedStyle && attrs.spaceAfter == null ? 0 : undefined
             : Math.round(number(attrs.spaceAfter, '段后间距', 0, 500) * 20),
         line:
           attrs.lineHeight == null || inherited('lineHeight')
@@ -2129,11 +2129,11 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
       children: inlineChildren(node.content, linkedStyle?.run),
     },surface);
   };
-  const blocks = (nodes: StudioRichNode[], depth = 0): (Paragraph | Table)[] => {
+  const blocks = (nodes: StudioRichNode[], depth = 0, inCell = false): (Paragraph | Table)[] => {
     if (depth > 20) throw new Error('文档嵌套层级过深。');
     const result: (Paragraph | Table)[] = [];
     for (const node of nodes) {
-      if (node.type === 'paragraph' || node.type === 'heading') result.push(paragraph(node));
+      if (node.type === 'paragraph' || node.type === 'heading') result.push(paragraph(node, {}, inCell));
       else if (node.type === 'pageBreak')
         result.push(new Paragraph({ children: [new DocxPageBreak()] }));
       else if (node.type === 'horizontalRule')
@@ -2152,7 +2152,7 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
             paragraph(item, {
               style: 'ZuviQuote',
               border: { left: { style: BorderStyle.SINGLE, size: 18, color: '1F2937' } },
-            })
+            }, inCell)
           );
         }
       } else if (node.type === 'bulletList' || node.type === 'orderedList') {
@@ -2166,10 +2166,10 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
             )
               throw new Error('列表项需要以段落开头。');
             checkAttrs(item, []);
-            result.push(paragraph(item.content![0]));
+            result.push(paragraph(item.content![0], {}, inCell));
             for (const nested of item.content!.slice(1)) {
               if (['paragraph', 'heading'].includes(nested.type)) {
-                result.push(paragraph(nested));
+                result.push(paragraph(nested, {}, inCell));
                 continue;
               }
               if (!['bulletList', 'orderedList'].includes(nested.type))
@@ -2225,7 +2225,8 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
                       : {}),
                     children: blocks(
                       cell.content?.length ? cell.content : [{ type: 'paragraph' }],
-                      depth + 1
+                      depth + 1,
+                      true
                     ),
                   });
                 }),

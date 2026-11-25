@@ -1,0 +1,10 @@
+[WebServer] (node:67221) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:67243) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › e2e/office-studio-word-rows.spec.ts:681:1 › nested vertically merged table distributes its own columns without changing outer widths (2.5s)
+
+  1 passed (4.5s)

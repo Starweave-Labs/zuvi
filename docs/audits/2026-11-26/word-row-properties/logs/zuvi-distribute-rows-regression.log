@@ -1,0 +1,14 @@
+[WebServer] (node:62793) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:62813) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 5 tests using 1 worker
+
+  ✓  1 [chromium] › e2e/office-studio-word-rows.spec.ts:17:1 › fixed rows use their clipped height during actual automatic pagination (2.4s)
+  ✓  2 [chromium] › e2e/office-studio-word-rows.spec.ts:118:1 › Word row properties edit atomically and retain height and split flags through two DOCX reopenings (7.5s)
+  ✓  3 [chromium] › e2e/office-studio-word-rows.spec.ts:269:1 › native vertically merged fixed rows use their combined content height (1.5s)
+  ✓  4 [chromium] › e2e/office-studio-word-rows.spec.ts:332:1 › allowed single-cell row fragments across pages while prohibited row remains intact (3.6s)
+  ✓  5 [chromium] › e2e/office-studio-word-rows.spec.ts:458:1 › distributes selected fixed rows with atomic history and native DOCX reopening (3.8s)
+
+  5 passed (20.7s)

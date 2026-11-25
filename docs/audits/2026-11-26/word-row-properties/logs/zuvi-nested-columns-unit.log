@@ -1,0 +1,9 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/studio-word-table-rows.test.ts (7 tests) 66ms
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  04:31:49
+   Duration  709ms (transform 50ms, setup 112ms, collect 85ms, tests 66ms, environment 316ms, prepare 34ms)

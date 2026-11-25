@@ -1678,9 +1678,9 @@
         "date": "2026-11-26",
         "sourceCommit": "83dc1a6",
         "implementation": "部分实现",
-        "implementedBehavior": "列宽导入保存和内核拖列宽；行高自动/最小/固定的ZUVI混合选区入口、单事务历史/取消/只读/输入IME、原生trHeight两次重开；固定内容裁切保留全文，25行实际编辑器和打印均为一页。 纵向合并固定行累计覆盖行高度，嵌套装饰历史和原生DOCX导入几何已验证。",
+        "implementedBehavior": "列宽导入保存和内核拖列宽；行高自动/最小/固定的ZUVI混合选区入口、单事务历史/取消/只读/输入IME、原生trHeight两次重开；固定内容裁切保留全文，25行实际编辑器和打印均为一页。 纵向合并固定行累计覆盖行高度，嵌套装饰历史和原生DOCX导入几何已验证。 所选多行平均分布ZUVI入口已接入，固定24/48磅→36/36磅，单事务撤销重做、跨页策略保留、两次DOCX重开与明暗320px/单行禁用/只读专项通过；自然高度计算排除分页装饰。 当前最内层表格全部列平均分布入口已接入；横向合并模型单事务、不同原列宽撤销恢复、两次DOCX重开后等宽几何专项通过。 局部列真实鼠标选区、合并边界未选列保留、嵌套纵向合并两次DOCX往返已验证；明暗320px及只读专项通过。自然高度平均行默认cell间距导出0修复后两次重开等高通过。",
         "functionalGaps": [
-          "行高拖动、行列平均分布、复杂合并/嵌套/极小或超高行及全部选区键盘组合仍待实现与验收。"
+          "行高拖动、完整键盘/IME浏览器交互、极小/超高/超宽与复杂嵌套布局矩阵仍待实现与验收。"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
@@ -1709,10 +1709,10 @@
           "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
           "docs/tests/office-studio-word.test.mjs"
         ],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "testEvidenceNote": "Distribution slices: full UI 2425, docs 306 without skips, full E2E 255, types/lint/build/registry/consumer/distribution passed. Row dragging and full complex layout/keyboard/IME acceptance remain unproven."
       },
       "gaps": [
-        "行高拖动、行列平均分布、复杂合并/嵌套/极小或超高行及全部选区键盘组合仍待实现与验收。"
+        "行高拖动、完整键盘/IME浏览器交互、极小/超高/超宽与复杂嵌套布局矩阵仍待实现与验收。"
       ]
     },
     {

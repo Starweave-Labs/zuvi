@@ -454,3 +454,644 @@ test('allowed single-cell row fragments across pages while prohibited row remain
     }
   }
 });
+
+test('distributes selected fixed rows with atomic history and native DOCX reopening', async ({
+  page,
+}) => {
+  const directory = path.resolve('docs/audits/2026-11-26/word-row-properties');
+  const source = Buffer.from(
+    await Packer.toArrayBuffer(
+      new Document({
+        sections: [
+          {
+            children: [
+              new Table({
+                rows: [24, 48].map(
+                  (height, index) =>
+                    new TableRow({
+                      height: { value: height * 20, rule: HeightRule.EXACT },
+                      cantSplit: index === 0,
+                      children: [
+                        new TableCell({ children: [new Paragraph(`Distribute row ${index + 1}`)] }),
+                      ],
+                    })
+                ),
+              }),
+            ],
+          },
+        ],
+      })
+    )
+  );
+  await writeFile(path.join(directory, 'distribute-source.docx'), source);
+  await page.goto('/#/components/office-studio');
+  const load = async (buffer: Buffer, name: string) => {
+    await page.getByLabel('导入文档文件', { exact: true }).setInputFiles({
+      name,
+      mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      buffer,
+    });
+    await expect(page.getByRole('textbox', { name: '文档名称', exact: true })).toHaveValue(name);
+  };
+  await load(source, 'Distribute.docx');
+  const body = page.getByRole('textbox', { name: 'Word 文档正文', exact: true });
+  await body.evaluate((element) => {
+    (element as HTMLElement).focus();
+    const paragraphs = element.querySelectorAll('td p');
+    const range = document.createRange();
+    range.setStart(paragraphs[0].firstChild!, 0);
+    range.setEnd(paragraphs[1].firstChild!, paragraphs[1].firstChild!.textContent!.length);
+    const selection = window.getSelection()!;
+    selection.removeAllRanges();
+    selection.addRange(range);
+    document.dispatchEvent(new Event('selectionchange'));
+  });
+  await page.getByRole('tab', { name: '插入', exact: true }).click();
+  const distribute = page.getByRole('button', { name: '平均分布行', exact: true });
+  await expect(distribute).toBeEnabled();
+  await distribute.click();
+  const rows = body.locator('tr');
+  for (const row of await rows.all())
+    await expect(row).toHaveAttribute('data-word-row-height', '36');
+  await expect(rows.nth(0)).toHaveAttribute('data-word-row-allow-split', 'false');
+  await expect(rows.nth(1)).toHaveAttribute('data-word-row-allow-split', 'true');
+  await page.getByRole('tab', { name: '开始', exact: true }).click();
+  await page.getByRole('button', { name: '撤销', exact: true }).click();
+  await expect(rows.nth(0)).toHaveAttribute('data-word-row-height', '24');
+  await expect(rows.nth(1)).toHaveAttribute('data-word-row-height', '48');
+  await page.getByRole('button', { name: '重做', exact: true }).click();
+  for (const row of await rows.all())
+    await expect(row).toHaveAttribute('data-word-row-height', '36');
+  for (let pass = 1; pass <= 2; pass++) {
+    const pending = page.waitForEvent('download');
+    await page.getByRole('button', { name: '导出文件', exact: true }).click();
+    const bytes = await readFile((await (await pending).path())!);
+    await writeFile(path.join(directory, `distribute-roundtrip-${pass}.docx`), bytes);
+    const xml = await (await JSZip.loadAsync(bytes)).file('word/document.xml')!.async('string');
+    expect(xml.match(/w:trHeight[^>]*w:val="720"/g)).toHaveLength(2);
+    await load(bytes, `Distributed-${pass}.docx`);
+    for (const row of await rows.all())
+      await expect(row).toHaveAttribute('data-word-row-height', '36');
+    await expect(body).toContainText('Distribute row 2');
+  }
+  const heights = await rows.evaluateAll((elements) =>
+    elements.map((element) => element.getBoundingClientRect().height)
+  );
+  expect(heights.every((height) => height >= 47 && height <= 49)).toBe(true);
+  await writeFile(
+    path.join(directory, 'distribute-evidence.json'),
+    JSON.stringify({ heights, nativeTwips: 720, reopenCycles: 2 }, null, 2)
+  );
+  for (const small of [false, true]) {
+    if (small) await page.setViewportSize({ width: 320, height: 720 });
+    for (const theme of ['light', 'dark']) {
+      if (theme === 'dark')
+        await page.getByRole('button', { name: '切换暗色', exact: true }).click();
+      await page.getByRole('tab', { name: '插入', exact: true }).click();
+      await body.locator('p').first().click();
+      await expect(distribute).toBeDisabled();
+      await distribute.scrollIntoViewIfNeeded();
+      await page.screenshot({
+        path: path.join(directory, `distribute-${theme}${small ? '-320' : ''}.png`),
+        fullPage: true,
+      });
+      if (theme === 'dark')
+        await page.getByRole('button', { name: '切换浅色', exact: true }).click();
+    }
+  }
+  await page.getByRole('switch', { name: '只读预览', exact: true }).click();
+  await expect(distribute).toBeDisabled();
+});
+
+test('equal table columns preserve merged geometry through native DOCX export', async ({
+  page,
+}) => {
+  const directory = path.resolve('docs/audits/2026-11-26/word-row-properties');
+  const source = Buffer.from(
+    await Packer.toArrayBuffer(
+      new Document({
+        sections: [
+          {
+            children: [
+              new Table({
+                columnWidths: [2000, 4000],
+                rows: [
+                  new TableRow({
+                    children: [
+                      new TableCell({ columnSpan: 2, children: [new Paragraph('Merged columns')] }),
+                    ],
+                  }),
+                  new TableRow({
+                    children: [
+                      new TableCell({ children: [new Paragraph('Column one')] }),
+                      new TableCell({ children: [new Paragraph('Column two')] }),
+                    ],
+                  }),
+                ],
+              }),
+            ],
+          },
+        ],
+      })
+    )
+  );
+  await writeFile(path.join(directory, 'columns-source.docx'), source);
+  await page.goto('/#/components/office-studio');
+  const load = async (bytes: Buffer, name: string) => {
+    await page.getByLabel('导入文档文件', { exact: true }).setInputFiles({
+      name,
+      mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      buffer: bytes,
+    });
+    await expect(page.getByRole('textbox', { name: '文档名称', exact: true })).toHaveValue(name);
+  };
+  await load(source, 'Columns.docx');
+  const body = page.getByRole('textbox', { name: 'Word 文档正文', exact: true });
+  await body.locator('p').last().click();
+  await page.getByRole('tab', { name: '插入', exact: true }).click();
+  const button = page.getByRole('button', { name: '平均分布表格列', exact: true });
+  const originalWidth = await body
+    .locator('table')
+    .evaluate((table) => table.getBoundingClientRect().width);
+  await button.click();
+  const assertEqual = async () => {
+    const widths = await body
+      .locator('tr')
+      .last()
+      .locator('td')
+      .evaluateAll((cells) => cells.map((cell) => cell.getBoundingClientRect().width));
+    expect(Math.abs(widths[0] - widths[1])).toBeLessThan(1);
+    expect(Math.abs(widths[0] + widths[1] - originalWidth)).toBeLessThan(1);
+    await expect(body.locator('td[colspan="2"]')).toHaveCount(1);
+    await expect(body).toContainText('Merged columns');
+    return widths;
+  };
+  await assertEqual();
+  await page.getByRole('tab', { name: '开始', exact: true }).click();
+  await page.getByRole('button', { name: '撤销', exact: true }).click();
+  const restored = await body
+    .locator('tr')
+    .last()
+    .locator('td')
+    .evaluateAll((cells) => cells.map((cell) => cell.getAttribute('colwidth')));
+  expect(restored[0]).not.toBe(restored[1]);
+  await page.getByRole('button', { name: '重做', exact: true }).click();
+  for (let pass = 1; pass <= 2; pass++) {
+    const pending = page.waitForEvent('download');
+    await page.getByRole('button', { name: '导出文件', exact: true }).click();
+    const bytes = await readFile((await (await pending).path())!);
+    await writeFile(path.join(directory, `columns-roundtrip-${pass}.docx`), bytes);
+    await load(bytes, `Columns-reopened-${pass}.docx`);
+    await assertEqual();
+  }
+  await writeFile(
+    path.join(directory, 'columns-evidence.json'),
+    JSON.stringify({ widths: await assertEqual(), reopenCycles: 2 }, null, 2)
+  );
+  for (const small of [false, true]) {
+    if (small) await page.setViewportSize({ width: 320, height: 720 });
+    for (const theme of ['light', 'dark']) {
+      if (theme === 'dark')
+        await page.getByRole('button', { name: '切换暗色', exact: true }).click();
+      await body.locator('p').last().click();
+      await page.getByRole('tab', { name: '插入', exact: true }).click();
+      await expect(button).toBeEnabled();
+      const nativeWidths = await body
+        .locator('td')
+        .evaluateAll((cells) => cells.map((cell) => cell.getAttribute('colwidth')));
+      await button.click();
+      expect(
+        await body
+          .locator('td')
+          .evaluateAll((cells) => cells.map((cell) => cell.getAttribute('colwidth')))
+      ).toEqual(nativeWidths);
+      await button.scrollIntoViewIfNeeded();
+      await page.screenshot({
+        path: path.join(directory, `columns-${theme}${small ? '-320' : ''}.png`),
+        fullPage: true,
+      });
+      if (theme === 'dark')
+        await page.getByRole('button', { name: '切换浅色', exact: true }).click();
+    }
+  }
+  await page.getByRole('switch', { name: '只读预览', exact: true }).click();
+  await expect(button).toBeDisabled();
+});
+
+test('nested vertically merged table distributes its own columns without changing outer widths', async ({
+  page,
+}) => {
+  const directory = path.resolve('docs/audits/2026-11-26/word-row-properties');
+  const inner = new Table({
+    columnWidths: [1200, 2400],
+    rows: [
+      new TableRow({
+        children: [
+          new TableCell({ rowSpan: 2, children: [new Paragraph('Nested merged')] }),
+          new TableCell({ children: [new Paragraph('Nested right')] }),
+        ],
+      }),
+      new TableRow({ children: [new TableCell({ children: [new Paragraph('Nested bottom')] })] }),
+    ],
+  });
+  const source = Buffer.from(
+    await Packer.toArrayBuffer(
+      new Document({
+        sections: [
+          {
+            children: [
+              new Table({
+                columnWidths: [5000, 2000],
+                rows: [
+                  new TableRow({
+                    children: [
+                      new TableCell({
+                        children: [
+                          new Paragraph('Outer before'),
+                          inner,
+                          new Paragraph('Outer after'),
+                        ],
+                      }),
+                      new TableCell({ children: [new Paragraph('Outer second')] }),
+                    ],
+                  }),
+                ],
+              }),
+            ],
+          },
+        ],
+      })
+    )
+  );
+  await writeFile(path.join(directory, 'nested-columns-source.docx'), source);
+  await page.goto('/#/components/office-studio');
+  const load = async (bytes: Buffer, name: string) => {
+    await page.getByLabel('导入文档文件', { exact: true }).setInputFiles({
+      name,
+      mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      buffer: bytes,
+    });
+    await expect(page.getByRole('textbox', { name: '文档名称', exact: true })).toHaveValue(name);
+  };
+  await load(source, 'Nested-columns.docx');
+  const body = page.getByRole('textbox', { name: 'Word 文档正文', exact: true });
+  const outerCells = body.locator('table').first().locator(':scope > tbody > tr > td');
+  const original = await outerCells.evaluateAll((cells) =>
+    cells.map((cell) => cell.getAttribute('colwidth'))
+  );
+  await body
+    .locator('p')
+    .filter({ hasText: /^Nested right$/ })
+    .click();
+  await page.getByRole('tab', { name: '插入', exact: true }).click();
+  await page.getByRole('button', { name: '平均分布表格列', exact: true }).click();
+  const assertNested = async () => {
+    expect(
+      await outerCells.evaluateAll((cells) => cells.map((cell) => cell.getAttribute('colwidth')))
+    ).toEqual(original);
+    const table = body.locator('table').nth(1);
+    await expect(table.locator('td[rowspan="2"]')).toHaveCount(1);
+    const widths = await table
+      .locator('tr')
+      .first()
+      .locator(':scope > td')
+      .evaluateAll((cells) => cells.map((cell) => cell.getBoundingClientRect().width));
+    expect(Math.abs(widths[0] - widths[1])).toBeLessThan(1);
+    await expect(body).toContainText('Outer second');
+  };
+  await assertNested();
+  for (let pass = 1; pass <= 2; pass++) {
+    const pending = page.waitForEvent('download');
+    await page.getByRole('button', { name: '导出文件', exact: true }).click();
+    const bytes = await readFile((await (await pending).path())!);
+    await writeFile(path.join(directory, `nested-columns-roundtrip-${pass}.docx`), bytes);
+    await load(bytes, `Nested-reopened-${pass}.docx`);
+    await assertNested();
+  }
+});
+
+test('mouse cell selection distributes only selected columns and reopens native widths', async ({
+  page,
+}) => {
+  const directory = path.resolve('docs/audits/2026-11-26/word-row-properties');
+  const source = Buffer.from(
+    await Packer.toArrayBuffer(
+      new Document({
+        sections: [
+          {
+            children: [
+              new Table({
+                columnWidths: [1200, 2400, 4500],
+                rows: [0, 1].map(
+                  (row) =>
+                    new TableRow({
+                      children: [0, 1, 2].map(
+                        (column) =>
+                          new TableCell({ children: [new Paragraph(`Selected ${row}-${column}`)] })
+                      ),
+                    })
+                ),
+              }),
+            ],
+          },
+        ],
+      })
+    )
+  );
+  await writeFile(path.join(directory, 'selected-columns-source.docx'), source);
+  await page.goto('/#/components/office-studio');
+  const load = async (bytes: Buffer, name: string) => {
+    await page.getByLabel('导入文档文件', { exact: true }).setInputFiles({
+      name,
+      mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      buffer: bytes,
+    });
+    await expect(page.getByRole('textbox', { name: '文档名称', exact: true })).toHaveValue(name);
+  };
+  await load(source, 'Selected-columns.docx');
+  const body = page.getByRole('textbox', { name: 'Word 文档正文', exact: true });
+  const cells = body.locator('tr').first().locator('td');
+  const original = await cells.evaluateAll((elements) =>
+    elements.map((element) => element.getAttribute('colwidth'))
+  );
+  await cells.nth(0).scrollIntoViewIfNeeded();
+  const selectColumns = async () => {
+    await cells.nth(0).scrollIntoViewIfNeeded();
+    const start = (await cells.nth(0).boundingBox())!;
+    const end = (await cells.nth(1).boundingBox())!;
+    await page.mouse.move(start.x + 4, start.y + start.height / 2);
+    await page.mouse.down();
+    await page.mouse.move(end.x + end.width - 4, end.y + end.height / 2, { steps: 10 });
+    await page.mouse.up();
+    await expect(body.locator('td.selectedCell')).toHaveCount(2);
+  };
+  await selectColumns();
+  await page.getByRole('tab', { name: '插入', exact: true }).click();
+  await page.getByRole('button', { name: '平均分布表格列', exact: true }).click();
+  const assertWidths = async () => {
+    const widths = await cells.evaluateAll((elements) =>
+      elements.map((element) => element.getAttribute('colwidth'))
+    );
+    expect(widths[0]).toBe(widths[1]);
+    expect(widths[2]).toBe(original[2]);
+    return widths;
+  };
+  await assertWidths();
+  await page.getByRole('tab', { name: '开始', exact: true }).click();
+  await page.getByRole('button', { name: '撤销', exact: true }).click();
+  expect(
+    await cells.evaluateAll((elements) =>
+      elements.map((element) => element.getAttribute('colwidth'))
+    )
+  ).toEqual(original);
+  await page.getByRole('button', { name: '重做', exact: true }).click();
+  for (let pass = 1; pass <= 2; pass++) {
+    const pending = page.waitForEvent('download');
+    await page.getByRole('button', { name: '导出文件', exact: true }).click();
+    const bytes = await readFile((await (await pending).path())!);
+    await writeFile(path.join(directory, `selected-columns-roundtrip-${pass}.docx`), bytes);
+    await load(bytes, `Selected-reopened-${pass}.docx`);
+    await assertWidths();
+  }
+  await writeFile(
+    path.join(directory, 'selected-columns-evidence.json'),
+    JSON.stringify({ original, result: await assertWidths(), reopenCycles: 2 }, null, 2)
+  );
+  for (const small of [false, true]) {
+    if (small) await page.setViewportSize({ width: 320, height: 720 });
+    for (const theme of ['light', 'dark']) {
+      if (theme === 'dark')
+        await page.getByRole('button', { name: '切换暗色', exact: true }).click();
+      await selectColumns();
+      await page.getByRole('tab', { name: '插入', exact: true }).click();
+      await page.getByRole('button', { name: '平均分布表格列', exact: true }).click();
+      await assertWidths();
+      await cells.nth(0).scrollIntoViewIfNeeded();
+      await page.screenshot({
+        path: path.join(directory, `selected-columns-${theme}${small ? '-320' : ''}.png`),
+        fullPage: true,
+      });
+      if (theme === 'dark')
+        await page.getByRole('button', { name: '切换浅色', exact: true }).click();
+    }
+  }
+  await page.getByRole('switch', { name: '只读预览', exact: true }).click();
+  await expect(page.getByRole('button', { name: '平均分布表格列', exact: true })).toBeDisabled();
+});
+
+test('merged boundary retains unselected column widths through native mouse editing', async ({
+  page,
+}) => {
+  const directory = path.resolve('docs/audits/2026-11-26/word-row-properties');
+  const source = Buffer.from(
+    await Packer.toArrayBuffer(
+      new Document({
+        sections: [
+          {
+            children: [
+              new Table({
+                columnWidths: [1200, 2400, 4500],
+                rows: [
+                  new TableRow({
+                    children: [
+                      new TableCell({ children: [new Paragraph('First column')] }),
+                      new TableCell({ columnSpan: 2, children: [new Paragraph('Boundary merge')] }),
+                    ],
+                  }),
+                  new TableRow({
+                    children: [0, 1, 2].map(
+                      (column) => new TableCell({ children: [new Paragraph(`Boundary ${column}`)] })
+                    ),
+                  }),
+                ],
+              }),
+            ],
+          },
+        ],
+      })
+    )
+  );
+  await writeFile(path.join(directory, 'boundary-columns-source.docx'), source);
+  await page.goto('/#/components/office-studio');
+  const load = async (bytes: Buffer, name: string) => {
+    await page.getByLabel('导入文档文件', { exact: true }).setInputFiles({
+      name,
+      mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      buffer: bytes,
+    });
+    await expect(page.getByRole('textbox', { name: '文档名称', exact: true })).toHaveValue(name);
+  };
+  await load(source, 'Boundary-columns.docx');
+  const body = page.getByRole('textbox', { name: 'Word 文档正文', exact: true });
+  const cells = body.locator('tr').last().locator('td');
+  const original = await cells.evaluateAll((elements) =>
+    elements.map((element) => element.getAttribute('colwidth'))
+  );
+  await cells.nth(0).scrollIntoViewIfNeeded();
+  const selectColumns = async () => {
+    await cells.nth(0).scrollIntoViewIfNeeded();
+    const start = (await cells.nth(0).boundingBox())!;
+    const end = (await cells.nth(1).boundingBox())!;
+    await page.mouse.move(start.x + 4, start.y + start.height / 2);
+    await page.mouse.down();
+    await page.mouse.move(end.x + end.width - 4, end.y + end.height / 2, { steps: 10 });
+    await page.mouse.up();
+    await expect(body.locator('td.selectedCell')).toHaveCount(2);
+  };
+  await selectColumns();
+  await page.getByRole('tab', { name: '插入', exact: true }).click();
+  await page.getByRole('button', { name: '平均分布表格列', exact: true }).click();
+  const assertWidths = async () => {
+    const widths = await cells.evaluateAll((elements) =>
+      elements.map((element) => element.getAttribute('colwidth'))
+    );
+    expect(widths[0]).toBe(widths[1]);
+    expect(widths[2]).toBe(original[2]);
+    const merged = body.locator('td[colspan="2"]');
+    await expect(merged).toHaveCount(1);
+    await expect(merged).toHaveAttribute('colwidth', `${widths[1]},${widths[2]}`);
+    await expect(merged).toContainText('Boundary merge');
+    return widths;
+  };
+  await assertWidths();
+  await page.getByRole('tab', { name: '开始', exact: true }).click();
+  await page.getByRole('button', { name: '撤销', exact: true }).click();
+  expect(
+    await cells.evaluateAll((elements) =>
+      elements.map((element) => element.getAttribute('colwidth'))
+    )
+  ).toEqual(original);
+  await page.getByRole('button', { name: '重做', exact: true }).click();
+  for (let pass = 1; pass <= 2; pass++) {
+    const pending = page.waitForEvent('download');
+    await page.getByRole('button', { name: '导出文件', exact: true }).click();
+    const bytes = await readFile((await (await pending).path())!);
+    await writeFile(path.join(directory, `boundary-columns-roundtrip-${pass}.docx`), bytes);
+    await load(bytes, `Boundary-reopened-${pass}.docx`);
+    await assertWidths();
+  }
+  await writeFile(
+    path.join(directory, 'boundary-columns-evidence.json'),
+    JSON.stringify({ original, result: await assertWidths(), reopenCycles: 2 }, null, 2)
+  );
+  for (const small of [false, true]) {
+    if (small) await page.setViewportSize({ width: 320, height: 720 });
+    for (const theme of ['light', 'dark']) {
+      if (theme === 'dark')
+        await page.getByRole('button', { name: '切换暗色', exact: true }).click();
+      await selectColumns();
+      await page.getByRole('tab', { name: '插入', exact: true }).click();
+      await page.getByRole('button', { name: '平均分布表格列', exact: true }).click();
+      await assertWidths();
+      await cells.nth(0).scrollIntoViewIfNeeded();
+      await page.screenshot({
+        path: path.join(directory, `boundary-columns-${theme}${small ? '-320' : ''}.png`),
+        fullPage: true,
+      });
+      if (theme === 'dark')
+        await page.getByRole('button', { name: '切换浅色', exact: true }).click();
+    }
+  }
+  await page.getByRole('switch', { name: '只读预览', exact: true }).click();
+  await expect(page.getByRole('button', { name: '平均分布表格列', exact: true })).toBeDisabled();
+});
+
+test('natural row distribution retains full multiline content through native reopening', async ({
+  page,
+}) => {
+  const directory = path.resolve('docs/audits/2026-11-26/word-row-properties');
+  const source = Buffer.from(
+    await Packer.toArrayBuffer(
+      new Document({
+        sections: [
+          {
+            children: [
+              new Table({
+                rows: [1, 5].map(
+                  (lines) =>
+                    new TableRow({
+                      children: [
+                        new TableCell({
+                          children: [
+                            new Paragraph({
+                              children: Array.from(
+                                { length: lines },
+                                (_, index) =>
+                                  new TextRun({
+                                    text: `Natural ${lines} line ${index + 1}`,
+                                    font: 'Arial',
+                                    size: 24,
+                                    break: index ? 1 : 0,
+                                  })
+                              ),
+                            }),
+                          ],
+                        }),
+                      ],
+                    })
+                ),
+              }),
+            ],
+          },
+        ],
+      })
+    )
+  );
+  await writeFile(path.join(directory, 'natural-rows-source.docx'), source);
+  await page.goto('/#/components/office-studio');
+  const load = async (bytes: Buffer, name: string) => {
+    await page.getByLabel('导入文档文件', { exact: true }).setInputFiles({
+      name,
+      mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      buffer: bytes,
+    });
+    await expect(page.getByRole('textbox', { name: '文档名称', exact: true })).toHaveValue(name);
+  };
+  await load(source, 'Natural.docx');
+  const body = page.getByRole('textbox', { name: 'Word 文档正文', exact: true });
+  await body.evaluate((element) => {
+    (element as HTMLElement).focus();
+    const paragraphs = element.querySelectorAll('td p');
+    const range = document.createRange();
+    range.setStart(paragraphs[0].firstChild!, 0);
+    range.setEndAfter(paragraphs[1].lastChild!);
+    const selection = window.getSelection()!;
+    selection.removeAllRanges();
+    selection.addRange(range);
+    document.dispatchEvent(new Event('selectionchange'));
+  });
+  await page.getByRole('tab', { name: '插入', exact: true }).click();
+  await page.getByRole('button', { name: '平均分布行', exact: true }).click();
+  const assertRows = async () => {
+    const rows = body.locator('tr');
+    const heights = await rows.evaluateAll((elements) =>
+      elements.map((element) => element.getBoundingClientRect().height)
+    );
+    expect(Math.abs(heights[0] - heights[1])).toBeLessThan(1);
+    for (const row of await rows.all())
+      await expect(row).toHaveAttribute('data-word-row-height-rule', 'atLeast');
+    await expect(body).toContainText('Natural 5 line 5');
+    return heights;
+  };
+  await assertRows();
+  await page.getByRole('tab', { name: '开始', exact: true }).click();
+  await page.getByRole('button', { name: '撤销', exact: true }).click();
+  await expect(body.locator('tr').first()).not.toHaveAttribute('data-word-row-height');
+  await page.getByRole('button', { name: '重做', exact: true }).click();
+  for (let pass = 1; pass <= 2; pass++) {
+    const pending = page.waitForEvent('download');
+    await page.getByRole('button', { name: '导出文件', exact: true }).click();
+    const bytes = await readFile((await (await pending).path())!);
+    await writeFile(path.join(directory, `natural-rows-roundtrip-${pass}.docx`), bytes);
+    await load(bytes, `Natural-reopened-${pass}.docx`);
+    await assertRows();
+  }
+  await writeFile(
+    path.join(directory, 'natural-rows-evidence.json'),
+    JSON.stringify(
+      { heights: await assertRows(), lastLineRetained: true, reopenCycles: 2 },
+      null,
+      2
+    )
+  );
+});

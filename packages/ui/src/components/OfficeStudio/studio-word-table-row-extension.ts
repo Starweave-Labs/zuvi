@@ -1,4 +1,5 @@
 import { Extension, type Editor } from '@tiptap/react';
+import { CellSelection, TableMap } from '@tiptap/pm/tables';
 import { closeHistory } from '@tiptap/pm/history';
 import {
   wordRowProperties,
@@ -75,6 +76,104 @@ export function wordSetRowProperties(editor: Editor, patch: Partial<WordRowPrope
     const node = editor.state.doc.nodeAt(row.position)!;
     if (JSON.stringify(wordRowProperties(node.attrs)) !== JSON.stringify(row.properties))
       transaction.setNodeMarkup(row.position, undefined, { ...node.attrs, ...row.properties });
+  }
+  if (!transaction.docChanged) return false;
+  editor.view.dispatch(transaction);
+  return true;
+}
+/** Equalize selected row heights without clipping existing content. */
+export function wordDistributeRows(editor: Editor): boolean {
+  if (editor.isDestroyed || !editor.isEditable || editor.view.composing) return false;
+  const rows = wordSelectedRows(editor);
+  if (rows.length < 2) return false;
+  const surfaceWidth = editor.view.dom.offsetWidth;
+  const scale = surfaceWidth > 0 ? editor.view.dom.getBoundingClientRect().width / surfaceWidth : 1;
+  if (!Number.isFinite(scale) || scale <= 0) return false;
+  const heights = rows.map((row) => {
+    const element = editor.view.nodeDOM(row.position);
+    if (!(element instanceof editor.view.dom.ownerDocument.defaultView!.HTMLElement)) return NaN;
+    // Decorative page gaps are view-only and must never become native row height.
+    const gaps = Array.from(
+      element.querySelectorAll<HTMLElement>('[data-word-auto-page-gap]')
+    ).reduce((sum, gap) => sum + gap.getBoundingClientRect().height, 0);
+    return ((element.getBoundingClientRect().height - gaps) / scale) * 0.75;
+  });
+  if (heights.some((height) => !Number.isFinite(height) || height <= 0 || height > 2000))
+    return false;
+  const allFixed = rows.every((row) => row.properties.rowHeightRule === 'exact');
+  const height = allFixed
+    ? rows.reduce((sum, row) => sum + row.properties.rowHeight!, 0) / rows.length
+    : Math.max(...heights);
+  return wordSetRowProperties(editor, {
+    rowHeight: Math.round(height * 100) / 100,
+    rowHeightRule: allFixed ? 'exact' : 'atLeast',
+  });
+}
+/** Equalize selected columns, or the current table columns for a text caret. */
+export function wordDistributeColumns(editor: Editor): boolean {
+  if (editor.isDestroyed || !editor.isEditable || editor.view.composing) return false;
+  const selection = editor.state.selection;
+  let depth = selection.$from.depth;
+  while (depth > 0 && selection.$from.node(depth).type.name !== 'table') depth--;
+  if (!depth || selection.to > selection.$from.end(depth)) return false;
+  const table = selection.$from.node(depth);
+  const position = selection.$from.before(depth);
+  const map = TableMap.get(table);
+  if (map.width < 2 || map.problems?.length) return false;
+  const element = editor.view.nodeDOM(position) as HTMLElement | null;
+  const surface = element?.matches('table') ? element : element?.querySelector('table');
+  const surfaceWidth = editor.view.dom.offsetWidth;
+  const scale = surfaceWidth > 0 ? editor.view.dom.getBoundingClientRect().width / surfaceWidth : 1;
+  if (!Number.isFinite(scale) || scale <= 0) return false;
+  const nativeWidths: (number | undefined)[] = Array.from({ length: map.width });
+  for (const offset of new Set(map.map)) {
+    const cell = table.nodeAt(offset)!;
+    const rectangle = map.findCell(offset);
+    const widths = cell.attrs.colwidth as number[] | null;
+    if (widths?.length === rectangle.right - rectangle.left)
+      widths.forEach((width, index) => {
+        if (Number.isFinite(width) && width > 0) nativeWidths[rectangle.left + index] = width;
+      });
+  }
+  const complete = nativeWidths.every((width) => width !== undefined);
+  const width = complete
+    ? nativeWidths.reduce<number>((sum, width) => sum + width!, 0)
+    : surface
+      ? surface.getBoundingClientRect().width / scale
+      : undefined;
+  if (!width || !Number.isFinite(width) || width <= 0) return false;
+  const rectangle =
+    selection instanceof CellSelection
+      ? map.rectBetween(
+          selection.$anchorCell.pos - position - 1,
+          selection.$headCell.pos - position - 1
+        )
+      : { left: 0, right: map.width };
+  if (rectangle.right - rectangle.left < 2) return false;
+  // Partial distribution requires known widths for the untouched columns.
+  if (!complete && (rectangle.left !== 0 || rectangle.right !== map.width)) return false;
+  const selectedWidth = complete
+    ? nativeWidths
+        .slice(rectangle.left, rectangle.right)
+        .reduce<number>((sum, value) => sum + value!, 0)
+    : width;
+  const columnWidth = Math.round((selectedWidth / (rectangle.right - rectangle.left)) * 100) / 100;
+  if (columnWidth < 25 || columnWidth > 20000) return false;
+  const transaction = closeHistory(editor.state.tr);
+  // TableMap repeats positions for spans. Each cell must be updated exactly once.
+  for (const offset of new Set(map.map)) {
+    const cell = table.nodeAt(offset);
+    if (!cell) return false;
+    const cellRectangle = map.findCell(offset);
+    if (cellRectangle.right <= rectangle.left || cellRectangle.left >= rectangle.right) continue;
+    const colwidth = Array.from({ length: Number(cell.attrs.colspan) || 1 }, (_, index) => {
+      const column = cellRectangle.left + index;
+      return column >= rectangle.left && column < rectangle.right
+        ? columnWidth
+        : nativeWidths[column]!;
+    });
+    if (JSON.stringify(cell.attrs.colwidth) !== JSON.stringify(colwidth))
+      transaction.setNodeMarkup(position + 1 + offset, undefined, { ...cell.attrs, colwidth });
   }
   if (!transaction.docChanged) return false;
   editor.view.dispatch(transaction);

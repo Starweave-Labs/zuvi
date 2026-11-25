@@ -1,15 +1,331 @@
-import { describe, expect, it } from 'vitest';
-import { Editor } from '@tiptap/react';
+import { describe, expect, it, vi } from 'vitest';
+import { Editor, type JSONContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
+import { undoDepth } from '@tiptap/pm/history';
+import { CellSelection } from '@tiptap/pm/tables';
 import { TableKit } from '@tiptap/extension-table';
 import { wordMergedRowHeight, wordRowCss, wordRowProperties } from './studio-word-table-rows';
 import {
   WordTableRowProperties,
+  wordDistributeRows,
+  wordDistributeColumns,
   wordSelectedRows,
   wordSetRowProperties,
 } from './studio-word-table-row-extension';
 
 describe('Word table row properties', () => {
+  it('rejects distribution during editor composition without changing history or document', () => {
+    const editor = new Editor({
+      extensions: [StarterKit, TableKit, WordTableRowProperties],
+      content: {
+        type: 'doc',
+        content: [
+          {
+            type: 'table',
+            content: [0, 1].map(() => ({
+              type: 'tableRow',
+              content: [80, 160].map((width) => ({
+                type: 'tableCell',
+                attrs: { colwidth: [width] },
+                content: [{ type: 'paragraph', content: [{ type: 'text', text: 'cell' }] }],
+              })),
+            })),
+          },
+        ],
+      },
+    });
+    try {
+      editor.commands.setTextSelection({ from: 4, to: editor.state.doc.content.size - 4 });
+      const before = JSON.stringify(editor.getJSON());
+      const selection = editor.state.selection;
+      const history = undoDepth(editor.state);
+      const composing = vi.spyOn(editor.view, 'composing', 'get').mockReturnValue(true);
+      expect(wordDistributeRows(editor)).toBe(false);
+      expect(wordDistributeColumns(editor)).toBe(false);
+      expect(JSON.stringify(editor.getJSON())).toBe(before);
+      expect(editor.state.selection.eq(selection)).toBe(true);
+      composing.mockRestore();
+      expect(undoDepth(editor.state)).toBe(history);
+    } finally {
+      editor.destroy();
+    }
+  });
+
+  it('updates only selected width slots in a cell spanning across the selection boundary', () => {
+    const paragraph = { type: 'paragraph', content: [{ type: 'text', text: 'cell' }] };
+    const editor = new Editor({
+      extensions: [StarterKit, TableKit, WordTableRowProperties],
+      content: {
+        type: 'doc',
+        content: [
+          {
+            type: 'table',
+            content: [
+              {
+                type: 'tableRow',
+                content: [
+                  { type: 'tableCell', attrs: { colwidth: [80] }, content: [paragraph] },
+                  {
+                    type: 'tableCell',
+                    attrs: { colspan: 2, colwidth: [160, 300] },
+                    content: [paragraph],
+                  },
+                ],
+              },
+              {
+                type: 'tableRow',
+                content: [80, 160, 300].map((width) => ({
+                  type: 'tableCell',
+                  attrs: { colwidth: [width] },
+                  content: [paragraph],
+                })),
+              },
+            ],
+          },
+        ],
+      },
+    });
+    try {
+      const table = editor.state.doc.firstChild!;
+      const first = 2 + table.firstChild!.nodeSize;
+      const second = first + table.child(1).firstChild!.nodeSize;
+      editor.view.dispatch(
+        editor.state.tr.setSelection(CellSelection.create(editor.state.doc, first, second))
+      );
+      expect(wordDistributeColumns(editor)).toBe(true);
+      const rows = (editor.getJSON() as JSONContent).content![0].content!;
+      expect(rows[0].content![0].attrs!.colwidth).toEqual([120]);
+      expect(rows[0].content![1].attrs!.colwidth).toEqual([120, 300]);
+      expect(rows[0].content![1].attrs!.colspan).toBe(2);
+      expect(rows[1].content!.map((cell) => cell.attrs!.colwidth)).toEqual([[120], [120], [300]]);
+    } finally {
+      editor.destroy();
+    }
+  });
+
+  it('equalizes only cell-selected columns and retains the remaining native widths', () => {
+    const editor = new Editor({
+      extensions: [StarterKit, TableKit, WordTableRowProperties],
+      content: {
+        type: 'doc',
+        content: [
+          {
+            type: 'table',
+            content: [0, 1].map(() => ({
+              type: 'tableRow',
+              content: [80, 160, 300].map((width) => ({
+                type: 'tableCell',
+                attrs: { colwidth: [width] },
+                content: [{ type: 'paragraph', content: [{ type: 'text', text: 'cell' }] }],
+              })),
+            })),
+          },
+        ],
+      },
+    });
+    try {
+      const table = editor.state.doc.firstChild!;
+      const first = 2;
+      const second = first + table.firstChild!.firstChild!.nodeSize;
+      editor.view.dispatch(
+        editor.state.tr.setSelection(CellSelection.create(editor.state.doc, first, second))
+      );
+      const original = JSON.stringify(editor.getJSON());
+      expect(wordDistributeColumns(editor)).toBe(true);
+      for (const row of (editor.getJSON() as JSONContent).content![0].content!)
+        expect(row.content!.map((cell) => cell.attrs!.colwidth)).toEqual([[120], [120], [300]]);
+      expect(editor.commands.undo()).toBe(true);
+      expect(JSON.stringify(editor.getJSON())).toBe(original);
+      expect(editor.commands.redo()).toBe(true);
+      editor.view.dispatch(
+        editor.state.tr.setSelection(CellSelection.create(editor.state.doc, first))
+      );
+      const saved = JSON.stringify(editor.getJSON());
+      expect(wordDistributeColumns(editor)).toBe(false);
+      expect(JSON.stringify(editor.getJSON())).toBe(saved);
+    } finally {
+      editor.destroy();
+    }
+  });
+
+  it('isolates nested column distribution and retains vertical merges with stable repeat commands', () => {
+    const paragraph = (text: string) => ({ type: 'paragraph', content: [{ type: 'text', text }] });
+    const inner = {
+      type: 'table',
+      content: [
+        {
+          type: 'tableRow',
+          content: [
+            {
+              type: 'tableCell',
+              attrs: { rowspan: 2, colwidth: [80] },
+              content: [paragraph('merged')],
+            },
+            { type: 'tableCell', attrs: { colwidth: [160] }, content: [paragraph('right')] },
+          ],
+        },
+        {
+          type: 'tableRow',
+          content: [
+            { type: 'tableCell', attrs: { colwidth: [160] }, content: [paragraph('bottom')] },
+          ],
+        },
+      ],
+    };
+    const editor = new Editor({
+      extensions: [StarterKit, TableKit, WordTableRowProperties],
+      content: {
+        type: 'doc',
+        content: [
+          {
+            type: 'table',
+            content: [
+              {
+                type: 'tableRow',
+                content: [
+                  {
+                    type: 'tableCell',
+                    attrs: { colwidth: [400] },
+                    content: [paragraph('outer'), inner],
+                  },
+                  {
+                    type: 'tableCell',
+                    attrs: { colwidth: [200] },
+                    content: [paragraph('outside')],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    });
+    try {
+      let caret = 0;
+      editor.state.doc.descendants((node, position) => {
+        if (node.isText && node.text === 'right') caret = position;
+      });
+      editor.commands.setTextSelection(caret);
+      const original = JSON.stringify(editor.getJSON());
+      expect(wordDistributeColumns(editor)).toBe(true);
+      const outerCells = (editor.getJSON() as JSONContent).content![0].content![0].content!;
+      expect(outerCells.map((cell) => cell.attrs!.colwidth)).toEqual([[400], [200]]);
+      const rows = outerCells[0].content![1].content!;
+      expect(rows[0].content![0].attrs!.rowspan).toBe(2);
+      expect(rows[0].content!.map((cell) => cell.attrs!.colwidth)).toEqual([[120], [120]]);
+      expect(rows[1].content![0].attrs!.colwidth).toEqual([120]);
+      const saved = JSON.stringify(editor.getJSON());
+      expect(wordDistributeColumns(editor)).toBe(false);
+      expect(JSON.stringify(editor.getJSON())).toBe(saved);
+      expect(editor.commands.undo()).toBe(true);
+      expect(JSON.stringify(editor.getJSON())).toBe(original);
+      expect(editor.commands.redo()).toBe(true);
+      expect(JSON.stringify(editor.getJSON())).toBe(saved);
+    } finally {
+      editor.destroy();
+    }
+  });
+
+  it('distributes table columns including merged cells in a single transaction', () => {
+    const paragraph = { type: 'paragraph', content: [{ type: 'text', text: 'cell' }] };
+    const editor = new Editor({
+      extensions: [StarterKit, TableKit, WordTableRowProperties],
+      content: {
+        type: 'doc',
+        content: [
+          {
+            type: 'table',
+            content: [
+              {
+                type: 'tableRow',
+                content: [
+                  {
+                    type: 'tableCell',
+                    attrs: { colspan: 2, colwidth: [100, 200] },
+                    content: [paragraph],
+                  },
+                ],
+              },
+              {
+                type: 'tableRow',
+                content: [100, 200].map((width) => ({
+                  type: 'tableCell',
+                  attrs: { colwidth: [width] },
+                  content: [paragraph],
+                })),
+              },
+            ],
+          },
+        ],
+      },
+    });
+    try {
+      editor.commands.setTextSelection(4);
+      const element = editor.view.nodeDOM(0) as HTMLElement;
+      const table = element.matches('table') ? element : element.querySelector('table')!;
+      table.getBoundingClientRect = () => ({ width: 300 }) as DOMRect;
+      const original = JSON.stringify(editor.getJSON());
+      expect(wordDistributeColumns(editor)).toBe(true);
+      const rows = (editor.getJSON() as JSONContent).content![0].content!;
+      expect(rows[0].content![0].attrs!.colwidth).toEqual([150, 150]);
+      expect(rows[1].content!.map((cell) => cell.attrs!.colwidth)).toEqual([[150], [150]]);
+      expect(rows[0].content![0].attrs!.colspan).toBe(2);
+      expect(editor.commands.undo()).toBe(true);
+      expect(JSON.stringify(editor.getJSON())).toBe(original);
+      expect(editor.commands.redo()).toBe(true);
+      editor.setEditable(false);
+      expect(wordDistributeColumns(editor)).toBe(false);
+    } finally {
+      editor.destroy();
+    }
+  });
+
+  it('distributes fixed row totals in one transaction and preserves independent split policies', () => {
+    const editor = new Editor({
+      extensions: [StarterKit, TableKit, WordTableRowProperties],
+      content: {
+        type: 'doc',
+        content: [
+          {
+            type: 'table',
+            content: [24, 48].map((rowHeight, index) => ({
+              type: 'tableRow',
+              attrs: { rowHeight, rowHeightRule: 'exact', allowSplit: index === 0 },
+              content: [
+                {
+                  type: 'tableCell',
+                  content: [{ type: 'paragraph', content: [{ type: 'text', text: 'row' }] }],
+                },
+              ],
+            })),
+          },
+        ],
+      },
+    });
+    try {
+      editor.commands.setTextSelection({ from: 4, to: 14 });
+      for (const row of wordSelectedRows(editor)) {
+        const element = editor.view.nodeDOM(row.position) as HTMLElement;
+        element.getBoundingClientRect = () =>
+          ({ height: row.properties.rowHeight! / 0.75 }) as DOMRect;
+      }
+      const original = JSON.stringify(editor.getJSON());
+      expect(wordDistributeRows(editor)).toBe(true);
+      expect(wordSelectedRows(editor).map((row) => row.properties.rowHeight)).toEqual([36, 36]);
+      expect(wordSelectedRows(editor).map((row) => row.properties.allowSplit)).toEqual([
+        true,
+        false,
+      ]);
+      expect(editor.commands.undo()).toBe(true);
+      expect(JSON.stringify(editor.getJSON())).toBe(original);
+      expect(editor.commands.redo()).toBe(true);
+      editor.setEditable(false);
+      expect(wordDistributeRows(editor)).toBe(false);
+    } finally {
+      editor.destroy();
+    }
+  });
+
   it('sums only fully fixed merged rows and updates nested cell decorations through history', () => {
     const exact = (rowHeight: number) => ({ rowHeight, rowHeightRule: 'exact' });
     expect(wordMergedRowHeight([exact(24), exact(36)])).toBe(60);
@@ -68,6 +384,57 @@ describe('Word table row properties', () => {
       expect(editor.commands.redo()).toBe(true);
       expect(cell()).toBeNull();
       expect(editor.getText()).toContain('Retained content');
+    } finally {
+      editor.destroy();
+    }
+  });
+  it('uses natural row height without persisting pagination gaps and rejects missing measurement', () => {
+    const editor = new Editor({
+      extensions: [StarterKit, TableKit, WordTableRowProperties],
+      content: {
+        type: 'doc',
+        content: [
+          {
+            type: 'table',
+            content: [0, 1].map(() => ({
+              type: 'tableRow',
+              content: [
+                {
+                  type: 'tableCell',
+                  content: [{ type: 'paragraph', content: [{ type: 'text', text: 'row' }] }],
+                },
+              ],
+            })),
+          },
+        ],
+      },
+    });
+    try {
+      editor.commands.setTextSelection({ from: 4, to: 14 });
+      Object.defineProperty(editor.view.dom, 'offsetWidth', { value: 600, configurable: true });
+      editor.view.dom.getBoundingClientRect = () => ({ width: 300 }) as DOMRect;
+      const rows = wordSelectedRows(editor);
+      rows.forEach((row, index) => {
+        const element = editor.view.nodeDOM(row.position) as HTMLElement;
+        element.getBoundingClientRect = () => ({ height: index === 0 ? 120 : 40 }) as DOMRect;
+        if (index === 0) {
+          const gap = document.createElement('span');
+          gap.dataset.wordAutoPageGap = '1';
+          gap.getBoundingClientRect = () => ({ height: 100 }) as DOMRect;
+          element.append(gap);
+        }
+      });
+      expect(wordDistributeRows(editor)).toBe(true);
+      expect(wordSelectedRows(editor).map((row) => row.properties)).toEqual([
+        { rowHeight: 60, rowHeightRule: 'atLeast', allowSplit: null },
+        { rowHeight: 60, rowHeightRule: 'atLeast', allowSplit: null },
+      ]);
+      editor.commands.undo();
+      const element = editor.view.nodeDOM(rows[1].position) as HTMLElement;
+      element.getBoundingClientRect = () => ({ height: 0 }) as DOMRect;
+      const before = JSON.stringify(editor.getJSON());
+      expect(wordDistributeRows(editor)).toBe(false);
+      expect(JSON.stringify(editor.getJSON())).toBe(before);
     } finally {
       editor.destroy();
     }
