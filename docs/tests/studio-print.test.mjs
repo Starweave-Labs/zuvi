@@ -188,10 +188,11 @@ test('Word prints character spacing and baseline movement without changing point
   const html = new JSDOM(print.createStudioPrintHtml(document)).window.document;
   const spans = html.querySelectorAll('p > span');
   assert.equal(spans[0].style.letterSpacing, '1.2pt');
-  assert.equal(spans[0].style.top, '-2pt');
+  assert.equal(spans[0].style.verticalAlign, '2pt');
+  assert.equal(spans[0].getAttribute('data-word-baselineshift'), '2pt');
   assert.equal(spans[0].style.fontSize, '14pt');
   assert.equal(spans[1].style.letterSpacing, '-0.2pt');
-  assert.equal(spans[1].style.top, '2.5pt');
+  assert.equal(spans[1].style.verticalAlign, '-2.5pt');
   assert.equal(spans[1].style.fontSize, '30pt');
   assert.equal(html.querySelector('p').textContent, 'RaisedLowered');
   document.content.content.push({
@@ -213,7 +214,7 @@ test('Word prints character spacing and baseline movement without changing point
     .querySelectorAll('article p')[1]
     .querySelector('span');
   assert.equal(field.textContent, '1');
-  assert.equal(field.style.top, '-1.5pt');
+  assert.equal(field.style.verticalAlign, '1.5pt');
   assert.equal(field.style.fontSize, '20pt');
 });
 

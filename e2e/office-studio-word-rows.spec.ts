@@ -1281,13 +1281,11 @@ test('merged row resizing updates combined cell height and retains native vertic
   await writeFile(path.join(directory, 'merged-drag-source.docx'), source);
   await page.goto('/#/components/office-studio');
   const load = async (bytes: Buffer, name: string) => {
-    await page
-      .getByLabel('导入文档文件', { exact: true })
-      .setInputFiles({
-        name,
-        mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        buffer: bytes,
-      });
+    await page.getByLabel('导入文档文件', { exact: true }).setInputFiles({
+      name,
+      mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      buffer: bytes,
+    });
     await expect(page.getByRole('textbox', { name: '文档名称', exact: true })).toHaveValue(name);
   };
   await load(source, 'Merged-drag.docx');
@@ -1327,4 +1325,219 @@ test('merged row resizing updates combined cell height and retains native vertic
     await expect(lower).toHaveAttribute('data-word-row-height', '36');
     await expect(body).toContainText('Lower row');
   }
+});
+
+test('multi-cell row fragments keep independent text and aligned page gaps through native reopen', async ({
+  page,
+  context,
+}) => {
+  const directory = path.resolve('docs/audits/2026-11-26/word-cell-fragments');
+  await mkdir(directory, { recursive: true });
+  const paragraph = (name: string, count: number, size: number) =>
+    new Paragraph({
+      spacing: { before: 0, after: 0, line: 240 },
+      children: Array.from(
+        { length: count },
+        (_, i) =>
+          new TextRun({
+            text: `Cell ${name} ${i + 1}`,
+            break: i ? 1 : 0,
+            size,
+            font: 'Arial',
+            position: name === 'A' && i === 0 ? 24 : undefined,
+          })
+      ),
+    });
+  const source = Buffer.from(
+    await Packer.toArrayBuffer(
+      new Document({
+        sections: [
+          {
+            children: [
+              new Table({
+                columnWidths: [4500, 4500],
+                rows: [
+                  new TableRow({
+                    cantSplit: false,
+                    children: [
+                      new TableCell({ children: [paragraph('A', 80, 24)] }),
+                      new TableCell({ children: [paragraph('B', 50, 28)] }),
+                    ],
+                  }),
+                ],
+              }),
+            ],
+          },
+        ],
+      })
+    )
+  );
+  await writeFile(path.join(directory, 'multi-cell-source.docx'), source);
+  await page.addInitScript(() => {
+    window.print = () => {
+      window.parent.postMessage(
+        { type: 'multi-cell-print', html: document.documentElement.outerHTML },
+        '*'
+      );
+      window.dispatchEvent(new Event('afterprint'));
+    };
+  });
+  await page.goto('/#/components/office-studio');
+  const importFile = (name: string, buffer: Buffer) =>
+    page.getByLabel('导入文档文件', { exact: true }).setInputFiles({
+      name,
+      mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      buffer,
+    });
+  await importFile('Multi-cell.docx', source);
+  const body = page.getByRole('textbox', { name: 'Word 文档正文', exact: true });
+  await expect(body).toContainText('Cell A 80');
+  await expect(body).toContainText('Cell B 50');
+  const enablePagination = async () => {
+    await page.getByRole('tab', { name: '视图', exact: true }).click();
+    const toggle = page.getByRole('checkbox', { name: '分页布局', exact: true });
+    if (!(await toggle.isChecked())) await toggle.click();
+    await expect(body).toHaveAttribute('data-word-pagination-overflow', 'false');
+    await expect(body.locator('td').nth(0).locator('[data-word-cell-page-gap]')).not.toHaveCount(0);
+    await expect(body.locator('td').nth(1).locator('[data-word-cell-page-gap]')).not.toHaveCount(0);
+  };
+  await enablePagination();
+  const naturalHeight = Number(
+    await body.locator('tr').getAttribute('data-word-natural-row-height')
+  );
+  expect(naturalHeight).toBeGreaterThan(0);
+  expect((await body.locator('tr').boundingBox())!.height).toBeGreaterThan(naturalHeight);
+  const gaps = await body.evaluate((element) => {
+    const scale = element.getBoundingClientRect().width / (element as HTMLElement).offsetWidth;
+    return Array.from(element.querySelectorAll('td')).map((cell) => {
+      const gap = cell.querySelector('[data-word-cell-page-gap]')!;
+      const rect = gap.getBoundingClientRect();
+      return {
+        top: rect.top,
+        end:
+          rect.top + parseFloat(getComputedStyle(gap).getPropertyValue('--word-gap-start')) * scale,
+      };
+    });
+  });
+  expect(Math.abs(gaps[0].end - gaps[1].end)).toBeLessThan(2);
+  const row = body.locator('tr');
+  await row.evaluate((element) => element.scrollIntoView({ block: 'end' }));
+  const boundary = (await row.boundingBox())!;
+  const dragScale = await body.evaluate(
+    (element) => element.getBoundingClientRect().width / (element as HTMLElement).offsetWidth
+  );
+  const pointerStart = Math.round(boundary.y + boundary.height - 1);
+  const pointerEnd = pointerStart + Math.round(16 * dragScale);
+  await page.mouse.move(boundary.x + 20, pointerStart);
+  await page.mouse.down();
+  await page.mouse.move(boundary.x + 20, pointerEnd, { steps: 4 });
+  const guide = page.locator('[data-word-row-resize-guide]');
+  await expect(guide).toBeVisible();
+  expect(parseFloat((await guide.textContent())!)).toBe(
+    Math.round((naturalHeight * 0.75 + ((pointerEnd - pointerStart) / dragScale) * 0.75) * 2) / 2
+  );
+  await page.keyboard.press('Escape');
+  await page.mouse.up();
+  await expect(guide).toHaveCount(0);
+  await expect(row).not.toHaveAttribute('data-word-row-height');
+  const target = body.locator('td').nth(1).locator('p').first();
+  await target.evaluate((element) => {
+    (element.closest('[contenteditable]') as HTMLElement).focus();
+    const range = document.createRange();
+    range.selectNodeContents(element);
+    range.collapse(false);
+    window.getSelection()!.removeAllRanges();
+    window.getSelection()!.addRange(range);
+    document.dispatchEvent(new Event('selectionchange'));
+  });
+  await expect
+    .poll(() =>
+      body.evaluate((element) => {
+        const editor = (
+          element as HTMLElement & { editor: { state: { selection: { empty: boolean } } } }
+        ).editor;
+        return editor.state.selection.empty;
+      })
+    )
+    .toBe(true);
+  await body.pressSequentially(' edited');
+  await expect(target).toContainText('Cell B 50 edited');
+  await expect(body).toContainText('Cell A 80');
+  await page.getByRole('tab', { name: '开始', exact: true }).click();
+  await page.getByRole('button', { name: '撤销', exact: true }).click();
+  await expect(target).not.toContainText(' edited');
+  await expect(body).toContainText('Cell B 50');
+  await page.getByRole('button', { name: '重做', exact: true }).click();
+  await expect(target).toContainText('Cell B 50 edited');
+  await body.locator('[data-word-cell-page-gap]').first().scrollIntoViewIfNeeded();
+  await page.screenshot({ path: path.join(directory, 'multi-cell-light.png'), fullPage: true });
+  await page.getByRole('button', { name: '切换暗色', exact: true }).click();
+  await page.setViewportSize({ width: 320, height: 720 });
+  await body.locator('[data-word-cell-page-gap]').first().scrollIntoViewIfNeeded();
+  await page.screenshot({ path: path.join(directory, 'multi-cell-dark-320.png'), fullPage: true });
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await body.locator('[data-word-cell-page-gap]').first().scrollIntoViewIfNeeded();
+  await page.screenshot({ path: path.join(directory, 'multi-cell-dark.png'), fullPage: true });
+  await page.getByRole('button', { name: '切换浅色', exact: true }).click();
+  await page.setViewportSize({ width: 320, height: 720 });
+  await body.locator('[data-word-cell-page-gap]').first().scrollIntoViewIfNeeded();
+  await page.screenshot({ path: path.join(directory, 'multi-cell-light-320.png'), fullPage: true });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(321);
+  await page.getByRole('button', { name: '切换暗色', exact: true }).click();
+  for (let pass = 1; pass <= 2; pass++) {
+    const download = page.waitForEvent('download');
+    await page.getByRole('button', { name: '导出文件', exact: true }).click();
+    const bytes = await readFile((await (await download).path())!);
+    await writeFile(path.join(directory, `multi-cell-roundtrip-${pass}.docx`), bytes);
+    const xml = await (await JSZip.loadAsync(bytes)).file('word/document.xml')!.async('string');
+    expect(xml).toContain('Cell A 80');
+    expect(xml).toContain('<w:position w:val="12pt"');
+    expect(xml).toContain('Cell B 50 edited');
+    expect(xml).not.toContain('data-word-cell-page-gap');
+    expect(xml).not.toContain('data-word-natural-row-height');
+    await importFile(`Multi-cell-${pass}.docx`, bytes);
+    await expect(page.getByRole('textbox', { name: '文档名称', exact: true })).toHaveValue(
+      `Multi-cell-${pass}.docx`
+    );
+    await expect(body).toContainText('Cell A 80');
+    await enablePagination();
+    await expect(body).toContainText('Cell B 50 edited');
+  }
+  await page.getByRole('switch', { name: '只读预览', exact: true }).click();
+  const readonlyText = await body.textContent();
+  await body.pressSequentially('blocked');
+  expect(await body.textContent()).toBe(readonlyText);
+  await page.evaluate(() =>
+    window.addEventListener('message', (event) => {
+      if (event.data?.type === 'multi-cell-print')
+        (window as Window & { multiCellPrint?: string }).multiCellPrint = event.data.html;
+    })
+  );
+  await page.getByRole('button', { name: '打印', exact: true }).click();
+  await expect
+    .poll(() =>
+      page.evaluate(() => (window as Window & { multiCellPrint?: string }).multiCellPrint)
+    )
+    .toBeTruthy();
+  const preview = await context.newPage();
+  await preview.setContent(
+    await page.evaluate(() => (window as Window & { multiCellPrint?: string }).multiCellPrint!)
+  );
+  await preview.evaluate(() => document.fonts.ready);
+  await expect(preview.locator('body')).toContainText('Cell A 80');
+  await expect(preview.locator('body')).toContainText('Cell B 50 edited');
+  const pdf = await preview.pdf({
+    path: path.join(directory, 'multi-cell-print.pdf'),
+    preferCSSPageSize: true,
+    printBackground: true,
+  });
+  const printedPages = (await PDFDocument.load(pdf)).getPageCount();
+  const editorPages = Number(await body.getAttribute('data-word-page-count'));
+  expect(printedPages).toBe(editorPages);
+  expect(printedPages).toBeGreaterThan(1);
+  await writeFile(
+    path.join(directory, 'multi-cell-evidence.json'),
+    JSON.stringify({ gaps, editorPages, printedPages }, null, 2)
+  );
+  await preview.close();
 });

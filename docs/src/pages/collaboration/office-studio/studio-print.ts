@@ -154,7 +154,7 @@ function rich(
       const styles: string[] = [];
       const metric = wordMetricCss(attrs);
       if (metric.letterSpacing) styles.push(`letter-spacing:${metric.letterSpacing}`);
-      if (metric.top) styles.push(`position:relative;top:${metric.top}`);
+      if (metric.verticalAlign) styles.push(`vertical-align:${metric.verticalAlign};--zuvi-word-baseline-shift:${metric['--zuvi-word-baseline-shift']}`);
       if (color(attrs.color)) styles.push(`color:${color(attrs.color)}`);
       if (color(attrs.backgroundColor))
         styles.push(`background-color:${color(attrs.backgroundColor)}`);
@@ -170,7 +170,9 @@ function rich(
         parseFloat(attrs.fontSize) <= 480
       )
         styles.push(`font-size:${attrs.fontSize}`);
-      if (styles.length) text = `<span style="${styles.join(';')}">${text}</span>`;
+      const baseline = metric.verticalAlign
+        ? ` data-word-baselineshift="${metric['--zuvi-word-baseline-shift']}"` : '';
+      if (styles.length) text = `<span${baseline} style="${styles.join(';')}">${text}</span>`;
     } else if (mark.type === 'link') {
       const href = mark.attrs?.href;
       if (typeof href === 'string' && /^(?:https?:\/\/|mailto:)/i.test(href))
@@ -602,6 +604,7 @@ export function createStudioPrintHtml(document: OfficeStudioDocument): string {
   return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; style-src 'unsafe-inline'; base-uri 'none'"><title>${escape(document.name)}</title><style>
 @page{size:${paper};margin:${margin}mm}*{box-sizing:border-box}body{margin:0;color:#253044;background:white;font:12pt/1.6 "Microsoft YaHei","Noto Sans SC",Arial,sans-serif}h1,h2,h3,h4,h5,h6{line-height:1.3;break-after:avoid}h1{font-size:25pt}h2{font-size:19pt}p{margin:0 0 8pt}table{border-collapse:collapse;width:100%;font-size:10pt;table-layout:fixed}td,th{border:1px solid #b8c2bc;padding:5pt;overflow-wrap:anywhere;vertical-align:top}th{background:#edf3ee;text-align:left}tr{break-inside:avoid}img{max-width:100%;height:auto;vertical-align:middle}blockquote{margin:10pt 0;padding-left:12pt;border-left:3px solid #90a59a}a{color:inherit}header,footer{font-size:9pt;color:#5a6c61}header{margin-bottom:12pt}footer{margin-top:14pt}.studio-print-page,.studio-print-sheet{break-after:page}.studio-print-page:last-child,.studio-print-sheet:last-child{break-after:auto}.studio-print-break{break-before:page}.studio-print-number{text-align:center}.studio-print-chart{margin:18pt 0;break-inside:avoid}.studio-print-chart svg{width:100%;max-height:240pt}.studio-print-chart figcaption{font-weight:700}.studio-print-chart p{font-size:9pt}[data-word-line-rule="exact"] :is(span,strong,em,u,s,a){line-height:inherit;vertical-align:top}[data-word-line-rule="atLeast"] :is(span,strong,em,u,s,a){line-height:max(var(--zuvi-word-min-line),1.2em)}body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 ${document.kind === 'excel' ? '.studio-print-sheet table{font-family:Calibri,Arial,sans-serif;font-size:11pt;line-height:1.15}.studio-print-sheet td{padding:2px 5px;vertical-align:middle}.studio-print-cell{overflow:hidden}' : ''}
+[data-word-line-rule="exact"] [data-word-baselineshift]{vertical-align:top!important;position:relative;top:calc(-1 * var(--zuvi-word-baseline-shift,0pt))}
 header:empty,footer:empty{display:none}thead{display:table-header-group}
 tr[data-word-row-height-rule="exact"][data-word-row-height]>:is(td,th):not([rowspan]:not([rowspan="1"])),:is(td,th)[data-word-fixed-cell-height]{padding-block:0}tr[data-word-row-height-rule="exact"][data-word-row-height]>:is(td,th):not([rowspan]:not([rowspan="1"]))>[data-word-cell-content],:is(td,th)[data-word-fixed-cell-height]>[data-word-cell-content]{box-sizing:border-box;height:max(0px,calc(var(--zuvi-word-cell-height,var(--zuvi-word-row-height)) - 1px));padding-block:max(0px,min(5pt,calc((var(--zuvi-word-cell-height,var(--zuvi-word-row-height)) - 1px)/2)));overflow:hidden}
 ${document.kind === 'word' ? '.studio-print-page{position:relative;isolation:isolate;min-height:50mm}.studio-print-page p,.studio-print-page h1,.studio-print-page h2,.studio-print-page h3,.studio-print-page h4,.studio-print-page h5,.studio-print-page h6{position:relative;white-space:pre-wrap}.studio-print-image-anchor{display:inline-block;position:relative;width:0;height:0}.studio-print-page-picture{position:absolute;inset:0;pointer-events:none}' : ''}

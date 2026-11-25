@@ -104,13 +104,11 @@ test('character metrics preserve native typography, zero overrides, caret input,
   await writeFile(path.join(audit, 'metrics-source.docx'), source);
   await page.goto('/#/components/office-studio');
   const importFile = (name: string, buffer: Buffer) =>
-    page
-      .getByLabel('导入文档文件', { exact: true })
-      .setInputFiles({
-        name,
-        mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        buffer,
-      });
+    page.getByLabel('导入文档文件', { exact: true }).setInputFiles({
+      name,
+      mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      buffer,
+    });
   await importFile('Metrics.docx', source);
   const body = page.getByRole('textbox', { name: 'Word 文档正文', exact: true });
   const mixed = body.locator('p').filter({ hasText: 'A 中😀B' });
@@ -236,4 +234,153 @@ test('character metrics preserve native typography, zero overrides, caret input,
   }
   await page.getByRole('switch', { name: '只读预览', exact: true }).click();
   await expect(page.getByRole('button', { name: '字符间距与位置', exact: true })).toBeDisabled();
+});
+
+test('baseline shifts expand automatic line boxes while exact line rules retain fixed height through DOCX reopening', async ({
+  page,
+}) => {
+  const directory = path.resolve('docs/audits/2026-11-26/word-baseline-line-rules');
+  await mkdir(directory, { recursive: true });
+  const source = Buffer.from(
+    await Packer.toArrayBuffer(
+      new Document({
+        sections: [
+          {
+            children: [
+              new Paragraph({
+                spacing: { before: 0, after: 0, line: 240, lineRule: 'auto' },
+                children: [
+                  new TextRun({ text: 'Raised auto', font: 'Arial', size: 24, position: '12pt' }),
+                  new TextRun({ text: ' Base auto', font: 'Arial', size: 24 }),
+                ],
+              }),
+              new Paragraph({
+                spacing: { before: 400, after: 0, line: 240, lineRule: 'exact' },
+                children: [
+                  new TextRun({ text: 'Raised exact', font: 'Arial', size: 24, position: '12pt' }),
+                  new TextRun({ text: ' Base exact', font: 'Arial', size: 24 }),
+                ],
+              }),
+              new Paragraph({
+                spacing: { before: 400, after: 0, line: 240, lineRule: 'auto' },
+                children: [
+                  new TextRun({
+                    text: 'Raised reference',
+                    font: 'Arial',
+                    size: 24,
+                    position: '0pt',
+                  }),
+                  new TextRun({ text: ' Base reference', font: 'Arial', size: 24 }),
+                ],
+              }),
+              new Paragraph({
+                spacing: { before: 400, after: 0, line: 240, lineRule: 'auto' },
+                children: [
+                  new TextRun({ text: 'Lowered auto', font: 'Arial', size: 24, position: '-12pt' }),
+                  new TextRun({ text: ' Base lowered', font: 'Arial', size: 24 }),
+                ],
+              }),
+              new Paragraph({
+                spacing: { before: 400, after: 0, line: 240, lineRule: 'atLeast' },
+                children: [
+                  new TextRun({
+                    text: 'Raised minimum',
+                    font: 'Arial',
+                    size: 24,
+                    position: '12pt',
+                  }),
+                  new TextRun({ text: ' Base minimum', font: 'Arial', size: 24 }),
+                ],
+              }),
+            ],
+          },
+        ],
+      })
+    )
+  );
+  await writeFile(path.join(directory, 'baseline-line-rules-source.docx'), source);
+  await page.goto('/#/components/office-studio');
+  const importFile = (name: string, buffer: Buffer) =>
+    page.getByLabel('导入文档文件', { exact: true }).setInputFiles({
+      name,
+      mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      buffer,
+    });
+  await importFile('Baseline line rules.docx', source);
+  const body = page.getByRole('textbox', { name: 'Word 文档正文', exact: true });
+  const automatic = body.locator('p').filter({ hasText: 'Raised auto' });
+  const exact = body.locator('p').filter({ hasText: 'Raised exact' });
+  const measurements = [];
+  for (let pass = 0; pass <= 2; pass++) {
+    await expect(automatic).toHaveAttribute('data-word-line-rule', 'auto');
+    await expect(exact).toHaveAttribute('data-word-line-rule', 'exact');
+    const geometry = await body.evaluate((element) => {
+      const paragraphs = element.querySelectorAll('p');
+      const scale = element.getBoundingClientRect().width / (element as HTMLElement).offsetWidth;
+      return Array.from(paragraphs).map((p) => {
+        const span = p.querySelector('[data-word-baselineshift]') ?? p.querySelector('span')!;
+        const rect = p.getBoundingClientRect();
+        const style = getComputedStyle(span);
+        return {
+          baseGlyphTop: (p.lastElementChild!.getBoundingClientRect().top - rect.top) / scale,
+          glyphHeight: span.getBoundingClientRect().height / scale,
+          fontSize: Number.parseFloat(style.fontSize),
+          height: rect.height / scale,
+          glyphTop: (span.getBoundingClientRect().top - rect.top) / scale,
+          position: style.position,
+          top: style.top,
+          align: style.verticalAlign,
+        };
+      });
+    });
+    expect(geometry[0].height).toBeGreaterThan(geometry[1].height);
+    // Inline glyph boxes include font bearings; the paragraph's inherited strut can
+    // differ from Arial's box. Compare the two runs in the same line instead.
+    expect(geometry[0].baseGlyphTop - geometry[0].glyphTop).toBeCloseTo(16, 0);
+    expect(geometry[0].height).toBeCloseTo(geometry[0].fontSize + 16, 0);
+    expect(geometry[0].glyphTop + geometry[0].glyphHeight).toBeLessThan(geometry[0].height);
+    expect(geometry[1].glyphTop - geometry[1].baseGlyphTop).toBeCloseTo(-16, 0);
+    expect(geometry[0].glyphTop - geometry[1].glyphTop).toBeCloseTo(16, 0);
+    expect(geometry[2].baseGlyphTop - geometry[2].glyphTop).toBeCloseTo(0, 0);
+    expect(geometry[1].height).toBeCloseTo(16, 0);
+    expect(geometry[1].glyphTop).toBeLessThan(0);
+    expect(geometry[1].position).toBe('relative');
+    expect(geometry[1].align).toBe('top');
+    expect(geometry[3].glyphTop - geometry[3].baseGlyphTop).toBeCloseTo(16, 0);
+    expect(geometry[3].height).toBeGreaterThan(geometry[2].height);
+    expect(geometry[4].baseGlyphTop - geometry[4].glyphTop).toBeCloseTo(16, 0);
+    expect(geometry[4].height).toBeGreaterThan(geometry[2].height);
+    measurements.push(geometry);
+    if (pass === 2) break;
+    const pending = page.waitForEvent('download');
+    await page.getByRole('button', { name: '导出文件', exact: true }).click();
+    const bytes = await readFile((await (await pending).path())!);
+    await writeFile(path.join(directory, `baseline-line-rules-roundtrip-${pass + 1}.docx`), bytes);
+    const xml = await (await JSZip.loadAsync(bytes)).file('word/document.xml')!.async('string');
+    expect(xml).toContain('w:lineRule="exact"');
+    expect(xml.match(/w:position w:val="12pt"/g)).toHaveLength(3);
+    expect(xml).toContain('w:position w:val="-12pt"');
+    expect(xml).toContain('w:lineRule="atLeast"');
+    expect(xml).toContain('w:position w:val="0pt"');
+    await importFile(`Baseline-reopened-${pass + 1}.docx`, bytes);
+    await expect(page.getByRole('textbox', { name: '文档名称', exact: true })).toHaveValue(
+      `Baseline-reopened-${pass + 1}.docx`
+    );
+  }
+  await body.scrollIntoViewIfNeeded();
+  await page.screenshot({
+    path: path.join(directory, 'baseline-line-rules-light.png'),
+    fullPage: true,
+  });
+  await page.getByRole('button', { name: '切换暗色', exact: true }).click();
+  await page.setViewportSize({ width: 320, height: 720 });
+  await body.scrollIntoViewIfNeeded();
+  await page.screenshot({
+    path: path.join(directory, 'baseline-line-rules-dark-320.png'),
+    fullPage: true,
+  });
+  await writeFile(
+    path.join(directory, 'baseline-line-rules-evidence.json'),
+    JSON.stringify(measurements, null, 2)
+  );
 });

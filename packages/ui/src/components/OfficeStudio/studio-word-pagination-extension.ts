@@ -1,7 +1,13 @@
 import { Extension, type Editor } from '@tiptap/react';
 import { Plugin, PluginKey } from '@tiptap/pm/state';
 import { Decoration, DecorationSet } from '@tiptap/pm/view';
-import { wordPaginate, type WordLayoutBlock, type WordPagination } from './studio-word-pagination';
+import {
+  wordPaginate,
+  type WordLayoutBlock,
+  type WordPagination,
+  type WordPageBreak,
+} from './studio-word-pagination';
+import type { WordCellFragmentMeasure, WordCellLineFragment } from './studio-word-table-fragments';
 import { effectiveParagraph } from './studio-word-paragraph-layout';
 const key = new PluginKey<{ layout: WordPagination | null }>('studioWordPagination');
 export interface WordPaginationOptions {
@@ -23,6 +29,68 @@ export function wordSetPagination(editor: Editor, options: WordPaginationOptions
     editor.state.tr.setMeta('wordPaginationOptions', options).setMeta('addToHistory', false)
   );
 }
+export function wordMeasureCellLines(
+  content: HTMLElement,
+  from: number,
+  top: number
+): WordCellLineFragment[] {
+  const doc = content.ownerDocument;
+  const lines: WordCellLineFragment[] = [];
+  const walker = doc.createTreeWalker(content, 5);
+  let position = from;
+  let hardBreak = false;
+  let previousLeft = 0,
+    previousRight = 0;
+  const rtl = doc.defaultView!.getComputedStyle(content).direction === 'rtl';
+  while (walker.nextNode()) {
+    const current = walker.currentNode;
+    if (current.nodeType === 1) {
+      if ((current as HTMLElement).matches('br:not(.ProseMirror-trailingBreak)')) {
+        position++;
+        hardBreak = true;
+      }
+      continue;
+    }
+    const text = current as Text;
+    let shift = 0;
+    for (
+      let parent = text.parentElement;
+      parent && parent !== content;
+      parent = parent.parentElement
+    ) {
+      const style = doc.defaultView!.getComputedStyle(parent);
+      if (style.position === 'relative') shift += parseFloat(style.top) || 0;
+    }
+    for (let offset = 0; offset < text.length; offset++) {
+      const range = doc.createRange();
+      range.setStart(text, offset);
+      range.setEnd(text, offset + 1);
+      const rect = range.getBoundingClientRect();
+      if (rect.height > 0) {
+        const previous = lines.at(-1);
+        const y = rect.top - top - shift;
+        const bottom = rect.bottom - top - shift;
+        const wrapped =
+          previous &&
+          y > previous.top + 1 &&
+          (rtl ? rect.right > previousRight + 1 : rect.left < previousLeft - 1);
+        const advances = rtl ? rect.right < previousRight - 1 : rect.left > previousLeft + 1;
+        const overlaps = previous && y < previous.bottom && bottom > previous.top;
+        if (previous && !hardBreak && !wrapped && (overlaps || advances)) {
+          previous.top = Math.min(previous.top, y);
+          previous.to = position + 1;
+          previous.bottom = Math.max(previous.bottom, bottom);
+        } else lines.push({ from: position, to: position + 1, top: y, bottom });
+        hardBreak = false;
+        previousLeft = rect.left;
+        previousRight = rect.right;
+      }
+      position++;
+    }
+  }
+  return lines;
+}
+
 function measure(editor: Editor): WordLayoutBlock[] {
   const doc = editor.view.dom.ownerDocument,
     win = doc.defaultView!,
@@ -159,7 +227,45 @@ function measure(editor: Editor): WordLayoutBlock[] {
           });
           const rowHeight = Math.max(1, rows[index].getBoundingClientRect().height);
           const previous = block.lines.at(-1);
-          if (rowPosition === rowFrom) {
+          const multiCell =
+            !repeatable &&
+            index >= headerCount &&
+            groupEnd <= index + 1 &&
+            row.attrs.allowSplit !== false &&
+            row.attrs.rowHeightRule !== 'exact' &&
+            row.childCount > 1 &&
+            Array.from({ length: row.childCount }, (_, i) => row.child(i)).every(
+              (cell) =>
+                Number(cell.attrs.rowspan ?? 1) === 1 &&
+                cell.childCount === 1 &&
+                cell.firstChild?.type.name === 'paragraph' &&
+                Array.from({ length: cell.firstChild.childCount }, (_, i) =>
+                  cell.firstChild!.child(i)
+                ).every((inline) => inline.isText || inline.type.name === 'hardBreak')
+            );
+          if (rowPosition === rowFrom && multiCell) {
+            const rowRect = rows[index].getBoundingClientRect();
+            const elements = rows[index].querySelectorAll<HTMLElement>(':scope > td,:scope > th');
+            const cells: WordCellFragmentMeasure[] = [];
+            row.forEach((cell, offset, cellIndex) => {
+              const from = rowFrom + offset + 3;
+              const content = elements[cellIndex]?.querySelector<HTMLElement>(
+                '[data-word-cell-content] > p'
+              );
+              if (content)
+                cells.push({
+                  from,
+                  to: rowFrom + offset + cell.nodeSize - 1,
+                  lines: wordMeasureCellLines(content, from, rowRect.top),
+                });
+            });
+            block.lines.push({
+              from: rowFrom,
+              to: rowTo,
+              height: rowHeight,
+              ...(cells.length === row.childCount ? { cells } : {}),
+            });
+          } else if (rowPosition === rowFrom) {
             // A single unmerged cell can carry editable line fragments directly. Other
             // row geometries retain their merge group until synchronized cell fragments exist.
             const cell = row.firstChild;
@@ -328,6 +434,19 @@ function markers(
     if (old) old.last = entry.page + 1;
     else ranges.set(entry.block, { first: entry.page + 1, last: entry.page + 1 });
   }
+  const rowHeights = new Map<number, number>();
+  for (const placement of layout?.placements ?? [])
+    if (placement.rowFrom !== undefined && placement.naturalRowHeight !== undefined)
+      rowHeights.set(placement.rowFrom, placement.naturalRowHeight);
+  for (const [position, height] of rowHeights) {
+    const row = document.nodeAt(position);
+    if (row?.type.name === 'tableRow')
+      decorations.push(
+        Decoration.node(position, position + row.nodeSize, {
+          'data-word-natural-row-height': String(height),
+        })
+      );
+  }
   const starts = new Map<number, number>();
   for (const entry of layout?.placements ?? [])
     if (!starts.has(entry.block)) starts.set(entry.block, entry.from);
@@ -352,8 +471,21 @@ function markers(
       return false;
     }
   });
-  for (const boundary of layout?.breaks ?? []) {
-    const size = boundary.remaining + options.margin * 2 + options.gap;
+  const boundaries = (layout?.breaks ?? []).flatMap<
+    WordPageBreak & { cellPadding?: number; cellIndex?: number }
+  >((boundary) =>
+    boundary.cellBreaks
+      ? boundary.cellBreaks.map((cell, cellIndex) => ({
+          ...boundary,
+          position: cell.position,
+          cellPadding: cell.padding,
+          cellIndex,
+        }))
+      : [{ ...boundary, cellPadding: undefined, cellIndex: undefined }]
+  );
+  for (const boundary of boundaries) {
+    const size =
+      boundary.remaining + options.margin * 2 + options.gap + (boundary.cellPadding ?? 0);
     const parent = document.resolve(boundary.position).parent;
     const tableBoundary = parent.type.name === 'table';
     decorations.push(
@@ -366,6 +498,27 @@ function markers(
           span.contentEditable = 'false';
           span.className = 'zuvi-studio-word-page-gap';
           span.style.cssText = `display:block;height:${size}px;pointer-events:none;user-select:none;line-height:0;--word-gap-start:${boundary.remaining + options.margin}px;--word-gap-end:${boundary.remaining + options.margin + options.gap}px;--word-gap-margin:${options.margin}px;`;
+          if (boundary.cellPadding !== undefined) {
+            span.dataset.wordCellPageGap = 'true';
+            if (boundary.cellIndex === 0) {
+              span.dataset.wordCellPageLabel = 'true';
+              const node = editor.view.domAtPos(boundary.position).node;
+              const element = node.nodeType === 1 ? (node as HTMLElement) : node.parentElement;
+              const paragraph = element?.closest('p');
+              const surface = editor.view.dom.getBoundingClientRect();
+              const scale = surface.width / editor.view.dom.offsetWidth;
+              const left =
+                paragraph && scale > 0
+                  ? (paragraph.getBoundingClientRect().left - surface.left) / scale
+                  : 0;
+              span.style.setProperty('--word-table-gap-left', `${-options.margin - left}px`);
+              span.style.setProperty(
+                '--word-table-gap-width',
+                `${editor.view.dom.offsetWidth + options.margin * 2}px`
+              );
+            }
+            span.style.cssText += `width:100%;margin-inline-start:0;background:none;--word-gap-start:${(boundary.cellPadding ?? 0) + boundary.remaining + options.margin}px;--word-gap-end:${(boundary.cellPadding ?? 0) + boundary.remaining + options.margin + options.gap}px;`;
+          }
           if (tableBoundary) {
             const row = editor.view.dom.ownerDocument.createElement('tr');
             row.dataset.wordAutoPageRow = String(boundary.page);
@@ -431,7 +584,7 @@ function markers(
         {
           side: -1,
           ignoreSelection: true,
-          key: `page:${boundary.page}:${boundary.position}:${size}:${boundary.continuationBefore ?? 0}`,
+          key: `page:${boundary.page}:${boundary.position}:${size}:${boundary.continuationBefore ?? 0}:${boundary.cellIndex ?? -1}`,
         }
       )
     );

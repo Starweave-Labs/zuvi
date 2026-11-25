@@ -37,7 +37,7 @@
 | W025 | 行高列宽与分布 | 部分实现 | 行高自动/最小/固定入口、混合/事务/取消/只读/IME、两次DOCX重开及固定裁切实际分页/打印；既有列宽读写拖动；平均行/全列/所选列、合并边界及嵌套原生往返、自然行默认间距修复已验证 | 行高拖动预览/取消/历史与合并两次DOCX切片通过；极小超高/超宽复杂布局/跨页拖动/完整键盘IME浏览器矩阵未闭环 | `docs/audits/2026-11-26/word-row-properties/` |
 | W026 | 单元格对齐与边距 | 部分实现 | 单元格内正文可水平对齐 | 缺九宫格垂直对齐、间距和内边距模型/入口 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W027 | 跨页重复标题行 | 部分实现 | 编辑器重复表头预留页高，打印thead；表头编辑/历史/两次DOCX重开/只读/明暗320px | 跨纵向合并、多行超高表头及全部复杂布局仍待验收 | `docs/audits/2026-11-26/word-table-pagination/` |
-| W028 | 表格跨页与环绕 | 部分实现 | 行/合并组分页及重复表头；跨页标记入口/历史/原生cantSplit两次重开，固定行高参与测量/打印；单单元格文字段落80行分3页，策略编辑/撤销重做/DOCX重开通过 | 多列/合并/多段落/图片及重复表头的行内同步分片、复杂布局和浮动定位/环绕仍缺失 | `studio-word-pagination-extension.ts`；`docs/audits/2026-11-26/word-row-properties/`；`docs/audits/2026-11-26/word-table-pagination/` |
+| W028 | 表格跨页与环绕 | 部分实现 | 行/合并组分页及重复表头；跨页标记入口/历史/原生cantSplit两次重开，固定行高参与测量/打印；单单元格文字段落80行分3页；双列80/50行独立分片、编辑/历史/只读/两次DOCX重开、明暗320px及打印2页全文切片通过 | 通用多列/合并/多段落/图片及重复表头的行内同步分片、复杂布局和浮动定位/环绕仍缺失 | `studio-word-pagination-extension.ts`；`docs/audits/2026-11-26/word-row-properties/`；`docs/audits/2026-11-26/word-table-pagination/` |
 | W029 | 文本与表格互转 | 未实现 | 有独立文字和表格节点 | 缺双向转换、分隔符预览及原生保存 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W030 | 表格公式 | 未实现 | Word 域仅支持页码 | 缺表格引用公式与域刷新；未知域拒绝 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W031 | 内嵌图片插入与尺寸 | 部分实现 | 内嵌图片导入/插入、比例尺寸、删除和保存 | 缺完整替换图片入口及其历史/文件验证 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |

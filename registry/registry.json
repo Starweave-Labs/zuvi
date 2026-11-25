@@ -2075,6 +2075,7 @@
         "packages/ui/src/components/OfficeStudio/studio-word-surface.ts",
         "packages/ui/src/components/OfficeStudio/studio-word-tab-extension.ts",
         "packages/ui/src/components/OfficeStudio/studio-word-table-cell.ts",
+        "packages/ui/src/components/OfficeStudio/studio-word-table-fragments.ts",
         "packages/ui/src/components/OfficeStudio/studio-word-table-row-extension.ts",
         "packages/ui/src/components/OfficeStudio/studio-word-table-rows.ts",
         "packages/ui/src/components/OfficeStudio/studio-word-tabs-dom.ts",

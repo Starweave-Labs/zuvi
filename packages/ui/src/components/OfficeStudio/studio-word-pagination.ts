@@ -1,7 +1,13 @@
+import {
+  wordPaginateTableCells,
+  wordValidateCellFragmentMeasures,
+  type WordCellFragmentMeasure,
+} from './studio-word-table-fragments';
 export interface WordLayoutLine {
   from: number;
   to: number;
   height: number;
+  cells?: readonly WordCellFragmentMeasure[];
 }
 export interface WordLayoutBlock {
   from: number;
@@ -23,6 +29,8 @@ export interface WordPagePlacement {
   height: number;
   block: number;
   line: number;
+  rowFrom?: number;
+  naturalRowHeight?: number;
 }
 export interface WordPageBreak {
   position: number;
@@ -30,6 +38,7 @@ export interface WordPageBreak {
   remaining: number;
   block: boolean;
   continuationBefore?: number;
+  cellBreaks?: { position: number; padding: number }[];
 }
 export interface WordPagination {
   placements: WordPagePlacement[];
@@ -61,6 +70,12 @@ export function wordPaginate(blocks: readonly WordLayoutBlock[], height: number)
       )
     )
       throw new Error('分页测量数据无效。');
+    for (const line of block.lines)
+      if (line.cells) {
+        wordValidateCellFragmentMeasures(line.cells, line.height);
+        if (line.cells.some((cell) => cell.from < line.from || cell.to > line.to))
+          throw new Error('单元格分页位置越界。');
+      }
   }
   const result: WordPagination = { placements: [], breaks: [], pages: 1, overflow: false };
   let page = 0,
@@ -102,10 +117,46 @@ export function wordPaginate(blocks: readonly WordLayoutBlock[], height: number)
     y += page === 0 || y > 0 ? (block.before ?? 0) : 0;
     let line = 0;
     while (line < block.lines.length) {
+      const row = block.lines[line];
+      if (row.cells) {
+        const pages = wordPaginateTableCells(
+          row.cells,
+          row.height,
+          height,
+          Math.max(0, height - y)
+        );
+        if (pages.startOnNextPage) next(row.from, line === 0);
+        pages.pages.forEach((fragment, fragmentIndex) => {
+          if (fragmentIndex > 0) {
+            const previous = pages.pages[fragmentIndex - 1];
+            next(fragment.cells[0].from, false);
+            result.breaks.at(-1)!.cellBreaks = fragment.cells.map((cell, index) => ({
+              position: cell.from,
+              padding: Math.max(0, previous.height - previous.cells[index].advance),
+            }));
+          }
+          result.placements.push({
+            from: row.from,
+            to: row.to,
+            page,
+            top: y,
+            height: fragment.height,
+            block: index,
+            line,
+            rowFrom: row.from,
+            naturalRowHeight: row.height,
+          });
+          result.overflow ||= fragment.overflow;
+          y += fragment.height;
+        });
+        line++;
+        continue;
+      }
       let count = 0,
         used = 0;
       while (
         line + count < block.lines.length &&
+        !block.lines[line + count].cells &&
         y + used + block.lines[line + count].height <= height + 0.01
       ) {
         used += block.lines[line + count].height;
@@ -147,7 +198,7 @@ export function wordPaginate(blocks: readonly WordLayoutBlock[], height: number)
         y += measured.height;
       }
       line += count;
-      if (line < block.lines.length) {
+      if (line < block.lines.length && !block.lines[line].cells) {
         next(block.lines[line].from, false);
         const repeated = block.continuationBefore ?? 0;
         if (repeated > 0 && repeated + block.lines[line].height <= height) {

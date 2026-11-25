@@ -42,12 +42,15 @@ describe('Word table row properties', () => {
     try {
       editor.commands.setTextSelection(4);
       const row = editor.view.nodeDOM(1) as HTMLElement;
+      row.dataset.wordNaturalRowHeight = '32';
       row.getBoundingClientRect = () =>
-        ({ top: 0, bottom: 32, height: 32, left: 0, width: 300 }) as DOMRect;
+        ({ top: 0, bottom: 128, height: 128, left: 0, width: 300 }) as DOMRect;
       const start = () =>
-        row.dispatchEvent(new MouseEvent('pointerdown', { bubbles: true, button: 0, clientY: 31 }));
+        row.dispatchEvent(
+          new MouseEvent('pointerdown', { bubbles: true, button: 0, clientY: 127 })
+        );
       start();
-      expect(document.querySelector('[data-word-row-resize-guide]')).not.toBeNull();
+      expect(document.querySelector('[data-word-row-resize-guide]')?.textContent).toBe('24.0 磅');
       editor.view.dispatch(editor.state.tr.insertText('changed', 4));
       expect(document.querySelector('[data-word-row-resize-guide]')).toBeNull();
       document.dispatchEvent(new MouseEvent('pointerup', { bubbles: true, clientY: 63 }));
@@ -613,4 +616,48 @@ describe('Word table row properties', () => {
       editor.destroy();
     }
   });
+});
+
+it('distributes original pagination row sizes instead of summing independent column gaps', () => {
+  const editor = new Editor({
+    extensions: [StarterKit, TableKit, WordTableRowProperties],
+    content: {
+      type: 'doc',
+      content: [
+        {
+          type: 'table',
+          content: [0, 1].map(() => ({
+            type: 'tableRow',
+            attrs: { rowHeightRule: 'auto' },
+            content: [
+              {
+                type: 'tableCell',
+                content: [{ type: 'paragraph', content: [{ type: 'text', text: 'row' }] }],
+              },
+            ],
+          })),
+        },
+      ],
+    },
+  });
+  try {
+    editor.commands.setTextSelection({ from: 4, to: 14 });
+    Object.defineProperty(editor.view.dom, 'offsetWidth', { configurable: true, value: 400 });
+    editor.view.dom.getBoundingClientRect = () => ({ width: 200 }) as DOMRect;
+    wordSelectedRows(editor).forEach((row, index) => {
+      const element = editor.view.nodeDOM(row.position) as HTMLElement;
+      element.dataset.wordNaturalRowHeight = String(index ? 120 : 80);
+      element.getBoundingClientRect = () => ({ height: index ? 600 : 500 }) as DOMRect;
+    });
+    const original = JSON.stringify(editor.getJSON());
+    expect(wordDistributeRows(editor)).toBe(true);
+    expect(wordSelectedRows(editor).map((row) => row.properties.rowHeight)).toEqual([90, 90]);
+    expect(JSON.stringify(editor.getJSON())).not.toContain('wordNaturalRowHeight');
+    expect(editor.commands.undo()).toBe(true);
+    expect(JSON.stringify(editor.getJSON())).toBe(original);
+    expect(editor.commands.redo()).toBe(true);
+    expect(wordSelectedRows(editor).map((row) => row.properties.rowHeight)).toEqual([90, 90]);
+  } finally {
+    editor.destroy();
+  }
 });

@@ -11,6 +11,15 @@ import { Plugin, PluginKey } from '@tiptap/pm/state';
 import { Decoration, DecorationSet } from '@tiptap/pm/view';
 import type { Node as ProseMirrorNode } from '@tiptap/pm/model';
 
+function rowHeightInPoints(element: HTMLElement, scale: number) {
+  const natural = Number(element.getAttribute('data-word-natural-row-height'));
+  if (Number.isFinite(natural) && natural > 0) return natural * 0.75;
+  const gaps = Array.from(
+    element.querySelectorAll<HTMLElement>('[data-word-auto-page-gap]')
+  ).reduce((sum, gap) => sum + gap.getBoundingClientRect().height, 0);
+  return ((element.getBoundingClientRect().height - gaps) / scale) * 0.75;
+}
+
 const fixedCellKey = new PluginKey<DecorationSet>('studioWordFixedCellHeights');
 function fixedCells(document: ProseMirrorNode) {
   const decorations: Decoration[] = [];
@@ -92,11 +101,8 @@ export function wordDistributeRows(editor: Editor): boolean {
   const heights = rows.map((row) => {
     const element = editor.view.nodeDOM(row.position);
     if (!(element instanceof editor.view.dom.ownerDocument.defaultView!.HTMLElement)) return NaN;
-    // Decorative page gaps are view-only and must never become native row height.
-    const gaps = Array.from(
-      element.querySelectorAll<HTMLElement>('[data-word-auto-page-gap]')
-    ).reduce((sum, gap) => sum + gap.getBoundingClientRect().height, 0);
-    return ((element.getBoundingClientRect().height - gaps) / scale) * 0.75;
+    // The pagination model supplies the original size for independently split columns.
+    return rowHeightInPoints(element, scale);
   });
   if (heights.some((height) => !Number.isFinite(height) || height <= 0 || height > 2000))
     return false;
@@ -251,11 +257,8 @@ export const WordTableRowProperties = Extension.create({
                 : 1;
             if (!Number.isFinite(scale) || scale <= 0) return;
             const rect = row.getBoundingClientRect();
-            const gaps = Array.from(
-              row.querySelectorAll<HTMLElement>('[data-word-auto-page-gap]')
-            ).reduce((sum, gap) => sum + gap.getBoundingClientRect().height, 0);
-            const height = ((rect.height - gaps) / scale) * 0.75;
-            if (height <= 0 || height > 2000) return;
+            const height = rowHeightInPoints(row, scale);
+            if (!Number.isFinite(height) || height <= 0 || height > 2000) return;
             const guide = owner.createElement('div');
             guide.dataset.wordRowResizeGuide = '';
             guide.setAttribute('role', 'status');

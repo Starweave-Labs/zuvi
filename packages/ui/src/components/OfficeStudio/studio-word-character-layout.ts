@@ -1,6 +1,6 @@
 import { Extension, type Editor } from '@tiptap/react';
 import { closeHistory } from '@tiptap/pm/history';
-import { wordMetricPoints, type WordMetric } from './studio-word-metrics';
+import { wordMetricPoints, wordMetricCss, type WordMetric } from './studio-word-metrics';
 
 const metrics: WordMetric[] = ['letterSpacing', 'baselineShift'];
 export const WordCharacterLayout = Extension.create({
@@ -22,7 +22,9 @@ export const WordCharacterLayout = Extension.create({
                     ? element.style.letterSpacing
                     : element.style.position === 'relative' && top
                       ? `${-Number(top[1])}pt`
-                      : '');
+                      : element.style.verticalAlign === 'baseline'
+                        ? '0pt'
+                        : element.style.verticalAlign);
                 const value = wordMetricPoints(raw, metric);
                 return value === null ? null : `${value}pt`;
               },
@@ -31,12 +33,12 @@ export const WordCharacterLayout = Extension.create({
                 if (value === null) return {};
                 return {
                   [`data-word-${metric}`]: `${value}pt`,
-                  style:
-                    metric === 'letterSpacing'
-                      ? `letter-spacing:${value}pt`
-                      : value === 0
-                        ? ''
-                        : `position:relative;top:${-value}pt`,
+                  style: Object.entries(wordMetricCss({ [metric]: value }))
+                    .map(
+                      ([key, css]) =>
+                        `${key.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`)}:${css}`
+                    )
+                    .join(';'),
                 };
               },
             },

@@ -128,10 +128,13 @@ describe('Word character spacing and position', () => {
     expect(wordMetricPoints('.75pt', 'baselineShift')).toBeNull();
     expect(wordMetricCss({ letterSpacing: '1.2pt', baselineShift: '-2.5pt' })).toEqual({
       letterSpacing: '1.2pt',
-      position: 'relative',
-      top: '2.5pt',
+      verticalAlign: '-2.5pt',
+      '--zuvi-word-baseline-shift': '-2.5pt',
     });
-    expect(wordMetricCss({ baselineShift: '0pt' })).toEqual({});
+    expect(wordMetricCss({ baselineShift: '0pt' })).toEqual({
+      verticalAlign: 'baseline',
+      '--zuvi-word-baseline-shift': '0pt',
+    });
   });
   it('applies mixed runs in one transaction, preserving size, links, superscript and text with undo/redo', () => {
     const e = fixture();
@@ -252,4 +255,18 @@ describe('Word character spacing and position', () => {
       validateStudioWordParagraphStyles([{ id: 'bad', name: '错误', run: { baselineShift: 0.25 } }])
     ).toThrow();
   });
+});
+
+it('reads legacy paint offsets and new baseline alignment while retaining explicit zero on HTML reopen', () => {
+  const editor = new Editor({
+    extensions: [StarterKit, TextStyleKit, WordCharacterLayout],
+    content:
+      '<p><span style="position:relative;top:-2pt">Legacy</span><span style="vertical-align:-1.5pt">Lowered</span><span style="vertical-align:baseline">Reset</span></p>',
+  });
+  editors.push(editor);
+  expect(runs(editor).map((node) => attrs(node)?.baselineShift)).toEqual(['2pt', '-1.5pt', '0pt']);
+  const html = editor.getHTML();
+  editor.commands.setContent(html);
+  expect(runs(editor).map((node) => attrs(node)?.baselineShift)).toEqual(['2pt', '-1.5pt', '0pt']);
+  expect(editor.getText()).toBe('LegacyLoweredReset');
 });

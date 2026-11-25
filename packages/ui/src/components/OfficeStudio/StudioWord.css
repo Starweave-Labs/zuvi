@@ -1329,3 +1329,33 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+.zuvi-studio-word-page-gap[data-word-cell-page-gap]:not([data-word-cell-page-label])::after { content: none; }
+
+.zuvi-studio-word-page-gap[data-word-cell-page-label]::before {
+  content: '';
+  position: absolute;
+  left: var(--word-table-gap-left);
+  width: var(--word-table-gap-width);
+  top: var(--word-gap-start);
+  height: calc(var(--word-gap-end) - var(--word-gap-start));
+  background: var(--zuvi-studio-word-stage-bg);
+  z-index: 1;
+  pointer-events: none;
+}
+.zuvi-studio-word-page-gap[data-word-cell-page-label]::after {
+  left: var(--word-table-gap-left);
+  right: auto;
+  width: var(--word-table-gap-width);
+  z-index: 2;
+}
+.zuvi-studio-word-content .tiptap .tableWrapper:has([data-word-cell-page-gap]),
+.zuvi-studio-word-content .tiptap table:has([data-word-cell-page-gap]) {
+  overflow: visible;
+}
+
+.zuvi-studio-word-content .tiptap [data-word-line-rule='exact'] [data-word-baselineshift] {
+  vertical-align: top !important;
+  position: relative;
+  top: calc(-1 * var(--zuvi-word-baseline-shift, 0pt));
+}

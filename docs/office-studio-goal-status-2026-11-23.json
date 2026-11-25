@@ -553,13 +553,14 @@
       "historicalStatus": "部分",
       "status": "implemented-format-slice-verified-full-acceptance-audit-pending",
       "evidence": [
-        "e2e/office-studio-word-format.spec.ts: format painting/clear preserves links and structure through repeated DOCX export/reopen, light/dark/320px"
+        "e2e/office-studio-word-format.spec.ts: format painting/clear preserves links and structure through repeated DOCX export/reopen, light/dark/320px",
+        "2026-11-26：自动/最小行距字符基线参与行框、固定行距维持固定高度；0/±12pt真实DOCX导入与两次重开、降低/抬升几何及明暗320px切片通过，见docs/audits/2026-11-26/word-baseline-line-rules/。完整需求仍未验收。"
       ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
+        "date": "2026-11-26",
+        "sourceCommit": "437a6fd",
         "implementation": "切片验证",
-        "implementedBehavior": "清除直接字符/段落格式，保留标题级别、列表/表格结构与链接；DOCX 重开保持取消格式",
+        "implementedBehavior": "清除直接字符/段落格式，保留标题级别、列表/表格结构与链接；DOCX 重开保持取消格式 自动/最小行距基线位移参与行框，固定行距保留固定高度，HTML旧格式兼容和显式零位移重开已验证；0/±12pt原生DOCX三次测量切片通过。",
         "functionalGaps": [
           "空插入点、混合选区与跨区域完整验收仍待补齐"
         ],
@@ -584,6 +585,11 @@
             "path": "e2e/office-studio-word-format.spec.ts",
             "line": 29,
             "anchor": "test("
+          },
+          {
+            "path": "docs/audits/2026-11-26/word-baseline-line-rules/README.md",
+            "line": 1,
+            "anchor": "字符基线与行距规则修复切片"
           }
         ],
         "existingTestFiles": [
@@ -1857,17 +1863,24 @@
       ],
       "historicalStatus": "缺失",
       "status": "audited-partial-acceptance-pending",
-      "evidence": [],
+      "evidence": [
+        "2026-11-26：双列单文字段落80/50行独立分片，明暗桌面/320px、键盘编辑/历史/只读和两次DOCX重开、打印2页全文无遗漏/重复通过；行高预览用自然高度且取消不写模型。完整多列复杂布局仍未验收。"
+      ],
       "currentAudit": {
         "date": "2026-11-26",
-        "sourceCommit": "fd7d8f0",
+        "sourceCommit": "437a6fd",
         "implementation": "部分实现",
-        "implementedBehavior": "按实测行高/合并组分页及重复表头；行跨页ZUVI入口、单事务历史、原生cantSplit两次重开；单个未合并单元格且只有文字/硬换行的单段落行实际内容分片，80行分为3页，禁止→允许跨页、撤销重做、DOCX导出重开后重新启用分页已验证；固定行高及合并高度参与测量/打印。",
+        "implementedBehavior": "按实测行高/合并组分页及重复表头；行跨页ZUVI入口、单事务历史、原生cantSplit两次重开；单个未合并单元格且只有文字/硬换行的单段落行实际内容分片，80行分为3页，禁止→允许跨页、撤销重做、DOCX导出重开后重新启用分页已验证；固定行高及合并高度参与测量/打印。 无合并/无重复表头的多列单文字段落行已接入每cell独立分页与共同续页补齐；双列80/50行混合字号原生来源、键盘编辑/撤销重做/只读、两次DOCX重开及打印2页切片通过。",
         "functionalGaps": [
-          "多列/合并单元格同步分片、多段落或图片单元格、带重复表头的行内分片及复杂布局仍待实现与验收；浮动表格定位/环绕仍缺失，原生浮动表格拒绝。"
+          "通用多列/合并单元格同步分片、多段落或图片单元格、带重复表头的行内分片及复杂布局仍待实现与验收；跨纸面页间视觉及本批全站259项E2E已复验；本双列来源编辑器与打印A列逐页内容分布尚未一致（首面52/57行）；浮动表格定位/环绕仍缺失，原生浮动表格拒绝。"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
+          {
+            "path": "docs/audits/2026-11-26/word-cell-fragments/README.md",
+            "line": 1,
+            "anchor": "W028 多单元格行分片进行中"
+          },
           {
             "path": "docs/audits/2026-11-26/word-row-properties/README.md",
             "line": 1,
@@ -1898,7 +1911,7 @@
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
       "gaps": [
-        "多列/合并单元格同步分片、多段落或图片单元格、带重复表头的行内分片及复杂布局仍待实现与验收；浮动表格定位/环绕仍缺失，原生浮动表格拒绝。"
+        "通用多列/合并单元格同步分片、多段落或图片单元格、带重复表头的行内分片及复杂布局仍待实现与验收；跨纸面页间视觉及本批全站259项E2E已复验；本双列来源编辑器与打印A列逐页内容分布尚未一致（首面52/57行）；浮动表格定位/环绕仍缺失，原生浮动表格拒绝。"
       ]
     },
     {

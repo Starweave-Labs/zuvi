@@ -26,8 +26,11 @@ export function wordMetricCss(attrs: Record<string, unknown>) {
   const baselineShift = wordMetricPoints(attrs.baselineShift, 'baselineShift');
   return {
     ...(letterSpacing !== null ? { letterSpacing: `${letterSpacing}pt` } : {}),
-    ...(baselineShift !== null && baselineShift !== 0
-      ? { position: 'relative' as const, top: `${-baselineShift}pt` }
+    ...(baselineShift !== null
+      ? {
+          verticalAlign: baselineShift === 0 ? 'baseline' : `${baselineShift}pt`,
+          '--zuvi-word-baseline-shift': `${baselineShift}pt`,
+        }
       : {}),
   };
 }

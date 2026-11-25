@@ -102,3 +102,75 @@ describe('Word measured pagination', () => {
     ).toThrow();
   });
 });
+
+it('paginates a multi-cell row against preceding content and aligns independent continuation gaps', () => {
+  const cells = [
+    {
+      from: 23,
+      to: 27,
+      lines: [
+        { from: 23, to: 25, top: 2, bottom: 12 },
+        { from: 25, to: 27, top: 12, bottom: 22 },
+      ],
+    },
+    {
+      from: 30,
+      to: 34,
+      lines: [
+        { from: 30, to: 32, top: 4, bottom: 20 },
+        { from: 32, to: 34, top: 20, bottom: 36 },
+      ],
+    },
+  ];
+  const result = wordPaginate(
+    [
+      { from: 0, to: 20, lines: [{ from: 1, to: 19, height: 5 }], widowControl: false },
+      { from: 20, to: 40, lines: [{ from: 21, to: 39, height: 36, cells }], widowControl: false },
+    ],
+    20
+  );
+  expect(result.placements.map((p) => [p.page, p.top, p.height])).toEqual([
+    [0, 0, 5],
+    [1, 0, 20],
+    [2, 0, 16],
+  ]);
+  expect(result.breaks).toEqual([
+    { position: 21, page: 1, remaining: 15, block: true },
+    {
+      position: 25,
+      page: 2,
+      remaining: 0,
+      block: false,
+      cellBreaks: [
+        { position: 25, padding: 8 },
+        { position: 32, padding: 0 },
+      ],
+    },
+  ]);
+  expect(result.overflow).toBe(false);
+});
+
+it('does not force an extra page before a cell row that fits the remaining space', () => {
+  const result = wordPaginate(
+    [
+      {
+        from: 0,
+        to: 30,
+        widowControl: false,
+        lines: [
+          { from: 0, to: 5, height: 5 },
+          {
+            from: 5,
+            to: 20,
+            height: 10,
+            cells: [{ from: 8, to: 10, lines: [{ from: 8, to: 10, top: 0, bottom: 10 }] }],
+          },
+          { from: 20, to: 30, height: 5 },
+        ],
+      },
+    ],
+    20
+  );
+  expect(result.pages).toBe(1);
+  expect(result.placements.map((p) => p.top)).toEqual([0, 5, 15]);
+});
