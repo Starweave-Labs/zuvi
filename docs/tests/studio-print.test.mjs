@@ -71,6 +71,21 @@ const print = compiled('../src/pages/collaboration/office-studio/studio-print.ts
   },
 });
 
+test('Word print repeats only consecutive leading complete header rows', () => {
+  const model = models.createOfficeStudioDocument('word');
+  const row = (type, text) => ({ type: 'tableRow', content: [{ type, content: [{ type: 'paragraph', content: [{ type: 'text', text }] }] }] });
+  model.content = { type: 'doc', content: [{ type: 'table', content: [row('tableHeader', 'Header one'), row('tableHeader', 'Header two'), row('tableCell', 'Body'), row('tableHeader', 'Later heading')] }] };
+  const rendered = new JSDOM(print.createStudioPrintHtml(model)).window.document;
+  assert.equal(rendered.querySelectorAll('thead > tr').length, 2);
+  assert.equal(rendered.querySelector('thead').textContent, 'Header oneHeader two');
+  assert.equal(rendered.querySelectorAll('tbody > tr').length, 2);
+  assert.equal(rendered.querySelector('tbody').textContent, 'BodyLater heading');
+  model.content.content[0].content = [row('tableCell', 'Body first'), row('tableHeader', 'Non-leading')];
+  const noHeader = new JSDOM(print.createStudioPrintHtml(model)).window.document;
+  assert.equal(noHeader.querySelectorAll('thead').length, 0);
+  assert.equal(noHeader.querySelectorAll('tbody > tr').length, 2);
+});
+
 test('Word print uses explicit keep and widow values while title defaults retain the next paragraph',()=>{
   const model=models.createOfficeStudioDocument('word');
   model.content={type:'doc',content:[{type:'paragraph',attrs:{keepNext:true,keepLines:true,widowControl:false},content:[{type:'text',text:'Kept'}]},{type:'paragraph',attrs:{keepNext:false,keepLines:false,widowControl:true},content:[{type:'text',text:'Split'}]}]};

@@ -1,0 +1,48 @@
+{
+  "date": "2026-11-26",
+  "sourceBase": "fd7d8f0",
+  "completionProven": false,
+  "scope": "W027/W028/W046 measured row groups and repeated table header slice",
+  "checks": {
+    "paginationModel": { "passed": 8 },
+    "printUnit": { "passed": 30 },
+    "relatedBrowser": { "passed": 4 },
+    "ui": { "files": 132, "passed": 2413 },
+    "docs": { "passed": 305, "skipped": 1 },
+    "typecheck": "passed",
+    "lint": "passed",
+    "registry": { "passed": true, "components": 92 },
+    "consumer": { "passed": true, "sourceFiles": 354 },
+    "distribution": "passed",
+    "uiBuild": "passed",
+    "browserBuild": "passed",
+    "cliAndMcpBuild": "passed",
+    "docsBuild": "passed",
+    "entrySize": { "gzipBytes": 124921, "exclusiveBudget": 124928, "passed": true },
+    "fullE2E": { "passed": 245, "failed": 0, "scope": "before final inert keyboard guard" },
+    "browserAfterKeyboardGuard": { "passed": 4, "failed": 0 },
+    "lazyEntryAfterSizeFix": { "unitPassed": 18, "browserPassed": 4 }
+  },
+  "evidence": [
+    "table-source.docx",
+    "table-roundtrip-1.docx",
+    "table-roundtrip-2.docx",
+    "table-print.pdf",
+    "print-page-evidence.json",
+    "table-light.png",
+    "table-dark.png",
+    "table-light-320.png",
+    "table-dark-320.png"
+  ],
+  "failuresResolved": [
+    "Empty header/footer margins created a blank trailing printed page; empty regions are hidden.",
+    "Table node view has an outer container; measurement now resolves the actual table.",
+    "Prior full E2E was interrupted after rebuilding removed its runtime artifacts; final E2E starts only after builds finish.",
+    "Keyboard-guard chunk hash changed entry gzip to 124930, exceeding the exclusive 124928 budget; directly loading the existing Word default export removes the redundant mapping and reduces the entry to 124921 without raising the budget."
+  ],
+  "remaining": [
+    "Merged/oversized row and multirow/oversized header complete matrices",
+    "Row split policy and floating table model/entry/native persistence",
+    "Full pagination with floating objects, footnotes, sections, repeated page regions and fields"
+  ]
+}

@@ -2,7 +2,7 @@
 
 源码基线：`2382530`。本次逐项核对 Word 65、Excel 68、PDF 26 项。历史状态保留；本页表示当前源码实现范围，全部条目仍需按原共通验收逐项闭环。
 
-实现分类：基础实现 22 项、切片验证 26 项、部分实现 52 项、未实现 59 项。这不是完整验收完成率。
+实现分类：基础实现 22 项、切片验证 26 项、部分实现 53 项、未实现 58 项。这不是完整验收完成率。
 
 验收要求：模型与编辑入口、只读/禁用、一次撤销重做、导入编辑导出重开、适用的明暗/320px 浏览器检查及失败原数据不变。已有测试文件不能自动替代每项六维证据。
 
@@ -36,8 +36,8 @@
 | W024 | 表格边框底纹样式 | 部分实现 | 单元格背景和默认表格边框 | 缺单边/内外边框、主题表样式编辑及原生保留 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W025 | 行高列宽与分布 | 部分实现 | 表格列宽导入保存与内核拖列宽 | 缺固定/最小行高、均匀分布、拖动历史验收 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W026 | 单元格对齐与边距 | 部分实现 | 单元格内正文可水平对齐 | 缺九宫格垂直对齐、间距和内边距模型/入口 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
-| W027 | 跨页重复标题行 | 部分实现 | 表头行可标记并写 w:tblHeader | 自动分页未完成，跨页重复显示未验收 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
-| W028 | 表格跨页与环绕 | 未实现 | 普通行内表格 | 缺跨页行策略与浮动定位/环绕；原生浮动表格拒绝 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
+| W027 | 跨页重复标题行 | 部分实现 | 编辑器重复表头预留页高，打印thead；表头编辑/历史/两次DOCX重开/只读/明暗320px | 跨纵向合并、多行超高表头及全部复杂布局仍待验收 | `docs/audits/2026-11-26/word-table-pagination/` |
+| W028 | 表格跨页与环绕 | 部分实现 | 普通行内表格实测行高分页，纵向合并关联行同组，真实65行DOCX/多页打印 | 缺跨页行策略与浮动定位/环绕；原生浮动表格拒绝 | `studio-word-pagination-extension.ts`；`docs/audits/2026-11-26/word-table-pagination/` |
 | W029 | 文本与表格互转 | 未实现 | 有独立文字和表格节点 | 缺双向转换、分隔符预览及原生保存 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W030 | 表格公式 | 未实现 | Word 域仅支持页码 | 缺表格引用公式与域刷新；未知域拒绝 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W031 | 内嵌图片插入与尺寸 | 部分实现 | 内嵌图片导入/插入、比例尺寸、删除和保存 | 缺完整替换图片入口及其历史/文件验证 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
@@ -55,7 +55,7 @@
 | W043 | 不同首页奇偶页页眉页脚 | 部分实现 | 默认页眉页脚编辑、距离和字段 | 不同首页/奇偶页/节继承未实现，原生拒绝 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W044 | 页码格式与起始页码 | 部分实现 | PAGE/NUMPAGES 域原生保存，画布占位 1 | 缺起始值、格式、续节和编辑器域计算 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W045 | 水印与页面背景 | 未实现 | 纸张背景为界面样式 | 缺文档水印/背景模型、透明度与节范围 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
-| W046 | 自动分页与布局重算 | 部分实现 | 文本/标题行测量、三种保持约束、视图/尺寸/字体重算及整块表格切片 | 图片/浮动避让、表格行/脚注/节/重复页眉页脚/页码域和长文稿全部组合仍未完成 | `studio-word-pagination-extension.ts`；`office-studio-word-keep.spec.ts` |
+| W046 | 自动分页与布局重算 | 部分实现 | 文本/标题/内嵌图片行测量、三种保持约束、视图/尺寸/字体/图片加载重算；表格行/合并组分页与重复表头，图片/表头编辑及两次DOCX重开/明暗320px | 浮动避让、复杂表格/脚注/节/重复页眉页脚/页码域和长文稿全部组合仍未完成 | `studio-word-pagination-extension.ts`；`office-studio-word-keep.spec.ts`；`docs/audits/2026-11-26/word-inline-pagination/`；`docs/audits/2026-11-26/word-table-pagination/` |
 | W047 | 标尺与页缩略图 | 部分实现 | 标尺缩进键盘/拖动预览/取消/历史和单元格原点；标题导航与缩放 | 缺页边距编辑、真实页缩略图与光标页同步，完整分页仍未实现 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W048 | 打印预览与真实分页 | 部分实现 | 打印 HTML 与图片定位/环绕 | 精确分页、页范围/纸张/域计算及真实打印验收待实现 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W049 | 大纲导航 | 基础实现 | 标题层级列表与光标跳转，随文档更新 | 全部修改/只读/跨区域浏览器验收矩阵待补 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |

@@ -16,7 +16,7 @@ import type {
 afterEach(cleanup);
 
 vi.mock('./StudioWord', () => ({
-  StudioWord: ({
+  default: ({
     document,
     onChange,
     disabled,

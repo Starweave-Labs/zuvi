@@ -16,6 +16,31 @@ const block = (
   ...options,
 });
 describe('Word measured pagination', () => {
+  it('reserves repeated table headers on every continuation page', () => {
+    const result = wordPaginate([block(0, 10, { continuationBefore: 20 })], 100);
+    expect(result.placements.map((entry) => entry.page)).toEqual([0, 0, 0, 0, 0, 1, 1, 1, 1, 2]);
+    expect(result.placements.filter((entry) => entry.page > 0 && entry.top === 20)).toHaveLength(2);
+    expect(result.breaks.map((entry) => entry.continuationBefore)).toEqual([20, 20]);
+    const oversized = wordPaginate(
+      [
+        {
+          from: 0,
+          to: 2,
+          widowControl: false,
+          continuationBefore: 30,
+          lines: [
+            { from: 0, to: 1, height: 80 },
+            { from: 1, to: 2, height: 120 },
+          ],
+        },
+      ],
+      100
+    );
+    expect(oversized.pages).toBe(2);
+    expect(oversized.overflow).toBe(true);
+    expect(oversized.breaks[0].continuationBefore).toBeUndefined();
+    expect(() => wordPaginate([block(0, 1, { continuationBefore: NaN })], 100)).toThrow();
+  });
   it('splits paragraphs across pages by actual line heights', () => {
     const value = wordPaginate([block(0, 8)], 100);
     expect(value.pages).toBe(2);
@@ -35,12 +60,15 @@ describe('Word measured pagination', () => {
     expect(value.placements.find((p) => p.block === 1)?.page).toBe(1);
     expect(value.placements.find((p) => p.block === 2)?.page).toBe(1);
   });
-  it('moves the complete intermediate paragraphs in keep-next chains and splits freely without a keep flag',()=>{
-    const chain=wordPaginate([block(0,3),block(3,1,{keepNext:true}),block(4,3,{keepNext:true}),block(7,1)],100);
-    expect(chain.placements.filter((p)=>p.block===1).map((p)=>p.page)).toEqual([1]);
-    expect(chain.placements.filter((p)=>p.block===2).map((p)=>p.page)).toEqual([1,1,1]);
-    const free=wordPaginate([block(0,3),block(3,3)],100);
-    expect(free.placements.filter((p)=>p.block===1).map((p)=>p.page)).toEqual([0,0,1]);
+  it('moves the complete intermediate paragraphs in keep-next chains and splits freely without a keep flag', () => {
+    const chain = wordPaginate(
+      [block(0, 3), block(3, 1, { keepNext: true }), block(4, 3, { keepNext: true }), block(7, 1)],
+      100
+    );
+    expect(chain.placements.filter((p) => p.block === 1).map((p) => p.page)).toEqual([1]);
+    expect(chain.placements.filter((p) => p.block === 2).map((p) => p.page)).toEqual([1, 1, 1]);
+    const free = wordPaginate([block(0, 3), block(3, 3)], 100);
+    expect(free.placements.filter((p) => p.block === 1).map((p) => p.page)).toEqual([0, 0, 1]);
   });
   it('avoids both orphan first lines and widow last lines when space permits', () => {
     const orphan = wordPaginate([block(0, 4), block(4, 4, { widowControl: true })], 100);

@@ -1791,15 +1791,20 @@
       "status": "audited-partial-acceptance-pending",
       "evidence": [],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
+        "date": "2026-11-26",
+        "sourceCommit": "fd7d8f0",
         "implementation": "部分实现",
-        "implementedBehavior": "表头行可标记并写 w:tblHeader",
+        "implementedBehavior": "表头行可标记并写 w:tblHeader；编辑器跨页重复表头预留高度并与首行保持，打印原生thead，表头文字编辑/撤销重做/两次DOCX重开/只读及明暗320px有切片证据。",
         "functionalGaps": [
-          "自动分页未完成，跨页重复显示未验收"
+          "跨纵向合并、多行或超高表头、属性切换/取消/IME及复杂布局完整矩阵仍待验收。"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
+          {
+            "path": "docs/audits/2026-11-26/word-table-pagination/README.md",
+            "line": 1,
+            "anchor": "W027 表格打印重复表头"
+          },
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
             "line": 156,
@@ -1823,7 +1828,7 @@
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
       "gaps": [
-        "自动分页未完成，跨页重复显示未验收"
+        "跨纵向合并、多行或超高表头、属性切换/取消/IME及复杂布局完整矩阵仍待验收。"
       ]
     },
     {
@@ -1846,18 +1851,23 @@
         "docs/tests/office-studio-word.test.mjs"
       ],
       "historicalStatus": "缺失",
-      "status": "audited-not-implemented",
+      "status": "audited-partial-acceptance-pending",
       "evidence": [],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "未实现",
-        "implementedBehavior": "普通行内表格",
+        "date": "2026-11-26",
+        "sourceCommit": "fd7d8f0",
+        "implementation": "部分实现",
+        "implementedBehavior": "普通行内表格按实测行高分页，纵向合并关联行保持同组，合法页间装饰及重复表头预留高度；65行DOCX与真实多页打印有证据。",
         "functionalGaps": [
           "缺跨页行策略与浮动定位/环绕；原生浮动表格拒绝"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
+          {
+            "path": "docs/audits/2026-11-26/word-table-pagination/README.md",
+            "line": 1,
+            "anchor": "W027 表格打印重复表头"
+          },
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
             "line": 156,
@@ -2894,7 +2904,7 @@
         "date": "2026-11-26",
         "sourceCommit": "f64363d",
         "implementation": "部分实现",
-        "implementedBehavior": "正文文本/标题按浏览器行测量分页，保持约束、字体与宽度变化重算，表格当前按整块；视图开关、文字/文件/历史不变及三种保持属性原生重开有证据。",
+        "implementedBehavior": "正文文本/标题及内嵌图片按浏览器行测量分页，保持约束、字体与宽度变化及图片加载重算；表格按行/纵向合并组分页并预留重复表头。内嵌图片与表头几何位置、编辑、事务撤销重做、只读、两次DOCX重开及明暗320px有切片证据。",
         "functionalGaps": [
           "图片/浮动对象避让、表格行分页/重复表头、脚注、节布局、重复页眉页脚与页码域尚未实现完整自动分页；长文稿、复杂混合字体/RTL/IME和真实页缩略图仍待验收。"
         ],
@@ -2919,11 +2929,21 @@
             "path": "packages/ui/src/components/OfficeStudio/studio-word-pagination-extension.ts",
             "line": 229,
             "anchor": "export const WordPaginationLayout"
+          },
+          {
+            "path": "docs/audits/2026-11-26/word-inline-pagination/README.md",
+            "line": 1,
+            "anchor": "W046 内嵌图片行测量修正"
+          },
+          {
+            "path": "docs/audits/2026-11-26/word-table-pagination/README.md",
+            "line": 1,
+            "anchor": "W027 表格打印重复表头"
           }
         ],
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete.",
-        "sourceState": "Includes text pagination continuation changes committed with this audit."
+        "sourceState": "Includes text pagination and inline-image measurement continuation; full pagination acceptance remains unproven."
       },
       "gaps": [
         "图片/浮动对象避让、表格行分页/重复表头、脚注、节布局、重复页眉页脚与页码域尚未实现完整自动分页；长文稿、复杂混合字体/RTL/IME和真实页缩略图仍待验收。"
@@ -10215,7 +10235,7 @@
   "currentImplementationCounts": {
     "基础实现": 22,
     "切片验证": 26,
-    "部分实现": 52,
-    "未实现": 59
+    "部分实现": 53,
+    "未实现": 58
   }
 }

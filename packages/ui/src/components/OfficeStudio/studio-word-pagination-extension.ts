@@ -69,13 +69,16 @@ function measure(editor: Editor): WordLayoutBlock[] {
       'display',
       'width',
       'max-width',
+      'aspect-ratio',
       'float',
       'position',
     ])
       copies[index].style.setProperty(property, computed.getPropertyValue(property));
   });
   clone.style.cssText += `position:absolute;width:${width}px;height:auto;min-height:0;margin:0;transform:none;`;
-  clone.querySelectorAll('[data-word-auto-page-gap]').forEach((node) => node.remove());
+  clone
+    .querySelectorAll('[data-word-auto-page-row],[data-word-auto-page-gap]')
+    .forEach((node) => node.remove());
   doc.body.append(clone);
   try {
     const blocks: WordLayoutBlock[] = [];
@@ -104,14 +107,63 @@ function measure(editor: Editor): WordLayoutBlock[] {
         keepLines: flags?.keepLines === true,
       };
       if (node.type.name === 'table') {
-        block.lines = [
-          {
-            from: position,
-            to: position + node.nodeSize,
-            height: Math.max(1, element.getBoundingClientRect().height),
-          },
-        ];
-        block.keepLines = true;
+        const table = element.matches('table') ? element : element.querySelector('table');
+        const rows = Array.from(
+          table?.querySelectorAll<HTMLElement>(':scope > tbody > tr,:scope > tr') ?? []
+        );
+        let headerCount = 0;
+        while (
+          headerCount < node.childCount &&
+          node.child(headerCount).childCount > 0 &&
+          Array.from({ length: node.child(headerCount).childCount }, (_, index) =>
+            node.child(headerCount).child(index)
+          ).every((cell) => cell.type.name === 'tableHeader')
+        )
+          headerCount++;
+        const repeatable =
+          headerCount > 0 &&
+          headerCount < node.childCount &&
+          Array.from({ length: headerCount }, (_, index) => node.child(index)).every(
+            (row, index) => {
+              let valid = true;
+              row.forEach((cell) => {
+                if (index + (Number(cell.attrs.rowspan) || 1) > headerCount) valid = false;
+              });
+              return valid;
+            }
+          );
+        if (repeatable)
+          block.continuationBefore = rows
+            .slice(0, headerCount)
+            .reduce((sum, row) => sum + row.getBoundingClientRect().height, 0);
+        let rowPosition = position + 1;
+        let groupEnd = repeatable ? headerCount + 1 : 0;
+        node.forEach((row, offset, index) => {
+          if (index >= rows.length) return;
+          const rowFrom = position + 1 + offset;
+          const rowTo = rowFrom + row.nodeSize;
+          row.forEach((cell) => {
+            groupEnd = Math.max(groupEnd, index + Math.max(1, Number(cell.attrs.rowspan) || 1));
+          });
+          const rowHeight = Math.max(1, rows[index].getBoundingClientRect().height);
+          const previous = block.lines.at(-1);
+          if (rowPosition === rowFrom) {
+            block.lines.push({ from: rowFrom, to: rowTo, height: rowHeight });
+          } else if (previous) {
+            previous.to = rowTo;
+            previous.height += rowHeight;
+          }
+          if (index + 1 >= groupEnd) rowPosition = rowTo;
+        });
+        if (!block.lines.length)
+          block.lines = [
+            {
+              from: position,
+              to: position + node.nodeSize,
+              height: Math.max(1, element.getBoundingClientRect().height),
+            },
+          ];
+        block.widowControl = false;
         blocks.push(block);
         return false;
       }
@@ -121,6 +173,27 @@ function measure(editor: Editor): WordLayoutBlock[] {
       while (walker.nextNode()) {
         if (walker.currentNode.nodeType === 1) {
           const inline = walker.currentNode as HTMLElement;
+          if (inline.matches('.ProseMirror-separator,.ProseMirror-trailingBreak')) continue;
+          if (inline.tagName === 'IMG') {
+            const wrap = inline.closest('[data-wrap]')?.getAttribute('data-wrap');
+            if (!wrap || wrap === 'inline') {
+              const rect = inline.getBoundingClientRect();
+              if (rect.height > 0) {
+                const last = measured.at(-1);
+                if (last && rect.top < last.bottom && rect.bottom > last.top) {
+                  last.to = offset + 1;
+                  last.top = Math.min(last.top, rect.top);
+                  last.bottom = Math.max(last.bottom, rect.bottom);
+                } else
+                  measured.push({
+                    from: offset,
+                    to: offset + 1,
+                    top: rect.top,
+                    bottom: rect.bottom,
+                  });
+              }
+            }
+          }
           if (inline.tagName === 'BR' || inline.matches('img,[data-word-page-number]')) offset++;
           continue;
         }
@@ -133,7 +206,7 @@ function measure(editor: Editor): WordLayoutBlock[] {
           const rect = range.getBoundingClientRect();
           if (rect.height > 0) {
             const last = measured.at(-1);
-            if (last && Math.abs(last.top - rect.top) < 3) {
+            if (last && rect.top < last.bottom && rect.bottom > last.top) {
               last.to = offset + 1;
               last.bottom = Math.max(last.bottom, rect.bottom);
             } else
@@ -149,8 +222,8 @@ function measure(editor: Editor): WordLayoutBlock[] {
             to: index === measured.length - 1 ? to : line.to,
             height:
               index < measured.length - 1
-                ? Math.max(lineHeight, measured[index + 1].top - line.top)
-                : lineHeight,
+                ? Math.max(lineHeight, line.bottom - line.top, measured[index + 1].top - line.top)
+                : Math.max(lineHeight, line.bottom - line.top),
           }))
         : [{ from, to, height: Math.max(lineHeight, element.getBoundingClientRect().height) }];
       // Account for blank hard-break lines and paragraph borders as part of the final fragment.
@@ -204,6 +277,8 @@ function markers(
   });
   for (const boundary of layout?.breaks ?? []) {
     const size = boundary.remaining + options.margin * 2 + options.gap;
+    const parent = document.resolve(boundary.position).parent;
+    const tableBoundary = parent.type.name === 'table';
     decorations.push(
       Decoration.widget(
         boundary.position,
@@ -214,12 +289,72 @@ function markers(
           span.contentEditable = 'false';
           span.className = 'zuvi-studio-word-page-gap';
           span.style.cssText = `display:block;height:${size}px;pointer-events:none;user-select:none;line-height:0;--word-gap-start:${boundary.remaining + options.margin}px;--word-gap-end:${boundary.remaining + options.margin + options.gap}px;--word-gap-margin:${options.margin}px;`;
+          if (tableBoundary) {
+            const row = editor.view.dom.ownerDocument.createElement('tr');
+            row.dataset.wordAutoPageRow = String(boundary.page);
+            const cell = editor.view.dom.ownerDocument.createElement('td');
+            let columns = 0;
+            parent.firstChild?.forEach((node) => {
+              columns += Number(node.attrs.colspan) || 1;
+            });
+            cell.colSpan = Math.max(1, columns);
+            cell.style.cssText = 'padding:0;border:0;line-height:0;';
+            row.setAttribute('aria-hidden', 'true');
+            row.inert = true;
+            row.contentEditable = 'false';
+            cell.append(span);
+            if (boundary.continuationBefore) {
+              const position = document.resolve(boundary.position).before();
+              const container = editor.view.dom.querySelector(
+                `[data-word-pagination-position="${position}"]`
+              );
+              const source = container?.matches('table')
+                ? container
+                : container?.querySelector('table');
+              if (source) {
+                const repeated = source.cloneNode(false) as HTMLElement;
+                repeated.removeAttribute('data-word-pagination-position');
+                repeated.dataset.wordRepeatedHeader = '';
+                repeated.style.cssText = 'width:100%;margin:0;pointer-events:none;';
+                const colgroup = source.querySelector(':scope > colgroup');
+                if (colgroup) repeated.append(colgroup.cloneNode(true));
+                const body = editor.view.dom.ownerDocument.createElement('tbody');
+                const sourceRows = source.querySelectorAll(
+                  ':scope > tbody > tr:not([data-word-auto-page-row]),:scope > tr:not([data-word-auto-page-row])'
+                );
+                for (let index = 0; index < parent.childCount; index++) {
+                  const header = parent.child(index);
+                  if (
+                    !header.childCount ||
+                    !Array.from({ length: header.childCount }, (_, cellIndex) =>
+                      header.child(cellIndex)
+                    ).every((cell) => cell.type.name === 'tableHeader')
+                  )
+                    break;
+                  if (sourceRows[index]) body.append(sourceRows[index].cloneNode(true));
+                }
+                body.querySelectorAll('[id],[data-word-pagination-position]').forEach((node) => {
+                  node.removeAttribute('id');
+                  node.removeAttribute('data-word-pagination-position');
+                });
+                body
+                  .querySelectorAll(
+                    'button,input,select,textarea,[data-word-image-resize],[data-word-image-move]'
+                  )
+                  .forEach((node) => node.remove());
+                repeated.append(body);
+                cell.append(repeated);
+              }
+            }
+            row.append(cell);
+            return row;
+          }
           return span;
         },
         {
           side: -1,
           ignoreSelection: true,
-          key: `page:${boundary.page}:${boundary.position}:${size}`,
+          key: `page:${boundary.page}:${boundary.position}:${size}:${boundary.continuationBefore ?? 0}`,
         }
       )
     );
@@ -282,6 +417,8 @@ export const WordPaginationLayout = Extension.create({
             win.requestAnimationFrame(schedule);
           };
           editor.view.dom.addEventListener('compositionend', afterComposition);
+          editor.view.dom.addEventListener('load', schedule, true);
+          editor.view.dom.addEventListener('error', schedule, true);
           win.addEventListener('resize', schedule);
           void editor.view.dom.ownerDocument.fonts?.ready.then(schedule);
           schedule();
@@ -300,6 +437,8 @@ export const WordPaginationLayout = Extension.create({
               resize?.disconnect();
               editor.view.dom.ownerDocument.fonts?.removeEventListener('loadingdone', schedule);
               editor.view.dom.removeEventListener('compositionend', afterComposition);
+              editor.view.dom.removeEventListener('load', schedule, true);
+              editor.view.dom.removeEventListener('error', schedule, true);
               win.removeEventListener('resize', schedule);
               delete editor.view.dom.dataset.wordPageCount;
               delete editor.view.dom.dataset.wordPaginationOverflow;

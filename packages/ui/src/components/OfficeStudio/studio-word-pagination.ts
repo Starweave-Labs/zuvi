@@ -13,6 +13,7 @@ export interface WordLayoutBlock {
   keepNext?: boolean;
   widowControl?: boolean;
   pageBreak?: boolean;
+  continuationBefore?: number;
 }
 export interface WordPagePlacement {
   from: number;
@@ -28,6 +29,7 @@ export interface WordPageBreak {
   page: number;
   remaining: number;
   block: boolean;
+  continuationBefore?: number;
 }
 export interface WordPagination {
   placements: WordPagePlacement[];
@@ -44,7 +46,9 @@ export function wordPaginate(blocks: readonly WordLayoutBlock[], height: number)
       !Number.isInteger(block.from) ||
       !Number.isInteger(block.to) ||
       block.to < block.from ||
-      [block.before ?? 0, block.after ?? 0].some((n) => !Number.isFinite(n) || n < 0) ||
+      [block.before ?? 0, block.after ?? 0, block.continuationBefore ?? 0].some(
+        (n) => !Number.isFinite(n) || n < 0
+      ) ||
       block.lines.some(
         (line) =>
           !Number.isInteger(line.from) ||
@@ -143,7 +147,14 @@ export function wordPaginate(blocks: readonly WordLayoutBlock[], height: number)
         y += measured.height;
       }
       line += count;
-      if (line < block.lines.length) next(block.lines[line].from, false);
+      if (line < block.lines.length) {
+        next(block.lines[line].from, false);
+        const repeated = block.continuationBefore ?? 0;
+        if (repeated > 0 && repeated + block.lines[line].height <= height) {
+          y = repeated;
+          result.breaks.at(-1)!.continuationBefore = repeated;
+        }
+      }
     }
     y += block.after ?? 0;
     if (y > height + 0.01) {

@@ -1,0 +1,33 @@
+{
+  "date": "2026-11-26",
+  "scope": "W046 inline-image pagination correction; full feature remains incomplete",
+  "completionProven": false,
+  "checks": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "uiTests": { "files": 132, "passed": 2413, "failed": 0 },
+    "docsTests": { "passed": 305, "failed": 0, "skipped": 1 },
+    "registry": { "passed": true, "components": 92 },
+    "consumer": { "passed": true, "sourceFiles": 354 },
+    "distribution": "passed",
+    "uiBuild": "passed",
+    "browserBuild": "passed",
+    "docsBuild": "passed",
+    "entrySize": { "gzipBytes": 124921, "exclusiveBudget": 124928, "passed": true },
+    "inlineImageE2EAfterBuild": "passed including geometry, resize, history, readonly, two DOCX roundtrips and light/dark/320px",
+    "fullE2E": { "passed": 245, "failed": 0, "scope": "before final repeated-header inert keyboard guard" },
+    "browserAfterKeyboardGuard": { "passed": 4, "failed": 0 },
+    "lazyEntryAfterSizeFix": { "unitPassed": 18, "browserPassed": 4 }
+  },
+  "failuresResolved": [
+    "Page-number assertions alone did not prove image geometry; added actual gap/image bounds checks.",
+    "ProseMirror separator images caused model-position drift; excluded auxiliary nodes and copied image aspect ratio.",
+    "Browser initially loaded old built UI; rebuilt before accepting source-level result.",
+    "Consumer check found stale CLI bundled source; rebuilt CLI and consumer check passed."
+  ],
+  "remaining": [
+    "Complete per-feature final acceptance",
+    "Floating-image avoidance, table row pagination and repeated headers",
+    "Footnotes, sections, repeated headers and footers, page fields and complex layout matrices"
+  ]
+}
