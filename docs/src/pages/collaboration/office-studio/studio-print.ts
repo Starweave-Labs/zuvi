@@ -14,12 +14,14 @@ import {
   studioDisplayCell,
   studioHiddenColumns,
   studioHiddenRows,
+  studioInputValue,
   studioMergedRange,
   studioParseAddress,
   studioParseRange,
   type SheetCalculation,
 } from '../../../../../packages/ui/src/components/OfficeStudio/studio-sheet-model';
 import { studioConditionalCellStyle } from '../../../../../packages/ui/src/components/OfficeStudio/studio-sheet-rules';
+import { studioNumberFormatColor } from '../../../../../packages/ui/src/components/OfficeStudio/studio-number-format';
 import { wordImageLayout } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-images';
 import { wordImageCss } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-image-preview';
 import {
@@ -376,9 +378,23 @@ function sheetTable(
           total + (sheet.rowHeights?.[String(index)] ?? sheet.defaultRowHeight ?? 18),
         0
       );
+      const conditionalStyle = studioConditionalCellStyle(sheet, address, calculation);
       const cell = {
         ...(sheet.cells[address] ?? { input: '' }),
-        ...studioConditionalCellStyle(sheet, address, calculation),
+        ...conditionalStyle,
+        color:
+          conditionalStyle.color ??
+          studioNumberFormatColor(
+            conditionalStyle.numberFormat ?? sheet.cells[address]?.numberFormat,
+            calculation.values.get(`${sheet.id}:${address}`) ??
+              studioInputValue(
+                sheet.cells[address]?.input ?? '',
+                sheet.cells[address]?.numberFormat,
+                sheet.cells[address]?.valueType
+              ),
+            calculation.errors.get(`${sheet.id}:${address}`)
+          ) ??
+          sheet.cells[address]?.color,
       };
       const styles: string[] = [];
       if (cell.fontFamily) styles.push(`font-family:${fontFamily(cell.fontFamily)}`);

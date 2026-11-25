@@ -1364,6 +1364,8 @@ function importedCell(cell: ExcelJS.Cell, nativeNumericInput?: string): StudioCe
     if (background) result.background = background;
   }
   if (cell.numFmt && cell.numFmt !== 'General') result.numberFormat = cell.numFmt;
+  if (cell.numFmt === '@' && (typeof cell.value === 'number' || typeof cell.value === 'boolean'))
+    result.valueType = typeof cell.value === 'number' ? 'number' : 'boolean';
   const align = cell.alignment?.horizontal;
   if (align === 'left' || align === 'center' || align === 'right') result.align = align;
   if (cell.alignment?.wrapText !== undefined) result.wrap = cell.alignment.wrapText;
@@ -1816,13 +1818,14 @@ function exportedValue(cell: StudioCell): ExcelJS.CellValue {
   if (input === '') return null;
   if (excelErrors.includes(input as (typeof excelErrors)[number]))
     return { error: input as ExcelJS.CellErrorValue['error'] };
-  return studioInputValue(input, cell.numberFormat);
+  return studioInputValue(input, cell.numberFormat, cell.valueType);
 }
 
 function updateCell(target: ExcelJS.Cell, cell: StudioCell) {
   const original = importedCell(target);
   if (
     cell.input !== original.input ||
+    cell.valueType !== original.valueType ||
     (cell.numberFormat === '@') !== (original.numberFormat === '@')
   )
     target.value = exportedValue(cell);

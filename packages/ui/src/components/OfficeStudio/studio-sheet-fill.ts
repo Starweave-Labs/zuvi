@@ -189,7 +189,7 @@ export function studioFillCells(
 }
 
 function numericSeed(cell: StudioCell): number {
-  const value = studioInputValue(cell.input, cell.numberFormat);
+  const value = studioInputValue(cell.input, cell.numberFormat, cell.valueType);
   if (typeof value !== 'number' || !Number.isFinite(value))
     throw new Error('数字序列需要有效数字种子，不能使用公式或文本。');
   return value;
@@ -231,7 +231,7 @@ function numberSeries(seeds: StudioCell[], step?: number): SeriesPlan {
 }
 
 function dateSeed(cell: StudioCell): { value: number; format: 'iso' | 'serial' } {
-  const value = studioInputValue(cell.input, cell.numberFormat);
+  const value = studioInputValue(cell.input, cell.numberFormat, cell.valueType);
   if (typeof value === 'number' && value >= 0 && value < LAST_SERIAL_DAY)
     return { value, format: 'serial' };
   if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value)) {
@@ -411,7 +411,10 @@ export function studioFillSeriesResult(
       const input = plan.format(value);
       const cell = { ...source, input };
       // Pure digit identifiers remain text when their padding reaches e.g. 099 -> 100.
-      if (options.type === 'text' && typeof studioInputValue(input, cell.numberFormat) !== 'string')
+      if (
+        options.type === 'text' &&
+        typeof studioInputValue(input, cell.numberFormat, cell.valueType) !== 'string'
+      )
         cell.numberFormat = '@';
       batch.add(
         position,

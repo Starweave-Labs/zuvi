@@ -42,7 +42,7 @@ function compiledModule(url, resolve = require) {
 const studioModules = new Map();
 function resolveStudioModule(id) {
   const name =
-    /(?:^|\/)(studio-model|studio-word-images|studio-cell-style|studio-sheet-(?:model|structure|rules|fill|hyperlinks|editing|arrays|painter))$/.exec(
+    /(?:^|\/)(studio-model|studio-word-images|studio-cell-style|studio-number-format|studio-sheet-(?:model|structure|rules|fill|hyperlinks|editing|arrays|painter))$/.exec(
       id
     )?.[1];
   if (!name) return require(id);
@@ -67,6 +67,69 @@ const codec = compiledModule(
   new URL('../src/pages/collaboration/office-studio/studio-excel-codec.ts', import.meta.url),
   resolveStudioModule
 );
+
+test('custom format editing preserves values, formulas, native color sections and Chinese region codes over repeated XLSX saves', async () => {
+  const workbook = new ExcelJS.Workbook();
+  const sheet = workbook.addWorksheet('Formats');
+  sheet.getCell('A1').value = -12.5;
+  sheet.getCell('A2').value = 0;
+  sheet.getCell('A3').value = '0042';
+  sheet.getCell('B1').value = { formula: 'A1*2', result: -25 };
+  sheet.getCell('C1').value = 45351.75;
+  sheet.getCell('D1').value = 42;
+  sheet.getCell('D2').value = false;
+  sheet.getCell('E1').value = 17;
+  sheet.getCell('E1').numFmt = '@';
+  let source = await asBlob(workbook);
+  let document = await codec.importStudioExcel(source, 'Formats.xlsx');
+  const id = document.sheets[0].id;
+  const sections = '0.00;[Red](0.00);"零";"文本："@';
+  const date = '[$-0804]dddd, mmmm d, yyyy hh:mm AM/PM';
+  const selection = (first, last = first) => ({
+    anchor: model.studioParseAddress(first),
+    focus: model.studioParseAddress(last),
+  });
+  document = editing.studioSetNumberFormat(document, id, selection('A1', 'B3'), sections);
+  document = editing.studioSetNumberFormat(document, id, selection('C1'), date);
+  document = editing.studioSetNumberFormat(document, id, selection('D1', 'D2'), '@');
+  for (let pass = 0; pass < 2; pass++) {
+    source = await codec.exportStudioExcel(document, source);
+    const native = new ExcelJS.Workbook();
+    await native.xlsx.load(await source.arrayBuffer());
+    const saved = native.getWorksheet('Formats');
+    assert.equal(saved.getCell('A1').value, -12.5);
+    assert.equal(saved.getCell('A2').value, 0);
+    assert.equal(saved.getCell('A3').value, '0042');
+    assert.equal(saved.getCell('B1').formula, 'A1*2');
+    assert.equal(saved.getCell('B1').result, -25);
+    assert.equal(saved.getCell('A1').numFmt, sections);
+    assert.equal(saved.getCell('B1').numFmt, sections);
+    assert.equal(saved.getCell('C1').numFmt, date);
+    assert.equal(saved.getCell('D1').value, 42);
+    assert.equal(saved.getCell('D1').numFmt, '@');
+    assert.equal(saved.getCell('D2').value, false);
+    assert.equal(saved.getCell('D2').numFmt, '@');
+    assert.equal(saved.getCell('E1').value, 17);
+    const zip = await JSZip.loadAsync(await source.arrayBuffer());
+    assert.match(await zip.file('xl/styles.xml').async('string'), /\[\$-0804\]/);
+    document = await codec.importStudioExcel(source, 'Reopened.xlsx');
+    const calculation = model.studioCalculate(document);
+    assert.equal(calculation.read(id, 'D1').value, 42);
+    assert.equal(calculation.read(id, 'D2').value, false);
+    assert.equal(calculation.read(id, 'E1').value, 17);
+    const display = (address) =>
+      model.studioDisplayCell(
+        document.sheets[0].cells[address],
+        calculation.values.get(`${id}:${address}`),
+        calculation.errors.get(`${id}:${address}`)
+      );
+    assert.equal(display('A1'), '(12.50)');
+    assert.equal(display('A2'), '零');
+    assert.equal(display('A3'), '文本：0042');
+    assert.equal(display('B1'), '(25.00)');
+    assert.equal(display('C1'), '星期四, 2月 29, 2024 06:00 下午');
+  }
+});
 
 test('skip blanks and arithmetic preserve native values, target formulas, links and explicit empty strings across XLSX saves', async () => {
   const workbook = new ExcelJS.Workbook();
@@ -2941,15 +3004,18 @@ test('version 3 Paste Special results survive a standalone XLSX round-trip', asy
   );
 });
 
-test('changing an existing numeric cell to text format changes its stored XLSX value type', async () => {
+test('text formatting preserves an existing numeric type while subsequent typed input is stored as text', async () => {
   const { source } = await fixture();
   const document = await codec.importStudioExcel(source, '销售.xlsx');
   const changed = model.studioPatchCells(document, document.sheets[0].id, {
     A2: { numberFormat: '@' },
   });
   const workbook = await readWorkbook(await codec.exportStudioExcel(changed, source));
-  assert.equal(workbook.getWorksheet('销售').getCell('A2').value, '3');
+  assert.equal(workbook.getWorksheet('销售').getCell('A2').value, 3);
   assert.equal(workbook.getWorksheet('销售').getCell('A2').numFmt, '@');
+  const edited = model.studioPatchCells(changed, document.sheets[0].id, { A2: { input: '17' } });
+  const typed = await readWorkbook(await codec.exportStudioExcel(edited, source));
+  assert.equal(typed.getWorksheet('销售').getCell('A2').value, '17');
 });
 
 test('refuses unsupported source objects before importing or exporting them', async () => {

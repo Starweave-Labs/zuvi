@@ -93,6 +93,8 @@ export interface StudioWordDocument extends StudioDocumentBase {
 
 export interface StudioCell {
   input: string;
+  /** Retains a stored constant's type when display formatting would change input inference. */
+  valueType?: 'number' | 'boolean' | 'text';
   /** Only the anchor stores an array formula. Fixed arrays also store their A1 result range. */
   array?: { type: 'fixed'; range: string } | { type: 'dynamic' };
   bold?: boolean;

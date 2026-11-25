@@ -2,7 +2,7 @@
 
 源码基线：`2382530`。本次逐项核对 Word 65、Excel 68、PDF 26 项。历史状态保留；本页表示当前源码实现范围，全部条目仍需按原共通验收逐项闭环。
 
-实现分类：基础实现 22 项、切片验证 17 项、部分实现 57 项、未实现 63 项。这不是完整验收完成率。
+实现分类：基础实现 22 项、切片验证 18 项、部分实现 56 项、未实现 63 项。这不是完整验收完成率。
 
 验收要求：模型与编辑入口、只读/禁用、一次撤销重做、导入编辑导出重开、适用的明暗/320px 浏览器检查及失败原数据不变。已有测试文件不能自动替代每项六维证据。
 
@@ -99,7 +99,7 @@
 | X017 | 向下向右与序列填充 | 切片验证 | 向下/向右复制与线性序列、停止值、正负/双种子/独立轨道；相对公式复制与 XLSX 两次重开及明暗/320px | 原始共通验收的全部适用组合仍待逐项核对 | `studio-sheet-fill.ts`；`StudioSheetRuleDialog.tsx`；`office-studio-sheet-series.spec.ts` |
 | X018 | 格式刷 | 切片验证 | 矩形格式快照、单次/连续、拖选/键盘、取消与单事务；原生 XLSX 两次重开、明暗/320px | 跨表与全部冻结/滚动/合并组合仍待完整验收；换表取消，布局冲突整次拒绝 | `studio-sheet-painter.ts`；`StudioSheet.tsx`；`office-studio-sheet-painter.spec.ts` |
 | X019 | 字体字号与常用文字格式 | 部分实现 | 字体小数、加粗斜体下划线与颜色保存 | 混合选区回显/默认字体契约及更多文字格式待补 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
-| X020 | 数字格式与自定义格式 | 部分实现 | 数字预设与导入自定义格式显示 | 缺新建编辑自定义格式/地区 UI、分节规则完整解析验收 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
+| X020 | 数字格式与自定义格式 | 切片验证 | 自定义代码/条件/四分节，中美地区日期时间及数字/文本；类型保留、历史、权限、打印/筛选和 XLSX 两次重开 | 其他地区/ColorN/1904 日期系统、宽度填充和外部应用完整验收仍待补齐 | `studio-number-format.ts`；`StudioSheetNumberFormatDialog.tsx`；`office-studio-sheet-number-format.spec.ts` |
 | X021 | 完整边框与斜线 | 部分实现 | 所有/外侧/无边框、六线型与颜色 | 缺单边/内横内竖/斜线；复杂合并边界待补 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
 | X022 | 填充与主题颜色 | 部分实现 | 直接 RGB 填充/无填充 | 缺主题引用和色调往返；普通源样式保留不代表编辑支持 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |
 | X023 | 对齐缩进旋转文字 | 部分实现 | 左中右、顶中底对齐 | 缺分散、跨选区居中、缩进与旋转模型/入口 | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267` |

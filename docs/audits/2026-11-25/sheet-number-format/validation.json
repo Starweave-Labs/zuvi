@@ -1,0 +1,53 @@
+{
+  "date": "2026-11-25",
+  "baselineCommit": "5a571d2",
+  "wholeGoalComplete": false,
+  "ui": {
+    "files": 123,
+    "passed": 2333
+  },
+  "docs": {
+    "passed": 284,
+    "skipped": 1
+  },
+  "dedicatedNumberFormatModelAndUi": {
+    "passed": 10
+  },
+  "nativeXlsxAndPrint": {
+    "passed": 69
+  },
+  "sourceChecks": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "registryItems": 92,
+    "consumerSourceFiles": 334,
+    "distribution": "passed",
+    "uiBuild": "passed",
+    "browserBuild": "passed",
+    "docsBuild": "passed",
+    "entryGzipBytes": 124924,
+    "entryGzipBudgetBytes": 124928
+  },
+  "e2e": {
+    "featurePassed": 1,
+    "themeAndMobileScreenshotsReviewed": true,
+    "fullRunBeforeBuilderFix": {
+      "passed": 234,
+      "failed": 1,
+      "total": 235,
+      "workers": 1,
+      "failure": "Builder iframe double-click binding"
+    },
+    "afterBuilderFix": {
+      "builderPassed": 52,
+      "failedCaseRepeatedPassed": 5
+    },
+    "finalDocsTestsTypesLintAndBuild": "passed"
+  },
+  "currentImplementationCounts": {
+    "基础实现": 22,
+    "部分实现": 56,
+    "未实现": 63,
+    "切片验证": 18
+  }
+}

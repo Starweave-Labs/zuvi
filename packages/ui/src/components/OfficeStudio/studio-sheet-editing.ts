@@ -4,6 +4,7 @@ import {
   studioDisplayCell,
   studioColumnLabel,
   studioParseAddress,
+  studioParseRange,
   studioPatchCells,
   studioMergedRange,
   studioSelectionAddresses,
@@ -12,6 +13,7 @@ import {
 } from './studio-sheet-model';
 import { studioCellValidation } from './studio-sheet-rules';
 import { studioBorderSides } from './studio-cell-style';
+import { studioValidateNumberFormat } from './studio-number-format';
 
 export interface StudioSheetSearchOptions {
   query: string;
@@ -344,6 +346,40 @@ export function studioDefaultCellFormat(): Omit<StudioCell, 'input'> {
     verticalAlign: 'bottom',
     borders: {},
   };
+}
+
+/** Number formats keep exact stored input and array definitions; a whole selection is one edit. */
+export function studioSetNumberFormat(
+  document: StudioExcelDocument,
+  sheetId: string,
+  selection: SheetSelection,
+  code: string
+) {
+  studioValidateNumberFormat(code);
+  const sheet = document.sheets.find((item) => item.id === sheetId);
+  if (!sheet) throw new Error('工作表不存在。');
+  const expanded = studioFormattingSelection(sheet, selection);
+  const bounds = studioSelectionBounds(expanded);
+  if (
+    sheet.protectedRanges?.some((input) => {
+      const range = studioParseRange(input);
+      return (
+        range &&
+        range.firstRow <= bounds.lastRow &&
+        range.lastRow >= bounds.firstRow &&
+        range.firstCol <= bounds.lastCol &&
+        range.lastCol >= bounds.firstCol
+      );
+    })
+  )
+    throw new Error('选区包含受保护区域，整次格式应用已取消。');
+  const updates = Object.fromEntries(
+    studioSelectionAddresses(expanded).map((address) => [address, { numberFormat: code }])
+  );
+  return studioPatchCells(document, sheetId, updates, {
+    preserveInput: true,
+    deferValidation: true,
+  });
 }
 
 export function studioColumnCharacterWidth(pixels: number) {

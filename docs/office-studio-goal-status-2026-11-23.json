@@ -5228,47 +5228,69 @@
         "docs/tests/studio-excel.test.mjs"
       ],
       "historicalStatus": "部分",
-      "status": "audited-partial-acceptance-pending",
-      "evidence": [],
+      "status": "implemented-custom-number-format-slice-verified-full-acceptance-audit-pending",
+      "evidence": [
+        "2026-11-25：自定义格式代码与混合选区弹窗、正负/零/文本与条件分节、中美地区日期时间、网格/打印/字体颜色筛选同步。格式不改变常量类型、原始输入或公式；输入错误、权限变化、保护区域及取消守卫，一次撤销/重做。",
+        "10 项专属模型/UI 与 69 项 XLSX/打印通过；真实 XLSX 导入→格式编辑→撤销/重做→两次导出重开，明暗与 320px 浏览器验收证据见 docs/audits/2026-11-25/sheet-number-format/。"
+      ],
       "currentAudit": {
         "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "部分实现",
-        "implementedBehavior": "数字预设与导入自定义格式显示",
+        "sourceCommit": "5a571d2",
+        "implementation": "切片验证",
+        "implementedBehavior": "编辑自定义代码、条件和正负数/零/文本分节；中美 LCID 与本地化日期时间、累计时间、小数/科学计数/分数和文字；网格、打印与字体颜色筛选同源。valueType 保留常量类型，编辑输入释放旧类型，复制及原生导入导出保持数字/布尔/数字形文本。草稿校验、保护整批取消、权限变化、取消及单事务历史，XLSX 两次重开和明暗/320px 已验证。",
         "functionalGaps": [
-          "缺新建编辑自定义格式/地区 UI、分节规则完整解析验收"
+          "地区编辑与本地化预览目前支持 en-US/zh-CN，基本八色；其他 LCID/ColorN、1904 日期系统、宽度相关填充及外部 Excel/WPS 完整排版重算仍待验收。"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
-            "line": 284,
-            "anchor": "const blocked"
+            "path": "packages/ui/src/components/OfficeStudio/studio-number-format.ts",
+            "line": 123,
+            "anchor": "export function studioValidateNumberFormat"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts",
-            "line": 1267,
-            "anchor": "async function checkSupportedWorkbook"
+            "path": "packages/ui/src/components/OfficeStudio/StudioSheetNumberFormatDialog.tsx",
+            "line": 25,
+            "anchor": "export function StudioSheetNumberFormatDialog"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 136,
-            "anchor": "export interface StudioSheet"
+            "path": "packages/ui/src/components/OfficeStudio/studio-sheet-editing.ts",
+            "line": 352,
+            "anchor": "export function studioSetNumberFormat"
           },
           {
             "path": "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
-            "line": 401,
-            "anchor": "studioPatchCells"
+            "line": 1246,
+            "anchor": "export function studioInputValue"
+          },
+          {
+            "path": "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts",
+            "line": 1345,
+            "anchor": "function importedCell"
+          },
+          {
+            "path": "docs/src/pages/collaboration/office-studio/studio-print.ts",
+            "line": 24,
+            "anchor": "studioNumberFormatColor"
+          },
+          {
+            "path": "e2e/office-studio-sheet-number-format.spec.ts",
+            "line": 7,
+            "anchor": "custom formats preserve native"
           }
         ],
         "existingTestFiles": [
-          "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx",
-          "docs/tests/studio-excel.test.mjs"
+          "packages/ui/src/components/OfficeStudio/studio-number-format.test.ts",
+          "packages/ui/src/components/OfficeStudio/StudioSheetNumberFormat.test.tsx",
+          "docs/tests/studio-excel.test.mjs",
+          "docs/tests/studio-print.test.mjs",
+          "e2e/office-studio-sheet-number-format.spec.ts"
         ],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "testEvidenceNote": "10 dedicated model/UI tests, 44 native XLSX and 25 printing tests, and repeated native XLSX browser reopening passed. Full gates are recorded separately in the completion log; full region and external-application acceptance remains pending.",
+        "sourceState": "Includes the X020 continuation changes committed with this audit."
       },
       "gaps": [
-        "缺新建编辑自定义格式/地区 UI、分节规则完整解析验收"
+        "地区编辑与本地化预览目前支持 en-US/zh-CN，基本八色；其他 LCID/ColorN、1904 日期系统、宽度相关填充及外部 Excel/WPS 完整排版重算仍待验收。"
       ]
     },
     {
@@ -10036,8 +10058,8 @@
   "currentAuditItems": 159,
   "currentImplementationCounts": {
     "基础实现": 22,
-    "切片验证": 13,
-    "部分实现": 58,
-    "未实现": 66
+    "切片验证": 18,
+    "部分实现": 56,
+    "未实现": 63
   }
 }

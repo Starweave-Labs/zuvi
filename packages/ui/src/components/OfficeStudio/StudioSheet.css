@@ -74,6 +74,39 @@
   width: 148px;
 }
 
+.zuvi-studio-sheet-number-dialog .zuvi-modal-body {
+  display: grid;
+  gap: 12px;
+}
+.zuvi-studio-sheet-number-dialog .zuvi-input {
+  width: 100%;
+}
+.zuvi-studio-sheet-number-help {
+  color: var(--zuvi-color-fg-muted);
+  font-size: 12px;
+  margin: 0;
+}
+.zuvi-studio-sheet-number-examples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.zuvi-studio-sheet-number-examples .zuvi-button {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.zuvi-studio-sheet-number-preview {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 6px 12px;
+  margin: 0;
+}
+.zuvi-studio-sheet-number-preview dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
 .zuvi-studio-sheet-fontgroup > .zuvi-studio-sheet-toolrow {
   width: 100%;
 }

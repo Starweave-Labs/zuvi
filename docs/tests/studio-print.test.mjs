@@ -71,6 +71,41 @@ const print = compiled('../src/pages/collaboration/office-studio/studio-print.ts
   },
 });
 
+test('custom number format text, Chinese dates and selected color sections print with conditional color taking priority', () => {
+  const document = models.createOfficeStudioDocument('excel');
+  const sheet = document.sheets[0];
+  sheet.cells = {
+    A1: { input: '-12.5', numberFormat: '0.00;[Red](0.00)' },
+    B1: { input: "'abc", numberFormat: '"文本："@' },
+    C1: { input: '45351.75', numberFormat: '[$-0804]dddd, mmmm d, yyyy hh:mm AM/PM' },
+  };
+  sheet.rowCount = 1;
+  sheet.columnCount = 3;
+  sheet.columnWidths = {};
+  let html = new JSDOM(print.createStudioPrintHtml(document)).window.document;
+  let cells = html.querySelectorAll('td');
+  assert.equal(cells[0].textContent, '(12.50)');
+  assert.equal(cells[0].style.color, 'rgb(255, 0, 0)');
+  assert.equal(cells[1].textContent, '文本：abc');
+  assert.equal(cells[2].textContent, '星期四, 2月 29, 2024 06:00 下午');
+  sheet.conditionalFormats = [
+    {
+      id: 'cf',
+      type: 'cellIs',
+      range: 'A1:A1',
+      priority: 1,
+      operator: 'lessThan',
+      formulae: ['0'],
+      style: { color: '#00ff00' },
+    },
+  ];
+  html = new JSDOM(print.createStudioPrintHtml(document)).window.document;
+  assert.equal(html.querySelector('td').style.color, 'rgb(0, 255, 0)');
+  sheet.conditionalFormats[0].style = { numberFormat: '[Blue]0.0' };
+  html = new JSDOM(print.createStudioPrintHtml(document)).window.document;
+  assert.equal(html.querySelector('td').style.color, 'rgb(0, 0, 255)');
+});
+
 test('Word printing retains whitespace and line breaks without any nonprinting view glyphs or decorations', () => {
   const document = models.createOfficeStudioDocument('word');
   document.content = {

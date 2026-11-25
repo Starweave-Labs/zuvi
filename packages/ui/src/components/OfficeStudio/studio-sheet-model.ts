@@ -1,4 +1,5 @@
 import FormulaParser from 'fast-formula-parser';
+import { studioFormatNumber, studioNumberFormatColor } from './studio-number-format';
 import {
   studioArrayRange,
   studioArrayContains,
@@ -88,6 +89,7 @@ export interface StudioSheetClipboardOrigin extends SheetPosition {
 
 const clipboardCellKeys = new Set([
   'input',
+  'valueType',
   'bold',
   'italic',
   'underline',
@@ -138,6 +140,11 @@ function clipboardCell(value: unknown): StudioCell | undefined {
   const cell = value as Record<string, unknown>;
   if (Object.keys(cell).some((key) => !clipboardCellKeys.has(key))) return;
   if (typeof cell.input !== 'string' || cell.input.length > 32767) return;
+  if (
+    cell.valueType !== undefined &&
+    !['number', 'boolean', 'text'].includes(String(cell.valueType))
+  )
+    return;
   if (clipboardBooleanCellKeys.some((key) => key in cell && typeof cell[key] !== 'boolean')) return;
   if (
     ('color' in cell && (typeof cell.color !== 'string' || !/^#[\da-f]{6}$/i.test(cell.color))) ||
@@ -495,6 +502,8 @@ export function studioPatchCells(
     const previous = cells[key];
     let next: StudioCell =
       !options.replace && previous ? { ...previous, ...update } : { input: '', ...update };
+    if (update.input !== undefined && !options.preserveInput && !('valueType' in update))
+      delete next.valueType;
     if (previous?.array && update.input !== undefined && !update.input.startsWith('=')) {
       if (previous.array.type === 'fixed' && update.input !== '')
         throw new Error('固定数组必须保持公式或整体删除。');
@@ -513,6 +522,27 @@ export function studioPatchCells(
     if (previous?.array && options.replace && options.preserveInput) {
       next.input = previous.input;
       next.array = previous.array;
+    }
+    if (
+      previous &&
+      !previous.input.startsWith('=') &&
+      (options.preserveInput || update.input === undefined) &&
+      'numberFormat' in update
+    ) {
+      const originalValue = studioInputValue(
+        previous.input,
+        previous.numberFormat,
+        previous.valueType
+      );
+      const inferredValue = studioInputValue(next.input, next.numberFormat);
+      if (typeof originalValue !== typeof inferredValue)
+        next.valueType =
+          typeof originalValue === 'string'
+            ? 'text'
+            : typeof originalValue === 'boolean'
+              ? 'boolean'
+              : 'number';
+      else delete next.valueType;
     }
     const arrayIssue = studioCellArrayIssue(next, key);
     if (arrayIssue) throw new Error(arrayIssue);
@@ -689,7 +719,7 @@ export function studioParseTsv(text: string): string[][] {
 }
 
 function clipboardCellFormat(cell: StudioCell): Omit<StudioCell, 'input'> {
-  const { input: _input, ...format } = cloneClipboardCell(cell);
+  const { input: _input, valueType: _valueType, ...format } = cloneClipboardCell(cell);
   return {
     ...clipboardFormatDefaults,
     ...format,
@@ -794,7 +824,8 @@ function pasteArithmeticInput(
   const left = !target?.input
     ? 0
     : pasteOperand(
-        calculation.values.get(key) ?? studioInputValue(target.input, target.numberFormat),
+        calculation.values.get(key) ??
+          studioInputValue(target.input, target.numberFormat, target.valueType),
         address
       );
   const sourceFormula = !valuesOnly && translated.startsWith('=');
@@ -802,7 +833,10 @@ function pasteArithmeticInput(
     ? undefined
     : !source.input
       ? 0
-      : pasteOperand(copiedValue ?? studioInputValue(source.input, source.numberFormat), address);
+      : pasteOperand(
+          copiedValue ?? studioInputValue(source.input, source.numberFormat, source.valueType),
+          address
+        );
   if (operation === 'divide' && right === 0)
     throw new Error(`${address}：不能除以零，整次运算粘贴已取消。`);
   const symbol = { add: '+', subtract: '-', multiply: '*', divide: '/' }[operation];
@@ -1006,6 +1040,7 @@ export function studioPasteCells(
       else if (mode === 'formulas' || mode === 'formulas-number-format') {
         updates[address] = {
           input: translated,
+          ...(sourceCell.valueType ? { valueType: sourceCell.valueType } : {}),
           ...(mode === 'formulas-number-format'
             ? { numberFormat: sourceCell.numberFormat ?? 'General' }
             : {}),
@@ -1040,6 +1075,7 @@ export function studioPasteCells(
             : targetCell?.numberFormat);
         updates[address].input =
           numberFormat === '@' && !input.startsWith('=') ? `=${input}` : input;
+        delete updates[address].valueType;
       }
       if (copiesHyperlinks) {
         hyperlinks[address] =
@@ -1079,7 +1115,8 @@ export function studioPasteCells(
         final.values.get(key) ??
         studioInputValue(
           nextSheet.cells[address]?.input ?? '',
-          nextSheet.cells[address]?.numberFormat
+          nextSheet.cells[address]?.numberFormat,
+          nextSheet.cells[address]?.valueType
         );
       if (final.errors.has(key) || typeof value !== 'number' || !Number.isFinite(value))
         throw new Error(
@@ -1169,7 +1206,7 @@ export function studioCopySheetClipboard(
           values.push({ type: typeof value, value } as StudioSheetClipboardValue);
         }
       } else {
-        const value = studioInputValue(cell.input, cell.numberFormat);
+        const value = studioInputValue(cell.input, cell.numberFormat, cell.valueType);
         values.push({ type: typeof value, value } as StudioSheetClipboardValue);
       }
     }
@@ -1206,9 +1243,13 @@ export function studioCopySheetClipboard(
   return payload;
 }
 
-export function studioInputValue(input: string, numberFormat?: string): SheetValue {
+export function studioInputValue(
+  input: string,
+  numberFormat?: string,
+  valueType?: StudioCell['valueType']
+): SheetValue {
   if (input.startsWith("'")) return input.slice(1);
-  if (numberFormat === '@') return input;
+  if (valueType === 'text' || (numberFormat === '@' && !valueType)) return input;
   if (/^(true|false)$/i.test(input)) return input.toLowerCase() === 'true';
   if (numericInput.test(input) && Number.isFinite(Number(input))) return Number(input);
   return input;
@@ -1405,7 +1446,11 @@ export function studioCalculate(document: StudioExcelDocument): SheetCalculation
     const input = sheet.cells[address]?.input ?? '';
     if (!input.startsWith('=')) {
       if (errorPattern.test(input) && input.startsWith('#')) throw new Error(input);
-      const value = studioInputValue(input, sheet.cells[address]?.numberFormat);
+      const value = studioInputValue(
+        input,
+        sheet.cells[address]?.numberFormat,
+        sheet.cells[address]?.valueType
+      );
       values.set(key, value);
       return value;
     }
@@ -1934,14 +1979,11 @@ export function studioDisplayCell(
           ? 'TRUE'
           : 'FALSE'
         : String(value);
-  const result = value ?? studioInputValue(cell.input, cell.numberFormat);
+  const result = value ?? studioInputValue(cell.input, cell.numberFormat, cell.valueType);
   if (typeof result === 'boolean') return result ? 'TRUE' : 'FALSE';
-  if (typeof result === 'number' && cell.numberFormat && cell.numberFormat !== 'General') {
+  if (cell.numberFormat && cell.numberFormat !== 'General') {
     try {
-      const formatter = FormulaParser as typeof FormulaParser & {
-        SSF: { format(format: string, value: number): string };
-      };
-      return formatter.SSF.format(cell.numberFormat, result);
+      return studioFormatNumber(cell.numberFormat, result);
     } catch {
       /* Preserve the raw value if a custom format is unsupported. */
     }
@@ -2360,12 +2402,26 @@ export function studioFilteredRows(sheet: StudioSheet, calculation: SheetCalcula
       const cell = sheet.cells[address];
       const result =
         calculation.values.get(`${sheet.id}:${address}`) ??
-        studioInputValue(cell?.input ?? '', cell?.numberFormat);
+        studioInputValue(cell?.input ?? '', cell?.numberFormat, cell?.valueType);
       const text = String(result).toLocaleLowerCase();
       const expected = condition.value.toLocaleLowerCase();
       const isColor = condition.operator === 'fontColor' || condition.operator === 'fillColor';
+      const conditionalStyle = isColor
+        ? studioConditionalCellStyle(sheet, address, calculation)
+        : {};
       const displayStyle = isColor
-        ? { ...cell, ...studioConditionalCellStyle(sheet, address, calculation) }
+        ? {
+            ...cell,
+            ...conditionalStyle,
+            color:
+              conditionalStyle.color ??
+              studioNumberFormatColor(
+                conditionalStyle.numberFormat ?? cell?.numberFormat,
+                result,
+                calculation.errors.get(`${sheet.id}:${address}`)
+              ) ??
+              cell?.color,
+          }
         : cell;
       const colorOperator =
         condition.operator === 'fontColor'
@@ -2606,7 +2662,7 @@ export function studioSortRangeByKeys(
       throw new Error('排序列含公式错误，请先修正。');
     return (
       calculation.values.get(`${sheetId}:${address}`) ??
-      studioInputValue(cell?.input ?? '', cell?.numberFormat)
+      studioInputValue(cell?.input ?? '', cell?.numberFormat, cell?.valueType)
     );
   };
   rows.sort((a, b) => {
@@ -2669,7 +2725,7 @@ export function studioAddChart(
       const cell = sheet.cells[address];
       const value =
         calculation.values.get(`${sheetId}:${address}`) ??
-        studioInputValue(cell?.input ?? '', cell?.numberFormat);
+        studioInputValue(cell?.input ?? '', cell?.numberFormat, cell?.valueType);
       if (
         value !== '' &&
         (typeof value !== 'number' || calculation.errors.has(`${sheetId}:${address}`))
@@ -2717,7 +2773,7 @@ export function studioChartData(
     const cell = sheet.cells[address];
     return (
       calculation.values.get(`${sheet.id}:${address}`) ??
-      studioInputValue(cell?.input ?? '', cell?.numberFormat)
+      studioInputValue(cell?.input ?? '', cell?.numberFormat, cell?.valueType)
     );
   };
   return {

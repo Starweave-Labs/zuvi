@@ -23,6 +23,7 @@ import {
   studioFormattingSelection,
   studioReplaceSheetCells,
   studioSetColumnWidths,
+  studioSetNumberFormat,
   type StudioSheetSearchOptions,
   type StudioSheetMatch,
 } from './studio-sheet-editing';
@@ -96,6 +97,11 @@ import { StudioSheetRuleDialog } from './StudioSheetRuleDialog';
 import { StudioSheetSortDialog, type StudioSortDialogState } from './StudioSheetSortDialog';
 import { StudioRibbonTabs } from './StudioRibbon';
 import { StudioSheetHyperlinkDialog } from './StudioSheetHyperlinkDialog';
+import {
+  StudioSheetNumberFormatDialog,
+  type SheetNumberFormatDialogState,
+} from './StudioSheetNumberFormatDialog';
+import { studioNumberFormatColor } from './studio-number-format';
 import type { SheetHyperlinkDialogState } from './StudioSheetHyperlinkDialog';
 import {
   studioCellHyperlink,
@@ -251,6 +257,7 @@ export function StudioSheet({
   const [ruleDialog, setRuleDialog] = React.useState<SheetRuleDialogMode | null>(null);
   const [sortDialog, setSortDialog] = React.useState<StudioSortDialogState | null>(null);
   const [linkDialog, setLinkDialog] = React.useState<SheetHyperlinkDialogState | null>(null);
+  const [numberDialog, setNumberDialog] = React.useState<SheetNumberFormatDialogState | null>(null);
   const [heightDialog, setHeightDialog] = React.useState<{
     firstRow: number;
     lastRow: number;
@@ -449,6 +456,7 @@ export function StudioSheet({
 
   React.useEffect(() => {
     if (document !== expectedRef.current) {
+      setNumberDialog(null);
       cancelPainter();
       pastRef.current = [];
       futureRef.current = [];
@@ -495,6 +503,7 @@ export function StudioSheet({
     setRuleDialog(null);
     setLinkDialog(null);
     setHeightDialog(null);
+    setNumberDialog(null);
     setWidthDialog(null);
   }, [sheet?.id]);
 
@@ -2080,7 +2089,7 @@ export function StudioSheet({
       if (!selectedCell) continue;
       const value =
         calculated.values.get(`${sheet.id}:${selected}`) ??
-        studioInputValue(selectedCell.input, selectedCell.numberFormat);
+        studioInputValue(selectedCell.input, selectedCell.numberFormat, selectedCell.valueType);
       if (typeof value === 'number' && !calculated.errors.has(`${sheet.id}:${selected}`)) {
         sum += value;
         numbers++;
@@ -2482,6 +2491,41 @@ export function StudioSheet({
                 onChange={(numberFormat) => formatSelection({ numberFormat })}
                 disabled={blocked}
               />
+              <Button
+                size="sm"
+                variant="ghost"
+                disabled={blocked}
+                onClick={() => {
+                  if (blocked || !sheet || !commitEditing()) return;
+                  const currentSheet = latestRef.current.sheets.find(
+                    (item) => item.id === sheet.id
+                  )!;
+                  const currentCell = currentSheet.cells[address];
+                  const calculation = studioCalculate(latestRef.current);
+                  setNumberDialog({
+                    sheetId: sheet.id,
+                    selection,
+                    code: currentCell?.numberFormat ?? 'General',
+                    mixed: studioSelectionAddresses(
+                      studioFormattingSelection(currentSheet, selection)
+                    ).some(
+                      (item) =>
+                        (currentSheet.cells[item]?.numberFormat ?? 'General') !==
+                        (currentCell?.numberFormat ?? 'General')
+                    ),
+                    value:
+                      calculation.values.get(`${sheet.id}:${address}`) ??
+                      studioInputValue(
+                        currentCell?.input ?? '',
+                        currentCell?.numberFormat,
+                        currentCell?.valueType
+                      ),
+                    error: calculation.errors.get(`${sheet.id}:${address}`),
+                  });
+                }}
+              >
+                自定义数字格式
+              </Button>
               <span>数字格式</span>
             </div>
             <div className="zuvi-studio-sheet-toolgroup">
@@ -3513,7 +3557,15 @@ export function StudioSheet({
                   );
                   const value =
                     calculated.values.get(key) ??
-                    studioInputValue(currentCell?.input ?? '', currentCell?.numberFormat);
+                    studioInputValue(
+                      currentCell?.input ?? '',
+                      currentCell?.numberFormat,
+                      currentCell?.valueType
+                    );
+                  displayCell.color =
+                    conditionalStyle.color ??
+                    studioNumberFormatColor(displayCell.numberFormat, value, currentError) ??
+                    currentCell?.color;
                   const selected =
                     row >= bounds.firstRow &&
                     row <= bounds.lastRow &&
@@ -4186,6 +4238,26 @@ export function StudioSheet({
               `已按 ${keys.length} 个关键字排序${header ? '，首行保留为标题' : ''}。`,
               () => fillAddresses('down')
             );
+          }}
+        />
+      )}
+      {numberDialog && (
+        <StudioSheetNumberFormatDialog
+          state={numberDialog}
+          blocked={!!blocked}
+          onClose={() => setNumberDialog(null)}
+          onSave={(code) => {
+            if (blocked || !commitEditing())
+              throw new Error('当前无法应用格式，请先确认单元格输入。');
+            replaceDocument(
+              studioSetNumberFormat(
+                latestRef.current,
+                numberDialog.sheetId,
+                numberDialog.selection,
+                code
+              )
+            );
+            setNotice('已应用自定义数字格式，可撤销恢复。');
           }}
         />
       )}
