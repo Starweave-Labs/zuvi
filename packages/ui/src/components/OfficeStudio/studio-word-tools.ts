@@ -955,6 +955,9 @@ const WORD_PARAGRAPH_FORMAT_ATTRS = [
   'lineHeight',
   'lineHeightRule',
   'lineHeightBasis',
+  'widowControl',
+  'keepNext',
+  'keepLines',
 ] as const;
 
 /** Clear direct character/paragraph formatting without changing links, list/table structure or heading levels. */

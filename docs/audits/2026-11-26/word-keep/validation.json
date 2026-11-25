@@ -1,0 +1,64 @@
+{
+  "date": "2026-11-26",
+  "baselineCommit": "f64363d",
+  "wholeGoalComplete": false,
+  "ui": {
+    "files": 132,
+    "passed": 2412
+  },
+  "docs": {
+    "passed": 304,
+    "skipped": 1
+  },
+  "paragraphModel": {
+    "passed": 10
+  },
+  "paginationModel": {
+    "passed": 7
+  },
+  "newPermissionUiCases": {
+    "passed": 2
+  },
+  "nativeDocx": {
+    "passed": 42
+  },
+  "printing": {
+    "passed": 29
+  },
+  "e2e": {
+    "fullPassed": 243,
+    "failed": 0,
+    "workers": 1,
+    "featurePassed": 2,
+    "screenshotsReviewed": true,
+    "printEvidence": [
+      "keep-before.pdf",
+      "keep-after.pdf",
+      "print-page-evidence.json"
+    ],
+    "priorRun": {
+      "passed": 242,
+      "failed": 1,
+      "reason": "Import completed after the test switched pagination. It now awaits the new document name and pagination state; the final full run passed."
+    },
+    "pdfReader": "Existing PDF.js legacy reader; initial independent Poppler extraction retained equivalent page evidence."
+  },
+  "checks": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "registryItems": 92,
+    "consumerSourceFiles": 354,
+    "distribution": "passed",
+    "uiBuild": "passed",
+    "browserBuild": "passed",
+    "docsBuild": "passed",
+    "entryGzipBytes": 124926,
+    "entryGzipBudgetBytes": 124928
+  },
+  "currentImplementationCounts": {
+    "基础实现": 22,
+    "切片验证": 26,
+    "部分实现": 52,
+    "未实现": 59
+  }
+}

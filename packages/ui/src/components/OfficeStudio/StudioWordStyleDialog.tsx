@@ -2,6 +2,7 @@ import * as React from 'react';
 import {
   wordLineUnits,
   wordParagraphLineCss,
+  WORD_KEEP_FLAGS,
   type WordLineRule,
 } from './studio-word-paragraph-format';
 import { Button } from '../Button';
@@ -101,8 +102,8 @@ export function StudioWordStyleDialog({
       ? { headingLevel: Number(level) as StudioWordParagraphStyle['headingLevel'] }
       : {}),
     autoUpdate,
-    ...(value.tabStops!==undefined?{tabStops:structuredClone(value.tabStops)}:{}),
-    ...(value.surface!==undefined?{surface:structuredClone(value.surface)}:{}),
+    ...(value.tabStops !== undefined ? { tabStops: structuredClone(value.tabStops) } : {}),
+    ...(value.surface !== undefined ? { surface: structuredClone(value.surface) } : {}),
     run: Object.fromEntries(
       Object.entries(run)
         .filter(([, input]) => input !== '')
@@ -122,7 +123,11 @@ export function StudioWordStyleDialog({
         .filter(([, input]) => input !== '')
         .map(([key, input]) => [
           key,
-          ['textAlign', 'lineHeightRule', 'lineHeightBasis'].includes(key) ? input : Number(input),
+          ['widowControl', 'keepNext', 'keepLines'].includes(key)
+            ? input === 'true'
+            : ['textAlign', 'lineHeightRule', 'lineHeightBasis'].includes(key)
+              ? input
+              : Number(input),
         ])
     ) as StudioWordParagraphFormat,
   });
@@ -343,6 +348,25 @@ export function StudioWordStyleDialog({
                 }
               />
             </label>
+            {WORD_KEEP_FLAGS.map((key) => (
+              <label key={key}>
+                {key === 'widowControl'
+                  ? '孤行控制'
+                  : key === 'keepNext'
+                    ? '与下段同页'
+                    : '段内不分页'}
+                <Select
+                  aria-label={`样式${key === 'widowControl' ? '孤行控制' : key === 'keepNext' ? '与下段同页' : '段内不分页'}`}
+                  value={paragraph[key] ?? ''}
+                  options={[
+                    { value: '', label: '继承' },
+                    { value: 'true', label: '开启' },
+                    { value: 'false', label: '关闭' },
+                  ]}
+                  onChange={(value) => changeParagraph(key, value)}
+                />
+              </label>
+            ))}
             {NUMBERS.map(([key, label, min, max]) => (
               <label key={key}>
                 {label}

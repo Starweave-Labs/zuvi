@@ -258,6 +258,11 @@ export const WordParagraphStyles = Extension.create<WordStyleExtensionOptions>({
               'spaceBefore',
               'spaceAfter',
               'lineHeight',
+              'lineHeightRule',
+              'lineHeightBasis',
+              'widowControl',
+              'keepNext',
+              'keepLines',
             ]
               .filter((key) => old.attrs[key] !== current.attrs[key])
               .map((key) => [

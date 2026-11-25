@@ -4,6 +4,10 @@
   gap: 10px;
   margin-block: 12px;
 }
+.zuvi-studio-word-keep-fields { display:grid; gap:8px; margin-block:12px; }
+.zuvi-studio-word-keep-fields label { display:flex; justify-content:space-between; gap:8px; align-items:center; }
+.zuvi-studio-word-page-gap { position:relative; width:calc(100% + var(--word-gap-margin) * 2); margin-inline-start:calc(-1 * var(--word-gap-margin)); background:linear-gradient(to bottom,transparent 0 var(--word-gap-start),var(--zuvi-studio-word-stage-bg) var(--word-gap-start) var(--word-gap-end),transparent var(--word-gap-end)); }
+.zuvi-studio-word-page-gap::after { content: '第 ' attr(data-word-auto-page-gap) ' 页结束'; position:absolute; top:var(--word-gap-start); left:0; right:0; height:24px; font:11px/24px sans-serif; color:var(--zuvi-color-fg-muted); text-align:center; }
 .zuvi-studio-word-paragraph-dialog .zuvi-input {
   width: 100%;
 }

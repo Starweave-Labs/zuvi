@@ -11,7 +11,19 @@ export const WORD_PARAGRAPH_KEYS = [
   'lineHeight',
   'lineHeightRule',
   'lineHeightBasis',
+  'widowControl',
+  'keepNext',
+  'keepLines',
 ] as const;
+export const WORD_KEEP_FLAGS = ['widowControl', 'keepNext', 'keepLines'] as const;
+export function wordParagraphKeepCss(attrs: Record<string, unknown>): Record<string, string> {
+  return {
+    widows: attrs.widowControl === false ? '1' : '2',
+    orphans: attrs.widowControl === false ? '1' : '2',
+    breakInside: attrs.keepLines === true ? 'avoid' : 'auto',
+    breakAfter: attrs.keepNext === true ? 'avoid' : 'auto',
+  };
+}
 export const wordLineUnits = (rule: WordLineRule | 'points') => (rule === 'auto' ? 240 : 20);
 
 export function wordParagraphNumber(
@@ -47,6 +59,10 @@ export function wordParagraphFormatIssue(
     if (!(WORD_PARAGRAPH_KEYS as readonly string[]).includes(key))
       return `不支持的段落属性：${key}。`;
     if (key === 'lineHeightRule') continue;
+    if ((WORD_KEEP_FLAGS as readonly string[]).includes(key)) {
+      if (typeof input !== 'boolean') return '分页保持属性必须为布尔值。';
+      continue;
+    }
     if (key === 'lineHeightBasis') {
       if (!['auto', 'points'].includes(String(input))) return '行距单位基准无效。';
       continue;

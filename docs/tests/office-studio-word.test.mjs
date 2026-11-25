@@ -103,6 +103,19 @@ runInNewContext(
 const { importStudioWord, exportStudioWord } = exports;
 const W = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';
 
+test('native widow control, keep-next and keep-lines retain inherited values and explicit false over repeated DOCX saves',async()=>{
+  let document=await importStudioWord(await fixture('<w:p><w:pPr><w:pStyle w:val="Keep"/><w:keepNext w:val="0"/><w:widowControl w:val="0"/></w:pPr><w:r><w:t>Direct false</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="Keep"/></w:pPr><w:r><w:t>Inherited</w:t></w:r></w:p>',{
+    'word/styles.xml':`<w:styles xmlns:w="${W}"><w:style w:type="paragraph" w:styleId="Keep"><w:name w:val="Keep"/><w:pPr><w:keepNext/><w:keepLines/><w:widowControl/></w:pPr></w:style></w:styles>`,
+  }),'Keep.docx');
+  assert.equal(document.content.attrs.paragraphStyles[0].paragraph.keepNext,true);
+  assert.equal(document.content.content[0].attrs.keepNext,false);assert.equal(document.content.content[0].attrs.keepLines,true);assert.equal(document.content.content[1].attrs.keepNext,true);
+  for(let pass=0;pass<2;pass++){
+    const file=await exportStudioWord(document),zip=await JSZip.loadAsync(await file.arrayBuffer()),xml=parse(await zip.file('word/document.xml').async('string'));
+    assert.equal(xml.getElementsByTagNameNS(W,'keepNext')[0].getAttributeNS(W,'val'),'false');
+    document=await importStudioWord(file,'Reopened.docx');assert.equal(document.content.content[0].attrs.keepNext,false);assert.equal(document.content.content[1].attrs.keepLines,true);
+  }
+});
+
 test('native paragraph borders, distance, shadow/frame and patterned shading survive direct edits and two DOCX cycles',async()=>{
   const source=await fixture('<w:p><w:pPr><w:pBdr><w:top w:val="double" w:sz="8" w:space="3" w:color="112233" w:shadow="1" w:frame="0"/><w:left w:val="dotted" w:sz="4" w:color="auto"/></w:pBdr><w:shd w:val="pct25" w:fill="FFEECC" w:color="123456"/></w:pPr><w:r><w:rPr><w:b/></w:rPr><w:t>Surface</w:t></w:r></w:p>');
   let document=await importStudioWord(source,'Surface.docx');

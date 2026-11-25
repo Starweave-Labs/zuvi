@@ -6,6 +6,8 @@ import {
   wordParagraphFormatIssue,
   wordParagraphLineCss,
   wordParagraphNumber,
+  WORD_KEEP_FLAGS,
+  wordParagraphKeepCss,
 } from './studio-word-paragraph-format';
 import {
   getStudioWordParagraphStyles,
@@ -29,6 +31,30 @@ export const WordParagraphLayout = Extension.create({
       {
         types: ['paragraph', 'heading'],
         attributes: {
+          ...Object.fromEntries(
+            WORD_KEEP_FLAGS.map((key) => [
+              key,
+              {
+                default: null,
+                parseHTML: (element: HTMLElement) => {
+                  const value = element.getAttribute(`data-word-${key.toLowerCase()}`);
+                  return value === null ? null : value === 'true';
+                },
+                renderHTML: (attrs: Record<string, unknown>) =>
+                  typeof attrs[key] === 'boolean'
+                    ? {
+                        [`data-word-${key.toLowerCase()}`]: String(attrs[key]),
+                        style: Object.entries(wordParagraphKeepCss(attrs))
+                          .map(
+                            ([key, value]) =>
+                              `${key.replace(/[A-Z]/g, (m) => '-' + m.toLowerCase())}:${value}`
+                          )
+                          .join(';'),
+                      }
+                    : {},
+              },
+            ])
+          ),
           ...Object.fromEntries(
             Object.entries(PARAGRAPH_LAYOUT).map(([key, css]) => [
               key,
@@ -181,7 +207,7 @@ export function wordSelectionParagraphFormat(editor: Editor) {
       const values = new Set(formats.map((format) => format[key]));
       return [key, values.size > 1 ? null : (values.values().next().value ?? null)];
     })
-  ) as Record<(typeof WORD_PARAGRAPH_KEYS)[number], string | number | null>;
+  ) as Record<(typeof WORD_PARAGRAPH_KEYS)[number], string | number | boolean | null>;
 }
 
 export function wordSetParagraphFormat(
@@ -193,6 +219,7 @@ export function wordSetParagraphFormat(
   if (
     editor.isDestroyed ||
     !editor.isEditable ||
+    editor.view.composing ||
     (typeof patch !== 'function' && !Object.keys(patch).length)
   )
     return false;

@@ -23,7 +23,7 @@ import {
 import { studioConditionalCellStyle } from '../../../../../packages/ui/src/components/OfficeStudio/studio-sheet-rules';
 import { studioNumberFormatColor } from '../../../../../packages/ui/src/components/OfficeStudio/studio-number-format';
 import { wordMetricCss } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-metrics';
-import { wordParagraphLineCss } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-paragraph-format';
+import { wordParagraphLineCss,wordParagraphKeepCss } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-paragraph-format';
 import {wordMergeSurface,wordSurfaceCss,type StudioWordParagraphSurface} from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-surface';
 import {
   wordMergeTabStops,
@@ -165,6 +165,7 @@ function rich(
       styles.push(`${property}:${amount(attrs[attribute], 'pt')}`);
   for (const [key, value] of Object.entries(wordParagraphLineCss(attrs)))
     styles.push(`${key.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`)}:${value}`);
+  if(['paragraph','heading'].includes(node.type))for(const [key,value]of Object.entries(wordParagraphKeepCss({...attrs,keepNext:attrs.keepNext??node.type==='heading'})))styles.push(`${key.replace(/[A-Z]/g,(m)=>'-'+m.toLowerCase())}:${value}`);
   const surface=wordMergeSurface((attrs.paragraphStyleSnapshot as {surface?:StudioWordParagraphSurface}|null)?.surface,attrs.paragraphSurface);
   for(const [key,value]of Object.entries(wordSurfaceCss(surface)))styles.push(`${key.replace(/[A-Z]/g,(m)=>'-'+m.toLowerCase())}:${value}`);
   if (color(attrs.backgroundColor)) styles.push(`background-color:${color(attrs.backgroundColor)}`);

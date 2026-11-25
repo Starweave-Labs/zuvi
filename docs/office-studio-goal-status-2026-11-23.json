@@ -1147,39 +1147,55 @@
         "docs/tests/office-studio-word.test.mjs"
       ],
       "historicalStatus": "缺失",
-      "status": "audited-not-implemented",
-      "evidence": [],
+      "status": "implemented-pagination-keep-slice-verified-full-acceptance-audit-pending",
+      "evidence": [
+        "2026-11-26：段落/样式孤行控制、与下段同页和段内不分页，继承/显式 false、取消/权限/IME/单事务历史，DOCX 三种属性与多次重开、明暗/320px。",
+        "docs/audits/2026-11-26/word-keep/: 实际分页移动、三种原生来源及两次重开，keep-before/after.pdf 与逐页文本，证明完整段落移动且文字不变。"
+      ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "未实现",
-        "implementedBehavior": "当前连续画布没有分页保持约束",
+        "date": "2026-11-26",
+        "sourceCommit": "f64363d",
+        "implementation": "切片验证",
+        "implementedBehavior": "实际段落/样式保持开关，默认孤行控制、标题与下段同页，混合值保持、直接 false 覆盖、事务/取消/权限/IME和格式刷/清除；测量正文文本分页视图，三种约束各自有关闭/开启/撤销重做/DOCX 两次重开证据，打印 PDF 逐页文本证明保持段落完整。",
         "functionalGaps": [
-          "缺 widow/orphan、keepNext、keepLines 和布局联动"
+          "文本/标题与整块表格的测量布局切片已验证；完整混合字体、浮动/图片避让、表格行拆分/脚注/重复页眉页脚与外部排版等复杂组合仍未完成。视图分页不新增文档分页符，不据此证明 W046/W048 全部验收。"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 156,
-            "anchor": "const EXTENSIONS"
+            "path": "packages/ui/src/components/OfficeStudio/studio-word-pagination.ts",
+            "line": 40,
+            "anchor": "export function wordPaginate"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
-            "line": 60,
-            "anchor": "const UNSUPPORTED_CONTENT"
+            "path": "packages/ui/src/components/OfficeStudio/studio-word-pagination-extension.ts",
+            "line": 229,
+            "anchor": "export const WordPaginationLayout"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 78,
-            "anchor": "export interface StudioWordDocument"
+            "path": "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialog.tsx",
+            "line": 22,
+            "anchor": "export function StudioWordParagraphDialog"
+          },
+          {
+            "path": "e2e/office-studio-word-keep.spec.ts",
+            "line": 41,
+            "anchor": "pagination keep flags move"
           }
         ],
-        "existingTestFiles": [],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "existingTestFiles": [
+          "packages/ui/src/components/OfficeStudio/studio-word-pagination.test.ts",
+          "packages/ui/src/components/OfficeStudio/studio-word-paragraph-layout.test.ts",
+          "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+          "docs/tests/office-studio-word.test.mjs",
+          "docs/tests/studio-print.test.mjs",
+          "e2e/office-studio-word-keep.spec.ts"
+        ],
+        "testEvidenceNote": "Model, permission/history/UI, native files, real browser text pagination and print PDF page evidence establish the current slice. Complete complex-layout acceptance remains pending.",
+        "sourceState": "Includes measured pagination and keep-property continuation changes committed with this audit."
       },
       "gaps": [
-        "缺 widow/orphan、keepNext、keepLines 和布局联动"
+        "文本/标题与整块表格的测量布局切片已验证；完整混合字体、浮动/图片避让、表格行拆分/脚注/重复页眉页脚与外部排版等复杂组合仍未完成。视图分页不新增文档分页符，不据此证明 W046/W048 全部验收。"
       ]
     },
     {
@@ -2872,15 +2888,15 @@
         "docs/tests/office-studio-word.test.mjs"
       ],
       "historicalStatus": "缺失",
-      "status": "audited-not-implemented",
+      "status": "audited-partial-acceptance-pending",
       "evidence": [],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "未实现",
-        "implementedBehavior": "连续文稿加显式分页",
+        "date": "2026-11-26",
+        "sourceCommit": "f64363d",
+        "implementation": "部分实现",
+        "implementedBehavior": "正文文本/标题按浏览器行测量分页，保持约束、字体与宽度变化重算，表格当前按整块；视图开关、文字/文件/历史不变及三种保持属性原生重开有证据。",
         "functionalGaps": [
-          "缺文字图片表格脚注的完整分页与布局重算"
+          "图片/浮动对象避让、表格行分页/重复表头、脚注、节布局、重复页眉页脚与页码域尚未实现完整自动分页；长文稿、复杂混合字体/RTL/IME和真实页缩略图仍待验收。"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
@@ -2898,13 +2914,19 @@
             "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
             "line": 78,
             "anchor": "export interface StudioWordDocument"
+          },
+          {
+            "path": "packages/ui/src/components/OfficeStudio/studio-word-pagination-extension.ts",
+            "line": 229,
+            "anchor": "export const WordPaginationLayout"
           }
         ],
         "existingTestFiles": [],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete.",
+        "sourceState": "Includes text pagination continuation changes committed with this audit."
       },
       "gaps": [
-        "缺文字图片表格脚注的完整分页与布局重算"
+        "图片/浮动对象避让、表格行分页/重复表头、脚注、节布局、重复页眉页脚与页码域尚未实现完整自动分页；长文稿、复杂混合字体/RTL/IME和真实页缩略图仍待验收。"
       ]
     },
     {
@@ -10192,8 +10214,8 @@
   "currentAuditItems": 159,
   "currentImplementationCounts": {
     "基础实现": 22,
-    "切片验证": 25,
-    "部分实现": 51,
-    "未实现": 61
+    "切片验证": 26,
+    "部分实现": 52,
+    "未实现": 59
   }
 }

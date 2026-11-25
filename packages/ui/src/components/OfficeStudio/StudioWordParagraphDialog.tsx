@@ -8,6 +8,7 @@ import {
   wordParagraphNumber,
   wordParagraphLineCss,
   type WordLineRule,
+  WORD_KEEP_FLAGS,
 } from './studio-word-paragraph-format';
 import type { StudioWordParagraphFormat } from './studio-types';
 
@@ -17,7 +18,7 @@ const numeric = [
   ['spaceBefore', '段前（pt）'],
   ['spaceAfter', '段后（pt）'],
 ] as const;
-type Values = Record<keyof Required<StudioWordParagraphFormat>, string | number | null>;
+type Values = Record<keyof Required<StudioWordParagraphFormat>, string | number | boolean | null>;
 export function StudioWordParagraphDialog({
   values,
   blocked,
@@ -51,6 +52,11 @@ export function StudioWordParagraphDialog({
           : 'hanging'
   );
   const [dirty, setDirty] = React.useState<Record<string, boolean>>({});
+  const [keep, setKeep] = React.useState(() =>
+    Object.fromEntries(
+      WORD_KEEP_FLAGS.map((key) => [key, values[key] === null ? 'keep' : String(values[key])])
+    )
+  );
   const [saveError, setSaveError] = React.useState('');
   const change = (key: string, value: string) => {
     setDraft((current) => ({ ...current, [key]: value }));
@@ -58,6 +64,8 @@ export function StudioWordParagraphDialog({
     setSaveError('');
   };
   const patch: Partial<StudioWordParagraphFormat> = {};
+  for (const key of WORD_KEEP_FLAGS)
+    if (dirty[key] && keep[key] !== 'keep') patch[key] = keep[key] === 'true';
   let issue = '';
   if (dirty.textAlign && align !== 'keep')
     patch.textAlign = align as StudioWordParagraphFormat['textAlign'];
@@ -210,6 +218,38 @@ export function StudioWordParagraphDialog({
             </label>
           </div>
           <p>空白或“保持原值”保留选区各自格式；修改只影响所选段落。</p>
+          <div className="zuvi-studio-word-keep-fields">
+            {WORD_KEEP_FLAGS.map((key) => (
+              <label key={key}>
+                {key === 'widowControl'
+                  ? '孤行控制'
+                  : key === 'keepNext'
+                    ? '与下段同页'
+                    : '段内不分页'}
+                <Select
+                  aria-label={
+                    key === 'widowControl'
+                      ? '孤行控制'
+                      : key === 'keepNext'
+                        ? '与下段同页'
+                        : '段内不分页'
+                  }
+                  value={keep[key]}
+                  disabled={blocked}
+                  options={[
+                    { value: 'keep', label: '保持原值' },
+                    { value: 'true', label: '开启' },
+                    { value: 'false', label: '关闭' },
+                  ]}
+                  onChange={(value) => {
+                    setKeep((old) => ({ ...old, [key]: value }));
+                    setDirty((old) => ({ ...old, [key]: true }));
+                    setSaveError('');
+                  }}
+                />
+              </label>
+            ))}
+          </div>
           <div className="zuvi-studio-word-paragraph-preview" aria-label="段落预览">
             <p
               data-word-line-rule={preview.lineHeightRule}

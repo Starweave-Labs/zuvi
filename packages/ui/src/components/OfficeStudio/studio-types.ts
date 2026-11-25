@@ -69,6 +69,9 @@ export interface StudioWordParagraphFormat {
   lineHeightRule?: 'auto' | 'exact' | 'atLeast';
   /** For a style's own value with an inherited rule, retains native measurement units. */
   lineHeightBasis?: 'auto' | 'points';
+  widowControl?: boolean;
+  keepNext?: boolean;
+  keepLines?: boolean;
 }
 
 /** Definitions live in content.attrs.paragraphStyles; paragraphs link via attrs.paragraphStyle. */

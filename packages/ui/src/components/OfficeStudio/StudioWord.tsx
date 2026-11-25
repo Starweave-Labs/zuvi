@@ -53,6 +53,7 @@ import { StudioWordRuler as WordRuler } from './StudioWordRuler';
 import { WordNumbering, wordSetNumberedContent, wordNumberingContext, wordContinueNumbering, wordRestartNumbering, wordChangeNumberingLevel, wordSetNumberingCatalog, wordToggleNumberingPreset, wordEditorNumbering, wordApplyNumbering } from './studio-word-numbering-extension';
 import { StudioWordNumberingDialog } from './StudioWordNumberingDialog';
 import {StudioWordSurfaceDialog} from './StudioWordSurfaceDialog';
+import {WordPaginationLayout,wordSetPagination} from './studio-word-pagination-extension';
 import {WordParagraphSurface,wordSelectionSurfaces,wordSetParagraphSurface} from './studio-word-surface-extension';
 import { materializeWordNumbering, wordNumberingCatalog, type WordNumberingCatalog } from './studio-word-numbering';
 import {
@@ -471,7 +472,7 @@ export function StudioWord({
   const focusRegionRef = React.useRef<WordRegion | null>(null);
   const bodyEditor: Editor | null = useEditor(
     {
-      extensions: [...EXTENSIONS, WordParagraphStyles, WordNumbering,
+      extensions: [...EXTENSIONS, WordParagraphStyles, WordNumbering, WordPaginationLayout,
         WordTabs.configure({ getDefaultTabStop: () => latest.current.document.defaultTabStop ?? 36, getDecimalSymbol: () => latest.current.document.decimalSymbol })],
       content: numberedContent(document.content, paragraphStyles),
       editable: editable && region === 'content',
@@ -727,6 +728,10 @@ export function StudioWord({
     zoom === 'fit' ? Math.min(1, Math.max(0.25, (stageWidth - 48) / pageWidth)) : Number(zoom);
   const headerDistance = document.page.headerDistance ?? DEFAULT_REGION_DISTANCE;
   const footerDistance = document.page.footerDistance ?? DEFAULT_REGION_DISTANCE;
+  const [paginatedView,setPaginatedView]=React.useState(false);
+  React.useLayoutEffect(()=>{
+    if(bodyEditor)wordSetPagination(bodyEditor,{enabled:paginatedView,height:pageHeight-margin*2,margin,gap:24});
+  },[bodyEditor,paginatedView,pageHeight,margin]);
 
   React.useEffect(() => {
     const stage = stageRef.current;
@@ -2363,6 +2368,7 @@ export function StudioWord({
         <Tabs.Panel value="view" className="zuvi-studio-word-tool-row">
           <RibbonGroup label="显示" className="zuvi-studio-word-view-group">
             <Checkbox label="标尺" checked={showRuler} onChange={setShowRuler} />
+            <Checkbox label="分页布局" checked={paginatedView} disabled={disabled} onChange={setPaginatedView}/>
             <Checkbox
               label="非打印字符"
               checked={showNonprinting}

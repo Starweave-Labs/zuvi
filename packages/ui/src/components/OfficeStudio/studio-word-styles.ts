@@ -6,7 +6,7 @@ import type {
 } from './studio-types';
 import { studioFontFamilyInput } from './studio-font-input';
 import { wordMetricPoints } from './studio-word-metrics';
-import { wordParagraphFormatIssue, wordLineUnits } from './studio-word-paragraph-format';
+import { wordParagraphFormatIssue, wordLineUnits, WORD_KEEP_FLAGS } from './studio-word-paragraph-format';
 import {
   wordSurface,
   wordMergeSurface,
@@ -30,6 +30,7 @@ export const WORD_BUILTIN_STYLES: StudioWordParagraphStyle[] = [
     next: 'paragraph',
     run: { fontSize: [24, 20, 16, 14, 13, 12][index], bold: true },
     paragraph: {
+      keepNext: true,
       lineHeight: 1.35,
       spaceBefore: [24, 20, 16, 14, 13, 12][index],
       spaceAfter: [13.2, 11, 8.8, 7.7, 7.15, 6.6][index],
@@ -60,6 +61,9 @@ const BODY_PARAGRAPH: Required<StudioWordParagraphFormat> = {
   lineHeight: 1.75,
   lineHeightRule: 'auto',
   lineHeightBasis: 'auto',
+  widowControl:true,
+  keepNext:false,
+  keepLines:false,
 };
 const RUN_KEYS = Object.keys(WORD_BODY_RUN) as (keyof StudioWordCharacterStyle)[];
 const PARAGRAPH_KEYS = Object.keys(BODY_PARAGRAPH) as (keyof StudioWordParagraphFormat)[];
@@ -176,7 +180,9 @@ export function validateStudioWordParagraphStyles(value: unknown): StudioWordPar
       for (const [key, input] of Object.entries(paragraph)) {
         if (!PARAGRAPH_KEYS.includes(key as keyof StudioWordParagraphFormat))
           throw new Error(`样式段落包含不支持的 ${key} 属性。`);
-        if (key === 'textAlign') {
+        if ((WORD_KEEP_FLAGS as readonly string[]).includes(key)) {
+          if(typeof input!=='boolean')throw new Error('样式分页保持属性必须为布尔值。');
+        } else if (key === 'textAlign') {
           if (!['left', 'center', 'right', 'justify'].includes(String(input)))
             throw new Error('样式对齐方式无效。');
         } else if (key === 'lineHeight') finite(input, '样式行距', 0.000001, 500);

@@ -62,15 +62,62 @@ function fixture() {
   return editor;
 }
 describe('Word paragraph layout model', () => {
+  it('updates automatic styles with boolean keep values in the same undo group',()=>{
+    const definition:StudioWordParagraphStyle={id:'autoKeep',name:'Auto keep',autoUpdate:true,paragraph:{keepNext:true,widowControl:true}};
+    const root:StudioRichNode={type:'doc',attrs:{paragraphStyles:[definition]},content:['First','Second'].map((text)=>({type:'paragraph',attrs:{paragraphStyle:'autoKeep'},content:[{type:'text',text}]}))};
+    const editor=new Editor({element:document.createElement('div'),extensions:[StarterKit,TextStyleKit,WordParagraphLayout,WordParagraphStyles],content:materializeStudioWordStyles(root,[definition])});editors.push(editor);
+    const original=editor.getJSON();wordSetParagraphFormat(editor,{keepNext:false,keepLines:true,widowControl:false});
+    expect(editor.getJSON().attrs?.paragraphStyles[0].paragraph).toMatchObject({keepNext:false,keepLines:true,widowControl:false});
+    expect(editor.getJSON().content!.map((node)=>node.attrs?.keepNext)).toEqual([false,false]);
+    editor.commands.undo();expect(editor.getJSON()).toEqual(original);
+  });
+  it('applies pagination flags atomically and preserves explicit false during style changes', () => {
+    const editor = fixture();
+    editor.commands.setTextSelection({ from: 1, to: 12 });
+    const original = editor.getJSON();
+    wordSetParagraphFormat(editor, { keepLines: true, keepNext: true, widowControl: false });
+    expect(
+      wordSelectedParagraphs(editor).every(
+        ({ node }) =>
+          node.attrs.keepLines && node.attrs.keepNext && node.attrs.widowControl === false
+      )
+    ).toBe(true);
+    editor.commands.undo();
+    expect(editor.getJSON()).toEqual(original);
+    editor.commands.redo();
+    wordSetParagraphStyles(editor, [
+      { ...styles[0], paragraph: { ...styles[0].paragraph, keepLines: false, widowControl: true } },
+    ]);
+    expect(editor.getJSON().content![0].attrs).toMatchObject({
+      keepLines: true,
+      widowControl: false,
+    });
+    expect(() => wordSetParagraphFormat(editor, { keepNext: 'true' as never })).toThrow();
+    editor.setEditable(false);
+    expect(wordSetParagraphFormat(editor, { keepNext: false })).toBe(false);
+  });
   it('reads shared body style definitions when formatting a header/footer without local definitions', () => {
     const editor = new Editor({
       element: document.createElement('div'),
-      extensions: [StarterKit, TextStyleKit, WordParagraphLayout,
-        WordParagraphStyles.configure({ autoUpdate: false, getStyles: () => styles })],
-      content: materializeStudioWordStyles({ type: 'doc', content: [{
-        type: 'paragraph', attrs: { paragraphStyle: 'review' },
-        content: [{ type: 'text', text: 'Header' }],
-      }] }, styles),
+      extensions: [
+        StarterKit,
+        TextStyleKit,
+        WordParagraphLayout,
+        WordParagraphStyles.configure({ autoUpdate: false, getStyles: () => styles }),
+      ],
+      content: materializeStudioWordStyles(
+        {
+          type: 'doc',
+          content: [
+            {
+              type: 'paragraph',
+              attrs: { paragraphStyle: 'review' },
+              content: [{ type: 'text', text: 'Header' }],
+            },
+          ],
+        },
+        styles
+      ),
     });
     editors.push(editor);
     expect(wordSelectionParagraphFormat(editor)).toMatchObject({ indentLeft: 8, lineHeight: 1.5 });

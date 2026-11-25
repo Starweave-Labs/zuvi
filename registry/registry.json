@@ -2064,6 +2064,8 @@
         "packages/ui/src/components/OfficeStudio/studio-word-numbering-extension.ts",
         "packages/ui/src/components/OfficeStudio/studio-word-numbering-layout.ts",
         "packages/ui/src/components/OfficeStudio/studio-word-numbering.ts",
+        "packages/ui/src/components/OfficeStudio/studio-word-pagination-extension.ts",
+        "packages/ui/src/components/OfficeStudio/studio-word-pagination.ts",
         "packages/ui/src/components/OfficeStudio/studio-word-paragraph-format.ts",
         "packages/ui/src/components/OfficeStudio/studio-word-paragraph-layout.ts",
         "packages/ui/src/components/OfficeStudio/studio-word-style-extension.ts",

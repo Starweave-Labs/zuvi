@@ -21,6 +21,7 @@ import {
 } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-tabs';
 import {
   wordLineUnits,
+  WORD_KEEP_FLAGS,
   wordParagraphNumber,
   WORD_PARAGRAPH_KEYS,
   type WordLineRule,
@@ -432,6 +433,7 @@ function paragraphProperties(
   ownOnly = false
 ): Record<string, unknown> {
   const result = ownOnly ? ({} as Record<string, unknown>) : { ...base };
+  for(const key of WORD_KEEP_FLAGS)if(child(properties,key))result[key]=enabled(child(properties,key));
   if (
     child(properties, 'framePr') ||
     child(properties, 'textDirection') ||
@@ -672,6 +674,9 @@ function parseStyles(xml?: XMLDocument): {
     'lineHeight',
     'lineHeightRule',
     'lineHeightBasis',
+    'widowControl',
+    'keepNext',
+    'keepLines',
   ];
   const paragraphFormat = (input: Record<string, unknown>): StudioWordParagraphFormat =>
     Object.fromEntries(
@@ -1063,6 +1068,7 @@ function parseParagraph(element: Element, context: ImportContext): ParsedParagra
     ...(attr(spacing, 'after') ? ['spaceAfter'] : []),
     ...(attr(spacing, 'line') ? ['lineHeight'] : []),
     ...(attr(spacing, 'lineRule') ? ['lineHeightRule'] : []),
+    ...WORD_KEEP_FLAGS.filter((key)=>child(properties,key)),
   ];
   const directOutline = value(properties, 'outlineLvl');
   const headingLevel = directOutline
@@ -1936,6 +1942,9 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
         : {}),
     },
     paragraph: {
+      ...(style.paragraph?.widowControl!==undefined?{widowControl:style.paragraph.widowControl}:{}),
+      ...(style.paragraph?.keepNext!==undefined?{keepNext:style.paragraph.keepNext}:{}),
+      ...(style.paragraph?.keepLines!==undefined?{keepLines:style.paragraph.keepLines}:{}),
       ...(style.tabStops !== undefined ? { tabStops: nativeTabs(style.tabStops) } : {}),
       ...(style.headingLevel !== undefined
         ? { outlineLevel: style.headingLevel ? style.headingLevel - 1 : 9 }
@@ -1988,6 +1997,9 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
       'lineHeight',
       'lineHeightRule',
       'lineHeightBasis',
+      'widowControl',
+      'keepNext',
+      'keepLines',
       'paragraphStyleDirectAttrs',
       'paragraphStyle',
       'paragraphStyleFallback',
@@ -1999,6 +2011,7 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
       'numberingDisabled',
     ]);
     const attrs = node.attrs || {};
+    for(const key of WORD_KEEP_FLAGS)if(attrs[key]!=null&&typeof attrs[key]!=='boolean')unsupported('分页保持属性');
     if (attrs.numberingDisabled != null && typeof attrs.numberingDisabled !== 'boolean')
       unsupported('编号禁用标记');
     const numberRef = wordNodeNumbering(node, numberCatalog);
@@ -2051,6 +2064,7 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
     }
     return new SurfaceParagraph({
       ...options,
+      ...Object.fromEntries(WORD_KEEP_FLAGS.filter((key)=>attrs[key]!=null&&!inherited(key)).map((key)=>[key,attrs[key]])),
       ...(surface?{border:undefined}:{}),
       ...(attrs.numberingDisabled
         ? { numbering: false }
@@ -2242,27 +2256,27 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
         },
         heading1: {
           run: { font: 'Noto Sans SC', size: 48, bold: true, color: '1F2937' },
-          paragraph: { spacing: { line: 324, before: 480, after: 264 } },
+          paragraph: { keepNext:true, spacing: { line: 324, before: 480, after: 264 } },
         },
         heading2: {
           run: { font: 'Noto Sans SC', size: 40, bold: true, color: '1F2937' },
-          paragraph: { spacing: { line: 324, before: 400, after: 220 } },
+          paragraph: { keepNext:true, spacing: { line: 324, before: 400, after: 220 } },
         },
         heading3: {
           run: { font: 'Noto Sans SC', size: 32, bold: true, color: '1F2937' },
-          paragraph: { spacing: { line: 324, before: 320, after: 176 } },
+          paragraph: { keepNext:true, spacing: { line: 324, before: 320, after: 176 } },
         },
         heading4: {
           run: { font: 'Noto Sans SC', size: 28, bold: true, color: '1F2937' },
-          paragraph: { spacing: { line: 324, before: 280, after: 154 } },
+          paragraph: { keepNext:true, spacing: { line: 324, before: 280, after: 154 } },
         },
         heading5: {
           run: { font: 'Noto Sans SC', size: 26, bold: true, color: '1F2937' },
-          paragraph: { spacing: { line: 324, before: 260, after: 143 } },
+          paragraph: { keepNext:true, spacing: { line: 324, before: 260, after: 143 } },
         },
         heading6: {
           run: { font: 'Noto Sans SC', size: 24, bold: true, color: '1F2937' },
-          paragraph: { spacing: { line: 324, before: 240, after: 132 } },
+          paragraph: { keepNext:true, spacing: { line: 324, before: 240, after: 132 } },
         },
       },
       paragraphStyles: [

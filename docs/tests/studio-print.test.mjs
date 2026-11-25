@@ -71,6 +71,14 @@ const print = compiled('../src/pages/collaboration/office-studio/studio-print.ts
   },
 });
 
+test('Word print uses explicit keep and widow values while title defaults retain the next paragraph',()=>{
+  const model=models.createOfficeStudioDocument('word');
+  model.content={type:'doc',content:[{type:'paragraph',attrs:{keepNext:true,keepLines:true,widowControl:false},content:[{type:'text',text:'Kept'}]},{type:'paragraph',attrs:{keepNext:false,keepLines:false,widowControl:true},content:[{type:'text',text:'Split'}]}]};
+  const html=new JSDOM(print.createStudioPrintHtml(model)).window.document,p=html.querySelectorAll('article p');
+  assert.equal(p[0].style.breakAfter,'avoid');assert.equal(p[0].style.breakInside,'avoid');assert.equal(p[0].style.widows,'1');
+  assert.equal(p[1].style.breakAfter,'auto');assert.equal(p[1].style.breakInside,'auto');assert.equal(p[1].style.orphans,'2');
+});
+
 test('Word print retains native tab characters and resolved leaders for the measurement pass without inserting document text', () => {
   const model = models.createOfficeStudioDocument('word');
   model.defaultTabStop = 30;

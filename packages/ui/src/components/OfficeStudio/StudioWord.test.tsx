@@ -85,7 +85,9 @@ describe('Word paragraph dialog and ruler', () => {
   it('edits inherited tab stops through ZUVI controls with precision checks, cancellation and one history step', async () => {
     const model = namedStyleDocument();
     model.defaultTabStop = 30;
-    (model.content.attrs!.paragraphStyles as StudioWordParagraphStyle[])[0].tabStops = [{ position: 180, alignment: 'right', leader: 'dot' }];
+    (model.content.attrs!.paragraphStyles as StudioWordParagraphStyle[])[0].tabStops = [
+      { position: 180, alignment: 'right', leader: 'dot' },
+    ];
     const { textbox, onChange } = await mount({ document: model });
     selectNodeContents(textbox, textbox.querySelector('p')!);
     fireEvent.click(screen.getByRole('button', { name: '制表位' }));
@@ -100,7 +102,12 @@ describe('Word paragraph dialog and ruler', () => {
     fireEvent.change(screen.getByLabelText('制表位位置（pt）'), { target: { value: '144.05' } });
     fireEvent.click(screen.getByRole('button', { name: '应用制表位' }));
     expect(onChange).toHaveBeenCalledTimes(1);
-    expect(onChange.mock.lastCall?.[0].content.content[0].attrs.tabStops).toEqual([{position:180,alignment:'clear'},{position:144.05,alignment:'right',leader:'dot'}].sort((a,b)=>a.position-b.position));
+    expect(onChange.mock.lastCall?.[0].content.content[0].attrs.tabStops).toEqual(
+      [
+        { position: 180, alignment: 'clear' },
+        { position: 144.05, alignment: 'right', leader: 'dot' },
+      ].sort((a, b) => a.position - b.position)
+    );
     fireEvent.click(screen.getByRole('button', { name: '撤销' }));
     expect(onChange.mock.lastCall?.[0].content.content[0].attrs.tabStops).toBeNull();
     fireEvent.click(screen.getByRole('button', { name: '重做' }));
@@ -164,10 +171,12 @@ describe('Word paragraph dialog and ruler', () => {
     };
   }
   const chooseParagraph = (label: string, value: string) => {
-    fireEvent.click(
-      within(screen.getByRole('dialog')).getByRole('button', { name: new RegExp(`^${label}`) })
-    );
-    fireEvent.click(screen.getByRole('option', { name: value }));
+    const trigger = within(screen.getByRole('dialog')).getByRole('button', {
+      name: new RegExp(`^${label}`),
+    });
+    fireEvent.click(trigger);
+    const list = document.getElementById(trigger.getAttribute('aria-controls')!)!;
+    fireEvent.click(within(list).getByRole('option', { name: value }));
   };
   it('applies mixed paragraph values in one history step and keeps untouched values separate', async () => {
     const f = paragraphSetup();
@@ -212,12 +221,53 @@ describe('Word paragraph dialog and ruler', () => {
     expect(f.changed).not.toHaveBeenCalled();
     expect(screen.getByRole('button', { name: '段落设置' })).toBeDisabled();
   });
+  it('keeps mixed pagination flags unchanged until edited, commits once, and blocks an open dialog after permission changes', async () => {
+    const f = paragraphSetup();
+    const body = await screen.findByRole('textbox', { name: 'Word 文档正文' });
+    selectNodeContents(body, body);
+    fireEvent.click(screen.getByRole('button', { name: '段落设置' }));
+    chooseParagraph('段内不分页', '开启');
+    chooseParagraph('与下段同页', '开启');
+    chooseParagraph('孤行控制', '关闭');
+    f.permissions({ readOnly: true, disabled: false });
+    expect(screen.getByRole('button', { name: '应用段落设置' })).toBeDisabled();
+    expect(f.changed).not.toHaveBeenCalled();
+    f.permissions({ readOnly: false, disabled: false });
+    fireEvent.click(screen.getByRole('button', { name: '应用段落设置' }));
+    expect(f.changed).toHaveBeenCalledOnce();
+    for (const paragraph of f.current().content.content!)
+      expect(paragraph.attrs).toMatchObject({
+        keepLines: true,
+        keepNext: true,
+        widowControl: false,
+      });
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    expect(f.current().content.content![0].attrs?.keepLines).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    expect(f.current().content.content![0].attrs?.keepLines).toBe(true);
+    selectNodeContents(body, body.firstChild!);
+    fireEvent.click(screen.getByRole('button', { name: '段落设置' }));
+    chooseParagraph('段内不分页', '关闭');
+    fireEvent.click(screen.getByRole('button', { name: '取消' }));
+    expect(f.current().content.content![0].attrs?.keepLines).toBe(true);
+  });
+  it('lets readonly readers toggle measured pagination without writing data while disabled readers cannot',async()=>{
+    const model=documentModel(),onChange=vi.fn();const view=render(<StudioWord document={model} onChange={onChange} readOnly disabled={false}/>);
+    await screen.findByRole('textbox',{name:'Word 文档正文'});fireEvent.click(screen.getByRole('tab',{name:'视图'}));const toggle=screen.getByRole('checkbox',{name:'分页布局'});fireEvent.click(toggle);
+    expect(toggle).toBeChecked();expect(onChange).not.toHaveBeenCalled();view.rerender(<StudioWord document={model} onChange={onChange} disabled readOnly={false}/>);expect(toggle).toBeDisabled();expect(onChange).not.toHaveBeenCalled();
+  });
   it('edits a named header style using shared definitions and restores its direct indent in one undo', async () => {
     const model = namedStyleDocument();
-    model.header = { type: 'doc', content: [{
-      type: 'paragraph', attrs: { paragraphStyle: 'review' },
-      content: [{ type: 'text', text: 'Named header' }],
-    }] };
+    model.header = {
+      type: 'doc',
+      content: [
+        {
+          type: 'paragraph',
+          attrs: { paragraphStyle: 'review' },
+          content: [{ type: 'text', text: 'Named header' }],
+        },
+      ],
+    };
     const { onChange } = await mount({ document: model });
     const header = await screen.findByRole('textbox', { name: 'Word 页眉' });
     fireEvent.doubleClick(screen.getByLabelText('页眉区域'));
@@ -228,7 +278,9 @@ describe('Word paragraph dialog and ruler', () => {
     fireEvent.change(screen.getByLabelText('左缩进（pt）'), { target: { value: '24' } });
     fireEvent.click(screen.getByRole('button', { name: '应用段落设置' }));
     expect(header.querySelector('p')).toHaveStyle({ marginLeft: '24pt', lineHeight: '1.5' });
-    expect(onChange.mock.lastCall?.[0].header.content[0].attrs.paragraphStyleDirectAttrs).toContain('indentLeft');
+    expect(onChange.mock.lastCall?.[0].header.content[0].attrs.paragraphStyleDirectAttrs).toContain(
+      'indentLeft'
+    );
     fireEvent.click(screen.getByRole('button', { name: '撤销' }));
     expect(header.querySelector('p')).toHaveStyle({ marginLeft: '0pt' });
   });
