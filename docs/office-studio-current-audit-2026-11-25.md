@@ -34,10 +34,10 @@
 | W022 | 建表与行列增删 | 基础实现 | 建表、增删行列、标题行与删除表格 | 跨行列选区取消和一次撤销需独立 UI/文件闭环 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W023 | 合并与拆分单元格 | 基础实现 | 矩形合并拆分，原生 colspan/rowspan 往返 | 拆分内容分配、复杂跨合并选区和失败保留证据待补 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W024 | 表格边框底纹样式 | 部分实现 | 单元格背景和默认表格边框 | 缺单边/内外边框、主题表样式编辑及原生保留 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
-| W025 | 行高列宽与分布 | 部分实现 | 表格列宽导入保存与内核拖列宽 | 缺固定/最小行高、均匀分布、拖动历史验收 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
+| W025 | 行高列宽与分布 | 部分实现 | 行高自动/最小/固定入口、混合/事务/取消/只读/IME、两次DOCX重开及固定裁切实际分页/打印；既有列宽读写拖动 | 行高拖动/行列平均分布及复杂合并/嵌套/极小超高行/键盘组合未闭环 | `docs/audits/2026-11-26/word-row-properties/` |
 | W026 | 单元格对齐与边距 | 部分实现 | 单元格内正文可水平对齐 | 缺九宫格垂直对齐、间距和内边距模型/入口 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W027 | 跨页重复标题行 | 部分实现 | 编辑器重复表头预留页高，打印thead；表头编辑/历史/两次DOCX重开/只读/明暗320px | 跨纵向合并、多行超高表头及全部复杂布局仍待验收 | `docs/audits/2026-11-26/word-table-pagination/` |
-| W028 | 表格跨页与环绕 | 部分实现 | 普通行内表格实测行高分页，纵向合并关联行同组，真实65行DOCX/多页打印 | 缺跨页行策略与浮动定位/环绕；原生浮动表格拒绝 | `studio-word-pagination-extension.ts`；`docs/audits/2026-11-26/word-table-pagination/` |
+| W028 | 表格跨页与环绕 | 部分实现 | 行/合并组分页及重复表头；跨页标记入口/历史/原生cantSplit两次重开，固定行高参与测量/打印；单单元格文字段落80行分3页，策略编辑/撤销重做/DOCX重开通过 | 多列/合并/多段落/图片及重复表头的行内同步分片、复杂布局和浮动定位/环绕仍缺失 | `studio-word-pagination-extension.ts`；`docs/audits/2026-11-26/word-row-properties/`；`docs/audits/2026-11-26/word-table-pagination/` |
 | W029 | 文本与表格互转 | 未实现 | 有独立文字和表格节点 | 缺双向转换、分隔符预览及原生保存 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W030 | 表格公式 | 未实现 | Word 域仅支持页码 | 缺表格引用公式与域刷新；未知域拒绝 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W031 | 内嵌图片插入与尺寸 | 部分实现 | 内嵌图片导入/插入、比例尺寸、删除和保存 | 缺完整替换图片入口及其历史/文件验证 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |

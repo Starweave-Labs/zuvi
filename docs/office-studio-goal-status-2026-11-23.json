@@ -1675,15 +1675,20 @@
       "status": "audited-partial-acceptance-pending",
       "evidence": [],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
+        "date": "2026-11-26",
+        "sourceCommit": "83dc1a6",
         "implementation": "部分实现",
-        "implementedBehavior": "表格列宽导入保存与内核拖列宽",
+        "implementedBehavior": "列宽导入保存和内核拖列宽；行高自动/最小/固定的ZUVI混合选区入口、单事务历史/取消/只读/输入IME、原生trHeight两次重开；固定内容裁切保留全文，25行实际编辑器和打印均为一页。 纵向合并固定行累计覆盖行高度，嵌套装饰历史和原生DOCX导入几何已验证。",
         "functionalGaps": [
-          "缺固定/最小行高、均匀分布、拖动历史验收"
+          "行高拖动、行列平均分布、复杂合并/嵌套/极小或超高行及全部选区键盘组合仍待实现与验收。"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
+          {
+            "path": "docs/audits/2026-11-26/word-row-properties/README.md",
+            "line": 1,
+            "anchor": "W025/W028 表格行属性进行中"
+          },
           {
             "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
             "line": 156,
@@ -1707,7 +1712,7 @@
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
       "gaps": [
-        "缺固定/最小行高、均匀分布、拖动历史验收"
+        "行高拖动、行列平均分布、复杂合并/嵌套/极小或超高行及全部选区键盘组合仍待实现与验收。"
       ]
     },
     {
@@ -1857,12 +1862,17 @@
         "date": "2026-11-26",
         "sourceCommit": "fd7d8f0",
         "implementation": "部分实现",
-        "implementedBehavior": "普通行内表格按实测行高分页，纵向合并关联行保持同组，合法页间装饰及重复表头预留高度；65行DOCX与真实多页打印有证据。",
+        "implementedBehavior": "按实测行高/合并组分页及重复表头；行跨页ZUVI入口、单事务历史、原生cantSplit两次重开；单个未合并单元格且只有文字/硬换行的单段落行实际内容分片，80行分为3页，禁止→允许跨页、撤销重做、DOCX导出重开后重新启用分页已验证；固定行高及合并高度参与测量/打印。",
         "functionalGaps": [
-          "缺跨页行策略与浮动定位/环绕；原生浮动表格拒绝"
+          "多列/合并单元格同步分片、多段落或图片单元格、带重复表头的行内分片及复杂布局仍待实现与验收；浮动表格定位/环绕仍缺失，原生浮动表格拒绝。"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
+          {
+            "path": "docs/audits/2026-11-26/word-row-properties/README.md",
+            "line": 1,
+            "anchor": "W025/W028 表格行属性进行中"
+          },
           {
             "path": "docs/audits/2026-11-26/word-table-pagination/README.md",
             "line": 1,
@@ -1888,7 +1898,7 @@
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
       "gaps": [
-        "缺跨页行策略与浮动定位/环绕；原生浮动表格拒绝"
+        "多列/合并单元格同步分片、多段落或图片单元格、带重复表头的行内分片及复杂布局仍待实现与验收；浮动表格定位/环绕仍缺失，原生浮动表格拒绝。"
       ]
     },
     {

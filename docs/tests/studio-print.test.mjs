@@ -85,6 +85,16 @@ test('Word print repeats only consecutive leading complete header rows', () => {
   assert.equal(noHeader.querySelectorAll('thead').length, 0);
   assert.equal(noHeader.querySelectorAll('tbody > tr').length, 2);
 });
+test('Word print applies row minimum height and explicit split policy while automatic height ignores its value', () => {
+  const model = models.createOfficeStudioDocument('word');
+  const row = (attrs, text) => ({ type: 'tableRow', attrs, content: [{ type: 'tableCell', content: [{ type: 'paragraph', content: [{ type: 'text', text }] }] }] });
+  model.content = { type: 'doc', content: [{ type: 'table', content: [row({ rowHeight: 36, rowHeightRule: 'atLeast', allowSplit: false }, 'Minimum'), row({ rowHeight: 100, rowHeightRule: 'auto', allowSplit: true }, 'Automatic')] }] };
+  const rows = new JSDOM(print.createStudioPrintHtml(model)).window.document.querySelectorAll('tr');
+  assert.equal(rows[0].style.height, '36pt');
+  assert.equal(rows[0].style.breakInside, 'avoid');
+  assert.equal(rows[1].style.height, '');
+  assert.equal(rows[1].style.breakInside, 'auto');
+});
 
 test('Word print uses explicit keep and widow values while title defaults retain the next paragraph',()=>{
   const model=models.createOfficeStudioDocument('word');
@@ -1107,4 +1117,26 @@ test('array print includes the entire computed region without persisting synthet
     ['10', '12', '14', '16', '18', '20']
   );
   assert.deepEqual(Object.keys(document.sheets[0].cells), ['A1']);
+});
+
+
+test('Word print sums fixed merged cell height without persisting print attributes', () => {
+  const model = models.createOfficeStudioDocument('word');
+  const paragraph = { type: 'paragraph', content: [{ type: 'text', text: 'Full merged content' }] };
+  model.content = { type: 'doc', content: [{ type: 'table', content: [
+    { type: 'tableRow', attrs: { rowHeight: 24, rowHeightRule: 'exact' }, content: [
+      { type: 'tableCell', attrs: { rowspan: 2 }, content: [paragraph] },
+      { type: 'tableCell', content: [paragraph] },
+    ] },
+    { type: 'tableRow', attrs: { rowHeight: 36, rowHeightRule: 'exact' }, content: [{ type: 'tableCell', content: [paragraph] }] },
+  ] }] };
+  const original = JSON.stringify(model);
+  const cell = new JSDOM(print.createStudioPrintHtml(model)).window.document.querySelector('td[rowspan="2"]');
+  assert.equal(cell.style.getPropertyValue('--zuvi-word-cell-height'), '60pt');
+  assert.ok(cell.hasAttribute('data-word-fixed-cell-height'));
+  assert.equal(cell.textContent, 'Full merged content');
+  assert.equal(JSON.stringify(model), original);
+  model.content.content[0].content[1].attrs.rowHeightRule = 'auto';
+  const mixed = new JSDOM(print.createStudioPrintHtml(model)).window.document.querySelector('td[rowspan="2"]');
+  assert.equal(mixed.hasAttribute('data-word-fixed-cell-height'), false);
 });

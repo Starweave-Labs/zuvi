@@ -1,0 +1,75 @@
+TAP version 13
+# Subtest: catalog resolves every shipped component from bundled data
+ok 1 - catalog resolves every shipped component from bundled data
+  ---
+  duration_ms: 2.764375
+  ...
+# Subtest: server reports the published package version
+ok 2 - server reports the published package version
+  ---
+  duration_ms: 0.196916
+  ...
+# Subtest: explicit false survives JSX generation
+ok 3 - explicit false survives JSX generation
+  ---
+  duration_ms: 0.070375
+  ...
+# Subtest: all components have generated examples with real imports and required props
+ok 4 - all components have generated examples with real imports and required props
+  ---
+  duration_ms: 84.630333
+  ...
+# Subtest: Office examples accept backend configuration and expose standalone document creation
+ok 5 - Office examples accept backend configuration and expose standalone document creation
+  ---
+  duration_ms: 0.168708
+  ...
+# Subtest: Globe example uses numeric categorized points, a named arc and opt-in exploration props
+ok 6 - Globe example uses numeric categorized points, a named arc and opt-in exploration props
+  ---
+  duration_ms: 1.1285
+  ...
+# Subtest: Globe example honors caller data, false flags, zero duration and independent selections
+ok 7 - Globe example honors caller data, false flags, zero duration and independent selections
+  ---
+  duration_ms: 0.68225
+  ...
+# Subtest: Chart source metadata exposes 13 discriminants, 17 forms and separate opt-in defaults
+ok 8 - Chart source metadata exposes 13 discriminants, 17 forms and separate opt-in defaults
+  ---
+  duration_ms: 0.137125
+  ...
+# Subtest: Chart source generator produces valid named examples for all 17 forms without mixed data families
+ok 9 - Chart source generator produces valid named examples for all 17 forms without mixed data families
+  ---
+  duration_ms: 21.323625
+  ...
+# Subtest: Chart source generation preserves caller data, explicit false flags and null selection/ranges
+ok 10 - Chart source generation preserves caller data, explicit false flags and null selection/ranges
+  ---
+  duration_ms: 4.448666
+  ...
+# Subtest: Chart bundled metadata and generation match source after dist/data refresh
+ok 11 - Chart bundled metadata and generation match source after dist/data refresh
+  ---
+  duration_ms: 3.228667
+  ...
+# Subtest: RPC gives useful failures and recognizes all three tools
+ok 12 - RPC gives useful failures and recognizes all three tools
+  ---
+  duration_ms: 18.092792
+  ...
+# Subtest: stdio server handles split input and exits after EOF
+ok 13 - stdio server handles split input and exits after EOF
+  ---
+  duration_ms: 32.690208
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 587.799459

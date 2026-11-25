@@ -1,0 +1,13 @@
+[WebServer] (node:53534) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:53550) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+  ✓  1 [chromium] › e2e/office-studio-word-keep.spec.ts:18:1 › inline picture height moves its own line before the page boundary (3.9s)
+  ✓  2 [chromium] › e2e/office-studio-word-keep.spec.ts:156:1 › native Word table repeats leading headers on every actual printed page (4.9s)
+  ✓  3 [chromium] › e2e/office-studio-word-keep.spec.ts:350:1 › pagination keep flags move measured paragraphs without editing text and persist through DOCX history and reopening (7.0s)
+  ✓  4 [chromium] › e2e/office-studio-word-keep.spec.ts:536:1 › keep-next headings and orphan control move actual browser lines to the following page (6.4s)
+
+  4 passed (23.9s)

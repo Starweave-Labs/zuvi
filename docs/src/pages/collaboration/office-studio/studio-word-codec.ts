@@ -1,5 +1,6 @@
 import JSZip from 'jszip';
 import {wordSurface,wordMergeSurface} from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-surface';
+import { wordRowProperties } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-table-rows';
 import {readWordSurface,wordSurfaceXml,patchWordSurfaceStyles} from './studio-word-surface-codec';
 import {
   materializeWordNumbering,
@@ -1327,7 +1328,14 @@ function parseTable(element: Element, context: ImportContext): StudioRichNode {
       }
       column += colspan;
     }
-    rows.push({ type: 'tableRow', content: cells });
+    const rowProperties = child(row, 'trPr');
+    const height = child(rowProperties, 'trHeight');
+    const cantSplit = child(rowProperties, 'cantSplit');
+    const properties = wordRowProperties({
+      ...(height ? { rowHeight: number(attr(height), '行高', 0, 40000) / 20, rowHeightRule: attr(height, 'hRule') || 'auto' } : {}),
+      ...(cantSplit ? { allowSplit: !enabled(cantSplit) } : {}),
+    });
+    rows.push({ type: 'tableRow', ...(height || cantSplit ? { attrs: { ...properties } } : {}), content: cells });
     previousMerges = merges;
   }
   if (!rows.length || !rows[0].content?.length) unsupported('空表格');
@@ -2195,8 +2203,11 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
             ...(columnWidths.length ? { columnWidths } : {}),
             rows: rows.map((row) => {
               if (row.type !== 'tableRow') throw new Error('表格行模型无效。');
-              checkAttrs(row, []);
+              checkAttrs(row, ['rowHeight', 'rowHeightRule', 'allowSplit']);
+              const properties = wordRowProperties(row.attrs);
               return new TableRow({
+                ...(properties.rowHeight !== null ? { height: { value: Math.round(properties.rowHeight * 20), rule: properties.rowHeightRule } } : {}),
+                ...(properties.allowSplit !== null ? { cantSplit: !properties.allowSplit } : {}),
                 tableHeader:
                   !!row.content?.length && row.content.every((cell) => cell.type === 'tableHeader'),
                 children: (row.content || []).map((cell) => {

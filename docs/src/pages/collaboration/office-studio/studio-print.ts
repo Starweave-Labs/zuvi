@@ -22,6 +22,7 @@ import {
 } from '../../../../../packages/ui/src/components/OfficeStudio/studio-sheet-model';
 import { studioConditionalCellStyle } from '../../../../../packages/ui/src/components/OfficeStudio/studio-sheet-rules';
 import { studioNumberFormatColor } from '../../../../../packages/ui/src/components/OfficeStudio/studio-number-format';
+import { wordRowCss, wordMergedRowHeight } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-table-rows';
 import { wordMetricCss } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-metrics';
 import {
   wordParagraphLineCss,
@@ -106,7 +107,13 @@ function rich(
       }
     }
   }
-  const children = node.content ?? [];
+  const children = node.type === 'table' ? (node.content ?? []).map((row, rowIndex, rows) => ({ ...row,
+    content: (row.content ?? []).map((cell) => {
+      const span = Number(cell.attrs?.rowspan) || 1;
+      const height = Number.isInteger(span) && span > 1 && rowIndex + span <= rows.length ? wordMergedRowHeight(rows.slice(rowIndex, rowIndex + span).map((source) => source.attrs)) : null;
+      return { ...cell, attrs: { ...cell.attrs, printFixedCellHeight: height } };
+    }),
+  })) : node.content ?? [];
   const renderedChildren = children.map((child) =>
     rich(child, page, total, floating, defaultTab, decimalSymbol)
   );
@@ -174,6 +181,11 @@ function rich(
   const number = attrs.printNumbering as WordNumberingLabel | undefined;
   const styles: string[] = [];
   if (alignment(attrs.textAlign)) styles.push(`text-align:${alignment(attrs.textAlign)}`);
+  const fixedCellHeight = (node.type === 'tableCell' || node.type === 'tableHeader') && attrs.printFixedCellHeight !== null ? amount(attrs.printFixedCellHeight, 'pt', 0, 20000000) : '';
+  if (fixedCellHeight) styles.push(`--zuvi-word-cell-height:${fixedCellHeight}`);
+  if (node.type === 'tableRow')
+    for (const [key, value] of Object.entries(wordRowCss(attrs)))
+      styles.push(`${key.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`)}:${value}`);
   for (const [attribute, property] of [
     ['spaceBefore', 'margin-top'],
     ['spaceAfter', 'margin-bottom'],
@@ -267,7 +279,9 @@ function rich(
   const numberedStyle = number
     ? ` style="${escape([...styles, ...Object.entries(wordNumberingStyle(attrs, number.level, number.ref.level)).map(([key, value]) => `${key}:${value}`)].join(';'))}"`
     : style;
-  return `<${tag}${numberedStyle}${spans}${start}${lineRule}${tabs}${numbering}${(tag === 'ol' || tag === 'ul') && attrs.numberingInstanceId ? ' data-word-list-instance="true"' : ''}>${text || (tag === 'p' ? '<br>' : '')}</${tag}>`;
+  const content = tag === 'td' || tag === 'th' ? `<div data-word-cell-content="">${text}</div>` : text || (tag === 'p' ? '<br>' : '');
+  const rowRule = tag === 'tr' && attrs.rowHeight != null ? ` data-word-row-height-rule="${escape(attrs.rowHeightRule ?? 'atLeast')}" data-word-row-height="${escape(attrs.rowHeight)}"` : '';
+  return `<${tag}${numberedStyle}${spans}${start}${lineRule}${tabs}${numbering}${rowRule}${fixedCellHeight ? ' data-word-fixed-cell-height=""' : ''}${(tag === 'ol' || tag === 'ul') && attrs.numberingInstanceId ? ' data-word-list-instance="true"' : ''}>${content}</${tag}>`;
 }
 
 function wordPages(document: StudioWordDocument) {
@@ -589,6 +603,7 @@ export function createStudioPrintHtml(document: OfficeStudioDocument): string {
 @page{size:${paper};margin:${margin}mm}*{box-sizing:border-box}body{margin:0;color:#253044;background:white;font:12pt/1.6 "Microsoft YaHei","Noto Sans SC",Arial,sans-serif}h1,h2,h3,h4,h5,h6{line-height:1.3;break-after:avoid}h1{font-size:25pt}h2{font-size:19pt}p{margin:0 0 8pt}table{border-collapse:collapse;width:100%;font-size:10pt;table-layout:fixed}td,th{border:1px solid #b8c2bc;padding:5pt;overflow-wrap:anywhere;vertical-align:top}th{background:#edf3ee;text-align:left}tr{break-inside:avoid}img{max-width:100%;height:auto;vertical-align:middle}blockquote{margin:10pt 0;padding-left:12pt;border-left:3px solid #90a59a}a{color:inherit}header,footer{font-size:9pt;color:#5a6c61}header{margin-bottom:12pt}footer{margin-top:14pt}.studio-print-page,.studio-print-sheet{break-after:page}.studio-print-page:last-child,.studio-print-sheet:last-child{break-after:auto}.studio-print-break{break-before:page}.studio-print-number{text-align:center}.studio-print-chart{margin:18pt 0;break-inside:avoid}.studio-print-chart svg{width:100%;max-height:240pt}.studio-print-chart figcaption{font-weight:700}.studio-print-chart p{font-size:9pt}[data-word-line-rule="exact"] :is(span,strong,em,u,s,a){line-height:inherit;vertical-align:top}[data-word-line-rule="atLeast"] :is(span,strong,em,u,s,a){line-height:max(var(--zuvi-word-min-line),1.2em)}body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 ${document.kind === 'excel' ? '.studio-print-sheet table{font-family:Calibri,Arial,sans-serif;font-size:11pt;line-height:1.15}.studio-print-sheet td{padding:2px 5px;vertical-align:middle}.studio-print-cell{overflow:hidden}' : ''}
 header:empty,footer:empty{display:none}thead{display:table-header-group}
+tr[data-word-row-height-rule="exact"][data-word-row-height]>:is(td,th):not([rowspan]:not([rowspan="1"])),:is(td,th)[data-word-fixed-cell-height]{padding-block:0}tr[data-word-row-height-rule="exact"][data-word-row-height]>:is(td,th):not([rowspan]:not([rowspan="1"]))>[data-word-cell-content],:is(td,th)[data-word-fixed-cell-height]>[data-word-cell-content]{box-sizing:border-box;height:max(0px,calc(var(--zuvi-word-cell-height,var(--zuvi-word-row-height)) - 1px));padding-block:max(0px,min(5pt,calc((var(--zuvi-word-cell-height,var(--zuvi-word-row-height)) - 1px)/2)));overflow:hidden}
 ${document.kind === 'word' ? '.studio-print-page{position:relative;isolation:isolate;min-height:50mm}.studio-print-page p,.studio-print-page h1,.studio-print-page h2,.studio-print-page h3,.studio-print-page h4,.studio-print-page h5,.studio-print-page h6{position:relative;white-space:pre-wrap}.studio-print-image-anchor{display:inline-block;position:relative;width:0;height:0}.studio-print-page-picture{position:absolute;inset:0;pointer-events:none}' : ''}
 .zuvi-studio-word-tab {
   display: inline-block;

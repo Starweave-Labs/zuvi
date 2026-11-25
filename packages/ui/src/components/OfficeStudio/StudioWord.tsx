@@ -53,6 +53,9 @@ import { StudioWordRuler as WordRuler } from './StudioWordRuler';
 import { WordNumbering, wordSetNumberedContent, wordNumberingContext, wordContinueNumbering, wordRestartNumbering, wordChangeNumberingLevel, wordSetNumberingCatalog, wordToggleNumberingPreset, wordEditorNumbering, wordApplyNumbering } from './studio-word-numbering-extension';
 import { StudioWordNumberingDialog } from './StudioWordNumberingDialog';
 import {StudioWordSurfaceDialog} from './StudioWordSurfaceDialog';
+import { WordTableRowProperties, wordSelectedRows, wordSetRowProperties } from './studio-word-table-row-extension';
+import { StudioWordRowDialog } from './StudioWordRowDialog';
+import { WordTableCell, WordTableHeader } from './studio-word-table-cell';
 import {WordPaginationLayout,wordSetPagination} from './studio-word-pagination-extension';
 import {WordParagraphSurface,wordSelectionSurfaces,wordSetParagraphSurface} from './studio-word-surface-extension';
 import { materializeWordNumbering, wordNumberingCatalog, type WordNumberingCatalog } from './studio-word-numbering';
@@ -165,7 +168,10 @@ const EXTENSIONS = [
       );
     },
   }).configure({ types: ['heading', 'paragraph'] }),
-  TableKit.configure({ table: { resizable: true } }),
+  TableKit.configure({ table: { resizable: true }, tableCell: false, tableHeader: false }),
+  WordTableCell,
+  WordTableHeader,
+  WordTableRowProperties,
   ParagraphLayout,
   WordParagraphSurface,
   PageBreak,
@@ -405,6 +411,7 @@ export function StudioWord({
   const [numberStart,setNumberStart]=React.useState('1');
   const [numberDialog,setNumberDialog]=React.useState<{editor:Editor;doc:Editor['state']['doc'];selection:Editor['state']['selection'];catalog:WordNumberingCatalog;currentId?:string;level:number}|null>(null);
   const [surfaceDialog,setSurfaceDialog]=React.useState<{editor:Editor;doc:Editor['state']['doc'];selection:Editor['state']['selection'];surfaces:ReturnType<typeof wordSelectionSurfaces>}|null>(null);
+  const [rowDialog, setRowDialog] = React.useState<{ editor: Editor; doc: Editor['state']['doc']; selection: Editor['state']['selection']; rows: ReturnType<typeof wordSelectedRows> } | null>(null);
   const [tableColumns, setTableColumns] = React.useState('3');
   const [tableHeader, setTableHeader] = React.useState(true);
   const [linkOpen, setLinkOpen] = React.useState(false);
@@ -566,6 +573,7 @@ export function StudioWord({
     setTabsDialog(null);
     setNumberDialog(null);
     setSurfaceDialog(null);
+    setRowDialog(null);
     setNotice('');
   }, [document.id]);
   React.useLayoutEffect(() => {
@@ -2095,6 +2103,11 @@ export function StudioWord({
             </Button>
           </RibbonGroup>
           <RibbonGroup label="表格工具" className="zuvi-studio-word-table-tools-group">
+            <Button variant="ghost" size="sm" disabled={toolsDisabled || !selection?.inTable} onMouseDown={keepSelection} onClick={() => {
+              if (!editor || toolsDisabled) return;
+              const rows = wordSelectedRows(editor);
+              if (rows.length) setRowDialog({ editor, doc: editor.state.doc, selection: editor.state.selection, rows });
+            }}>表格行属性</Button>
             <Button
               variant="ghost"
               size="sm"
@@ -2890,6 +2903,15 @@ export function StudioWord({
           if(!latest.current.editable||target.isDestroyed||target!==editor||target.state.doc!==surfaceDialog.doc)throw new Error('文档或编辑区域已变化，请重新打开段落边框。');
           target.view.dispatch(target.state.tr.setSelection(surfaceDialog.selection).setMeta('addToHistory',false));
           const changed=wordSetParagraphSurface(target,patch);setNotice(changed?'已应用段落边框和底纹，可撤销恢复。':'段落边框/底纹保持原样。');
+        }} />}
+      {rowDialog && <StudioWordRowDialog rows={rowDialog.rows.map((row) => row.properties)} blocked={!editable}
+        onClose={() => { setRowDialog(null); if (!rowDialog.editor.isDestroyed) rowDialog.editor.commands.focus(); }}
+        onSave={(patch) => {
+          const target = rowDialog.editor;
+          if (!latest.current.editable || target.isDestroyed || target !== editor || target.state.doc !== rowDialog.doc || target.view.composing) throw new Error('文档或编辑区域已变化，请重新打开表格行属性。');
+          target.view.dispatch(target.state.tr.setSelection(rowDialog.selection).setMeta('addToHistory', false));
+          const changed = wordSetRowProperties(target, patch);
+          setNotice(changed ? '已应用表格行属性，可撤销恢复。' : '表格行属性保持原样。');
         }} />}
       {numberDialog&&<StudioWordNumberingDialog catalog={numberDialog.catalog} currentId={numberDialog.currentId} currentLevel={numberDialog.level} styles={paragraphStyles} blocked={!editable}
         onClose={()=>{setNumberDialog(null);if(!numberDialog.editor.isDestroyed)numberDialog.editor.commands.focus();}}

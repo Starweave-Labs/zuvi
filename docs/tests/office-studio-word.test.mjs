@@ -24,9 +24,11 @@ const numberCodecExports = {};
 const surfaceExports = {};
 const surfaceCodecExports = {};
 const imageExports = {};
+const rowExports = {};
 for (const [file, target] of [
   ['studio-font-input.ts', fontExports],
   ['studio-word-metrics.ts', metricExports],
+  ['studio-word-table-rows.ts', rowExports],
   ['studio-word-paragraph-format.ts', paragraphExports],
   ['studio-word-tabs.ts', tabExports],
   ['studio-word-surface.ts', surfaceExports],
@@ -83,7 +85,7 @@ runInNewContext(
   {
     exports,
     require: (id) =>
-      id.endsWith('/studio-word-surface')?surfaceExports:id==='./studio-word-surface-codec'?surfaceCodecExports:id.endsWith('/studio-word-numbering') ? numberExports : id === './studio-word-numbering-codec' ? numberCodecExports : id.endsWith('/studio-word-tabs') ? tabExports : id.endsWith('/studio-word-paragraph-format')
+      id.endsWith('/studio-word-table-rows')?rowExports:id.endsWith('/studio-word-surface')?surfaceExports:id==='./studio-word-surface-codec'?surfaceCodecExports:id.endsWith('/studio-word-numbering') ? numberExports : id === './studio-word-numbering-codec' ? numberCodecExports : id.endsWith('/studio-word-tabs') ? tabExports : id.endsWith('/studio-word-paragraph-format')
         ? paragraphExports
         : id.endsWith('/studio-word-metrics')
           ? metricExports
@@ -102,6 +104,27 @@ runInNewContext(
 );
 const { importStudioWord, exportStudioWord } = exports;
 const W = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';
+test('native table row heights and explicit cantSplit flags survive edits and two DOCX cycles', async () => {
+  let document = await importStudioWord(await fixture('<w:tbl><w:tr><w:trPr><w:trHeight w:val="480" w:hRule="exact"/><w:cantSplit/></w:trPr><w:tc><w:p><w:r><w:t>Fixed row</w:t></w:r></w:p></w:tc></w:tr><w:tr><w:trPr><w:trHeight w:val="0" w:hRule="auto"/><w:cantSplit w:val="0"/></w:trPr><w:tc><w:p><w:r><w:t>Automatic row</w:t></w:r></w:p></w:tc></w:tr></w:tbl>'), 'Rows.docx');
+  assert.equal(document.content.content[0].content[0].attrs.rowHeight, 24);
+  assert.equal(document.content.content[0].content[0].attrs.allowSplit, false);
+  assert.equal(document.content.content[0].content[1].attrs.allowSplit, true);
+  document.content.content[0].content[0].attrs.rowHeight = 36;
+  for (let pass = 0; pass < 2; pass++) {
+    const file = await exportStudioWord(document);
+    const zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const native = await zip.file('word/document.xml').async('string');
+    assert.match(native, /w:trHeight[^>]*w:val="720"/);
+    document = await importStudioWord(file, 'Reopened-rows.docx');
+    const rows = document.content.content[0].content;
+    assert.equal(rows[0].attrs.rowHeight, 36);
+    assert.equal(rows[0].attrs.rowHeightRule, 'exact');
+    assert.equal(rows[0].attrs.allowSplit, false);
+    assert.equal(rows[1].attrs.rowHeight, 0);
+    assert.equal(rows[1].attrs.rowHeightRule, 'auto');
+    assert.equal(rows[1].attrs.allowSplit, true);
+  }
+});
 
 test('native widow control, keep-next and keep-lines retain inherited values and explicit false over repeated DOCX saves',async()=>{
   let document=await importStudioWord(await fixture('<w:p><w:pPr><w:pStyle w:val="Keep"/><w:keepNext w:val="0"/><w:widowControl w:val="0"/></w:pPr><w:r><w:t>Direct false</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="Keep"/></w:pPr><w:r><w:t>Inherited</w:t></w:r></w:p>',{

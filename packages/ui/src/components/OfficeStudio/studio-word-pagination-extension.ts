@@ -62,6 +62,9 @@ function measure(editor: Editor): WordLayoutBlock[] {
       'border-right-width',
       'border-top-style',
       'border-bottom-style',
+      'border-collapse',
+      'border-spacing',
+      'table-layout',
       'box-sizing',
       'white-space',
       'text-align',
@@ -74,6 +77,15 @@ function measure(editor: Editor): WordLayoutBlock[] {
       'position',
     ])
       copies[index].style.setProperty(property, computed.getPropertyValue(property));
+    if (
+      node.matches('[data-word-cell-content]') &&
+      node.parentElement?.parentElement?.matches(
+        'tr[data-word-row-height-rule="exact"][data-word-row-height]'
+      )
+    ) {
+      copies[index].style.height = computed.height;
+      copies[index].style.overflow = computed.overflow;
+    }
   });
   clone.style.cssText += `position:absolute;width:${width}px;height:auto;min-height:0;margin:0;transform:none;`;
   clone
@@ -148,7 +160,72 @@ function measure(editor: Editor): WordLayoutBlock[] {
           const rowHeight = Math.max(1, rows[index].getBoundingClientRect().height);
           const previous = block.lines.at(-1);
           if (rowPosition === rowFrom) {
-            block.lines.push({ from: rowFrom, to: rowTo, height: rowHeight });
+            // A single unmerged cell can carry editable line fragments directly. Other
+            // row geometries retain their merge group until synchronized cell fragments exist.
+            const cell = row.firstChild;
+            const paragraph = cell?.firstChild;
+            const canFragment =
+              !repeatable &&
+              index >= headerCount &&
+              groupEnd <= index + 1 &&
+              row.attrs.allowSplit !== false &&
+              row.attrs.rowHeightRule !== 'exact' &&
+              row.childCount === 1 &&
+              Number(cell?.attrs.rowspan ?? 1) === 1 &&
+              cell?.childCount === 1 &&
+              paragraph?.type.name === 'paragraph' &&
+              Array.from({ length: paragraph.childCount }, (_, childIndex) =>
+                paragraph.child(childIndex)
+              ).every((inline) => inline.isText || inline.type.name === 'hardBreak');
+            const content = rows[index].querySelector<HTMLElement>('[data-word-cell-content] > p');
+            const fragments: { from: number; to: number; top: number; bottom: number }[] = [];
+            if (canFragment && content) {
+              let textPosition = rowFrom + 3;
+              const walker = doc.createTreeWalker(content, 5);
+              while (walker.nextNode()) {
+                const current = walker.currentNode;
+                if (current.nodeType === 1) {
+                  if ((current as HTMLElement).matches('br:not(.ProseMirror-trailingBreak),img'))
+                    textPosition++;
+                  continue;
+                }
+                const text = current as Text;
+                for (let offset = 0; offset < text.length; offset++) {
+                  const range = doc.createRange();
+                  range.setStart(text, offset);
+                  range.setEnd(text, offset + 1);
+                  const rect = range.getBoundingClientRect();
+                  if (rect.height > 0) {
+                    const previous = fragments.at(-1);
+                    if (previous && rect.top < previous.bottom && rect.bottom > previous.top) {
+                      previous.to = textPosition + 1;
+                      previous.bottom = Math.max(previous.bottom, rect.bottom);
+                    } else
+                      fragments.push({
+                        from: textPosition,
+                        to: textPosition + 1,
+                        top: rect.top,
+                        bottom: rect.bottom,
+                      });
+                  }
+                  textPosition++;
+                }
+              }
+            }
+            if (fragments.length > 1) {
+              const rowRect = rows[index].getBoundingClientRect();
+              fragments.forEach((fragment, fragmentIndex) =>
+                block.lines.push({
+                  from: fragmentIndex === 0 ? rowFrom : fragment.from,
+                  to: fragmentIndex === fragments.length - 1 ? rowTo : fragment.to,
+                  height:
+                    (fragmentIndex === fragments.length - 1
+                      ? rowRect.bottom
+                      : fragments[fragmentIndex + 1].top) -
+                    (fragmentIndex === 0 ? rowRect.top : fragment.top),
+                })
+              );
+            } else block.lines.push({ from: rowFrom, to: rowTo, height: rowHeight });
           } else if (previous) {
             previous.to = rowTo;
             previous.height += rowHeight;
