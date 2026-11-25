@@ -68,6 +68,99 @@ const codec = compiledModule(
   resolveStudioModule
 );
 
+test('series stop boundaries preserve untouched contents, styles, merges and hyperlinks across repeated XLSX edits and saves', async () => {
+  const workbook = new ExcelJS.Workbook();
+  const data = workbook.addWorksheet('Series');
+  data.getCell('A1').value = 0.1;
+  data.getCell('A1').font = { bold: true, color: { argb: 'FF0055AA' } };
+  data.getCell('A1').numFmt = '0.0';
+  data.getCell('A4').value = 99;
+  data.getCell('A4').font = { italic: true };
+  data.getCell('A5').value = { text: 'merged tail', hyperlink: 'https://example.com/tail' };
+  data.getCell('A5').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFF00' } };
+  data.mergeCells('A5:B5');
+  data.getCell('C1').value = new Date('2024-02-28T00:00:00.000Z');
+  data.getCell('C1').numFmt = 'yyyy-mm-dd';
+  data.getCell('C4').value = 'date tail';
+  data.getCell('E1').value = '订单008';
+  data.getCell('E2').value = '订单010';
+  data.getCell('E5').value = 'text tail';
+  data.getCell('A9').value = 10;
+  data.getCell('B9').value = 7;
+  data.getCell('F9').value = 'descending tail';
+  data.getCell('G1').value = { formula: 'SUM(A1:A3)', result: 0.1 };
+  data.getCell('G1').numFmt = '0.0';
+  data.getCell('G1').font = { bold: true };
+  let source = new Blob([await workbook.xlsx.writeBuffer()]);
+  let document = await codec.importStudioExcel(source, 'series.xlsx');
+  document.sheets[0].protectedRanges = ['A4:A4'];
+  const selection = (a, b) => ({
+    anchor: model.studioParseAddress(a),
+    focus: model.studioParseAddress(b),
+  });
+  for (let pass = 0; pass < 2; pass++) {
+    const id = document.sheets[0].id;
+    document = fill.studioFillSeries(document, id, selection('A1', 'A8'), {
+      direction: 'down',
+      type: 'number',
+      step: 0.1,
+      stopValue: 0.3,
+    });
+    document = fill.studioFillSeries(document, id, selection('C1', 'C6'), {
+      direction: 'down',
+      type: 'date',
+      stopValue: '2024-03-01',
+    });
+    document = fill.studioFillSeries(document, id, selection('E1', 'E6'), {
+      direction: 'down',
+      type: 'text',
+      seedCount: 2,
+      stopValue: '订单014',
+    });
+    document = fill.studioFillSeries(document, id, selection('A9', 'H9'), {
+      direction: 'right',
+      type: 'number',
+      seedCount: 2,
+      stopValue: -2,
+    });
+    document = fill.studioFillCells(document, id, selection('G1', 'G3'), 'down');
+    document = fill.studioFillCells(document, id, selection('G1', 'I1'), 'right');
+    source = await codec.exportStudioExcel(document, source);
+    const native = new ExcelJS.Workbook();
+    await native.xlsx.load(Buffer.from(await source.arrayBuffer()));
+    const opened = native.getWorksheet('Series');
+    assert.equal(opened.getCell('A2').value, 0.2);
+    assert.equal(opened.getCell('A3').value, 0.3);
+    assert.equal(opened.getCell('A3').font.bold, true);
+    assert.equal(opened.getCell('A3').numFmt, '0.0');
+    assert.equal(opened.getCell('A4').value, 99);
+    assert.equal(opened.getCell('A4').font.italic, true);
+    assert.equal(opened.getCell('A5').value.hyperlink, 'https://example.com/tail');
+    assert.equal(opened.getCell('A5').fill.fgColor.argb, 'FFFFFF00');
+    assert.ok(opened.model.merges.includes('A5:B5'));
+    assert.equal(opened.getCell('A6').value, null);
+    assert.equal(opened.getCell('C2').value.toISOString(), '2024-02-29T00:00:00.000Z');
+    assert.equal(opened.getCell('C3').value.toISOString(), '2024-03-01T00:00:00.000Z');
+    assert.equal(opened.getCell('C4').value, 'date tail');
+    assert.equal(opened.getCell('E3').value, '订单012');
+    assert.equal(opened.getCell('E4').value, '订单014');
+    assert.equal(opened.getCell('E5').value, 'text tail');
+    assert.deepEqual(
+      ['C9', 'D9', 'E9', 'F9'].map((a) => opened.getCell(a).value),
+      [4, 1, -2, 'descending tail']
+    );
+    assert.equal(opened.getCell('G2').value.formula, 'SUM(A2:A4)');
+    assert.equal(opened.getCell('G2').value.result, 99.5);
+    assert.equal(opened.getCell('H1').value.formula, 'SUM(B1:B3)');
+    assert.equal(opened.getCell('G2').font.bold, true);
+    assert.equal(opened.getCell('G2').numFmt, '0.0');
+    document = await codec.importStudioExcel(source, document.name);
+    assert.equal(document.sheets[0].cells.A3.input, '0.3');
+    assert.equal(document.sheets[0].cells.E4.input, '订单014');
+    assert.deepEqual(Array.from(document.sheets[0].protectedRanges), ['A4:A4']);
+  }
+});
+
 test('format painter keeps direct styles, default resets, formulas, hyperlinks and rules through repeated native XLSX saves', async () => {
   const workbook = new ExcelJS.Workbook();
   const sheet = workbook.addWorksheet('Painter');

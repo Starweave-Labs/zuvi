@@ -84,7 +84,12 @@ import {
   studioSetConditionalFormat,
   studioSetDataValidation,
 } from './studio-sheet-rules';
-import { studioFillCells, studioFillSeries, studioInferFillType } from './studio-sheet-fill';
+import {
+  studioFillCells,
+  studioFillSeries,
+  studioFillSeriesResult,
+  studioInferFillType,
+} from './studio-sheet-fill';
 import { studioHiddenColumns, studioSetColumnsHidden } from './studio-sheet-model';
 import { StudioSheetRuleDialog } from './StudioSheetRuleDialog';
 import { StudioSheetSortDialog, type StudioSortDialogState } from './StudioSheetSortDialog';
@@ -4035,14 +4040,14 @@ export function StudioSheet({
           }}
           onSeries={(options) => {
             if (blocked || !commitEditing()) throw new Error('请先确认单元格输入。');
-            const next = studioFillSeries(latestRef.current, sheet.id, selection, options);
+            const result = studioFillSeriesResult(latestRef.current, sheet.id, selection, options);
             const message = validationNotice(
-              next,
+              result.document,
               sheet.id,
-              fillAddresses(options.direction, options.seedCount),
-              '已完成序列填充，可撤销恢复。'
+              result.addresses,
+              `已填充 ${result.addresses.length} 个序列单元格，可撤销恢复。${options.stopValue !== undefined ? '停止位置之后保持原样。' : ''}`
             );
-            replaceDocument(next);
+            replaceDocument(result.document);
             setNotice(message);
           }}
         />

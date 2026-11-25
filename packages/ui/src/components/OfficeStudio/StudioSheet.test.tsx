@@ -70,6 +70,109 @@ function setup({
 }
 
 describe('StudioSheet Office editing details', () => {
+  it('validates stop drafts, fills only through a decimal boundary and undoes the batch without warning about the untouched tail', async () => {
+    const user = userEvent.setup();
+    const doc = documentFixture();
+    doc.sheets[0].cells.A1 = { input: '0.1', bold: true, numberFormat: '0.0' };
+    doc.sheets[0].cells.A4 = { input: '99', italic: true };
+    doc.sheets[0].dataValidations = [
+      {
+        id: 'v',
+        range: 'A2:A6',
+        type: 'decimal',
+        operator: 'lessThanOrEqual',
+        formula1: '0.3',
+        errorStyle: 'warning',
+        showErrorMessage: true,
+      },
+    ];
+    const f = setup({ document: doc });
+    const address = screen.getByLabelText('单元格地址');
+    fireEvent.change(address, { target: { value: 'A1:A6' } });
+    fireEvent.keyDown(address, { key: 'Enter' });
+    await user.click(screen.getByRole('button', { name: '序列填充' }));
+    fireEvent.change(screen.getByLabelText('序列停止值'), { target: { value: 'bad' } });
+    await user.click(screen.getByRole('button', { name: '填充序列' }));
+    expect(screen.getByRole('alert')).toHaveTextContent('停止值');
+    expect(f.changed).not.toHaveBeenCalled();
+    fireEvent.change(screen.getByLabelText('序列停止值'), { target: { value: '0.3' } });
+    fireEvent.change(screen.getByLabelText('序列步长'), { target: { value: '0' } });
+    await user.click(screen.getByRole('button', { name: '填充序列' }));
+    expect(screen.getByRole('alert')).toHaveTextContent('不能为 0');
+    fireEvent.change(screen.getByLabelText('序列步长'), { target: { value: '0.1' } });
+    await user.click(screen.getByRole('button', { name: '填充序列' }));
+    expect(f.changed).toHaveBeenCalledTimes(1);
+    expect(f.current().sheets[0].cells.A2.input).toBe('0.2');
+    expect(f.current().sheets[0].cells.A3.input).toBe('0.3');
+    expect(f.current().sheets[0].cells.A4).toEqual(doc.sheets[0].cells.A4);
+    expect(
+      screen.getByText('已填充 2 个序列单元格，可撤销恢复。停止位置之后保持原样。')
+    ).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: '撤销表格修改' }));
+    expect(f.current()).toBe(doc);
+    await user.click(screen.getByRole('button', { name: '重做表格修改' }));
+    expect(f.current().sheets[0].cells.A3.bold).toBe(true);
+  });
+
+  it('fills through an ISO date stop across the leap day and keeps invalid date drafts reviewable', async () => {
+    const user = userEvent.setup();
+    const doc = documentFixture();
+    doc.sheets[0].cells.C1 = { input: '2024-02-28', numberFormat: 'yyyy-mm-dd' };
+    doc.sheets[0].cells.C4 = { input: 'tail', italic: true };
+    const f = setup({ document: doc });
+    const address = screen.getByLabelText('单元格地址');
+    fireEvent.change(address, { target: { value: 'C1:C6' } });
+    fireEvent.keyDown(address, { key: 'Enter' });
+    await user.click(screen.getByRole('button', { name: '序列填充' }));
+    await user.click(screen.getByRole('button', { name: /^序列类型/ }));
+    await user.click(screen.getByRole('option', { name: '日期（步长单位：天）' }));
+    fireEvent.change(screen.getByLabelText('序列停止值'), { target: { value: '2024-02-30' } });
+    await user.click(screen.getByRole('button', { name: '填充序列' }));
+    expect(screen.getByRole('alert')).toHaveTextContent('日期');
+    expect(f.changed).not.toHaveBeenCalled();
+    fireEvent.change(screen.getByLabelText('序列停止值'), { target: { value: '2024-03-01' } });
+    await user.click(screen.getByRole('button', { name: '填充序列' }));
+    expect(screen.getByRole('gridcell', { name: 'C2' })).toHaveTextContent('2024-02-29');
+    expect(screen.getByRole('gridcell', { name: 'C3' })).toHaveTextContent('2024-03-01');
+    expect(f.current().sheets[0].cells.C4).toEqual(doc.sheets[0].cells.C4);
+    expect(f.current().sheets[0].cells.C5).toBeUndefined();
+  });
+
+  it('preserves stop drafts across read-only and disabled states, cancels without a write, then fills padded text from two seeds', async () => {
+    const user = userEvent.setup();
+    const doc = documentFixture();
+    doc.sheets[0].cells.D1 = { input: '编号009' };
+    doc.sheets[0].cells.D2 = { input: '编号010', bold: true };
+    doc.sheets[0].cells.D4 = { input: 'tail' };
+    doc.sheets[0].protectedRanges = ['D4:D4'];
+    const f = setup({ document: doc });
+    const address = screen.getByLabelText('单元格地址');
+    fireEvent.change(address, { target: { value: 'D1:D5' } });
+    fireEvent.keyDown(address, { key: 'Enter' });
+    const open = async () => {
+      await user.click(screen.getByRole('button', { name: '序列填充' }));
+      await user.click(screen.getByRole('button', { name: /^序列类型/ }));
+      await user.click(screen.getByRole('option', { name: '文本末尾数字' }));
+      await user.click(screen.getByRole('button', { name: /^序列种子数量/ }));
+      await user.click(screen.getByRole('option', { name: '前两个单元格' }));
+      fireEvent.change(screen.getByLabelText('序列停止值'), { target: { value: '编号011' } });
+    };
+    await open();
+    f.setPermissions({ readOnly: true });
+    expect(screen.getByLabelText('序列停止值')).toBeDisabled();
+    expect(screen.getByRole('button', { name: '填充序列' })).toBeDisabled();
+    f.setPermissions({ disabled: true });
+    expect(screen.getByLabelText('序列停止值')).toHaveValue('编号011');
+    f.setPermissions({});
+    await user.keyboard('{Escape}');
+    expect(screen.queryByRole('dialog')).toBeNull();
+    expect(f.changed).not.toHaveBeenCalled();
+    await open();
+    await user.click(screen.getByRole('button', { name: '填充序列' }));
+    expect(f.current().sheets[0].cells.D3.input).toBe('编号011');
+    expect(f.current().sheets[0].cells.D4.input).toBe('tail');
+  });
+
   it('clears displayed fill and keeps the full painted selection when its last row is hidden', () => {
     const doc = documentFixture();
     doc.sheets[0].cells.A1.bold = true;

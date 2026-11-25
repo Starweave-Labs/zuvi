@@ -1,9 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { studioFillCells, studioFillSeries } from './studio-sheet-fill';
+import { studioFillCells, studioFillSeries, studioFillSeriesResult } from './studio-sheet-fill';
 import {
   STUDIO_SHEET_LIMITS,
   studioCellAddress,
   studioInputValue,
+  studioCalculate,
   studioParseAddress,
   type SheetSelection,
 } from './studio-sheet-model';
@@ -36,6 +37,263 @@ function selection(anchor: string, focus: string): SheetSelection {
 function inputs(document: StudioExcelDocument, addresses: string[]): string[] {
   return addresses.map((address) => document.sheets[0].cells[address].input);
 }
+
+describe('Series stop boundaries', () => {
+  it('includes decimal endpoints, stops before overshoot and preserves every tail cell and link', () => {
+    const original = fixture({
+      A1: { input: '0.1', bold: true, numberFormat: '0.0' },
+      A5: { input: 'tail', italic: true, background: '#ff0000' },
+    });
+    original.sheets[0].hyperlinks = [
+      { id: 'tail-link', ref: 'A5', target: 'https://example.com/tail' },
+    ];
+    const tail = original.sheets[0].cells.A5;
+    const result = studioFillSeriesResult(original, 'main', selection('A1', 'A6'), {
+      direction: 'down',
+      type: 'number',
+      step: 0.1,
+      stopValue: '0.3',
+    });
+    expect(result.addresses).toEqual(['A2', 'A3']);
+    expect(inputs(result.document, ['A1', 'A2', 'A3', 'A5'])).toEqual([
+      '0.1',
+      '0.2',
+      '0.3',
+      'tail',
+    ]);
+    expect(result.document.sheets[0].cells.A4).toBeUndefined();
+    expect(result.document.sheets[0].cells.A5).toBe(tail);
+    expect(result.document.sheets[0].hyperlinks).toEqual(original.sheets[0].hyperlinks);
+    expect(result.document.sheets[0].cells.A3.bold).toBe(true);
+    const overshoot = studioFillSeries(original, 'main', selection('A1', 'A6'), {
+      direction: 'down',
+      type: 'number',
+      step: 0.1,
+      stopValue: 0.25,
+    });
+    expect(overshoot.sheets[0].cells.A2.input).toBe('0.2');
+    expect(overshoot.sheets[0].cells.A3).toBeUndefined();
+  });
+  it('uses each track step independently and stops descending rightward sequences at an inclusive endpoint', () => {
+    const original = fixture({
+      A1: { input: '10' },
+      B1: { input: '7' },
+      E1: { input: 'tail' },
+      A2: { input: '4' },
+      B2: { input: '2' },
+      E2: { input: 'tail2' },
+    });
+    const result = studioFillSeriesResult(original, 'main', selection('F2', 'A1'), {
+      direction: 'right',
+      type: 'number',
+      seedCount: 2,
+      stopValue: -2,
+    });
+    expect(inputs(result.document, ['A1', 'B1', 'C1', 'D1', 'E1', 'C2', 'D2', 'E2'])).toEqual([
+      '10',
+      '7',
+      '4',
+      '1',
+      '-2',
+      '0',
+      '-2',
+      'tail2',
+    ]);
+    expect(result.document.sheets[0].cells.F1).toBeUndefined();
+    expect(result.addresses).toEqual(['C1', 'D1', 'E1', 'C2', 'D2']);
+  });
+  it('stops ISO and native serial dates with ISO or serial boundaries across the leap day', () => {
+    const iso = fixture({ A1: { input: '2024-02-28' }, A5: { input: 'tail' } });
+    const result = studioFillSeries(iso, 'main', selection('A1', 'A5'), {
+      direction: 'down',
+      type: 'date',
+      stopValue: '2024-03-01',
+    });
+    expect(inputs(result, ['A2', 'A3', 'A5'])).toEqual(['2024-02-29', '2024-03-01', 'tail']);
+    expect(result.sheets[0].cells.A4).toBeUndefined();
+    expect(
+      studioFillSeries(iso, 'main', selection('A1', 'A5'), {
+        direction: 'down',
+        type: 'date',
+        stopValue: 45352,
+      })
+    ).toEqual(result);
+    const serial = fixture({ A1: { input: '45350.5', numberFormat: 'yyyy-mm-dd hh:mm' } });
+    const serialResult = studioFillSeries(serial, 'main', selection('A1', 'A5'), {
+      direction: 'down',
+      type: 'date',
+      stopValue: '2024-03-01',
+    });
+    expect(serialResult.sheets[0].cells.A2.input).toBe('45351.5');
+    expect(serialResult.sheets[0].cells.A3).toBeUndefined();
+    expect(serialResult.sheets[0].cells.A2.numberFormat).toBe('yyyy-mm-dd hh:mm');
+  });
+  it('accepts label and numeric suffix stops while keeping padded identifiers as text', () => {
+    const original = fixture({
+      A1: { input: '订单008' },
+      A2: { input: '订单010', bold: true },
+      A5: { input: 'tail' },
+    });
+    for (const stopValue of ['订单014', '14', 14, '1.4e1']) {
+      const result = studioFillSeries(original, 'main', selection('A1', 'A6'), {
+        direction: 'down',
+        type: 'text',
+        seedCount: 2,
+        stopValue,
+      });
+      expect(inputs(result, ['A3', 'A4', 'A5'])).toEqual(['订单012', '订单014', 'tail']);
+      expect(result.sheets[0].cells.A6).toBeUndefined();
+    }
+    const padded = studioFillSeries(
+      fixture({ A1: { input: '099' } }),
+      'main',
+      selection('A1', 'A5'),
+      {
+        direction: 'down',
+        type: 'text',
+        stopValue: 101,
+      }
+    );
+    expect(inputs(padded, ['A2', 'A3'])).toEqual(['100', '101']);
+    expect(padded.sheets[0].cells.A3.numberFormat).toBe('@');
+    expect(padded.sheets[0].cells.A4).toBeUndefined();
+    expect(
+      studioFillSeries(fixture({ A1: { input: '  项目001' } }), 'main', selection('A1', 'A5'), {
+        direction: 'down',
+        type: 'text',
+        stopValue: '  项目003 ',
+      }).sheets[0].cells.A3.input
+    ).toBe('  项目003');
+  });
+
+  it('allows merged tail cells but rejects a merge intersecting retained seeds or actual destinations', () => {
+    const original = fixture({ A1: { input: '1' }, A5: { input: 'merged tail' } });
+    original.sheets[0].merges = ['A5:B5'];
+    const result = studioFillSeries(original, 'main', selection('A1', 'A6'), {
+      direction: 'down',
+      type: 'number',
+      stopValue: 3,
+    });
+    expect(result.sheets[0].cells.A3.input).toBe('3');
+    expect(result.sheets[0].cells.A5).toBe(original.sheets[0].cells.A5);
+    expect(result.sheets[0].merges).toBe(original.sheets[0].merges);
+    expect(() =>
+      studioFillSeries(original, 'main', selection('A1', 'A6'), {
+        direction: 'down',
+        type: 'number',
+        stopValue: 5,
+      })
+    ).toThrow('合并单元格');
+    original.sheets[0].merges = ['A1:B1'];
+    expect(() =>
+      studioFillSeries(original, 'main', selection('A1', 'A6'), {
+        direction: 'down',
+        type: 'number',
+        stopValue: 3,
+      })
+    ).toThrow('合并单元格');
+    expect(original.sheets[0].cells.A2).toBeUndefined();
+  });
+  it('leaves already reached boundaries unchanged and avoids generating values past the date domain', () => {
+    const original = fixture({ A1: { input: '9999-12-31' }, A2: { input: 'tail' } });
+    expect(
+      studioFillSeriesResult(original, 'main', selection('A1', 'A2'), {
+        direction: 'down',
+        type: 'date',
+        stopValue: '9999-12-31',
+      })
+    ).toEqual({ document: original, addresses: [] });
+    const numeric = fixture({ A1: { input: '10' } });
+    expect(
+      studioFillSeries(numeric, 'main', selection('A1', 'A4'), {
+        direction: 'down',
+        type: 'number',
+        stopValue: 5,
+      })
+    ).toBe(numeric);
+    const nearEnd = fixture({ A1: { input: '9999-12-30' } });
+    expect(
+      studioFillSeries(nearEnd, 'main', selection('A1', 'A4'), {
+        direction: 'down',
+        type: 'date',
+        step: 2,
+        stopValue: '9999-12-31',
+      })
+    ).toBe(nearEnd);
+  });
+  it('rejects invalid stops, zero steps and late track errors without changing the original document', () => {
+    const original = fixture({ A1: { input: '1' } });
+    const before = JSON.stringify(original);
+    for (const stopValue of ['', '0x10', 'NaN', Infinity])
+      expect(() =>
+        studioFillSeries(original, 'main', selection('A1', 'A3'), {
+          direction: 'down',
+          type: 'number',
+          stopValue,
+        })
+      ).toThrow('停止值');
+    expect(() =>
+      studioFillSeries(original, 'main', selection('A1', 'A3'), {
+        direction: 'down',
+        type: 'number',
+        step: 0,
+        stopValue: 3,
+      })
+    ).toThrow('不能为 0');
+    expect(JSON.stringify(original)).toBe(before);
+    const dates = fixture({ A1: { input: '2024-02-28' } });
+    expect(() =>
+      studioFillSeries(dates, 'main', selection('A1', 'A3'), {
+        direction: 'down',
+        type: 'date',
+        stopValue: '2024-02-30',
+      })
+    ).toThrow('日期');
+    expect(() =>
+      studioFillSeries(dates, 'main', selection('A1', 'A3'), {
+        direction: 'down',
+        type: 'date',
+        stopValue: 60,
+      })
+    ).toThrow('虚构日期');
+    const labels = fixture({ A1: { input: '订单001' }, B1: { input: '其他001' } });
+    const labelsBefore = JSON.stringify(labels);
+    expect(() =>
+      studioFillSeries(labels, 'main', selection('A1', 'B4'), {
+        direction: 'down',
+        type: 'text',
+        stopValue: '订单004',
+      })
+    ).toThrow('前缀');
+    expect(JSON.stringify(labels)).toBe(labelsBefore);
+  });
+  it('leaves protected, validated and array tail cells untouched but rejects real destination conflicts atomically', () => {
+    const original = fixture({
+      A1: { input: '1' },
+      A5: { input: '=SEQUENCE(2)', array: { type: 'dynamic' } },
+    });
+    original.sheets[0].protectedRanges = ['A4'];
+    original.sheets[0].dataValidations = [
+      { id: 'v', range: 'A4', type: 'whole', operator: 'lessThan', formula1: '0' },
+    ];
+    const result = studioFillSeriesResult(original, 'main', selection('A1', 'A8'), {
+      direction: 'down',
+      type: 'number',
+      stopValue: 3,
+    });
+    expect(result.addresses).toEqual(['A2', 'A3']);
+    expect(result.document.sheets[0].cells.A5).toBe(original.sheets[0].cells.A5);
+    expect(studioCalculate(result.document).values.get('main:A6')).toBe(2);
+    expect(() =>
+      studioFillSeries(original, 'main', selection('A1', 'A8'), {
+        direction: 'down',
+        type: 'number',
+        stopValue: 6,
+      })
+    ).toThrow('受保护');
+    expect(original.sheets[0].cells.A2).toBeUndefined();
+  });
+});
 
 describe('Office Studio fill cells', () => {
   it('copies the top row of a reversed rectangle and replaces all direct target formatting', () => {

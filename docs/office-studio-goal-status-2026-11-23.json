@@ -4987,53 +4987,58 @@
         "docs/tests/studio-excel.test.mjs"
       ],
       "historicalStatus": "部分",
-      "status": "audited-partial-acceptance-pending",
-      "evidence": [],
+      "status": "implemented-series-stop-slice-verified-full-acceptance-audit-pending",
+      "evidence": [
+        "2026-11-25：数字/日期/文本序列补齐停止值，包含端点、越界前停止、正负步长、多轨道与双种子；尾部内容/格式/合并/链接/保护/数组保持原样。",
+        "116 项模型/Sheet UI、42 项原生 XLSX 和浏览器四类序列→撤销重做→两次保存重开→明暗/320px 验证通过；证据在 docs/audits/2026-11-25/sheet-series/。"
+      ],
       "currentAudit": {
         "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "部分实现",
-        "implementedBehavior": "向下向右复制、数字日期文本序列和步长",
+        "sourceCommit": "b43bc71",
+        "implementation": "切片验证",
+        "implementedBehavior": "向下/向右复制及数字/日期/文本线性序列；支持默认/显式/双种子步长、包含端点的停止值，数字精度、ISO/序号日期转换、补零文本、逐轨道停止。实际填充地址用于验证提示；停止后的数据/格式/合并/链接/保护/数组不写入，失败整批不变，一次撤销重做。原生 XLSX 两次重开、明暗/320px 已验证。向下/向右相对公式复制和单次历史操作也已纳入同一份 XLSX 往返。",
         "functionalGaps": [
-          "缺停止值；更多序列策略和原生 UI 文件链路待补"
+          "原始共通验收的全部适用隐藏/冻结/合并/滚动组合仍待逐项核对。"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
-            "line": 284,
-            "anchor": "const blocked"
-          },
-          {
-            "path": "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts",
-            "line": 1267,
-            "anchor": "async function checkSupportedWorkbook"
-          },
-          {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 136,
-            "anchor": "export interface StudioSheet"
-          },
-          {
-            "path": "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
-            "line": 401,
-            "anchor": "studioPatchCells"
+            "path": "packages/ui/src/components/OfficeStudio/studio-sheet-fill.ts",
+            "line": 41,
+            "anchor": "export interface StudioFillSeriesOptions"
           },
           {
             "path": "packages/ui/src/components/OfficeStudio/studio-sheet-fill.ts",
-            "line": 41,
-            "anchor": "StudioFillSeriesOptions"
+            "line": 364,
+            "anchor": "export function studioFillSeriesResult"
+          },
+          {
+            "path": "packages/ui/src/components/OfficeStudio/StudioSheetRuleDialog.tsx",
+            "line": 789,
+            "anchor": "aria-label=\"序列停止值\""
+          },
+          {
+            "path": "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+            "line": 4043,
+            "anchor": "const result = studioFillSeriesResult"
+          },
+          {
+            "path": "e2e/office-studio-sheet-series.spec.ts",
+            "line": 7,
+            "anchor": "series stop drafts, per-track bounds"
           }
         ],
         "existingTestFiles": [
+          "packages/ui/src/components/OfficeStudio/studio-sheet-fill.test.ts",
           "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx",
           "docs/tests/studio-excel.test.mjs",
-          "packages/ui/src/components/OfficeStudio/studio-sheet-fill.test.ts"
+          "e2e/office-studio-sheet-series.spec.ts"
         ],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "testEvidenceNote": "35 fill-model and 81 Sheet UI tests, 42 native XLSX codec tests and browser roundtrips cover relative formulas, date steps, text suffixes and stop values. Full repository checks are recorded in the completion log; the complete applicable common-acceptance matrix remains pending.",
+        "sourceState": "Includes the X017 series-stop continuation changes committed with this audit."
       },
       "gaps": [
-        "缺停止值；更多序列策略和原生 UI 文件链路待补"
+        "原始共通验收的全部适用隐藏/冻结/合并/滚动组合仍待逐项核对。"
       ]
     },
     {

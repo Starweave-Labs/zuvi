@@ -14,6 +14,7 @@ import type {
   StudioSheetConditionalStyle,
   StudioSheetDataValidation,
 } from './studio-types';
+import type { StudioFillSeriesOptions } from './studio-sheet-fill';
 
 export type SheetRuleDialogMode = {
   kind: 'conditional' | 'validation' | 'series';
@@ -30,12 +31,7 @@ interface RuleDialogProps {
   onConditional(rule: StudioSheetConditionalFormat): void;
   onValidation(rule: StudioSheetDataValidation): void;
   onRemove(kind: 'conditional' | 'validation', id: string): void;
-  onSeries(options: {
-    direction: 'down' | 'right';
-    type: 'number' | 'date' | 'text';
-    step?: number;
-    seedCount: 1 | 2;
-  }): void;
+  onSeries(options: StudioFillSeriesOptions): void;
 }
 
 const conditions = [
@@ -198,6 +194,7 @@ export function StudioSheetRuleDialog({
   const [seriesType, setSeriesType] = React.useState<'number' | 'date' | 'text'>('number');
   const [seeds, setSeeds] = React.useState<'1' | '2'>('1');
   const [step, setStep] = React.useState('');
+  const [seriesStopValue, setSeriesStopValue] = React.useState('');
   const [error, setError] = React.useState('');
   const between = operator === 'between' || operator === 'notBetween';
   const title =
@@ -217,6 +214,7 @@ export function StudioSheetRuleDialog({
           type: seriesType,
           seedCount: seeds === '2' ? 2 : 1,
           ...(step.trim() ? { step: Number(step) } : {}),
+          ...(seriesStopValue.trim() ? { stopValue: seriesStopValue } : {}),
         });
       } else if (mode.kind === 'conditional') {
         const base = { id, range: range.trim(), priority: Number(priority), stopIfTrue: stop };
@@ -785,6 +783,25 @@ export function StudioSheetRuleDialog({
                     placeholder="例如 1、2 或 -1"
                   />
                 </label>
+                <label className="zuvi-studio-sheet-rule-field">
+                  <span>停止值，可留空填满选区</span>
+                  <Input
+                    aria-label="序列停止值"
+                    value={seriesStopValue}
+                    disabled={blocked}
+                    onChange={(event) => setSeriesStopValue(event.target.value)}
+                    placeholder={
+                      seriesType === 'date'
+                        ? 'YYYY-MM-DD 或 Excel 日期序号'
+                        : seriesType === 'text'
+                          ? '例如 项目010 或 10'
+                          : '例如 10、0.5 或 -10'
+                    }
+                  />
+                </label>
+                <p className="zuvi-studio-sheet-rule-hint">
+                  到达停止值后结束；不能整步到达时，填到边界前一项。种子和停止位置之后的内容、格式与链接保持原样。
+                </p>
               </>
             )}
             {error && (
