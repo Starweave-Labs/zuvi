@@ -1,5 +1,6 @@
 import { Mark, Node, type Editor } from '@tiptap/react';
 import { closeHistory } from '@tiptap/pm/history';
+import { wordMergeTabStops } from './studio-word-tabs';
 import { TextSelection } from '@tiptap/pm/state';
 import {
   resolveStudioWordParagraphStyle,
@@ -974,6 +975,7 @@ export function wordClearFormat(editor: Editor): boolean {
       paragraphStyleMaterialized: true,
       paragraphStyleFallback: null,
       paragraphStyleSnapshot: null,
+      tabStops: null,
       paragraphStyleDirectAttrs: null,
     });
   });
@@ -995,6 +997,7 @@ export function wordCaptureFormat(editor: Editor): WordFormatSnapshot | null {
   const paragraph = Object.fromEntries(
     WORD_PARAGRAPH_FORMAT_ATTRS.map((key) => [key, node.attrs[key] ?? null])
   );
+  paragraph.tabStops = wordMergeTabStops(node.attrs.paragraphStyleSnapshot?.tabStops, node.attrs.tabStops);
   return { marks, textStyle, paragraph };
 }
 
@@ -1027,6 +1030,10 @@ export function wordApplyFormat(editor: Editor, snapshot: WordFormatSnapshot | n
     transaction.setNodeMarkup(position, undefined, {
       ...node.attrs,
       ...snapshot.paragraph,
+      tabStops: wordMergeTabStops(
+        wordMergeTabStops(node.attrs.paragraphStyleSnapshot?.tabStops, node.attrs.tabStops).map((stop) => ({ position: stop.position, alignment: 'clear' })),
+        snapshot.paragraph.tabStops
+      ),
       paragraphStyleDirectAttrs: WORD_PARAGRAPH_FORMAT_ATTRS.filter(
         (key) => key !== 'lineHeightBasis'
       ),

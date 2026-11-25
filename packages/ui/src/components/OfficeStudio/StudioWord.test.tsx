@@ -10,6 +10,7 @@ import type {
   StudioEditorProps,
   StudioRichNode,
   StudioWordDocument,
+  StudioWordParagraphStyle,
 } from './studio-types';
 
 const namedStyleDocument = (autoUpdate = false): StudioWordDocument => ({
@@ -81,6 +82,30 @@ function selectNodeContents(textbox: HTMLElement, node: Node) {
 const restore: (() => void)[] = [];
 
 describe('Word paragraph dialog and ruler', () => {
+  it('edits inherited tab stops through ZUVI controls with precision checks, cancellation and one history step', async () => {
+    const model = namedStyleDocument();
+    model.defaultTabStop = 30;
+    (model.content.attrs!.paragraphStyles as StudioWordParagraphStyle[])[0].tabStops = [{ position: 180, alignment: 'right', leader: 'dot' }];
+    const { textbox, onChange } = await mount({ document: model });
+    selectNodeContents(textbox, textbox.querySelector('p')!);
+    fireEvent.click(screen.getByRole('button', { name: '制表位' }));
+    expect(screen.getByText(/当前默认每 30pt/)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: /^180pt/ }));
+    fireEvent.change(screen.getByLabelText('制表位位置（pt）'), { target: { value: '144.03' } });
+    expect(screen.getByRole('button', { name: '应用制表位' })).toBeDisabled();
+    fireEvent.click(screen.getByRole('button', { name: '取消' }));
+    expect(onChange).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: '制表位' }));
+    fireEvent.click(screen.getByRole('button', { name: /^180pt/ }));
+    fireEvent.change(screen.getByLabelText('制表位位置（pt）'), { target: { value: '144.05' } });
+    fireEvent.click(screen.getByRole('button', { name: '应用制表位' }));
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange.mock.lastCall?.[0].content.content[0].attrs.tabStops).toEqual([{position:180,alignment:'clear'},{position:144.05,alignment:'right',leader:'dot'}].sort((a,b)=>a.position-b.position));
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    expect(onChange.mock.lastCall?.[0].content.content[0].attrs.tabStops).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    expect(onChange.mock.lastCall?.[0].content.content[0].attrs.tabStops).toHaveLength(2);
+  });
   beforeAll(() =>
     vi.stubGlobal(
       'PointerEvent',

@@ -53,6 +53,9 @@ export interface StudioWordCharacterStyle {
   backgroundColor?: string | null;
 }
 
+export type { StudioWordTabStop } from './studio-word-tabs';
+import type { StudioWordTabStop } from './studio-word-tabs';
+
 export interface StudioWordParagraphFormat {
   textAlign?: 'left' | 'center' | 'right' | 'justify';
   indentLeft?: number;
@@ -80,6 +83,8 @@ export interface StudioWordParagraphStyle {
   autoUpdate?: boolean;
   run?: StudioWordCharacterStyle;
   paragraph?: StudioWordParagraphFormat;
+  /** Native paragraph tab deltas; clear removes an inherited position. */
+  tabStops?: StudioWordTabStop[];
 }
 
 export interface StudioWordDocument extends StudioDocumentBase {
@@ -89,6 +94,10 @@ export interface StudioWordDocument extends StudioDocumentBase {
   header?: StudioRichNode;
   footer?: StudioRichNode;
   pageNumbers?: boolean;
+  /** Default tab interval in points. DOCX defaults to 36pt when omitted. */
+  defaultTabStop?: number;
+  /** Native decimal separator used by decimal-aligned tab stops. */
+  decimalSymbol?: '.' | ',';
   page: {
     size: 'A4' | 'Letter';
     orientation: 'portrait' | 'landscape';

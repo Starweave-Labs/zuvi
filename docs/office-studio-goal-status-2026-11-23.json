@@ -847,39 +847,60 @@
         "docs/tests/office-studio-word.test.mjs"
       ],
       "historicalStatus": "缺失",
-      "status": "audited-not-implemented",
-      "evidence": [],
+      "status": "implemented-tab-stops-slice-verified-full-acceptance-audit-pending",
+      "evidence": [
+        "2026-11-25：左/中/右/小数点制表位和点线/短线/实线/中点前导符的 ZUVI 编辑入口、原生指令模型、混合段落位置增量、样式继承/自动更新、清除、草稿/只读/禁用/IME守卫及历史已接入。",
+        "e2e/office-studio-word-tabs.spec.ts：实际 DOCX 导入、修改/清除/取消/历史、缩放/非打印标记、页眉/表格坐标、打印与两次 DOCX 重开，明暗/320px；证据位于 docs/audits/2026-11-25/word-tabs/。",
+        "2026-11-25：补齐原生点号/逗号小数符号，千位分隔符不误识别；两种 DOCX 连续两次重开和浏览器对齐通过。默认间隔在读写/渲染前严格验证。"
+      ],
       "currentAudit": {
         "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "未实现",
-        "implementedBehavior": "无制表位编辑命令",
+        "sourceCommit": "9cf1532",
+        "implementation": "切片验证",
+        "implementedBehavior": "左/中/右/小数点制表位，点线/短线/实线/中点前导符；位置增量保留混合段落其他制表位，显式清除继承，自动样式联动，格式刷/清除联动；显示装饰保留制表字符/选区/历史，默认间隔及点号/逗号小数符号原生保存，千位分隔符不误识别、页眉/表格、缩放及打印对齐，DOCX 两次重开和明暗/320px。",
         "functionalGaps": [
-          "DOCX tabs 拒绝；缺小数点制表位和前导符"
+          "每段落/样式合并最多 64 个制表位指令，位置 0–1584pt、步长 0.05pt。bar/num/heavy 等扩展仍拒绝导入。多行长文本、段落其他对齐、RTL、复杂浮动和完整自动分页的布局组合仍待完整验收。"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 156,
-            "anchor": "const EXTENSIONS"
+            "path": "packages/ui/src/components/OfficeStudio/StudioWordTabsDialog.tsx",
+            "line": 23,
+            "anchor": "export function StudioWordTabsDialog"
+          },
+          {
+            "path": "packages/ui/src/components/OfficeStudio/studio-word-tab-extension.ts",
+            "line": 22,
+            "anchor": "export function wordSetTabStops"
+          },
+          {
+            "path": "packages/ui/src/components/OfficeStudio/studio-word-tabs.ts",
+            "line": 24,
+            "anchor": "export function wordTabStops"
           },
           {
             "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
-            "line": 60,
-            "anchor": "const UNSUPPORTED_CONTENT"
+            "line": 489,
+            "anchor": "function paragraphTabs"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 78,
-            "anchor": "export interface StudioWordDocument"
+            "path": "e2e/office-studio-word-tabs.spec.ts",
+            "line": 59,
+            "anchor": "Word tab positions and leaders align"
           }
         ],
-        "existingTestFiles": [],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "existingTestFiles": [
+          "packages/ui/src/components/OfficeStudio/studio-word-tabs.test.ts",
+          "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+          "docs/tests/office-studio-word.test.mjs",
+          "docs/tests/studio-print.test.mjs",
+          "e2e/office-studio-word-tabs.spec.ts"
+        ],
+        "testEvidenceNote": "Dedicated tab model, UI and native/browser evidence establish the current slice. Full repository results are recorded with the audit; complete layout combinations remain pending.",
+        "sourceState": "Includes tab-stop continuation changes committed with this audit."
       },
       "gaps": [
-        "DOCX tabs 拒绝；缺小数点制表位和前导符"
+        "每段落/样式合并最多 64 个制表位指令，位置 0–1584pt、步长 0.05pt。bar/num/heavy 等扩展仍拒绝导入。多行长文本、段落其他对齐、RTL、复杂浮动和完整自动分页的布局组合仍待完整验收。"
       ]
     },
     {
@@ -1144,7 +1165,7 @@
         "implementation": "切片验证",
         "implementedBehavior": "空格·、制表→、NBSP°、段落¶、换行↵的视图装饰；工具栏/视图复选/快捷键，正文与表格、页眉页脚联动；不改变文本、选区、字符格式、文档序列化和历史。只读可查看，禁用不可切换，组合输入/控件草稿快捷键隔离。DOCX 原生 w:tab 往返及打印空白保留，打印隐藏视图标记。",
         "functionalGaps": [
-          "超长文稿及全部分页/字号/文字方向组合的完整共通验收仍待审计；现有自定义 DOCX 制表位导入限制保留。"
+          "超长文稿及全部分页/字号/文字方向组合的完整共通验收仍待审计；bar/num/heavy 制表位扩展仍拒绝导入。"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
@@ -1185,7 +1206,7 @@
         "sourceState": "Includes the W018 continuation changes committed with this audit."
       },
       "gaps": [
-        "超长文稿及全部分页/字号/文字方向组合的完整共通验收仍待审计；现有自定义 DOCX 制表位导入限制保留。"
+        "超长文稿及全部分页/字号/文字方向组合的完整共通验收仍待审计；bar/num/heavy 制表位扩展仍拒绝导入。"
       ]
     },
     {
@@ -10123,8 +10144,8 @@
   "currentAuditItems": 159,
   "currentImplementationCounts": {
     "基础实现": 22,
-    "切片验证": 21,
+    "切片验证": 22,
     "部分实现": 54,
-    "未实现": 62
+    "未实现": 61
   }
 }

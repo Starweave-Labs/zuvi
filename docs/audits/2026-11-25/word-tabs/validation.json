@@ -1,0 +1,69 @@
+{
+  "date": "2026-11-25",
+  "baselineCommit": "9cf1532",
+  "wholeGoalComplete": false,
+  "ui": {
+    "files": 126,
+    "passed": 2370,
+    "priorRun": {
+      "passed": 2369,
+      "failed": 1,
+      "failure": "DataGrid warning assertion ran before its effect. The test now waits for the warning; the full UI rerun passed."
+    }
+  },
+  "docs": {
+    "passed": 296,
+    "skipped": 1
+  },
+  "dedicatedTabModel": {
+    "passed": 9
+  },
+  "nativeDocx": {
+    "passed": 38
+  },
+  "printing": {
+    "passed": 28
+  },
+  "e2e": {
+    "uniqueCasesWithApplicablePassingEvidence": 239,
+    "lastFullRun": {
+      "passed": 238,
+      "failed": 1,
+      "workers": 1,
+      "failure": "Word case/size checked DOM caret before focus restoration. The test now polls the expected caret; no timeout increase."
+    },
+    "earlierFullRun": {
+      "passed": 237,
+      "failed": 1,
+      "failure": "Concurrent Playwright runs shared output storage and removed a trace file. Subsequent runs use separate output folders."
+    },
+    "wordRegressionAfterRepair": {
+      "passed": 11,
+      "failed": 0
+    },
+    "tabAndNativeSymbols": {
+      "passed": 2,
+      "failed": 0
+    },
+    "screenshotsReviewed": true,
+    "note": "No single full-run 239/239 green result is claimed. Every final test case has applicable passing evidence; failed runs and repairs are retained here."
+  },
+  "checks": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "registryItems": 92,
+    "consumerSourceFiles": 345,
+    "distribution": "passed",
+    "uiBuild": "passed",
+    "browserBuild": "passed",
+    "docsBuild": "passed",
+    "entryGzipBytes": 124926,
+    "entryGzipBudgetBytes": 124928
+  },
+  "currentImplementationCounts": {
+    "基础实现": 22,
+    "切片验证": 22,
+    "部分实现": 54,
+    "未实现": 61
+  }
+}

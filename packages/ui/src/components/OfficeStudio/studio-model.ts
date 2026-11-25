@@ -249,6 +249,8 @@ const record = (value: unknown): value is Record<string, unknown> =>
 const finite = (value: unknown): value is number =>
   typeof value === 'number' && Number.isFinite(value);
 
+const integer = (value: unknown): value is number => Number.isInteger(value);
+
 const optionalText = (value: unknown, limit = 32767) =>
   value === undefined || (typeof value === 'string' && value.length <= limit);
 const optionalBoolean = (value: unknown) => value === undefined || typeof value === 'boolean';
@@ -435,8 +437,7 @@ function sheetRules(sheet: Record<string, unknown>, rows: number, columns: numbe
       if (covered > 100000) return false;
       if (field === 'conditionalFormats') {
         if (
-          !finite(rule.priority) ||
-          !Number.isInteger(rule.priority) ||
+          !integer(rule.priority) ||
           rule.priority < 1 ||
           !optionalBoolean(rule.stopIfTrue)
         )
@@ -471,8 +472,7 @@ function sheetRules(sheet: Record<string, unknown>, rows: number, columns: numbe
           case 'top10':
             fields = ['rank', 'percent', 'bottom'];
             if (
-              !finite(rule.rank) ||
-              !Number.isInteger(rule.rank) ||
+              !integer(rule.rank) ||
               rule.rank < 1 ||
               rule.rank > (rule.percent === true ? 100 : 1000) ||
               !optionalBoolean(rule.percent) ||
@@ -634,11 +634,9 @@ function sheetFeatures(sheet: Record<string, unknown>, rows: number, columns: nu
         !record(edit) ||
         (edit.axis !== 'row' && edit.axis !== 'column') ||
         (edit.type !== 'insert' && edit.type !== 'delete') ||
-        !finite(edit.index) ||
-        !Number.isInteger(edit.index) ||
+        !integer(edit.index) ||
         edit.index < 1 ||
-        !finite(edit.count) ||
-        !Number.isInteger(edit.count) ||
+        !integer(edit.count) ||
         edit.count < 1
       )
         return false;
@@ -694,7 +692,7 @@ function sheetFeatures(sheet: Record<string, unknown>, rows: number, columns: nu
       sheet.hiddenRows.length > rows ||
       new Set(sheet.hiddenRows).size !== sheet.hiddenRows.length ||
       !sheet.hiddenRows.every(
-        (row) => finite(row) && Number.isInteger(row) && row >= 1 && row <= rows
+        (row) => integer(row) && row >= 1 && row <= rows
       ))
   )
     return false;
@@ -735,10 +733,8 @@ function sheetFeatures(sheet: Record<string, unknown>, rows: number, columns: nu
     const freeze = sheet.freeze;
     if (
       !record(freeze) ||
-      !Number.isInteger(freeze.rows) ||
-      !Number.isInteger(freeze.columns) ||
-      !finite(freeze.rows) ||
-      !finite(freeze.columns) ||
+      !integer(freeze.rows) ||
+      !integer(freeze.columns) ||
       freeze.rows < 0 ||
       freeze.columns < 0 ||
       freeze.rows > 100 ||
@@ -827,18 +823,16 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
   )
     return false;
   if (value.kind === 'word') {
+    const page = value.page;
+    const tab = value.defaultTabStop as number | undefined;
     if (
-      !record(value.page) ||
-      !['A4', 'Letter'].includes(String(value.page.size)) ||
-      !['portrait', 'landscape'].includes(String(value.page.orientation)) ||
-      !finite(value.page.margin) ||
-      value.page.margin < 0 ||
-      value.page.margin > 80
-    )
-      return false;
-    if (
-      [value.page.headerDistance, value.page.footerDistance].some(
-        (distance) => distance !== undefined && (!finite(distance) || distance < 0 || distance > 80)
+      !record(page) ||
+      !['A4', 'Letter'].includes(page.size as string) ||
+      !['portrait', 'landscape'].includes(page.orientation as string) ||
+      page.margin === undefined ||
+      (tab !== undefined && (typeof tab !== 'number' || tab <= 0 || tab > 1584 || !integer(tab * 20))) ||
+      ![page.margin, page.headerDistance, page.footerDistance].every(
+        (distance) => distance === undefined || (finite(distance) && distance >= 0 && distance <= 80)
       )
     )
       return false;
@@ -878,10 +872,9 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
       );
     };
     return (
-      richNode(value.content, 0) &&
-      value.content.type === 'doc' &&
+      value.content !== undefined &&
       optionalBoolean(value.pageNumbers) &&
-      [value.header, value.footer].every(
+      [value.content, value.header, value.footer].every(
         (body) => body === undefined || (richNode(body, 0) && body.type === 'doc')
       )
     );
@@ -909,12 +902,10 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
           sheet.name.length > 31 ||
           /[\\/*?:[\]]/.test(sheet.name) ||
           names.has(sheet.name.toLocaleLowerCase()) ||
-          !finite(sheet.rowCount) ||
-          !Number.isInteger(sheet.rowCount) ||
+          !integer(sheet.rowCount) ||
           sheet.rowCount < 1 ||
           sheet.rowCount > 10000 ||
-          !finite(sheet.columnCount) ||
-          !Number.isInteger(sheet.columnCount) ||
+          !integer(sheet.columnCount) ||
           sheet.columnCount < 1 ||
           sheet.columnCount > 256 ||
           !record(sheet.cells)
@@ -938,17 +929,17 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
           sheetFeatures(sheet, rows, columns) &&
           entries.every(([address, cell]) => {
             const position = cellPosition(address);
-            if (!position) return false;
+            if (!position || !record(cell)) return false;
+            const valueType = cell.valueType;
             return (
               position.row <= rows &&
               position.column <= columns &&
-              record(cell) &&
               typeof cell.input === 'string' &&
               cell.input.length <= 32767 &&
-              (cell.valueType === undefined ||
-                cell.valueType === 'number' ||
-                cell.valueType === 'boolean' ||
-                cell.valueType === 'text') &&
+              (valueType === undefined ||
+                valueType === 'number' ||
+                valueType === 'boolean' ||
+                valueType === 'text') &&
               (cell.array === undefined ||
                 (record(cell.array) &&
                   cell.input.startsWith('=') &&
@@ -976,8 +967,7 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
   }
   if (
     value.kind !== 'pdf' ||
-    !finite(value.pageCount) ||
-    !Number.isInteger(value.pageCount) ||
+    !integer(value.pageCount) ||
     value.pageCount < 1 ||
     value.pageCount > 200 ||
     !Array.isArray(value.marks) ||
@@ -998,8 +988,7 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
         typeof mark.id === 'string' &&
         !!mark.id &&
         !markIds.has(mark.id) &&
-        finite(mark.page) &&
-        Number.isInteger(mark.page) &&
+        integer(mark.page) &&
         mark.page >= 0 &&
         mark.page < pageCount &&
         ['text', 'highlight', 'rectangle', 'ink'].includes(String(mark.type)) &&
@@ -1013,7 +1002,7 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
         optionalPositive(mark.width) &&
         optionalPositive(mark.height) &&
         optionalPositive(mark.lineWidth, 40) &&
-        (mark.lineWidth === undefined || (finite(mark.lineWidth) && mark.lineWidth >= 0.5)) &&
+        (mark.lineWidth === undefined || (mark.lineWidth as number) >= 0.5) &&
         optionalText(mark.color, 256)
       ))
         return false;
@@ -1077,8 +1066,7 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
           field.widgets.every(
             (widget) =>
               record(widget) &&
-              finite(widget.page) &&
-              Number.isInteger(widget.page) &&
+              integer(widget.page) &&
               widget.page >= 0 &&
               widget.page < pageCount &&
               finite(widget.x) &&

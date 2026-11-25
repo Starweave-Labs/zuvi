@@ -71,6 +71,19 @@ const print = compiled('../src/pages/collaboration/office-studio/studio-print.ts
   },
 });
 
+test('Word print retains native tab characters and resolved leaders for the measurement pass without inserting document text', () => {
+  const model = models.createOfficeStudioDocument('word');
+  model.defaultTabStop = 30;
+  model.content = { type: 'doc', attrs: { paragraphStyles: [{ id: 'tabs', name: 'Tabs', tabStops: [{ position: 120, alignment: 'decimal', leader: 'dot' }] }] }, content: [{ type: 'paragraph', attrs: { paragraphStyle: 'tabs' }, content: [{ type: 'text', text: 'Label\t12.34', marks: [{type:'bold'}] }] }] };
+  const html = new JSDOM(print.createStudioPrintHtml(model)).window.document;
+  const paragraph = html.querySelector('article p');
+  assert.equal(paragraph.textContent,'Label\t12.34');
+  assert.equal(paragraph.dataset.wordDefaultTab,'30');
+  assert.deepEqual(JSON.parse(paragraph.dataset.wordTabs),[{position:120,alignment:'decimal',leader:'dot'}]);
+  assert.equal(paragraph.querySelector('[data-word-tab]').textContent,'\t');
+  assert.equal(html.querySelectorAll('script').length,0);
+});
+
 test('Word print preserves point paragraph geometry and exact/minimum line-rule metadata', () => {
   const document = models.createOfficeStudioDocument('word');
   document.content = {

@@ -1,4 +1,5 @@
 import JSZip from 'jszip';
+import { wordTabStops, wordMergeTabStops, wordDecimalSymbol, wordDefaultTabStop } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-tabs';
 import {
   wordLineUnits,
   wordParagraphNumber,
@@ -410,10 +411,11 @@ function paragraphProperties(
     child(properties, 'framePr') ||
     child(properties, 'textDirection') ||
     enabled(child(properties, 'bidi')) ||
-    child(properties, 'pPrChange') ||
-    child(properties, 'tabs')
+    child(properties, 'pPrChange')
   )
-    unsupported('段落定位、方向或制表位');
+    unsupported('段落定位或方向');
+  const tabs = paragraphTabs(properties);
+  if (tabs !== undefined) result.tabStops = ownOnly ? tabs : wordMergeTabStops(base.tabStops, tabs);
   const outline = value(properties, 'outlineLvl');
   if (
     outline &&
@@ -484,6 +486,24 @@ function paragraphProperties(
   return result;
 }
 
+function paragraphTabs(properties?: Element) {
+  const tabs = child(properties, 'tabs');
+  if (!tabs) return undefined;
+  return wordTabStops(elements(tabs).map((tab) => {
+    if (tab.localName !== 'tab') unsupported('制表位子元素');
+    const alignment = attr(tab), leader = attr(tab, 'leader');
+    return {
+      position: number(attr(tab, 'pos'), '制表位位置', 0, 31680) / 20,
+      alignment: ({ start: 'left', end: 'right' } as Record<string, string>)[alignment] || alignment,
+      ...(leader ? { leader } : {}),
+    };
+  }));
+}
+
+const nativeTabs = (input: unknown) => wordTabStops(input).map((stop) => ({
+  position: Math.round(stop.position * 20), type: stop.alignment, leader: stop.leader,
+}));
+
 function parseStyles(xml?: XMLDocument): {
   defaults: Style;
   styles: Map<string, Style>;
@@ -546,8 +566,7 @@ function parseStyles(xml?: XMLDocument): {
         : undefined,
     };
     if (
-      !elements(child(source, 'rPr')).some((element) => UNSUPPORTED_RUN.has(element.localName)) &&
-      !child(child(source, 'pPr'), 'tabs')
+      !elements(child(source, 'rPr')).some((element) => UNSUPPORTED_RUN.has(element.localName))
     ) {
       try {
         resolve(id);
@@ -649,6 +668,7 @@ function parseStyles(xml?: XMLDocument): {
         ? { headingLevel: (resolved.heading || 0) as StudioWordParagraphStyle['headingLevel'] }
         : {}),
       autoUpdate: enabled(child(source, 'autoRedefine')),
+      tabStops: baseModel ? paragraphTabs(child(source, 'pPr')) : wordMergeTabStops(nativeBase.paragraph.tabStops, paragraphTabs(child(source, 'pPr'))),
       run: {
         ...(!baseModel
           ? Object.fromEntries(
@@ -1041,6 +1061,9 @@ function parseParagraph(element: Element, context: ImportContext): ParsedParagra
     : style.heading;
   const namedStyle = context.styleModels.get(styleId);
   if (namedStyle) {
+    const ownTabs = paragraphTabs(properties);
+    if (ownTabs === undefined) delete attrs.tabStops;
+    else attrs.tabStops = ownTabs;
     attrs.paragraphStyle = namedStyle.id;
     attrs.paragraphStyleMaterialized = true;
     context.usedStyles.add(namedStyle.id);
@@ -1481,6 +1504,12 @@ export async function importStudioWord(source: Blob, name: string): Promise<Stud
     id: `studio-word-${globalThis.crypto.randomUUID()}`,
     name: name || '未命名.docx',
     kind: 'word',
+    ...(child(settingsXml?.documentElement, 'decimalSymbol') ? {
+      decimalSymbol: wordDecimalSymbol(value(settingsXml?.documentElement, 'decimalSymbol')),
+    } : {}),
+    ...(child(settingsXml?.documentElement, 'defaultTabStop') ? {
+      defaultTabStop: wordDefaultTabStop(number(value(settingsXml?.documentElement, 'defaultTabStop'), '默认制表位', 1, 31680) / 20),
+    } : {}),
     content: {
       type: 'doc',
       ...(paragraphStyles.length ? { attrs: { paragraphStyles } } : {}),
@@ -1778,6 +1807,7 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
         : {}),
     },
     paragraph: {
+      ...(style.tabStops !== undefined ? { tabStops: nativeTabs(style.tabStops) } : {}),
       ...(style.headingLevel !== undefined
         ? { outlineLevel: style.headingLevel ? style.headingLevel - 1 : 9 }
         : {}),
@@ -1834,6 +1864,7 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
       'paragraphStyleFallback',
       'paragraphStyleMaterialized',
       'paragraphStyleSnapshot',
+      'tabStops',
     ]);
     const attrs = node.attrs || {};
     const linkedStyle =
@@ -1880,6 +1911,7 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
       unsupported('行距单位');
     return new Paragraph({
       ...options,
+      ...(attrs.tabStops != null ? { tabStops: nativeTabs(attrs.tabStops) } : {}),
       ...(linkedStyle ? { style: nativeStyleId(linkedStyle.id) } : {}),
       ...(linkedStyle && nodeLevel !== linkedStyle.headingLevel
         ? { outlineLevel: nodeLevel ? nodeLevel - 1 : 9 }
@@ -2065,6 +2097,7 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
       ? [12240, 15840]
       : [Math.round(210 * TWIPS_PER_MM), Math.round(297 * TWIPS_PER_MM)];
   const file = new DocxDocument({
+    defaultTabStop: wordDefaultTabStop(document.defaultTabStop) * 20,
     creator: 'ZUVI Office Studio',
     title: document.name,
     numbering: { config: numbering },
@@ -2169,6 +2202,7 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
       },
     ],
   });
+  file.Settings.addChildElement(ImportedXmlComponent.fromXmlString(`<w:decimalSymbol w:val="${wordDecimalSymbol(document.decimalSymbol)}"/>`));
   const bytes = await Packer.toArrayBuffer(file);
   const imageLayouts = [document.content, document.header, document.footer].flatMap((root) => {
     const result: StudioWordImageLayout[] = [];

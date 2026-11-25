@@ -3,6 +3,7 @@ import { Plugin, type EditorState, type Transaction } from '@tiptap/pm/state';
 import { closeHistory } from '@tiptap/pm/history';
 import { splitBlock } from '@tiptap/pm/commands';
 import { splitListItem } from '@tiptap/pm/schema-list';
+import { wordMergeTabStops } from './studio-word-tabs';
 import type { Node as ProseMirrorNode } from '@tiptap/pm/model';
 import type { StudioRichNode, StudioWordParagraphStyle } from './studio-types';
 import {
@@ -266,7 +267,10 @@ export const WordParagraphStyles = Extension.create<WordStyleExtensionOptions>({
                   ],
               ])
           );
-          if (!Object.keys(run).length && !Object.keys(paragraph).length) return null;
+          const tabStops = JSON.stringify(old.attrs.tabStops) !== JSON.stringify(current.attrs.tabStops)
+            ? wordMergeTabStops(resolveStudioWordParagraphStyle(styles, id).tabStops, current.attrs.tabStops)
+            : undefined;
+          if (!Object.keys(run).length && !Object.keys(paragraph).length && tabStops === undefined) return null;
           const next = validateStudioWordParagraphStyles(
             styles.map((style) =>
               style.id === id
@@ -274,12 +278,20 @@ export const WordParagraphStyles = Extension.create<WordStyleExtensionOptions>({
                     ...style,
                     run: { ...style.run, ...run },
                     paragraph: { ...style.paragraph, ...paragraph },
+                    ...(tabStops !== undefined ? { tabStops } : {}),
                   }
                 : style
             )
           );
           const tr = state.tr;
           setDefinitions(tr, next, styles);
+          if (tabStops !== undefined) state.doc.descendants((node, position) => {
+            if (!isParagraph(node) || node.attrs.paragraphStyle !== id ||
+              JSON.stringify(oldState.doc.nodeAt(position)?.attrs.tabStops) === JSON.stringify(node.attrs.tabStops)) return;
+            const updated = tr.doc.nodeAt(position)!;
+            tr.setNodeMarkup(position, undefined, { ...updated.attrs, tabStops: null });
+            return false;
+          });
           return tr;
         },
       }),

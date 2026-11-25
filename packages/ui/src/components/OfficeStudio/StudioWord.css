@@ -777,6 +777,35 @@
   margin: 0 0 0.65em;
 }
 
+.zuvi-studio-word-tab {
+  display: inline-block;
+  position: relative;
+  white-space: pre;
+  tab-size: 0;
+  text-indent: 0;
+  width: 36pt;
+  vertical-align: baseline;
+  overflow: hidden;
+}
+.zuvi-studio-word-tab::after {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.zuvi-studio-word-tab[data-word-leader='dot']::after { content: '................................................................................................................................................................................................'; }
+.zuvi-studio-word-tab[data-word-leader='middleDot']::after { content: '··········································································································································································'; }
+.zuvi-studio-word-tab[data-word-leader='hyphen']::after { content: '------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------'; }
+.zuvi-studio-word-tab[data-word-leader='underscore']::after,
+.zuvi-studio-word-tab[data-word-leader='heavy']::after { content: ''; bottom: 0.2em; border-bottom: 1px solid currentColor; }
+.zuvi-studio-word-tab[data-word-leader='heavy']::after { border-bottom-width: 2px; }
+.zuvi-studio-word-tabs-list { display: flex; flex-direction: column; max-height: 160px; overflow: auto; margin-block: 8px; }
+.zuvi-studio-word-tabs-list button { justify-content: flex-start; text-align: start; white-space: normal; height: auto; min-height: 32px; }
+.zuvi-studio-word-tabs-actions { display: flex; flex-wrap: wrap; gap: 4px; margin-block: 12px; }
+.zuvi-studio-word-tabs-dialog label { display: block; }
+
 .zuvi-studio-word-nonprinting-space,
 .zuvi-studio-word-nonprinting-end {
   position: relative;

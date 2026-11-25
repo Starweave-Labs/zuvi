@@ -7,6 +7,7 @@ import type {
 import { studioFontFamilyInput } from './studio-font-input';
 import { wordMetricPoints } from './studio-word-metrics';
 import { wordParagraphFormatIssue, wordLineUnits } from './studio-word-paragraph-format';
+import { wordMergeTabStops, wordTabStops, type StudioWordTabStop } from './studio-word-tabs';
 
 export const WORD_STYLE_LIMIT = 100;
 export const WORD_BUILTIN_STYLES: StudioWordParagraphStyle[] = [
@@ -67,6 +68,7 @@ export interface ResolvedStudioWordParagraphStyle {
   autoUpdate: boolean;
   run: Required<StudioWordCharacterStyle>;
   paragraph: Required<StudioWordParagraphFormat>;
+  tabStops: StudioWordTabStop[];
 }
 
 function record(value: unknown, label: string): Record<string, unknown> {
@@ -101,6 +103,7 @@ export function validateStudioWordParagraphStyles(value: unknown): StudioWordPar
           'autoUpdate',
           'run',
           'paragraph',
+          'tabStops',
         ].includes(key)
       )
         throw new Error(`段落样式包含不支持的 ${key} 属性。`);
@@ -138,6 +141,7 @@ export function validateStudioWordParagraphStyles(value: unknown): StudioWordPar
     }
     if (style.autoUpdate !== undefined && typeof style.autoUpdate !== 'boolean')
       throw new Error('样式自动更新标记无效。');
+    if (style.tabStops !== undefined) wordTabStops(style.tabStops);
     if (style.run !== undefined) {
       const run = record(style.run, '样式文字属性');
       for (const [key, input] of Object.entries(run)) {
@@ -204,7 +208,7 @@ export function resolveStudioWordParagraphStyle(
   if (!source) throw new Error(`段落样式 ${id} 不存在。`);
   const base = source.basedOn
     ? resolveStudioWordParagraphStyle(styles, source.basedOn, [...path, id])
-    : { headingLevel: 0 as const, run: WORD_BODY_RUN, paragraph: BODY_PARAGRAPH };
+    : { headingLevel: 0 as const, run: WORD_BODY_RUN, paragraph: BODY_PARAGRAPH, tabStops: [] };
   const paragraph = { ...base.paragraph, ...source.paragraph };
   const rawLine =
     source.paragraph?.lineHeight === undefined
@@ -223,6 +227,7 @@ export function resolveStudioWordParagraphStyle(
     autoUpdate: source.autoUpdate ?? false,
     run: { ...base.run, ...source.run },
     paragraph,
+    tabStops: wordMergeTabStops(base.tabStops, source.tabStops),
   };
 }
 
@@ -309,6 +314,7 @@ export function applyStudioWordStyleToNode(
     paragraphStyleSnapshot: {
       run: { ...style.run },
       paragraph: { ...style.paragraph },
+      tabStops: style.tabStops,
       headingLevel: style.headingLevel,
     },
   };
@@ -432,6 +438,7 @@ export function materializeStudioWordStyles(
               name: '已应用样式',
               run: source.run,
               paragraph: source.paragraph,
+              tabStops: source.tabStops,
               headingLevel: source.headingLevel,
             },
           ]);
@@ -440,11 +447,13 @@ export function materializeStudioWordStyles(
             JSON.stringify({
               run: previous.run,
               paragraph: previous.paragraph,
+              tabStops: previous.tabStops,
               headingLevel: previous.headingLevel,
             }) !==
             JSON.stringify({
               run: style.run,
               paragraph: style.paragraph,
+              tabStops: style.tabStops,
               headingLevel: style.headingLevel,
             })
           )
@@ -455,6 +464,7 @@ export function materializeStudioWordStyles(
             attrs: {
               ...node.attrs,
               paragraphStyleSnapshot: {
+                tabStops: style.tabStops,
                 run: { ...style.run },
                 paragraph: { ...style.paragraph },
                 headingLevel: style.headingLevel,

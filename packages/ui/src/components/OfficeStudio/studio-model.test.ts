@@ -19,6 +19,29 @@ it('accepts primitive constant value tags and rejects string-coercing objects or
 import type { StudioExcelDocument, StudioPdfDocument, StudioWordDocument } from './studio-types';
 
 describe('persisted OfficeStudio models', () => {
+  it('keeps integer geometry strict while retaining fractional point measurements', () => {
+    const doc = createOfficeStudioDocument('excel') as StudioExcelDocument;
+    const sheet = doc.sheets[0], originalRows = sheet.rowCount;
+    sheet.defaultRowHeight = 18.25;
+    sheet.cells.A1 = { input: 'Text', fontSize: 11.5 };
+    expect(isOfficeStudioDocument(doc)).toBe(true);
+    for (const rows of [Infinity, NaN, 2.5, '80', { toString: () => '80' }]) {
+      sheet.rowCount = rows as number;
+      expect(isOfficeStudioDocument(doc)).toBe(false);
+    }
+    sheet.rowCount = originalRows;
+    expect(isOfficeStudioDocument(doc)).toBe(true);
+  });
+  it('validates native Word default tab precision and primitive page values without coercion', () => {
+    const doc = createOfficeStudioDocument('word') as StudioWordDocument;
+    for (const value of [0.05, 30, 1584]) { doc.defaultTabStop = value; expect(isOfficeStudioDocument(doc)).toBe(true); }
+    for (const value of [0, -1, 30.03, 1584.05, NaN, '30', { toString: () => '30' }]) {
+      doc.defaultTabStop = value as number; expect(isOfficeStudioDocument(doc)).toBe(false);
+    }
+    delete doc.defaultTabStop;
+    doc.page.size = { toString: () => 'A4' } as never;
+    expect(isOfficeStudioDocument(doc)).toBe(false);
+  });
   it('keeps multiline Unicode rule messages and refuses characters that cannot round-trip through XLSX XML', () => {
     const document = createOfficeStudioDocument('excel') as StudioExcelDocument;
     const sheet = document.sheets[0];

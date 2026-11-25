@@ -24,6 +24,8 @@ import { studioConditionalCellStyle } from '../../../../../packages/ui/src/compo
 import { studioNumberFormatColor } from '../../../../../packages/ui/src/components/OfficeStudio/studio-number-format';
 import { wordMetricCss } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-metrics';
 import { wordParagraphLineCss } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-paragraph-format';
+import { wordMergeTabStops, wordDecimalSymbol, wordDefaultTabStop } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-tabs';
+import { wordLayoutTabElements } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-tabs-dom';
 import { wordImageLayout } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-images';
 import { wordImageCss } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-image-preview';
 import {
@@ -65,7 +67,9 @@ function rich(
   node: StudioRichNode,
   page: number,
   total: number,
-  floating?: PrintedFloatingImage[]
+  floating?: PrintedFloatingImage[],
+  defaultTab = 36,
+  decimalSymbol: '.' | ',' = '.'
 ): string {
   if (node.type === 'image' && floating) {
     const layout = wordImageLayout(node.attrs?.layout);
@@ -81,10 +85,10 @@ function rich(
   }
   let text =
     node.type === 'text'
-      ? escape(node.text)
+      ? escape(node.text).replace(/\t/g, '<span data-word-tab="" class="zuvi-studio-word-tab">\t</span>')
       : node.type === 'pageNumber'
         ? String(node.attrs?.kind === 'total' ? total : page)
-        : (node.content ?? []).map((child) => rich(child, page, total, floating)).join('');
+        : (node.content ?? []).map((child) => rich(child, page, total, floating, defaultTab, decimalSymbol)).join('');
   for (const mark of node.marks ?? []) {
     const tag = (
       {
@@ -200,7 +204,9 @@ function rich(
   const lineRule = ['auto', 'exact', 'atLeast'].includes(String(attrs.lineHeightRule))
     ? ` data-word-line-rule="${attrs.lineHeightRule}"`
     : '';
-  return `<${tag}${style}${spans}${start}${lineRule}>${text || (tag === 'p' ? '<br>' : '')}</${tag}>`;
+  const tabs = node.type === 'paragraph' || node.type === 'heading'
+    ? ` data-word-tabs="${escape(JSON.stringify(wordMergeTabStops((attrs.paragraphStyleSnapshot as { tabStops?: unknown } | null)?.tabStops, attrs.tabStops)))}" data-word-default-tab="${defaultTab}" data-word-decimal-symbol="${decimalSymbol}"` : '';
+  return `<${tag}${style}${spans}${start}${lineRule}${tabs}>${text || (tag === 'p' ? '<br>' : '')}</${tag}>`;
 }
 
 function wordPages(document: StudioWordDocument) {
@@ -221,7 +227,7 @@ function wordPages(document: StudioWordDocument) {
       const total = pages.length;
       const floating: PrintedFloatingImage[] = [];
       const render = (node?: StudioRichNode) =>
-        node ? rich(node, index + 1, total, floating) : '';
+        node ? rich(node, index + 1, total, floating, wordDefaultTabStop(document.defaultTabStop), wordDecimalSymbol(document.decimalSymbol)) : '';
       const footer = render(document.footer);
       const containsPage = (node?: StudioRichNode): boolean =>
         !!node && (node.type === 'pageNumber' || (node.content ?? []).some(containsPage));
@@ -489,6 +495,31 @@ export function createStudioPrintHtml(document: OfficeStudioDocument): string {
 @page{size:${paper};margin:${margin}mm}*{box-sizing:border-box}body{margin:0;color:#253044;background:white;font:12pt/1.6 "Microsoft YaHei","Noto Sans SC",Arial,sans-serif}h1,h2,h3,h4,h5,h6{line-height:1.3;break-after:avoid}h1{font-size:25pt}h2{font-size:19pt}p{margin:0 0 8pt}table{border-collapse:collapse;width:100%;font-size:10pt;table-layout:fixed}td,th{border:1px solid #b8c2bc;padding:5pt;overflow-wrap:anywhere;vertical-align:top}th{background:#edf3ee;text-align:left}tr{break-inside:avoid}img{max-width:100%;height:auto;vertical-align:middle}blockquote{margin:10pt 0;padding-left:12pt;border-left:3px solid #90a59a}a{color:inherit}header,footer{font-size:9pt;color:#5a6c61}header{margin-bottom:12pt}footer{margin-top:14pt}.studio-print-page,.studio-print-sheet{break-after:page}.studio-print-page:last-child,.studio-print-sheet:last-child{break-after:auto}.studio-print-break{break-before:page}.studio-print-number{text-align:center}.studio-print-chart{margin:18pt 0;break-inside:avoid}.studio-print-chart svg{width:100%;max-height:240pt}.studio-print-chart figcaption{font-weight:700}.studio-print-chart p{font-size:9pt}[data-word-line-rule="exact"] :is(span,strong,em,u,s,a){line-height:inherit;vertical-align:top}[data-word-line-rule="atLeast"] :is(span,strong,em,u,s,a){line-height:max(var(--zuvi-word-min-line),1.2em)}body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 ${document.kind === 'excel' ? '.studio-print-sheet table{font-family:Calibri,Arial,sans-serif;font-size:11pt;line-height:1.15}.studio-print-sheet td{padding:2px 5px;vertical-align:middle}.studio-print-cell{overflow:hidden}' : ''}
 ${document.kind === 'word' ? '.studio-print-page{position:relative;isolation:isolate;min-height:50mm}.studio-print-page p,.studio-print-page h1,.studio-print-page h2,.studio-print-page h3,.studio-print-page h4,.studio-print-page h5,.studio-print-page h6{position:relative;white-space:pre-wrap}.studio-print-image-anchor{display:inline-block;position:relative;width:0;height:0}.studio-print-page-picture{position:absolute;inset:0;pointer-events:none}' : ''}
+.zuvi-studio-word-tab {
+  display: inline-block;
+  position: relative;
+  white-space: pre;
+  tab-size: 0;
+  text-indent: 0;
+  width: 36pt;
+  vertical-align: baseline;
+  overflow: hidden;
+}
+.zuvi-studio-word-tab::after {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.zuvi-studio-word-tab[data-word-leader='dot']::after { content: '................................................................................................................................................................................................'; }
+.zuvi-studio-word-tab[data-word-leader='middleDot']::after { content: '··········································································································································································'; }
+.zuvi-studio-word-tab[data-word-leader='hyphen']::after { content: '------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------'; }
+.zuvi-studio-word-tab[data-word-leader='underscore']::after,
+.zuvi-studio-word-tab[data-word-leader='heavy']::after { content: ''; bottom: 0.2em; border-bottom: 1px solid currentColor; }
+.zuvi-studio-word-tab[data-word-leader='heavy']::after { border-bottom-width: 2px; }
+
 </style></head><body>${content}</body></html>`;
 }
 
@@ -503,6 +534,14 @@ export async function printStudioFile(
   frame.title = `${document.name} 打印预览`;
   frame.setAttribute('aria-hidden', 'true');
   frame.style.cssText = 'position:fixed;inset:0;width:0;height:0;border:0;';
+  if (document.kind === 'word') {
+    const paper = document.page.size === 'Letter' ? [215.9, 279.4] : [210, 297];
+    if (document.page.orientation === 'landscape') paper.reverse();
+    frame.style.width = `${Math.max(1, paper[0] - document.page.margin * 2) * 96 / 25.4}px`;
+    frame.style.height = `${paper[1] * 96 / 25.4}px`;
+    frame.style.visibility = 'hidden';
+    frame.style.pointerEvents = 'none';
+  }
   const url = pdf ? URL.createObjectURL(pdf) : undefined;
   let cleaned = false;
   let loadingHandled = false;
@@ -543,6 +582,7 @@ export async function printStudioFile(
           );
         }
         if (cleaned) return;
+        if (html && document.kind === 'word') wordLayoutTabElements(view.document.body);
         view.addEventListener('afterprint', cleanup, { once: true });
         if (timer) clearTimeout(timer);
         timer = setTimeout(cleanup, 60000);

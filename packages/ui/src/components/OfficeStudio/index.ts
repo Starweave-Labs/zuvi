@@ -32,4 +32,5 @@ export type {
   StudioWordCharacterStyle,
   StudioWordParagraphFormat,
   StudioWordParagraphStyle,
+  StudioWordTabStop,
 } from './studio-types';

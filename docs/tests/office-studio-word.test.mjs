@@ -18,11 +18,13 @@ const styleExports = {};
 const fontExports = {};
 const metricExports = {};
 const paragraphExports = {};
+const tabExports = {};
 const imageExports = {};
 for (const [file, target] of [
   ['studio-font-input.ts', fontExports],
   ['studio-word-metrics.ts', metricExports],
   ['studio-word-paragraph-format.ts', paragraphExports],
+  ['studio-word-tabs.ts', tabExports],
   ['studio-word-styles.ts', styleExports],
   ['studio-word-images.ts', imageExports],
   ['studio-word-image-preview.ts', imageExports],
@@ -44,7 +46,7 @@ for (const [file, target] of [
     {
       exports: target,
       require: (id) =>
-        id === './studio-word-paragraph-format'
+        id === './studio-word-tabs' ? tabExports : id === './studio-word-paragraph-format'
           ? paragraphExports
           : id === './studio-word-metrics'
             ? metricExports
@@ -71,7 +73,7 @@ runInNewContext(
   {
     exports,
     require: (id) =>
-      id.endsWith('/studio-word-paragraph-format')
+      id.endsWith('/studio-word-tabs') ? tabExports : id.endsWith('/studio-word-paragraph-format')
         ? paragraphExports
         : id.endsWith('/studio-word-metrics')
           ? metricExports
@@ -90,6 +92,59 @@ runInNewContext(
 );
 const { importStudioWord, exportStudioWord } = exports;
 const W = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';
+
+test('native period and comma decimal symbols persist independently of text grouping separators', async () => {
+  for (const [symbol,text] of [['.','1,234.50'],[',','1.234,50']]) {
+    let document=await importStudioWord(await fixture(`<w:p><w:pPr><w:tabs><w:tab w:val="decimal" w:pos="3600"/></w:tabs></w:pPr><w:r><w:t>Group</w:t><w:tab/><w:t>${text}</w:t></w:r></w:p>`,{
+      'word/settings.xml':`<w:settings xmlns:w="${W}"><w:decimalSymbol w:val="${symbol}"/></w:settings>`,
+    }),'Symbol.docx');
+    for(let pass=0;pass<2;pass++){
+      assert.equal(document.decimalSymbol,symbol);
+      const file=await exportStudioWord(document),zip=await JSZip.loadAsync(await file.arrayBuffer());
+      const settings=parse(await zip.file('word/settings.xml').async('string'));
+      assert.equal(settings.getElementsByTagNameNS(W,'decimalSymbol')[0].getAttributeNS(W,'val'),symbol);
+      document=await importStudioWord(file,'Reopened.docx');
+      assert.equal(find(document.content,'text').map((node)=>node.text).join(''),`Group\t${text}`);
+    }
+  }
+});
+
+test('native tab stops, leaders, inherited clear directives and the default interval survive edits and repeated DOCX saves', async () => {
+  const source = await fixture('<w:p><w:pPr><w:pStyle w:val="Tabs"/><w:tabs><w:tab w:val="clear" w:pos="720"/><w:tab w:val="decimal" w:pos="2880" w:leader="dot"/></w:tabs></w:pPr><w:r><w:rPr><w:b/></w:rPr><w:t>Label</w:t><w:tab/><w:t>12.34</w:t></w:r></w:p><w:p><w:pPr><w:tabs><w:tab w:val="left" w:pos="720"/><w:tab w:val="center" w:pos="1440" w:leader="hyphen"/><w:tab w:val="right" w:pos="2160" w:leader="underscore"/></w:tabs></w:pPr><w:r><w:t>A</w:t><w:tab/><w:t>B</w:t><w:tab/><w:t>C</w:t></w:r></w:p>', {
+    'word/styles.xml': `<w:styles xmlns:w="${W}"><w:style w:type="paragraph" w:styleId="Tabs"><w:name w:val="Tabs"/><w:pPr><w:tabs><w:tab w:val="left" w:pos="720"/><w:tab w:val="right" w:pos="2160" w:leader="dot"/></w:tabs></w:pPr></w:style></w:styles>`,
+    'word/settings.xml': `<w:settings xmlns:w="${W}"><w:defaultTabStop w:val="600"/></w:settings>`,
+  });
+  let document = await importStudioWord(source, 'Tabs.docx');
+  assert.equal(document.defaultTabStop, 30);
+  assert.equal(document.content.content[0].attrs.tabStops[0].alignment, 'clear');
+  assert.equal(document.content.attrs.paragraphStyles[0].tabStops[1].alignment, 'right');
+  document.content.content[0].attrs.tabStops[1] = { position: 170.25, alignment: 'decimal', leader: 'dot' };
+  for (let pass = 0; pass < 2; pass++) {
+    const file = await exportStudioWord(document), zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const native = parse(await zip.file('word/document.xml').async('string'));
+    const tab = [...native.getElementsByTagNameNS(W, 'tab')].find((item) => item.getAttributeNS(W, 'val') === 'decimal');
+    assert.equal(tab.getAttributeNS(W, 'pos'), '3405');
+    assert.equal(tab.getAttributeNS(W, 'leader'), 'dot');
+    assert.ok([...native.getElementsByTagNameNS(W, 'tab')].some((item) => item.getAttributeNS(W, 'val') === 'clear'));
+    assert.equal(parse(await zip.file('word/settings.xml').async('string')).getElementsByTagNameNS(W, 'defaultTabStop')[0].getAttributeNS(W,'val'),'600');
+    document = await importStudioWord(file, 'Reopened.docx');
+    assert.equal(document.defaultTabStop, 30);
+    assert.deepEqual(JSON.parse(JSON.stringify(document.content.content[0].attrs.tabStops)), [{ position: 36, alignment: 'clear' }, { position: 170.25, alignment: 'decimal', leader: 'dot' }]);
+    assert.equal(find(document.content,'text').map((node) => node.text).join(''), 'Label\t12.34A\tB\tC');
+    assert.ok(find(document.content,'text')[0].marks.some((mark) => mark.type === 'bold'));
+  }
+});
+
+test('unsupported, duplicate and malformed native tab definitions reject the whole document', async () => {
+  for (const tabs of [
+    '<w:tab w:val="bar" w:pos="720"/>', '<w:tab w:val="left" w:pos="-1"/>',
+    '<w:tab w:val="left" w:pos="720" w:leader="heavy"/>',
+    '<w:tab w:val="left" w:pos="720"/><w:tab w:val="right" w:pos="720"/>',
+  ]) await assert.rejects(importStudioWord(await fixture(`<w:p><w:pPr><w:tabs>${tabs}</w:tabs></w:pPr><w:r><w:t>Original</w:t></w:r></w:p>`),'Invalid.docx'));
+  await assert.rejects(importStudioWord(await fixture('<w:p><w:r><w:t>Original</w:t></w:r></w:p>',{
+    'word/settings.xml':`<w:settings xmlns:w="${W}"><w:defaultTabStop w:val="600.5"/></w:settings>`,
+  }),'Invalid.docx'));
+});
 
 test('paragraph indentation and three native line-spacing rules preserve point values and text over repeated DOCX saves', async () => {
   const source = await fixture(

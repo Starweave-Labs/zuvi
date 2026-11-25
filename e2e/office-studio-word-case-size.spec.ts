@@ -120,7 +120,7 @@ test('Word font steps and case modes retain mixed formatting, links and selectio
   await page.getByRole('button', { name: '变更大小写', exact: true }).click();
   await page.getByRole('menuitem', { name: '全部大写', exact: true }).click();
   await expect(caret).toHaveText('CARET word');
-  expect(await page.evaluate(() => window.getSelection()?.anchorOffset)).toBe(2);
+  await expect.poll(() => page.evaluate(() => window.getSelection()?.anchorOffset)).toBe(2);
   await page.getByRole('button', { name: '增大字号', exact: true }).click();
   await body.pressSequentially('X');
   await expect(caret).toHaveText('CAXRET word');

@@ -259,7 +259,7 @@ describe('DataGrid', () => {
       />
     );
     await ready(container);
-    expect(warn).toHaveBeenCalledWith(expect.stringContaining('仅前两列'));
+    await waitFor(() => expect(warn).toHaveBeenCalledWith(expect.stringContaining('仅前两列')));
     expect(container.querySelectorAll('[role="columnheader"][data-sticky]')).toHaveLength(2);
     warn.mockRestore();
   });

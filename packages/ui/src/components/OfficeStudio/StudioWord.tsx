@@ -47,6 +47,8 @@ import type {
 import { StudioWordStyleDialog } from './StudioWordStyleDialog';
 import { StudioWordCharacterDialog } from './StudioWordCharacterDialog';
 import { StudioWordParagraphDialog } from './StudioWordParagraphDialog';
+import { StudioWordTabsDialog } from './StudioWordTabsDialog';
+import { WordTabs, wordSelectionTabStops, wordSetTabStops, wordInsertTab, wordRefreshTabLayout } from './studio-word-tab-extension';
 import { StudioWordRuler as WordRuler } from './StudioWordRuler';
 import {
   WordCharacterLayout,
@@ -235,6 +237,8 @@ function RegionEditor({
   onActive,
   onImagePaste,
   paragraphStyles,
+  defaultTabStop,
+  decimalSymbol,
 }: {
   region: WordRegion;
   documentId: string;
@@ -245,6 +249,8 @@ function RegionEditor({
   onActive(region: WordRegion): void;
   onImagePaste(file: File, editor: Editor | null): void;
   paragraphStyles: StudioWordParagraphStyle[];
+  defaultTabStop?: number;
+  decimalSymbol?: '.' | ',';
 }) {
   const latest = React.useRef({
     editable,
@@ -253,13 +259,16 @@ function RegionEditor({
     onActive,
     onImagePaste,
     paragraphStyles,
+    defaultTabStop,
+    decimalSymbol,
   });
-  latest.current = { editable, onChange, onReady, onActive, onImagePaste, paragraphStyles };
+  latest.current = { editable, onChange, onReady, onActive, onImagePaste, paragraphStyles, defaultTabStop, decimalSymbol };
   const [request, setRequest] = React.useState(0);
   const editor: Editor | null = useEditor(
     {
       extensions: [
         ...EXTENSIONS,
+        WordTabs.configure({ getDefaultTabStop: () => latest.current.defaultTabStop ?? 36, getDecimalSymbol: () => latest.current.decimalSymbol }),
         WordParagraphStyles.configure({
           autoUpdate: false,
           getStyles: () => latest.current.paragraphStyles,
@@ -410,6 +419,10 @@ export function StudioWord({
     selection: Editor['state']['selection'];
     values: ReturnType<typeof wordSelectionParagraphFormat>;
   } | null>(null);
+  const [tabsDialog, setTabsDialog] = React.useState<{
+    editor: Editor; doc: Editor['state']['doc']; selection: Editor['state']['selection'];
+    values: ReturnType<typeof wordSelectionTabStops>;
+  } | null>(null);
   const styleDefinitions = document.content.attrs?.paragraphStyles;
   const paragraphStyles = React.useMemo(
     () => validateStudioWordParagraphStyles(styleDefinitions),
@@ -442,7 +455,8 @@ export function StudioWord({
   const focusRegionRef = React.useRef<WordRegion | null>(null);
   const bodyEditor: Editor | null = useEditor(
     {
-      extensions: [...EXTENSIONS, WordParagraphStyles],
+      extensions: [...EXTENSIONS, WordParagraphStyles,
+        WordTabs.configure({ getDefaultTabStop: () => latest.current.document.defaultTabStop ?? 36, getDecimalSymbol: () => latest.current.document.decimalSymbol })],
       content: materializeStudioWordStyles(document.content, paragraphStyles),
       editable: editable && region === 'content',
       immediatelyRender: false,
@@ -532,8 +546,13 @@ export function StudioWord({
     setStyleDialog(null);
     setCharacterDialog(null);
     setParagraphDialog(null);
+    setTabsDialog(null);
     setNotice('');
   }, [document.id]);
+  React.useLayoutEffect(() => {
+    for (const target of [bodyEditor, regions.header, regions.footer])
+      if (target) wordRefreshTabLayout(target);
+  }, [bodyEditor, regions.header, regions.footer, document.defaultTabStop, document.decimalSymbol]);
   React.useEffect(() => {
     const requested = focusRegionRef.current;
     if (
@@ -974,6 +993,20 @@ export function StudioWord({
       selection: editor.state.selection,
       values: wordSelectionParagraphFormat(editor),
     });
+  };
+  const prepareTabAction = () => {
+    if (!editor || !editable || editor.view.composing) return false;
+    const root = editor.view.dom.closest('.zuvi-studio-word'), focused = window.document.activeElement;
+    if (focused instanceof HTMLElement && root?.contains(focused) && focused.matches('input,textarea'))
+      flushSync(() => focused.blur());
+    if (root?.querySelector('[data-studio-input-error]')) {
+      setNotice('请先修正当前输入，或按 Esc 取消。'); return false;
+    }
+    return true;
+  };
+  const openTabsSettings = () => {
+    if (!prepareTabAction() || !editor) return;
+    setTabsDialog({ editor, doc: editor.state.doc, selection: editor.state.selection, values: wordSelectionTabStops(editor) });
   };
   // ---- 本轮新增：字号步进 / 高亮 / 大小写 / 格式刷 ----
   const [highlightOpen, setHighlightOpen] = React.useState(false);
@@ -1635,6 +1668,9 @@ export function StudioWord({
               >
                 段落设置
               </Button>
+              <Button size="sm" variant="ghost" disabled={toolsDisabled} onMouseDown={keepSelection} onClick={openTabsSettings}>制表位</Button>
+              <Button size="sm" variant="ghost" disabled={toolsDisabled} onMouseDown={keepSelection}
+                onClick={() => { if (prepareTabAction() && editor) wordInsertTab(editor); }}>插入制表符</Button>
             </RibbonRow>
             <RibbonRow>
               {ALIGNMENTS.map(({ value, label, Icon }) => (
@@ -2713,6 +2749,8 @@ export function StudioWord({
                     documentId={document.id}
                     content={document.header}
                     paragraphStyles={paragraphStyles}
+                    defaultTabStop={document.defaultTabStop}
+                    decimalSymbol={document.decimalSymbol}
                     editable={editable && region === 'header'}
                     onReady={registerRegion}
                     onActive={setRegion}
@@ -2741,6 +2779,8 @@ export function StudioWord({
                     documentId={document.id}
                     content={document.footer}
                     paragraphStyles={paragraphStyles}
+                    defaultTabStop={document.defaultTabStop}
+                    decimalSymbol={document.decimalSymbol}
                     editable={editable && region === 'footer'}
                     onReady={registerRegion}
                     onActive={setRegion}
@@ -2784,6 +2824,18 @@ export function StudioWord({
           />
         </div>
       </div>
+      {tabsDialog && (
+        <StudioWordTabsDialog values={tabsDialog.values} defaultTabStop={document.defaultTabStop} blocked={!editable}
+          onClose={() => { setTabsDialog(null); if (!tabsDialog.editor.isDestroyed) tabsDialog.editor.commands.focus(); }}
+          onSave={(patch) => {
+            const target = tabsDialog.editor;
+            if (!latest.current.editable || target.isDestroyed || target !== editor || target.state.doc !== tabsDialog.doc)
+              throw new Error('文档或编辑区域已变化，请重新选择段落。');
+            target.view.dispatch(target.state.tr.setSelection(tabsDialog.selection).setMeta('addToHistory', false));
+            const changed = wordSetTabStops(target, patch);
+            setNotice(changed ? '已应用制表位，可撤销恢复。' : '制表位保持原样。');
+          }} />
+      )}
       {paragraphDialog && (
         <StudioWordParagraphDialog
           values={paragraphDialog.values}
