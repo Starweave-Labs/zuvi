@@ -132,6 +132,8 @@ function rich(
           /\t/g,
           '<span data-word-tab="" class="zuvi-studio-word-tab">\t</span>'
         )
+      : node.type === 'tableFormula'
+        ? escape(String(node.attrs?.result ?? '0'))
       : node.type === 'pageNumber'
         ? String(node.attrs?.kind === 'total' ? total : page)
         : node.type === 'table'
@@ -233,7 +235,7 @@ function rich(
       ? `<span class="studio-print-image-anchor">${printed}</span>`
       : printed;
   }
-  if (node.type === 'pageNumber') return text;
+  if (node.type === 'pageNumber' || node.type === 'tableFormula') return text;
   if (node.type === 'hardBreak') return '<br>';
   if (node.type === 'horizontalRule') return '<hr>';
   if (node.type === 'pageBreak') return '<div class="studio-print-break"></div>';

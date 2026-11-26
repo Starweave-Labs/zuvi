@@ -1,0 +1,6 @@
+directions-roundtrip-1.docx: [('=SUM(LEFT)', '5'), ('=SUM(RIGHT)', '9'), ('=SUM(ABOVE)', '13'), ('=SUM(BELOW)', '17'), ('=SUM(LEFT)', '10')]
+directions-roundtrip-2.docx: [('=SUM(LEFT)', '5'), ('=SUM(RIGHT)', '9'), ('=SUM(ABOVE)', '13'), ('=SUM(BELOW)', '17'), ('=SUM(LEFT)', '10')]
+formula-roundtrip-1.docx: [('=A1*3', '6'), ('=SUM(LEFT) \\# "0.00"', '8.00')]
+formula-roundtrip-2.docx: [('=A1*3', '6'), ('=SUM(LEFT) \\# "0.00"', '8.00')]
+nested-merge-roundtrip-1.docx: [('=SUM(LEFT)', '3'), ('=A1*2', '8'), ('=SUM(ABOVE)', '3')]
+nested-merge-roundtrip-2.docx: [('=SUM(LEFT)', '3'), ('=A1*2', '8'), ('=SUM(ABOVE)', '3')]

@@ -1141,3 +1141,11 @@ test('Word print sums fixed merged cell height without persisting print attribut
   const mixed = new JSDOM(print.createStudioPrintHtml(model)).window.document.querySelector('td[rowspan="2"]');
   assert.equal(mixed.hasAttribute('data-word-fixed-cell-height'), false);
 });
+
+test('Word formula print uses the current escaped cached result and preserves character marks', () => {
+  const model = models.createOfficeStudioDocument('word');
+  model.content = { type: 'doc', content: [{ type: 'table', content: [{ type: 'tableRow', content: [{ type: 'tableCell', content: [{ type: 'paragraph', content: [{ type: 'tableFormula', attrs: { formula: '=SUM(LEFT)', result: '12' }, marks: [{ type: 'bold' }] }] }] }] }] }] };
+  const rendered = new JSDOM(print.createStudioPrintHtml(model)).window.document;
+  assert.equal(rendered.querySelector('td').textContent, '12');
+  assert.equal(rendered.querySelector('td strong').textContent, '12');
+});

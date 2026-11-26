@@ -1,0 +1,12 @@
+[WebServer] (node:88190) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:88240) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+  ✓  1 [chromium] › e2e/office-studio-word-formula.spec.ts:125:1 › native direction formulas and merged cells refresh independently through repeated DOCX saves (4.8s)
+  ✓  2 [chromium] › e2e/office-studio-word-images.spec.ts:12:1 › floating Word pictures wrap, move, undo and keep page anchors through native export (7.7s)
+  ✓  3 [chromium] › e2e/office-studio-word-keep.spec.ts:18:1 › inline picture height moves its own line before the page boundary (5.1s)
+
+  3 passed (21.1s)

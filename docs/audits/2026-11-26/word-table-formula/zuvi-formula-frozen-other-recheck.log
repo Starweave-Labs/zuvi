@@ -1,0 +1,11 @@
+[WebServer] (node:88679) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:88703) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+  ✓  1 [chromium] › e2e/office-studio-word-conversion.spec.ts:319:1 › native mouse row selection converts only selected rows and preserves two surrounding tables on reopening (6.5s)
+  ✓  2 [chromium] › e2e/office-studio-word-format.spec.ts:29:1 › Word painting preserves exact formats and links, clears formatting without losing structure and reopens native DOCX (5.2s)
+
+  2 passed (13.9s)

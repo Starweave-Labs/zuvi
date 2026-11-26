@@ -47,6 +47,7 @@ import {
   PageBreak as DocxPageBreak,
   PageOrientation,
   PageNumber,
+  SimpleField,
   Paragraph,
   ParagraphProperties,
   ShadingType,
@@ -770,6 +771,16 @@ function pageFieldKind(instruction: string): 'current' | 'total' {
   return match[1].toUpperCase() === 'NUMPAGES' ? 'total' : 'current';
 }
 
+function importedField(instruction: string, result: string, appearance: Appearance): StudioRichNode {
+  if (instruction.trim().startsWith('=')) {
+    const formula = instruction.trim().replace(/\s+\\\*\s+MERGEFORMAT$/i, '').trim();
+    if (formula.length > 2048 || /[\r\n]/.test(formula)) unsupported('表格公式域');
+    return { type: 'tableFormula', attrs: { formula, result: result.trim() || '0' }, marks: marks(appearance) };
+  }
+  if (result && !/^\s*\d+\s*$/.test(result)) unsupported('非阿拉伯页码缓存');
+  return { type: 'pageNumber', attrs: { kind: pageFieldKind(instruction) }, marks: marks(appearance) };
+}
+
 function parseComplexField(
   items: Element[],
   firstIndex: number,
@@ -810,7 +821,7 @@ function parseComplexField(
           if (separated) unsupported('无效的域');
           separated = true;
         } else if (type === 'end') {
-          if (result && !/^\s*\d+\s*$/.test(result)) unsupported('非阿拉伯页码缓存');
+
           const tail = run.cloneNode(false) as Element;
           if (properties) tail.appendChild(properties.cloneNode(true));
           for (const remaining of runItems.slice(runIndex + 1)) {
@@ -819,11 +830,7 @@ function parseComplexField(
           return {
             lastIndex: index,
             nodes: [
-              {
-                type: 'pageNumber',
-                attrs: { kind: pageFieldKind(instruction) },
-                marks: marks(appearance),
-              } as StudioRichNode,
+              importedField(instruction, result, appearance),
               ...parseRun(tail, context, inherited),
             ],
           };
@@ -1105,7 +1112,7 @@ function parseParagraph(element: Element, context: ImportContext): ParsedParagra
       index = parsed.lastIndex;
     } else if (item.localName === 'fldSimple') {
       if (['1', 'true', 'on'].includes(attr(item, 'fldLock'))) unsupported('锁定域');
-      const kind = pageFieldKind(attr(item, 'instr'));
+      const instruction = attr(item, 'instr');
       const cachedRuns = elements(item);
       let cachedText = '';
       let cachedAppearance: Appearance | undefined;
@@ -1127,12 +1134,7 @@ function parseParagraph(element: Element, context: ImportContext): ParsedParagra
           if (child.localName === 't') cachedText += child.textContent || '';
         }
       }
-      if (cachedText && !/^\s*\d+\s*$/.test(cachedText)) unsupported('非阿拉伯页码缓存');
-      inline.push({
-        type: 'pageNumber',
-        attrs: { kind },
-        marks: marks(cachedAppearance || appearance),
-      });
+      inline.push(importedField(instruction, cachedText, cachedAppearance || appearance));
     } else if (item.localName === 'r') inline.push(...parseRun(item, context, appearance));
     else if (item.localName === 'hyperlink') {
       const id = item.getAttributeNS(R, 'id') || item.getAttribute('r:id') || '';
@@ -1749,12 +1751,27 @@ class SurfaceParagraph extends Paragraph {
     }
   }
 }
+class FormulaField extends SimpleField {
+  constructor(instruction: string, run: MetricTextRun) {
+    super(instruction);
+    this.root.push(run);
+  }
+}
 function inlineChildren(
   nodes: StudioRichNode[] = [],
   inherited?: Required<StudioWordCharacterStyle>
 ): ParagraphChild[] {
   return nodes.map((node) => {
     if (node.type === 'hardBreak') return new TextRun({ break: 1 });
+    if (node.type === 'tableFormula') {
+      checkAttrs(node, ['formula', 'result']);
+      const formula = String(node.attrs?.formula || '').trim();
+      const result = String(node.attrs?.result ?? '0');
+      if (!formula.startsWith('=') || formula.length > 2048 || /[\r\n]/.test(formula)) unsupported('表格公式域');
+      const { options, href } = runOptions({ ...node, text: result }, inherited);
+      if (href) unsupported('包含超链接的表格公式域');
+      return new FormulaField(formula, new MetricTextRun(options));
+    }
     if (node.type === 'pageNumber') {
       checkAttrs(node, ['kind']);
       if (node.attrs?.kind != null && !['current', 'total'].includes(String(node.attrs.kind)))

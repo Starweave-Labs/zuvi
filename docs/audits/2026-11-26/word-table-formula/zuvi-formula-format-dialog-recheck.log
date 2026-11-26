@@ -1,0 +1,1065 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ❯ src/components/OfficeStudio/StudioWordFormulaDialog.test.tsx (1 test | 1 failed) 108ms
+   × changes native numeric pictures through ZUVI options without accumulating switches 108ms
+     → Unable to find an accessible element with the role "button" and name "公式数字格式"
+
+Here are the accessible roles:
+
+  dialog:
+
+  Name "表格公式":
+  [36m<div[39m
+    [33maria-labelledby[39m=[32m"_r_0_-title"[39m
+    [33maria-modal[39m=[32m"true"[39m
+    [33mclass[39m=[32m"zuvi-modal"[39m
+    [33mdata-part[39m=[32m"content"[39m
+    [33mdata-size[39m=[32m"md"[39m
+    [33mdata-state[39m=[32m"open"[39m
+    [33mrole[39m=[32m"dialog"[39m
+    [33mtabindex[39m=[32m"-1"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  heading:
+
+  Name "表格公式":
+  [36m<h2[39m
+    [33mclass[39m=[32m"zuvi-modal-title"[39m
+    [33mdata-part[39m=[32m"title"[39m
+    [33mid[39m=[32m"_r_0_-title"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  button:
+
+  Name "关闭":
+  [36m<button[39m
+    [33maria-label[39m=[32m"关闭"[39m
+    [33mclass[39m=[32m"zuvi-modal-close"[39m
+    [33mdata-part[39m=[32m"close"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "常用表格公式 请选择":
+  [36m<button[39m
+    [33maria-controls[39m=[32m"_r_1_-listbox"[39m
+    [33maria-expanded[39m=[32m"false"[39m
+    [33maria-haspopup[39m=[32m"listbox"[39m
+    [33maria-label[39m=[32m"常用表格公式"[39m
+    [33maria-labelledby[39m=[32m"_r_1_-trigger-label _r_1_-trigger-value"[39m
+    [33mclass[39m=[32m"zuvi-select-trigger"[39m
+    [33mdata-part[39m=[32m"trigger"[39m
+    [33mid[39m=[32m"_r_1_-trigger"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "公式数字格式 请选择":
+  [36m<button[39m
+    [33maria-controls[39m=[32m"_r_2_-listbox"[39m
+    [33maria-expanded[39m=[32m"false"[39m
+    [33maria-haspopup[39m=[32m"listbox"[39m
+    [33maria-label[39m=[32m"公式数字格式"[39m
+    [33maria-labelledby[39m=[32m"_r_2_-trigger-label _r_2_-trigger-value"[39m
+    [33mclass[39m=[32m"zuvi-select-trigger"[39m
+    [33mdata-part[39m=[32m"trigger"[39m
+    [33mid[39m=[32m"_r_2_-trigger"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "取消":
+  [36m<button[39m
+    [33mclass[39m=[32m"zuvi-button"[39m
+    [33mdata-part[39m=[32m"root"[39m
+    [33mdata-size[39m=[32m"md"[39m
+    [33mdata-variant[39m=[32m"ghost"[39m
+  [36m/>[39m
+
+  Name "保存公式":
+  [36m<button[39m
+    [33mclass[39m=[32m"zuvi-button"[39m
+    [33mdata-part[39m=[32m"root"[39m
+    [33mdata-size[39m=[32m"md"[39m
+    [33mdata-variant[39m=[32m"primary"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  [36m<p />[39m
+
+  --------------------------------------------------
+  textbox:
+
+  Name "表格公式表达式":
+  [36m<input[39m
+    [33maria-label[39m=[32m"表格公式表达式"[39m
+    [33mclass[39m=[32m"zuvi-input-field"[39m
+    [33mdata-part[39m=[32m"input"[39m
+    [33mvalue[39m=[32m"=A1*2"[39m
+  [36m/>[39m
+
+  --------------------------------------------------listbox:
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"zuvi-select-listbox"[39m
+    [33mdata-open[39m=[32m"false"[39m
+    [33mdata-part[39m=[32m"listbox"[39m
+    [33mid[39m=[32m"_r_1_-listbox"[39m
+    [33mrole[39m=[32m"listbox"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  option:
+
+  Name "SUM(ABOVE)":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_1_-option-0"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  Name "SUM(LEFT)":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_1_-option-1"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  Name "SUM(BELOW)":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_1_-option-2"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  Name "SUM(RIGHT)":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_1_-option-3"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  --------------------------------------------------listbox:
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"zuvi-select-listbox"[39m
+    [33mdata-open[39m=[32m"false"[39m
+    [33mdata-part[39m=[32m"listbox"[39m
+    [33mid[39m=[32m"_r_2_-listbox"[39m
+    [33mrole[39m=[32m"listbox"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  option:
+
+  Name "常规":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_2_-option-0"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  Name "整数":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_2_-option-1"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  Name "两位小数":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_2_-option-2"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  Name "千位分隔":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_2_-option-3"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  Name "百分比":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_2_-option-4"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body[39m
+  [33mstyle[39m=[32m"overflow: hidden; padding-right: 1024px;"[39m
+[36m>[39m
+  [36m<div>[39m
+    [36m<span[39m
+      [33mdata-zuvi-portal-source[39m=[32m""[39m
+      [33mhidden[39m=[32m""[39m
+    [36m/>[39m
+  [36m</div>[39m
+  [36m<div[39m
+    [33mdata-zuvi-portal[39m=[32m""[39m
+    [33mstyle[39m=[32m"display: contents;"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"zuvi-modal-overlay"[39m
+      [33mdata-part[39m=[32m"overlay"[39m
+      [33mdata-size[39m=[32m"md"[39m
+      [33mdata-state[39m=[32m"open"[39m
+      [33mdata-zuvi-modal-layer[39m=[32m""[39m
+    [36m>[39m
+      [36m<div[39m
+        [33maria-labelledby[39m=[32m"_r_0_-title"[39m
+        [33maria-modal[39m=[32m"true"[39m
+        [33mclass[39m=[32m"zuvi-modal"[39m
+        [33mdata-part[39m=[32m"content"[39m
+        [33mdata-size[39m=[32m"md"[39m
+        [33mdata-state[39m=[32m"open"[39m
+        [33mrole[39m=[32m"dialog"[39m
+        [33mtabindex[39m=[32m"-1"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"zuvi-modal-header"[39m
+          [33mdata-part[39m=[32m"header"[39m
+        [36m>[39m
+          [36m<h2[39m
+            [33mclass[39m=[32m"zuvi-modal-title"[39m
+            [33mdata-part[39m=[32m"title"[39m
+            [33mid[39m=[32m"_r_0_-title"[39m
+          [36m>[39m
+            [0m表格公式[0m
+          [36m</h2>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"关闭"[39m
+            [33mclass[39m=[32m"zuvi-modal-close"[39m
+            [33mdata-part[39m=[32m"close"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"1em"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"1em"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M18 6 6 18"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"m6 6 12 12"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"zuvi-modal-body"[39m
+          [33mdata-part[39m=[32m"body"[39m
+        [36m>[39m
+          [36m<p>[39m
+            [0m使用 A1 单元格引用或 SUM(ABOVE)、SUM(LEFT) 等方向公式。[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"zuvi-input"[39m
+            [33mdata-part[39m=[32m"root"[39m
+            [33mdata-size[39m=[32m"md"[39m
+            [33mdata-status[39m=[32m"default"[39m
+          [36m>[39m
+            [36m<input[39m
+              [33maria-label[39m=[32m"表格公式表达式"[39m
+              [33mclass[39m=[32m"zuvi-input-field"[39m
+              [33mdata-part[39m=[32m"input"[39m
+              [33mvalue[39m=[32m"=A1*2"[39m
+            [36m/>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"zuvi-select"[39m
+            [33mdata-open[39m=[32m"false"[39m
+            [33mdata-part[39m=[32m"root"[39m
+            [33mdata-size[39m=[32m"md"[39m
+            [33mdata-status[39m=[32m"default"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mid[39m=[32m"_r_1_-trigger-label"[39m
+              [33mstyle[39m=[32m"position: absolute; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap;"[39m
+            [36m>[39m
+              [0m常用表格公式[0m
+            [36m</span>[39m
+            [36m<button[39m
+              [33maria-controls[39m=[32m"_r_1_-listbox"[39m
+              [33maria-expanded[39m=[32m"false"[39m
+              [33maria-haspopup[39m=[32m"listbox"[39m
+              [33maria-label[39m=[32m"常用表格公式"[39m
+              [33maria-labelledby[39m=[32m"_r_1_-trigger-label _r_1_-trigger-value"[39m
+              [33mclass[39m=[32m"zuvi-select-trigger"[39m
+              [33mdata-part[39m=[32m"trigger"[39m
+              [33mid[39m=[32m"_r_1_-trigger"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"zuvi-select-value"[39m
+                [33mdata-part[39m=[32m"value"[39m
+                [33mdata-placeholder[39m=[32m""[39m
+                [33mid[39m=[32m"_r_1_-trigger-value"[39m
+              [36m>[39m
+                [0m请选择[0m
+              [36m</span>[39m
+            [36m</button>[39m
+            [36m<span[39m
+              [33mdata-zuvi-portal-source[39m=[32m""[39m
+              [33mhidden[39m=[32m""[39m
+            [36m/>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"zuvi-select"[39m
+            [33mdata-open[39m=[32m"false"[39m
+            [33mdata-part[39m=[32m"root"[39m
+            [33mdata-size[39m=[32m"md"[39m
+            [33mdata-status[39m=[32m"default"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mid[39m=[32m"_r_2_-trigger-label"[39m
+              [33mstyle[39m=[32m"position: absolute; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap;"[39m
+            [36m>[39m
+              [0m公式数字格式[0m
+            [36m</span>[39m
+            [36m<button[39m
+              [33maria-controls[39m=[32m"_r_2_-listbox"[39m
+              [33maria-expanded[39m=[32m"false"[39m
+              [33maria-haspopup[39m=[32m"listbox"[39m
+              [33maria-label[39m=[32m"公式数字格式"[39m
+              [33maria-labelledby[39m=[32m"_r_2_-trigger-label _r_2_-trigger-value"[39m
+              [33mclass[39m=[32m"zuvi-select-trigger"[39m
+              [33mdata-part[39m=[32m"trigger"[39m
+              [33mid[39m=[32m"_r_2_-trigger"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"zuvi-select-value"[39m
+                [33mdata-part[39m=[32m"value"[39m
+                [33mdata-placeholder[39m=[32m""[39m
+                [33mid[39m=[32m"_r_2_-trigger-value"[39m
+              [36m>[39m
+                [0m请选择[0m
+              [36m</span>[39m
+            [36m</button>[39m
+            [36m<span[39m
+              [33mdata-zuvi-portal-source[39m=[32m""[39m
+              [33mhidden[39m=[32m""[39m
+            [36m/>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"zuvi-modal-footer"[39m
+          [33mdata-part[39m=[32m"footer"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"zuvi-button"[39m
+            [33mdata-part[39m=[32m"root"[39m
+            [33mdata-size[39m=[32m"md"[39m
+            [33mdata-variant[39m=[32m"ghost"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"zuvi-button-label"[39m
+              [33mdata-part[39m=[32m"label"[39m
+            [36m>[39m
+              [0m取消[0m
+            [36m</span>[39m
+          [36m</button>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"zuvi-button"[39m
+            [33mdata-part[39m=[32m"root"[39m
+            [33mdata-size[39m=[32m"md"[39m
+            [33mdata-variant[39m=[32m"primary"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"zuvi-button-label"[39m
+              [33mdata-part[39m=[32m"label"[39m
+            [36m>[39m
+              [0m保存公式[0m
+            [36m</span>[39m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+  [36m<div[39m
+    [33mdata-zuvi-portal[39m=[32m""[39m
+    [33mstyle[39m=[32m"display: contents;"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"zuvi-select-listbox"[39m
+      [33mdata-open[39m=[32m"false"[39m
+      [33mdata-part[39m=[32m"listbox"[39m
+      [33mid[39m=[32m"_r_1_-listbox"[39m
+      [33mrole[39m=[32m"listbox"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33maria-selected[39m=[32m"false"[39m
+        [33mclass[39m=[32m"zuvi-select-option"[39m
+        [33mdata-part[39m=[32m"option"[39m
+        [33mid[39m=[32m"_r_1_-option-0"[39m
+        [33mrole[39m=[32m"option"[39m
+      [36m>[39m
+        [0mSUM(ABOVE)[0m
+      [36m</div>[39m
+      [36m<div[39m
+        [33maria-selected[39m=[32m"false"[39m
+        [33mclass[39m=[32m"zuvi-select-option"[39m
+        [33mdata-part[39m=[32m"option"[39m
+        [33mid[39m=[32m"_r_1_-option-1"[39m
+        [33mrole[39m=[32m"option"[39m
+      [36m>[39m
+        [0mSUM(LEFT)[0m
+      [36m</div>[39m
+      [36m<div[39m
+        [33maria-selected[39m=[32m"false"[39m
+        [33mclass[39m=[32m"zuvi-select-option"[39m
+        [33mdata-part[39m=[32m"option"[39m
+        [33mid[39m=[32m"_r_1_-option-2"[39m
+        [33mrole[39m=[32m"option"[39m
+      [36m>[39m
+        [0mSUM(BELOW)[0m
+      [36m</div>[39m
+      [36m<div[39m
+        [33maria-selected[39m=[32m"false"[39m
+        [33mclass[39m=[32m"zuvi-select-option"[39m
+        [33mdata-part[39m=[32m"option"[39m
+        [33mid[39m=[32m"_r_1_-option-3"[39m
+        [33mrole[39m=[32m"option"[39m
+      [36m>[39m
+        [0mSUM(RIGHT)[0m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+  [36m<div[39m
+    [33mdata-zuvi-portal[39m=[32m""[39m
+    [33mstyle[39m=[32m"display: contents;"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"zuvi-select-listbox"[39m
+      [33mdata-open[39m=[32m"false"[39m
+      [33mdata-part[39m=[32m"listbox"[39m
+      [33mid[39m=[32m"_r_2_-listbox"[39m
+      [33mrole[39m=[32m"listbox"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33maria-selected[39m=[32m"false"[39m
+        [33mclass[39m=[32m"zuvi-select-option"[39m
+        [33mdata-part[39m=[32m"option"[39m
+        [33mid[39m=[32m"_r_2_-option-0"[39m
+        [33mrole[39m=[32m"option"[39m
+      [36m>[39m
+        [0m常规[0m
+      [36m</div>[39m
+      [36m<div[39m
+        [33maria-selected[39m=[32m"false"[39m
+        [33mclass[39m=[32m"zuvi-select-option"[39m
+        [33mdata-part[39m=[32m"option"[39m
+        [33mid[39m=[32m"_r_2_-option-1"[39m
+        [33mrole[39m=[32m"option"[39m
+      [36m>[39m
+        [0m整数[0m
+      [36m</div>[39m
+      [36m<div[39m
+        [33maria-selected[39m=[32m"false"[39m
+        [33mclass[39m=[32m"zuvi-select-option"[39m
+        [33mdata-part[39m=[32m"option"[39m
+        [33mid[39m=[32m"_r_2_-option-2"[39m
+        [33mrole[39m=[32m"option"[39m
+      [36m>[39m
+        [0m两位小数[0m
+      [36m</div>[39m
+      [36m<div[39m
+        [33maria-selected[39m=[32m"false"[39m
+        [33mclass[39m=[32m"zuvi-select-option"[39m
+        [33mdata-part[39m=[32m"option"[39m
+        [33mid[39m=[32m"_r_2_-option-3"[39m
+        [33mrole[39m=[32m"option"[39m
+      [36m>[39m
+        [0m千位分隔[0m
+      [36m</div>[39m
+      [36m<div[39m
+        [33maria-selected[39m=[32m"false"[39m
+        [33mclass[39m=[32m"zuvi-select-option"[39m
+        [33mdata-part[39m=[32m"option"[39m
+        [33mid[39m=[32m"_r_2_-option-4"[39m
+        [33mrole[39m=[32m"option"[39m
+      [36m>[39m
+        [0m百分比[0m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/OfficeStudio/StudioWordFormulaDialog.test.tsx > changes native numeric pictures through ZUVI options without accumulating switches
+TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "公式数字格式"
+
+Here are the accessible roles:
+
+  dialog:
+
+  Name "表格公式":
+  [36m<div[39m
+    [33maria-labelledby[39m=[32m"_r_0_-title"[39m
+    [33maria-modal[39m=[32m"true"[39m
+    [33mclass[39m=[32m"zuvi-modal"[39m
+    [33mdata-part[39m=[32m"content"[39m
+    [33mdata-size[39m=[32m"md"[39m
+    [33mdata-state[39m=[32m"open"[39m
+    [33mrole[39m=[32m"dialog"[39m
+    [33mtabindex[39m=[32m"-1"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  heading:
+
+  Name "表格公式":
+  [36m<h2[39m
+    [33mclass[39m=[32m"zuvi-modal-title"[39m
+    [33mdata-part[39m=[32m"title"[39m
+    [33mid[39m=[32m"_r_0_-title"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  button:
+
+  Name "关闭":
+  [36m<button[39m
+    [33maria-label[39m=[32m"关闭"[39m
+    [33mclass[39m=[32m"zuvi-modal-close"[39m
+    [33mdata-part[39m=[32m"close"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "常用表格公式 请选择":
+  [36m<button[39m
+    [33maria-controls[39m=[32m"_r_1_-listbox"[39m
+    [33maria-expanded[39m=[32m"false"[39m
+    [33maria-haspopup[39m=[32m"listbox"[39m
+    [33maria-label[39m=[32m"常用表格公式"[39m
+    [33maria-labelledby[39m=[32m"_r_1_-trigger-label _r_1_-trigger-value"[39m
+    [33mclass[39m=[32m"zuvi-select-trigger"[39m
+    [33mdata-part[39m=[32m"trigger"[39m
+    [33mid[39m=[32m"_r_1_-trigger"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "公式数字格式 请选择":
+  [36m<button[39m
+    [33maria-controls[39m=[32m"_r_2_-listbox"[39m
+    [33maria-expanded[39m=[32m"false"[39m
+    [33maria-haspopup[39m=[32m"listbox"[39m
+    [33maria-label[39m=[32m"公式数字格式"[39m
+    [33maria-labelledby[39m=[32m"_r_2_-trigger-label _r_2_-trigger-value"[39m
+    [33mclass[39m=[32m"zuvi-select-trigger"[39m
+    [33mdata-part[39m=[32m"trigger"[39m
+    [33mid[39m=[32m"_r_2_-trigger"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "取消":
+  [36m<button[39m
+    [33mclass[39m=[32m"zuvi-button"[39m
+    [33mdata-part[39m=[32m"root"[39m
+    [33mdata-size[39m=[32m"md"[39m
+    [33mdata-variant[39m=[32m"ghost"[39m
+  [36m/>[39m
+
+  Name "保存公式":
+  [36m<button[39m
+    [33mclass[39m=[32m"zuvi-button"[39m
+    [33mdata-part[39m=[32m"root"[39m
+    [33mdata-size[39m=[32m"md"[39m
+    [33mdata-variant[39m=[32m"primary"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  [36m<p />[39m
+
+  --------------------------------------------------
+  textbox:
+
+  Name "表格公式表达式":
+  [36m<input[39m
+    [33maria-label[39m=[32m"表格公式表达式"[39m
+    [33mclass[39m=[32m"zuvi-input-field"[39m
+    [33mdata-part[39m=[32m"input"[39m
+    [33mvalue[39m=[32m"=A1*2"[39m
+  [36m/>[39m
+
+  --------------------------------------------------listbox:
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"zuvi-select-listbox"[39m
+    [33mdata-open[39m=[32m"false"[39m
+    [33mdata-part[39m=[32m"listbox"[39m
+    [33mid[39m=[32m"_r_1_-listbox"[39m
+    [33mrole[39m=[32m"listbox"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  option:
+
+  Name "SUM(ABOVE)":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_1_-option-0"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  Name "SUM(LEFT)":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_1_-option-1"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  Name "SUM(BELOW)":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_1_-option-2"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  Name "SUM(RIGHT)":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_1_-option-3"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  --------------------------------------------------listbox:
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"zuvi-select-listbox"[39m
+    [33mdata-open[39m=[32m"false"[39m
+    [33mdata-part[39m=[32m"listbox"[39m
+    [33mid[39m=[32m"_r_2_-listbox"[39m
+    [33mrole[39m=[32m"listbox"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  option:
+
+  Name "常规":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_2_-option-0"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  Name "整数":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_2_-option-1"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  Name "两位小数":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_2_-option-2"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  Name "千位分隔":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_2_-option-3"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  Name "百分比":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_2_-option-4"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body[39m
+  [33mstyle[39m=[32m"overflow: hidden; padding-right: 1024px;"[39m
+[36m>[39m
+  [36m<div>[39m
+    [36m<span[39m
+      [33mdata-zuvi-portal-source[39m=[32m""[39m
+      [33mhidden[39m=[32m""[39m
+    [36m/>[39m
+  [36m</div>[39m
+  [36m<div[39m
+    [33mdata-zuvi-portal[39m=[32m""[39m
+    [33mstyle[39m=[32m"display: contents;"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"zuvi-modal-overlay"[39m
+      [33mdata-part[39m=[32m"overlay"[39m
+      [33mdata-size[39m=[32m"md"[39m
+      [33mdata-state[39m=[32m"open"[39m
+      [33mdata-zuvi-modal-layer[39m=[32m""[39m
+    [36m>[39m
+      [36m<div[39m
+        [33maria-labelledby[39m=[32m"_r_0_-title"[39m
+        [33maria-modal[39m=[32m"true"[39m
+        [33mclass[39m=[32m"zuvi-modal"[39m
+        [33mdata-part[39m=[32m"content"[39m
+        [33mdata-size[39m=[32m"md"[39m
+        [33mdata-state[39m=[32m"open"[39m
+        [33mrole[39m=[32m"dialog"[39m
+        [33mtabindex[39m=[32m"-1"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"zuvi-modal-header"[39m
+          [33mdata-part[39m=[32m"header"[39m
+        [36m>[39m
+          [36m<h2[39m
+            [33mclass[39m=[32m"zuvi-modal-title"[39m
+            [33mdata-part[39m=[32m"title"[39m
+            [33mid[39m=[32m"_r_0_-title"[39m
+          [36m>[39m
+            [0m表格公式[0m
+          [36m</h2>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"关闭"[39m
+            [33mclass[39m=[32m"zuvi-modal-close"[39m
+            [33mdata-part[39m=[32m"close"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"1em"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"1em"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M18 6 6 18"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"m6 6 12 12"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"zuvi-modal-body"[39m
+          [33mdata-part[39m=[32m"body"[39m
+        [36m>[39m
+          [36m<p>[39m
+            [0m使用 A1 单元格引用或 SUM(ABOVE)、SUM(LEFT) 等方向公式。[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"zuvi-input"[39m
+            [33mdata-part[39m=[32m"root"[39m
+            [33mdata-size[39m=[32m"md"[39m
+            [33mdata-status[39m=[32m"default"[39m
+          [36m>[39m
+            [36m<input[39m
+              [33maria-label[39m=[32m"表格公式表达式"[39m
+              [33mclass[39m=[32m"zuvi-input-field"[39m
+              [33mdata-part[39m=[32m"input"[39m
+              [33mvalue[39m=[32m"=A1*2"[39m
+            [36m/>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"zuvi-select"[39m
+            [33mdata-open[39m=[32m"false"[39m
+            [33mdata-part[39m=[32m"root"[39m
+            [33mdata-size[39m=[32m"md"[39m
+            [33mdata-status[39m=[32m"default"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mid[39m=[32m"_r_1_-trigger-label"[39m
+              [33mstyle[39m=[32m"position: absolute; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap;"[39m
+            [36m>[39m
+              [0m常用表格公式[0m
+            [36m</span>[39m
+            [36m<button[39m
+              [33maria-controls[39m=[32m"_r_1_-listbox"[39m
+              [33maria-expanded[39m=[32m"false"[39m
+              [33maria-haspopup[39m=[32m"listbox"[39m
+              [33maria-label[39m=[32m"常用表格公式"[39m
+              [33maria-labelledby[39m=[32m"_r_1_-trigger-label _r_1_-trigger-value"[39m
+              [33mclass[39m=[32m"zuvi-select-trigger"[39m
+              [33mdata-part[39m=[32m"trigger"[39m
+              [33mid[39m=[32m"_r_1_-trigger"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"zuvi-select-value"[39m
+                [33mdata-part[39m=[32m"value"[39m
+                [33mdata-placeholder[39m=[32m""[39m
+                [33mid[39m=[32m"_r_1_-trigger-value"[39m
+              [36m>[39m
+                [0m请选择[0m
+              [36m</span>[39m
+            [36m</button>[39m
+            [36m<span[39m
+              [33mdata-zuvi-portal-source[39m=[32m""[39m
+              [33mhidden[39m=[32m""[39m
+            [36m/>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"zuvi-select"[39m
+            [33mdata-open[39m=[32m"false"[39m
+            [33mdata-part[39m=[32m"root"[39m
+            [33mdata-size[39m=[32m"md"[39m
+            [33mdata-status[39m=[32m"default"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mid[39m=[32m"_r_2_-trigger-label"[39m
+              [33mstyle[39m=[32m"position: absolute; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap;"[39m
+            [36m>[39m
+              [0m公式数字格式[0m
+            [36m</span>[39m
+            [36m<button[39m
+              [33maria-controls[39m=[32m"_r_2_-listbox"[39m
+              [33maria-expanded[39m=[32m"false"[39m
+              [33maria-haspopup[39m=[32m"listbox"[39m
+              [33maria-label[39m=[32m"公式数字格式"[39m
+              [33maria-labelledby[39m=[32m"_r_2_-trigger-label _r_2_-trigger-value"[39m
+              [33mclass[39m=[32m"zuvi-select-trigger"[39m
+              [33mdata-part[39m=[32m"trigger"[39m
+              [33mid[39m=[32m"_r_2_-trigger"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"zuvi-select-value"[39m
+                [33mdata-part[39m=[32m"value"[39m
+                [33mdata-placeholder[39m=[32m""[39m
+                [33mid[39m=[32m"_r_2_-trigger-value"[39m
+              [36m>[39m
+                [0m请选择[0m
+              [36m</span>[39m
+            [36m</button>[39m
+            [36m<span[39m
+              [33mdata-zuvi-portal-source[39m=[32m""[39m
+              [33mhidden[39m=[32m""[39m
+            [36m/>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"zuvi-modal-footer"[39m
+          [33mdata-part[39m=[32m"footer"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"zuvi-button"[39m
+            [33mdata-part[39m=[32m"root"[39m
+            [33mdata-size[39m=[32m"md"[39m
+            [33mdata-variant[39m=[32m"ghost"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"zuvi-button-label"[39m
+              [33mdata-part[39m=[32m"label"[39m
+            [36m>[39m
+              [0m取消[0m
+            [36m</span>[39m
+          [36m</button>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"zuvi-button"[39m
+            [33mdata-part[39m=[32m"root"[39m
+            [33mdata-size[39m=[32m"md"[39m
+            [33mdata-variant[39m=[32m"primary"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"zuvi-button-label"[39m
+              [33mdata-part[39m=[32m"label"[39m
+            [36m>[39m
+              [0m保存公式[0m
+            [36m</span>[39m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+  [36m<div[39m
+    [33mdata-zuvi-portal[39m=[32m""[39m
+    [33mstyle[39m=[32m"display: contents;"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"zuvi-select-listbox"[39m
+      [33mdata-open[39m=[32m"false"[39m
+      [33mdata-part[39m=[32m"listbox"[39m
+      [33mid[39m=[32m"_r_1_-listbox"[39m
+      [33mrole[39m=[32m"listbox"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33maria-selected[39m=[32m"false"[39m
+        [33mclass[39m=[32m"zuvi-select-option"[39m
+        [33mdata-part[39m=[32m"option"[39m
+        [33mid[39m=[32m"_r_1_-option-0"[39m
+        [33mrole[39m=[32m"option"[39m
+      [36m>[39m
+        [0mSUM(ABOVE)[0m
+      [36m</div>[39m
+      [36m<div[39m
+        [33maria-selected[39m=[32m"false"[39m
+        [33mclass[39m=[32m"zuvi-select-option"[39m
+        [33mdata-part[39m=[32m"option"[39m
+        [33mid[39m=[32m"_r_1_-option-1"[39m
+        [33mrole[39m=[32m"option"[39m
+      [36m>[39m
+        [0mSUM(LEFT)[0m
+      [36m</div>[39m
+      [36m<div[39m
+        [33maria-selected[39m=[32m"false"[39m
+        [33mclass[39m=[32m"zuvi-select-option"[39m
+        [33mdata-part[39m=[32m"option"[39m
+        [33mid[39m=[32m"_r_1_-option-2"[39m
+        [33mrole[39m=[32m"option"[39m
+      [36m>[39m
+        [0mSUM(BELOW)[0m
+      [36m</div>[39m
+      [36m<div[39m
+        [33maria-selected[39m=[32m"false"[39m
+        [33mclass[39m=[32m"zuvi-select-option"[39m
+        [33mdata-part[39m=[32m"option"[39m
+        [33mid[39m=[32m"_r_1_-option-3"[39m
+        [33mrole[39m=[32m"option"[39m
+      [36m>[39m
+        [0mSUM(RIGHT)[0m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+  [36m<div[39m
+    [33mdata-zuvi-portal[39m=[32m""[39m
+    [33mstyle[39m=[32m"display: contents;"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"zuvi-select-listbox"[39m
+      [33mdata-open[39m=[32m"false"[39m
+      [33mdata-part[39m=[32m"listbox"[39m
+      [33mid[39m=[32m"_r_2_-listbox"[39m
+      [33mrole[39m=[32m"listbox"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33maria-selected[39m=[32m"false"[39m
+        [33mclass[39m=[32m"zuvi-select-option"[39m
+        [33mdata-part[39m=[32m"option"[39m
+        [33mid[39m=[32m"_r_2_-option-0"[39m
+        [33mrole[39m=[32m"option"[39m
+      [36m>[39m
+        [0m常规[0m
+      [36m</div>[39m
+      [36m<div[39m
+        [33maria-selected[39m=[32m"false"[39m
+        [33mclass[39m=[32m"zuvi-select-option"[39m
+        [33mdata-part[39m=[32m"option"[39m
+        [33mid[39m=[32m"_r_2_-option-1"[39m
+        [33mrole[39m=[32m"option"[39m
+      [36m>[39m
+        [0m整数[0m
+      [36m</div>[39m
+      [36m<div[39m
+        [33maria-selected[39m=[32m"false"[39m
+        [33mclass[39m=[32m"zuvi-select-option"[39m
+        [33mdata-part[39m=[32m"option"[39m
+        [33mid[39m=[32m"_r_2_-option-2"[39m
+        [33mrole[39m=[32m"option"[39m
+      [36m>[39m
+        [0m两位小数[0m
+      [36m</div>[39m
+      [36m<div[39m
+        [33maria-selected[39m=[32m"false"[39m
+        [33mclass[39m=[32m"zuvi-select-option"[39m
+        [33mdata-part[39m=[32m"option"[39m
+        [33mid[39m=[32m"_r_2_-option-3"[39m
+        [33mrole[39m=[32m"option"[39m
+      [36m>[39m
+        [0m千位分隔[0m
+      [36m</div>[39m
+      [36m<div[39m
+        [33maria-selected[39m=[32m"false"[39m
+        [33mclass[39m=[32m"zuvi-select-option"[39m
+        [33mdata-part[39m=[32m"option"[39m
+        [33mid[39m=[32m"_r_2_-option-4"[39m
+        [33mrole[39m=[32m"option"[39m
+      [36m>[39m
+        [0m百分比[0m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ❯ Object.getElementError ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/OfficeStudio/StudioWordFormulaDialog.test.tsx:9:26
+      7|   render(<StudioWordFormulaDialog initial="=A1*2" blocked={false} onCl…
+      8|   const input = screen.getByRole('textbox', { name: '表格公式表达式' }…
+      9|   fireEvent.click(screen.getByRole('button', { name: '公式数字格式' })…
+       |                          ^
+     10|   fireEvent.click(screen.getByRole('option', { name: '千位分隔' }));
+     11|   expect(input).toHaveValue('=A1*2 \\# "#,##0.00"');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  08:28:19
+   Duration  1.40s (transform 250ms, setup 111ms, collect 387ms, tests 108ms, environment 377ms, prepare 60ms)
+
+undefined
+/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run src/components/OfficeStudio/StudioWordFormulaDialog.test.tsx --reporter=dot

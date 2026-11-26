@@ -1,4 +1,6 @@
 'use client';
+import { StudioWordFormulaDialog } from './StudioWordFormulaDialog';
+import { WordFormulaField, wordSetTableFormula, wordRefreshTableFormulas } from './studio-word-formula-field';
 
 import * as React from 'react';
 import { flushSync } from 'react-dom';
@@ -179,6 +181,7 @@ const EXTENSIONS = [
   PageBreak,
   WordImage,
   WordPageNumber,
+  WordFormulaField,
   WordSubscript,
   WordSuperscript,
   WordNonprinting,
@@ -413,6 +416,7 @@ export function StudioWord({
   const [numberStart,setNumberStart]=React.useState('1');
   const [numberDialog,setNumberDialog]=React.useState<{editor:Editor;doc:Editor['state']['doc'];selection:Editor['state']['selection'];catalog:WordNumberingCatalog;currentId?:string;level:number}|null>(null);
   const [surfaceDialog,setSurfaceDialog]=React.useState<{editor:Editor;doc:Editor['state']['doc'];selection:Editor['state']['selection'];surfaces:ReturnType<typeof wordSelectionSurfaces>}|null>(null);
+  const [formulaDialog, setFormulaDialog] = React.useState<{ editor: Editor; doc: Editor['state']['doc']; selection: Editor['state']['selection']; initial: string } | null>(null);
   const [conversionDialog, setConversionDialog] = React.useState<{ editor: Editor; target: WordConversionTarget } | null>(null);
   const [rowDialog, setRowDialog] = React.useState<{ editor: Editor; doc: Editor['state']['doc']; selection: Editor['state']['selection']; rows: ReturnType<typeof wordSelectedRows> } | null>(null);
   const [tableColumns, setTableColumns] = React.useState('3');
@@ -2106,6 +2110,15 @@ export function StudioWord({
             </Button>
           </RibbonGroup>
           <RibbonGroup label="表格工具" className="zuvi-studio-word-table-tools-group">
+            <Button variant="ghost" size="sm" disabled={toolsDisabled || !selection?.inTable} onMouseDown={keepSelection} onClick={() => {
+              if (!editor || toolsDisabled || editor.view.composing) return;
+              const node = editor.state.doc.nodeAt(editor.state.selection.from);
+              setFormulaDialog({ editor, doc: editor.state.doc, selection: editor.state.selection, initial: node?.type.name === 'tableFormula' ? node.attrs.formula : '=SUM(ABOVE)' });
+            }}>表格公式</Button>
+            <Button variant="ghost" size="sm" disabled={toolsDisabled || !editor} onMouseDown={keepSelection} onClick={() => {
+              if (!editor || toolsDisabled) return;
+              try { wordRefreshTableFormulas(editor); } catch (reason) { setNotice(reason instanceof Error ? reason.message : '公式刷新失败。'); }
+            }}>刷新公式</Button>
             <Button variant="ghost" size="sm" disabled={toolsDisabled || !editor || !wordConversionTarget(editor)} onMouseDown={keepSelection} onClick={() => {
               if (!editor || toolsDisabled || editor.view.composing) return;
               const target = wordConversionTarget(editor);
@@ -2926,6 +2939,14 @@ export function StudioWord({
           target.view.dispatch(target.state.tr.setSelection(surfaceDialog.selection).setMeta('addToHistory',false));
           const changed=wordSetParagraphSurface(target,patch);setNotice(changed?'已应用段落边框和底纹，可撤销恢复。':'段落边框/底纹保持原样。');
         }} />}
+      {formulaDialog && <StudioWordFormulaDialog initial={formulaDialog.initial} blocked={!editable} onClose={() => { setFormulaDialog(null); if (!formulaDialog.editor.isDestroyed) formulaDialog.editor.commands.focus(); }} onSave={(formula) => {
+        const target = formulaDialog.editor;
+        if (!latest.current.editable || target.isDestroyed || target !== editor || !target.isEditable) throw new Error('当前文档只读或编辑区域已变化。');
+        if (target.state.doc !== formulaDialog.doc) throw new Error('文档已变化，请重新打开公式。');
+        target.view.dispatch(target.state.tr.setSelection(formulaDialog.selection).setMeta('addToHistory', false));
+        if (!wordSetTableFormula(target, formula)) throw new Error('请结束输入法组合后重试。');
+        setFormulaDialog(null); target.commands.focus();
+      }} />}
       {conversionDialog && <StudioWordConversionDialog target={conversionDialog.target} blocked={!editable}
         onClose={() => { setConversionDialog(null); if (!conversionDialog.editor.isDestroyed) conversionDialog.editor.commands.focus(); }}
         onSave={(separator, columns, convertNested) => {

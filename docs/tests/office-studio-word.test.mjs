@@ -1513,3 +1513,56 @@ test('table paragraph absent spacing exports zero while explicit spacing survive
     document = await importStudioWord(file, 'Spacing-reopened.docx');
   }
 });
+
+test('native simple and complex table formula fields preserve instructions, cached edits and run formatting twice', async () => {
+  const body = '<w:tbl><w:tr><w:tc><w:p><w:r><w:t>2</w:t></w:r></w:p></w:tc><w:tc><w:p><w:fldSimple w:instr="=SUM(LEFT)"><w:r><w:rPr><w:b/><w:color w:val="0055AA"/></w:rPr><w:t>2</w:t></w:r></w:fldSimple></w:p></w:tc><w:tc><w:p><w:r><w:fldChar w:fldCharType="begin"/></w:r><w:r><w:instrText xml:space="preserve"> =B1*3 </w:instrText></w:r><w:r><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:rPr><w:i/></w:rPr><w:t>6</w:t></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r></w:p></w:tc></w:tr></w:tbl>';
+  let document = await importStudioWord(await fixture(body), 'Formulas.docx');
+  const fields = () => document.content.content[0].content[0].content.slice(1).map((cell) => cell.content[0].content[0]);
+  assert.equal(fields()[0].type, 'tableFormula');
+  assert.equal(fields()[1].attrs.formula, '=B1*3');
+  assert.equal(fields()[0].marks.some((mark) => mark.type === 'bold'), true);
+  assert.equal(fields()[1].marks.some((mark) => mark.type === 'italic'), true);
+  fields()[0].attrs.formula = '=A1*4'; fields()[0].attrs.result = '8';
+  fields()[1].attrs.result = '24';
+  for (let pass = 0; pass < 2; pass++) {
+    const file = await exportStudioWord(document);
+    const zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const native = await zip.file('word/document.xml').async('string');
+    assert.match(native, /w:fldSimple w:instr="=A1\*4"/);
+    document = await importStudioWord(file, `Formulas-${pass}.docx`);
+    assert.equal(fields()[0].attrs.formula, '=A1*4');
+    assert.equal(fields()[0].attrs.result, '8');
+    assert.equal(fields()[1].attrs.result, '24');
+    assert.equal(fields()[0].marks.some((mark) => mark.type === 'bold'), true);
+    assert.equal(fields()[1].marks.some((mark) => mark.type === 'italic'), true);
+  }
+});
+
+test('native vertical merges and nested formula instructions remain scoped and intact across two DOCX cycles', async () => {
+  const formula = (expression, cached) => `<w:p><w:fldSimple w:instr="${expression}"><w:r><w:t>${cached}</w:t></w:r></w:fldSimple></w:p>`;
+  const number = (text) => `<w:p><w:r><w:t>${text}</w:t></w:r></w:p>`;
+  const nested = `<w:tbl><w:tr><w:tc>${number('4')}</w:tc><w:tc>${formula('=A1*2', '8')}</w:tc></w:tr></w:tbl>`;
+  const body = `<w:tbl><w:tr><w:tc><w:tcPr><w:vMerge w:val="restart"/></w:tcPr>${number('3')}</w:tc><w:tc>${formula('=SUM(LEFT)', '3')}${nested}${number('Outer tail')}</w:tc></w:tr><w:tr><w:tc><w:tcPr><w:vMerge/></w:tcPr><w:p/></w:tc><w:tc>${formula('=SUM(ABOVE)', '3')}</w:tc></w:tr></w:tbl>`;
+  let document = await importStudioWord(await fixture(body), 'Merged-nested.docx');
+  const fields = () => {
+    const result = [];
+    const visit = (node) => { if (node.type === 'tableFormula') result.push([node.attrs.formula, node.attrs.result]); for (const child of node.content || []) visit(child); };
+    visit(document.content); return result;
+  };
+  for (let pass = 0; pass < 2; pass++) {
+    assert.equal(document.content.content[0].content[0].content[0].attrs.rowspan, 2);
+    assert.deepEqual(fields(), [['=SUM(LEFT)', '3'], ['=A1*2', '8'], ['=SUM(ABOVE)', '3']]);
+    document = await importStudioWord(await exportStudioWord(document), `Merged-nested-${pass}.docx`);
+  }
+  assert.deepEqual(fields(), [['=SUM(LEFT)', '3'], ['=A1*2', '8'], ['=SUM(ABOVE)', '3']]);
+});
+
+test('native numeric-picture formula switches and formatted caches survive repeated DOCX saving', async () => {
+  let document = await importStudioWord(await fixture('<w:tbl><w:tr><w:tc><w:p><w:r><w:t>1234.5</w:t></w:r></w:p></w:tc><w:tc><w:p><w:fldSimple w:instr="=A1*2 \\# &quot;#,##0.00&quot;"><w:r><w:t>2,469.00</w:t></w:r></w:fldSimple></w:p></w:tc></w:tr></w:tbl>'), 'Numeric-picture.docx');
+  for (let pass = 0; pass < 2; pass++) {
+    const field = document.content.content[0].content[0].content[1].content[0].content[0];
+    assert.equal(field.attrs.formula, '=A1*2 \\# "#,##0.00"');
+    assert.equal(field.attrs.result, '2,469.00');
+    document = await importStudioWord(await exportStudioWord(document), `Numeric-picture-${pass}.docx`);
+  }
+});

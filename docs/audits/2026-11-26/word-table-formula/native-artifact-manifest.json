@@ -1,0 +1,67 @@
+[
+  {
+    "file": "directions-roundtrip-1.docx",
+    "bytes": 10126,
+    "sha256": "69da2a79d5af7259efe28952843b89183ff55120fdd27eb48dd174c9fd87d885"
+  },
+  {
+    "file": "directions-roundtrip-2.docx",
+    "bytes": 10230,
+    "sha256": "40ffba640df488aaaade33ca456e14c48d3f40f3b7d1059baaf1614358a915aa"
+  },
+  {
+    "file": "directions-source.docx",
+    "bytes": 9732,
+    "sha256": "84a0f8c996fc056368f44975cc83f740ff5556e8c28bf6726dd7fbd83c63ed31"
+  },
+  {
+    "file": "formula-dialog-dark-320.png",
+    "bytes": 46702,
+    "sha256": "20bafec6390c612825141e4106c7c6ea2eb6923dd58af439c6e0d3e0c78bc839"
+  },
+  {
+    "file": "formula-dialog-dark.png",
+    "bytes": 119850,
+    "sha256": "765fe9f51469855185d5a15991b4f580f09ee92ccf8f6c03cdfe597f48e32ad4"
+  },
+  {
+    "file": "formula-dialog-light-320.png",
+    "bytes": 49044,
+    "sha256": "fdab1f75867a26af24f9cd9f5b0ab8a64eb19bbe24950476029d8fcac68e2fd4"
+  },
+  {
+    "file": "formula-dialog-light.png",
+    "bytes": 126569,
+    "sha256": "f348d3a420f0ad7c3dbb549da450272739f2c2e073b40495698106b844a916dc"
+  },
+  {
+    "file": "formula-roundtrip-1.docx",
+    "bytes": 10021,
+    "sha256": "7174c14bbdbcfa417b39a39662ac5dfd9ed2c13f5ca6568eb6eed929f03f00ec"
+  },
+  {
+    "file": "formula-roundtrip-2.docx",
+    "bytes": 10119,
+    "sha256": "02a9918eaace2f94e950d17fa45ac504da6f80394b638d65065f8bf6df6e54e0"
+  },
+  {
+    "file": "formula-source.docx",
+    "bytes": 9630,
+    "sha256": "1ecfd491c044f7b27f5969ada3009442b1001dbfce698521f144a7ac451fa6bf"
+  },
+  {
+    "file": "nested-merge-roundtrip-1.docx",
+    "bytes": 10081,
+    "sha256": "da36f5cdb181b56340ade925a85ef0e5495fcca74a72b2a7e2e984ee29b4379c"
+  },
+  {
+    "file": "nested-merge-roundtrip-2.docx",
+    "bytes": 10177,
+    "sha256": "23ff36eb73ab4092fd53afa83258dea1cd64a19289da42d985a975f2e8c80102"
+  },
+  {
+    "file": "nested-merge-source.docx",
+    "bytes": 9721,
+    "sha256": "2961d79eae99e98ce0a18ff3a985661c790523726f30289accfccedb68a745e6"
+  }
+]

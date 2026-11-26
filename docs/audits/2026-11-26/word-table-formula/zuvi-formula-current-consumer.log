@@ -1,0 +1,95 @@
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: CLI bundled source is stale: packages/ui/src/components/OfficeStudio/studio-word-formula-field.ts; rebuild @zuvi/cli
++ actual - expected ... Lines skipped
+
++ Buffer(6087) [Uint8Array] [
+- Buffer(6143) [Uint8Array] [
+    105,
+    109,
+...
+    40,
+    41,
+...
+-   46,
+-   115,
+-   116,
+-   97,
+-   114,
+-   116,
+-   115,
+-   87,
+-   105,
+-   116,
+-   104,
+-   40,
+-   39,
+-   61,
+-   39,
+-   41,
+-   32,
+-   63,
+-   32,
+-   102,
+-   111,
+-   114,
+-   109,
+-   117,
+-   108,
+-   97,
+-   46,
+-   116,
+-   114,
+-   105,
+-   109,
+-   40,
+-   41,
+-   32,
+-   58,
+-   32,
+-   96,
+-   61,
+-   36,
+-   123,
+-   102,
+-   111,
+-   114,
+-   109,
+-   117,
+...
+    at file:///Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/scripts/check-consumer.mjs:32:12
+    at ModuleJob.run (node:internal/modules/esm/module_job:325:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:606:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: Buffer(6087) [Uint8Array] [
+    105, 109, 112, 111, 114, 116,  32, 123,  32,  78, 111, 100,
+    101,  44,  32, 116, 121, 112, 101,  32,  69, 100, 105, 116,
+    111, 114,  32, 125,  32, 102, 114, 111, 109,  32,  39,  64,
+    116, 105, 112, 116,  97, 112,  47, 114, 101,  97,  99, 116,
+     39,  59,  10, 105, 109, 112, 111, 114, 116,  32, 123,  32,
+     84,  97,  98, 108, 101,  77,  97, 112,  32, 125,  32, 102,
+    114, 111, 109,  32,  39,  64, 116, 105, 112, 116,  97, 112,
+     47, 112, 109,  47, 116,  97,  98, 108, 101, 115,  39,  59,
+     10, 105, 109, 112,
+    ... 5987 more items
+  ],
+  expected: Buffer(6143) [Uint8Array] [
+    105, 109, 112, 111, 114, 116,  32, 123,  32,  78, 111, 100,
+    101,  44,  32, 116, 121, 112, 101,  32,  69, 100, 105, 116,
+    111, 114,  32, 125,  32, 102, 114, 111, 109,  32,  39,  64,
+    116, 105, 112, 116,  97, 112,  47, 114, 101,  97,  99, 116,
+     39,  59,  10, 105, 109, 112, 111, 114, 116,  32, 123,  32,
+     84,  97,  98, 108, 101,  77,  97, 112,  32, 125,  32, 102,
+    114, 111, 109,  32,  39,  64, 116, 105, 112, 116,  97, 112,
+     47, 112, 109,  47, 116,  97,  98, 108, 101, 115,  39,  59,
+     10, 105, 109, 112,
+    ... 6043 more items
+  ],
+  operator: 'deepStrictEqual'
+}
+
+Node.js v20.20.0
