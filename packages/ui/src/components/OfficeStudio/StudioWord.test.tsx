@@ -2480,3 +2480,73 @@ it('restores a rejected controlled formula insertion and saves the original docu
   await act(async () => ref.current?.save());
   expect(onSave).toHaveBeenCalledWith(value);
 });
+
+it('applies image crop through the toolbar, cancels drafts and restores crop with undo and redo', async () => {
+  const model = documentModel();
+  model.content.content![0].content!.unshift({ type: 'image', attrs: { src: `data:image/png;base64,${PNG}`, width: 320, height: 160, alt: '裁剪示意图' } });
+  const { textbox, onChange } = await mount({ document: model });
+  fireEvent.click(textbox.querySelector('img[data-word-image]')!);
+  fireEvent.click(screen.getByRole('button', { name: '裁剪图片' }));
+  fireEvent.change(screen.getByRole('spinbutton', { name: '左边裁剪百分比' }), { target: { value: '25' } });
+  fireEvent.click(screen.getByRole('button', { name: '取消' }));
+  expect(onChange).not.toHaveBeenCalled();
+  fireEvent.click(screen.getByRole('button', { name: '裁剪图片' }));
+  expect(screen.getByRole('spinbutton', { name: '左边裁剪百分比' })).toHaveValue(0);
+  fireEvent.change(screen.getByRole('spinbutton', { name: '左边裁剪百分比' }), { target: { value: '25' } });
+  fireEvent.click(screen.getByRole('button', { name: '应用裁剪' }));
+  await waitFor(() => expect(textbox.querySelector('[data-word-image-crop-frame]')).toHaveStyle({ overflow: 'hidden' }));
+  expect(onChange.mock.lastCall?.[0].content.content[0].content[0].attrs).toMatchObject({ crop: { left: 25, top: 0, right: 0, bottom: 0 }, width: 320, height: 160, src: `data:image/png;base64,${PNG}` });
+  fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+  fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await waitFor(() => expect(textbox.querySelector('[data-word-image-crop-frame]')).not.toHaveStyle({ overflow: 'hidden' }));
+  fireEvent.click(screen.getByRole('button', { name: '重做' }));
+  await waitFor(() => expect(textbox.querySelector('[data-word-image-crop-frame]')).toHaveStyle({ overflow: 'hidden' }));
+  fireEvent.click(textbox.querySelector('img[data-word-image]')!);
+  fireEvent.click(screen.getByRole('button', { name: '裁剪图片' }));
+  fireEvent.click(screen.getByRole('button', { name: '重置裁剪' }));
+  fireEvent.click(screen.getByRole('button', { name: '应用裁剪' }));
+  await waitFor(() => expect(textbox.querySelector('[data-word-image-crop-frame]')).not.toHaveStyle({ overflow: 'hidden' }));
+  fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+  fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await waitFor(() => expect(textbox.querySelector('img[data-word-image]')).toHaveAttribute('data-word-image-crop', expect.stringContaining('25')));
+  fireEvent.click(screen.getByRole('button', { name: '重做' }));
+  await waitFor(() => expect(textbox.querySelector('img[data-word-image]')).not.toHaveAttribute('data-word-image-crop'));
+
+});
+
+it('blocks an open crop draft when permissions or external content change', async () => {
+  const model = documentModel();
+  model.content.content![0].content!.unshift({ type: 'image', attrs: { src: `data:image/png;base64,${PNG}`, width: 320, height: 160 } });
+  const { textbox, onChange, rerender } = await mount({ document: model });
+  fireEvent.click(textbox.querySelector('img[data-word-image]')!);
+  fireEvent.click(screen.getByRole('button', { name: '裁剪图片' }));
+  fireEvent.change(screen.getByRole('spinbutton', { name: '左边裁剪百分比' }), { target: { value: '25' } });
+  rerender(<WordHost document={model} onChange={onChange} disabled={false} readOnly />);
+  expect(screen.getByRole('button', { name: '应用裁剪' })).toBeDisabled();
+  expect(onChange).not.toHaveBeenCalled();
+  rerender(<WordHost document={documentModel('replacement')} onChange={onChange} disabled={false} readOnly={false} />);
+  if (screen.queryByRole('button', { name: '应用裁剪' })) {
+    fireEvent.click(screen.getByRole('button', { name: '应用裁剪' }));
+    expect(await screen.findByRole('alert')).toHaveTextContent('文档已变化');
+  }
+  expect(onChange).not.toHaveBeenCalled();
+  expect(textbox.querySelector('img[data-word-image]')).toBeNull();
+});
+
+it('restores a rejected controlled crop and saves the original image', async () => {
+  const value = documentModel();
+  value.content.content![0].content!.unshift({ type: 'image', attrs: { src: `data:image/png;base64,${PNG}`, width: 320, height: 160 } });
+  const ref = createRef<OfficeStudioHandle>();
+  const onChange = vi.fn(), onSave = vi.fn();
+  render(<OfficeStudio ref={ref} value={value} onChange={onChange} onSave={onSave} />);
+  const body = await screen.findByRole('textbox', { name: 'Word 文档正文' });
+  fireEvent.click(body.querySelector('img[data-word-image]')!);
+  fireEvent.click(screen.getByRole('button', { name: '裁剪图片' }));
+  fireEvent.change(screen.getByRole('spinbutton', { name: '左边裁剪百分比' }), { target: { value: '25' } });
+  fireEvent.click(screen.getByRole('button', { name: '应用裁剪' }));
+  await waitFor(() => expect(onChange).toHaveBeenCalledTimes(1));
+  await waitFor(() => expect(body.querySelector('img[data-word-image]')).not.toHaveAttribute('data-word-image-crop'));
+  expect(ref.current?.getDocument()).toBe(value);
+  await act(async () => ref.current?.save());
+  expect(onSave).toHaveBeenCalledWith(value);
+});

@@ -35,6 +35,7 @@ for (const [file, target] of [
   ['studio-word-numbering.ts', numberExports],
   ['studio-word-styles.ts', styleExports],
   ['studio-word-images.ts', imageExports],
+  ['studio-word-image-crop.ts', imageExports],
   ['studio-word-image-preview.ts', imageExports],
 ]) {
   runInNewContext(
@@ -85,7 +86,7 @@ runInNewContext(
   {
     exports,
     require: (id) =>
-      id.endsWith('/studio-word-table-rows')?rowExports:id.endsWith('/studio-word-surface')?surfaceExports:id==='./studio-word-surface-codec'?surfaceCodecExports:id.endsWith('/studio-word-numbering') ? numberExports : id === './studio-word-numbering-codec' ? numberCodecExports : id.endsWith('/studio-word-tabs') ? tabExports : id.endsWith('/studio-word-paragraph-format')
+      id.endsWith('/studio-word-image-crop')?imageExports:id.endsWith('/studio-word-table-rows')?rowExports:id.endsWith('/studio-word-surface')?surfaceExports:id==='./studio-word-surface-codec'?surfaceCodecExports:id.endsWith('/studio-word-numbering') ? numberExports : id === './studio-word-numbering-codec' ? numberCodecExports : id.endsWith('/studio-word-tabs') ? tabExports : id.endsWith('/studio-word-paragraph-format')
         ? paragraphExports
         : id.endsWith('/studio-word-metrics')
           ? metricExports
@@ -1565,4 +1566,32 @@ test('native numeric-picture formula switches and formatted caches survive repea
     assert.equal(field.attrs.result, '2,469.00');
     document = await importStudioWord(await exportStudioWord(document), `Numeric-picture-${pass}.docx`);
   }
+});
+
+test('native image crop preserves embedded source bytes, frame dimensions and edited edges across repeated DOCX saves', async () => {
+  const original = model([p(image())]);
+  const source = await exportStudioWord(original);
+  const sourceZip = await JSZip.loadAsync(await source.arrayBuffer());
+  const xmlPart = await sourceZip.file('word/document.xml').async('string');
+  sourceZip.file('word/document.xml', xmlPart.replace(/<a:srcRect[^>]*\/>/, '<a:srcRect l="25000" t="10000" r="15000" b="5000"/>'));
+  let current = await importStudioWord(new Blob([await sourceZip.generateAsync({ type: 'uint8array' })]), 'Cropped.docx');
+  let picture = find(current.content, 'image')[0];
+  assert.deepEqual(JSON.parse(JSON.stringify(picture.attrs.crop)), { left: 25, top: 10, right: 15, bottom: 5 });
+  assert.equal(picture.attrs.src, original.content.content[0].content[0].attrs.src);
+  picture.attrs.crop.left = 30;
+  for (let pass = 0; pass < 2; pass++) {
+    const file = await exportStudioWord(current);
+    const zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const native = await zip.file('word/document.xml').async('string');
+    assert.match(native, /a:srcRect[^>]*l="30000"/);
+    current = await importStudioWord(file, `Crop-${pass}.docx`);
+    picture = find(current.content, 'image')[0];
+    assert.equal(picture.attrs.crop.left, 30);
+    assert.equal(picture.attrs.width, 300);
+    assert.equal(picture.attrs.height, 150);
+    assert.equal(picture.attrs.src, original.content.content[0].content[0].attrs.src);
+  }
+  picture.attrs.crop = null;
+  current = await importStudioWord(await exportStudioWord(current), 'Reset.docx');
+  assert.equal(find(current.content, 'image')[0].attrs.crop, undefined);
 });

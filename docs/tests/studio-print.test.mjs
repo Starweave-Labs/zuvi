@@ -1149,3 +1149,22 @@ test('Word formula print uses the current escaped cached result and preserves ch
   assert.equal(rendered.querySelector('td').textContent, '12');
   assert.equal(rendered.querySelector('td strong').textContent, '12');
 });
+
+test('Word image crop prints a clipped original raster frame and resets without modifying source', () => {
+  const model = models.createOfficeStudioDocument('word');
+  const source = 'data:image/png;base64,iVBORw0KGgo=';
+  const image = { type: 'image', attrs: { src: source, width: 200, height: 100, alt: 'Original crop', crop: { left: 25, right: 25, top: 10, bottom: 40 } } };
+  model.content = { type: 'doc', content: [{ type: 'paragraph', content: [image] }] };
+  let printed = new JSDOM(print.createStudioPrintHtml(model)).window.document;
+  const frame = printed.querySelector('[data-word-image-crop-frame]');
+  assert.equal(frame.style.width, '200px');
+  assert.equal(frame.style.height, '100px');
+  assert.equal(frame.style.overflow, 'hidden');
+  assert.equal(frame.querySelector('img').style.width, '400px');
+  assert.equal(frame.querySelector('img').style.left, '-100px');
+  assert.equal(frame.querySelector('img').getAttribute('src'), source);
+  image.attrs.crop = null;
+  printed = new JSDOM(print.createStudioPrintHtml(model)).window.document;
+  assert.equal(printed.querySelector('[data-word-image-crop-frame]'), null);
+  assert.equal(printed.querySelector('img').getAttribute('src'), source);
+});

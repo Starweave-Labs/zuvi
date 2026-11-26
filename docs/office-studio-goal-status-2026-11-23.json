@@ -2125,44 +2125,46 @@
         "docs/tests/office-studio-word.test.mjs"
       ],
       "historicalStatus": "缺失",
-      "status": "audited-not-implemented",
-      "evidence": [],
+      "status": "audited-slice-acceptance-pending",
+      "evidence": [
+        "docs/audits/2026-11-26/word-image-crop/README.md",
+        "e2e/office-studio-word-crop.spec.ts"
+      ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "未实现",
-        "implementedBehavior": "保留原图且可缩放",
+        "date": "2026-11-26",
+        "sourceCommit": "1534d2b + current W032 changes",
+        "implementation": "切片验证",
+        "implementedBehavior": "四边百分比与可视拖动裁剪、重置原图、单事务历史、权限/IME/过期快照/受控拒绝、HTML及原生DOCX两次重开、打印及明暗320px",
         "functionalGaps": [
-          "缺可视裁剪与重置；DOCX 裁剪拒绝"
+          "复杂原生裁剪（负srcRect/非零fillRect）仍拒绝；浮动/缩放/分页等全部布局组合尚未闭环"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 156,
-            "anchor": "const EXTENSIONS"
+            "path": "docs/audits/2026-11-26/word-image-crop/README.md",
+            "anchor": "最终冻结第二轮"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
-            "line": 60,
-            "anchor": "const UNSUPPORTED_CONTENT"
+            "path": "e2e/office-studio-word-crop.spec.ts",
+            "anchor": "native image crop preserves original bytes"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 78,
-            "anchor": "export interface StudioWordDocument"
-          },
-          {
-            "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
-            "line": 17,
-            "anchor": "WordImage"
+            "path": "packages/ui/src/components/OfficeStudio/studio-word-image-crop-command.ts",
+            "anchor": "wordSetImageCrop"
           }
         ],
-        "existingTestFiles": [],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "existingTestFiles": [
+          "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+          "packages/ui/src/components/OfficeStudio/StudioWordImageCropDialog.test.tsx",
+          "packages/ui/src/components/OfficeStudio/studio-word-image-crop-command.test.ts",
+          "docs/tests/office-studio-word.test.mjs",
+          "docs/tests/studio-print.test.mjs",
+          "e2e/office-studio-word-crop.spec.ts"
+        ],
+        "testEvidenceNote": "UI2519/docs316 no skips and final frozen E2E268 passed; native browser slice passed. Complex crop/layout combinations remain incomplete."
       },
       "gaps": [
-        "缺可视裁剪与重置；DOCX 裁剪拒绝"
+        "复杂原生裁剪（负srcRect/非零fillRect）仍拒绝；浮动/缩放/分页等全部布局组合尚未闭环"
       ]
     },
     {
@@ -10275,8 +10277,8 @@
   "currentAuditItems": 159,
   "currentImplementationCounts": {
     "基础实现": 22,
-    "切片验证": 26,
+    "切片验证": 27,
     "部分实现": 55,
-    "未实现": 56
+    "未实现": 55
   }
 }

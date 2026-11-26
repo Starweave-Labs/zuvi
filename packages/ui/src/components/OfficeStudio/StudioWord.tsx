@@ -1,4 +1,6 @@
 'use client';
+import { StudioWordImageCropDialog } from './StudioWordImageCropDialog';
+import { wordSetImageCrop } from './studio-word-image-crop-command';
 import { StudioWordFormulaDialog } from './StudioWordFormulaDialog';
 import { WordFormulaField, wordSetTableFormula, wordRefreshTableFormulas } from './studio-word-formula-field';
 
@@ -416,6 +418,13 @@ export function StudioWord({
   const [numberStart,setNumberStart]=React.useState('1');
   const [numberDialog,setNumberDialog]=React.useState<{editor:Editor;doc:Editor['state']['doc'];selection:Editor['state']['selection'];catalog:WordNumberingCatalog;currentId?:string;level:number}|null>(null);
   const [surfaceDialog,setSurfaceDialog]=React.useState<{editor:Editor;doc:Editor['state']['doc'];selection:Editor['state']['selection'];surfaces:ReturnType<typeof wordSelectionSurfaces>}|null>(null);
+  const [cropDialog, setCropDialog] = React.useState<{
+    editor: Editor;
+    doc: Editor['state']['doc'];
+    selection: Editor['state']['selection'];
+    src: string;
+    initial: unknown;
+  } | null>(null);
   const [formulaDialog, setFormulaDialog] = React.useState<{ editor: Editor; doc: Editor['state']['doc']; selection: Editor['state']['selection']; initial: string } | null>(null);
   const [conversionDialog, setConversionDialog] = React.useState<{ editor: Editor; target: WordConversionTarget } | null>(null);
   const [rowDialog, setRowDialog] = React.useState<{ editor: Editor; doc: Editor['state']['doc']; selection: Editor['state']['selection']; rows: ReturnType<typeof wordSelectedRows> } | null>(null);
@@ -581,6 +590,7 @@ export function StudioWord({
     setNumberDialog(null);
     setSurfaceDialog(null);
     setRowDialog(null);
+    setCropDialog(null);
     setNotice('');
   }, [document.id]);
   React.useLayoutEffect(() => {
@@ -2006,6 +2016,24 @@ export function StudioWord({
                 >
                   删除图片
                 </Button>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  disabled={toolsDisabled}
+                  onMouseDown={keepSelection}
+                  onClick={() => {
+                    if (!editor || !latest.current.editable || editor.view.composing) return;
+                    setCropDialog({
+                      editor,
+                      doc: editor.state.doc,
+                      selection: editor.state.selection,
+                      src: String(selection.image?.src || ''),
+                      initial: selection.image?.crop,
+                    });
+                  }}
+                >
+                  裁剪图片
+                </Button>
                 <StudioWordImageLayoutTools
                   key={`${document.id}:${region}:${selection.from}`}
                   layout={selection.image.layout}
@@ -2939,6 +2967,37 @@ export function StudioWord({
           target.view.dispatch(target.state.tr.setSelection(surfaceDialog.selection).setMeta('addToHistory',false));
           const changed=wordSetParagraphSurface(target,patch);setNotice(changed?'已应用段落边框和底纹，可撤销恢复。':'段落边框/底纹保持原样。');
         }} />}
+      {cropDialog && (
+        <StudioWordImageCropDialog
+          src={cropDialog.src}
+          initial={cropDialog.initial}
+          blocked={!editable}
+          onClose={() => {
+            setCropDialog(null);
+            if (!cropDialog.editor.isDestroyed) cropDialog.editor.commands.focus();
+          }}
+          onSave={(crop) => {
+            const target = cropDialog.editor;
+            if (
+              !latest.current.editable ||
+              target.isDestroyed ||
+              target !== editor ||
+              !target.isEditable
+            )
+              throw new Error('当前文档只读或编辑区域已变化。');
+            if (target.state.doc !== cropDialog.doc)
+              throw new Error('文档已变化，请重新打开裁剪。');
+            if (target.view.composing) throw new Error('请结束输入法组合后重试。');
+            target.view.dispatch(
+              target.state.tr.setSelection(cropDialog.selection).setMeta('addToHistory', false)
+            );
+            const changed = wordSetImageCrop(target, crop);
+            setCropDialog(null);
+            target.commands.focus();
+            setNotice(changed ? '已应用图片裁剪，可撤销恢复。' : '图片裁剪保持原样。');
+          }}
+        />
+      )}
       {formulaDialog && <StudioWordFormulaDialog initial={formulaDialog.initial} blocked={!editable} onClose={() => { setFormulaDialog(null); if (!formulaDialog.editor.isDestroyed) formulaDialog.editor.commands.focus(); }} onSave={(formula) => {
         const target = formulaDialog.editor;
         if (!latest.current.editable || target.isDestroyed || target !== editor || !target.isEditable) throw new Error('当前文档只读或编辑区域已变化。');

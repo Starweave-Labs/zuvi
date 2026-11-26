@@ -1,3 +1,4 @@
+import { wordImageCrop } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-image-crop';
 import JSZip from 'jszip';
 import {wordSurface,wordMergeSurface} from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-surface';
 import { wordRowProperties } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-table-rows';
@@ -953,9 +954,15 @@ function parseDrawing(drawing: Element, context: ImportContext): StudioRichNode 
     )
       unsupported('图片旋转或翻转');
   }
-  for (const crop of Array.from(inline.getElementsByTagNameNS(A, 'srcRect')))
-    if (['l', 't', 'r', 'b'].some((key) => Number(crop.getAttribute(key) || 0) !== 0))
-      unsupported('图片裁剪');
+  const cropNodes = Array.from(inline.getElementsByTagNameNS(A, 'srcRect'));
+  if (cropNodes.length > 1) unsupported('多个图片裁剪区域');
+  let crop;
+  try {
+    crop = cropNodes.length ? wordImageCrop(Object.fromEntries(
+      [['l', 'left'], ['t', 'top'], ['r', 'right'], ['b', 'bottom']].map(([native, edge]) =>
+        [edge, Number(cropNodes[0].getAttribute(native) || 0) / 1000])
+    )) : null;
+  } catch { unsupported('图片裁剪区域'); }
   if (Array.from(blip.children).some((node) => node.localName !== 'extLst'))
     unsupported('图片效果');
   for (const list of elements(blip))
@@ -1003,6 +1010,7 @@ function parseDrawing(drawing: Element, context: ImportContext): StudioRichNode 
         1000
       ),
       ...(layout ? { layout } : {}),
+      ...(crop ? { crop } : {}),
     },
     ...(drawingLink ? { marks: [{ type: 'link', attrs: { href: drawingLink } }] } : {}),
   };
@@ -1784,13 +1792,14 @@ function inlineChildren(
       });
     }
     if (node.type === 'image') {
-      checkAttrs(node, ['src', 'width', 'height', 'alt', 'layout']);
+      checkAttrs(node, ['src', 'width', 'height', 'alt', 'layout', 'crop']);
       const layout = wordImageLayout(node.attrs?.layout);
       const { data, type } = embeddedImageData(node.attrs?.src);
       const { options, href } = runOptions({ ...node, text: '' }, inherited);
       const run = new MetricImageRun({
         type,
         data,
+        ...(wordImageCrop(node.attrs?.crop) ? { crop: wordImageCrop(node.attrs?.crop)! } : {}),
         ...(layout
           ? {
               floating: {

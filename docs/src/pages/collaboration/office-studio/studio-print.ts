@@ -1,3 +1,4 @@
+import { wordImageCrop, wordImageCropGeometry } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-image-crop';
 import {
   isOfficeStudioDocument,
   type OfficeStudioDocument,
@@ -231,6 +232,13 @@ function rich(
       )
       .join(';');
     const printed = `<img src="${escape(source)}" alt="${escape(attrs.alt)}"${amount(attrs.width, '', 1, 10000) ? ` width="${attrs.width}"` : ''}${amount(attrs.height, '', 1, 10000) ? ` height="${attrs.height}"` : ''}${css ? ` style="${escape(css)}"` : ''}>`;
+    const crop = wordImageCrop(attrs.crop);
+    if (crop) {
+      const width = Number(attrs.width) || 320, height = Number(attrs.height) || 180;
+      const geometry = wordImageCropGeometry(crop, width, height);
+      const clipped = `<span data-word-image-crop-frame="" style="display:inline-block;position:relative;overflow:hidden;width:${width}px;height:${height}px;${escape(css)}"><img src="${escape(source)}" alt="${escape(attrs.alt)}" style="position:absolute;max-width:none;width:${geometry.width}px;height:${geometry.height}px;left:${geometry.left}px;top:${geometry.top}px"></span>`;
+      return layout && ['front', 'behind'].includes(layout.wrap) ? `<span class="studio-print-image-anchor">${clipped}</span>` : clipped;
+    }
     return layout && ['front', 'behind'].includes(layout.wrap)
       ? `<span class="studio-print-image-anchor">${printed}</span>`
       : printed;

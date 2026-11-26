@@ -1,7 +1,8 @@
 import { Mark, Node, type Editor } from '@tiptap/react';
+import type { DOMOutputSpec } from '@tiptap/pm/model';
 import { closeHistory } from '@tiptap/pm/history';
 import { wordMergeTabStops } from './studio-word-tabs';
-import {wordMergeSurface,wordClearSurface} from './studio-word-surface';
+import { wordMergeSurface, wordClearSurface } from './studio-word-surface';
 import { TextSelection } from '@tiptap/pm/state';
 import {
   resolveStudioWordParagraphStyle,
@@ -9,6 +10,7 @@ import {
 } from './studio-word-styles';
 import type { StudioRichNode } from './studio-types';
 import { wordDefaultImageLayout, wordImageCss } from './studio-word-image-preview';
+import { wordImageCrop, wordImageCropGeometry } from './studio-word-image-crop';
 import { wordImageLayout } from './studio-word-images';
 
 const MAX_IMAGE_BYTES = 8 * 1024 * 1024;
@@ -38,6 +40,7 @@ export const WordImage = Node.create({
       height: { default: 180 },
       alt: { default: '' },
       layout: { default: null, rendered: false },
+      crop: { default: null, rendered: false },
     };
   },
   parseHTML: () => [
@@ -49,7 +52,9 @@ export const WordImage = Node.create({
         const width = Number(element.getAttribute('width') || 320);
         const height = Number(element.getAttribute('height') || 180);
         let layout;
+        let crop;
         try {
+          crop = wordImageCrop(JSON.parse(element.getAttribute('data-word-image-crop') || 'null'));
           layout = wordImageLayout(
             JSON.parse(element.getAttribute('data-word-image-layout') || 'null')
           );
@@ -62,43 +67,77 @@ export const WordImage = Node.create({
           height: Math.max(1, Math.min(2000, Number.isFinite(height) ? height : 180)),
           alt: (element.getAttribute('alt') || '').slice(0, 1000),
           layout: layout || null,
+          crop,
         };
       },
     },
   ],
-  renderHTML: ({ node }) => [
-    'img',
-    {
-      src: safeWordImageSource(node.attrs.src) ? node.attrs.src : '',
-      width: Math.max(1, Math.min(2000, Number(node.attrs.width) || 320)),
-      height: Math.max(1, Math.min(2000, Number(node.attrs.height) || 180)),
-      style: `aspect-ratio: ${Math.max(1, Math.min(2000, Number(node.attrs.width) || 320))} / ${Math.max(1, Math.min(2000, Number(node.attrs.height) || 180))}`,
-      alt: String(node.attrs.alt || '').slice(0, 1000),
-      class: 'zuvi-studio-word-image',
-      'data-word-image': '',
-      ...(node.attrs.layout
-        ? {
-            'data-word-image-layout': JSON.stringify(wordImageLayout(node.attrs.layout)),
-            style: `aspect-ratio: ${Number(node.attrs.width) || 320} / ${Number(node.attrs.height) || 180};${Object.entries(
-              wordImageCss(
-                wordImageLayout(node.attrs.layout),
-                Number(node.attrs.width) || 320,
-                Number(node.attrs.height) || 180
+  renderHTML: ({ node }) => {
+    const output: DOMOutputSpec = [
+      'img',
+      {
+        src: safeWordImageSource(node.attrs.src) ? node.attrs.src : '',
+        width: Math.max(1, Math.min(2000, Number(node.attrs.width) || 320)),
+        height: Math.max(1, Math.min(2000, Number(node.attrs.height) || 180)),
+        style: `aspect-ratio: ${Math.max(1, Math.min(2000, Number(node.attrs.width) || 320))} / ${Math.max(1, Math.min(2000, Number(node.attrs.height) || 180))}`,
+        alt: String(node.attrs.alt || '').slice(0, 1000),
+        class: 'zuvi-studio-word-image',
+        'data-word-image': '',
+        ...(node.attrs.crop
+          ? { 'data-word-image-crop': JSON.stringify(wordImageCrop(node.attrs.crop)) }
+          : {}),
+        ...(node.attrs.layout
+          ? {
+              'data-word-image-layout': JSON.stringify(wordImageLayout(node.attrs.layout)),
+              style: `aspect-ratio: ${Number(node.attrs.width) || 320} / ${Number(node.attrs.height) || 180};${Object.entries(
+                wordImageCss(
+                  wordImageLayout(node.attrs.layout),
+                  Number(node.attrs.width) || 320,
+                  Number(node.attrs.height) || 180
+                )
               )
-            )
-              .map(
-                ([key, value]) =>
-                  `${key.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`)}:${value}`
-              )
-              .join(';')}`,
-          }
-        : {}),
-    },
-  ],
+                .map(
+                  ([key, value]) =>
+                    `${key.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`)}:${value}`
+                )
+                .join(';')}`,
+            }
+          : {}),
+      },
+    ];
+    const crop = wordImageCrop(node.attrs.crop);
+    if (!crop) return output;
+    const width = Math.max(1, Math.min(2000, Number(node.attrs.width) || 320));
+    const height = Math.max(1, Math.min(2000, Number(node.attrs.height) || 180));
+    const geometry = wordImageCropGeometry(crop, width, height);
+    const imageAttrs = output[1] as Record<string, unknown>;
+    imageAttrs.style = `position:absolute;max-width:none;width:${(geometry.width / width) * 100}%;height:${(geometry.height / height) * 100}%;left:${(geometry.left / width) * 100}%;top:${(geometry.top / height) * 100}%`;
+    const cropLayout = wordImageLayout(node.attrs.layout);
+    const cropPosition = cropLayout && ['front', 'behind'].includes(cropLayout.wrap) ? 'absolute' : 'relative';
+    const layoutCss = Object.entries(
+      wordImageCss(wordImageLayout(node.attrs.layout), width, height)
+    )
+      .map(
+        ([key, value]) =>
+          `${key.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`)}:${value}`
+      )
+      .join(';');
+    return [
+      'span',
+      {
+        'data-word-image-crop-frame': '',
+        style: `${layoutCss};display:inline-block;position:${cropPosition};overflow:hidden;width:${width}px;aspect-ratio:${width}/${height};max-width:100%`,
+      },
+      output,
+    ];
+  },
   addNodeView() {
     return ({ node, editor, getPos }) => {
       const dom = document.createElement('span');
       const image = document.createElement('img');
+      const cropFrame = document.createElement('span');
+      cropFrame.dataset.wordImageCropFrame = '';
+      cropFrame.append(image);
       const handle = document.createElement('span');
       const mover = document.createElement('span');
       let current = node;
@@ -175,7 +214,7 @@ export const WordImage = Node.create({
       mover.title = '拖动移动图片；方向键微调，Shift+方向键移动 10 像素';
       mover.textContent = '✥';
       mover.tabIndex = -1;
-      dom.append(image, handle, mover);
+      dom.append(cropFrame, handle, mover);
 
       const render = (attrs: Record<string, unknown>) => {
         const width = Math.max(1, Math.min(2000, Number(attrs.width) || 320));
@@ -185,6 +224,36 @@ export const WordImage = Node.create({
         image.height = height;
         image.alt = String(attrs.alt || '').slice(0, 1000);
         image.style.aspectRatio = `${width} / ${height}`;
+        const crop = wordImageCrop(attrs.crop);
+        cropFrame.removeAttribute('style');
+        cropFrame.style.display = 'block';
+        image.style.removeProperty('position');
+        image.style.removeProperty('left');
+        image.style.removeProperty('top');
+        image.style.removeProperty('width');
+        image.style.removeProperty('height');
+        image.style.removeProperty('max-width');
+        if (crop) {
+          const geometry = wordImageCropGeometry(crop, width, height);
+          Object.assign(cropFrame.style, {
+            display: 'block',
+            position: 'relative',
+            overflow: 'hidden',
+            width: `${width}px`,
+            aspectRatio: `${width} / ${height}`,
+            maxWidth: '100%',
+          });
+          Object.assign(image.style, {
+            position: 'absolute',
+            maxWidth: 'none',
+            width: `${(geometry.width / width) * 100}%`,
+            height: `${(geometry.height / height) * 100}%`,
+            left: `${(geometry.left / width) * 100}%`,
+            top: `${(geometry.top / height) * 100}%`,
+          });
+          image.dataset.wordImageCrop = JSON.stringify(crop);
+        } else delete image.dataset.wordImageCrop;
+
         const layout = wordImageLayout(attrs.layout);
         dom.removeAttribute('style');
         dom.draggable = !layout?.lockAnchor;
@@ -233,7 +302,7 @@ export const WordImage = Node.create({
         const height = Math.max(1, Math.min(2000, Number(current.attrs.height) || 180));
         const original = current;
         const ratio = width / height;
-        const box = image.getBoundingClientRect();
+        const box = cropFrame.getBoundingClientRect();
         const scaleX = box.width > 0 ? box.width / width : 1;
         const scaleY = box.height > 0 ? box.height / height : scaleX;
         const initialX = event.clientX;
@@ -343,7 +412,7 @@ export const WordImage = Node.create({
         const layout = wordImageLayout(initial.attrs.layout)!;
         const width = Number(initial.attrs.width) || 320;
         const height = Number(initial.attrs.height) || 180;
-        const rect = image.getBoundingClientRect();
+        const rect = cropFrame.getBoundingClientRect();
         const scaleX = rect.width > 0 ? rect.width / width : 1;
         const scaleY = rect.height > 0 ? rect.height / height : scaleX;
         let next = layout;
@@ -980,7 +1049,7 @@ export function wordClearFormat(editor: Editor): boolean {
       paragraphStyleFallback: null,
       paragraphStyleSnapshot: null,
       tabStops: null,
-      paragraphSurface:null,
+      paragraphSurface: null,
       paragraphStyleDirectAttrs: null,
     });
   });
@@ -1002,8 +1071,14 @@ export function wordCaptureFormat(editor: Editor): WordFormatSnapshot | null {
   const paragraph = Object.fromEntries(
     WORD_PARAGRAPH_FORMAT_ATTRS.map((key) => [key, node.attrs[key] ?? null])
   );
-  paragraph.tabStops = wordMergeTabStops(node.attrs.paragraphStyleSnapshot?.tabStops, node.attrs.tabStops);
-  paragraph.paragraphSurface=wordMergeSurface(node.attrs.paragraphStyleSnapshot?.surface,node.attrs.paragraphSurface);
+  paragraph.tabStops = wordMergeTabStops(
+    node.attrs.paragraphStyleSnapshot?.tabStops,
+    node.attrs.tabStops
+  );
+  paragraph.paragraphSurface = wordMergeSurface(
+    node.attrs.paragraphStyleSnapshot?.surface,
+    node.attrs.paragraphSurface
+  );
   return { marks, textStyle, paragraph };
 }
 
@@ -1036,9 +1111,11 @@ export function wordApplyFormat(editor: Editor, snapshot: WordFormatSnapshot | n
     transaction.setNodeMarkup(position, undefined, {
       ...node.attrs,
       ...snapshot.paragraph,
-      paragraphSurface:wordMergeSurface(wordClearSurface(),snapshot.paragraph.paragraphSurface),
+      paragraphSurface: wordMergeSurface(wordClearSurface(), snapshot.paragraph.paragraphSurface),
       tabStops: wordMergeTabStops(
-        wordMergeTabStops(node.attrs.paragraphStyleSnapshot?.tabStops, node.attrs.tabStops).map((stop) => ({ position: stop.position, alignment: 'clear' })),
+        wordMergeTabStops(node.attrs.paragraphStyleSnapshot?.tabStops, node.attrs.tabStops).map(
+          (stop) => ({ position: stop.position, alignment: 'clear' })
+        ),
         snapshot.paragraph.tabStops
       ),
       paragraphStyleDirectAttrs: WORD_PARAGRAPH_FORMAT_ATTRS.filter(
