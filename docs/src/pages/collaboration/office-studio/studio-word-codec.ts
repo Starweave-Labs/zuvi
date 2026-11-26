@@ -3,6 +3,13 @@ import { wordImageCrop } from '../../../../../packages/ui/src/components/OfficeS
 import JSZip from 'jszip';
 import {wordSurface,wordMergeSurface} from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-surface';
 import { wordRowProperties } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-table-rows';
+import {
+  wordTableProperties,
+  wordTableGridToColumns,
+  wordTableColumnsToGrid,
+  wordEffectiveRowSpacing,
+  wordTableGridSpanWidth,
+} from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-table-properties';
 import {readWordSurface,wordSurfaceXml,patchWordSurfaceStyles} from './studio-word-surface-codec';
 import {
   materializeWordNumbering,
@@ -1333,14 +1340,36 @@ function parseBlocks(parent: Element, context: ImportContext): StudioRichNode[] 
   return output;
 }
 
+function nativeCellSpacing(properties: Element | undefined | null): number | null {
+  const spacing = child(properties, 'tblCellSpacing');
+  if (!spacing) return null;
+  if (attr(spacing, 'type') === 'nil') return 0;
+  if (attr(spacing, 'type') !== 'dxa' || !attr(spacing, 'w')) unsupported('单元格间距单位');
+  // Word stores the half-gap in twips. The editor model records the visible gap.
+  return number(Number(attr(spacing, 'w')), '单元格间距', 0, 20000) / 10;
+}
+
 function parseTable(element: Element, context: ImportContext): StudioRichNode {
   const properties = child(element, 'tblPr');
   if (child(properties, 'tblpPr') || enabled(child(properties, 'bidiVisual')))
     unsupported('浮动或反向表格');
-  const grid = elements(child(element, 'tblGrid')).map((column) => Number(attr(column, 'w')) / 15);
+  const defaultMargins: Record<string, number> = {};
+  for (const side of elements(child(properties, 'tblCellMar'))) {
+    if (!['top', 'right', 'bottom', 'left', 'start', 'end'].includes(side.localName) || attr(side, 'type') !== 'dxa') unsupported('表格默认内边距单位');
+    const key = side.localName === 'start' ? 'left' : side.localName === 'end' ? 'right' : side.localName;
+    if (key in defaultMargins) unsupported('重复表格默认内边距');
+    defaultMargins[key] = number(Number(attr(side, 'w')), '表格默认内边距', 0, 40000) / 20;
+  }
+  const tableSpacing = nativeCellSpacing(properties);
+  const sourceRows = elements(element).filter((item) => item.localName === 'tr');
+  const rowSpacings = sourceRows.map(row => nativeCellSpacing(child(row, 'trPr')) ?? nativeCellSpacing(child(row, 'tblPrEx')));
+  const tableProperties = wordTableProperties({ defaultCellMargins: defaultMargins, cellSpacing: tableSpacing });
+  const gridSpacing = tableSpacing ?? 0;
+  const nativeGrid = elements(child(element, 'tblGrid')).map((column) => number(Number(attr(column, 'w')), '表格网格列宽', 1, 400000) / 15);
+  const grid = nativeGrid.length ? wordTableGridToColumns(nativeGrid, gridSpacing) : [];
   const rows: StudioRichNode[] = [];
   let previousMerges = new Map<number, StudioRichNode>();
-  for (const row of elements(element).filter((item) => item.localName === 'tr')) {
+  for (const [rowIndex, row] of sourceRows.entries()) {
     if (child(child(row, 'trPr'), 'gridBefore') || child(child(row, 'trPr'), 'gridAfter'))
       unsupported('不规则表格行');
     const isHeader = enabled(child(child(row, 'trPr'), 'tblHeader'));
@@ -1353,6 +1382,8 @@ function parseTable(element: Element, context: ImportContext): StudioRichNode {
         unsupported('表格文字方向或旧式合并');
       const colspan = number(value(cellProperties, 'gridSpan', '1'), '合并列数', 1, 100);
       const merge = child(cellProperties, 'vMerge');
+      if ((!merge || attr(merge) === 'restart') && nativeGrid.length && column + colspan <= nativeGrid.length)
+        wordTableGridSpanWidth(nativeGrid, column, colspan, rowSpacings[rowIndex] ?? tableSpacing);
       const content = parseBlocks(cell, context);
       if (merge && attr(merge) !== 'restart') {
         const origin = previousMerges.get(column);
@@ -1362,6 +1393,17 @@ function parseTable(element: Element, context: ImportContext): StudioRichNode {
         origin.attrs!.rowspan = Number(origin.attrs!.rowspan) + 1;
         for (let offset = 0; offset < colspan; offset++) merges.set(column + offset, origin);
       } else {
+        const verticalAlign = value(cellProperties, 'vAlign');
+        if (verticalAlign && !['top', 'center', 'bottom'].includes(verticalAlign)) unsupported('单元格垂直对齐');
+        const cellMargins: Record<string, number> = {};
+        const explicitSides = new Set<string>();
+        for (const side of elements(child(cellProperties, 'tcMar'))) {
+          if (!['top', 'right', 'bottom', 'left', 'start', 'end'].includes(side.localName) || attr(side, 'type') !== 'dxa') unsupported('单元格内边距单位');
+          const key = side.localName === 'start' ? 'left' : side.localName === 'end' ? 'right' : side.localName;
+          if (explicitSides.has(key)) unsupported('重复单元格内边距');
+          explicitSides.add(key);
+          cellMargins[key] = number(Number(attr(side, 'w')), '单元格内边距', 0, 40000) / 20;
+        }
         const backgroundColor = colour(attr(child(cellProperties, 'shd'), 'fill'));
         const colwidth = grid.slice(column, column + colspan);
         const node: StudioRichNode = {
@@ -1375,6 +1417,8 @@ function parseTable(element: Element, context: ImportContext): StudioRichNode {
                 ? colwidth
                 : null,
             ...(backgroundColor ? { backgroundColor } : {}),
+            ...(verticalAlign ? { verticalAlign } : {}),
+            ...(Object.keys(cellMargins).length ? { cellMargins } : {}),
           },
           content: content.length ? content : [{ type: 'paragraph' }],
         };
@@ -1391,11 +1435,12 @@ function parseTable(element: Element, context: ImportContext): StudioRichNode {
       ...(height ? { rowHeight: number(attr(height), '行高', 0, 40000) / 20, rowHeightRule: attr(height, 'hRule') || 'auto' } : {}),
       ...(cantSplit ? { allowSplit: !enabled(cantSplit) } : {}),
     });
-    rows.push({ type: 'tableRow', ...(height || cantSplit ? { attrs: { ...properties } } : {}), content: cells });
+    const spacing = rowSpacings[rowIndex];
+    rows.push({ type: 'tableRow', ...(height || cantSplit || spacing !== null ? { attrs: { ...properties, ...(spacing !== null ? { cellSpacing: spacing } : {}) } } : {}), content: cells });
     previousMerges = merges;
   }
   if (!rows.length || !rows[0].content?.length) unsupported('空表格');
-  return { type: 'table', content: rows };
+  return { type: 'table', attrs: tableProperties as unknown as Record<string, unknown>, content: rows };
 }
 
 function parsePage(body: Element): StudioWordDocument['page'] {
@@ -2289,30 +2334,61 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
         };
         renderList(node, 0);
       } else if (node.type === 'table') {
-        checkAttrs(node, []);
+        checkAttrs(node, ['defaultCellMargins', 'cellSpacing']);
         const rows = node.content || [];
         if (!rows.length || !rows[0].content?.length) throw new Error('表格缺少行或单元格。');
-        const columnWidths: number[] = [];
+        const tableProperties = wordTableProperties(node.attrs);
+        const gridSpacing = tableProperties.cellSpacing ?? 0;
+        const tableMargins = tableProperties.defaultCellMargins ? Object.fromEntries(Object.entries(tableProperties.defaultCellMargins).map(([side, value]) => [side, Math.round(value * 20)])) : undefined;
+        const sourceColumnWidths: (number | undefined)[] = [];
         for (const cell of rows[0].content) {
           const widths = cell.attrs?.colwidth;
-          if (Array.isArray(widths))
-            columnWidths.push(
-              ...widths.map((width) => Math.round(number(width, '列宽', 1, 5000) * 15))
+          const span = number(cell.attrs?.colspan ?? 1, '合并列数', 1, 100);
+          if (Array.isArray(widths)) {
+            if (widths.length !== span) throw new Error('单元格列宽与合并列数不一致。');
+            sourceColumnWidths.push(
+              ...widths.map((width) => width === 0 ? undefined : number(width, '列宽', 1, 20000))
             );
-          else {
-            columnWidths.length = 0;
-            break;
+          } else sourceColumnWidths.push(...Array<number | undefined>(span).fill(undefined));
+        }
+        const knownWidths = sourceColumnWidths.filter((width): width is number => width !== undefined);
+        const shouldResolve = knownWidths.length > 0 || gridSpacing > 0;
+        const missingColumns = sourceColumnWidths.length - knownWidths.length;
+        const paperMm = document.page.size === 'Letter' ? [215.9, 279.4] : [210, 297];
+        const available = (paperMm[document.page.orientation === 'landscape' ? 1 : 0] - document.page.margin * 2) * 96 / 25.4;
+        const fallbackWidth = Math.max(25, (available - (sourceColumnWidths.length + 1) * gridSpacing * 4 / 3 - knownWidths.reduce((sum, width) => sum + width, 0)) / Math.max(1, missingColumns));
+        const columnWidths = shouldResolve ? sourceColumnWidths.map(width => width ?? fallbackWidth) : [];
+        const nativeColumnWidths = columnWidths.length ? wordTableColumnsToGrid(columnWidths, gridSpacing).map(width => Math.round(width * 15)) : [];
+        if (columnWidths.length) {
+          const grid = wordTableColumnsToGrid(columnWidths, gridSpacing);
+          const occupied = Array<number>(grid.length).fill(0);
+          for (const [rowIndex, row] of rows.entries()) {
+            let column = 0;
+            for (const cell of row.content ?? []) {
+              while (column < grid.length && occupied[column] > rowIndex) column++;
+              const span = Number(cell.attrs?.colspan) || 1;
+              if (column + span <= grid.length)
+                wordTableGridSpanWidth(grid, column, span, wordEffectiveRowSpacing(tableProperties, row.attrs));
+              const rowSpan = Number(cell.attrs?.rowspan) || 1;
+              if (rowSpan > 1) for (let offset = 0; offset < span; offset++)
+                occupied[column + offset] = rowIndex + rowSpan;
+              column += span;
+            }
           }
         }
         result.push(
           new Table({
-            width: { size: 100, type: WidthType.PERCENTAGE },
-            ...(columnWidths.length ? { columnWidths } : {}),
+            width: nativeColumnWidths.length ? { size: nativeColumnWidths.reduce((sum, width) => sum + width, 0), type: WidthType.DXA } : { size: 100, type: WidthType.PERCENTAGE },
+            ...(nativeColumnWidths.length ? { columnWidths: nativeColumnWidths } : {}),
+            ...(tableMargins ? { margins: tableMargins } : {}),
+            ...(tableProperties.cellSpacing !== null ? { cellSpacing: { value: Math.round(tableProperties.cellSpacing * 10) } } : {}),
             rows: rows.map((row) => {
               if (row.type !== 'tableRow') throw new Error('表格行模型无效。');
-              checkAttrs(row, ['rowHeight', 'rowHeightRule', 'allowSplit']);
+              checkAttrs(row, ['rowHeight', 'rowHeightRule', 'allowSplit', 'cellSpacing']);
               const properties = wordRowProperties(row.attrs);
+              const rowSpacing = wordTableProperties(row.attrs).cellSpacing;
               return new TableRow({
+                ...(rowSpacing !== null ? { cellSpacing: { value: Math.round(rowSpacing * 10) } } : {}),
                 ...(properties.rowHeight !== null ? { height: { value: Math.round(properties.rowHeight * 20), rule: properties.rowHeightRule } } : {}),
                 ...(properties.allowSplit !== null ? { cantSplit: !properties.allowSplit } : {}),
                 tableHeader:
@@ -2320,11 +2396,24 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
                 children: (row.content || []).map((cell) => {
                   if (!['tableCell', 'tableHeader'].includes(cell.type))
                     throw new Error('表格单元格模型无效。');
-                  checkAttrs(cell, ['colspan', 'rowspan', 'colwidth', 'backgroundColor']);
+                  checkAttrs(cell, ['colspan', 'rowspan', 'colwidth', 'backgroundColor', 'verticalAlign', 'cellMargins']);
+                  const verticalAlign = cell.attrs?.verticalAlign;
+                  if (verticalAlign != null && !['top', 'center', 'bottom'].includes(String(verticalAlign))) unsupported('单元格垂直对齐');
+                  const margins = cell.attrs?.cellMargins;
+                  if (margins != null && (typeof margins !== 'object' || Array.isArray(margins))) unsupported('单元格内边距');
+                  const nativeMargins: Record<string, number> = {};
+                  for (const [side, amount] of Object.entries(margins || {})) {
+                    if (!['top', 'right', 'bottom', 'left'].includes(side)) unsupported('单元格内边距方向');
+                    const points = number(amount, '单元格内边距', 0, 2000);
+                    if (Math.abs(points * 20 - Math.round(points * 20)) > 1e-6) unsupported('单元格内边距精度');
+                    nativeMargins[side] = Math.round(points * 20);
+                  }
                   const background =
                     colour(cell.attrs?.backgroundColor) ||
                     (cell.type === 'tableHeader' ? '#f3f4f6' : undefined);
                   return new TableCell({
+                    ...(verticalAlign ? { verticalAlign: verticalAlign as 'top' | 'center' | 'bottom' } : {}),
+                    ...(Object.keys(nativeMargins).length ? { margins: nativeMargins } : {}),
                     columnSpan: number(cell.attrs?.colspan ?? 1, '合并列数', 1, 100),
                     rowSpan: number(cell.attrs?.rowspan ?? 1, '合并行数', 1, 10000),
                     ...(background

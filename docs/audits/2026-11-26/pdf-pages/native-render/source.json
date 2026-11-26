@@ -1,0 +1,6 @@
+{
+  "path": "docs/audits/2026-11-26/pdf-pages/pages-round-2.pdf",
+  "sha256": "9b4a0c11775bab9eb027333ee2761d1c35e9158c0ffc12a9f8e05fbb54ff49c4",
+  "pages": 2,
+  "review": "blank resized page and rotated source/form AP visually inspected with bundled Poppler"
+}

@@ -15,6 +15,63 @@ import {
 } from './studio-word-table-row-extension';
 
 describe('Word table row properties', () => {
+  it('starts exact row drags from the native height and follows the actual bottom without adding borders', () => {
+    for (const nativeHeight of [0, 24]) {
+      const editor = new Editor({
+        extensions: [StarterKit, TableKit, WordTableRowProperties],
+        content: {
+          type: 'doc',
+          content: [
+            {
+              type: 'table',
+              content: [
+                {
+                  type: 'tableRow',
+                  attrs: { rowHeight: nativeHeight, rowHeightRule: 'exact' },
+                  content: [
+                    {
+                      type: 'tableCell',
+                      content: [
+                        { type: 'paragraph', content: [{ type: 'text', text: 'Exact row' }] },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      });
+      try {
+        const row = editor.view.nodeDOM(1) as HTMLElement;
+        const bottom = (nativeHeight * 4) / 3 + 1;
+        row.getBoundingClientRect = () =>
+          ({ top: 0, bottom, height: bottom, left: 0, width: 300 }) as DOMRect;
+        const start = bottom - 1,
+          original = JSON.stringify(editor.getJSON());
+        row.dispatchEvent(
+          new MouseEvent('pointerdown', { bubbles: true, button: 0, clientY: start })
+        );
+        const guide = document.querySelector<HTMLElement>('[data-word-row-resize-guide]')!;
+        expect(guide.textContent).toBe(`${nativeHeight.toFixed(1)} 磅`);
+        document.dispatchEvent(
+          new MouseEvent('pointermove', { bubbles: true, clientY: start + 32 })
+        );
+        expect(guide.style.top).toBe(`${bottom + 32}px`);
+        expect(JSON.stringify(editor.getJSON())).toBe(original);
+        document.dispatchEvent(new MouseEvent('pointerup', { bubbles: true, clientY: start + 32 }));
+        expect(editor.state.doc.nodeAt(1)!.attrs.rowHeight).toBe(nativeHeight + 24);
+        expect(undoDepth(editor.state)).toBe(1);
+        editor.commands.undo();
+        expect(editor.state.doc.nodeAt(1)!.attrs.rowHeight).toBe(nativeHeight);
+        editor.commands.redo();
+        expect(editor.state.doc.nodeAt(1)!.attrs.rowHeight).toBe(nativeHeight + 24);
+      } finally {
+        editor.destroy();
+      }
+    }
+  });
+
   it('cancels active drag on document replacement and loss of edit permission', () => {
     const editor = new Editor({
       extensions: [StarterKit, TableKit, WordTableRowProperties],

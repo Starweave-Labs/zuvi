@@ -1,0 +1,6 @@
+{
+  "path": "docs/audits/2026-11-26/word-cell-properties/cell-round-2.docx",
+  "sha256": "33ef76e986d1a5d35a9e499e0be8751596e656110e0aa8046268a4d7543cd6da",
+  "review": "all rendered pages visually inspected",
+  "compiler": "bundled LibreOffice; source spacing behavior remains limited"
+}

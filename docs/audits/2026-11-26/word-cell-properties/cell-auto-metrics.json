@@ -1,0 +1,28 @@
+{
+  "positions": {
+    "top": {
+      "longHeight": 226,
+      "shortHeight": 226,
+      "top": 4,
+      "minHeight": "226px"
+    },
+    "center": {
+      "longHeight": 226,
+      "shortHeight": 226,
+      "top": 102,
+      "minHeight": "226px"
+    },
+    "bottom": {
+      "longHeight": 226,
+      "shortHeight": 226,
+      "top": 200,
+      "minHeight": "226px"
+    }
+  },
+  "printed": {
+    "longHeight": 226,
+    "shortHeight": 226,
+    "top": 200,
+    "minHeight": "226px"
+  }
+}

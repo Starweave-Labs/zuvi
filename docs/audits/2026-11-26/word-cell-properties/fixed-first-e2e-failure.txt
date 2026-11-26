@@ -1,0 +1,39 @@
+[WebServer] (node:72742) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:72761) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium] › e2e/office-studio-word-cell-properties.spec.ts:5:1 › keeps native exact row height with explicit cell padding while editing and reopening twice (1.9s)
+
+
+  1) [chromium] › e2e/office-studio-word-cell-properties.spec.ts:5:1 › keeps native exact row height with explicit cell padding while editing and reopening twice 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 31
+    Received:    0
+
+      22 |       return { height: element.getBoundingClientRect().height, top: getComputedStyle(wrapper).paddingTop, bottom: getComputedStyle(wrapper).paddingBottom };
+      23 |     });
+    > 24 |     expect(metrics.height).toBeGreaterThanOrEqual(31); expect(metrics.height).toBeLessThanOrEqual(33);
+         |                            ^
+      25 |     expect(metrics.top).toBe('0px'); expect(parseFloat(metrics.bottom)).toBeCloseTo(20 / 3, 1);
+      26 |   };
+      27 |   await check();
+        at check (/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-cell-properties.spec.ts:24:28)
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-cell-properties.spec.ts:27:3
+
+    Error Context: test-results/office-studio-word-cell-pr-500ff-editing-and-reopening-twice-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/office-studio-word-cell-pr-500ff-editing-and-reopening-twice-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/office-studio-word-cell-pr-500ff-editing-and-reopening-twice-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/office-studio-word-cell-properties.spec.ts:5:1 › keeps native exact row height with explicit cell padding while editing and reopening twice 

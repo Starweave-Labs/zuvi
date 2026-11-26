@@ -1,0 +1,52 @@
+{
+  "status": "whole-suite-first-terminal-failures",
+  "suite": {
+    "passed": 284,
+    "failed": 3
+  },
+  "sourceTestResultsModified": false,
+  "files": [
+    {
+      "source": "test-results/office-studio-word-rows-ro-b18e4-e-native-height-transaction-chromium/error-context.md",
+      "archived": "docs/audits/2026-11-26/word-cell-properties/whole-row-regressions/office-studio-word-rows-ro-b18e4-e-native-height-transaction-chromium/error-context.md",
+      "bytes": 11818,
+      "sha256": "289c86e00bbb105fc18f7a1d60e1337138acae3f46400e312d4af24f7378f00d"
+    },
+    {
+      "source": "test-results/office-studio-word-rows-ro-b18e4-e-native-height-transaction-chromium/trace.zip",
+      "archived": "docs/audits/2026-11-26/word-cell-properties/whole-row-regressions/office-studio-word-rows-ro-b18e4-e-native-height-transaction-chromium/trace.zip",
+      "bytes": 2693696,
+      "sha256": "c64899c96d839e63ed5625756c997d1482149453408f15b478ef02ff739ec512"
+    },
+    {
+      "source": "test-results/office-studio-word-rows-me-54e78-tains-native-vertical-merge-chromium/error-context.md",
+      "archived": "docs/audits/2026-11-26/word-cell-properties/whole-row-regressions/office-studio-word-rows-me-54e78-tains-native-vertical-merge-chromium/error-context.md",
+      "bytes": 11481,
+      "sha256": "dbff6dcd6f4feec9b1fce21414e19f1624eba94f64c9f881b50bb98f51dcde5b"
+    },
+    {
+      "source": "test-results/office-studio-word-rows-me-54e78-tains-native-vertical-merge-chromium/trace.zip",
+      "archived": "docs/audits/2026-11-26/word-cell-properties/whole-row-regressions/office-studio-word-rows-me-54e78-tains-native-vertical-merge-chromium/trace.zip",
+      "bytes": 2032147,
+      "sha256": "d95ef21b44a081839e244b1dff613c7f87686920ae1e60830eda7716182a78cd"
+    },
+    {
+      "source": "test-results/office-studio-word-rows-mu-a76c6--gaps-through-native-reopen-chromium/error-context.md",
+      "archived": "docs/audits/2026-11-26/word-cell-properties/whole-row-regressions/office-studio-word-rows-mu-a76c6--gaps-through-native-reopen-chromium/error-context.md",
+      "bytes": 12653,
+      "sha256": "1c72b02d5082f4ae3a12d72edbcbe25053ac8b7c25af2bf0ab2084e18a6a3d08"
+    },
+    {
+      "source": "test-results/office-studio-word-rows-mu-a76c6--gaps-through-native-reopen-chromium/trace.zip",
+      "archived": "docs/audits/2026-11-26/word-cell-properties/whole-row-regressions/office-studio-word-rows-mu-a76c6--gaps-through-native-reopen-chromium/trace.zip",
+      "bytes": 2556711,
+      "sha256": "ee38cdb12723eda19b85d54bd5f96b8faddfb99db1c011383754c064cd8eb6ed"
+    },
+    {
+      "source": "/tmp/zuvi-office-batch-e2e-whole-final.txt",
+      "archived": "docs/audits/2026-11-26/word-cell-properties/whole-row-regressions/run.txt",
+      "bytes": 52613,
+      "sha256": "0b18a32a51f834bb76b54598a9c4913c558c64f59ee753be888359a853c0d98c"
+    }
+  ]
+}

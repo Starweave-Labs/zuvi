@@ -367,7 +367,24 @@ export interface StudioPdfField {
     height: number;
     rotation?: number;
     option?: string;
+    /** Canonical annotation flags, used for nonvisual source widgets. */
+    flags?: number;
   }[];
+  /** Hidden/NoView source widgets participate in page and field mapping but not the UI overlay. */
+  hiddenWidgets?: StudioPdfField['widgets'];
+}
+
+export interface StudioPdfPage {
+  /** Stable identity of this page instance, including copies of an original page. */
+  id: string;
+  /** Zero-based page in the immutable original file. Missing denotes a blank page. */
+  sourcePage?: number;
+  /** Pages copied together keep internal destinations within their own copied group. */
+  copyGroup?: string;
+  /** Visible original bounds, retained in absolute PDF coordinates. */
+  bounds?: { left: number; bottom: number; right: number; top: number };
+  /** Explicit canvas size; content coordinates remain unchanged. Required for blank pages. */
+  size?: { width: number; height: number };
 }
 
 export interface StudioPdfDocument extends StudioDocumentBase {
@@ -378,6 +395,10 @@ export interface StudioPdfDocument extends StudioDocumentBase {
   fields: StudioPdfField[];
   /** Source fields removed through a design action, independently of value-only edits. */
   removedFields?: string[];
+  /** Legacy documents without pages use the original file's page order. */
+  pages?: StudioPdfPage[];
+  /** Original page count is independent of insertion, removal, and reordering. */
+  sourcePageCount?: number;
 }
 
 export type OfficeStudioDocument = StudioWordDocument | StudioExcelDocument | StudioPdfDocument;
@@ -391,14 +412,17 @@ export interface StudioPdfRenderResult {
 
 export interface StudioPdfSession {
   pageCount: number;
+  /** Supports virtual blank, copied, reordered, and resized page descriptors. */
+  supportsPageMapping?: boolean;
   /** Visible crop box in absolute PDF points; avoids rendering pages just to place fields. */
   getPageBounds?(
-    page: number
+    page: number,
+    descriptor?: StudioPdfPage
   ): Promise<{ left: number; bottom: number; right: number; top: number }>;
   render(
     page: number,
     canvas: HTMLCanvasElement,
-    options: { scale: number; rotation: number; signal?: AbortSignal }
+    options: { scale: number; rotation: number; signal?: AbortSignal; page?: StudioPdfPage }
   ): Promise<StudioPdfRenderResult>;
   search?(query: string, options?: { signal?: AbortSignal }): Promise<StudioPdfSearchResult[]>;
   destroy(): void | Promise<void>;

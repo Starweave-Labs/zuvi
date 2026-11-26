@@ -28,6 +28,8 @@ import { Select } from '../Select/Select';
 import { Tabs } from '../Tabs/Tabs';
 import { StudioRibbonTabs } from './StudioRibbon';
 import { StudioPdfFieldDialog } from './StudioPdfFieldDialog';
+import { StudioPdfPageDialog, type PdfPageAction } from './StudioPdfPageDialog';
+import { pdfPages, pdfInsertBlankPage, pdfRemovePages, pdfMovePages, pdfCopyPages, pdfRotatePages, pdfResizePages } from './studio-pdf-pages';
 import {
   pdfFieldDesign,
   pdfFieldIssue,
@@ -40,6 +42,7 @@ import type {
   StudioPdfDocument,
   StudioPdfField,
   StudioPdfMark,
+  StudioPdfPage,
   StudioPdfRenderer,
   StudioPdfRenderResult,
   StudioPdfSession,
@@ -75,6 +78,7 @@ interface RenderedPage {
   page: number;
   zoom: number;
   rotation: number;
+  descriptor?: StudioPdfPage;
   result: StudioPdfRenderResult;
 }
 
@@ -257,15 +261,19 @@ function PdfThumbnail({
   loaded,
   page,
   rotation,
+  descriptor,
   currentPage,
   disabled,
+  draggable,
   onSelect,
 }: {
   loaded: LoadedPdf;
   page: number;
   rotation: number;
+  descriptor?: StudioPdfPage;
   currentPage: number;
   disabled: boolean;
+  draggable?: boolean;
   onSelect(): void;
 }) {
   const button = useRef<HTMLButtonElement>(null);
@@ -295,6 +303,7 @@ function PdfThumbnail({
         loaded.session.render(page, destination, {
           scale: 0.25,
           rotation,
+          ...(descriptor ? { page: descriptor } : {}),
           signal: controller.signal,
         })
       )
@@ -307,7 +316,7 @@ function PdfThumbnail({
         }
       );
     return () => controller.abort();
-  }, [loaded, page, rotation, visible]);
+  }, [loaded, page, rotation, descriptor, visible]);
   return (
     <Button
       ref={button}
@@ -316,6 +325,7 @@ function PdfThumbnail({
       className="zuvi-studio-pdf-thumbnail"
       aria-label={`PDF 第 ${page + 1} 页缩略图`}
       aria-pressed={page === currentPage}
+      draggable={draggable}
       disabled={disabled}
       onClick={onSelect}
     >
@@ -343,6 +353,12 @@ export default function StudioPdf({
   const [loaded, setLoaded] = useState<LoadedPdf | null>(null);
   const [rendered, setRendered] = useState<RenderedPage | null>(null);
   const [page, setPage] = useState(0);
+  const [selectedPages, setSelectedPages] = useState<number[]>([0]);
+  const [pageDialog, setPageDialog] = useState<{ action: PdfPageAction; snapshot: StudioPdfDocument; selection: number[]; source?: Blob; renderer?: StudioPdfRenderer; session?: StudioPdfSession } | null>(null);
+  const pageDrag = useRef<{ snapshot: StudioPdfDocument; selection: number[] } | null>(null);
+  const pageDescriptors = pdfDocument.pages;
+  const descriptor = pageDescriptors?.[page];
+  const originalPageCount = pdfDocument.sourcePageCount ?? pdfDocument.pageCount;
   const [zoom, setZoom] = useState(1);
   const [ribbon, setRibbon] = useState('home');
   const [tool, setTool] = useState<Tool>('select');
@@ -378,6 +394,7 @@ export default function StudioPdf({
   const expectedRef = useRef(pdfDocument);
   const pastRef = useRef<StudioPdfDocument[]>([]);
   const futureRef = useRef<StudioPdfDocument[]>([]);
+  const pageViews = useRef(new WeakMap<StudioPdfDocument, { current?: string; selected: string[] }>());
   const drawingRef = useRef<Drawing | null>(null);
   const suppressClick = useRef(false);
   const drag = useRef<{
@@ -405,9 +422,10 @@ export default function StudioPdf({
     rendered.loaded === activeLoaded &&
     rendered.page === page &&
     rendered.zoom === zoom &&
-    rendered.rotation === rotation
+    rendered.rotation === rotation && rendered.descriptor === descriptor
       ? rendered.result
       : null;
+  const canManagePages = !!activeLoaded?.session.supportsPageMapping;
   const canModify = !disabled && !readOnly && !!activeLoaded;
   const canModifyRef = useRef(canModify);
   canModifyRef.current = canModify;
@@ -420,6 +438,7 @@ export default function StudioPdf({
       setHistoryVersion((value) => value + 1);
       setDateDrafts({});
       setFieldDialog(null);
+      setPageDialog(null);
       fieldEdit.current = null;
     }
     expectedRef.current = pdfDocument;
@@ -428,7 +447,10 @@ export default function StudioPdf({
   useEffect(() => {
     setDateDrafts({});
     fieldEdit.current = null;
-  }, [disabled, readOnly, source]);
+    pageDrag.current = null;
+    setPageDialog(null);
+    setFieldDialog(null);
+  }, [disabled, readOnly, source, pdfRenderer]);
 
   useEffect(() => {
     drawingRef.current = null;
@@ -460,7 +482,8 @@ export default function StudioPdf({
       .then(
         (results) => {
           if (controller.signal.aborted) return;
-          const valid = results
+          const mapped = pageDescriptors ? results.flatMap(result => pageDescriptors.flatMap((entry, index) => entry.sourcePage === result.page ? [{ ...result, page: index }] : [])) : results;
+          const valid = mapped
             .filter(
               (result) =>
                 Number.isInteger(result.page) &&
@@ -487,7 +510,7 @@ export default function StudioPdf({
         }
       );
     return () => controller.abort();
-  }, [activeLoaded, searchRequest, pdfDocument.pageCount, disabled]);
+  }, [activeLoaded, searchRequest, pdfDocument.pageCount, pageDescriptors, disabled]);
 
   useEffect(() => {
     let active = true;
@@ -504,9 +527,6 @@ export default function StudioPdf({
     setDrawing(null);
     setSearchResults([]);
     setSearchRequest({ text: '', version: 0 });
-    pastRef.current = [];
-    futureRef.current = [];
-    setHistoryVersion((value) => value + 1);
     if (!source || !pdfRenderer) return;
     void Promise.resolve()
       .then(() => pdfRenderer.load(source))
@@ -518,7 +538,7 @@ export default function StudioPdf({
           }
           owned = session;
           if (
-            session.pageCount !== pdfDocument.pageCount ||
+            session.pageCount !== (documentRef.current.sourcePageCount ?? documentRef.current.pageCount) ||
             session.pageCount < 1 ||
             session.pageCount > 200
           ) {
@@ -527,6 +547,7 @@ export default function StudioPdf({
             setError('PDF 草稿页数与原文件不一致，请重新导入文件。');
             return;
           }
+          if (!session.supportsPageMapping && documentRef.current.pages?.some((entry, index) => entry.sourcePage !== index || entry.size)) { dispose(session); owned = undefined; setError('当前 PDF 渲染器不支持页面编辑映射，请使用支持此能力的适配器。'); return; }
           setLoaded({ id: pdfDocument.id, source, renderer: pdfRenderer, session });
         },
         (reason: unknown) => {
@@ -537,7 +558,7 @@ export default function StudioPdf({
       active = false;
       if (owned) dispose(owned);
     };
-  }, [source, pdfRenderer, pdfDocument.id, pdfDocument.pageCount, retry]);
+  }, [source, pdfRenderer, pdfDocument.id, originalPageCount, retry]);
 
   useEffect(() => {
     if (!activeLoaded || !canvas.current) return;
@@ -552,6 +573,7 @@ export default function StudioPdf({
         activeLoaded.session.render(page, destination, {
           scale: zoom,
           rotation,
+          ...(descriptor ? { page: descriptor } : {}),
           signal: controller.signal,
         })
       )
@@ -567,7 +589,7 @@ export default function StudioPdf({
               setError('PDF 渲染器返回了无效的页面尺寸。');
               return;
             }
-            setRendered({ loaded: activeLoaded, page, zoom, rotation, result });
+            setRendered({ loaded: activeLoaded, page, zoom, rotation, descriptor, result });
           }
         },
         (reason: unknown) => {
@@ -579,9 +601,10 @@ export default function StudioPdf({
       active = false;
       controller.abort();
     };
-  }, [activeLoaded, page, zoom, rotation]);
+  }, [activeLoaded, page, zoom, rotation, descriptor]);
 
   const remember = (snapshot: StudioPdfDocument) => {
+    const pages = pdfPages(snapshot); pageViews.current.set(snapshot, { current: pages[page]?.id, selected: selectedPages.flatMap(index => pages[index] ? [pages[index].id] : []) });
     pastRef.current = [...pastRef.current.slice(-39), snapshot];
     futureRef.current = [];
     setHistoryVersion((value) => value + 1);
@@ -600,12 +623,38 @@ export default function StudioPdf({
     const to = direction === 'undo' ? futureRef : pastRef;
     const next = from.current.pop();
     if (!next) return;
+    const currentPages = pdfPages(documentRef.current); pageViews.current.set(documentRef.current, { current: currentPages[page]?.id, selected: selectedPages.flatMap(index => currentPages[index] ? [currentPages[index].id] : []) });
     to.current = [...to.current.slice(-39), documentRef.current];
     commit(next, false);
     setDateDrafts({});
     fieldEdit.current = null;
     setSelectedId(null);
+    const pages = pdfPages(next), prior = pageViews.current.get(next), restored = pages.findIndex(entry => entry.id === prior?.current);
+    setPage(restored >= 0 ? restored : Math.min(page, next.pageCount - 1));
+    const restoredSelection = pages.flatMap((entry, index) => prior?.selected.includes(entry.id) ? [index] : []);
+    setSelectedPages(restoredSelection.length ? restoredSelection : [restored >= 0 ? restored : Math.min(page, next.pageCount - 1)]);
+    setPageDialog(null);
     setHistoryVersion((value) => value + 1);
+  };
+  const commitPages = (next: StudioPdfDocument) => {
+    if (!canModifyRef.current || next === documentRef.current) return;
+    const previousPages = pdfPages(documentRef.current), selectedIds = selectedPages.flatMap(index => previousPages[index] ? [previousPages[index].id] : []);
+    const currentId = previousPages[page]?.id;
+    const nextIndex = pdfPages(next).findIndex(entry => entry.id === currentId);
+    commit(next);
+    setPage(nextIndex >= 0 ? nextIndex : Math.min(page, next.pageCount - 1));
+    const selection = pdfPages(next).flatMap((entry, index) => selectedIds.includes(entry.id) ? [index] : []);
+    setSelectedPages(selection.length ? selection : [nextIndex >= 0 ? nextIndex : Math.min(page, next.pageCount - 1)]);
+    setSelectedId(null); setFieldDialog(null); setPageDialog(null);
+    setTool('select'); pageDrag.current = null;
+  };
+  const pageOperation = (operation: () => StudioPdfDocument) => {
+    if (!canModifyRef.current || !canManagePages) return;
+    try { commitPages(operation()); } catch (cause) { setNotice(cause instanceof Error ? cause.message : '页面操作失败。'); }
+  };
+  const openPageDialog = (action: PdfPageAction) => {
+    if (!canModify || !canManagePages) return;
+    setPageDialog({ action, snapshot: documentRef.current, selection: selectedPages.filter(index => index < pdfDocument.pageCount), source, renderer: pdfRenderer, session: activeLoaded?.session });
   };
   const changeField = (name: string, value: string | boolean) => {
     const current = documentRef.current;
@@ -1190,6 +1239,12 @@ export default function StudioPdf({
             </div>
             <div className="zuvi-studio-pdf-ribbon-group" role="group" aria-label="页面">
               <div className="zuvi-studio-pdf-ribbon-group-body">
+                <Button size="sm" variant="ghost" disabled={!canModify || !canManagePages || pdfDocument.pageCount >= 200} onClick={() => openPageDialog('insert')}>插入空白页</Button>
+                <Button size="sm" variant="ghost" disabled={!canModify || !canManagePages || !selectedPages.length || selectedPages.length >= pdfDocument.pageCount} onClick={() => pageOperation(() => pdfRemovePages(documentRef.current, selectedPages))}>删除所选页</Button>
+                <Button size="sm" variant="ghost" disabled={!canModify || !canManagePages || !selectedPages.length} onClick={() => openPageDialog('move')}>移动所选页</Button>
+                <Button size="sm" variant="ghost" disabled={!canModify || !canManagePages || !selectedPages.length || pdfDocument.pageCount + selectedPages.length > 200} onClick={() => openPageDialog('copy')}>复制所选页</Button>
+                <Button size="sm" variant="ghost" disabled={!canModify || !canManagePages || !selectedPages.length} onClick={() => pageOperation(() => pdfRotatePages(documentRef.current, selectedPages, 90))}>旋转所选页</Button>
+                <Button size="sm" variant="ghost" disabled={!canModify || !canManagePages || !selectedPages.length} onClick={() => openPageDialog('resize')}>页面尺寸</Button>
                 <Button
                   size="sm"
                   variant="ghost"
@@ -1714,19 +1769,28 @@ export default function StudioPdf({
               <div className="zuvi-studio-pdf-panel-body" aria-label="PDF 页面缩略导航">
                 {activeLoaded &&
                   Array.from({ length: pdfDocument.pageCount }, (_, index) => (
+                    <div key={pageDescriptors?.[index]?.id ?? index} className="zuvi-studio-pdf-page-item" data-pdf-page-id={pageDescriptors?.[index]?.id ?? `source-${index}`} data-pdf-page-index={index}
+                      onDragStart={event => { if (!canModifyRef.current || !canManagePages) return; event.dataTransfer.effectAllowed = 'move'; event.dataTransfer.setData('text/plain', 'zuvi-pdf-pages'); pageDrag.current = { snapshot: documentRef.current, selection: selectedPages.includes(index) ? selectedPages : [index] }; }}
+                      onDragOver={event => { if (canModifyRef.current && canManagePages && pageDrag.current) { event.preventDefault(); event.dataTransfer.dropEffect = 'move'; } }}
+                      onDrop={event => { event.preventDefault(); const dragged = pageDrag.current, bounds = event.currentTarget.getBoundingClientRect(); const position = index + (event.clientY >= bounds.top + bounds.height / 2 ? 1 : 0); if (dragged && dragged.snapshot === documentRef.current) pageOperation(() => pdfMovePages(documentRef.current, dragged.selection, position)); pageDrag.current = null; }}
+                      onDragEnd={() => { pageDrag.current = null; }}>
+                    <Checkbox aria-label={`选择 PDF 第 ${index + 1} 页`} checked={selectedPages.includes(index)} disabled={disabled} onChange={checked => setSelectedPages(previous => checked ? [...new Set([...previous, index])].sort((a, b) => a - b) : previous.filter(entry => entry !== index))} />
                     <PdfThumbnail
-                      key={index}
+                      descriptor={pageDescriptors?.[index]}
                       loaded={activeLoaded}
                       page={index}
                       rotation={pdfDocument.rotations[String(index)] ?? 0}
                       currentPage={page}
+                      draggable={canModify && canManagePages}
                       disabled={disabled}
                       onSelect={() => {
                         setPage(index);
+                        setSelectedPages([index]);
                         setSelectedId(null);
                         setTool('select');
                       }}
                     />
+                    </div>
                   ))}
               </div>
             ) : panel === 'search' ? (
@@ -2301,6 +2365,10 @@ export default function StudioPdf({
           />
         </div>
       </div>
+      {pageDialog && <StudioPdfPageDialog action={pageDialog.action} pageCount={pdfDocument.pageCount} currentPage={page} width={view ? visibleBounds(view).right - visibleBounds(view).left : 595.28} height={view ? visibleBounds(view).top - visibleBounds(view).bottom : 841.89} blocked={!canModify || documentRef.current !== pageDialog.snapshot || source !== pageDialog.source || pdfRenderer !== pageDialog.renderer || activeLoaded?.session !== pageDialog.session} onClose={() => setPageDialog(null)} onApply={value => {
+        if (!canModifyRef.current || documentRef.current !== pageDialog.snapshot || source !== pageDialog.source || pdfRenderer !== pageDialog.renderer || activeLoaded?.session !== pageDialog.session) return;
+        pageOperation(() => pageDialog.action === 'insert' ? pdfInsertBlankPage(documentRef.current, value.position, value) : pageDialog.action === 'resize' ? pdfResizePages(documentRef.current, pageDialog.selection, value) : pageDialog.action === 'copy' ? pdfCopyPages(documentRef.current, pageDialog.selection, value.position) : pdfMovePages(documentRef.current, pageDialog.selection, value.position));
+      }} />}
       {fieldDialog && canModify && view && (
         <StudioPdfFieldDialog
           key={fieldDialog.field?.name || 'new'}
@@ -2308,7 +2376,7 @@ export default function StudioPdf({
           document={pdfDocument}
           page={page}
           bounds={visibleBounds(view)}
-          getPageBounds={activeLoaded?.session.getPageBounds}
+          getPageBounds={activeLoaded?.session.getPageBounds ? index => activeLoaded.session.getPageBounds!(index, pageDescriptors?.[index]) : undefined}
           onClose={() => setFieldDialog(null)}
           onSave={(field) => {
             if (documentRef.current !== pdfDocument)

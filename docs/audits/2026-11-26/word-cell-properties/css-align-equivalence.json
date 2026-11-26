@@ -1,0 +1,18 @@
+{
+  "browser": "158.0.8127.18",
+  "flexDirection": "column",
+  "samples": [
+    {
+      "input": "safe flex-end",
+      "computed": "safe flow-end",
+      "top": 95,
+      "bottom": 5
+    },
+    {
+      "input": "safe flow-end",
+      "computed": "safe flow-end",
+      "top": 95,
+      "bottom": 5
+    }
+  ]
+}

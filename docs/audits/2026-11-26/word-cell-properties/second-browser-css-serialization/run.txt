@@ -1,0 +1,58 @@
+[WebServer] (node:95645) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:95659) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 11 tests using 1 worker
+
+  ✓   1 [chromium] › e2e/office-studio-pdf-pages.spec.ts:25:1 › edits native PDF page dimensions, copies and removes pages, and preserves fields through history and two reopens (6.9s)
+  ✓   2 [chromium] › e2e/office-studio-pdf-pages.spec.ts:57:1 › moves native page references by dragging a thumbnail after the final page (2.6s)
+  ✓   3 [chromium] › e2e/office-studio-word-cell-properties.spec.ts:5:1 › keeps native exact row height with explicit cell padding while editing and reopening twice (3.2s)
+  ✓   4 [chromium] › e2e/office-studio-word-cell-properties.spec.ts:134:1 › moves actual text through all nine fixed-cell alignments and restores the transaction (6.3s)
+  ✓   5 [chromium] › e2e/office-studio-word-cell-properties.spec.ts:241:1 › edits table defaults and spacing without materializing direct margins, restores inheritance and reopens twice (6.3s)
+  ✓   6 [chromium] › e2e/office-studio-word-cell-properties.spec.ts:421:1 › keeps nested fixed-cell alignment and margins local while preserving native layout on reopening and printing (3.2s)
+  ✘   7 [chromium] › e2e/office-studio-word-cell-properties.spec.ts:536:1 › uses each native row gap with one shared column grid and preserves fixed-cell budgets through printing and reopening (7.1s)
+  ✓   8 [chromium] › e2e/office-studio-word-cell-properties.spec.ts:671:1 › previews column resizing without jumping between native and model grids, cancels cleanly and saves one history action (2.5s)
+  ✓   9 [chromium] › e2e/office-studio-word-cell-properties.spec.ts:807:1 › aligns actual short content within a taller automatic row with mixed gaps and reproduces it in the native print document (3.6s)
+  ✓  10 [chromium] › e2e/office-studio-word-cell-regions.spec.ts:152:1 › edits independent native header and footer table cells, cancels drafts, undoes once and reopens both regions twice (5.2s)
+  ✓  11 [chromium] › e2e/office-studio-word-cell-regions.spec.ts:216:1 › blocks a real Word cell draft on readonly changes and keeps light, dark and 320px dialogs interactive without writes (5.0s)
+
+
+  1) [chromium] › e2e/office-studio-word-cell-properties.spec.ts:536:1 › uses each native row gap with one shared column grid and preserves fixed-cell budgets through printing and reopening 
+
+    Error: expect(locator).toHaveCSS(expected) failed
+
+    Locator:  getByRole('textbox', { name: 'Word 文档正文', exact: true }).locator('table').first().locator('td').nth(2).locator('[data-word-cell-content]')
+    Expected: "safe flex-end"
+    Received: "safe flow-end"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCSS" getByRole('textbox', { name: 'Word 文档正文', exact: true }).locator('table').first().locator('td').nth(2).locator('[data-word-cell-content]') with timeout 5000ms
+      - waiting for getByRole('textbox', { name: 'Word 文档正文', exact: true }).locator('table').first().locator('td').nth(2).locator('[data-word-cell-content]')
+        14 × locator resolved to <div data-word-cell-content="">…</div>
+           - unexpected value "safe flow-end"
+
+
+      615 |   await page.getByRole('button', { name: '应用单元格属性', exact: true }).click();
+      616 |   assertGeometry(await table.evaluate(measure));
+    > 617 |   await expect(target.locator('[data-word-cell-content]')).toHaveCSS(
+          |                                                            ^
+      618 |     'justify-content',
+      619 |     'safe flex-end'
+      620 |   );
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-cell-properties.spec.ts:617:60
+
+    Error Context: test-results/office-studio-word-cell-pr-4e55a-ough-printing-and-reopening-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/office-studio-word-cell-pr-4e55a-ough-printing-and-reopening-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/office-studio-word-cell-pr-4e55a-ough-printing-and-reopening-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/office-studio-word-cell-properties.spec.ts:536:1 › uses each native row gap with one shared column grid and preserves fixed-cell budgets through printing and reopening 
+  10 passed (54.1s)

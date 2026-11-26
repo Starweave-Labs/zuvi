@@ -1,0 +1,1633 @@
+{
+  "before": {
+    "defaults": {
+      "top": 4,
+      "right": 5,
+      "bottom": 6,
+      "left": 7
+    },
+    "spacing": 6,
+    "rowSpacings": [
+      null,
+      12,
+      0
+    ],
+    "cells": [
+      {
+        "row": 0,
+        "column": 0,
+        "colspan": 1,
+        "rowspan": 2,
+        "paragraphs": [
+          "Span A",
+          "A line 1",
+          "A line 2",
+          "A line 3",
+          "A line 4",
+          "A line 5",
+          "A line 6",
+          "A line 7",
+          "A line 8"
+        ],
+        "horizontal": [
+          "left",
+          "left",
+          "left",
+          "left",
+          "left",
+          "left",
+          "left",
+          "left",
+          "left"
+        ],
+        "bold": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "italic": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "vertical": "top",
+        "margins": {
+          "top": 0,
+          "right": 3.25
+        },
+        "background": "#e8eef7"
+      },
+      {
+        "row": 0,
+        "column": 1,
+        "colspan": 2,
+        "rowspan": 1,
+        "paragraphs": [
+          "Wide B"
+        ],
+        "horizontal": [
+          "left"
+        ],
+        "bold": [
+          false
+        ],
+        "italic": [
+          true
+        ],
+        "vertical": "top",
+        "margins": {
+          "bottom": 2
+        },
+        "background": "#ecfdf5"
+      },
+      {
+        "row": 1,
+        "column": 1,
+        "colspan": 1,
+        "rowspan": 1,
+        "paragraphs": [
+          "Cell C"
+        ],
+        "horizontal": [
+          "left"
+        ],
+        "bold": [
+          false
+        ],
+        "italic": [
+          false
+        ],
+        "vertical": "top",
+        "margins": null,
+        "background": null
+      },
+      {
+        "row": 1,
+        "column": 2,
+        "colspan": 1,
+        "rowspan": 1,
+        "paragraphs": [
+          "D first",
+          "D last"
+        ],
+        "horizontal": [
+          "left",
+          "left"
+        ],
+        "bold": [
+          true,
+          false
+        ],
+        "italic": [
+          false,
+          false
+        ],
+        "vertical": "top",
+        "margins": null,
+        "background": null
+      },
+      {
+        "row": 2,
+        "column": 0,
+        "colspan": 2,
+        "rowspan": 1,
+        "paragraphs": [
+          "Unselected E"
+        ],
+        "horizontal": [
+          "left"
+        ],
+        "bold": [
+          true
+        ],
+        "italic": [
+          false
+        ],
+        "vertical": "top",
+        "margins": {
+          "left": 1.5
+        },
+        "background": null
+      },
+      {
+        "row": 2,
+        "column": 2,
+        "colspan": 1,
+        "rowspan": 1,
+        "paragraphs": [
+          "Unselected F"
+        ],
+        "horizontal": [
+          "left"
+        ],
+        "bold": [
+          false
+        ],
+        "italic": [
+          true
+        ],
+        "vertical": "top",
+        "margins": null,
+        "background": null
+      }
+    ]
+  },
+  "after": {
+    "defaults": {
+      "top": 9,
+      "right": 5,
+      "bottom": 6,
+      "left": 7
+    },
+    "spacing": 6,
+    "rowSpacings": [
+      null,
+      12,
+      0
+    ],
+    "cells": [
+      {
+        "row": 0,
+        "column": 0,
+        "colspan": 1,
+        "rowspan": 2,
+        "paragraphs": [
+          "Span A",
+          "A line 1",
+          "A line 2",
+          "A line 3",
+          "A line 4",
+          "A line 5",
+          "A line 6",
+          "A line 7",
+          "A line 8"
+        ],
+        "horizontal": [
+          "right",
+          "right",
+          "right",
+          "right",
+          "right",
+          "right",
+          "right",
+          "right",
+          "right"
+        ],
+        "bold": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "italic": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "vertical": "bottom",
+        "margins": {
+          "top": 0,
+          "right": 3.25,
+          "left": 4.25,
+          "bottom": 5.5
+        },
+        "background": "#e8eef7"
+      },
+      {
+        "row": 0,
+        "column": 1,
+        "colspan": 2,
+        "rowspan": 1,
+        "paragraphs": [
+          "Wide B"
+        ],
+        "horizontal": [
+          "right"
+        ],
+        "bold": [
+          false
+        ],
+        "italic": [
+          true
+        ],
+        "vertical": "bottom",
+        "margins": {
+          "bottom": 5.5,
+          "left": 4.25
+        },
+        "background": "#ecfdf5"
+      },
+      {
+        "row": 1,
+        "column": 1,
+        "colspan": 1,
+        "rowspan": 1,
+        "paragraphs": [
+          "Cell C"
+        ],
+        "horizontal": [
+          "right"
+        ],
+        "bold": [
+          false
+        ],
+        "italic": [
+          false
+        ],
+        "vertical": "bottom",
+        "margins": {
+          "left": 4.25,
+          "bottom": 5.5
+        },
+        "background": null
+      },
+      {
+        "row": 1,
+        "column": 2,
+        "colspan": 1,
+        "rowspan": 1,
+        "paragraphs": [
+          "D first",
+          "D last"
+        ],
+        "horizontal": [
+          "right",
+          "right"
+        ],
+        "bold": [
+          true,
+          false
+        ],
+        "italic": [
+          false,
+          false
+        ],
+        "vertical": "bottom",
+        "margins": {
+          "left": 4.25,
+          "bottom": 5.5
+        },
+        "background": null
+      },
+      {
+        "row": 2,
+        "column": 0,
+        "colspan": 2,
+        "rowspan": 1,
+        "paragraphs": [
+          "Unselected E"
+        ],
+        "horizontal": [
+          "left"
+        ],
+        "bold": [
+          true
+        ],
+        "italic": [
+          false
+        ],
+        "vertical": "top",
+        "margins": {
+          "left": 1.5
+        },
+        "background": null
+      },
+      {
+        "row": 2,
+        "column": 2,
+        "colspan": 1,
+        "rowspan": 1,
+        "paragraphs": [
+          "Unselected F"
+        ],
+        "horizontal": [
+          "left"
+        ],
+        "bold": [
+          false
+        ],
+        "italic": [
+          true
+        ],
+        "vertical": "top",
+        "margins": null,
+        "background": null
+      }
+    ]
+  },
+  "initial": {
+    "width": 440,
+    "columns": [
+      140,
+      150,
+      150
+    ],
+    "cells": [
+      {
+        "name": "Span A",
+        "box": {
+          "left": 7.999715919179007,
+          "right": 135.99517062604312,
+          "top": 7.999715919179007,
+          "bottom": 269.99041227229145,
+          "width": 127.99545470686411,
+          "height": 261.99069635311247
+        },
+        "outerBox": {
+          "left": 0,
+          "right": 139.9950285856326,
+          "top": 3.9998579595895034,
+          "bottom": 277.9901281914705,
+          "width": 139.9950285856326,
+          "height": 273.99027023188097
+        },
+        "fillError": -0.0004261212314897733,
+        "topGap": 0.9999644898973759,
+        "bottomGap": 8.999680409076383,
+        "expectedTop": 1,
+        "expectedBottom": 9,
+        "rangeRightGap": 55.88864031817052,
+        "padding": {
+          "top": 0,
+          "right": 4.33333,
+          "bottom": 8,
+          "left": 9.33333
+        },
+        "outerPadding": {
+          "top": 4,
+          "right": 4,
+          "bottom": 8,
+          "left": 8
+        },
+        "inlineMinHeight": "261.984px"
+      },
+      {
+        "name": "Wide B",
+        "box": {
+          "left": 143.99488654522213,
+          "right": 432.000284080821,
+          "top": 7.999715919179007,
+          "bottom": 94.48101985014738,
+          "width": 288.0053975355989,
+          "height": 86.48130393096837
+        },
+        "outerBox": {
+          "left": 139.9950285856326,
+          "right": 440,
+          "top": 3.9998579595895034,
+          "bottom": 98.48087780973687,
+          "width": 300.0049714143674,
+          "height": 94.48101985014738
+        },
+        "fillError": -0.0002840808209931822,
+        "topGap": 6.327900287631832,
+        "bottomGap": 52.15439792621001,
+        "expectedTop": 6.33333,
+        "expectedBottom": 3.66667,
+        "rangeRightGap": 216.61730762401905,
+        "padding": {
+          "top": 5.33333,
+          "right": 6.66667,
+          "bottom": 2.66667,
+          "left": 9.33333
+        },
+        "outerPadding": {
+          "top": 4,
+          "right": 8,
+          "bottom": 4,
+          "left": 4
+        },
+        "inlineMinHeight": "86.4844px"
+      },
+      {
+        "name": "Cell C",
+        "box": {
+          "left": 147.99474450481162,
+          "right": 281.98998615106,
+          "top": 106.48059372891588,
+          "bottom": 269.9591633819822,
+          "width": 133.99524164624836,
+          "height": 163.4785696530663
+        },
+        "outerBox": {
+          "left": 139.9950285856326,
+          "right": 289.989702070239,
+          "top": 98.48087780973687,
+          "bottom": 277.9901281914705,
+          "width": 149.99467348460638,
+          "height": 179.5092503817336
+        },
+        "fillError": 0.030680728667306312,
+        "topGap": 6.327900287631832,
+        "bottomGap": 129.15166364830796,
+        "expectedTop": 6.33333,
+        "expectedBottom": 9,
+        "rangeRightGap": 70.98185433755904,
+        "padding": {
+          "top": 5.33333,
+          "right": 6.66667,
+          "bottom": 8,
+          "left": 9.33333
+        },
+        "outerPadding": {
+          "top": 8,
+          "right": 8,
+          "bottom": 8,
+          "left": 8
+        },
+        "inlineMinHeight": "163.484px"
+      },
+      {
+        "name": "D first",
+        "box": {
+          "left": 297.989417989418,
+          "right": 424.000568161642,
+          "top": 106.48059372891588,
+          "bottom": 269.9591633819822,
+          "width": 126.011150172224,
+          "height": 163.4785696530663
+        },
+        "outerBox": {
+          "left": 289.989702070239,
+          "right": 440,
+          "top": 98.48087780973687,
+          "bottom": 277.9901281914705,
+          "width": 150.010297929761,
+          "height": 179.5092503817336
+        },
+        "fillError": 0.030680728667306312,
+        "topGap": 6.327900287631832,
+        "bottomGap": 101.15265793118142,
+        "expectedTop": 6.33333,
+        "expectedBottom": 9,
+        "rangeRightGap": 64.93519406271085,
+        "padding": {
+          "top": 5.33333,
+          "right": 6.66667,
+          "bottom": 8,
+          "left": 9.33333
+        },
+        "outerPadding": {
+          "top": 8,
+          "right": 16,
+          "bottom": 8,
+          "left": 8
+        },
+        "inlineMinHeight": "163.484px"
+      },
+      {
+        "name": "Unselected E",
+        "box": {
+          "left": 0,
+          "right": 289.989702070239,
+          "top": 277.9901281914705,
+          "bottom": 321.3167146053052,
+          "width": 289.989702070239,
+          "height": 43.32658641383474
+        },
+        "outerBox": {
+          "left": 0,
+          "right": 289.989702070239,
+          "top": 277.9901281914705,
+          "bottom": 321.3167146053052,
+          "width": 289.989702070239,
+          "height": 43.32658641383474
+        },
+        "fillError": 0,
+        "topGap": 6.327900287631832,
+        "bottomGap": 8.999680409076383,
+        "expectedTop": 6.33333,
+        "expectedBottom": 9,
+        "rangeRightGap": 178.6030325627641,
+        "padding": {
+          "top": 5.33333,
+          "right": 6.66667,
+          "bottom": 8,
+          "left": 2
+        },
+        "outerPadding": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        },
+        "inlineMinHeight": "43.3125px"
+      },
+      {
+        "name": "Unselected F",
+        "box": {
+          "left": 289.989702070239,
+          "right": 440,
+          "top": 277.9901281914705,
+          "bottom": 321.3167146053052,
+          "width": 150.010297929761,
+          "height": 43.32658641383474
+        },
+        "outerBox": {
+          "left": 289.989702070239,
+          "right": 440,
+          "top": 277.9901281914705,
+          "bottom": 321.3167146053052,
+          "width": 150.010297929761,
+          "height": 43.32658641383474
+        },
+        "fillError": 0,
+        "topGap": 6.327900287631832,
+        "bottomGap": 8.999680409076383,
+        "expectedTop": 6.33333,
+        "expectedBottom": 9,
+        "rangeRightGap": 34.8112638045524,
+        "padding": {
+          "top": 5.33333,
+          "right": 6.66667,
+          "bottom": 8,
+          "left": 9.33333
+        },
+        "outerPadding": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        },
+        "inlineMinHeight": "43.3125px"
+      }
+    ]
+  },
+  "changed": {
+    "width": 440,
+    "columns": [
+      140,
+      150,
+      150
+    ],
+    "cells": [
+      {
+        "name": "Span A",
+        "box": {
+          "left": 8,
+          "right": 136,
+          "top": 8,
+          "bottom": 269.328125,
+          "width": 128,
+          "height": 261.328125
+        },
+        "outerBox": {
+          "left": 0,
+          "right": 140,
+          "top": 4,
+          "bottom": 277.328125,
+          "width": 140,
+          "height": 273.328125
+        },
+        "fillError": 0,
+        "topGap": 1,
+        "bottomGap": 8.328125,
+        "expectedTop": 1,
+        "expectedBottom": 8.33333,
+        "rangeRightGap": 0,
+        "padding": {
+          "top": 0,
+          "right": 4.33333,
+          "bottom": 7.33333,
+          "left": 5.66667
+        },
+        "outerPadding": {
+          "top": 4,
+          "right": 4,
+          "bottom": 8,
+          "left": 8
+        },
+        "inlineMinHeight": "261.328px"
+      },
+      {
+        "name": "Wide B",
+        "box": {
+          "left": 144,
+          "right": 432,
+          "top": 8,
+          "bottom": 104,
+          "width": 288,
+          "height": 96
+        },
+        "outerBox": {
+          "left": 140,
+          "right": 440,
+          "top": 4,
+          "bottom": 108,
+          "width": 300,
+          "height": 104
+        },
+        "fillError": 0,
+        "topGap": 59.671875,
+        "bottomGap": 8.328125,
+        "expectedTop": 13,
+        "expectedBottom": 8.33333,
+        "rangeRightGap": 0,
+        "padding": {
+          "top": 12,
+          "right": 6.66667,
+          "bottom": 7.33333,
+          "left": 5.66667
+        },
+        "outerPadding": {
+          "top": 4,
+          "right": 8,
+          "bottom": 4,
+          "left": 4
+        },
+        "inlineMinHeight": "96px"
+      },
+      {
+        "name": "Cell C",
+        "box": {
+          "left": 148,
+          "right": 282,
+          "top": 116,
+          "bottom": 269.328125,
+          "width": 134,
+          "height": 153.328125
+        },
+        "outerBox": {
+          "left": 140,
+          "right": 290,
+          "top": 108,
+          "bottom": 277.328125,
+          "width": 150,
+          "height": 169.328125
+        },
+        "fillError": 0,
+        "topGap": 117,
+        "bottomGap": 8.328125,
+        "expectedTop": 13,
+        "expectedBottom": 8.33333,
+        "rangeRightGap": 0,
+        "padding": {
+          "top": 12,
+          "right": 6.66667,
+          "bottom": 7.33333,
+          "left": 5.66667
+        },
+        "outerPadding": {
+          "top": 8,
+          "right": 8,
+          "bottom": 8,
+          "left": 8
+        },
+        "inlineMinHeight": "153.328px"
+      },
+      {
+        "name": "D first",
+        "box": {
+          "left": 298,
+          "right": 424,
+          "top": 116,
+          "bottom": 269.328125,
+          "width": 126,
+          "height": 153.328125
+        },
+        "outerBox": {
+          "left": 290,
+          "right": 440,
+          "top": 108,
+          "bottom": 277.328125,
+          "width": 150,
+          "height": 169.328125
+        },
+        "fillError": 0,
+        "topGap": 89,
+        "bottomGap": 8.328125,
+        "expectedTop": 13,
+        "expectedBottom": 8.33333,
+        "rangeRightGap": 0,
+        "padding": {
+          "top": 12,
+          "right": 6.66667,
+          "bottom": 7.33333,
+          "left": 5.66667
+        },
+        "outerPadding": {
+          "top": 8,
+          "right": 16,
+          "bottom": 8,
+          "left": 8
+        },
+        "inlineMinHeight": "153.328px"
+      },
+      {
+        "name": "Unselected E",
+        "box": {
+          "left": 0,
+          "right": 290,
+          "top": 277.328125,
+          "bottom": 327.328125,
+          "width": 290,
+          "height": 50
+        },
+        "outerBox": {
+          "left": 0,
+          "right": 290,
+          "top": 277.328125,
+          "bottom": 327.328125,
+          "width": 290,
+          "height": 50
+        },
+        "fillError": 0,
+        "topGap": 13,
+        "bottomGap": 9,
+        "expectedTop": 13,
+        "expectedBottom": 9,
+        "rangeRightGap": 178.609375,
+        "padding": {
+          "top": 12,
+          "right": 6.66667,
+          "bottom": 8,
+          "left": 2
+        },
+        "outerPadding": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        },
+        "inlineMinHeight": "50px"
+      },
+      {
+        "name": "Unselected F",
+        "box": {
+          "left": 290,
+          "right": 440,
+          "top": 277.328125,
+          "bottom": 327.328125,
+          "width": 150,
+          "height": 50
+        },
+        "outerBox": {
+          "left": 290,
+          "right": 440,
+          "top": 277.328125,
+          "bottom": 327.328125,
+          "width": 150,
+          "height": 50
+        },
+        "fillError": 0,
+        "topGap": 13,
+        "bottomGap": 9,
+        "expectedTop": 13,
+        "expectedBottom": 9,
+        "rangeRightGap": 34.796875,
+        "padding": {
+          "top": 12,
+          "right": 6.66667,
+          "bottom": 8,
+          "left": 9.33333
+        },
+        "outerPadding": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        },
+        "inlineMinHeight": "50px"
+      }
+    ]
+  },
+  "rounds": [
+    {
+      "width": 440,
+      "columns": [
+        140,
+        150,
+        150
+      ],
+      "cells": [
+        {
+          "name": "Span A",
+          "box": {
+            "left": 8,
+            "right": 136,
+            "top": 8,
+            "bottom": 269.328125,
+            "width": 128,
+            "height": 261.328125
+          },
+          "outerBox": {
+            "left": 0,
+            "right": 140,
+            "top": 4,
+            "bottom": 277.328125,
+            "width": 140,
+            "height": 273.328125
+          },
+          "fillError": 0,
+          "topGap": 1,
+          "bottomGap": 8.328125,
+          "expectedTop": 1,
+          "expectedBottom": 8.33333,
+          "rangeRightGap": 0,
+          "padding": {
+            "top": 0,
+            "right": 4.33333,
+            "bottom": 7.33333,
+            "left": 5.66667
+          },
+          "outerPadding": {
+            "top": 4,
+            "right": 4,
+            "bottom": 8,
+            "left": 8
+          },
+          "inlineMinHeight": "261.328px"
+        },
+        {
+          "name": "Wide B",
+          "box": {
+            "left": 144,
+            "right": 432,
+            "top": 8,
+            "bottom": 104,
+            "width": 288,
+            "height": 96
+          },
+          "outerBox": {
+            "left": 140,
+            "right": 440,
+            "top": 4,
+            "bottom": 108,
+            "width": 300,
+            "height": 104
+          },
+          "fillError": 0,
+          "topGap": 59.671875,
+          "bottomGap": 8.328125,
+          "expectedTop": 13,
+          "expectedBottom": 8.33333,
+          "rangeRightGap": 0,
+          "padding": {
+            "top": 12,
+            "right": 6.66667,
+            "bottom": 7.33333,
+            "left": 5.66667
+          },
+          "outerPadding": {
+            "top": 4,
+            "right": 8,
+            "bottom": 4,
+            "left": 4
+          },
+          "inlineMinHeight": "96px"
+        },
+        {
+          "name": "Cell C",
+          "box": {
+            "left": 148,
+            "right": 282,
+            "top": 116,
+            "bottom": 269.328125,
+            "width": 134,
+            "height": 153.328125
+          },
+          "outerBox": {
+            "left": 140,
+            "right": 290,
+            "top": 108,
+            "bottom": 277.328125,
+            "width": 150,
+            "height": 169.328125
+          },
+          "fillError": 0,
+          "topGap": 117,
+          "bottomGap": 8.328125,
+          "expectedTop": 13,
+          "expectedBottom": 8.33333,
+          "rangeRightGap": 0,
+          "padding": {
+            "top": 12,
+            "right": 6.66667,
+            "bottom": 7.33333,
+            "left": 5.66667
+          },
+          "outerPadding": {
+            "top": 8,
+            "right": 8,
+            "bottom": 8,
+            "left": 8
+          },
+          "inlineMinHeight": "153.328px"
+        },
+        {
+          "name": "D first",
+          "box": {
+            "left": 298,
+            "right": 424,
+            "top": 116,
+            "bottom": 269.328125,
+            "width": 126,
+            "height": 153.328125
+          },
+          "outerBox": {
+            "left": 290,
+            "right": 440,
+            "top": 108,
+            "bottom": 277.328125,
+            "width": 150,
+            "height": 169.328125
+          },
+          "fillError": 0,
+          "topGap": 89,
+          "bottomGap": 8.328125,
+          "expectedTop": 13,
+          "expectedBottom": 8.33333,
+          "rangeRightGap": 0,
+          "padding": {
+            "top": 12,
+            "right": 6.66667,
+            "bottom": 7.33333,
+            "left": 5.66667
+          },
+          "outerPadding": {
+            "top": 8,
+            "right": 16,
+            "bottom": 8,
+            "left": 8
+          },
+          "inlineMinHeight": "153.328px"
+        },
+        {
+          "name": "Unselected E",
+          "box": {
+            "left": 0,
+            "right": 290,
+            "top": 277.328125,
+            "bottom": 327.328125,
+            "width": 290,
+            "height": 50
+          },
+          "outerBox": {
+            "left": 0,
+            "right": 290,
+            "top": 277.328125,
+            "bottom": 327.328125,
+            "width": 290,
+            "height": 50
+          },
+          "fillError": 0,
+          "topGap": 13,
+          "bottomGap": 9,
+          "expectedTop": 13,
+          "expectedBottom": 9,
+          "rangeRightGap": 178.609375,
+          "padding": {
+            "top": 12,
+            "right": 6.66667,
+            "bottom": 8,
+            "left": 2
+          },
+          "outerPadding": {
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "inlineMinHeight": "50px"
+        },
+        {
+          "name": "Unselected F",
+          "box": {
+            "left": 290,
+            "right": 440,
+            "top": 277.328125,
+            "bottom": 327.328125,
+            "width": 150,
+            "height": 50
+          },
+          "outerBox": {
+            "left": 290,
+            "right": 440,
+            "top": 277.328125,
+            "bottom": 327.328125,
+            "width": 150,
+            "height": 50
+          },
+          "fillError": 0,
+          "topGap": 13,
+          "bottomGap": 9,
+          "expectedTop": 13,
+          "expectedBottom": 9,
+          "rangeRightGap": 34.796875,
+          "padding": {
+            "top": 12,
+            "right": 6.66667,
+            "bottom": 8,
+            "left": 9.33333
+          },
+          "outerPadding": {
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "inlineMinHeight": "50px"
+        }
+      ]
+    },
+    {
+      "width": 440,
+      "columns": [
+        140,
+        150,
+        150
+      ],
+      "cells": [
+        {
+          "name": "Span A",
+          "box": {
+            "left": 8,
+            "right": 136,
+            "top": 8,
+            "bottom": 269.328125,
+            "width": 128,
+            "height": 261.328125
+          },
+          "outerBox": {
+            "left": 0,
+            "right": 140,
+            "top": 4,
+            "bottom": 277.328125,
+            "width": 140,
+            "height": 273.328125
+          },
+          "fillError": 0,
+          "topGap": 1,
+          "bottomGap": 8.328125,
+          "expectedTop": 1,
+          "expectedBottom": 8.33333,
+          "rangeRightGap": 0,
+          "padding": {
+            "top": 0,
+            "right": 4.33333,
+            "bottom": 7.33333,
+            "left": 5.66667
+          },
+          "outerPadding": {
+            "top": 4,
+            "right": 4,
+            "bottom": 8,
+            "left": 8
+          },
+          "inlineMinHeight": "261.328px"
+        },
+        {
+          "name": "Wide B",
+          "box": {
+            "left": 144,
+            "right": 432,
+            "top": 8,
+            "bottom": 104,
+            "width": 288,
+            "height": 96
+          },
+          "outerBox": {
+            "left": 140,
+            "right": 440,
+            "top": 4,
+            "bottom": 108,
+            "width": 300,
+            "height": 104
+          },
+          "fillError": 0,
+          "topGap": 59.671875,
+          "bottomGap": 8.328125,
+          "expectedTop": 13,
+          "expectedBottom": 8.33333,
+          "rangeRightGap": 0,
+          "padding": {
+            "top": 12,
+            "right": 6.66667,
+            "bottom": 7.33333,
+            "left": 5.66667
+          },
+          "outerPadding": {
+            "top": 4,
+            "right": 8,
+            "bottom": 4,
+            "left": 4
+          },
+          "inlineMinHeight": "96px"
+        },
+        {
+          "name": "Cell C",
+          "box": {
+            "left": 148,
+            "right": 282,
+            "top": 116,
+            "bottom": 269.328125,
+            "width": 134,
+            "height": 153.328125
+          },
+          "outerBox": {
+            "left": 140,
+            "right": 290,
+            "top": 108,
+            "bottom": 277.328125,
+            "width": 150,
+            "height": 169.328125
+          },
+          "fillError": 0,
+          "topGap": 117,
+          "bottomGap": 8.328125,
+          "expectedTop": 13,
+          "expectedBottom": 8.33333,
+          "rangeRightGap": 0,
+          "padding": {
+            "top": 12,
+            "right": 6.66667,
+            "bottom": 7.33333,
+            "left": 5.66667
+          },
+          "outerPadding": {
+            "top": 8,
+            "right": 8,
+            "bottom": 8,
+            "left": 8
+          },
+          "inlineMinHeight": "153.328px"
+        },
+        {
+          "name": "D first",
+          "box": {
+            "left": 298,
+            "right": 424,
+            "top": 116,
+            "bottom": 269.328125,
+            "width": 126,
+            "height": 153.328125
+          },
+          "outerBox": {
+            "left": 290,
+            "right": 440,
+            "top": 108,
+            "bottom": 277.328125,
+            "width": 150,
+            "height": 169.328125
+          },
+          "fillError": 0,
+          "topGap": 89,
+          "bottomGap": 8.328125,
+          "expectedTop": 13,
+          "expectedBottom": 8.33333,
+          "rangeRightGap": 0,
+          "padding": {
+            "top": 12,
+            "right": 6.66667,
+            "bottom": 7.33333,
+            "left": 5.66667
+          },
+          "outerPadding": {
+            "top": 8,
+            "right": 16,
+            "bottom": 8,
+            "left": 8
+          },
+          "inlineMinHeight": "153.328px"
+        },
+        {
+          "name": "Unselected E",
+          "box": {
+            "left": 0,
+            "right": 290,
+            "top": 277.328125,
+            "bottom": 327.328125,
+            "width": 290,
+            "height": 50
+          },
+          "outerBox": {
+            "left": 0,
+            "right": 290,
+            "top": 277.328125,
+            "bottom": 327.328125,
+            "width": 290,
+            "height": 50
+          },
+          "fillError": 0,
+          "topGap": 13,
+          "bottomGap": 9,
+          "expectedTop": 13,
+          "expectedBottom": 9,
+          "rangeRightGap": 178.609375,
+          "padding": {
+            "top": 12,
+            "right": 6.66667,
+            "bottom": 8,
+            "left": 2
+          },
+          "outerPadding": {
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "inlineMinHeight": "50px"
+        },
+        {
+          "name": "Unselected F",
+          "box": {
+            "left": 290,
+            "right": 440,
+            "top": 277.328125,
+            "bottom": 327.328125,
+            "width": 150,
+            "height": 50
+          },
+          "outerBox": {
+            "left": 290,
+            "right": 440,
+            "top": 277.328125,
+            "bottom": 327.328125,
+            "width": 150,
+            "height": 50
+          },
+          "fillError": 0,
+          "topGap": 13,
+          "bottomGap": 9,
+          "expectedTop": 13,
+          "expectedBottom": 9,
+          "rangeRightGap": 34.796875,
+          "padding": {
+            "top": 12,
+            "right": 6.66667,
+            "bottom": 8,
+            "left": 9.33333
+          },
+          "outerPadding": {
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "inlineMinHeight": "50px"
+        }
+      ]
+    }
+  ],
+  "printed": {
+    "width": 440,
+    "columns": [
+      140,
+      150,
+      150
+    ],
+    "cells": [
+      {
+        "name": "Span A",
+        "box": {
+          "left": 8,
+          "right": 136,
+          "top": 8,
+          "bottom": 269.328125,
+          "width": 128,
+          "height": 261.328125
+        },
+        "outerBox": {
+          "left": 0,
+          "right": 140,
+          "top": 4,
+          "bottom": 277.328125,
+          "width": 140,
+          "height": 273.328125
+        },
+        "fillError": 0,
+        "topGap": 1,
+        "bottomGap": 8.328125,
+        "expectedTop": 1,
+        "expectedBottom": 8.33333,
+        "rangeRightGap": 0,
+        "padding": {
+          "top": 0,
+          "right": 4.33333,
+          "bottom": 7.33333,
+          "left": 5.66667
+        },
+        "outerPadding": {
+          "top": 4,
+          "right": 4,
+          "bottom": 8,
+          "left": 8
+        },
+        "inlineMinHeight": "261.328px"
+      },
+      {
+        "name": "Wide B",
+        "box": {
+          "left": 144,
+          "right": 432,
+          "top": 8,
+          "bottom": 104,
+          "width": 288,
+          "height": 96
+        },
+        "outerBox": {
+          "left": 140,
+          "right": 440,
+          "top": 4,
+          "bottom": 108,
+          "width": 300,
+          "height": 104
+        },
+        "fillError": 0,
+        "topGap": 59.671875,
+        "bottomGap": 8.328125,
+        "expectedTop": 13,
+        "expectedBottom": 8.33333,
+        "rangeRightGap": 0,
+        "padding": {
+          "top": 12,
+          "right": 6.66667,
+          "bottom": 7.33333,
+          "left": 5.66667
+        },
+        "outerPadding": {
+          "top": 4,
+          "right": 8,
+          "bottom": 4,
+          "left": 4
+        },
+        "inlineMinHeight": "96px"
+      },
+      {
+        "name": "Cell C",
+        "box": {
+          "left": 148,
+          "right": 282,
+          "top": 116,
+          "bottom": 269.3125,
+          "width": 134,
+          "height": 153.3125
+        },
+        "outerBox": {
+          "left": 140,
+          "right": 290,
+          "top": 108,
+          "bottom": 277.328125,
+          "width": 150,
+          "height": 169.328125
+        },
+        "fillError": 0.015625,
+        "topGap": 116.984375,
+        "bottomGap": 8.328125,
+        "expectedTop": 13,
+        "expectedBottom": 8.33333,
+        "rangeRightGap": 0,
+        "padding": {
+          "top": 12,
+          "right": 6.66667,
+          "bottom": 7.33333,
+          "left": 5.66667
+        },
+        "outerPadding": {
+          "top": 8,
+          "right": 8,
+          "bottom": 8,
+          "left": 8
+        },
+        "inlineMinHeight": "153.328px"
+      },
+      {
+        "name": "D first",
+        "box": {
+          "left": 298,
+          "right": 424,
+          "top": 116,
+          "bottom": 269.3125,
+          "width": 126,
+          "height": 153.3125
+        },
+        "outerBox": {
+          "left": 290,
+          "right": 440,
+          "top": 108,
+          "bottom": 277.328125,
+          "width": 150,
+          "height": 169.328125
+        },
+        "fillError": 0.015625,
+        "topGap": 88.984375,
+        "bottomGap": 8.328125,
+        "expectedTop": 13,
+        "expectedBottom": 8.33333,
+        "rangeRightGap": 0,
+        "padding": {
+          "top": 12,
+          "right": 6.66667,
+          "bottom": 7.33333,
+          "left": 5.66667
+        },
+        "outerPadding": {
+          "top": 8,
+          "right": 16,
+          "bottom": 8,
+          "left": 8
+        },
+        "inlineMinHeight": "153.328px"
+      },
+      {
+        "name": "Unselected E",
+        "box": {
+          "left": 0,
+          "right": 290,
+          "top": 277.328125,
+          "bottom": 327.328125,
+          "width": 290,
+          "height": 50
+        },
+        "outerBox": {
+          "left": 0,
+          "right": 290,
+          "top": 277.328125,
+          "bottom": 327.328125,
+          "width": 290,
+          "height": 50
+        },
+        "fillError": 0,
+        "topGap": 13,
+        "bottomGap": 9,
+        "expectedTop": 13,
+        "expectedBottom": 9,
+        "rangeRightGap": 178.609375,
+        "padding": {
+          "top": 12,
+          "right": 6.66667,
+          "bottom": 8,
+          "left": 2
+        },
+        "outerPadding": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        },
+        "inlineMinHeight": "50px"
+      },
+      {
+        "name": "Unselected F",
+        "box": {
+          "left": 290,
+          "right": 440,
+          "top": 277.328125,
+          "bottom": 327.328125,
+          "width": 150,
+          "height": 50
+        },
+        "outerBox": {
+          "left": 290,
+          "right": 440,
+          "top": 277.328125,
+          "bottom": 327.328125,
+          "width": 150,
+          "height": 50
+        },
+        "fillError": 0,
+        "topGap": 13,
+        "bottomGap": 9,
+        "expectedTop": 13,
+        "expectedBottom": 9,
+        "rangeRightGap": 34.796875,
+        "padding": {
+          "top": 12,
+          "right": 6.66667,
+          "bottom": 8,
+          "left": 9.33333
+        },
+        "outerPadding": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        },
+        "inlineMinHeight": "50px"
+      }
+    ]
+  },
+  "dialogGeometry": [
+    {
+      "name": "merged-dialog-light.png",
+      "dark": false,
+      "width": 1280,
+      "height": 800,
+      "box": {
+        "x": 448,
+        "y": 26,
+        "width": 384,
+        "height": 748
+      },
+      "clientWidth": 384,
+      "scrollWidth": 384
+    },
+    {
+      "name": "merged-dialog-dark.png",
+      "dark": true,
+      "width": 1280,
+      "height": 800,
+      "box": {
+        "x": 448,
+        "y": 26,
+        "width": 384,
+        "height": 748
+      },
+      "clientWidth": 384,
+      "scrollWidth": 384
+    },
+    {
+      "name": "merged-dialog-dark-320.png",
+      "dark": true,
+      "width": 320,
+      "height": 720,
+      "box": {
+        "x": 16,
+        "y": 16,
+        "width": 288,
+        "height": 688
+      },
+      "clientWidth": 288,
+      "scrollWidth": 288
+    },
+    {
+      "name": "merged-dialog-light-320.png",
+      "dark": false,
+      "width": 320,
+      "height": 720,
+      "box": {
+        "x": 16,
+        "y": 16,
+        "width": 288,
+        "height": 688
+      },
+      "clientWidth": 288,
+      "scrollWidth": 288
+    }
+  ],
+  "selection": "mouse CellSelection, four-cell merged closure",
+  "historyActions": 1
+}

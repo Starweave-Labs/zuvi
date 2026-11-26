@@ -35,6 +35,10 @@ const text = (value: unknown, max: number) =>
     );
   });
 
+export function pdfFieldWidgets(field: StudioPdfField): NonNullable<StudioPdfField['widgets']> {
+  return [...(Array.isArray(field.widgets) ? field.widgets : []), ...(Array.isArray(field.hiddenWidgets) ? field.hiddenWidgets : [])];
+}
+
 export function pdfFieldKind(field: StudioPdfField): StudioPdfFieldDesign['kind'] {
   return (
     field.design?.kind ||
@@ -44,7 +48,7 @@ export function pdfFieldKind(field: StudioPdfField): StudioPdfFieldDesign['kind'
         ? 'image'
         : field.type === 'text'
           ? 'text'
-          : field.widgets?.some((widget) => widget.option !== undefined)
+          : pdfFieldWidgets(field).some((widget) => plain(widget) && widget.option !== undefined)
             ? 'radio'
             : 'dropdown')
   );
@@ -187,26 +191,32 @@ export function pdfFieldIssue(field: StudioPdfField, pageCount: number): string 
     if (kind === 'date' && design.defaultValue && !pdfFieldDateValid(String(design.defaultValue)))
       return 'PDF 默认日期无效。';
   }
+  const widgets = pdfFieldWidgets(field);
   if (
     !Array.isArray(field.widgets) ||
-    field.widgets.length > 2000 ||
-    (design && !field.widgets.length)
+    (field.hiddenWidgets !== undefined && !Array.isArray(field.hiddenWidgets)) ||
+    widgets.length > 2000 ||
+    (design && !widgets.length)
   )
     return 'PDF 设计字段至少需要一个控件。';
   if (
     kind === 'radio' &&
-    field.options?.some((option) => !field.widgets?.some((widget) => widget.option === option))
+    field.options?.some((option) => !widgets.some((widget) => plain(widget) && widget.option === option))
   )
     return '单选组的每个选项都需要对应控件。';
-  for (const widget of field.widgets) {
+  for (const widget of widgets) {
+    if (!plain(widget)) return 'PDF 控件页面、位置或尺寸无效。';
+    const hidden = field.hiddenWidgets?.includes(widget);
+    if (widget.flags !== undefined && (!!(widget.flags & (2 | 32)) !== !!hidden)) return 'PDF 控件的可见性属性无效。';
     if (
       !plain(widget) ||
       !Number.isInteger(widget.page) ||
       !finite(widget.page, 0, pageCount - 1) ||
       !finite(widget.x, -100000, 100000) ||
       !finite(widget.y, -100000, 100000) ||
-      !finite(widget.width, 1, 100000) ||
-      !finite(widget.height, 1, 100000) ||
+      !finite(widget.width, hidden ? 0 : 1, 100000) ||
+      !finite(widget.height, hidden ? 0 : 1, 100000) ||
+      (widget.flags !== undefined && (!finite(widget.flags, 0, 4294967295) || !Number.isInteger(widget.flags))) ||
       (widget.rotation !== undefined &&
         (!finite(widget.rotation, -360000, 360000) || widget.rotation % 90 !== 0))
     )

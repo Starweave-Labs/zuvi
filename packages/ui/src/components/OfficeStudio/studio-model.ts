@@ -10,6 +10,10 @@ function newId() {
   );
 }
 
+function plainParagraph(text: string): StudioRichNode {
+  return { type: 'paragraph', content: [{ type: 'text', text }] };
+}
+
 /** Creates editable content without an Office server. PDF bytes are supplied by the host. */
 export function createOfficeStudioDocument(kind: OfficeStudioKind = 'word'): OfficeStudioDocument {
   const id = newId();
@@ -38,15 +42,9 @@ export function createOfficeStudioDocument(kind: OfficeStudioKind = 'word'): Off
             attrs: { level: 1 },
             content: [{ type: 'text', text: '让想法，成为下一步。' }],
           },
-          {
-            type: 'paragraph',
-            content: [
-              {
-                type: 'text',
-                text: '在页面中直接编辑正文，用清晰的结构记录目标、计划与成果。选中文字后，可以调整字体、颜色和段落样式。',
-              },
-            ],
-          },
+          plainParagraph(
+            '在页面中直接编辑正文，用清晰的结构记录目标、计划与成果。选中文字后，可以调整字体、颜色和段落样式。'
+          ),
           {
             type: 'heading',
             attrs: { level: 2 },
@@ -65,36 +63,10 @@ export function createOfficeStudioDocument(kind: OfficeStudioKind = 'word'): Off
           {
             type: 'bulletList',
             content: [
-              {
-                type: 'listItem',
-                content: [
-                  {
-                    type: 'paragraph',
-                    content: [
-                      { type: 'text', text: '把重要内容写在前面，让每次沟通都有明确结论。' },
-                    ],
-                  },
-                ],
-              },
-              {
-                type: 'listItem',
-                content: [
-                  {
-                    type: 'paragraph',
-                    content: [{ type: 'text', text: '在同一张画布完成排版、表格和内容修改。' }],
-                  },
-                ],
-              },
-              {
-                type: 'listItem',
-                content: [
-                  {
-                    type: 'paragraph',
-                    content: [{ type: 'text', text: '保存进度，并导出可继续编辑的 DOCX 文件。' }],
-                  },
-                ],
-              },
-            ],
+              '把重要内容写在前面，让每次沟通都有明确结论。',
+              '在同一张画布完成排版、表格和内容修改。',
+              '保存进度，并导出可继续编辑的 DOCX 文件。',
+            ].map((text) => ({ type: 'listItem', content: [plainParagraph(text)] })),
           },
           {
             type: 'heading',
@@ -104,68 +76,16 @@ export function createOfficeStudioDocument(kind: OfficeStudioKind = 'word'): Off
           {
             type: 'table',
             content: [
-              {
-                type: 'tableRow',
-                content: [
-                  {
-                    type: 'tableHeader',
-                    content: [{ type: 'paragraph', content: [{ type: 'text', text: '阶段' }] }],
-                  },
-                  {
-                    type: 'tableHeader',
-                    content: [{ type: 'paragraph', content: [{ type: 'text', text: '交付内容' }] }],
-                  },
-                  {
-                    type: 'tableHeader',
-                    content: [{ type: 'paragraph', content: [{ type: 'text', text: '状态' }] }],
-                  },
-                ],
-              },
-              {
-                type: 'tableRow',
-                content: [
-                  {
-                    type: 'tableCell',
-                    content: [{ type: 'paragraph', content: [{ type: 'text', text: '本周' }] }],
-                  },
-                  {
-                    type: 'tableCell',
-                    content: [
-                      {
-                        type: 'paragraph',
-                        content: [{ type: 'text', text: '完成项目提案与预算' }],
-                      },
-                    ],
-                  },
-                  {
-                    type: 'tableCell',
-                    content: [{ type: 'paragraph', content: [{ type: 'text', text: '进行中' }] }],
-                  },
-                ],
-              },
-              {
-                type: 'tableRow',
-                content: [
-                  {
-                    type: 'tableCell',
-                    content: [{ type: 'paragraph', content: [{ type: 'text', text: '下周' }] }],
-                  },
-                  {
-                    type: 'tableCell',
-                    content: [
-                      {
-                        type: 'paragraph',
-                        content: [{ type: 'text', text: '评审并确认实施计划' }],
-                      },
-                    ],
-                  },
-                  {
-                    type: 'tableCell',
-                    content: [{ type: 'paragraph', content: [{ type: 'text', text: '待开始' }] }],
-                  },
-                ],
-              },
-            ],
+              ['阶段', '交付内容', '状态'],
+              ['本周', '完成项目提案与预算', '进行中'],
+              ['下周', '评审并确认实施计划', '待开始'],
+            ].map((values, index) => ({
+              type: 'tableRow',
+              content: values.map((text) => ({
+                type: index === 0 ? 'tableHeader' : 'tableCell',
+                content: [plainParagraph(text)],
+              })),
+            })),
           },
           {
             type: 'paragraph',
@@ -196,22 +116,27 @@ export function createOfficeStudioDocument(kind: OfficeStudioKind = 'word'): Off
           columnWidths: { A: 200, B: 120, C: 120, D: 140 },
           cells: {
             A1: { input: '项目预算', bold: true, color: '#2f684e' },
-            A3: { input: '交付项目', bold: true, background: '#e8f0ea' },
-            B3: { input: '单价', bold: true, background: '#e8f0ea' },
-            C3: { input: '数量', bold: true, background: '#e8f0ea' },
-            D3: { input: '小计', bold: true, background: '#e8f0ea' },
-            A4: { input: '产品设计' },
-            B4: { input: '1800', numberFormat: '0.00' },
-            C4: { input: '3' },
-            D4: { input: '=B4*C4', numberFormat: '0.00' },
-            A5: { input: '组件开发' },
-            B5: { input: '2400', numberFormat: '0.00' },
-            C5: { input: '5' },
-            D5: { input: '=B5*C5', numberFormat: '0.00' },
-            A6: { input: '质量验证' },
-            B6: { input: '1600', numberFormat: '0.00' },
-            C6: { input: '2' },
-            D6: { input: '=B6*C6', numberFormat: '0.00' },
+            ...Object.fromEntries(
+              ['交付项目', '单价', '数量', '小计'].map((input, index) => [
+                `${String.fromCharCode(65 + index)}3`,
+                { input, bold: true, background: '#e8f0ea' },
+              ])
+            ),
+            ...Object.fromEntries(
+              [
+                ['产品设计', '1800', '3'],
+                ['组件开发', '2400', '5'],
+                ['质量验证', '1600', '2'],
+              ].flatMap(([name, price, count], index) => {
+                const row = index + 4;
+                return [
+                  [`A${row}`, { input: name }],
+                  [`B${row}`, { input: price, numberFormat: '0.00' }],
+                  [`C${row}`, { input: count }],
+                  [`D${row}`, { input: `=B${row}*C${row}`, numberFormat: '0.00' }],
+                ];
+              })
+            ),
             A8: { input: '预算合计', bold: true },
             D8: { input: '=SUM(D4:D6)', bold: true, numberFormat: '0.00' },
             A10: { input: '双击单元格编辑，支持从表格复制并粘贴。', color: '#59746b' },
@@ -246,16 +171,27 @@ export function createOfficeStudioDocument(kind: OfficeStudioKind = 'word'): Off
 
 const record = (value: unknown): value is Record<string, unknown> =>
   !!value && typeof value === 'object' && !Array.isArray(value);
-const finite = (value: unknown): value is number =>
-  typeof value === 'number' && Number.isFinite(value);
+const finite = (value: unknown): value is number => Number.isFinite(value);
 
 const integer = (value: unknown): value is number => Number.isInteger(value);
+const integerRange = (value: unknown, min: number, max: number): value is number =>
+  integer(value) && value >= min && value <= max;
+const finiteRange = (value: unknown, min: number, max: number): value is number =>
+  finite(value) && value >= min && value <= max;
+const positive = (value: unknown, max: number): value is number =>
+  finite(value) && value > 0 && value <= max;
+const nonempty = (value: unknown): value is string => typeof value === 'string' && !!value;
+const arrayOf = (
+  value: unknown,
+  max: number,
+  accept: (item: unknown) => boolean
+): value is unknown[] => Array.isArray(value) && value.length <= max && value.every(accept);
 
 const optionalText = (value: unknown, limit = 32767) =>
   value === undefined || (typeof value === 'string' && value.length <= limit);
 const optionalBoolean = (value: unknown) => value === undefined || typeof value === 'boolean';
 const optionalPositive = (value: unknown, max = 100000) =>
-  value === undefined || (finite(value) && value > 0 && value <= max);
+  value === undefined || positive(value, max);
 function cellPosition(address: unknown) {
   if (typeof address !== 'string') return null;
   const match = /^([A-Z]{1,3})([1-9]\d*)$/.exec(address);
@@ -265,6 +201,13 @@ function cellPosition(address: unknown) {
     column: [...match[1]].reduce((total, char) => total * 26 + char.charCodeAt(0) - 64, 0),
   };
 }
+
+type CellRange = NonNullable<ReturnType<typeof cellRange>>;
+const rangesOverlap = (left: CellRange, right: CellRange) =>
+  left.firstRow <= right.lastRow &&
+  left.lastRow >= right.firstRow &&
+  left.firstColumn <= right.lastColumn &&
+  left.lastColumn >= right.firstColumn;
 function cellRange(input: unknown, rows: number, columns: number) {
   if (typeof input !== 'string') return null;
   const parts = input.split(':');
@@ -292,20 +235,13 @@ const comparisonOperators = new Set([
   'notBetween',
 ]);
 const ruleColor = (value: unknown) => typeof value === 'string' && /^#[\da-f]{6}$/i.test(value);
-const ruleId = (value: unknown) => typeof value === 'string' && !!value && value.length <= 128;
+const ruleId = (value: unknown): value is string => nonempty(value) && value.length <= 128;
 function ruleText(value: unknown, max: number): boolean {
   if (!optionalText(value, max)) return false;
   return (
     typeof value !== 'string' ||
-    [...value].every((character) => {
-      const code = character.codePointAt(0)!;
-      return (
-        (code >= 32 || code === 9 || code === 10 || code === 13) &&
-        !(code >= 0xd800 && code <= 0xdfff) &&
-        code !== 0xfffe &&
-        code !== 0xffff
-      );
-    })
+    // eslint-disable-next-line no-control-regex -- XML text explicitly excludes these control code points.
+    !/[\u0000-\u0008\u000b\u000c\u000e-\u001f\p{Cs}\ufffe\uffff]/u.test(value)
   );
 }
 
@@ -318,13 +254,7 @@ export function studioCellFontIssue(cell: { fontFamily?: unknown; fontSize?: unk
       !ruleText(cell.fontFamily, 255))
   )
     return '字体名称须为 1 至 255 个字符，并使用有效的 XML 文本。';
-  if (
-    cell.fontSize !== undefined &&
-    (typeof cell.fontSize !== 'number' ||
-      !Number.isFinite(cell.fontSize) ||
-      cell.fontSize < 1 ||
-      cell.fontSize > 409)
-  )
+  if (cell.fontSize !== undefined && !finiteRange(cell.fontSize, 1, 409))
     return '字号须为 1 至 409 磅之间的数值。';
 }
 
@@ -428,19 +358,14 @@ function sheetRules(sheet: Record<string, unknown>, rows: number, columns: numbe
     const ranges: NonNullable<ReturnType<typeof cellRange>>[] = [];
     let covered = 0;
     for (const rule of rules) {
-      if (!record(rule) || !ruleId(rule.id) || typeof rule.id !== 'string' || ids.has(rule.id))
-        return false;
+      if (!record(rule) || !ruleId(rule.id) || ids.has(rule.id)) return false;
       ids.add(rule.id);
       const range = cellRange(rule.range, rows, columns);
       if (!range) return false;
       covered += (range.lastRow - range.firstRow + 1) * (range.lastColumn - range.firstColumn + 1);
       if (covered > 100000) return false;
       if (field === 'conditionalFormats') {
-        if (
-          !integer(rule.priority) ||
-          rule.priority < 1 ||
-          !optionalBoolean(rule.stopIfTrue)
-        )
+        if (!integer(rule.priority) || rule.priority < 1 || !optionalBoolean(rule.stopIfTrue))
           return false;
         const base = ['id', 'range', 'priority', 'stopIfTrue', 'style', 'type'];
         let fields: string[];
@@ -462,8 +387,7 @@ function sheetRules(sheet: Record<string, unknown>, rows: number, columns: numbe
             break;
           case 'containsText':
             fields = ['text'];
-            if (typeof rule.text !== 'string' || !rule.text || !ruleText(rule.text, 255))
-              return false;
+            if (!nonempty(rule.text) || !ruleText(rule.text, 255)) return false;
             break;
           case 'duplicateValues':
           case 'uniqueValues':
@@ -472,9 +396,7 @@ function sheetRules(sheet: Record<string, unknown>, rows: number, columns: numbe
           case 'top10':
             fields = ['rank', 'percent', 'bottom'];
             if (
-              !integer(rule.rank) ||
-              rule.rank < 1 ||
-              rule.rank > (rule.percent === true ? 100 : 1000) ||
+              !integerRange(rule.rank, 1, rule.percent === true ? 100 : 1000) ||
               !optionalBoolean(rule.percent) ||
               !optionalBoolean(rule.bottom)
             )
@@ -515,13 +437,7 @@ function sheetRules(sheet: Record<string, unknown>, rows: number, columns: numbe
         }
       } else {
         if (
-          ranges.some(
-            (other) =>
-              other.firstRow <= range.lastRow &&
-              other.lastRow >= range.firstRow &&
-              other.firstColumn <= range.lastColumn &&
-              other.lastColumn >= range.firstColumn
-          ) ||
+          ranges.some((other) => rangesOverlap(other, range)) ||
           ![rule.allowBlank, rule.showInputMessage, rule.showErrorMessage].every(optionalBoolean) ||
           ![rule.inputTitle, rule.errorTitle].every((text) => ruleText(text, 32)) ||
           ![rule.inputMessage, rule.errorMessage].every((text) => ruleText(text, 255)) ||
@@ -554,14 +470,10 @@ function sheetRules(sheet: Record<string, unknown>, rows: number, columns: numbe
               rule.values.length > 100 ||
               !rule.values.every(
                 (item) =>
-                  typeof item === 'string' &&
-                  !!item &&
+                  nonempty(item) &&
                   ruleText(item, 255) &&
-                  !item.includes(',') &&
-                  !item.includes('"') &&
-                  [...item].every(
-                    (character) => character.charCodeAt(0) >= 32 && character.charCodeAt(0) !== 127
-                  )
+                  // eslint-disable-next-line no-control-regex -- Inline XLSX lists reject control characters and delimiters.
+                  !/[\u0000-\u001f\u007f",]/.test(item)
               ) ||
               rule.values.join(',').length > 255
             )
@@ -619,11 +531,11 @@ function sheetFeatures(sheet: Record<string, unknown>, rows: number, columns: nu
   if (!sheetRules(sheet, rows, columns)) return false;
   if (
     sheet.protectedRanges !== undefined &&
-    (!Array.isArray(sheet.protectedRanges) ||
-      sheet.protectedRanges.length > 100 ||
-      sheet.protectedRanges.some(
-        (range) => typeof range !== 'string' || !cellRange(range, rows, columns)
-      ))
+    !arrayOf(
+      sheet.protectedRanges,
+      100,
+      (range) => typeof range === 'string' && !!cellRange(range, rows, columns)
+    )
   )
     return false;
   if (sheet.structureEdits !== undefined) {
@@ -659,30 +571,18 @@ function sheetFeatures(sheet: Record<string, unknown>, rows: number, columns: nu
       !record(sheet.columnWidths) ||
       !Object.entries(sheet.columnWidths).every(([label, width]) => {
         const position = cellPosition(`${label}1`);
-        return (
-          position && position.column <= columns && finite(width) && width >= 12 && width <= 4000
-        );
+        return position && position.column <= columns && finiteRange(width, 12, 4000);
       })
     )
       return false;
   }
-  if (
-    sheet.defaultRowHeight !== undefined &&
-    (!finite(sheet.defaultRowHeight) ||
-      sheet.defaultRowHeight <= 0 ||
-      sheet.defaultRowHeight > 409.5)
-  )
+  if (sheet.defaultRowHeight !== undefined && !positive(sheet.defaultRowHeight, 409.5))
     return false;
   if (
     sheet.rowHeights !== undefined &&
     (!record(sheet.rowHeights) ||
       !Object.entries(sheet.rowHeights).every(
-        ([row, height]) =>
-          /^[1-9]\d*$/.test(row) &&
-          Number(row) <= rows &&
-          finite(height) &&
-          height > 0 &&
-          height <= 409.5
+        ([row, height]) => /^[1-9]\d*$/.test(row) && Number(row) <= rows && positive(height, 409.5)
       ))
   )
     return false;
@@ -691,9 +591,7 @@ function sheetFeatures(sheet: Record<string, unknown>, rows: number, columns: nu
     (!Array.isArray(sheet.hiddenRows) ||
       sheet.hiddenRows.length > rows ||
       new Set(sheet.hiddenRows).size !== sheet.hiddenRows.length ||
-      !sheet.hiddenRows.every(
-        (row) => integer(row) && row >= 1 && row <= rows
-      ))
+      !sheet.hiddenRows.every((row) => integerRange(row, 1, rows)))
   )
     return false;
   if (
@@ -702,10 +600,9 @@ function sheetFeatures(sheet: Record<string, unknown>, rows: number, columns: nu
       sheet.hiddenColumns.length > columns ||
       new Set(sheet.hiddenColumns).size !== sheet.hiddenColumns.length ||
       !sheet.hiddenColumns.every((label) => {
-        if (typeof label !== 'string' || !/^[A-Z]+$/.test(label)) return false;
-        let index = 0;
-        for (const char of label) index = index * 26 + (char.charCodeAt(0) - 64);
-        return index >= 1 && index <= columns;
+        if (typeof label !== 'string') return false;
+        const position = cellPosition(`${label}1`);
+        return !!position && position.column <= columns;
       }))
   )
     return false;
@@ -716,16 +613,7 @@ function sheetFeatures(sheet: Record<string, unknown>, rows: number, columns: nu
       const range = cellRange(merge, rows, columns);
       if (!range || (range.firstRow === range.lastRow && range.firstColumn === range.lastColumn))
         return false;
-      if (
-        ranges.some(
-          (other) =>
-            other.firstRow <= range.lastRow &&
-            other.lastRow >= range.firstRow &&
-            other.firstColumn <= range.lastColumn &&
-            other.lastColumn >= range.firstColumn
-        )
-      )
-        return false;
+      if (ranges.some((other) => rangesOverlap(other, range))) return false;
       ranges.push(range);
     }
   }
@@ -733,14 +621,8 @@ function sheetFeatures(sheet: Record<string, unknown>, rows: number, columns: nu
     const freeze = sheet.freeze;
     if (
       !record(freeze) ||
-      !integer(freeze.rows) ||
-      !integer(freeze.columns) ||
-      freeze.rows < 0 ||
-      freeze.columns < 0 ||
-      freeze.rows > 100 ||
-      freeze.columns > 20 ||
-      freeze.rows >= rows ||
-      freeze.columns >= columns
+      !integerRange(freeze.rows, 0, Math.min(100, rows - 1)) ||
+      !integerRange(freeze.columns, 0, Math.min(20, columns - 1))
     )
       return false;
     const frozenRows = freeze.rows;
@@ -788,8 +670,7 @@ function sheetFeatures(sheet: Record<string, unknown>, rows: number, columns: nu
       !sheet.charts.every((chart) => {
         if (
           !record(chart) ||
-          typeof chart.id !== 'string' ||
-          !chart.id ||
+          !nonempty(chart.id) ||
           ids.has(chart.id) ||
           !['bar', 'line'].includes(String(chart.type)) ||
           typeof chart.title !== 'string' ||
@@ -817,8 +698,7 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
   if (
     !record(value) ||
     value.version !== 1 ||
-    typeof value.id !== 'string' ||
-    !value.id ||
+    !nonempty(value.id) ||
     typeof value.name !== 'string'
   )
     return false;
@@ -827,12 +707,12 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
     const tab = value.defaultTabStop as number | undefined;
     if (
       !record(page) ||
-      !['A4', 'Letter'].includes(page.size as string) ||
-      !['portrait', 'landscape'].includes(page.orientation as string) ||
+      (page.size !== 'A4' && page.size !== 'Letter') ||
+      (page.orientation !== 'portrait' && page.orientation !== 'landscape') ||
       page.margin === undefined ||
-      (tab !== undefined && (typeof tab !== 'number' || tab <= 0 || tab > 1584 || !integer(tab * 20))) ||
+      (tab !== undefined && (!positive(tab, 1584) || !integer(tab * 20))) ||
       ![page.margin, page.headerDistance, page.footerDistance].every(
-        (distance) => distance === undefined || (finite(distance) && distance >= 0 && distance <= 80)
+        (distance) => distance === undefined || finiteRange(distance, 0, 80)
       )
     )
       return false;
@@ -857,18 +737,19 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
       }
       if (
         node.marks !== undefined &&
-        (!Array.isArray(node.marks) ||
-          !node.marks.every(
-            (mark) =>
-              record(mark) &&
-              typeof mark.type === 'string' &&
-              (mark.attrs === undefined || record(mark.attrs))
-          ))
+        !arrayOf(
+          node.marks,
+          Infinity,
+          (mark) =>
+            record(mark) &&
+            typeof mark.type === 'string' &&
+            (mark.attrs === undefined || record(mark.attrs))
+        )
       )
         return false;
       return (
         node.content === undefined ||
-        (Array.isArray(node.content) && node.content.every((child) => richNode(child, depth + 1)))
+        arrayOf(node.content, Infinity, (child) => richNode(child, depth + 1))
       );
     };
     return (
@@ -897,17 +778,12 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
           !record(sheet) ||
           typeof sheet.id !== 'string' ||
           ids.has(sheet.id) ||
-          typeof sheet.name !== 'string' ||
-          !sheet.name ||
+          !nonempty(sheet.name) ||
           sheet.name.length > 31 ||
           /[\\/*?:[\]]/.test(sheet.name) ||
           names.has(sheet.name.toLocaleLowerCase()) ||
-          !integer(sheet.rowCount) ||
-          sheet.rowCount < 1 ||
-          sheet.rowCount > 10000 ||
-          !integer(sheet.columnCount) ||
-          sheet.columnCount < 1 ||
-          sheet.columnCount > 256 ||
+          !integerRange(sheet.rowCount, 1, 10000) ||
+          !integerRange(sheet.columnCount, 1, 256) ||
           !record(sheet.cells)
         )
           return false;
@@ -965,38 +841,56 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
       sheetValidationSources(value.sheets)
     );
   }
-  if (
-    value.kind !== 'pdf' ||
-    !integer(value.pageCount) ||
-    value.pageCount < 1 ||
-    value.pageCount > 200 ||
-    !Array.isArray(value.marks) ||
-    value.marks.length > 2000 ||
-    !Array.isArray(value.fields) ||
-    value.fields.length > 2000 ||
-    !record(value.rotations)
-  )
+  if (value.kind !== 'pdf' || !integerRange(value.pageCount, 1, 200) || !record(value.rotations))
     return false;
   const pageCount = value.pageCount;
+  if (value.sourcePageCount !== undefined && !integerRange(value.sourcePageCount, 1, 200))
+    return false;
+  if (value.pages !== undefined) {
+    if (!Array.isArray(value.pages) || value.pages.length !== pageCount) return false;
+    const pageIds = new Set<string>(),
+      sourceCount = value.sourcePageCount ?? pageCount;
+    for (const page of value.pages) {
+      if (!record(page) || !nonempty(page.id) || pageIds.has(page.id)) return false;
+      pageIds.add(page.id);
+      if (page.copyGroup !== undefined && !nonempty(page.copyGroup)) return false;
+      if (
+        page.sourcePage !== undefined &&
+        !integerRange(page.sourcePage, 0, (sourceCount as number) - 1)
+      )
+        return false;
+      if (page.size !== undefined || page.sourcePage === undefined) {
+        if (
+          !record(page.size) ||
+          ![page.size.width, page.size.height].every((size) => finiteRange(size, 1, 14400))
+        )
+          return false;
+      }
+      if (
+        page.bounds !== undefined &&
+        (!record(page.bounds) ||
+          ![page.bounds.left, page.bounds.bottom, page.bounds.right, page.bounds.top].every(
+            finite
+          ) ||
+          (page.bounds.right as number) <= (page.bounds.left as number) ||
+          (page.bounds.top as number) <= (page.bounds.bottom as number))
+      )
+        return false;
+    }
+  }
   const markIds = new Set<string>();
   const fieldNames = new Set<string>();
   let storedPoints = 0;
   return (
-    value.marks.every((mark) => {
+    arrayOf(value.marks, 2000, (mark) => {
       if (!(
         record(mark) &&
-        typeof mark.id === 'string' &&
-        !!mark.id &&
+        nonempty(mark.id) &&
         !markIds.has(mark.id) &&
-        integer(mark.page) &&
-        mark.page >= 0 &&
-        mark.page < pageCount &&
+        integerRange(mark.page, 0, pageCount - 1) &&
         ['text', 'highlight', 'rectangle', 'ink'].includes(String(mark.type)) &&
-        finite(mark.x) &&
-        finite(mark.y) &&
-        finite(mark.size) &&
-        mark.size > 0 &&
-        mark.size <= 240 &&
+        [mark.x, mark.y].every(finite) &&
+        positive(mark.size, 240) &&
         typeof mark.text === 'string' &&
         mark.text.length <= 10000 &&
         optionalPositive(mark.width) &&
@@ -1022,11 +916,10 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
       }
       return true;
     }) &&
-    value.fields.every((field) => {
+    arrayOf(value.fields, 2000, (field) => {
       if (!(
         record(field) &&
-        typeof field.name === 'string' &&
-        !!field.name &&
+        nonempty(field.name) &&
         !fieldNames.has(field.name) &&
         ['text', 'checkbox', 'choice', 'image'].includes(String(field.type)) &&
         (typeof field.value === 'string' || typeof field.value === 'boolean') &&
@@ -1036,9 +929,7 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
       fieldNames.add(field.name);
       if (
         field.options !== undefined &&
-        (!Array.isArray(field.options) ||
-          field.options.length > 10000 ||
-          !field.options.every((option) => typeof option === 'string'))
+        !arrayOf(field.options, 10000, (option) => typeof option === 'string')
       )
         return false;
       if (!optionalBoolean(field.multiline)) return false;
@@ -1052,39 +943,37 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
         return false;
       if (
         field.selectedValues !== undefined &&
-        (!Array.isArray(field.selectedValues) ||
-          !field.selectedValues.every(
-            (entry) =>
-              typeof entry === 'string' && (field.options as string[] | undefined)?.includes(entry)
-          ))
+        !arrayOf(
+          field.selectedValues,
+          Infinity,
+          (entry) =>
+            typeof entry === 'string' && !!(field.options as string[] | undefined)?.includes(entry)
+        )
       )
         return false;
-      return (
-        field.widgets === undefined ||
-        (Array.isArray(field.widgets) &&
-          field.widgets.length <= 2000 &&
-          field.widgets.every(
+      return [field.widgets, field.hiddenWidgets].every(
+        (widgets, hidden) =>
+          widgets === undefined ||
+          arrayOf(
+            widgets,
+            2000,
             (widget) =>
               record(widget) &&
-              integer(widget.page) &&
-              widget.page >= 0 &&
-              widget.page < pageCount &&
-              finite(widget.x) &&
-              finite(widget.y) &&
-              finite(widget.width) &&
-              widget.width > 0 &&
-              finite(widget.height) &&
-              widget.height > 0 &&
+              integerRange(widget.page, 0, pageCount - 1) &&
+              [widget.x, widget.y].every(finite) &&
+              [widget.width, widget.height].every(
+                (size) => finite(size) && (hidden ? size >= 0 : size > 0)
+              ) &&
               (widget.rotation === undefined ||
                 (finite(widget.rotation) && widget.rotation % 90 === 0)) &&
-              optionalText(widget.option)
-          ))
+              optionalText(widget.option) &&
+              (widget.flags === undefined ||
+                (integerRange(widget.flags, 0, 4294967295) &&
+                  !!(widget.flags & (2 | 32)) === !!hidden))
+          )
       );
     }) &&
-    (value.removedFields === undefined ||
-      (Array.isArray(value.removedFields) &&
-        value.removedFields.length <= 2000 &&
-        value.removedFields.every((name) => typeof name === 'string' && !!name))) &&
+    (value.removedFields === undefined || arrayOf(value.removedFields, 2000, nonempty)) &&
     Object.entries(value.rotations).every(
       ([page, rotation]) =>
         /^\d+$/.test(page) && Number(page) < pageCount && finite(rotation) && rotation % 90 === 0

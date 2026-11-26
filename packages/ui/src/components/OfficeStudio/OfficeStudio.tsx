@@ -301,6 +301,20 @@ export function OfficeStudio({
   const consume = (task: Promise<void>) => {
     void task.catch(() => {});
   };
+  const newDocumentItems = (['word', 'excel', 'pdf'] as const).map((kind) => (
+    <DropdownMenu.Item
+      key={kind}
+      disabled={editingDisabled || (kind === 'pdf' && !onCreate)}
+      onSelect={() => consume(create(kind))}
+    >
+      {kindLabels[kind]} 文档
+    </DropdownMenu.Item>
+  ));
+  const fileActions = [
+    ['export', '导出文件', '导出文件', Download, onExport, exportDocument],
+    ['print', '打印', '打印（Ctrl / ⌘ + P）', Printer, onPrint, printDocument],
+    ['save', '保存', '保存（Ctrl / ⌘ + S）', Save, onSave, save],
+  ] as const;
   const fileMenu = (
     <DropdownMenu>
       <div className="zuvi-office-studio-file-menu">
@@ -314,15 +328,7 @@ export function OfficeStudio({
       </div>
       <DropdownMenu.Content className="zuvi-office-studio-file-content">
         <DropdownMenu.Label>新建</DropdownMenu.Label>
-        {(['word', 'excel', 'pdf'] as const).map((kind) => (
-          <DropdownMenu.Item
-            key={kind}
-            disabled={editingDisabled || (kind === 'pdf' && !onCreate)}
-            onSelect={() => consume(create(kind))}
-          >
-            {kindLabels[kind]} 文档
-          </DropdownMenu.Item>
-        ))}
+        {newDocumentItems}
         <DropdownMenu.Separator />
         <DropdownMenu.Item
           disabled={!onImport || editingDisabled}
@@ -333,30 +339,20 @@ export function OfficeStudio({
             打开文件
           </span>
         </DropdownMenu.Item>
-        <DropdownMenu.Item disabled={!onSave || editingDisabled} onSelect={() => consume(save())}>
-          <span className="zuvi-office-studio-file-action">
-            <Save size={16} />
-            保存
-          </span>
-        </DropdownMenu.Item>
-        <DropdownMenu.Item
-          disabled={!onExport || actionDisabled}
-          onSelect={() => consume(exportDocument())}
-        >
-          <span className="zuvi-office-studio-file-action">
-            <Download size={16} />
-            导出文件
-          </span>
-        </DropdownMenu.Item>
-        <DropdownMenu.Item
-          disabled={!onPrint || actionDisabled}
-          onSelect={() => consume(printDocument())}
-        >
-          <span className="zuvi-office-studio-file-action">
-            <Printer size={16} />
-            打印
-          </span>
-        </DropdownMenu.Item>
+        {[fileActions[2], fileActions[0], fileActions[1]].map(
+          ([kind, label, , Icon, callback, action]) => (
+            <DropdownMenu.Item
+              key={kind}
+              disabled={!callback || actionDisabled || (kind === 'save' && readOnly)}
+              onSelect={() => consume(action())}
+            >
+              <span className="zuvi-office-studio-file-action">
+                <Icon size={16} />
+                {label}
+              </span>
+            </DropdownMenu.Item>
+          )
+        )}
       </DropdownMenu.Content>
     </DropdownMenu>
   );
@@ -437,15 +433,7 @@ export function OfficeStudio({
             </DropdownMenu.Trigger>
             <DropdownMenu.Content>
               <DropdownMenu.Label>新建文档</DropdownMenu.Label>
-              {(['word', 'excel', 'pdf'] as const).map((kind) => (
-                <DropdownMenu.Item
-                  key={kind}
-                  disabled={editingDisabled || (kind === 'pdf' && !onCreate)}
-                  onSelect={() => consume(create(kind))}
-                >
-                  {kindLabels[kind]} 文档
-                </DropdownMenu.Item>
-              ))}
+              {newDocumentItems}
             </DropdownMenu.Content>
           </DropdownMenu>
           <Button
@@ -460,45 +448,27 @@ export function OfficeStudio({
           >
             <span className="zuvi-office-studio-action-label">导入</span>
           </Button>
-          <Button
-            type="button"
-            size="sm"
-            variant="ghost"
-            iconStart={<Download size={15} />}
-            aria-label="导出文件"
-            title="导出文件"
-            loading={operation === 'export'}
-            disabled={!onExport || disabled || (busy && operation !== 'export')}
-            onClick={() => consume(exportDocument())}
-          >
-            <span className="zuvi-office-studio-action-label">导出文件</span>
-          </Button>
-          <Button
-            type="button"
-            size="sm"
-            variant="ghost"
-            iconStart={<Printer size={15} />}
-            aria-label="打印"
-            title="打印（Ctrl / ⌘ + P）"
-            loading={operation === 'print'}
-            disabled={!onPrint || disabled || (busy && operation !== 'print')}
-            onClick={() => consume(printDocument())}
-          >
-            <span className="zuvi-office-studio-action-label">打印</span>
-          </Button>
-          <Button
-            type="button"
-            size="sm"
-            variant="ghost"
-            iconStart={<Save size={15} />}
-            aria-label="保存"
-            title="保存（Ctrl / ⌘ + S）"
-            loading={operation === 'save'}
-            disabled={!onSave || disabled || readOnly || (busy && operation !== 'save')}
-            onClick={() => consume(save())}
-          >
-            <span className="zuvi-office-studio-action-label">保存</span>
-          </Button>
+          {fileActions.map(([kind, label, title, Icon, callback, action]) => (
+            <Button
+              key={kind}
+              type="button"
+              size="sm"
+              variant="ghost"
+              iconStart={<Icon size={15} />}
+              aria-label={label}
+              title={title}
+              loading={operation === kind}
+              disabled={
+                !callback ||
+                disabled ||
+                (kind === 'save' && readOnly) ||
+                (busy && operation !== kind)
+              }
+              onClick={() => consume(action())}
+            >
+              <span className="zuvi-office-studio-action-label">{label}</span>
+            </Button>
+          ))}
           <Button
             type="button"
             size="sm"

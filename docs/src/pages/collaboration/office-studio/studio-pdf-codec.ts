@@ -34,10 +34,12 @@ import {
   type PDFPage,
 } from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
+import { applyPdfPageLayout, isolatePdfPageBuffers } from './studio-pdf-page-codec';
 import type { StudioPdfDocument, StudioPdfField, StudioPdfMark } from '@zuvi/react';
 import {
   pdfFieldIssue,
   pdfFieldKind,
+  pdfFieldWidgets,
 } from '../../../../../packages/ui/src/components/OfficeStudio/studio-pdf-fields';
 
 const MAX_PAGES = 200;
@@ -103,11 +105,12 @@ function pageBounds(page: PDFPage) {
   return { left, bottom, right, top };
 }
 
-function readWidgets(pdf: PDFDocument, field: PDFField): NonNullable<StudioPdfField['widgets']> {
+function readWidgets(pdf: PDFDocument, field: PDFField, hidden = false): NonNullable<StudioPdfField['widgets']> {
   const pages = pdf.getPages();
   return field.acroField.getWidgets().flatMap((widget, widgetIndex) => {
     // Hidden/NoView widgets retain their original data but have no visual control.
-    if (widget.getFlags() & (2 | 32)) return [];
+    const flags = widget.getFlags();
+    if (!!(flags & (2 | 32)) !== hidden) return [];
     const pageRef = widget.P();
     const page = pages.findIndex(
       (entry) =>
@@ -121,8 +124,8 @@ function readWidgets(pdf: PDFDocument, field: PDFField): NonNullable<StudioPdfFi
     if (page < 0) throw new Error(`表单“${field.getName()}”的控件未关联页面，无法进行页面内编辑。`);
     if (
       !Object.values(rectangle).every(Number.isFinite) ||
-      rectangle.width <= 0 ||
-      rectangle.height <= 0
+      (hidden ? rectangle.width < 0 : rectangle.width <= 0) ||
+      (hidden ? rectangle.height < 0 : rectangle.height <= 0)
     )
       throw new Error(`表单“${field.getName()}”含有无效的控件位置。`);
     const angle = widget.getAppearanceCharacteristics()?.getRotation() ?? 0;
@@ -137,6 +140,7 @@ function readWidgets(pdf: PDFDocument, field: PDFField): NonNullable<StudioPdfFi
         ...rectangle,
         rotation: quarterTurn(angle),
         ...(option === undefined ? {} : { option }),
+        ...(hidden ? { flags } : {}),
       },
     ];
   });
@@ -167,7 +171,7 @@ function readFields(pdf: PDFDocument): StudioPdfField[] {
           multiline: field.isMultiline(),
         };
       } else if (field instanceof PDFCheckBox) {
-        result = { ...base, type: 'checkbox', value: field.isChecked() };
+        result = { ...base, type: 'checkbox', value: field.acroField.getWidgets().length ? field.isChecked() : field.acroField.getValue() !== PDFName.of('Off') };
       } else if (field instanceof PDFDropdown) {
         if (field.isMultiselect() || field.isEditable() || field.getSelected().length > 1)
           throw new Error(`表单“${name}”使用多选或可编辑下拉框，当前编辑器暂不支持。`);
@@ -220,7 +224,9 @@ function readFields(pdf: PDFDocument): StudioPdfField[] {
         throw new Error(`表单“${name}”包含签名、按钮或列表等不受支持的字段，无法完整编辑此 PDF。`);
       }
       result.widgets = readWidgets(pdf, field);
-      if (design) {
+      const hiddenWidgets = readWidgets(pdf, field, true);
+      if (hiddenWidgets.length) result.hiddenWidgets = hiddenWidgets;
+      if (design && pdfFieldWidgets(result).length) {
         const issue = pdfFieldIssue(result, pdf.getPageCount());
         if (issue) throw new Error(issue);
       }
@@ -236,6 +242,8 @@ export async function importStudioPdf(source: Blob, name: string): Promise<Studi
     name: name.trim() || '文档.pdf',
     kind: 'pdf',
     pageCount: pdf.getPageCount(),
+    sourcePageCount: pdf.getPageCount(),
+    pages: pdf.getPages().map((page, sourcePage) => ({ id: crypto.randomUUID(), sourcePage, bounds: pageBounds(page) })),
     marks: [],
     rotations: {},
     fields: readFields(pdf),
@@ -356,28 +364,21 @@ async function annotationFont(pdf: PDFDocument, texts: string[]): Promise<PDFFon
   return font;
 }
 
-function sameWidgets(left: StudioPdfField['widgets'], right: StudioPdfField['widgets']) {
-  return (
-    Array.isArray(left) &&
-    Array.isArray(right) &&
-    left.length === right.length &&
-    left.every((widget, index) => {
-      const other = right[index];
-      return (
-        other &&
-        widget.page === other.page &&
-        widget.x === other.x &&
-        widget.y === other.y &&
-        widget.width === other.width &&
-        widget.height === other.height &&
-        (widget.rotation ?? 0) === (other.rotation ?? 0) &&
-        widget.option === other.option
-      );
-    })
-  );
+function sameWidgets(left: StudioPdfField['widgets'], right: StudioPdfField['widgets'], flags = 0) {
+  if (!Array.isArray(left) || !Array.isArray(right) || left.length !== right.length || [...left, ...right].some(widget => !widget || typeof widget !== 'object')) return false;
+  const key = (widget: NonNullable<StudioPdfField['widgets']>[number]) => JSON.stringify([widget.page, widget.x, widget.y, widget.width, widget.height, widget.rotation ?? 0, widget.option ?? null, widget.flags ?? flags]);
+  const leftKeys = left.map(key).sort(), rightKeys = right.map(key).sort();
+  return leftKeys.every((entry, index) => entry === rightKeys[index]);
+}
+
+function sameOptions(left: StudioPdfField['options'], right: StudioPdfField['options'], radio: boolean) {
+  if (!radio) return JSON.stringify(left) === JSON.stringify(right);
+  if (!Array.isArray(left) || !Array.isArray(right) || new Set(left).size !== left.length || new Set(right).size !== right.length || left.length !== right.length) return false;
+  const values = new Set(right); return left.every(value => values.has(value));
 }
 
 function sameDesignedField(left: StudioPdfField, right: StudioPdfField) {
+  const radio = pdfFieldKind(right) === 'radio';
   const normalize = (field: StudioPdfField) => {
     const design = { ...field.design };
     delete design.sourceName;
@@ -386,7 +387,7 @@ function sameDesignedField(left: StudioPdfField, right: StudioPdfField) {
       type: field.type,
       readOnly: field.readOnly,
       multiline: !!field.multiline,
-      options: field.options || [],
+      options: radio ? [...(field.options || [])].sort() : field.options || [],
       value: field.value,
       selectedValues: field.selectedValues || [],
       design,
@@ -394,7 +395,8 @@ function sameDesignedField(left: StudioPdfField, right: StudioPdfField) {
   };
   return (
     JSON.stringify(normalize(left)) === JSON.stringify(normalize(right)) &&
-    sameWidgets(left.widgets, right.widgets)
+    sameWidgets(left.widgets, right.widgets) &&
+    sameWidgets(left.hiddenWidgets || [], right.hiddenWidgets || [], 32)
   );
 }
 
@@ -424,7 +426,7 @@ async function writeDesignedField(pdf: PDFDocument, field: StudioPdfField, font:
   }
   const borderWidth = design.borderWidth ?? 1;
   if (native instanceof PDFRadioGroup) native.disableMutualExclusion();
-  for (const widget of field.widgets || []) {
+  for (const widget of pdfFieldWidgets(field)) {
     const page = pdf.getPages()[widget.page];
     const options = {
       x: widget.x + borderWidth / 2,
@@ -442,6 +444,7 @@ async function writeDesignedField(pdf: PDFDocument, field: StudioPdfField, font:
     else if (native instanceof PDFButton) native.addToPage('', page, options);
     else native.addToPage(page, options);
     const created = native.acroField.getWidgets().at(-1)!;
+    if (widget.flags !== undefined || field.hiddenWidgets?.includes(widget)) created.setFlags(widget.flags ?? 32);
     created.setRectangle({ x: widget.x, y: widget.y, width: widget.width, height: widget.height });
   }
   if (native instanceof PDFTextField) {
@@ -553,6 +556,8 @@ async function writeDesignedField(pdf: PDFDocument, field: StudioPdfField, font:
 /** Apply changes to the original PDF's page streams and original AcroForm. */
 export async function exportStudioPdf(document: StudioPdfDocument, source: Blob): Promise<Blob> {
   const pdf = await loadSource(source);
+  isolatePdfPageBuffers(pdf);
+  const layoutChanged = applyPdfPageLayout(pdf, document);
   const originalFields = readFields(pdf);
   if (
     document.version !== 1 ||
@@ -601,7 +606,7 @@ export async function exportStudioPdf(document: StudioPdfDocument, source: Blob)
   for (const field of document.fields) {
     if (fieldNames.has(field.name)) throw new Error('PDF 草稿包含重复字段名称。');
     if (field.design) {
-      const issue = pdfFieldIssue(field, pdf.getPageCount());
+      const issue = !field.widgets?.length && originalFields.some(entry => entry.name === (field.design?.sourceName ?? field.name) && !entry.widgets?.length && sameDesignedField(field, entry)) ? undefined : pdfFieldIssue(field, pdf.getPageCount());
       if (issue) throw new Error(issue);
       const sourceName = field.design.sourceName;
       const original = sourceName
@@ -640,9 +645,10 @@ export async function exportStudioPdf(document: StudioPdfDocument, source: Blob)
       fieldNames.has(field.name) ||
       field.type !== original.type ||
       field.readOnly !== original.readOnly ||
-      JSON.stringify(field.options) !== JSON.stringify(original.options) ||
+      !sameOptions(field.options, original.options, pdf.getForm().getField(original.name) instanceof PDFRadioGroup) ||
       (field.multiline !== undefined && field.multiline !== original.multiline) ||
       (field.widgets !== undefined && !sameWidgets(field.widgets, original.widgets)) ||
+      (field.hiddenWidgets !== undefined && !sameWidgets(field.hiddenWidgets, original.hiddenWidgets || [], 32)) ||
       typeof field.value !== typeof original.value ||
       (typeof field.value === 'string' && field.value.length > 10_000)
     )
@@ -671,6 +677,7 @@ export async function exportStudioPdf(document: StudioPdfDocument, source: Blob)
     throw new Error('PDF 原有字段缺失，请通过表单设计操作删除。');
 
   if (
+    !layoutChanged &&
     !document.marks.length &&
     !rotations.some((entry) => entry.angle) &&
     !changedFields.length &&

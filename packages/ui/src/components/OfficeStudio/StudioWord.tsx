@@ -1,6 +1,8 @@
 'use client';
 import { WordBookmark, wordBookmarkName, wordBookmarks, wordGoToBookmark } from './studio-word-bookmarks';
 import { StudioWordBookmarkDialog } from './StudioWordBookmarkDialog';
+import { StudioWordCellDialog } from './StudioWordCellDialog';
+import { wordSelectedCellPositions } from './studio-word-cell-command';
 import { StudioWordMathDialog } from './StudioWordMathDialog';
 import { WordMath, wordSetMath } from './studio-word-math-extension';
 import { StudioWordImageCropDialog } from './StudioWordImageCropDialog';
@@ -67,6 +69,7 @@ import { StudioWordRowDialog } from './StudioWordRowDialog';
 import { StudioWordConversionDialog } from './StudioWordConversionDialog';
 import { wordConversionTarget, wordApplyTableConversion, type WordConversionTarget } from './studio-word-table-conversion';
 import { WordTableCell, WordTableHeader } from './studio-word-table-cell';
+import { WordTable, WordTableSpacing } from './studio-word-table-extension';
 import {WordPaginationLayout,wordSetPagination} from './studio-word-pagination-extension';
 import {WordParagraphSurface,wordSelectionSurfaces,wordSetParagraphSurface} from './studio-word-surface-extension';
 import { materializeWordNumbering, wordNumberingCatalog, type WordNumberingCatalog } from './studio-word-numbering';
@@ -180,7 +183,9 @@ const EXTENSIONS = [
       );
     },
   }).configure({ types: ['heading', 'paragraph'] }),
-  TableKit.configure({ table: { resizable: true }, tableCell: false, tableHeader: false }),
+  TableKit.configure({ table: false, tableCell: false, tableHeader: false }),
+  WordTable,
+  WordTableSpacing,
   WordTableCell,
   WordTableHeader,
   WordTableRowProperties,
@@ -435,6 +440,7 @@ export function StudioWord({
   const [mathDialog, setMathDialog] = React.useState<{ editor: Editor; doc: Editor['state']['doc']; selection: Editor['state']['selection']; initial: unknown } | null>(null);
   const [formulaDialog, setFormulaDialog] = React.useState<{ editor: Editor; doc: Editor['state']['doc']; selection: Editor['state']['selection']; initial: string } | null>(null);
   const [conversionDialog, setConversionDialog] = React.useState<{ editor: Editor; target: WordConversionTarget } | null>(null);
+  const [cellDialog, setCellDialog] = React.useState<Editor | null>(null);
   const [rowDialog, setRowDialog] = React.useState<{ editor: Editor; doc: Editor['state']['doc']; selection: Editor['state']['selection']; rows: ReturnType<typeof wordSelectedRows> } | null>(null);
   const [tableColumns, setTableColumns] = React.useState('3');
   const [tableHeader, setTableHeader] = React.useState(true);
@@ -2016,6 +2022,7 @@ export function StudioWord({
                     cols: Number(tableColumns),
                     withHeaderRow: tableHeader,
                   })
+                  .updateAttributes('table', { defaultCellMargins: { top: 6, right: 7.5, bottom: 6, left: 7.5 } })
                   .run()
               }
             >
@@ -2252,6 +2259,7 @@ export function StudioWord({
               const rows = wordSelectedRows(editor);
               if (rows.length) setRowDialog({ editor, doc: editor.state.doc, selection: editor.state.selection, rows });
             }}>表格行属性</Button>
+            <Button variant="ghost" size="sm" disabled={toolsDisabled || !editor || !wordSelectedCellPositions(editor).length} onMouseDown={keepSelection} onClick={() => { if (editor && wordSelectedCellPositions(editor).length) setCellDialog(editor); }}>单元格对齐与边距</Button>
             <Button variant="ghost" size="sm" disabled={toolsDisabled || !selection?.inTable}
               onMouseDown={keepSelection} onClick={() => {
                 if (!editor || toolsDisabled) return;
@@ -3126,6 +3134,7 @@ export function StudioWord({
           target.commands.focus();
           setNotice('已转换内容，可撤销恢复。');
         }} />}
+      {cellDialog && <StudioWordCellDialog editor={cellDialog} blocked={!editable || editor !== cellDialog} onClose={() => { setCellDialog(null); if (editor && !editor.isDestroyed) editor.view.focus(); }} />}
       {rowDialog && <StudioWordRowDialog rows={rowDialog.rows.map((row) => row.properties)} blocked={!editable}
         onClose={() => { setRowDialog(null); if (!rowDialog.editor.isDestroyed) rowDialog.editor.commands.focus(); }}
         onSave={(patch) => {

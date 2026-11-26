@@ -8,6 +8,8 @@ import {
   type WordPageBreak,
 } from './studio-word-pagination';
 import type { WordCellFragmentMeasure, WordCellLineFragment } from './studio-word-table-fragments';
+import { wordTableMeasuredRowBands } from './studio-word-table-layout';
+import { wordEffectiveRowSpacing } from './studio-word-table-properties';
 import { effectiveParagraph } from './studio-word-paragraph-layout';
 const key = new PluginKey<{ layout: WordPagination | null }>('studioWordPagination');
 export interface WordPaginationOptions {
@@ -32,8 +34,11 @@ export function wordSetPagination(editor: Editor, options: WordPaginationOptions
 export function wordMeasureCellLines(
   content: HTMLElement,
   from: number,
-  top: number
+  top: number,
+  height?: number
 ): WordCellLineFragment[] {
+  if (height !== undefined && (!Number.isFinite(height) || height <= 0))
+    throw new Error('Invalid cell row flow height.');
   const doc = content.ownerDocument;
   const lines: WordCellLineFragment[] = [];
   const walker = doc.createTreeWalker(content, 5);
@@ -107,7 +112,12 @@ export function wordMeasureCellLines(
       position++;
     }
   }
-  return lines;
+  // A glyph Range can paint beyond a single-spacing paragraph's first/last
+  // line box. Cell pagination consumes the natural row flow, after removing
+  // baseline paint offsets; those endpoint overhangs do not add row height.
+  return height === undefined ? lines : lines.map(line => ({
+    ...line, top: Math.max(0, line.top), bottom: Math.min(height, line.bottom),
+  }));
 }
 
 function measure(editor: Editor): WordLayoutBlock[] {
@@ -149,6 +159,8 @@ function measure(editor: Editor): WordLayoutBlock[] {
       'border-right-width',
       'border-top-style',
       'border-bottom-style',
+      'border-left-style',
+      'border-right-style',
       'border-collapse',
       'border-spacing',
       'table-layout',
@@ -157,6 +169,10 @@ function measure(editor: Editor): WordLayoutBlock[] {
       'text-align',
       'vertical-align',
       'display',
+      'flex-direction',
+      'justify-content',
+      'align-items',
+      'flex-shrink',
       'width',
       'max-width',
       'aspect-ratio',
@@ -164,15 +180,20 @@ function measure(editor: Editor): WordLayoutBlock[] {
       'position',
     ])
       copies[index].style.setProperty(property, computed.getPropertyValue(property));
+    // Mixed-row fill and pagination are view geometry. A natural measurement
+    // clone must not retain a previously expanded content wrapper minimum.
+    if (node.matches('[data-word-cell-content]')) copies[index].style.removeProperty('min-height');
     if (
       node.matches('[data-word-cell-content]') &&
-      node.parentElement?.parentElement?.matches(
+      (node.parentElement?.hasAttribute('data-word-fixed-cell-height') || node.parentElement?.parentElement?.matches(
         'tr[data-word-row-height-rule="exact"][data-word-row-height]'
-      )
+      ))
     ) {
       copies[index].style.height = computed.height;
       copies[index].style.overflow = computed.overflow;
     }
+    if (node.matches('tr[data-word-row-height-rule="exact"][data-word-row-height]'))
+      copies[index].style.height = computed.height;
   });
   clone.style.cssText += `position:absolute;width:${width}px;height:auto;min-height:0;margin:0;transform:none;`;
   clone
@@ -210,6 +231,7 @@ function measure(editor: Editor): WordLayoutBlock[] {
         const rows = Array.from(
           table?.querySelectorAll<HTMLElement>(':scope > tbody > tr,:scope > tr') ?? []
         );
+        const bands = table ? wordTableMeasuredRowBands(table.getBoundingClientRect(), rows.map(row => row.getBoundingClientRect())) : [];
         let headerCount = 0;
         while (
           headerCount < node.childCount &&
@@ -234,7 +256,7 @@ function measure(editor: Editor): WordLayoutBlock[] {
         if (repeatable)
           block.continuationBefore = rows
             .slice(0, headerCount)
-            .reduce((sum, row) => sum + row.getBoundingClientRect().height, 0);
+            .reduce((sum, _row, index) => sum + bands[index].height, 0);
         let rowPosition = position + 1;
         let groupEnd = repeatable ? headerCount + 1 : 0;
         node.forEach((row, offset, index) => {
@@ -244,7 +266,7 @@ function measure(editor: Editor): WordLayoutBlock[] {
           row.forEach((cell) => {
             groupEnd = Math.max(groupEnd, index + Math.max(1, Number(cell.attrs.rowspan) || 1));
           });
-          const rowHeight = Math.max(1, rows[index].getBoundingClientRect().height);
+          const rowHeight = Math.max(1, bands[index].height);
           const previous = block.lines.at(-1);
           const multiCell =
             !repeatable &&
@@ -263,7 +285,7 @@ function measure(editor: Editor): WordLayoutBlock[] {
                 ).every((inline) => inline.isText || inline.type.name === 'hardBreak')
             );
           if (rowPosition === rowFrom && multiCell) {
-            const rowRect = rows[index].getBoundingClientRect();
+            const rowRect = bands[index];
             const elements = rows[index].querySelectorAll<HTMLElement>(':scope > td,:scope > th');
             const cells: WordCellFragmentMeasure[] = [];
             row.forEach((cell, offset, cellIndex) => {
@@ -275,7 +297,7 @@ function measure(editor: Editor): WordLayoutBlock[] {
                 cells.push({
                   from,
                   to: rowFrom + offset + cell.nodeSize - 1,
-                  lines: wordMeasureCellLines(content, from, rowRect.top),
+                  lines: wordMeasureCellLines(content, from, rowRect.top, rowHeight),
                 });
             });
             block.lines.push({
@@ -338,7 +360,7 @@ function measure(editor: Editor): WordLayoutBlock[] {
               }
             }
             if (fragments.length > 1) {
-              const rowRect = rows[index].getBoundingClientRect();
+              const rowRect = bands[index];
               fragments.forEach((fragment, fragmentIndex) =>
                 block.lines.push({
                   from: fragmentIndex === 0 ? rowFrom : fragment.from,
@@ -564,13 +586,16 @@ function markers(
                 const repeated = source.cloneNode(false) as HTMLElement;
                 repeated.removeAttribute('data-word-pagination-position');
                 repeated.dataset.wordRepeatedHeader = '';
-                repeated.style.cssText = 'width:100%;margin:0;pointer-events:none;';
+                repeated.style.width = '100%';
+                repeated.style.margin = '0';
+                repeated.style.pointerEvents = 'none';
                 const colgroup = source.querySelector(':scope > colgroup');
                 if (colgroup) repeated.append(colgroup.cloneNode(true));
                 const body = editor.view.dom.ownerDocument.createElement('tbody');
                 const sourceRows = source.querySelectorAll(
                   ':scope > tbody > tr:not([data-word-auto-page-row]),:scope > tr:not([data-word-auto-page-row])'
                 );
+                let lastHeaderIndex = -1;
                 for (let index = 0; index < parent.childCount; index++) {
                   const header = parent.child(index);
                   if (
@@ -581,6 +606,12 @@ function markers(
                   )
                     break;
                   if (sourceRows[index]) body.append(sourceRows[index].cloneNode(true));
+                  lastHeaderIndex = index;
+                }
+                if (source.getAttribute('data-word-spacing-layout') === 'mixed' && lastHeaderIndex >= 0) {
+                  const bottom = wordEffectiveRowSpacing(parent.attrs, parent.child(lastHeaderIndex).attrs) / 2;
+                  repeated.style.setProperty('--zuvi-word-table-gap-bottom', `${bottom}pt`);
+                  repeated.style.paddingBottom = `${bottom}pt`;
                 }
                 body.querySelectorAll('[id],[data-word-pagination-position]').forEach((node) => {
                   node.removeAttribute('id');

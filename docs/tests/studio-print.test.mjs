@@ -1121,7 +1121,7 @@ test('array print includes the entire computed region without persisting synthet
 });
 
 
-test('Word print sums fixed merged cell height without persisting print attributes', () => {
+test('Word print combines native fixed row budgets and a shared border without persisting print attributes', () => {
   const model = models.createOfficeStudioDocument('word');
   const paragraph = { type: 'paragraph', content: [{ type: 'text', text: 'Full merged content' }] };
   model.content = { type: 'doc', content: [{ type: 'table', content: [
@@ -1133,7 +1133,7 @@ test('Word print sums fixed merged cell height without persisting print attribut
   ] }] };
   const original = JSON.stringify(model);
   const cell = new JSDOM(print.createStudioPrintHtml(model)).window.document.querySelector('td[rowspan="2"]');
-  assert.equal(cell.style.getPropertyValue('--zuvi-word-cell-height'), '60pt');
+  assert.equal(cell.style.getPropertyValue('--zuvi-word-cell-height'), '60.75pt');
   assert.ok(cell.hasAttribute('data-word-fixed-cell-height'));
   assert.equal(cell.textContent, 'Full merged content');
   assert.equal(JSON.stringify(model), original);
@@ -1201,4 +1201,28 @@ test('Word multi-equation groups print independent members and their local style
   assert.equal(rendered.querySelector('math mspace').getAttribute('width'), '1em');
   assert.equal(rendered.querySelector('math mtext').textContent, 'x');
   assert.ok(rendered.querySelector('math mfrac mtext').getAttribute('style').includes('color:#aa2244'));
+});
+
+test('prints cell vertical alignment and margin variables on the cell rather than text marks', () => {
+  const document = { version: 1, id: 'cell-print', name: 'Cell.docx', kind: 'word', page: { size: 'A4', orientation: 'portrait', margin: 20 }, content: { type: 'doc', content: [{ type: 'table', content: [{ type: 'tableRow', attrs: { rowHeight: 24, rowHeightRule: 'exact' }, content: [{ type: 'tableCell', attrs: { verticalAlign: 'bottom', cellMargins: { top: 0, bottom: 5, left: 3 } }, content: [{ type: 'paragraph', content: [{ type: 'text', text: 'Cell' }] }] }] }] }] } };
+  const rendered = new JSDOM(print.createStudioPrintHtml(document)).window.document;
+  const cell = rendered.querySelector('td');
+  assert.equal(cell.style.verticalAlign, 'bottom');
+  assert.equal(cell.style.paddingTop, '0pt');
+  assert.equal(cell.style.getPropertyValue('--zuvi-word-cell-margin-bottom'), '5pt');
+  assert.ok(rendered.querySelector('[data-word-cell-content]'));
+});
+
+test('Word print scopes table defaults and cell overrides and uses the same column footprint with spacing', () => {
+  const model = models.createOfficeStudioDocument('word');
+  const cell = (attrs, text) => ({ type: 'tableCell', attrs: { colspan: 1, rowspan: 1, colwidth: [294], ...attrs }, content: [{ type: 'paragraph', content: [{ type: 'text', text }] }] });
+  model.content = { type: 'doc', content: [{ type: 'table', attrs: { defaultCellMargins: { top: 12, left: 10 }, cellSpacing: 6 }, content: [{ type: 'tableRow', content: [cell({ cellMargins: { top: 0, right: 8.25 } }, 'A'), cell({}, 'B')] }] }] };
+  const page = new JSDOM(print.createStudioPrintHtml(model)).window.document, table = page.querySelector('table'), cells = page.querySelectorAll('td');
+  assert.equal(table.style.width, '612px'); assert.equal(table.style.borderCollapse, 'separate'); assert.equal(table.style.borderSpacing, '6pt');
+  assert.equal(table.style.getPropertyValue('--zuvi-word-cell-border-y'), '2px');
+  assert.equal(table.style.getPropertyValue('--zuvi-word-table-margin-top'), '12pt');
+  assert.deepEqual(Array.from(table.querySelectorAll('col'), col => col.style.width), ['294px', '294px']);
+  assert.equal(cells[0].style.paddingTop, '0pt'); assert.equal(cells[0].style.getPropertyValue('--zuvi-word-cell-margin-right'), '8.25pt');
+  assert.equal(cells[1].style.getPropertyValue('--zuvi-word-cell-margin-top'), 'var(--zuvi-word-table-margin-top,0pt)');
+  assert.equal(cells[1].style.getPropertyValue('--zuvi-word-cell-justify'), 'flex-start');
 });

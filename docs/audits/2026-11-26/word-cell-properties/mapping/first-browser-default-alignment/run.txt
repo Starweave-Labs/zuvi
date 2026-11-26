@@ -1,0 +1,238 @@
+[WebServer] (node:17690) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:17704) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 13 tests using 1 worker
+
+  ✓   1 [chromium] › e2e/office-studio-pdf-pages.spec.ts:45:1 › edits native PDF page dimensions, copies and removes pages, and preserves fields through history and two reopens (7.2s)
+  ✓   2 [chromium] › e2e/office-studio-pdf-pages.spec.ts:152:1 › moves native page references by dragging a thumbnail after the final page (2.4s)
+  ✘   3 [chromium] › e2e/office-studio-word-cell-mapping.spec.ts:338:1 › maps real merged multi-cell edits through mixed row gaps, one history action, two native reopens and print (5.5s)
+  ✘   4 [chromium] › e2e/office-studio-word-cell-mapping.spec.ts:431:1 › restores null margins through two native reopens, then clears a default side and all spacing while retaining explicit zero (5.5s)
+  ✓   5 [chromium] › e2e/office-studio-word-cell-properties.spec.ts:5:1 › keeps native exact row height with explicit cell padding while editing and reopening twice (3.0s)
+  ✓   6 [chromium] › e2e/office-studio-word-cell-properties.spec.ts:132:1 › moves actual text through all nine fixed-cell alignments and restores the transaction (6.1s)
+  ✓   7 [chromium] › e2e/office-studio-word-cell-properties.spec.ts:237:1 › edits table defaults and spacing without materializing direct margins, restores inheritance and reopens twice (6.1s)
+  ✓   8 [chromium] › e2e/office-studio-word-cell-properties.spec.ts:413:1 › keeps nested fixed-cell alignment and margins local while preserving native layout on reopening and printing (3.2s)
+  ✓   9 [chromium] › e2e/office-studio-word-cell-properties.spec.ts:526:1 › uses each native row gap with one shared column grid and preserves fixed-cell budgets through printing and reopening (3.0s)
+  ✓  10 [chromium] › e2e/office-studio-word-cell-properties.spec.ts:689:1 › previews column resizing without jumping between native and model grids, cancels cleanly and saves one history action (2.4s)
+  ✓  11 [chromium] › e2e/office-studio-word-cell-properties.spec.ts:821:1 › aligns actual short content within a taller automatic row with mixed gaps and reproduces it in the native print document (3.6s)
+  ✓  12 [chromium] › e2e/office-studio-word-cell-regions.spec.ts:197:1 › edits independent native header and footer table cells, cancels drafts, undoes once and reopens both regions twice (5.2s)
+  ✓  13 [chromium] › e2e/office-studio-word-cell-regions.spec.ts:306:1 › blocks a real Word cell draft on readonly changes and keeps light, dark and 320px dialogs interactive without writes (5.0s)
+
+
+  1) [chromium] › e2e/office-studio-word-cell-mapping.spec.ts:338:1 › maps real merged multi-cell edits through mixed row gaps, one history action, two native reopens and print 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 15
+    + Received  + 15
+
+    @@ -14,19 +14,19 @@
+              false,
+            ],
+            "colspan": 1,
+            "column": 0,
+            "horizontal": Array [
+    -         "left",
+    -         "left",
+    -         "left",
+    -         "left",
+    -         "left",
+    -         "left",
+    -         "left",
+    -         "left",
+    -         "left",
+    +         "start",
+    +         "start",
+    +         "start",
+    +         "start",
+    +         "start",
+    +         "start",
+    +         "start",
+    +         "start",
+    +         "start",
+            ],
+            "italic": Array [
+              false,
+              false,
+              false,
+    @@ -62,11 +62,11 @@
+              false,
+            ],
+            "colspan": 2,
+            "column": 1,
+            "horizontal": Array [
+    -         "left",
+    +         "start",
+            ],
+            "italic": Array [
+              true,
+            ],
+            "margins": Object {
+    @@ -85,11 +85,11 @@
+              false,
+            ],
+            "colspan": 1,
+            "column": 1,
+            "horizontal": Array [
+    -         "left",
+    +         "start",
+            ],
+            "italic": Array [
+              false,
+            ],
+            "margins": null,
+    @@ -107,12 +107,12 @@
+              false,
+            ],
+            "colspan": 1,
+            "column": 2,
+            "horizontal": Array [
+    -         "left",
+    -         "left",
+    +         "start",
+    +         "start",
+            ],
+            "italic": Array [
+              false,
+              false,
+            ],
+    @@ -131,11 +131,11 @@
+              true,
+            ],
+            "colspan": 2,
+            "column": 0,
+            "horizontal": Array [
+    -         "left",
+    +         "start",
+            ],
+            "italic": Array [
+              false,
+            ],
+            "margins": Object {
+    @@ -154,11 +154,11 @@
+              false,
+            ],
+            "colspan": 1,
+            "column": 2,
+            "horizontal": Array [
+    -         "left",
+    +         "start",
+            ],
+            "italic": Array [
+              true,
+            ],
+            "margins": null,
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      257 | }
+      258 | async function assertState(table: Locator, expected: TableState) {
+    > 259 |   await expect(async () => expect(await readTable(table)).toEqual(expected)).toPass({ timeout: 5000 });
+          |                                                                              ^
+      260 | }
+      261 | async function openDialog(page: Page, cell?: Locator) {
+      262 |   if (cell) await cell.locator(':scope > [data-word-cell-content] > p').first().click();
+        at assertState (/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-cell-mapping.spec.ts:259:78)
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-cell-mapping.spec.ts:352:9
+
+    Error Context: test-results/office-studio-word-cell-ma-098e3-wo-native-reopens-and-print-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/office-studio-word-cell-ma-098e3-wo-native-reopens-and-print-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/office-studio-word-cell-ma-098e3-wo-native-reopens-and-print-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › e2e/office-studio-word-cell-mapping.spec.ts:431:1 › restores null margins through two native reopens, then clears a default side and all spacing while retaining explicit zero 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 5
+    + Received  + 5
+
+    @@ -6,11 +6,11 @@
+              true,
+            ],
+            "colspan": 1,
+            "column": 0,
+            "horizontal": Array [
+    -         "left",
+    +         "start",
+            ],
+            "italic": Array [
+              false,
+            ],
+            "margins": Object {
+    @@ -31,12 +31,12 @@
+              false,
+            ],
+            "colspan": 1,
+            "column": 1,
+            "horizontal": Array [
+    -         "left",
+    -         "left",
+    +         "start",
+    +         "start",
+            ],
+            "italic": Array [
+              false,
+              false,
+            ],
+    @@ -55,11 +55,11 @@
+              false,
+            ],
+            "colspan": 1,
+            "column": 0,
+            "horizontal": Array [
+    -         "left",
+    +         "start",
+            ],
+            "italic": Array [
+              true,
+            ],
+            "margins": Object {
+    @@ -79,11 +79,11 @@
+              false,
+            ],
+            "colspan": 1,
+            "column": 1,
+            "horizontal": Array [
+    -         "left",
+    +         "start",
+            ],
+            "italic": Array [
+              false,
+            ],
+            "margins": null,
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      257 | }
+      258 | async function assertState(table: Locator, expected: TableState) {
+    > 259 |   await expect(async () => expect(await readTable(table)).toEqual(expected)).toPass({ timeout: 5000 });
+          |                                                                              ^
+      260 | }
+      261 | async function openDialog(page: Page, cell?: Locator) {
+      262 |   if (cell) await cell.locator(':scope > [data-word-cell-content] > p').first().click();
+        at assertState (/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-cell-mapping.spec.ts:259:78)
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-cell-mapping.spec.ts:446:9
+
+    Error Context: test-results/office-studio-word-cell-ma-3c3fa-ile-retaining-explicit-zero-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/office-studio-word-cell-ma-3c3fa-ile-retaining-explicit-zero-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/office-studio-word-cell-ma-3c3fa-ile-retaining-explicit-zero-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › e2e/office-studio-word-cell-mapping.spec.ts:338:1 › maps real merged multi-cell edits through mixed row gaps, one history action, two native reopens and print 
+    [chromium] › e2e/office-studio-word-cell-mapping.spec.ts:431:1 › restores null margins through two native reopens, then clears a default side and all spacing while retaining explicit zero 
+  11 passed (1.0m)

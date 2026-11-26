@@ -1,0 +1,42 @@
+[WebServer] (node:93980) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:93995) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+  ✓  1 [chromium] › e2e/office-studio-word-cell-properties.spec.ts:5:1 › keeps native exact row height with explicit cell padding while editing and reopening twice (6.3s)
+  ✘  2 [chromium] › e2e/office-studio-word-cell-properties.spec.ts:74:1 › moves actual text through all nine fixed-cell alignments and restores the transaction (30.5s)
+
+
+  1) [chromium] › e2e/office-studio-word-cell-properties.spec.ts:74:1 › moves actual text through all nine fixed-cell alignments and restores the transaction 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: '撤销', exact: true })
+
+
+      109 |     expect(samples[`${vertical}右`].left - samples[`${vertical}中`].left).toBeGreaterThan(50);
+      110 |   }
+    > 111 |   await page.getByRole('button', { name: '撤销', exact: true }).click();
+          |                                                               ^
+      112 |   expect((await metrics()).align).toBe('center');
+      113 |   await page.getByRole('button', { name: '重做', exact: true }).click();
+      114 |   expect((await metrics()).align).toBe('right');
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-cell-properties.spec.ts:111:63
+
+    Error Context: test-results/office-studio-word-cell-pr-eb5db-nd-restores-the-transaction-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/office-studio-word-cell-pr-eb5db-nd-restores-the-transaction-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/office-studio-word-cell-pr-eb5db-nd-restores-the-transaction-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/office-studio-word-cell-properties.spec.ts:74:1 › moves actual text through all nine fixed-cell alignments and restores the transaction 
+  1 passed (39.3s)

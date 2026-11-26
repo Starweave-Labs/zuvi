@@ -976,16 +976,27 @@
   margin-bottom: 0;
 }
 
+.zuvi-studio-word-content .tiptap tr[data-word-row-height-rule='exact'][data-word-row-height] {
+  height: var(--zuvi-word-row-render-height, var(--zuvi-word-row-height)) !important;
+}
 .zuvi-studio-word-content .tiptap tr[data-word-row-height-rule='exact'][data-word-row-height] > :is(td, th):not([rowspan]:not([rowspan='1'])),
 .zuvi-studio-word-content .tiptap :is(td, th)[data-word-fixed-cell-height] {
-  padding-block: 0;
+  padding-block: 0 !important;
 }
 .zuvi-studio-word-content .tiptap tr[data-word-row-height-rule='exact'][data-word-row-height] > :is(td, th):not([rowspan]:not([rowspan='1'])) > [data-word-cell-content],
 .zuvi-studio-word-content .tiptap :is(td, th)[data-word-fixed-cell-height] > [data-word-cell-content] {
+  display: flex;
+  flex-direction: column;
+  justify-content: var(--zuvi-word-cell-justify, flex-start);
   box-sizing: border-box;
-  height: max(0px, calc(var(--zuvi-word-cell-height, var(--zuvi-word-row-height)) - 1px));
-  padding-block: max(0px, min(8px, calc((var(--zuvi-word-cell-height, var(--zuvi-word-row-height)) - 1px) / 2)));
+  height: max(0px, calc(var(--zuvi-word-cell-height, var(--zuvi-word-row-height)) - var(--zuvi-word-cell-border-y, 1px)));
+  padding-top: max(0px, min(var(--zuvi-word-cell-margin-top, 0pt), calc(var(--zuvi-word-cell-height, var(--zuvi-word-row-height)) - var(--zuvi-word-cell-border-y, 1px))));
+  padding-bottom: max(0px, min(var(--zuvi-word-cell-margin-bottom, 0pt), calc(var(--zuvi-word-cell-height, var(--zuvi-word-row-height)) - var(--zuvi-word-cell-border-y, 1px) - var(--zuvi-word-cell-margin-top, 0pt))));
   overflow: hidden;
+}
+
+.zuvi-studio-word-content .tiptap [data-word-cell-content] > * {
+  flex-shrink: 0;
 }
 
 .zuvi-studio-word-content .tiptap .selectedCell::after {
@@ -1358,4 +1369,58 @@
   vertical-align: top !important;
   position: relative;
   top: calc(-1 * var(--zuvi-word-baseline-shift, 0pt));
+}
+
+.zuvi-studio-word-cell-align-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+}
+.zuvi-studio-word-cell-margins-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-block: 8px;
+}
+.zuvi-studio-word-cell-margins-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+/* Row-specific native gaps occupy space outside the visible cell box. */
+.zuvi-studio-word-content .tiptap table[data-word-spacing-layout='mixed'] > tbody > tr:not([data-word-auto-page-row]) > :is(td, th) {
+  padding-top: calc(var(--zuvi-word-row-spacing, 0pt) / 2) !important;
+  padding-bottom: calc(var(--zuvi-word-cell-end-spacing, var(--zuvi-word-row-spacing, 0pt)) / 2) !important;
+  padding-left: var(--zuvi-word-cell-gap-left, calc(var(--zuvi-word-row-spacing, 0pt) / 2)) !important;
+  padding-right: var(--zuvi-word-cell-gap-right, calc(var(--zuvi-word-row-spacing, 0pt) / 2)) !important;
+  border: 0 !important;
+  background: transparent !important;
+  vertical-align: top !important;
+}
+.zuvi-studio-word-content .tiptap table[data-word-spacing-layout='mixed'] > tbody > tr:not([data-word-auto-page-row]) > :is(td, th):first-child {
+  padding-left: var(--zuvi-word-cell-gap-left, var(--zuvi-word-row-spacing, 0pt)) !important;
+}
+.zuvi-studio-word-content .tiptap table[data-word-spacing-layout='mixed'] > tbody > tr:not([data-word-auto-page-row]) > :is(td, th):last-child {
+  padding-right: var(--zuvi-word-cell-gap-right, var(--zuvi-word-row-spacing, 0pt)) !important;
+}
+.zuvi-studio-word-content .tiptap table[data-word-spacing-layout='mixed'] > tbody > tr:not([data-word-auto-page-row]) > :is(td, th) > [data-word-cell-content] {
+  display: flex;
+  flex-direction: column;
+  justify-content: var(--zuvi-word-cell-justify, flex-start);
+  border: 1px solid currentColor;
+  background: var(--zuvi-word-cell-background, transparent);
+  padding: var(--zuvi-word-cell-margin-top, 0pt) var(--zuvi-word-cell-margin-right, 5.4pt) var(--zuvi-word-cell-margin-bottom, 0pt) var(--zuvi-word-cell-margin-left, 5.4pt);
+  box-sizing: border-box;
+}
+.zuvi-studio-word-content .tiptap table[data-word-spacing-layout='mixed'] > tbody > tr[data-word-row-height-rule='exact'][data-word-row-height] > :is(td, th):not([rowspan]:not([rowspan='1'])),
+.zuvi-studio-word-content .tiptap table[data-word-spacing-layout='mixed'] > tbody > tr > :is(td, th)[data-word-fixed-cell-height] {
+  padding-top: calc(var(--zuvi-word-row-spacing, 0pt) / 2) !important;
+  padding-bottom: calc(var(--zuvi-word-cell-end-spacing, var(--zuvi-word-row-spacing, 0pt)) / 2) !important;
+}
+.zuvi-studio-word-content .tiptap table[data-word-spacing-layout='mixed'] > tbody > tr[data-word-row-height-rule='exact'][data-word-row-height] > :is(td, th):not([rowspan]:not([rowspan='1'])) > [data-word-cell-content],
+.zuvi-studio-word-content .tiptap table[data-word-spacing-layout='mixed'] > tbody > tr > :is(td, th)[data-word-fixed-cell-height] > [data-word-cell-content] {
+  height: var(--zuvi-word-cell-height);
+  overflow: hidden;
 }

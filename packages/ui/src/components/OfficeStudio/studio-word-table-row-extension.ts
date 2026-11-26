@@ -1,15 +1,13 @@
 import { Extension, type Editor } from '@tiptap/react';
 import { CellSelection, TableMap } from '@tiptap/pm/tables';
 import { closeHistory } from '@tiptap/pm/history';
-import {
-  wordRowProperties,
-  wordRowCss,
-  wordMergedRowHeight,
-  type WordRowProperties,
-} from './studio-word-table-rows';
+import { wordRowProperties, wordRowCss, type WordRowProperties } from './studio-word-table-rows';
 import { Plugin, PluginKey } from '@tiptap/pm/state';
 import { Decoration, DecorationSet } from '@tiptap/pm/view';
 import type { Node as ProseMirrorNode } from '@tiptap/pm/model';
+import { wordTableHeightBudgets, wordTableCellColumns } from './studio-word-table-layout';
+import type { StudioRichNode } from './studio-types';
+import { wordEffectiveRowSpacing, wordTableCellGapCss } from './studio-word-table-properties';
 
 function rowHeightInPoints(element: HTMLElement, scale: number) {
   const natural = Number(element.getAttribute('data-word-natural-row-height'));
@@ -25,23 +23,54 @@ function fixedCells(document: ProseMirrorNode) {
   const decorations: Decoration[] = [];
   document.descendants((table, tablePosition) => {
     if (table.type.name !== 'table') return;
-    table.forEach((row, rowOffset, rowIndex) =>
-      row.forEach((cell, cellOffset) => {
-        const span = Number(cell.attrs.rowspan) || 1;
-        if (!Number.isInteger(span) || span <= 1 || rowIndex + span > table.childCount) return;
-        const height = wordMergedRowHeight(
-          Array.from({ length: span }, (_, index) => table.child(rowIndex + index).attrs)
+    const geometry = wordTableHeightBudgets(table.toJSON() as StudioRichNode);
+    const columns = wordTableCellColumns(table.toJSON() as StudioRichNode);
+    table.forEach((row, rowOffset, rowIndex) => {
+      const budget = geometry.rows[rowIndex];
+      const rowPosition = tablePosition + 1 + rowOffset;
+      if (budget)
+        decorations.push(
+          Decoration.node(rowPosition, rowPosition + row.nodeSize, {
+            'data-word-rendered-row-height': String(budget.outerHeight),
+            style: `--zuvi-word-row-render-height:${budget.outerHeight}pt`,
+          })
         );
-        if (height === null) return;
+      row.forEach((cell, cellOffset, cellIndex) => {
+        const height = geometry.cells[rowIndex][cellIndex]?.outerHeight;
+        const span = Math.max(1, Number(cell.attrs.rowspan) || 1);
+        const end = Math.min(table.childCount - 1, rowIndex + span - 1);
+        const endSpacing = wordEffectiveRowSpacing(table.attrs, table.child(end).attrs);
+        const column = columns.cells[rowIndex][cellIndex];
+        const gaps = wordTableCellGapCss(
+          wordEffectiveRowSpacing(table.attrs, row.attrs),
+          column.first,
+          column.last,
+          endSpacing
+        );
+        const rawHeight =
+          height === undefined
+            ? null
+            : Array.from({ length: span }, (_, index) =>
+                Number(table.child(rowIndex + index).attrs.rowHeight)
+              ).reduce((sum, value) => sum + value, 0);
         const position = tablePosition + 2 + rowOffset + cellOffset;
         decorations.push(
           Decoration.node(position, position + cell.nodeSize, {
-            'data-word-fixed-cell-height': String(height),
-            style: `--zuvi-word-cell-height:${height}pt`,
+            ...(height === undefined
+              ? {}
+              : {
+                  'data-word-rendered-cell-height': String(height),
+                  ...(span > 1 ? { 'data-word-fixed-cell-height': String(rawHeight) } : {}),
+                }),
+            style: `${Object.entries(gaps)
+              .map(([key, value]) => `${key}:${value}`)
+              .join(
+                ';'
+              )};--zuvi-word-cell-end-spacing:${endSpacing}pt${height === undefined ? '' : `;--zuvi-word-cell-height:${height}pt`}`,
           })
         );
-      })
-    );
+      });
+    });
   });
   return DecorationSet.create(document, decorations);
 }
@@ -226,6 +255,7 @@ export const WordTableRowProperties = Extension.create({
             document: ProseMirrorNode;
             pointer: number;
             startY: number;
+            startBottom: number;
             height: number;
             scale: number;
             value: number;
@@ -250,15 +280,22 @@ export const WordTableRowProperties = Extension.create({
             const row = targetRow(event);
             if (!row) return;
             const position = view.posAtDOM(row, 0) - 1;
-            if (view.state.doc.nodeAt(position)?.type.name !== 'tableRow') return;
+            const node = view.state.doc.nodeAt(position);
+            if (node?.type.name !== 'tableRow') return;
             const scale =
               view.dom.offsetWidth > 0
                 ? view.dom.getBoundingClientRect().width / view.dom.offsetWidth
                 : 1;
             if (!Number.isFinite(scale) || scale <= 0) return;
+            if (!Number.isFinite(scale) || scale <= 0) return;
             const rect = row.getBoundingClientRect();
-            const height = rowHeightInPoints(row, scale);
-            if (!Number.isFinite(height) || height <= 0 || height > 2000) return;
+            const properties = wordRowProperties(node.attrs);
+            // The visible box includes margins and borders; an exact row already owns its native height.
+            const height =
+              properties.rowHeightRule === 'exact' && properties.rowHeight !== null
+                ? properties.rowHeight
+                : rowHeightInPoints(row, scale);
+            if (!Number.isFinite(height) || height < 0 || height > 2000) return;
             const guide = owner.createElement('div');
             guide.dataset.wordRowResizeGuide = '';
             guide.setAttribute('role', 'status');
@@ -271,6 +308,7 @@ export const WordTableRowProperties = Extension.create({
               document: view.state.doc,
               pointer: event.pointerId,
               startY: event.clientY,
+              startBottom: rect.bottom,
               height,
               scale,
               value: height,
@@ -293,7 +331,7 @@ export const WordTableRowProperties = Extension.create({
                   Math.min(2000, drag.height + ((event.clientY - drag.startY) / drag.scale) * 0.75)
                 ) * 2
               ) / 2;
-            drag.guide.style.top = `${drag.startY + ((drag.value - drag.height) / 0.75) * drag.scale}px`;
+            drag.guide.style.top = `${drag.startBottom + ((drag.value - drag.height) / 0.75) * drag.scale}px`;
             drag.guide.textContent = `${drag.value.toFixed(1)} 磅`;
             event.preventDefault();
           };

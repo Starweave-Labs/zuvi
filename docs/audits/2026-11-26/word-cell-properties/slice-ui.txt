@@ -1,0 +1,12 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/studio-word-cell-properties.test.ts (6 tests) 3ms
+ ✓ src/components/OfficeStudio/studio-word-cell-command.test.ts (3 tests) 101ms
+ ✓ src/components/OfficeStudio/StudioWordCellDialog.test.tsx (3 tests) 212ms
+
+ Test Files  3 passed (3)
+      Tests  12 passed (12)
+   Start at  16:17:58
+   Duration  1.75s (transform 330ms, setup 583ms, collect 665ms, tests 316ms, environment 1.60s, prepare 205ms)
+

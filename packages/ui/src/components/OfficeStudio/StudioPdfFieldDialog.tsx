@@ -186,6 +186,7 @@ export function StudioPdfFieldDialog({
         ...(choice ? { options: optionValues } : {}),
         ...(['text', 'date'].includes(kind) ? { multiline: kind === 'text' && multiline } : {}),
         widgets: fieldWidgets,
+        ...(field?.hiddenWidgets ? { hiddenWidgets: field.hiddenWidgets } : {}),
         design,
       };
       const issue = pdfFieldIssue(result, document.pageCount);

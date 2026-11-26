@@ -1,0 +1,550 @@
+TAP version 13
+# Subtest: native table row heights and explicit cantSplit flags survive edits and two DOCX cycles
+ok 1 - native table row heights and explicit cantSplit flags survive edits and two DOCX cycles
+  ---
+  duration_ms: 347.813
+  ...
+# Subtest: native widow control, keep-next and keep-lines retain inherited values and explicit false over repeated DOCX saves
+ok 2 - native widow control, keep-next and keep-lines retain inherited values and explicit false over repeated DOCX saves
+  ---
+  duration_ms: 98.017291
+  ...
+# Subtest: native paragraph borders, distance, shadow/frame and patterned shading survive direct edits and two DOCX cycles
+ok 3 - native paragraph borders, distance, shadow/frame and patterned shading survive direct edits and two DOCX cycles
+  ---
+  duration_ms: 71.227584
+  ...
+# Subtest: surface styles preserve independent inherited edges and explicit nil overrides across repeated native saves
+ok 4 - surface styles preserve independent inherited edges and explicit nil overrides across repeated native saves
+  ---
+  duration_ms: 74.554416
+  ...
+# Subtest: full native numbering templates, interrupted sequences and independent starts survive edits and repeated DOCX reopenings
+ok 5 - full native numbering templates, interrupted sequences and independent starts survive edits and repeated DOCX reopenings
+  ---
+  duration_ms: 124.708
+  ...
+# Subtest: native period and comma decimal symbols persist independently of text grouping separators
+ok 6 - native period and comma decimal symbols persist independently of text grouping separators
+  ---
+  duration_ms: 160.793875
+  ...
+# Subtest: native tab stops, leaders, inherited clear directives and the default interval survive edits and repeated DOCX saves
+ok 7 - native tab stops, leaders, inherited clear directives and the default interval survive edits and repeated DOCX saves
+  ---
+  duration_ms: 103.994166
+  ...
+# Subtest: unsupported, duplicate and malformed native tab definitions reject the whole document
+ok 8 - unsupported, duplicate and malformed native tab definitions reject the whole document
+  ---
+  duration_ms: 19.078875
+  ...
+# Subtest: paragraph indentation and three native line-spacing rules preserve point values and text over repeated DOCX saves
+ok 9 - paragraph indentation and three native line-spacing rules preserve point values and text over repeated DOCX saves
+  ---
+  duration_ms: 78.027291
+  ...
+# Subtest: partial native line properties preserve style raw-unit inheritance and direct paragraph zero overrides
+ok 10 - partial native line properties preserve style raw-unit inheritance and direct paragraph zero overrides
+  ---
+  duration_ms: 84.93875
+  ...
+# Subtest: signed native run spacing and position preserve fonts, scripts, header/footer and repeated DOCX edits
+ok 11 - signed native run spacing and position preserve fonts, scripts, header/footer and repeated DOCX edits
+  ---
+  duration_ms: 89.900792
+  ...
+# Subtest: style inheritance and explicit zero spacing/position overrides survive native DOCX serialization
+ok 12 - style inheritance and explicit zero spacing/position overrides survive native DOCX serialization
+  ---
+  duration_ms: 93.644416
+  ...
+# Subtest: explicit zero run metrics also cancel inherited values on images and page fields
+ok 13 - explicit zero run metrics also cancel inherited values on images and page fields
+  ---
+  duration_ms: 38.237875
+  ...
+# Subtest: invalid character metrics are refused without changing the original model
+ok 14 - invalid character metrics are refused without changing the original model
+  ---
+  duration_ms: 1.991417
+  ...
+# Subtest: native tabs, repeated spaces, nonbreaking spaces and line breaks retain their original characters and formatting across DOCX edits and repeated saves
+ok 15 - native tabs, repeated spaces, nonbreaking spaces and line breaks retain their original characters and formatting across DOCX edits and repeated saves
+  ---
+  duration_ms: 63.6395
+  ...
+# Subtest: named paragraph styles preserve inheritance, native links, automatic update and direct overrides over repeated saves
+ok 16 - named paragraph styles preserve inheritance, native links, automatic update and direct overrides over repeated saves
+  ---
+  duration_ms: 106.440666
+  ...
+# Subtest: native custom styles remain editable definitions with parent and next-style links
+ok 17 - native custom styles remain editable definitions with parent and next-style links
+  ---
+  duration_ms: 32.367416
+  ...
+# Subtest: a named body style can explicitly remove an inherited heading outline level
+ok 18 - a named body style can explicitly remove an inherited heading outline level
+  ---
+  duration_ms: 23.504417
+  ...
+# Subtest: invalid style graphs cannot be exported or partially change the source document
+ok 19 - invalid style graphs cannot be exported or partially change the source document
+  ---
+  duration_ms: 0.348625
+  ...
+# Subtest: derived styles retain inherited heading levels instead of freezing the parent level on import
+ok 20 - derived styles retain inherited heading levels instead of freezing the parent level on import
+  ---
+  duration_ms: 25.879917
+  ...
+# Subtest: paragraph-level outline overrides survive saving without changing the linked style definition
+ok 21 - paragraph-level outline overrides survive saving without changing the linked style definition
+  ---
+  duration_ms: 29.2125
+  ...
+# Subtest: named styles inside a quote retain the existing quote border and structure after saving
+ok 22 - named styles inside a quote retain the existing quote border and structure after saving
+  ---
+  duration_ms: 27.712958
+  ...
+# Subtest: DOCX roundtrip keeps headings, rich text, link, hard/page breaks and page configuration
+ok 23 - DOCX roundtrip keeps headings, rich text, link, hard/page breaks and page configuration
+  ---
+  duration_ms: 28.010709
+  ...
+# Subtest: DOCX list import preserves nested mixed lists, sequence and non-default starts
+ok 24 - DOCX list import preserves nested mixed lists, sequence and non-default starts
+  ---
+  duration_ms: 49.874375
+  ...
+# Subtest: DOCX table roundtrip retains row/column merges, headings and cell background
+ok 25 - DOCX table roundtrip retains row/column merges, headings and cell background
+  ---
+  duration_ms: 51.991292
+  ...
+# Subtest: DOCX import resolves inherited paragraph and character styles
+ok 26 - DOCX import resolves inherited paragraph and character styles
+  ---
+  duration_ms: 2.036125
+  ...
+# Subtest: DOCX import resolves theme fonts and colors instead of dropping them
+ok 27 - DOCX import resolves theme fonts and colors instead of dropping them
+  ---
+  duration_ms: 2.266792
+  ...
+# Subtest: the published studio Word sample can export, reopen and export again
+ok 28 - the published studio Word sample can export, reopen and export again
+  ---
+  duration_ms: 154.118375
+  ...
+# Subtest: DOCX import refuses unsupported drawings, tracked changes, broken header references and embedded objects
+ok 29 - DOCX import refuses unsupported drawings, tracked changes, broken header references and embedded objects
+  ---
+  duration_ms: 3.582
+  ...
+# Subtest: DOCX import refuses unsafe hyperlinks and merged cells containing hidden text
+ok 30 - DOCX import refuses unsafe hyperlinks and merged cells containing hidden text
+  ---
+  duration_ms: 4.181667
+  ...
+# Subtest: DOCX export fails explicitly for unsupported nodes, marks and inline layout
+ok 31 - DOCX export fails explicitly for unsupported nodes, marks and inline layout
+  ---
+  duration_ms: 15.001
+  ...
+# Subtest: DOCX embeds raster images and retains body, default header/footer, fields and distances over repeated exports
+ok 32 - DOCX embeds raster images and retains body, default header/footer, fields and distances over repeated exports
+  ---
+  duration_ms: 67.625667
+  ...
+# Subtest: DOCX imports simple PAGE and NUMPAGES fields without their cached values becoming editable text
+ok 33 - DOCX imports simple PAGE and NUMPAGES fields without their cached values becoming editable text
+  ---
+  duration_ms: 34.880083
+  ...
+# Subtest: DOCX adds a native page field to a populated footer without duplicating it on reopening
+ok 34 - DOCX adds a native page field to a populated footer without duplicating it on reopening
+  ---
+  duration_ms: 59.669083
+  ...
+# Subtest: DOCX retains text after a complex field in the same run and refuses nested fields
+ok 35 - DOCX retains text after a complex field in the same run and refuses nested fields
+  ---
+  duration_ms: 25.538209
+  ...
+# Subtest: DOCX embeds JPEG bytes unchanged and retains configured header/footer distances before regions are created
+ok 36 - DOCX embeds JPEG bytes unchanged and retains configured header/footer distances before regions are created
+  ---
+  duration_ms: 31.534166
+  ...
+# Subtest: floating images preserve wrapping, position, anchor flags, distances and custom contours across native DOCX saves
+ok 37 - floating images preserve wrapping, position, anchor flags, distances and custom contours across native DOCX saves
+  ---
+  duration_ms: 162.453625
+  ...
+# Subtest: invalid floating images are rejected before changing the source model
+ok 38 - invalid floating images are rejected before changing the source model
+  ---
+  duration_ms: 0.884917
+  ...
+# Subtest: DOCX refuses image layout that cannot be preserved and external image links
+ok 39 - DOCX refuses image layout that cannot be preserved and external image links
+  ---
+  duration_ms: 173.530834
+  ...
+# Subtest: DOCX roundtrip retains superscript and subscript independently
+ok 40 - DOCX roundtrip retains superscript and subscript independently
+  ---
+  duration_ms: 22.433834
+  ...
+# Subtest: DOCX import rejects old DOC, corrupt XML and unequal margins instead of flattening
+ok 41 - DOCX import rejects old DOC, corrupt XML and unequal margins instead of flattening
+  ---
+  duration_ms: 2.251584
+  ...
+# Subtest: typed Word font names and 1pt to 300pt half-point sizes survive repeated DOCX saves
+ok 42 - typed Word font names and 1pt to 300pt half-point sizes survive repeated DOCX saves
+  ---
+  duration_ms: 44.545791
+  ...
+# Subtest: a cleared heading keeps its level and hyperlink without reintroducing default heading bold on reopen
+ok 43 - a cleared heading keeps its level and hyperlink without reintroducing default heading bold on reopen
+  ---
+  duration_ms: 41.640792
+  ...
+# Subtest: table paragraph absent spacing exports zero while explicit spacing survives repeated saves
+ok 44 - table paragraph absent spacing exports zero while explicit spacing survives repeated saves
+  ---
+  duration_ms: 48.505792
+  ...
+# Subtest: native simple and complex table formula fields preserve instructions, cached edits and run formatting twice
+ok 45 - native simple and complex table formula fields preserve instructions, cached edits and run formatting twice
+  ---
+  duration_ms: 49.640375
+  ...
+# Subtest: native vertical merges and nested formula instructions remain scoped and intact across two DOCX cycles
+ok 46 - native vertical merges and nested formula instructions remain scoped and intact across two DOCX cycles
+  ---
+  duration_ms: 51.86525
+  ...
+# Subtest: native numeric-picture formula switches and formatted caches survive repeated DOCX saving
+ok 47 - native numeric-picture formula switches and formatted caches survive repeated DOCX saving
+  ---
+  duration_ms: 45.419084
+  ...
+# Subtest: native image crop preserves embedded source bytes, frame dimensions and edited edges across repeated DOCX saves
+ok 48 - native image crop preserves embedded source bytes, frame dimensions and edited edges across repeated DOCX saves
+  ---
+  duration_ms: 92.451292
+  ...
+# Subtest: replacing cropped PNG with JPEG preserves display frame, description and native drawing position through two saves
+ok 49 - replacing cropped PNG with JPEG preserves display frame, description and native drawing position through two saves
+  ---
+  duration_ms: 68.954333
+  ...
+# Subtest: replacing a floating picture retains page anchor, offsets, layering and visible crop frame across native saves
+ok 50 - replacing a floating picture retains page anchor, offsets, layering and visible crop frame across native saves
+  ---
+  duration_ms: 71.165625
+  ...
+# Subtest: native OMML fractions, scripts, roots and matrices retain editable structures through repeated DOCX saves
+ok 51 - native OMML fractions, scripts, roots and matrices retain editable structures through repeated DOCX saves
+  ---
+  duration_ms: 51.762459
+  ...
+# Subtest: unsupported OMML attributes and hidden degree content fail instead of silently losing data
+ok 52 - unsupported OMML attributes and hidden degree content fail instead of silently losing data
+  ---
+  duration_ms: 3.478625
+  ...
+# Subtest: local equation run formatting and surrounding bold marks survive two native DOCX saves
+ok 53 - local equation run formatting and surrounding bold marks survive two native DOCX saves
+  ---
+  duration_ms: 47.308208
+  ...
+# Subtest: separate mathematical and Word run property namespaces retain legitimate local formatting
+ok 54 - separate mathematical and Word run property namespaces retain legitimate local formatting
+  ---
+  duration_ms: 0.48975
+  ...
+# Subtest: equation typography retains local overrides and surrounding textStyle through repeated DOCX saves
+ok 55 - equation typography retains local overrides and surrounding textStyle through repeated DOCX saves
+  ---
+  duration_ms: 52.113125
+  ...
+# Subtest: native display OMML and mathematical styles import, edit and reopen twice with alignment intact
+ok 56 - native display OMML and mathematical styles import, edit and reopen twice with alignment intact
+  ---
+  duration_ms: 212.771125
+  ...
+# Subtest: equation Unicode and carriage returns survive native XML whitespace normalization
+ok 57 - equation Unicode and carriage returns survive native XML whitespace normalization
+  ---
+  duration_ms: 48.918333
+  ...
+# Subtest: native multi-equation paragraph groups retain independent editable trees across two saves
+ok 58 - native multi-equation paragraph groups retain independent editable trees across two saves
+  ---
+  duration_ms: 54.264
+  ...
+# Subtest: native equations retain independent region and table trees with Unicode through repeated saves
+ok 59 - native equations retain independent region and table trees with Unicode through repeated saves
+  ---
+  duration_ms: 68.109417
+  ...
+# Subtest: native cross-paragraph bookmarks retain identity and edited text through two DOCX saves
+ok 60 - native cross-paragraph bookmarks retain identity and edited text through two DOCX saves
+  ---
+  duration_ms: 51.865541
+  ...
+# Subtest: native malformed or duplicate bookmarks fail rather than silently losing ranges
+ok 61 - native malformed or duplicate bookmarks fail rather than silently losing ranges
+  ---
+  duration_ms: 3.362125
+  ...
+# Subtest: native internal bookmark hyperlinks retain display formatting and anchor across two saves
+ok 62 - native internal bookmark hyperlinks retain display formatting and anchor across two saves
+  ---
+  duration_ms: 48.442208
+  ...
+# Subtest: native cell vertical alignment and independent margins survive editing and two DOCX cycles
+ok 63 - native cell vertical alignment and independent margins survive editing and two DOCX cycles
+  ---
+  duration_ms: 49.643792
+  ...
+# Subtest: cell margins with unrepresentable native precision fail without mutating the source model
+ok 64 - cell margins with unrepresentable native precision fail without mutating the source model
+  ---
+  duration_ms: 1.649291
+  ...
+# Subtest: table default margins and explicit zero cell overrides retain independent identities on reopening
+ok 65 - table default margins and explicit zero cell overrides retain independent identities on reopening
+  ---
+  duration_ms: 46.864708
+  ...
+# Subtest: native table defaults, direct zero overrides and spacing keep their identity and grid after two saves
+ok 66 - native table defaults, direct zero overrides and spacing keep their identity and grid after two saves
+  ---
+  duration_ms: 51.269792
+  ...
+# Subtest: row spacing overrides including nil and exceptions remain independent of table defaults
+ok 67 - row spacing overrides including nil and exceptions remain independent of table defaults
+  ---
+  duration_ms: 45.871042
+  ...
+# Subtest: nested table defaults and direct cell margins remain local through repeated native reopening
+ok 68 - nested table defaults and direct cell margins remain local through repeated native reopening
+  ---
+  duration_ms: 50.585417
+  ...
+# Subtest: invalid table spacing or default precision rejects the whole save without changing the model
+ok 69 - invalid table spacing or default precision rejects the whole save without changing the model
+  ---
+  duration_ms: 1.691791
+  ...
+# Subtest: Word print repeats only consecutive leading complete header rows
+ok 70 - Word print repeats only consecutive leading complete header rows
+  ---
+  duration_ms: 75.552375
+  ...
+# Subtest: Word print applies row minimum height and explicit split policy while automatic height ignores its value
+ok 71 - Word print applies row minimum height and explicit split policy while automatic height ignores its value
+  ---
+  duration_ms: 10.953584
+  ...
+# Subtest: Word print uses explicit keep and widow values while title defaults retain the next paragraph
+ok 72 - Word print uses explicit keep and widow values while title defaults retain the next paragraph
+  ---
+  duration_ms: 14.494542
+  ...
+# Subtest: Word print retains native tab characters and resolved leaders for the measurement pass without inserting document text
+ok 73 - Word print retains native tab characters and resolved leaders for the measurement pass without inserting document text
+  ---
+  duration_ms: 92.629167
+  ...
+# Subtest: Word print preserves point paragraph geometry and exact/minimum line-rule metadata
+ok 74 - Word print preserves point paragraph geometry and exact/minimum line-rule metadata
+  ---
+  duration_ms: 65.837416
+  ...
+# Subtest: Word prints character spacing and baseline movement without changing point size or source text
+ok 75 - Word prints character spacing and baseline movement without changing point size or source text
+  ---
+  duration_ms: 49.472708
+  ...
+# Subtest: custom number format text, Chinese dates and selected color sections print with conditional color taking priority
+ok 76 - custom number format text, Chinese dates and selected color sections print with conditional color taking priority
+  ---
+  duration_ms: 95.906584
+  ...
+# Subtest: Word printing retains whitespace and line breaks without any nonprinting view glyphs or decorations
+ok 77 - Word printing retains whitespace and line breaks without any nonprinting view glyphs or decorations
+  ---
+  duration_ms: 8.267125
+  ...
+# Subtest: Word print keeps floating images, wrap contours and page-coordinate placement in the printed document
+ok 78 - Word print keeps floating images, wrap contours and page-coordinate placement in the printed document
+  ---
+  duration_ms: 12.29175
+  ...
+# Subtest: sheet print respects widths, vertical alignment, blank border-only cells and merged outer edges
+ok 79 - sheet print respects widths, vertical alignment, blank border-only cells and merged outer edges
+  ---
+  duration_ms: 39.242584
+  ...
+# Subtest: Word print content repeats headers for explicit pages, preserves page fields and safely embeds images
+ok 80 - Word print content repeats headers for explicit pages, preserves page fields and safely embeds images
+  ---
+  duration_ms: 9.344083
+  ...
+# Subtest: document text, hyperlinks, labels and style attributes cannot inject script into printable HTML
+ok 81 - document text, hyperlinks, labels and style attributes cannot inject script into printable HTML
+  ---
+  duration_ms: 6.66375
+  ...
+# Subtest: Excel print uses computed values, filters and merged cells, and includes the actual chart series
+ok 82 - Excel print uses computed values, filters and merged cells, and includes the actual chart series
+  ---
+  duration_ms: 17.600417
+  ...
+# Subtest: Excel cell fonts retain point sizes, formulas and conditional styling while legacy cells inherit defaults
+ok 83 - Excel cell fonts retain point sizes, formulas and conditional styling while legacy cells inherit defaults
+  ---
+  duration_ms: 17.157375
+  ...
+# Subtest: unknown Excel font names cannot create CSS declarations or HTML even with quotes and XML whitespace
+ok 84 - unknown Excel font names cannot create CSS declarations or HTML even with quotes and XML whitespace
+  ---
+  duration_ms: 9.105667
+  ...
+# Subtest: invalid Excel font controls and out-of-range point sizes fail the print model gate
+ok 85 - invalid Excel font controls and out-of-range point sizes fail the print model gate
+  ---
+  duration_ms: 0.801416
+  ...
+# Subtest: Excel print escapes native hyperlink text, tooltip and validated external destinations
+ok 86 - Excel print escapes native hyperlink text, tooltip and validated external destinations
+  ---
+  duration_ms: 8.261084
+  ...
+# Subtest: Excel print preserves unsupported protocols, paths and workbook locations as plain text
+ok 87 - Excel print preserves unsupported protocols, paths and workbook locations as plain text
+  ---
+  duration_ms: 9.057083
+  ...
+# Subtest: Excel hyperlinks retain typed values, formatted formula results and empty or failing formulas
+ok 88 - Excel hyperlinks retain typed values, formatted formula results and empty or failing formulas
+  ---
+  duration_ms: 14.938708
+  ...
+# Subtest: blank hyperlinks stay printable from a frozen read-only snapshot without adding editing controls
+ok 89 - blank hyperlinks stay printable from a frozen read-only snapshot without adding editing controls
+  ---
+  duration_ms: 9.0845
+  ...
+# Subtest: Excel print resolves top-level HYPERLINK formulas while preserving calculated labels
+ok 90 - Excel print resolves top-level HYPERLINK formulas while preserving calculated labels
+  ---
+  duration_ms: 12.427167
+  ...
+# Subtest: a hyperlink outside populated cells cannot bypass the print area limit
+ok 91 - a hyperlink outside populated cells cannot bypass the print area limit
+  ---
+  duration_ms: 0.443708
+  ...
+# Subtest: oversized print regions and invalid models fail before constructing a printable frame
+ok 92 - oversized print regions and invalid models fail before constructing a printable frame
+  ---
+  duration_ms: 7.861875
+  ...
+# Subtest: printing calls the document frame and releases it after the print dialog ends
+ok 93 - printing calls the document frame and releases it after the print dialog ends
+  ---
+  duration_ms: 13.449333
+  ...
+# Subtest: Excel print renders recalculated conditional styles and number formats, including styled empty cells
+ok 94 - Excel print renders recalculated conditional styles and number formats, including styled empty cells
+  ---
+  duration_ms: 35.896041
+  ...
+# Subtest: conditional formatting cannot silently extend printing beyond its cell budget
+ok 95 - conditional formatting cannot silently extend printing beyond its cell budget
+  ---
+  duration_ms: 8.736709
+  ...
+# Subtest: PDF printing uses the exported file and releases its object URL after printing
+ok 96 - PDF printing uses the exported file and releases its object URL after printing
+  ---
+  duration_ms: 204.712416
+  ...
+# Subtest: a failed PDF print preview cleans up its file and ignores a late load event
+ok 97 - a failed PDF print preview cleans up its file and ignores a late load event
+  ---
+  duration_ms: 48.186125
+  ...
+# Subtest: a timed-out print preview never starts printing when a late font load completes
+ok 98 - a timed-out print preview never starts printing when a late font load completes
+  ---
+  duration_ms: 44.213166
+  ...
+# Subtest: Sheet print uses actual row sizes and keeps merged content whose original row is hidden
+ok 99 - Sheet print uses actual row sizes and keeps merged content whose original row is hidden
+  ---
+  duration_ms: 8.640042
+  ...
+# Subtest: array print includes the entire computed region without persisting synthetic result cells
+ok 100 - array print includes the entire computed region without persisting synthetic result cells
+  ---
+  duration_ms: 16.511083
+  ...
+# Subtest: Word print sums fixed merged cell height without persisting print attributes
+ok 101 - Word print sums fixed merged cell height without persisting print attributes
+  ---
+  duration_ms: 15.226417
+  ...
+# Subtest: Word formula print uses the current escaped cached result and preserves character marks
+ok 102 - Word formula print uses the current escaped cached result and preserves character marks
+  ---
+  duration_ms: 7.619541
+  ...
+# Subtest: Word image crop prints a clipped original raster frame and resets without modifying source
+ok 103 - Word image crop prints a clipped original raster frame and resets without modifying source
+  ---
+  duration_ms: 13.32725
+  ...
+# Subtest: Word equations print semantic MathML fractions and matrices with escaped text
+ok 104 - Word equations print semantic MathML fractions and matrices with escaped text
+  ---
+  duration_ms: 17.380792
+  ...
+# Subtest: Word display formulas retain their alignment and semantic MathML when printed
+ok 105 - Word display formulas retain their alignment and semantic MathML when printed
+  ---
+  duration_ms: 9.960292
+  ...
+# Subtest: Word multi-equation groups print independent members and their local styles with spacing
+ok 106 - Word multi-equation groups print independent members and their local styles with spacing
+  ---
+  duration_ms: 8.528459
+  ...
+# Subtest: prints cell vertical alignment and margin variables on the cell rather than text marks
+ok 107 - prints cell vertical alignment and margin variables on the cell rather than text marks
+  ---
+  duration_ms: 6.179666
+  ...
+# Subtest: Word print scopes table defaults and cell overrides and uses the same column footprint with spacing
+ok 108 - Word print scopes table defaults and cell overrides and uses the same column footprint with spacing
+  ---
+  duration_ms: 12.961708
+  ...
+1..108
+# tests 108
+# suites 0
+# pass 108
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5617.35175

@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { wordMeasureCellLines } from './studio-word-pagination-extension';
+import { wordPaginate } from './studio-word-pagination';
 
 const original = Object.getOwnPropertyDescriptor(Range.prototype, 'getBoundingClientRect');
 afterEach(() => {
@@ -114,4 +115,37 @@ it.each([false, true])('keeps a wrapped equation on a separate physical line (RT
 it('counts zero-width bookmark atoms without changing physical line height', () => {
   rects(range => ({ top: 0, bottom: 20, left: range.startContainer.textContent === 'a' ? 0 : 5, right: range.startContainer.textContent === 'a' ? 5 : 10 }));
   expect(wordMeasureCellLines(paragraph('a<span data-word-bookmark="0"></span>b'), 3, 0)).toEqual([{ from: 3, to: 6, top: 0, bottom: 20 }]);
+});
+
+it('converts first and last glyph overhangs to the natural row flow boundary before strict cell pagination', () => {
+  const p = paragraph('aa<br>bb<br>cc');
+  rects(range => {
+    const index = ['aa', 'bb', 'cc'].indexOf(range.startContainer.textContent!);
+    const top = index * 16 - 0.5;
+    return { top, bottom: top + 18, left: range.startOffset * 5, right: range.startOffset * 5 + 5 };
+  });
+  const lines = wordMeasureCellLines(p, 4, 0, 49);
+  expect(lines).toEqual([
+    { from: 4, to: 6, top: 0, bottom: 17.5 },
+    { from: 7, to: 9, top: 15.5, bottom: 33.5 },
+    { from: 10, to: 12, top: 31.5, bottom: 49 },
+  ]);
+  const result = wordPaginate([{ from: 0, to: 20, widowControl: false, lines: [
+    { from: 1, to: 19, height: 49, cells: [{ from: 4, to: 12, lines }] },
+  ] }], 24);
+  expect(result.overflow).toBe(false); expect(result.pages).toBe(3);
+});
+
+it('removes a raised-run paint offset before applying the row flow boundary', () => {
+  const p = paragraph('<span style="position:relative;top:-16px">aa</span><br>bb');
+  rects(range => {
+    const raised = range.startContainer.textContent === 'aa';
+    const top = raised ? -16.5 : 15.5;
+    return { top, bottom: top + 18, left: range.startOffset * 5, right: range.startOffset * 5 + 5 };
+  });
+  expect(wordMeasureCellLines(p, 4, 0, 33)).toEqual([
+    { from: 4, to: 6, top: 0, bottom: 17.5 },
+    { from: 7, to: 9, top: 15.5, bottom: 33 },
+  ]);
+  expect(() => wordMeasureCellLines(p, 4, 0, 0)).toThrow();
 });

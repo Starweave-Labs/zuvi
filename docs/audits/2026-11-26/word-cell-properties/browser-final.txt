@@ -1,0 +1,11 @@
+[WebServer] (node:94491) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:94506) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+  ✓  1 [chromium] › e2e/office-studio-word-cell-properties.spec.ts:5:1 › keeps native exact row height with explicit cell padding while editing and reopening twice (4.5s)
+  ✓  2 [chromium] › e2e/office-studio-word-cell-properties.spec.ts:74:1 › moves actual text through all nine fixed-cell alignments and restores the transaction (7.9s)
+
+  2 passed (14.4s)

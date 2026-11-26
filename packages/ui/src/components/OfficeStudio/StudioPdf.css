@@ -838,3 +838,7 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+.zuvi-studio-pdf-page-item { display: flex; align-items: flex-start; gap: 8px; margin-block: 8px; }
+.zuvi-studio-pdf-page-item .zuvi-studio-pdf-thumbnail { flex: 1; min-width: 0; }
+.zuvi-studio-pdf-page-dialog label { display: block; margin-block: 12px; }

@@ -118,10 +118,11 @@ function renderer() {
 
 function host(
   model = document(),
-  options: { readOnly?: boolean; disabled?: boolean; search?: StudioPdfSession['search'] } = {}
+  options: { readOnly?: boolean; disabled?: boolean; search?: StudioPdfSession['search']; pages?: boolean } = {}
 ) {
   const f = renderer();
   if (options.search) f.session.search = options.search;
+  if (options.pages) f.session.supportsPageMapping = true;
   const source = new Blob(['%PDF-controlled']);
   let latest = model;
   const changed = vi.fn();
@@ -1239,4 +1240,81 @@ describe('StudioPdf drawing and search', () => {
     f.unmount();
     expect(search.mock.calls[1][1]?.signal?.aborted).toBe(true);
   });
+});
+
+
+describe('StudioPdf page transactions', () => {
+  it('inserts a blank page through ZUVI inputs, preserves the source session and restores the whole transaction', async () => {
+    const f = host(document(), { pages: true }); await ready();
+    fireEvent.click(screen.getByRole('button', { name: '插入空白页' }));
+    fireEvent.change(screen.getByLabelText('PDF 页面宽度'), { target: { value: '600' } });
+    fireEvent.change(screen.getByLabelText('PDF 页面高度'), { target: { value: '300' } });
+    fireEvent.change(screen.getByLabelText('PDF 页面插入位置'), { target: { value: '2' } });
+    fireEvent.click(screen.getByRole('button', { name: '应用 PDF 页面操作' }));
+    expect(f.document().pageCount).toBe(3); expect(f.document().pages?.[1].size).toEqual({ width: 600, height: 300 });
+    expect(f.document().fields.find(field => field.name === 'confirmed')?.widgets?.[1].page).toBe(2);
+    expect(f.load).toHaveBeenCalledTimes(1); expect(isOfficeStudioDocument(f.document())).toBe(true);
+    fireEvent.click(screen.getByRole('button', { name: '撤销' })); expect(f.document()).toEqual(document());
+    fireEvent.click(screen.getByRole('button', { name: '重做' })); expect(f.document().pageCount).toBe(3);
+    expect(f.load).toHaveBeenCalledTimes(1);
+  });
+  it('selects multiple pages, rotates once, prevents removal of the last page, and cancels invalid size drafts', async () => {
+    const f = host(document(), { pages: true }); await ready();
+    fireEvent.click(screen.getByRole('button', { name: '页面缩略图' }));
+    fireEvent.click(screen.getByLabelText('选择 PDF 第 2 页'));
+    expect(screen.getByRole('button', { name: '删除所选页' })).toBeDisabled();
+    fireEvent.click(screen.getByRole('button', { name: '旋转所选页' }));
+    expect(f.document().rotations).toEqual({ 0: 90, 1: 90 });
+    fireEvent.click(screen.getByRole('button', { name: '撤销' })); expect(f.document().rotations).toEqual({});
+    fireEvent.click(screen.getByRole('button', { name: '页面尺寸' }));
+    fireEvent.change(screen.getByLabelText('PDF 页面宽度'), { target: { value: '-2' } });
+    fireEvent.click(screen.getByRole('button', { name: '应用 PDF 页面操作' })); expect(screen.getByRole('alert')).toHaveTextContent('宽高');
+    fireEvent.click(screen.getByRole('button', { name: '取消' })); expect(f.document()).toEqual(document());
+    expect(f.load).toHaveBeenCalledTimes(1);
+  });
+  it('keeps page mutation commands blocked in readOnly and legacy renderer modes', async () => {
+    const f = host(document(), { readOnly: true, pages: true }); await ready();
+    for (const name of ['插入空白页', '删除所选页', '移动所选页', '复制所选页', '旋转所选页', '页面尺寸']) expect(screen.getByRole('button', { name })).toBeDisabled();
+    expect(f.changed).not.toHaveBeenCalled(); cleanup();
+    host(); await ready(); expect(screen.getByRole('button', { name: '插入空白页' })).toBeDisabled();
+  });
+});
+
+describe('PDF page source and renderer scope', () => {
+  it('closes an old page draft when the same model switches source sessions and keeps document history', async () => {
+    const f = renderer(), first = new Blob(['A']), second = new Blob(['B']); f.session.supportsPageMapping = true;
+    const secondSession: StudioPdfSession = { ...f.session, getPageBounds: async () => ({ left: 40, bottom: 20, right: 640, top: 820 }), render: async (_page, _canvas, options) => {
+      const turn = ((options.rotation % 360) + 360) % 360, swap = turn === 90 || turn === 270;
+      return { width: (swap ? 800 : 600) * options.scale, height: (swap ? 600 : 800) * options.scale,
+        toViewportPoint(x, y) { const p = turn === 90 ? [y - 20, x - 40] : turn === 180 ? [640 - x, y - 20] : turn === 270 ? [820 - y, 640 - x] : [x - 40, 820 - y]; return [p[0] * options.scale, p[1] * options.scale]; },
+        toPdfPoint(x, y) { const a = x / options.scale, b = y / options.scale; return turn === 90 ? [40 + b, 20 + a] : turn === 180 ? [640 - a, 20 + b] : turn === 270 ? [640 - b, 820 - a] : [40 + a, 820 - b]; }
+      };
+    } };
+    f.load.mockImplementation(async source => source === first ? f.session : secondSession);
+    let replace!: (source: Blob) => void, latest = document(); const changes = vi.fn();
+    function Host() { const [value, setValue] = useState(latest), [source, setSource] = useState(first); replace = setSource; return <StudioPdf document={value} source={source} pdfRenderer={f.renderer} onChange={next => { latest = next; changes(next); setValue(next); }} readOnly={false} disabled={false} />; }
+    render(<Host />); await ready(); fireEvent.click(screen.getByRole('button', { name: '旋转当前页' })); await ready();
+    fireEvent.click(screen.getByRole('button', { name: '插入空白页' })); expect(screen.getByLabelText('PDF 页面宽度')).toHaveValue('300');
+    const beforeSwitch = latest; act(() => replace(second));
+    expect(screen.queryByRole('dialog', { name: '插入 PDF 空白页' })).not.toBeInTheDocument(); await ready(); expect(latest).toBe(beforeSwitch);
+    fireEvent.click(screen.getByRole('button', { name: '插入空白页' })); expect(screen.getByLabelText('PDF 页面宽度')).toHaveValue('600'); expect(screen.getByLabelText('PDF 页面高度')).toHaveValue('800');
+    fireEvent.click(screen.getByRole('button', { name: '取消' })); expect(screen.getByRole('button', { name: '撤销' })).toBeEnabled(); fireEvent.click(screen.getByRole('button', { name: '撤销' })); expect(latest.rotations).toEqual({}); expect(changes).toHaveBeenCalledTimes(2);
+  });
+  it('rejects saved virtual-page mappings for a legacy renderer while retaining the ordinary original-page contract', async () => {
+    const model = document(); model.sourcePageCount = 2; model.pages = [{ id: 'second', sourcePage: 1 }, { id: 'first', sourcePage: 0 }];
+    const f = host(model); await screen.findByText(/当前 PDF 渲染器不支持页面编辑映射/); expect(f.renderPage).not.toHaveBeenCalled(); expect(f.destroy).toHaveBeenCalled();
+    cleanup(); const ordinary = host(); await ready(); expect(ordinary.renderPage).toHaveBeenCalledTimes(1);
+  });
+});
+
+it('drags the actual thumbnail to the lower half of the final page and keeps the native source mapping in one transaction', async () => {
+  const f = host(document(), { pages: true }); await ready(); fireEvent.click(screen.getByRole('button', { name: '页面缩略图' }));
+  const source = screen.getByRole('button', { name: 'PDF 第 1 页缩略图' }), target = screen.getByRole('button', { name: 'PDF 第 2 页缩略图' }).closest<HTMLElement>('.zuvi-studio-pdf-page-item')!;
+  expect(source).toHaveAttribute('draggable', 'true'); expect(target).not.toHaveAttribute('draggable', 'true');
+  vi.spyOn(target, 'getBoundingClientRect').mockReturnValue({ x: 0, y: 100, top: 100, left: 0, right: 200, bottom: 300, width: 200, height: 200, toJSON: () => ({}) });
+  const transfer = { setData: vi.fn(), effectAllowed: '', dropEffect: '' };
+  const drag = (type: string, element: Element) => { const event = new MouseEvent(type, { bubbles: true, cancelable: true, clientX: 40, clientY: 299 }); Object.defineProperty(event, 'dataTransfer', { value: transfer }); fireEvent(element, event); };
+  drag('dragstart', source); drag('dragover', target); drag('drop', target);
+  expect(transfer.setData).toHaveBeenCalledWith('text/plain', 'zuvi-pdf-pages'); expect(f.document().pages?.map(page => page.sourcePage)).toEqual([1, 0]);
+  fireEvent.click(screen.getByRole('button', { name: '撤销' })); expect(f.document()).toEqual(document());
 });

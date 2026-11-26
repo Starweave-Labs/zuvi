@@ -1,4 +1,5 @@
 import { CellSelection } from '@tiptap/pm/tables';
+import { undoDepth } from '@tiptap/pm/history';
 import type { Editor } from '@tiptap/react';
 import { createRef, StrictMode, useLayoutEffect, useState } from 'react';
 import { renderToString } from 'react-dom/server';
@@ -2946,4 +2947,438 @@ it('rejects an internal link draft after the bookmark target region changes', as
   fireEvent.click(screen.getByRole('button', { name: '应用链接' }));
   expect(screen.getByRole('alert')).toHaveTextContent('文档已变化');
   expect(editor.getJSON()).toEqual(original);
+});
+
+it('applies cell alignment and independent margins through the actual ZUVI dialog and undoes atomically', async () => {
+  const model = documentModel();
+  model.content.content = [{ type: 'table', content: [{ type: 'tableRow', content: [{ type: 'tableCell', content: [{ type: 'paragraph', content: [{ type: 'text', text: 'Cell' }] }] }] }] }];
+  const { textbox } = await mount({ document: model });
+  const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+  let cellPos = 0; editor.state.doc.descendants((node, pos) => { if (node.type.name === 'tableCell') cellPos = pos; });
+  act(() => editor.commands.setTextSelection(cellPos + 2));
+  fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+  fireEvent.click(screen.getByRole('button', { name: '单元格对齐与边距' }));
+  fireEvent.click(screen.getByRole('button', { name: '下右对齐' }));
+  fireEvent.change(screen.getByLabelText('单元格left内边距'), { target: { value: '5.25' } });
+  fireEvent.change(screen.getByLabelText('单元格top内边距'), { target: { value: '0' } });
+  fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+  await waitFor(() => expect(editor.state.doc.nodeAt(cellPos)!.attrs.verticalAlign).toBe('bottom'));
+  expect(editor.state.doc.nodeAt(cellPos)!.attrs.cellMargins).toEqual({ top: 0, left: 5.25 });
+  expect(editor.state.doc.nodeAt(cellPos)!.firstChild!.attrs.textAlign).toBe('right');
+  fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+  fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await waitFor(() => expect(editor.state.doc.nodeAt(cellPos)!.attrs.verticalAlign).toBeNull());
+});
+
+function cellPropertiesDocument(): StudioWordDocument {
+  const model = documentModel();
+  model.content = { type: 'doc', content: [{ type: 'table', content: [
+    ['Selected A', 'Selected B'], ['Untouched A', 'Untouched B'],
+  ].map((labels) => ({ type: 'tableRow', content: labels.map((text, index) => ({
+    type: 'tableCell',
+    attrs: { verticalAlign: 'center', cellMargins: { left: index + 3, top: 1, bottom: 2 } },
+    content: [{ type: 'paragraph', attrs: { textAlign: 'left' }, content: [{ type: 'text', text, marks: [{ type: 'bold' }] }] }],
+  })) })) }] };
+  return model;
+}
+function cellPropertiesPositions(editor: Editor) {
+  const cells: number[] = [];
+  editor.state.doc.descendants((node, position) => { if (node.type.name === 'tableCell') cells.push(position); });
+  return cells;
+}
+function openCellProperties(editor: Editor, position: number) {
+  act(() => editor.commands.setTextSelection(position + 2));
+  fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+  fireEvent.click(screen.getByRole('button', { name: '单元格对齐与边距' }));
+}
+function cellTableDefaultsDocument(): StudioWordDocument {
+  const model = cellPropertiesDocument(), table = model.content.content![0];
+  table.attrs = { defaultCellMargins: { top: 5, right: 7, bottom: 8, left: 6 }, cellSpacing: 3 };
+  for (const row of table.content!) row.content!.forEach((cell, index) => {
+    cell.attrs = { ...cell.attrs, colwidth: [index === 0 ? 120 : 150] };
+  });
+  const first = table.content![0].content![0], second = table.content![0].content![1];
+  first.attrs = { ...first.attrs, cellMargins: { top: 0 }, backgroundColor: '#ffeedd' };
+  first.content![0].content![0].marks!.push({ type: 'link', attrs: { href: 'https://example.com/cell' } });
+  second.attrs = { ...second.attrs, cellMargins: null };
+  return model;
+}
+describe('StudioWord cell table defaults and spacing', () => {
+  it.each(['top', 'right', 'bottom', 'left'] as const)('edits only the dirty %s table default and leaves cell overrides separate from inherited values', async side => {
+    const { textbox, onChange } = await mount({ document: cellTableDefaultsDocument() });
+    const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+    const cells = cellPropertiesPositions(editor), before = editor.getJSON();
+    const defaults = { top: 5, right: 7, bottom: 8, left: 6 };
+    const changed = { top: 9.5, right: 10.5, bottom: 11.5, left: 12.5 };
+    openCellProperties(editor, cells[0]);
+    for (const [key, value] of Object.entries(defaults))
+      expect(screen.getByLabelText(`表格默认${key}内边距`)).toHaveValue(String(value));
+    expect(screen.getByLabelText('单元格top内边距')).toHaveValue('0');
+    expect(screen.getByLabelText('单元格left内边距')).toHaveValue('');
+    expect(screen.getByLabelText('单元格left内边距')).toHaveAttribute('placeholder', '继承 6');
+    fireEvent.change(screen.getByLabelText(`表格默认${side}内边距`), { target: { value: String(changed[side]) } });
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    await waitFor(() => expect(onChange).toHaveBeenCalledOnce());
+    const expected = { ...defaults, [side]: changed[side] }, after = editor.getJSON();
+    expect(after.content![0].attrs!.defaultCellMargins).toEqual(expected);
+    expect(after.content![0].attrs!.cellSpacing).toBe(3);
+    expect(after.content![0].content).toEqual(before.content![0].content);
+    expect(editor.state.doc.nodeAt(cells[0])!.attrs.cellMargins).toEqual({ top: 0 });
+    expect(editor.state.doc.nodeAt(cells[1])!.attrs.cellMargins).toBeNull();
+    openCellProperties(editor, cells[0]);
+    expect(screen.getByLabelText('单元格top内边距')).toHaveValue('0');
+    expect(screen.getByLabelText('单元格left内边距')).toHaveValue('');
+    expect(screen.getByLabelText('单元格left内边距')).toHaveAttribute('placeholder', `继承 ${expected.left}`);
+    const depth = undoDepth(editor.state);
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    expect(onChange).toHaveBeenCalledOnce(); expect(editor.getJSON()).toEqual(after);
+    expect(undoDepth(editor.state)).toBe(depth);
+    openCellProperties(editor, cells[1]);
+    expect(screen.getByLabelText('单元格top内边距')).toHaveValue('');
+    expect(screen.getByLabelText('单元格top内边距')).toHaveAttribute('placeholder', `继承 ${expected.top}`);
+    fireEvent.click(screen.getByRole('button', { name: '取消' }));
+    expect(onChange).toHaveBeenCalledOnce();
+  });
+  it('keeps restoring defaults in the draft until apply, cancels without writes, and removes only the selected cell direct margins', async () => {
+    const { textbox, onChange } = await mount({ document: cellTableDefaultsDocument() });
+    const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+    const cells = cellPropertiesPositions(editor), before = editor.getJSON(), depth = undoDepth(editor.state);
+    openCellProperties(editor, cells[0]);
+    fireEvent.click(screen.getByRole('button', { name: '恢复表格默认边距' }));
+    expect(screen.getByRole('button', { name: '恢复表格默认边距' })).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByLabelText('单元格top内边距')).toBeDisabled();
+    expect(editor.getJSON()).toEqual(before); expect(undoDepth(editor.state)).toBe(depth);
+    expect(onChange).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: '取消' }));
+    expect(editor.getJSON()).toEqual(before); expect(onChange).not.toHaveBeenCalled();
+    openCellProperties(editor, cells[0]);
+    fireEvent.click(screen.getByRole('button', { name: '恢复表格默认边距' }));
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    await waitFor(() => expect(onChange).toHaveBeenCalledOnce());
+    const after = editor.getJSON();
+    expect(editor.state.doc.nodeAt(cells[0])!.attrs.cellMargins).toBeNull();
+    expect(after.content![0].attrs).toEqual(before.content![0].attrs);
+    for (const position of cells.slice(1)) {
+      const beforeCell = editor.schema.nodeFromJSON(before).nodeAt(position)!;
+      expect(editor.state.doc.nodeAt(position)!.toJSON()).toEqual(beforeCell.toJSON());
+    }
+    expect(undoDepth(editor.state)).toBe(depth + 1);
+    openCellProperties(editor, cells[0]);
+    expect(screen.getByLabelText('单元格top内边距')).toHaveValue('');
+    expect(screen.getByLabelText('单元格top内边距')).toHaveAttribute('placeholder', '继承 5');
+    fireEvent.click(screen.getByRole('button', { name: '取消' }));
+    fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(editor.getJSON()).toEqual(before));
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    await waitFor(() => expect(editor.getJSON()).toEqual(after));
+  });
+  it('commits defaults, spacing, direct margins and the nine-grid choice as one transaction while preserving cell identity, marks and untouched cells', async () => {
+    const { textbox, onChange } = await mount({ document: cellTableDefaultsDocument() });
+    const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+    const cells = cellPropertiesPositions(editor), before = editor.getJSON(), depth = undoDepth(editor.state);
+    const beforeCells: StudioRichNode[] = cells.map(position => {
+      const cell = editor.state.doc.nodeAt(position)!;
+      expect(cell.type.name).toBe('tableCell');
+      return cell.toJSON() as StudioRichNode;
+    });
+    act(() => editor.view.dispatch(editor.state.tr.setSelection(CellSelection.create(editor.state.doc, cells[0], cells[1]))));
+    fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+    fireEvent.click(screen.getByRole('button', { name: '单元格对齐与边距' }));
+    fireEvent.change(screen.getByLabelText('表格默认left内边距'), { target: { value: '11' } });
+    fireEvent.change(screen.getByLabelText('表格默认top内边距'), { target: { value: '9' } });
+    fireEvent.change(screen.getByLabelText('单元格间距'), { target: { value: '4.5' } });
+    fireEvent.change(screen.getByLabelText('单元格left内边距'), { target: { value: '2.25' } });
+    fireEvent.click(screen.getByRole('button', { name: '下右对齐' }));
+    expect(editor.getJSON()).toEqual(before); expect(onChange).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    await waitFor(() => expect(onChange).toHaveBeenCalledOnce());
+    const after = editor.getJSON();
+    expect(after.content![0].attrs).toMatchObject({ defaultCellMargins: { top: 9, right: 7, bottom: 8, left: 11 }, cellSpacing: 4.5 });
+    for (const [index, position] of cells.entries()) {
+      const expected = structuredClone(beforeCells[index]);
+      if (index < 2) {
+        const margins = expected.attrs!.cellMargins as Record<string, number> | null;
+        expected.attrs = { ...expected.attrs, verticalAlign: 'bottom', cellMargins: { ...margins, left: 2.25 } };
+        expected.content![0].attrs = { ...expected.content![0].attrs, textAlign: 'right' };
+      }
+      expect(editor.state.doc.nodeAt(position)!.toJSON()).toEqual(expected);
+    }
+    expect(undoDepth(editor.state)).toBe(depth + 1);
+    fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(editor.getJSON()).toEqual(before));
+    expect(undoDepth(editor.state)).toBe(depth);
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    await waitFor(() => expect(editor.getJSON()).toEqual(after));
+    expect(undoDepth(editor.state)).toBe(depth + 1); expect(onChange).toHaveBeenCalledTimes(3);
+  });
+  it.each([
+    ['单元格间距', '1.01'],
+    ['表格默认left内边距', '2001'],
+    ['单元格left内边距', '1.01'],
+  ])('rejects the whole draft after invalid %s=%s, including other valid proposed edits', async (label, invalid) => {
+    const { textbox, onChange } = await mount({ document: cellTableDefaultsDocument() });
+    const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+    openCellProperties(editor, cellPropertiesPositions(editor)[0]);
+    const before = editor.getJSON(), selection = editor.state.selection, depth = undoDepth(editor.state);
+    fireEvent.change(screen.getByLabelText('表格默认top内边距'), { target: { value: '10' } });
+    fireEvent.change(screen.getByLabelText('单元格bottom内边距'), { target: { value: '4' } });
+    fireEvent.click(screen.getByRole('button', { name: '下右对齐' }));
+    const input = screen.getByLabelText(label);
+    fireEvent.change(input, { target: { value: invalid } });
+    fireEvent.compositionStart(input);
+    expect(screen.getByRole('button', { name: '应用单元格属性' })).toBeDisabled();
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    expect(editor.getJSON()).toEqual(before); expect(onChange).not.toHaveBeenCalled();
+    fireEvent.compositionEnd(input);
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    expect(screen.getByRole('alert')).toBeVisible(); expect(input).toHaveValue(invalid);
+    expect(editor.getJSON()).toEqual(before); expect(undoDepth(editor.state)).toBe(depth);
+    expect(editor.state.selection.eq(selection)).toBe(true); expect(onChange).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: '取消' }));
+    expect(editor.getJSON()).toEqual(before);
+  });
+  it('sets whole-table spacing while clearing row overrides and restores both layers in one undo', async () => {
+    const model = cellTableDefaultsDocument();
+    model.content.content![0].content![0].attrs = { cellSpacing: 1, rowHeight: 48, rowHeightRule: 'exact', allowSplit: false };
+    model.content.content![0].content![1].attrs = { cellSpacing: 7, rowHeight: 36, rowHeightRule: 'atLeast', allowSplit: true };
+    const { textbox, onChange } = await mount({ document: model });
+    const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+    const before = editor.getJSON() as StudioRichNode, depth = undoDepth(editor.state);
+    expect(before.content![0].content!.map(row => row.attrs!.cellSpacing)).toEqual([1, 7]);
+    openCellProperties(editor, cellPropertiesPositions(editor)[0]);
+    expect(screen.getByLabelText('单元格间距')).toHaveValue('3');
+    fireEvent.change(screen.getByLabelText('单元格间距'), { target: { value: '4.2' } });
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    await waitFor(() => expect(onChange).toHaveBeenCalledOnce());
+    const after = editor.getJSON() as StudioRichNode;
+    expect(after.content![0].attrs!.cellSpacing).toBe(4.2);
+    for (const [index, row] of after.content![0].content!.entries()) {
+      expect(row.attrs).toEqual({ ...before.content![0].content![index].attrs, cellSpacing: null });
+      expect(row.content).toEqual(before.content![0].content![index].content);
+    }
+    expect(undoDepth(editor.state)).toBe(depth + 1);
+    fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(editor.getJSON()).toEqual(before));
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    await waitFor(() => expect(editor.getJSON()).toEqual(after));
+  });
+  it('clears only an emptied default side and an emptied spacing attribute without materializing inherited cell margins', async () => {
+    const { textbox, onChange } = await mount({ document: cellTableDefaultsDocument() });
+    const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+    const before = editor.getJSON(), depth = undoDepth(editor.state);
+    openCellProperties(editor, cellPropertiesPositions(editor)[0]);
+    fireEvent.change(screen.getByLabelText('表格默认left内边距'), { target: { value: '' } });
+    fireEvent.change(screen.getByLabelText('单元格间距'), { target: { value: '' } });
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    await waitFor(() => expect(onChange).toHaveBeenCalledOnce());
+    const after = editor.getJSON();
+    expect(after.content![0].attrs!.defaultCellMargins).toEqual({ top: 5, right: 7, bottom: 8 });
+    expect(after.content![0].attrs!.cellSpacing).toBeNull();
+    expect(after.content![0].content).toEqual(before.content![0].content);
+    expect(undoDepth(editor.state)).toBe(depth + 1);
+    openCellProperties(editor, cellPropertiesPositions(editor)[0]);
+    expect(screen.getByLabelText('表格默认left内边距')).toHaveValue('');
+    expect(screen.getByLabelText('单元格间距')).toHaveValue('');
+    fireEvent.click(screen.getByRole('button', { name: '取消' }));
+    expect(onChange).toHaveBeenCalledOnce();
+    fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(editor.getJSON()).toEqual(before));
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    await waitFor(() => expect(editor.getJSON()).toEqual(after));
+  });
+});
+describe('StudioWord cell properties', () => {
+  it('leaves an unchanged cell draft without model writes or an extra history event', async () => {
+    const { textbox, onChange } = await mount({ document: cellPropertiesDocument() });
+    const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+    openCellProperties(editor, cellPropertiesPositions(editor)[0]);
+    const before = editor.getJSON(), initialHistoryDepth = undoDepth(editor.state);
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    expect(screen.queryByRole('dialog', { name: '单元格对齐与边距' })).toBeNull();
+    expect(editor.getJSON()).toEqual(before); expect(onChange).not.toHaveBeenCalled();
+    expect(undoDepth(editor.state)).toBe(initialHistoryDepth);
+  });
+  it('keeps a formatting command and immediate following cell typing in separate undo events', async () => {
+    const { textbox } = await mount({ document: cellPropertiesDocument() });
+    const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+    const position = cellPropertiesPositions(editor)[0], before = editor.getJSON();
+    const initialHistoryDepth = undoDepth(editor.state);
+    openCellProperties(editor, position);
+    fireEvent.click(screen.getByRole('button', { name: '下右对齐' }));
+    let formatted = before;
+    const clock = vi.spyOn(Date, 'now').mockReturnValue(Date.now());
+    try {
+      fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+      formatted = editor.getJSON();
+      expect(undoDepth(editor.state)).toBe(initialHistoryDepth + 1);
+      act(() => {
+        editor.commands.setTextSelection(position + 2);
+        editor.commands.insertContent('Typed ');
+      });
+      expect(editor.state.doc.nodeAt(position)!.textContent).toContain('Typed Selected A');
+      expect(undoDepth(editor.state)).toBe(initialHistoryDepth + 2);
+    } finally { clock.mockRestore(); }
+    fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(editor.getJSON()).toEqual(formatted));
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(editor.getJSON()).toEqual(before));
+  });
+  it('commits a cell selection once, preserves untouched cells and marks, and restores the whole transaction with undo and redo', async () => {
+    const { textbox, onChange } = await mount({ document: cellPropertiesDocument() });
+    const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+    const cells = cellPropertiesPositions(editor), before = editor.getJSON();
+    const initialHistoryDepth = undoDepth(editor.state);
+    act(() => editor.view.dispatch(editor.state.tr.setSelection(CellSelection.create(editor.state.doc, cells[0], cells[1]))));
+    fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+    fireEvent.click(screen.getByRole('button', { name: '单元格对齐与边距' }));
+    expect(screen.getByLabelText('单元格left内边距')).toHaveValue('');
+    fireEvent.change(screen.getByLabelText('单元格top内边距'), { target: { value: '0' } });
+    fireEvent.click(screen.getByRole('button', { name: '下右对齐' }));
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    await waitFor(() => expect(onChange).toHaveBeenCalledOnce());
+    const after = editor.getJSON();
+    expect(undoDepth(editor.state)).toBe(initialHistoryDepth + 1);
+    for (const [index, position] of cells.entries()) {
+      const cell = editor.state.doc.nodeAt(position)!;
+      expect(cell.attrs.cellMargins).toEqual({ left: index % 2 + 3, top: index < 2 ? 0 : 1, bottom: 2 });
+      expect(cell.attrs.verticalAlign).toBe(index < 2 ? 'bottom' : 'center');
+      expect(cell.firstChild!.attrs.textAlign).toBe(index < 2 ? 'right' : 'left');
+      expect(cell.firstChild!.firstChild!.marks.map(mark => mark.type.name)).toContain('bold');
+    }
+    expect(textbox).toHaveTextContent('Untouched B');
+    fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(editor.getJSON()).toEqual(before));
+    expect(onChange).toHaveBeenCalledTimes(2);
+    expect(undoDepth(editor.state)).toBe(initialHistoryDepth);
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    await waitFor(() => expect(editor.getJSON()).toEqual(after));
+    expect(undoDepth(editor.state)).toBe(initialHistoryDepth + 1);
+    expect(onChange).toHaveBeenCalledTimes(3);
+  });
+  it('preserves the original model and selection through IME, invalid precision and cancelling an actual draft', async () => {
+    const { textbox, onChange } = await mount({ document: cellPropertiesDocument() });
+    const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+    const position = cellPropertiesPositions(editor)[0];
+    openCellProperties(editor, position);
+    const before = editor.getJSON(), selection = editor.state.selection;
+    const input = screen.getByLabelText('单元格left内边距');
+    fireEvent.change(input, { target: { value: '7.25' } });
+    fireEvent.click(screen.getByRole('button', { name: '下右对齐' }));
+    fireEvent.compositionStart(input);
+    expect(screen.getByRole('button', { name: '应用单元格属性' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: '上左对齐' })).toBeDisabled();
+    expect(screen.getByLabelText('表格默认left内边距')).toBeDisabled();
+    expect(screen.getByLabelText('单元格间距')).toBeDisabled();
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    expect(editor.getJSON()).toEqual(before); expect(onChange).not.toHaveBeenCalled();
+    fireEvent.compositionEnd(input);
+    fireEvent.change(input, { target: { value: '1.01' } });
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    expect(screen.getByRole('alert')).toHaveTextContent('精度');
+    expect(editor.getJSON()).toEqual(before); expect(onChange).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: '取消' }));
+    expect(screen.queryByRole('dialog', { name: '单元格对齐与边距' })).toBeNull();
+    expect(editor.state.selection.eq(selection)).toBe(true);
+    expect(editor.getJSON()).toEqual(before); expect(onChange).not.toHaveBeenCalled();
+  });
+  it.each([{ readOnly: true }, { disabled: true }])('disables the actual cell draft and entry after permissions change to %j', async permissions => {
+    const model = cellPropertiesDocument();
+    const { textbox, onChange, rerender } = await mount({ document: model });
+    const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+    openCellProperties(editor, cellPropertiesPositions(editor)[0]);
+    const before = editor.getJSON(), input = screen.getByLabelText('单元格left内边距');
+    fireEvent.change(input, { target: { value: '9' } });
+    rerender(<WordHost document={model} onChange={onChange} disabled={false} readOnly={false} {...permissions} />);
+    expect(input).toHaveValue('9'); expect(input).toBeDisabled();
+    for (const side of ['top', 'right', 'bottom', 'left'])
+      expect(screen.getByLabelText(`表格默认${side}内边距`)).toBeDisabled();
+    expect(screen.getByLabelText('单元格间距')).toBeDisabled();
+    expect(screen.getByRole('button', { name: '恢复表格默认边距' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: '应用单元格属性' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: '下右对齐' })).toBeDisabled();
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    expect(editor.getJSON()).toEqual(before); expect(onChange).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: '取消' }));
+    expect(screen.getByRole('button', { name: '单元格对齐与边距' })).toBeDisabled();
+  });
+  it.each(['same-id', 'new-id'])('invalidates an actual cell draft after a %s external document replacement', async identity => {
+    const { textbox, onChange, rerender } = await mount({ document: cellPropertiesDocument() });
+    const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+    openCellProperties(editor, cellPropertiesPositions(editor)[0]);
+    fireEvent.change(screen.getByLabelText('单元格left内边距'), { target: { value: '8' } });
+    const replacement = documentModel('replacement');
+    if (identity === 'new-id') replacement.id = 'replacement-cell-document';
+    rerender(<WordHost document={replacement} onChange={onChange} disabled={false} readOnly={false} />);
+    await waitFor(() => expect(screen.getByRole('textbox', { name: 'Word 文档正文', hidden: true })).toHaveTextContent('replacement'));
+    const apply = screen.queryByRole('button', { name: '应用单元格属性' });
+    if (apply) { expect(apply).toBeDisabled(); fireEvent.click(apply); }
+    expect(onChange).not.toHaveBeenCalled();
+    expect(screen.getByRole('textbox', { name: 'Word 文档正文', hidden: true }).querySelector('table')).toBeNull();
+  });
+  it('invalidates the target body draft when the active editor switches to the header', async () => {
+    const model = cellPropertiesDocument(); model.header = emptyRegion();
+    const { textbox, onChange } = await mount({ document: model });
+    const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+    const header = await screen.findByRole('textbox', { name: 'Word 页眉' });
+    const headerRegion = screen.getByLabelText('页眉区域');
+    openCellProperties(editor, cellPropertiesPositions(editor)[0]);
+    const before = editor.getJSON();
+    fireEvent.change(screen.getByLabelText('单元格left内边距'), { target: { value: '8' } });
+    fireEvent.doubleClick(headerRegion);
+    await waitFor(() => expect(header).toHaveAttribute('contenteditable', 'true'));
+    expect(screen.getByRole('button', { name: '应用单元格属性' })).toBeDisabled();
+    expect(screen.getByLabelText('单元格left内边距')).toBeDisabled();
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    expect(editor.getJSON()).toEqual(before); expect(onChange).not.toHaveBeenCalled();
+  });
+  it.each(['header', 'footer'] as const)('edits actual %s table cells with independent undo and redo', async region => {
+    const model = cellPropertiesDocument(); model[region] = structuredClone(model.content);
+    const { textbox, onChange } = await mount({ document: model });
+    const bodyEditor = (textbox as HTMLElement & { editor: Editor }).editor;
+    const bodyBefore = bodyEditor.getJSON();
+    const box = await screen.findByRole('textbox', { name: region === 'header' ? 'Word 页眉' : 'Word 页脚' });
+    fireEvent.doubleClick(screen.getByLabelText(region === 'header' ? '页眉区域' : '页脚区域'));
+    await waitFor(() => expect(box).toHaveAttribute('contenteditable', 'true'));
+    const editor = (box as HTMLElement & { editor: Editor }).editor;
+    const position = cellPropertiesPositions(editor)[0], before = editor.getJSON();
+    openCellProperties(editor, position);
+    fireEvent.click(screen.getByRole('button', { name: '下右对齐' }));
+    fireEvent.change(screen.getByLabelText('单元格left内边距'), { target: { value: '9' } });
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    await waitFor(() => expect(onChange).toHaveBeenCalledOnce());
+    const after = editor.getJSON();
+    expect(editor.state.doc.nodeAt(position)!.attrs).toMatchObject({ verticalAlign: 'bottom', cellMargins: { left: 9, top: 1, bottom: 2 } });
+    expect(bodyEditor.getJSON()).toEqual(bodyBefore);
+    fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(editor.getJSON()).toEqual(before));
+    expect(bodyEditor.getJSON()).toEqual(bodyBefore);
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    await waitFor(() => expect(editor.getJSON()).toEqual(after));
+    expect(bodyEditor.getJSON()).toEqual(bodyBefore);
+  });
+  it('restores a rejected controlled cell edit and saves the original model', async () => {
+    const value = cellPropertiesDocument();
+    const ref = createRef<OfficeStudioHandle>(), onChange = vi.fn(), onSave = vi.fn();
+    render(<OfficeStudio ref={ref} value={value} onChange={onChange} onSave={onSave} />);
+    const body = await screen.findByRole('textbox', { name: 'Word 文档正文' });
+    const editor = (body as HTMLElement & { editor: Editor }).editor;
+    const position = cellPropertiesPositions(editor)[0], before = editor.getJSON();
+    openCellProperties(editor, position);
+    fireEvent.click(screen.getByRole('button', { name: '下右对齐' }));
+    fireEvent.change(screen.getByLabelText('单元格left内边距'), { target: { value: '9' } });
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    await waitFor(() => expect(onChange).toHaveBeenCalledOnce());
+    expect(onChange.mock.lastCall?.[0].content.content[0].content[0].content[0].attrs).toMatchObject({ verticalAlign: 'bottom', cellMargins: { left: 9 } });
+    await waitFor(() => expect(editor.getJSON()).toEqual(before));
+    expect(ref.current?.getDocument()).toBe(value);
+    await act(async () => ref.current?.save());
+    expect(onSave).toHaveBeenCalledWith(value); expect(onChange).toHaveBeenCalledOnce();
+  });
 });

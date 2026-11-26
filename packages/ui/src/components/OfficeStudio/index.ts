@@ -14,6 +14,7 @@ export type {
   StudioPdfField,
   StudioPdfFieldDesign,
   StudioPdfMark,
+  StudioPdfPage,
   StudioPdfRenderer,
   StudioPdfRenderResult,
   StudioPdfSession,

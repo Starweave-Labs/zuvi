@@ -92,14 +92,18 @@ export const studioPdfRenderer: StudioPdfRenderer = {
 
     return {
       pageCount: pdf.numPages,
-      async getPageBounds(index) {
+      supportsPageMapping: true,
+      async getPageBounds(index, descriptor) {
+        if (destroyed) throw new Error('PDF 渲染会话已关闭。');
+        if (descriptor && descriptor.sourcePage === undefined) return { left: 0, bottom: 0, right: descriptor.size!.width, top: descriptor.size!.height };
+        index = descriptor?.sourcePage ?? index;
         if (destroyed) throw new Error('PDF 渲染会话已关闭。');
         if (!Number.isInteger(index) || index < 0 || index >= pdf.numPages)
           throw new Error('PDF 页码无效。');
         const page = await pdf.getPage(index + 1);
         if (destroyed) throw new Error('PDF 渲染会话已关闭。');
         const [left, bottom, right, top] = page.view;
-        return { left, bottom, right, top };
+        return { left, bottom, right: descriptor?.size ? left + descriptor.size.width : right, top: descriptor?.size ? bottom + descriptor.size.height : top };
       },
       async search(query, options = {}) {
         const assertCurrent = () => {
@@ -160,7 +164,7 @@ export const studioPdfRenderer: StudioPdfRenderer = {
       },
       async render(pageIndex, canvas, options) {
         if (destroyed || options.signal?.aborted) throw abortError();
-        if (!Number.isInteger(pageIndex) || pageIndex < 0 || pageIndex >= pdf.numPages)
+        if (!Number.isInteger(pageIndex) || pageIndex < 0 || pageIndex >= (options.page ? 200 : pdf.numPages))
           throw new Error('PDF 页码无效。');
         if (!Number.isFinite(options.scale) || options.scale < 0.25 || options.scale > 4)
           throw new Error('PDF 缩放须在 25% 至 400% 之间。');
@@ -189,12 +193,18 @@ export const studioPdfRenderer: StudioPdfRenderer = {
         };
 
         try {
-          const page = await pdf.getPage(pageIndex + 1);
+          const blank = !!options.page && options.page.sourcePage === undefined;
+          const page = await pdf.getPage(blank ? 1 : (options.page?.sourcePage ?? pageIndex) + 1);
           assertCurrent();
-          const viewport = page.getViewport({
+          let viewport = page.getViewport({
             scale: options.scale,
-            rotation: quarterTurn(page.rotate + options.rotation),
+            rotation: quarterTurn((blank ? 0 : page.rotate) + options.rotation),
           });
+          if (options.page?.size) {
+            const [left, bottom] = blank ? [0, 0] : page.view;
+            const SizedViewport = viewport.constructor as new (options: { viewBox: number[]; userUnit: number; scale: number; rotation: number }) => typeof viewport;
+            viewport = new SizedViewport({ viewBox: [left, bottom, left + options.page.size.width, bottom + options.page.size.height], userUnit: blank ? 1 : page.userUnit, scale: options.scale, rotation: quarterTurn((blank ? 0 : page.rotate) + options.rotation) });
+          }
           if (
             !Number.isFinite(viewport.width) ||
             !Number.isFinite(viewport.height) ||
@@ -218,6 +228,7 @@ export const studioPdfRenderer: StudioPdfRenderer = {
           temporary.height = Math.ceil(viewport.height * ratio);
           const context = temporary.getContext('2d');
           if (!context) throw new Error('当前环境无法创建 PDF 画布。');
+          if (blank) { context.fillStyle = 'white'; context.fillRect(0, 0, temporary.width, temporary.height); } else {
           request.task = page.render({
             canvas: temporary,
             canvasContext: context,
@@ -225,6 +236,7 @@ export const studioPdfRenderer: StudioPdfRenderer = {
             transform: ratio === 1 ? undefined : [ratio, 0, 0, ratio, 0, 0],
           });
           await request.task.promise;
+          }
           assertCurrent();
 
           const destination = canvas.getContext('2d');

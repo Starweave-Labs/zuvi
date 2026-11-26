@@ -25,6 +25,7 @@ const surfaceExports = {};
 const surfaceCodecExports = {};
 const imageExports = {};
 const rowExports = {};
+const tableExports = {};
 const mathExports = {};
 const mathCodecExports = {};
 for (const [file, target] of [
@@ -32,6 +33,7 @@ for (const [file, target] of [
   ['studio-font-input.ts', fontExports],
   ['studio-word-metrics.ts', metricExports],
   ['studio-word-table-rows.ts', rowExports],
+  ['studio-word-table-properties.ts', tableExports],
   ['studio-word-paragraph-format.ts', paragraphExports],
   ['studio-word-tabs.ts', tabExports],
   ['studio-word-surface.ts', surfaceExports],
@@ -90,7 +92,7 @@ runInNewContext(
   {
     exports,
     require: (id) =>
-      id === './studio-word-math-codec' ? mathCodecExports : id.endsWith('/studio-word-image-crop')?imageExports:id.endsWith('/studio-word-table-rows')?rowExports:id.endsWith('/studio-word-surface')?surfaceExports:id==='./studio-word-surface-codec'?surfaceCodecExports:id.endsWith('/studio-word-numbering') ? numberExports : id === './studio-word-numbering-codec' ? numberCodecExports : id.endsWith('/studio-word-tabs') ? tabExports : id.endsWith('/studio-word-paragraph-format')
+      id.endsWith('/studio-word-table-properties') ? tableExports : id === './studio-word-math-codec' ? mathCodecExports : id.endsWith('/studio-word-image-crop')?imageExports:id.endsWith('/studio-word-table-rows')?rowExports:id.endsWith('/studio-word-surface')?surfaceExports:id==='./studio-word-surface-codec'?surfaceCodecExports:id.endsWith('/studio-word-numbering') ? numberExports : id === './studio-word-numbering-codec' ? numberCodecExports : id.endsWith('/studio-word-tabs') ? tabExports : id.endsWith('/studio-word-paragraph-format')
         ? paragraphExports
         : id.endsWith('/studio-word-metrics')
           ? metricExports
@@ -1814,5 +1816,130 @@ test('native internal bookmark hyperlinks retain display formatting and anchor a
     const xml = parse(await zip.file('word/document.xml').async('string'));
     assert.equal(xml.getElementsByTagNameNS(W, 'hyperlink')[0].getAttributeNS(W, 'anchor'), 'Here');
     document = await importStudioWord(file, 'Reopened.docx');
+  }
+});
+
+test('native cell vertical alignment and independent margins survive editing and two DOCX cycles', async () => {
+  let document = await importStudioWord(await fixture('<w:tbl><w:tr><w:tc><w:tcPr><w:vAlign w:val="center"/><w:tcMar><w:top w:w="0" w:type="dxa"/><w:left w:w="105" w:type="dxa"/><w:bottom w:w="200" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:t>Cell</w:t></w:r></w:p></w:tc></w:tr></w:tbl>'), 'Cell.docx');
+  let cell = document.content.content[0].content[0].content[0];
+  assert.equal(cell.attrs.verticalAlign, 'center');
+  assert.deepEqual(JSON.parse(JSON.stringify(cell.attrs.cellMargins)), { top: 0, left: 5.25, bottom: 10 });
+  cell.attrs.verticalAlign = 'bottom'; cell.attrs.cellMargins.right = 4.5;
+  for (let round = 0; round < 2; round++) {
+    const file = await exportStudioWord(document), zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const xml = parse(await zip.file('word/document.xml').async('string'));
+    assert.equal(xml.getElementsByTagNameNS(W, 'vAlign')[0].getAttributeNS(W, 'val'), 'bottom');
+    assert.equal(xml.getElementsByTagNameNS(W, 'tcMar')[0].getElementsByTagNameNS(W, 'right')[0].getAttributeNS(W, 'w'), '90');
+    document = await importStudioWord(file, 'Reopened.docx'); cell = document.content.content[0].content[0].content[0];
+    assert.equal(cell.attrs.verticalAlign, 'bottom');
+    assert.deepEqual(JSON.parse(JSON.stringify(cell.attrs.cellMargins)), { top: 0, left: 5.25, bottom: 10, right: 4.5 });
+  }
+});
+
+test('cell margins with unrepresentable native precision fail without mutating the source model', async () => {
+  const document = await importStudioWord(await fixture('<w:tbl><w:tr><w:tc><w:p><w:r><w:t>Cell</w:t></w:r></w:p></w:tc></w:tr></w:tbl>'), 'Cell.docx');
+  document.content.content[0].content[0].content[0].attrs.cellMargins = { left: 1.01 };
+  const before = JSON.stringify(document);
+  await assert.rejects(exportStudioWord(document), /精度/);
+  assert.equal(JSON.stringify(document), before);
+});
+
+test('table default margins and explicit zero cell overrides retain independent identities on reopening', async () => {
+  let document = await importStudioWord(await fixture('<w:tbl><w:tblPr><w:tblCellMar><w:top w:w="100" w:type="dxa"/><w:left w:w="120" w:type="dxa"/></w:tblCellMar></w:tblPr><w:tr><w:tc><w:tcPr><w:tcMar><w:top w:w="0" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:t>Cell</w:t></w:r></w:p></w:tc></w:tr></w:tbl>'), 'Defaults.docx');
+  for (let round = 0; round < 3; round++) {
+    assert.deepEqual(JSON.parse(JSON.stringify(document.content.content[0].attrs.defaultCellMargins)), { top: 5, left: 6 });
+    assert.deepEqual(JSON.parse(JSON.stringify(document.content.content[0].content[0].content[0].attrs.cellMargins)), { top: 0 });
+    if (round < 2) document = await importStudioWord(await exportStudioWord(document), 'Reopened.docx');
+  }
+});
+
+test('native table defaults, direct zero overrides and spacing keep their identity and grid after two saves', async () => {
+  let document = await importStudioWord(await fixture('<w:tbl><w:tblPr><w:tblCellSpacing w:w="60" w:type="dxa"/><w:tblCellMar><w:top w:w="120" w:type="dxa"/><w:bottom w:w="120" w:type="dxa"/><w:left w:w="90" w:type="dxa"/><w:right w:w="90" w:type="dxa"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w="4500"/><w:gridCol w:w="4500"/></w:tblGrid><w:tr><w:tc><w:tcPr><w:tcMar><w:top w:w="0" w:type="dxa"/><w:right w:w="165" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:t>A</w:t></w:r></w:p></w:tc><w:tc><w:p><w:r><w:t>B</w:t></w:r></w:p></w:tc></w:tr></w:tbl>'), 'Spacing.docx');
+  let table = document.content.content[0];
+  assert.equal(table.attrs.cellSpacing, 6);
+  assert.deepEqual(Array.from(table.content[0].content[0].attrs.colwidth), [288]);
+  table.attrs.defaultCellMargins.top = 12;
+  table.attrs.defaultCellMargins.left = 10;
+  table.attrs.cellSpacing = 12;
+  for (let round = 0; round < 2; round++) {
+    const file = await exportStudioWord(document);
+    const archive = await JSZip.loadAsync(await file.arrayBuffer());
+    const native = parse(await archive.file('word/document.xml').async('string'));
+    assert.deepEqual(Array.from(native.getElementsByTagNameNS(W, 'gridCol'), col => Number(col.getAttributeNS(W, 'w'))), [4680, 4680]);
+    assert.equal(native.getElementsByTagNameNS(W, 'tblW')[0].getAttributeNS(W, 'w'), '9360');
+    assert.equal(native.getElementsByTagNameNS(W, 'tblCellSpacing')[0].getAttributeNS(W, 'w'), '120');
+    assert.equal(native.getElementsByTagNameNS(W, 'tcMar').length, 1);
+    assert.equal(native.getElementsByTagNameNS(W, 'tcMar')[0].getElementsByTagNameNS(W, 'top')[0].getAttributeNS(W, 'w'), '0');
+    document = await importStudioWord(file, 'Reopened.docx'); table = document.content.content[0];
+    assert.equal(table.attrs.cellSpacing, 12);
+    assert.deepEqual(JSON.parse(JSON.stringify(table.attrs.defaultCellMargins)), { top: 12, bottom: 6, left: 10, right: 4.5 });
+    assert.deepEqual(JSON.parse(JSON.stringify(table.content[0].content[0].attrs.cellMargins)), { top: 0, right: 8.25 });
+    assert.equal(table.content[0].content[1].attrs.cellMargins, undefined);
+    assert.deepEqual(Array.from(table.content[0].content[1].attrs.colwidth), [288]);
+  }
+});
+
+test('row spacing overrides including nil and exceptions remain independent of table defaults', async () => {
+  let document = await importStudioWord(await fixture('<w:tbl><w:tblPr><w:tblCellSpacing w:w="40" w:type="dxa"/></w:tblPr><w:tblGrid><w:gridCol w:w="4500"/></w:tblGrid><w:tr><w:trPr><w:tblCellSpacing w:w="80" w:type="dxa"/></w:trPr><w:tc><w:p><w:r><w:t>Override</w:t></w:r></w:p></w:tc></w:tr><w:tr><w:tblPrEx><w:tblCellSpacing w:type="nil"/></w:tblPrEx><w:tc><w:p><w:r><w:t>Zero</w:t></w:r></w:p></w:tc></w:tr></w:tbl>'), 'Rows.docx');
+  for (let round = 0; round < 3; round++) {
+    const table = document.content.content[0];
+    assert.equal(table.attrs.cellSpacing, 4);
+    assert.equal(table.content[0].attrs.cellSpacing, 8);
+    assert.equal(table.content[1].attrs.cellSpacing, 0);
+    if (round < 2) document = await importStudioWord(await exportStudioWord(document), 'Reopened.docx');
+  }
+});
+
+test('nested table defaults and direct cell margins remain local through repeated native reopening', async () => {
+  let document = await importStudioWord(await fixture('<w:tbl><w:tblPr><w:tblCellMar><w:top w:w="200" w:type="dxa"/><w:left w:w="240" w:type="dxa"/></w:tblCellMar></w:tblPr><w:tr><w:tc><w:tcPr><w:tcMar><w:right w:w="60" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:t>Outer</w:t></w:r></w:p><w:tbl><w:tblPr><w:tblCellMar><w:top w:w="0" w:type="dxa"/><w:left w:w="40" w:type="dxa"/></w:tblCellMar><w:tblCellSpacing w:type="nil"/></w:tblPr><w:tr><w:tc><w:p><w:r><w:t>Inner</w:t></w:r></w:p></w:tc></w:tr></w:tbl><w:p/></w:tc></w:tr></w:tbl>'), 'Nested.docx');
+  for (let round = 0; round < 3; round++) {
+    const outer = document.content.content[0], cell = outer.content[0].content[0], inner = cell.content.find(node => node.type === 'table');
+    assert.deepEqual(JSON.parse(JSON.stringify(outer.attrs.defaultCellMargins)), { top: 10, left: 12 });
+    assert.deepEqual(JSON.parse(JSON.stringify(cell.attrs.cellMargins)), { right: 3 });
+    assert.deepEqual(JSON.parse(JSON.stringify(inner.attrs.defaultCellMargins)), { top: 0, left: 2 });
+    assert.equal(inner.attrs.cellSpacing, 0); assert.equal(inner.content[0].content[0].attrs.cellMargins, undefined);
+    if (round < 2) document = await importStudioWord(await exportStudioWord(document), 'Reopened.docx');
+  }
+});
+
+test('invalid table spacing or default precision rejects the whole save without changing the model', async () => {
+  const document = await importStudioWord(await fixture('<w:tbl><w:tr><w:tc><w:p><w:r><w:t>Cell</w:t></w:r></w:p></w:tc></w:tr></w:tbl>'), 'Source.docx');
+  for (const properties of [{ cellSpacing: -1 }, { cellSpacing: 1.01 }, { defaultCellMargins: { left: 1.01 } }]) {
+    document.content.content[0].attrs = properties;
+    const before = JSON.stringify(document);
+    await assert.rejects(exportStudioWord(document), /间距|边距/);
+    assert.equal(JSON.stringify(document), before);
+  }
+});
+
+test('rejects row spacing wider than its native grid before creating a broken editable table', async () => {
+  const source = await fixture('<w:tbl><w:tblGrid><w:gridCol w:w="1500"/></w:tblGrid><w:tr><w:trPr><w:tblCellSpacing w:w="1000" w:type="dxa"/></w:trPr><w:tc><w:p><w:r><w:t>Too wide</w:t></w:r></w:p></w:tc></w:tr></w:tbl>');
+  const original = Buffer.from(await source.arrayBuffer());
+  await assert.rejects(importStudioWord(source, 'Unsupported spacing.docx'), /间距超过/);
+  assert.deepEqual(Buffer.from(await source.arrayBuffer()), original);
+});
+
+test('keeps an edited column when its sibling columns remain automatic and resolves the native grid once', async () => {
+  let document = await importStudioWord(await fixture('<w:tbl><w:tr><w:tc><w:p><w:r><w:t>Edited</w:t></w:r></w:p></w:tc><w:tc><w:p><w:r><w:t>Automatic</w:t></w:r></w:p></w:tc></w:tr></w:tbl>'), 'Partial columns.docx');
+  document.content.content[0].content[0].content[0].attrs.colwidth = [150];
+  document.content.content[0].attrs.cellSpacing = 6;
+  for (let pass = 0; pass < 2; pass++) {
+    const file = await exportStudioWord(document), zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const native = parse(await zip.file('word/document.xml').async('string'));
+    assert.equal(native.getElementsByTagNameNS(W, 'gridCol')[0].getAttributeNS(W, 'w'), '2430');
+    document = await importStudioWord(file, 'Reopened.docx');
+    assert.deepEqual(Array.from(document.content.content[0].content[0].content[0].attrs.colwidth), [150]);
+    assert.equal(document.content.content[0].attrs.cellSpacing, 6);
+  }
+});
+
+test('resolves the unknown zero slot of a merged resized cell without losing its edited column', async () => {
+  let document = await importStudioWord(await fixture('<w:tbl><w:tr><w:tc><w:tcPr><w:gridSpan w:val="2"/></w:tcPr><w:p><w:r><w:t>Merged</w:t></w:r></w:p></w:tc></w:tr></w:tbl>'), 'Unknown merged.docx');
+  document.content.content[0].content[0].content[0].attrs.colwidth = [0, 150];
+  for (let pass = 0; pass < 2; pass++) {
+    document = await importStudioWord(await exportStudioWord(document), 'Reopened.docx');
+    assert.equal(document.content.content[0].content[0].content[0].attrs.colspan, 2);
+    assert.equal(document.content.content[0].content[0].content[0].attrs.colwidth[1], 150);
+    assert.ok(document.content.content[0].content[0].content[0].attrs.colwidth[0] > 0);
   }
 });

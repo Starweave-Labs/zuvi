@@ -1,0 +1,29 @@
+
+> zuvi@0.1.0 typecheck /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59
+> pnpm -r typecheck
+
+Scope: 8 of 9 workspace projects
+packages/cli typecheck$ tsc -p tsconfig.json
+packages/i18n typecheck$ tsc -p tsconfig.json --noEmit
+packages/icons typecheck$ tsc -p tsconfig.json --noEmit
+packages/mcp typecheck$ tsc -p tsconfig.json --noEmit
+packages/mcp typecheck: Done
+packages/tokens typecheck$ tsc -p tsconfig.json --noEmit
+packages/cli typecheck: Done
+packages/i18n typecheck: Done
+packages/tokens typecheck: Done
+packages/icons typecheck: Done
+packages/ui typecheck$ tsc --noEmit
+packages/ui typecheck: src/components/OfficeStudio/studio-word-table-extension.test.ts(325,33): error TS2352: Conversion of type '{ type: "attributes"; attributeName: string; target: HTMLElement; }' to type 'MutationRecord' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+packages/ui typecheck:   Type '{ type: "attributes"; attributeName: string; target: HTMLElement; }' is missing the following properties from type 'MutationRecord': addedNodes, attributeNamespace, nextSibling, oldValue, and 2 more.
+packages/ui typecheck: src/components/OfficeStudio/studio-word-table-extension.test.ts(326,33): error TS2352: Conversion of type '{ type: "attributes"; attributeName: string; target: HTMLElement; }' to type 'MutationRecord' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+packages/ui typecheck:   Type '{ type: "attributes"; attributeName: string; target: HTMLElement; }' is missing the following properties from type 'MutationRecord': addedNodes, attributeNamespace, nextSibling, oldValue, and 2 more.
+packages/ui typecheck: src/components/OfficeStudio/studio-word-table-extension.test.ts(327,33): error TS2352: Conversion of type '{ type: "childList"; target: HTMLElement; }' to type 'MutationRecord' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+packages/ui typecheck:   Type '{ type: "childList"; target: HTMLElement; }' is missing the following properties from type 'MutationRecord': addedNodes, attributeName, attributeNamespace, nextSibling, and 3 more.
+packages/ui typecheck: src/components/OfficeStudio/studio-word-table-extension.test.ts(328,33): error TS2352: Conversion of type '{ type: "characterData"; target: HTMLElement; }' to type 'MutationRecord' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+packages/ui typecheck:   Type '{ type: "characterData"; target: HTMLElement; }' is missing the following properties from type 'MutationRecord': addedNodes, attributeName, attributeNamespace, nextSibling, and 3 more.
+packages/ui typecheck: Failed
+/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @zuvi/react@1.1.0 typecheck: `tsc --noEmit`
+Exit status 2
+ ELIFECYCLE  Command failed with exit code 2.

@@ -1,5 +1,8 @@
 import { wordMathMarkup } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-math';
-import { wordImageCrop, wordImageCropGeometry } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-image-crop';
+import {
+  wordImageCrop,
+  wordImageCropGeometry,
+} from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-image-crop';
 import {
   isOfficeStudioDocument,
   type OfficeStudioDocument,
@@ -24,7 +27,21 @@ import {
 } from '../../../../../packages/ui/src/components/OfficeStudio/studio-sheet-model';
 import { studioConditionalCellStyle } from '../../../../../packages/ui/src/components/OfficeStudio/studio-sheet-rules';
 import { studioNumberFormatColor } from '../../../../../packages/ui/src/components/OfficeStudio/studio-number-format';
-import { wordRowCss, wordMergedRowHeight } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-table-rows';
+import { wordRowCss } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-table-rows';
+import {
+  wordTableHeightBudgets,
+  wordTableCellColumns,
+} from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-table-layout';
+import { wordFillMixedTableRows } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-table-mixed-layout';
+import {
+  wordTableCss,
+  wordTableRowSpacingCss,
+  wordTableSpacingLayout,
+  wordTableRenderedColumnWidths,
+  wordTableColumnsToGrid,
+  wordEffectiveRowSpacing,
+  wordTableCellGapCss,
+} from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-table-properties';
 import { wordMetricCss } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-metrics';
 import {
   wordParagraphLineCss,
@@ -109,13 +126,42 @@ function rich(
       }
     }
   }
-  const children = node.type === 'table' ? (node.content ?? []).map((row, rowIndex, rows) => ({ ...row,
-    content: (row.content ?? []).map((cell) => {
-      const span = Number(cell.attrs?.rowspan) || 1;
-      const height = Number.isInteger(span) && span > 1 && rowIndex + span <= rows.length ? wordMergedRowHeight(rows.slice(rowIndex, rowIndex + span).map((source) => source.attrs)) : null;
-      return { ...cell, attrs: { ...cell.attrs, printFixedCellHeight: height } };
-    }),
-  })) : node.content ?? [];
+  const heights = node.type === 'table' ? wordTableHeightBudgets(node) : null;
+  const columns = node.type === 'table' ? wordTableCellColumns(node) : null;
+  const children =
+    node.type === 'table'
+      ? (node.content ?? []).map((row, rowIndex) => ({
+          ...row,
+          attrs: {
+            ...row.attrs,
+            printRenderedRowHeight: heights!.rows[rowIndex]?.outerHeight ?? null,
+          },
+          content: (row.content ?? []).map((cell, cellIndex) => {
+            const height = heights!.cells[rowIndex][cellIndex]?.outerHeight ?? null;
+            const end = Math.min(
+              (node.content ?? []).length - 1,
+              rowIndex + Math.max(1, Number(cell.attrs?.rowspan) || 1) - 1
+            );
+            const endSpacing = wordEffectiveRowSpacing(node.attrs, node.content![end].attrs),
+              column = columns!.cells[rowIndex][cellIndex];
+            const gaps = wordTableCellGapCss(
+              wordEffectiveRowSpacing(node.attrs, row.attrs),
+              column.first,
+              column.last,
+              endSpacing
+            );
+            return {
+              ...cell,
+              attrs: {
+                ...cell.attrs,
+                printFixedCellHeight: height,
+                printEndSpacing: endSpacing,
+                printCellGaps: gaps,
+              },
+            };
+          }),
+        }))
+      : (node.content ?? []);
   const renderedChildren = children.map((child) =>
     rich(child, page, total, floating, defaultTab, decimalSymbol)
   );
@@ -128,21 +174,53 @@ function rich(
       children[headerRows].content!.every((cell) => cell.type === 'tableHeader')
     )
       headerRows++;
+  const tableColumns: number[] = [];
+  if (node.type === 'table') {
+    for (const cell of node.content?.[0]?.content ?? []) {
+      const widths = cell.attrs?.colwidth;
+      if (
+        !Array.isArray(widths) ||
+        widths.length !== Number(cell.attrs?.colspan ?? 1) ||
+        widths.some(
+          (width) =>
+            typeof width !== 'number' || !Number.isFinite(width) || width <= 0 || width > 20000
+        )
+      ) {
+        tableColumns.length = 0;
+        break;
+      }
+      tableColumns.push(...widths);
+    }
+  }
+  const spacingLayout =
+    node.type === 'table'
+      ? wordTableSpacingLayout(
+          node.attrs,
+          (node.content ?? []).map((row) => row.attrs)
+        )
+      : null;
+  const renderedColumns = tableColumns.length
+    ? wordTableRenderedColumnWidths(
+        tableColumns,
+        node.attrs,
+        (node.content ?? []).map((row) => row.attrs)
+      )
+    : [];
   let text =
     node.type === 'mathEquation'
       ? `<span data-word-math-print="">${wordMathMarkup(node.attrs?.equation)}</span>`
       : node.type === 'text'
-      ? escape(node.text).replace(
-          /\t/g,
-          '<span data-word-tab="" class="zuvi-studio-word-tab">\t</span>'
-        )
-      : node.type === 'tableFormula'
-        ? escape(String(node.attrs?.result ?? '0'))
-      : node.type === 'pageNumber'
-        ? String(node.attrs?.kind === 'total' ? total : page)
-        : node.type === 'table'
-          ? `${headerRows ? `<thead>${renderedChildren.slice(0, headerRows).join('')}</thead>` : ''}<tbody>${renderedChildren.slice(headerRows).join('')}</tbody>`
-          : renderedChildren.join('');
+        ? escape(node.text).replace(
+            /\t/g,
+            '<span data-word-tab="" class="zuvi-studio-word-tab">\t</span>'
+          )
+        : node.type === 'tableFormula'
+          ? escape(String(node.attrs?.result ?? '0'))
+          : node.type === 'pageNumber'
+            ? String(node.attrs?.kind === 'total' ? total : page)
+            : node.type === 'table'
+              ? `${renderedColumns.length ? `<colgroup>${renderedColumns.map((width) => `<col style="width:${width}px">`).join('')}</colgroup>` : ''}${headerRows ? `<thead>${renderedChildren.slice(0, headerRows).join('')}</thead>` : ''}<tbody>${renderedChildren.slice(headerRows).join('')}</tbody>`
+              : renderedChildren.join('');
   for (const mark of node.marks ?? []) {
     const tag = (
       {
@@ -158,9 +236,13 @@ function rich(
     else if (mark.type === 'textStyle') {
       const attrs = mark.attrs ?? {};
       const styles: string[] = [];
+
       const metric = wordMetricCss(attrs);
       if (metric.letterSpacing) styles.push(`letter-spacing:${metric.letterSpacing}`);
-      if (metric.verticalAlign) styles.push(`vertical-align:${metric.verticalAlign};--zuvi-word-baseline-shift:${metric['--zuvi-word-baseline-shift']}`);
+      if (metric.verticalAlign)
+        styles.push(
+          `vertical-align:${metric.verticalAlign};--zuvi-word-baseline-shift:${metric['--zuvi-word-baseline-shift']}`
+        );
       if (color(attrs.color)) styles.push(`color:${color(attrs.color)}`);
       if (color(attrs.backgroundColor))
         styles.push(`background-color:${color(attrs.backgroundColor)}`);
@@ -177,7 +259,8 @@ function rich(
       )
         styles.push(`font-size:${attrs.fontSize}`);
       const baseline = metric.verticalAlign
-        ? ` data-word-baselineshift="${metric['--zuvi-word-baseline-shift']}"` : '';
+        ? ` data-word-baselineshift="${metric['--zuvi-word-baseline-shift']}"`
+        : '';
       if (styles.length) text = `<span${baseline} style="${styles.join(';')}">${text}</span>`;
     } else if (mark.type === 'link') {
       const href = mark.attrs?.href;
@@ -188,12 +271,63 @@ function rich(
   const attrs = node.attrs ?? {};
   const number = attrs.printNumbering as WordNumberingLabel | undefined;
   const styles: string[] = [];
+  if (node.type === 'table') {
+    const rows = (node.content ?? []).map((row) => row.attrs);
+    for (const [key, value] of Object.entries(wordTableCss(attrs, rows)))
+      styles.push(`${key}:${value}`);
+    if (tableColumns.length) {
+      const grid = wordTableColumnsToGrid(tableColumns, Number(attrs.cellSpacing) || 0);
+      styles.push(`width:${grid.reduce((sum, width) => sum + width, 0)}px`);
+    }
+  }
+  if (node.type === 'tableCell' || node.type === 'tableHeader') {
+    styles.push('--zuvi-word-cell-justify:flex-start');
+    styles.push(
+      `--zuvi-word-cell-background:${color(attrs.backgroundColor) || (node.type === 'tableHeader' ? '#edf3ee' : 'transparent')}`
+    );
+    if (typeof attrs.printEndSpacing === 'number')
+      styles.push(`--zuvi-word-cell-end-spacing:${attrs.printEndSpacing}pt`);
+    if (attrs.printCellGaps && typeof attrs.printCellGaps === 'object')
+      for (const [key, value] of Object.entries(attrs.printCellGaps))
+        if (
+          /^--zuvi-word-cell-gap-(top|right|bottom|left)$/.test(key) &&
+          typeof value === 'string' &&
+          /^\d+(?:\.\d+)?pt$/.test(value)
+        )
+          styles.push(`${key}:${value}`);
+    for (const side of ['top', 'right', 'bottom', 'left'])
+      styles.push(
+        `--zuvi-word-cell-margin-${side}:var(--zuvi-word-table-margin-${side},${side === 'top' || side === 'bottom' ? '0pt' : '5.4pt'});padding-${side}:var(--zuvi-word-cell-margin-${side})`
+      );
+    if (['top', 'center', 'bottom'].includes(String(attrs.verticalAlign)))
+      styles.push(
+        `vertical-align:${attrs.verticalAlign === 'center' ? 'middle' : attrs.verticalAlign};--zuvi-word-cell-justify:${attrs.verticalAlign === 'center' ? 'safe center' : attrs.verticalAlign === 'bottom' ? 'safe flex-end' : 'flex-start'}`
+      );
+    if (attrs.cellMargins && typeof attrs.cellMargins === 'object')
+      for (const [side, value] of Object.entries(attrs.cellMargins))
+        if (
+          ['top', 'right', 'bottom', 'left'].includes(side) &&
+          typeof value === 'number' &&
+          value >= 0 &&
+          value <= 2000
+        )
+          styles.push(`padding-${side}:${value}pt;--zuvi-word-cell-margin-${side}:${value}pt`);
+  }
   if (alignment(attrs.textAlign)) styles.push(`text-align:${alignment(attrs.textAlign)}`);
-  const fixedCellHeight = (node.type === 'tableCell' || node.type === 'tableHeader') && attrs.printFixedCellHeight !== null ? amount(attrs.printFixedCellHeight, 'pt', 0, 20000000) : '';
+  const fixedCellHeight =
+    (node.type === 'tableCell' || node.type === 'tableHeader') &&
+    attrs.printFixedCellHeight !== null
+      ? amount(attrs.printFixedCellHeight, 'pt', 0, 20000000)
+      : '';
   if (fixedCellHeight) styles.push(`--zuvi-word-cell-height:${fixedCellHeight}`);
   if (node.type === 'tableRow')
-    for (const [key, value] of Object.entries(wordRowCss(attrs)))
+    for (const [key, value] of Object.entries({
+      ...wordRowCss(attrs),
+      ...wordTableRowSpacingCss(attrs),
+    }))
       styles.push(`${key.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`)}:${value}`);
+  if (node.type === 'tableRow' && typeof attrs.printRenderedRowHeight === 'number')
+    styles.push(`--zuvi-word-row-render-height:${attrs.printRenderedRowHeight}pt`);
   for (const [attribute, property] of [
     ['spaceBefore', 'margin-top'],
     ['spaceAfter', 'margin-bottom'],
@@ -237,17 +371,21 @@ function rich(
     const printed = `<img src="${escape(source)}" alt="${escape(attrs.alt)}"${amount(attrs.width, '', 1, 10000) ? ` width="${attrs.width}"` : ''}${amount(attrs.height, '', 1, 10000) ? ` height="${attrs.height}"` : ''}${css ? ` style="${escape(css)}"` : ''}>`;
     const crop = wordImageCrop(attrs.crop);
     if (crop) {
-      const width = Number(attrs.width) || 320, height = Number(attrs.height) || 180;
+      const width = Number(attrs.width) || 320,
+        height = Number(attrs.height) || 180;
       const geometry = wordImageCropGeometry(crop, width, height);
       const clipped = `<span data-word-image-crop-frame="" style="display:inline-block;position:relative;overflow:hidden;width:${width}px;height:${height}px;${escape(css)}"><img src="${escape(source)}" alt="${escape(attrs.alt)}" style="position:absolute;max-width:none;width:${geometry.width}px;height:${geometry.height}px;left:${geometry.left}px;top:${geometry.top}px"></span>`;
-      return layout && ['front', 'behind'].includes(layout.wrap) ? `<span class="studio-print-image-anchor">${clipped}</span>` : clipped;
+      return layout && ['front', 'behind'].includes(layout.wrap)
+        ? `<span class="studio-print-image-anchor">${clipped}</span>`
+        : clipped;
     }
     return layout && ['front', 'behind'].includes(layout.wrap)
       ? `<span class="studio-print-image-anchor">${printed}</span>`
       : printed;
   }
 
-  if (node.type === 'mathEquation' || node.type === 'pageNumber' || node.type === 'tableFormula') return text;
+  if (node.type === 'mathEquation' || node.type === 'pageNumber' || node.type === 'tableFormula')
+    return text;
   if (node.type === 'wordBookmark') return '';
   if (node.type === 'hardBreak') return '<br>';
   if (node.type === 'horizontalRule') return '<hr>';
@@ -296,9 +434,15 @@ function rich(
   const numberedStyle = number
     ? ` style="${escape([...styles, ...Object.entries(wordNumberingStyle(attrs, number.level, number.ref.level)).map(([key, value]) => `${key}:${value}`)].join(';'))}"`
     : style;
-  const content = tag === 'td' || tag === 'th' ? `<div data-word-cell-content="">${text}</div>` : text || (tag === 'p' ? '<br>' : '');
-  const rowRule = tag === 'tr' && attrs.rowHeight != null ? ` data-word-row-height-rule="${escape(attrs.rowHeightRule ?? 'atLeast')}" data-word-row-height="${escape(attrs.rowHeight)}"` : '';
-  return `<${tag}${numberedStyle}${spans}${start}${lineRule}${tabs}${numbering}${rowRule}${fixedCellHeight ? ' data-word-fixed-cell-height=""' : ''}${(tag === 'ol' || tag === 'ul') && attrs.numberingInstanceId ? ' data-word-list-instance="true"' : ''}>${content}</${tag}>`;
+  const content =
+    tag === 'td' || tag === 'th'
+      ? `<div data-word-cell-content="">${text}</div>`
+      : text || (tag === 'p' ? '<br>' : '');
+  const rowRule =
+    tag === 'tr' && attrs.rowHeight != null
+      ? ` data-word-row-height-rule="${escape(attrs.rowHeightRule ?? 'atLeast')}" data-word-row-height="${escape(attrs.rowHeight)}"`
+      : '';
+  return `<${tag}${spacingLayout ? ` data-word-spacing-layout="${spacingLayout.kind}"` : ''}${numberedStyle}${spans}${start}${lineRule}${tabs}${numbering}${rowRule}${fixedCellHeight ? ` data-word-rendered-cell-height="${escape(attrs.printFixedCellHeight)}"${Number(attrs.rowspan) > 1 ? ' data-word-fixed-cell-height=""' : ''}` : ''}${(tag === 'ol' || tag === 'ul') && attrs.numberingInstanceId ? ' data-word-list-instance="true"' : ''}>${content}</${tag}>`;
 }
 
 function wordPages(document: StudioWordDocument) {
@@ -621,7 +765,45 @@ export function createStudioPrintHtml(document: OfficeStudioDocument): string {
 ${document.kind === 'excel' ? '.studio-print-sheet table{font-family:Calibri,Arial,sans-serif;font-size:11pt;line-height:1.15}.studio-print-sheet td{padding:2px 5px;vertical-align:middle}.studio-print-cell{overflow:hidden}' : ''}
 [data-word-line-rule="exact"] [data-word-baselineshift]{vertical-align:top!important;position:relative;top:calc(-1 * var(--zuvi-word-baseline-shift,0pt))}
 header:empty,footer:empty{display:none}thead{display:table-header-group}
-tr[data-word-row-height-rule="exact"][data-word-row-height]>:is(td,th):not([rowspan]:not([rowspan="1"])),:is(td,th)[data-word-fixed-cell-height]{padding-block:0}tr[data-word-row-height-rule="exact"][data-word-row-height]>:is(td,th):not([rowspan]:not([rowspan="1"]))>[data-word-cell-content],:is(td,th)[data-word-fixed-cell-height]>[data-word-cell-content]{box-sizing:border-box;height:max(0px,calc(var(--zuvi-word-cell-height,var(--zuvi-word-row-height)) - 1px));padding-block:max(0px,min(5pt,calc((var(--zuvi-word-cell-height,var(--zuvi-word-row-height)) - 1px)/2)));overflow:hidden}
+tr[data-word-row-height-rule="exact"][data-word-row-height]{height:var(--zuvi-word-row-render-height,var(--zuvi-word-row-height))!important}
+tr[data-word-row-height-rule="exact"][data-word-row-height]>:is(td,th):not([rowspan]:not([rowspan="1"])),:is(td,th)[data-word-fixed-cell-height]{padding-block:0!important}tr[data-word-row-height-rule="exact"][data-word-row-height]>:is(td,th):not([rowspan]:not([rowspan="1"]))>[data-word-cell-content],:is(td,th)[data-word-fixed-cell-height]>[data-word-cell-content]{display:flex;flex-direction:column;justify-content:var(--zuvi-word-cell-justify,flex-start);box-sizing:border-box;height:max(0px,calc(var(--zuvi-word-cell-height,var(--zuvi-word-row-height)) - var(--zuvi-word-cell-border-y,1px)));padding-top:max(0px,min(var(--zuvi-word-cell-margin-top,0pt),calc(var(--zuvi-word-cell-height,var(--zuvi-word-row-height)) - var(--zuvi-word-cell-border-y,1px))));padding-bottom:max(0px,min(var(--zuvi-word-cell-margin-bottom,0pt),calc(var(--zuvi-word-cell-height,var(--zuvi-word-row-height)) - var(--zuvi-word-cell-border-y,1px) - var(--zuvi-word-cell-margin-top,0pt))));overflow:hidden}
+[data-word-cell-content]>*{flex-shrink:0}
+/* Row-specific native gaps occupy space outside the visible cell box. */
+.studio-print-page table[data-word-spacing-layout='mixed'] > tbody > tr:not([data-word-auto-page-row]) > :is(td, th) {
+  padding-top: calc(var(--zuvi-word-row-spacing, 0pt) / 2) !important;
+  padding-bottom: calc(var(--zuvi-word-cell-end-spacing, var(--zuvi-word-row-spacing, 0pt)) / 2) !important;
+  padding-left: var(--zuvi-word-cell-gap-left, calc(var(--zuvi-word-row-spacing, 0pt) / 2)) !important;
+  padding-right: var(--zuvi-word-cell-gap-right, calc(var(--zuvi-word-row-spacing, 0pt) / 2)) !important;
+  border: 0 !important;
+  background: transparent !important;
+  vertical-align: top !important;
+}
+.studio-print-page table[data-word-spacing-layout='mixed'] > tbody > tr:not([data-word-auto-page-row]) > :is(td, th):first-child {
+  padding-left: var(--zuvi-word-cell-gap-left, var(--zuvi-word-row-spacing, 0pt)) !important;
+}
+.studio-print-page table[data-word-spacing-layout='mixed'] > tbody > tr:not([data-word-auto-page-row]) > :is(td, th):last-child {
+  padding-right: var(--zuvi-word-cell-gap-right, var(--zuvi-word-row-spacing, 0pt)) !important;
+}
+.studio-print-page table[data-word-spacing-layout='mixed'] > tbody > tr:not([data-word-auto-page-row]) > :is(td, th) > [data-word-cell-content] {
+  display: flex;
+  flex-direction: column;
+  justify-content: var(--zuvi-word-cell-justify, flex-start);
+  border: 1px solid #b8c2bc;
+  background: var(--zuvi-word-cell-background, transparent);
+  padding: var(--zuvi-word-cell-margin-top, 0pt) var(--zuvi-word-cell-margin-right, 5.4pt) var(--zuvi-word-cell-margin-bottom, 0pt) var(--zuvi-word-cell-margin-left, 5.4pt);
+  box-sizing: border-box;
+}
+.studio-print-page table[data-word-spacing-layout='mixed'] > tbody > tr[data-word-row-height-rule='exact'][data-word-row-height] > :is(td, th):not([rowspan]:not([rowspan='1'])),
+.studio-print-page table[data-word-spacing-layout='mixed'] > tbody > tr > :is(td, th)[data-word-fixed-cell-height] {
+  padding-top: calc(var(--zuvi-word-row-spacing, 0pt) / 2) !important;
+  padding-bottom: calc(var(--zuvi-word-cell-end-spacing, var(--zuvi-word-row-spacing, 0pt)) / 2) !important;
+}
+.studio-print-page table[data-word-spacing-layout='mixed'] > tbody > tr[data-word-row-height-rule='exact'][data-word-row-height] > :is(td, th):not([rowspan]:not([rowspan='1'])) > [data-word-cell-content],
+.studio-print-page table[data-word-spacing-layout='mixed'] > tbody > tr > :is(td, th)[data-word-fixed-cell-height] > [data-word-cell-content] {
+  height: var(--zuvi-word-cell-height);
+  overflow: hidden;
+}
+
 ${document.kind === 'word' ? '.studio-print-page{position:relative;isolation:isolate;min-height:50mm}.studio-print-page p,.studio-print-page h1,.studio-print-page h2,.studio-print-page h3,.studio-print-page h4,.studio-print-page h5,.studio-print-page h6{position:relative;white-space:pre-wrap}.studio-print-image-anchor{display:inline-block;position:relative;width:0;height:0}.studio-print-page-picture{position:absolute;inset:0;pointer-events:none}' : ''}
 .zuvi-studio-word-tab {
   display: inline-block;
@@ -714,6 +896,9 @@ export async function printStudioFile(
         if (html && document.kind === 'word') {
           wordLayoutPrintedNumbering(view.document.body);
           wordLayoutTabElements(view.document.body);
+          view.document
+            .querySelectorAll<HTMLTableElement>('table[data-word-spacing-layout="mixed"]')
+            .forEach(wordFillMixedTableRows);
         }
         view.addEventListener('afterprint', cleanup, { once: true });
         if (timer) clearTimeout(timer);
