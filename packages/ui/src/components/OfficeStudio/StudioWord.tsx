@@ -2110,7 +2110,7 @@ export function StudioWord({
               if (!editor || toolsDisabled || editor.view.composing) return;
               const target = wordConversionTarget(editor);
               if (target) setConversionDialog({ editor, target });
-            }}>{editor && wordConversionTarget(editor)?.direction === 'tableToText' ? '表格转文本' : '文本转表格'}</Button>
+            }}>{editor?.isActive('table') ? '表格转文本' : '文本转表格'}</Button>
             <Button variant="ghost" size="sm" disabled={toolsDisabled || !selection?.inTable} onMouseDown={keepSelection} onClick={() => {
               if (!editor || toolsDisabled) return;
               const rows = wordSelectedRows(editor);

@@ -1,3 +1,5 @@
+import { CellSelection } from '@tiptap/pm/tables';
+import { wordSelectedTableRowRange, wordSplitTableRows } from './studio-word-table-row-range';
 import type { Editor } from '@tiptap/react';
 import { closeHistory } from '@tiptap/pm/history';
 import { TextSelection, type Selection } from '@tiptap/pm/state';
@@ -157,12 +159,38 @@ export interface WordConversionTarget {
   direction: 'textToTable' | 'tableToText';
   before?: ProseMirrorNode;
   after?: ProseMirrorNode;
+  selectedRows?: number;
 }
 
 export function wordConversionTarget(editor: Editor): WordConversionTarget | null {
   if (editor.isDestroyed) return null;
   const { doc, selection } = editor.state;
   const { $from, $to } = selection;
+  if (selection instanceof CellSelection) {
+    const range = wordSelectedTableRowRange(selection);
+    if (!range) return null;
+    {
+      const table = selection.$anchorCell.node(-1);
+      const from = selection.$anchorCell.before(selection.$anchorCell.depth - 1);
+      let parts: ReturnType<typeof wordSplitTableRows>;
+      try {
+        parts = wordSplitTableRows(table, range.first, range.end);
+      } catch {
+        return null;
+      }
+      return {
+        doc,
+        selection,
+        from,
+        to: from + table.nodeSize,
+        nodes: [parts.selected],
+        direction: 'tableToText',
+        before: parts.before,
+        after: parts.after,
+        selectedRows: range.end - range.first,
+      };
+    }
+  }
   const selectedNode = doc.nodeAt(selection.from);
   if (
     selectedNode?.type.name === 'table' &&
@@ -247,7 +275,14 @@ export function wordApplyTableConversion(
           wordTextToTable(editor.schema, target.nodes, separator, columns),
           ...(target.after ? [target.after] : []),
         ])
-      : wordTableToText(editor.schema, target.nodes[0], separator, convertNested);
+      : Fragment.fromArray([
+          ...(target.before ? [target.before] : []),
+          ...(() => {
+            const text = wordTableToText(editor.schema, target.nodes[0], separator, convertNested);
+            return Array.from({ length: text.childCount }, (_, index) => text.child(index));
+          })(),
+          ...(target.after ? [target.after] : []),
+        ]);
   const tr = closeHistory(editor.state.tr).replaceWith(target.from, target.to, content);
   tr.setSelection(
     TextSelection.near(

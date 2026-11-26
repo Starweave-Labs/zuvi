@@ -1,3 +1,5 @@
+import { CellSelection } from '@tiptap/pm/tables';
+import type { Editor } from '@tiptap/react';
 import { createRef, StrictMode, useLayoutEffect, useState } from 'react';
 import { renderToString } from 'react-dom/server';
 import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
@@ -2368,4 +2370,33 @@ it('restores a rejected controlled conversion without changing the saved native 
   expect(ref.current?.getDocument()).toBe(value);
   await act(async () => ref.current?.save());
   expect(onSave).toHaveBeenCalledWith(value);
+});
+
+
+it('converts complete selected rows through the ribbon and preserves surrounding tables', async () => {
+  const model = documentModel();
+  model.content.content = [{ type: 'table', content: ['Before', 'Selected', 'After'].map((text) => ({ type: 'tableRow', content: [text, 'Value'].map((value) => ({ type: 'tableCell', content: [{ type: 'paragraph', content: [{ type: 'text', text: value }] }] })) })) }, { type: 'paragraph', content: [{ type: 'text', text: 'Outside' }] }];
+  const { textbox, onChange } = await mount({ document: model });
+  const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+  const cells: number[] = [];
+  editor.state.doc.descendants((node, position) => { if (node.type.name === 'tableCell') cells.push(position); });
+  act(() => editor.view.dispatch(editor.state.tr.setSelection(CellSelection.create(editor.state.doc, cells[2], cells[3]))));
+  fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+  fireEvent.click(screen.getByRole('button', { name: '表格转文本' }));
+  expect(screen.getByText('转换所选 1 行，保留前后表格和字符格式。')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: '取消' }));
+  expect(onChange).not.toHaveBeenCalled();
+  fireEvent.click(screen.getByRole('button', { name: '表格转文本' }));
+  fireEvent.click(screen.getByRole('button', { name: '转换' }));
+  await waitFor(() => expect(textbox.querySelectorAll('table')).toHaveLength(2));
+  expect(textbox.querySelectorAll('table')[0]).toHaveTextContent('Before');
+  expect(textbox.querySelectorAll('table')[1]).toHaveTextContent('After');
+  expect(textbox).toHaveTextContent('Outside');
+  expect(onChange).toHaveBeenCalledTimes(1);
+  fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+  fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await waitFor(() => expect(textbox.querySelectorAll('table')).toHaveLength(1));
+  expect(textbox.querySelectorAll('tr')).toHaveLength(3);
+  fireEvent.click(screen.getByRole('button', { name: '重做' }));
+  await waitFor(() => expect(textbox.querySelectorAll('table')).toHaveLength(2));
 });

@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { Editor } from '@tiptap/react';
-import { NodeSelection } from '@tiptap/pm/state';
+import { CellSelection } from '@tiptap/pm/tables';
+import { EditorState, NodeSelection } from '@tiptap/pm/state';
 import { undoDepth } from '@tiptap/pm/history';
 import { vi } from 'vitest';
 import { WordImage } from './studio-word-tools';
@@ -274,4 +275,46 @@ it('preserves inline image nodes and their attributes across delimiter removal a
   const table = wordTextToTable(schema, [paragraph], ',');
   expect(table.child(0).child(1).firstChild!.firstChild!.eq(image)).toBe(true);
   expect(wordTableToText(schema, table, ',').firstChild!.eq(paragraph)).toBe(true);
+});
+
+it('disables conversion targets for malformed selected row geometry instead of throwing during rendering', () => {
+  const editor = new Editor({ extensions: [StarterKit, TableKit] });
+  editors.push(editor);
+  const schema = editor.schema;
+  const cell = (text: string) =>
+    schema.nodes.tableCell.create(null, schema.nodes.paragraph.create(null, schema.text(text)));
+  const table = schema.nodes.table.create(null, [
+    schema.nodes.tableRow.create(null, [cell('A'), cell('B')]),
+    schema.nodes.tableRow.create(null, [cell('C')]),
+  ]);
+  const doc = schema.nodes.doc.create(null, [table]);
+  const positions: number[] = [];
+  doc.descendants((node, pos) => {
+    if (node.type.name === 'tableCell') positions.push(pos);
+  });
+  const selection = CellSelection.create(doc, positions[0], positions[1]);
+  const state = EditorState.create({ schema, doc, selection });
+  editor.view.updateState(state);
+  expect(() => wordConversionTarget(editor)).not.toThrow();
+  expect(wordConversionTarget(editor)).toBeNull();
+});
+
+it('rejects partial-width cell selections without falling back to converting the entire table', () => {
+  const editor = new Editor({
+    extensions: [StarterKit, TableKit],
+    content:
+      '<table><tr><td><p>A</p></td><td><p>B</p></td></tr><tr><td><p>C</p></td><td><p>D</p></td></tr></table>',
+  });
+  editors.push(editor);
+  const before = editor.state.doc;
+  const cells: number[] = [];
+  before.descendants((node, pos) => {
+    if (node.type.name === 'tableCell') cells.push(pos);
+  });
+  editor.view.dispatch(
+    editor.state.tr.setSelection(CellSelection.create(before, cells[0], cells[2]))
+  );
+  const selectedDocument = editor.state.doc;
+  expect(wordConversionTarget(editor)).toBeNull();
+  expect(editor.state.doc.eq(selectedDocument)).toBe(true);
 });

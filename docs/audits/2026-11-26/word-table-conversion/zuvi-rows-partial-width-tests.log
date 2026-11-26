@@ -1,0 +1,36 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ❯ src/components/OfficeStudio/studio-word-table-conversion.test.ts (15 tests | 1 failed) 112ms
+   × rejects partial-width cell selections without falling back to converting the entire table 9ms
+     → expected false to be true // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/OfficeStudio/studio-word-table-conversion.test.ts > rejects partial-width cell selections without falling back to converting the entire table
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/components/OfficeStudio/studio-word-table-conversion.test.ts:318:39
+    316|   );
+    317|   expect(wordConversionTarget(editor)).toBeNull();
+    318|   expect(editor.state.doc.eq(before)).toBe(true);
+       |                                       ^
+    319| });
+    320|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 14 passed (15)
+   Start at  07:58:28
+   Duration  902ms (transform 95ms, setup 98ms, collect 142ms, tests 112ms, environment 314ms, prepare 56ms)
+
+undefined
+/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run src/components/OfficeStudio/studio-word-table-conversion.test.ts --reporter=dot

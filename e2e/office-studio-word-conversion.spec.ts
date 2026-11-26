@@ -315,3 +315,193 @@ test('nested native table conversion preserves nested structures by default and 
       await expect(body).toContainText(text);
   }
 });
+
+test('native mouse row selection converts only selected rows and preserves two surrounding tables on reopening', async ({
+  page,
+}) => {
+  const audit = path.resolve('docs/audits/2026-11-26/word-table-conversion');
+  const table = new Table({
+    columnWidths: [3000, 3000],
+    rows: ['Before', 'Selected', 'After'].map(
+      (text) =>
+        new TableRow({
+          children: [text, 'Value'].map(
+            (value) => new TableCell({ children: [new Paragraph(value)] })
+          ),
+        })
+    ),
+  });
+  const source = Buffer.from(
+    await Packer.toArrayBuffer(
+      new Document({ sections: [{ children: [table, new Paragraph('Outside')] }] })
+    )
+  );
+  await writeFile(path.join(audit, 'selected-rows-source.docx'), source);
+  await page.goto('/#/components/office-studio');
+  const input = page.getByLabel('导入文档文件', { exact: true });
+  await input.setInputFiles({
+    name: 'Selected rows.docx',
+    buffer: source,
+    mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  });
+  const body = page.getByRole('textbox', { name: 'Word 文档正文', exact: true });
+  await expect(page.getByRole('textbox', { name: '文档名称', exact: true })).toHaveValue(
+    'Selected rows.docx'
+  );
+  await expect(body.locator('tr')).toHaveCount(3);
+  const topLeft = body.locator('tr').first().locator('td').first();
+  const bottomLeft = body.locator('tr').last().locator('td').first();
+  await topLeft.scrollIntoViewIfNeeded();
+  const top = (await topLeft.boundingBox())!,
+    bottom = (await bottomLeft.boundingBox())!;
+  await page.mouse.move(top.x + 4, top.y + top.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(bottom.x + 4, bottom.y + bottom.height / 2, { steps: 10 });
+  await page.mouse.up();
+  await expect(body.locator('td.selectedCell')).toHaveCount(3);
+  await page.getByRole('tab', { name: '插入', exact: true }).click();
+  await expect(page.getByRole('button', { name: '表格转文本', exact: true })).toBeDisabled();
+  await expect(body.locator('table')).toHaveCount(1);
+  const cells = body.locator('tr').nth(1).locator('td');
+  await expect(cells.first()).toHaveText('Selected');
+  await cells.first().scrollIntoViewIfNeeded();
+  const first = (await cells.first().boundingBox())!,
+    last = (await cells.last().boundingBox())!;
+  await page.mouse.move(first.x + 4, first.y + first.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(last.x + last.width - 4, last.y + last.height / 2, { steps: 10 });
+  await page.mouse.up();
+  await expect(body.locator('td.selectedCell')).toHaveCount(2);
+  await page.getByRole('tab', { name: '插入', exact: true }).click();
+  await page.getByRole('button', { name: '表格转文本', exact: true }).click();
+  await expect(page.getByRole('dialog')).toContainText('转换所选 1 行');
+  await page.screenshot({
+    path: path.join(audit, 'selected-rows-dialog-light.png'),
+    fullPage: true,
+    animations: 'disabled',
+  });
+  await page.setViewportSize({ width: 320, height: 800 });
+  await page.screenshot({
+    path: path.join(audit, 'selected-rows-dialog-light-320.png'),
+    fullPage: true,
+    animations: 'disabled',
+  });
+  await page.getByRole('button', { name: '取消', exact: true }).click();
+  await page.getByRole('button', { name: '切换暗色', exact: true }).click();
+  await page.getByRole('button', { name: '表格转文本', exact: true }).click();
+  await page.screenshot({
+    path: path.join(audit, 'selected-rows-dialog-dark-320.png'),
+    fullPage: true,
+    animations: 'disabled',
+  });
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await page.screenshot({
+    path: path.join(audit, 'selected-rows-dialog-dark.png'),
+    fullPage: true,
+    animations: 'disabled',
+  });
+  await page.getByRole('button', { name: '转换', exact: true }).click();
+  await expect(body.locator('table')).toHaveCount(2);
+  await expect(body.locator('table').first()).toContainText('Before');
+  await expect(body.locator('table').last()).toContainText('After');
+  await page.getByRole('tab', { name: '开始', exact: true }).click();
+  await page.getByRole('button', { name: '撤销', exact: true }).click();
+  await expect(body.locator('table')).toHaveCount(1);
+  await expect(body.locator('tr')).toHaveCount(3);
+  await page.getByRole('button', { name: '重做', exact: true }).click();
+  for (let pass = 1; pass <= 2; pass++) {
+    const pending = page.waitForEvent('download');
+    await page.getByRole('button', { name: '导出文件', exact: true }).click();
+    const bytes = await readFile((await (await pending).path())!);
+    await writeFile(path.join(audit, `selected-rows-roundtrip-${pass}.docx`), bytes);
+    await input.setInputFiles({
+      name: `Rows-reopened-${pass}.docx`,
+      buffer: bytes,
+      mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    });
+    await expect(page.getByRole('textbox', { name: '文档名称', exact: true })).toHaveValue(
+      `Rows-reopened-${pass}.docx`
+    );
+    await expect(body.locator('table')).toHaveCount(2);
+    await expect(body).toContainText('Selected');
+    await expect(body).toContainText('Outside');
+  }
+  await page.getByRole('switch', { name: '只读预览', exact: true }).click();
+  await body.locator('table').first().locator('p').first().click();
+  await page.getByRole('tab', { name: '插入', exact: true }).click();
+  await expect(page.getByRole('button', { name: '表格转文本', exact: true })).toBeDisabled();
+});
+
+test('native merged row selection expands vertical merges and keeps untouched rows through DOCX reopening', async ({
+  page,
+}) => {
+  const audit = path.resolve('docs/audits/2026-11-26/word-table-conversion');
+  const table = new Table({
+    columnWidths: [3000, 3000],
+    rows: [
+      new TableRow({
+        children: [
+          new TableCell({ rowSpan: 2, children: [new Paragraph('Merged')] }),
+          new TableCell({ children: [new Paragraph('Top')] }),
+        ],
+      }),
+      new TableRow({ children: [new TableCell({ children: [new Paragraph('Bottom')] })] }),
+      new TableRow({
+        children: [new TableCell({ columnSpan: 2, children: [new Paragraph('Wide untouched')] })],
+      }),
+    ],
+  });
+  const source = Buffer.from(
+    await Packer.toArrayBuffer(
+      new Document({ sections: [{ children: [table, new Paragraph('Outside merged')] }] })
+    )
+  );
+  await writeFile(path.join(audit, 'merged-rows-source.docx'), source);
+  await page.goto('/#/components/office-studio');
+  const input = page.getByLabel('导入文档文件', { exact: true });
+  const importFile = async (name: string, buffer: Buffer) => {
+    await input.setInputFiles({
+      name,
+      buffer,
+      mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    });
+    await expect(page.getByRole('textbox', { name: '文档名称', exact: true })).toHaveValue(name);
+  };
+  await importFile('Merged rows.docx', source);
+  const body = page.getByRole('textbox', { name: 'Word 文档正文', exact: true });
+  await expect(body.locator('td[rowspan="2"]')).toHaveText('Merged');
+  const firstCell = body.locator('td[rowspan="2"]');
+  const lastCell = body.locator('td').filter({ hasText: /^Bottom$/ });
+  await firstCell.scrollIntoViewIfNeeded();
+  const first = (await firstCell.boundingBox())!,
+    last = (await lastCell.boundingBox())!;
+  await page.mouse.move(first.x + 4, first.y + 8);
+  await page.mouse.down();
+  await page.mouse.move(last.x + last.width - 4, last.y + last.height / 2, { steps: 10 });
+  await page.mouse.up();
+  await expect(body.locator('td.selectedCell')).toHaveCount(3);
+  await page.getByRole('tab', { name: '插入', exact: true }).click();
+  await page.getByRole('button', { name: '表格转文本', exact: true }).click();
+  await expect(page.getByRole('dialog')).toContainText('转换所选 2 行');
+  await page.getByRole('button', { name: '转换', exact: true }).click();
+  await expect(body.locator('table')).toHaveCount(1);
+  await expect(body.locator('td[colspan="2"]')).toHaveText('Wide untouched');
+  for (const text of ['Merged', 'Top', 'Bottom', 'Outside merged'])
+    await expect(body).toContainText(text);
+  await page.getByRole('tab', { name: '开始', exact: true }).click();
+  await page.getByRole('button', { name: '撤销', exact: true }).click();
+  await expect(body.locator('td[rowspan="2"]')).toHaveText('Merged');
+  await expect(body.locator('tr')).toHaveCount(3);
+  await page.getByRole('button', { name: '重做', exact: true }).click();
+  for (let pass = 1; pass <= 2; pass++) {
+    const pending = page.waitForEvent('download');
+    await page.getByRole('button', { name: '导出文件', exact: true }).click();
+    const bytes = await readFile((await (await pending).path())!);
+    await writeFile(path.join(audit, `merged-rows-roundtrip-${pass}.docx`), bytes);
+    await importFile(`Merged-reopened-${pass}.docx`, bytes);
+    await expect(body.locator('table')).toHaveCount(1);
+    await expect(body.locator('td[colspan="2"]')).toHaveText('Wide untouched');
+    for (const text of ['Merged', 'Top', 'Bottom', 'Outside merged'])
+      await expect(body).toContainText(text);
+  }
+});

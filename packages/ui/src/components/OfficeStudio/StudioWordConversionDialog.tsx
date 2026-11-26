@@ -78,7 +78,9 @@ export function StudioWordConversionDialog({
           <p>
             {toTable
               ? `将所选 ${target.nodes.length} 个段落中的选中文本转换为表格。`
-              : '转换当前表格，保留文字和字符格式；合并覆盖位置留为空字段。'}
+              : target.selectedRows
+                ? `转换所选 ${target.selectedRows} 行，保留前后表格和字符格式。`
+                : '转换当前表格，保留文字和字符格式；合并覆盖位置留为空字段。'}
           </p>
           <Select
             aria-label="转换分隔符"
