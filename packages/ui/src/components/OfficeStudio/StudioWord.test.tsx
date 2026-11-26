@@ -2761,3 +2761,24 @@ it('restores a rejected controlled math edit and saves the original semantic mod
   await act(async () => ref.current?.save());
   expect(onSave).toHaveBeenCalledWith(value);
 });
+
+it('edits a second equation group member through the actual dialog and undoes the group atomically', async () => {
+  const value = documentModel();
+  const equation = { kind: 'display', align: 'centerGroup', body: { kind: 'text', text: 'x' }, following: [{ kind: 'text', text: 'y' }] };
+  value.content.content![0].content = [{ type: 'mathEquation', attrs: { equation } }];
+  const { textbox, onChange } = await mount({ document: value });
+  const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+  act(() => editor.commands.setNodeSelection(1));
+  fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+  fireEvent.click(screen.getByRole('button', { name: '数学公式' }));
+  fireEvent.change(screen.getByRole('textbox', { name: '公式 组内第2公式文字' }), { target: { value: 'y+1' } });
+  fireEvent.click(screen.getByRole('button', { name: '增加组内公式' }));
+  fireEvent.click(screen.getByRole('button', { name: '保存数学公式' }));
+  await waitFor(() => expect(onChange).toHaveBeenCalledTimes(1));
+  expect(JSON.parse(textbox.querySelector('[data-word-math]')!.getAttribute('data-word-math')!).following).toHaveLength(2);
+  fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+  fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await waitFor(() => expect(JSON.parse(textbox.querySelector('[data-word-math]')!.getAttribute('data-word-math')!)).toEqual(equation));
+  fireEvent.click(screen.getByRole('button', { name: '重做' }));
+  await waitFor(() => expect(textbox.querySelectorAll('math mtext')[1]).toHaveTextContent('y+1'));
+});

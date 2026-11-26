@@ -107,3 +107,20 @@ it('retains display alignment through canvas, HTML serialization and independent
   expect(restored).toEqual(tree);
   container.remove();
 });
+
+it('preserves multiple display group members in canvas and HTML and undoes one group edit', () => {
+  const editor = fixture();
+  const tree = { kind: 'display', align: 'centerGroup', body: equation, following: [{ kind: 'text', text: 'y' }] };
+  wordSetMath(editor, tree);
+  const html = editor.getHTML();
+  expect(html).toContain('mspace');
+  wordSetMath(editor, { ...tree, following: [{ kind: 'text', text: 'z' }] });
+  editor.commands.undo();
+  expect(editor.state.doc.nodeAt(3)!.attrs.equation).toEqual(tree);
+  editor.commands.redo();
+  expect(editor.state.doc.nodeAt(3)!.attrs.equation.following[0].text).toBe('z');
+  editor.commands.setContent(html);
+  let restored: unknown;
+  editor.state.doc.descendants(node => { if (node.type.name === 'mathEquation') restored = node.attrs.equation; });
+  expect(restored).toEqual(tree);
+});

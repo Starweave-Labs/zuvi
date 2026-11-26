@@ -1190,3 +1190,15 @@ test('Word display formulas retain their alignment and semantic MathML when prin
   assert.ok(rendered.querySelector('math').getAttribute('style').includes('justify-content:flex-end'));
   assert.equal(rendered.querySelectorAll('math mfrac').length, 1);
 });
+
+test('Word multi-equation groups print independent members and their local styles with spacing', () => {
+  const model = models.createOfficeStudioDocument('word');
+  const t = text => ({ kind: 'text', text });
+  model.content = { type: 'doc', content: [{ type: 'paragraph', content: [{ type: 'mathEquation', attrs: { equation: { kind: 'display', align: 'centerGroup', body: t('x'), following: [{ kind: 'fraction', numerator: { ...t('a'), format: { color: '#aa2244' } }, denominator: t('b') }] } } }] }] };
+  const rendered = new JSDOM(print.createStudioPrintHtml(model)).window.document;
+  assert.equal(rendered.querySelectorAll('math mfrac').length, 1);
+  assert.equal(rendered.querySelectorAll('math mspace').length, 1);
+  assert.equal(rendered.querySelector('math mspace').getAttribute('width'), '1em');
+  assert.equal(rendered.querySelector('math mtext').textContent, 'x');
+  assert.ok(rendered.querySelector('math mfrac mtext').getAttribute('style').includes('color:#aa2244'));
+});

@@ -1,0 +1,12 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/studio-word-math.test.ts (7 tests) 15ms
+ ✓ src/components/OfficeStudio/studio-word-math-extension.test.ts (5 tests) 153ms
+ ✓ src/components/OfficeStudio/StudioWordMathDialog.test.tsx (6 tests) 1138ms
+   ✓ edits nested fractions and matrices with a live structural preview and cancels without saving 486ms
+
+ Test Files  3 passed (3)
+      Tests  18 passed (18)
+   Start at  13:11:57
+   Duration  3.02s (transform 525ms, setup 559ms, collect 1.00s, tests 1.31s, environment 1.76s, prepare 332ms)

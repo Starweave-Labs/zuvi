@@ -1,0 +1,10 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/StudioWord.test.tsx (106 tests | 105 skipped) 678ms
+   ✓ edits a second equation group member through the actual dialog and undoes the group atomically 677ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 105 skipped (106)
+   Start at  13:14:41
+   Duration  2.84s (transform 862ms, setup 148ms, collect 1.31s, tests 678ms, environment 421ms, prepare 70ms)

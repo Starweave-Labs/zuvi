@@ -2,7 +2,7 @@
 export type WordMathFormat = { bold?: boolean; italic?: boolean; underline?: boolean; strike?: boolean; fontFamily?: string; fontSize?: string; color?: string; backgroundColor?: string; letterSpacing?: string; baselineShift?: string; script?: 'baseline' | 'superscript' | 'subscript' };
 export type WordMathNode =
   | { kind: 'text'; text: string; format?: WordMathFormat }
-  | { kind: 'display'; body: WordMathNode; align: 'left' | 'center' | 'right' | 'centerGroup' }
+  | { kind: 'display'; body: WordMathNode; following?: WordMathNode[]; align: 'left' | 'center' | 'right' | 'centerGroup' }
   | { kind: 'row'; children: WordMathNode[] }
   | { kind: 'fraction'; numerator: WordMathNode; denominator: WordMathNode }
   | { kind: 'script'; base: WordMathNode; sub?: WordMathNode; sup?: WordMathNode }
@@ -24,7 +24,7 @@ export function wordMathTree(input: unknown): WordMathNode {
       const node = value as Record<string, unknown>;
       const allowed: Record<string, string[]> = {
         text: ['kind', 'text', 'format'],
-        display: ['kind', 'body', 'align'],
+        display: ['kind', 'body', 'following', 'align'],
         row: ['kind', 'children'],
         fraction: ['kind', 'numerator', 'denominator'],
         script: ['kind', 'base', 'sub', 'sup'],
@@ -51,7 +51,8 @@ export function wordMathTree(input: unknown): WordMathNode {
 
         case 'display':
           if (depth !== 0 || typeof node.align !== 'string' || !['left', 'center', 'right', 'centerGroup'].includes(node.align)) throw new Error('段落公式只能位于公式根节点，并需有效对齐。');
-          return { kind: 'display', body: child(node.body), align: node.align as 'left' | 'center' | 'right' | 'centerGroup' };
+          if (node.following != null && (!Array.isArray(node.following) || node.following.length > 31)) throw new Error('段落公式组最多32个公式。');
+          return { kind: 'display', body: child(node.body), ...(Array.isArray(node.following) && node.following.length ? { following: node.following.map(child) } : {}), align: node.align as 'left' | 'center' | 'right' | 'centerGroup' };
         case 'row':
           if (!Array.isArray(node.children) || !node.children.length || node.children.length > 512)
             throw new Error('公式行必须包含有效节点。');
@@ -113,7 +114,7 @@ export function wordMathText(input: unknown): string {
     switch (node.kind) {
       case 'text':
         return node.text;
-      case 'display': return render(node.body);
+      case 'display': return [node.body, ...(node.following || [])].map(render).join(' ; ');
       case 'row':
         return node.children.map(render).join('');
       case 'fraction':
@@ -140,7 +141,7 @@ export function wordMathMarkup(input: unknown): string {
     switch (node.kind) {
       case 'text':
         return `<mtext${node.format ? ` style="${escape(wordMathFormatCss(node.format))}"` : ''}>${escape(node.text)}</mtext>`;
-      case 'display': return render(node.body);
+      case 'display': return node.following?.length ? `<mrow>${[node.body, ...node.following].map(render).join('<mspace width="1em"/>')}</mrow>` : render(node.body);
       case 'row':
         return `<mrow>${node.children.map(render).join('')}</mrow>`;
       case 'fraction':

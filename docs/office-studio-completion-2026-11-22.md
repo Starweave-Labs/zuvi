@@ -135,3 +135,5 @@ W032最终全UI2519/docs316无跳过、类型/lint/build/browser/Registry92/消�
 最终冻结整站E2E269项全部通过。全UI2525/docs318无跳过、typecheck/lint/build/browser/Registry92/消费者370/分发/体积124925通过。W031仍部分实现：完整跨区域和布局组合尚未验收；159项未完成。
 
 - 数学公式 W037（2026-11-26）：ZUVI递归结构编辑文字/组合/分式/上下标/根式/矩阵/括号与局部格式，行内/段落及对齐；画布、HTML、打印使用结构MathML。OMML原生输入编辑后两次DOCX重开，数学样式/局部字号颜色与Unicode回车保留；实际取消/一次撤销重做、readonly/disabled/组合事件、受控拒绝恢复并保存原模型已验证。完整Word/公式121项、全UI2548项、docs327项无跳过通过；类型、lint、Registry92、消费者373文件、分发、构建/browser build及入口124924<124928字节通过。浅色/暗色/320px截图、真实DOCX与日志见 `docs/audits/2026-11-26/word-math/`。全E2E270项全部通过（17.8分钟），多公式段落组及更多原生/复杂区域组合未完整验收，W037保持部分实现，159项完成尚未证明。
+
+- W037 多公式段落组续补（2026-11-26）：同一原生oMathPara内多个oMath保留独立树与对齐；ZUVI增加/删除/编辑和行内转换保留成员，实际一次历史与HTML重开通过。Word/公式125项、原生DOCX/打印95项及多成员浏览器两次原生重开/明暗320px专项通过。类型/lint/build/browser build通过；本轮全UI2552/docs329、Registry/消费者/分发/体积和全E2E271项通过（17.7分钟），证据在 `docs/audits/2026-11-26/word-math-groups/`，不得记为完整验收完成。

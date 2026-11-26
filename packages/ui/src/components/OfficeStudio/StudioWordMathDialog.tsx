@@ -69,9 +69,15 @@ function MathPart({
       </div>
       {path === '公式' && node.kind !== 'display' && <Button variant="ghost" disabled={blocked} aria-label="改为段落公式" onClick={() => change({ kind: 'display', body: node, align: 'center' })}>段落公式</Button>}
       {node.kind === 'display' && <>
-        <Button variant="ghost" disabled={blocked} aria-label="改为行内公式" onClick={() => change(node.body)}>行内公式</Button>
+        <Button variant="ghost" disabled={blocked} aria-label="改为行内公式" onClick={() => change(node.following?.length ? { kind: 'row', children: [node.body, ...node.following] } : node.body)}>行内公式</Button>
         {(['left', 'center', 'right', 'centerGroup'] as const).map(align => <Button key={align} variant={node.align === align ? 'secondary' : 'ghost'} disabled={blocked} aria-label={`段落公式对齐${align}`} aria-pressed={node.align === align} onClick={() => change({ ...node, align })}>{({ left: '左对齐', center: '居中', right: '右对齐', centerGroup: '公式组居中' })[align]}</Button>)}
         {part(node.body, '段落内容', body => change({ ...node, body }))}
+        {(node.following || []).map((equation, index) => <div key={index}>
+          {part(equation, `组内第${index + 2}公式`, next => change({ ...node, following: node.following!.map((value, i) => i === index ? next : value) }))}
+          <Button variant="ghost" disabled={blocked} aria-label={`删除组内第${index + 2}公式`} onClick={() => change({ ...node, following: node.following!.filter((_, i) => i !== index) })}>删除公式</Button>
+        </div>)}
+        <Button variant="ghost" disabled={blocked || (node.following?.length || 0) >= 31} aria-label="增加组内公式" onClick={() => change({ ...node, following: [...(node.following || []), text()] })}>增加公式</Button>
+
       </>}
       {node.kind === 'text' && <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
         {([['bold', '加粗'], ['italic', '斜体'], ['underline', '下划线'], ['strike', '删除线']] as const).map(([key, label]) =>

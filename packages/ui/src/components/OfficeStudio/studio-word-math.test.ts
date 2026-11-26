@@ -79,3 +79,12 @@ it('rejects non-XML characters and malformed surrogate text without rejecting fu
   }
   expect(wordMathTree(text('😀\t\n\r'))).toEqual(text('😀\t\n\r'));
 });
+
+it('validates bounded equation groups and renders each member without merging their trees', () => {
+  const tree = { kind: 'display', align: 'centerGroup', body: text('x'), following: [text('y')] };
+  expect(wordMathTree(tree)).toEqual(tree);
+  expect(wordMathText(tree)).toBe('x ; y');
+  expect(wordMathMarkup(tree)).toContain('<mspace width="1em"/>');
+  expect(() => wordMathTree({ ...tree, following: Array.from({ length: 32 }, () => text('z')) })).toThrow('32');
+  expect(() => wordMathTree({ ...tree, following: [tree] })).toThrow('根节点');
+});

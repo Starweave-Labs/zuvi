@@ -33,7 +33,7 @@ export const WordMath = Node.create({
         [`http://www.w3.org/1998/Math/MathML ${tag}`, {}, ...children];
       switch (value.kind) {
         case 'text': return ['http://www.w3.org/1998/Math/MathML mtext', value.format ? { style: wordMathFormatCss(value.format) } : {}, value.text];
-        case 'display': return spec(value.body);
+        case 'display': return value.following?.length ? element('mrow', ...[value.body, ...value.following].flatMap((item, index) => index ? [['http://www.w3.org/1998/Math/MathML mspace', { width: '1em' }] as DOMOutputSpec, spec(item)] : [spec(item)])) : spec(value.body);
         case 'row': return element('mrow', ...value.children.map(spec));
         case 'fraction': return element('mfrac', spec(value.numerator), spec(value.denominator));
         case 'script': return value.sub && value.sup

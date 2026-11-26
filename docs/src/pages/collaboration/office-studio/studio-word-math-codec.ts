@@ -50,7 +50,7 @@ export function wordMathOmml(input: unknown, inherited: WordMathFormat = {}): st
     }
   };
   const tree = wordMathTree(input);
-  const equation = `<m:oMath xmlns:m="${M}" xmlns:w="${W}">${render(tree)}</m:oMath>`;
+  const equation = (tree.kind === 'display' ? [tree.body, ...(tree.following || [])] : [tree]).map(value => `<m:oMath xmlns:m="${M}" xmlns:w="${W}">${render(value)}</m:oMath>`).join('');
   return tree.kind === 'display' ? `<m:oMathPara xmlns:m="${M}" xmlns:w="${W}"><m:oMathParaPr><m:jc m:val="${tree.align}"/></m:oMathParaPr>${equation}</m:oMathPara>` : equation;
 }
 export function readWordMath(element: Element): WordMathNode {
@@ -118,7 +118,7 @@ export function readWordMath(element: Element): WordMathNode {
     // Only mathematical rows and matrix rows admit repeated children.
     if (item.localName !== 'oMath') {
       const names = children(item).filter(child =>
-        !(item.localName === 'm' && child.localName === 'mr') && !(item.localName === 'r' && child.localName === 't')).map(child => `${child.namespaceURI}:${child.localName}`);
+        !(item.localName === 'm' && child.localName === 'mr') && !(item.localName === 'oMathPara' && child.localName === 'oMath') && !(item.localName === 'r' && child.localName === 't')).map(child => `${child.namespaceURI}:${child.localName}`);
       if (new Set(names).size !== names.length) fail();
     }
     const slot = (name: string) => {
@@ -132,9 +132,9 @@ export function readWordMath(element: Element): WordMathNode {
         if (props && (children(props).some(child => child.namespaceURI !== M || child.localName !== 'jc') || children(props).length > 1)) fail();
         const align = props ? find(props, 'jc')?.getAttributeNS(M, 'val') || 'centerGroup' : 'centerGroup';
         if (!['left', 'center', 'right', 'centerGroup'].includes(align)) fail();
-        const equation = find(item, 'oMath');
-        if (!equation) fail();
-        return { kind: 'display', align: align as 'left' | 'center' | 'right' | 'centerGroup', body: parse(equation!, depth + 1) };
+        const equations = children(item).filter(child => child.namespaceURI === M && child.localName === 'oMath');
+        if (!equations.length || equations.length > 32) fail();
+        return { kind: 'display', align: align as 'left' | 'center' | 'right' | 'centerGroup', body: parse(equations[0], depth + 1), ...(equations.length > 1 ? { following: equations.slice(1).map(equation => parse(equation, depth + 1)) } : {}) };
       }
       case 'oMath':
         return row(item, depth);

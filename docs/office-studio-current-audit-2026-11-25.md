@@ -46,7 +46,7 @@
 | W034 | 形状与文本框 | 未实现 | Word 节点仅支持文字表格图片等基础内容 | 缺形状/文本框绘制文字及排列、原生对象往返 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W035 | WordArt与SmartArt | 未实现 | 没有对应图形编辑节点 | 缺 WordArt/SmartArt 结构和原生保存 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W036 | 图表与嵌入对象 | 未实现 | Word 内无图表数据/嵌入对象内核 | 缺创建、数据编辑、激活和保存；嵌入对象拒绝 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
-| W037 | 数学公式 | 部分实现 | ZUVI结构/局部格式/段落对齐、MathML画布HTML打印、OMML与真实DOCX两次重开、历史取消及明暗320px专项通过 | 多oMath同组/更多原生复杂区域组合、操作系统IME未证实，全仓检查和E2E270通过；组合事件/受控拒绝/readonly/disabled已验，完整验收仍待补 | `studio-word-math.ts`；`office-studio-word-math.spec.ts`；`word-math/README.md` |
+| W037 | 数学公式 | 部分实现 | ZUVI结构/局部格式/段落对齐、MathML画布HTML打印、OMML与真实DOCX两次重开、历史取消及明暗320px专项通过 | 多oMath同组已补模型/实际入口/原生两次重开及明暗320px；更多原生复杂区域组合和操作系统IME未证实，本轮全仓检查/E2E271通过，完整验收仍待补 | `studio-word-math.ts`；`office-studio-word-math.spec.ts`；`word-math/README.md` |
 | W038 | 超链接 | 部分实现 | 外部链接创建编辑删除与 DOCX 保存 | 缺内部书签链接；原生内部链接拒绝 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W039 | 纸张方向页边距 | 部分实现 | A4/Letter、方向、统一页边距 | 缺按节、自定义纸张及四侧独立边距；多节拒绝 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W040 | 分页符与空白页 | 部分实现 | 显式 pageBreak 可插入和原生保存 | 连续画布没有完整空白页管理及页级删除验收 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |

@@ -1657,7 +1657,6 @@ test('unsupported OMML attributes and hidden degree content fail instead of sile
     `<m:oMath xmlns:m="${M}"><m:r m:custom="lost"><m:t>x</m:t></m:r></m:oMath>`,
     `<m:oMath xmlns:m="${M}"><m:r><m:rPr><m:sty m:val="bad"/></m:rPr><m:t>x</m:t></m:r></m:oMath>`,
     `<m:oMathPara xmlns:m="${M}"><m:oMathParaPr><m:jc m:val="bad"/></m:oMathParaPr><m:oMath><m:r><m:t>x</m:t></m:r></m:oMath></m:oMathPara>`,
-    `<m:oMathPara xmlns:m="${M}"><m:oMath><m:r><m:t>x</m:t></m:r></m:oMath><m:oMath><m:r><m:t>y</m:t></m:r></m:oMath></m:oMathPara>`,
     `<m:oMath xmlns:m="${M}" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><m:r><w:rPr><w:rFonts w:ascii="Arial" w:eastAsia="SimSun"/></w:rPr><m:t>x</m:t></m:r></m:oMath>`,
     `<m:oMath xmlns:m="${M}" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><m:r><w:rPr><w:color w:val="auto"/></w:rPr><m:t>x</m:t></m:r></m:oMath>`,
     `<m:oMath xmlns:m="${M}" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><m:r><w:rPr><w:sz w:val="1"/></w:rPr><m:t>x</m:t></m:r></m:oMath>`,
@@ -1738,5 +1737,23 @@ test('equation Unicode and carriage returns survive native XML whitespace normal
   for (let pass = 0; pass < 2; pass++) {
     current = await importStudioWord(await exportStudioWord(current), 'Unicode-math.docx');
     assert.equal(find(current.content, 'mathEquation')[0].attrs.equation.text, equation.text);
+  }
+});
+
+test('native multi-equation paragraph groups retain independent editable trees across two saves', async () => {
+  const M = 'http://schemas.openxmlformats.org/officeDocument/2006/math';
+  const source = await fixture(`<w:p><m:oMathPara xmlns:m="${M}"><m:oMathParaPr><m:jc m:val="centerGroup"/></m:oMathParaPr><m:oMath><m:r><m:t>x</m:t></m:r></m:oMath><m:oMath><m:f><m:num><m:r><m:t>a</m:t></m:r></m:num><m:den><m:r><m:t>b</m:t></m:r></m:den></m:f></m:oMath></m:oMathPara></w:p>`);
+  let current = await importStudioWord(source, 'Equation-group.docx');
+  const equation = find(current.content, 'mathEquation')[0].attrs.equation;
+  assert.equal(equation.following.length, 1);
+  equation.following[0].numerator.text = 'a+1';
+  const expected = JSON.parse(JSON.stringify(equation));
+  for (let pass = 0; pass < 2; pass++) {
+    const file = await exportStudioWord(current);
+    const zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const native = await zip.file('word/document.xml').async('string');
+    assert.equal((native.match(/<m:oMath\s/g) || []).length, 2);
+    current = await importStudioWord(file, 'Equation-group-reopen.docx');
+    assert.deepEqual(JSON.parse(JSON.stringify(find(current.content, 'mathEquation')[0].attrs.equation)), expected);
   }
 });

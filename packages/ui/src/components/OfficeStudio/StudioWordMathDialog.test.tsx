@@ -76,3 +76,17 @@ it('changes inline formulas to aligned display formulas without losing their str
   fireEvent.click(screen.getByRole('button', { name: '保存数学公式' }));
   expect(save.mock.lastCall?.[0].kind).toBe('fraction');
 });
+
+it('edits, adds and removes independent formulas inside a display group without losing inline conversion content', () => {
+  const save = vi.fn();
+  render(<StudioWordMathDialog initial={{ kind: 'display', align: 'centerGroup', body: initial, following: [{ kind: 'text', text: 'y' }] }} blocked={false} onSave={save} onClose={vi.fn()} />);
+  fireEvent.change(screen.getByRole('textbox', { name: '公式 组内第2公式文字' }), { target: { value: 'y+1' } });
+  fireEvent.click(screen.getByRole('button', { name: '增加组内公式' }));
+  fireEvent.change(screen.getByRole('textbox', { name: '公式 组内第3公式文字' }), { target: { value: 'z' } });
+  fireEvent.click(screen.getByRole('button', { name: '删除组内第2公式' }));
+  fireEvent.click(screen.getByRole('button', { name: '保存数学公式' }));
+  expect(save.mock.lastCall?.[0].following).toEqual([{ kind: 'text', text: 'z' }]);
+  fireEvent.click(screen.getByRole('button', { name: '改为行内公式' }));
+  fireEvent.click(screen.getByRole('button', { name: '保存数学公式' }));
+  expect(save.mock.lastCall?.[0]).toEqual({ kind: 'row', children: [initial, { kind: 'text', text: 'z' }] });
+});
