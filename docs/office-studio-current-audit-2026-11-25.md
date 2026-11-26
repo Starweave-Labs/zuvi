@@ -2,7 +2,7 @@
 
 整体审计基线：`2382530`；后续条目按 JSON 中的日期/源码记录续验。本次逐项核对 Word 65、Excel 68、PDF 26 项。历史状态保留；本页表示当前源码实现范围，全部条目仍需按原共通验收逐项闭环。
 
-实现分类：基础实现 22 项、切片验证 32 项、部分实现 55 项、未实现 50 项。这不是完整验收完成率。
+实现分类：基础实现 22 项、切片验证 35 项、部分实现 53 项、未实现 49 项。这不是完整验收完成率。
 
 验收要求：模型与编辑入口、只读/禁用、一次撤销重做、导入编辑导出重开、适用的明暗/320px 浏览器检查及失败原数据不变。已有测试文件不能自动替代每项六维证据。
 
@@ -102,8 +102,8 @@
 | X020 | 数字格式与自定义格式     | 切片验证 | 自定义代码/条件/四分节，中美地区日期时间及数字/文本；类型保留、历史、权限、打印/筛选和 XLSX 两次重开      | 其他地区/ColorN/1904 日期系统、宽度填充和外部应用完整验收仍待补齐    | `studio-number-format.ts`；`StudioSheetNumberFormatDialog.tsx`；`office-studio-sheet-number-format.spec.ts` |
 | X021 | 完整边框与斜线           | 部分实现 | 所有/外侧/无边框、六线型与颜色                                                                            | 缺单边/内横内竖/斜线；复杂合并边界待补                               | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267`                                                         |
 | X022 | 填充与主题颜色           | 部分实现 | 直接 RGB 填充/无填充                                                                                      | 缺主题引用和色调往返；普通源样式保留不代表编辑支持                   | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267`                                                         |
-| X023 | 对齐缩进旋转文字         | 部分实现 | 左中右、顶中底对齐                                                                                        | 缺分散、跨选区居中、缩进与旋转模型/入口                              | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267`                                                         |
-| X024 | 换行缩小字体             | 部分实现 | 自动换行和手动自动行高                                                                                    | 缺 shrinkToFit 与编辑后自动行高联动                                  | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267`                                                         |
+| X023 | 对齐缩进旋转文字 | 切片验证 | 常规/填充/两端/分散/跨选区居中、垂直对齐、缩进、旋转/竖排；实际入口/历史/保护及两轮XLSX、打印、明暗320px | 复杂RTL/竖排或斜角换行、跨隐藏/冻结桥接和完整原生等价仍待验收 | `StudioSheetTextDialog.tsx`；`studio-sheet-text-layout.ts`；`sheet-text-layout/README.md` |
+| X024 | 换行缩小字体 | 切片验证 | 共享grid/print文字几何、原字号保留、自动ht临时刷新及auto/fixed身份；隐藏合并起点与205行数组，两轮XLSX及明暗320px | 多可见纵向合并自动分配、普通文字溢出和复杂方向/布局仍待验收 | `studio-sheet-text-display.ts`；`studio-excel-codec.ts`；`sheet-text-layout/README.md` |
 | X025 | 合并拆分                 | 基础实现 | 合并冲突/非空拒绝、拆分和 XLSX 保存                                                                       | 完整浏览器失败恢复/历史/原生重开矩阵待补                             | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267`                                                         |
 | X026 | 清除分项菜单             | 部分实现 | 清空内容、清除格式和链接/规则独立管理                                                                     | 缺统一清除分项菜单、批注管理/选择性清除                              | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267`                                                         |
 | X027 | 行列插入删除             | 基础实现 | 行列结构日志、公式尺寸合并规则图表链接迁移                                                                | 数组新增边界及全原生浏览器矩阵待完整审计                             | `StudioSheet.tsx:284`；`studio-excel-codec.ts:1267`                                                         |
@@ -158,9 +158,9 @@
 | P003 | 目录书签导航           | 未实现   | 左侧导航只有搜索批注缩略图表单                                                                    | 缺 PDF 原目录读取/层级编辑与保存                                | `studio-types.ts:350`；`StudioPdf.tsx:411`                                          |
 | P004 | 插入空白页             | 切片验证 | 稳定ID/sourcePage、空白页尺寸/插入位置与方向操作，原始session不随页数清空历史，两轮原生重开       | 更多插入位置/原生字段来源兼容与完整共通验收待审                 | `studio-pdf-pages.ts`；`StudioPdfPageDialog.tsx`；`studio-pdf-page-codec.ts`        |
 | P005 | 删除页面               | 切片验证 | 多页删除/最后页限制；模型标注控件与原生引用/动作/目录同步，单事务与两轮原生重开                   | 更多多页/选值/引用组合及现有未支持字段来源待审                  | `studio-pdf-pages.ts`；`StudioPdf.tsx`；`studio-pdf-page-codec.ts`                  |
-| P006 | 复制移动重排页面       | 切片验证 | 复制/移动/实际缩略图拖动、稳定ID/copyGroup、页面/控件映射、内容数组与资源隔离，一次历史和原生重开 | 更多多页拖动/滚动和复杂字段待审；跨文件P008仍未接入             | `StudioPdf.tsx`；`studio-pdf-page-codec.ts`；`office-studio-pdf-pages.spec.ts`      |
+| P006 | 复制移动重排页面 | 切片验证 | 复制/移动/真实缩略图拖动、稳定ID/copyGroup、资源与控件映射；P008已接入、被动/非视觉字段保全 | 更多多页拖动/滚动、选区取消及复杂字段/动作组合待验收 | `StudioPdf.tsx`；`studio-pdf-page-codec.ts`；`pdf-composition/README.md` |
 | P007 | 旋转与页面尺寸         | 切片验证 | 单/多页旋转、可见画布尺寸与交换宽高，保原坐标，两轮原生保存不重复旋转                             | 更多裁剪原点/方向/选区字段组合及完整共通验收待审                | `StudioPdfPageDialog.tsx`；`studio-pdf-codec.ts`；`office-studio-pdf-pages.spec.ts` |
-| P008 | 合并文件与提取页面     | 未实现   | 单个 source PDF                                                                                   | 缺合并提取及资源/链接/字段冲突处理                              | `studio-types.ts:350`；`StudioPdf.tsx:411`                                          |
+| P008 | 合并文件与提取页面 | 切片验证 | 实际ZUVI合并/提取、配对Blob/模型历史、页序/字段策略与原生资源/链接/目录/动作；两轮重开、明暗320px及独立AP/字段树检查 | 复杂字段/动作/资源组合的完整适用验收仍待审计；来源拒绝边界见README | `StudioPdfComposeDialog.tsx`；`studio-pdf-compose.ts`；`pdf-composition/README.md` |
 | P009 | 原页面转换为可编辑对象 | 未实现   | 只在原页叠加模型内容                                                                              | 缺原页字体图片路径解析/可编辑转换                               | `studio-types.ts:350`；`StudioPdf.tsx:411`                                          |
 | P010 | 原文文字编辑           | 未实现   | 原文 canvas 只读                                                                                  | 缺段落重排、字体映射、真实原内容修改                            | `studio-types.ts:350`；`StudioPdf.tsx:411`                                          |
 | P011 | 字体段落与对象排列     | 部分实现 | 新增标注位置/大小可编辑，局部移动                                                                 | 缺对象层级/分组、原文字段落属性与图像裁剪                       | `studio-types.ts:350`；`StudioPdf.tsx:411`                                          |
@@ -170,15 +170,15 @@
 | P015 | 便利贴与回复解决       | 部分实现 | 模型内标注列表及回复增删                                                                          | 缺原生便利贴/回复作者时间/解决状态；PDF 导出回复未保存          | `studio-types.ts:350`；`StudioPdf.tsx:411`                                          |
 | P016 | 墨迹矩形椭圆箭头多边形 | 部分实现 | 笔迹/矩形拖动、宽度、位置和原生矢量内容                                                           | 缺椭圆/箭头/多边形、完整填充/透明度及原生可编辑批注             | `studio-types.ts:350`；`StudioPdf.tsx:411`                                          |
 | P017 | 图章与签名图片         | 部分实现 | 手写签名作为 ink 轨迹，图片表单可承载图片                                                         | 缺预设/自定义图章和独立签名图片批注，未覆盖图章原生外观流       | `studio-types.ts:350`；`StudioPdf.tsx:411`                                          |
-| P018 | 已有字段填写           | 部分实现 | 已有文本复选单选下拉填写、只读同步及导出                                                          | 普通列表/显示导出值不同的下拉等原生字段仍拒绝，完整字段兼容待审 | `studio-types.ts:350`；`StudioPdf.tsx:411`                                          |
+| P018 | 已有字段填写 | 部分实现 | 文本复选单选下拉填写；未知/密码/按钮/额外列表只读保全原值指纹和AP | 普通列表和独立显示/导出值下拉尚不可填写，完整兼容待审 | `studio-pdf-field-reader.ts`；`studio-pdf-codec.ts`；`pdf-composition/README.md` |
 | P019 | 创建文本日期图片字段   | 切片验证 | 文本日期图片字段创建/重复控件/原生保存                                                            | 日期外部动作/更多原生字段格式和完整共通验收待审                 | `studio-types.ts:350`；`StudioPdf.tsx:411`                                          |
 | P020 | 创建复选单选下拉列表   | 切片验证 | 复选单选下拉列表、导出标签/值、多选默认值                                                         | 完整原生字段兼容和共通验收审计待完成                            | `studio-types.ts:350`；`StudioPdf.tsx:411`                                          |
 | P021 | 字段布局外观与限制     | 切片验证 | 布局/外观、必填只读多行字符上限提示边框                                                           | 填写时必填的提交策略、任意原文件设计兼容仍需审计                | `studio-types.ts:350`；`StudioPdf.tsx:411`                                          |
 | P022 | 字段计算与验证         | 部分实现 | 本编辑器日期 YYYY-MM-DD 验证                                                                      | 缺数字范围、原生动作/计算顺序与外部格式校验                     | `studio-types.ts:350`；`StudioPdf.tsx:411`                                          |
-| P023 | 签名字段与角色         | 未实现   | 图片/笔迹不能代表签名字段                                                                         | 缺签名字段角色/状态/外观，原生签名字段拒绝                      | `studio-types.ts:350`；`StudioPdf.tsx:411`                                          |
+| P023 | 签名字段与角色 | 未实现 | 已有签名类型字段可被动读取保全 | 缺创建、角色/状态/外观编辑；已有签名负载源不可修改 | `studio-pdf-field-reader.ts`；`pdf-composition/README.md` |
 | P024 | 选区搜索页面脱敏       | 未实现   | 高亮只叠加色块                                                                                    | 缺真正内容/图片/元数据删除及搜索后脱敏                          | `studio-types.ts:350`；`StudioPdf.tsx:411`                                          |
 | P025 | 密码与权限             | 未实现   | 加密文件直接拒绝                                                                                  | 缺密码读写和修改打印复制权限保存                                | `studio-types.ts:350`；`StudioPdf.tsx:411`                                          |
-| P026 | 证书数字签名           | 未实现   | 手写 ink 非数字签名                                                                               | 缺证书签名/有效性与文件修改校验，原生签名拒绝                   | `studio-types.ts:350`；`StudioPdf.tsx:411`                                          |
+| P026 | 证书数字签名 | 未实现 | 已有签名字段被动保全，未编辑时精确返回原源 | 缺证书签名/有效性与文件修改校验；已有签名负载源不可修改 | `studio-pdf-codec.ts`；`pdf-composition/README.md` |
 
 ## 优先补齐方向
 
@@ -201,3 +201,5 @@ X017 续修：停止值已补，包含端点，不能整步到达时停在边界
 X012 续修：跳过真正空白及四种运算已补，保留被跳过目标的全部属性，源/目标公式与值快照按所选模式处理，最终批次验证和一次历史。键盘复制与原生空串类型往返同时修复；152 项专项、43 项 XLSX 与真实浏览器两次重开/明暗/320px 已通过。证据在 `docs/audits/2026-11-25/sheet-paste-options/`。
 
 2026-11-26 W026/P004–P007续验：表格默认/直接边距身份、完整间距、合并多格和原生页面管理已补，旧“缺间距/默认值物化/无页面管理”记录不再表示当前实现。Word11项与PDF2项真实浏览器、两轮原生及打印证据已通过；全UI2710、docs359、类型/lint/Registry/消费者385文件/分发/构建/browser及体积通过。整站修复后287项全部通过（15.0分钟），完整159项验收未证明。
+
+2026-11-27 P008/X023/X024续验：源码和冻结证据提交 `bd3ebba`。PDF合并提取的Blob/模型配对历史、原生完整字段/资源闭包，以及Excel共享文字排版与自动行高已验证；全UI2784、原docs523、完整E2E293和其后原生PDF171/docs526、类型/lint/Registry92/消费者395/构建/分发通过。64份旧ignored日志另存gzip与原始SHA，1663份旧证据可随提交复核。当前基础22、切片35、部分53、未实现49；完整159项仍未完成。

@@ -5381,44 +5381,79 @@
         "docs/tests/studio-excel.test.mjs"
       ],
       "historicalStatus": "部分",
-      "status": "audited-partial-acceptance-pending",
-      "evidence": [],
+      "status": "implemented-sheet-text-layout-slice-verified-full-acceptance-audit-pending",
+      "evidence": [
+        {
+          "path": "docs/audits/2026-11-27/sheet-text-layout/README.md",
+          "description": "2026-11-27实际ZUVI交互、事务/权限/取消、两轮原生文件与明暗320px切片验收。"
+        },
+        {
+          "path": "docs/audits/2026-11-27/full-e2e/README.md",
+          "description": "本批全UI2784、docs523及其后526、完整E2E293、原生PDF171、类型/lint/Registry92/消费者395/构建/分发通过；执行时点和原字节SHA分别登记。"
+        }
+      ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "部分实现",
-        "implementedBehavior": "左中右、顶中底对齐",
-        "functionalGaps": ["缺分散、跨选区居中、缩进与旋转模型/入口"],
+        "date": "2026-11-27",
+        "sourceCommit": "bd3ebbafb5d846bdae03a3827c153e4754951a2b",
+        "implementation": "切片验证",
+        "implementedBehavior": "实际ZUVI文字排版弹窗；常规/填充/两端/分散/跨选区居中、垂直对齐、缩进、旋转/竖排、换行和缩小字体；草稿/IME/取消/权限/保护整次守卫、一次撤销重做。grid/print共享文字几何、原生font0/theme与原始字号、auto/fixed身份及临时导出自动ht刷新；隐藏合并逻辑master与跨表205行数组范围正确。两轮XLSX、真实打印PDF、明暗320px与独立XML/链接检查通过。",
+        "functionalGaps": [
+          "复杂RTL、竖排多列或斜角换行的原生等价、tab stop、普通文字向相邻空白cell溢出、跨隐藏/冻结边界桥接及多可见纵向合并自动分配尚未完整证实。"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
-            "line": 284,
-            "anchor": "const blocked"
+            "path": "docs/audits/2026-11-27/sheet-text-layout/README.md",
+            "line": 1,
+            "anchor": "# Excel"
+          },
+          {
+            "path": "packages/ui/src/components/OfficeStudio/StudioSheetTextDialog.tsx",
+            "line": 48,
+            "anchor": "export function StudioSheetTextDialog"
+          },
+          {
+            "path": "packages/ui/src/components/OfficeStudio/studio-sheet-text-properties.ts",
+            "line": 114,
+            "anchor": "export function sheetApplyTextFormatPatch"
+          },
+          {
+            "path": "packages/ui/src/components/OfficeStudio/studio-sheet-text-layout.ts",
+            "line": 241,
+            "anchor": "export function sheetLayoutText"
           },
           {
             "path": "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts",
-            "line": 1267,
-            "anchor": "async function checkSupportedWorkbook"
+            "line": 2587,
+            "anchor": "export async function exportStudioExcel"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 136,
-            "anchor": "export interface StudioSheet"
+            "path": "e2e/office-studio-sheet-text.spec.ts",
+            "line": 8,
+            "anchor": "const audit ="
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
-            "line": 401,
-            "anchor": "studioPatchCells"
+            "path": "docs/audits/2026-11-27/full-e2e/README.md",
+            "line": 1,
+            "anchor": "# P008"
           }
         ],
         "existingTestFiles": [
-          "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx",
-          "docs/tests/studio-excel.test.mjs"
+          "packages/ui/src/components/OfficeStudio/StudioSheetText.test.tsx",
+          "packages/ui/src/components/OfficeStudio/studio-sheet-text-model.test.ts",
+          "packages/ui/src/components/OfficeStudio/studio-sheet-text-layout.test.ts",
+          "packages/ui/src/components/OfficeStudio/studio-sheet-text-display.test.ts",
+          "packages/ui/src/components/OfficeStudio/studio-sheet-text-properties.test.ts",
+          "docs/tests/studio-excel.test.mjs",
+          "docs/tests/studio-print.test.mjs",
+          "e2e/office-studio-sheet-text.spec.ts"
         ],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "testEvidenceNote": "Current verified slice is anchored to bd3ebba. Full UI 2784, original docs 523, full E2E 293 without failures/skips/flaky, and post-run PDF native 171 plus docs 526 passed. Exact logs, source hashes, rendering and repeated native reopening evidence are archived. Full original item acceptance remains unproven.",
+        "workingTree": false
       },
-      "gaps": ["缺分散、跨选区居中、缩进与旋转模型/入口"]
+      "gaps": [
+        "复杂RTL、竖排多列或斜角换行的原生等价、tab stop、普通文字向相邻空白cell溢出、跨隐藏/冻结边界桥接及多可见纵向合并自动分配尚未完整证实。"
+      ]
     },
     {
       "id": "X024",
@@ -5441,44 +5476,79 @@
         "docs/tests/studio-excel.test.mjs"
       ],
       "historicalStatus": "部分",
-      "status": "audited-partial-acceptance-pending",
-      "evidence": [],
+      "status": "implemented-sheet-text-layout-slice-verified-full-acceptance-audit-pending",
+      "evidence": [
+        {
+          "path": "docs/audits/2026-11-27/sheet-text-layout/README.md",
+          "description": "2026-11-27实际ZUVI交互、事务/权限/取消、两轮原生文件与明暗320px切片验收。"
+        },
+        {
+          "path": "docs/audits/2026-11-27/full-e2e/README.md",
+          "description": "本批全UI2784、docs523及其后526、完整E2E293、原生PDF171、类型/lint/Registry92/消费者395/构建/分发通过；执行时点和原字节SHA分别登记。"
+        }
+      ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "部分实现",
-        "implementedBehavior": "自动换行和手动自动行高",
-        "functionalGaps": ["缺 shrinkToFit 与编辑后自动行高联动"],
+        "date": "2026-11-27",
+        "sourceCommit": "bd3ebbafb5d846bdae03a3827c153e4754951a2b",
+        "implementation": "切片验证",
+        "implementedBehavior": "实际ZUVI文字排版弹窗；常规/填充/两端/分散/跨选区居中、垂直对齐、缩进、旋转/竖排、换行和缩小字体；草稿/IME/取消/权限/保护整次守卫、一次撤销重做。grid/print共享文字几何、原生font0/theme与原始字号、auto/fixed身份及临时导出自动ht刷新；隐藏合并逻辑master与跨表205行数组范围正确。两轮XLSX、真实打印PDF、明暗320px与独立XML/链接检查通过。",
+        "functionalGaps": [
+          "复杂RTL、竖排多列或斜角换行的原生等价、tab stop、普通文字向相邻空白cell溢出、跨隐藏/冻结边界桥接及多可见纵向合并自动分配尚未完整证实。"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
-            "line": 284,
-            "anchor": "const blocked"
+            "path": "docs/audits/2026-11-27/sheet-text-layout/README.md",
+            "line": 1,
+            "anchor": "# Excel"
+          },
+          {
+            "path": "packages/ui/src/components/OfficeStudio/StudioSheetTextDialog.tsx",
+            "line": 48,
+            "anchor": "export function StudioSheetTextDialog"
+          },
+          {
+            "path": "packages/ui/src/components/OfficeStudio/studio-sheet-text-properties.ts",
+            "line": 114,
+            "anchor": "export function sheetApplyTextFormatPatch"
+          },
+          {
+            "path": "packages/ui/src/components/OfficeStudio/studio-sheet-text-layout.ts",
+            "line": 241,
+            "anchor": "export function sheetLayoutText"
           },
           {
             "path": "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts",
-            "line": 1267,
-            "anchor": "async function checkSupportedWorkbook"
+            "line": 2587,
+            "anchor": "export async function exportStudioExcel"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 136,
-            "anchor": "export interface StudioSheet"
+            "path": "e2e/office-studio-sheet-text.spec.ts",
+            "line": 8,
+            "anchor": "const audit ="
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
-            "line": 401,
-            "anchor": "studioPatchCells"
+            "path": "docs/audits/2026-11-27/full-e2e/README.md",
+            "line": 1,
+            "anchor": "# P008"
           }
         ],
         "existingTestFiles": [
-          "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx",
-          "docs/tests/studio-excel.test.mjs"
+          "packages/ui/src/components/OfficeStudio/StudioSheetText.test.tsx",
+          "packages/ui/src/components/OfficeStudio/studio-sheet-text-model.test.ts",
+          "packages/ui/src/components/OfficeStudio/studio-sheet-text-layout.test.ts",
+          "packages/ui/src/components/OfficeStudio/studio-sheet-text-display.test.ts",
+          "packages/ui/src/components/OfficeStudio/studio-sheet-text-properties.test.ts",
+          "docs/tests/studio-excel.test.mjs",
+          "docs/tests/studio-print.test.mjs",
+          "e2e/office-studio-sheet-text.spec.ts"
         ],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "testEvidenceNote": "Current verified slice is anchored to bd3ebba. Full UI 2784, original docs 523, full E2E 293 without failures/skips/flaky, and post-run PDF native 171 plus docs 526 passed. Exact logs, source hashes, rendering and repeated native reopening evidence are archived. Full original item acceptance remains unproven.",
+        "workingTree": false
       },
-      "gaps": ["缺 shrinkToFit 与编辑后自动行高联动"]
+      "gaps": [
+        "复杂RTL、竖排多列或斜角换行的原生等价、tab stop、普通文字向相邻空白cell溢出、跨隐藏/冻结边界桥接及多可见纵向合并自动分配尚未完整证实。"
+      ]
     },
     {
       "id": "X025",
@@ -8332,13 +8402,12 @@
         }
       ],
       "currentAudit": {
-        "date": "2026-11-26",
-        "sourceCommit": "c192b33",
+        "date": "2026-11-27",
+        "sourceCommit": "bd3ebbafb5d846bdae03a3827c153e4754951a2b",
         "implementation": "切片验证",
-        "implementedBehavior": "稳定页面ID/sourcePage与原始session解耦；ZUVI空白页尺寸/插入位置与方向操作，事务撤销重做，原生保存及两轮重开。",
+        "implementedBehavior": "稳定页面ID/sourcePage与原始session解耦；ZUVI空白页尺寸/插入位置与方向操作，事务撤销重做，原生保存及两轮重开。 2026-11-27续验：未知FT/密码等字段按opaque只读保全，Invisible/Hidden/NoView及零面积控件参与原生页映射；规范字段树、继承值/flags、PageLabels/PrintPageRange在页面准备中保持。P008实际合并/提取已接入，相关原生171项与完整整站293项通过。",
         "functionalGaps": [
-          "更多插入位置/异构来源页面和原生字段兼容矩阵仍待完整审计。",
-          "带未支持字段、未带Hidden/NoView标志的零面积控件等来源仍受现有导入限制。"
+          "更多插入位置/异构来源页面和原生字段兼容矩阵仍待完整审计。"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
@@ -8356,6 +8425,11 @@
           },
           {
             "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts"
+          },
+          {
+            "path": "docs/audits/2026-11-27/pdf-composition/README.md",
+            "line": 1,
+            "anchor": "# P008"
           }
         ],
         "existingTestFiles": [
@@ -8366,8 +8440,7 @@
         "workingTree": false
       },
       "gaps": [
-        "更多插入位置/异构来源页面和原生字段兼容矩阵仍待完整审计。",
-        "带未支持字段、未带Hidden/NoView标志的零面积控件等来源仍受现有导入限制。"
+        "更多插入位置/异构来源页面和原生字段兼容矩阵仍待完整审计。"
       ]
     },
     {
@@ -8398,13 +8471,12 @@
         }
       ],
       "currentAudit": {
-        "date": "2026-11-26",
-        "sourceCommit": "c192b33",
+        "date": "2026-11-27",
+        "sourceCommit": "bd3ebbafb5d846bdae03a3827c153e4754951a2b",
         "implementation": "切片验证",
-        "implementedBehavior": "多页选择删除、最后页限制，模型标注/控件和原生页面引用、链接动作/命名目的地/目录同步，单事务历史与两轮保存重开。",
+        "implementedBehavior": "多页选择删除、最后页限制，模型标注/控件和原生页面引用、链接动作/命名目的地/目录同步，单事务历史与两轮保存重开。 2026-11-27续验：未知FT/密码等字段按opaque只读保全，Invisible/Hidden/NoView及零面积控件参与原生页映射；规范字段树、继承值/flags、PageLabels/PrintPageRange在页面准备中保持。P008实际合并/提取已接入，相关原生171项与完整整站293项通过。",
         "functionalGaps": [
-          "全部多页/字段取值与引用组合仍待完整共通验收。",
-          "现有未支持原生字段和零面积可见控件来源仍受导入限制。"
+          "全部多页/字段取值与引用组合仍待完整共通验收。"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
@@ -8422,6 +8494,11 @@
           },
           {
             "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts"
+          },
+          {
+            "path": "docs/audits/2026-11-27/pdf-composition/README.md",
+            "line": 1,
+            "anchor": "# P008"
           }
         ],
         "existingTestFiles": [
@@ -8432,8 +8509,7 @@
         "workingTree": false
       },
       "gaps": [
-        "全部多页/字段取值与引用组合仍待完整共通验收。",
-        "现有未支持原生字段和零面积可见控件来源仍受导入限制。"
+        "全部多页/字段取值与引用组合仍待完整共通验收。"
       ]
     },
     {
@@ -8464,13 +8540,13 @@
         }
       ],
       "currentAudit": {
-        "date": "2026-11-26",
-        "sourceCommit": "c192b33",
+        "date": "2026-11-27",
+        "sourceCommit": "bd3ebbafb5d846bdae03a3827c153e4754951a2b",
         "implementation": "切片验证",
-        "implementedBehavior": "复制/移动/缩略图真实拖动重排，稳定ID和copyGroup；页面/控件/链接映射，内容数组及可变资源隔离，单事务与原生重开。",
+        "implementedBehavior": "复制/移动/缩略图真实拖动重排，稳定ID和copyGroup；页面/控件/链接映射，内容数组及可变资源隔离，单事务与原生重开。 2026-11-27续验：未知FT/密码等字段按opaque只读保全，Invisible/Hidden/NoView及零面积控件参与原生页映射；规范字段树、继承值/flags、PageLabels/PrintPageRange在页面准备中保持。P008实际合并/提取已接入，相关原生171项与完整整站293项通过。",
         "functionalGaps": [
           "更多多页拖动/滚动、选区取消及来源复杂字段组合仍待完整审计。",
-          "跨文件合并与提取P008尚未接入；现有完整原生字段兼容仍未完成。"
+          "完整原生字段兼容与更复杂页面/动作组合仍待逐项验收。"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
@@ -8488,6 +8564,11 @@
           },
           {
             "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts"
+          },
+          {
+            "path": "docs/audits/2026-11-27/pdf-composition/README.md",
+            "line": 1,
+            "anchor": "# P008"
           }
         ],
         "existingTestFiles": [
@@ -8499,7 +8580,7 @@
       },
       "gaps": [
         "更多多页拖动/滚动、选区取消及来源复杂字段组合仍待完整审计。",
-        "跨文件合并与提取P008尚未接入；现有完整原生字段兼容仍未完成。"
+        "完整原生字段兼容与更复杂页面/动作组合仍待逐项验收。"
       ]
     },
     {
@@ -8530,11 +8611,13 @@
         }
       ],
       "currentAudit": {
-        "date": "2026-11-26",
-        "sourceCommit": "c192b33",
+        "date": "2026-11-27",
+        "sourceCommit": "bd3ebbafb5d846bdae03a3827c153e4754951a2b",
         "implementation": "切片验证",
-        "implementedBehavior": "单页/多页旋转、可见画布尺寸弹窗与交换宽高；保留原坐标，原生旋转不累积重复，模型历史和两轮保存重开。",
-        "functionalGaps": ["更多裁剪原点/不同方向/选区与字段组合及完整原始共通验收仍待审计。"],
+        "implementedBehavior": "单页/多页旋转、可见画布尺寸弹窗与交换宽高；保留原坐标，原生旋转不累积重复，模型历史和两轮保存重开。 2026-11-27续验：未知FT/密码等字段按opaque只读保全，Invisible/Hidden/NoView及零面积控件参与原生页映射；规范字段树、继承值/flags、PageLabels/PrintPageRange在页面准备中保持。P008实际合并/提取已接入，相关原生171项与完整整站293项通过。",
+        "functionalGaps": [
+          "更多裁剪原点/不同方向/选区与字段组合及完整原始共通验收仍待审计。"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -8551,6 +8634,11 @@
           },
           {
             "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts"
+          },
+          {
+            "path": "docs/audits/2026-11-27/pdf-composition/README.md",
+            "line": 1,
+            "anchor": "# P008"
           }
         ],
         "existingTestFiles": [
@@ -8562,7 +8650,9 @@
         "testEvidenceNote": "Current slice evidence and current all-repository gates passed: UI 2710, docs 359, E2E 287. The whole 159-item acceptance is still not proven complete.",
         "workingTree": false
       },
-      "gaps": ["更多裁剪原点/不同方向/选区与字段组合及完整原始共通验收仍待审计。"]
+      "gaps": [
+        "更多裁剪原点/不同方向/选区与字段组合及完整原始共通验收仍待审计。"
+      ]
     },
     {
       "id": "P008",
@@ -8584,41 +8674,74 @@
         "docs/tests/studio-pdf-codec.test.mjs"
       ],
       "historicalStatus": "缺失",
-      "status": "audited-not-implemented",
-      "evidence": [],
+      "status": "implemented-pdf-composition-slice-verified-full-acceptance-audit-pending",
+      "evidence": [
+        {
+          "path": "docs/audits/2026-11-27/pdf-composition/README.md",
+          "description": "2026-11-27实际ZUVI交互、事务/权限/取消、两轮原生文件与明暗320px切片验收。"
+        },
+        {
+          "path": "docs/audits/2026-11-27/full-e2e/README.md",
+          "description": "本批全UI2784、docs523及其后526、完整E2E293、原生PDF171、类型/lint/Registry92/消费者395/构建/分发通过；执行时点和原字节SHA分别登记。"
+        }
+      ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "未实现",
-        "implementedBehavior": "单个 source PDF",
-        "functionalGaps": ["缺合并提取及资源/链接/字段冲突处理"],
+        "date": "2026-11-27",
+        "sourceCommit": "bd3ebbafb5d846bdae03a3827c153e4754951a2b",
+        "implementation": "切片验证",
+        "implementedBehavior": "实际ZUVI合并/提取弹窗、页序/插入位置/名称/字段策略；document/source配对原子接受、取消/过期/权限/拒绝守卫及单事务历史。原生受控资源闭包、链接/目录/动作、重复字段改名或连接、V/DV与原AP、被动字段及非视觉控件保全；虚拟页面准备同步PageLabels与PrintPageRange。真实多文件/历史导出、两轮PDF重开、明暗320px及独立字段树/外观/页序检查通过。",
+        "functionalGaps": [
+          "动态动作和复杂字段/资源/目录组合的完整适用验收仍待逐项审计；明确拒绝来源边界见本批README。"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
+            "path": "docs/audits/2026-11-27/pdf-composition/README.md",
+            "line": 1,
+            "anchor": "# P008"
+          },
+          {
+            "path": "packages/ui/src/components/OfficeStudio/StudioPdfComposeDialog.tsx",
+            "line": 13,
+            "anchor": "export function StudioPdfComposeDialog"
+          },
+          {
+            "path": "docs/src/pages/collaboration/office-studio/studio-pdf-composition.ts",
+            "line": 46,
+            "anchor": "export async function composeStudioPdf"
+          },
+          {
             "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 350,
-            "anchor": "export interface StudioPdfDocument"
+            "line": 470,
+            "anchor": "export interface StudioPdfSnapshot"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
-            "line": 411,
-            "anchor": "const canModify"
+            "path": "e2e/office-studio-pdf-composition.spec.ts",
+            "line": 47,
+            "anchor": "test('merges native pages"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
-            "line": 231,
-            "anchor": "export async function importStudioPdf"
-          },
-          {
-            "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
-            "line": 145,
-            "anchor": "readFields"
+            "path": "docs/audits/2026-11-27/full-e2e/README.md",
+            "line": 1,
+            "anchor": "# P008"
           }
         ],
-        "existingTestFiles": [],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "existingTestFiles": [
+          "packages/ui/src/components/OfficeStudio/StudioPdf.composition.test.tsx",
+          "docs/tests/studio-pdf-codec.test.mjs",
+          "docs/tests/studio-pdf-field-reader.test.mjs",
+          "docs/tests/studio-pdf-compose.test.mjs",
+          "docs/tests/studio-pdf-compose-catalog.test.mjs",
+          "docs/tests/studio-pdf-page-catalog.test.mjs",
+          "docs/tests/studio-pdf-composition.test.mjs",
+          "e2e/office-studio-pdf-composition.spec.ts"
+        ],
+        "testEvidenceNote": "Current verified slice is anchored to bd3ebba. Full UI 2784, original docs 523, full E2E 293 without failures/skips/flaky, and post-run PDF native 171 plus docs 526 passed. Exact logs, source hashes, rendering and repeated native reopening evidence are archived. Full original item acceptance remains unproven.",
+        "workingTree": false
       },
-      "gaps": ["缺合并提取及资源/链接/字段冲突处理"]
+      "gaps": [
+        "动态动作和复杂字段/资源/目录组合的完整适用验收仍待逐项审计；明确拒绝来源边界见本批README。"
+      ]
     },
     {
       "id": "P009",
@@ -9168,11 +9291,13 @@
       "status": "audited-partial-acceptance-pending",
       "evidence": [],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
+        "date": "2026-11-27",
+        "sourceCommit": "bd3ebbafb5d846bdae03a3827c153e4754951a2b",
         "implementation": "部分实现",
-        "implementedBehavior": "已有文本复选单选下拉填写、只读同步及导出",
-        "functionalGaps": ["普通列表/显示导出值不同的下拉等原生字段仍拒绝，完整字段兼容待审"],
+        "implementedBehavior": "已有文本复选单选下拉填写、只读同步及导出；密码/未知FT/普通按钮、未进入编辑合同的列表及独立显示标签下拉按opaque保全原值指纹和AP，不暴露为可编辑值。",
+        "functionalGaps": [
+          "普通列表、独立显示/导出值下拉等来源目前只读保全，完整填写兼容仍待实现与验收。"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -9194,6 +9319,11 @@
             "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
             "line": 145,
             "anchor": "readFields"
+          },
+          {
+            "path": "docs/audits/2026-11-27/pdf-composition/README.md",
+            "line": 1,
+            "anchor": "# P008"
           }
         ],
         "existingTestFiles": [
@@ -9202,7 +9332,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["普通列表/显示导出值不同的下拉等原生字段仍拒绝，完整字段兼容待审"]
+      "gaps": [
+        "普通列表、独立显示/导出值下拉等来源目前只读保全，完整填写兼容仍待实现与验收。"
+      ]
     },
     {
       "id": "P019",
@@ -9535,11 +9667,13 @@
       "status": "audited-not-implemented",
       "evidence": [],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
+        "date": "2026-11-27",
+        "sourceCommit": "bd3ebbafb5d846bdae03a3827c153e4754951a2b",
         "implementation": "未实现",
-        "implementedBehavior": "图片/笔迹不能代表签名字段",
-        "functionalGaps": ["缺签名字段角色/状态/外观，原生签名字段拒绝"],
+        "implementedBehavior": "签名类型字段可被动读取；图片/笔迹仍不能代表签名角色或数字签名。",
+        "functionalGaps": [
+          "缺创建签名字段、角色/状态/外观编辑；已有签名负载来源按只读保全并阻止修改。"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -9561,12 +9695,19 @@
             "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
             "line": 145,
             "anchor": "readFields"
+          },
+          {
+            "path": "docs/audits/2026-11-27/pdf-composition/README.md",
+            "line": 1,
+            "anchor": "# P008"
           }
         ],
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺签名字段角色/状态/外观，原生签名字段拒绝"]
+      "gaps": [
+        "缺创建签名字段、角色/状态/外观编辑；已有签名负载来源按只读保全并阻止修改。"
+      ]
     },
     {
       "id": "P024",
@@ -9703,11 +9844,13 @@
       "status": "audited-not-implemented",
       "evidence": [],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
+        "date": "2026-11-27",
+        "sourceCommit": "bd3ebbafb5d846bdae03a3827c153e4754951a2b",
         "implementation": "未实现",
-        "implementedBehavior": "手写 ink 非数字签名",
-        "functionalGaps": ["缺证书签名/有效性与文件修改校验，原生签名拒绝"],
+        "implementedBehavior": "手写ink非证书数字签名；现有签名字段和负载被动保全，未修改时精确返回原源。",
+        "functionalGaps": [
+          "缺证书签名/有效性与文件修改校验；已有签名负载来源不能编辑。"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -9729,12 +9872,19 @@
             "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
             "line": 145,
             "anchor": "readFields"
+          },
+          {
+            "path": "docs/audits/2026-11-27/pdf-composition/README.md",
+            "line": 1,
+            "anchor": "# P008"
           }
         ],
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺证书签名/有效性与文件修改校验，原生签名拒绝"]
+      "gaps": [
+        "缺证书签名/有效性与文件修改校验；已有签名负载来源不能编辑。"
+      ]
     }
   ],
   "currentAuditDate": "2026-11-25",
@@ -9742,9 +9892,9 @@
   "currentAuditItems": 159,
   "currentImplementationCounts": {
     "基础实现": 22,
-    "切片验证": 32,
-    "部分实现": 55,
-    "未实现": 50
+    "切片验证": 35,
+    "部分实现": 53,
+    "未实现": 49
   },
-  "lastEvidenceUpdate": "2026-11-26"
+  "lastEvidenceUpdate": "2026-11-27"
 }
