@@ -2063,46 +2063,41 @@
       ],
       "historicalStatus": "基础已有",
       "status": "audited-partial-acceptance-pending",
-      "evidence": [],
+      "evidence": [
+        "docs/audits/2026-11-26/word-image-replace/README.md",
+        "e2e/office-studio-word-replace.spec.ts"
+      ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
+        "date": "2026-11-26",
+        "sourceCommit": "5f09ac6 + current W031 changes",
         "implementation": "部分实现",
-        "implementedBehavior": "内嵌图片导入/插入、比例尺寸、删除和保存",
+        "implementedBehavior": "内嵌图片导入/插入、比例尺寸、删除；独立替换保留显示框/位置/说明/marks，重置裁剪，单事务历史/权限/IME/过期文档/受控拒绝；PNG→JPEG两次DOCX重开及明暗320px浏览器切片通过",
         "functionalGaps": [
-          "缺完整替换图片入口及其历史/文件验证"
+          "完整插入/尺寸/替换跨区域和全部布局组合仍需验收"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 156,
-            "anchor": "const EXTENSIONS"
+            "path": "docs/audits/2026-11-26/word-image-replace/README.md",
+            "anchor": "最终冻结整站"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
-            "line": 60,
-            "anchor": "const UNSUPPORTED_CONTENT"
+            "path": "e2e/office-studio-word-replace.spec.ts",
+            "anchor": "replaces a native cropped image"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 78,
-            "anchor": "export interface StudioWordDocument"
-          },
-          {
-            "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
-            "line": 17,
-            "anchor": "WordImage"
+            "path": "packages/ui/src/components/OfficeStudio/studio-word-image-replace.ts",
+            "anchor": "wordReplaceImage"
           }
         ],
         "existingTestFiles": [
           "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
           "docs/tests/office-studio-word.test.mjs"
         ],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "testEvidenceNote": "UI2525/docs318 no skips, final frozen E2E269 and all distribution gates passed; full cross-region/layout matrix remains incomplete."
       },
       "gaps": [
-        "缺完整替换图片入口及其历史/文件验证"
+        "完整插入/尺寸/替换跨区域和全部布局组合仍需验收"
       ]
     },
     {

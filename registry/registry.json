@@ -2065,6 +2065,7 @@
         "packages/ui/src/components/OfficeStudio/studio-word-image-crop-command.ts",
         "packages/ui/src/components/OfficeStudio/studio-word-image-crop.ts",
         "packages/ui/src/components/OfficeStudio/studio-word-image-preview.ts",
+        "packages/ui/src/components/OfficeStudio/studio-word-image-replace.ts",
         "packages/ui/src/components/OfficeStudio/studio-word-images.ts",
         "packages/ui/src/components/OfficeStudio/studio-word-metrics.ts",
         "packages/ui/src/components/OfficeStudio/studio-word-nonprinting.ts",

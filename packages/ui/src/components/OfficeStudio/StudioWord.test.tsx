@@ -2550,3 +2550,95 @@ it('restores a rejected controlled crop and saves the original image', async () 
   await act(async () => ref.current?.save());
   expect(onSave).toHaveBeenCalledWith(value);
 });
+
+it('replaces a selected picture through the actual file input and restores its original crop with undo', async () => {
+  const model = documentModel();
+  model.content.content![0].content!.unshift({ type: 'image', attrs: { src: `data:image/png;base64,${PNG}`, width: 320, height: 160, alt: '保留说明', crop: { left: 25, top: 0, right: 0, bottom: 0 } } });
+  const { textbox, onChange } = await mount({ document: model });
+  fireEvent.click(textbox.querySelector('img[data-word-image]')!);
+  fireEvent.click(screen.getByRole('button', { name: '替换图片' }));
+  const input = screen.getByLabelText('选择替换 Word 图片');
+  fireEvent.change(input, { target: { files: [new File([Uint8Array.from(atob(JPEG), char => char.charCodeAt(0))], '替换.jpg', { type: 'image/jpeg' })] } });
+  await waitFor(() => expect(textbox.querySelector('img[data-word-image]')).toHaveAttribute('src', `data:image/jpeg;base64,${JPEG}`));
+  expect(onChange.mock.lastCall?.[0].content.content[0].content[0].attrs).toMatchObject({ width: 320, height: 160, alt: '保留说明', crop: null });
+  expect(textbox.querySelectorAll('img[data-word-image]')).toHaveLength(1);
+  fireEvent.click(screen.getByRole('tab', { name: '开始' })); fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await waitFor(() => expect(textbox.querySelector('img[data-word-image]')).toHaveAttribute('src', `data:image/png;base64,${PNG}`));
+  expect(textbox.querySelector('img[data-word-image]')).toHaveAttribute('data-word-image-crop', expect.stringContaining('25'));
+  fireEvent.click(screen.getByRole('button', { name: '重做' }));
+  await waitFor(() => expect(textbox.querySelector('img[data-word-image]')).toHaveAttribute('src', `data:image/jpeg;base64,${JPEG}`));
+});
+it('keeps the selected original image and history when a replacement file is invalid or cancelled', async () => {
+  const model = documentModel();
+  model.content.content![0].content!.unshift({ type: 'image', attrs: { src: `data:image/png;base64,${PNG}`, width: 320, height: 160 } });
+  const { textbox, onChange } = await mount({ document: model });
+  fireEvent.click(textbox.querySelector('img[data-word-image]')!);
+  fireEvent.click(screen.getByRole('button', { name: '替换图片' }));
+  fireEvent.change(screen.getByLabelText('选择替换 Word 图片'), { target: { files: [new File(['<svg/>'], 'invalid.png', { type: 'image/png' })] } });
+  await screen.findByText('请选择有效的 PNG 或 JPEG 图片。');
+  expect(onChange).not.toHaveBeenCalled();
+  expect(textbox.querySelector('img[data-word-image]')).toHaveAttribute('src', `data:image/png;base64,${PNG}`);
+  fireEvent.click(screen.getByRole('button', { name: '替换图片' }));
+  fireEvent.change(screen.getByLabelText('选择替换 Word 图片'), { target: { files: [] } });
+  expect(onChange).not.toHaveBeenCalled();
+  fireEvent.click(screen.getByRole('button', { name: '替换图片' }));
+  fireEvent(screen.getByLabelText('选择替换 Word 图片'), new Event('cancel'));
+  fireEvent.change(screen.getByLabelText('选择替换 Word 图片'), { target: { files: [new File([Uint8Array.from(atob(JPEG), char => char.charCodeAt(0))], 'late.jpg', { type: 'image/jpeg' })] } });
+  await act(async () => { await Promise.resolve(); });
+  expect(onChange).not.toHaveBeenCalled();
+  expect(textbox.querySelector('img[data-word-image]')).toHaveAttribute('src', `data:image/png;base64,${PNG}`);
+
+});
+
+it('discards a delayed replacement after readonly or document changes', async () => {
+  const model = documentModel();
+  model.content.content![0].content!.unshift({ type: 'image', attrs: { src: `data:image/png;base64,${PNG}`, width: 320, height: 160 } });
+  const { textbox, onChange, rerender } = await mount({ document: model });
+  let reader: FileReader | null = null;
+  const captureReader = (value: FileReader) => { reader = value; };
+  const read = vi.spyOn(FileReader.prototype, 'readAsArrayBuffer').mockImplementation(function (this: FileReader) { captureReader(this); });
+  try {
+    fireEvent.click(textbox.querySelector('img[data-word-image]')!);
+    fireEvent.click(screen.getByRole('button', { name: '替换图片' }));
+    fireEvent.change(screen.getByLabelText('选择替换 Word 图片'), { target: { files: [new File(['delayed'], 'delayed.jpg')] } });
+    expect(reader).not.toBeNull();
+    rerender(<WordHost document={model} onChange={onChange} disabled={false} readOnly />);
+    const bytes = Uint8Array.from(atob(JPEG), char => char.charCodeAt(0));
+    await act(async () => {
+      Object.defineProperty(reader!, 'result', { value: bytes.buffer });
+      reader!.onload?.call(reader!, new ProgressEvent('load') as ProgressEvent<FileReader>);
+    });
+    expect(onChange).not.toHaveBeenCalled();
+    expect(textbox.querySelector('img[data-word-image]')).toHaveAttribute('src', `data:image/png;base64,${PNG}`);
+    expect(screen.getByRole('button', { name: '替换图片' })).toBeDisabled();
+    rerender(<WordHost document={model} onChange={onChange} disabled={false} readOnly={false} />);
+    fireEvent.click(textbox.querySelector('img[data-word-image]')!);
+    fireEvent.click(screen.getByRole('button', { name: '替换图片' }));
+    fireEvent.change(screen.getByLabelText('选择替换 Word 图片'), { target: { files: [new File(['delayed'], 'delayed.jpg')] } });
+    const next = documentModel('外部替换文档');
+    rerender(<WordHost document={next} onChange={onChange} disabled={false} readOnly={false} />);
+    await act(async () => {
+      Object.defineProperty(reader!, 'result', { value: bytes.buffer, configurable: true });
+      reader!.onload?.call(reader!, new ProgressEvent('load') as ProgressEvent<FileReader>);
+    });
+    expect(onChange).not.toHaveBeenCalled(); expect(textbox.querySelector('img[data-word-image]')).toBeNull();
+    expect(textbox).toHaveTextContent('外部替换文档');
+  } finally { read.mockRestore(); }
+});
+
+it('restores a rejected controlled image replacement and saves the original source', async () => {
+  const value = documentModel();
+  value.content.content![0].content!.unshift({ type: 'image', attrs: { src: `data:image/png;base64,${PNG}`, width: 320, height: 160, crop: { left: 25, top: 0, right: 0, bottom: 0 } } });
+  const ref = createRef<OfficeStudioHandle>();
+  const onChange = vi.fn(), onSave = vi.fn();
+  render(<OfficeStudio ref={ref} value={value} onChange={onChange} onSave={onSave} />);
+  const body = await screen.findByRole('textbox', { name: 'Word 文档正文' });
+  fireEvent.click(body.querySelector('img[data-word-image]')!);
+  fireEvent.click(screen.getByRole('button', { name: '替换图片' }));
+  fireEvent.change(screen.getByLabelText('选择替换 Word 图片'), { target: { files: [new File([Uint8Array.from(atob(JPEG), char => char.charCodeAt(0))], 'new.jpg', { type: 'image/jpeg' })] } });
+  await waitFor(() => expect(onChange).toHaveBeenCalledTimes(1));
+  await waitFor(() => expect(body.querySelector('img[data-word-image]')).toHaveAttribute('src', `data:image/png;base64,${PNG}`));
+  expect(body.querySelector('img[data-word-image]')).toHaveAttribute('data-word-image-crop', expect.stringContaining('25'));
+  expect(ref.current?.getDocument()).toBe(value);
+  await act(async () => ref.current?.save()); expect(onSave).toHaveBeenCalledWith(value);
+});

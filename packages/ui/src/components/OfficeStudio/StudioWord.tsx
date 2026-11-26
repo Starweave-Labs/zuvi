@@ -1,5 +1,6 @@
 'use client';
 import { StudioWordImageCropDialog } from './StudioWordImageCropDialog';
+import { wordImageReplacementTarget, wordReplaceImage, type WordImageReplacementTarget } from './studio-word-image-replace';
 import { wordSetImageCrop } from './studio-word-image-crop-command';
 import { StudioWordFormulaDialog } from './StudioWordFormulaDialog';
 import { WordFormulaField, wordSetTableFormula, wordRefreshTableFormulas } from './studio-word-formula-field';
@@ -484,6 +485,14 @@ export function StudioWord({
   } | null>(null);
   const stageRef = React.useRef<HTMLDivElement>(null);
   const paperRef = React.useRef<HTMLElement>(null);
+  const replacementInputRef = React.useRef<HTMLInputElement>(null);
+  const replacementTargetRef = React.useRef<WordImageReplacementTarget | null>(null);
+  React.useEffect(() => {
+    const input = replacementInputRef.current;
+    const cancel = () => { replacementTargetRef.current = null; };
+    input?.addEventListener('cancel', cancel);
+    return () => { input?.removeEventListener('cancel', cancel); };
+  }, [tab]);
   const imageInputRef = React.useRef<HTMLInputElement>(null);
   const searchInputRef = React.useRef<HTMLInputElement>(null);
   const imageOperationRef = React.useRef(false);
@@ -564,6 +573,8 @@ export function StudioWord({
     region !== 'content' && regions[region] && !regions[region]!.isDestroyed
       ? regions[region]!
       : bodyEditor;
+  const activeEditorRef = React.useRef(editor);
+  activeEditorRef.current = editor;
   const registerRegion = React.useCallback((name: WordRegion, current: Editor | null) => {
     setRegions((previous) => {
       if (previous[name] === current || (!current && !previous[name])) return previous;
@@ -802,6 +813,23 @@ export function StudioWord({
       imageOperationRef.current = false;
       setImageBusy(false);
     }
+  }
+  async function replaceImage(file: File) {
+    const target = replacementTargetRef.current;
+    replacementTargetRef.current = null;
+    if (!target || imageOperationRef.current || !latest.current.editable) return;
+    const id = latest.current.document.id;
+    imageOperationRef.current = true; setImageBusy(true);
+    try {
+      const attrs = await wordReadImage(file, pageWidth - margin * 2);
+      if (latest.current.document.id !== id || !latest.current.editable || target.editor !== activeEditorRef.current || target.editor.isDestroyed) return;
+      if (wordReplaceImage(target, attrs.src)) {
+        target.editor.commands.focus();
+        setNotice('图片已替换，保留显示尺寸、位置和说明，裁剪已重置，可撤销恢复。');
+      }
+    } catch (reason) {
+      if (latest.current.document.id === id) setNotice(reason instanceof Error ? reason.message : '图片替换失败。');
+    } finally { imageOperationRef.current = false; setImageBusy(false); }
   }
   insertImageRef.current = insertImage;
 
@@ -1965,8 +1993,17 @@ export function StudioWord({
               <ImageIcon size={24} />
               {imageBusy ? '正在读取…' : '插入图片'}
             </Button>
+            <input type="file" accept="image/png,image/jpeg" aria-label="选择替换 Word 图片" ref={replacementInputRef} className="zuvi-studio-word-file-input" tabIndex={-1} disabled={toolsDisabled || imageBusy} onChange={(event) => {
+              const file = event.target.files?.[0]; event.target.value = '';
+              if (file) void replaceImage(file); else replacementTargetRef.current = null;
+            }} />
             {selection?.image && (
               <>
+                <Button size="sm" variant="ghost" disabled={toolsDisabled || imageBusy} onMouseDown={keepSelection} onClick={() => {
+                  if (!editor) return;
+                  replacementTargetRef.current = wordImageReplacementTarget(editor);
+                  if (replacementTargetRef.current) replacementInputRef.current?.click();
+                }}>替换图片</Button>
                 <Input
                   type="number"
                   min={1}

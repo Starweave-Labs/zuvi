@@ -1595,3 +1595,39 @@ test('native image crop preserves embedded source bytes, frame dimensions and ed
   current = await importStudioWord(await exportStudioWord(current), 'Reset.docx');
   assert.equal(find(current.content, 'image')[0].attrs.crop, undefined);
 });
+
+test('replacing cropped PNG with JPEG preserves display frame, description and native drawing position through two saves', async () => {
+  const original = model([p(image({ crop: { left: 25, top: 0, right: 25, bottom: 0 }, alt: '保留图片说明' }))]);
+  let current = await importStudioWord(await exportStudioWord(original), 'Original-crop.docx');
+  let picture = find(current.content, 'image')[0];
+  picture.attrs = { ...picture.attrs, src: `data:image/jpeg;base64,${JPEG}`, crop: null };
+  for (let pass = 0; pass < 2; pass++) {
+    const file = await exportStudioWord(current);
+    const zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const media = Object.keys(zip.files).filter(name => name.startsWith('word/media/') && !zip.files[name].dir);
+    assert.equal(media.length, 1);
+    assert.equal(Buffer.from(await zip.file(media[0]).async('uint8array')).toString('base64'), JPEG);
+    const native = await zip.file('word/document.xml').async('string');
+    assert.doesNotMatch(native, /a:srcRect[^>]*l="25000"/);
+    current = await importStudioWord(file, `Replaced-${pass}.docx`);
+    picture = find(current.content, 'image')[0];
+    assert.equal(picture.attrs.src, `data:image/jpeg;base64,${JPEG}`);
+    assert.equal(picture.attrs.width, 300); assert.equal(picture.attrs.height, 150);
+    assert.equal(picture.attrs.alt, '保留图片说明'); assert.equal(picture.attrs.crop, undefined);
+  }
+});
+
+test('replacing a floating picture retains page anchor, offsets, layering and visible crop frame across native saves', async () => {
+  const layout = { ...imageExports.wordDefaultImageLayout('front'), horizontal: { relative: 'page', offset: 40 }, vertical: { relative: 'page', offset: 35 }, lockAnchor: true, zIndex: 3 };
+  let current = await importStudioWord(await exportStudioWord(model([p(image({ layout, crop: { left: 25, right: 25 } }))])), 'Floating-original.docx');
+  const before = JSON.parse(JSON.stringify(find(current.content, 'image')[0].attrs.layout));
+  find(current.content, 'image')[0].attrs.src = `data:image/jpeg;base64,${JPEG}`;
+  find(current.content, 'image')[0].attrs.crop = null;
+  for (let pass = 0; pass < 2; pass++) {
+    current = await importStudioWord(await exportStudioWord(current), `Floating-replaced-${pass}.docx`);
+    const picture = find(current.content, 'image')[0];
+    assert.deepEqual(JSON.parse(JSON.stringify(picture.attrs.layout)), before);
+    assert.equal(picture.attrs.src, `data:image/jpeg;base64,${JPEG}`);
+    assert.equal(picture.attrs.width, 300); assert.equal(picture.attrs.height, 150);
+  }
+});

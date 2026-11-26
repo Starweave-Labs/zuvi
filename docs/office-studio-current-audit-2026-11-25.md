@@ -40,7 +40,7 @@
 | W028 | 表格跨页与环绕 | 部分实现 | 行/合并组分页及重复表头；跨页标记入口/历史/原生cantSplit两次重开，固定行高参与测量/打印；单单元格文字段落80行分3页；双列80/50行独立分片、编辑/历史/只读/两次DOCX重开、明暗320px及打印2页全文切片通过 | 通用多列/合并/多段落/图片及重复表头的行内同步分片、复杂布局和浮动定位/环绕仍缺失 | `studio-word-pagination-extension.ts`；`docs/audits/2026-11-26/word-row-properties/`；`docs/audits/2026-11-26/word-table-pagination/` |
 | W029 | 文本与表格互转 | 部分实现 | ZUVI分隔/预览/部分文本及嵌套递归选项，取消/IME/历史/权限/受控拒绝；原生完整/部分/嵌套3项与相关模型组件101项通过 | 完整行/纵向合并鼠标选择、各两次DOCX重开及局部列禁用已验收切片；多层复杂内容和完整分隔/合并/焦点组合仍待验收 | `docs/audits/2026-11-26/word-table-conversion/` |
 | W030 | 表格公式 | 部分实现 | A1/范围/SUM方向计算、ZUVI公式入口/刷新、单事务历史、真实DOCX两次重开及明暗320px切片通过 | 四方向、横纵合并与嵌套计算、受控拒绝、常见数字格式原生切片通过；复杂数字格式/混合域语义及最终全站验收仍待完成 | `docs/audits/2026-11-26/word-table-formula/` |
-| W031 | 内嵌图片插入与尺寸 | 部分实现 | 内嵌图片导入/插入、比例尺寸、删除和保存 | 缺完整替换图片入口及其历史/文件验证 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
+| W031 | 内嵌图片插入与尺寸 | 部分实现 | 独立替换保留显示框/位置/说明/格式，重置裁剪，历史/权限/IME/过期文档/受控拒绝；PNG→JPEG两次DOCX重开及明暗320px | 跨区域和全部布局组合待验收；最终全仓检查/E2E269通过 | `studio-word-image-replace.ts`；`office-studio-word-replace.spec.ts` |
 | W032 | 图片裁剪 | 切片验证 | 四边输入/拖动、重置原图、事务历史/权限/IME/受控拒绝；原生两次重开、打印与明暗320px | 负srcRect/非零fillRect、完整布局组合未闭环；最终全仓检查和E2E268通过 | `studio-word-image-crop-command.ts`；`office-studio-word-crop.spec.ts`；`word-image-crop/README.md` |
 | W033 | 浮动图片环绕锚点 | 切片验证 | 六种环绕、锚点、定位、层级、移动与 DOCX 往返 | 完整自动分页、复杂避让和跨页布局未完成 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W034 | 形状与文本框 | 未实现 | Word 节点仅支持文字表格图片等基础内容 | 缺形状/文本框绘制文字及排列、原生对象往返 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |

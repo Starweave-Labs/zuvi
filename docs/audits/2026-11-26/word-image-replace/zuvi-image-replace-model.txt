@@ -1,0 +1,9 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/studio-word-image-replace.test.ts (2 tests) 35ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  11:30:05
+   Duration  843ms (transform 89ms, setup 135ms, collect 159ms, tests 35ms, environment 337ms, prepare 33ms)
