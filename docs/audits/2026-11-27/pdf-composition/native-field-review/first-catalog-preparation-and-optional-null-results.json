@@ -1,0 +1,260 @@
+[
+  {
+    "label": "virtual move then extraction preserves PageLabels and PrintPageRange from the same original page",
+    "result": {
+      "expected": {
+        "labels": [
+          {
+            "page": 0,
+            "prefix": "B",
+            "first": 1
+          },
+          {
+            "page": 1,
+            "prefix": "A",
+            "first": 1
+          }
+        ],
+        "print": [
+          1,
+          1
+        ]
+      },
+      "prepared": {
+        "labels": [
+          {
+            "page": 0,
+            "prefix": "A",
+            "first": 1
+          },
+          {
+            "page": 1,
+            "prefix": "B",
+            "first": 1
+          }
+        ],
+        "print": [
+          0,
+          0
+        ]
+      },
+      "adapter": {
+        "labels": [
+          {
+            "page": 0,
+            "prefix": "A",
+            "first": 1
+          },
+          {
+            "page": 1,
+            "prefix": "B",
+            "first": 1
+          }
+        ],
+        "print": [
+          0,
+          0
+        ]
+      }
+    }
+  },
+  {
+    "label": "direct null XFA",
+    "result": {
+      "imported": 1,
+      "error": "source:/AcroForm/XFA: AcroForm property cannot be combined safely",
+      "code": "OPAQUE_ACROFORM",
+      "path": "/AcroForm/XFA"
+    }
+  },
+  {
+    "label": "direct null SigFlags",
+    "result": {
+      "imported": 1,
+      "error": "source:/AcroForm/SigFlags: AcroForm property cannot be combined safely",
+      "code": "OPAQUE_ACROFORM",
+      "path": "/AcroForm/SigFlags"
+    }
+  },
+  {
+    "label": "direct null field Lock",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "direct null field SV",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "direct null field A",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "direct null field AA",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "direct null widget A",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "direct null widget AA",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "direct null OpenAction",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "direct null action Next",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "direct null ResetForm Fields",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "indirect null XFA",
+    "result": {
+      "imported": "此 PDF 使用 XFA 动态表单，当前编辑器暂不支持。",
+      "error": "source:/AcroForm/XFA: Dynamic XFA forms cannot be composed safely",
+      "code": "XFA",
+      "path": "/AcroForm/XFA"
+    }
+  },
+  {
+    "label": "indirect null SigFlags",
+    "result": {
+      "imported": 1,
+      "error": "source:/AcroForm/SigFlags: Signature policy cannot be retained safely",
+      "code": "SIGNATURE_POLICY",
+      "path": "/AcroForm/SigFlags"
+    }
+  },
+  {
+    "label": "indirect null field Lock",
+    "result": {
+      "imported": 1,
+      "error": "source:/AcroForm/Fields[0]/Lock: Signature seed and field-lock policies require a separate signing workflow",
+      "code": "SIGNATURE_FIELD_POLICY",
+      "path": "/AcroForm/Fields[0]/Lock"
+    }
+  },
+  {
+    "label": "indirect null field SV",
+    "result": {
+      "imported": 1,
+      "error": "source:/AcroForm/Fields[0]/SV: Signature seed and field-lock policies require a separate signing workflow",
+      "code": "SIGNATURE_FIELD_POLICY",
+      "path": "/AcroForm/Fields[0]/SV"
+    }
+  },
+  {
+    "label": "indirect null field A",
+    "result": {
+      "imported": 1,
+      "error": "source:/AcroForm/Fields[0]/A: Action is not a dictionary",
+      "code": "ACTION_TYPE",
+      "path": "/AcroForm/Fields[0]/A"
+    }
+  },
+  {
+    "label": "indirect null field AA",
+    "result": {
+      "imported": 1,
+      "error": "source:/AcroForm/Fields[0]/AA: Additional actions are not a dictionary",
+      "code": "ADDITIONAL_ACTIONS",
+      "path": "/AcroForm/Fields[0]/AA"
+    }
+  },
+  {
+    "label": "indirect null widget A",
+    "result": {
+      "imported": 1,
+      "error": "source:/Pages[0]/Annots/A: Action is not a dictionary",
+      "code": "ACTION_TYPE",
+      "path": "/Pages[0]/Annots/A"
+    }
+  },
+  {
+    "label": "indirect null widget AA",
+    "result": {
+      "imported": 1,
+      "error": "source:/Pages[0]/Annots/AA: Additional actions are not a dictionary",
+      "code": "ADDITIONAL_ACTIONS",
+      "path": "/Pages[0]/Annots/AA"
+    }
+  },
+  {
+    "label": "indirect null OpenAction",
+    "result": {
+      "imported": 1,
+      "error": "source:/OpenAction: Expected a dictionary",
+      "code": "CATALOG_OPEN_ACTION",
+      "path": "/OpenAction"
+    }
+  },
+  {
+    "label": "indirect null action Next",
+    "result": {
+      "imported": 1,
+      "error": "source:/OpenAction/Next: Action is not a dictionary",
+      "code": "ACTION_TYPE",
+      "path": "/OpenAction/Next"
+    }
+  },
+  {
+    "label": "indirect null ResetForm Fields",
+    "result": {
+      "imported": 1,
+      "error": "source:/OpenAction/Fields: Action refers to an object that is not a canonical field or annotation",
+      "code": "ACTION_FIELD_REFERENCE",
+      "path": "/OpenAction/Fields"
+    }
+  },
+  {
+    "label": "XYZ destination null array entries remain actual null coordinates after two compose saves",
+    "result": [
+      [
+        "3 0 R",
+        "/XYZ",
+        "null",
+        "null",
+        "null"
+      ],
+      [
+        "4 0 R",
+        "/XYZ",
+        "null",
+        "null",
+        "null"
+      ]
+    ]
+  }
+]

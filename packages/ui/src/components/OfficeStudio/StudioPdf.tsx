@@ -29,6 +29,8 @@ import { Tabs } from '../Tabs/Tabs';
 import { StudioRibbonTabs } from './StudioRibbon';
 import { StudioPdfFieldDialog } from './StudioPdfFieldDialog';
 import { StudioPdfPageDialog, type PdfPageAction } from './StudioPdfPageDialog';
+import { StudioPdfComposeDialog } from './StudioPdfComposeDialog';
+import { pdfCompositionSnapshotValid } from './studio-pdf-composition';
 import { pdfPages, pdfInsertBlankPage, pdfRemovePages, pdfMovePages, pdfCopyPages, pdfRotatePages, pdfResizePages } from './studio-pdf-pages';
 import {
   pdfFieldDesign,
@@ -47,6 +49,10 @@ import type {
   StudioPdfRenderResult,
   StudioPdfSession,
   StudioPdfSearchResult,
+  StudioPdfSnapshot,
+  StudioPdfComposer,
+  StudioPdfComposeRequest,
+  StudioPdfComposeResult,
 } from './studio-types';
 import './StudioPdf.css';
 import { isImeComposing } from '../../utils';
@@ -349,12 +355,20 @@ export default function StudioPdf({
   readOnly,
   source,
   pdfRenderer,
+  pdfComposer,
+  onPdfSourceChange,
 }: StudioEditorProps<StudioPdfDocument>) {
   const [loaded, setLoaded] = useState<LoadedPdf | null>(null);
   const [rendered, setRendered] = useState<RenderedPage | null>(null);
   const [page, setPage] = useState(0);
   const [selectedPages, setSelectedPages] = useState<number[]>([0]);
   const [pageDialog, setPageDialog] = useState<{ action: PdfPageAction; snapshot: StudioPdfDocument; selection: number[]; source?: Blob; renderer?: StudioPdfRenderer; session?: StudioPdfSession } | null>(null);
+  const [composeDialog, setComposeDialog] = useState<{
+    mode: 'merge' | 'extract'; snapshot: StudioPdfSnapshot; selection: number[]; currentPage: number;
+    renderer: StudioPdfRenderer; session: StudioPdfSession; composer: StudioPdfComposer;
+  } | null>(null);
+  const [composeBusy, setComposeBusy] = useState(false);
+  const composeTask = useRef<AbortController | null>(null);
   const pageDrag = useRef<{ snapshot: StudioPdfDocument; selection: number[] } | null>(null);
   const pageDescriptors = pdfDocument.pages;
   const descriptor = pageDescriptors?.[page];
@@ -392,8 +406,10 @@ export default function StudioPdf({
   const searchInput = useRef<HTMLInputElement>(null);
   const documentRef = useRef(pdfDocument);
   const expectedRef = useRef(pdfDocument);
-  const pastRef = useRef<StudioPdfDocument[]>([]);
-  const futureRef = useRef<StudioPdfDocument[]>([]);
+  const sourceRef = useRef(source);
+  const expectedSourceRef = useRef(source);
+  const pastRef = useRef<StudioPdfSnapshot[]>([]);
+  const futureRef = useRef<StudioPdfSnapshot[]>([]);
   const pageViews = useRef(new WeakMap<StudioPdfDocument, { current?: string; selected: string[] }>());
   const drawingRef = useRef<Drawing | null>(null);
   const suppressClick = useRef(false);
@@ -408,6 +424,9 @@ export default function StudioPdf({
   const formId = useId();
   const panelId = useId();
   documentRef.current = pdfDocument;
+  sourceRef.current = source;
+  const sourceChangeRef = useRef(onPdfSourceChange);
+  sourceChangeRef.current = onPdfSourceChange;
 
   const activeLoaded =
     loaded &&
@@ -426,23 +445,39 @@ export default function StudioPdf({
       ? rendered.result
       : null;
   const canManagePages = !!activeLoaded?.session.supportsPageMapping;
-  const canModify = !disabled && !readOnly && !!activeLoaded;
+  const canEditSource = !disabled && !readOnly && !!activeLoaded;
+  const canEditSourceRef = useRef(canEditSource);
+  canEditSourceRef.current = canEditSource;
+  const canModify = canEditSource && !composeBusy;
   const canModifyRef = useRef(canModify);
   canModifyRef.current = canModify;
   const selected = pdfDocument.marks.find((mark) => mark.id === selectedId);
 
   useEffect(() => {
-    if (pdfDocument !== expectedRef.current) {
+    const legacySourceReplacement = pdfDocument === expectedRef.current && source &&
+      source !== expectedSourceRef.current && !sourceChangeRef.current;
+    if (legacySourceReplacement) {
+      // Hosts with the original model-only API replace the source themselves.
+      // Their existing document history continues against that explicitly supplied source.
+      pastRef.current = pastRef.current.map((entry) => ({ ...entry, source }));
+      futureRef.current = futureRef.current.map((entry) => ({ ...entry, source }));
+    }
+    if (pdfDocument !== expectedRef.current || (source !== expectedSourceRef.current && !legacySourceReplacement)) {
       pastRef.current = [];
       futureRef.current = [];
       setHistoryVersion((value) => value + 1);
       setDateDrafts({});
       setFieldDialog(null);
       setPageDialog(null);
+      composeTask.current?.abort();
+      composeTask.current = null;
+      setComposeBusy(false);
+      setComposeDialog(null);
       fieldEdit.current = null;
     }
     expectedRef.current = pdfDocument;
-  }, [pdfDocument]);
+    expectedSourceRef.current = source;
+  }, [pdfDocument, source]);
 
   useEffect(() => {
     setDateDrafts({});
@@ -450,13 +485,19 @@ export default function StudioPdf({
     pageDrag.current = null;
     setPageDialog(null);
     setFieldDialog(null);
-  }, [disabled, readOnly, source, pdfRenderer]);
+    composeTask.current?.abort();
+    composeTask.current = null;
+    setComposeBusy(false);
+    setComposeDialog(null);
+  }, [disabled, readOnly, source, pdfRenderer, pdfComposer]);
+
+  useEffect(() => () => composeTask.current?.abort(), []);
 
   useEffect(() => {
     drawingRef.current = null;
     setDrawing(null);
     drag.current = null;
-  }, [disabled, readOnly, page, zoom, rotation, tool]);
+  }, [disabled, readOnly, page, zoom, rotation, tool, composeBusy]);
 
   useEffect(() => {
     if (inspector && panel === 'search') searchInput.current?.focus();
@@ -603,36 +644,69 @@ export default function StudioPdf({
     };
   }, [activeLoaded, page, zoom, rotation, descriptor]);
 
-  const remember = (snapshot: StudioPdfDocument) => {
-    const pages = pdfPages(snapshot); pageViews.current.set(snapshot, { current: pages[page]?.id, selected: selectedPages.flatMap(index => pages[index] ? [pages[index].id] : []) });
-    pastRef.current = [...pastRef.current.slice(-39), snapshot];
+  const remember = (snapshot: StudioPdfDocument, originalSource = sourceRef.current) => {
+    if (!originalSource) return;
+    const pages = pdfPages(snapshot);
+    pageViews.current.set(snapshot, { current: pages[page]?.id, selected: selectedPages.flatMap(index => pages[index] ? [pages[index].id] : []) });
+    pastRef.current = [...pastRef.current.slice(-39), { document: snapshot, source: originalSource }];
     futureRef.current = [];
     setHistoryVersion((value) => value + 1);
   };
-  const commit = (next: StudioPdfDocument, addHistory = true) => {
-    if (!canModifyRef.current) return;
+  const commit = (next: StudioPdfDocument, addHistory = true): boolean => {
+    if (!canModifyRef.current) return false;
     if (addHistory) remember(documentRef.current);
     documentRef.current = next;
     expectedRef.current = next;
     setNotice('');
     onChange(next);
+    return true;
+  };
+  const commitSnapshot = (next: StudioPdfSnapshot, addHistory = true): boolean => {
+    const previousSource = sourceRef.current;
+    if (!canEditSourceRef.current || !previousSource || !sourceChangeRef.current) return false;
+    const previous = { document: documentRef.current, source: previousSource };
+    expectedRef.current = next.document;
+    expectedSourceRef.current = next.source;
+    let accepted = false;
+    try { accepted = sourceChangeRef.current({ previous, next }) === true; }
+    finally {
+      if (!accepted) {
+        expectedRef.current = previous.document;
+        expectedSourceRef.current = previous.source;
+      }
+    }
+    if (!accepted) return false;
+    if (addHistory) remember(previous.document, previous.source);
+    documentRef.current = next.document;
+    sourceRef.current = next.source;
+    setNotice('');
+    return true;
   };
   const stepHistory = (direction: 'undo' | 'redo') => {
-    if (!canModify) return;
+    if (!canModify || !sourceRef.current) return;
     const from = direction === 'undo' ? pastRef : futureRef;
     const to = direction === 'undo' ? futureRef : pastRef;
-    const next = from.current.pop();
+    const next = from.current.at(-1);
     if (!next) return;
-    const currentPages = pdfPages(documentRef.current); pageViews.current.set(documentRef.current, { current: currentPages[page]?.id, selected: selectedPages.flatMap(index => currentPages[index] ? [currentPages[index].id] : []) });
-    to.current = [...to.current.slice(-39), documentRef.current];
-    commit(next, false);
+    const current = { document: documentRef.current, source: sourceRef.current };
+    const currentPages = pdfPages(current.document);
+    pageViews.current.set(current.document, { current: currentPages[page]?.id, selected: selectedPages.flatMap(index => currentPages[index] ? [currentPages[index].id] : []) });
+    try {
+      const accepted = next.source === current.source ? commit(next.document, false) : commitSnapshot(next, false);
+      if (!accepted) { setNotice('当前宿主未接受 PDF 原文件切换，历史未改变。'); return; }
+    } catch (cause) {
+      setNotice(cause instanceof Error ? cause.message : 'PDF 历史恢复失败，当前内容仍保留。');
+      return;
+    }
+    from.current.pop();
+    to.current = [...to.current.slice(-39), current];
     setDateDrafts({});
     fieldEdit.current = null;
     setSelectedId(null);
-    const pages = pdfPages(next), prior = pageViews.current.get(next), restored = pages.findIndex(entry => entry.id === prior?.current);
-    setPage(restored >= 0 ? restored : Math.min(page, next.pageCount - 1));
+    const pages = pdfPages(next.document), prior = pageViews.current.get(next.document), restored = pages.findIndex(entry => entry.id === prior?.current);
+    setPage(restored >= 0 ? restored : Math.min(page, next.document.pageCount - 1));
     const restoredSelection = pages.flatMap((entry, index) => prior?.selected.includes(entry.id) ? [index] : []);
-    setSelectedPages(restoredSelection.length ? restoredSelection : [restored >= 0 ? restored : Math.min(page, next.pageCount - 1)]);
+    setSelectedPages(restoredSelection.length ? restoredSelection : [restored >= 0 ? restored : Math.min(page, next.document.pageCount - 1)]);
     setPageDialog(null);
     setHistoryVersion((value) => value + 1);
   };
@@ -655,6 +729,66 @@ export default function StudioPdf({
   const openPageDialog = (action: PdfPageAction) => {
     if (!canModify || !canManagePages) return;
     setPageDialog({ action, snapshot: documentRef.current, selection: selectedPages.filter(index => index < pdfDocument.pageCount), source, renderer: pdfRenderer, session: activeLoaded?.session });
+  };
+  const openComposition = (mode: 'merge' | 'extract') => {
+    if (!canModify || !canManagePages || !source || !pdfRenderer || !pdfComposer || !onPdfSourceChange || !activeLoaded) return;
+    const invalid = Object.entries(dateDraftRef.current).map(([name, value]) => {
+      const field = documentRef.current.fields.find((entry) => entry.name === name);
+      return field && pdfFieldIssue({ ...field, value }, documentRef.current.pageCount);
+    }).find(Boolean);
+    if (invalid) { setNotice(invalid); return; }
+    fieldEdit.current = null;
+    setComposeDialog({
+      mode,
+      snapshot: { document: documentRef.current, source },
+      selection: selectedPages.length ? [...selectedPages] : [page],
+      currentPage: page,
+      renderer: pdfRenderer,
+      session: activeLoaded.session,
+      composer: pdfComposer,
+    });
+  };
+  const closeComposition = () => {
+    composeTask.current?.abort();
+    composeTask.current = null;
+    setComposeBusy(false);
+    setComposeDialog(null);
+  };
+  const applyComposition = async (options: Omit<StudioPdfComposeRequest, 'snapshot' | 'signal'>) => {
+    const dialog = composeDialog;
+    if (!dialog || composeTask.current) return;
+    const unchanged = () => documentRef.current === dialog.snapshot.document &&
+      sourceRef.current === dialog.snapshot.source && pdfRenderer === dialog.renderer &&
+      pdfComposer === dialog.composer && activeLoaded?.session === dialog.session && canEditSourceRef.current;
+    if (!unchanged()) throw new Error('当前 PDF 已变化，请重新打开页面组合窗口。');
+    const controller = new AbortController();
+    composeTask.current = controller;
+    setComposeBusy(true);
+    try {
+      const result: StudioPdfComposeResult = await dialog.composer.compose({ ...options, snapshot: dialog.snapshot, signal: controller.signal });
+      if (controller.signal.aborted || composeTask.current !== controller) return;
+      if (!unchanged()) throw new Error('生成 PDF 期间当前内容或编辑权限已变化，结果未应用。');
+      if (!pdfCompositionSnapshotValid(result, dialog.snapshot)) throw new Error('PDF 组合适配器返回了不完整的原文件与模型。');
+      if (!commitSnapshot(result)) throw new Error('当前宿主未接受 PDF 原文件与模型，结果未应用。');
+      const previousPages = pdfPages(dialog.snapshot.document), nextPages = pdfPages(result.document);
+      const currentId = previousPages[dialog.currentPage]?.id;
+      const nextPage = nextPages.findIndex((entry) => entry.id === currentId);
+      setPage(nextPage >= 0 ? nextPage : 0);
+      const selectedIds = new Set(dialog.selection.map((index) => previousPages[index]?.id));
+      const nextSelection = nextPages.flatMap((entry, index) => selectedIds.has(entry.id) ? [index] : []);
+      setSelectedPages(nextSelection.length ? nextSelection : [nextPage >= 0 ? nextPage : 0]);
+      setSelectedId(null);
+      setDateDrafts({});
+      fieldEdit.current = null;
+      setComposeDialog(null);
+      setTool('select');
+      setNotice(result.warnings?.join('；') || (options.mode === 'merge' ? 'PDF 文件已合并。' : 'PDF 页面已提取。'));
+    } finally {
+      if (composeTask.current === controller) {
+        composeTask.current = null;
+        setComposeBusy(false);
+      }
+    }
   };
   const changeField = (name: string, value: string | boolean) => {
     const current = documentRef.current;
@@ -959,7 +1093,7 @@ export default function StudioPdf({
     widget: NonNullable<StudioPdfField['widgets']>[number],
     index: number
   ) => {
-    if (!view) return null;
+    if (!view || field.type === 'opaque') return null;
     const matrix = pdfMatrix(view, widget.x, widget.y + widget.height);
     const locked = !canModify || field.readOnly;
     const label = `PDF 页面表单 ${field.name}${widget.option === undefined ? '' : ` ${widget.option}`}`;
@@ -1243,6 +1377,8 @@ export default function StudioPdf({
                 <Button size="sm" variant="ghost" disabled={!canModify || !canManagePages || !selectedPages.length || selectedPages.length >= pdfDocument.pageCount} onClick={() => pageOperation(() => pdfRemovePages(documentRef.current, selectedPages))}>删除所选页</Button>
                 <Button size="sm" variant="ghost" disabled={!canModify || !canManagePages || !selectedPages.length} onClick={() => openPageDialog('move')}>移动所选页</Button>
                 <Button size="sm" variant="ghost" disabled={!canModify || !canManagePages || !selectedPages.length || pdfDocument.pageCount + selectedPages.length > 200} onClick={() => openPageDialog('copy')}>复制所选页</Button>
+                <Button size="sm" variant="ghost" disabled={!canModify || !canManagePages || !pdfComposer || !onPdfSourceChange || pdfDocument.pageCount >= 200} onClick={() => openComposition('merge')}>合并 PDF 文件</Button>
+                <Button size="sm" variant="ghost" disabled={!canModify || !canManagePages || !pdfComposer || !onPdfSourceChange} onClick={() => openComposition('extract')}>提取 PDF 页面</Button>
                 <Button size="sm" variant="ghost" disabled={!canModify || !canManagePages || !selectedPages.length} onClick={() => pageOperation(() => pdfRotatePages(documentRef.current, selectedPages, 90))}>旋转所选页</Button>
                 <Button size="sm" variant="ghost" disabled={!canModify || !canManagePages || !selectedPages.length} onClick={() => openPageDialog('resize')}>页面尺寸</Button>
                 <Button
@@ -2150,7 +2286,12 @@ export default function StudioPdf({
                 ) : (
                   pdfDocument.fields.map((field) => (
                     <div className="zuvi-studio-pdf-field" key={field.name}>
-                      {field.type === 'image' ? (
+                      {field.type === 'opaque' ? (
+                        <div className="zuvi-studio-pdf-passive-field">
+                          <strong>{field.name}</strong>
+                          <p>{field.passiveReason} · 保留原始值与外观</p>
+                        </div>
+                      ) : field.type === 'image' ? (
                         <label>
                           {field.name}
                           <input
@@ -2255,7 +2396,7 @@ export default function StudioPdf({
                       <Button
                         size="sm"
                         variant="ghost"
-                        disabled={!canModify || !view}
+                        disabled={!canModify || !view || field.type === 'opaque'}
                         aria-label={`设计 PDF 字段 ${field.name}`}
                         onClick={() =>
                           setFieldDialog({ field: { ...field, design: pdfFieldDesign(field) } })
@@ -2369,6 +2510,20 @@ export default function StudioPdf({
         if (!canModifyRef.current || documentRef.current !== pageDialog.snapshot || source !== pageDialog.source || pdfRenderer !== pageDialog.renderer || activeLoaded?.session !== pageDialog.session) return;
         pageOperation(() => pageDialog.action === 'insert' ? pdfInsertBlankPage(documentRef.current, value.position, value) : pageDialog.action === 'resize' ? pdfResizePages(documentRef.current, pageDialog.selection, value) : pageDialog.action === 'copy' ? pdfCopyPages(documentRef.current, pageDialog.selection, value.position) : pdfMovePages(documentRef.current, pageDialog.selection, value.position));
       }} />}
+      {composeDialog && (
+        <StudioPdfComposeDialog
+          mode={composeDialog.mode}
+          pageCount={composeDialog.snapshot.document.pageCount}
+          currentPage={composeDialog.currentPage}
+          selectedPages={composeDialog.selection}
+          name={composeDialog.snapshot.document.name}
+          composer={composeDialog.composer}
+          blocked={!canEditSource || pdfDocument !== composeDialog.snapshot.document || source !== composeDialog.snapshot.source || pdfRenderer !== composeDialog.renderer || pdfComposer !== composeDialog.composer || activeLoaded?.session !== composeDialog.session}
+          busy={composeBusy}
+          onClose={closeComposition}
+          onApply={applyComposition}
+        />
+      )}
       {fieldDialog && canModify && view && (
         <StudioPdfFieldDialog
           key={fieldDialog.field?.name || 'new'}

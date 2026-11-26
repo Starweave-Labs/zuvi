@@ -1,0 +1,69 @@
+[
+  {
+    "case": "inherited-text-ft-indirect",
+    "rounds": 2,
+    "type": "text",
+    "value": "Parent-current",
+    "ref": "7 0 R",
+    "V": "<FEFF0050006100720065006E0074002D00630075007200720065006E0074>",
+    "DV": "(Parent-default)",
+    "appearances": [
+      "d7378c042ab7818730a2a49edf60079572e02f882107373dbce58829d0c97951"
+    ]
+  },
+  {
+    "case": "inherited-text-v-indirect",
+    "rounds": 2,
+    "type": "text",
+    "value": "Parent-current",
+    "ref": "7 0 R",
+    "V": "<FEFF0050006100720065006E0074002D00630075007200720065006E0074>",
+    "DV": "(Parent-default)",
+    "appearances": [
+      "d7378c042ab7818730a2a49edf60079572e02f882107373dbce58829d0c97951"
+    ]
+  },
+  {
+    "case": "inherited-password-ff-indirect",
+    "rounds": 2,
+    "type": "opaque",
+    "value": "",
+    "ref": "7 0 R",
+    "V": "<FEFF0050006100720065006E0074002D00630075007200720065006E0074>",
+    "DV": "(Parent-default)",
+    "appearances": [
+      "d7378c042ab7818730a2a49edf60079572e02f882107373dbce58829d0c97951"
+    ]
+  },
+  {
+    "case": "inherited-radio-ff-indirect",
+    "rounds": 2,
+    "type": "choice",
+    "value": "B",
+    "ref": "7 0 R",
+    "V": "/1",
+    "DV": "/0",
+    "appearances": [
+      [
+        [
+          "/0",
+          "1dea63410c33e49d0046fc8c926d606c55f9000f9e9dbc1199077d1a62854842"
+        ],
+        [
+          "/Off",
+          "d8f385e617e720eed2da7203cee8fbfdae28c775540b074465c48f2fcf4520f1"
+        ]
+      ],
+      [
+        [
+          "/1",
+          "1dea63410c33e49d0046fc8c926d606c55f9000f9e9dbc1199077d1a62854842"
+        ],
+        [
+          "/Off",
+          "d8f385e617e720eed2da7203cee8fbfdae28c775540b074465c48f2fcf4520f1"
+        ]
+      ]
+    ]
+  }
+]

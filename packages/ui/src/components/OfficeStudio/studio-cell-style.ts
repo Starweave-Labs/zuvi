@@ -1,46 +1,17 @@
 import type { CSSProperties } from 'react';
 import type { StudioCell } from './studio-types';
+import { sheetTextFormatIssue, type SheetTextFormat } from './studio-sheet-text-properties';
 
-export const studioBorderSides = ['top', 'bottom', 'left', 'right'] as const;
-export const studioBorderStyles = [
-  'thin',
-  'medium',
-  'thick',
-  'double',
-  'dotted',
-  'dashed',
-  'hair',
-  'dashDot',
-  'dashDotDot',
-  'mediumDashed',
-  'mediumDashDot',
-  'mediumDashDotDot',
-  'slantDashDot',
-] as const;
+import { studioBorderSides, studioCellBorderError } from './studio-cell-format-core';
+export { studioBorderSides, studioBorderStyles } from './studio-cell-format-core';
 
-export function studioCellStyleIssue(cell: { verticalAlign?: unknown; borders?: unknown }) {
-  if (
-    cell.verticalAlign !== undefined &&
-    !['top', 'middle', 'bottom'].includes(String(cell.verticalAlign))
-  )
-    return '垂直对齐方式无效。';
-  if (cell.borders === undefined) return null;
-  if (!cell.borders || typeof cell.borders !== 'object' || Array.isArray(cell.borders))
-    return '单元格边框无效。';
-  for (const [side, border] of Object.entries(cell.borders)) {
-    if (
-      !studioBorderSides.includes(side as (typeof studioBorderSides)[number]) ||
-      !border ||
-      typeof border !== 'object' ||
-      Array.isArray(border) ||
-      !studioBorderStyles.includes(border.style) ||
-      Object.keys(border).some((key) => !['style', 'color'].includes(key)) ||
-      (border.color !== undefined &&
-        (typeof border.color !== 'string' || !/^#[\da-f]{6}$/i.test(border.color)))
-    )
-      return '单元格边框线型或颜色无效。';
-  }
-  return null;
+export function studioCellStyleIssue(
+  cell: { [Key in keyof SheetTextFormat]?: unknown } & { borders?: unknown }
+) {
+  const textIssue = sheetTextFormatIssue(cell as SheetTextFormat);
+  if (textIssue) return textIssue;
+  const borderIssue = studioCellBorderError(cell.borders);
+  return borderIssue === 1 ? '单元格边框无效。' : borderIssue === 2 ? '单元格边框线型或颜色无效。' : null;
 }
 
 export function studioBorderCss(

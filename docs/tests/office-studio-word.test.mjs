@@ -24,6 +24,7 @@ const numberCodecExports = {};
 const surfaceExports = {};
 const surfaceCodecExports = {};
 const imageExports = {};
+const imageContractExports = {};
 const rowExports = {};
 const tableExports = {};
 const mathExports = {};
@@ -39,6 +40,7 @@ for (const [file, target] of [
   ['studio-word-surface.ts', surfaceExports],
   ['studio-word-numbering.ts', numberExports],
   ['studio-word-styles.ts', styleExports],
+  ['studio-word-image-contract.ts', imageContractExports],
   ['studio-word-images.ts', imageExports],
   ['studio-word-image-crop.ts', imageExports],
   ['studio-word-image-preview.ts', imageExports],
@@ -60,7 +62,7 @@ for (const [file, target] of [
     {
       exports: target,
       require: (id) =>
-        id === './studio-word-surface'?surfaceExports:id === './studio-word-tabs' ? tabExports : id === './studio-word-paragraph-format'
+        id === './studio-word-image-contract' ? imageContractExports : id === './studio-word-surface'?surfaceExports:id === './studio-word-tabs' ? tabExports : id === './studio-word-paragraph-format'
           ? paragraphExports
           : id === './studio-word-metrics'
             ? metricExports

@@ -1095,8 +1095,9 @@ test('Sheet print uses actual row sizes and keeps merged content whose original 
   assert.match(merged.textContent, /合并内容/);
   assert.equal(
     merged.querySelector('.studio-print-cell').style.maxHeight,
-    `${((44.5 + 27) * 4) / 3 - 4}px`
+    `${((44.5 + 27) * 4) / 3 - 1}px`
   );
+  assert.equal(merged.querySelector('.studio-print-text-clip').style.height, `${((44.5 + 27) * 4) / 3}px`);
 });
 
 test('array print includes the entire computed region without persisting synthetic result cells', () => {
@@ -1118,6 +1119,144 @@ test('array print includes the entire computed region without persisting synthet
     ['10', '12', '14', '16', '18', '20']
   );
   assert.deepEqual(Object.keys(document.sheets[0].cells), ['A1']);
+});
+
+test('sheet advanced print shares default font, shrink geometry and center across without merging cells', () => {
+  const document = models.createOfficeStudioDocument('excel');
+  document.defaultFont = { family: 'Arial', sizePt: 9.5, bold: true, italic: true };
+  const sheet = document.sheets[0];
+  document.sheets = [sheet];
+  sheet.merges = [];
+  sheet.conditionalFormats = [];
+  sheet.hyperlinks = [];
+  sheet.charts = [];
+  sheet.cells = {
+    A1: { input: 'Long line to shrink in a narrow cell', fontSize: 22, shrinkToFit: true },
+    B1: { input: 'Title', align: 'centerContinuous' },
+    C1: { input: '', align: 'centerContinuous' },
+  };
+  sheet.columnWidths = { A: 112, B: 112, C: 112 };
+  const original = JSON.stringify(document);
+  const html = new JSDOM(print.createStudioPrintHtml(document)).window.document;
+  const cells = [...html.querySelectorAll('td')];
+  assert.equal(cells.length, 3);
+  assert.ok(Number(cells[0].querySelector('[data-effective-font-size]').dataset.effectiveFontSize) < 22);
+  assert.equal(cells[1].colSpan, 1);
+  assert.equal(cells[1].querySelector('.studio-print-text-clip').style.width, '224px');
+  assert.equal(cells[1].querySelector('.studio-print-text').style.fontSize, '9.5pt');
+  assert.equal(cells[1].querySelector('.studio-print-text').style.fontWeight, '700');
+  assert.equal(cells[1].querySelector('.studio-print-text').style.fontStyle, 'italic');
+  assert.equal(JSON.stringify(document), original);
+});
+
+test('sheet advanced print derives automatic rows from wrap and array spill while retaining explicit fixed heights', () => {
+  const document = models.createOfficeStudioDocument('excel');
+  const sheet = document.sheets[0];
+  sheet.cells = {
+    A1: { input: '=SEQUENCE(2,2)', array: { type: 'dynamic' } },
+    B2: { input: '', fontSize: 40 },
+    A3: { input: 'Long wrapped content that needs several lines in the printed cell', wrap: true, fontSize: 22 },
+    A4: { input: 'Fixed height wrapped content', wrap: true, fontSize: 40 },
+  };
+  sheet.rowHeights = { 4: 18 };
+  sheet.rowHeightModes = { 4: 'fixed' };
+  const before = JSON.stringify(document);
+  const html = new JSDOM(print.createStudioPrintHtml(document)).window.document;
+  const rows = [...html.querySelectorAll('tr')];
+  assert.ok(parseFloat(rows[1].style.height) > 18);
+  assert.ok(parseFloat(rows[2].style.height) > 18);
+  assert.equal(rows[3].style.height, '18pt');
+  assert.equal(rows[1].querySelectorAll('td')[1].textContent, '4');
+  assert.equal(JSON.stringify(document), before);
+});
+
+test('center-across automatic print height shares the rendered span and preserves frozen boundaries', () => {
+  const document = models.createOfficeStudioDocument('excel');
+  const sheet = document.sheets[0];
+  document.sheets = [sheet];
+  sheet.merges = []; sheet.conditionalFormats = []; sheet.hyperlinks = []; sheet.charts = [];
+  sheet.columnWidths = { A: 100, B: 100, C: 100 };
+  sheet.cells = {
+    A1: { input: 'LongHeading', fontSize: 24, align: 'centerContinuous', shrinkToFit: true },
+    B1: { input: '', align: 'centerContinuous' }, C1: { input: '', align: 'centerContinuous' },
+  };
+  for (const wrap of [false, true]) {
+    sheet.cells.A1.wrap = wrap;
+    const rendered = new JSDOM(print.createStudioPrintHtml(document)).window.document;
+    const owner = rendered.querySelector('td');
+    assert.ok(parseFloat(rendered.querySelector('tr').style.height) > 27);
+    assert.ok(parseFloat(rendered.querySelector('tr').style.height) < 40);
+    assert.equal(owner.querySelector('.studio-print-text-clip').style.width, '300px');
+    assert.equal(owner.querySelector('.studio-print-text').dataset.effectiveFontSize, '24');
+    assert.equal(owner.querySelectorAll('.studio-print-text-transform>span').length, 1);
+    const matrix = owner.querySelector('.studio-print-text-transform').style.transform.match(/matrix\(([^)]+)\)/)[1].split(',').map(Number);
+    assert.ok(matrix[5] >= 0, 'the actual full-size heading must not start above its clipping box');
+  }
+  sheet.cells.A1.wrap = false;
+  sheet.freeze = { columns: 1, rows: 0 };
+  const frozen = new JSDOM(print.createStudioPrintHtml(document)).window.document;
+  assert.equal(frozen.querySelector('td .studio-print-text-clip').style.width, '100px');
+  assert.ok(Number(frozen.querySelector('td .studio-print-text').dataset.effectiveFontSize) < 24);
+});
+
+test('sheet print maps hidden merge columns and rows to visible spans while retaining the native master and following data', () => {
+  const document = models.createOfficeStudioDocument('excel');
+  document.sheets = [{ id: 'visible', name: 'Visible', rowCount: 4, columnCount: 4, columnWidths: { A: 100, B: 100, C: 100, D: 100 }, hiddenColumns: ['B'], hiddenRows: [3], merges: ['A1:C1', 'A3:C4'], cells: { A1: { input: 'Visible master' }, D1: { input: 'Following data' }, A3: { input: 'Hidden row master' }, D4: { input: 'Fourth row tail' } } }];
+  document.activeSheetId = 'visible';
+  let rendered = new JSDOM(print.createStudioPrintHtml(document)).window.document;
+  const table = rendered.querySelector('table'), rows = [...table.querySelectorAll('tr')];
+  assert.equal(table.querySelectorAll('col').length, 3);
+  assert.equal(rows.length, 3);
+  assert.equal(rows[0].querySelector('td').colSpan, 2);
+  assert.equal(rows[0].querySelectorAll('td').length, 2);
+  assert.equal(rows[0].querySelectorAll('td')[1].textContent, 'Following data');
+  assert.equal(rows[0].querySelector('.studio-print-text-clip').style.width, '200px');
+  assert.equal(rows[2].querySelector('td').colSpan, 2);
+  assert.equal(rows[2].querySelector('td').rowSpan, 1);
+  assert.equal(rows[2].querySelector('td').textContent, 'Hidden row master');
+  assert.equal(rows[2].querySelectorAll('td')[1].textContent, 'Fourth row tail');
+  document.sheets[0].hiddenColumns = ['A'];
+  document.sheets[0].hiddenRows = [1];
+  document.sheets[0].merges = ['A1:C2'];
+  document.sheets[0].cells = { A1: { input: 'Hidden master' }, D2: { input: 'Visible tail' } };
+  rendered = new JSDOM(print.createStudioPrintHtml(document)).window.document;
+  const visible = rendered.querySelector('tr');
+  assert.equal(visible.querySelector('td').colSpan, 2);
+  assert.equal(visible.querySelector('td').rowSpan, 1);
+  assert.equal(visible.querySelector('td').textContent, 'Hidden master');
+  assert.equal(visible.querySelectorAll('td')[1].textContent, 'Visible tail');
+  assert.equal(visible.querySelector('.studio-print-text-clip').style.width, '200px');
+});
+
+test('hidden logical merge masters auto-fit the complete text when exactly one physical row remains', () => {
+  for (const scenario of [
+    { hiddenColumns: ['A'], hiddenRows: [], merge: 'A1:C1' },
+    { hiddenColumns: [], hiddenRows: [1], merge: 'A1:C2' },
+    { hiddenColumns: ['A'], hiddenRows: [1], merge: 'A1:C2' },
+  ]) {
+    const document = models.createOfficeStudioDocument('excel');
+    document.sheets = [{ id: 'hidden-auto', name: 'Hidden auto', rowCount: 2, columnCount: 3, columnWidths: { A: 100, B: 100, C: 100 }, hiddenColumns: scenario.hiddenColumns, hiddenRows: scenario.hiddenRows, merges: [scenario.merge], cells: { A1: { input: 'Merged', fontSize: 24, wrap: true } } }];
+    document.activeSheetId = 'hidden-auto';
+    const rendered = new JSDOM(print.createStudioPrintHtml(document)).window.document;
+    const first = rendered.querySelector('td');
+    assert.ok(parseFloat(rendered.querySelector('tr').style.height) > 27);
+    assert.equal(first.querySelector('.studio-print-text').dataset.effectiveFontSize, '24');
+    assert.equal(first.textContent, 'Merged');
+    const matrix = first.querySelector('.studio-print-text-transform').style.transform.match(/matrix\(([^)]+)\)/)[1].split(',').map(Number);
+    assert.ok(matrix[5] >= 0, 'a hidden logical master must not be clipped above its unique visible row');
+  }
+});
+
+test('sheet print anchors have a visible rectangle when text is positioned absolutely', () => {
+  const document = models.createOfficeStudioDocument('excel');
+  document.sheets = [{ id: 'linked', name: 'Linked', rowCount: 1, columnCount: 1, cells: { A1: { input: 'Printable link' } }, hyperlinks: [{ id: 'native', ref: 'A1', target: 'https://example.com/printable' }] }];
+  document.activeSheetId = 'linked';
+  const rendered = new JSDOM(print.createStudioPrintHtml(document)).window;
+  const anchor = rendered.document.querySelector('.studio-print-text-clip > a');
+  assert.ok(anchor);
+  assert.equal(anchor.href, 'https://example.com/printable');
+  assert.equal(rendered.getComputedStyle(anchor).position, 'absolute');
+  assert.equal(rendered.getComputedStyle(anchor).display, 'block');
 });
 
 

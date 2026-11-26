@@ -1,0 +1,940 @@
+[
+  {
+    "label": "root Parent",
+    "indirect": false,
+    "importFields": [
+      {
+        "name": "Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "Before",
+        "readOnly": false
+      }
+    ],
+    "reopenedFields": [
+      {
+        "name": "Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "After",
+        "readOnly": false
+      }
+    ],
+    "native": {
+      "V": "<FEFF0050006100720065006E0074002D00630075007200720065006E0074>",
+      "DV": "(Parent-default)",
+      "flags": 0,
+      "widgetCount": 1,
+      "AP": [
+        true
+      ]
+    },
+    "compose": {
+      "pages": 1,
+      "fields": 2
+    }
+  },
+  {
+    "label": "root Parent",
+    "indirect": true,
+    "importFields": [
+      {
+        "name": "Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "Before",
+        "readOnly": false
+      }
+    ],
+    "reopenedFields": [
+      {
+        "name": "Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "After",
+        "readOnly": false
+      }
+    ],
+    "native": {
+      "V": "<FEFF0050006100720065006E0074002D00630075007200720065006E0074>",
+      "DV": "(Parent-default)",
+      "flags": 0,
+      "widgetCount": 1,
+      "AP": [
+        true
+      ]
+    },
+    "compose": {
+      "pages": 1,
+      "fields": 2
+    }
+  },
+  {
+    "label": "widget P",
+    "indirect": false,
+    "importFields": [
+      {
+        "name": "Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "Before",
+        "readOnly": false
+      }
+    ],
+    "reopenedFields": [
+      {
+        "name": "Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "After",
+        "readOnly": false
+      }
+    ],
+    "native": {
+      "V": "<FEFF0050006100720065006E0074002D00630075007200720065006E0074>",
+      "DV": "(Parent-default)",
+      "flags": 0,
+      "widgetCount": 1,
+      "AP": [
+        true
+      ]
+    },
+    "compose": {
+      "pages": 1,
+      "fields": 2
+    }
+  },
+  {
+    "label": "widget P",
+    "indirect": true,
+    "importFields": [
+      {
+        "name": "Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "Before",
+        "readOnly": false
+      }
+    ],
+    "reopenedFields": [
+      {
+        "name": "Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "After",
+        "readOnly": false
+      }
+    ],
+    "native": {
+      "V": "<FEFF0050006100720065006E0074002D00630075007200720065006E0074>",
+      "DV": "(Parent-default)",
+      "flags": 0,
+      "widgetCount": 1,
+      "AP": [
+        true
+      ]
+    },
+    "compose": {
+      "pages": 1,
+      "fields": 2
+    }
+  },
+  {
+    "label": "widget T",
+    "indirect": false,
+    "importFields": [
+      {
+        "name": "Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "Before",
+        "readOnly": false
+      }
+    ],
+    "reopenedFields": [
+      {
+        "name": "Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "After",
+        "readOnly": false
+      }
+    ],
+    "native": {
+      "V": "<FEFF0050006100720065006E0074002D00630075007200720065006E0074>",
+      "DV": "(Parent-default)",
+      "flags": 0,
+      "widgetCount": 1,
+      "AP": [
+        true
+      ]
+    },
+    "compose": {
+      "pages": 1,
+      "fields": 2
+    }
+  },
+  {
+    "label": "widget T",
+    "indirect": true,
+    "importFields": [
+      {
+        "name": "Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "Before",
+        "readOnly": false
+      }
+    ],
+    "reopenedFields": [
+      {
+        "name": "Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "After",
+        "readOnly": false
+      }
+    ],
+    "native": {
+      "V": "<FEFF0050006100720065006E0074002D00630075007200720065006E0074>",
+      "DV": "(Parent-default)",
+      "flags": 0,
+      "widgetCount": 1,
+      "AP": [
+        true
+      ]
+    },
+    "compose": {
+      "pages": 1,
+      "fields": 2
+    }
+  },
+  {
+    "label": "widget FT",
+    "indirect": false,
+    "importFields": [
+      {
+        "name": "Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "Before",
+        "readOnly": false
+      }
+    ],
+    "reopenedFields": [
+      {
+        "name": "Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "After",
+        "readOnly": false
+      }
+    ],
+    "native": {
+      "V": "<FEFF0050006100720065006E0074002D00630075007200720065006E0074>",
+      "DV": "(Parent-default)",
+      "flags": 0,
+      "widgetCount": 1,
+      "AP": [
+        true
+      ]
+    },
+    "compose": {
+      "pages": 1,
+      "fields": 2
+    }
+  },
+  {
+    "label": "widget FT",
+    "indirect": true,
+    "importFields": [
+      {
+        "name": "Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "Before",
+        "readOnly": false
+      }
+    ],
+    "reopenedFields": [
+      {
+        "name": "Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "After",
+        "readOnly": false
+      }
+    ],
+    "native": {
+      "V": "<FEFF0050006100720065006E0074002D00630075007200720065006E0074>",
+      "DV": "(Parent-default)",
+      "flags": 0,
+      "widgetCount": 1,
+      "AP": [
+        true
+      ]
+    },
+    "compose": {
+      "pages": 1,
+      "fields": 2
+    }
+  },
+  {
+    "label": "combined Kids",
+    "indirect": false,
+    "importFields": [
+      {
+        "name": "Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "Before",
+        "readOnly": false
+      }
+    ],
+    "reopenedFields": [
+      {
+        "name": "Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "After",
+        "readOnly": false
+      }
+    ],
+    "native": {
+      "V": "<FEFF0050006100720065006E0074002D00630075007200720065006E0074>",
+      "DV": "(Parent-default)",
+      "flags": 0,
+      "widgetCount": 1,
+      "AP": [
+        true
+      ]
+    },
+    "compose": {
+      "pages": 1,
+      "fields": 2
+    }
+  },
+  {
+    "label": "combined Kids",
+    "indirect": true,
+    "importFields": [
+      {
+        "name": "Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "Before",
+        "readOnly": false
+      }
+    ],
+    "reopenedFields": [
+      {
+        "name": "Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "After",
+        "readOnly": false
+      }
+    ],
+    "native": {
+      "V": "<FEFF0050006100720065006E0074002D00630075007200720065006E0074>",
+      "DV": "(Parent-default)",
+      "flags": 0,
+      "widgetCount": 1,
+      "AP": [
+        true
+      ]
+    },
+    "compose": {
+      "pages": 1,
+      "fields": 2
+    }
+  },
+  {
+    "label": "combined root Parent",
+    "indirect": false,
+    "importFields": [
+      {
+        "name": "Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "Before",
+        "readOnly": false
+      }
+    ],
+    "reopenedFields": [
+      {
+        "name": "Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "After",
+        "readOnly": false
+      }
+    ],
+    "native": {
+      "V": "<FEFF0050006100720065006E0074002D00630075007200720065006E0074>",
+      "DV": "(Parent-default)",
+      "flags": 0,
+      "widgetCount": 1,
+      "AP": [
+        true
+      ]
+    },
+    "compose": {
+      "pages": 1,
+      "fields": 2
+    }
+  },
+  {
+    "label": "combined root Parent",
+    "indirect": true,
+    "importFields": [
+      {
+        "name": "Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "Before",
+        "readOnly": false
+      }
+    ],
+    "reopenedFields": [
+      {
+        "name": "Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "After",
+        "readOnly": false
+      }
+    ],
+    "native": {
+      "V": "<FEFF0050006100720065006E0074002D00630075007200720065006E0074>",
+      "DV": "(Parent-default)",
+      "flags": 0,
+      "widgetCount": 1,
+      "AP": [
+        true
+      ]
+    },
+    "compose": {
+      "pages": 1,
+      "fields": 2
+    }
+  },
+  {
+    "label": "inherited text FT",
+    "indirect": false,
+    "importFields": [
+      {
+        "name": "Root.Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "Before",
+        "readOnly": false
+      }
+    ],
+    "reopenedFields": [
+      {
+        "name": "Root.Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "After",
+        "readOnly": false
+      }
+    ],
+    "native": {
+      "V": "<FEFF0050006100720065006E0074002D00630075007200720065006E0074>",
+      "DV": "(Parent-default)",
+      "flags": 0,
+      "widgetCount": 1,
+      "AP": [
+        true
+      ]
+    },
+    "compose": {
+      "pages": 1,
+      "fields": 2
+    }
+  },
+  {
+    "label": "inherited text FT",
+    "indirect": true,
+    "importFields": [
+      {
+        "name": "Root.Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "Before",
+        "readOnly": false
+      }
+    ],
+    "reopenedFields": [
+      {
+        "name": "Root.Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "After",
+        "readOnly": false
+      }
+    ],
+    "native": {
+      "V": "<FEFF0050006100720065006E0074002D00630075007200720065006E0074>",
+      "DV": "(Parent-default)",
+      "flags": 0,
+      "widgetCount": 1,
+      "AP": [
+        true
+      ]
+    },
+    "compose": {
+      "pages": 1,
+      "fields": 2
+    }
+  },
+  {
+    "label": "inherited text V",
+    "indirect": false,
+    "importFields": [
+      {
+        "name": "Root.Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "Before",
+        "readOnly": false
+      }
+    ],
+    "reopenedFields": [
+      {
+        "name": "Root.Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "After",
+        "readOnly": false
+      }
+    ],
+    "native": {
+      "V": "<FEFF0050006100720065006E0074002D00630075007200720065006E0074>",
+      "DV": "(Parent-default)",
+      "flags": 0,
+      "widgetCount": 1,
+      "AP": [
+        true
+      ]
+    },
+    "compose": {
+      "pages": 1,
+      "fields": 2
+    }
+  },
+  {
+    "label": "inherited text V",
+    "indirect": true,
+    "importFields": [
+      {
+        "name": "Root.Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "Before",
+        "readOnly": false
+      }
+    ],
+    "reopenedFields": [
+      {
+        "name": "Root.Shared",
+        "type": "text",
+        "value": "Parent-current",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "After",
+        "readOnly": false
+      }
+    ],
+    "native": {
+      "V": "<FEFF0050006100720065006E0074002D00630075007200720065006E0074>",
+      "DV": "(Parent-default)",
+      "flags": 0,
+      "widgetCount": 1,
+      "AP": [
+        true
+      ]
+    },
+    "compose": {
+      "pages": 1,
+      "fields": 2
+    }
+  },
+  {
+    "label": "inherited password Ff",
+    "indirect": false,
+    "importFields": [
+      {
+        "name": "Root.Shared",
+        "type": "opaque",
+        "value": "",
+        "readOnly": true,
+        "passiveReason": "密码字段"
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "Before",
+        "readOnly": false
+      }
+    ],
+    "reopenedFields": [
+      {
+        "name": "Root.Shared",
+        "type": "opaque",
+        "value": "",
+        "readOnly": true,
+        "passiveReason": "密码字段"
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "After",
+        "readOnly": false
+      }
+    ],
+    "native": {
+      "V": "<FEFF0050006100720065006E0074002D00630075007200720065006E0074>",
+      "DV": "(Parent-default)",
+      "flags": 8192,
+      "widgetCount": 1,
+      "AP": [
+        true
+      ]
+    },
+    "compose": {
+      "pages": 1,
+      "fields": 2
+    }
+  },
+  {
+    "label": "inherited password Ff",
+    "indirect": true,
+    "importFields": [
+      {
+        "name": "Root.Shared",
+        "type": "opaque",
+        "value": "",
+        "readOnly": true,
+        "passiveReason": "密码字段"
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "Before",
+        "readOnly": false
+      }
+    ],
+    "reopenedFields": [
+      {
+        "name": "Root.Shared",
+        "type": "opaque",
+        "value": "",
+        "readOnly": true,
+        "passiveReason": "密码字段"
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "After",
+        "readOnly": false
+      }
+    ],
+    "native": {
+      "V": "<FEFF0050006100720065006E0074002D00630075007200720065006E0074>",
+      "DV": "(Parent-default)",
+      "flags": 8192,
+      "widgetCount": 1,
+      "AP": [
+        true
+      ]
+    },
+    "compose": {
+      "pages": 1,
+      "fields": 2
+    }
+  },
+  {
+    "label": "inherited radio Ff",
+    "indirect": false,
+    "importFields": [
+      {
+        "name": "Root.Shared",
+        "type": "choice",
+        "value": "B",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "Before",
+        "readOnly": false
+      }
+    ],
+    "reopenedFields": [
+      {
+        "name": "Root.Shared",
+        "type": "choice",
+        "value": "B",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "After",
+        "readOnly": false
+      }
+    ],
+    "native": {
+      "V": "/1",
+      "DV": "/0",
+      "flags": 32768,
+      "widgetCount": 2,
+      "AP": [
+        true,
+        true
+      ]
+    },
+    "compose": {
+      "pages": 1,
+      "fields": 2
+    }
+  },
+  {
+    "label": "inherited radio Ff",
+    "indirect": true,
+    "importFields": [
+      {
+        "name": "Root.Shared",
+        "type": "choice",
+        "value": "B",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "Before",
+        "readOnly": false
+      }
+    ],
+    "reopenedFields": [
+      {
+        "name": "Root.Shared",
+        "type": "choice",
+        "value": "B",
+        "readOnly": false
+      },
+      {
+        "name": "Other",
+        "type": "text",
+        "value": "After",
+        "readOnly": false
+      }
+    ],
+    "native": {
+      "V": "/1",
+      "DV": "/0",
+      "flags": 32768,
+      "widgetCount": 2,
+      "AP": [
+        true,
+        true
+      ]
+    },
+    "compose": {
+      "pages": 1,
+      "fields": 2
+    }
+  },
+  {
+    "label": "empty Fields",
+    "indirect": false,
+    "result": {
+      "modelFields": 0,
+      "fields": 0
+    }
+  },
+  {
+    "label": "empty Fields",
+    "indirect": true,
+    "result": {
+      "modelFields": 0,
+      "fields": 0
+    }
+  },
+  {
+    "label": "empty AcroForm",
+    "indirect": false,
+    "result": {
+      "modelFields": 0,
+      "fields": 0
+    }
+  },
+  {
+    "label": "empty AcroForm",
+    "indirect": true,
+    "result": {
+      "modelFields": 0,
+      "fields": 0
+    }
+  }
+]

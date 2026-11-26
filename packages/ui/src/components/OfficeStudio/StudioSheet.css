@@ -416,6 +416,77 @@
   white-space: nowrap;
 }
 
+.zuvi-studio-sheet-text {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  pointer-events: none;
+  text-decoration: inherit;
+}
+.zuvi-studio-sheet-text-transform {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  transform-origin: 0 0;
+  text-decoration: inherit;
+}
+.zuvi-studio-sheet-text-transform > span {
+  position: absolute;
+  display: block;
+  white-space: pre;
+  padding: 0;
+  max-width: none;
+  overflow: visible;
+  text-decoration: inherit;
+}
+.zuvi-studio-sheet-text-dialog .zuvi-modal-body {
+  display: grid;
+  gap: 12px;
+}
+.zuvi-studio-sheet-text-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.zuvi-studio-sheet-text-controls > label {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+.zuvi-studio-sheet-text-controls .zuvi-select,
+.zuvi-studio-sheet-text-controls .zuvi-input {
+  width: 100%;
+}
+.zuvi-studio-sheet-text-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  grid-column: 1 / -1;
+}
+.zuvi-studio-sheet-text-help {
+  color: var(--zuvi-color-fg-muted);
+  font-size: 12px;
+  margin: 0;
+}
+.zuvi-studio-sheet-text-preview {
+  position: relative;
+  width: 240px;
+  height: 112px;
+  max-width: 100%;
+  border: 1px solid var(--zuvi-color-border);
+  margin-inline: auto;
+  overflow: hidden;
+}
+@media (max-width: 400px) {
+  .zuvi-studio-sheet-text-controls {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 .zuvi-studio-sheet-column-resize {
   position: absolute;
   top: 0;

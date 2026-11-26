@@ -22,7 +22,7 @@ export default defineConfig({
     trace: 'retain-on-failure',
   },
   webServer: {
-    command: `pnpm --filter @zuvi/docs dev --port ${port} --strictPort`,
+    command: `pnpm --filter @zuvi/docs dev --port ${port} --strictPort --force`,
     url: `http://localhost:${port}`,
     reuseExistingServer: !process.env.CI,
     timeout: 120000,

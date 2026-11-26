@@ -1,0 +1,92 @@
+{
+  "kind": "fresh-dist-spec-locator-failures",
+  "port": 5268,
+  "distEntry": "packages/ui/dist/StudioSheet-9utJ3SHo.js",
+  "observedResult": {
+    "failed": 2
+  },
+  "reasons": [
+    "Chromium serializes CSS height to fewer decimals than getBoundingClientRect: 59.3281px vs 59.328125px. The next check will compare numeric bounding geometry.",
+    "The protection entry lives on the Home ribbon. The test selected Data and waited for a hidden button. The next test uses the actual Home entry."
+  ],
+  "entries": [
+    {
+      "path": ".last-run.json",
+      "originalPath": "/tmp/zuvi-excel-text-playwright-results/.last-run.json",
+      "bytes": 145,
+      "sha256": "ebce1e5a43cd34894e23583a1b242a891fee67544744c62d1215295f3d024556"
+    },
+    {
+      "path": "office-studio-sheet-text-a-df2ac-opens-use-the-actual-editor-chromium/error-context.md.raw.gz",
+      "originalPath": "/tmp/zuvi-excel-text-playwright-results/office-studio-sheet-text-a-df2ac-opens-use-the-actual-editor-chromium/error-context.md",
+      "bytes": 3809,
+      "sha256": "e4f926a437b2c2337096682689ea4554692439de0aaafdec30bfe41bb2905cd0",
+      "uncompressedOriginal": {
+        "bytes": 12055,
+        "sha256": "5d3f1b6b58b19e5587611bf829cb678e1d72d2b6262a7042ab7ef212594b0739"
+      },
+      "normalizedView": {
+        "path": "office-studio-sheet-text-a-df2ac-opens-use-the-actual-editor-chromium/error-context.md",
+        "bytes": 12051,
+        "sha256": "4e8a1509c97c2e263ae01691320a52e600c5dbb503233f1bddd740dc07db353f",
+        "change": "Trailing spaces/tabs only; original bytes are preserved in the raw gzip archive."
+      }
+    },
+    {
+      "path": "office-studio-sheet-text-a-df2ac-opens-use-the-actual-editor-chromium/trace.zip",
+      "originalPath": "/tmp/zuvi-excel-text-playwright-results/office-studio-sheet-text-a-df2ac-opens-use-the-actual-editor-chromium/trace.zip",
+      "bytes": 8637535,
+      "sha256": "19192dae81074e85aa5db0d97d93aa5e6e435a6f386ed97ad72dcfbdfc6ab55f"
+    },
+    {
+      "path": "office-studio-sheet-text-t-0c2e6-tches-before-adding-history-chromium/error-context.md.raw.gz",
+      "originalPath": "/tmp/zuvi-excel-text-playwright-results/office-studio-sheet-text-t-0c2e6-tches-before-adding-history-chromium/error-context.md",
+      "bytes": 10997,
+      "sha256": "5e6bed8e77bb8e1f99158b7f5e499504abb7b3b0f164c5ffa7c619ea00d67941",
+      "uncompressedOriginal": {
+        "bytes": 50265,
+        "sha256": "7d10a4faad87eec7ee9051c95b49426226c5c7078f250cb5159a4188e6074cad"
+      },
+      "normalizedView": {
+        "path": "office-studio-sheet-text-t-0c2e6-tches-before-adding-history-chromium/error-context.md",
+        "bytes": 50263,
+        "sha256": "06a3ee94cbc2f671ff6b5e22354d6aed99598adab98ac9e5fb65c337c438092f",
+        "change": "Trailing spaces/tabs only; original bytes are preserved in the raw gzip archive."
+      }
+    },
+    {
+      "path": "office-studio-sheet-text-t-0c2e6-tches-before-adding-history-chromium/trace.zip",
+      "originalPath": "/tmp/zuvi-excel-text-playwright-results/office-studio-sheet-text-t-0c2e6-tches-before-adding-history-chromium/trace.zip",
+      "bytes": 5473497,
+      "sha256": "444198dd2c150bba36a240a80e770194e4cf9c09fadfa5e5bed38b43b16fe55f"
+    },
+    {
+      "path": "run.txt.raw.gz",
+      "originalPath": "/tmp/zuvi-excel-text-browser-second.txt",
+      "bytes": 1481,
+      "sha256": "0e0a82e0173b62e312747736745aa5695e3fc2301ac21675b89acd63119a508e",
+      "uncompressedOriginal": {
+        "bytes": 5705,
+        "sha256": "c063b25f5605b3d88458af93b990f3c910c43c0ad0ce231257019ba6fc068ddf"
+      },
+      "normalizedView": {
+        "path": "run.txt",
+        "bytes": 5701,
+        "sha256": "11b4f9f47f091145add838461e81ebe95949e3982d1fc64e88dfb479cdee0267",
+        "change": "Trailing spaces/tabs only; original bytes are preserved in the raw gzip archive."
+      }
+    },
+    {
+      "path": "text-source.xlsx",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/text-source.xlsx",
+      "bytes": 8209,
+      "sha256": "c17d2353bd29f19704c5cd5147ca933f165b2cc63a8cf2ae8cd11785c400ab6b"
+    },
+    {
+      "path": "office-studio-sheet-text.spec.ts",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-sheet-text.spec.ts",
+      "bytes": 21781,
+      "sha256": "b66881736671695b44cc4b5f08eff3cf7aa20c4d0057d3a02e8b00f8ff9ec788"
+    }
+  ]
+}

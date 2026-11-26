@@ -36,13 +36,14 @@ function compiledModule(url, resolve = require) {
     Error,
     crypto: webcrypto,
     DOMParser: dom.window.DOMParser,
+    XMLSerializer: dom.window.XMLSerializer,
   });
   return module.exports;
 }
 const studioModules = new Map();
 function resolveStudioModule(id) {
   const name =
-    /(?:^|\/)(studio-model|studio-word-images|studio-cell-style|studio-number-format|studio-sheet-(?:model|structure|rules|fill|hyperlinks|editing|arrays|painter))$/.exec(
+    /(?:^|\/)(studio-model|studio-word-images|studio-word-image-contract|studio-cell-style|studio-cell-font|studio-cell-format-core|studio-number-format|studio-sheet-(?:model|structure|rules|fill|hyperlinks|editing|arrays|painter|text-properties|text-layout|text-display))$/.exec(
       id
     )?.[1];
   if (!name) return require(id);
@@ -3312,7 +3313,10 @@ test('row point heights and manual hides survive source and independent XLSX exp
       await codec.exportStudioExcel(reset, output),
       '默认.xlsx'
     );
-    assert.deepEqual({ ...cleared.sheets[0].rowHeights }, {});
+    // Reset restores automatic sizing; the two explicit text lines retain a derived cache.
+    assert.deepEqual({ ...cleared.sheets[0].rowHeights }, { 3: 26.25 });
+    assert.equal(cleared.sheets[0].rowHeightModes['3'], 'auto');
+    assert.deepEqual({ ...reset.sheets[0].rowHeights }, {});
     assert.deepEqual([...cleared.sheets[0].hiddenRows], []);
   }
   const legacy = globalThis.structuredClone(inserted);
@@ -3431,4 +3435,968 @@ test('fixed and dynamic arrays save native formulas/caches, reopen, resize, clea
   document = await codec.importStudioExcel(source, 'Protected spill.xlsx');
   assert.deepEqual(Array.from(document.sheets[0].protectedRanges), ['F5:F5']);
   assert.equal(model.studioCalculate(document).errors.get(`${id}:E5`), '#SPILL!');
+});
+
+const textFixtureNamespace = 'http://schemas.openxmlformats.org/spreadsheetml/2006/main';
+
+async function textFixtureParts(source) {
+  const zip = await JSZip.loadAsync(await source.arrayBuffer());
+  const parse = (xml) => new dom.window.DOMParser().parseFromString(xml, 'application/xml');
+  const styles = parse(await zip.file('xl/styles.xml').async('string'));
+  const sheets = await Promise.all(
+    Object.keys(zip.files)
+      .filter((name) => /^xl\/worksheets\/sheet\d+\.xml$/.test(name))
+      .sort()
+      .map(async (name) => ({ name, xml: parse(await zip.file(name).async('string')) }))
+  );
+  const formats = () => styles.getElementsByTagNameNS(textFixtureNamespace, 'cellXfs')[0];
+  const cell = (address, sheet = 0) =>
+    Array.from(sheets[sheet].xml.getElementsByTagNameNS(textFixtureNamespace, 'c')).find(
+      (entry) => entry.getAttribute('r') === address
+    );
+  const row = (index, sheet = 0) =>
+    Array.from(sheets[sheet].xml.getElementsByTagNameNS(textFixtureNamespace, 'row')).find(
+      (entry) => entry.getAttribute('r') === String(index)
+    );
+  const format = (address, sheet = 0) =>
+    formats().children[Number(cell(address, sheet)?.getAttribute('s') ?? 0)];
+  const alignment = (address, sheet = 0) =>
+    Object.fromEntries(
+      Array.from(
+        format(address, sheet)?.getElementsByTagNameNS(textFixtureNamespace, 'alignment')[0]
+          ?.attributes ?? []
+      ).map((entry) => [entry.name, entry.value])
+    );
+  const fontSize = (address, sheet = 0) => {
+    const font = styles.getElementsByTagNameNS(textFixtureNamespace, 'fonts')[0].children[
+      Number(format(address, sheet).getAttribute('fontId') ?? 0)
+    ];
+    return Number(font.getElementsByTagNameNS(textFixtureNamespace, 'sz')[0].getAttribute('val'));
+  };
+  const patchAlignment = (address, attrs, sheet = 0) => {
+    const cloned = format(address, sheet).cloneNode(true);
+    let node = cloned.getElementsByTagNameNS(textFixtureNamespace, 'alignment')[0];
+    if (!node) {
+      node = styles.createElementNS(textFixtureNamespace, 'alignment');
+      cloned.appendChild(node);
+    }
+    for (const [key, value] of Object.entries(attrs)) {
+      if (value === null) node.removeAttribute(key);
+      else node.setAttribute(key, String(value));
+    }
+    cloned.setAttribute('applyAlignment', '1');
+    cell(address, sheet).setAttribute('s', String(formats().children.length));
+    formats().appendChild(cloned);
+    formats().setAttribute('count', String(formats().children.length));
+  };
+  const save = async () => {
+    const serializer = new dom.window.XMLSerializer();
+    zip.file('xl/styles.xml', serializer.serializeToString(styles));
+    for (const sheet of sheets) zip.file(sheet.name, serializer.serializeToString(sheet.xml));
+    return new Blob([await zip.generateAsync({ type: 'uint8array' })]);
+  };
+  return { zip, styles, sheets, cell, row, format, alignment, fontSize, patchAlignment, save };
+}
+
+async function nativeTextFixture() {
+  const workbook = new ExcelJS.Workbook();
+  const alignment = workbook.addWorksheet('Alignment');
+  const fit = workbook.addWorksheet('Fit');
+  const put = (sheet, address, value, style = {}, size = 14) => {
+    const cell = sheet.getCell(address);
+    cell.value = value;
+    cell.font = { name: 'Calibri', size };
+    cell.alignment = { ...style };
+    return cell;
+  };
+  const general = { horizontal: 'general' };
+  put(alignment, 'A1', 42, general);
+  put(alignment, 'B1', '0042', general).numFmt = '0.00';
+  put(alignment, 'C1', true, general);
+  put(alignment, 'D1', { error: '#DIV/0!' }, general);
+  put(alignment, 'E1', { formula: 'A1*2', result: 84 }, general);
+  put(alignment, 'F1', 17, general).numFmt = '@';
+  put(alignment, 'G1', { formula: 'TRUE()', result: true }, general);
+  put(alignment, 'H1', { formula: '1/0', result: { error: '#DIV/0!' } }, general);
+  put(alignment, 'A2', 'ordinary text', general);
+  for (const address of ['A3', 'B3', 'C3', 'A4', 'B4', 'C4'])
+    put(alignment, address, null, { horizontal: 'centerContinuous' });
+  alignment.getCell('A3').value = 'Across three empty cells';
+  alignment.getCell('A4').value = 'Before blocker';
+  alignment.getCell('C4').value = 'BLOCK';
+  put(alignment, 'A5', 'distributed', { horizontal: 'distributed' });
+  put(alignment, 'B5', 'justify text', { horizontal: 'justify' });
+  put(alignment, 'C5', 'fill', { horizontal: 'fill' });
+  put(alignment, 'A6', 'left indent', { horizontal: 'left', indent: 2 });
+  put(alignment, 'B6', 'right indent', { horizontal: 'right', indent: 3 });
+  put(alignment, 'C6', 'explicit zero', { horizontal: 'left', indent: 0 });
+  for (const [address, rotation] of [
+    ['D6', 45],
+    ['E6', -45],
+    ['F6', 90],
+    ['G6', -90],
+    ['H6', 'vertical'],
+  ])
+    put(alignment, address, `Rotation ${rotation}`, { textRotation: rotation });
+  for (const [address, vertical] of [
+    ['A7', 'top'],
+    ['B7', 'middle'],
+    ['C7', 'bottom'],
+    ['D7', 'justify'],
+    ['E7', 'distributed'],
+  ])
+    put(alignment, address, `Vertical ${vertical}`, { vertical });
+  put(alignment, 'A8', 'array text');
+  put(alignment, 'B8', 2);
+  put(alignment, 'A9', 'array-only first\narray-only second');
+  put(alignment, 'B9', 4);
+  put(
+    fit,
+    'A1',
+    'Long shrink text keeps the original twenty point font.',
+    { shrinkToFit: true },
+    20
+  );
+  put(
+    fit,
+    'B1',
+    'Wrap and shrink are both native true.',
+    { shrinkToFit: true, wrapText: true },
+    20
+  );
+  put(fit, 'A2', 'Automatic height', { wrapText: true });
+  fit.getRow(2).height = 44.5;
+  put(fit, 'A3', 'Fixed height', { wrapText: true });
+  fit.getRow(3).height = 30.75;
+  put(fit, 'A4', 'Hidden height');
+  fit.getRow(4).height = 22;
+  fit.getRow(4).hidden = true;
+  put(fit, 'A5', 'Horizontal merged text', { wrapText: true });
+  fit.mergeCells('A5:C5');
+  put(fit, 'A6', 'Multirow merged text', { wrapText: true });
+  fit.mergeCells('A6:B7');
+  put(fit, 'D1', { formula: 'Alignment!E1', result: 84 });
+  // The same shareType/ref protocol already exercised by the array E2E; no synthetic metadata.
+  put(
+    fit,
+    'F8',
+    { formula: 'Alignment!A8:B9', shareType: 'array', ref: 'F8:G9', result: 'array text' },
+    { wrapText: true }
+  );
+  put(fit, 'G8', 2, { wrapText: true }, 24);
+  put(fit, 'G9', 4);
+  const parts = await textFixtureParts(await asBlob(workbook));
+  parts.patchAlignment('C6', { indent: '0' });
+  parts.patchAlignment('A1', { wrapText: '0', shrinkToFit: '1' }, 1);
+  parts.patchAlignment('B1', { wrapText: '1', shrinkToFit: '1' }, 1);
+  parts.row(2, 1).setAttribute('customHeight', '0');
+  return parts.save();
+}
+
+test('native text alignment, rotation, shrink and row-mode identities survive source and standalone XLSX reopen cycles', async () => {
+  const source = await nativeTextFixture();
+  const imported = await codec.importStudioExcel(source, 'Alignment and fit.xlsx');
+  const original = imported.sheets[0];
+  assert.equal(original.cells.A3.align, 'centerContinuous');
+  assert.equal(original.cells.A5.align, 'distributed');
+  assert.equal(original.cells.B5.align, 'justify');
+  assert.equal(original.cells.C5.align, 'fill');
+  assert.equal(original.cells.A6.indent, 2);
+  assert.equal(original.cells.B6.indent, 3);
+  assert.equal(original.cells.C6.indent, 0);
+  for (const [address, expected] of [
+    ['D6', 45],
+    ['E6', -45],
+    ['F6', 90],
+    ['G6', -90],
+    ['H6', 'vertical'],
+  ])
+    assert.equal(original.cells[address].textRotation, expected);
+  for (const [address, expected] of [
+    ['A7', 'top'],
+    ['B7', 'middle'],
+    ['C7', 'bottom'],
+    ['D7', 'justify'],
+    ['E7', 'distributed'],
+  ])
+    assert.equal(original.cells[address].verticalAlign, expected);
+  assert.equal(imported.sheets[1].cells.A1.shrinkToFit, true);
+  assert.equal(imported.sheets[1].cells.A1.wrap, false);
+  assert.equal(imported.sheets[1].cells.B1.shrinkToFit, true);
+  assert.equal(imported.sheets[1].cells.B1.wrap, true);
+  assert.equal(imported.sheets[1].rowHeightModes['2'], 'auto');
+  assert.equal(imported.sheets[1].rowHeightModes['3'], 'fixed');
+  assert.equal(imported.sheets[1].cells.F9, undefined);
+  assert.equal(imported.sheets[1].cells.G8.input, '');
+  assert.equal(imported.sheets[1].cells.G8.fontSize, 24);
+  assert.equal(
+    model.studioCalculate(imported).read(imported.sheets[1].id, 'F9').value,
+    'array-only first\narray-only second'
+  );
+  const edited = model.studioPatchCells(imported, original.id, { A1: { input: '43' } });
+  for (const useSource of [true, false]) {
+    let current = edited,
+      currentSource = source;
+    for (let pass = 0; pass < 2; pass++) {
+      const output = await codec.exportStudioExcel(current, useSource ? currentSource : undefined);
+      const parts = await textFixtureParts(output);
+      assert.equal(parts.alignment('A3').horizontal, 'centerContinuous');
+      assert.equal(parts.alignment('A5').horizontal, 'distributed');
+      assert.equal(parts.alignment('B5').horizontal, 'justify');
+      assert.equal(parts.alignment('C5').horizontal, 'fill');
+      assert.equal(parts.alignment('C6').indent, '0');
+      for (const [address, expected] of [
+        ['D6', '45'],
+        ['E6', '135'],
+        ['F6', '90'],
+        ['G6', '180'],
+        ['H6', '255'],
+      ])
+        assert.equal(parts.alignment(address).textRotation, expected);
+      assert.equal(parts.alignment('D7').vertical, 'justify');
+      assert.equal(parts.alignment('E7').vertical, 'distributed');
+      assert.equal(parts.alignment('A1', 1).shrinkToFit, '1');
+      assert.equal(parts.alignment('A1', 1).wrapText, '0');
+      assert.equal(parts.alignment('B1', 1).shrinkToFit, '1');
+      assert.equal(parts.alignment('B1', 1).wrapText, '1');
+      assert.equal(parts.fontSize('A1', 1), 20);
+      assert.equal(parts.fontSize('B1', 1), 20);
+      assert.equal(parts.row(2, 1).getAttribute('ht'), '33');
+      assert.equal(parts.row(2, 1).getAttribute('customHeight'), '0');
+      assert.equal(parts.row(3, 1).getAttribute('ht'), '30.75');
+      assert.equal(parts.row(3, 1).getAttribute('customHeight'), '1');
+      assert.equal(parts.row(4, 1).getAttribute('hidden'), '1');
+      const native = await readWorkbook(output);
+      const values = native.getWorksheet('Alignment');
+      assert.equal(values.getCell('A1').value, 43);
+      assert.equal(values.getCell('B1').value, '0042');
+      assert.equal(values.getCell('B1').numFmt, '0.00');
+      assert.equal(values.getCell('C1').value, true);
+      assert.deepEqual(values.getCell('D1').value, { error: '#DIV/0!' });
+      assert.equal(values.getCell('E1').formula, 'A1*2');
+      assert.equal(values.getCell('E1').result, 86);
+      assert.equal(values.getCell('F1').value, 17);
+      assert.equal(values.getCell('F1').numFmt, '@');
+      assert.equal(native.getWorksheet('Fit').getCell('D1').result, 86);
+      assert.deepEqual(Array.from(native.getWorksheet('Fit').model.merges), ['A5:C5', 'A6:B7']);
+      assert.equal(
+        native.getWorksheet('Fit').getCell('F9').value,
+        'array-only first\narray-only second'
+      );
+      current = await codec.importStudioExcel(output, 'Reopened text.xlsx');
+      assert.equal(current.sheets[0].cells.E6.textRotation, -45);
+      assert.equal(current.sheets[1].rowHeightModes['2'], 'auto');
+      assert.equal(current.sheets[1].rowHeightModes['3'], 'fixed');
+      currentSource = output;
+    }
+  }
+});
+
+test('explicit general, zero, false and an empty row-mode map clear source text and custom-height attributes', async () => {
+  const source = await nativeTextFixture();
+  const imported = await codec.importStudioExcel(source, 'Clear text.xlsx');
+  let cleared = model.studioPatchCells(imported, imported.sheets[0].id, {
+    A5: { align: 'general' },
+    A6: { indent: 0 },
+    E6: { textRotation: 0 },
+    H6: { textRotation: 0 },
+  });
+  cleared = model.studioPatchCells(cleared, imported.sheets[1].id, {
+    A1: { shrinkToFit: false, wrap: false },
+    B1: { shrinkToFit: false, wrap: false },
+  });
+  cleared = {
+    ...cleared,
+    sheets: cleared.sheets.map((sheet) =>
+      sheet.id === imported.sheets[1].id ? { ...sheet, rowHeightModes: {} } : sheet
+    ),
+  };
+  for (const useSource of [true, false]) {
+    let document = cleared,
+      previous = source;
+    for (let pass = 0; pass < 2; pass++) {
+      const output = await codec.exportStudioExcel(document, useSource ? previous : undefined);
+      const parts = await textFixtureParts(output);
+      assert.equal(parts.alignment('A5').horizontal, undefined);
+      assert.equal(parts.alignment('A6').indent, '0');
+      assert.equal(parts.alignment('E6').textRotation, '0');
+      assert.equal(parts.alignment('H6').textRotation, '0');
+      for (const address of ['A1', 'B1']) {
+        assert.equal(parts.alignment(address, 1).wrapText, '0');
+        assert.equal(parts.alignment(address, 1).shrinkToFit, '0');
+        assert.equal(parts.fontSize(address, 1), 20);
+      }
+      assert.equal(parts.row(2, 1).getAttribute('customHeight'), '0');
+      assert.equal(parts.row(3, 1).getAttribute('customHeight'), '0');
+      document = await codec.importStudioExcel(output, 'Cleared reopen.xlsx');
+      assert.equal(document.sheets[0].cells.A6.indent, 0);
+      assert.equal(document.sheets[0].cells.E6.textRotation, 0);
+      assert.equal(document.sheets[1].cells.A1.shrinkToFit, false);
+      assert.equal(document.sheets[1].rowHeightModes['3'], 'auto');
+      previous = output;
+    }
+  }
+});
+
+test('native text row/column inheritance, explicit default styles and legacy hydration map through row and column edits', async () => {
+  const workbook = new ExcelJS.Workbook();
+  const sheet = workbook.addWorksheet('Inherited text');
+  sheet.addRows([['one', 'column', 'ordinary'], ['two', 'row', 'default'], ['hidden']]);
+  sheet.getRow(2).alignment = { horizontal: 'right', indent: 3, textRotation: -45 };
+  sheet.getColumn(2).alignment = { horizontal: 'distributed', wrapText: true };
+  sheet.getRow(1).height = 44.5;
+  sheet.getRow(2).height = 30.75;
+  sheet.getRow(3).height = 0;
+  const parts = await textFixtureParts(await asBlob(workbook));
+  parts.row(1).setAttribute('customHeight', '0');
+  parts.row(2).setAttribute('customHeight', '1');
+  parts.row(3).setAttribute('ht', '0');
+  parts.cell('A2').removeAttribute('s');
+  parts.cell('B1').removeAttribute('s');
+  parts.cell('C2').setAttribute('s', '0');
+  // Legal source-only attrs remain distinct even if ExcelJS coalesces their column definitions.
+  parts.patchAlignment('A1', { readingOrder: '2', justifyLastLine: '1' });
+  const source = await parts.save();
+  const imported = await codec.importStudioExcel(source, 'Inherited text.xlsx');
+  assert.equal(imported.sheets[0].cells.A2.align, 'right');
+  assert.equal(imported.sheets[0].cells.A2.indent, 3);
+  assert.equal(imported.sheets[0].cells.A2.textRotation, -45);
+  assert.equal(imported.sheets[0].cells.B1.align, 'distributed');
+  assert.equal(imported.sheets[0].cells.C2.align ?? 'general', 'general');
+  let inserted = structure.studioChangeSheetStructure(imported, imported.sheets[0].id, {
+    axis: 'row',
+    type: 'insert',
+    index: 2,
+    count: 1,
+  });
+  inserted = structure.studioChangeSheetStructure(inserted, imported.sheets[0].id, {
+    axis: 'column',
+    type: 'insert',
+    index: 1,
+    count: 1,
+  });
+  const legacy = globalThis.structuredClone(inserted);
+  for (const field of ['defaultRowHeight', 'rowHeights', 'rowHeightModes', 'hiddenRows'])
+    delete legacy.sheets[0][field];
+  for (const field of ['indent', 'textRotation', 'align']) delete legacy.sheets[0].cells.B3[field];
+  const hydrated = await codec.hydrateStudioExcelHyperlinks(legacy, source);
+  assert.equal(hydrated.sheets[0].cells.B3.textRotation, -45);
+  assert.equal(hydrated.sheets[0].cells.B3.indent, 3);
+  assert.equal(hydrated.sheets[0].rowHeights['1'], 44.5);
+  assert.equal(hydrated.sheets[0].rowHeightModes['1'], 'auto');
+  assert.equal(hydrated.sheets[0].rowHeightModes['3'], 'fixed');
+  assert.deepEqual(Array.from(hydrated.sheets[0].hiddenRows), [4]);
+  assert.equal(legacy.sheets[0].cells.B3.textRotation, undefined);
+  let document = hydrated,
+    previous = source;
+  for (let pass = 0; pass < 2; pass++) {
+    const output = await codec.exportStudioExcel(document, previous);
+    const raw = await textFixtureParts(output);
+    assert.equal(raw.row(1).getAttribute('customHeight'), '0');
+    assert.equal(raw.row(3).getAttribute('customHeight'), '1');
+    assert.equal(raw.alignment('B3').textRotation, '135');
+    assert.equal(raw.alignment('B3').indent, '3');
+    assert.equal(raw.alignment('B1').readingOrder, '2');
+    assert.equal(raw.alignment('B1').justifyLastLine, '1');
+    document = await codec.importStudioExcel(output, 'Inherited reopen.xlsx');
+    assert.equal(document.sheets[0].cells.D3.align ?? 'general', 'general');
+    previous = output;
+  }
+  const conservative = globalThis.structuredClone(imported);
+  delete conservative.sheets[0].rowHeightModes;
+  const legacyFixed = await codec.hydrateStudioExcelHyperlinks(conservative, source);
+  assert.equal(legacyFixed.sheets[0].rowHeightModes['1'], 'fixed');
+  const authoritative = {
+    ...imported,
+    sheets: imported.sheets.map((sheet) => ({ ...sheet, rowHeightModes: {} })),
+  };
+  assert.equal(
+    await codec.hydrateStudioExcelHyperlinks(authoritative, new Blob(['no source read'])),
+    authoritative
+  );
+  const allAuto = await textFixtureParts(await codec.exportStudioExcel(authoritative, source));
+  assert.equal(allAuto.row(2).getAttribute('customHeight'), '0');
+});
+
+test('native text field preflight rejects invalid alignment/angle/Boolean/row modes before ExcelJS and leaves source unchanged', async () => {
+  const source = await nativeTextFixture();
+  const document = await codec.importStudioExcel(source, 'Valid text.xlsx');
+  const original = Buffer.from(await source.arrayBuffer());
+  const invalid = [];
+  for (const attrs of [
+    { horizontal: 'unknown' },
+    { vertical: 'middle' },
+    { indent: '-1' },
+    { indent: '251' },
+    { indent: '1.5' },
+    { textRotation: '-45' },
+    { textRotation: '181' },
+    { textRotation: '254' },
+    { textRotation: '45.5' },
+    { wrapText: 'yes' },
+    { shrinkToFit: '2' },
+    { justifyLastLine: 'yes' },
+    { readingOrder: '3' },
+    { relativeIndent: '1.5' },
+  ]) {
+    const parts = await textFixtureParts(source);
+    parts.patchAlignment('E6', attrs);
+    invalid.push(await parts.save());
+  }
+  for (const [field, value] of [
+    ['customHeight', 'yes'],
+    ['hidden', '2'],
+    ['ht', '409.6'],
+    ['ht', '0x2A'],
+  ]) {
+    const parts = await textFixtureParts(source);
+    parts.row(2, 1).setAttribute(field, value);
+    invalid.push(await parts.save());
+  }
+  const xlsxPrototype = Object.getPrototypeOf(new ExcelJS.Workbook().xlsx);
+  const load = xlsxPrototype.load;
+  let allocated = 0;
+  xlsxPrototype.load = function () {
+    allocated++;
+    throw new Error('ExcelJS allocation must follow raw preflight.');
+  };
+  try {
+    for (const variant of invalid) {
+      await assert.rejects(
+        codec.importStudioExcel(variant, 'Invalid text.xlsx'),
+        /对齐|缩进|旋转|行高|适配/
+      );
+      await assert.rejects(codec.exportStudioExcel(document, variant), /对齐|缩进|旋转|行高|适配/);
+    }
+    assert.equal(allocated, 0);
+    for (const patch of [{ indent: 251 }, { textRotation: 91 }, { shrinkToFit: 'true' }]) {
+      const bad = {
+        ...document,
+        sheets: document.sheets.map((sheet, index) =>
+          index
+            ? sheet
+            : {
+                ...sheet,
+                cells: { ...sheet.cells, A1: { ...sheet.cells.A1, ...patch } },
+              }
+        ),
+      };
+      await assert.rejects(codec.exportStudioExcel(bad, source), /无效|缩进|旋转|适配/);
+    }
+    assert.equal(allocated, 0);
+  } finally {
+    xlsxPrototype.load = load;
+  }
+  assert.deepEqual(Buffer.from(await source.arrayBuffer()), original);
+  assert.equal(
+    (await codec.importStudioExcel(source, 'Still valid.xlsx')).sheets[0].cells.E6.textRotation,
+    -45
+  );
+});
+
+async function nativeDefaultFontFixture() {
+  const workbook = new ExcelJS.Workbook();
+  workbook
+    .addWorksheet('Default font')
+    .addRows([['Different cellXF0 font'], ['Themed font0'], ['ordinary']]);
+  const parts = await textFixtureParts(await asBlob(workbook));
+  const namespace = textFixtureNamespace;
+  const fonts = parts.styles.getElementsByTagNameNS(namespace, 'fonts')[0];
+  const literal = fonts.children[0].cloneNode(true);
+  literal.getElementsByTagNameNS(namespace, 'name')[0].setAttribute('val', 'Courier New');
+  literal.getElementsByTagNameNS(namespace, 'sz')[0].setAttribute('val', '16');
+  literal.getElementsByTagNameNS(namespace, 'scheme')[0]?.remove();
+  const font = new dom.window.DOMParser().parseFromString(
+    `<font xmlns="${namespace}"><b/><i/><sz val="9.5"/><name val="+mn-lt"/><scheme val="minor"/><color theme="1" tint="0.125"/><family val="2"/><charset val="204"/><outline val="0"/><shadow val="1"/></font>`,
+    'application/xml'
+  ).documentElement;
+  fonts.replaceChild(parts.styles.importNode(font, true), fonts.children[0]);
+  fonts.appendChild(literal);
+  fonts.setAttribute('count', '2');
+  const formats = parts.styles.getElementsByTagNameNS(namespace, 'cellXfs')[0];
+  formats.children[0].setAttribute('fontId', '1');
+  const own = formats.children[0].cloneNode(true);
+  own.setAttribute('fontId', '0');
+  own.setAttribute('applyFont', '1');
+  formats.appendChild(own);
+  formats.setAttribute('count', String(formats.children.length));
+  parts.cell('A1').setAttribute('s', '0');
+  parts.cell('A2').setAttribute('s', String(formats.children.length - 1));
+  const drawingNamespace = 'http://schemas.openxmlformats.org/drawingml/2006/main';
+  const theme = new dom.window.DOMParser().parseFromString(
+    await parts.zip.file('xl/theme/theme1.xml').async('string'),
+    'application/xml'
+  );
+  const scheme = theme.getElementsByTagNameNS(drawingNamespace, 'fontScheme')[0];
+  scheme.setAttribute('name', 'ZUVI native default-font fixture');
+  scheme
+    .getElementsByTagNameNS(drawingNamespace, 'minorFont')[0]
+    .getElementsByTagNameNS(drawingNamespace, 'latin')[0]
+    .setAttribute('typeface', 'Arial');
+  scheme
+    .getElementsByTagNameNS(drawingNamespace, 'majorFont')[0]
+    .getElementsByTagNameNS(drawingNamespace, 'latin')[0]
+    .setAttribute('typeface', 'Georgia');
+  const serialize = (node) => new dom.window.XMLSerializer().serializeToString(node);
+  const themePart = 'xl/theme/custom-text-font0.xml';
+  const themeXml = serialize(theme);
+  parts.zip.file(themePart, themeXml);
+  const relationships = new dom.window.DOMParser().parseFromString(
+    await parts.zip.file('xl/_rels/workbook.xml.rels').async('string'),
+    'application/xml'
+  );
+  const relationship = Array.from(relationships.getElementsByTagName('Relationship')).find((node) =>
+    node.getAttribute('Type').endsWith('/theme')
+  );
+  relationship.setAttribute('Target', 'theme/custom-text-font0.xml');
+  parts.zip.file('xl/_rels/workbook.xml.rels', serialize(relationships));
+  const content = new dom.window.DOMParser().parseFromString(
+    await parts.zip.file('[Content_Types].xml').async('string'),
+    'application/xml'
+  );
+  const override = content.createElementNS(content.documentElement.namespaceURI, 'Override');
+  override.setAttribute('PartName', `/${themePart}`);
+  override.setAttribute('ContentType', 'application/vnd.openxmlformats-officedocument.theme+xml');
+  content.documentElement.appendChild(override);
+  parts.zip.file('[Content_Types].xml', serialize(content));
+  return {
+    source: await parts.save(),
+    themePart,
+    themeXml,
+    rawFont0: serialize(fonts.children[0]),
+  };
+}
+
+test('actual file preparation restores native font0 and legacy row modes before editing or previewing an otherwise complete workbook', async () => {
+  const prepare = compiledModule(
+    new URL('../src/pages/collaboration/office-studio/studio-prepare.ts', import.meta.url),
+    (id) => (id === './studio-excel-codec' ? codec : resolveStudioModule(id))
+  ).prepareStudioFile;
+  const fixture = await nativeDefaultFontFixture(),
+    imported = await codec.importStudioExcel(fixture.source, 'Native preparation.xlsx');
+  const expected = { family: 'Arial', sizePt: 9.5, bold: true, italic: true };
+  for (const missing of ['defaultFont', 'rowHeightModes', 'both']) {
+    const legacy = globalThis.structuredClone(imported);
+    if (missing !== 'rowHeightModes') delete legacy.defaultFont;
+    if (missing !== 'defaultFont') {
+      legacy.sheets[0].rowHeights = { 2: 44.5 };
+      delete legacy.sheets[0].rowHeightModes;
+    }
+    const before = JSON.stringify(legacy);
+    const file = {
+      id: legacy.id,
+      document: legacy,
+      source: fixture.source,
+      revision: 3,
+      savedAt: 0,
+    };
+    const restored = await prepare(file);
+    assert.deepEqual({ ...restored.defaultFont }, expected);
+    assert.deepEqual([...restored.sheets[0].hyperlinks], []);
+    if (missing !== 'defaultFont') {
+      assert.equal(restored.sheets[0].rowHeights['2'], 44.5);
+      assert.equal(restored.sheets[0].rowHeightModes['2'], 'fixed');
+    }
+    assert.equal(JSON.stringify(legacy), before);
+    assert.equal(
+      await prepare({ ...file, document: restored, source: new Blob(['no parsing needed']) }),
+      restored
+    );
+    let document = restored,
+      source = fixture.source;
+    for (let round = 1; round <= 2; round++) {
+      const output = await codec.exportStudioExcel(document, source),
+        parts = await textFixtureParts(output);
+      assert.equal(await parts.zip.file(fixture.themePart).async('string'), fixture.themeXml);
+      document = await codec.importStudioExcel(output, `Prepared reopen ${round}.xlsx`);
+      assert.deepEqual({ ...document.defaultFont }, expected);
+      if (missing !== 'defaultFont') assert.equal(document.sheets[0].rowHeightModes['2'], 'fixed');
+      source = output;
+    }
+  }
+});
+
+test('export refreshes automatic height caches after text or font edits without changing the editor snapshot or fixed rows', async () => {
+  const long = 'Long wrapped content that needs several lines';
+  for (const [label, initial, initialSize, final, finalSize, mode, expected] of [
+    ['grow-auto', 'Short', 11, long, 24, 'auto', 276.75],
+    ['shrink-auto', long, 24, 'Short', 11, 'auto', 18],
+    ['fixed', 'Short', 11, long, 24, 'fixed', 18],
+  ]) {
+    let document = {
+      version: 1,
+      id: label,
+      name: `${label}.xlsx`,
+      kind: 'excel',
+      activeSheetId: 'local',
+      defaultFont: { family: 'Arial', sizePt: 11, bold: false, italic: false },
+      sheets: [
+        {
+          id: 'local',
+          name: 'Cache',
+          rowCount: 1,
+          columnCount: 1,
+          defaultRowHeight: 18,
+          rowHeightModes: { 1: mode },
+          rowHeights: { 1: 18 },
+          columnWidths: { A: 100 },
+          cells: { A1: { input: initial, fontSize: initialSize, wrap: true } },
+        },
+      ],
+    };
+    const initialJson = JSON.stringify(document);
+    let source = await codec.exportStudioExcel(document);
+    assert.equal(JSON.stringify(document), initialJson);
+    document = await codec.importStudioExcel(source, `${label}.xlsx`);
+    document = model.studioPatchCells(document, document.sheets[0].id, {
+      A1: { input: final, fontSize: finalSize },
+    });
+    for (let round = 1; round <= 2; round++) {
+      const before = JSON.stringify(document),
+        original = Buffer.from(await source.arrayBuffer());
+      const output = await codec.exportStudioExcel(document, source),
+        parts = await textFixtureParts(output);
+      assert.equal(Number(parts.row(1).getAttribute('ht')), expected);
+      assert.equal(parts.row(1).getAttribute('customHeight'), mode === 'fixed' ? '1' : '0');
+      assert.equal(JSON.stringify(document), before);
+      assert.deepEqual(Buffer.from(await source.arrayBuffer()), original);
+      const independent = await readWorkbook(output),
+        row = independent.getWorksheet('Cache').getRow(1);
+      assert.equal(row.height, expected);
+      assert.equal(row.getCell(1).value, final);
+      assert.equal(row.getCell(1).font.size, finalSize);
+      document = await codec.importStudioExcel(output, `Cache reopen ${round}.xlsx`);
+      assert.equal(document.sheets[0].rowHeights['1'], expected);
+      assert.equal(document.sheets[0].rowHeightModes['1'], mode);
+      source = output;
+    }
+  }
+});
+
+test('automatic export caches use centered spans, cross-sheet array results, cleared content and protection without storing spill cells', async () => {
+  const long = 'Long wrapped content that needs several lines';
+  let document = {
+    version: 1,
+    id: 'derived-values',
+    name: 'Derived.xlsx',
+    kind: 'excel',
+    activeSheetId: 'main',
+    defaultFont: { family: 'Arial', sizePt: 11, bold: false, italic: false },
+    sheets: [
+      {
+        id: 'main',
+        name: 'Main',
+        rowCount: 3,
+        columnCount: 3,
+        defaultRowHeight: 18,
+        columnWidths: { A: 100, B: 100, C: 100 },
+        rowHeights: { 1: 18, 2: 18, 3: 18 },
+        rowHeightModes: { 1: 'auto', 2: 'auto', 3: 'fixed' },
+        protectedRanges: ['A1:C1', 'A3:C3'],
+        cells: {
+          A1: { input: 'LongHeading', fontSize: 24, align: 'centerContinuous', shrinkToFit: true },
+          B1: { input: '', align: 'centerContinuous' },
+          C1: { input: '', align: 'centerContinuous' },
+          A2: {
+            input: '=Inputs!A1',
+            array: { type: 'fixed', range: 'A2:C2' },
+            fontSize: 24,
+            wrap: true,
+          },
+          B2: { input: '', fontSize: 24, wrap: true },
+          C2: { input: '', fontSize: 24, wrap: true },
+          A3: { input: long, fontSize: 24, wrap: true },
+        },
+      },
+      {
+        id: 'inputs',
+        name: 'Inputs',
+        rowCount: 1,
+        columnCount: 1,
+        cells: { A1: { input: 'Short' } },
+      },
+    ],
+  };
+  let source = await codec.exportStudioExcel(document);
+  document = await codec.importStudioExcel(source, 'Derived.xlsx');
+  const mainId = document.sheets[0].id,
+    inputsId = document.sheets[1].id;
+  document = model.studioPatchCells(document, inputsId, { A1: { input: long } });
+  for (let round = 1; round <= 2; round++) {
+    const snapshot = JSON.stringify(document),
+      output = await codec.exportStudioExcel(document, source);
+    assert.equal(JSON.stringify(document), snapshot);
+    const parts = await textFixtureParts(output),
+      native = (await readWorkbook(output)).getWorksheet('Main');
+    assert.equal(Number(parts.row(1).getAttribute('ht')), 28.5);
+    assert.equal(Number(parts.row(2).getAttribute('ht')), 276.75);
+    assert.equal(native.getRow(3).height, 18);
+    assert.equal(native.getCell('A2').result, long);
+    assert.equal(parts.row(2).getAttribute('customHeight'), '0');
+    document = await codec.importStudioExcel(output, `Derived ${round}.xlsx`);
+    assert.equal(document.sheets[0].cells.A2.array.range, 'A2:C2');
+    assert.equal(document.sheets[0].cells.B2.input, '');
+    source = output;
+  }
+  const cleared = model.studioPatchCells(document, inputsId, { A1: { input: '' } });
+  const after = await codec.importStudioExcel(
+    await codec.exportStudioExcel(cleared, source),
+    'Cleared.xlsx'
+  );
+  assert.equal(after.sheets.find((sheet) => sheet.id === mainId).rowHeights['2'], 28.5);
+  assert.equal(after.sheets.find((sheet) => sheet.id === mainId).rowHeightModes['2'], 'auto');
+});
+
+test('automatic native height caches follow the sole visible row of a hidden logical merge master', async () => {
+  for (const [merge, hiddenRows, hiddenColumns, target] of [
+    ['A1:C1', [], ['A'], 1],
+    ['A1:C2', [1], [], 2],
+    ['A1:C2', [1], ['A'], 2],
+  ]) {
+    let document = {
+      version: 1,
+      id: 'hidden-cache',
+      name: 'Hidden-cache.xlsx',
+      kind: 'excel',
+      activeSheetId: 's',
+      defaultFont: { family: 'Arial', sizePt: 11, bold: false, italic: false },
+      sheets: [
+        {
+          id: 's',
+          name: 'Hidden',
+          rowCount: 3,
+          columnCount: 4,
+          defaultRowHeight: 18,
+          columnWidths: { A: 100, B: 100, C: 100, D: 100 },
+          hiddenRows,
+          hiddenColumns,
+          rowHeightModes: {},
+          rowHeights: {},
+          merges: [merge],
+          cells: { A1: { input: 'Merged', fontSize: 24, wrap: true }, D3: { input: 'Control' } },
+        },
+      ],
+    };
+    let source;
+    for (let round = 1; round <= 2; round++) {
+      const before = JSON.stringify(document),
+        output = await codec.exportStudioExcel(document, source);
+      assert.equal(JSON.stringify(document), before);
+      const parts = await textFixtureParts(output),
+        native = (await readWorkbook(output)).getWorksheet('Hidden');
+      assert.equal(Number(parts.row(target).getAttribute('ht')), 28.5);
+      assert.equal(parts.row(target).getAttribute('customHeight'), '0');
+      assert.equal(native.getCell('A1').value, 'Merged');
+      assert.equal(native.getCell('A1').font.size, 24);
+      assert.equal(native.getCell('D3').value, 'Control');
+      for (const row of hiddenRows) assert.equal(native.getRow(row).hidden, true);
+      for (const col of hiddenColumns) assert.equal(native.getColumn(col).hidden, true);
+      document = await codec.importStudioExcel(output, `Hidden ${round}.xlsx`);
+      assert.equal(document.sheets[0].rowHeights[String(target)], 28.5);
+      assert.equal(document.sheets[0].rowHeightModes[String(target)], 'auto');
+      source = output;
+    }
+  }
+});
+
+test('the first export caches cross-sheet dynamic results beyond the prior declared view dimensions', async () => {
+  let document = {
+    version: 1,
+    id: 'expanded-cache',
+    name: 'Expanded.xlsx',
+    kind: 'excel',
+    activeSheetId: 'main',
+    defaultFont: { family: 'Arial', sizePt: 24, bold: false, italic: false },
+    sheets: [
+      {
+        id: 'main',
+        name: 'Main',
+        rowCount: 1,
+        columnCount: 1,
+        defaultRowHeight: 18,
+        rowHeightModes: {},
+        cells: { A1: { input: '=SEQUENCE(Data!A1,Data!B1)', array: { type: 'dynamic' } } },
+      },
+      {
+        id: 'data',
+        name: 'Data',
+        rowCount: 1,
+        columnCount: 2,
+        cells: { A1: { input: '1' }, B1: { input: '1' } },
+      },
+    ],
+  };
+  let source = await codec.exportStudioExcel(document);
+  document = await codec.importStudioExcel(source, 'Expanded.xlsx');
+  const dataId = document.sheets[1].id;
+  assert.equal(document.sheets[0].rowCount, 200);
+  assert.equal(document.sheets[0].columnCount, 26);
+  document = model.studioPatchCells(document, dataId, {
+    A1: { input: '205' },
+    B1: { input: '28' },
+  });
+  for (let round = 1; round <= 2; round++) {
+    const before = JSON.stringify(document),
+      output = await codec.exportStudioExcel(document, source);
+    assert.equal(JSON.stringify(document), before);
+    const parts = await textFixtureParts(output),
+      independent = (await readWorkbook(output)).getWorksheet('Main');
+    assert.equal(Number(parts.row(201).getAttribute('ht')), 28.5);
+    assert.equal(parts.row(201).getAttribute('customHeight'), '0');
+    assert.equal(independent.getRow(205).height, 28.5);
+    assert.equal(independent.getCell('A201').value, 5601);
+    assert.equal(independent.getCell('AB205').value, 5740);
+    assert.equal(parts.fontSize('AB205'), 24);
+    document = await codec.importStudioExcel(output, `Expanded ${round}.xlsx`);
+    assert.equal(document.sheets[0].rowCount, 205);
+    assert.equal(document.sheets[0].columnCount, 28);
+    assert.equal(document.sheets[0].rowHeights['201'], 28.5);
+    assert.equal(document.sheets[0].rowHeightModes['201'], 'auto');
+    source = output;
+  }
+});
+
+test('real font0 and its actual custom theme survive source and standalone saves without using cellXF0 or Calibri11 defaults', async () => {
+  const fixture = await nativeDefaultFontFixture();
+  const imported = await codec.importStudioExcel(fixture.source, 'Custom theme font0.xlsx');
+  const expected = { family: 'Arial', sizePt: 9.5, bold: true, italic: true };
+  assert.deepEqual({ ...imported.defaultFont }, expected);
+  assert.equal(imported.sheets[0].cells.A1.fontFamily, 'Courier New');
+  assert.equal(imported.sheets[0].cells.A1.fontSize, 16);
+  assert.equal(imported.sheets[0].cells.A1.bold, false);
+  assert.equal(imported.sheets[0].cells.A1.italic, false);
+  assert.equal(imported.sheets[0].cells.A2.fontFamily, 'Arial');
+  assert.equal(imported.sheets[0].cells.A2.fontSize, 9.5);
+  assert.equal(imported.sheets[0].cells.A2.bold, true);
+  assert.equal(imported.sheets[0].cells.A2.italic, true);
+  const edited = model.studioPatchCells(imported, imported.sheets[0].id, {
+    A2: { input: 'Edited themed font0' },
+  });
+  for (const useSource of [true, false]) {
+    let document = edited,
+      previous = fixture.source;
+    for (let pass = 0; pass < 2; pass++) {
+      const output = await codec.exportStudioExcel(document, useSource ? previous : undefined);
+      const parts = await textFixtureParts(output);
+      const font0 = parts.styles.getElementsByTagNameNS(textFixtureNamespace, 'fonts')[0]
+        .children[0];
+      assert.equal(
+        Number(font0.getElementsByTagNameNS(textFixtureNamespace, 'sz')[0].getAttribute('val')),
+        9.5
+      );
+      assert.ok(font0.getElementsByTagNameNS(textFixtureNamespace, 'b')[0]);
+      assert.ok(font0.getElementsByTagNameNS(textFixtureNamespace, 'i')[0]);
+      if (useSource) {
+        assert.equal(new dom.window.XMLSerializer().serializeToString(font0), fixture.rawFont0);
+        assert.equal(parts.format('A2').getAttribute('fontId'), '0');
+        assert.equal(await parts.zip.file(fixture.themePart).async('string'), fixture.themeXml);
+        assert.match(
+          await parts.zip.file('xl/_rels/workbook.xml.rels').async('string'),
+          /Target="theme\/custom-text-font0.xml"/
+        );
+      } else {
+        assert.equal(
+          font0.getElementsByTagNameNS(textFixtureNamespace, 'name')[0].getAttribute('val'),
+          'Arial'
+        );
+        assert.equal(font0.getElementsByTagNameNS(textFixtureNamespace, 'scheme').length, 0);
+      }
+      document = await codec.importStudioExcel(output, 'Font0 reopen.xlsx');
+      assert.deepEqual({ ...document.defaultFont }, expected);
+      assert.equal(document.sheets[0].cells.A2.fontFamily, 'Arial');
+      assert.equal(document.sheets[0].cells.A2.fontSize, 9.5);
+      assert.equal(document.sheets[0].cells.A1.bold, false);
+      assert.equal(document.sheets[0].cells.A1.italic, false);
+      previous = output;
+    }
+  }
+  const legacy = globalThis.structuredClone(imported);
+  delete legacy.defaultFont;
+  legacy.sheets[0].cells.A2.fontFamily = '+mn-lt';
+  const hydrated = await codec.hydrateStudioExcelHyperlinks(legacy, fixture.source);
+  assert.deepEqual({ ...hydrated.defaultFont }, expected);
+  assert.equal(hydrated.sheets[0].cells.A2.fontFamily, 'Arial');
+  assert.equal(legacy.defaultFont, undefined);
+  const declared = {
+    ...imported,
+    defaultFont: { family: 'Verdana', sizePt: 13, bold: false, italic: false },
+  };
+  assert.equal(
+    await codec.hydrateStudioExcelHyperlinks(declared, new Blob(['must not read source'])),
+    declared
+  );
+});
+
+test('unresolvable font0 theme bindings fail clearly before ExcelJS and leave the original theme and bytes intact', async () => {
+  const fixture = await nativeDefaultFontFixture();
+  const original = Buffer.from(await fixture.source.arrayBuffer());
+  const zip = await JSZip.loadAsync(original);
+  const relations = await zip.file('xl/_rels/workbook.xml.rels').async('string');
+  zip.file(
+    'xl/_rels/workbook.xml.rels',
+    relations.replace('theme/custom-text-font0.xml', 'theme/missing-font0.xml')
+  );
+  const badTheme = new Blob([await zip.generateAsync({ type: 'uint8array' })]);
+  const document = await codec.importStudioExcel(fixture.source, 'Valid font0.xlsx');
+  const xlsxPrototype = Object.getPrototypeOf(new ExcelJS.Workbook().xlsx);
+  const load = xlsxPrototype.load;
+  let allocated = 0;
+  xlsxPrototype.load = function () {
+    allocated++;
+    throw new Error('Raw font0 must be checked first.');
+  };
+  try {
+    await assert.rejects(
+      codec.importStudioExcel(badTheme, 'Missing actual theme.xlsx'),
+      /默认字体.*主题绑定/
+    );
+    await assert.rejects(codec.exportStudioExcel(document, badTheme), /默认字体.*主题绑定/);
+    assert.equal(allocated, 0);
+  } finally {
+    xlsxPrototype.load = load;
+  }
+  assert.deepEqual(Buffer.from(await fixture.source.arrayBuffer()), original);
+  assert.equal(
+    await (await JSZip.loadAsync(original)).file(fixture.themePart).async('string'),
+    fixture.themeXml
+  );
+});
+
+test('explicit text native error spellings stay strings while literal and formula errors stay native XLSX errors', async () => {
+  const original = studioModel.createOfficeStudioDocument('excel');
+  const id = original.sheets[0].id;
+  const document = model.studioPatchCells(original, id, {
+    A1: { input: '#DIV/0!', valueType: 'text' },
+    B1: { input: '#DIV/0!' },
+    C1: { input: '=1/0' },
+    D1: { input: "'#DIV/0!" },
+  });
+  for (const useSource of [true, false]) {
+    let current = document,
+      source;
+    for (let pass = 0; pass < 2; pass++) {
+      const output = await codec.exportStudioExcel(current, useSource ? source : undefined);
+      const native = (await readWorkbook(output)).worksheets[0];
+      assert.equal(native.getCell('A1').value, '#DIV/0!');
+      assert.equal(native.getCell('A1').type, ExcelJS.ValueType.String);
+      assert.equal(native.getCell('D1').value, '#DIV/0!');
+      assert.equal(native.getCell('D1').type, ExcelJS.ValueType.String);
+      assert.deepEqual(native.getCell('B1').value, { error: '#DIV/0!' });
+      assert.deepEqual(native.getCell('C1').result, { error: '#DIV/0!' });
+      const raw = await textFixtureParts(output);
+      assert.equal(raw.cell('A1').getAttribute('t'), 's');
+      assert.equal(raw.cell('B1').getAttribute('t'), 'e');
+      assert.equal(raw.cell('C1').getAttribute('t'), 'e');
+      assert.equal(
+        raw.cell('C1').getElementsByTagNameNS(textFixtureNamespace, 'f')[0].textContent,
+        '1/0'
+      );
+      current = await codec.importStudioExcel(output, 'Error type reopen.xlsx');
+      assert.equal(
+        model.studioCalculate(current).read(current.sheets[0].id, 'A1').value,
+        '#DIV/0!'
+      );
+      source = output;
+    }
+  }
 });

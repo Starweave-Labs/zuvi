@@ -1,0 +1,242 @@
+{
+  "scope": "X023/X024 verified slice, not whole-ledger completion",
+  "baseHead": "cd2e54cfc8454996f1037103192de93912ff0f75",
+  "code": [
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+      "sha256": "ee81cba74ab88a563e34be0064953183262e8a1d6658cd6f693fd2a997431550"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioSheet.css",
+      "sha256": "8fc9e397717d90c787a0dc5dc252b7976a34121a26518e8ce03de20dc6d656f1"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioSheetText.tsx",
+      "sha256": "754a9e006471e459c1a217ffdddd1119a4ace51ce09e2c67db939bc72b5f0562"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioSheetTextDialog.tsx",
+      "sha256": "9398223392f2b8957b7bc42ad608c708354eb4059bb4a6de139445bfe948d5cf"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-sheet-text-display.ts",
+      "sha256": "75f414aac31f65bf613ff458c8571d2d7b801c78a241bed47fa1e0cca6501154"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-sheet-text-layout.ts",
+      "sha256": "6241b360cb08074afb3644737d621906ec131d357db9056cf563c2b16b5966ec"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-print.ts",
+      "sha256": "d6d2d767b32bc1c1271e0ec8fe795ef0b862c4e62ce550542a4007729b39eceb"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts",
+      "sha256": "931ebba8759367f572393c9f4aaaf1e8d95b3ec4da380fc0b316667aa3291ccd"
+    },
+    {
+      "path": "e2e/office-studio-sheet-text.spec.ts",
+      "sha256": "b3f4a4db22567607ec012a383ed65ba5ad9dbfa99aed3d8c2b19a95e9d49cd66"
+    }
+  ],
+  "entries": [
+    {
+      "path": "README.md",
+      "bytes": 5252,
+      "sha256": "675e17324b4d7347331e01500b590e2cc588c6ff11c3d818af620dc7cae3f385"
+    },
+    {
+      "path": "array-view-205.png",
+      "bytes": 129113,
+      "sha256": "76b819479ceb2067e9e0ebd26870a3df425138391e4ddc9fcba1010bda8c2e07"
+    },
+    {
+      "path": "array-view-roundtrip-1.xlsx",
+      "bytes": 9899,
+      "sha256": "9a5571d061019ac1ed99317cb84f0957542524e17d8ff8e0332fd46b7a4d6bc4"
+    },
+    {
+      "path": "array-view-roundtrip-2.xlsx",
+      "bytes": 9912,
+      "sha256": "8fbfa9cd85117b51381b570a4f698caa2d1f238af35f762412fe9550b3ceee90"
+    },
+    {
+      "path": "array-view-source.xlsx",
+      "bytes": 6668,
+      "sha256": "c1ef4530f1576f664dc0a69cc4c5294ac0423ff5d4255323d2ea9a9da939dde7"
+    },
+    {
+      "path": "browser-guard-evidence.json",
+      "bytes": 332,
+      "sha256": "cef34221f3d8de97dc13807ea514a3891a0e7b15fe20daca3eca6be3519c9db4"
+    },
+    {
+      "path": "browser-roundtrip-evidence.json",
+      "bytes": 8341,
+      "sha256": "4a9557ff7a8c2ee4455bc812fd038dc72be2821638433dd179a40f4c56a31e38"
+    },
+    {
+      "path": "independent-native-inspection.json",
+      "bytes": 4992,
+      "sha256": "77c10a625be87392adcd558921db4a826c55b9a1158a5cfb38d3626d5120eaf9"
+    },
+    {
+      "path": "inspect-native-evidence.py",
+      "bytes": 4970,
+      "sha256": "96bec08915a915140738c3bdb14c6650bbc09a3c48bed153d3dd151b616bce46"
+    },
+    {
+      "path": "pdf-render/text-print-1.png",
+      "bytes": 56808,
+      "sha256": "139d066ec2aaa38116410b37e5cf3a342d809a996198d0b9e9780cab1b000555"
+    },
+    {
+      "path": "pdf-render/text-print-2.png",
+      "bytes": 12463,
+      "sha256": "053bb6ef04a82944c86b3d81bc35da34b870cc3323ae3da5454b72007adc140c"
+    },
+    {
+      "path": "pdf-render/text-print-3.png",
+      "bytes": 20307,
+      "sha256": "c479b3bdb26125bf984df04da75a23bd9337a0c34fcd4eb5f9afd625f13b613f"
+    },
+    {
+      "path": "pdf-render/text-print-4.png",
+      "bytes": 18585,
+      "sha256": "8efc629b9ebbd4526fea87ab90aa3fb626207fe55fd7d0b00da7c4f85992fcac"
+    },
+    {
+      "path": "pdf-render/text-print-5.png",
+      "bytes": 19308,
+      "sha256": "8dc93df3ebba5c1f59a96d14b907669a61c02f48da5a0ce68c3796c174e370c6"
+    },
+    {
+      "path": "text-dialog-dark-320.png",
+      "bytes": 40278,
+      "sha256": "2444a71cb863e4c081f6054e0f95a7487d66355abb40e97762f3ca431349d0d2"
+    },
+    {
+      "path": "text-dialog-dark.png",
+      "bytes": 150570,
+      "sha256": "5de355970397632042fd27ee9f1be893f0951ca8aeaca82dabdc82dc2d9a2f34"
+    },
+    {
+      "path": "text-dialog-light-320.png",
+      "bytes": 41053,
+      "sha256": "a41cafb3737260c4d22de70f3ad202001f791a2ba2236d4b4bba5bea8c4c580c"
+    },
+    {
+      "path": "text-dialog-light.png",
+      "bytes": 150984,
+      "sha256": "790597a501df0aab4f4fe1d302c9c91187b6af485cea8eeba04e5e24c1165e25"
+    },
+    {
+      "path": "text-hidden-master-grid.png",
+      "bytes": 128568,
+      "sha256": "cf22aab0f6d2f512314074e25d72505b19e9d04a8ad26f2c6e66ede182b1db07"
+    },
+    {
+      "path": "text-print.html",
+      "bytes": 51586,
+      "sha256": "250bbc07117fdfd629abf458f9a6adacdd4fe4343b730db5990033e8c25f6441"
+    },
+    {
+      "path": "text-print.pdf",
+      "bytes": 142172,
+      "sha256": "ecdb6fc257c6cb8b4ffc12d544cc5c9c70f53e03430344bcd8e3bbeaca8852eb"
+    },
+    {
+      "path": "text-print.png",
+      "bytes": 81382,
+      "sha256": "1f208bd8ec0456214353f9de25e6762e63d5eebdda7effa8f6037991a7fd0893"
+    },
+    {
+      "path": "text-protected-after-rejection.xlsx",
+      "bytes": 12283,
+      "sha256": "06973bfb68600d4e8b49371bee958660b29a3c178e2c48132e2b1312bd9fdb8f"
+    },
+    {
+      "path": "text-protected-rejection.png",
+      "bytes": 149478,
+      "sha256": "5ab1e794386b37e8e3b792846d198cefd1b00671ba2f70175ca3873f962212f8"
+    },
+    {
+      "path": "text-results-light.png",
+      "bytes": 142527,
+      "sha256": "41414d64ab244423434f3dfc2cce2af0d8d514b4e297f5cced8c6420513fdbbc"
+    },
+    {
+      "path": "text-roundtrip-1.xlsx",
+      "bytes": 12257,
+      "sha256": "c34a391de1497508edbcfd1cc3c5d4f2514daf08effefa9b87212120b49b1b93"
+    },
+    {
+      "path": "text-roundtrip-2.xlsx",
+      "bytes": 12257,
+      "sha256": "f51331061c6a2cdb01730fa905bcb481bbb280c2a8d3a952c1529bdc0ae1bb37"
+    },
+    {
+      "path": "text-source.xlsx",
+      "bytes": 11006,
+      "sha256": "6870e609d1191fc12db0562c01febaa7bdd2a977b1e426525a21bf6374700e61"
+    },
+    {
+      "path": "validation/focused-ui-146.txt.raw.gz",
+      "bytes": 2775,
+      "sha256": "0fca05a4da9a89628be9c34eab93857ddb05b6f29b9c16a286ad5d8ed76773a8",
+      "uncompressedOriginal": {
+        "bytes": 8148,
+        "sha256": "f24e6289d575d99fdc9b75e5cf569e899ad4430bdba7b783130e76acf0d4f96e"
+      },
+      "normalizedView": {
+        "path": "validation/focused-ui-146.txt",
+        "bytes": 8147,
+        "sha256": "d6157f6e76aa249653897a20a52c584bfe3628bfc0359cbd9bf84966d6ad4d3e",
+        "change": "Trailing whitespace and excess blank EOF only; raw gzip retains the complete original."
+      }
+    },
+    {
+      "path": "validation/independent-native.txt",
+      "bytes": 97,
+      "sha256": "0b2e99a95654345867ab7f0c7af85a35e11be35af4950cb445c90b1f9c59a633"
+    },
+    {
+      "path": "validation/pdfinfo.txt",
+      "bytes": 500,
+      "sha256": "e9efb3770b9fbebafedb8e4293bb4be485378efb92c5643c72d9d664b79da3c3"
+    },
+    {
+      "path": "validation/print-45.txt",
+      "bytes": 10884,
+      "sha256": "b8bb5b731673af7b4aa2bbe36289294d732940757884db0e700c0a07727f52d0"
+    },
+    {
+      "path": "validation/scoped-lint.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "validation/targeted-browser-3-passed.txt",
+      "bytes": 976,
+      "sha256": "1ed18f458595a30d2e25c761da3ced6e8e76afe32ff5ec5c9fc111eb22ed9b4b"
+    },
+    {
+      "path": "validation/targeted-master-screenshot.txt",
+      "bytes": 614,
+      "sha256": "32d1c7d4bb957023a4fa5edf9ef1e653d705d6275074eb88f1bd30584ba7eb9e"
+    },
+    {
+      "path": "validation/ui-types.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "regeneration": "The full-site E2E regenerates current artifacts. Re-run independent inspection and refresh this manifest after that run; historical archives stay separate.",
+  "latestFullE2E": {
+    "path": "docs/audits/2026-11-27/full-e2e/validation/e2e.json",
+    "passed": 293,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0
+  }
+}

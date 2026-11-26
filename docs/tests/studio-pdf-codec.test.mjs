@@ -1,3 +1,4 @@
+/* global structuredClone */
 import assert from 'node:assert/strict';
 import { Blob, Buffer } from 'node:buffer';
 import { createHash, webcrypto } from 'node:crypto';
@@ -7,6 +8,7 @@ import test from 'node:test';
 import { URL } from 'node:url';
 import { runInNewContext } from 'node:vm';
 import { trueTypeFromWoff } from '../../scripts/office-fonts.mjs';
+import { pdfTestRuntime } from './studio-pdf-test-runtime.mjs';
 
 const require = createRequire(new URL('../package.json', import.meta.url));
 const ts = require('typescript');
@@ -21,76 +23,9 @@ const {
   degrees,
   decodePDFRawStream,
 } = require('pdf-lib');
-const file = new URL(
-  '../src/pages/collaboration/office-studio/studio-pdf-codec.ts',
-  import.meta.url
-);
-const compiled = ts.transpileModule(
-  readFileSync(file, 'utf8').replaceAll('import.meta.env.BASE_URL', "'/test-base/'"),
-  {
-    compilerOptions: {
-      target: ts.ScriptTarget.ES2022,
-      module: ts.ModuleKind.CommonJS,
-      esModuleInterop: true,
-    },
-  }
-).outputText;
-const fieldExports = {};
-runInNewContext(
-  ts.transpileModule(
-    readFileSync(
-      new URL(
-        '../../packages/ui/src/components/OfficeStudio/studio-pdf-fields.ts',
-        import.meta.url
-      ),
-      'utf8'
-    ),
-    {
-      compilerOptions: {
-        target: ts.ScriptTarget.ES2022,
-        module: ts.ModuleKind.CommonJS,
-        esModuleInterop: true,
-      },
-    }
-  ).outputText,
-  { exports: fieldExports, require }
-);
-
-function codec(
-  fetch = async () => {
-    throw new Error('Unexpected network request');
-  }
-) {
-  const exports = {};
-  const requests = [];
-  const execute = new Function(
-    'scope',
-    'const { exports, require, Blob, Uint8Array, ArrayBuffer, Error, crypto, fetch } = scope;\n' +
-      compiled
-  );
-  execute({
-    exports,
-    require: (id) => {
-      if (id.endsWith('/studio-pdf-fields')) return fieldExports;
-      if (id.endsWith('/studio-pdf-pages') || id === './studio-pdf-page-codec') {
-        const exports = {};
-        const relative = id === './studio-pdf-page-codec' ? '../src/pages/collaboration/office-studio/studio-pdf-page-codec.ts' : '../../packages/ui/src/components/OfficeStudio/studio-pdf-pages.ts';
-        runInNewContext(ts.transpileModule(readFileSync(new URL(relative, import.meta.url), 'utf8'), { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS } }).outputText, { exports, crypto: webcrypto, require: (module) => module.endsWith('/studio-pdf-pages') ? (() => { const result = {}; runInNewContext(ts.transpileModule(readFileSync(new URL('../../packages/ui/src/components/OfficeStudio/studio-pdf-pages.ts', import.meta.url), 'utf8'), { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS } }).outputText, { exports: result, crypto: webcrypto }); return result; })() : require(module) });
-        return exports;
-      }
-      return require(id);
-    },
-    Blob,
-    Uint8Array,
-    ArrayBuffer,
-    Error,
-    crypto: webcrypto,
-    fetch: async (...args) => {
-      requests.push(args[0]);
-      return fetch(...args);
-    },
-  });
-  return { ...exports, requests };
+function codec(fetch) {
+  const runtime = pdfTestRuntime({ fetch });
+  return { ...runtime.load('../src/pages/collaboration/office-studio/studio-pdf-codec.ts'), requests: runtime.requests };
 }
 
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -621,7 +556,7 @@ test('validates crop-box offsets, native field structure, readonly values, choic
   await assert.rejects(c.exportStudioPdf(maxDocument, maxSource), /允许的文字长度/);
 });
 
-test('rejects encrypted PDFs, XFA, signatures, buttons, lists and field modes the model cannot preserve', async () => {
+test('retains passive native fields without exposing editable values and still rejects encrypted PDFs and XFA', async () => {
   const c = codec();
   const mutations = [
     (pdf) => {
@@ -663,13 +598,24 @@ test('rejects encrypted PDFs, XFA, signatures, buttons, lists and field modes th
     },
   ];
   const source = await original();
-  for (const mutate of mutations) {
+  for (const [index, mutate] of mutations.entries()) {
     const pdf = await PDFDocument.load(await source.arrayBuffer());
     mutate(pdf);
-    await assert.rejects(
-      c.importStudioPdf(await blob(pdf), 'Unsupported.pdf'),
-      /不支持|不受支持|无法完整/
-    );
+    const nativeSource = await blob(pdf);
+    if (index === 0) {
+      await assert.rejects(c.importStudioPdf(nativeSource, 'Dynamic.pdf'), /不支持/);
+      continue;
+    }
+    const document = await c.importStudioPdf(nativeSource, 'Passive.pdf');
+    const fields = document.fields.filter((field) => field.type === 'opaque');
+    assert.equal(fields.length, 1);
+    assert.equal(fields[0].readOnly, true);
+    assert.equal(fields[0].value, '');
+    assert.match(fields[0].nativeValueHash, /^[a-f0-9]{64}$/);
+    assert.equal(await c.exportStudioPdf(document, nativeSource), nativeSource);
+    const changed = structuredClone(document);
+    changed.fields.find((field) => field.type === 'opaque').value = 'Tampered';
+    await assert.rejects(c.exportStudioPdf(changed, nativeSource), /只读原生/);
   }
   const encrypted = await PDFDocument.load(await source.arrayBuffer());
   encrypted.context.trailerInfo.Encrypt = encrypted.context.register(
@@ -1178,4 +1124,36 @@ test('keeps each repeated-source copy self actions on its own page while field-g
     assert.equal(native.acroField.dict.lookup(PDFName.of('AA')).lookup(PDFName.of('V')).lookup(PDFName.of('D')).get(0).toString(), pdf.getPages()[0].ref.toString());
     document = await c.importStudioPdf(source, 'Self-reopened.pdf'); if (!round) document = commands.pdfCopyPages(document, [2, 3], 4);
   }
+});
+
+test('clears designed text, date, choice, list and image values without recreating field refs or leaving stale appearances', async () => {
+  const c = codec(), pdf = await PDFDocument.create(); pdf.addPage([400, 500]);
+  const original = await blob(pdf), base = await c.importStudioPdf(original, 'Designed.pdf');
+  const widget = (y) => [{ page: 0, x: 20, y, width: 140, height: 26 }];
+  base.fields = [
+    { name: 'text', type: 'text', value: 'Original', readOnly: false, design: { kind: 'text', defaultValue: 'Default' }, widgets: widget(420) },
+    { name: 'date', type: 'text', value: '2026-11-26', readOnly: false, design: { kind: 'date', defaultValue: '2026-01-01' }, widgets: widget(370) },
+    { name: 'drop', type: 'choice', value: 'A', options: ['A', 'B'], readOnly: false, design: { kind: 'dropdown', optionLabels: { A: 'Alpha', B: 'Beta' }, defaultValue: 'B' }, widgets: widget(320) },
+    { name: 'list', type: 'choice', value: 'A', selectedValues: ['A', 'B'], options: ['A', 'B'], readOnly: false, design: { kind: 'list', multiSelect: true, defaultSelections: ['B'] }, widgets: [{ ...widget(240)[0], height: 60 }] },
+    { name: 'image', type: 'image', value: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+a9N8AAAAASUVORK5CYII=', readOnly: false, design: { kind: 'image' }, widgets: widget(190) },
+  ];
+  const filled = await c.exportStudioPdf(base, original), before = await PDFDocument.load(await filled.arrayBuffer());
+  const refs = new Map(before.getForm().getFields().map((field) => [field.getName(), field.ref.toString()]));
+  const oldAp = new Map(before.getForm().getFields().map((field) => [field.getName(), digest(field.acroField.getWidgets()[0].getAppearances().normal.getContents())]));
+  const draft = await c.importStudioPdf(filled, 'Filled.pdf');
+  draft.fields = draft.fields.map((field) => ({ ...field, value: '', ...(field.design?.kind === 'list' ? { selectedValues: [] } : {}) }));
+  const cleared = await c.exportStudioPdf(draft, filled), after = await PDFDocument.load(await cleared.arrayBuffer());
+  for (const field of after.getForm().getFields()) {
+    assert.equal(field.ref.toString(), refs.get(field.getName()));
+    assert.notEqual(digest(field.acroField.getWidgets()[0].getAppearances().normal.getContents()), oldAp.get(field.getName()));
+  }
+  assert.equal(after.getForm().getTextField('text').getText(), undefined);
+  assert.equal(after.getForm().getTextField('date').getText(), undefined);
+  assert.deepEqual(after.getForm().getDropdown('drop').getSelected(), []);
+  assert.deepEqual(after.getForm().getOptionList('list').getSelected(), []);
+  assert.equal(after.getForm().getButton('image').acroField.dict.lookup(PDFName.of('ZuviFieldImage')).decodeText(), '');
+  assert.equal(after.getForm().getTextField('text').acroField.dict.lookup(PDFName.of('DV')).decodeText(), 'Default');
+  assert.equal(after.getForm().getTextField('date').acroField.dict.lookup(PDFName.of('DV')).decodeText(), '2026-01-01');
+  assert.deepEqual(after.getForm().getOptionList('list').acroField.dict.lookup(PDFName.of('DV')).asArray().map((item) => item.decodeText()), ['B']);
+  const reopened = await c.importStudioPdf(cleared, 'Cleared.pdf'); assert.equal(await c.exportStudioPdf(reopened, cleared), cleared);
 });

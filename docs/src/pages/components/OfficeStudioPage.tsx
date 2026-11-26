@@ -12,6 +12,7 @@ import {
   type OfficeStudioHandle,
   type OfficeStudioKind,
   type StudioPdfRenderer,
+  type StudioPdfComposer,
 } from '@zuvi/react';
 import ApiTable from '../../components/ApiTable';
 import Demo from '../../components/Demo';
@@ -37,6 +38,12 @@ const studioPdfRenderer: StudioPdfRenderer = {
     (await import('../collaboration/office-studio/studio-pdf-adapter')).studioPdfRenderer.load(
       source
     ),
+};
+const studioPdfComposer: StudioPdfComposer = {
+  inspect: async (source, options) =>
+    (await import('../collaboration/office-studio/studio-pdf-composition')).studioPdfComposer.inspect(source, options),
+  compose: async (request) =>
+    (await import('../collaboration/office-studio/studio-pdf-composition')).studioPdfComposer.compose(request),
 };
 let initializing: Promise<void> | undefined;
 function initializeWorkspace(): Promise<void> {
@@ -326,6 +333,8 @@ export default function OfficeStudioPage(): React.ReactNode {
               value={active.document}
               source={active.source}
               pdfRenderer={studioPdfRenderer}
+              pdfComposer={studioPdfComposer}
+              onPdfSourceChange={(change) => workspace.editPdfSnapshot(change)}
               height={780}
               disabled={blocked}
               readOnly={readOnly}

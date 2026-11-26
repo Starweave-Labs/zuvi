@@ -1,0 +1,60 @@
+{
+  "files": [
+    {
+      "path": "full-e2e/validation/docs-build.txt",
+      "rawPath": "full-e2e/validation/docs-build.txt.raw.gz",
+      "originalBytes": 37509,
+      "originalSha256": "61c71bcfb424c0ad7f43bbfa0ba660f58facfeafa7282c58b38adba646d5590e",
+      "bytes": 6803,
+      "sha256": "fdc252af3ec644e089f9e87d4c2adfc02797f42d4507c5984dde671168133068",
+      "viewBytes": 37508,
+      "viewSha256": "66570d6b38687207490b6d381bb50a46b65235b253810e0fbd45150124af3830"
+    },
+    {
+      "path": "full-e2e/validation/lint.txt",
+      "rawPath": "full-e2e/validation/lint.txt.raw.gz",
+      "originalBytes": 120,
+      "originalSha256": "779d6485622c43ec841eade19561bcc5489be9ff1c7a61d3cfc3647717f79aac",
+      "bytes": 127,
+      "sha256": "89d797d9f2120287b654c56db1b128e786f6b385f3f925fc9e72953b1292ac70",
+      "viewBytes": 119,
+      "viewSha256": "dc4e2cbfc92140685312faddd09f900724f3469dd40ec75d8ffdde977a007238"
+    },
+    {
+      "path": "full-e2e/validation/ui-tests.txt",
+      "rawPath": "full-e2e/validation/ui-tests.txt.raw.gz",
+      "originalBytes": 38812,
+      "originalSha256": "4a537b439b6c6a0f438d4db18ee509322120dc0f710463d0261b659768626e90",
+      "bytes": 10867,
+      "sha256": "502ef43be3fd9a3f5d083317b88a254bca98d7e3076817d0e686f8c182f440b1",
+      "viewBytes": 38811,
+      "viewSha256": "e4989b634bd5cf63475ff7ef886bf02426e976ddd2865f066d648c9e208fb11a"
+    },
+    {
+      "path": "sheet-text-layout/hidden-origin-review-source/actual-ui-runtime.mjs.txt",
+      "rawPath": "sheet-text-layout/hidden-origin-review-source/actual-ui-runtime.mjs.txt.raw.gz",
+      "originalBytes": 2053,
+      "originalSha256": "09e83d15a833fce9420122cafca493a72eada995e5b995e28429451a7e126605",
+      "bytes": 932,
+      "sha256": "4d4f84b948e6ea1da2af3f06a09ddc3f813248c114777f9bb2cdf31956c0afcd",
+      "viewBytes": 2052,
+      "viewSha256": "405fc3d4dc06fe25182e760c6a02994b26e424f5d88dd733fc66528037d0f9cb"
+    },
+    {
+      "path": "sheet-text-layout/validation/focused-ui-146.txt",
+      "rawPath": "sheet-text-layout/validation/focused-ui-146.txt.raw.gz",
+      "originalBytes": 8148,
+      "originalSha256": "f24e6289d575d99fdc9b75e5cf569e899ad4430bdba7b783130e76acf0d4f96e",
+      "bytes": 2775,
+      "sha256": "0fca05a4da9a89628be9c34eab93857ddb05b6f29b9c16a286ad5d8ed76773a8",
+      "viewBytes": 8147,
+      "viewSha256": "d6157f6e76aa249653897a20a52c584bfe3628bfc0359cbd9bf84966d6ad4d3e"
+    }
+  ],
+  "updatedManifests": [
+    "source-snapshot-renames.json",
+    "sheet-text-layout/current-evidence-manifest.json",
+    "sheet-text-layout/hidden-origin-review-source/archive-manifest.json",
+    "full-e2e/validation-manifest.json"
+  ]
+}

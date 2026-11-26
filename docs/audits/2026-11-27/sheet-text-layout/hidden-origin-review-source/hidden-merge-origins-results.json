@@ -1,0 +1,87 @@
+[
+  {
+    "label": "first-column",
+    "hiddenRows": [],
+    "hiddenColumns": [
+      "A"
+    ],
+    "merge": "A1:C1",
+    "gridError": "Invalid cell width in text geometry.",
+    "mergedGridCount": 0,
+    "mergedPrintCount": 1,
+    "uiMergedStyle": [],
+    "printMergedSpans": [
+      {
+        "colSpan": 2,
+        "rowSpan": 1,
+        "clip": "left:0px;top:0px;width:200px;height:53.333333333333336px"
+      }
+    ],
+    "uiControl": false,
+    "printControl": true
+  },
+  {
+    "label": "first-row",
+    "hiddenRows": [
+      1
+    ],
+    "hiddenColumns": [],
+    "merge": "A1:C2",
+    "gridError": "Invalid cell height in text geometry.",
+    "mergedGridCount": 0,
+    "mergedPrintCount": 1,
+    "uiMergedStyle": [],
+    "printMergedSpans": [
+      {
+        "colSpan": 3,
+        "rowSpan": 1,
+        "clip": "left:0px;top:0px;width:300px;height:53.333333333333336px"
+      }
+    ],
+    "uiControl": false,
+    "printControl": true
+  },
+  {
+    "label": "both-origins",
+    "hiddenRows": [
+      1
+    ],
+    "hiddenColumns": [
+      "A"
+    ],
+    "merge": "A1:C2",
+    "gridError": "Invalid cell width in text geometry.",
+    "mergedGridCount": 0,
+    "mergedPrintCount": 1,
+    "uiMergedStyle": [],
+    "printMergedSpans": [
+      {
+        "colSpan": 2,
+        "rowSpan": 1,
+        "clip": "left:0px;top:0px;width:200px;height:53.333333333333336px"
+      }
+    ],
+    "uiControl": false,
+    "printControl": true
+  },
+  {
+    "label": "control",
+    "hiddenRows": [],
+    "hiddenColumns": [],
+    "merge": "A1:C2",
+    "mergedGridCount": 1,
+    "mergedPrintCount": 1,
+    "uiMergedStyle": [
+      "left:40px;width:300px;height:106.66666666666666px;z-index:2;font-size:24pt;align-items:flex-end;text-align:center"
+    ],
+    "printMergedSpans": [
+      {
+        "colSpan": 3,
+        "rowSpan": 2,
+        "clip": "left:0px;top:0px;width:300px;height:106.66666666666667px"
+      }
+    ],
+    "uiControl": true,
+    "printControl": true
+  }
+]

@@ -44,6 +44,8 @@ export function OfficeStudio({
   onChange,
   source,
   pdfRenderer,
+  pdfComposer,
+  onPdfSourceChange,
   onSave,
   onExport,
   onPrint,
@@ -151,6 +153,7 @@ export function OfficeStudio({
     }
     setDocument(next);
   };
+
 
   const run = (
     nextOperation: Operation,
@@ -297,6 +300,8 @@ export function OfficeStudio({
     readOnly,
     source,
     pdfRenderer,
+    pdfComposer,
+    onPdfSourceChange: value !== undefined ? onPdfSourceChange : undefined,
   };
   const consume = (task: Promise<void>) => {
     void task.catch(() => {});

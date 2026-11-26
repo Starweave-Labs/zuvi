@@ -12,6 +12,7 @@ import {
   PDFString,
   PDFDict,
   PDFName,
+  PDFRef,
   EncryptedPDFError,
   StandardFonts,
   defaultDropdownAppearanceProvider,
@@ -35,6 +36,7 @@ import {
 } from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
 import { applyPdfPageLayout, isolatePdfPageBuffers } from './studio-pdf-page-codec';
+import { enumeratePdfFields, hasNativePdfSignature, passivePdfField, PassivePdfField, readPdfFieldWidgets } from './studio-pdf-field-reader';
 import type { StudioPdfDocument, StudioPdfField, StudioPdfMark } from '@zuvi/react';
 import {
   pdfFieldIssue,
@@ -83,7 +85,8 @@ async function loadSource(source: Blob) {
   if (pdf.getPageCount() < 1 || pdf.getPageCount() > MAX_PAGES)
     throw new Error('当前 PDF 编辑器支持 1 至 200 页。');
   // getForm() deletes XFA automatically, so inspect the source dictionary first.
-  if (pdf.catalog.AcroForm()?.has(PDFName.of('XFA')))
+  // PDFDict.lookup treats direct and indirect null entries as absent.
+  if (pdf.catalog.AcroForm()?.lookup(PDFName.of('XFA')) !== undefined)
     throw new Error('此 PDF 使用 XFA 动态表单，当前编辑器暂不支持。');
   for (const page of pdf.getPages()) {
     if (!Number.isFinite(page.getRotation().angle) || page.getRotation().angle % 90 !== 0)
@@ -106,39 +109,16 @@ function pageBounds(page: PDFPage) {
 }
 
 function readWidgets(pdf: PDFDocument, field: PDFField, hidden = false): NonNullable<StudioPdfField['widgets']> {
-  const pages = pdf.getPages();
-  return field.acroField.getWidgets().flatMap((widget, widgetIndex) => {
-    // Hidden/NoView widgets retain their original data but have no visual control.
-    const flags = widget.getFlags();
-    if (!!(flags & (2 | 32)) !== hidden) return [];
-    const pageRef = widget.P();
-    const page = pages.findIndex(
-      (entry) =>
-        (pageRef && entry.ref.toString() === pageRef.toString()) ||
-        entry.node
-          .Annots()
-          ?.asArray()
-          .some((ref) => pdf.context.lookup(ref) === widget.dict)
-    );
-    const rectangle = widget.getRectangle();
-    if (page < 0) throw new Error(`表单“${field.getName()}”的控件未关联页面，无法进行页面内编辑。`);
-    if (
-      !Object.values(rectangle).every(Number.isFinite) ||
-      (hidden ? rectangle.width < 0 : rectangle.width <= 0) ||
-      (hidden ? rectangle.height < 0 : rectangle.height <= 0)
-    )
-      throw new Error(`表单“${field.getName()}”含有无效的控件位置。`);
-    const angle = widget.getAppearanceCharacteristics()?.getRotation() ?? 0;
-    if (!Number.isFinite(angle) || angle % 90 !== 0)
-      throw new Error(`表单“${field.getName()}”含有不受支持的控件旋转。`);
+  return readPdfFieldWidgets(pdf, field).flatMap((widget, widgetIndex) => {
+    const { flags = 0, ...rectangle } = widget;
+    const nonvisual = !!(flags & (1 | 2 | 32)) || widget.width === 0 || widget.height === 0;
+    if (nonvisual !== hidden) return [];
     const option = field instanceof PDFRadioGroup ? field.getOptions()[widgetIndex] : undefined;
     if (field instanceof PDFRadioGroup && option === undefined)
       throw new Error(`单选表单“${field.getName()}”的控件选项不完整。`);
     return [
       {
-        page,
         ...rectangle,
-        rotation: quarterTurn(angle),
         ...(option === undefined ? {} : { option }),
         ...(hidden ? { flags } : {}),
       },
@@ -148,22 +128,21 @@ function readWidgets(pdf: PDFDocument, field: PDFField, hidden = false): NonNull
 
 function readFields(pdf: PDFDocument): StudioPdfField[] {
   const names = new Set<string>();
-  return pdf
-    .getForm()
-    .getFields()
+  return enumeratePdfFields(pdf)
     .map((field): StudioPdfField => {
       const name = field.getName();
       if (!name || names.has(name)) throw new Error('PDF 含有重复或空的表单字段名称。');
       names.add(name);
+      if (field instanceof PassivePdfField) return passivePdfField(pdf, field, '未知原生字段');
       const design = nativeDesign(field);
       const base = { name, readOnly: field.isReadOnly(), ...(design ? { design } : {}) };
       let result: StudioPdfField;
       if (field instanceof PDFTextField) {
         if (field.isRichFormatted() || field.isPassword() || field.isFileSelector())
-          throw new Error(`表单“${name}”使用富文本、密码或文件选择功能，当前编辑器暂不支持。`);
+          return passivePdfField(pdf, field, field.isPassword() ? '密码字段' : field.isFileSelector() ? '文件选择字段' : '富文本字段');
         const value = field.getText() ?? '';
         if (value.length > 10_000 || (!field.isMultiline() && /[\r\n]/.test(value)))
-          throw new Error(`表单“${name}”的文字长度或换行状态暂不支持完整编辑。`);
+          return passivePdfField(pdf, field, '原生文本超出编辑范围');
         result = {
           ...base,
           type: 'text',
@@ -174,7 +153,7 @@ function readFields(pdf: PDFDocument): StudioPdfField[] {
         result = { ...base, type: 'checkbox', value: field.acroField.getWidgets().length ? field.isChecked() : field.acroField.getValue() !== PDFName.of('Off') };
       } else if (field instanceof PDFDropdown) {
         if (field.isMultiselect() || field.isEditable() || field.getSelected().length > 1)
-          throw new Error(`表单“${name}”使用多选或可编辑下拉框，当前编辑器暂不支持。`);
+          return passivePdfField(pdf, field, '原生下拉框包含额外编辑功能');
         if (
           !design &&
           field.acroField
@@ -184,12 +163,12 @@ function readFields(pdf: PDFDocument): StudioPdfField[] {
                 option.display && option.display.decodeText() !== option.value.decodeText()
             )
         )
-          throw new Error(`表单“${name}”的显示标签与存储值不同，当前编辑器暂不支持完整编辑。`);
+          return passivePdfField(pdf, field, '原生下拉框使用独立显示标签');
         const options = design
           ? field.acroField.getOptions().map((option) => option.value.decodeText())
           : field.getOptions();
         if (field.getSelected().some((value) => !options.includes(value)))
-          throw new Error(`表单“${name}”包含未定义的选中值，当前编辑器暂不支持完整编辑。`);
+          return passivePdfField(pdf, field, '原生下拉框包含列表外的值');
         result = {
           ...base,
           type: 'choice',
@@ -221,7 +200,7 @@ function readFields(pdf: PDFDocument): StudioPdfField[] {
           options: [...new Set(field.getOptions())],
         };
       } else {
-        throw new Error(`表单“${name}”包含签名、按钮或列表等不受支持的字段，无法完整编辑此 PDF。`);
+        return passivePdfField(pdf, field, field instanceof PDFOptionList ? '原生列表框' : field instanceof PDFButton ? '原生按钮' : '数字签名字段');
       }
       result.widgets = readWidgets(pdf, field);
       const hiddenWidgets = readWidgets(pdf, field, true);
@@ -377,7 +356,7 @@ function sameOptions(left: StudioPdfField['options'], right: StudioPdfField['opt
   const values = new Set(right); return left.every(value => values.has(value));
 }
 
-function sameDesignedField(left: StudioPdfField, right: StudioPdfField) {
+function sameDesignedField(left: StudioPdfField, right: StudioPdfField, compareValues = true) {
   const radio = pdfFieldKind(right) === 'radio';
   const normalize = (field: StudioPdfField) => {
     const design = { ...field.design };
@@ -388,8 +367,8 @@ function sameDesignedField(left: StudioPdfField, right: StudioPdfField) {
       readOnly: field.readOnly,
       multiline: !!field.multiline,
       options: radio ? [...(field.options || [])].sort() : field.options || [],
-      value: field.value,
-      selectedValues: field.selectedValues || [],
+      value: compareValues ? field.value : undefined,
+      selectedValues: compareValues ? field.selectedValues || [] : undefined,
       design,
     };
   };
@@ -398,6 +377,77 @@ function sameDesignedField(left: StudioPdfField, right: StudioPdfField) {
     sameWidgets(left.widgets, right.widgets) &&
     sameWidgets(left.hiddenWidgets || [], right.hiddenWidgets || [], 32)
   );
+}
+
+/** Remove actual annotation refs; pdf-lib 1.17 removes AP refs and can leave dangling widgets. */
+function removeNativeField(pdf: PDFDocument, name: string) {
+  const form = pdf.getForm(), native = form.getField(name);
+  const widgets = new Set(native.acroField.getWidgets().map((widget) => widget.dict));
+  for (const page of pdf.getPages()) {
+    const annotations = page.node.Annots();
+    for (let index = (annotations?.size() ?? 0) - 1; index >= 0; index--) {
+      const dict = annotations!.lookup(index);
+      if (dict === native.acroField.dict || (dict instanceof PDFDict && widgets.has(dict))) annotations!.remove(index);
+    }
+  }
+  form.acroForm.removeField(native.acroField);
+  form.markFieldAsClean(native.ref);
+  for (const ref of native.acroField.Kids()?.asArray() ?? []) {
+    if (ref instanceof PDFRef) pdf.context.delete(ref);
+  }
+  pdf.context.delete(native.ref);
+}
+
+/** The resource alias changes without renaming the embedded font's native BaseFont. */
+function formFont(pdf: PDFDocument, font: PDFFont): PDFFont {
+  const form = pdf.getForm().acroForm.dict;
+  const old = form.lookup(PDFName.of('DR'));
+  const resources = old instanceof PDFDict ? old.clone(pdf.context) : pdf.context.obj({});
+  const oldFonts = resources.lookup(PDFName.of('Font'));
+  const fonts = oldFonts instanceof PDFDict ? oldFonts.clone(pdf.context) : pdf.context.obj({});
+  let alias = `ZuviEdit${font.ref.objectNumber}`;
+  while (fonts.has(PDFName.of(alias))) alias += '_';
+  fonts.set(PDFName.of(alias), font.ref);
+  resources.set(PDFName.of('Font'), fonts);
+  form.set(PDFName.of('DR'), resources);
+  return new Proxy(font, { get(target, name, receiver) { return name === 'name' ? alias : Reflect.get(target, name, receiver); } });
+}
+
+async function writeNativeValue(pdf: PDFDocument, field: StudioPdfField, native: PDFField, font?: PDFFont) {
+  if (native instanceof PDFTextField) {
+    native.setText(String(field.value));
+    if (font) native.updateAppearances(font);
+  } else if (native instanceof PDFCheckBox) {
+    if (field.value) native.check(); else native.uncheck();
+    if (native.needsAppearancesUpdate()) native.updateAppearances();
+  } else if (native instanceof PDFDropdown || native instanceof PDFOptionList) {
+    const selected = native instanceof PDFOptionList ? field.selectedValues || (field.value ? [String(field.value)] : []) : field.value ? [String(field.value)] : [];
+    native.acroField.setValues(selected.map((value) => PDFHexString.fromText(value)));
+    const label = (value: string) => field.design?.optionLabels?.[value] ?? value;
+    if (font) native.updateAppearances(font, (original, widget, appearanceFont) => {
+      if (original instanceof PDFDropdown) {
+        const display = new Proxy(original, { get(target, key, receiver) { return key === 'getSelected' ? () => selected.map(label) : Reflect.get(target, key, receiver); } });
+        return defaultDropdownAppearanceProvider(display, widget, appearanceFont);
+      }
+      const display = new Proxy(original, { get(target, key, receiver) {
+        if (key === 'getOptions') return () => (field.options || []).map(label);
+        if (key === 'getSelected') return () => selected.map(label);
+        return Reflect.get(target, key, receiver);
+      } });
+      return defaultOptionListAppearanceProvider(display, widget, appearanceFont);
+    });
+  } else if (native instanceof PDFRadioGroup) {
+    if (field.value) native.select(String(field.value)); else native.clear();
+    if (native.needsAppearancesUpdate()) native.updateAppearances();
+  } else if (native instanceof PDFButton && field.type === 'image') {
+    if (field.value) {
+      const match = /^data:image\/(png|jpeg);base64,([a-z\d+/]+={0,2})$/i.exec(String(field.value));
+      if (!match) throw new Error('PDF 图片字段的数据无效。');
+      const image = match[1].toLowerCase() === 'png' ? await pdf.embedPng(String(field.value)) : await pdf.embedJpg(String(field.value));
+      native.setImage(image);
+    } else if (font) native.updateAppearances(font);
+    native.acroField.dict.set(IMAGE_KEY, PDFHexString.fromText(String(field.value)));
+  }
 }
 
 async function writeDesignedField(pdf: PDFDocument, field: StudioPdfField, font: PDFFont) {
@@ -556,6 +606,7 @@ async function writeDesignedField(pdf: PDFDocument, field: StudioPdfField, font:
 /** Apply changes to the original PDF's page streams and original AcroForm. */
 export async function exportStudioPdf(document: StudioPdfDocument, source: Blob): Promise<Blob> {
   const pdf = await loadSource(source);
+  const signed = hasNativePdfSignature(pdf);
   isolatePdfPageBuffers(pdf);
   const layoutChanged = applyPdfPageLayout(pdf, document);
   const originalFields = readFields(pdf);
@@ -602,11 +653,25 @@ export async function exportStudioPdf(document: StudioPdfDocument, source: Blob)
     removed.some((name) => !originalFields.some((field) => field.name === name))
   )
     throw new Error('PDF 删除字段记录与原文件不匹配。');
+  if (removed.some((name) => originalFields.some((field) => field.name === name && field.type === 'opaque')))
+    throw new Error('PDF 只读原生字段不能单独删除。');
   for (const name of removed) handledSources.add(name);
   for (const field of document.fields) {
     if (fieldNames.has(field.name)) throw new Error('PDF 草稿包含重复字段名称。');
+    const passiveSource = originalFields.find((entry) => entry.name === field.name);
+    if (field.type === 'opaque' || passiveSource?.type === 'opaque') {
+      if (!passiveSource || passiveSource.type !== 'opaque' || field.type !== 'opaque' ||
+        pdfFieldIssue(field, pdf.getPageCount()) || field.nativeType !== passiveSource.nativeType ||
+        field.nativeValueHash !== passiveSource.nativeValueHash || field.passiveReason !== passiveSource.passiveReason ||
+        !sameWidgets(field.widgets ?? [], passiveSource.widgets ?? []) ||
+        !sameWidgets(field.hiddenWidgets ?? [], passiveSource.hiddenWidgets ?? [], 32))
+        throw new Error('PDF 只读原生字段的身份、值或控件结构不能修改。');
+      fieldNames.add(field.name);
+      handledSources.add(field.name);
+      continue;
+    }
     if (field.design) {
-      const issue = !field.widgets?.length && originalFields.some(entry => entry.name === (field.design?.sourceName ?? field.name) && !entry.widgets?.length && sameDesignedField(field, entry)) ? undefined : pdfFieldIssue(field, pdf.getPageCount());
+      const issue = !field.widgets?.length && originalFields.some(entry => entry.name === (field.design?.sourceName ?? field.name) && !entry.widgets?.length && sameDesignedField(field, entry, false)) ? undefined : pdfFieldIssue(field, pdf.getPageCount());
       if (issue) throw new Error(issue);
       const sourceName = field.design.sourceName;
       const original = sourceName
@@ -615,6 +680,7 @@ export async function exportStudioPdf(document: StudioPdfDocument, source: Blob)
             (entry) => entry.name === field.name && entry.design && !removed.includes(entry.name)
           );
       if (sourceName && !original) throw new Error('PDF 设计字段的来源不存在。');
+      if (original?.type === 'opaque') throw new Error('PDF 只读原生字段不能替换设计。');
       if (original) {
         if (handledSources.has(original.name))
           throw new Error('PDF 同一来源字段被重复编辑或删除。');
@@ -635,7 +701,11 @@ export async function exportStudioPdf(document: StudioPdfDocument, source: Blob)
         )
           throw new Error('PDF 字段控件超出可见页面或尺寸过小。');
       }
-      if (!original || !sameDesignedField(field, original)) designedFields.push(field);
+      if (!original || !sameDesignedField(field, original, false)) designedFields.push(field);
+      else if (!sameDesignedField(field, original)) {
+        if (original.readOnly) throw new Error(`表单“${field.name}”为只读，不能修改。`);
+        changedFields.push(field);
+      }
       fieldNames.add(field.name);
       continue;
     }
@@ -685,22 +755,28 @@ export async function exportStudioPdf(document: StudioPdfDocument, source: Blob)
     !removed.length
   )
     return source;
+  if (signed) throw new Error('此 PDF 已含数字签名，修改会使签名失效，请使用未签名的副本。');
   const form = pdf.getForm();
   const texts = [
     ...document.marks.filter((mark) => mark.type === 'text' && mark.text).map((mark) => mark.text),
     ...changedFields
-      .filter((field) => {
+      .flatMap((field) => {
         const native = form.getField(field.name);
-        return native instanceof PDFTextField || native instanceof PDFDropdown;
-      })
-      .map((field) => String(field.value)),
+        if (native instanceof PDFTextField) return [String(field.value)];
+        if (native instanceof PDFDropdown || native instanceof PDFOptionList)
+          return (field.options || []).map((value) => field.design?.optionLabels?.[value] ?? value);
+        return [];
+      }),
     ...designedFields.flatMap((field) => [
       field.type === 'image' ? '' : String(field.value),
       ...(field.options || []).map((value) => field.design?.optionLabels?.[value] ?? value),
     ]),
   ];
-  const font = await annotationFont(pdf, texts);
-  for (const name of removed) form.removeField(form.getField(name));
+  const needsFieldFont = designedFields.length > 0 || changedFields.some((field) =>
+    field.type === 'text' || field.type === 'choice' || field.type === 'image');
+  const embedded = await annotationFont(pdf, needsFieldFont ? [...texts, ' '] : texts);
+  const font = embedded && needsFieldFont ? formFont(pdf, embedded) : embedded;
+  for (const name of removed) removeNativeField(pdf, name);
   for (const field of designedFields) {
     const sourceName =
       field.design?.sourceName ||
@@ -709,7 +785,7 @@ export async function exportStudioPdf(document: StudioPdfDocument, source: Blob)
       )
         ? field.name
         : undefined);
-    if (sourceName) form.removeField(form.getField(sourceName));
+    if (sourceName) removeNativeField(pdf, sourceName);
   }
   if (designedFields.length) {
     const fieldFont = font || (await pdf.embedFont(StandardFonts.Helvetica));
@@ -776,25 +852,7 @@ export async function exportStudioPdf(document: StudioPdfDocument, source: Blob)
     }
   }
 
-  for (const field of changedFields) {
-    const native = form.getField(field.name);
-    if (native instanceof PDFTextField) {
-      native.setText(String(field.value));
-      if (font) native.updateAppearances(font);
-    } else if (native instanceof PDFCheckBox) {
-      if (field.value) native.check();
-      else native.uncheck();
-      if (native.needsAppearancesUpdate()) native.updateAppearances();
-    } else if (native instanceof PDFDropdown) {
-      if (field.value) native.select(String(field.value));
-      else native.clear();
-      if (font) native.updateAppearances(font);
-    } else if (native instanceof PDFRadioGroup) {
-      if (field.value) native.select(String(field.value));
-      else native.clear();
-      if (native.needsAppearancesUpdate()) native.updateAppearances();
-    }
-  }
+  for (const field of changedFields) await writeNativeValue(pdf, field, form.getField(field.name), font);
   return new Blob([new Uint8Array(await pdf.save({ updateFieldAppearances: false }))], {
     type: 'application/pdf',
   });

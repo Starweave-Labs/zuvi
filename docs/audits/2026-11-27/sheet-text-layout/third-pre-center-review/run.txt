@@ -1,0 +1,37 @@
+[WebServer] (node:48647) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:48676) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+  ✓  1 [chromium] › e2e/office-studio-sheet-text.spec.ts:127:1 › advanced text editing, native default font, automatic rows, print and two XLSX reopens use the actual editor (17.6s)
+  ✘  2 [chromium] › e2e/office-studio-sheet-text.spec.ts:418:1 › text formatting holds invalid drafts, cancels cleanly and rejects protected batches before adding history (4.5s)
+
+
+  1) [chromium] › e2e/office-studio-sheet-text.spec.ts:418:1 › text formatting holds invalid drafts, cancels cleanly and rejects protected batches before adding history
+
+    TypeError: Cannot read properties of undefined (reading 'horizontal')
+
+      456 |   const saved = new ExcelJS.Workbook();
+      457 |   await saved.xlsx.load(protectedBytes);
+    > 458 |   expect(saved.getWorksheet('Text')!.getCell('A1').alignment.horizontal).not.toBe(
+          |                                                             ^
+      459 |     'centerContinuous'
+      460 |   );
+      461 |   await page.getByRole('button', { name: '撤销表格修改', exact: true }).click();
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-sheet-text.spec.ts:458:61
+
+    Error Context: ../../../../../../tmp/zuvi-excel-text-playwright-results/office-studio-sheet-text-t-0c2e6-tches-before-adding-history-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../tmp/zuvi-excel-text-playwright-results/office-studio-sheet-text-t-0c2e6-tches-before-adding-history-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../../../tmp/zuvi-excel-text-playwright-results/office-studio-sheet-text-t-0c2e6-tches-before-adding-history-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/office-studio-sheet-text.spec.ts:418:1 › text formatting holds invalid drafts, cancels cleanly and rejects protected batches before adding history
+  1 passed (24.6s)

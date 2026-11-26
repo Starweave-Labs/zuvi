@@ -1,0 +1,88 @@
+[
+  {
+    "format": {
+      "align": "centerContinuous",
+      "shrinkToFit": true
+    },
+    "value": {
+      "value": "LongHeading"
+    },
+    "centers": [
+      {
+        "ownerCol": 1,
+        "firstCol": 1,
+        "lastCol": 3,
+        "x": 0,
+        "width": 300,
+        "memberCols": [
+          1,
+          2,
+          3
+        ]
+      }
+    ],
+    "rowHeightPt": 18,
+    "width": 300,
+    "actualFontPt": 24,
+    "requiredHeightPt": 28.349999999999998,
+    "textTransformY": -13.799999999999997,
+    "overconstrained": true,
+    "printedRowStyle": "height:18pt",
+    "printedClipStyle": "left:0px;top:0px;width:300px;height:24px",
+    "printedFont": "24",
+    "printedTransform": "matrix(1,0,0,1,5,-13.799999999999997)"
+  },
+  {
+    "format": {
+      "align": "centerContinuous",
+      "wrap": true
+    },
+    "value": {
+      "value": "LongHeading"
+    },
+    "centers": [
+      {
+        "ownerCol": 1,
+        "firstCol": 1,
+        "lastCol": 3,
+        "x": 0,
+        "width": 300,
+        "memberCols": [
+          1,
+          2,
+          3
+        ]
+      }
+    ],
+    "rowHeightPt": 83.75,
+    "width": 300,
+    "actualFontPt": 24,
+    "requiredHeightPt": 28.349999999999998,
+    "textTransformY": 73.86666666666667,
+    "overconstrained": false,
+    "printedRowStyle": "height:83.75pt",
+    "printedClipStyle": "left:0px;top:0px;width:300px;height:111.66666666666667px",
+    "printedFont": "24",
+    "printedTransform": "matrix(1,0,0,1,5,73.86666666666667)"
+  },
+  {
+    "format": {
+      "align": "left",
+      "shrinkToFit": true
+    },
+    "value": {
+      "value": "LongHeading"
+    },
+    "centers": [],
+    "rowHeightPt": 18,
+    "width": 100,
+    "actualFontPt": 11,
+    "requiredHeightPt": 13.399999999999999,
+    "textTransformY": 6.133333333333336,
+    "overconstrained": false,
+    "printedRowStyle": "height:18pt",
+    "printedClipStyle": "left:0px;top:0px;width:100px;height:24px",
+    "printedFont": "11",
+    "printedTransform": "matrix(1,0,0,1,5,6.133333333333336)"
+  }
+]

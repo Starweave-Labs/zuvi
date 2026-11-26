@@ -1,0 +1,47 @@
+import assert from 'node:assert/strict';
+import { createRequire } from 'node:module';
+import { writeFile } from 'node:fs/promises';
+import { pdfTestRuntime } from '/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/tests/studio-pdf-test-runtime.mjs';
+const require = createRequire('/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui/package.json');
+const { JSDOM } = require('jsdom');
+const r = pdfTestRuntime();
+const model = r.load('../../packages/ui/src/components/OfficeStudio/studio-sheet-model.ts');
+const display = r.load('../../packages/ui/src/components/OfficeStudio/studio-sheet-text-display.ts');
+const geometry = r.load('../../packages/ui/src/components/OfficeStudio/studio-sheet-text-layout.ts');
+const { createStudioPrintHtml } = r.load('../src/pages/collaboration/office-studio/studio-print.ts');
+const results = [];
+for (const format of [
+  { align: 'centerContinuous', shrinkToFit: true },
+  { align: 'centerContinuous', wrap: true },
+  { align: 'left', shrinkToFit: true },
+]) {
+  const document = {
+    version: 1, id: 'center-auto', kind: 'excel', name: 'Center-auto.xlsx', activeSheetId: 's',
+    defaultFont: { family: 'Arial', sizePt: 11, bold: false, italic: false },
+    sheets: [{ id: 's', name: 'Sheet', rowCount: 1, columnCount: 3, rowHeightModes: { '1': 'auto' },
+      columnWidths: { A: 100, B: 100, C: 100 },
+      cells: { A1: { input: 'LongHeading', fontSize: 24, ...format },
+        B1: { input: '', align: 'centerContinuous' }, C1: { input: '', align: 'centerContinuous' } } }],
+  };
+  const sheet = document.sheets[0], calculated = model.studioCalculate(document), measure = display.studioSheetTextMeasure(undefined);
+  const heights = display.studioSheetDerivedRowHeights(document, sheet, calculated, [1], [0, 100, 200, 300], measure);
+  const center = display.studioSheetCenteredTextSegments(document, sheet, calculated, 1, [0, 100, 200, 300]);
+  const width = center.find(segment => segment.ownerCol === 1)?.width ?? 100;
+  const input = display.studioSheetCellTextInput(document, sheet, calculated, 'A1', { width, height: heights['1'] * 4 / 3 }, measure);
+  const layout = geometry.sheetLayoutText(input);
+  const html = createStudioPrintHtml(document);
+  const parsed = new JSDOM(html).window.document;
+  const row = parsed.querySelector('.studio-print-sheet tr'), clip = row.querySelector('.studio-print-text-clip'), text = row.querySelector('[data-effective-font-size]');
+  results.push({ format, value: calculated.read('s', 'A1'), centers: center, rowHeightPt: heights['1'], width,
+    actualFontPt: layout.effectiveFont.sizePt, requiredHeightPt: (layout.naturalTextBox.height + layout.padding.top + layout.padding.bottom) * 3 / 4,
+    textTransformY: layout.transform.f, overconstrained: layout.overconstrained,
+    printedRowStyle: row.getAttribute('style'), printedClipStyle: clip.getAttribute('style'), printedFont: text.dataset.effectiveFontSize,
+    printedTransform: text.firstElementChild.style.transform });
+  await writeFile(`/tmp/zuvi-sheet-text-review-2026-11-27/center-${format.shrinkToFit ? 'shrink' : 'wrap'}-${format.align}.html`, html);
+}
+await writeFile('/tmp/zuvi-sheet-text-review-2026-11-27/center-auto-height-results.json', JSON.stringify(results, null, 2));
+assert.equal(results[0].width, 300);
+assert.ok(results[0].requiredHeightPt > results[0].rowHeightPt);
+assert.ok(results[0].textTransformY < 0);
+assert.equal(results[2].overconstrained, false);
+console.log(JSON.stringify(results, null, 2));

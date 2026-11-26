@@ -1,0 +1,162 @@
+{
+  "observedResult": {
+    "browserPassed": 2,
+    "nativeInspectionPassed": false
+  },
+  "reasons": [
+    "CJK font ToUnicode returns compatibility radicals. Poppler glyphs match and NFKC restores the source phrase; raw codepoints are not claimed identical.",
+    "The 62-character shrink example reaches the existing 2.5pt minimum and remains wider than the content box. PDF crops its final four characters, matching the grid/print clipping contract. A shorter fit-capable source plus explicit visible-fit geometry will replace this acceptance sample."
+  ],
+  "entries": [
+    {
+      "path": "browser-roundtrip-evidence.json",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/browser-roundtrip-evidence.json",
+      "bytes": 8364,
+      "sha256": "907cceecdca770bd99fdb57e95ad553dc3d3a010b69be2576134a928b95aaee6"
+    },
+    {
+      "path": "text-dialog-light-320.png",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/text-dialog-light-320.png",
+      "bytes": 38889,
+      "sha256": "fd903f69431dfbd01cb2eaf6e6c8952e20c7f0badec655e0fd86e1aee9d3c5ff"
+    },
+    {
+      "path": "text-source.xlsx",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/text-source.xlsx",
+      "bytes": 11006,
+      "sha256": "571b087104f098094659de1f0d89381b46f959092e1dcff47675417b1728220a"
+    },
+    {
+      "path": "text-dialog-light.png",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/text-dialog-light.png",
+      "bytes": 134567,
+      "sha256": "c916603e3bd10fb7726ac55ea44c3dcbcf5cb045a7fa657b8be0ee66507f1783"
+    },
+    {
+      "path": "inspect-native-evidence.py",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/inspect-native-evidence.py",
+      "bytes": 3608,
+      "sha256": "ef102ddfdfbab99b8137d4a4198d82fb4fb124691ad6f682e051783fd5800f01"
+    },
+    {
+      "path": "browser-guard-evidence.json",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/browser-guard-evidence.json",
+      "bytes": 332,
+      "sha256": "f9d96747f34114ba8309dd142a6506bf8c0d4b7cf3719404e550d9ff7b75c224"
+    },
+    {
+      "path": "text-dialog-dark-320.png",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/text-dialog-dark-320.png",
+      "bytes": 38187,
+      "sha256": "8994259a905a977a78f2c0a0344bbcae5dac9634fac86d0f07d7e8bb1929d631"
+    },
+    {
+      "path": "text-roundtrip-2.xlsx",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/text-roundtrip-2.xlsx",
+      "bytes": 12257,
+      "sha256": "d3015e7845970886292d2da8ebce688c66907b2ef4c47ddf43aeb77c98c0fec5"
+    },
+    {
+      "path": "text-results-light.png",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/text-results-light.png",
+      "bytes": 154652,
+      "sha256": "f4ffc7e2e9c6101e49b038dc76f58eaecf41eab7ff35af2cbed4510c86147a65"
+    },
+    {
+      "path": "text-dialog-dark.png",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/text-dialog-dark.png",
+      "bytes": 126412,
+      "sha256": "b8531feb8f40792c6cc44a595957040253ad86b4476c322a4caa1bdc8b33d319"
+    },
+    {
+      "path": "text-roundtrip-1.xlsx",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/text-roundtrip-1.xlsx",
+      "bytes": 12257,
+      "sha256": "d3015e7845970886292d2da8ebce688c66907b2ef4c47ddf43aeb77c98c0fec5"
+    },
+    {
+      "path": "text-print.html",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/text-print.html",
+      "bytes": 51426,
+      "sha256": "394f69507c21dfd40a742f685cb9ba05a68a281fd33ab5714800c757f6d62e17"
+    },
+    {
+      "path": "text-hidden-master-grid.png",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/text-hidden-master-grid.png",
+      "bytes": 135039,
+      "sha256": "4b44d822163b5e5bc6553c489f0ccce1bbd7e904c08770fd48c4cb075b75c5d2"
+    },
+    {
+      "path": "text-protected-after-rejection.xlsx",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/text-protected-after-rejection.xlsx",
+      "bytes": 12284,
+      "sha256": "c378b071467e602a53d7778cdd2d4bb2db55d4a9ff9efcd01c893a2d72f3dbb1"
+    },
+    {
+      "path": "text-protected-rejection.png",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/text-protected-rejection.png",
+      "bytes": 149475,
+      "sha256": "b27515c8e047a59682a049e4916716197ee990e12f74e1c9b5a2f8436ac5133e"
+    },
+    {
+      "path": "text-print.png",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/text-print.png",
+      "bytes": 81876,
+      "sha256": "4858f5a456121859b6eecef921721a50096c9f9571a9a34a94aab12b62bc45c2"
+    },
+    {
+      "path": "text-print.pdf",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/text-print.pdf",
+      "bytes": 139668,
+      "sha256": "b403131e93507ceb9c44fe1c9fa283965b12cc7c3a9e64a30b2f8cd78aebb90e"
+    },
+    {
+      "path": "pdf-render/text-print-1.png",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/pdf-render/text-print-1.png",
+      "bytes": 57109,
+      "sha256": "87c693b9a966abcb50923ddc3478911a31248f029cfc54fabc5be0ecd3e8d36e"
+    },
+    {
+      "path": "pdf-render/text-print-2.png",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/pdf-render/text-print-2.png",
+      "bytes": 12463,
+      "sha256": "053bb6ef04a82944c86b3d81bc35da34b870cc3323ae3da5454b72007adc140c"
+    },
+    {
+      "path": "pdf-render/text-print-3.png",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/pdf-render/text-print-3.png",
+      "bytes": 20307,
+      "sha256": "c479b3bdb26125bf984df04da75a23bd9337a0c34fcd4eb5f9afd625f13b613f"
+    },
+    {
+      "path": "pdf-render/text-print-4.png",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/pdf-render/text-print-4.png",
+      "bytes": 18570,
+      "sha256": "5d0ec4afaded927080775ed1d5935730646084fbfddf52ab157775b7042b7ec1"
+    },
+    {
+      "path": "pdf-render/text-print-5.png",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/pdf-render/text-print-5.png",
+      "bytes": 19308,
+      "sha256": "8dc93df3ebba5c1f59a96d14b907669a61c02f48da5a0ce68c3796c174e370c6"
+    },
+    {
+      "path": "run.txt",
+      "originalPath": "/tmp/zuvi-excel-text-browser-fifth.txt",
+      "bytes": 801,
+      "sha256": "d24e817df1bdc18cb9c01a7a7be8a5ad404ce49f8d18d42c1e19ee750b706777"
+    },
+    {
+      "path": "native-inspection-failure.txt",
+      "originalPath": "/tmp/zuvi-excel-text-native-inspection.txt",
+      "bytes": 427,
+      "sha256": "e1d47f034059668461b0b8ccaa4a947d83f803058c9bd70ee82a09123f4ac2fe"
+    },
+    {
+      "path": "office-studio-sheet-text.spec.ts",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-sheet-text.spec.ts",
+      "bytes": 28183,
+      "sha256": "87f88407ad6a1dbb7cdf68e710a04e71cf3b80b1901b1419681949e7649b41f0"
+    }
+  ]
+}

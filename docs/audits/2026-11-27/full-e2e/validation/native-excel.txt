@@ -1,0 +1,290 @@
+TAP version 13
+# Subtest: custom format editing preserves values, formulas, native color sections and Chinese region codes over repeated XLSX saves
+ok 1 - custom format editing preserves values, formulas, native color sections and Chinese region codes over repeated XLSX saves
+  ---
+  duration_ms: 236.660084
+  ...
+# Subtest: skip blanks and arithmetic preserve native values, target formulas, links and explicit empty strings across XLSX saves
+ok 2 - skip blanks and arithmetic preserve native values, target formulas, links and explicit empty strings across XLSX saves
+  ---
+  duration_ms: 162.029417
+  ...
+# Subtest: series stop boundaries preserve untouched contents, styles, merges and hyperlinks across repeated XLSX edits and saves
+ok 3 - series stop boundaries preserve untouched contents, styles, merges and hyperlinks across repeated XLSX edits and saves
+  ---
+  duration_ms: 117.15
+  ...
+# Subtest: format painter keeps direct styles, default resets, formulas, hyperlinks and rules through repeated native XLSX saves
+ok 4 - format painter keeps direct styles, default resets, formulas, hyperlinks and rules through repeated native XLSX saves
+  ---
+  duration_ms: 100.853667
+  ...
+# Subtest: font and fill color filters retain native DXF references, conditional colors and clear behavior across XLSX saves
+ok 5 - font and fill color filters retain native DXF references, conditional colors and clear behavior across XLSX saves
+  ---
+  duration_ms: 137.805125
+  ...
+# Subtest: invalid native color filter references and duplicate columns are rejected without rewriting the source file
+ok 6 - invalid native color filter references and duplicate columns are rejected without rewriting the source file
+  ---
+  duration_ms: 17.579
+  ...
+# Subtest: Office cell formatting and explicit default widths survive repeated native XLSX saves
+ok 7 - Office cell formatting and explicit default widths survive repeated native XLSX saves
+  ---
+  duration_ms: 78.597666
+  ...
+# Subtest: XLSX replacement retains formulas, selected scope, original workbook and native hyperlink formatting
+ok 8 - XLSX replacement retains formulas, selected scope, original workbook and native hyperlink formatting
+  ---
+  duration_ms: 34.101917
+  ...
+# Subtest: font names and point sizes survive editing and repeated source-based or standalone XLSX saves
+ok 9 - font names and point sizes survive editing and repeated source-based or standalone XLSX saves
+  ---
+  duration_ms: 182.110542
+  ...
+# Subtest: native cell, row and column font inheritance preserves fractional sizes and explicit style zero across repeated XLSX saves
+ok 10 - native cell, row and column font inheritance preserves fractional sizes and explicit style zero across repeated XLSX saves
+  ---
+  duration_ms: 189.114875
+  ...
+# Subtest: changing only a fractional point size preserves the source font name, scheme, bold and links
+ok 11 - changing only a fractional point size preserves the source font name, scheme, bold and links
+  ---
+  duration_ms: 113.988875
+  ...
+# Subtest: source row and column edits retain fractional font overrides, inherited fonts and formula caches
+ok 12 - source row and column edits retain fractional font overrides, inherited fonts and formula caches
+  ---
+  duration_ms: 173.912916
+  ...
+# Subtest: older drafts without font fields preserve source fonts until explicitly edited
+ok 13 - older drafts without font fields preserve source fonts until explicitly edited
+  ---
+  duration_ms: 61.486916
+  ...
+# Subtest: invalid font names and point sizes are rejected before XLSX export
+ok 14 - invalid font names and point sizes are rejected before XLSX export
+  ---
+  duration_ms: 12.590459
+  ...
+# Subtest: native hyperlink metadata, original value types, formula caches and date precision survive repeated real XLSX saves
+ok 15 - native hyperlink metadata, original value types, formula caches and date precision survive repeated real XLSX saves
+  ---
+  duration_ms: 236.175334
+  ...
+# Subtest: native hyperlinks can be added, edited and explicitly removed without dropping source comments or changing linked values
+ok 16 - native hyperlinks can be added, edited and explicitly removed without dropping source comments or changing linked values
+  ---
+  duration_ms: 301.065959
+  ...
+# Subtest: legacy hyperlink hydration follows source identities, structure logs and renames while preserving edited cells and explicit metadata
+ok 17 - legacy hyperlink hydration follows source identities, structure logs and renames while preserving edited cells and explicit metadata
+  ---
+  duration_ms: 69.680292
+  ...
+# Subtest: legacy hyperlink hydration handles sheet-name swaps, removed destinations and explicitly cleared source metadata
+ok 18 - legacy hyperlink hydration handles sheet-name swaps, removed destinations and explicitly cleared source metadata
+  ---
+  duration_ms: 130.87225
+  ...
+# Subtest: modern hyperlink metadata migrates once and copied, filled or pasted links survive real XLSX round-trips
+ok 19 - modern hyperlink metadata migrates once and copied, filled or pasted links survive real XLSX round-trips
+  ---
+  duration_ms: 246.22925
+  ...
+# Subtest: all supported native CF and DV rules, styles, operators and prompts survive source-based and standalone XLSX round-trips
+ok 20 - all supported native CF and DV rules, styles, operators and prompts survive source-based and standalone XLSX round-trips
+  ---
+  duration_ms: 202.473
+  ...
+# Subtest: native rule coordinates migrate once after row or column edits and removed rules leave no old XLSX objects
+ok 21 - native rule coordinates migrate once after row or column edits and removed rules leave no old XLSX objects
+  ---
+  duration_ms: 188.848542
+  ...
+# Subtest: rules and formula date/time criteria coexist with native filters, merges, charts, comments and print breaks
+ok 22 - rules and formula date/time criteria coexist with native filters, merges, charts, comments and print breaks
+  ---
+  duration_ms: 159.442375
+  ...
+# Subtest: Office DXF background colours and standard generated contains-text formulas import without flattening their rules
+ok 23 - Office DXF background colours and standard generated contains-text formulas import without flattening their rules
+  ---
+  duration_ms: 43.003584
+  ...
+# Subtest: unsupported native rules, extensions, differential styles and overlapping validations are explicitly refused
+ok 24 - unsupported native rules, extensions, differential styles and overlapping validations are explicitly refused
+  ---
+  duration_ms: 246.714042
+  ...
+# Subtest: native rule budgets are checked before ExcelJS allocation and invalid drafts are rejected before source rewriting
+ok 25 - native rule budgets are checked before ExcelJS allocation and invalid drafts are rejected before source rewriting
+  ---
+  duration_ms: 41.671041
+  ...
+# Subtest: row and column edits move original styles, notes, dimensions, print ranges and native objects across real XLSX round-trips
+ok 26 - row and column edits move original styles, notes, dimensions, print ranges and native objects across real XLSX round-trips
+  ---
+  duration_ms: 197.944709
+  ...
+# Subtest: deleting trailing source rows or columns leaves no old cells or notes and clears filters whose header is deleted
+ok 27 - deleting trailing source rows or columns leaves no old cells or notes and clears filters whose header is deleted
+  ---
+  duration_ms: 89.678125
+  ...
+# Subtest: real XLSX source round-trip clears cells, recalculates cached formulas and preserves untouched workbook settings
+ok 28 - real XLSX source round-trip clears cells, recalculates cached formulas and preserves untouched workbook settings
+  ---
+  duration_ms: 45.698125
+  ...
+# Subtest: native numeric dates preserve serial 0, 1, 59, 60, 61 and fractional-day precision across repeated source and standalone XLSX saves
+ok 29 - native numeric dates preserve serial 0, 1, 59, 60, 61 and fractional-day precision across repeated source and standalone XLSX saves
+  ---
+  duration_ms: 233.306167
+  ...
+# Subtest: native ISO date cells use Gregorian days before the fictitious Excel leap day and retain their serials on subsequent saves
+ok 30 - native ISO date cells use Gregorian days before the fictitious Excel leap day and retain their serials on subsequent saves
+  ---
+  duration_ms: 103.6425
+  ...
+# Subtest: new XLSX documents export multiple worksheets, text format and native formulas
+ok 31 - new XLSX documents export multiple worksheets, text format and native formulas
+  ---
+  duration_ms: 14.484875
+  ...
+# Subtest: version 3 Paste Special results survive a standalone XLSX round-trip
+ok 32 - version 3 Paste Special results survive a standalone XLSX round-trip
+  ---
+  duration_ms: 26.536458
+  ...
+# Subtest: text formatting preserves an existing numeric type while subsequent typed input is stored as text
+ok 33 - text formatting preserves an existing numeric type while subsequent typed input is stored as text
+  ---
+  duration_ms: 62.839917
+  ...
+# Subtest: refuses unsupported source objects before importing or exporting them
+ok 34 - refuses unsupported source objects before importing or exporting them
+  ---
+  duration_ms: 31.370917
+  ...
+# Subtest: rejects out-of-range drafts rather than silently omitting data
+ok 35 - rejects out-of-range drafts rather than silently omitting data
+  ---
+  duration_ms: 11.125666
+  ...
+# Subtest: imports and exports an entirely empty worksheet
+ok 36 - imports and exports an entirely empty worksheet
+  ---
+  duration_ms: 18.892083
+  ...
+# Subtest: deleted worksheets are absent from the actual XLSX source-based export and workbook view indices stay valid
+ok 37 - deleted worksheets are absent from the actual XLSX source-based export and workbook view indices stay valid
+  ---
+  duration_ms: 25.194625
+  ...
+# Subtest: native merges, frozen panes, filter conditions and charts survive two actual XLSX exports and reimports
+ok 38 - native merges, frozen panes, filter conditions and charts survive two actual XLSX exports and reimports
+  ---
+  duration_ms: 101.144
+  ...
+# Subtest: contains filter escaping and Unicode series labels survive XLSX while complex charts are refused
+ok 39 - contains filter escaping and Unicode series labels survive XLSX while complex charts are refused
+  ---
+  duration_ms: 33.570166
+  ...
+# Subtest: empty chart titles survive reopening and huge implicit merge areas are refused before ExcelJS allocation
+ok 40 - empty chart titles survive reopening and huge implicit merge areas are refused before ExcelJS allocation
+  ---
+  duration_ms: 41.128084
+  ...
+# Subtest: the default Office Studio budget demo survives export, import and source-based re-export with valid root models
+ok 41 - the default Office Studio budget demo survives export, import and source-based re-export with valid root models
+  ---
+  duration_ms: 66.634667
+  ...
+# Subtest: row point heights and manual hides survive source and independent XLSX exports, edits and resets
+ok 42 - row point heights and manual hides survive source and independent XLSX exports, edits and resets
+  ---
+  duration_ms: 84.3655
+  ...
+# Subtest: 隐藏列往返：隐藏 B 后保存重开仍隐藏，结构编辑重映射
+ok 43 - 隐藏列往返：隐藏 B 后保存重开仍隐藏，结构编辑重映射
+  ---
+  duration_ms: 39.640292
+  ...
+# Subtest: fixed and dynamic arrays save native formulas/caches, reopen, resize, clear and retain protection conflicts
+ok 44 - fixed and dynamic arrays save native formulas/caches, reopen, resize, clear and retain protection conflicts
+  ---
+  duration_ms: 155.805125
+  ...
+# Subtest: native text alignment, rotation, shrink and row-mode identities survive source and standalone XLSX reopen cycles
+ok 45 - native text alignment, rotation, shrink and row-mode identities survive source and standalone XLSX reopen cycles
+  ---
+  duration_ms: 227.718167
+  ...
+# Subtest: explicit general, zero, false and an empty row-mode map clear source text and custom-height attributes
+ok 46 - explicit general, zero, false and an empty row-mode map clear source text and custom-height attributes
+  ---
+  duration_ms: 216.560083
+  ...
+# Subtest: native text row/column inheritance, explicit default styles and legacy hydration map through row and column edits
+ok 47 - native text row/column inheritance, explicit default styles and legacy hydration map through row and column edits
+  ---
+  duration_ms: 67.471416
+  ...
+# Subtest: native text field preflight rejects invalid alignment/angle/Boolean/row modes before ExcelJS and leaves source unchanged
+ok 48 - native text field preflight rejects invalid alignment/angle/Boolean/row modes before ExcelJS and leaves source unchanged
+  ---
+  duration_ms: 313.829875
+  ...
+# Subtest: actual file preparation restores native font0 and legacy row modes before editing or previewing an otherwise complete workbook
+ok 49 - actual file preparation restores native font0 and legacy row modes before editing or previewing an otherwise complete workbook
+  ---
+  duration_ms: 137.554708
+  ...
+# Subtest: export refreshes automatic height caches after text or font edits without changing the editor snapshot or fixed rows
+ok 50 - export refreshes automatic height caches after text or font edits without changing the editor snapshot or fixed rows
+  ---
+  duration_ms: 142.055583
+  ...
+# Subtest: automatic export caches use centered spans, cross-sheet array results, cleared content and protection without storing spill cells
+ok 51 - automatic export caches use centered spans, cross-sheet array results, cleared content and protection without storing spill cells
+  ---
+  duration_ms: 123.795542
+  ...
+# Subtest: automatic native height caches follow the sole visible row of a hidden logical merge master
+ok 52 - automatic native height caches follow the sole visible row of a hidden logical merge master
+  ---
+  duration_ms: 97.582708
+  ...
+# Subtest: the first export caches cross-sheet dynamic results beyond the prior declared view dimensions
+ok 53 - the first export caches cross-sheet dynamic results beyond the prior declared view dimensions
+  ---
+  duration_ms: 12215.119833
+  ...
+# Subtest: real font0 and its actual custom theme survive source and standalone saves without using cellXF0 or Calibri11 defaults
+ok 54 - real font0 and its actual custom theme survive source and standalone saves without using cellXF0 or Calibri11 defaults
+  ---
+  duration_ms: 114.719625
+  ...
+# Subtest: unresolvable font0 theme bindings fail clearly before ExcelJS and leave the original theme and bytes intact
+ok 55 - unresolvable font0 theme bindings fail clearly before ExcelJS and leave the original theme and bytes intact
+  ---
+  duration_ms: 17.523625
+  ...
+# Subtest: explicit text native error spellings stay strings while literal and formula errors stay native XLSX errors
+ok 56 - explicit text native error spellings stay strings while literal and formula errors stay native XLSX errors
+  ---
+  duration_ms: 128.927917
+  ...
+1..56
+# tests 56
+# suites 0
+# pass 56
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 19764.244292

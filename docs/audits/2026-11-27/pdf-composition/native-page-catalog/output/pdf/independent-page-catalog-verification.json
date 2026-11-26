@@ -1,0 +1,76 @@
+[
+  {
+    "file": "catalog-complex-original.pdf",
+    "pageCount": 5,
+    "labels": [
+      "前言-iii",
+      "前言-iv",
+      "正文-8",
+      "正文-9",
+      "Appendix-B"
+    ],
+    "printRange": [
+      0,
+      1,
+      3,
+      4
+    ],
+    "fieldValue": "Current",
+    "fieldDefault": "Default",
+    "widgets": 2,
+    "appearanceHashes": [
+      "09a284e75a70d6806f7b0c7b2b272dc7c5e813c84f2ead91aa630a31c90a0225",
+      "09a284e75a70d6806f7b0c7b2b272dc7c5e813c84f2ead91aa630a31c90a0225"
+    ],
+    "metadataHash": "1c4668f93c9328d4db4cd56888d9245ef1f5a616d12ca08c2f6334069e340e3d"
+  },
+  {
+    "file": "catalog-complex-prepared.pdf",
+    "pageCount": 6,
+    "labels": [
+      "前言-iv",
+      "2",
+      "前言-iv",
+      "Appendix-B",
+      "前言-iii",
+      "正文-9"
+    ],
+    "printRange": [
+      0,
+      0,
+      2,
+      5
+    ],
+    "fieldValue": "Current",
+    "fieldDefault": "Default",
+    "widgets": 2,
+    "appearanceHashes": [
+      "09a284e75a70d6806f7b0c7b2b272dc7c5e813c84f2ead91aa630a31c90a0225",
+      "09a284e75a70d6806f7b0c7b2b272dc7c5e813c84f2ead91aa630a31c90a0225"
+    ],
+    "metadataHash": "1c4668f93c9328d4db4cd56888d9245ef1f5a616d12ca08c2f6334069e340e3d"
+  },
+  {
+    "file": "catalog-complex-extracted.pdf",
+    "pageCount": 4,
+    "labels": [
+      "正文-9",
+      "2",
+      "Appendix-B",
+      "前言-iv"
+    ],
+    "printRange": [
+      0,
+      0,
+      2,
+      3
+    ],
+    "fieldValue": "Current",
+    "fieldDefault": "Default",
+    "widgets": 1,
+    "appearanceHashes": [
+      "09a284e75a70d6806f7b0c7b2b272dc7c5e813c84f2ead91aa630a31c90a0225"
+    ],
+    "metadataHash": "1c4668f93c9328d4db4cd56888d9245ef1f5a616d12ca08c2f6334069e340e3d"
+  }
+]

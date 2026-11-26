@@ -1,0 +1,111 @@
+{
+  "purpose": "Original independent hidden merge/master UI and print diagnostics before repair verification.",
+  "entries": [
+    {
+      "path": "actual-ui-runtime.mjs.txt.raw.gz",
+      "originalPath": "/tmp/zuvi-sheet-text-review-2026-11-27/actual-ui-runtime.mjs",
+      "bytes": 932,
+      "sha256": "4d4f84b948e6ea1da2af3f06a09ddc3f813248c114777f9bb2cdf31956c0afcd",
+      "uncompressedOriginal": {
+        "bytes": 2053,
+        "sha256": "09e83d15a833fce9420122cafca493a72eada995e5b995e28429451a7e126605"
+      },
+      "normalizedView": {
+        "path": "actual-ui-runtime.mjs.txt",
+        "bytes": 2052,
+        "sha256": "405fc3d4dc06fe25182e760c6a02994b26e424f5d88dd733fc66528037d0f9cb",
+        "change": "Trailing whitespace and excess blank EOF only; raw gzip retains the complete original."
+      }
+    },
+    {
+      "path": "hidden-both-origins-grid.html",
+      "originalPath": "/tmp/zuvi-sheet-text-review-2026-11-27/hidden-both-origins-grid.html",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hidden-both-origins-print.html",
+      "originalPath": "/tmp/zuvi-sheet-text-review-2026-11-27/hidden-both-origins-print.html",
+      "bytes": 11822,
+      "sha256": "4d2650d7c1d756880e08c6176b38a6916cf7bc58028cf1844862ea9d71537cff"
+    },
+    {
+      "path": "hidden-control-grid.html",
+      "originalPath": "/tmp/zuvi-sheet-text-review-2026-11-27/hidden-control-grid.html",
+      "bytes": 26753,
+      "sha256": "3acfcc6c765df8f73e75791954301d069974a8325163757f9716a8db896347ca"
+    },
+    {
+      "path": "hidden-control-print.html",
+      "originalPath": "/tmp/zuvi-sheet-text-review-2026-11-27/hidden-control-print.html",
+      "bytes": 12927,
+      "sha256": "518093daa7c008ba0d8f51ce332ffb4a50aa1125fd5c9cf3138964bae789e93a"
+    },
+    {
+      "path": "hidden-first-column-grid.html",
+      "originalPath": "/tmp/zuvi-sheet-text-review-2026-11-27/hidden-first-column-grid.html",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hidden-first-column-print.html",
+      "originalPath": "/tmp/zuvi-sheet-text-review-2026-11-27/hidden-first-column-print.html",
+      "bytes": 13546,
+      "sha256": "c6e3b73c683322a46277935384ff6c943e4a4d411f2d169974ddc3411ba2ad93"
+    },
+    {
+      "path": "hidden-first-row-grid.html",
+      "originalPath": "/tmp/zuvi-sheet-text-review-2026-11-27/hidden-first-row-grid.html",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hidden-first-row-print.html",
+      "originalPath": "/tmp/zuvi-sheet-text-review-2026-11-27/hidden-first-row-print.html",
+      "bytes": 12336,
+      "sha256": "661102dbe1f2cc15a6e801fd2908e2e0a9f1342b7e7a6bb3fa432e10e1516b35"
+    },
+    {
+      "path": "hidden-master-auto-height-results.json",
+      "originalPath": "/tmp/zuvi-sheet-text-review-2026-11-27/hidden-master-auto-height-results.json",
+      "bytes": 2794,
+      "sha256": "a8941d3be0e2f490fcdec7f567627a5092d6a9a5b54b5b69ab562eea490caf83"
+    },
+    {
+      "path": "hidden-master-auto-height.mjs.txt",
+      "originalPath": "/tmp/zuvi-sheet-text-review-2026-11-27/hidden-master-auto-height.mjs",
+      "bytes": 4184,
+      "sha256": "f62d97aa4c02306fa44c8015d1d93762256c0530ec049e9c4131e88bc39cf11b"
+    },
+    {
+      "path": "hidden-merge-origins-results.json",
+      "originalPath": "/tmp/zuvi-sheet-text-review-2026-11-27/hidden-merge-origins-results.json",
+      "bytes": 1956,
+      "sha256": "388b2558fdb2ab79a1daa642b68ef9841b23bfe064982abd7f395aaf45566227"
+    },
+    {
+      "path": "hidden-merge-origins.mjs.txt",
+      "originalPath": "/tmp/zuvi-sheet-text-review-2026-11-27/hidden-merge-origins.mjs",
+      "bytes": 3627,
+      "sha256": "edf30df313c0fa7915a4c712bdc5947ea66b61869bac2b7f310ffce218b7a27f"
+    },
+    {
+      "path": "hidden-merge-print-results.json",
+      "originalPath": "/tmp/zuvi-sheet-text-review-2026-11-27/hidden-merge-print-results.json",
+      "bytes": 321,
+      "sha256": "bb1ff90c23943de7bc5a1d5002c84b3ba6dca985545179dbaccf0afe9ac3e798"
+    },
+    {
+      "path": "hidden-merge-print.html",
+      "originalPath": "/tmp/zuvi-sheet-text-review-2026-11-27/hidden-merge-print.html",
+      "bytes": 9994,
+      "sha256": "7beb6f84799819715739391b9cd273796d2849f35dbe6c777c42cc0eeeecb291"
+    },
+    {
+      "path": "hidden-merge-print.mjs.txt",
+      "originalPath": "/tmp/zuvi-sheet-text-review-2026-11-27/hidden-merge-print.mjs",
+      "bytes": 2174,
+      "sha256": "1666957a6d7ef2251654d8c305dead52ff3b3fe20666c28a0390611fbef00777"
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+[
+  {
+    "label": "grow-auto",
+    "initialCache": 18,
+    "rows": [
+      {
+        "round": 1,
+        "uiHeightPt": 276.75,
+        "printHeightPt": 276.75,
+        "exportedHt": "18",
+        "customHeight": "0",
+        "independentExcelJSHeight": 18,
+        "reopenedCache": 18,
+        "reopenedMode": "auto",
+        "reopenedUiHeight": 276.75,
+        "font": 24,
+        "value": "Long wrapped content that needs several lines"
+      },
+      {
+        "round": 2,
+        "uiHeightPt": 276.75,
+        "printHeightPt": 276.75,
+        "exportedHt": "18",
+        "customHeight": "0",
+        "independentExcelJSHeight": 18,
+        "reopenedCache": 18,
+        "reopenedMode": "auto",
+        "reopenedUiHeight": 276.75,
+        "font": 24,
+        "value": "Long wrapped content that needs several lines"
+      }
+    ]
+  },
+  {
+    "label": "shrink-auto",
+    "initialCache": 276.75,
+    "rows": [
+      {
+        "round": 1,
+        "uiHeightPt": 18,
+        "printHeightPt": 18,
+        "exportedHt": "276.75",
+        "customHeight": "0",
+        "independentExcelJSHeight": 276.75,
+        "reopenedCache": 276.75,
+        "reopenedMode": "auto",
+        "reopenedUiHeight": 18,
+        "font": 11,
+        "value": "Short"
+      },
+      {
+        "round": 2,
+        "uiHeightPt": 18,
+        "printHeightPt": 18,
+        "exportedHt": "276.75",
+        "customHeight": "0",
+        "independentExcelJSHeight": 276.75,
+        "reopenedCache": 276.75,
+        "reopenedMode": "auto",
+        "reopenedUiHeight": 18,
+        "font": 11,
+        "value": "Short"
+      }
+    ]
+  },
+  {
+    "label": "fixed-control",
+    "initialCache": 18,
+    "rows": [
+      {
+        "round": 1,
+        "uiHeightPt": 18,
+        "printHeightPt": 18,
+        "exportedHt": "18",
+        "customHeight": "1",
+        "independentExcelJSHeight": 18,
+        "reopenedCache": 18,
+        "reopenedMode": "fixed",
+        "reopenedUiHeight": 18,
+        "font": 24,
+        "value": "Long wrapped content that needs several lines"
+      },
+      {
+        "round": 2,
+        "uiHeightPt": 18,
+        "printHeightPt": 18,
+        "exportedHt": "18",
+        "customHeight": "1",
+        "independentExcelJSHeight": 18,
+        "reopenedCache": 18,
+        "reopenedMode": "fixed",
+        "reopenedUiHeight": 18,
+        "font": 24,
+        "value": "Long wrapped content that needs several lines"
+      }
+    ]
+  }
+]

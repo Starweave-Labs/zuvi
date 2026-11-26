@@ -481,6 +481,14 @@ function transformMetadata(sheet: StudioSheet, edit: StudioSheetStructureEdit): 
     }
     next.rowHeights = heights;
   }
+  if (sheet.rowHeightModes && edit.axis === 'row') {
+    const modes: NonNullable<StudioSheet['rowHeightModes']> = {};
+    for (const [row, mode] of Object.entries(sheet.rowHeightModes)) {
+      const moved = studioTransformSheetIndex(Number(row), edit);
+      if (moved !== undefined) modes[String(moved)] = mode;
+    }
+    next.rowHeightModes = modes;
+  }
   if (sheet.hiddenRows && edit.axis === 'row') {
     const hidden = sheet.hiddenRows.flatMap((row) => {
       const moved = studioTransformSheetIndex(row, edit);

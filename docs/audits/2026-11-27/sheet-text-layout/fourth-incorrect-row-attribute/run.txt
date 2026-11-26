@@ -1,0 +1,37 @@
+[WebServer] (node:84572) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:84585) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+  ✘  1 [chromium] › e2e/office-studio-sheet-text.spec.ts:170:1 › advanced text editing, native default font, automatic rows, print and two XLSX reopens use the actual editor (13.6s)
+  ✓  2 [chromium] › e2e/office-studio-sheet-text.spec.ts:553:1 › text formatting holds invalid drafts, cancels cleanly and rejects protected batches before adding history (4.5s)
+
+
+  1) [chromium] › e2e/office-studio-sheet-text.spec.ts:170:1 › advanced text editing, native default font, automatic rows, print and two XLSX reopens use the actual editor
+
+    TypeError: Cannot read properties of null (reading '1')
+
+      307 |     const savedAutoRow = xml.match(/<row\b[^>]*\br="2"[^>]*>/)![0];
+      308 |     expect(savedAutoRow).not.toContain('customHeight="1"');
+    > 309 |     const cachedHeight = Number(savedAutoRow.match(/\bh="([^"]+)"/)![1]);
+          |                                                                    ^
+      310 |     expect((cachedHeight * 4) / 3).toBeCloseTo(wrappedHeight, 1);
+      311 |     expect(xml.match(/<row\b[^>]*\br="5"[^>]*>/)![0]).toContain('customHeight="1"');
+      312 |     expect(xml).toMatch(/<f[^>]*t="array"[^>]*ref="A10:B11"/);
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-sheet-text.spec.ts:309:68
+
+    Error Context: ../../../../../../tmp/zuvi-excel-text-playwright-results/office-studio-sheet-text-a-df2ac-opens-use-the-actual-editor-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../tmp/zuvi-excel-text-playwright-results/office-studio-sheet-text-a-df2ac-opens-use-the-actual-editor-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../../../tmp/zuvi-excel-text-playwright-results/office-studio-sheet-text-a-df2ac-opens-use-the-actual-editor-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/office-studio-sheet-text.spec.ts:170:1 › advanced text editing, native default font, automatic rows, print and two XLSX reopens use the actual editor
+  1 passed (21.6s)

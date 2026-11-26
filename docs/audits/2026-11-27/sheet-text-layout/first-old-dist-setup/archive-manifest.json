@@ -1,0 +1,83 @@
+{
+  "kind": "interrupted-old-dist-setup",
+  "reason": "The first run confirmed the worktree dev service cwd on port 5268 but started before a fresh @zuvi/react build. Docs consumes packages/ui/dist. The missing text toolbar in old dist is not recorded as a product failure. The owned Playwright CLI received SIGINT; no primary service or root PDF test was terminated.",
+  "entries": [
+    {
+      "path": ".last-run.json",
+      "originalPath": "/tmp/zuvi-excel-text-playwright-results/.last-run.json",
+      "bytes": 101,
+      "sha256": "a93b47873db5aca1dbf2b63367ae62fff49b4329d607efa254aaa8b3f3554fcf"
+    },
+    {
+      "path": "office-studio-sheet-text-a-df2ac-opens-use-the-actual-editor-chromium/error-context.md.raw.gz",
+      "originalPath": "/tmp/zuvi-excel-text-playwright-results/office-studio-sheet-text-a-df2ac-opens-use-the-actual-editor-chromium/error-context.md",
+      "bytes": 12663,
+      "sha256": "b617612b355ad58d92b5ec524720f34121bdc2b28b4ea3136b4056ab400aa3ec",
+      "uncompressedOriginal": {
+        "bytes": 57968,
+        "sha256": "18fba8b8db25e60625371f43d7cef469575bb0d399a844151ffa43ff29ba5eed"
+      },
+      "normalizedView": {
+        "path": "office-studio-sheet-text-a-df2ac-opens-use-the-actual-editor-chromium/error-context.md",
+        "bytes": 57963,
+        "sha256": "6eef1e786f15347bece56d15b6ef167d43db23e6d289f049f7a66e743a2dc50f",
+        "change": "Trailing spaces/tabs only; original bytes are preserved in the raw gzip archive."
+      }
+    },
+    {
+      "path": "office-studio-sheet-text-a-df2ac-opens-use-the-actual-editor-chromium/trace.zip",
+      "originalPath": "/tmp/zuvi-excel-text-playwright-results/office-studio-sheet-text-a-df2ac-opens-use-the-actual-editor-chromium/trace.zip",
+      "bytes": 3675932,
+      "sha256": "0b13173c9ca058a97469570d1f4532cf9f8e907923f4afef391970e9ed6034fb"
+    },
+    {
+      "path": "office-studio-sheet-text-t-0c2e6-tches-before-adding-history-chromium/error-context.md.raw.gz",
+      "originalPath": "/tmp/zuvi-excel-text-playwright-results/office-studio-sheet-text-t-0c2e6-tches-before-adding-history-chromium/error-context.md",
+      "bytes": 2883,
+      "sha256": "87734298889e1b5003a781c1bcf72fcfd74d52d8dd31f479ab6ebc924ba4f449",
+      "uncompressedOriginal": {
+        "bytes": 9252,
+        "sha256": "d046354aab3b9adfddcd4adc068cc5033027f6bd07c59721ffaabcce5adf4fbd"
+      },
+      "normalizedView": {
+        "path": "office-studio-sheet-text-t-0c2e6-tches-before-adding-history-chromium/error-context.md",
+        "bytes": 9250,
+        "sha256": "bbf394b013f62df645c53bafba307de1e60d4b0f836166587ff6a50e8e31039e",
+        "change": "Trailing spaces/tabs only; original bytes are preserved in the raw gzip archive."
+      }
+    },
+    {
+      "path": "office-studio-sheet-text-t-0c2e6-tches-before-adding-history-chromium/trace.zip",
+      "originalPath": "/tmp/zuvi-excel-text-playwright-results/office-studio-sheet-text-t-0c2e6-tches-before-adding-history-chromium/trace.zip",
+      "bytes": 2656436,
+      "sha256": "571bd98d334952e3339fb1a65e0a8dbcc474927f30db5f1498d93ca05bba99d6"
+    },
+    {
+      "path": "run.txt.raw.gz",
+      "originalPath": "/tmp/zuvi-excel-text-browser-first.txt",
+      "bytes": 1193,
+      "sha256": "c9e1421b14be95533240bceef50113f49864798068ec6b6d38628159d7faccb0",
+      "uncompressedOriginal": {
+        "bytes": 5365,
+        "sha256": "73035292a8ca008e26049dda8c57e2f33f9bfe43ce6a710c969f98947f75db54"
+      },
+      "normalizedView": {
+        "path": "run.txt",
+        "bytes": 5361,
+        "sha256": "c8c0505ff426ff2e6bdba3e5fbd662cdcc262ca00280208b5e5d06daa3316447",
+        "change": "Trailing spaces/tabs only; original bytes are preserved in the raw gzip archive."
+      }
+    },
+    {
+      "path": "text-source.xlsx",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/text-source.xlsx",
+      "bytes": 8181,
+      "sha256": "90f2d87f64b8371b7e38a3a0f7d2018fdf4fd933febe6584f88ffc9f16e9d930"
+    }
+  ],
+  "observedResult": {
+    "failed": 1,
+    "interrupted": 1,
+    "missingEntry": "文字排版"
+  }
+}

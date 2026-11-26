@@ -10,8 +10,9 @@ import {
   studioRewriteSpillReferences,
 } from './studio-sheet-arrays';
 import type { StudioArrayRange } from './studio-sheet-arrays';
-import { studioCellFontIssue } from './studio-model';
+import { studioCellFontIssue } from './studio-cell-font';
 import { studioCellStyleIssue } from './studio-cell-style';
+import { sheetDefaultTextFormat } from './studio-sheet-text-properties';
 import {
   studioCopySheetHyperlinks,
   studioDeleteSheetHyperlinks,
@@ -32,6 +33,7 @@ import type { StudioSheetRuleCalculation, StudioSheetRuleResult } from './studio
 import type {
   StudioCell,
   StudioExcelDocument,
+  StudioExcelDefaultFont,
   StudioSheet,
   StudioSheetHyperlink,
 } from './studio-types';
@@ -78,6 +80,8 @@ export type StudioSheetClipboardValue =
   | { type: 'string' | 'error'; value: string };
 
 export interface StudioSheetClipboardOrigin extends SheetPosition {
+  /** Captured once; absent on old payloads retains the application's legacy defaults. */
+  defaultFont?: StudioExcelDefaultFont;
   rows?: number;
   columns?: number;
   cells?: StudioCell[];
@@ -96,14 +100,17 @@ const clipboardCellKeys = new Set([
   'fontFamily',
   'fontSize',
   'wrap',
+  'shrinkToFit',
   'color',
   'background',
   'numberFormat',
   'align',
   'verticalAlign',
+  'indent',
+  'textRotation',
   'borders',
 ]);
-const clipboardBooleanCellKeys = ['bold', 'italic', 'underline', 'wrap'] as const;
+const clipboardBooleanCellKeys = ['bold', 'italic', 'underline', 'wrap', 'shrinkToFit'] as const;
 const clipboardFormatDefaults: Omit<StudioCell, 'input'> = {
   bold: false,
   italic: false,
@@ -111,11 +118,14 @@ const clipboardFormatDefaults: Omit<StudioCell, 'input'> = {
   fontFamily: 'Calibri',
   fontSize: 11,
   wrap: false,
+  shrinkToFit: false,
   color: '#000000',
   background: 'none',
   numberFormat: 'General',
   align: 'general',
   verticalAlign: 'bottom',
+  indent: 0,
+  textRotation: 0,
   borders: {},
 };
 
@@ -155,8 +165,7 @@ function clipboardCell(value: unknown): StudioCell | undefined {
         cell.numberFormat.length > 1024 ||
         // 这里就是要匹配控制字符本身（XML 不可表示字符校验），关闭该规则。
         // eslint-disable-next-line no-control-regex
-        /[\u0000-\u0008\u000b\u000c\u000e-\u001f]/.test(cell.numberFormat))) ||
-    ('align' in cell && !['left', 'center', 'right', 'general'].includes(String(cell.align)))
+        /[\u0000-\u0008\u000b\u000c\u000e-\u001f]/.test(cell.numberFormat)))
   )
     return;
   const candidate = cloneClipboardCell(cell as unknown as StudioCell);
@@ -237,6 +246,14 @@ export function studioClipboardOrigin(
     const position = { row: value.row, col: value.col };
     if (!validSheetPosition(position)) return undefined;
     if (value.version === 1) return position;
+    let defaultFont: StudioExcelDefaultFont | undefined;
+    if (value.defaultFont !== undefined) {
+      const defaults = sheetDefaultTextFormat(value.defaultFont);
+      defaultFont = {
+        family: defaults.fontFamily, sizePt: defaults.fontSize,
+        bold: defaults.bold, italic: defaults.italic,
+      };
+    }
     if (
       !Array.isArray(value.hyperlinks) ||
       value.hyperlinks.length > STUDIO_SHEET_LIMITS.clipboardCells ||
@@ -268,6 +285,7 @@ export function studioClipboardOrigin(
     if (value.version === 2)
       return {
         ...position,
+        ...(defaultFont ? { defaultFont } : {}),
         hyperlinks: (value.hyperlinks as StudioSheetHyperlink[]).map((link) => ({ ...link })),
       };
     if (
@@ -326,6 +344,7 @@ export function studioClipboardOrigin(
             return undefined;
     return {
       ...position,
+      ...(defaultFont ? { defaultFont } : {}),
       rows: value.rows,
       columns: value.columns,
       cells: cells as StudioCell[],
@@ -718,10 +737,11 @@ export function studioParseTsv(text: string): string[][] {
   return rows;
 }
 
-function clipboardCellFormat(cell: StudioCell): Omit<StudioCell, 'input'> {
+function clipboardCellFormat(cell: StudioCell, defaultFont?: StudioExcelDefaultFont): Omit<StudioCell, 'input'> {
   const { input: _input, valueType: _valueType, ...format } = cloneClipboardCell(cell);
   return {
     ...clipboardFormatDefaults,
+    ...sheetDefaultTextFormat(defaultFont),
     ...format,
     borders: format.borders ?? {},
   };
@@ -1009,6 +1029,11 @@ export function studioPasteCells(
     mode
   );
   let hyperlinkCoverage = 0;
+  const capturedFont = rich && source?.defaultFont ? sheetDefaultTextFormat(source.defaultFont) : undefined;
+  const sourceFontDefaults = capturedFont ? {
+    fontFamily: capturedFont.fontFamily, fontSize: capturedFont.fontSize,
+    bold: capturedFont.bold, italic: capturedFont.italic,
+  } : {};
   for (let row = 0; row < sourceRows; row++) {
     const columns = rich ? sourceColumns : parsedRows[row].length;
     for (let col = 0; col < columns; col++) {
@@ -1019,7 +1044,7 @@ export function studioPasteCells(
       const sourcePosition = source ? { row: source.row + row, col: source.col + col } : undefined;
       const index = row * sourceColumns + col;
       const sourceCell = rich
-        ? source!.cells![index]
+        ? { ...sourceFontDefaults, ...source!.cells![index] }
         : ({ input: parsedRows[row][col] } satisfies StudioCell);
       const translated = sourcePosition
         ? studioTranslateFormula(
@@ -1036,7 +1061,7 @@ export function studioPasteCells(
             ? { numberFormat: sourceCell.numberFormat ?? 'General' }
             : {}),
         };
-      } else if (mode === 'formats') updates[address] = clipboardCellFormat(sourceCell);
+      } else if (mode === 'formats') updates[address] = clipboardCellFormat(sourceCell, source?.defaultFont);
       else if (mode === 'formulas' || mode === 'formulas-number-format') {
         updates[address] = {
           input: translated,
@@ -1225,6 +1250,11 @@ export function studioCopySheetClipboard(
     }));
   const payload = JSON.stringify({
     version: 3,
+    defaultFont: (() => {
+      const defaults = sheetDefaultTextFormat(document.defaultFont);
+      return { family: defaults.fontFamily, sizePt: defaults.fontSize,
+        bold: defaults.bold, italic: defaults.italic };
+    })(),
     row: bounds.firstRow,
     col: bounds.firstCol,
     rows,
@@ -2127,6 +2157,10 @@ export function studioSetRowHeight(
   )
     throw new Error('行高需要在 0–409.5 磅之间，0 表示隐藏。');
   const rowHeights = { ...sheet.rowHeights };
+  const rowHeightModes: NonNullable<StudioSheet['rowHeightModes']> =
+    sheet.rowHeightModes === undefined
+      ? Object.fromEntries(Object.keys(sheet.rowHeights ?? {}).map((row) => [row, 'fixed']))
+      : { ...sheet.rowHeightModes };
   const hidden = new Set(sheet.hiddenRows ?? []);
   let changed = false;
   for (let row = range.firstRow; row <= range.lastRow; row++) {
@@ -2138,6 +2172,11 @@ export function studioSetRowHeight(
       }
     } else {
       if (hidden.delete(row)) changed = true;
+      const mode = height === undefined ? 'auto' : 'fixed';
+      if ((rowHeightModes[key] ?? 'auto') !== mode) {
+        rowHeightModes[key] = mode;
+        changed = true;
+      }
       if (height === undefined) {
         if (key in rowHeights) {
           delete rowHeights[key];
@@ -2150,7 +2189,12 @@ export function studioSetRowHeight(
     }
   }
   if (!changed) return document;
-  const next = { ...sheet, rowHeights, hiddenRows: [...hidden].sort((a, b) => a - b) };
+  const next = {
+    ...sheet,
+    rowHeights,
+    ...(height !== 0 ? { rowHeightModes } : {}),
+    hiddenRows: [...hidden].sort((a, b) => a - b),
+  };
   return {
     ...document,
     activeSheetId: sheetId,

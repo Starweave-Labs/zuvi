@@ -55,6 +55,7 @@ export function pdfFieldKind(field: StudioPdfField): StudioPdfFieldDesign['kind'
 }
 
 export function pdfFieldDesign(field: StudioPdfField): StudioPdfFieldDesign {
+  if (field.type === 'opaque') throw new Error('此原生字段以只读方式保留，不能修改设计。');
   return (
     field.design || {
       kind: pdfFieldKind(field),
@@ -78,6 +79,23 @@ export function pdfFieldIssue(field: StudioPdfField, pageCount: number): string 
     typeof field.readOnly !== 'boolean'
   )
     return 'PDF 字段名称或只读属性无效。';
+  if (field.type === 'opaque') {
+    if (field.readOnly !== true || field.value !== '' || field.design !== undefined ||
+      field.options !== undefined || field.multiline !== undefined || field.selectedValues !== undefined ||
+      !text(field.nativeType, 256) || !field.nativeType || !text(field.passiveReason, 1000) || !field.passiveReason ||
+      !/^[a-f0-9]{64}$/.test(field.nativeValueHash ?? '')) return 'PDF 只读原生字段身份无效。';
+    for (const widget of pdfFieldWidgets(field)) {
+      const hidden = field.hiddenWidgets?.includes(widget);
+      if (!plain(widget) || !Number.isInteger(widget.page) || !finite(widget.page, 0, pageCount - 1) ||
+        !finite(widget.x, -100000, 100000) || !finite(widget.y, -100000, 100000) ||
+        !finite(widget.width, hidden ? 0 : Number.MIN_VALUE, 100000) || !finite(widget.height, hidden ? 0 : Number.MIN_VALUE, 100000) ||
+        !Number.isInteger(widget.flags) || !finite(widget.flags, 0, 4294967295) ||
+        (!!(widget.flags! & (1 | 2 | 32)) || widget.width === 0 || widget.height === 0) !== !!hidden ||
+        (widget.rotation !== undefined && (!finite(widget.rotation, -360000, 360000) || widget.rotation % 90 !== 0)))
+        return 'PDF 原生控件身份或位置无效。';
+    }
+    return;
+  }
   const kind = pdfFieldKind(field);
   const design = field.design;
   if (design !== undefined && (!plain(design) || !PDF_FIELD_KINDS.includes(design.kind)))
@@ -207,7 +225,7 @@ export function pdfFieldIssue(field: StudioPdfField, pageCount: number): string 
   for (const widget of widgets) {
     if (!plain(widget)) return 'PDF 控件页面、位置或尺寸无效。';
     const hidden = field.hiddenWidgets?.includes(widget);
-    if (widget.flags !== undefined && (!!(widget.flags & (2 | 32)) !== !!hidden)) return 'PDF 控件的可见性属性无效。';
+    if (widget.flags !== undefined && ((!!(widget.flags & (1 | 2 | 32)) || widget.width === 0 || widget.height === 0) !== !!hidden)) return 'PDF 控件的可见性属性无效。';
     if (
       !plain(widget) ||
       !Number.isInteger(widget.page) ||
@@ -252,6 +270,8 @@ export function pdfSetDesignedField(
     throw new Error('PDF 字段名称已存在。重复控件请添加到同一字段。');
   if (previousName && !document.fields.some((entry) => entry.name === previousName))
     throw new Error('PDF 字段不存在，请重新打开设计窗口。');
+  if (previousName && document.fields.some((entry) => entry.name === previousName && entry.type === 'opaque'))
+    throw new Error('此原生字段以只读方式保留，不能修改设计。');
   if (!previousName && document.fields.length >= 2000)
     throw new Error('PDF 字段数量已达到 2000 项上限。');
   const fields = previousName
@@ -266,6 +286,7 @@ export function pdfRemoveDesignedField(
 ): StudioPdfDocument {
   const field = document.fields.find((entry) => entry.name === name);
   if (!field) throw new Error('PDF 字段不存在。');
+  if (field.type === 'opaque') throw new Error('此原生字段以只读方式保留，不能单独删除。');
   const source = field.design ? field.design.sourceName : field.name;
   return {
     ...document,

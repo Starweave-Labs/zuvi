@@ -5,11 +5,12 @@ import {
 } from '@zuvi/react';
 
 export const STUDIO_FILE_LIMIT = 20 * 1024 * 1024;
+export const STUDIO_PDF_FILE_LIMIT = 50 * 1024 * 1024;
 
 export async function importStudioFile(file: File): Promise<OfficeStudioDocument> {
-  if (!file.size || file.size > STUDIO_FILE_LIMIT)
-    throw new Error('请导入非空的 DOCX、XLSX 或 PDF 文件，最大 20 MB。');
   const extension = file.name.split('.').pop()?.toLowerCase();
+  if (!file.size || file.size > (extension === 'pdf' ? STUDIO_PDF_FILE_LIMIT : STUDIO_FILE_LIMIT))
+    throw new Error('请导入非空文件。DOCX/XLSX 最大 20 MB，PDF 最大 50 MB。');
   if (extension === 'docx')
     return (await import('./studio-word-codec')).importStudioWord(file, file.name);
   if (extension === 'xlsx')

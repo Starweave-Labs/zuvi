@@ -1,0 +1,2631 @@
+
+> @zuvi/docs@0.2.1 test /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs
+> node --test translate-proxy.test.mjs tests/*.test.mjs
+
+TAP version 13
+# Subtest: 多选只操作最外层，锁定选区原子拒绝，分组保持视觉顺序并可往返保存
+ok 1 - 多选只操作最外层，锁定选区原子拒绝，分组保持视觉顺序并可往返保存
+  ---
+  duration_ms: 6.924875
+  ...
+# Subtest: 自由布局组的坐标、分布与手机流式覆盖真实保留
+ok 2 - 自由布局组的坐标、分布与手机流式覆盖真实保留
+  ---
+  duration_ms: 56.846709
+  ...
+# Subtest: 设计变量与交互状态验证安全且生成真实状态 CSS
+ok 3 - 设计变量与交互状态验证安全且生成真实状态 CSS
+  ---
+  duration_ms: 4.489875
+  ...
+# Subtest: 主组件跨页同步保留实例覆盖和新增本地子项，更新结构与样式可验证
+ok 4 - 主组件跨页同步保留实例覆盖和新增本地子项，更新结构与样式可验证
+  ---
+  duration_ms: 8.274334
+  ...
+# Subtest: 变体切换与复制实例的映射唯一，脱离后保留设计；没有主组件的旧存档仍可读取
+ok 5 - 变体切换与复制实例的映射唯一，脱离后保留设计；没有主组件的旧存档仍可读取
+  ---
+  duration_ms: 1.643209
+  ...
+# Subtest: 受限表达式支持类型、条件和分支，拒绝任意代码及危险属性绑定
+ok 6 - 受限表达式支持类型、条件和分支，拒绝任意代码及危险属性绑定
+  ---
+  duration_ms: 1.528625
+  ...
+# Subtest: 关联实例锚点独立且复制、更新与链接对应；独立区块脱离关联但保留规范和交互依赖
+ok 7 - 关联实例锚点独立且复制、更新与链接对应；独立区块脱离关联但保留规范和交互依赖
+  ---
+  duration_ms: 24.215083
+  ...
+# Subtest: 页面检查定位失效变量、组件关联、数据字段、锚点与窄屏固定宽度
+ok 8 - 页面检查定位失效变量、组件关联、数据字段、锚点与窄屏固定宽度
+  ---
+  duration_ms: 12.755959
+  ...
+# Subtest: 现有全部模板通过严格配置检查，页面设计检查无配置错误
+ok 9 - 现有全部模板通过严格配置检查，页面设计检查无配置错误
+  ---
+  duration_ms: 18.520666
+  ...
+# Subtest: Chart is a separate serializable catalog entry, with default six-month data and no DataChart replacement
+ok 10 - Chart is a separate serializable catalog entry, with default six-month data and no DataChart replacement
+  ---
+  duration_ms: 46.817792
+  ...
+# Subtest: wide rows map only allowlisted fields to aligned cartesian props, preserving signed, zero and null values
+ok 11 - wide rows map only allowlisted fields to aligned cartesian props, preserving signed, zero and null values
+  ---
+  duration_ms: 1.317458
+  ...
+# Subtest: cartesian resolver never coerces numbers or invents zeros and skips invalid series/rows without misaligning columns
+ok 12 - cartesian resolver never coerces numbers or invents zeros and skips invalid series/rows without misaligning columns
+  ---
+  duration_ms: 3.319209
+  ...
+# Subtest: pie, donut, treemap and funnel retain nonnegative slices and zero without forwarding unrelated fields
+ok 13 - pie, donut, treemap and funnel retain nonnegative slices and zero without forwarding unrelated fields
+  ---
+  duration_ms: 1.359625
+  ...
+# Subtest: scatter groups flat points by explicit seriesId, validates series-local IDs, and preserves zero and negative coordinates
+ok 14 - scatter groups flat points by explicit seriesId, validates series-local IDs, and preserves zero and negative coordinates
+  ---
+  duration_ms: 0.878417
+  ...
+# Subtest: heatmap maps signed scalar cells with unique coordinates and sanitized colors
+ok 15 - heatmap maps signed scalar cells with unique coordinates and sanitized colors
+  ---
+  duration_ms: 0.225042
+  ...
+# Subtest: waterfall preserves signed increments while gauge requires one finite in-range value and valid bounds
+ok 16 - waterfall preserves signed increments while gauge requires one finite in-range value and valid bounds
+  ---
+  duration_ms: 4.413625
+  ...
+# Subtest: radar retains aligned finite nonnegative axes, drops invalid rows rather than inventing values and requires three axes
+ok 17 - radar retains aligned finite nonnegative axes, drops invalid rows rather than inventing values and requires three axes
+  ---
+  duration_ms: 1.545
+  ...
+# Subtest: scatter bubble value is optional but must be nonnegative and finite when provided
+ok 18 - scatter bubble value is optional but must be nonnegative and finite when provided
+  ---
+  duration_ms: 0.256334
+  ...
+# Subtest: resolver bounds diagnostics and processing, rejects inherited required fields and never invokes accessors
+ok 19 - resolver bounds diagnostics and processing, rejects inherited required fields and never invokes accessors
+  ---
+  duration_ms: 5.2405
+  ...
+# Subtest: Chart color sanitization refuses escaped/comment-obfuscated URLs without mutating safe token colors
+ok 20 - Chart color sanitization refuses escaped/comment-obfuscated URLs without mutating safe token colors
+  ---
+  duration_ms: 0.642166
+  ...
+# Subtest: Chart JSON validation roundtrips each type and rejects nested models, unsafe fields and serialized callbacks
+ok 21 - Chart JSON validation roundtrips each type and rejects nested models, unsafe fields and serialized callbacks
+  ---
+  duration_ms: 12.739625
+  ...
+# Subtest: adapter renders the real public Chart with sanitized discriminated data, serializable labels and bounded presentation
+ok 22 - adapter renders the real public Chart with sanitized discriminated data, serializable labels and bounded presentation
+  ---
+  duration_ms: 107.20575
+  ...
+# Subtest: adapter forwards all 17 forms and opt-in interaction controls with canonical selection IDs
+ok 23 - adapter forwards all 17 forms and opt-in interaction controls with canonical selection IDs
+  ---
+  duration_ms: 86.728458
+  ...
+# Subtest: adapter reports sanitized data issues instead of silently drawing malformed input and missing selection IDs
+ok 24 - adapter reports sanitized data issues instead of silently drawing malformed input and missing selection IDs
+  ---
+  duration_ms: 32.4475
+  ...
+# Subtest: Chart has exactly one lazy data route and renders the real exported component with the requested title
+ok 25 - Chart has exactly one lazy data route and renders the real exported component with the requested title
+  ---
+  duration_ms: 128.788542
+  ...
+# Subtest: primary trend and compact radial/scatter examples contain valid explicitly synthetic data
+ok 26 - primary trend and compact radial/scatter examples contain valid explicitly synthetic data
+  ---
+  duration_ms: 39.891083
+  ...
+# Subtest: docs publish the exact six-type data API, state semantics, customization and flat builder contract
+ok 27 - docs publish the exact six-type data API, state semantics, customization and flat builder contract
+  ---
+  duration_ms: 27.658875
+  ...
+# Subtest: Chart docs styling stays token-driven, container responsive and scoped to the new page
+ok 28 - Chart docs styling stays token-driven, container responsive and scoped to the new page
+  ---
+  duration_ms: 7.262708
+  ...
+# Subtest: real docs interactions retype/recolor without changing data, reflect actual events, and mount secondary panels only when open
+ok 29 - real docs interactions retype/recolor without changing data, reflect actual events, and mount secondary panels only when open
+  ---
+  duration_ms: 1329.641417
+  ...
+# Subtest: 17 named forms use exactly the locked 13 Chart discriminants and four prop variants
+ok 30 - 17 named forms use exactly the locked 13 Chart discriminants and four prop variants
+  ---
+  duration_ms: 1.994958
+  ...
+# Subtest: all presets validate the correct editable data union; no executable or incompatible props leak into JSON
+ok 31 - all presets validate the correct editable data union; no executable or incompatible props leak into JSON
+  ---
+  duration_ms: 1.343875
+  ...
+# Subtest: flat shared fixtures are reproducible text counts, trigonometry, geometry and dice enumeration
+ok 32 - flat shared fixtures are reproducible text counts, trigonometry, geometry and dice enumeration
+  ---
+  duration_ms: 0.623708
+  ...
+# Subtest: JSON parser rejects prototype keys, functions, deep objects, nonfinite values and arbitrary CSS
+ok 33 - JSON parser rejects prototype keys, functions, deep objects, nonfinite values and arbitrary CSS
+  ---
+  duration_ms: 11.49875
+  ...
+# Subtest: data validation preserves gaps, zero and signed deltas, but rejects malformed branch data and ids
+ok 34 - data validation preserves gaps, zero and signed deltas, but rejects malformed branch data and ids
+  ---
+  duration_ms: 0.977416
+  ...
+# Subtest: three lazy pages have matching nav, hash tabs and 86 navigation entries; group follows data
+ok 35 - three lazy pages have matching nav, hash tabs and 86 navigation entries; group follows data
+  ---
+  duration_ms: 2.512167
+  ...
+# Subtest: gallery mounts previews on visibility and detail on selection; playground keeps one transactional Chart
+ok 36 - gallery mounts previews on visibility and detail on selection; playground keeps one transactional Chart
+  ---
+  duration_ms: 0.627125
+  ...
+# Subtest: page sources parse and local CSS uses tokens, bounded type sizes and narrow-container fallbacks
+ok 37 - page sources parse and local CSS uses tokens, bounded type sizes and narrow-container fallbacks
+  ---
+  duration_ms: 490.078834
+  ...
+# Subtest: laboratory is preview-first, wide and tabbed rather than a stack of settings cards
+ok 38 - laboratory is preview-first, wide and tabbed rather than a stack of settings cards
+  ---
+  duration_ms: 1.225375
+  ...
+# Subtest: laboratory transitions are local, opt-out capable and avoid remounting same-form data updates
+ok 39 - laboratory transitions are local, opt-out capable and avoid remounting same-form data updates
+  ---
+  duration_ms: 0.679458
+  ...
+# Subtest: copyable code contains the actual applied data branch and selected variant, not fake type aliases
+ok 40 - copyable code contains the actual applied data branch and selected variant, not fake type aliases
+  ---
+  duration_ms: 401.867542
+  ...
+# Subtest: owned pages and helpers strictly type-check against locked public Chart props without a build
+ok 41 - owned pages and helpers strictly type-check against locked public Chart props without a build
+  ---
+  duration_ms: 6020.701417
+  ...
+# Subtest: fresh Chart dist exposes the documented React component (integration pending main build)
+ok 42 - fresh Chart dist exposes the documented React component (integration pending main build)
+  ---
+  duration_ms: 102.443125
+  ...
+# Subtest: 高亮保留含引号注释、跨行代码和 NUL 的原文
+ok 43 - 高亮保留含引号注释、跨行代码和 NUL 的原文
+  ---
+  duration_ms: 1.005583
+  ...
+# Subtest: 类似 HTML 与注入标签的代码只以转义文本展示
+ok 44 - 类似 HTML 与注入标签的代码只以转义文本展示
+  ---
+  duration_ms: 0.147417
+  ...
+# Subtest: clipboard 权限被拒绝后仍尝试兼容复制
+ok 45 - clipboard 权限被拒绝后仍尝试兼容复制
+  ---
+  duration_ms: 0.235542
+  ...
+# Subtest: 兼容复制返回 false 或抛错时不误报成功，仍清理临时节点
+ok 46 - 兼容复制返回 false 或抛错时不误报成功，仍清理临时节点
+  ---
+  duration_ms: 0.096208
+  ...
+# Subtest: DataGrid docs page parses and uses only the public @zuvi/react API
+ok 47 - DataGrid docs page parses and uses only the public @zuvi/react API
+  ---
+  duration_ms: 128.1825
+  ...
+# Subtest: DataGrid is registered in the docs navigation with the data group
+ok 48 - DataGrid is registered in the docs navigation with the data group
+  ---
+  duration_ms: 0.888917
+  ...
+# Subtest: DataGrid component metadata stays in sync with the documented props
+ok 49 - DataGrid component metadata stays in sync with the documented props
+  ---
+  duration_ms: 0.510417
+  ...
+# Subtest: Globe uses serializable content catalog defaults and independent flat JSON fields
+ok 50 - Globe uses serializable content catalog defaults and independent flat JSON fields
+  ---
+  duration_ms: 129.633125
+  ...
+# Subtest: Globe row transformations preserve zero coordinates, scalar values and clamp geometric sizes
+ok 51 - Globe row transformations preserve zero coordinates, scalar values and clamp geometric sizes
+  ---
+  duration_ms: 0.825625
+  ...
+# Subtest: Globe category and route metadata are sanitized independently without forwarding raw rows
+ok 52 - Globe category and route metadata are sanitized independently without forwarding raw rows
+  ---
+  duration_ms: 1.68275
+  ...
+# Subtest: Globe route metadata preserves text safely and bounds long scalar values
+ok 53 - Globe route metadata preserves text safely and bounds long scalar values
+  ---
+  duration_ms: 39.079709
+  ...
+# Subtest: Globe skips invalid or duplicate points and routes without manufacturing coordinates
+ok 54 - Globe skips invalid or duplicate points and routes without manufacturing coordinates
+  ---
+  duration_ms: 0.255916
+  ...
+# Subtest: Globe ignores unsafe colors and non-finite optional geometry, with bounded diagnostics
+ok 55 - Globe ignores unsafe colors and non-finite optional geometry, with bounded diagnostics
+  ---
+  duration_ms: 5.130041
+  ...
+# Subtest: Globe import validates flat rows and refuses nested models, functions and prototype keys
+ok 56 - Globe import validates flat rows and refuses nested models, functions and prototype keys
+  ---
+  duration_ms: 8.654208
+  ...
+# Subtest: Globe design canvas is lightweight 2d while runtime honors configured mode and selection
+ok 57 - Globe design canvas is lightweight 2d while runtime honors configured mode and selection
+  ---
+  duration_ms: 9.1
+  ...
+# Subtest: Globe builder config roundtrips categories, search, labels, sizing and arc details into runtime
+ok 58 - Globe builder config roundtrips categories, search, labels, sizing and arc details into runtime
+  ---
+  duration_ms: 11.508292
+  ...
+# Subtest: Globe adapter visibly reports invalid data and a missing selected id without crashing
+ok 59 - Globe adapter visibly reports invalid data and a missing selected id without crashing
+  ---
+  duration_ms: 7.794291
+  ...
+# Subtest: Globe has one lazy data navigation route and the requested page title
+ok 60 - Globe has one lazy data navigation route and the requested page title
+  ---
+  duration_ms: 157.651917
+  ...
+# Subtest: Globe docs mount one network scene with actual city coordinates and sample-derived connections
+ok 61 - Globe docs mount one network scene with actual city coordinates and sample-derived connections
+  ---
+  duration_ms: 90.355
+  ...
+# Subtest: Globe docs publish the public API, customization slots, keyboard and provenance caveats
+ok 62 - Globe docs publish the public API, customization slots, keyboard and provenance caveats
+  ---
+  duration_ms: 30.217375
+  ...
+# Subtest: Globe docs use token-only panel palettes and shrinkable responsive layouts
+ok 63 - Globe docs use token-only panel palettes and shrinkable responsive layouts
+  ---
+  duration_ms: 18.48575
+  ...
+# Subtest: Globe demo retains hidden selection, separates search and repeats independent focus requests
+ok 64 - Globe demo retains hidden selection, separates search and repeats independent focus requests
+  ---
+  duration_ms: 1101.909333
+  ...
+# Subtest: JWT verification rejects malformed headers, signatures, lifetimes and operations
+ok 65 - JWT verification rejects malformed headers, signatures, lifetimes and operations
+  ---
+  duration_ms: 4.54425
+  ...
+# Subtest: health checks the configured engine and reports its public address
+ok 66 - health checks the configured engine and reports its public address
+  ---
+  duration_ms: 77.28625
+  ...
+# Subtest: health obtains authenticated version metadata when the info endpoint is restricted
+ok 67 - health obtains authenticated version metadata when the info endpoint is restricted
+  ---
+  duration_ms: 79.983416
+  ...
+# Subtest: Word, spreadsheet and PDF sessions have signed editor configurations and immutable originals
+ok 68 - Word, spreadsheet and PDF sessions have signed editor configurations and immutable originals
+  ---
+  duration_ms: 76.220708
+  ...
+# Subtest: invalid uploads, legacy extensions and file-size overflow are rejected before session creation
+ok 69 - invalid uploads, legacy extensions and file-size overflow are rejected before session creation
+  ---
+  duration_ms: 19.649
+  ...
+# Subtest: browser mutations require local Origin and every session read requires its own access token
+ok 70 - browser mutations require local Origin and every session read requires its own access token
+  ---
+  duration_ms: 45.32475
+  ...
+# Subtest: callback capabilities, signed payload matching and read-only sessions prevent unauthorized writes
+ok 71 - callback capabilities, signed payload matching and read-only sessions prevent unauthorized writes
+  ---
+  duration_ms: 50.13975
+  ...
+# Subtest: force-save correlates a requestId, deduplicates requests and preserves saving through status 1
+ok 72 - force-save correlates a requestId, deduplicates requests and preserves saving through status 1
+  ---
+  duration_ms: 165.073042
+  ...
+# Subtest: same-byte force-save updates requestId without incrementing the generated sequence
+ok 73 - same-byte force-save updates requestId without incrementing the generated sequence
+  ---
+  duration_ms: 187.858375
+  ...
+# Subtest: unmarked autosave results stay pending until the matching force-save callback confirms them
+ok 74 - unmarked autosave results stay pending until the matching force-save callback confirms them
+  ---
+  duration_ms: 59.028833
+  ...
+# Subtest: generated versions are retained and ACKs cannot falsify or roll back workspace revisions
+ok 75 - generated versions are retained and ACKs cannot falsify or roll back workspace revisions
+  ---
+  duration_ms: 296.978042
+  ...
+# Subtest: command error 4 reports noChanges while leaving unacknowledged output visible
+ok 76 - command error 4 reports noChanges while leaving unacknowledged output visible
+  ---
+  duration_ms: 62.758667
+  ...
+# Subtest: external result URLs and redirects are rejected while allowed relative redirects succeed
+ok 77 - external result URLs and redirects are rejected while allowed relative redirects succeed
+  ---
+  duration_ms: 144.740417
+  ...
+# Subtest: public generated file ports are cleared when the internal Docs address uses its default port
+ok 78 - public generated file ports are cleared when the internal Docs address uses its default port
+  ---
+  duration_ms: 63.730459
+  ...
+# Subtest: oversized, invalid and failed outputs preserve the source and previously generated versions
+ok 79 - oversized, invalid and failed outputs preserve the source and previously generated versions
+  ---
+  duration_ms: 185.037458
+  ...
+# Subtest: late unmarked callbacks cannot replace a result with an earlier save timestamp
+ok 80 - late unmarked callbacks cannot replace a result with an earlier save timestamp
+  ---
+  duration_ms: 55.856833
+  ...
+# Subtest: manifest failures never expose uncommitted sequence numbers and retain generated bytes for retry
+ok 81 - manifest failures never expose uncommitted sequence numbers and retain generated bytes for retry
+  ---
+  duration_ms: 210.658709
+  ...
+# Subtest: restart restores sessions, request confirmations, ACKs and the latest recoverable source
+ok 82 - restart restores sessions, request confirmations, ACKs and the latest recoverable source
+  ---
+  duration_ms: 70.816958
+  ...
+# Subtest: command failures can be retried with a fresh request without losing successful callback data
+ok 83 - command failures can be retried with a fresh request without losing successful callback data
+  ---
+  duration_ms: 52.892542
+  ...
+# Subtest: force-save rejects missing or malformed requestId before sending a Docs command
+ok 84 - force-save rejects missing or malformed requestId before sending a Docs command
+  ---
+  duration_ms: 105.485833
+  ...
+# Subtest: final-save and no-change close callbacks end sessions while force-save callbacks keep them open
+ok 85 - final-save and no-change close callbacks end sessions while force-save callbacks keep them open
+  ---
+  duration_ms: 135.312167
+  ...
+# Subtest: 同一文件和模式并发打开复用同一 Promise，旧草稿只迁移并创建一次会话
+ok 86 - 同一文件和模式并发打开复用同一 Promise，旧草稿只迁移并创建一次会话
+  ---
+  duration_ms: 13.314875
+  ...
+# Subtest: 重新打开存活会话时同步新版本，再读取最新工作区文件而不误报冲突
+ok 87 - 重新打开存活会话时同步新版本，再读取最新工作区文件而不误报冲突
+  ---
+  duration_ms: 26.467375
+  ...
+# Subtest: 并发轮询与显式保存只回写一次，并等待同一事务确认后 ACK
+ok 88 - 并发轮询与显式保存只回写一次，并等待同一事务确认后 ACK
+  ---
+  duration_ms: 7.3305
+  ...
+# Subtest: ACK 被拒绝 后重试不重复增加文件版本
+ok 89 - ACK 被拒绝 后重试不重复增加文件版本
+  ---
+  duration_ms: 26.219167
+  ...
+# Subtest: ACK 成功但响应丢失 后重试不重复增加文件版本
+ok 90 - ACK 成功但响应丢失 后重试不重复增加文件版本
+  ---
+  duration_ms: 21.276167
+  ...
+# Subtest: ACK 响应丢失后工作区版本已变化时拒绝覆盖后来的文件
+ok 91 - ACK 响应丢失后工作区版本已变化时拒绝覆盖后来的文件
+  ---
+  duration_ms: 18.907417
+  ...
+# Subtest: 浏览器持久化失败时不 ACK，重试确认原回写而不新建版本
+ok 92 - 浏览器持久化失败时不 ACK，重试确认原回写而不新建版本
+  ---
+  duration_ms: 8.101083
+  ...
+# Subtest: 本次 requestId 即使复用已确认的 sequence 也立即完成保存
+ok 93 - 本次 requestId 即使复用已确认的 sequence 也立即完成保存
+  ---
+  duration_ms: 11.186209
+  ...
+# Subtest: 保存过程中产生的新输入仍保持待保存状态
+ok 94 - 保存过程中产生的新输入仍保持待保存状态
+  ---
+  duration_ms: 3.755209
+  ...
+# Subtest: 切换前保存等待期间新增输入继续回写，全部完成后才返回
+ok 95 - 切换前保存等待期间新增输入继续回写，全部完成后才返回
+  ---
+  duration_ms: 4.651917
+  ...
+# Subtest: 切换前持续新增输入时有界结束并拒绝切换，保留最新已回写副本
+ok 96 - 切换前持续新增输入时有界结束并拒绝切换，保留最新已回写副本
+  ---
+  duration_ms: 117.503
+  ...
+# Subtest: 切换前等待已有保存请求，即使当前 dirty=false 也不能提前返回
+ok 97 - 切换前等待已有保存请求，即使当前 dirty=false 也不能提前返回
+  ---
+  duration_ms: 15.476583
+  ...
+# Subtest: 没有内容变化的显式保存仍刷新状态并清除已保存标记
+ok 98 - 没有内容变化的显式保存仍刷新状态并清除已保存标记
+  ---
+  duration_ms: 3.193875
+  ...
+# Subtest: 关闭编辑器的最终结果仍回写，后续显式保存不再调用 force-save
+ok 99 - 关闭编辑器的最终结果仍回写，后续显式保存不再调用 force-save
+  ---
+  duration_ms: 6.052209
+  ...
+# Subtest: Word、Excel、PDF 的旧草稿在创建编辑会话前导出并持久化
+    # Subtest: word
+    ok 1 - word
+      ---
+      duration_ms: 1.466541
+      ...
+    # Subtest: excel
+    ok 2 - excel
+      ---
+      duration_ms: 2.394917
+      ...
+    # Subtest: pdf
+    ok 3 - pdf
+      ---
+      duration_ms: 19.355292
+      ...
+    1..3
+ok 100 - Word、Excel、PDF 的旧草稿在创建编辑会话前导出并持久化
+  ---
+  duration_ms: 23.888625
+  ...
+# Subtest: 迁移草稿已删除后以旧文件和旧草稿重新打开，保留后续原生编辑内容
+ok 101 - 迁移草稿已删除后以旧文件和旧草稿重新打开，保留后续原生编辑内容
+  ---
+  duration_ms: 41.499792
+  ...
+# Subtest: 旧草稿类型或基础版本不匹配时保留草稿并拒绝创建会话
+    # Subtest: excel/1/persisted
+    ok 1 - excel/1/persisted
+      ---
+      duration_ms: 0.877833
+      ...
+    # Subtest: excel/1/passed
+    ok 2 - excel/1/passed
+      ---
+      duration_ms: 0.416375
+      ...
+    # Subtest: word/2/persisted
+    ok 3 - word/2/persisted
+      ---
+      duration_ms: 0.288333
+      ...
+    # Subtest: word/2/passed
+    ok 4 - word/2/passed
+      ---
+      duration_ms: 0.310416
+      ...
+    1..4
+ok 102 - 旧草稿类型或基础版本不匹配时保留草稿并拒绝创建会话
+  ---
+  duration_ms: 2.300875
+  ...
+# Subtest: 草稿持久化失败时不创建会话或替换保存凭据
+ok 103 - 草稿持久化失败时不创建会话或替换保存凭据
+  ---
+  duration_ms: 0.344667
+  ...
+# Subtest: 恢复会话遇到 CAS 冲突时保留原凭据和可下载副本，不创建新会话
+ok 104 - 恢复会话遇到 CAS 冲突时保留原凭据和可下载副本，不创建新会话
+  ---
+  duration_ms: 2.743875
+  ...
+# Subtest: 恢复结果的哈希不一致时不回写和 ACK，仍保留恢复凭据
+ok 105 - 恢复结果的哈希不一致时不回写和 ACK，仍保留恢复凭据
+  ---
+  duration_ms: 1.227625
+  ...
+# Subtest: 只读预览与编辑会话分别保存，忽略修改事件和显式保存请求
+ok 106 - 只读预览与编辑会话分别保存，忽略修改事件和显式保存请求
+  ---
+  duration_ms: 0.707208
+  ...
+# Subtest: 预览旧草稿只导出预览文件，保留工作区的草稿和版本
+ok 107 - 预览旧草稿只导出预览文件，保留工作区的草稿和版本
+  ---
+  duration_ms: 0.575167
+  ...
+# Subtest: 空闲自动保存等待静默窗口，超过窗口后回写并清除待保存状态
+ok 108 - 空闲自动保存等待静默窗口，超过窗口后回写并清除待保存状态
+  ---
+  duration_ms: 1.651958
+  ...
+# Subtest: 自动保存开关持久化：关闭时不自动回写，手动保存不受影响，重新开启后恢复
+ok 109 - 自动保存开关持久化：关闭时不自动回写，手动保存不受影响，重新开启后恢复
+  ---
+  duration_ms: 3.318167
+  ...
+# Subtest: 自动保存默认开启，存储写入失败时开关调用不中断保存
+ok 110 - 自动保存默认开启，存储写入失败时开关调用不中断保存
+  ---
+  duration_ms: 3.401292
+  ...
+# Subtest: Noto Sans SC 400 保留真实 family、字重、版权与全部中文字形
+ok 111 - Noto Sans SC 400 保留真实 family、字重、版权与全部中文字形
+  ---
+  duration_ms: 3205.038584
+  ...
+# Subtest: Noto Sans SC 700 保留真实 family、字重、版权与全部中文字形
+ok 112 - Noto Sans SC 700 保留真实 family、字重、版权与全部中文字形
+  ---
+  duration_ms: 2402.951916
+  ...
+# Subtest: 无效、截断和校验和损坏的 WOFF 不生成 TrueType
+ok 113 - 无效、截断和校验和损坏的 WOFF 不生成 TrueType
+  ---
+  duration_ms: 19.433417
+  ...
+# Subtest: 运行时生成两种 TrueType、原始 OFL 和可核验来源的 SHA-256 清单
+ok 114 - 运行时生成两种 TrueType、原始 OFL 和可核验来源的 SHA-256 清单
+  ---
+  duration_ms: 173.84375
+  ...
+# Subtest: 重复启动复用相同字体；损坏的本地字体、许可证和清单会恢复
+ok 115 - 重复启动复用相同字体；损坏的本地字体、许可证和清单会恢复
+  ---
+  duration_ms: 464.792291
+  ...
+# Subtest: 许可证缺失或不匹配时拒绝生成，也不覆盖现有文件
+ok 116 - 许可证缺失或不匹配时拒绝生成，也不覆盖现有文件
+  ---
+  duration_ms: 5.714584
+  ...
+# Subtest: 源字体损坏时不写入部分运行时字体
+ok 117 - 源字体损坏时不写入部分运行时字体
+  ---
+  duration_ms: 81.671375
+  ...
+# Subtest: native table row heights and explicit cantSplit flags survive edits and two DOCX cycles
+ok 118 - native table row heights and explicit cantSplit flags survive edits and two DOCX cycles
+  ---
+  duration_ms: 561.84425
+  ...
+# Subtest: native widow control, keep-next and keep-lines retain inherited values and explicit false over repeated DOCX saves
+ok 119 - native widow control, keep-next and keep-lines retain inherited values and explicit false over repeated DOCX saves
+  ---
+  duration_ms: 279.451875
+  ...
+# Subtest: native paragraph borders, distance, shadow/frame and patterned shading survive direct edits and two DOCX cycles
+ok 120 - native paragraph borders, distance, shadow/frame and patterned shading survive direct edits and two DOCX cycles
+  ---
+  duration_ms: 203.079417
+  ...
+# Subtest: surface styles preserve independent inherited edges and explicit nil overrides across repeated native saves
+ok 121 - surface styles preserve independent inherited edges and explicit nil overrides across repeated native saves
+  ---
+  duration_ms: 268.728792
+  ...
+# Subtest: full native numbering templates, interrupted sequences and independent starts survive edits and repeated DOCX reopenings
+ok 122 - full native numbering templates, interrupted sequences and independent starts survive edits and repeated DOCX reopenings
+  ---
+  duration_ms: 193.850542
+  ...
+# Subtest: native period and comma decimal symbols persist independently of text grouping separators
+ok 123 - native period and comma decimal symbols persist independently of text grouping separators
+  ---
+  duration_ms: 286.202791
+  ...
+# Subtest: native tab stops, leaders, inherited clear directives and the default interval survive edits and repeated DOCX saves
+ok 124 - native tab stops, leaders, inherited clear directives and the default interval survive edits and repeated DOCX saves
+  ---
+  duration_ms: 221.259416
+  ...
+# Subtest: unsupported, duplicate and malformed native tab definitions reject the whole document
+ok 125 - unsupported, duplicate and malformed native tab definitions reject the whole document
+  ---
+  duration_ms: 23.896625
+  ...
+# Subtest: paragraph indentation and three native line-spacing rules preserve point values and text over repeated DOCX saves
+ok 126 - paragraph indentation and three native line-spacing rules preserve point values and text over repeated DOCX saves
+  ---
+  duration_ms: 248.177833
+  ...
+# Subtest: partial native line properties preserve style raw-unit inheritance and direct paragraph zero overrides
+ok 127 - partial native line properties preserve style raw-unit inheritance and direct paragraph zero overrides
+  ---
+  duration_ms: 213.817083
+  ...
+# Subtest: signed native run spacing and position preserve fonts, scripts, header/footer and repeated DOCX edits
+ok 128 - signed native run spacing and position preserve fonts, scripts, header/footer and repeated DOCX edits
+  ---
+  duration_ms: 260.560709
+  ...
+# Subtest: style inheritance and explicit zero spacing/position overrides survive native DOCX serialization
+ok 129 - style inheritance and explicit zero spacing/position overrides survive native DOCX serialization
+  ---
+  duration_ms: 136.344583
+  ...
+# Subtest: explicit zero run metrics also cancel inherited values on images and page fields
+ok 130 - explicit zero run metrics also cancel inherited values on images and page fields
+  ---
+  duration_ms: 140.409084
+  ...
+# Subtest: invalid character metrics are refused without changing the original model
+ok 131 - invalid character metrics are refused without changing the original model
+  ---
+  duration_ms: 3.438208
+  ...
+# Subtest: native tabs, repeated spaces, nonbreaking spaces and line breaks retain their original characters and formatting across DOCX edits and repeated saves
+ok 132 - native tabs, repeated spaces, nonbreaking spaces and line breaks retain their original characters and formatting across DOCX edits and repeated saves
+  ---
+  duration_ms: 219.891292
+  ...
+# Subtest: named paragraph styles preserve inheritance, native links, automatic update and direct overrides over repeated saves
+ok 133 - named paragraph styles preserve inheritance, native links, automatic update and direct overrides over repeated saves
+  ---
+  duration_ms: 360.188709
+  ...
+# Subtest: native custom styles remain editable definitions with parent and next-style links
+ok 134 - native custom styles remain editable definitions with parent and next-style links
+  ---
+  duration_ms: 87.694333
+  ...
+# Subtest: a named body style can explicitly remove an inherited heading outline level
+ok 135 - a named body style can explicitly remove an inherited heading outline level
+  ---
+  duration_ms: 40.308666
+  ...
+# Subtest: invalid style graphs cannot be exported or partially change the source document
+ok 136 - invalid style graphs cannot be exported or partially change the source document
+  ---
+  duration_ms: 54.365
+  ...
+# Subtest: derived styles retain inherited heading levels instead of freezing the parent level on import
+ok 137 - derived styles retain inherited heading levels instead of freezing the parent level on import
+  ---
+  duration_ms: 40.118416
+  ...
+# Subtest: paragraph-level outline overrides survive saving without changing the linked style definition
+ok 138 - paragraph-level outline overrides survive saving without changing the linked style definition
+  ---
+  duration_ms: 128.761416
+  ...
+# Subtest: named styles inside a quote retain the existing quote border and structure after saving
+ok 139 - named styles inside a quote retain the existing quote border and structure after saving
+  ---
+  duration_ms: 72.008792
+  ...
+# Subtest: DOCX roundtrip keeps headings, rich text, link, hard/page breaks and page configuration
+ok 140 - DOCX roundtrip keeps headings, rich text, link, hard/page breaks and page configuration
+  ---
+  duration_ms: 120.644542
+  ...
+# Subtest: DOCX list import preserves nested mixed lists, sequence and non-default starts
+ok 141 - DOCX list import preserves nested mixed lists, sequence and non-default starts
+  ---
+  duration_ms: 167.198333
+  ...
+# Subtest: DOCX table roundtrip retains row/column merges, headings and cell background
+ok 142 - DOCX table roundtrip retains row/column merges, headings and cell background
+  ---
+  duration_ms: 167.654042
+  ...
+# Subtest: DOCX import resolves inherited paragraph and character styles
+ok 143 - DOCX import resolves inherited paragraph and character styles
+  ---
+  duration_ms: 3.075167
+  ...
+# Subtest: DOCX import resolves theme fonts and colors instead of dropping them
+ok 144 - DOCX import resolves theme fonts and colors instead of dropping them
+  ---
+  duration_ms: 6.946333
+  ...
+# Subtest: the published studio Word sample can export, reopen and export again
+ok 145 - the published studio Word sample can export, reopen and export again
+  ---
+  duration_ms: 524.216958
+  ...
+# Subtest: DOCX import refuses unsupported drawings, tracked changes, broken header references and embedded objects
+ok 146 - DOCX import refuses unsupported drawings, tracked changes, broken header references and embedded objects
+  ---
+  duration_ms: 17.578666
+  ...
+# Subtest: DOCX import refuses unsafe hyperlinks and merged cells containing hidden text
+ok 147 - DOCX import refuses unsafe hyperlinks and merged cells containing hidden text
+  ---
+  duration_ms: 34.873208
+  ...
+# Subtest: DOCX export fails explicitly for unsupported nodes, marks and inline layout
+ok 148 - DOCX export fails explicitly for unsupported nodes, marks and inline layout
+  ---
+  duration_ms: 22.538667
+  ...
+# Subtest: DOCX embeds raster images and retains body, default header/footer, fields and distances over repeated exports
+ok 149 - DOCX embeds raster images and retains body, default header/footer, fields and distances over repeated exports
+  ---
+  duration_ms: 174.676917
+  ...
+# Subtest: DOCX imports simple PAGE and NUMPAGES fields without their cached values becoming editable text
+ok 150 - DOCX imports simple PAGE and NUMPAGES fields without their cached values becoming editable text
+  ---
+  duration_ms: 132.510417
+  ...
+# Subtest: DOCX adds a native page field to a populated footer without duplicating it on reopening
+ok 151 - DOCX adds a native page field to a populated footer without duplicating it on reopening
+  ---
+  duration_ms: 116.637209
+  ...
+# Subtest: DOCX retains text after a complex field in the same run and refuses nested fields
+ok 152 - DOCX retains text after a complex field in the same run and refuses nested fields
+  ---
+  duration_ms: 62.022125
+  ...
+# Subtest: DOCX embeds JPEG bytes unchanged and retains configured header/footer distances before regions are created
+ok 153 - DOCX embeds JPEG bytes unchanged and retains configured header/footer distances before regions are created
+  ---
+  duration_ms: 45.846666
+  ...
+# Subtest: floating images preserve wrapping, position, anchor flags, distances and custom contours across native DOCX saves
+ok 154 - floating images preserve wrapping, position, anchor flags, distances and custom contours across native DOCX saves
+  ---
+  duration_ms: 334.552583
+  ...
+# Subtest: invalid floating images are rejected before changing the source model
+ok 155 - invalid floating images are rejected before changing the source model
+  ---
+  duration_ms: 1.471459
+  ...
+# Subtest: DOCX refuses image layout that cannot be preserved and external image links
+ok 156 - DOCX refuses image layout that cannot be preserved and external image links
+  ---
+  duration_ms: 424.346083
+  ...
+# Subtest: DOCX roundtrip retains superscript and subscript independently
+ok 157 - DOCX roundtrip retains superscript and subscript independently
+  ---
+  duration_ms: 40.238417
+  ...
+# Subtest: DOCX import rejects old DOC, corrupt XML and unequal margins instead of flattening
+ok 158 - DOCX import rejects old DOC, corrupt XML and unequal margins instead of flattening
+  ---
+  duration_ms: 29.310167
+  ...
+# Subtest: typed Word font names and 1pt to 300pt half-point sizes survive repeated DOCX saves
+ok 159 - typed Word font names and 1pt to 300pt half-point sizes survive repeated DOCX saves
+  ---
+  duration_ms: 79.405916
+  ...
+# Subtest: a cleared heading keeps its level and hyperlink without reintroducing default heading bold on reopen
+ok 160 - a cleared heading keeps its level and hyperlink without reintroducing default heading bold on reopen
+  ---
+  duration_ms: 50.471625
+  ...
+# Subtest: table paragraph absent spacing exports zero while explicit spacing survives repeated saves
+ok 161 - table paragraph absent spacing exports zero while explicit spacing survives repeated saves
+  ---
+  duration_ms: 79.031917
+  ...
+# Subtest: native simple and complex table formula fields preserve instructions, cached edits and run formatting twice
+ok 162 - native simple and complex table formula fields preserve instructions, cached edits and run formatting twice
+  ---
+  duration_ms: 102.463709
+  ...
+# Subtest: native vertical merges and nested formula instructions remain scoped and intact across two DOCX cycles
+ok 163 - native vertical merges and nested formula instructions remain scoped and intact across two DOCX cycles
+  ---
+  duration_ms: 85.562583
+  ...
+# Subtest: native numeric-picture formula switches and formatted caches survive repeated DOCX saving
+ok 164 - native numeric-picture formula switches and formatted caches survive repeated DOCX saving
+  ---
+  duration_ms: 84.383583
+  ...
+# Subtest: native image crop preserves embedded source bytes, frame dimensions and edited edges across repeated DOCX saves
+ok 165 - native image crop preserves embedded source bytes, frame dimensions and edited edges across repeated DOCX saves
+  ---
+  duration_ms: 159.307
+  ...
+# Subtest: replacing cropped PNG with JPEG preserves display frame, description and native drawing position through two saves
+ok 166 - replacing cropped PNG with JPEG preserves display frame, description and native drawing position through two saves
+  ---
+  duration_ms: 124.201708
+  ...
+# Subtest: replacing a floating picture retains page anchor, offsets, layering and visible crop frame across native saves
+ok 167 - replacing a floating picture retains page anchor, offsets, layering and visible crop frame across native saves
+  ---
+  duration_ms: 143.814125
+  ...
+# Subtest: native OMML fractions, scripts, roots and matrices retain editable structures through repeated DOCX saves
+ok 168 - native OMML fractions, scripts, roots and matrices retain editable structures through repeated DOCX saves
+  ---
+  duration_ms: 137.204125
+  ...
+# Subtest: unsupported OMML attributes and hidden degree content fail instead of silently losing data
+ok 169 - unsupported OMML attributes and hidden degree content fail instead of silently losing data
+  ---
+  duration_ms: 8.508083
+  ...
+# Subtest: local equation run formatting and surrounding bold marks survive two native DOCX saves
+ok 170 - local equation run formatting and surrounding bold marks survive two native DOCX saves
+  ---
+  duration_ms: 109.015667
+  ...
+# Subtest: separate mathematical and Word run property namespaces retain legitimate local formatting
+ok 171 - separate mathematical and Word run property namespaces retain legitimate local formatting
+  ---
+  duration_ms: 0.81425
+  ...
+# Subtest: equation typography retains local overrides and surrounding textStyle through repeated DOCX saves
+ok 172 - equation typography retains local overrides and surrounding textStyle through repeated DOCX saves
+  ---
+  duration_ms: 70.470208
+  ...
+# Subtest: native display OMML and mathematical styles import, edit and reopen twice with alignment intact
+ok 173 - native display OMML and mathematical styles import, edit and reopen twice with alignment intact
+  ---
+  duration_ms: 261.176
+  ...
+# Subtest: equation Unicode and carriage returns survive native XML whitespace normalization
+ok 174 - equation Unicode and carriage returns survive native XML whitespace normalization
+  ---
+  duration_ms: 55.042791
+  ...
+# Subtest: native multi-equation paragraph groups retain independent editable trees across two saves
+ok 175 - native multi-equation paragraph groups retain independent editable trees across two saves
+  ---
+  duration_ms: 57.281583
+  ...
+# Subtest: native equations retain independent region and table trees with Unicode through repeated saves
+ok 176 - native equations retain independent region and table trees with Unicode through repeated saves
+  ---
+  duration_ms: 94.72175
+  ...
+# Subtest: native cross-paragraph bookmarks retain identity and edited text through two DOCX saves
+ok 177 - native cross-paragraph bookmarks retain identity and edited text through two DOCX saves
+  ---
+  duration_ms: 93.897334
+  ...
+# Subtest: native malformed or duplicate bookmarks fail rather than silently losing ranges
+ok 178 - native malformed or duplicate bookmarks fail rather than silently losing ranges
+  ---
+  duration_ms: 8.45
+  ...
+# Subtest: native internal bookmark hyperlinks retain display formatting and anchor across two saves
+ok 179 - native internal bookmark hyperlinks retain display formatting and anchor across two saves
+  ---
+  duration_ms: 56.137375
+  ...
+# Subtest: native cell vertical alignment and independent margins survive editing and two DOCX cycles
+ok 180 - native cell vertical alignment and independent margins survive editing and two DOCX cycles
+  ---
+  duration_ms: 48.74025
+  ...
+# Subtest: cell margins with unrepresentable native precision fail without mutating the source model
+ok 181 - cell margins with unrepresentable native precision fail without mutating the source model
+  ---
+  duration_ms: 1.53525
+  ...
+# Subtest: table default margins and explicit zero cell overrides retain independent identities on reopening
+ok 182 - table default margins and explicit zero cell overrides retain independent identities on reopening
+  ---
+  duration_ms: 46.077834
+  ...
+# Subtest: native table defaults, direct zero overrides and spacing keep their identity and grid after two saves
+ok 183 - native table defaults, direct zero overrides and spacing keep their identity and grid after two saves
+  ---
+  duration_ms: 60.348417
+  ...
+# Subtest: row spacing overrides including nil and exceptions remain independent of table defaults
+ok 184 - row spacing overrides including nil and exceptions remain independent of table defaults
+  ---
+  duration_ms: 66.553125
+  ...
+# Subtest: nested table defaults and direct cell margins remain local through repeated native reopening
+ok 185 - nested table defaults and direct cell margins remain local through repeated native reopening
+  ---
+  duration_ms: 57.122416
+  ...
+# Subtest: invalid table spacing or default precision rejects the whole save without changing the model
+ok 186 - invalid table spacing or default precision rejects the whole save without changing the model
+  ---
+  duration_ms: 3.076667
+  ...
+# Subtest: rejects row spacing wider than its native grid before creating a broken editable table
+ok 187 - rejects row spacing wider than its native grid before creating a broken editable table
+  ---
+  duration_ms: 3.648917
+  ...
+# Subtest: keeps an edited column when its sibling columns remain automatic and resolves the native grid once
+ok 188 - keeps an edited column when its sibling columns remain automatic and resolves the native grid once
+  ---
+  duration_ms: 52.747833
+  ...
+# Subtest: resolves the unknown zero slot of a merged resized cell without losing its edited column
+ok 189 - resolves the unknown zero slot of a merged resized cell without losing its edited column
+  ---
+  duration_ms: 61.670458
+  ...
+# Subtest: GitHub Pages 自动启用官方 Demo，查询参数可以显式切换模式
+ok 190 - GitHub Pages 自动启用官方 Demo，查询参数可以显式切换模式
+  ---
+  duration_ms: 3.875083
+  ...
+# Subtest: 官方在线 Demo 为三种格式生成可验证的样例配置
+ok 191 - 官方在线 Demo 为三种格式生成可验证的样例配置
+  ---
+  duration_ms: 11.777834
+  ...
+# Subtest: custom format editing preserves values, formulas, native color sections and Chinese region codes over repeated XLSX saves
+ok 192 - custom format editing preserves values, formulas, native color sections and Chinese region codes over repeated XLSX saves
+  ---
+  duration_ms: 1126.542958
+  ...
+# Subtest: skip blanks and arithmetic preserve native values, target formulas, links and explicit empty strings across XLSX saves
+ok 193 - skip blanks and arithmetic preserve native values, target formulas, links and explicit empty strings across XLSX saves
+  ---
+  duration_ms: 815.43875
+  ...
+# Subtest: series stop boundaries preserve untouched contents, styles, merges and hyperlinks across repeated XLSX edits and saves
+ok 194 - series stop boundaries preserve untouched contents, styles, merges and hyperlinks across repeated XLSX edits and saves
+  ---
+  duration_ms: 835.408625
+  ...
+# Subtest: format painter keeps direct styles, default resets, formulas, hyperlinks and rules through repeated native XLSX saves
+ok 195 - format painter keeps direct styles, default resets, formulas, hyperlinks and rules through repeated native XLSX saves
+  ---
+  duration_ms: 573.758959
+  ...
+# Subtest: font and fill color filters retain native DXF references, conditional colors and clear behavior across XLSX saves
+ok 196 - font and fill color filters retain native DXF references, conditional colors and clear behavior across XLSX saves
+  ---
+  duration_ms: 700.635709
+  ...
+# Subtest: invalid native color filter references and duplicate columns are rejected without rewriting the source file
+ok 197 - invalid native color filter references and duplicate columns are rejected without rewriting the source file
+  ---
+  duration_ms: 85.621667
+  ...
+# Subtest: Office cell formatting and explicit default widths survive repeated native XLSX saves
+ok 198 - Office cell formatting and explicit default widths survive repeated native XLSX saves
+  ---
+  duration_ms: 316.271417
+  ...
+# Subtest: XLSX replacement retains formulas, selected scope, original workbook and native hyperlink formatting
+ok 199 - XLSX replacement retains formulas, selected scope, original workbook and native hyperlink formatting
+  ---
+  duration_ms: 159.729041
+  ...
+# Subtest: font names and point sizes survive editing and repeated source-based or standalone XLSX saves
+ok 200 - font names and point sizes survive editing and repeated source-based or standalone XLSX saves
+  ---
+  duration_ms: 624.972
+  ...
+# Subtest: native cell, row and column font inheritance preserves fractional sizes and explicit style zero across repeated XLSX saves
+ok 201 - native cell, row and column font inheritance preserves fractional sizes and explicit style zero across repeated XLSX saves
+  ---
+  duration_ms: 901.926917
+  ...
+# Subtest: changing only a fractional point size preserves the source font name, scheme, bold and links
+ok 202 - changing only a fractional point size preserves the source font name, scheme, bold and links
+  ---
+  duration_ms: 310.834959
+  ...
+# Subtest: source row and column edits retain fractional font overrides, inherited fonts and formula caches
+ok 203 - source row and column edits retain fractional font overrides, inherited fonts and formula caches
+  ---
+  duration_ms: 611.303917
+  ...
+# Subtest: older drafts without font fields preserve source fonts until explicitly edited
+ok 204 - older drafts without font fields preserve source fonts until explicitly edited
+  ---
+  duration_ms: 183.378625
+  ...
+# Subtest: invalid font names and point sizes are rejected before XLSX export
+ok 205 - invalid font names and point sizes are rejected before XLSX export
+  ---
+  duration_ms: 31.4175
+  ...
+# Subtest: native hyperlink metadata, original value types, formula caches and date precision survive repeated real XLSX saves
+ok 206 - native hyperlink metadata, original value types, formula caches and date precision survive repeated real XLSX saves
+  ---
+  duration_ms: 450.356416
+  ...
+# Subtest: native hyperlinks can be added, edited and explicitly removed without dropping source comments or changing linked values
+ok 207 - native hyperlinks can be added, edited and explicitly removed without dropping source comments or changing linked values
+  ---
+  duration_ms: 498.745291
+  ...
+# Subtest: legacy hyperlink hydration follows source identities, structure logs and renames while preserving edited cells and explicit metadata
+ok 208 - legacy hyperlink hydration follows source identities, structure logs and renames while preserving edited cells and explicit metadata
+  ---
+  duration_ms: 106.425167
+  ...
+# Subtest: legacy hyperlink hydration handles sheet-name swaps, removed destinations and explicitly cleared source metadata
+ok 209 - legacy hyperlink hydration handles sheet-name swaps, removed destinations and explicitly cleared source metadata
+  ---
+  duration_ms: 240.200542
+  ...
+# Subtest: modern hyperlink metadata migrates once and copied, filled or pasted links survive real XLSX round-trips
+ok 210 - modern hyperlink metadata migrates once and copied, filled or pasted links survive real XLSX round-trips
+  ---
+  duration_ms: 400.209833
+  ...
+# Subtest: all supported native CF and DV rules, styles, operators and prompts survive source-based and standalone XLSX round-trips
+ok 211 - all supported native CF and DV rules, styles, operators and prompts survive source-based and standalone XLSX round-trips
+  ---
+  duration_ms: 280.420542
+  ...
+# Subtest: native rule coordinates migrate once after row or column edits and removed rules leave no old XLSX objects
+ok 212 - native rule coordinates migrate once after row or column edits and removed rules leave no old XLSX objects
+  ---
+  duration_ms: 252.68175
+  ...
+# Subtest: rules and formula date/time criteria coexist with native filters, merges, charts, comments and print breaks
+ok 213 - rules and formula date/time criteria coexist with native filters, merges, charts, comments and print breaks
+  ---
+  duration_ms: 225.217167
+  ...
+# Subtest: Office DXF background colours and standard generated contains-text formulas import without flattening their rules
+ok 214 - Office DXF background colours and standard generated contains-text formulas import without flattening their rules
+  ---
+  duration_ms: 52.673292
+  ...
+# Subtest: unsupported native rules, extensions, differential styles and overlapping validations are explicitly refused
+ok 215 - unsupported native rules, extensions, differential styles and overlapping validations are explicitly refused
+  ---
+  duration_ms: 344.479833
+  ...
+# Subtest: native rule budgets are checked before ExcelJS allocation and invalid drafts are rejected before source rewriting
+ok 216 - native rule budgets are checked before ExcelJS allocation and invalid drafts are rejected before source rewriting
+  ---
+  duration_ms: 57.472625
+  ...
+# Subtest: row and column edits move original styles, notes, dimensions, print ranges and native objects across real XLSX round-trips
+ok 217 - row and column edits move original styles, notes, dimensions, print ranges and native objects across real XLSX round-trips
+  ---
+  duration_ms: 259.485209
+  ...
+# Subtest: deleting trailing source rows or columns leaves no old cells or notes and clears filters whose header is deleted
+ok 218 - deleting trailing source rows or columns leaves no old cells or notes and clears filters whose header is deleted
+  ---
+  duration_ms: 112.357792
+  ...
+# Subtest: real XLSX source round-trip clears cells, recalculates cached formulas and preserves untouched workbook settings
+ok 219 - real XLSX source round-trip clears cells, recalculates cached formulas and preserves untouched workbook settings
+  ---
+  duration_ms: 60.693916
+  ...
+# Subtest: native numeric dates preserve serial 0, 1, 59, 60, 61 and fractional-day precision across repeated source and standalone XLSX saves
+ok 220 - native numeric dates preserve serial 0, 1, 59, 60, 61 and fractional-day precision across repeated source and standalone XLSX saves
+  ---
+  duration_ms: 306.940542
+  ...
+# Subtest: native ISO date cells use Gregorian days before the fictitious Excel leap day and retain their serials on subsequent saves
+ok 221 - native ISO date cells use Gregorian days before the fictitious Excel leap day and retain their serials on subsequent saves
+  ---
+  duration_ms: 139.060625
+  ...
+# Subtest: new XLSX documents export multiple worksheets, text format and native formulas
+ok 222 - new XLSX documents export multiple worksheets, text format and native formulas
+  ---
+  duration_ms: 23.81725
+  ...
+# Subtest: version 3 Paste Special results survive a standalone XLSX round-trip
+ok 223 - version 3 Paste Special results survive a standalone XLSX round-trip
+  ---
+  duration_ms: 32.446958
+  ...
+# Subtest: text formatting preserves an existing numeric type while subsequent typed input is stored as text
+ok 224 - text formatting preserves an existing numeric type while subsequent typed input is stored as text
+  ---
+  duration_ms: 74.8765
+  ...
+# Subtest: refuses unsupported source objects before importing or exporting them
+ok 225 - refuses unsupported source objects before importing or exporting them
+  ---
+  duration_ms: 38.760542
+  ...
+# Subtest: rejects out-of-range drafts rather than silently omitting data
+ok 226 - rejects out-of-range drafts rather than silently omitting data
+  ---
+  duration_ms: 13.725834
+  ...
+# Subtest: imports and exports an entirely empty worksheet
+ok 227 - imports and exports an entirely empty worksheet
+  ---
+  duration_ms: 26.305292
+  ...
+# Subtest: deleted worksheets are absent from the actual XLSX source-based export and workbook view indices stay valid
+ok 228 - deleted worksheets are absent from the actual XLSX source-based export and workbook view indices stay valid
+  ---
+  duration_ms: 45.86825
+  ...
+# Subtest: native merges, frozen panes, filter conditions and charts survive two actual XLSX exports and reimports
+ok 229 - native merges, frozen panes, filter conditions and charts survive two actual XLSX exports and reimports
+  ---
+  duration_ms: 127.842541
+  ...
+# Subtest: contains filter escaping and Unicode series labels survive XLSX while complex charts are refused
+ok 230 - contains filter escaping and Unicode series labels survive XLSX while complex charts are refused
+  ---
+  duration_ms: 52.634708
+  ...
+# Subtest: empty chart titles survive reopening and huge implicit merge areas are refused before ExcelJS allocation
+ok 231 - empty chart titles survive reopening and huge implicit merge areas are refused before ExcelJS allocation
+  ---
+  duration_ms: 39.359875
+  ...
+# Subtest: the default Office Studio budget demo survives export, import and source-based re-export with valid root models
+ok 232 - the default Office Studio budget demo survives export, import and source-based re-export with valid root models
+  ---
+  duration_ms: 79.789584
+  ...
+# Subtest: row point heights and manual hides survive source and independent XLSX exports, edits and resets
+ok 233 - row point heights and manual hides survive source and independent XLSX exports, edits and resets
+  ---
+  duration_ms: 124.334958
+  ...
+# Subtest: 隐藏列往返：隐藏 B 后保存重开仍隐藏，结构编辑重映射
+ok 234 - 隐藏列往返：隐藏 B 后保存重开仍隐藏，结构编辑重映射
+  ---
+  duration_ms: 47.040625
+  ...
+# Subtest: fixed and dynamic arrays save native formulas/caches, reopen, resize, clear and retain protection conflicts
+ok 235 - fixed and dynamic arrays save native formulas/caches, reopen, resize, clear and retain protection conflicts
+  ---
+  duration_ms: 200.11275
+  ...
+# Subtest: native text alignment, rotation, shrink and row-mode identities survive source and standalone XLSX reopen cycles
+ok 236 - native text alignment, rotation, shrink and row-mode identities survive source and standalone XLSX reopen cycles
+  ---
+  duration_ms: 329.607792
+  ...
+# Subtest: explicit general, zero, false and an empty row-mode map clear source text and custom-height attributes
+ok 237 - explicit general, zero, false and an empty row-mode map clear source text and custom-height attributes
+  ---
+  duration_ms: 271.4525
+  ...
+# Subtest: native text row/column inheritance, explicit default styles and legacy hydration map through row and column edits
+ok 238 - native text row/column inheritance, explicit default styles and legacy hydration map through row and column edits
+  ---
+  duration_ms: 97.692333
+  ...
+# Subtest: native text field preflight rejects invalid alignment/angle/Boolean/row modes before ExcelJS and leaves source unchanged
+ok 239 - native text field preflight rejects invalid alignment/angle/Boolean/row modes before ExcelJS and leaves source unchanged
+  ---
+  duration_ms: 407.020875
+  ...
+# Subtest: actual file preparation restores native font0 and legacy row modes before editing or previewing an otherwise complete workbook
+ok 240 - actual file preparation restores native font0 and legacy row modes before editing or previewing an otherwise complete workbook
+  ---
+  duration_ms: 209.104542
+  ...
+# Subtest: export refreshes automatic height caches after text or font edits without changing the editor snapshot or fixed rows
+ok 241 - export refreshes automatic height caches after text or font edits without changing the editor snapshot or fixed rows
+  ---
+  duration_ms: 167.212167
+  ...
+# Subtest: automatic export caches use centered spans, cross-sheet array results, cleared content and protection without storing spill cells
+ok 242 - automatic export caches use centered spans, cross-sheet array results, cleared content and protection without storing spill cells
+  ---
+  duration_ms: 203.38975
+  ...
+# Subtest: automatic native height caches follow the sole visible row of a hidden logical merge master
+ok 243 - automatic native height caches follow the sole visible row of a hidden logical merge master
+  ---
+  duration_ms: 163.553833
+  ...
+# Subtest: the first export caches cross-sheet dynamic results beyond the prior declared view dimensions
+ok 244 - the first export caches cross-sheet dynamic results beyond the prior declared view dimensions
+  ---
+  duration_ms: 14252.279125
+  ...
+# Subtest: real font0 and its actual custom theme survive source and standalone saves without using cellXF0 or Calibri11 defaults
+ok 245 - real font0 and its actual custom theme survive source and standalone saves without using cellXF0 or Calibri11 defaults
+  ---
+  duration_ms: 85.964208
+  ...
+# Subtest: unresolvable font0 theme bindings fail clearly before ExcelJS and leave the original theme and bytes intact
+ok 246 - unresolvable font0 theme bindings fail clearly before ExcelJS and leave the original theme and bytes intact
+  ---
+  duration_ms: 18.109583
+  ...
+# Subtest: explicit text native error spellings stay strings while literal and formula errors stay native XLSX errors
+ok 247 - explicit text native error spellings stay strings while literal and formula errors stay native XLSX errors
+  ---
+  duration_ms: 129.248291
+  ...
+# Subtest: loads local worker/assets and maps original plus additional rotation with CSS-pixel coordinates at device resolution
+ok 248 - loads local worker/assets and maps original plus additional rotation with CSS-pixel coordinates at device resolution
+  ---
+  duration_ms: 2.701084
+  ...
+# Subtest: a late completed old render cannot overwrite the newer page on the same destination canvas
+ok 249 - a late completed old render cannot overwrite the newer page on the same destination canvas
+  ---
+  duration_ms: 0.715417
+  ...
+# Subtest: independent thumbnail and page canvases do not cancel each other, and cancelling a thumbnail leaves the main render active
+ok 250 - independent thumbnail and page canvases do not cancel each other, and cancelling a thumbnail leaves the main render active
+  ---
+  duration_ms: 0.55175
+  ...
+# Subtest: aborting during page loading prevents task creation; disposal cancels pending tasks and prevents canvas writes
+ok 251 - aborting during page loading prevents task creation; disposal cancels pending tasks and prevents canvas writes
+  ---
+  duration_ms: 1.045833
+  ...
+# Subtest: rejects invalid page, zoom, rotation, page dimensions and unavailable contexts before committing a canvas
+ok 252 - rejects invalid page, zoom, rotation, page dimensions and unavailable contexts before committing a canvas
+  ---
+  duration_ms: 3.589417
+  ...
+# Subtest: encrypted loading errors and unsupported page counts dispose the PDF.js loading task
+ok 253 - encrypted loading errors and unsupported page counts dispose the PDF.js loading task
+  ---
+  duration_ms: 1.013625
+  ...
+# Subtest: finds text across formatting runs and returns original PDF rectangles for horizontal and rotated text
+ok 254 - finds text across formatting runs and returns original PDF rectangles for horizontal and rotated text
+  ---
+  duration_ms: 0.9445
+  ...
+# Subtest: aborting or destroying a search during extraction prevents stale results and further page loads
+ok 255 - aborting or destroying a search during extraction prevents stale results and further page loads
+  ---
+  duration_ms: 0.775875
+  ...
+# Subtest: limits queries, extraction and result counts without rendering or loading unnecessary pages
+ok 256 - limits queries, extraction and result counts without rendering or loading unnecessary pages
+  ---
+  duration_ms: 67.715125
+  ...
+# Subtest: searches actual PDF.js extracted page text from a real generated PDF
+ok 257 - searches actual PDF.js extracted page text from a real generated PDF
+  ---
+  duration_ms: 1366.592084
+  ...
+# Subtest: reads visible page bounds without painting or applying page rotation
+ok 258 - reads visible page bounds without painting or applying page rotation
+  ---
+  duration_ms: 19.3355
+  ...
+# Subtest: creates every designed field kind as native AcroForm data with original page streams unchanged
+ok 259 - creates every designed field kind as native AcroForm data with original page streams unchanged
+  ---
+  duration_ms: 1720.9865
+  ...
+# Subtest: explicit design edits rename, reposition and delete fields while retaining untouched readonly data
+ok 260 - explicit design edits rename, reposition and delete fields while retaining untouched readonly data
+  ---
+  duration_ms: 463.220834
+  ...
+# Subtest: imports original AcroForm values, real widget rectangles, pages, radio options and read-only metadata
+ok 261 - imports original AcroForm values, real widget rectangles, pages, radio options and read-only metadata
+  ---
+  duration_ms: 252.770875
+  ...
+# Subtest: unchanged PDF exports return the exact source without reserialization or a font request
+ok 262 - unchanged PDF exports return the exact source without reserialization or a font request
+  ---
+  duration_ms: 300.884541
+  ...
+# Subtest: exports real text, transparent highlight, additional rotation and editable native forms while preserving every original page stream
+ok 263 - exports real text, transparent highlight, additional rotation and editable native forms while preserving every original page stream
+  ---
+  duration_ms: 403.282541
+  ...
+# Subtest: uses the bundled full Chinese font and retries a failed font load without changing the source
+ok 264 - uses the bundled full Chinese font and retries a failed font load without changing the source
+  ---
+  duration_ms: 1303.778083
+  ...
+# Subtest: validates crop-box offsets, native field structure, readonly values, choices and finite annotation/rotation data
+ok 265 - validates crop-box offsets, native field structure, readonly values, choices and finite annotation/rotation data
+  ---
+  duration_ms: 504.487541
+  ...
+# Subtest: retains passive native fields without exposing editable values and still rejects encrypted PDFs and XFA
+ok 266 - retains passive native fields without exposing editable values and still rejects encrypted PDFs and XFA
+  ---
+  duration_ms: 647.014875
+  ...
+# Subtest: exports rectangles and handwritten signatures as native vector instructions without replacing original page streams
+ok 267 - exports rectangles and handwritten signatures as native vector instructions without replacing original page streams
+  ---
+  duration_ms: 286.729084
+  ...
+# Subtest: rejects invalid signature points, drawing widths and strokes extending outside the visible crop box
+ok 268 - rejects invalid signature points, drawing widths and strokes extending outside the visible crop box
+  ---
+  duration_ms: 337.7515
+  ...
+# Subtest: deletes a source field and creates a replacement with the same name without duplicate native widgets
+ok 269 - deletes a source field and creates a replacement with the same name without duplicate native widgets
+  ---
+  duration_ms: 200.020791
+  ...
+# Subtest: repeated radio export options stay synchronized across pages and survive repeated reopens
+ok 270 - repeated radio export options stay synchronized across pages and survive repeated reopens
+  ---
+  duration_ms: 293.13525
+  ...
+# Subtest: inserts real blank pages, remaps native widgets and keeps source streams and repeated rotation idempotent
+ok 271 - inserts real blank pages, remaps native widgets and keeps source streams and repeated rotation idempotent
+  ---
+  duration_ms: 249.176417
+  ...
+# Subtest: removes source widgets on deleted pages while retaining shared fields, appearances and remaining source content
+ok 272 - removes source widgets on deleted pages while retaining shared fields, appearances and remaining source content
+  ---
+  duration_ms: 231.524083
+  ...
+# Subtest: copies native pages and widgets into shared field trees, preserves independent annotation owners and moves page references
+ok 273 - copies native pages and widgets into shared field trees, preserves independent annotation owners and moves page references
+  ---
+  duration_ms: 174.587666
+  ...
+# Subtest: resizes the visible native canvas at an offset crop origin without scaling original contents
+ok 274 - resizes the visible native canvas at an offset crop origin without scaling original contents
+  ---
+  duration_ms: 193.123541
+  ...
+# Subtest: repairs named destinations and catalog navigation after deletion and maps copied-group links to copied page references
+ok 275 - repairs named destinations and catalog navigation after deletion and maps copied-group links to copied page references
+  ---
+  duration_ms: 186.081542
+  ...
+# Subtest: page transformations keep readonly and source field-structure protections and reject invalid drafts without modifying source bytes
+ok 276 - page transformations keep readonly and source field-structure protections and reject invalid drafts without modifying source bytes
+  ---
+  duration_ms: 124.542875
+  ...
+# Subtest: preserves the original instance reference when its copy is inserted before it and keeps ordinary links on the original
+ok 277 - preserves the original instance reference when its copy is inserted before it and keeps ordinary links on the original
+  ---
+  duration_ms: 179.462167
+  ...
+# Subtest: splits a valid combined field/widget before page duplication without creating a self-referencing field tree
+ok 278 - splits a valid combined field/widget before page duplication without creating a self-referencing field tree
+  ---
+  duration_ms: 140.342666
+  ...
+# Subtest: materializes inherited page boxes resources and rotation before reparenting original leaves
+ok 279 - materializes inherited page boxes resources and rotation before reparenting original leaves
+  ---
+  duration_ms: 167.53475
+  ...
+# Subtest: maps AA and chained actions within copied groups, prunes deleted targets and bounds cyclic Next actions
+ok 280 - maps AA and chained actions within copied groups, prunes deleted targets and bounds cyclic Next actions
+  ---
+  duration_ms: 132.864833
+  ...
+# Subtest: keeps hidden radio widgets and their selected export value across insertions, copies and removal of the original page
+ok 281 - keeps hidden radio widgets and their selected export value across insertions, copies and removal of the original page
+  ---
+  duration_ms: 155.563666
+  ...
+# Subtest: radio options preserve meaning after copy and original-page deletion while choice ordering guards remain strict
+ok 282 - radio options preserve meaning after copy and original-page deletion while choice ordering guards remain strict
+  ---
+  duration_ms: 142.940709
+  ...
+# Subtest: drawing only on a copied page isolates Contents and mutable resource maps while retaining original streams and widget appearances
+ok 283 - drawing only on a copied page isolates Contents and mutable resource maps while retaining original streams and widget appearances
+  ---
+  duration_ms: 81.970625
+  ...
+# Subtest: keeps each repeated-source copy self actions on its own page while field-global actions retain their original context
+ok 284 - keeps each repeated-source copy self actions on its own page while field-global actions retain their original context
+  ---
+  duration_ms: 80.689042
+  ...
+# Subtest: clears designed text, date, choice, list and image values without recreating field refs or leaving stale appearances
+ok 285 - clears designed text, date, choice, list and image values without recreating field refs or leaving stale appearances
+  ---
+  duration_ms: 70.768791
+  ...
+# Subtest: namespaced legacy and name-tree destinations retain selected pages and prune unselected targets through two native saves
+ok 286 - namespaced legacy and name-tree destinations retain selected pages and prune unselected targets through two native saves
+  ---
+  duration_ms: 127.512458
+  ...
+# Subtest: retained outlines rebuild canonical parents, sibling refs and open/closed counts without unselected page objects
+ok 287 - retained outlines rebuild canonical parents, sibling refs and open/closed counts without unselected page objects
+  ---
+  duration_ms: 27.999625
+  ...
+# Subtest: named destinations in outlines become real retained-page references and URI Next survives a pruned GoTo
+ok 288 - named destinations in outlines become real retained-page references and URI Next survives a pruned GoTo
+  ---
+  duration_ms: 59.20525
+  ...
+# Subtest: nested PageLabels ranges preserve original numbering after reorder, copies and merge through two saves
+ok 289 - nested PageLabels ranges preserve original numbering after reorder, copies and merge through two saves
+  ---
+  duration_ms: 14.440709
+  ...
+# Subtest: prefix-only page labels retain constant text and do not gain a numbering style
+ok 290 - prefix-only page labels retain constant text and do not gain a numbering style
+  ---
+  duration_ms: 21.195667
+  ...
+# Subtest: catalog can be re-composed twice with canonical outlines and labels remaining native
+ok 291 - catalog can be re-composed twice with canonical outlines and labels remaining native
+  ---
+  duration_ms: 10.834167
+  ...
+# Subtest: primary Info, XML metadata, language, extension and viewer settings are retained with explicit secondary decisions
+ok 292 - primary Info, XML metadata, language, extension and viewer settings are retained with explicit secondary decisions
+  ---
+  duration_ms: 5.770834
+  ...
+# Subtest: missing primary metadata remains absent and secondary metadata omission is explicit
+ok 293 - missing primary metadata remains absent and secondary metadata omission is explicit
+  ---
+  duration_ms: 7.571291
+  ...
+# Subtest: compatible OpenAction and AA sequences preserve all sources and do not mutate shared cached actions
+ok 294 - compatible OpenAction and AA sequences preserve all sources and do not mutate shared cached actions
+  ---
+  duration_ms: 4.829125
+  ...
+# Subtest: two incompatible local OpenAction views reject the whole operation with a locatable conflict and unchanged sources
+ok 295 - two incompatible local OpenAction views reject the whole operation with a locatable conflict and unchanged sources
+  ---
+  duration_ms: 1.544625
+  ...
+# Subtest: incompatible local additional actions reject instead of silently keeping the primary event
+ok 296 - incompatible local additional actions reject instead of silently keeping the primary event
+  ---
+  duration_ms: 6.67075
+  ...
+# Subtest: unselected OpenAction destination is pruned while the other source action survives
+ok 297 - unselected OpenAction destination is pruned while the other source action survives
+  ---
+  duration_ms: 4.602333
+  ...
+# Subtest: primary print preference with no retained target is explicitly pruned
+ok 298 - primary print preference with no retained target is explicitly pruned
+  ---
+  duration_ms: 35.913208
+  ...
+# Subtest: invalid outline cycle fails without copying source page trees
+ok 299 - invalid outline cycle fails without copying source page trees
+  ---
+  duration_ms: 15.775542
+  ...
+# Subtest: invalid outline bad parent fails without copying source page trees
+ok 300 - invalid outline bad parent fails without copying source page trees
+  ---
+  duration_ms: 0.970875
+  ...
+# Subtest: invalid outline bad last fails without copying source page trees
+ok 301 - invalid outline bad last fails without copying source page trees
+  ---
+  duration_ms: 1.001125
+  ...
+# Subtest: invalid outline bad prev fails without copying source page trees
+ok 302 - invalid outline bad prev fails without copying source page trees
+  ---
+  duration_ms: 40.687542
+  ...
+# Subtest: invalid outline opaque structure element fails without copying source page trees
+ok 303 - invalid outline opaque structure element fails without copying source page trees
+  ---
+  duration_ms: 1.316375
+  ...
+# Subtest: invalid outline dangling first fails without copying source page trees
+ok 304 - invalid outline dangling first fails without copying source page trees
+  ---
+  duration_ms: 1.213625
+  ...
+# Subtest: invalid page label unknown style rejects
+ok 305 - invalid page label unknown style rejects
+  ---
+  duration_ms: 0.854375
+  ...
+# Subtest: invalid page label duplicate indexes rejects
+ok 306 - invalid page label duplicate indexes rejects
+  ---
+  duration_ms: 12.788292
+  ...
+# Subtest: invalid page label missing first page rejects
+ok 307 - invalid page label missing first page rejects
+  ---
+  duration_ms: 0.921292
+  ...
+# Subtest: invalid page label zero first number rejects
+ok 308 - invalid page label zero first number rejects
+  ---
+  duration_ms: 2.382334
+  ...
+# Subtest: invalid page label opaque label key rejects
+ok 309 - invalid page label opaque label key rejects
+  ---
+  duration_ms: 1.082
+  ...
+# Subtest: cyclic PageLabels Kids and mismatching Limits reject instead of generic copying the number tree
+ok 310 - cyclic PageLabels Kids and mismatching Limits reject instead of generic copying the number tree
+  ---
+  duration_ms: 3.28625
+  ...
+# Subtest: named destination cycles and namespace collisions reject with source locations
+ok 311 - named destination cycles and namespace collisions reject with source locations
+  ---
+  duration_ms: 1.678458
+  ...
+# Subtest: opaque catalog events, JavaScript and malformed action values reject without dropping source semantics
+ok 312 - opaque catalog events, JavaScript and malformed action values reject without dropping source semantics
+  ---
+  duration_ms: 13.697417
+  ...
+# Subtest: Info object references, opaque metadata streams and unknown viewer settings fail locatably
+ok 313 - Info object references, opaque metadata streams and unknown viewer settings fail locatably
+  ---
+  duration_ms: 3.260791
+  ...
+# Subtest: target page instance coverage and metadata policy are validated before catalog mutation
+ok 314 - target page instance coverage and metadata policy are validated before catalog mutation
+  ---
+  duration_ms: 8.516875
+  ...
+# Subtest: multiple relative Named initial page actions reject even when their action names match
+ok 315 - multiple relative Named initial page actions reject even when their action names match
+  ---
+  duration_ms: 6.137459
+  ...
+# Subtest: page label arithmetic outside safe integer range rejects instead of rounding a native St
+ok 316 - page label arithmetic outside safe integer range rejects instead of rounding a native St
+  ---
+  duration_ms: 5.529417
+  ...
+# Subtest: Metadata filters and DecodeParms cannot retain disguised page references
+ok 317 - Metadata filters and DecodeParms cannot retain disguised page references
+  ---
+  duration_ms: 12.867416
+  ...
+# Subtest: DA tokenizer rewrites resource operands and ignores comments with escaped PDF names
+ok 318 - DA tokenizer rewrites resource operands and ignores comments with escaped PDF names
+  ---
+  duration_ms: 72.874042
+  ...
+# Subtest: DA resource compiler supports font, graphics state, color space and pattern namespaces
+ok 319 - DA resource compiler supports font, graphics state, color space and pattern namespaces
+  ---
+  duration_ms: 13.306375
+  ...
+# Subtest: DA semantic comparison resolves actual font resources rather than matching /F1 text
+ok 320 - DA semantic comparison resolves actual font resources rather than matching /F1 text
+  ---
+  duration_ms: 76.502209
+  ...
+# Subtest: missing AcroForm DR font is recovered only from unambiguous existing appearance resources
+ok 321 - missing AcroForm DR font is recovered only from unambiguous existing appearance resources
+  ---
+  duration_ms: 37.244959
+  ...
+# Subtest: unresolved DA resource and opaque content operators fail at their exact field path
+ok 322 - unresolved DA resource and opaque content operators fail at their exact field path
+  ---
+  duration_ms: 16.988542
+  ...
+# Subtest: closed copier registers stream placeholders before traversing a cyclic stream dictionary
+ok 323 - closed copier registers stream placeholders before traversing a cyclic stream dictionary
+  ---
+  duration_ms: 1.056291
+  ...
+# Subtest: portable SHA-256 matches native crypto and published empty/abc vectors
+ok 324 - portable SHA-256 matches native crypto and published empty/abc vectors
+  ---
+  duration_ms: 194.756709
+  ...
+# Subtest: treats direct and indirect null dictionary values as absent while retaining null destination coordinates
+ok 325 - treats direct and indirect null dictionary values as absent while retaining null destination coordinates
+  ---
+  duration_ms: 596.590583
+  ...
+# Subtest: ignores optional null policies, actions and widget dictionary entries while preserving real navigation and appearances
+ok 326 - ignores optional null policies, actions and widget dictionary entries while preserving real navigation and appearances
+  ---
+  duration_ms: 803.356833
+  ...
+# Subtest: extracts only selected native pages, order and stream closure through two recompositions
+ok 327 - extracts only selected native pages, order and stream closure through two recompositions
+  ---
+  duration_ms: 18.049834
+  ...
+# Subtest: multi-source merge keeps page resource and AcroForm font namespaces distinct
+ok 328 - multi-source merge keeps page resource and AcroForm font namespaces distinct
+  ---
+  duration_ms: 52.609458
+  ...
+# Subtest: materializes nested page inheritance without losing resources, dimensions or rotation
+ok 329 - materializes nested page inheritance without losing resources, dimensions or rotation
+  ---
+  duration_ms: 21.206667
+  ...
+# Subtest: splits merged field/widget into canonical parent plus child and retains every appearance
+ok 330 - splits merged field/widget into canonical parent plus child and retains every appearance
+  ---
+  duration_ms: 52.728292
+  ...
+# Subtest: preserves seven common native form kinds and values without flattening
+ok 331 - preserves seven common native form kinds and values without flattening
+  ---
+  duration_ms: 106.209708
+  ...
+# Subtest: retains Zero widget original Rect/F/V/AP through two native recompositions
+ok 332 - retains Zero widget original Rect/F/V/AP through two native recompositions
+  ---
+  duration_ms: 25.731875
+  ...
+# Subtest: retains Invisible widget original Rect/F/V/AP through two native recompositions
+ok 333 - retains Invisible widget original Rect/F/V/AP through two native recompositions
+  ---
+  duration_ms: 58.374791
+  ...
+# Subtest: retains NoView widget original Rect/F/V/AP through two native recompositions
+ok 334 - retains NoView widget original Rect/F/V/AP through two native recompositions
+  ---
+  duration_ms: 38.917375
+  ...
+# Subtest: passively retains opaque canonical field type, value, flags, extension and zero-area appearance
+ok 335 - passively retains opaque canonical field type, value, flags, extension and zero-area appearance
+  ---
+  duration_ms: 20.219208
+  ...
+# Subtest: rename keeps hierarchical roots and changes only colliding source subtree names
+ok 336 - rename keeps hierarchical roots and changes only colliding source subtree names
+  ---
+  duration_ms: 15.69975
+  ...
+# Subtest: link merges compatible fields into one canonical field and keeps both original AP streams
+ok 337 - link merges compatible fields into one canonical field and keeps both original AP streams
+  ---
+  duration_ms: 7.562125
+  ...
+# Subtest: same /F1 DA name with different underlying fonts is incompatible for link
+ok 338 - same /F1 DA name with different underlying fonts is incompatible for link
+  ---
+  duration_ms: 92.169583
+  ...
+# Subtest: link refuses different field types without mutating either input
+ok 339 - link refuses different field types without mutating either input
+  ---
+  duration_ms: 28.0985
+  ...
+# Subtest: link conflicting text values refuses first-value policy rather than leaving stale AP
+ok 340 - link conflicting text values refuses first-value policy rather than leaving stale AP
+  ---
+  duration_ms: 2.639041
+  ...
+# Subtest: link default policy rejects conflicting V and DV
+ok 341 - link default policy rejects conflicting V and DV
+  ---
+  duration_ms: 2.653042
+  ...
+# Subtest: explicit checkbox link policy synchronizes canonical V/DV and every AP/AS without stream regeneration
+ok 342 - explicit checkbox link policy synchronizes canonical V/DV and every AP/AS without stream regeneration
+  ---
+  duration_ms: 55.102291
+  ...
+# Subtest: explicit radio link policy remaps on-state names and Opt in exact Kids order
+ok 343 - explicit radio link policy remaps on-state names and Opt in exact Kids order
+  ---
+  duration_ms: 76.324459
+  ...
+# Subtest: radio link preserves independent original default A and current B through two native recompositions
+ok 344 - radio link preserves independent original default A and current B through two native recompositions
+  ---
+  duration_ms: 70.68725
+  ...
+# Subtest: checkbox link preserves independent false default and true current value
+ok 345 - checkbox link preserves independent false default and true current value
+  ---
+  duration_ms: 73.82425
+  ...
+# Subtest: equal current V with differing DV still rejects default link policy
+ok 346 - equal current V with differing DV still rejects default link policy
+  ---
+  duration_ms: 9.1935
+  ...
+# Subtest: choice option order remains significant for link
+ok 347 - choice option order remains significant for link
+  ---
+  duration_ms: 6.002541
+  ...
+# Subtest: radio selected option omitted by extraction requires explicit clear policy
+ok 348 - radio selected option omitted by extraction requires explicit clear policy
+  ---
+  duration_ms: 14.927375
+  ...
+# Subtest: hidden selected radio widget remains a canonical option with value and AP through extraction
+ok 349 - hidden selected radio widget remains a canonical option with value and AP through extraction
+  ---
+  duration_ms: 13.200708
+  ...
+# Subtest: self A/AA/Next destinations use each selected instance and cross-page jumps use its group
+ok 350 - self A/AA/Next destinations use each selected instance and cross-page jumps use its group
+  ---
+  duration_ms: 7.512083
+  ...
+# Subtest: unselected GoTo is pruned while safe Next URI survives
+ok 351 - unselected GoTo is pruned while safe Next URI survives
+  ---
+  duration_ms: 55.375083
+  ...
+# Subtest: ResetForm static field lists are renamed and do not reset other merged sources
+ok 352 - ResetForm static field lists are renamed and do not reset other merged sources
+  ---
+  duration_ms: 20.120709
+  ...
+# Subtest: JavaScript referring to old field names fails with a path and immutable source bytes
+ok 353 - JavaScript referring to old field names fails with a path and immutable source bytes
+  ---
+  duration_ms: 1.51175
+  ...
+# Subtest: cyclic action Next fails instead of truncating executable semantics
+ok 354 - cyclic action Next fails instead of truncating executable semantics
+  ---
+  duration_ms: 6.986917
+  ...
+# Subtest: opaque action embedded under an unrecognized field key is a located failure
+ok 355 - opaque action embedded under an unrecognized field key is a located failure
+  ---
+  duration_ms: 15.395417
+  ...
+# Subtest: viewer-generated form appearances are rejected until source AP is materialized
+ok 356 - viewer-generated form appearances are rejected until source AP is materialized
+  ---
+  duration_ms: 1.72575
+  ...
+# Subtest: unmapped canonical field reference cannot drag an unselected widget/page into output
+ok 357 - unmapped canonical field reference cannot drag an unselected widget/page into output
+  ---
+  duration_ms: 2.066292
+  ...
+# Subtest: unselected annotation references are rejected before any extra page is copied
+ok 358 - unselected annotation references are rejected before any extra page is copied
+  ---
+  duration_ms: 0.7885
+  ...
+# Subtest: wrong widget P versus unique Annots owner is rejected
+ok 359 - wrong widget P versus unique Annots owner is rejected
+  ---
+  duration_ms: 1.101709
+  ...
+# Subtest: canonical field tree cycles are rejected without recursing indefinitely
+ok 360 - canonical field tree cycles are rejected without recursing indefinitely
+  ---
+  duration_ms: 15.918334
+  ...
+# Subtest: opaque document-wide name trees are a located all-or-nothing failure
+ok 361 - opaque document-wide name trees are a located all-or-nothing failure
+  ---
+  duration_ms: 11.5885
+  ...
+# Subtest: source/selection validation rejects duplicate ids, invalid indexes and empty output
+ok 362 - source/selection validation rejects duplicate ids, invalid indexes and empty output
+  ---
+  duration_ms: 3.926167
+  ...
+# Subtest: isolates Contents and mutable Resources for copied instances before future drawing
+ok 363 - isolates Contents and mutable Resources for copied instances before future drawing
+  ---
+  duration_ms: 25.3805
+  ...
+# Subtest: copied instances share immutable native stream/font references while owning mutable arrays
+ok 364 - copied instances share immutable native stream/font references while owning mutable arrays
+  ---
+  duration_ms: 1.067792
+  ...
+# Subtest: non-widget popup Parent and Popup links retain their native annotation relationship
+ok 365 - non-widget popup Parent and Popup links retain their native annotation relationship
+  ---
+  duration_ms: 8.336459
+  ...
+# Subtest: AcroForm default DA and Q become explicit independent leaf attributes
+ok 366 - AcroForm default DA and Q become explicit independent leaf attributes
+  ---
+  duration_ms: 51.553542
+  ...
+# Subtest: nonvisual canonical field value and calculation-order identity are retained
+ok 367 - nonvisual canonical field value and calculation-order identity are retained
+  ---
+  duration_ms: 14.69975
+  ...
+# Subtest: image link compares independent native DV instead of substituting current image data
+ok 368 - image link compares independent native DV instead of substituting current image data
+  ---
+  duration_ms: 82.111292
+  ...
+# Subtest: radio last-value policy retains selected source V, DV and independent design default
+ok 369 - radio last-value policy retains selected source V, DV and independent design default
+  ---
+  duration_ms: 79.33175
+  ...
+# Subtest: radio native on-state aliases are linked by logical export option without losing V or DV
+ok 370 - radio native on-state aliases are linked by logical export option without losing V or DV
+  ---
+  duration_ms: 34.301583
+  ...
+# Subtest: different checkbox native export state is an incompatible link definition
+ok 371 - different checkbox native export state is an incompatible link definition
+  ---
+  duration_ms: 2.84025
+  ...
+# Subtest: signed field is rejected before native composition and source bytes remain immutable
+ok 372 - signed field is rejected before native composition and source bytes remain immutable
+  ---
+  duration_ms: 1.362459
+  ...
+# Subtest: native bytes API accepts Blob source input and returns reopenable immutable bytes
+ok 373 - native bytes API accepts Blob source input and returns reopenable immutable bytes
+  ---
+  duration_ms: 21.60575
+  ...
+# Subtest: combined opaque widget preserves raw FT, value, Rect, F and AP without pdf-lib field classification
+ok 374 - combined opaque widget preserves raw FT, value, Rect, F and AP without pdf-lib field classification
+  ---
+  duration_ms: 103.674916
+  ...
+# Subtest: duplicate opaque field names cannot be renamed or linked without private semantic support
+ok 375 - duplicate opaque field names cannot be renamed or linked without private semantic support
+  ---
+  duration_ms: 9.275958
+  ...
+# Subtest: malformed standard field values cannot masquerade as empty values during link
+ok 376 - malformed standard field values cannot masquerade as empty values during link
+  ---
+  duration_ms: 60.673458
+  ...
+# Subtest: anonymous field groups have an explicit unsupported-name error rather than a partial output
+ok 377 - anonymous field groups have an explicit unsupported-name error rather than a partial output
+  ---
+  duration_ms: 3.773209
+  ...
+# Subtest: final link resolution report identifies the actual chosen source after three input records
+ok 378 - final link resolution report identifies the actual chosen source after three input records
+  ---
+  duration_ms: 17.922958
+  ...
+# Subtest: combined widget Hide reference targets its own child annotation and field-global context retains the original instance
+ok 379 - combined widget Hide reference targets its own child annotation and field-global context retains the original instance
+  ---
+  duration_ms: 43.80525
+  ...
+# Subtest: Hide field names are rewritten, native annotation NM identity remains unchanged
+ok 380 - Hide field names are rewritten, native annotation NM identity remains unchanged
+  ---
+  duration_ms: 34.011166
+  ...
+# Subtest: field-global GoTo and cross-group fallback retain the original page behind a front-inserted copy
+ok 381 - field-global GoTo and cross-group fallback retain the original page behind a front-inserted copy
+  ---
+  duration_ms: 41.606958
+  ...
+# Subtest: relative and executable URI links reject instead of changing their origin or dynamic name semantics
+ok 382 - relative and executable URI links reject instead of changing their origin or dynamic name semantics
+  ---
+  duration_ms: 11.793333
+  ...
+# Subtest: GoToR keeps absolute remote names and page numbers but refuses relative file targets
+ok 383 - GoToR keeps absolute remote names and page numbers but refuses relative file targets
+  ---
+  duration_ms: 12.679417
+  ...
+# Subtest: external stream data and reference XObjects cannot silently disappear from a Blob-only composition
+ok 384 - external stream data and reference XObjects cannot silently disappear from a Blob-only composition
+  ---
+  duration_ms: 49.879792
+  ...
+# Subtest: unsigned signature seed and field-lock policies reject before name or page changes
+ok 385 - unsigned signature seed and field-lock policies reject before name or page changes
+  ---
+  duration_ms: 39.29325
+  ...
+# Subtest: private field-name binding metadata rejects unsafe conflict renaming
+ok 386 - private field-name binding metadata rejects unsafe conflict renaming
+  ---
+  duration_ms: 4.903417
+  ...
+# Subtest: link rejects different canonical mapping names or alternative labels rather than discarding one
+ok 387 - link rejects different canonical mapping names or alternative labels rather than discarding one
+  ---
+  duration_ms: 13.259417
+  ...
+# Subtest: absolute SubmitForm preserves its source export mapping and relative submission targets reject
+ok 388 - absolute SubmitForm preserves its source export mapping and relative submission targets reject
+  ---
+  duration_ms: 60.617917
+  ...
+# Subtest: rebases virtual pages, native edits, links and resource conflicts while keeping editable marks out of the new base
+ok 389 - rebases virtual pages, native edits, links and resource conflicts while keeping editable marks out of the new base
+  ---
+  duration_ms: 1523.984458
+  ...
+# Subtest: keeps a prior page-copy transaction with combined Hide and ResetForm semantics through composition and extraction
+ok 390 - keeps a prior page-copy transaction with combined Hide and ResetForm semantics through composition and extraction
+  ---
+  duration_ms: 719.826208
+  ...
+# Subtest: links compatible equal fields and retains independent fields by default, while value conflicts leave both inputs unchanged
+ok 391 - links compatible equal fields and retains independent fields by default, while value conflicts leave both inputs unchanged
+  ---
+  duration_ms: 659.346334
+  ...
+# Subtest: preserves zero-area, Invisible, NoView and unknown passive fields in an extracted base and later native edits
+ok 392 - preserves zero-area, Invisible, NoView and unknown passive fields in an extracted base and later native edits
+  ---
+  duration_ms: 489.144334
+  ...
+# Subtest: requires an explicit policy when extracting only the current or only the default radio widget, preserving V and DV independently
+ok 393 - requires an explicit policy when extracting only the current or only the default radio widget, preserving V and DV independently
+  ---
+  duration_ms: 464.75825
+  ...
+# Subtest: rejects incompatible names, unsupported native actions, invalid snapshots and cancellation without mutating the active model
+ok 394 - rejects incompatible names, unsupported native actions, invalid snapshots and cancellation without mutating the active model
+  ---
+  duration_ms: 352.56425
+  ...
+# Subtest: replaces a designed field on copied pages without leaving dangling old widget annotations
+ok 395 - replaces a designed field on copied pages without leaving dangling old widget annotations
+  ---
+  duration_ms: 457.037583
+  ...
+# Subtest: enumerates unknown terminal fields, protects private values and retains Invisible and zero-area controls
+ok 396 - enumerates unknown terminal fields, protects private values and retains Invisible and zero-area controls
+  ---
+  duration_ms: 1262.987708
+  ...
+# Subtest: edits a supported field, preserves passive canonical values and appearances, and reopens twice
+ok 397 - edits a supported field, preserves passive canonical values and appearances, and reopens twice
+  ---
+  duration_ms: 471.940709
+  ...
+# Subtest: copies, moves and deletes native pages while keeping unknown and nonvisual field ownership
+ok 398 - copies, moves and deletes native pages while keeping unknown and nonvisual field ownership
+  ---
+  duration_ms: 375.383833
+  ...
+# Subtest: refuses passive value, type, flags, geometry, deletion and design replacement without modifying the source
+ok 399 - refuses passive value, type, flags, geometry, deletion and design replacement without modifying the source
+  ---
+  duration_ms: 323.114375
+  ...
+# Subtest: validates canonical cycles, duplicate roots, orphan widgets and unknown FT before public field traversal
+ok 400 - validates canonical cycles, duplicate roots, orphan widgets and unknown FT before public field traversal
+  ---
+  duration_ms: 300.103041
+  ...
+# Subtest: reads unsigned signature fields passively but prevents editing an existing signature payload
+ok 401 - reads unsigned signature fields passively but prevents editing an existing signature payload
+  ---
+  duration_ms: 376.434666
+  ...
+# Subtest: splits combined widgets while Hide keeps annotation identity and ResetForm keeps field identity through page copies
+ok 402 - splits combined widgets while Hide keeps annotation identity and ResetForm keeps field identity through page copies
+  ---
+  duration_ms: 305.299667
+  ...
+# Subtest: bounds cyclic indirect passive values and retains the original source bytes
+ok 403 - bounds cyclic indirect passive values and retains the original source bytes
+  ---
+  duration_ms: 297.317708
+  ...
+# Subtest: inherits through direct and indirect null entries when protecting passive current and default values
+ok 404 - inherits through direct and indirect null entries when protecting passive current and default values
+  ---
+  duration_ms: 291.990084
+  ...
+# Subtest: materializes effective terminal values and flags before constructing native wrappers or exposing editable values
+ok 405 - materializes effective terminal values and flags before constructing native wrappers or exposing editable values
+  ---
+  duration_ms: 377.835125
+  ...
+# Subtest: ignores null structural dictionary entries without weakening required field and widget ownership
+ok 406 - ignores null structural dictionary entries without weakening required field and widget ownership
+  ---
+  duration_ms: 234.052875
+  ...
+# Subtest: virtual move preserves original page labels and print preference through the actual composition adapter and two native saves
+ok 407 - virtual move preserves original page labels and print preference through the actual composition adapter and two native saves
+  ---
+  duration_ms: 1197.417667
+  ...
+# Subtest: nested ranges survive copy, blank insertion, multi-page move and deletion with original refs, resources, field AP and defaults intact
+ok 408 - nested ranges survive copy, blank insertion, multi-page move and deletion with original refs, resources, field AP and defaults intact
+  ---
+  duration_ms: 787.127125
+  ...
+# Subtest: all five numbering styles and prefix-only labels retain their own starts after native reorder and merge
+ok 409 - all five numbering styles and prefix-only labels retain their own starts after native reorder and merge
+  ---
+  duration_ms: 762.337709
+  ...
+# Subtest: unlabelled sources stay unlabelled and removing the entire print selection removes only that preference
+ok 410 - unlabelled sources stay unlabelled and removing the entire print selection removes only that preference
+  ---
+  duration_ms: 462.31375
+  ...
+# Subtest: rejects unknown style labels before exporting any changed page tree
+ok 411 - rejects unknown style labels before exporting any changed page tree
+  ---
+  duration_ms: 370.863959
+  ...
+# Subtest: rejects non-text prefix labels before exporting any changed page tree
+ok 412 - rejects non-text prefix labels before exporting any changed page tree
+  ---
+  duration_ms: 299.617708
+  ...
+# Subtest: rejects zero start labels before exporting any changed page tree
+ok 413 - rejects zero start labels before exporting any changed page tree
+  ---
+  duration_ms: 308.815
+  ...
+# Subtest: rejects overflow start labels before exporting any changed page tree
+ok 414 - rejects overflow start labels before exporting any changed page tree
+  ---
+  duration_ms: 391.71075
+  ...
+# Subtest: rejects missing first page labels before exporting any changed page tree
+ok 415 - rejects missing first page labels before exporting any changed page tree
+  ---
+  duration_ms: 307.404625
+  ...
+# Subtest: rejects unsorted branches labels before exporting any changed page tree
+ok 416 - rejects unsorted branches labels before exporting any changed page tree
+  ---
+  duration_ms: 245.587125
+  ...
+# Subtest: rejects cyclic children labels before exporting any changed page tree
+ok 417 - rejects cyclic children labels before exporting any changed page tree
+  ---
+  duration_ms: 199.226375
+  ...
+# Subtest: rejects incorrect limits labels before exporting any changed page tree
+ok 418 - rejects incorrect limits labels before exporting any changed page tree
+  ---
+  duration_ms: 199.030459
+  ...
+# Subtest: rejects opaque label property labels before exporting any changed page tree
+ok 419 - rejects opaque label property labels before exporting any changed page tree
+  ---
+  duration_ms: 182.117542
+  ...
+# Subtest: rejects malformed native print range [0]
+ok 420 - rejects malformed native print range [0]
+  ---
+  duration_ms: 211.321292
+  ...
+# Subtest: rejects malformed native print range [1,0]
+ok 421 - rejects malformed native print range [1,0]
+  ---
+  duration_ms: 159.974708
+  ...
+# Subtest: rejects malformed native print range [0,1,1,1]
+ok 422 - rejects malformed native print range [0,1,1,1]
+  ---
+  duration_ms: 209.704875
+  ...
+# Subtest: rejects malformed native print range [0,2]
+ok 423 - rejects malformed native print range [0,2]
+  ---
+  duration_ms: 162.274792
+  ...
+# Subtest: rejects malformed native print range [0.5,1]
+ok 424 - rejects malformed native print range [0.5,1]
+  ---
+  duration_ms: 137.910458
+  ...
+# Subtest: catalog remapping preserves an unrelated native catalog feature and composition continues to reject unsupported semantics
+ok 425 - catalog remapping preserves an unrelated native catalog feature and composition continues to reject unsupported semantics
+  ---
+  duration_ms: 136.383958
+  ...
+# Subtest: catalog remapping does not bypass native signature protection
+ok 426 - catalog remapping does not bypass native signature protection
+  ---
+  duration_ms: 136.192291
+  ...
+# Subtest: Word print repeats only consecutive leading complete header rows
+ok 427 - Word print repeats only consecutive leading complete header rows
+  ---
+  duration_ms: 173.670125
+  ...
+# Subtest: Word print applies row minimum height and explicit split policy while automatic height ignores its value
+ok 428 - Word print applies row minimum height and explicit split policy while automatic height ignores its value
+  ---
+  duration_ms: 41.78575
+  ...
+# Subtest: Word print uses explicit keep and widow values while title defaults retain the next paragraph
+ok 429 - Word print uses explicit keep and widow values while title defaults retain the next paragraph
+  ---
+  duration_ms: 35.140583
+  ...
+# Subtest: Word print retains native tab characters and resolved leaders for the measurement pass without inserting document text
+ok 430 - Word print retains native tab characters and resolved leaders for the measurement pass without inserting document text
+  ---
+  duration_ms: 58.217542
+  ...
+# Subtest: Word print preserves point paragraph geometry and exact/minimum line-rule metadata
+ok 431 - Word print preserves point paragraph geometry and exact/minimum line-rule metadata
+  ---
+  duration_ms: 31.257292
+  ...
+# Subtest: Word prints character spacing and baseline movement without changing point size or source text
+ok 432 - Word prints character spacing and baseline movement without changing point size or source text
+  ---
+  duration_ms: 79.16275
+  ...
+# Subtest: custom number format text, Chinese dates and selected color sections print with conditional color taking priority
+ok 433 - custom number format text, Chinese dates and selected color sections print with conditional color taking priority
+  ---
+  duration_ms: 266.010541
+  ...
+# Subtest: Word printing retains whitespace and line breaks without any nonprinting view glyphs or decorations
+ok 434 - Word printing retains whitespace and line breaks without any nonprinting view glyphs or decorations
+  ---
+  duration_ms: 4.529666
+  ...
+# Subtest: Word print keeps floating images, wrap contours and page-coordinate placement in the printed document
+ok 435 - Word print keeps floating images, wrap contours and page-coordinate placement in the printed document
+  ---
+  duration_ms: 28.714166
+  ...
+# Subtest: sheet print respects widths, vertical alignment, blank border-only cells and merged outer edges
+ok 436 - sheet print respects widths, vertical alignment, blank border-only cells and merged outer edges
+  ---
+  duration_ms: 172.760667
+  ...
+# Subtest: Word print content repeats headers for explicit pages, preserves page fields and safely embeds images
+ok 437 - Word print content repeats headers for explicit pages, preserves page fields and safely embeds images
+  ---
+  duration_ms: 21.97475
+  ...
+# Subtest: document text, hyperlinks, labels and style attributes cannot inject script into printable HTML
+ok 438 - document text, hyperlinks, labels and style attributes cannot inject script into printable HTML
+  ---
+  duration_ms: 24.539583
+  ...
+# Subtest: Excel print uses computed values, filters and merged cells, and includes the actual chart series
+ok 439 - Excel print uses computed values, filters and merged cells, and includes the actual chart series
+  ---
+  duration_ms: 46.894875
+  ...
+# Subtest: Excel cell fonts retain point sizes, formulas and conditional styling while legacy cells inherit defaults
+ok 440 - Excel cell fonts retain point sizes, formulas and conditional styling while legacy cells inherit defaults
+  ---
+  duration_ms: 40.178459
+  ...
+# Subtest: unknown Excel font names cannot create CSS declarations or HTML even with quotes and XML whitespace
+ok 441 - unknown Excel font names cannot create CSS declarations or HTML even with quotes and XML whitespace
+  ---
+  duration_ms: 35.584834
+  ...
+# Subtest: invalid Excel font controls and out-of-range point sizes fail the print model gate
+ok 442 - invalid Excel font controls and out-of-range point sizes fail the print model gate
+  ---
+  duration_ms: 3.523625
+  ...
+# Subtest: Excel print escapes native hyperlink text, tooltip and validated external destinations
+ok 443 - Excel print escapes native hyperlink text, tooltip and validated external destinations
+  ---
+  duration_ms: 17.357666
+  ...
+# Subtest: Excel print preserves unsupported protocols, paths and workbook locations as plain text
+ok 444 - Excel print preserves unsupported protocols, paths and workbook locations as plain text
+  ---
+  duration_ms: 30.447125
+  ...
+# Subtest: Excel hyperlinks retain typed values, formatted formula results and empty or failing formulas
+ok 445 - Excel hyperlinks retain typed values, formatted formula results and empty or failing formulas
+  ---
+  duration_ms: 16.389958
+  ...
+# Subtest: blank hyperlinks stay printable from a frozen read-only snapshot without adding editing controls
+ok 446 - blank hyperlinks stay printable from a frozen read-only snapshot without adding editing controls
+  ---
+  duration_ms: 57.397459
+  ...
+# Subtest: Excel print resolves top-level HYPERLINK formulas while preserving calculated labels
+ok 447 - Excel print resolves top-level HYPERLINK formulas while preserving calculated labels
+  ---
+  duration_ms: 30.810334
+  ...
+# Subtest: a hyperlink outside populated cells cannot bypass the print area limit
+ok 448 - a hyperlink outside populated cells cannot bypass the print area limit
+  ---
+  duration_ms: 0.609167
+  ...
+# Subtest: oversized print regions and invalid models fail before constructing a printable frame
+ok 449 - oversized print regions and invalid models fail before constructing a printable frame
+  ---
+  duration_ms: 56.752709
+  ...
+# Subtest: printing calls the document frame and releases it after the print dialog ends
+ok 450 - printing calls the document frame and releases it after the print dialog ends
+  ---
+  duration_ms: 18.388083
+  ...
+# Subtest: Excel print renders recalculated conditional styles and number formats, including styled empty cells
+ok 451 - Excel print renders recalculated conditional styles and number formats, including styled empty cells
+  ---
+  duration_ms: 109.217458
+  ...
+# Subtest: conditional formatting cannot silently extend printing beyond its cell budget
+ok 452 - conditional formatting cannot silently extend printing beyond its cell budget
+  ---
+  duration_ms: 10.073541
+  ...
+# Subtest: PDF printing uses the exported file and releases its object URL after printing
+ok 453 - PDF printing uses the exported file and releases its object URL after printing
+  ---
+  duration_ms: 262.114
+  ...
+# Subtest: a failed PDF print preview cleans up its file and ignores a late load event
+ok 454 - a failed PDF print preview cleans up its file and ignores a late load event
+  ---
+  duration_ms: 78.6465
+  ...
+# Subtest: a timed-out print preview never starts printing when a late font load completes
+ok 455 - a timed-out print preview never starts printing when a late font load completes
+  ---
+  duration_ms: 100.155084
+  ...
+# Subtest: Sheet print uses actual row sizes and keeps merged content whose original row is hidden
+ok 456 - Sheet print uses actual row sizes and keeps merged content whose original row is hidden
+  ---
+  duration_ms: 7.559875
+  ...
+# Subtest: array print includes the entire computed region without persisting synthetic result cells
+ok 457 - array print includes the entire computed region without persisting synthetic result cells
+  ---
+  duration_ms: 26.585959
+  ...
+# Subtest: sheet advanced print shares default font, shrink geometry and center across without merging cells
+ok 458 - sheet advanced print shares default font, shrink geometry and center across without merging cells
+  ---
+  duration_ms: 15.494041
+  ...
+# Subtest: sheet advanced print derives automatic rows from wrap and array spill while retaining explicit fixed heights
+ok 459 - sheet advanced print derives automatic rows from wrap and array spill while retaining explicit fixed heights
+  ---
+  duration_ms: 24.650583
+  ...
+# Subtest: center-across automatic print height shares the rendered span and preserves frozen boundaries
+ok 460 - center-across automatic print height shares the rendered span and preserves frozen boundaries
+  ---
+  duration_ms: 60.072834
+  ...
+# Subtest: sheet print maps hidden merge columns and rows to visible spans while retaining the native master and following data
+ok 461 - sheet print maps hidden merge columns and rows to visible spans while retaining the native master and following data
+  ---
+  duration_ms: 24.912375
+  ...
+# Subtest: hidden logical merge masters auto-fit the complete text when exactly one physical row remains
+ok 462 - hidden logical merge masters auto-fit the complete text when exactly one physical row remains
+  ---
+  duration_ms: 35.470583
+  ...
+# Subtest: sheet print anchors have a visible rectangle when text is positioned absolutely
+ok 463 - sheet print anchors have a visible rectangle when text is positioned absolutely
+  ---
+  duration_ms: 83.515125
+  ...
+# Subtest: Word print combines native fixed row budgets and a shared border without persisting print attributes
+ok 464 - Word print combines native fixed row budgets and a shared border without persisting print attributes
+  ---
+  duration_ms: 18.570375
+  ...
+# Subtest: Word formula print uses the current escaped cached result and preserves character marks
+ok 465 - Word formula print uses the current escaped cached result and preserves character marks
+  ---
+  duration_ms: 5.489625
+  ...
+# Subtest: Word image crop prints a clipped original raster frame and resets without modifying source
+ok 466 - Word image crop prints a clipped original raster frame and resets without modifying source
+  ---
+  duration_ms: 14.715958
+  ...
+# Subtest: Word equations print semantic MathML fractions and matrices with escaped text
+ok 467 - Word equations print semantic MathML fractions and matrices with escaped text
+  ---
+  duration_ms: 13.020709
+  ...
+# Subtest: Word display formulas retain their alignment and semantic MathML when printed
+ok 468 - Word display formulas retain their alignment and semantic MathML when printed
+  ---
+  duration_ms: 17.882292
+  ...
+# Subtest: Word multi-equation groups print independent members and their local styles with spacing
+ok 469 - Word multi-equation groups print independent members and their local styles with spacing
+  ---
+  duration_ms: 11.575667
+  ...
+# Subtest: prints cell vertical alignment and margin variables on the cell rather than text marks
+ok 470 - prints cell vertical alignment and margin variables on the cell rather than text marks
+  ---
+  duration_ms: 14.812459
+  ...
+# Subtest: Word print scopes table defaults and cell overrides and uses the same column footprint with spacing
+ok 471 - Word print scopes table defaults and cell overrides and uses the same column footprint with spacing
+  ---
+  duration_ms: 17.889375
+  ...
+# Subtest: native multi-level formats, starts, restart rules, title links and unapplied definitions survive two DOCX cycles
+ok 472 - native multi-level formats, starts, restart rules, title links and unapplied definitions survive two DOCX cycles
+  ---
+  duration_ms: 300.402625
+  ...
+# Subtest: default starts continue inheriting after reopening while explicit matching overrides remain direct
+ok 473 - default starts continue inheriting after reopening while explicit matching overrides remain direct
+  ---
+  duration_ms: 112.5915
+  ...
+# Subtest: unused unsupported numbering templates do not reject an otherwise unnumbered file
+ok 474 - unused unsupported numbering templates do not reject an otherwise unnumbered file
+  ---
+  duration_ms: 1.004084
+  ...
+# Subtest: IndexedDB restores the real document JSON and Blob only after its commit, and rejects stale revisions
+ok 475 - IndexedDB restores the real document JSON and Blob only after its commit, and rejects stale revisions
+  ---
+  duration_ms: 62.365042
+  ...
+# Subtest: concurrent IndexedDB writers cannot silently replace the same document revision
+ok 476 - concurrent IndexedDB writers cannot silently replace the same document revision
+  ---
+  duration_ms: 5.636208
+  ...
+# Subtest: IndexedDB preserves every supported conditional-format and validation shape across saves and database reopen
+ok 477 - IndexedDB preserves every supported conditional-format and validation shape across saves and database reopen
+  ---
+  duration_ms: 152.571
+  ...
+# Subtest: IndexedDB history restores all Excel rules as a new workbook while keeping the latest rules and original bytes
+ok 478 - IndexedDB history restores all Excel rules as a new workbook while keeping the latest rules and original bytes
+  ---
+  duration_ms: 49.459125
+  ...
+# Subtest: unsupported persisted Excel rules reject atomically without replacing the current model or writing history
+ok 479 - unsupported persisted Excel rules reject atomically without replacing the current model or writing history
+  ---
+  duration_ms: 68.687083
+  ...
+# Subtest: save completion retains new input and the next save uses the committed revision
+ok 480 - save completion retains new input and the next save uses the committed revision
+  ---
+  duration_ms: 1.233667
+  ...
+# Subtest: switching waits for existing persistence and saves the next snapshot before replacing the canvas
+ok 481 - switching waits for existing persistence and saves the next snapshot before replacing the canvas
+  ---
+  duration_ms: 0.908334
+  ...
+# Subtest: storage failure keeps editing data and source exportable; retry persists the newest content
+ok 482 - storage failure keeps editing data and source exportable; retry persists the newest content
+  ---
+  duration_ms: 1.137584
+  ...
+# Subtest: explicit save copy resolves a cross-tab conflict without overwriting the other document
+ok 483 - explicit save copy resolves a cross-tab conflict without overwriting the other document
+  ---
+  duration_ms: 0.916333
+  ...
+# Subtest: saved files restore their latest active document and remain independent from the old officeDrafts database
+ok 484 - saved files restore their latest active document and remain independent from the old officeDrafts database
+  ---
+  duration_ms: 0.89725
+  ...
+# Subtest: failed restoration rejects initialization and a new start can recover the existing files
+ok 485 - failed restoration rejects initialization and a new start can recover the existing files
+  ---
+  duration_ms: 0.522125
+  ...
+# Subtest: input entered while the next document loads stays dirty in the current canvas
+ok 486 - input entered while the next document loads stays dirty in the current canvas
+  ---
+  duration_ms: 0.938958
+  ...
+# Subtest: input entered during the active preference transaction cancels the switch and restores the preference
+ok 487 - input entered during the active preference transaction cancels the switch and restores the preference
+  ---
+  duration_ms: 2.904625
+  ...
+# Subtest: concurrent file replacements reject without changing either canvas and release their lock afterward
+ok 488 - concurrent file replacements reject without changing either canvas and release their lock afterward
+  ---
+  duration_ms: 5.513416
+  ...
+# Subtest: an imported document remains exportable after its first commit fails and a retry leaves the old file intact
+ok 489 - an imported document remains exportable after its first commit fails and a retry leaves the old file intact
+  ---
+  duration_ms: 1.749334
+  ...
+# Subtest: history retains the twenty most recent committed models with their original bytes and ignores stale writers
+ok 490 - history retains the twenty most recent committed models with their original bytes and ignores stale writers
+  ---
+  duration_ms: 189.671542
+  ...
+# Subtest: version restoration creates a separate document while keeping the latest saved file and source intact
+ok 491 - version restoration creates a separate document while keeping the latest saved file and source intact
+  ---
+  duration_ms: 12.503083
+  ...
+# Subtest: new input while loading a historical version cancels restoration without replacing the current canvas
+ok 492 - new input while loading a historical version cancels restoration without replacing the current canvas
+  ---
+  duration_ms: 1.247958
+  ...
+# Subtest: upgrading the original database preserves existing files and starts an empty history
+ok 493 - upgrading the original database preserves existing files and starts an empty history
+  ---
+  duration_ms: 13.287292
+  ...
+# Subtest: a synchronously denied database open can be retried after permission changes
+ok 494 - a synchronously denied database open can be retried after permission changes
+  ---
+  duration_ms: 1.299542
+  ...
+# Subtest: a data clone failure aborts both history and current-file writes
+ok 495 - a data clone failure aborts both history and current-file writes
+  ---
+  duration_ms: 4.041958
+  ...
+# Subtest: the conflict-copy action respects the same document limit as new files and history restoration
+ok 496 - the conflict-copy action respects the same document limit as new files and history restoration
+  ---
+  duration_ms: 8.258083
+  ...
+# Subtest: workspace preparation visits only the active, selected, and newly added files before publishing them
+ok 497 - workspace preparation visits only the active, selected, and newly added files before publishing them
+  ---
+  duration_ms: 0.878334
+  ...
+# Subtest: new input during selected-file preparation cancels replacement and preserves its source and preference
+ok 498 - new input during selected-file preparation cancels replacement and preserves its source and preference
+  ---
+  duration_ms: 0.650708
+  ...
+# Subtest: new input during import preparation cancels the import before committing or replacing the old draft
+ok 499 - new input during import preparation cancels the import before committing or replacing the old draft
+  ---
+  duration_ms: 24.222667
+  ...
+# Subtest: failed initial preparation retains stored files and the active preference, then retries the same file
+ok 500 - failed initial preparation retains stored files and the active preference, then retries the same file
+  ---
+  duration_ms: 0.597542
+  ...
+# Subtest: preparation failures during selection, import, preview and restoration keep the old active file recoverable
+ok 501 - preparation failures during selection, import, preview and restoration keep the old active file recoverable
+  ---
+  duration_ms: 20.924542
+  ...
+# Subtest: prepared document id or kind mismatches reject selection, import and history without publishing invalid data
+ok 502 - prepared document id or kind mismatches reject selection, import and history without publishing invalid data
+  ---
+  duration_ms: 0.933542
+  ...
+# Subtest: IndexedDB history preview and restoration publish prepared links while preserving original versions and bytes
+ok 503 - IndexedDB history preview and restoration publish prepared links while preserving original versions and bytes
+  ---
+  duration_ms: 72.414834
+  ...
+# Subtest: new input while preparing a historical workbook cancels restoration and retains cleared links in the current draft
+ok 504 - new input while preparing a historical workbook cancels restoration and retains cleared links in the current draft
+  ---
+  duration_ms: 9.353083
+  ...
+# Subtest: a delayed history preview rejects after another file opens and cannot replace its active canvas or source
+ok 505 - a delayed history preview rejects after another file opens and cannot replace its active canvas or source
+  ---
+  duration_ms: 0.48275
+  ...
+# Subtest: file preparation keeps non-Excel documents and explicit native empty arrays by reference without loading a parser
+ok 506 - file preparation keeps non-Excel documents and explicit native empty arrays by reference without loading a parser
+  ---
+  duration_ms: 44.987334
+  ...
+# Subtest: file preparation hydrates a missing workbook default font or row mode even when links and point heights are explicit
+ok 507 - file preparation hydrates a missing workbook default font or row mode even when links and point heights are explicit
+  ---
+  duration_ms: 31.183541
+  ...
+# Subtest: file preparation marks missing links empty for CSV and source-free workbooks while preserving known sheets and the old model
+ok 508 - file preparation marks missing links empty for CSV and source-free workbooks while preserving known sheets and the old model
+  ---
+  duration_ms: 45.913542
+  ...
+# Subtest: file preparation dispatches source hydration by XLSX sheet identity and rejects known incompatible MIME types before decoding
+ok 509 - file preparation dispatches source hydration by XLSX sheet identity and rejects known incompatible MIME types before decoding
+  ---
+  duration_ms: 12.350375
+  ...
+# Subtest: a native source edit emits one complete snapshot and survives a save of the previous source in flight
+ok 510 - a native source edit emits one complete snapshot and survives a save of the previous source in flight
+  ---
+  duration_ms: 4.292792
+  ...
+# Subtest: rejects old source/document pairs and invalid native replacements without publishing an intermediate edit
+ok 511 - rejects old source/document pairs and invalid native replacements without publishing an intermediate edit
+  ---
+  duration_ms: 1.056625
+  ...
+# Subtest: IndexedDB refresh and version preview restore their paired native source rather than the newest file bytes
+ok 512 - IndexedDB refresh and version preview restore their paired native source rather than the newest file bytes
+  ---
+  duration_ms: 28.731125
+  ...
+# Subtest: translates a batch with context and keeps the key on the server
+ok 513 - translates a batch with context and keeps the key on the server
+  ---
+  duration_ms: 48.897542
+  ...
+# Subtest: rejects malformed requests and reports upstream failures
+ok 514 - rejects malformed requests and reports upstream failures
+  ---
+  duration_ms: 7.084583
+  ...
+# Subtest: rejects oversized bodies and mismatched context arrays
+ok 515 - rejects oversized bodies and mismatched context arrays
+  ---
+  duration_ms: 6.003875
+  ...
+# Subtest: rejects URL credentials and query parameters
+ok 516 - rejects URL credentials and query parameters
+  ---
+  duration_ms: 0.404375
+  ...
+1..516
+# tests 523
+# suites 0
+# pass 523
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 34124.683792

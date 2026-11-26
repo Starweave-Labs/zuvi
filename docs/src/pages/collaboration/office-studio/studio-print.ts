@@ -16,7 +16,6 @@ import {
   studioCellAddress,
   studioColumnLabel,
   studioChartData,
-  studioDisplayCell,
   studioHiddenColumns,
   studioHiddenRows,
   studioInputValue,
@@ -84,6 +83,14 @@ import {
   studioResolveSheetHyperlink,
 } from '../../../../../packages/ui/src/components/OfficeStudio/studio-sheet-hyperlinks';
 import type { StudioSheet } from '../../../../../packages/ui/src/components/OfficeStudio/studio-types';
+import { sheetLayoutText, type SheetTextLayout } from '../../../../../packages/ui/src/components/OfficeStudio/studio-sheet-text-layout';
+import {
+  studioSheetCellTextInput,
+  studioSheetCenteredTextSegments,
+  studioSheetDerivedRowHeights,
+  studioSheetTextFontFamily,
+  studioSheetTextMeasure,
+} from '../../../../../packages/ui/src/components/OfficeStudio/studio-sheet-text-display';
 import { exportStudioFile } from './studio-files';
 
 const escape = (value: unknown) =>
@@ -606,6 +613,16 @@ function sheetChart(sheet: StudioSheet, chart: StudioSheetChart, calculation: Sh
   return `<figure class="studio-print-chart"><figcaption>${escape(chart.title)}</figcaption><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 255" role="img" aria-label="${escape(chart.title)}"><line x1="45" x2="595" y1="${y(0)}" y2="${y(0)}" stroke="#aeb6b0"/>${seriesSvg}${labels}</svg><p>${data.series.map((series, index) => `<span style="color:${palette[index % palette.length]}">● ${escape(series.name)}</span>`).join('　')}</p></figure>`;
 }
 
+function sheetTextMarkup(layout: SheetTextLayout): string {
+  const { effectiveFont: font, transform: matrix } = layout;
+  const styles = `font-family:${studioSheetTextFontFamily(font.family)};font-size:${font.sizePt}pt;font-weight:${font.bold ? 700 : 400};font-style:${font.italic ? 'italic' : 'normal'}`;
+  const lines = layout.lines.flatMap((line) => layout.verticalGlyphs
+    ? line.runs.map((run) => `<span style="left:${run.x}px;top:${run.y}px;line-height:${run.height}px">${escape(run.text)}</span>`)
+    : [`<span dir="${layout.direction}" style="left:${line.x}px;top:${line.y}px;line-height:${line.height}px;${line.gapKind === 'characters' ? `letter-spacing:${line.gap}px;` : line.gapKind === 'words' ? `word-spacing:${line.gap}px;` : ''}">${escape(line.text)}</span>`]
+  ).join('');
+  return `<div class="studio-print-text" data-text-align="${layout.align}" data-effective-font-size="${font.sizePt}" style="${escape(styles)}"><div class="studio-print-text-transform" style="transform:matrix(${matrix.a},${matrix.b},${matrix.c},${matrix.d},${matrix.e},${matrix.f})">${lines}</div></div>`;
+}
+
 function sheetTable(
   document: StudioExcelDocument,
   sheet: StudioSheet,
@@ -619,7 +636,7 @@ function sheetTable(
     columns = Math.max(columns, array.range.lastCol);
   }
   for (const [address, cell] of Object.entries(sheet.cells)) {
-    if (!cell.input && !cell.background && !Object.keys(cell.borders ?? {}).length) continue;
+    if (!cell.input && !cell.background && !Object.keys(cell.borders ?? {}).length && cell.align !== 'centerContinuous') continue;
     const position = studioParseAddress(address)!;
     rows = Math.max(rows, position.row);
     columns = Math.max(columns, position.col);
@@ -643,10 +660,15 @@ function sheetTable(
     throw new Error(`“${sheet.name}”的打印区域过大，请导出 XLSX 并在 Excel 中设置打印区域。`);
   const hidden = studioHiddenRows(sheet, calculation);
   const hiddenCols = studioHiddenColumns(sheet);
+  const offsets = [0];
+  for (let col = 1; col <= columns; col++) offsets.push(offsets[col - 1] + (hiddenCols.has(studioColumnLabel(col)) ? 0 : sheet.columnWidths?.[studioColumnLabel(col)] ?? 112));
+  const measure = studioSheetTextMeasure();
+  const heights = studioSheetDerivedRowHeights(document, sheet, calculation, Array.from({ length: rows }, (_, index) => index + 1).filter((row) => !hidden.has(row)), offsets, measure);
   const body: string[] = [];
   for (let row = 1; row <= rows; row++) {
     if (hidden.has(row)) continue;
-    const rowPoints = sheet.rowHeights?.[String(row)] ?? sheet.defaultRowHeight ?? 18;
+    const rowPoints = heights[String(row)] ?? sheet.defaultRowHeight ?? 18;
+    const centered = studioSheetCenteredTextSegments(document, sheet, calculation, row, offsets);
     const cells: string[] = [];
     for (let col = 1; col <= columns; col++) {
       if (hiddenCols.has(studioColumnLabel(col))) continue;
@@ -657,11 +679,18 @@ function sheetTable(
             (_, offset) => merge.firstRow + offset
           ).filter((index) => !hidden.has(index))
         : [row];
-      if (merge && (mergeRows[0] !== row || merge.firstCol !== col)) continue;
-      const address = studioCellAddress(merge?.firstRow ?? row, col);
+      const mergeColumns = merge
+        ? Array.from(
+            { length: merge.lastCol - merge.firstCol + 1 },
+            (_, offset) => merge.firstCol + offset
+          ).filter((index) => !hiddenCols.has(studioColumnLabel(index)))
+        : [col];
+      if (merge && (mergeRows[0] !== row || mergeColumns[0] !== col)) continue;
+      // The visible first cell can differ from the logical native merge master.
+      const address = studioCellAddress(merge?.firstRow ?? row, merge?.firstCol ?? col);
       const points = mergeRows.reduce(
         (total, index) =>
-          total + (sheet.rowHeights?.[String(index)] ?? sheet.defaultRowHeight ?? 18),
+          total + (heights[String(index)] ?? sheet.defaultRowHeight ?? 18),
         0
       );
       const conditionalStyle = studioConditionalCellStyle(sheet, address, calculation);
@@ -712,18 +741,14 @@ function sheetTable(
       }
       if (cell?.wrap) styles.push('white-space:pre-wrap');
       const spans = merge
-        ? ` colspan="${merge.lastCol - col + 1}" rowspan="${Array.from({ length: merge.lastRow - row + 1 }, (_, offset) => row + offset).filter((index) => !hidden.has(index)).length}"`
+        ? ` colspan="${mergeColumns.length}" rowspan="${mergeRows.length}"`
         : '';
       const link = studioCellHyperlink(document, sheet.id, address, calculation);
-      const displayed = studioDisplayCell(
-        cell,
-        calculation.values.get(`${sheet.id}:${address}`),
-        calculation.errors.get(`${sheet.id}:${address}`)
-      );
-      // A native label can fill a blank cell without replacing a number, formula or text value.
-      const text = escape(
-        !cell.input && link ? link.display || link.target || link.location || displayed : displayed
-      );
+      const center = centered.find((segment) => segment.ownerCol === col);
+      const width = center?.width ?? offsets[merge?.lastCol ?? col] - offsets[(merge?.firstCol ?? col) - 1];
+      const height = points * 4 / 3;
+      const textInput = studioSheetCellTextInput(document, sheet, calculation, address, { width, height }, measure, center?.lastCol);
+      const text = sheetTextMarkup(sheetLayoutText(textInput));
       const tooltip = link?.tooltip ? ` title="${escape(link.tooltip)}"` : '';
       const target = link ? studioResolveSheetHyperlink(document, sheet.id, link) : undefined;
       const content =
@@ -732,8 +757,12 @@ function sheetTable(
           : tooltip
             ? `<span${tooltip}>${text}</span>`
             : text;
+      if (center) styles.push('position:relative;z-index:2');
+      const topBorder = textInput.box.padding?.top ?? 0;
+      const leftBorder = (textInput.box.padding?.left ?? 5) - 5;
+      const bottomBorder = textInput.box.padding?.bottom ?? 1;
       cells.push(
-        `<td${spans} style="${escape(styles.join(';'))}"><div class="studio-print-cell" style="max-height:${Math.max(0, (points * 4) / 3 - 4)}px">${content}</div></td>`
+        `<td${spans} style="${escape(styles.join(';'))}"><div class="studio-print-cell" style="height:${Math.max(0, height - topBorder - bottomBorder)}px;max-height:${Math.max(0, height - topBorder - bottomBorder)}px;overflow:${center ? 'visible' : 'hidden'}"><div class="studio-print-text-clip" style="left:${-leftBorder}px;top:${-topBorder}px;width:${width}px;height:${height}px">${content}</div></div></td>`
       );
     }
     body.push(`<tr style="height:${rowPoints}pt">${cells.join('')}</tr>`);
@@ -743,7 +772,7 @@ function sheetTable(
       ? ''
       : `<col style="width:${sheet.columnWidths?.[studioColumnLabel(index + 1)] ?? 112}px">`
   ).join('');
-  return `<section class="studio-print-sheet"><h1>${escape(sheet.name)}</h1><table><colgroup>${cols}</colgroup>${body.join('')}</table>${(sheet.charts ?? []).map((chart) => sheetChart(sheet, chart, calculation)).join('')}</section>`;
+  return `<section class="studio-print-sheet"><h1>${escape(sheet.name)}</h1><table style="width:${offsets[columns]}px"><colgroup>${cols}</colgroup>${body.join('')}</table>${(sheet.charts ?? []).map((chart) => sheetChart(sheet, chart, calculation)).join('')}</section>`;
 }
 
 /** Pure and escaped document HTML; no toolbar, scripts, remote images or arbitrary styles. */
@@ -762,7 +791,15 @@ export function createStudioPrintHtml(document: OfficeStudioDocument): string {
       : document.sheets.map((sheet) => sheetTable(document, sheet, calculation!)).join('');
   return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; style-src 'unsafe-inline'; base-uri 'none'"><title>${escape(document.name)}</title><style>
 @page{size:${paper};margin:${margin}mm}*{box-sizing:border-box}body{margin:0;color:#253044;background:white;font:12pt/1.6 "Microsoft YaHei","Noto Sans SC",Arial,sans-serif}h1,h2,h3,h4,h5,h6{line-height:1.3;break-after:avoid}h1{font-size:25pt}h2{font-size:19pt}p{margin:0 0 8pt}table{border-collapse:collapse;width:100%;font-size:10pt;table-layout:fixed}td,th{border:1px solid #b8c2bc;padding:5pt;overflow-wrap:anywhere;vertical-align:top}th{background:#edf3ee;text-align:left}tr{break-inside:avoid}img{max-width:100%;height:auto;vertical-align:middle}blockquote{margin:10pt 0;padding-left:12pt;border-left:3px solid #90a59a}a{color:inherit}header,footer{font-size:9pt;color:#5a6c61}header{margin-bottom:12pt}footer{margin-top:14pt}.studio-print-page,.studio-print-sheet{break-after:page}.studio-print-page:last-child,.studio-print-sheet:last-child{break-after:auto}.studio-print-break{break-before:page}.studio-print-number{text-align:center}.studio-print-chart{margin:18pt 0;break-inside:avoid}.studio-print-chart svg{width:100%;max-height:240pt}.studio-print-chart figcaption{font-weight:700}.studio-print-chart p{font-size:9pt}[data-word-line-rule="exact"] :is(span,strong,em,u,s,a){line-height:inherit;vertical-align:top}[data-word-line-rule="atLeast"] :is(span,strong,em,u,s,a){line-height:max(var(--zuvi-word-min-line),1.2em)}body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-${document.kind === 'excel' ? '.studio-print-sheet table{font-family:Calibri,Arial,sans-serif;font-size:11pt;line-height:1.15}.studio-print-sheet td{padding:2px 5px;vertical-align:middle}.studio-print-cell{overflow:hidden}' : ''}
+.studio-print-sheet table{border-collapse:separate;border-spacing:0}
+.studio-print-sheet td{padding:0;border:0;border-right:1px solid #b8c2bc;border-bottom:1px solid #b8c2bc;overflow:visible}
+.studio-print-cell{position:relative;overflow:hidden;text-decoration:inherit}
+.studio-print-text-clip{position:absolute;overflow:hidden;text-decoration:inherit}
+.studio-print-text-clip>a{position:absolute;inset:0;display:block}
+.studio-print-text,.studio-print-text-transform{position:absolute;left:0;top:0;transform-origin:0 0;text-decoration:inherit}
+.studio-print-text-transform{width:0;height:0}
+.studio-print-text-transform>span{position:absolute;display:block;white-space:pre;padding:0;max-width:none;overflow:visible;text-decoration:inherit}
+${document.kind === 'excel' ? '.studio-print-sheet table{font-family:Calibri,Arial,sans-serif;font-size:11pt;line-height:1.15}' : ''}
 [data-word-line-rule="exact"] [data-word-baselineshift]{vertical-align:top!important;position:relative;top:calc(-1 * var(--zuvi-word-baseline-shift,0pt))}
 header:empty,footer:empty{display:none}thead{display:table-header-group}
 tr[data-word-row-height-rule="exact"][data-word-row-height]{height:var(--zuvi-word-row-render-height,var(--zuvi-word-row-height))!important}

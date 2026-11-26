@@ -59,7 +59,9 @@ const { createStudioStorage, StudioStorageConflict } = load(
   '../src/pages/collaboration/office-studio/studio-storage.ts',
   { '@zuvi/react': models }
 );
-const { StudioWorkspace } = load('../src/pages/collaboration/office-studio/studio-workspace.ts');
+const { StudioWorkspace } = load('../src/pages/collaboration/office-studio/studio-workspace.ts', {
+  '@zuvi/react': models,
+});
 const document = () => structuredClone(models.createOfficeStudioDocument('word'));
 const excelDocument = () =>
   structuredClone(loadSource(officeRuleConsumerLines().join('\n')).officeRuleDocument);
@@ -927,11 +929,13 @@ test('IndexedDB history preview and restoration publish prepared links while pre
   const storage = createStudioStorage(new IDBFactory());
   const original = unpreparedExcel();
   const current = structuredClone(original);
+  current.defaultFont = { family: 'Calibri', sizePt: 11, bold: false, italic: false };
   current.name = 'current-with-cleared-links.xlsx';
   current.sheets.forEach((sheet) => {
     sheet.hyperlinks = [];
     sheet.defaultRowHeight = 18;
     sheet.rowHeights = {};
+    sheet.rowHeightModes = {};
     sheet.hiddenRows = [];
   });
   const nativeLinks = [
@@ -946,10 +950,14 @@ test('IndexedDB history preview and restoration publish prepared links while pre
   ];
   const hydrated = {
     ...original,
+    defaultFont: current.defaultFont,
     sheets: original.sheets.map((sheet, index) => ({
       ...sheet,
       hyperlinks: index === 0 ? nativeLinks : [],
-      defaultRowHeight: 18, rowHeights: {}, hiddenRows: [],
+      defaultRowHeight: 18,
+      rowHeights: {},
+      rowHeightModes: {},
+      hiddenRows: [],
     })),
   };
   const calls = [];
@@ -1110,10 +1118,12 @@ test('file preparation keeps non-Excel documents and explicit native empty array
     assert.equal(await prepare({ ...record(doc), source: new Blob(['unused-source']) }), doc);
   }
   const cleared = unpreparedExcel();
+  cleared.defaultFont = { family: 'Calibri', sizePt: 11, bold: false, italic: false };
   cleared.sheets.forEach((sheet) => {
     sheet.hyperlinks = [];
     sheet.defaultRowHeight = 18;
     sheet.rowHeights = {};
+    sheet.rowHeightModes = {};
     sheet.hiddenRows = [];
   });
   const prepared = await prepare({
@@ -1124,6 +1134,47 @@ test('file preparation keeps non-Excel documents and explicit native empty array
   assert.equal(prepared.sheets[0], cleared.sheets[0]);
   assert.equal(prepared.sheets[0].hyperlinks, cleared.sheets[0].hyperlinks);
   assert.equal(loads, 0);
+});
+
+test('file preparation hydrates a missing workbook default font or row mode even when links and point heights are explicit', async () => {
+  const complete = unpreparedExcel();
+  complete.defaultFont = { family: 'Arial', sizePt: 9.5, bold: true, italic: true };
+  complete.sheets.forEach((sheet) => {
+    sheet.hyperlinks = [];
+    sheet.defaultRowHeight = 18;
+    sheet.rowHeights = { 2: 30 };
+    sheet.rowHeightModes = {};
+    sheet.hiddenRows = [];
+  });
+  const calls = [];
+  const prepare = preparation(async (document, source) => {
+    calls.push({ document, source });
+    return complete;
+  });
+  for (const missing of ['defaultFont', 'rowHeightModes']) {
+    const document = structuredClone(complete);
+    if (missing === 'defaultFont') delete document.defaultFont;
+    else delete document.sheets[0].rowHeightModes;
+    const original = JSON.stringify(document),
+      source = new Blob(['native-source'], { type: xlsxType });
+    assert.equal(await prepare({ ...record(document), source }), complete);
+    assert.equal(calls.at(-1).document, document);
+    assert.equal(calls.at(-1).source, source);
+    assert.equal(JSON.stringify(document), original);
+    await assert.rejects(
+      prepare({
+        ...record(document),
+        source: new Blob(['wrong-kind'], { type: 'application/pdf' }),
+      }),
+      /源文件类型不匹配/
+    );
+  }
+  assert.equal(calls.length, 2);
+  assert.equal(
+    await prepare({ ...record(complete), source: new Blob(['parser must remain lazy']) }),
+    complete
+  );
+  assert.equal(calls.length, 2);
 });
 
 test('file preparation marks missing links empty for CSV and source-free workbooks while preserving known sheets and the old model', async () => {
@@ -1200,4 +1251,136 @@ test('file preparation dispatches source hydration by XLSX sheet identity and re
     assert.equal(calls.length, allowedCalls, type);
   }
   assert.ok(original.sheets.every((sheet) => sheet.hyperlinks === undefined));
+});
+
+function pdfDocument() {
+  return {
+    version: 1,
+    id: 'paired-pdf',
+    name: 'Original.pdf',
+    kind: 'pdf',
+    pageCount: 1,
+    sourcePageCount: 1,
+    pages: [{ id: 'first', sourcePage: 0 }],
+    fields: [],
+    marks: [],
+    rotations: {},
+  };
+}
+
+test('a native source edit emits one complete snapshot and survives a save of the previous source in flight', async () => {
+  const f = memory();
+  await f.workspace.start();
+  await f.workspace.add(pdfDocument(), new Blob(['original PDF']));
+  f.workspace.edit({ ...f.workspace.getSnapshot().active.document, name: 'Pending.pdf' });
+  const started = deferred(),
+    release = deferred();
+  f.beforeCommit = async () => {
+    started.resolve();
+    await release.promise;
+  };
+  const saving = f.workspace.save();
+  await started.promise;
+  const previous = f.workspace.getSnapshot().active;
+  const next = {
+    document: {
+      ...previous.document,
+      name: 'Combined.pdf',
+      pageCount: 2,
+      sourcePageCount: 2,
+      pages: [
+        { id: 'first', sourcePage: 0 },
+        { id: 'incoming', sourcePage: 1 },
+      ],
+    },
+    source: new Blob(['combined PDF']),
+  };
+  const observed = [];
+  const unsubscribe = f.workspace.subscribe(() => observed.push(f.workspace.getSnapshot().active));
+  assert.equal(f.workspace.editPdfSnapshot({ previous, next }), true);
+  assert.equal(observed.length, 1);
+  assert.equal(observed[0].document, next.document);
+  assert.equal(observed[0].source, next.source);
+  unsubscribe();
+  release.resolve();
+  await saving;
+  assert.equal(f.workspace.getSnapshot().active.document, next.document);
+  assert.equal(f.workspace.getSnapshot().active.source, next.source);
+  assert.equal(f.workspace.getSnapshot().saveState, 'unsaved');
+  f.beforeCommit = async () => {};
+  await f.workspace.flush();
+  assert.equal(await f.commits[1].source.text(), 'original PDF');
+  assert.equal(f.commits[1].document.name, 'Pending.pdf');
+  assert.equal(await f.commits[2].source.text(), 'combined PDF');
+  assert.equal(f.commits[2].document.pageCount, 2);
+  assert.equal(f.workspace.getSnapshot().saveState, 'saved');
+});
+
+test('rejects old source/document pairs and invalid native replacements without publishing an intermediate edit', async () => {
+  const f = memory();
+  await f.workspace.start();
+  await f.workspace.add(pdfDocument(), new Blob(['original PDF']));
+  const previous = f.workspace.getSnapshot().active;
+  const next = {
+    document: { ...previous.document, name: 'Combined.pdf' },
+    source: new Blob(['combined PDF']),
+  };
+  const cases = [
+    { previous: { ...previous, source: new Blob(['original PDF']) }, next },
+    { previous: { ...previous, document: structuredClone(previous.document) }, next },
+    { previous, next: { ...next, document: { ...next.document, id: 'other-file' } } },
+    { previous, next: { ...next, document: { ...next.document, pageCount: 0 } } },
+    { previous, next: { ...next, source: new Blob() } },
+  ];
+  let notifications = 0;
+  const unsubscribe = f.workspace.subscribe(() => notifications++);
+  for (const change of cases)
+    assert.throws(() => f.workspace.editPdfSnapshot(change), /已变化|无效/);
+  unsubscribe();
+  assert.equal(notifications, 0);
+  assert.equal(f.workspace.getSnapshot().active, previous);
+  assert.equal(f.workspace.getSnapshot().saveState, 'saved');
+});
+
+test('IndexedDB refresh and version preview restore their paired native source rather than the newest file bytes', async () => {
+  const storage = createStudioStorage(new IDBFactory()),
+    first = new StudioWorkspace(storage, -1);
+  await first.start();
+  await first.add(pdfDocument(), new Blob(['original native PDF']));
+  const original = first.getSnapshot().active;
+  const combined = {
+    document: {
+      ...original.document,
+      name: 'Combined.pdf',
+      pageCount: 2,
+      sourcePageCount: 2,
+      pages: [
+        { id: 'first', sourcePage: 0 },
+        { id: 'incoming', sourcePage: 1 },
+      ],
+    },
+    source: new Blob(['combined native PDF']),
+  };
+  first.editPdfSnapshot({ previous: original, next: combined });
+  await first.flush();
+  const fresh = new StudioWorkspace(storage, -1);
+  await fresh.start();
+  assert.equal(fresh.getSnapshot().active.document.pageCount, 2);
+  assert.equal(await fresh.getSnapshot().active.source.text(), 'combined native PDF');
+  fresh.edit({ ...fresh.getSnapshot().active.document, name: 'Later.pdf' });
+  await fresh.flush();
+  const old = await fresh.version(original.revision);
+  assert.equal(old.document.pageCount, 1);
+  assert.equal(await old.source.text(), 'original native PDF');
+  const current = await fresh.version(original.revision + 1);
+  assert.equal(current.document.pageCount, 2);
+  assert.equal(await current.source.text(), 'combined native PDF');
+  fresh.editPdfSnapshot({
+    previous: fresh.getSnapshot().active,
+    next: { document: old.document, source: old.source },
+  });
+  await fresh.flush();
+  const restored = await storage.load(original.id);
+  assert.equal(restored.document.pageCount, 1);
+  assert.equal(await restored.source.text(), 'original native PDF');
 });

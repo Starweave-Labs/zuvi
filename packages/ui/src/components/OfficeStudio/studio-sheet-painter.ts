@@ -1,4 +1,9 @@
-import type { StudioCell, StudioExcelDocument, StudioSheet } from './studio-types';
+import type {
+  StudioCell,
+  StudioExcelDocument,
+  StudioExcelDefaultFont,
+  StudioSheet,
+} from './studio-types';
 import {
   STUDIO_SHEET_LIMITS,
   studioCellAddress,
@@ -17,8 +22,8 @@ export interface StudioSheetFormatSnapshot {
   merges: string[];
 }
 
-function copyFormat(cell?: CellFormat): CellFormat {
-  const format: CellFormat = studioDefaultCellFormat();
+function copyFormat(cell?: CellFormat, defaultFont?: StudioExcelDefaultFont): CellFormat {
+  const format: CellFormat = studioDefaultCellFormat(defaultFont);
   for (const key of Object.keys(format) as (keyof CellFormat)[]) {
     if (cell?.[key] !== undefined) Object.assign(format, { [key]: cell[key] });
   }
@@ -62,7 +67,8 @@ function mergePattern(sheet: StudioSheet, selection: SheetSelection) {
 
 export function studioCopySheetFormat(
   sheet: StudioSheet,
-  selection: SheetSelection
+  selection: SheetSelection,
+  defaultFont?: StudioExcelDefaultFont
 ): StudioSheetFormatSnapshot {
   const expanded = studioFormattingSelection(sheet, selection);
   const bounds = studioSelectionBounds(expanded);
@@ -75,7 +81,10 @@ export function studioCopySheetFormat(
     columns,
     cells: Array.from({ length: rows }, (_, row) =>
       Array.from({ length: columns }, (_, col) =>
-        copyFormat(sheet.cells[studioCellAddress(bounds.firstRow + row, bounds.firstCol + col)])
+        copyFormat(
+          sheet.cells[studioCellAddress(bounds.firstRow + row, bounds.firstCol + col)],
+          defaultFont
+        )
       )
     ),
     merges: mergePattern(sheet, expanded),
@@ -133,7 +142,10 @@ export function studioPaintSheetFormat(
   for (let row = 0; row < rows; row++)
     for (let col = 0; col < columns; col++) {
       const address = studioCellAddress(bounds.firstRow + row, bounds.firstCol + col);
-      const format = copyFormat(snapshot.cells[row % snapshot.rows][col % snapshot.columns]);
+      const format = copyFormat(
+        snapshot.cells[row % snapshot.rows][col % snapshot.columns],
+        document.defaultFont
+      );
       const previous = sheet.cells[address]?.borders;
       if (previous && JSON.stringify(previous) === JSON.stringify(format.borders))
         format.borders = previous;

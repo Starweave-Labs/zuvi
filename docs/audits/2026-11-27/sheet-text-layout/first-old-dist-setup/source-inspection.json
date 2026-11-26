@@ -1,0 +1,76 @@
+{
+  "kind": "source-fixture-independent-zip-inspection",
+  "sourceSha256": "90f2d87f64b8371b7e38a3a0f7d2018fdf4fd933febe6584f88ffc9f16e9d930",
+  "font0": "<ns0:font xmlns:ns0=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\"><ns0:b /><ns0:i /><ns0:sz val=\"9.5\" /><ns0:name val=\"Arial\" /></ns0:font>",
+  "rows": {
+    "1": {
+      "r": "1",
+      "spans": "1:4",
+      "{http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac}dyDescent": "0.25"
+    },
+    "2": {
+      "r": "2",
+      "spans": "1:1",
+      "{http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac}dyDescent": "0.25"
+    },
+    "3": {
+      "r": "3",
+      "spans": "1:1",
+      "{http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac}dyDescent": "0.25"
+    },
+    "4": {
+      "r": "4",
+      "spans": "1:1",
+      "{http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac}dyDescent": "0.25"
+    },
+    "5": {
+      "r": "5",
+      "ht": "90",
+      "customHeight": "1",
+      "spans": "1:1",
+      "{http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac}dyDescent": "0.25"
+    },
+    "6": {
+      "r": "6",
+      "spans": "1:3",
+      "{http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac}dyDescent": "0.25"
+    },
+    "7": {
+      "r": "7",
+      "spans": "1:1",
+      "{http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac}dyDescent": "0.25"
+    },
+    "8": {
+      "r": "8",
+      "ht": "72",
+      "customHeight": "1",
+      "spans": "1:2",
+      "{http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac}dyDescent": "0.25"
+    },
+    "9": {
+      "r": "9",
+      "spans": "1:2",
+      "{http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac}dyDescent": "0.25"
+    },
+    "10": {
+      "r": "10",
+      "spans": "1:2",
+      "{http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac}dyDescent": "0.25"
+    },
+    "11": {
+      "r": "11",
+      "spans": "1:2",
+      "{http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac}dyDescent": "0.25"
+    }
+  },
+  "arrays": [
+    {
+      "cell": "A10",
+      "attributes": {
+        "t": "array",
+        "ref": "A10:B11"
+      },
+      "formula": "SEQUENCE(2,2)"
+    }
+  ]
+}

@@ -1,7 +1,8 @@
+export { studioCellFontIssue } from './studio-cell-font';
 import type { OfficeStudioDocument, OfficeStudioKind, StudioRichNode } from './studio-types';
 import { studioIsSheetHyperlink } from './studio-sheet-hyperlinks';
-import { studioCellStyleIssue } from './studio-cell-style';
-import { wordImageLayoutIssue } from './studio-word-images';
+import { studioCellStyleValid, sheetTextFormatError } from './studio-cell-format-core';
+import { wordImageLayoutValid } from './studio-word-image-contract';
 
 function newId() {
   return (
@@ -105,6 +106,7 @@ export function createOfficeStudioDocument(kind: OfficeStudioKind = 'word'): Off
       id,
       name: '项目预算.xlsx',
       kind,
+      defaultFont: { family: 'Calibri', sizePt: 11, bold: false, italic: false },
       activeSheetId: sheetId,
       sheets: [
         {
@@ -112,6 +114,7 @@ export function createOfficeStudioDocument(kind: OfficeStudioKind = 'word'): Off
           name: '预算',
           rowCount: 60,
           columnCount: 16,
+          rowHeightModes: {},
           hyperlinks: [],
           columnWidths: { A: 200, B: 120, C: 120, D: 140 },
           cells: {
@@ -147,6 +150,7 @@ export function createOfficeStudioDocument(kind: OfficeStudioKind = 'word'): Off
           name: '汇总',
           rowCount: 60,
           columnCount: 16,
+          rowHeightModes: {},
           columnWidths: { A: 200, B: 160 },
           cells: {
             A1: { input: '预算总览', bold: true },
@@ -246,18 +250,6 @@ function ruleText(value: unknown, max: number): boolean {
 }
 
 /** @internal Shared validation for persisted cells and direct formatting edits. */
-export function studioCellFontIssue(cell: { fontFamily?: unknown; fontSize?: unknown }) {
-  if (
-    cell.fontFamily !== undefined &&
-    (typeof cell.fontFamily !== 'string' ||
-      !cell.fontFamily.trim() ||
-      !ruleText(cell.fontFamily, 255))
-  )
-    return '字体名称须为 1 至 255 个字符，并使用有效的 XML 文本。';
-  if (cell.fontSize !== undefined && !finiteRange(cell.fontSize, 1, 409))
-    return '字号须为 1 至 409 磅之间的数值。';
-}
-
 /** Rule formulas share the editor's A1 subset and never trigger external reads. */
 function ruleFormula(value: unknown, numeric = false): boolean {
   if (typeof value !== 'string' || !value.trim() || !ruleText(value, 4096)) return false;
@@ -587,6 +579,17 @@ function sheetFeatures(sheet: Record<string, unknown>, rows: number, columns: nu
   )
     return false;
   if (
+    sheet.rowHeightModes !== undefined &&
+    (!record(sheet.rowHeightModes) ||
+      !Object.entries(sheet.rowHeightModes).every(
+        ([row, mode]) =>
+          /^[1-9]\d*$/.test(row) &&
+          Number(row) <= rows &&
+          (mode === 'auto' || mode === 'fixed')
+      ))
+  )
+    return false;
+  if (
     sheet.hiddenRows !== undefined &&
     (!Array.isArray(sheet.hiddenRows) ||
       sheet.hiddenRows.length > rows ||
@@ -731,7 +734,7 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
           !optionalPositive(node.attrs.width, 10000) ||
           !optionalPositive(node.attrs.height, 10000) ||
           !optionalText(node.attrs.alt, 1000) ||
-          wordImageLayoutIssue(node.attrs.layout) !== undefined
+          !wordImageLayoutValid(node.attrs.layout)
         )
           return false;
       }
@@ -761,7 +764,15 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
     );
   }
   if (value.kind === 'excel') {
+    const defaultFont = value.defaultFont;
     if (
+      (defaultFont !== undefined &&
+        (!record(defaultFont) ||
+          typeof defaultFont.family !== 'string' ||
+          typeof defaultFont.sizePt !== 'number' ||
+          typeof defaultFont.bold !== 'boolean' ||
+          typeof defaultFont.italic !== 'boolean' ||
+          sheetTextFormatError({ fontFamily: defaultFont.family, fontSize: defaultFont.sizePt }) !== 0)) ||
       !Array.isArray(value.sheets) ||
       value.sheets.length < 1 ||
       value.sheets.length > 32 ||
@@ -825,14 +836,11 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
                       typeof cell.array.range === 'string' &&
                       !!cellRange(cell.array.range, rows, columns) &&
                       cell.array.range.split(':')[0] === address))) &&
-              [cell.bold, cell.italic, cell.underline, cell.wrap].every(optionalBoolean) &&
-              !studioCellFontIssue(cell) &&
-              !studioCellStyleIssue(cell) &&
+              optionalBoolean(cell.underline) &&
+              studioCellStyleValid(cell) &&
               [cell.color, cell.background, cell.numberFormat].every((item) =>
                 optionalText(item, 256)
-              ) &&
-              (cell.align === undefined ||
-                ['left', 'center', 'right', 'general'].includes(String(cell.align)))
+              )
             );
           })
         );
@@ -921,12 +929,18 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
         record(field) &&
         nonempty(field.name) &&
         !fieldNames.has(field.name) &&
-        ['text', 'checkbox', 'choice', 'image'].includes(String(field.type)) &&
+        ['text', 'checkbox', 'choice', 'image', 'opaque'].includes(String(field.type)) &&
         (typeof field.value === 'string' || typeof field.value === 'boolean') &&
         typeof field.readOnly === 'boolean'
       ))
         return false;
       fieldNames.add(field.name);
+      if (field.type === 'opaque') {
+        if (field.readOnly !== true || field.value !== '' ||
+          [field.design, field.options, field.multiline, field.selectedValues].some((entry) => entry !== undefined) ||
+          ![field.nativeType, field.passiveReason].every(nonempty) ||
+          typeof field.nativeValueHash !== 'string' || !/^[a-f0-9]{64}$/.test(field.nativeValueHash)) return false;
+      } else if ([field.nativeType, field.passiveReason, field.nativeValueHash].some((entry) => entry !== undefined)) return false;
       if (
         field.options !== undefined &&
         !arrayOf(field.options, 10000, (option) => typeof option === 'string')
@@ -969,7 +983,7 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
               optionalText(widget.option) &&
               (widget.flags === undefined ||
                 (integerRange(widget.flags, 0, 4294967295) &&
-                  !!(widget.flags & (2 | 32)) === !!hidden))
+                  (!!(widget.flags & (1 | 2 | 32)) || widget.width === 0 || widget.height === 0) === !!hidden))
           )
       );
     }) &&

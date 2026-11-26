@@ -126,11 +126,19 @@ export interface StudioCell {
   /** Excel font size in points, from 1 to 409 inclusive. */
   fontSize?: number;
   wrap?: boolean;
+  /** Fit drawing to the available width without changing the stored font size. */
+  shrinkToFit?: boolean;
   color?: string;
   background?: string;
   numberFormat?: string;
-  align?: 'left' | 'center' | 'right' | 'general';
-  verticalAlign?: 'top' | 'middle' | 'bottom';
+  align?:
+    | 'left' | 'center' | 'right' | 'general' | 'fill'
+    | 'justify' | 'distributed' | 'centerContinuous';
+  verticalAlign?: 'top' | 'middle' | 'bottom' | 'justify' | 'distributed';
+  /** Integer levels, 0–250; one level is three workbook-default-font spaces. */
+  indent?: number;
+  /** Native Excel orientation in degrees, -90–90; vertical keeps glyphs upright. */
+  textRotation?: number | 'vertical';
   /** Missing retains source borders; {} explicitly removes all borders. */
   borders?: Partial<
     Record<
@@ -280,8 +288,13 @@ export interface StudioSheet {
   columnWidths?: Record<string, number>;
   /** Default row height in points; absent uses 18pt (24 CSS pixels). */
   defaultRowHeight?: number;
-  /** Positive point heights keyed by one-based rows; {} explicitly resets source heights. */
+  /** Point heights keyed by one-based rows; {} clears overrides. Auto caches refresh on export. */
   rowHeights?: Record<string, number>;
+  /**
+   * Native row-height identity. A defined map defaults unlisted rows to auto.
+   * Missing map keeps legacy stored rowHeights fixed; {} clears source modes.
+   */
+  rowHeightModes?: Record<string, 'auto' | 'fixed'>;
   /** Manual hides retain the last height; [] explicitly shows previously hidden source rows. */
   hiddenRows?: number[];
   /** Column labels hidden manually; [] explicitly shows all columns. Hidden columns keep widths. */
@@ -300,8 +313,18 @@ export interface StudioSheet {
   structureEdits?: StudioSheetStructureEdit[];
 }
 
+/** Resolved workbook font0, used by indentation and native character widths. */
+export interface StudioExcelDefaultFont {
+  family: string;
+  sizePt: number;
+  bold: boolean;
+  italic: boolean;
+}
+
 export interface StudioExcelDocument extends StudioDocumentBase {
   kind: 'excel';
+  /** Missing on legacy drafts; new and imported documents retain the real workbook default. */
+  defaultFont?: StudioExcelDefaultFont;
   sheets: StudioSheet[];
   activeSheetId: string;
 }
@@ -352,7 +375,7 @@ export interface StudioPdfFieldDesign {
 
 export interface StudioPdfField {
   name: string;
-  type: 'text' | 'checkbox' | 'choice' | 'image';
+  type: 'text' | 'checkbox' | 'choice' | 'image' | 'opaque';
   value: string | boolean;
   options?: string[];
   readOnly: boolean;
@@ -370,8 +393,12 @@ export interface StudioPdfField {
     /** Canonical annotation flags, used for nonvisual source widgets. */
     flags?: number;
   }[];
-  /** Hidden/NoView source widgets participate in page and field mapping but not the UI overlay. */
+  /** Nonvisual source widgets participate in page and field mapping without an HTML control. */
   hiddenWidgets?: StudioPdfField['widgets'];
+  /** Passive native fields retain their source value and appearance and cannot be redesigned. */
+  nativeType?: string;
+  passiveReason?: string;
+  nativeValueHash?: string;
 }
 
 export interface StudioPdfPage {
@@ -439,6 +466,44 @@ export interface StudioPdfRenderer {
   load(source: Blob): Promise<StudioPdfSession>;
 }
 
+/** The editable model and its immutable native PDF always travel together. */
+export interface StudioPdfSnapshot {
+  document: StudioPdfDocument;
+  source: Blob;
+}
+
+export interface StudioPdfSourceChange {
+  previous: StudioPdfSnapshot;
+  next: StudioPdfSnapshot;
+}
+
+export interface StudioPdfComposeRequest {
+  snapshot: StudioPdfSnapshot;
+  mode: 'merge' | 'extract';
+  /** Zero-based current pages in the requested output order. */
+  pages: number[];
+  /** Zero-based boundary in the current document, including its end. */
+  insertAt?: number;
+  incoming?: { source: Blob; name: string; pages: number[] };
+  name?: string;
+  conflicts: {
+    strategy: 'rename' | 'link';
+    valuePolicy: 'reject' | 'first' | 'last';
+  };
+  orphanRadioValue: 'reject' | 'clear';
+  signal?: AbortSignal;
+}
+
+export interface StudioPdfComposeResult extends StudioPdfSnapshot {
+  warnings?: string[];
+}
+
+/** A host codec prepares a new source without changing the active editor or storage. */
+export interface StudioPdfComposer {
+  inspect(source: Blob, options?: { signal?: AbortSignal }): Promise<{ pageCount: number }>;
+  compose(request: StudioPdfComposeRequest): Promise<StudioPdfComposeResult>;
+}
+
 export interface StudioEditorProps<T extends OfficeStudioDocument> {
   document: T;
   onChange(document: T): void;
@@ -446,6 +511,9 @@ export interface StudioEditorProps<T extends OfficeStudioDocument> {
   readOnly: boolean;
   source?: Blob;
   pdfRenderer?: StudioPdfRenderer;
+  pdfComposer?: StudioPdfComposer;
+  /** Return true only after synchronously accepting the complete document/source pair. */
+  onPdfSourceChange?: (change: StudioPdfSourceChange) => boolean;
 }
 
 export interface OfficeStudioHandle {
@@ -466,6 +534,9 @@ export interface OfficeStudioProps extends Omit<
   onChange?: (document: OfficeStudioDocument) => void;
   source?: Blob;
   pdfRenderer?: StudioPdfRenderer;
+  pdfComposer?: StudioPdfComposer;
+  /** Requires a controlled value; atomically compare and replace both the model and source. */
+  onPdfSourceChange?: (change: StudioPdfSourceChange) => boolean;
   onSave?: (document: OfficeStudioDocument) => void | Promise<void>;
   onExport?: (document: OfficeStudioDocument) => void | Promise<void>;
   onPrint?: (document: OfficeStudioDocument) => void | Promise<void>;

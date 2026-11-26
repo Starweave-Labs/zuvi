@@ -842,3 +842,14 @@
 .zuvi-studio-pdf-page-item { display: flex; align-items: flex-start; gap: 8px; margin-block: 8px; }
 .zuvi-studio-pdf-page-item .zuvi-studio-pdf-thumbnail { flex: 1; min-width: 0; }
 .zuvi-studio-pdf-page-dialog label { display: block; margin-block: 12px; }
+
+.zuvi-studio-pdf-compose-dialog {
+  max-inline-size: calc(100vw - 32px);
+  max-block-size: calc(100dvh - 32px);
+}
+.zuvi-studio-pdf-compose-dialog form { display: flex; flex-direction: column; gap: 12px; }
+.zuvi-studio-pdf-compose-dialog label { display: flex; flex-direction: column; gap: 6px; }
+.zuvi-studio-pdf-compose-dialog label.zuvi-studio-pdf-compose-check { flex-direction: row; align-items: flex-start; }
+.zuvi-studio-pdf-compose-dialog p { margin: 0; }
+.zuvi-studio-pdf-compose-file { overflow-wrap: anywhere; }
+.zuvi-studio-pdf-passive-field p { margin-block: 6px; color: var(--zuvi-color-fg-muted); font-size: 12px; }

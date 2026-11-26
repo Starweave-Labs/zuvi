@@ -1,0 +1,239 @@
+{
+  "scope": "P008/X023/X024 current source, full repository closure checks; whole 159 requirements not complete",
+  "checks": {
+    "ui": 2784,
+    "docs": 523,
+    "e2e": 293,
+    "registry": 92,
+    "consumerFiles": 395,
+    "entryGzipBytes": 124924,
+    "entryBudgetBytes": 124928
+  },
+  "e2eStats": {
+    "startTime": "2026-11-26T19:18:45.402Z",
+    "duration": 934180.9199999999,
+    "expected": 293,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "files": [
+    {
+      "path": "validation/ui-tests.txt.raw.gz",
+      "originalPath": "/tmp/zuvi-office-composition-text-complete-ui-tests.txt",
+      "bytes": 10867,
+      "sha256": "502ef43be3fd9a3f5d083317b88a254bca98d7e3076817d0e686f8c182f440b1",
+      "uncompressedOriginal": {
+        "bytes": 38812,
+        "sha256": "4a537b439b6c6a0f438d4db18ee509322120dc0f710463d0261b659768626e90"
+      },
+      "normalizedView": {
+        "path": "validation/ui-tests.txt",
+        "bytes": 38811,
+        "sha256": "e4989b634bd5cf63475ff7ef886bf02426e976ddd2865f066d648c9e208fb11a",
+        "change": "Trailing whitespace and excess blank EOF only; raw gzip retains the complete original."
+      }
+    },
+    {
+      "path": "validation/types.txt",
+      "originalPath": "/tmp/zuvi-office-composition-text-complete-types.txt",
+      "bytes": 788,
+      "sha256": "dd78ff5a350c97f5d28420b71492a27cd5eaf65f5ba61d703bf7b8eeb2c80066"
+    },
+    {
+      "path": "validation/lint.txt.raw.gz",
+      "originalPath": "/tmp/zuvi-office-composition-text-complete-lint.txt",
+      "bytes": 127,
+      "sha256": "89d797d9f2120287b654c56db1b128e786f6b385f3f925fc9e72953b1292ac70",
+      "uncompressedOriginal": {
+        "bytes": 120,
+        "sha256": "779d6485622c43ec841eade19561bcc5489be9ff1c7a61d3cfc3647717f79aac"
+      },
+      "normalizedView": {
+        "path": "validation/lint.txt",
+        "bytes": 119,
+        "sha256": "dc4e2cbfc92140685312faddd09f900724f3469dd40ec75d8ffdde977a007238",
+        "change": "Trailing whitespace and excess blank EOF only; raw gzip retains the complete original."
+      }
+    },
+    {
+      "path": "validation/docs-tests.txt",
+      "originalPath": "/tmp/zuvi-office-composition-text-complete-docs-tests.txt",
+      "bytes": 124768,
+      "sha256": "292f023ef250bd1d293621a4b0d2b4494abe1ab383911b6c19aabcefeb23d3d4"
+    },
+    {
+      "path": "validation/ui-build.txt",
+      "originalPath": "/tmp/zuvi-office-composition-text-complete-ui-build.txt",
+      "bytes": 2718,
+      "sha256": "fee92dcfe9a2213dbd668d9f2c31156f4039903e0b1e3e37c55c41e3cccd3327"
+    },
+    {
+      "path": "validation/browser-build.txt",
+      "originalPath": "/tmp/zuvi-office-composition-text-complete-browser-build.txt",
+      "bytes": 512,
+      "sha256": "303c6892097a83fb1e0933973b7cf8cb1b14f8e71ea9a251d27e7442515c5b8d"
+    },
+    {
+      "path": "validation/docs-build.txt.raw.gz",
+      "originalPath": "/tmp/zuvi-office-composition-text-complete-docs-build.txt",
+      "bytes": 6803,
+      "sha256": "fdc252af3ec644e089f9e87d4c2adfc02797f42d4507c5984dde671168133068",
+      "uncompressedOriginal": {
+        "bytes": 37509,
+        "sha256": "61c71bcfb424c0ad7f43bbfa0ba660f58facfeafa7282c58b38adba646d5590e"
+      },
+      "normalizedView": {
+        "path": "validation/docs-build.txt",
+        "bytes": 37508,
+        "sha256": "66570d6b38687207490b6d381bb50a46b65235b253810e0fbd45150124af3830",
+        "change": "Trailing whitespace and excess blank EOF only; raw gzip retains the complete original."
+      }
+    },
+    {
+      "path": "validation/tool-build.txt",
+      "originalPath": "/tmp/zuvi-office-composition-text-complete-tool-build.txt",
+      "bytes": 257,
+      "sha256": "6326e5a8be6cbc638a95a28e96d4e84d9c39a6c02577762c33cc118766d101d6"
+    },
+    {
+      "path": "validation/distribution.txt",
+      "originalPath": "/tmp/zuvi-office-composition-text-complete-distribution.txt",
+      "bytes": 507,
+      "sha256": "a21f31603babbad9e9c9fc16be837935d385db9210c6877ae296566c5184fe1b"
+    },
+    {
+      "path": "validation/consumer.txt",
+      "originalPath": "/tmp/zuvi-office-composition-text-complete-consumer.txt",
+      "bytes": 209,
+      "sha256": "4839d890e19039186549d6610bdaf91bf92cf2e708d50f945c9c17e93a2f4af9"
+    },
+    {
+      "path": "validation/registry.txt",
+      "originalPath": "/tmp/zuvi-office-composition-text-complete-registry-check.txt",
+      "bytes": 45,
+      "sha256": "3a06a875aa8006514b75c0075e31c01d5c9ec733646dbb11cc8849dcde4fbafe"
+    },
+    {
+      "path": "validation/bundle-size.txt",
+      "originalPath": "/tmp/zuvi-office-composition-text-complete-size.txt",
+      "bytes": 668,
+      "sha256": "1d474c8a4d186245f265f9246adb5cf2216acc0c5cb2a9e1a3b435d9b3d08f4f"
+    },
+    {
+      "path": "validation/e2e.txt",
+      "originalPath": "/tmp/zuvi-office-composition-text-full-e2e.txt",
+      "bytes": 46087,
+      "sha256": "6c94a84d233be800b2d47b72dfde9ca1803ddbc5a90c579a7eefbde0fec2426f"
+    },
+    {
+      "path": "validation/e2e.json",
+      "originalPath": "/tmp/zuvi-office-composition-text-full-e2e.json",
+      "bytes": 399756,
+      "sha256": "a6b02426eb3b0a397512ab984165cb6c9f4abd04eac929fd5e9be8e614a3e583"
+    },
+    {
+      "path": "validation/native-excel.txt",
+      "originalPath": "/tmp/zuvi-excel-effective-bounds-native-final.txt",
+      "bytes": 15033,
+      "sha256": "5f887e8c794d08ebc671431b3d583fcfe1b1ce640ee0762734514a368b332012"
+    },
+    {
+      "path": "validation/independent-pdf.txt",
+      "originalPath": "/tmp/zuvi-pdf-composition-independent-after-full.txt",
+      "bytes": 194,
+      "sha256": "1c5cea58919afc15f4dab10a6139cdf760954d5eefd832cd5ee8a5dcce1ccc21"
+    },
+    {
+      "path": "validation/independent-sheet.txt",
+      "originalPath": "/tmp/zuvi-sheet-text-independent-after-full.txt",
+      "bytes": 97,
+      "sha256": "0b2e99a95654345867ab7f0c7af85a35e11be35af4950cb445c90b1f9c59a633"
+    }
+  ],
+  "postRunChecks": {
+    "reason": "XFA null hypothesis disproved against actual pdf-lib; comment and three native regressions only. CLI/MCP rebuilt after source EOF cleanup.",
+    "pdfNative": 171,
+    "docs": 526,
+    "docsSkipped": 0,
+    "docsTypes": "passed",
+    "scopedLint": "passed",
+    "docsBuild": "passed",
+    "consumerFiles": 395,
+    "e2eReexecuted": false
+  },
+  "postRunFiles": [
+    {
+      "path": "validation/post-run/pdf-native-171.txt",
+      "originalPath": "/tmp/zuvi-office-xfa-confirmation-pdf-native.txt",
+      "bytes": 40119,
+      "sha256": "ec07c4ca6ab60319044c3c3dbd9023a78df75cb998712afcb183f9cc89f5fa85"
+    },
+    {
+      "path": "validation/post-run/docs-526.txt",
+      "originalPath": "/tmp/zuvi-office-xfa-confirmation-all-docs.txt",
+      "bytes": 125571,
+      "sha256": "f21cd641f0dd28f7cfef233b224e3ad8388485d38eedae8282cebf0f063b6bac"
+    },
+    {
+      "path": "validation/post-run/docs-types.txt.raw.gz",
+      "originalPath": "/tmp/zuvi-office-xfa-confirmation-docs-types.txt",
+      "bytes": 143,
+      "sha256": "4ac1bac2b8baefe1871636a29fd225279c5d763b8107b74fef28a1026888085f",
+      "uncompressedOriginal": {
+        "bytes": 140,
+        "sha256": "ba7e0c5e66d89ed98a3d9af11e2aaf1246817c40d3c878ec259f58a7152b008a"
+      },
+      "normalizedView": {
+        "path": "validation/post-run/docs-types.txt",
+        "bytes": 139,
+        "sha256": "b6759b8a11062d2ec52bbfc1533b1e9b4f51b28aa68ff68626b3fc95e0a8e4e8",
+        "change": "Trailing whitespace and excess blank EOF only; raw gzip retains the complete original."
+      }
+    },
+    {
+      "path": "validation/post-run/scoped-lint.txt",
+      "originalPath": "/tmp/zuvi-office-xfa-confirmation-lint.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "validation/post-run/docs-build.txt.raw.gz",
+      "originalPath": "/tmp/zuvi-office-xfa-confirmation-docs-build.txt",
+      "bytes": 6803,
+      "sha256": "e4fc5ba993c42f83c1569303bbe9923a4616036364c06f186741eac50f7039ab",
+      "uncompressedOriginal": {
+        "bytes": 37509,
+        "sha256": "0a5acb4d7679d272a1049eaebc32365c17e96f072926c78899e41da653c74066"
+      },
+      "normalizedView": {
+        "path": "validation/post-run/docs-build.txt",
+        "bytes": 37508,
+        "sha256": "fc9ed4dc32beff26dc9838715daefba291b9db1637225312ce6a9f8904a1ef32",
+        "change": "Trailing whitespace and excess blank EOF only; raw gzip retains the complete original."
+      }
+    },
+    {
+      "path": "validation/post-run/source-eof-tools-build.txt",
+      "originalPath": "/tmp/zuvi-office-composition-text-source-eof-tool-build.txt",
+      "bytes": 257,
+      "sha256": "6326e5a8be6cbc638a95a28e96d4e84d9c39a6c02577762c33cc118766d101d6"
+    },
+    {
+      "path": "validation/post-run/consumer-395.txt",
+      "originalPath": "/tmp/zuvi-office-composition-text-source-eof-consumer.txt",
+      "bytes": 209,
+      "sha256": "4839d890e19039186549d6610bdaf91bf92cf2e708d50f945c9c17e93a2f4af9"
+    }
+  ],
+  "postRunCode": [
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
+      "sha256": "9364bfa2cb200fc67016d3c788fbfe11257d77e0fe0a1568fa6f6ed2ffc666c1"
+    },
+    {
+      "path": "docs/tests/studio-pdf-field-reader.test.mjs",
+      "sha256": "008e558d77cfa797c8051d55f61f27ed04f33f76f09961d46b4caec45248a9c2"
+    }
+  ]
+}

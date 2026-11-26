@@ -1,0 +1,45 @@
+{
+  "reason": "Actual worktree run reached native history export and radio policy; selectors needed scoped footer close and a direct checkbox parent label.",
+  "entries": [
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-worktree-browser-locators/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/trace.zip",
+      "bytes": 16165549,
+      "sha256": "2c6a46ac4468c1ed93c33fbebb9fcd1a0208b203e2ca5173d30f388b33aeebcb"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-worktree-browser-locators/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/error-context.md.raw.gz",
+      "bytes": 13754,
+      "sha256": "990518e91a59e05004762719eec08ade4df9d8ac249060b7bac718287de201dc",
+      "uncompressedOriginal": {
+        "bytes": 63151,
+        "sha256": "bb48ecfac2df0de0bedceece13e6984d2b04c785ad9d2870ba5bf4d868f82e5f"
+      },
+      "normalizedView": {
+        "path": "docs/audits/2026-11-27/pdf-composition/first-worktree-browser-locators/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/error-context.md",
+        "bytes": 63146,
+        "sha256": "d0085a856f78c7b6eb47247fbd4a0a383b5fb6fd3fe8594a95929a82d0077922",
+        "change": "Trailing spaces/tabs only; original bytes are preserved in the raw gzip archive."
+      }
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-worktree-browser-locators/office-studio-pdf-composit-0d74b-s-undo-and-repeated-reopens-chromium/trace.zip",
+      "bytes": 3816786,
+      "sha256": "a0bc005412106deee0ef5988e77a29a60b575954306627761a3c3bbd5560f996"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-worktree-browser-locators/office-studio-pdf-composit-0d74b-s-undo-and-repeated-reopens-chromium/error-context.md.raw.gz",
+      "bytes": 12516,
+      "sha256": "e5d1e082341a6838521dd5b3324e6af4657422c554fe34ff708cd25891be02ab",
+      "uncompressedOriginal": {
+        "bytes": 52631,
+        "sha256": "bfbaf7079e4f9947b3e5194b7d3e34f87b85d2d73578883c912154c11c55f957"
+      },
+      "normalizedView": {
+        "path": "docs/audits/2026-11-27/pdf-composition/first-worktree-browser-locators/office-studio-pdf-composit-0d74b-s-undo-and-repeated-reopens-chromium/error-context.md",
+        "bytes": 52626,
+        "sha256": "05d84f0cab8c964d912379c1822efe5b3125008f6e28a467e1d9d88bc3a178bf",
+        "change": "Trailing spaces/tabs only; original bytes are preserved in the raw gzip archive."
+      }
+    }
+  ]
+}

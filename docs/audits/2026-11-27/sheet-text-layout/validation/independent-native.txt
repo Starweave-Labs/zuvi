@@ -1,0 +1,1 @@
+{"xlsx": 3, "arrayXlsx": 2, "pdfPages": 5, "pdfLinks": 2, "cjkAndFullShrinkTextPreserved": true}

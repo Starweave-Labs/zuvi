@@ -11,6 +11,19 @@ import {
   studioBorderStyles,
 } from '../../../../../packages/ui/src/components/OfficeStudio/studio-cell-style';
 import { isOfficeStudioDocument } from '../../../../../packages/ui/src/components/OfficeStudio/studio-model';
+import { studioCellFontIssue } from '../../../../../packages/ui/src/components/OfficeStudio/studio-cell-font';
+import {
+  sheetRowHeightMode,
+  sheetRowStateFromNative,
+  sheetTextFormatFromNative,
+  sheetTextFormatToNativePatch,
+  type SheetTextFormat,
+} from '../../../../../packages/ui/src/components/OfficeStudio/studio-sheet-text-properties';
+import {
+  studioSheetDerivedRowHeights,
+  studioSheetTextMeasure,
+} from '../../../../../packages/ui/src/components/OfficeStudio/studio-sheet-text-display';
+import type { SheetTextMetrics } from '../../../../../packages/ui/src/components/OfficeStudio/studio-sheet-text-layout';
 import {
   STUDIO_SHEET_LIMITS,
   studioCalculate,
@@ -18,6 +31,7 @@ import {
   studioColumnLabel,
   studioFilteredRows,
   studioHiddenRows,
+  studioHiddenColumns,
   studioInputValue,
   studioParseAddress,
   studioParseRange,
@@ -79,6 +93,50 @@ function text(parent: Document | Element, namespace: string, name: string): stri
 }
 function val(parent: Document | Element, namespace: string, name: string): string | undefined {
   return first(parent, namespace, name)?.getAttribute('val') ?? undefined;
+}
+function xmlAttributes(element: Element | undefined): Record<string, string> {
+  return Object.fromEntries(
+    Array.from(element?.attributes ?? [])
+      .filter((attribute) => !attribute.namespaceURI)
+      .map((attribute) => [attribute.name, attribute.value])
+  );
+}
+function serializeXml(node: Node): string {
+  const source = new XMLSerializer().serializeToString(node);
+  const parts: string[] = [];
+  let start = 0;
+  let tag = false;
+  let quote = '';
+  for (let index = 0; index < source.length; index++) {
+    const char = source[index];
+    if (!tag && char === '<') {
+      const end = source.startsWith('<!--', index)
+        ? '-->'
+        : source.startsWith('<![CDATA[', index)
+          ? ']]>'
+          : source.startsWith('<?', index)
+            ? '?>'
+            : undefined;
+      if (end) {
+        const next = source.indexOf(end, index + 2);
+        if (next >= 0) {
+          index = next + end.length - 1;
+          continue;
+        }
+      }
+      tag = true;
+    } else if (tag && quote && char === quote) quote = '';
+    else if (tag && !quote && (char === '"' || char === "'")) quote = char;
+    else if (tag && !quote && char === '>') tag = false;
+    // XML attribute whitespace and literal text CR would be normalized on reopening.
+    if ((quote && /[\t\r\n]/.test(char)) || (!tag && char === '\r')) {
+      parts.push(source.slice(start, index), `&#${char.charCodeAt(0)};`);
+      start = index + 1;
+    }
+  }
+  if (!parts.length) return source;
+  parts.push(source.slice(start));
+  return parts.join('');
 }
 function escapeXml(input: string): string {
   for (const character of input) {
@@ -201,6 +259,7 @@ type NativeFont = Partial<ExcelJS.Font> & {
 
 interface NativeSheetFonts {
   styles: Array<NativeFont | undefined>;
+  fontIds: number[];
   cells: Map<string, number | undefined>;
   rows: Map<number, number>;
   columns: Map<number, number>;
@@ -212,6 +271,8 @@ interface SheetMetadata {
   arrays: Map<string, { formula: string; array: NonNullable<StudioCell['array']>; range: string }>;
   protectedRanges?: string[];
   fonts: NativeSheetFonts;
+  textAlignments: NativeTextAlignment[];
+  fontDefaults: NativeWorkbookFontDefaults;
   rowLayout: NativeRowLayout;
   hyperlinks: StudioSheetHyperlink[];
   merges: string[];
@@ -223,9 +284,106 @@ interface SheetMetadata {
   pageBreaks: { rowBreaks: NativePageBreak[]; colBreaks: NativePageBreak[] };
 }
 
+interface NativeWorkbookFontDefaults {
+  value?: NonNullable<StudioExcelDocument['defaultFont']>;
+  rawFont?: NativeFont;
+  rawFontXml?: string;
+  themeFonts: { major?: string; minor?: string };
+  theme?: { part: string; target: string; xml: string };
+}
+
+const workbookFontDefaults = new WeakMap<ExcelJS.Workbook, NativeWorkbookFontDefaults>();
+
+function themeFontFamily(
+  font: NativeFont,
+  themes: NativeWorkbookFontDefaults['themeFonts']
+): string | undefined {
+  const placeholder = /^\+m([nj])-(lt|ea|cs)$/i.exec(font.name ?? '');
+  if (placeholder && placeholder[2].toLowerCase() !== 'lt')
+    throw new Error('工作簿默认字体使用暂不支持的主题脚本字体。');
+  const scheme =
+    font.scheme === 'major' || font.scheme === 'minor'
+      ? font.scheme
+      : placeholder
+        ? placeholder[1].toLowerCase() === 'j'
+          ? 'major'
+          : 'minor'
+        : undefined;
+  if (!scheme) return font.name;
+  const family = themes[scheme];
+  if (!family || /^\+m[nj]-/i.test(family))
+    throw new Error('工作簿默认字体的主题绑定无法解析，暂不支持此字体定义。');
+  return family;
+}
+
+async function nativeWorkbookFontDefaults(
+  zip: JSZip,
+  styles: XMLDocument | undefined
+): Promise<NativeWorkbookFontDefaults> {
+  const result: NativeWorkbookFontDefaults = { themeFonts: {} };
+  const relation = (await readRelationships(zip, 'xl/workbook.xml')).find(
+    (entry) => entry.type === `${R}/theme`
+  );
+  if (relation && relation.targetMode !== 'External') {
+    const part = packagePath('xl/workbook.xml', relation.target);
+    const file = zip.file(part);
+    if (file) {
+      const source = await file.async('string');
+      const xml = xmlDocument(source);
+      const scheme = first(xml, A, 'fontScheme');
+      if (scheme)
+        for (const name of ['major', 'minor'] as const) {
+          const font = first(scheme, A, `${name}Font`);
+          const family = font && first(font, A, 'latin')?.getAttribute('typeface');
+          if (family) result.themeFonts[name] = family;
+        }
+      result.theme = { part, target: relation.target, xml: source };
+    }
+  }
+  const font0 = styles && first(styles, S, 'fonts')?.children[0];
+  // An undeclared font0 retains the application's legacy fallback; no native family is invented.
+  if (!font0) return result;
+  const font = nativeFont(font0);
+  const family = themeFontFamily(font, result.themeFonts);
+  if (!family || font.size === undefined)
+    throw new Error('工作簿默认字体的名称或字号无法解析，暂不支持此字体定义。');
+  const issue = studioCellFontIssue({
+    fontFamily: family,
+    fontSize: font.size,
+  });
+  if (issue) throw new Error('工作簿默认字体属性无效。');
+  result.value = {
+    family,
+    sizePt: font.size,
+    bold: font.bold ?? false,
+    italic: font.italic ?? false,
+  };
+  result.rawFont = font;
+  result.rawFontXml = serializeXml(font0);
+  return result;
+}
+
+function importedFontFamily(cell: ExcelJS.Cell): string | undefined {
+  const defaults = workbookFontDefaults.get(cell.worksheet.workbook);
+  const font = cell.font;
+  if (!font) return undefined;
+  // Resolve actual font0 aliases while retaining their raw name and scheme for unchanged source saves.
+  if (
+    defaults?.value &&
+    defaults.rawFont &&
+    font.name === defaults.rawFont.name &&
+    font.scheme === defaults.rawFont.scheme
+  )
+    return defaults.value.family;
+  if (/^\+m[nj]-(?:lt|ea|cs)$/i.test(font.name ?? ''))
+    return themeFontFamily(font, defaults?.themeFonts ?? {});
+  return font.name;
+}
+
 interface NativeRowLayout {
   defaultRowHeight?: number;
   rowHeights: Record<string, number>;
+  rowHeightModes: NonNullable<StudioSheet['rowHeightModes']>;
   hiddenRows: number[];
   visibleRows: number[];
   defaultHidden: boolean;
@@ -258,6 +416,7 @@ function nativeRowLayout(xml: XMLDocument): NativeRowLayout {
   const layout: NativeRowLayout = {
     ...(height !== undefined && height > 0 ? { defaultRowHeight: height } : {}),
     rowHeights: {},
+    rowHeightModes: {},
     hiddenRows: [],
     visibleRows: [],
     defaultHidden: height === 0 || boolean(format, 'zeroHeight'),
@@ -276,9 +435,16 @@ function nativeRowLayout(xml: XMLDocument): NativeRowLayout {
       throw new Error('工作表行索引无效或超过 10,000 行。');
     seen.add(index);
     layout.lastRow = Math.max(layout.lastRow, index);
-    const height = pointHeight(row, 'ht');
-    if (height !== undefined && height > 0) layout.rowHeights[String(index)] = height;
-    if (height === 0 || boolean(row, 'hidden')) layout.hiddenRows.push(index);
+    let state: ReturnType<typeof sheetRowStateFromNative>;
+    try {
+      state = sheetRowStateFromNative(xmlAttributes(row));
+    } catch {
+      throw new Error('工作表行高、自动行高或隐藏属性无效。');
+    }
+    if (state.heightPt !== undefined) layout.rowHeights[String(index)] = state.heightPt;
+    if (row.hasAttribute('ht') || row.hasAttribute('customHeight'))
+      layout.rowHeightModes[String(index)] = state.mode;
+    if (state.hidden) layout.hiddenRows.push(index);
     else layout.visibleRows.push(index);
   }
   return layout;
@@ -953,11 +1119,154 @@ function nativeFontStyles(xml: XMLDocument | undefined): Array<NativeFont | unde
     : [];
 }
 
+interface NativeTextAlignment {
+  raw: Record<string, string>;
+  format: SheetTextFormat;
+}
+
+const TEXT_ALIGNMENT_KEYS = [
+  'align',
+  'verticalAlign',
+  'indent',
+  'textRotation',
+  'wrap',
+  'shrinkToFit',
+] as const;
+const EXCEL_ALIGNMENT_KEYS = [
+  'horizontal',
+  'vertical',
+  'indent',
+  'textRotation',
+  'wrapText',
+  'shrinkToFit',
+] as const;
+
+function nativeTextAlignment(raw: Record<string, string>): NativeTextAlignment {
+  const normalized = { ...raw };
+  if (
+    raw.justifyLastLine !== undefined &&
+    !['0', '1', 'true', 'false'].includes(raw.justifyLastLine)
+  )
+    throw new Error('工作簿包含无效的原生对齐布尔属性。');
+  if (
+    raw.readingOrder !== undefined &&
+    (!/^[+]?\d+$/.test(raw.readingOrder) || Number(raw.readingOrder) > 2)
+  )
+    throw new Error('工作簿包含无效的原生对齐阅读顺序。');
+  if (
+    raw.relativeIndent !== undefined &&
+    (!/^[+-]?\d+$/.test(raw.relativeIndent) ||
+      !Number.isSafeInteger(Number(raw.relativeIndent)) ||
+      Number(raw.relativeIndent) < -2147483648 ||
+      Number(raw.relativeIndent) > 2147483647)
+  )
+    throw new Error('工作簿包含无效的原生相对缩进。');
+  if (
+    raw.vertical !== undefined &&
+    !['top', 'center', 'bottom', 'justify', 'distributed'].includes(raw.vertical)
+  )
+    throw new Error('工作簿包含无效的原生垂直对齐属性。');
+  for (const key of ['indent', 'textRotation'] as const) {
+    if (raw[key] === undefined) continue;
+    if (!/^[+]?\d+$/.test(raw[key]) || !Number.isSafeInteger(Number(raw[key])))
+      throw new Error('工作簿单元格缩进或旋转属性必须是有效整数。');
+    normalized[key] = String(Number(raw[key]));
+  }
+  try {
+    return { raw, format: sheetTextFormatFromNative(normalized) };
+  } catch {
+    throw new Error('工作簿包含无效的对齐、缩进（0–250）、旋转或文字适配属性。');
+  }
+}
+
+function nativeTextAlignmentStyles(xml: XMLDocument | undefined): NativeTextAlignment[] {
+  if (!xml) return [];
+  const read = (format: Element) => {
+    const flag = format.getAttribute('applyAlignment');
+    if (flag !== null && !['0', '1', 'true', 'false'].includes(flag))
+      throw new Error('工作簿包含无效的对齐应用属性。');
+    return nativeTextAlignment(xmlAttributes(first(format, S, 'alignment')));
+  };
+  const definitions = first(xml, S, 'cellStyleXfs');
+  const bases = definitions ? Array.from(definitions.children).map(read) : [];
+  const formats = first(xml, S, 'cellXfs');
+  return formats
+    ? Array.from(formats.children).map((format) => {
+        // Validate a present alignment even when applyAlignment=0 prevents its use.
+        const own = read(format);
+        const base = bases[Number(format.getAttribute('xfId') ?? 0)];
+        const apply = format.getAttribute('applyAlignment');
+        if (apply === '0' || apply === 'false') return base ?? nativeTextAlignment({});
+        if (first(format, S, 'alignment') || apply === '1' || apply === 'true') return own;
+        return base ?? own;
+      })
+    : [];
+}
+
+function nativeAlignmentForAddress(
+  native: SheetMetadata,
+  address: string
+): NativeTextAlignment | undefined {
+  const point = studioParseAddress(address);
+  if (!point) return undefined;
+  const style =
+    native.fonts.cells.get(address) ??
+    native.fonts.rows.get(point.row) ??
+    native.fonts.columns.get(point.col) ??
+    0;
+  return native.textAlignments[style];
+}
+
+function excelTextAlignment(format: SheetTextFormat): Partial<ExcelJS.Alignment> {
+  const alignment: Partial<ExcelJS.Alignment> = {};
+  if (format.align !== undefined)
+    alignment.horizontal = format.align === 'general' ? undefined : format.align;
+  if (format.verticalAlign !== undefined) alignment.vertical = format.verticalAlign;
+  if (format.indent !== undefined) alignment.indent = format.indent;
+  if (format.textRotation !== undefined) alignment.textRotation = format.textRotation;
+  if (format.wrap !== undefined) alignment.wrapText = format.wrap;
+  if (format.shrinkToFit !== undefined) alignment.shrinkToFit = format.shrinkToFit;
+  return alignment;
+}
+
+function restoreNativeTextAlignments(worksheet: ExcelJS.Worksheet, native: SheetMetadata) {
+  const restore = (base: Partial<ExcelJS.Alignment> | undefined, source: NativeTextAlignment) => {
+    const alignment: Partial<ExcelJS.Alignment> = { ...base };
+    for (const key of EXCEL_ALIGNMENT_KEYS) delete alignment[key];
+    return { ...alignment, ...excelTextAlignment(source.format) };
+  };
+  for (const [index, style] of native.fonts.rows) {
+    const source = native.textAlignments[style];
+    if (!source) continue;
+    const row = worksheet.getRow(index) as ExcelJS.Row & { style: Partial<ExcelJS.Style> };
+    row.style = { ...row.style, alignment: restore(row.alignment, source) };
+  }
+  for (const [index, style] of native.fonts.columns) {
+    const source = native.textAlignments[style];
+    if (!source) continue;
+    const column = worksheet.getColumn(index);
+    column.style = { ...column.style, alignment: restore(column.alignment, source) };
+  }
+  for (const address of native.fonts.cells.keys()) {
+    const source = nativeAlignmentForAddress(native, address);
+    if (!source) continue;
+    const cell = worksheet.getCell(address);
+    cell.style = { ...cell.style, alignment: restore(cell.alignment, source) };
+  }
+}
+
 function nativeSheetFonts(
   xml: XMLDocument,
-  styles: Array<NativeFont | undefined>
+  styles: Array<NativeFont | undefined>,
+  fontIds: number[]
 ): NativeSheetFonts {
-  const fonts: NativeSheetFonts = { styles, cells: new Map(), rows: new Map(), columns: new Map() };
+  const fonts: NativeSheetFonts = {
+    styles,
+    fontIds,
+    cells: new Map(),
+    rows: new Map(),
+    columns: new Map(),
+  };
   for (const cell of xmlElements(xml, S, 'c')) {
     const address = cell.getAttribute('r');
     if (!address) continue;
@@ -987,10 +1296,17 @@ function nativeSheetFonts(
   return fonts;
 }
 
-function restoreNativeFonts(worksheet: ExcelJS.Worksheet, native: NativeSheetFonts) {
+function restoreNativeFonts(
+  worksheet: ExcelJS.Worksheet,
+  native: NativeSheetFonts,
+  defaults?: StudioExcelDocument['defaultFont']
+) {
   const restore = (base: Partial<ExcelJS.Font> | undefined, original: NativeFont | undefined) => {
     if (!base && !original) return undefined;
     const font: NativeFont = { ...base, ...original };
+    // Font components default absent b/i to false, independently of a bold/italic font0.
+    if (original && defaults?.bold && original.bold === undefined) font.bold = false;
+    if (original && defaults?.italic && original.italic === undefined) font.italic = false;
     if (font.color) font.color = { ...font.color };
     return font;
   };
@@ -1037,6 +1353,13 @@ async function readMetadata(zip: JSZip): Promise<Map<number, SheetMetadata>> {
   const stylesEntry = zip.file('xl/styles.xml');
   const stylesXml = stylesEntry ? xmlDocument(await stylesEntry.async('string')) : undefined;
   const fontStyles = nativeFontStyles(stylesXml);
+  const fontIds = stylesXml
+    ? Array.from(first(stylesXml, S, 'cellXfs')?.children ?? []).map((format) =>
+        Number(format.getAttribute('fontId') ?? 0)
+      )
+    : [];
+  const fontDefaults = await nativeWorkbookFontDefaults(zip, stylesXml);
+  const textAlignments = nativeTextAlignmentStyles(stylesXml);
   const differential = stylesXml && first(stylesXml, S, 'dxfs');
   const styles = differential ? Array.from(differential.children) : [];
   if (differential) {
@@ -1240,7 +1563,9 @@ async function readMetadata(zip: JSZip): Promise<Map<number, SheetMetadata>> {
       numericInputs,
       arrays,
       protectedRanges,
-      fonts: nativeSheetFonts(xml, fontStyles),
+      fonts: nativeSheetFonts(xml, fontStyles, fontIds),
+      textAlignments,
+      fontDefaults,
       rowLayout: nativeRowLayout(xml),
       hyperlinks,
       merges,
@@ -1342,9 +1667,14 @@ function argb(color: string): string | undefined {
   return /^#[\da-f]{6}$/i.test(color) ? `FF${color.slice(1).toUpperCase()}` : undefined;
 }
 
-function importedCell(cell: ExcelJS.Cell, nativeNumericInput?: string): StudioCell {
+function importedCell(
+  cell: ExcelJS.Cell,
+  nativeNumericInput?: string,
+  nativeFormat?: SheetTextFormat
+): StudioCell {
   const result: StudioCell = { input: importedInput(cell, nativeNumericInput) };
-  if (cell.font?.name !== undefined) result.fontFamily = cell.font.name;
+  const family = importedFontFamily(cell);
+  if (family !== undefined) result.fontFamily = family;
   if (cell.font?.size !== undefined) result.fontSize = cell.font.size;
   if (cell.font?.bold !== undefined) result.bold = cell.font.bold;
   if (cell.font?.italic !== undefined) result.italic = cell.font.italic;
@@ -1367,11 +1697,14 @@ function importedCell(cell: ExcelJS.Cell, nativeNumericInput?: string): StudioCe
   if (cell.numFmt === '@' && (typeof cell.value === 'number' || typeof cell.value === 'boolean'))
     result.valueType = typeof cell.value === 'number' ? 'number' : 'boolean';
   const align = cell.alignment?.horizontal;
-  if (align === 'left' || align === 'center' || align === 'right') result.align = align;
+  if (align !== undefined) result.align = align;
   if (cell.alignment?.wrapText !== undefined) result.wrap = cell.alignment.wrapText;
   const vertical = cell.alignment?.vertical;
-  if (vertical === 'top' || vertical === 'middle' || vertical === 'bottom')
-    result.verticalAlign = vertical;
+  if (vertical !== undefined) result.verticalAlign = vertical;
+  if (cell.alignment?.indent !== undefined) result.indent = cell.alignment.indent;
+  if (cell.alignment?.textRotation !== undefined) result.textRotation = cell.alignment.textRotation;
+  if (cell.alignment?.shrinkToFit !== undefined) result.shrinkToFit = cell.alignment.shrinkToFit;
+  if (nativeFormat) Object.assign(result, nativeFormat);
   if (cell.border && Object.keys(cell.border).length) {
     const borders: StudioCell['borders'] = {};
     for (const side of studioBorderSides) {
@@ -1498,10 +1831,15 @@ async function loadWorkbook(source: Blob): Promise<{
   if (workbook.properties.date1904)
     throw new Error('首版暂不支持使用 1904 日期系统的工作簿。请在 Excel 或 WPS 中打开原文件。');
   if (!workbook.worksheets.length) throw new Error('工作簿中没有工作表。');
+  const defaults = metadata.values().next().value?.fontDefaults;
+  if (defaults) workbookFontDefaults.set(workbook, defaults);
   // ExcelJS 4.4 reads <sz> with parseInt. Keep native decimals and inherited fonts before any edits.
   for (const worksheet of workbook.worksheets) {
     const native = metadata.get(worksheet.id);
-    if (native) restoreNativeFonts(worksheet, native.fonts);
+    if (native) {
+      restoreNativeFonts(worksheet, native.fonts, native.fontDefaults.value);
+      restoreNativeTextAlignments(worksheet, native);
+    }
   }
   return { workbook, metadata };
 }
@@ -1533,9 +1871,15 @@ function importedDocument(
             studioArrayContains(studioArrayRange(entry.range)!, position.row, position.col)
           );
         });
+        const nativeFormat = advanced?.fonts.cells.has(cell.address)
+          ? nativeAlignmentForAddress(advanced, cell.address)?.format
+          : undefined;
         const value = resultCell
-          ? { ...importedCell(cell, advanced?.numericInputs.get(cell.address)), input: '' }
-          : importedCell(cell, advanced?.numericInputs.get(cell.address));
+          ? {
+              ...importedCell(cell, advanced?.numericInputs.get(cell.address), nativeFormat),
+              input: '',
+            }
+          : importedCell(cell, advanced?.numericInputs.get(cell.address), nativeFormat);
         if (array) {
           value.input = array.formula;
           value.array = array.array;
@@ -1607,6 +1951,7 @@ function importedDocument(
         sheet.properties.defaultRowHeight ||
         STUDIO_SHEET_LIMITS.defaultRowHeight,
       rowHeights: { ...rowLayout?.rowHeights },
+      rowHeightModes: { ...rowLayout?.rowHeightModes },
       hiddenRows: [...(rowLayout?.hiddenRows ?? [])],
       ...(advanced?.protectedRanges ? { protectedRanges: advanced.protectedRanges } : {}),
       ...(advanced
@@ -1641,11 +1986,13 @@ function importedDocument(
       target.columnCount = Math.max(target.columnCount, range.lastCol);
     }
   const selected = workbook.views?.[0]?.activeTab ?? 0;
+  const defaultFont = metadata.values().next().value?.fontDefaults.value;
   const document: StudioExcelDocument = {
     version: 1,
     id: `xlsx-${typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Date.now()}`,
     name,
     kind: 'excel',
+    ...(defaultFont ? { defaultFont: { ...defaultFont } } : {}),
     sheets,
     activeSheetId: sheets[selected]?.id ?? sheets[0].id,
   };
@@ -1746,17 +2093,152 @@ function hydrateHyperlinksFromMetadata(
   };
 }
 
+function hydrateLegacyTextFormats(
+  document: StudioExcelDocument,
+  metadata: Map<number, SheetMetadata>
+): StudioExcelDocument {
+  let changed = false;
+  const sheets = document.sheets.map((sheet) => {
+    // New imports always have the row-mode map. Missing modes also identify pre-X023/X024 snapshots.
+    const legacyAlignment = sheet.rowHeightModes === undefined;
+    const legacyFont = document.defaultFont === undefined;
+    if (!legacyAlignment && !legacyFont) return sheet;
+    const id = /^xlsx-sheet-(\d+)$/.exec(sheet.id)?.[1];
+    const native = id === undefined ? undefined : metadata.get(Number(id));
+    if (!native) return sheet;
+    let cells = sheet.cells;
+    for (const address of native.fonts.cells.keys()) {
+      const point = studioParseAddress(address);
+      if (!point) continue;
+      const row = transformSourceIndex(point.row, 'row', sheet.structureEdits ?? []);
+      const col = transformSourceIndex(point.col, 'column', sheet.structureEdits ?? []);
+      if (row === undefined || col === undefined || row > sheet.rowCount || col > sheet.columnCount)
+        continue;
+      const target = `${studioColumnLabel(col)}${row}`;
+      const cell = cells[target];
+      const alignment = nativeAlignmentForAddress(native, address);
+      if (!cell || !alignment) continue;
+      const patch: SheetTextFormat = {};
+      if (legacyAlignment)
+        for (const key of TEXT_ALIGNMENT_KEYS)
+          if (cell[key] === undefined && alignment.format[key] !== undefined)
+            Object.assign(patch, { [key]: alignment.format[key] });
+      const sourceFont =
+        native.fonts.styles[
+          native.fonts.cells.get(address) ??
+            native.fonts.rows.get(point.row) ??
+            native.fonts.columns.get(point.col) ??
+            0
+        ];
+      const defaults = native.fontDefaults;
+      if (
+        legacyFont &&
+        defaults.value &&
+        defaults.rawFont &&
+        sourceFont &&
+        sourceFont.name === defaults.rawFont.name &&
+        sourceFont.scheme === defaults.rawFont.scheme &&
+        cell.fontFamily === defaults.rawFont.name &&
+        cell.fontFamily !== defaults.value.family
+      )
+        patch.fontFamily = defaults.value.family;
+      if (!Object.keys(patch).length) continue;
+      if (cells === sheet.cells) cells = { ...cells };
+      cells[target] = { ...cell, ...patch };
+    }
+    if (cells === sheet.cells) return sheet;
+    changed = true;
+    return { ...sheet, cells };
+  });
+  return changed ? { ...document, sheets } : document;
+}
+
+function hydrateRowLayoutFromMetadata(
+  document: StudioExcelDocument,
+  metadata: Map<number, SheetMetadata>
+): StudioExcelDocument {
+  const calculation = studioCalculate(document);
+  let changed = false;
+  const sheets = document.sheets.map((sheet) => {
+    if (
+      sheet.defaultRowHeight !== undefined &&
+      sheet.rowHeights !== undefined &&
+      sheet.rowHeightModes !== undefined &&
+      sheet.hiddenRows !== undefined
+    )
+      return sheet;
+    const id = /^xlsx-sheet-(\d+)$/.exec(sheet.id)?.[1];
+    const native = id === undefined ? undefined : metadata.get(Number(id))?.rowLayout;
+    if (!native) return sheet;
+    const edits = sheet.structureEdits ?? [];
+    const heights: Record<string, number> = {};
+    const modes: NonNullable<StudioSheet['rowHeightModes']> = {};
+    for (const [index, height] of Object.entries(native.rowHeights)) {
+      const row = transformSourceIndex(Number(index), 'row', edits);
+      if (row !== undefined && row <= sheet.rowCount) heights[String(row)] = height;
+    }
+    for (const [index, mode] of Object.entries(native.rowHeightModes)) {
+      const row = transformSourceIndex(Number(index), 'row', edits);
+      if (row !== undefined && row <= sheet.rowCount) modes[String(row)] = mode;
+    }
+    const sourceHidden = new Set(native.hiddenRows);
+    if (native.defaultHidden) {
+      const visible = new Set(native.visibleRows);
+      const sourceRows = edits.reduce(
+        (rows, edit) =>
+          edit.axis === 'row' ? rows + (edit.type === 'insert' ? -edit.count : edit.count) : rows,
+        sheet.rowCount
+      );
+      for (let row = 1; row <= sourceRows; row++) if (!visible.has(row)) sourceHidden.add(row);
+    }
+    const filtered = studioFilteredRows({ ...sheet, hiddenRows: [] }, calculation);
+    const hidden = [...sourceHidden]
+      .flatMap((index) => {
+        const row = transformSourceIndex(index, 'row', edits);
+        return row !== undefined && row <= sheet.rowCount && !filtered.has(row) ? [row] : [];
+      })
+      .sort((a, b) => a - b);
+    changed = true;
+    return {
+      ...sheet,
+      defaultRowHeight: sheet.defaultRowHeight ?? native.defaultRowHeight ?? 18,
+      rowHeights: sheet.rowHeights ?? heights,
+      // Existing legacy point heights were manual until their mode was explicitly recorded.
+      rowHeightModes:
+        sheet.rowHeightModes ??
+        (sheet.rowHeights === undefined
+          ? modes
+          : Object.fromEntries(
+              Object.keys(sheet.rowHeights).map((row) => [row, 'fixed' as const])
+            )),
+      hiddenRows: sheet.hiddenRows ?? hidden,
+    };
+  });
+  return changed ? { ...document, sheets } : document;
+}
+
+function hydrateDefaultFontFromMetadata(
+  document: StudioExcelDocument,
+  metadata: Map<number, SheetMetadata>
+): StudioExcelDocument {
+  if (document.defaultFont !== undefined) return document;
+  const font = metadata.values().next().value?.fontDefaults.value;
+  return font ? { ...document, defaultFont: { ...font } } : document;
+}
+
 /** Restore missing source metadata before editing an older workspace or history entry. */
 export async function hydrateStudioExcelHyperlinks(
   document: StudioExcelDocument,
   source: Blob
 ): Promise<StudioExcelDocument> {
   if (
+    document.defaultFont !== undefined &&
     document.sheets.every(
       (sheet) =>
         sheet.hyperlinks !== undefined &&
         sheet.defaultRowHeight !== undefined &&
         sheet.rowHeights !== undefined &&
+        sheet.rowHeightModes !== undefined &&
         sheet.hiddenRows !== undefined
     )
   )
@@ -1764,50 +2246,10 @@ export async function hydrateStudioExcelHyperlinks(
   validateDocument(document);
   const metadata = await checkSupportedWorkbook(source);
   const linked = hydrateHyperlinksFromMetadata(document, metadata);
-  const calculation = studioCalculate(linked);
-  const hydrated = {
-    ...linked,
-    sheets: linked.sheets.map((sheet) => {
-      if (
-        sheet.defaultRowHeight !== undefined &&
-        sheet.rowHeights !== undefined &&
-        sheet.hiddenRows !== undefined
-      )
-        return sheet;
-      const id = /^xlsx-sheet-(\d+)$/.exec(sheet.id)?.[1];
-      const native = id === undefined ? undefined : metadata.get(Number(id))?.rowLayout;
-      if (!native) return sheet;
-      const edits = sheet.structureEdits ?? [];
-      const heights: Record<string, number> = {};
-      for (const [index, height] of Object.entries(native.rowHeights)) {
-        const row = transformSourceIndex(Number(index), 'row', edits);
-        if (row !== undefined && row <= sheet.rowCount) heights[String(row)] = height;
-      }
-      const sourceHidden = new Set(native.hiddenRows);
-      if (native.defaultHidden) {
-        const visible = new Set(native.visibleRows);
-        const sourceRows = edits.reduce(
-          (rows, edit) =>
-            edit.axis === 'row' ? rows + (edit.type === 'insert' ? -edit.count : edit.count) : rows,
-          sheet.rowCount
-        );
-        for (let row = 1; row <= sourceRows; row++) if (!visible.has(row)) sourceHidden.add(row);
-      }
-      const filtered = studioFilteredRows({ ...sheet, hiddenRows: [] }, calculation);
-      const hidden = [...sourceHidden]
-        .flatMap((index) => {
-          const row = transformSourceIndex(index, 'row', edits);
-          return row !== undefined && row <= sheet.rowCount && !filtered.has(row) ? [row] : [];
-        })
-        .sort((a, b) => a - b);
-      return {
-        ...sheet,
-        defaultRowHeight: sheet.defaultRowHeight ?? native.defaultRowHeight ?? 18,
-        rowHeights: sheet.rowHeights ?? heights,
-        hiddenRows: sheet.hiddenRows ?? hidden,
-      };
-    }),
-  };
+  const hydrated = hydrateDefaultFontFromMetadata(
+    hydrateRowLayoutFromMetadata(hydrateLegacyTextFormats(linked, metadata), metadata),
+    metadata
+  );
   validateDocument(hydrated);
   return hydrated;
 }
@@ -1816,7 +2258,7 @@ function exportedValue(cell: StudioCell): ExcelJS.CellValue {
   const input = cell.input;
   if (input.startsWith('=')) return { formula: input.slice(1) };
   if (input === '') return null;
-  if (excelErrors.includes(input as (typeof excelErrors)[number]))
+  if (cell.valueType !== 'text' && excelErrors.includes(input as (typeof excelErrors)[number]))
     return { error: input as ExcelJS.CellErrorValue['error'] };
   return studioInputValue(input, cell.numberFormat, cell.valueType);
 }
@@ -1855,15 +2297,15 @@ function updateCell(target: ExcelJS.Cell, cell: StudioCell) {
   }
   if (cell.numberFormat !== undefined && cell.numberFormat !== original.numberFormat)
     target.numFmt = cell.numberFormat;
-  if (cell.align !== undefined && cell.align !== original.align)
-    target.alignment = {
-      ...target.alignment,
-      horizontal: cell.align === 'general' ? undefined : cell.align,
-    };
-  if (cell.wrap !== undefined && cell.wrap !== original.wrap)
-    target.alignment = { ...target.alignment, wrapText: cell.wrap };
-  if (cell.verticalAlign !== undefined && cell.verticalAlign !== original.verticalAlign)
-    target.alignment = { ...target.alignment, vertical: cell.verticalAlign };
+  const changed: SheetTextFormat = {};
+  for (const key of TEXT_ALIGNMENT_KEYS)
+    if (cell[key] !== undefined && cell[key] !== original[key])
+      Object.assign(changed, { [key]: cell[key] });
+  if (Object.keys(changed).length) {
+    const alignment = { ...target.alignment, ...excelTextAlignment(changed) };
+    if (changed.align === 'general') delete alignment.horizontal;
+    target.alignment = alignment;
+  }
   if (
     cell.borders !== undefined &&
     JSON.stringify(cell.borders) !== JSON.stringify(original.borders)
@@ -2017,18 +2459,151 @@ function replaySourceStructure(target: ExcelJS.Worksheet, edits: StudioSheetStru
   }
 }
 
+/** Refresh only derived caches in the export copy; editor input and transaction history stay intact. */
+function exportAutoRowHeights(
+  document: StudioExcelDocument,
+  original?: StudioExcelDocument
+): StudioExcelDocument {
+  const calculation = studioCalculate(document),
+    baseMeasure = studioSheetTextMeasure();
+  const originalCalculation = original?.sheets.some((sheet) =>
+    Object.values(sheet.cells).some((cell) => cell.array)
+  )
+    ? studioCalculate(original)
+    : undefined;
+  const metrics = new Map<string, SheetTextMetrics>();
+  const measure: ReturnType<typeof studioSheetTextMeasure> = (text, font) => {
+    const key = JSON.stringify([text, font.family, font.sizePt, font.bold, font.italic]);
+    const cached = metrics.get(key);
+    if (cached) return cached;
+    const result = baseMeasure(text, font);
+    if (metrics.size >= 512) metrics.delete(metrics.keys().next().value!);
+    metrics.set(key, result);
+    return result;
+  };
+  let changed = false;
+  const sheets = document.sheets.map((storedSheet) => {
+    const prefix = `${storedSheet.id}:`;
+    const spillPositions = [...calculation.arrayOwners.keys()]
+      .filter((key) => key.startsWith(prefix))
+      .map((key) => studioParseAddress(key.slice(prefix.length))!);
+    const rowCount = spillPositions.reduce(
+      (count, cell) => Math.max(count, cell.row),
+      storedSheet.rowCount
+    );
+    const columnCount = spillPositions.reduce(
+      (count, cell) => Math.max(count, cell.col),
+      storedSheet.columnCount
+    );
+    const expanded = rowCount !== storedSheet.rowCount || columnCount !== storedSheet.columnCount;
+    const sheet = expanded ? { ...storedSheet, rowCount, columnCount } : storedSheet;
+    if (expanded) changed = true;
+    const rows = new Set<number>();
+    const add = (row: number) => {
+      if (row >= 1 && row <= sheet.rowCount) rows.add(row);
+    };
+    for (const address of Object.keys(sheet.cells)) add(studioParseAddress(address)!.row);
+    for (const merge of sheet.merges ?? []) {
+      const range = studioParseRange(merge)!;
+      for (let row = range.firstRow; row <= range.lastRow; row++) add(row);
+    }
+    for (const key of calculation.arrayOwners.keys())
+      if (key.startsWith(prefix)) add(studioParseAddress(key.slice(prefix.length))!.row);
+    for (const link of sheet.hyperlinks ?? []) {
+      const range = studioParseRange(link.ref)!;
+      for (let row = range.firstRow; row <= Math.min(range.lastRow, sheet.rowCount); row++)
+        add(row);
+    }
+    const source = original?.sheets.find((item) => item.id === sheet.id);
+    if (source) {
+      const edits = sheet.structureEdits ?? [];
+      const sourceRows = new Set(
+        Object.keys(source.cells).map((address) => studioParseAddress(address)!.row)
+      );
+      for (const merge of source.merges ?? []) {
+        const range = studioParseRange(merge)!;
+        for (let row = range.firstRow; row <= range.lastRow; row++) sourceRows.add(row);
+      }
+      const sourcePrefix = `${source.id}:`;
+      for (const key of originalCalculation?.arrayOwners.keys() ?? [])
+        if (key.startsWith(sourcePrefix))
+          sourceRows.add(studioParseAddress(key.slice(sourcePrefix.length))!.row);
+      for (const link of source.hyperlinks ?? []) {
+        const range = studioParseRange(link.ref)!;
+        for (let row = range.firstRow; row <= Math.min(range.lastRow, source.rowCount); row++)
+          sourceRows.add(row);
+      }
+      for (const row of sourceRows) {
+        const mapped = transformSourceIndex(row, 'row', edits);
+        if (mapped !== undefined) add(mapped);
+      }
+    } else for (const row of Object.keys(sheet.rowHeights ?? {})) add(Number(row));
+    const automatic = [...rows]
+      .filter((row) => sheetRowHeightMode(sheet, row) === 'auto')
+      .sort((a, b) => a - b);
+    if (!automatic.length) return sheet;
+    const offsets = [0],
+      hidden = studioHiddenColumns(sheet);
+    for (let col = 1; col <= sheet.columnCount; col++) {
+      const label = studioColumnLabel(col);
+      offsets.push(
+        offsets[col - 1] + (hidden.has(label) ? 0 : (sheet.columnWidths?.[label] ?? 112))
+      );
+    }
+    const derived = studioSheetDerivedRowHeights(
+      document,
+      sheet,
+      calculation,
+      automatic,
+      offsets,
+      measure
+    );
+    const heights = { ...sheet.rowHeights };
+    let rowChanged = false;
+    for (const [row, height] of Object.entries(derived)) {
+      if (
+        heights?.[row] === height ||
+        (heights?.[row] === undefined && height === (sheet.defaultRowHeight ?? 18))
+      )
+        continue;
+      heights[row] = height;
+      rowChanged = true;
+    }
+    if (!rowChanged) return sheet;
+    changed = true;
+    return {
+      ...sheet,
+      rowHeights: heights,
+      rowHeightModes:
+        sheet.rowHeightModes ??
+        Object.fromEntries(
+          Object.keys(sheet.rowHeights ?? {}).map((row) => [row, 'fixed' as const])
+        ),
+    };
+  });
+  return changed ? { ...document, sheets } : document;
+}
+
 export async function exportStudioExcel(
   document: StudioExcelDocument,
   source?: Blob
 ): Promise<Blob> {
   validateDocument(document);
   const loaded = source ? await loadWorkbook(source) : undefined;
+  let original: StudioExcelDocument | undefined;
   // Validate native metadata before a draft can replace it, using the already loaded workbook.
   if (loaded) {
-    importedDocument(loaded.workbook, loaded.metadata, document.name);
+    original = importedDocument(loaded.workbook, loaded.metadata, document.name);
     document = hydrateHyperlinksFromMetadata(document, loaded.metadata);
+    document = hydrateRowLayoutFromMetadata(
+      hydrateLegacyTextFormats(document, loaded.metadata),
+      loaded.metadata
+    );
+    document = hydrateDefaultFontFromMetadata(document, loaded.metadata);
     validateDocument(document);
   }
+  if (globalThis.document?.fonts) await globalThis.document.fonts.ready;
+  document = exportAutoRowHeights(document, original);
   const workbook = loaded?.workbook ?? new ExcelJS.Workbook();
   if (!source) workbook.creator = 'ZUVI Office Studio';
   const matched = new Map<string, ExcelJS.Worksheet>();
@@ -2040,6 +2615,9 @@ export async function exportStudioExcel(
       throw new Error('草稿引用的原工作表不存在，请重新打开原文件。');
     if (existing) matched.set(sheet.id, existing);
   }
+  const textSources = new Map(
+    [...matched].map(([id, sheet]) => [id, loaded!.metadata.get(sheet.id)!])
+  );
   // Temporary names allow host-controlled renames without intermediate collisions.
   for (const [id, sheet] of matched)
     sheet.name = `_zuvi_${id.replace(/[^\da-z]/gi, '').slice(-20)}`;
@@ -2262,10 +2840,318 @@ export async function exportStudioExcel(
   const bytes = await workbook.xlsx.writeBuffer();
   const zip = await JSZip.loadAsync(new Uint8Array(bytes));
   await writeAdvancedParts(zip, workbook, document, calculated, pageBreaks);
+  await writeNativeTextParts(
+    zip,
+    document,
+    textSources,
+    loaded?.metadata.values().next().value?.fontDefaults
+  );
   return new Blob(
     [new Uint8Array(await zip.generateAsync({ type: 'uint8array', compression: 'DEFLATE' }))],
     { type: XLSX_MIME }
   );
+}
+
+/** ExcelJS omits explicit false/zero alignment attrs and derives customHeight from ht alone. */
+async function writeNativeTextParts(
+  zip: JSZip,
+  document: StudioExcelDocument,
+  sources: Map<string, SheetMetadata>,
+  fontSource?: NativeWorkbookFontDefaults
+) {
+  const styles = xmlDocument(await zip.file('xl/styles.xml')!.async('string'));
+  const formats = first(styles, S, 'cellXfs');
+  if (!formats) throw new Error('无法保存工作簿单元格样式。');
+  const cached = new Map<string, number>();
+  const font0Cached = new Map<number, number>();
+  const sourceDefaultFont = fontSource?.value;
+  const currentDefaultFont = document.defaultFont;
+  const unchangedFont0 =
+    sourceDefaultFont &&
+    currentDefaultFont &&
+    (['family', 'sizePt', 'bold', 'italic'] as const).every(
+      (key) => sourceDefaultFont[key] === currentDefaultFont[key]
+    );
+  const patchFont0 = (target: Element, attribute: 's' | 'style') => {
+    if (!unchangedFont0) return;
+    const index = Number(target.getAttribute(attribute) ?? 0);
+    const current = formats.children[index];
+    if (!current || Number(current.getAttribute('fontId') ?? 0) === 0) return;
+    let next = font0Cached.get(index);
+    if (next === undefined) {
+      const cloned = current.cloneNode(true) as Element;
+      cloned.setAttribute('fontId', '0');
+      cloned.setAttribute('applyFont', '1');
+      next = formats.children.length;
+      formats.appendChild(cloned);
+      font0Cached.set(index, next);
+    }
+    target.setAttribute(attribute, String(next));
+  };
+  const sameFont0 = (cell: StudioCell | undefined) => {
+    if (!fontSource?.rawFont || !fontSource.value) return false;
+    if (!cell) return true;
+    const expected: Partial<StudioCell> = {
+      fontFamily: fontSource.value.family,
+      fontSize: fontSource.rawFont.size,
+      bold: fontSource.rawFont.bold ?? false,
+      italic: fontSource.rawFont.italic ?? false,
+      underline: !!fontSource.rawFont.underline,
+      color: rgb(fontSource.rawFont.color),
+    };
+    return (['fontFamily', 'fontSize', 'bold', 'italic', 'underline', 'color'] as const).every(
+      (key) => cell[key] === undefined || cell[key] === expected[key]
+    );
+  };
+  const patchAlignment = (
+    target: Element,
+    styleAttribute: 's' | 'style',
+    patch: Record<string, string | null>
+  ) => {
+    if (!Object.keys(patch).length) return;
+    const index = Number(target.getAttribute(styleAttribute) ?? 0);
+    const current = formats.children[index];
+    if (!current) throw new Error('无法保存工作簿单元格对齐样式。');
+    const original = first(current, S, 'alignment');
+    const desired = { ...xmlAttributes(original) };
+    for (const [name, value] of Object.entries(patch)) {
+      if (value === null) delete desired[name];
+      else desired[name] = value;
+    }
+    const signature = JSON.stringify(
+      Object.entries(desired).sort(([a], [b]) => a.localeCompare(b))
+    );
+    if (
+      original &&
+      signature ===
+        JSON.stringify(
+          Object.entries(xmlAttributes(original)).sort(([a], [b]) => a.localeCompare(b))
+        ) &&
+      current.getAttribute('applyAlignment') === '1'
+    )
+      return;
+    const key = `${index}:${signature}`;
+    let next = cached.get(key);
+    if (next === undefined) {
+      const format = current.cloneNode(true) as Element;
+      let alignment = first(format, S, 'alignment');
+      if (!alignment) {
+        alignment = styles.createElementNS(S, 'alignment');
+        format.insertBefore(
+          alignment,
+          first(format, S, 'protection') ?? first(format, S, 'extLst') ?? null
+        );
+      }
+      for (const name of Object.keys(xmlAttributes(alignment))) alignment.removeAttribute(name);
+      for (const [name, value] of Object.entries(desired)) alignment.setAttribute(name, value);
+      // An empty, applied alignment clears inherited alignment without changing fonts or borders.
+      format.setAttribute('applyAlignment', '1');
+      next = formats.children.length;
+      formats.appendChild(format);
+      cached.set(key, next);
+    }
+    target.setAttribute(styleAttribute, String(next));
+  };
+  const workbook = xmlDocument(await zip.file('xl/workbook.xml')!.async('string'));
+  const rels = await relationships(zip, 'xl/workbook.xml');
+  for (const entry of xmlElements(workbook, S, 'sheet')) {
+    const sheet = document.sheets.find((sheet) => sheet.name === entry.getAttribute('name'));
+    const part = rels.get(entry.getAttributeNS(R, 'id') ?? '');
+    if (!sheet || !part || !zip.file(part)) throw new Error('无法保存工作表文字布局。');
+    const xml = xmlDocument(await zip.file(part)!.async('string'));
+    const native = sources.get(sheet.id);
+    const edits = sheet.structureEdits ?? [];
+    const rawCells = new Map<string, Record<string, string>>();
+    const explicitCells = new Set<string>();
+    const font0Cells = new Set<string>();
+    if (native) {
+      for (const address of native.fonts.cells.keys()) {
+        const point = studioParseAddress(address);
+        if (!point) continue;
+        const row = transformSourceIndex(point.row, 'row', edits);
+        const col = transformSourceIndex(point.col, 'column', edits);
+        if (
+          row === undefined ||
+          col === undefined ||
+          row > sheet.rowCount ||
+          col > sheet.columnCount
+        )
+          continue;
+        const original = nativeAlignmentForAddress(native, address);
+        const target = `${studioColumnLabel(col)}${row}`;
+        if (original) rawCells.set(target, original.raw);
+        if (native.fonts.cells.get(address) !== undefined) explicitCells.add(target);
+        const style =
+          native.fonts.cells.get(address) ??
+          native.fonts.rows.get(point.row) ??
+          native.fonts.columns.get(point.col) ??
+          0;
+        if (native.fonts.fontIds[style] === 0) font0Cells.add(target);
+      }
+      // Source-only legal alignment attrs also survive in inherited row/column formats.
+      const inheritedRows = new Map<number, Record<string, string>>();
+      const font0Rows = new Set<number>();
+      for (const [old, style] of native.fonts.rows) {
+        const index = transformSourceIndex(old, 'row', edits);
+        const alignment = native.textAlignments[style];
+        if (index !== undefined && alignment) inheritedRows.set(index, alignment.raw);
+        if (index !== undefined && native.fonts.fontIds[style] === 0) font0Rows.add(index);
+      }
+      for (const row of xmlElements(xml, S, 'row')) {
+        const raw = inheritedRows.get(Number(row.getAttribute('r')));
+        if (raw) {
+          if (!row.hasAttribute('s')) row.setAttribute('s', '0');
+          row.setAttribute('customFormat', '1');
+          patchAlignment(row, 's', raw);
+          if (font0Rows.has(Number(row.getAttribute('r')))) patchFont0(row, 's');
+        }
+      }
+      const columns = new Map<number, Record<string, string>>();
+      const font0Columns = new Set<number>();
+      for (const [old, style] of native.fonts.columns) {
+        const index = transformSourceIndex(old, 'column', edits);
+        const alignment = native.textAlignments[style];
+        if (index !== undefined && alignment) columns.set(index, alignment.raw);
+        if (index !== undefined && native.fonts.fontIds[style] === 0) font0Columns.add(index);
+      }
+      for (const column of xmlElements(xml, S, 'col')) {
+        let start = Number(column.getAttribute('min'));
+        const end = Number(column.getAttribute('max'));
+        while (start <= end) {
+          const raw = columns.get(start);
+          const signature = JSON.stringify([raw ?? null, font0Columns.has(start)]);
+          let last = start;
+          while (
+            last < end &&
+            JSON.stringify([columns.get(last + 1) ?? null, font0Columns.has(last + 1)]) ===
+              signature
+          )
+            last++;
+          const run = column.cloneNode(true) as Element;
+          run.setAttribute('min', String(start));
+          run.setAttribute('max', String(last));
+          if (raw) {
+            if (!run.hasAttribute('style')) run.setAttribute('style', '0');
+            patchAlignment(run, 'style', raw);
+            if (font0Columns.has(start)) patchFont0(run, 'style');
+          }
+          column.parentNode!.insertBefore(run, column);
+          start = last + 1;
+        }
+        column.remove();
+      }
+    }
+    for (const cell of xmlElements(xml, S, 'c')) {
+      const address = cell.getAttribute('r') ?? '';
+      const model = sheet.cells[address];
+      // ExcelJS omits style index zero; its presence releases a row/column format.
+      if (explicitCells.has(address) && !cell.hasAttribute('s')) cell.setAttribute('s', '0');
+      patchAlignment(cell, 's', {
+        ...rawCells.get(address),
+        ...(model ? sheetTextFormatToNativePatch(model) : {}),
+      });
+      if (font0Cells.has(address) && sameFont0(model)) patchFont0(cell, 's');
+    }
+    const data = first(xml, S, 'sheetData');
+    if (!data) throw new Error('无法保存工作表行高。');
+    const rows = new Map(
+      xmlElements(data, S, 'row').map((row) => [Number(row.getAttribute('r')), row])
+    );
+    let added = false;
+    for (const key of Object.keys(sheet.rowHeightModes ?? {})) {
+      const index = Number(key);
+      if (rows.has(index)) continue;
+      const row = xml.createElementNS(S, 'row');
+      row.setAttribute('r', key);
+      const height = sheet.rowHeights?.[key];
+      if (height !== undefined) row.setAttribute('ht', String(height));
+      rows.set(index, row);
+      added = true;
+    }
+    if (added) {
+      const ordered = xml.createDocumentFragment();
+      for (const [, row] of [...rows].sort(([a], [b]) => a - b)) ordered.appendChild(row);
+      data.replaceChildren(ordered);
+    }
+    for (const [index, row] of rows)
+      row.setAttribute('customHeight', sheetRowHeightMode(sheet, index) === 'fixed' ? '1' : '0');
+    zip.file(part, serializeXml(xml));
+  }
+  formats.setAttribute('count', String(formats.children.length));
+  await writeNativeDefaultFont(zip, styles, document.defaultFont, fontSource);
+  zip.file('xl/styles.xml', serializeXml(styles));
+}
+
+async function writeNativeDefaultFont(
+  zip: JSZip,
+  styles: XMLDocument,
+  value: StudioExcelDocument['defaultFont'],
+  source?: NativeWorkbookFontDefaults
+) {
+  const fonts = first(styles, S, 'fonts');
+  if (!fonts?.children[0]) throw new Error('无法保存工作簿默认字体。');
+  let font0 = fonts.children[0];
+  if (source?.rawFontXml) {
+    const original = xmlDocument(source.rawFontXml).documentElement;
+    const preserved = styles.importNode(original, true);
+    fonts.replaceChild(preserved, font0);
+    font0 = preserved;
+  }
+  const node = (name: string) => {
+    const existing = first(font0, S, name);
+    if (existing) return existing;
+    const created = styles.createElementNS(S, name);
+    font0.appendChild(created);
+    return created;
+  };
+  if (value) {
+    if (!source?.value || value.family !== source.value.family) {
+      node('name').setAttribute('val', value.family);
+      // Standalone files use the actual family; a stock theme must not replace it.
+      first(font0, S, 'scheme')?.remove();
+    }
+    if (!source?.value || value.sizePt !== source.value.sizePt)
+      node('sz').setAttribute('val', String(value.sizePt));
+    for (const [tag, key] of [
+      ['b', 'bold'],
+      ['i', 'italic'],
+    ] as const) {
+      if (source?.value && value[key] === source.value[key]) continue;
+      if (value[key]) node(tag).setAttribute('val', '1');
+      else first(font0, S, tag)?.remove();
+    }
+  }
+  fonts.setAttribute('count', String(fonts.children.length));
+  if (source?.theme) {
+    // ExcelJS hardcodes theme/theme1.xml when rewriting workbook relationships.
+    const part = 'xl/_rels/workbook.xml.rels';
+    const rels = xmlDocument(await zip.file(part)!.async('string'));
+    const theme = xmlElements(rels, PR, 'Relationship').find(
+      (entry) => entry.getAttribute('Type') === `${R}/theme`
+    );
+    if (!theme) throw new Error('无法保存工作簿主题字体关系。');
+    theme.setAttribute('Target', source.theme.target);
+    zip.file(part, serializeXml(rels));
+    zip.file(source.theme.part, source.theme.xml);
+    const contentPart = '[Content_Types].xml';
+    const content = xmlDocument(await zip.file(contentPart)!.async('string'));
+    const namespace = 'http://schemas.openxmlformats.org/package/2006/content-types';
+    const name = `/${source.theme.part}`;
+    if (
+      !xmlElements(content, namespace, 'Override').some(
+        (entry) => entry.getAttribute('PartName') === name
+      )
+    ) {
+      const override = content.createElementNS(namespace, 'Override');
+      override.setAttribute('PartName', name);
+      override.setAttribute(
+        'ContentType',
+        'application/vnd.openxmlformats-officedocument.theme+xml'
+      );
+      content.documentElement.appendChild(override);
+      zip.file(contentPart, serializeXml(content));
+    }
+  }
 }
 
 type SheetColorFilter = NonNullable<StudioSheet['filter']>['columns'][string];

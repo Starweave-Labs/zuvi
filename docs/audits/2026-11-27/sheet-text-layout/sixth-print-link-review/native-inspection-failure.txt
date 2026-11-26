@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/inspect-native-evidence.py", line 57, in <module>
+    assert {item["uri"] for item in links} >= {"https://example.com/native-text", "https://example.com/hidden-master"}
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
