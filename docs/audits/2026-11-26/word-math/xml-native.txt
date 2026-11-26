@@ -296,10 +296,10 @@ not ok 57 - equation Unicode and carriage returns survive native XML whitespace 
   name: 'AssertionError'
   expected: |-
     😀
-    	𝑥
+        𝑥
   actual: |-
     😀
-    	𝑥
+        𝑥
   operator: 'strictEqual'
   stack: |-
     TestContext.<anonymous> (file:///Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/tests/office-studio-word.test.mjs:1740:12)
