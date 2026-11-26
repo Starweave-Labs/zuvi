@@ -20,7 +20,7 @@ Running 13 tests using 1 worker
   ✓  13 [chromium] › e2e/office-studio-word-cell-regions.spec.ts:306:1 › blocks a real Word cell draft on readonly changes and keeps light, dark and 320px dialogs interactive without writes (5.0s)
 
 
-  1) [chromium] › e2e/office-studio-word-cell-mapping.spec.ts:338:1 › maps real merged multi-cell edits through mixed row gaps, one history action, two native reopens and print 
+  1) [chromium] › e2e/office-studio-word-cell-mapping.spec.ts:338:1 › maps real merged multi-cell edits through mixed row gaps, one history action, two native reopens and print
 
     Error: expect(received).toEqual(expected) // deep equality
 
@@ -147,7 +147,7 @@ Running 13 tests using 1 worker
 
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
-  2) [chromium] › e2e/office-studio-word-cell-mapping.spec.ts:431:1 › restores null margins through two native reopens, then clears a default side and all spacing while retaining explicit zero 
+  2) [chromium] › e2e/office-studio-word-cell-mapping.spec.ts:431:1 › restores null margins through two native reopens, then clears a default side and all spacing while retaining explicit zero
 
     Error: expect(received).toEqual(expected) // deep equality
 
@@ -233,6 +233,6 @@ Running 13 tests using 1 worker
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
   2 failed
-    [chromium] › e2e/office-studio-word-cell-mapping.spec.ts:338:1 › maps real merged multi-cell edits through mixed row gaps, one history action, two native reopens and print 
-    [chromium] › e2e/office-studio-word-cell-mapping.spec.ts:431:1 › restores null margins through two native reopens, then clears a default side and all spacing while retaining explicit zero 
+    [chromium] › e2e/office-studio-word-cell-mapping.spec.ts:338:1 › maps real merged multi-cell edits through mixed row gaps, one history action, two native reopens and print
+    [chromium] › e2e/office-studio-word-cell-mapping.spec.ts:431:1 › restores null margins through two native reopens, then clears a default side and all spacing while retaining explicit zero
   11 passed (1.0m)

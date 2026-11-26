@@ -310,4 +310,3 @@ stdout | src/components/VirtualTable/VirtualTable.test.tsx > VirtualTable > 1000
       Tests  2710 passed (2710)
    Start at  22:22:47
    Duration  103.08s (transform 3.40s, setup 12.47s, collect 14.85s, tests 121.89s, environment 36.31s, prepare 5.63s)
-

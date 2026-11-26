@@ -9,7 +9,7 @@ Running 2 tests using 1 worker
   ✘  2 [chromium] › e2e/office-studio-word-cell-properties.spec.ts:74:1 › moves actual text through all nine fixed-cell alignments and restores the transaction (30.5s)
 
 
-  1) [chromium] › e2e/office-studio-word-cell-properties.spec.ts:74:1 › moves actual text through all nine fixed-cell alignments and restores the transaction 
+  1) [chromium] › e2e/office-studio-word-cell-properties.spec.ts:74:1 › moves actual text through all nine fixed-cell alignments and restores the transaction
 
     Test timeout of 30000ms exceeded.
 
@@ -38,5 +38,5 @@ Running 2 tests using 1 worker
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
   1 failed
-    [chromium] › e2e/office-studio-word-cell-properties.spec.ts:74:1 › moves actual text through all nine fixed-cell alignments and restores the transaction 
+    [chromium] › e2e/office-studio-word-cell-properties.spec.ts:74:1 › moves actual text through all nine fixed-cell alignments and restores the transaction
   1 passed (39.3s)

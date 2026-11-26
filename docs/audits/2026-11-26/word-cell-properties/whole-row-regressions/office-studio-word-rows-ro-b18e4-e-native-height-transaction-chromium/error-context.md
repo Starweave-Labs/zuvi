@@ -57,7 +57,7 @@ Call log:
   1094 |     )
   1095 |   );
   1096 | });
-  1097 | 
+  1097 |
   1098 | test('row boundary drag previews without document edits and commits one native height transaction', async ({
   1099 |   page,
   1100 | }) => {
@@ -210,7 +210,7 @@ Call log:
   1246 |   await expect(page.locator('[data-word-row-resize-guide]')).toHaveCount(0);
   1247 |   await expect(row).toHaveAttribute('data-word-row-height', '60');
   1248 | });
-  1249 | 
+  1249 |
   1250 | test('merged row resizing updates combined cell height and retains native vertical merge', async ({
   1251 |   page,
   1252 | }) => {

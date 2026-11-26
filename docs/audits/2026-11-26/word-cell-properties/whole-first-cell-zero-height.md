@@ -776,9 +776,9 @@ Received:    0
   68  |   await page.screenshot({ path: path.join(audit, 'cell-fixed-dark.png'), fullPage: true });
   69  |   await page.setViewportSize({ width: 320, height: 720 });
   70  |   await page.screenshot({ path: path.join(audit, 'cell-fixed-320.png'), fullPage: true });
-  71  | 
+  71  |
   72  | });
-  73  | 
+  73  |
   74  | test('moves actual text through all nine fixed-cell alignments and restores the transaction', async ({ page }) => {
   75  |   const audit = path.resolve('docs/audits/2026-11-26/word-cell-properties');
   76  |   const zip = await JSZip.loadAsync(await readFile(path.join(audit, 'cell-source.docx')));
@@ -824,5 +824,5 @@ Received:    0
   116 |   await writeFile(path.join(audit, 'cell-nine-alignments.json'), JSON.stringify(samples, null, 2) + '\n');
   117 |   await page.screenshot({ path: path.join(audit, 'cell-nine-alignments-light.png'), fullPage: true });
   118 | });
-  119 | 
+  119 |
 ```

@@ -1,0 +1,333 @@
+{
+  "schemaVersion": 1,
+  "status": "evidence-text-normalized-with-originals-retained-in-git",
+  "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+  "operations": [
+    "remove line-final ASCII spaces and tabs",
+    "remove blank lines at EOF, retaining one terminal LF"
+  ],
+  "scope": "Existing c192b33 whitespace findings in docs/audits/2026-11-26/word-cell-properties only",
+  "binaryEvidenceModified": false,
+  "sourceTestResultsModified": false,
+  "files": [
+    {
+      "file": "docs/audits/2026-11-26/word-cell-properties/all-ui.txt",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+      "originalGitObject": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f:docs/audits/2026-11-26/word-cell-properties/all-ui.txt",
+      "originalBytes": 38917,
+      "originalSha256": "99c99962686cc73b1852b93d707da91b31574a10e0849775f9e206fcf2820751",
+      "bytes": 38916,
+      "sha256": "8c8c0480708f4f6e82910d12aa8ac19f3f25e00570d6adb5bdf487127c609d8e",
+      "lineFinalWhitespaceRemoved": 0,
+      "eofBlankLinesRemoved": 1
+    },
+    {
+      "file": "docs/audits/2026-11-26/word-cell-properties/cell-dialog-and-word-ui-current.txt",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+      "originalGitObject": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f:docs/audits/2026-11-26/word-cell-properties/cell-dialog-and-word-ui-current.txt",
+      "originalBytes": 3016,
+      "originalSha256": "c6cb8e6b068b81f9e576b795d13e25950a70205fe42f8c2c45a07ca2db4e0121",
+      "bytes": 3015,
+      "sha256": "54cc74552de0ceee12722b51e3777f7dc7a817c543011f23c452dbfb9f99e870",
+      "lineFinalWhitespaceRemoved": 0,
+      "eofBlankLinesRemoved": 1
+    },
+    {
+      "file": "docs/audits/2026-11-26/word-cell-properties/checks/build.txt",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+      "originalGitObject": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f:docs/audits/2026-11-26/word-cell-properties/checks/build.txt",
+      "originalBytes": 46161,
+      "originalSha256": "626d13378923bbda1778f4e5ff004cf453351afe83e52c5d70ef794ea10f10cd",
+      "bytes": 46160,
+      "sha256": "b814debbd9b4e38bf8faec3a7df9ffc14e218b656dba0d6f74cc26c3c11f1c20",
+      "lineFinalWhitespaceRemoved": 1,
+      "eofBlankLinesRemoved": 0
+    },
+    {
+      "file": "docs/audits/2026-11-26/word-cell-properties/checks/lint.txt",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+      "originalGitObject": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f:docs/audits/2026-11-26/word-cell-properties/checks/lint.txt",
+      "originalBytes": 120,
+      "originalSha256": "779d6485622c43ec841eade19561bcc5489be9ff1c7a61d3cfc3647717f79aac",
+      "bytes": 119,
+      "sha256": "dc4e2cbfc92140685312faddd09f900724f3469dd40ec75d8ffdde977a007238",
+      "lineFinalWhitespaceRemoved": 0,
+      "eofBlankLinesRemoved": 1
+    },
+    {
+      "file": "docs/audits/2026-11-26/word-cell-properties/checks/ui.txt",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+      "originalGitObject": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f:docs/audits/2026-11-26/word-cell-properties/checks/ui.txt",
+      "originalBytes": 27869,
+      "originalSha256": "e16eefa37c5ef27bb56374f83d2bf6fe5a1c889d7ed76617b9345393b6ed390a",
+      "bytes": 27868,
+      "sha256": "ff9559f798bf4834127d9ed6b837a31f240c79cd997d69b06ae3406dea3c5e09",
+      "lineFinalWhitespaceRemoved": 0,
+      "eofBlankLinesRemoved": 1
+    },
+    {
+      "file": "docs/audits/2026-11-26/word-cell-properties/first-expanded-e2e-failures/office-studio-pdf-pages-mo-1296e-mbnail-after-the-final-page-chromium.md",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+      "originalGitObject": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f:docs/audits/2026-11-26/word-cell-properties/first-expanded-e2e-failures/office-studio-pdf-pages-mo-1296e-mbnail-after-the-final-page-chromium.md",
+      "originalBytes": 40604,
+      "originalSha256": "7ea9dfb5953a6aa16eeb4922853b5e80547c03c1a5980495f0eef3c10227a28d",
+      "bytes": 40604,
+      "sha256": "1d8dc489dc017faf39e442931a09e5d1863b374c4441d0d3020568c1fed1d515",
+      "lineFinalWhitespaceRemoved": 1,
+      "eofBlankLinesRemoved": -1
+    },
+    {
+      "file": "docs/audits/2026-11-26/word-cell-properties/first-expanded-e2e-failures/office-studio-word-cell-pr-4e55a-ough-printing-and-reopening-chromium.md",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+      "originalGitObject": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f:docs/audits/2026-11-26/word-cell-properties/first-expanded-e2e-failures/office-studio-word-cell-pr-4e55a-ough-printing-and-reopening-chromium.md",
+      "originalBytes": 63203,
+      "originalSha256": "fb7e39a37ccde7166134ce44646b07b8c5038984ff919d97fcae1a2261553a31",
+      "bytes": 63200,
+      "sha256": "8c02459c4863d3c311ee3bc8c74b590cc76f95a8b290b53256888d2deafb8c8c",
+      "lineFinalWhitespaceRemoved": 4,
+      "eofBlankLinesRemoved": -1
+    },
+    {
+      "file": "docs/audits/2026-11-26/word-cell-properties/first-expanded-e2e-failures/office-studio-word-cell-pr-8c816-t-on-reopening-and-printing-chromium.md",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+      "originalGitObject": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f:docs/audits/2026-11-26/word-cell-properties/first-expanded-e2e-failures/office-studio-word-cell-pr-8c816-t-on-reopening-and-printing-chromium.md",
+      "originalBytes": 62176,
+      "originalSha256": "bbb08f684a8235ecf25f531a0d00f24dcdd4ba8fbef1a39d2ef87323bcae9f9e",
+      "bytes": 62173,
+      "sha256": "b2dc1b0d8a29ac6d0ffef86fe4871fb571882fd286d735814f262cb127e9fb44",
+      "lineFinalWhitespaceRemoved": 4,
+      "eofBlankLinesRemoved": -1
+    },
+    {
+      "file": "docs/audits/2026-11-26/word-cell-properties/first-expanded-e2e-failures/office-studio-word-cell-pr-ac84a-n-the-native-print-document-chromium.md",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+      "originalGitObject": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f:docs/audits/2026-11-26/word-cell-properties/first-expanded-e2e-failures/office-studio-word-cell-pr-ac84a-n-the-native-print-document-chromium.md",
+      "originalBytes": 49924,
+      "originalSha256": "f3b84df00080a457824aec8a0bad99ecb4ff82c79aaa12ac2d39eded276fddc5",
+      "bytes": 49922,
+      "sha256": "e44d60841fcfab36c9aa2dea4fce6b61c9a1584115f3b7273cb040560ca777cf",
+      "lineFinalWhitespaceRemoved": 3,
+      "eofBlankLinesRemoved": -1
+    },
+    {
+      "file": "docs/audits/2026-11-26/word-cell-properties/first-expanded-e2e-failures/office-studio-word-cell-pr-e83f8-nd-saves-one-history-action-chromium.md",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+      "originalGitObject": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f:docs/audits/2026-11-26/word-cell-properties/first-expanded-e2e-failures/office-studio-word-cell-pr-e83f8-nd-saves-one-history-action-chromium.md",
+      "originalBytes": 60249,
+      "originalSha256": "b3db3e94218b02b08cbe3f73c0af46c4f3d156b266ab775c0f57c0a00de063d5",
+      "bytes": 60246,
+      "sha256": "ecebf9f7d025c39f99d4270fd755429f8178388f9a26178bb3921c4d790a005a",
+      "lineFinalWhitespaceRemoved": 4,
+      "eofBlankLinesRemoved": -1
+    },
+    {
+      "file": "docs/audits/2026-11-26/word-cell-properties/first-expanded-e2e-failures/run.txt",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+      "originalGitObject": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f:docs/audits/2026-11-26/word-cell-properties/first-expanded-e2e-failures/run.txt",
+      "originalBytes": 15704,
+      "originalSha256": "82a974a17a79ae2722f21764237800899b9fea4f768e07e3f446715b3331189a",
+      "bytes": 15692,
+      "sha256": "af688754b3612f8be94f94cf95ad57d836a82a7a40c29f2df9c7606df9a4f61c",
+      "lineFinalWhitespaceRemoved": 12,
+      "eofBlankLinesRemoved": 0
+    },
+    {
+      "file": "docs/audits/2026-11-26/word-cell-properties/fixed-first-e2e-failure.txt",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+      "originalGitObject": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f:docs/audits/2026-11-26/word-cell-properties/fixed-first-e2e-failure.txt",
+      "originalBytes": 2712,
+      "originalSha256": "ea01c8a76f81d5d9703c6ef14800d5aa3bc3c2b38a6b901a8147eb557d49633d",
+      "bytes": 2710,
+      "sha256": "4367c99d03535f5ab4483b44e2fbc09ebe1e705a137d5e90e3ee01cc2a6a36d3",
+      "lineFinalWhitespaceRemoved": 2,
+      "eofBlankLinesRemoved": 0
+    },
+    {
+      "file": "docs/audits/2026-11-26/word-cell-properties/mapping/first-browser-default-alignment/inheritance/error-context.md",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+      "originalGitObject": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f:docs/audits/2026-11-26/word-cell-properties/mapping/first-browser-default-alignment/inheritance/error-context.md",
+      "originalBytes": 53097,
+      "originalSha256": "2b260ca3aa881407fd20656903a300b00b3ad2254c42a731aa42c89ce273c54d",
+      "bytes": 53095,
+      "sha256": "95458b3c96839849ac2a9ecf8c2484f6f09c8830e12469fa70abb81cc5865708",
+      "lineFinalWhitespaceRemoved": 3,
+      "eofBlankLinesRemoved": -1
+    },
+    {
+      "file": "docs/audits/2026-11-26/word-cell-properties/mapping/first-browser-default-alignment/merged/error-context.md",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+      "originalGitObject": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f:docs/audits/2026-11-26/word-cell-properties/mapping/first-browser-default-alignment/merged/error-context.md",
+      "originalBytes": 54907,
+      "originalSha256": "4530fae5a7841bf142ff9add1279affa3b162fd8aabbe2e0fb31b9da2ed3b3a6",
+      "bytes": 54905,
+      "sha256": "d7431aeac1038392d2463c9545a9e5a97d0cd2efb21a6d6a2ab8f5eb9966f389",
+      "lineFinalWhitespaceRemoved": 3,
+      "eofBlankLinesRemoved": -1
+    },
+    {
+      "file": "docs/audits/2026-11-26/word-cell-properties/mapping/first-browser-default-alignment/run.txt",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+      "originalGitObject": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f:docs/audits/2026-11-26/word-cell-properties/mapping/first-browser-default-alignment/run.txt",
+      "originalBytes": 10874,
+      "originalSha256": "17f9bfc41f0e810c03bdc6f5072d1cde3adc80bd1066771ac6a19e8705395456",
+      "bytes": 10870,
+      "sha256": "c37fc1b6bc39006a1aa44c670980e2cf898bc3a5a2ca7d9d7f8278a9384f4ab1",
+      "lineFinalWhitespaceRemoved": 4,
+      "eofBlankLinesRemoved": 0
+    },
+    {
+      "file": "docs/audits/2026-11-26/word-cell-properties/native-height-budget-ui.txt",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+      "originalGitObject": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f:docs/audits/2026-11-26/word-cell-properties/native-height-budget-ui.txt",
+      "originalBytes": 548,
+      "originalSha256": "d0be665f838afe9731ef493f0bc6bd926389590d1d08e149348489341405532d",
+      "bytes": 547,
+      "sha256": "f2ea25c94970e14647cae4e6633b5968ebbfb3e2ae1b634d4ead0a93c46da3ad",
+      "lineFinalWhitespaceRemoved": 0,
+      "eofBlankLinesRemoved": 1
+    },
+    {
+      "file": "docs/audits/2026-11-26/word-cell-properties/nine-alignments-first-failure.txt",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+      "originalGitObject": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f:docs/audits/2026-11-26/word-cell-properties/nine-alignments-first-failure.txt",
+      "originalBytes": 2831,
+      "originalSha256": "374113030766e03df06b9cdcb213ac757ddc976d69c46baecbbe3d423400a4e2",
+      "bytes": 2829,
+      "sha256": "318851774273663fccddd6f65d982c4fdce1917dc2b43ae43093ae7728fca214",
+      "lineFinalWhitespaceRemoved": 2,
+      "eofBlankLinesRemoved": 0
+    },
+    {
+      "file": "docs/audits/2026-11-26/word-cell-properties/second-browser-css-serialization/error-context.md",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+      "originalGitObject": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f:docs/audits/2026-11-26/word-cell-properties/second-browser-css-serialization/error-context.md",
+      "originalBytes": 12144,
+      "originalSha256": "a9e5d7eb37ef40413fd73d127cebc297f686ae06efd08ef096f2b902f21ce171",
+      "bytes": 12143,
+      "sha256": "e9c2c48693628be8e5ca29f14310cab94cf00af88673158712beaaddf1d18b9d",
+      "lineFinalWhitespaceRemoved": 2,
+      "eofBlankLinesRemoved": -1
+    },
+    {
+      "file": "docs/audits/2026-11-26/word-cell-properties/second-browser-css-serialization/run.txt",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+      "originalGitObject": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f:docs/audits/2026-11-26/word-cell-properties/second-browser-css-serialization/run.txt",
+      "originalBytes": 5176,
+      "originalSha256": "b13d5a6a77c565f2130658f28d53085aa256f3b8aa5811afd3322ee3ce881f7e",
+      "bytes": 5174,
+      "sha256": "efa9a2aa21422dfe532ab702a68a0367ed66b059bded6b7b8fd7e73953d402f0",
+      "lineFinalWhitespaceRemoved": 2,
+      "eofBlankLinesRemoved": 0
+    },
+    {
+      "file": "docs/audits/2026-11-26/word-cell-properties/slice-ui.txt",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+      "originalGitObject": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f:docs/audits/2026-11-26/word-cell-properties/slice-ui.txt",
+      "originalBytes": 550,
+      "originalSha256": "e08067211f5ffe59e045572c5c852cf5e1376824cb5acc37dffcf13090c7d7b6",
+      "bytes": 549,
+      "sha256": "a215c5c00c5082eb0e6e0790072e9deba83d213dea4eeacc2c5732238f3850f4",
+      "lineFinalWhitespaceRemoved": 0,
+      "eofBlankLinesRemoved": 1
+    },
+    {
+      "file": "docs/audits/2026-11-26/word-cell-properties/whole-first-cell-zero-height.md",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+      "originalGitObject": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f:docs/audits/2026-11-26/word-cell-properties/whole-first-cell-zero-height.md",
+      "originalBytes": 48223,
+      "originalSha256": "ffa56c850f11ee20e491e13da4831c1ed97ae33901e76278d4438aebb954df51",
+      "bytes": 48221,
+      "sha256": "1bc9476038d86785723bdd8ab276cfea2e544d3ce685b1828d3e283957eeb303",
+      "lineFinalWhitespaceRemoved": 3,
+      "eofBlankLinesRemoved": -1
+    },
+    {
+      "file": "docs/audits/2026-11-26/word-cell-properties/whole-first-e2e.txt",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+      "originalGitObject": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f:docs/audits/2026-11-26/word-cell-properties/whole-first-e2e.txt",
+      "originalBytes": 44864,
+      "originalSha256": "fada8c9bcc253418d84460dea2cb60bc5e462cfaa0a4280fd1f8c4ea08a6fd1f",
+      "bytes": 44862,
+      "sha256": "8211e14d89ba6ad92d15ed02ed38bc5a6694069d1fb04977906e8ea22c832e8f",
+      "lineFinalWhitespaceRemoved": 2,
+      "eofBlankLinesRemoved": 0
+    },
+    {
+      "file": "docs/audits/2026-11-26/word-cell-properties/whole-row-regressions/office-studio-word-rows-me-54e78-tains-native-vertical-merge-chromium/error-context.md",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+      "originalGitObject": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f:docs/audits/2026-11-26/word-cell-properties/whole-row-regressions/office-studio-word-rows-me-54e78-tains-native-vertical-merge-chromium/error-context.md",
+      "originalBytes": 11481,
+      "originalSha256": "dbff6dcd6f4feec9b1fce21414e19f1624eba94f64c9f881b50bb98f51dcde5b",
+      "bytes": 11480,
+      "sha256": "f209fb3050d1450d0f31ed83bb4377c2e961441cba19b248a32d746d60f8dfda",
+      "lineFinalWhitespaceRemoved": 2,
+      "eofBlankLinesRemoved": -1
+    },
+    {
+      "file": "docs/audits/2026-11-26/word-cell-properties/whole-row-regressions/office-studio-word-rows-mu-a76c6--gaps-through-native-reopen-chromium/error-context.md",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+      "originalGitObject": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f:docs/audits/2026-11-26/word-cell-properties/whole-row-regressions/office-studio-word-rows-mu-a76c6--gaps-through-native-reopen-chromium/error-context.md",
+      "originalBytes": 12653,
+      "originalSha256": "1c72b02d5082f4ae3a12d72edbcbe25053ac8b7c25af2bf0ab2084e18a6a3d08",
+      "bytes": 12653,
+      "sha256": "540bb43ed852ef1d10addf56132bf2d1b4c15b1e608b1bb69d73646182345084",
+      "lineFinalWhitespaceRemoved": 1,
+      "eofBlankLinesRemoved": -1
+    },
+    {
+      "file": "docs/audits/2026-11-26/word-cell-properties/whole-row-regressions/office-studio-word-rows-ro-b18e4-e-native-height-transaction-chromium/error-context.md",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+      "originalGitObject": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f:docs/audits/2026-11-26/word-cell-properties/whole-row-regressions/office-studio-word-rows-ro-b18e4-e-native-height-transaction-chromium/error-context.md",
+      "originalBytes": 11818,
+      "originalSha256": "289c86e00bbb105fc18f7a1d60e1337138acae3f46400e312d4af24f7378f00d",
+      "bytes": 11817,
+      "sha256": "bcb0cf94ab827ad938370e43d715707eb375b4495e5fb853d79c1e27ab5d0eb8",
+      "lineFinalWhitespaceRemoved": 2,
+      "eofBlankLinesRemoved": -1
+    },
+    {
+      "file": "docs/audits/2026-11-26/word-cell-properties/whole-row-regressions/pagination-first-unit-failure.txt",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+      "originalGitObject": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f:docs/audits/2026-11-26/word-cell-properties/whole-row-regressions/pagination-first-unit-failure.txt",
+      "originalBytes": 6790,
+      "originalSha256": "1febf4e05f8dd032738523d9df00095ad3c944f6fa1532240232acabb3b90356",
+      "bytes": 6788,
+      "sha256": "d0399f3806af7d0e7bd434cc1886300a90b95176c171d92f6ce6193a46dde734",
+      "lineFinalWhitespaceRemoved": 2,
+      "eofBlankLinesRemoved": 0
+    },
+    {
+      "file": "docs/audits/2026-11-26/word-cell-properties/whole-row-regressions/pagination-focused-final.txt",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+      "originalGitObject": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f:docs/audits/2026-11-26/word-cell-properties/whole-row-regressions/pagination-focused-final.txt",
+      "originalBytes": 729,
+      "originalSha256": "b09361ffc963aee69b8d7218ae8481bf52108f7edf465f44cebdfc418176c411",
+      "bytes": 728,
+      "sha256": "a26f04bb1a314a52145c676a859b14deebd3544b4f85b7b68b1a299b78885112",
+      "lineFinalWhitespaceRemoved": 0,
+      "eofBlankLinesRemoved": 1
+    },
+    {
+      "file": "docs/audits/2026-11-26/word-cell-properties/whole-row-regressions/pagination-types-final.txt",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+      "originalGitObject": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f:docs/audits/2026-11-26/word-cell-properties/whole-row-regressions/pagination-types-final.txt",
+      "originalBytes": 148,
+      "originalSha256": "68ec6d80c2b25b081d386c6e6a0dc0ed1f04d85de012b574555495bfb768041b",
+      "bytes": 147,
+      "sha256": "f31feb7516e618a7f9fffa299eb1139961e0fd56426eb6830164f5b7c2c8781b",
+      "lineFinalWhitespaceRemoved": 0,
+      "eofBlankLinesRemoved": 1
+    },
+    {
+      "file": "docs/audits/2026-11-26/word-cell-properties/whole-row-regressions/run.txt",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+      "originalGitObject": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f:docs/audits/2026-11-26/word-cell-properties/whole-row-regressions/run.txt",
+      "originalBytes": 52613,
+      "originalSha256": "0b18a32a51f834bb76b54598a9c4913c558c64f59ee753be888359a853c0d98c",
+      "bytes": 52607,
+      "sha256": "ff2bea32890d4aa85eb3b00560de8013b845a65b79c872fe0cb17eaa9dbbec30",
+      "lineFinalWhitespaceRemoved": 6,
+      "eofBlankLinesRemoved": 0
+    }
+  ]
+}

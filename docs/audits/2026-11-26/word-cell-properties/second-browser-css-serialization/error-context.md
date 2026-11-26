@@ -52,7 +52,7 @@ Call log:
   532 |     JSON.stringify({ initial, printed }, null, 2) + '\n'
   533 |   );
   534 | });
-  535 | 
+  535 |
   536 | test('uses each native row gap with one shared column grid and preserves fixed-cell budgets through printing and reopening', async ({
   537 |   page,
   538 |   context,
@@ -188,7 +188,7 @@ Call log:
   667 |     JSON.stringify({ initial, printed }, null, 2) + '\n'
   668 |   );
   669 | });
-  670 | 
+  670 |
   671 | test('previews column resizing without jumping between native and model grids, cancels cleanly and saves one history action', async ({
   672 |   page,
   673 | }) => {

@@ -76,7 +76,7 @@ Call log:
   1246 |   await expect(page.locator('[data-word-row-resize-guide]')).toHaveCount(0);
   1247 |   await expect(row).toHaveAttribute('data-word-row-height', '60');
   1248 | });
-  1249 | 
+  1249 |
   1250 | test('merged row resizing updates combined cell height and retains native vertical merge', async ({
   1251 |   page,
   1252 | }) => {
@@ -157,7 +157,7 @@ Call log:
   1326 |     await expect(body).toContainText('Lower row');
   1327 |   }
   1328 | });
-  1329 | 
+  1329 |
   1330 | test('multi-cell row fragments keep independent text and aligned page gaps through native reopen', async ({
   1331 |   page,
   1332 |   context,

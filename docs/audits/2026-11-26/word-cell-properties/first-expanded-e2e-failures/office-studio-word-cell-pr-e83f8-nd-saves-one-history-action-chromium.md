@@ -744,7 +744,7 @@ Call log:
   262 |   await page.screenshot({ path: path.join(audit, 'cell-nested-light.png'), fullPage: true });
   263 |   await writeFile(path.join(audit, 'cell-nested-metrics.json'), JSON.stringify({ initial, printed }, null, 2) + '\n');
   264 | });
-  265 | 
+  265 |
   266 | test('uses each native row gap with one shared column grid and preserves fixed-cell budgets through printing and reopening', async ({ page, context }) => {
   267 |   const audit = path.resolve('docs/audits/2026-11-26/word-cell-properties');
   268 |   const row = (label: string, spacing = '') => `<w:tr><w:trPr><w:trHeight w:val="1440" w:hRule="exact"/>${spacing}</w:trPr>${[0, 1].map(index => `<w:tc><w:p><w:r><w:t>${label}${index}</w:t></w:r></w:p></w:tc>`).join('')}</w:tr>`;
@@ -800,7 +800,7 @@ Call log:
   318 |   await page.screenshot({ path: path.join(audit, 'cell-row-spacing-light.png'), fullPage: true });
   319 |   await writeFile(path.join(audit, 'cell-row-spacing-metrics.json'), JSON.stringify({ initial, printed }, null, 2) + '\n');
   320 | });
-  321 | 
+  321 |
   322 | test('previews column resizing without jumping between native and model grids, cancels cleanly and saves one history action', async ({ page }) => {
   323 |   const audit = path.resolve('docs/audits/2026-11-26/word-cell-properties');
   324 |   const row = (label: string, spacing = '') => `<w:tr><w:trPr>${spacing}</w:trPr>${[0, 1].map(index => `<w:tc><w:p><w:r><w:t>${label}${index}</w:t></w:r></w:p></w:tc>`).join('')}</w:tr>`;
@@ -849,7 +849,7 @@ Call log:
   366 |   }
   367 |   await writeFile(path.join(audit, 'cell-column-metrics.json'), JSON.stringify({ initialColumns, previewWidth, resized, expectedGrid }, null, 2) + '\n');
   368 | });
-  369 | 
+  369 |
   370 | test('aligns actual short content within a taller automatic row with mixed gaps and reproduces it in the native print document', async ({ page, context }) => {
   371 |   const audit = path.resolve('docs/audits/2026-11-26/word-cell-properties');
   372 |   const long = Array.from({ length: 8 }, (_, index) => `<w:r><w:t>Long line ${index}</w:t>${index < 7 ? '<w:br/>' : ''}</w:r>`).join('');
@@ -888,5 +888,5 @@ Call log:
   405 |   await page.screenshot({ path: path.join(audit, 'cell-auto-light.png'), fullPage: true });
   406 |   await writeFile(path.join(audit, 'cell-auto-metrics.json'), JSON.stringify({ positions, printed }, null, 2) + '\n');
   407 | });
-  408 | 
+  408 |
 ```

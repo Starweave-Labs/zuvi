@@ -774,7 +774,7 @@ Call Log:
   162 |     };
   163 |   });
   164 | }
-  165 | 
+  165 |
   166 | // Read-only geometry from the actual editor DOM or the actual print document.
   167 | function tableGeometry(element: Element) {
   168 |   const tableRect = element.getBoundingClientRect();
@@ -860,7 +860,7 @@ Call Log:
   248 |   near(other.outerPadding.left, 2); near(other.outerPadding.bottom, 3);
   249 |   for (const cell of actual.cells) expect(cell.inlineMinHeight).toBe('');
   250 | }
-  251 | 
+  251 |
   252 | async function upload(page: Page, bytes: Buffer, name: string) {
   253 |   await page.getByLabel('导入文档文件', { exact: true }).setInputFiles({ name, mimeType, buffer: bytes });
   254 |   await expect(page.getByRole('textbox', { name: '文档名称', exact: true })).toHaveValue(name);
@@ -947,7 +947,7 @@ Call Log:
   334 |     await preview.close();
   335 |   }
   336 | }
-  337 | 
+  337 |
   338 | test('maps real merged multi-cell edits through mixed row gaps, one history action, two native reopens and print', async ({ page, context }) => {
   339 |   test.setTimeout(120000);
   340 |   await mkdir(audit, { recursive: true });

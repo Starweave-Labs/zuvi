@@ -18,7 +18,7 @@ Running 11 tests using 1 worker
   ✓  11 [chromium] › e2e/office-studio-word-cell-regions.spec.ts:216:1 › blocks a real Word cell draft on readonly changes and keeps light, dark and 320px dialogs interactive without writes (5.0s)
 
 
-  1) [chromium] › e2e/office-studio-pdf-pages.spec.ts:20:1 › edits native PDF page dimensions, copies and removes pages, and preserves fields through history and two reopens 
+  1) [chromium] › e2e/office-studio-pdf-pages.spec.ts:20:1 › edits native PDF page dimensions, copies and removes pages, and preserves fields through history and two reopens
 
     Test timeout of 90000ms exceeded.
 
@@ -32,7 +32,7 @@ Running 11 tests using 1 worker
 
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
-  2) [chromium] › e2e/office-studio-pdf-pages.spec.ts:52:1 › moves native page references by dragging a thumbnail after the final page 
+  2) [chromium] › e2e/office-studio-pdf-pages.spec.ts:52:1 › moves native page references by dragging a thumbnail after the final page
 
     Error: expect(received).toEqual(expected) // deep equality
 
@@ -63,7 +63,7 @@ Running 11 tests using 1 worker
 
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
-  3) [chromium] › e2e/office-studio-word-cell-properties.spec.ts:219:1 › keeps nested fixed-cell alignment and margins local while preserving native layout on reopening and printing 
+  3) [chromium] › e2e/office-studio-word-cell-properties.spec.ts:219:1 › keeps nested fixed-cell alignment and margins local while preserving native layout on reopening and printing
 
     Error: expect(received).toBe(expected) // Object.is equality
 
@@ -90,7 +90,7 @@ Running 11 tests using 1 worker
 
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
-  4) [chromium] › e2e/office-studio-word-cell-properties.spec.ts:266:1 › uses each native row gap with one shared column grid and preserves fixed-cell budgets through printing and reopening 
+  4) [chromium] › e2e/office-studio-word-cell-properties.spec.ts:266:1 › uses each native row gap with one shared column grid and preserves fixed-cell budgets through printing and reopening
 
     Error: expect(received).toBeCloseTo(expected, precision)
 
@@ -122,7 +122,7 @@ Running 11 tests using 1 worker
 
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
-  5) [chromium] › e2e/office-studio-word-cell-properties.spec.ts:322:1 › previews column resizing without jumping between native and model grids, cancels cleanly and saves one history action 
+  5) [chromium] › e2e/office-studio-word-cell-properties.spec.ts:322:1 › previews column resizing without jumping between native and model grids, cancels cleanly and saves one history action
 
     Error: locator.scrollIntoViewIfNeeded: Element is not attached to the DOM
     Call log:
@@ -150,7 +150,7 @@ Running 11 tests using 1 worker
 
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
-  6) [chromium] › e2e/office-studio-word-cell-properties.spec.ts:370:1 › aligns actual short content within a taller automatic row with mixed gaps and reproduces it in the native print document 
+  6) [chromium] › e2e/office-studio-word-cell-properties.spec.ts:370:1 › aligns actual short content within a taller automatic row with mixed gaps and reproduces it in the native print document
 
     Error: expect(received).toBeLessThan(expected)
 
@@ -180,10 +180,10 @@ Running 11 tests using 1 worker
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
   6 failed
-    [chromium] › e2e/office-studio-pdf-pages.spec.ts:20:1 › edits native PDF page dimensions, copies and removes pages, and preserves fields through history and two reopens 
-    [chromium] › e2e/office-studio-pdf-pages.spec.ts:52:1 › moves native page references by dragging a thumbnail after the final page 
-    [chromium] › e2e/office-studio-word-cell-properties.spec.ts:219:1 › keeps nested fixed-cell alignment and margins local while preserving native layout on reopening and printing 
-    [chromium] › e2e/office-studio-word-cell-properties.spec.ts:266:1 › uses each native row gap with one shared column grid and preserves fixed-cell budgets through printing and reopening 
-    [chromium] › e2e/office-studio-word-cell-properties.spec.ts:322:1 › previews column resizing without jumping between native and model grids, cancels cleanly and saves one history action 
-    [chromium] › e2e/office-studio-word-cell-properties.spec.ts:370:1 › aligns actual short content within a taller automatic row with mixed gaps and reproduces it in the native print document 
+    [chromium] › e2e/office-studio-pdf-pages.spec.ts:20:1 › edits native PDF page dimensions, copies and removes pages, and preserves fields through history and two reopens
+    [chromium] › e2e/office-studio-pdf-pages.spec.ts:52:1 › moves native page references by dragging a thumbnail after the final page
+    [chromium] › e2e/office-studio-word-cell-properties.spec.ts:219:1 › keeps nested fixed-cell alignment and margins local while preserving native layout on reopening and printing
+    [chromium] › e2e/office-studio-word-cell-properties.spec.ts:266:1 › uses each native row gap with one shared column grid and preserves fixed-cell budgets through printing and reopening
+    [chromium] › e2e/office-studio-word-cell-properties.spec.ts:322:1 › previews column resizing without jumping between native and model grids, cancels cleanly and saves one history action
+    [chromium] › e2e/office-studio-word-cell-properties.spec.ts:370:1 › aligns actual short content within a taller automatic row with mixed gaps and reproduces it in the native print document
   5 passed (2.2m)

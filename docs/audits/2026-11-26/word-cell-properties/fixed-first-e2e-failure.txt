@@ -8,7 +8,7 @@ Running 1 test using 1 worker
   ✘  1 [chromium] › e2e/office-studio-word-cell-properties.spec.ts:5:1 › keeps native exact row height with explicit cell padding while editing and reopening twice (1.9s)
 
 
-  1) [chromium] › e2e/office-studio-word-cell-properties.spec.ts:5:1 › keeps native exact row height with explicit cell padding while editing and reopening twice 
+  1) [chromium] › e2e/office-studio-word-cell-properties.spec.ts:5:1 › keeps native exact row height with explicit cell padding while editing and reopening twice
 
     Error: expect(received).toBeGreaterThanOrEqual(expected)
 
@@ -36,4 +36,4 @@ Running 1 test using 1 worker
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
   1 failed
-    [chromium] › e2e/office-studio-word-cell-properties.spec.ts:5:1 › keeps native exact row height with explicit cell padding while editing and reopening twice 
+    [chromium] › e2e/office-studio-word-cell-properties.spec.ts:5:1 › keeps native exact row height with explicit cell padding while editing and reopening twice

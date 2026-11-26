@@ -1682,7 +1682,7 @@
       ],
       "currentAudit": {
         "date": "2026-11-26",
-        "sourceCommit": "d8761e0",
+        "sourceCommit": "c192b33",
         "implementation": "切片验证",
         "implementedBehavior": "ZUVI九宫格、四侧直接/默认边距与完整物理间距；部分覆盖、显式零、null恢复、单事务与后续历史边界；固定/自动行、mixed行间距、合并/嵌套与区域隔离；实际鼠标多格选择、两轮DOCX/XML与同坐标打印。",
         "functionalGaps": [
@@ -1718,7 +1718,7 @@
           "e2e/office-studio-word-cell-mapping.spec.ts"
         ],
         "testEvidenceNote": "Current slice evidence and current all-repository gates passed: UI 2710, docs 359, E2E 287. The whole 159-item acceptance is still not proven complete.",
-        "workingTree": true
+        "workingTree": false
       },
       "gaps": [
         "超大合法边距/间距、更多固定行与合并组合，以及文档表格样式继承仍待完整审计。",
@@ -8333,7 +8333,7 @@
       ],
       "currentAudit": {
         "date": "2026-11-26",
-        "sourceCommit": "d8761e0",
+        "sourceCommit": "c192b33",
         "implementation": "切片验证",
         "implementedBehavior": "稳定页面ID/sourcePage与原始session解耦；ZUVI空白页尺寸/插入位置与方向操作，事务撤销重做，原生保存及两轮重开。",
         "functionalGaps": [
@@ -8363,7 +8363,7 @@
           "packages/ui/src/components/OfficeStudio/studio-pdf-pages.test.ts"
         ],
         "testEvidenceNote": "Current slice evidence and current all-repository gates passed: UI 2710, docs 359, E2E 287. The whole 159-item acceptance is still not proven complete.",
-        "workingTree": true
+        "workingTree": false
       },
       "gaps": [
         "更多插入位置/异构来源页面和原生字段兼容矩阵仍待完整审计。",
@@ -8399,7 +8399,7 @@
       ],
       "currentAudit": {
         "date": "2026-11-26",
-        "sourceCommit": "d8761e0",
+        "sourceCommit": "c192b33",
         "implementation": "切片验证",
         "implementedBehavior": "多页选择删除、最后页限制，模型标注/控件和原生页面引用、链接动作/命名目的地/目录同步，单事务历史与两轮保存重开。",
         "functionalGaps": [
@@ -8429,7 +8429,7 @@
           "packages/ui/src/components/OfficeStudio/studio-pdf-pages.test.ts"
         ],
         "testEvidenceNote": "Current slice evidence and current all-repository gates passed: UI 2710, docs 359, E2E 287. The whole 159-item acceptance is still not proven complete.",
-        "workingTree": true
+        "workingTree": false
       },
       "gaps": [
         "全部多页/字段取值与引用组合仍待完整共通验收。",
@@ -8465,7 +8465,7 @@
       ],
       "currentAudit": {
         "date": "2026-11-26",
-        "sourceCommit": "d8761e0",
+        "sourceCommit": "c192b33",
         "implementation": "切片验证",
         "implementedBehavior": "复制/移动/缩略图真实拖动重排，稳定ID和copyGroup；页面/控件/链接映射，内容数组及可变资源隔离，单事务与原生重开。",
         "functionalGaps": [
@@ -8495,7 +8495,7 @@
           "packages/ui/src/components/OfficeStudio/studio-pdf-pages.test.ts"
         ],
         "testEvidenceNote": "Current slice evidence and current all-repository gates passed: UI 2710, docs 359, E2E 287. The whole 159-item acceptance is still not proven complete.",
-        "workingTree": true
+        "workingTree": false
       },
       "gaps": [
         "更多多页拖动/滚动、选区取消及来源复杂字段组合仍待完整审计。",
@@ -8531,7 +8531,7 @@
       ],
       "currentAudit": {
         "date": "2026-11-26",
-        "sourceCommit": "d8761e0",
+        "sourceCommit": "c192b33",
         "implementation": "切片验证",
         "implementedBehavior": "单页/多页旋转、可见画布尺寸弹窗与交换宽高；保留原坐标，原生旋转不累积重复，模型历史和两轮保存重开。",
         "functionalGaps": ["更多裁剪原点/不同方向/选区与字段组合及完整原始共通验收仍待审计。"],
@@ -8560,7 +8560,7 @@
           "packages/ui/src/components/OfficeStudio/studio-pdf-pages.test.ts"
         ],
         "testEvidenceNote": "Current slice evidence and current all-repository gates passed: UI 2710, docs 359, E2E 287. The whole 159-item acceptance is still not proven complete.",
-        "workingTree": true
+        "workingTree": false
       },
       "gaps": ["更多裁剪原点/不同方向/选区与字段组合及完整原始共通验收仍待审计。"]
     },

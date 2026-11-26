@@ -745,7 +745,7 @@ Received difference:   2.0104166666666714
   215 |   await preview.pdf({ path: path.join(audit, 'cell-defaults-print.pdf'), preferCSSPageSize: true, printBackground: true }); await preview.close();
   216 |   await writeFile(path.join(audit, 'cell-defaults-metrics.json'), JSON.stringify({ initial, changed, printed }, null, 2) + '\n');
   217 | });
-  218 | 
+  218 |
   219 | test('keeps nested fixed-cell alignment and margins local while preserving native layout on reopening and printing', async ({ page, context }) => {
   220 |   const audit = path.resolve('docs/audits/2026-11-26/word-cell-properties');
   221 |   const source = await tableFile('<w:tbl><w:tblGrid><w:gridCol w:w="6000"/></w:tblGrid><w:tr><w:tc><w:tcPr><w:vAlign w:val="bottom"/><w:tcMar><w:top w:w="400" w:type="dxa"/><w:bottom w:w="600" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:t>Outer content</w:t></w:r></w:p><w:tbl><w:tblGrid><w:gridCol w:w="3000"/></w:tblGrid><w:tr><w:trPr><w:trHeight w:val="1440" w:hRule="exact"/></w:trPr><w:tc><w:p><w:r><w:t>Inner content</w:t></w:r></w:p></w:tc></w:tr></w:tbl><w:p/></w:tc></w:tr></w:tbl>');
@@ -792,7 +792,7 @@ Received difference:   2.0104166666666714
   262 |   await page.screenshot({ path: path.join(audit, 'cell-nested-light.png'), fullPage: true });
   263 |   await writeFile(path.join(audit, 'cell-nested-metrics.json'), JSON.stringify({ initial, printed }, null, 2) + '\n');
   264 | });
-  265 | 
+  265 |
   266 | test('uses each native row gap with one shared column grid and preserves fixed-cell budgets through printing and reopening', async ({ page, context }) => {
   267 |   const audit = path.resolve('docs/audits/2026-11-26/word-cell-properties');
   268 |   const row = (label: string, spacing = '') => `<w:tr><w:trPr><w:trHeight w:val="1440" w:hRule="exact"/>${spacing}</w:trPr>${[0, 1].map(index => `<w:tc><w:p><w:r><w:t>${label}${index}</w:t></w:r></w:p></w:tc>`).join('')}</w:tr>`;
@@ -849,7 +849,7 @@ Received difference:   2.0104166666666714
   318 |   await page.screenshot({ path: path.join(audit, 'cell-row-spacing-light.png'), fullPage: true });
   319 |   await writeFile(path.join(audit, 'cell-row-spacing-metrics.json'), JSON.stringify({ initial, printed }, null, 2) + '\n');
   320 | });
-  321 | 
+  321 |
   322 | test('previews column resizing without jumping between native and model grids, cancels cleanly and saves one history action', async ({ page }) => {
   323 |   const audit = path.resolve('docs/audits/2026-11-26/word-cell-properties');
   324 |   const row = (label: string, spacing = '') => `<w:tr><w:trPr>${spacing}</w:trPr>${[0, 1].map(index => `<w:tc><w:p><w:r><w:t>${label}${index}</w:t></w:r></w:p></w:tc>`).join('')}</w:tr>`;
@@ -897,7 +897,7 @@ Received difference:   2.0104166666666714
   366 |   }
   367 |   await writeFile(path.join(audit, 'cell-column-metrics.json'), JSON.stringify({ initialColumns, previewWidth, resized, expectedGrid }, null, 2) + '\n');
   368 | });
-  369 | 
+  369 |
   370 | test('aligns actual short content within a taller automatic row with mixed gaps and reproduces it in the native print document', async ({ page, context }) => {
   371 |   const audit = path.resolve('docs/audits/2026-11-26/word-cell-properties');
   372 |   const long = Array.from({ length: 8 }, (_, index) => `<w:r><w:t>Long line ${index}</w:t>${index < 7 ? '<w:br/>' : ''}</w:r>`).join('');

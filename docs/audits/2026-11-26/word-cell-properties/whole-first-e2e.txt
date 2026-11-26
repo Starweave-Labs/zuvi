@@ -288,7 +288,7 @@ Running 276 tests using 1 worker
   ✓  276 [chromium] › e2e/ui-lab.spec.ts:238:5 › 工坊显示、完整无障碍与减少动效 320px dark (1.9s)
 
 
-  1) [chromium] › e2e/office-studio-word-cell-properties.spec.ts:5:1 › keeps native exact row height with explicit cell padding while editing and reopening twice 
+  1) [chromium] › e2e/office-studio-word-cell-properties.spec.ts:5:1 › keeps native exact row height with explicit cell padding while editing and reopening twice
 
     Error: expect(received).toBeGreaterThanOrEqual(expected)
 
@@ -316,5 +316,5 @@ Running 276 tests using 1 worker
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
   1 failed
-    [chromium] › e2e/office-studio-word-cell-properties.spec.ts:5:1 › keeps native exact row height with explicit cell padding while editing and reopening twice 
+    [chromium] › e2e/office-studio-word-cell-properties.spec.ts:5:1 › keeps native exact row height with explicit cell padding while editing and reopening twice
   275 passed (17.7m)

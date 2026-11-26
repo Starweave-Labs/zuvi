@@ -64,7 +64,7 @@ Call log:
   1326 |     await expect(body).toContainText('Lower row');
   1327 |   }
   1328 | });
-  1329 | 
+  1329 |
   1330 | test('multi-cell row fragments keep independent text and aligned page gaps through native reopen', async ({
   1331 |   page,
   1332 |   context,

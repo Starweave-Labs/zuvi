@@ -299,7 +299,7 @@ Running 287 tests using 1 worker
   ✓  287 [chromium] › e2e/ui-lab.spec.ts:238:5 › 工坊显示、完整无障碍与减少动效 320px dark (1.7s)
 
 
-  1) [chromium] › e2e/office-studio-word-rows.spec.ts:1098:1 › row boundary drag previews without document edits and commits one native height transaction 
+  1) [chromium] › e2e/office-studio-word-rows.spec.ts:1098:1 › row boundary drag previews without document edits and commits one native height transaction
 
     Error: expect(locator).toHaveAttribute(expected) failed
 
@@ -334,7 +334,7 @@ Running 287 tests using 1 worker
 
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
-  2) [chromium] › e2e/office-studio-word-rows.spec.ts:1250:1 › merged row resizing updates combined cell height and retains native vertical merge 
+  2) [chromium] › e2e/office-studio-word-rows.spec.ts:1250:1 › merged row resizing updates combined cell height and retains native vertical merge
 
     Error: expect(locator).toHaveAttribute(expected) failed
 
@@ -369,7 +369,7 @@ Running 287 tests using 1 worker
 
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
-  3) [chromium] › e2e/office-studio-word-rows.spec.ts:1330:1 › multi-cell row fragments keep independent text and aligned page gaps through native reopen 
+  3) [chromium] › e2e/office-studio-word-rows.spec.ts:1330:1 › multi-cell row fragments keep independent text and aligned page gaps through native reopen
 
     Error: expect(locator).toHaveAttribute(expected) failed
 
@@ -406,7 +406,7 @@ Running 287 tests using 1 worker
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
   3 failed
-    [chromium] › e2e/office-studio-word-rows.spec.ts:1098:1 › row boundary drag previews without document edits and commits one native height transaction 
-    [chromium] › e2e/office-studio-word-rows.spec.ts:1250:1 › merged row resizing updates combined cell height and retains native vertical merge 
-    [chromium] › e2e/office-studio-word-rows.spec.ts:1330:1 › multi-cell row fragments keep independent text and aligned page gaps through native reopen 
+    [chromium] › e2e/office-studio-word-rows.spec.ts:1098:1 › row boundary drag previews without document edits and commits one native height transaction
+    [chromium] › e2e/office-studio-word-rows.spec.ts:1250:1 › merged row resizing updates combined cell height and retains native vertical merge
+    [chromium] › e2e/office-studio-word-rows.spec.ts:1330:1 › multi-cell row fragments keep independent text and aligned page gaps through native reopen
   284 passed (14.0m)

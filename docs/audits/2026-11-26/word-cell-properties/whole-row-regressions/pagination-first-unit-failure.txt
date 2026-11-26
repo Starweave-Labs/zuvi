@@ -92,10 +92,10 @@ AssertionError: expected [ { from: 4, to: 6, …(2) }, …(1) ] to deeply equal 
  FAIL  src/components/OfficeStudio/studio-word-pagination-extension.test.ts > publishes strict multi-cell pagination after glyph overhang conversion and ignores view minima without changing the document or history
 AssertionError: expected [Function] to not throw an error but 'Error: Invalid cell line geometry.' was thrown
 
-- Expected: 
+- Expected:
 undefined
 
-+ Received: 
++ Received:
 "Error: Invalid cell line geometry."
 
  ❯ src/components/OfficeStudio/studio-word-pagination-extension.test.ts:82:33

@@ -18,7 +18,7 @@ Running 11 tests using 1 worker
   ✓  11 [chromium] › e2e/office-studio-word-cell-regions.spec.ts:216:1 › blocks a real Word cell draft on readonly changes and keeps light, dark and 320px dialogs interactive without writes (5.0s)
 
 
-  1) [chromium] › e2e/office-studio-word-cell-properties.spec.ts:536:1 › uses each native row gap with one shared column grid and preserves fixed-cell budgets through printing and reopening 
+  1) [chromium] › e2e/office-studio-word-cell-properties.spec.ts:536:1 › uses each native row gap with one shared column grid and preserves fixed-cell budgets through printing and reopening
 
     Error: expect(locator).toHaveCSS(expected) failed
 
@@ -54,5 +54,5 @@ Running 11 tests using 1 worker
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
   1 failed
-    [chromium] › e2e/office-studio-word-cell-properties.spec.ts:536:1 › uses each native row gap with one shared column grid and preserves fixed-cell budgets through printing and reopening 
+    [chromium] › e2e/office-studio-word-cell-properties.spec.ts:536:1 › uses each native row gap with one shared column grid and preserves fixed-cell budgets through printing and reopening
   10 passed (54.1s)
