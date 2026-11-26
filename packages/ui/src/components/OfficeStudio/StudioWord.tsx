@@ -1,4 +1,6 @@
 'use client';
+import { StudioWordMathDialog } from './StudioWordMathDialog';
+import { WordMath, wordSetMath } from './studio-word-math-extension';
 import { StudioWordImageCropDialog } from './StudioWordImageCropDialog';
 import { wordImageReplacementTarget, wordReplaceImage, type WordImageReplacementTarget } from './studio-word-image-replace';
 import { wordSetImageCrop } from './studio-word-image-crop-command';
@@ -185,6 +187,7 @@ const EXTENSIONS = [
   WordImage,
   WordPageNumber,
   WordFormulaField,
+  WordMath,
   WordSubscript,
   WordSuperscript,
   WordNonprinting,
@@ -426,6 +429,7 @@ export function StudioWord({
     src: string;
     initial: unknown;
   } | null>(null);
+  const [mathDialog, setMathDialog] = React.useState<{ editor: Editor; doc: Editor['state']['doc']; selection: Editor['state']['selection']; initial: unknown } | null>(null);
   const [formulaDialog, setFormulaDialog] = React.useState<{ editor: Editor; doc: Editor['state']['doc']; selection: Editor['state']['selection']; initial: string } | null>(null);
   const [conversionDialog, setConversionDialog] = React.useState<{ editor: Editor; target: WordConversionTarget } | null>(null);
   const [rowDialog, setRowDialog] = React.useState<{ editor: Editor; doc: Editor['state']['doc']; selection: Editor['state']['selection']; rows: ReturnType<typeof wordSelectedRows> } | null>(null);
@@ -2180,6 +2184,11 @@ export function StudioWord({
               const node = editor.state.doc.nodeAt(editor.state.selection.from);
               setFormulaDialog({ editor, doc: editor.state.doc, selection: editor.state.selection, initial: node?.type.name === 'tableFormula' ? node.attrs.formula : '=SUM(ABOVE)' });
             }}>表格公式</Button>
+            <Button size="sm" variant="ghost" disabled={toolsDisabled} onMouseDown={keepSelection} onClick={() => {
+              if (!editor || !latest.current.editable || editor.view.composing) return;
+              const node = editor.state.doc.nodeAt(editor.state.selection.from);
+              setMathDialog({ editor, doc: editor.state.doc, selection: editor.state.selection, initial: node?.type.name === 'mathEquation' ? node.attrs.equation : { kind: 'text', text: 'x' } });
+            }}>数学公式</Button>
             <Button variant="ghost" size="sm" disabled={toolsDisabled || !editor} onMouseDown={keepSelection} onClick={() => {
               if (!editor || toolsDisabled) return;
               try { wordRefreshTableFormulas(editor); } catch (reason) { setNotice(reason instanceof Error ? reason.message : '公式刷新失败。'); }
@@ -3035,6 +3044,17 @@ export function StudioWord({
           }}
         />
       )}
+      {mathDialog && <StudioWordMathDialog initial={mathDialog.initial} blocked={!editable}
+        onClose={() => { setMathDialog(null); if (!mathDialog.editor.isDestroyed) mathDialog.editor.commands.focus(); }}
+        onSave={(tree) => {
+          const target = mathDialog.editor;
+          if (!latest.current.editable || target.isDestroyed || target !== editor || !target.isEditable) throw new Error('当前文档只读或编辑区域已变化。');
+          if (target.state.doc !== mathDialog.doc) throw new Error('文档已变化，请重新打开数学公式。');
+          if (target.view.composing) throw new Error('请结束输入法组合后重试。');
+          target.view.dispatch(target.state.tr.setSelection(mathDialog.selection).setMeta('addToHistory', false));
+          const changed = wordSetMath(target, tree);
+          setMathDialog(null); target.commands.focus(); setNotice(changed ? '数学公式已保存，可撤销恢复。' : '数学公式保持原样。');
+        }} />}
       {formulaDialog && <StudioWordFormulaDialog initial={formulaDialog.initial} blocked={!editable} onClose={() => { setFormulaDialog(null); if (!formulaDialog.editor.isDestroyed) formulaDialog.editor.commands.focus(); }} onSave={(formula) => {
         const target = formulaDialog.editor;
         if (!latest.current.editable || target.isDestroyed || target !== editor || !target.isEditable) throw new Error('当前文档只读或编辑区域已变化。');

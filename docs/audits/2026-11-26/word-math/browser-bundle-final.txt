@@ -1,0 +1,13 @@
+
+> @zuvi/react@1.1.0 build:browser /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+> vite build --config vite.browser.config.ts
+
+vite v6.4.5 building for production...
+transforming...
+✓ 668 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/browser/LICENSE.txt        65.71 kB │ gzip:   5.78 kB
+dist/browser/zuvi.css          421.77 kB │ gzip:  54.48 kB
+dist/browser/zuvi.global.js  2,679.69 kB │ gzip: 804.06 kB
+✓ built in 5.48s

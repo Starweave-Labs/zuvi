@@ -2421,39 +2421,47 @@
         "docs/tests/office-studio-word.test.mjs"
       ],
       "historicalStatus": "缺失",
-      "status": "audited-not-implemented",
-      "evidence": [],
+      "status": "audited-partial-acceptance-pending",
+      "evidence": [
+        "docs/audits/2026-11-26/word-math/README.md",
+        "e2e/office-studio-word-math.spec.ts"
+      ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "未实现",
-        "implementedBehavior": "无数学结构节点",
+        "date": "2026-11-26",
+        "sourceCommit": "e8f51cb",
+        "sourceState": "working-tree-uncommitted",
+        "implementation": "部分实现",
+        "implementedBehavior": "ZUVI结构与局部格式、段落对齐、事务历史/取消/权限快照，MathML画布HTML打印，OMML及真实DOCX两次重开与明暗320px专项通过",
         "functionalGaps": [
-          "缺公式结构与 OMML 文件往返；扩展对象拒绝"
+          "多oMath段落组与更多原生结构/复杂区域组合未完整支持和验收",
+          "操作系统真实IME候选交互未证实"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 156,
-            "anchor": "const EXTENSIONS"
+            "path": "docs/audits/2026-11-26/word-math/README.md",
+            "line": 1,
+            "anchor": "W037 数学公式进行中"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
-            "line": 60,
-            "anchor": "const UNSUPPORTED_CONTENT"
-          },
-          {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 78,
-            "anchor": "export interface StudioWordDocument"
+            "path": "e2e/office-studio-word-math.spec.ts",
+            "line": 6,
+            "anchor": "edits native display equations"
           }
         ],
-        "existingTestFiles": [],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "existingTestFiles": [
+          "packages/ui/src/components/OfficeStudio/studio-word-math.test.ts",
+          "packages/ui/src/components/OfficeStudio/studio-word-math-extension.test.ts",
+          "packages/ui/src/components/OfficeStudio/StudioWordMathDialog.test.tsx",
+          "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+          "docs/tests/office-studio-word.test.mjs",
+          "docs/tests/studio-print.test.mjs"
+        ],
+        "testEvidenceNote": "121 Word/math, 2548 full UI, 327 docs and 270 full E2E passed; type/lint/build/browser/Registry92/consumer373/distribution/size passed. Native and screenshots retained. Remaining gaps prevent full acceptance."
       },
       "gaps": [
-        "缺公式结构与 OMML 文件往返；扩展对象拒绝"
+        "多oMath段落组与更多原生结构/复杂区域组合未完整支持和验收",
+        "操作系统真实IME候选交互未证实"
       ]
     },
     {

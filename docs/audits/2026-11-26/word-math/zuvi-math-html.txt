@@ -1,0 +1,9 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/studio-word-math-extension.test.ts (3 tests) 116ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  12:13:11
+   Duration  1.59s (transform 84ms, setup 153ms, collect 116ms, tests 116ms, environment 639ms, prepare 144ms)

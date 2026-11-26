@@ -1,3 +1,4 @@
+import { readWordMath, wordMathOmml } from './studio-word-math-codec';
 import { wordImageCrop } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-image-crop';
 import JSZip from 'jszip';
 import {wordSurface,wordMergeSurface} from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-surface';
@@ -1112,6 +1113,9 @@ function parseParagraph(element: Element, context: ImportContext): ParsedParagra
   const paragraphItems = elements(element);
   for (let index = 0; index < paragraphItems.length; index++) {
     const item = paragraphItems[index];
+    if (item.namespaceURI === 'http://schemas.openxmlformats.org/officeDocument/2006/math' && ['oMath', 'oMathPara'].includes(item.localName)) {
+      inline.push({ type: 'mathEquation', attrs: { equation: readWordMath(item) } }); continue;
+    }
     if (item.namespaceURI !== W) unsupported('公式或扩展对象');
     if (['pPr', 'proofErr', 'bookmarkStart', 'bookmarkEnd'].includes(item.localName)) continue;
     if (item.localName === 'r' && child(item, 'fldChar')) {
@@ -1765,6 +1769,28 @@ class FormulaField extends SimpleField {
     this.root.push(run);
   }
 }
+function nativeWordMath(node: StudioRichNode): string {
+      const format: import('../../../../../packages/ui/src/components/OfficeStudio/studio-word-math').WordMathFormat = {};
+      for (const mark of node.marks || []) {
+        if (['bold', 'italic', 'underline', 'strike'].includes(mark.type)) format[mark.type as 'bold' | 'italic' | 'underline' | 'strike'] = true;
+        else if (mark.type === 'superscript' || mark.type === 'subscript') format.script = mark.type;
+        else if (mark.type === 'textStyle') {
+          runOptions({ ...node, marks: [mark] });
+          for (const [key, value] of Object.entries(mark.attrs || {})) {
+            if (value == null || value === '') continue;
+            if (key === 'fontSize') {
+              const match = /^(\d+(?:\.\d+)?)(pt|px)$/.exec(String(value))!;
+              format.fontSize = `${Number(match[1]) * (match[2] === 'px' ? 0.75 : 1)}pt`;
+            } else if (key === 'color' || key === 'backgroundColor') Object.assign(format, { [key]: colour(value) });
+            else if (key === 'letterSpacing' || key === 'baselineShift') Object.assign(format, { [key]: `${wordMetricPoints(value, key)}pt` });
+            else Object.assign(format, { [key]: value });
+          }
+        } else unsupported('此数学公式字符格式');
+      }
+
+  return wordMathOmml(node.attrs?.equation, format);
+}
+
 function inlineChildren(
   nodes: StudioRichNode[] = [],
   inherited?: Required<StudioWordCharacterStyle>
@@ -1790,6 +1816,10 @@ function inlineChildren(
         ...options,
         children: [node.attrs?.kind === 'total' ? PageNumber.TOTAL_PAGES : PageNumber.CURRENT],
       });
+    }
+    if (node.type === 'mathEquation') {
+      checkAttrs(node, ['equation']);
+      return ImportedXmlComponent.fromXmlString(nativeWordMath(node)) as unknown as ParagraphChild;
     }
     if (node.type === 'image') {
       checkAttrs(node, ['src', 'width', 'height', 'alt', 'layout', 'crop']);
@@ -2407,8 +2437,11 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
     walk(root);
     return result;
   });
+  const hasMath = (node?: StudioRichNode): boolean => !!node &&
+    (node.type === 'mathEquation' || (node.content || []).some(hasMath));
+  const mathNeedsPatch = [document.content, document.header, document.footer].some(hasMath);
   if (
-    !numberCatalog.definitions.length && !paragraphStyles.some((style)=>style.surface) &&
+    !mathNeedsPatch && !numberCatalog.definitions.length && !paragraphStyles.some((style)=>style.surface) &&
     !paragraphStyles.some((style) => style.autoUpdate) &&
     !paragraphStyles.some((style) => style.run?.letterSpacing === 0) &&
     !imageLayouts.some((layout) => layout.polygon || layout.zIndex === 0)
@@ -2451,14 +2484,21 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
   ] as const) {
     if (!root || !zip.file(path)) continue;
     const layouts: StudioWordImageLayout[] = [];
+    const equations: string[] = [];
     const walk = (node: StudioRichNode) => {
+      if (node.type === 'mathEquation') equations.push(nativeWordMath(node));
       if (node.type === 'image' && node.attrs?.layout)
         layouts.push(wordImageLayout(node.attrs.layout)!);
       for (const child of node.content || []) walk(child);
     };
     walk(root);
     let index = 0;
-    const native = await zip.file(path)!.async('string');
+    let equationIndex = 0;
+    const native = (await zip.file(path)!.async('string')).replace(
+      /<m:oMathPara\b[\s\S]*?<\/m:oMathPara>|<m:oMath\b[\s\S]*?<\/m:oMath>/g,
+      () => equations[equationIndex++] || unsupported('无法对应原生数学公式')
+    );
+    if (equationIndex !== equations.length) unsupported('无法对应原生数学公式');
     zip.file(
       path,
       native.replace(/<wp:anchor\b[\s\S]*?<\/wp:anchor>/g, (anchor) => {

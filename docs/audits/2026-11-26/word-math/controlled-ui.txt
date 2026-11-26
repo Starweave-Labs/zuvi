@@ -1,0 +1,11 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/StudioWord.test.tsx (105 tests | 104 skipped) 733ms
+   ✓ restores a rejected controlled math edit and saves the original semantic model 732ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 104 skipped (105)
+   Start at  12:49:42
+   Duration  2.98s (transform 931ms, setup 129ms, collect 1.41s, tests 733ms, environment 388ms, prepare 54ms)
+

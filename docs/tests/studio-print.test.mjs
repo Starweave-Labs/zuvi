@@ -1168,3 +1168,25 @@ test('Word image crop prints a clipped original raster frame and resets without 
   assert.equal(printed.querySelector('[data-word-image-crop-frame]'), null);
   assert.equal(printed.querySelector('img').getAttribute('src'), source);
 });
+
+test('Word equations print semantic MathML fractions and matrices with escaped text', () => {
+  const model = models.createOfficeStudioDocument('word');
+  const t = text => ({ kind: 'text', text });
+  model.content = { type: 'doc', content: [{ type: 'paragraph', content: [{ type: 'mathEquation', marks: [{ type: 'bold' }], attrs: { equation: { kind: 'fraction', numerator: { ...t('<&'), format: { fontFamily: 'Cambria Math', fontSize: '14.5pt', color: '#aa2244', backgroundColor: '#eeeeff', letterSpacing: '-0.05pt', baselineShift: '1.5pt', script: 'superscript' } }, denominator: { kind: 'matrix', rows: [[t('1'), t('2')], [t('3'), t('4')]] } } } }] }] };
+  const rendered = new JSDOM(print.createStudioPrintHtml(model)).window.document;
+  assert.equal(rendered.querySelectorAll('strong math mfrac').length, 1);
+  assert.equal(rendered.querySelectorAll('math mtd').length, 4);
+  assert.equal(rendered.querySelector('math mtext').textContent, '<&');
+  const style = rendered.querySelector('math mtext').getAttribute('style');
+  for (const value of ['font-family:"Cambria Math"', 'font-size:14.5pt', 'color:#aa2244', 'background-color:#eeeeff', 'letter-spacing:-0.05pt', 'top:-1.5pt', 'vertical-align:super']) assert.ok(style.includes(value), value);
+  assert.equal(rendered.querySelector('script'), null);
+});
+
+test('Word display formulas retain their alignment and semantic MathML when printed', () => {
+  const model = models.createOfficeStudioDocument('word');
+  model.content = { type: 'doc', content: [{ type: 'paragraph', content: [{ type: 'mathEquation', attrs: { equation: { kind: 'display', align: 'right', body: { kind: 'fraction', numerator: { kind: 'text', text: 'x' }, denominator: { kind: 'text', text: '2' } } } } }] }] };
+  const rendered = new JSDOM(print.createStudioPrintHtml(model)).window.document;
+  assert.equal(rendered.querySelector('math').getAttribute('display'), 'block');
+  assert.ok(rendered.querySelector('math').getAttribute('style').includes('justify-content:flex-end'));
+  assert.equal(rendered.querySelectorAll('math mfrac').length, 1);
+});

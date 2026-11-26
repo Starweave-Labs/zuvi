@@ -1,3 +1,4 @@
+import { wordMathMarkup } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-math';
 import { wordImageCrop, wordImageCropGeometry } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-image-crop';
 import {
   isOfficeStudioDocument,
@@ -128,7 +129,9 @@ function rich(
     )
       headerRows++;
   let text =
-    node.type === 'text'
+    node.type === 'mathEquation'
+      ? `<span data-word-math-print="">${wordMathMarkup(node.attrs?.equation)}</span>`
+      : node.type === 'text'
       ? escape(node.text).replace(
           /\t/g,
           '<span data-word-tab="" class="zuvi-studio-word-tab">\t</span>'
@@ -243,7 +246,8 @@ function rich(
       ? `<span class="studio-print-image-anchor">${printed}</span>`
       : printed;
   }
-  if (node.type === 'pageNumber' || node.type === 'tableFormula') return text;
+
+  if (node.type === 'mathEquation' || node.type === 'pageNumber' || node.type === 'tableFormula') return text;
   if (node.type === 'hardBreak') return '<br>';
   if (node.type === 'horizontalRule') return '<hr>';
   if (node.type === 'pageBreak') return '<div class="studio-print-break"></div>';

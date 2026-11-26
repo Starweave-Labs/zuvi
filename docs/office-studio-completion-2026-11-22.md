@@ -133,3 +133,5 @@ W032最终全UI2519/docs316无跳过、类型/lint/build/browser/Registry92/消�
 2026-11-26 W031替换图片进行中：实际ZUVI文件入口与异步editor/doc/NodeSelection快照，保留显示框/layout/说明/marks，重置旧crop；历史、权限/IME、过期文档、受控拒绝保存原源通过。相关Word100项/原生Word50项、真实浏览器PNG→JPEG两次DOCX重开媒体SHA保持/明暗320px通过，浮动page anchor/offset/zIndex原生往返通过。本批最终全仓检查与E2E仍待确认，W031保持部分实现，159项未完成。
 
 最终冻结整站E2E269项全部通过。全UI2525/docs318无跳过、typecheck/lint/build/browser/Registry92/消费者370/分发/体积124925通过。W031仍部分实现：完整跨区域和布局组合尚未验收；159项未完成。
+
+- 数学公式 W037（2026-11-26）：ZUVI递归结构编辑文字/组合/分式/上下标/根式/矩阵/括号与局部格式，行内/段落及对齐；画布、HTML、打印使用结构MathML。OMML原生输入编辑后两次DOCX重开，数学样式/局部字号颜色与Unicode回车保留；实际取消/一次撤销重做、readonly/disabled/组合事件、受控拒绝恢复并保存原模型已验证。完整Word/公式121项、全UI2548项、docs327项无跳过通过；类型、lint、Registry92、消费者373文件、分发、构建/browser build及入口124924<124928字节通过。浅色/暗色/320px截图、真实DOCX与日志见 `docs/audits/2026-11-26/word-math/`。全E2E270项全部通过（17.8分钟），多公式段落组及更多原生/复杂区域组合未完整验收，W037保持部分实现，159项完成尚未证明。

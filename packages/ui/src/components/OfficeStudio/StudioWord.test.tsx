@@ -2642,3 +2642,122 @@ it('restores a rejected controlled image replacement and saves the original sour
   expect(ref.current?.getDocument()).toBe(value);
   await act(async () => ref.current?.save()); expect(onSave).toHaveBeenCalledWith(value);
 });
+
+it('inserts a structured fraction through the actual math dialog and undoes it atomically', async () => {
+  const { textbox, onChange } = await mount();
+  const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+  act(() => editor.commands.setTextSelection(1));
+  fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+  fireEvent.click(screen.getByRole('button', { name: '数学公式' }));
+  fireEvent.click(screen.getByRole('button', { name: '公式改为分式' }));
+  fireEvent.change(screen.getByRole('textbox', { name: '公式 分子文字' }), { target: { value: 'x+1' } });
+  fireEvent.click(screen.getByRole('button', { name: '取消' })); expect(onChange).not.toHaveBeenCalled();
+  fireEvent.click(screen.getByRole('button', { name: '数学公式' }));
+  fireEvent.click(screen.getByRole('button', { name: '公式改为分式' }));
+  fireEvent.change(screen.getByRole('textbox', { name: '公式 分子文字' }), { target: { value: 'x+1' } });
+  fireEvent.click(screen.getByRole('button', { name: '保存数学公式' }));
+  await waitFor(() => expect(textbox.querySelector('math mfrac')).not.toBeNull());
+  expect(onChange.mock.lastCall?.[0].content.content[0].content[0].attrs.equation.numerator.text).toBe('x+1');
+  fireEvent.click(screen.getByRole('tab', { name: '开始' })); fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await waitFor(() => expect(textbox.querySelector('[data-word-math]')).toBeNull());
+  fireEvent.click(screen.getByRole('button', { name: '重做' }));
+  await waitFor(() => expect(textbox.querySelector('math mfrac')).not.toBeNull());
+});
+
+it('blocks an open math draft after permissions or external content change', async () => {
+  const value = documentModel();
+  const { textbox, onChange, rerender } = await mount({ document: value });
+  const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+  act(() => editor.commands.setTextSelection(1));
+  fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+  fireEvent.click(screen.getByRole('button', { name: '数学公式' }));
+  fireEvent.click(screen.getByRole('button', { name: '公式改为矩阵' }));
+  rerender(<WordHost document={value} onChange={onChange} disabled={false} readOnly />);
+  expect(screen.getByRole('button', { name: '保存数学公式' })).toBeDisabled();
+  rerender(<WordHost document={documentModel('外部新内容')} onChange={onChange} disabled={false} readOnly={false} />);
+  fireEvent.click(screen.getByRole('button', { name: '保存数学公式' }));
+  expect(await screen.findByRole('alert')).toHaveTextContent('文档已变化');
+  expect(onChange).not.toHaveBeenCalled(); expect(textbox.querySelector('[data-word-math]')).toBeNull();
+});
+
+it('edits an existing math structure through the dialog with separate undo and redo', async () => {
+  const { textbox, onChange } = await mount();
+  const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+  act(() => editor.commands.setTextSelection(1));
+  fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+  fireEvent.click(screen.getByRole('button', { name: '数学公式' }));
+  fireEvent.click(screen.getByRole('button', { name: '保存数学公式' }));
+  await waitFor(() => expect(textbox.querySelector('math mtext')).toHaveTextContent('x'));
+  fireEvent.click(screen.getByRole('button', { name: '数学公式' }));
+  expect(screen.getByRole('textbox', { name: '公式文字' })).toHaveValue('x');
+  fireEvent.change(screen.getByRole('textbox', { name: '公式文字' }), { target: { value: 'y+2' } });
+  fireEvent.click(screen.getByRole('button', { name: '保存数学公式' }));
+  await waitFor(() => expect(textbox.querySelector('math mtext')).toHaveTextContent('y+2'));
+  expect(textbox.querySelectorAll('[data-word-math]')).toHaveLength(1);
+  expect(onChange).toHaveBeenCalledTimes(2);
+  fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+  fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await waitFor(() => expect(textbox.querySelector('math mtext')).toHaveTextContent('x'));
+  fireEvent.click(screen.getByRole('button', { name: '重做' }));
+  await waitFor(() => expect(textbox.querySelector('math mtext')).toHaveTextContent('y+2'));
+});
+
+it('keeps composition drafts out of the document through the actual math entry', async () => {
+  const { textbox, onChange } = await mount();
+  const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+  act(() => editor.commands.setTextSelection(1));
+  fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+  fireEvent.click(screen.getByRole('button', { name: '数学公式' }));
+  const input = screen.getByRole('textbox', { name: '公式文字' });
+  fireEvent.compositionStart(input);
+  fireEvent.change(input, { target: { value: '变量甲' } });
+  expect(screen.getByRole('button', { name: '保存数学公式' })).toBeDisabled();
+  fireEvent.click(screen.getByRole('button', { name: '保存数学公式' }));
+  expect(onChange).not.toHaveBeenCalled();
+  fireEvent.compositionEnd(input);
+  Object.defineProperty(editor.view, 'composing', { configurable: true, value: true });
+  fireEvent.click(screen.getByRole('button', { name: '保存数学公式' }));
+  expect(await screen.findByRole('alert')).toHaveTextContent('输入法');
+  expect(onChange).not.toHaveBeenCalled();
+  Object.defineProperty(editor.view, 'composing', { configurable: true, value: false });
+  fireEvent.click(screen.getByRole('button', { name: '保存数学公式' }));
+  await waitFor(() => expect(textbox.querySelector('math mtext')).toHaveTextContent('变量甲'));
+  expect(onChange).toHaveBeenCalledTimes(1);
+});
+
+it.each([{ readOnly: true }, { disabled: true }])('disables actual math insertion and stale drafts with %j', async permissions => {
+  const value = documentModel();
+  const { textbox, onChange, rerender } = await mount({ document: value });
+  const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+  act(() => editor.commands.setTextSelection(1));
+  fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+  fireEvent.click(screen.getByRole('button', { name: '数学公式' }));
+  rerender(<WordHost document={value} onChange={onChange} disabled={false} readOnly={false} {...permissions} />);
+  expect(screen.getByRole('button', { name: '保存数学公式' })).toBeDisabled();
+  expect(screen.getByRole('textbox', { name: '公式文字' })).toBeDisabled();
+  fireEvent.click(screen.getByRole('button', { name: '取消' }));
+  expect(screen.getByRole('button', { name: '数学公式' })).toBeDisabled();
+  expect(onChange).not.toHaveBeenCalled();
+  expect(textbox.querySelector('[data-word-math]')).toBeNull();
+});
+
+it('restores a rejected controlled math edit and saves the original semantic model', async () => {
+  const value = documentModel();
+  const equation = { kind: 'fraction', numerator: { kind: 'text', text: 'x', format: { bold: true } }, denominator: { kind: 'text', text: '2' } };
+  value.content.content![0].content = [{ type: 'mathEquation', attrs: { equation } }];
+  const onChange = vi.fn(), onSave = vi.fn(), ref = createRef<OfficeStudioHandle>();
+  render(<OfficeStudio ref={ref} value={value} onChange={onChange} onSave={onSave} />);
+  const body = await screen.findByRole('textbox', { name: 'Word 文档正文' });
+  const editor = (body as HTMLElement & { editor: Editor }).editor;
+  act(() => editor.commands.setNodeSelection(1));
+  fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+  fireEvent.click(screen.getByRole('button', { name: '数学公式' }));
+  fireEvent.change(screen.getByRole('textbox', { name: '公式 分子文字' }), { target: { value: 'rejected' } });
+  fireEvent.click(screen.getByRole('button', { name: '保存数学公式' }));
+  await waitFor(() => expect(onChange).toHaveBeenCalledTimes(1));
+  await waitFor(() => expect(body.querySelector('mfrac mtext')).toHaveTextContent('x'));
+  expect(JSON.parse(body.querySelector('[data-word-math]')!.getAttribute('data-word-math')!)).toEqual(equation);
+  expect(ref.current?.getDocument()).toBe(value);
+  await act(async () => ref.current?.save());
+  expect(onSave).toHaveBeenCalledWith(value);
+});

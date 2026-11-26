@@ -25,7 +25,10 @@ const surfaceExports = {};
 const surfaceCodecExports = {};
 const imageExports = {};
 const rowExports = {};
+const mathExports = {};
+const mathCodecExports = {};
 for (const [file, target] of [
+  ['studio-word-math.ts', mathExports],
   ['studio-font-input.ts', fontExports],
   ['studio-word-metrics.ts', metricExports],
   ['studio-word-table-rows.ts', rowExports],
@@ -65,6 +68,7 @@ for (const [file, target] of [
     }
   );
 }
+runInNewContext(ts.transpileModule(readFileSync(new URL('../src/pages/collaboration/office-studio/studio-word-math-codec.ts',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,esModuleInterop:true}}).outputText,{exports:mathCodecExports,require:(id)=>id.endsWith('/studio-word-math')?mathExports:require(id)});
 runInNewContext(ts.transpileModule(readFileSync(new URL('../src/pages/collaboration/office-studio/studio-word-numbering-codec.ts',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,esModuleInterop:true}}).outputText,{
   exports:numberCodecExports, require:(id)=>id.endsWith('/studio-word-numbering')?numberExports:id.endsWith('/studio-word-tabs')?tabExports:require(id), DOMParser:xml.DOMParser, XMLSerializer:xml.XMLSerializer,
 });
@@ -86,7 +90,7 @@ runInNewContext(
   {
     exports,
     require: (id) =>
-      id.endsWith('/studio-word-image-crop')?imageExports:id.endsWith('/studio-word-table-rows')?rowExports:id.endsWith('/studio-word-surface')?surfaceExports:id==='./studio-word-surface-codec'?surfaceCodecExports:id.endsWith('/studio-word-numbering') ? numberExports : id === './studio-word-numbering-codec' ? numberCodecExports : id.endsWith('/studio-word-tabs') ? tabExports : id.endsWith('/studio-word-paragraph-format')
+      id === './studio-word-math-codec' ? mathCodecExports : id.endsWith('/studio-word-image-crop')?imageExports:id.endsWith('/studio-word-table-rows')?rowExports:id.endsWith('/studio-word-surface')?surfaceExports:id==='./studio-word-surface-codec'?surfaceCodecExports:id.endsWith('/studio-word-numbering') ? numberExports : id === './studio-word-numbering-codec' ? numberCodecExports : id.endsWith('/studio-word-tabs') ? tabExports : id.endsWith('/studio-word-paragraph-format')
         ? paragraphExports
         : id.endsWith('/studio-word-metrics')
           ? metricExports
@@ -1629,5 +1633,110 @@ test('replacing a floating picture retains page anchor, offsets, layering and vi
     assert.deepEqual(JSON.parse(JSON.stringify(picture.attrs.layout)), before);
     assert.equal(picture.attrs.src, `data:image/jpeg;base64,${JPEG}`);
     assert.equal(picture.attrs.width, 300); assert.equal(picture.attrs.height, 150);
+  }
+});
+
+
+test('native OMML fractions, scripts, roots and matrices retain editable structures through repeated DOCX saves', async () => {
+  const t = text => ({ kind: 'text', text });
+  const equation = { kind: 'row', children: [{ kind: 'fraction', numerator: { kind: 'script', base: t('x'), sub: t('i'), sup: t('2') }, denominator: { kind: 'radical', body: t('y'), degree: t('3') } }, { kind: 'delimiter', left: '[', right: ']', body: { kind: 'matrix', rows: [[t('1'), t('2')], [t('3'), t('4')]] } }] };
+  let current = model([p({ type: 'mathEquation', attrs: { equation } })]);
+  for (let pass = 0; pass < 2; pass++) {
+    const file = await exportStudioWord(current);
+    const zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const native = await zip.file('word/document.xml').async('string');
+    assert.match(native, /<m:oMath/); assert.match(native, /<m:sSubSup/); assert.match(native, /<m:mr/);
+    current = await importStudioWord(file, `Equation-${pass}.docx`);
+    assert.deepEqual(JSON.parse(JSON.stringify(find(current.content, 'mathEquation')[0].attrs.equation)), equation);
+  }
+});
+
+test('unsupported OMML attributes and hidden degree content fail instead of silently losing data', async () => {
+  const M = 'http://schemas.openxmlformats.org/officeDocument/2006/math';
+  for (const source of [
+    `<m:oMath xmlns:m="${M}"><m:r m:custom="lost"><m:t>x</m:t></m:r></m:oMath>`,
+    `<m:oMath xmlns:m="${M}"><m:r><m:rPr><m:sty m:val="bad"/></m:rPr><m:t>x</m:t></m:r></m:oMath>`,
+    `<m:oMathPara xmlns:m="${M}"><m:oMathParaPr><m:jc m:val="bad"/></m:oMathParaPr><m:oMath><m:r><m:t>x</m:t></m:r></m:oMath></m:oMathPara>`,
+    `<m:oMathPara xmlns:m="${M}"><m:oMath><m:r><m:t>x</m:t></m:r></m:oMath><m:oMath><m:r><m:t>y</m:t></m:r></m:oMath></m:oMathPara>`,
+    `<m:oMath xmlns:m="${M}" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><m:r><w:rPr><w:rFonts w:ascii="Arial" w:eastAsia="SimSun"/></w:rPr><m:t>x</m:t></m:r></m:oMath>`,
+    `<m:oMath xmlns:m="${M}" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><m:r><w:rPr><w:color w:val="auto"/></w:rPr><m:t>x</m:t></m:r></m:oMath>`,
+    `<m:oMath xmlns:m="${M}" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><m:r><w:rPr><w:sz w:val="1"/></w:rPr><m:t>x</m:t></m:r></m:oMath>`,
+    `<m:oMath xmlns:m="${M}" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><m:r><w:rPr>lost<w:b/></w:rPr><m:t>x</m:t></m:r></m:oMath>`,
+    `<m:oMath xmlns:m="${M}" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><m:r><w:rPr><w:b/><w:b w:val="0"/></w:rPr><m:t>x</m:t></m:r></m:oMath>`,
+    `<m:oMath xmlns:m="${M}" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><m:r><w:rPr><w:u w:val="double"/></w:rPr><m:t>x</m:t></m:r></m:oMath>`,
+    `<m:oMath xmlns:m="${M}">lost<m:r><m:t>x</m:t></m:r></m:oMath>`,
+    `<m:oMath xmlns:m="${M}"><m:r><m:rPr/><m:rPr/><m:t>x</m:t></m:r></m:oMath>`,
+    `<m:oMath xmlns:m="${M}"><m:rad><m:deg/><m:deg/><m:e><m:r><m:t>x</m:t></m:r></m:e></m:rad></m:oMath>`,
+    `<m:oMath xmlns:m="${M}"><m:d><m:dPr><m:begChr m:val="("/><m:begChr m:val="["/></m:dPr><m:e><m:r><m:t>x</m:t></m:r></m:e></m:d></m:oMath>`,
+    `<m:oMath xmlns:m="${M}"><m:d><m:dPr><begChr xmlns="urn:other" m:val="("/></m:dPr><m:e><m:r><m:t>x</m:t></m:r></m:e></m:d></m:oMath>`,
+    `<m:oMath xmlns:m="${M}"><m:rad><m:radPr><m:degHide m:val="1"/></m:radPr><m:deg><m:r><m:t>3</m:t></m:r></m:deg><m:e><m:r><m:t>x</m:t></m:r></m:e></m:rad></m:oMath>`,
+  ]) {
+    assert.throws(() => mathCodecExports.readWordMath(parse(source).documentElement));
+  }
+});
+
+test('local equation run formatting and surrounding bold marks survive two native DOCX saves', async () => {
+  const equation = { kind: 'fraction', numerator: { kind: 'text', text: 'x', format: { bold: false, italic: true, underline: true } }, denominator: { kind: 'text', text: '2', format: { strike: true } } };
+  let current = model([p({ type: 'mathEquation', attrs: { equation }, marks: [{ type: 'bold' }] })]);
+  const expected = { kind: 'fraction', numerator: { ...equation.numerator }, denominator: { ...equation.denominator, format: { bold: true, strike: true } } };
+  for (let pass = 0; pass < 2; pass++) {
+    const file = await exportStudioWord(current);
+    const zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const source = await zip.file('word/document.xml').async('string');
+    assert.match(source, /<w:b w:val="0"/);
+    assert.match(source, /<w:u w:val="single"/);
+    current = await importStudioWord(file, `Formatted-equation-${pass}.docx`);
+    assert.deepEqual(JSON.parse(JSON.stringify(find(current.content, 'mathEquation')[0].attrs.equation)), expected);
+  }
+});
+
+test('separate mathematical and Word run property namespaces retain legitimate local formatting', () => {
+  const source = '<m:oMath xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><m:r><m:rPr/><w:rPr><w:b/><w:i w:val="0"/></w:rPr><m:t>x</m:t></m:r></m:oMath>';
+  assert.deepEqual(JSON.parse(JSON.stringify(mathCodecExports.readWordMath(parse(source).documentElement))), { kind: 'text', text: 'x', format: { bold: true, italic: false } });
+});
+
+test('equation typography retains local overrides and surrounding textStyle through repeated DOCX saves', async () => {
+  const inherited = { fontFamily: 'Cambria Math', fontSize: '16px', color: '#123', backgroundColor: '#eeeeff', letterSpacing: -0.05, baselineShift: 1.5 };
+  const local = { fontFamily: 'Arial', fontSize: '14.5pt', color: '#aa2244', backgroundColor: '#ddffee', letterSpacing: '0.1pt', baselineShift: '-2pt', script: 'subscript' };
+  const equation = { kind: 'fraction', numerator: { kind: 'text', text: 'x', format: local }, denominator: { kind: 'text', text: 'y' } };
+  let current = model([p({ type: 'mathEquation', attrs: { equation }, marks: [{ type: 'textStyle', attrs: inherited }, { type: 'superscript' }] })]);
+  const expected = { ...equation, denominator: { ...equation.denominator, format: { ...inherited, fontSize: '12pt', color: '#112233', letterSpacing: '-0.05pt', baselineShift: '1.5pt', script: 'superscript' } } };
+  for (let pass = 0; pass < 2; pass++) {
+    const file = await exportStudioWord(current);
+    const zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const source = await zip.file('word/document.xml').async('string');
+    assert.match(source, /<w:sz w:val="29"/); assert.match(source, /<w:spacing w:val="-1"/); assert.match(source, /<w:position w:val="-4"/);
+    current = await importStudioWord(file, `Typography-equation-${pass}.docx`);
+    assert.deepEqual(JSON.parse(JSON.stringify(find(current.content, 'mathEquation')[0].attrs.equation)), expected);
+  }
+});
+
+test('native display OMML and mathematical styles import, edit and reopen twice with alignment intact', async () => {
+  const M = 'http://schemas.openxmlformats.org/officeDocument/2006/math';
+  for (const align of ['left', 'center', 'right', 'centerGroup']) {
+    const native = await fixture(`<w:p><m:oMathPara xmlns:m="${M}"><m:oMathParaPr><m:jc m:val="${align}"/></m:oMathParaPr><m:oMath><m:f><m:num><m:r><m:rPr><m:sty m:val="bi"/></m:rPr><m:t>x</m:t></m:r></m:num><m:den><m:r><m:rPr><m:sty m:val="p"/></m:rPr><m:t>2</m:t></m:r></m:den></m:f></m:oMath></m:oMathPara></w:p>`);
+    let current = await importStudioWord(native, 'Native-display.docx');
+    const equation = find(current.content, 'mathEquation')[0].attrs.equation;
+    assert.equal(equation.kind, 'display'); assert.equal(equation.align, align);
+    assert.deepEqual(JSON.parse(JSON.stringify(equation.body.numerator.format)), { bold: true, italic: true });
+    equation.body.numerator.text = 'x+1';
+    const expected = JSON.parse(JSON.stringify(equation));
+    for (let pass = 0; pass < 2; pass++) {
+      const file = await exportStudioWord(current);
+      const zip = await JSZip.loadAsync(await file.arrayBuffer());
+      const source = await zip.file('word/document.xml').async('string');
+      assert.match(source, /<m:oMathPara/); assert.match(source, /<m:sty m:val="bi"/);
+      current = await importStudioWord(file, `Display-${pass}.docx`);
+      assert.deepEqual(JSON.parse(JSON.stringify(find(current.content, 'mathEquation')[0].attrs.equation)), expected);
+    }
+  }
+});
+
+test('equation Unicode and carriage returns survive native XML whitespace normalization', async () => {
+  const equation = { kind: 'text', text: '😀\r\n\t𝑥' };
+  let current = model([p({ type: 'mathEquation', attrs: { equation } })]);
+  for (let pass = 0; pass < 2; pass++) {
+    current = await importStudioWord(await exportStudioWord(current), 'Unicode-math.docx');
+    assert.equal(find(current.content, 'mathEquation')[0].attrs.equation.text, equation.text);
   }
 });
