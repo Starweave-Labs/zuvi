@@ -2919,3 +2919,31 @@ it('opens an internal link across regions in readonly without editing document d
   expect((header as HTMLElement & { editor: Editor }).editor.state.selection.to).toBe(8);
   expect(onChange).not.toHaveBeenCalled();
 });
+
+it('disables the bookmark management entry when the Word component is disabled', async () => {
+  await mount({ disabled: true });
+  fireEvent.click(screen.getByRole('tab', { name: '引用' }));
+  expect(screen.getByRole('button', { name: '书签' })).toBeDisabled();
+});
+
+it('rejects an internal link draft after the bookmark target region changes', async () => {
+  const model = documentModel('Link');
+  model.header = { type: 'doc', content: [{ type: 'paragraph', content: [
+    { type: 'wordBookmark', attrs: { id: '3', name: 'Here', end: false } },
+    { type: 'text', text: 'Header' },
+    { type: 'wordBookmark', attrs: { id: '3', name: 'Here', end: true } },
+  ] }] };
+  const { textbox } = await mount({ document: model });
+  const header = await screen.findByRole('textbox', { name: 'Word 页眉' });
+  const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+  const regionEditor = (header as HTMLElement & { editor: Editor }).editor;
+  act(() => editor.commands.setTextSelection({ from: 1, to: 5 }));
+  fireEvent.click(screen.getByRole('tab', { name: '引用' }));
+  fireEvent.click(screen.getByRole('button', { name: '链接' }));
+  fireEvent.change(screen.getByLabelText('链接地址'), { target: { value: '#Here' } });
+  const original = editor.getJSON();
+  act(() => { regionEditor.view.dispatch(regionEditor.state.tr.insertText('Changed', 2)); });
+  fireEvent.click(screen.getByRole('button', { name: '应用链接' }));
+  expect(screen.getByRole('alert')).toHaveTextContent('文档已变化');
+  expect(editor.getJSON()).toEqual(original);
+});

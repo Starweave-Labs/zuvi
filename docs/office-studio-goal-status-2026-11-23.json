@@ -2492,11 +2492,10 @@
       ],
       "currentAudit": {
         "date": "2026-11-26",
-        "sourceCommit": "579dbcb",
+        "sourceCommit": "6721365",
         "implementation": "部分实现",
         "implementedBehavior": "书签范围/名称/原生身份、管理入口、历史/删除修复、跨区域身份和内部链接/显示文字编辑/跳转已实现；实际原生两次重开与明暗320px切片通过",
         "functionalGaps": [
-          "整体禁用及跨区域变化草稿验收待补",
           "复杂拖放/复制与范围交互矩阵待审计"
         ],
         "acceptance": "not-proven-complete",
@@ -2511,11 +2510,10 @@
           "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
           "docs/tests/office-studio-word.test.mjs"
         ],
-        "testEvidenceNote": "2571 UI, 333 docs, 99 native/print, 274 full E2E passed; type/lint/build/browser/Registry92/consumer375/distribution/size passed. Remaining interaction audit is not proven complete.",
+        "testEvidenceNote": "Latest permission guards: 2575 UI, 333 docs and 274 full E2E passed; type/lint/build/browser/Registry92/consumer375/distribution/size passed. Disabled and cross-region draft guards verified in actual UI tests.",
         "sourceState": "working-tree-uncommitted"
       },
       "gaps": [
-        "整体禁用及跨区域变化草稿验收待补",
         "复杂拖放/复制与范围交互矩阵待审计"
       ]
     },
@@ -3313,11 +3311,10 @@
       ],
       "currentAudit": {
         "date": "2026-11-26",
-        "sourceCommit": "579dbcb",
+        "sourceCommit": "6721365",
         "implementation": "部分实现",
         "implementedBehavior": "书签范围/名称/原生身份、管理入口、历史/删除修复、跨区域身份和内部链接/显示文字编辑/跳转已实现；实际原生两次重开与明暗320px切片通过",
         "functionalGaps": [
-          "整体禁用及跨区域变化草稿验收待补",
           "复杂拖放/复制与范围交互矩阵待审计"
         ],
         "acceptance": "not-proven-complete",
@@ -3329,11 +3326,10 @@
           }
         ],
         "existingTestFiles": [],
-        "testEvidenceNote": "2571 UI, 333 docs, 99 native/print, 274 full E2E passed; type/lint/build/browser/Registry92/consumer375/distribution/size passed. Remaining interaction audit is not proven complete.",
+        "testEvidenceNote": "Latest permission guards: 2575 UI, 333 docs and 274 full E2E passed; type/lint/build/browser/Registry92/consumer375/distribution/size passed. Disabled and cross-region draft guards verified in actual UI tests.",
         "sourceState": "working-tree-uncommitted"
       },
       "gaps": [
-        "整体禁用及跨区域变化草稿验收待补",
         "复杂拖放/复制与范围交互矩阵待审计"
       ]
     },

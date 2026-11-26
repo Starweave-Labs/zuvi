@@ -440,7 +440,7 @@ export function StudioWord({
   const [tableHeader, setTableHeader] = React.useState(true);
   const [bookmarkEditor, setBookmarkEditor] = React.useState<Editor | null>(null);
   const [linkOpen, setLinkOpen] = React.useState(false);
-  const linkSnapshot = React.useRef<{ editor: Editor; doc: Editor['state']['doc']; selection: Editor['state']['selection'] } | null>(null);
+  const linkSnapshot = React.useRef<{ editor: Editor; doc: Editor['state']['doc']; selection: Editor['state']['selection']; regions: { editor: Editor; doc: Editor['state']['doc'] }[] } | null>(null);
   const [linkComposing, setLinkComposing] = React.useState(false);
   const [linkText, setLinkText] = React.useState('');
   const linkInitialText = React.useRef('');
@@ -962,13 +962,13 @@ export function StudioWord({
     const text = editor.state.doc.textBetween(editor.state.selection.from, editor.state.selection.to, '\n', '\ufffc');
     linkInitialText.current = text; setLinkText(text);
     setLinkHref(editor.getAttributes('link').href || ''); setLinkError('');
-    linkSnapshot.current = { editor, doc: editor.state.doc, selection: editor.state.selection };
+    linkSnapshot.current = { editor, doc: editor.state.doc, selection: editor.state.selection, regions: [bodyEditor, ...Object.values(regions)].filter((item): item is Editor => !!item && !item.isDestroyed).map(item => ({ editor: item, doc: item.state.doc })) };
     setLinkOpen(true);
   };
   const applyLink = () => {
     if (!editor || !editable || editor.view.composing || linkComposing) return;
     const snapshot = linkSnapshot.current;
-    if (!snapshot || snapshot.editor !== editor || snapshot.doc !== editor.state.doc) { setLinkError('文档已变化，请重新打开链接编辑。'); return; }
+    if (!snapshot || snapshot.editor !== editor || snapshot.doc !== editor.state.doc || snapshot.regions.some(item => item.editor.isDestroyed || item.editor.state.doc !== item.doc)) { setLinkError('文档已变化，请重新打开链接编辑。'); return; }
     const href = linkHref.trim();
     try {
       if (href.startsWith('#')) {
@@ -1280,7 +1280,7 @@ export function StudioWord({
       data-nonprinting={showNonprinting || undefined}
       onClick={(event) => {
         const anchor = event.target instanceof Element ? event.target.closest('a[href^="#"]') : null;
-        if (anchor && (!editable || event.ctrlKey || event.metaKey)) {
+        if (anchor && !disabled && (!editable || event.ctrlKey || event.metaKey)) {
           event.preventDefault();
           const name = anchor.getAttribute('href')!.slice(1);
           for (const [targetRegion, current] of [['content', bodyEditor], ['header', regions.header], ['footer', regions.footer]] as const) {
@@ -2470,7 +2470,7 @@ export function StudioWord({
         </Tabs.Panel>
         <Tabs.Panel value="references" className="zuvi-studio-word-tool-row">
           <RibbonGroup label="书签">
-            <Button variant="ghost" size="sm" disabled={!editor} onMouseDown={keepSelection} onClick={() => { if (editor) setBookmarkEditor(editor); }}>书签</Button>
+            <Button variant="ghost" size="sm" disabled={!editor || disabled} onMouseDown={keepSelection} onClick={() => { if (editor && !disabled) setBookmarkEditor(editor); }}>书签</Button>
           </RibbonGroup>
           <RibbonGroup label="目录">
             <Button
@@ -3251,7 +3251,7 @@ export function StudioWord({
           </Modal.Footer>
         </Modal.Content>
       </Modal>
-      {bookmarkEditor && <StudioWordBookmarkDialog editor={bookmarkEditor} otherEditors={[bodyEditor, ...Object.values(regions)].filter((item): item is Editor => !!item && item !== bookmarkEditor)} onClose={() => setBookmarkEditor(null)} />}
+      {bookmarkEditor && <StudioWordBookmarkDialog editor={bookmarkEditor} disabled={disabled} otherEditors={[bodyEditor, ...Object.values(regions)].filter((item): item is Editor => !!item && item !== bookmarkEditor)} onClose={() => setBookmarkEditor(null)} />}
       <Modal open={linkOpen && editable} onOpenChange={setLinkOpen}>
         <Modal.Content size="sm">
           <Modal.Header>

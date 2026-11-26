@@ -1,0 +1,20 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/studio-word-bookmarks.test.ts (7 tests) 98ms
+ ✓ src/components/OfficeStudio/StudioWordBookmarkDialog.test.tsx (2 tests) 115ms
+ ✓ src/components/OfficeStudio/StudioWord.test.tsx (116 tests) 17911ms
+   ✓ Word paragraph dialog and ruler > edits inherited tab stops through ZUVI controls with precision checks, cancellation and one history step 450ms
+   ✓ Word paragraph dialog and ruler > keeps mixed pagination flags unchanged until edited, commits once, and blocks an open dialog after permission changes 412ms
+   ✓ StudioWord named paragraph styles > creates, applies, modifies and deletes a named style with real undo and redo 397ms
+   ✓ StudioWord named paragraph styles > updates body and header bindings while preserving direct formatting in another paragraph 307ms
+   ✓ StudioWord structured editing > restores rejected controlled edits so the canvas and saved model agree 403ms
+   ✓ StudioWord structured editing > changes picture wrapping, position and anchor flags and restores them with undo 603ms
+   ✓ inserts a table formula through ZUVI dialog, keeps cancelled drafts and refreshes in a separate undo transaction 359ms
+   ✓ applies image crop through the toolbar, cancels drafts and restores crop with undo and redo 346ms
+   ✓ inserts a structured fraction through the actual math dialog and undoes it atomically 352ms
+
+ Test Files  3 passed (3)
+      Tests  125 passed (125)
+   Start at  15:00:08
+   Duration  19.32s (transform 618ms, setup 322ms, collect 1.36s, tests 18.12s, environment 898ms, prepare 116ms)

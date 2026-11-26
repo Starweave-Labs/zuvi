@@ -27,3 +27,13 @@ DOCX导入不再跳过bookmarkStart/End，保留原生编号/名称和跨段范�
 下一项W026源码核对：studio-word-codec.ts parseTable仅读colspan/rowspan/colwidth/backgroundColor，导出checkAttrs也仅允许四项，原生vAlign/tcMar当前不读写。后续需要垂直对齐/四侧内边距模型、九宫格/数值实际入口、原生twips保存，以及固定行高/分页单元格测量与打印联动，不能只加CSS。该检查不代表已实现。
 
 全量E2E终态：274项全部通过，完整日志见full-e2e.txt。恢复非本批历史audits为HEAD字节。本批仍保留整体禁用与跨区域变化草稿等待审范围，不作159项完成声明。
+
+6721365之后权限续修（未提交）：整体disabled禁用书签管理入口、已打开弹窗的输入/删除/跳转和内部链接点击；弹窗快照收集其他区域文档并订阅其事务，任一区域内容变化禁用添加/删除草稿。两项实际弹窗测试通过，类型/lint及完整Word/书签回归通过，见guards-ui.txt。新增disabled入口专项包含在本次回归中。最后修改后的浏览器与全仓回归尚未运行；链接目标区域变化草稿仍需单独审计。
+
+链接跨区域草稿续修：打开弹窗快照收集正文/页眉/页脚editor和各自doc；任一目标区域内容变化或editor销毁后提交拒绝。实际页眉目标变化、正文保持不变专项通过；Word/书签125项与类型/lint/build/browser通过。本轮浏览器往返复验已启动，终态待归档；仍未做最终全量E2E，不沿用6721365的274绿灯证明最后源码。
+
+权限续修最终专项：最新源码全UI2575、docs333、Registry92/消费者375/分发/体积通过，入口124924<124928 gzip字节，浏览器专项5.6秒通过。完整E2E已启动，活跃session34012，日志/tmp/zuvi-bookmark-permissions-full-e2e.txt；终态待确认。源码/浏览器产物冻结，本轮未提交。
+
+W026参考续核：固定sdkjs word/api.js:5975 set_AlignCell以及set_SpacingBetweenCells为无操作空包装，不能据此声称行为已学习。实际tblApply:6006-6045检查changestype_Table_Properties锁，以StartAction(Document_ApplyTablePr)→SetTableProps→FinalizeAction提交；Document.js:7318委派Controller.SetTableProps，21567委派当前table。ZUVI后续单元格属性需进入同一事务并参与分页/打印，不依赖空入口。
+
+权限续修终态：最新全量E2E274项全部通过，日志permissions-full-e2e.txt；全UI2575、docs333及类型/lint/构建/browser/Registry92/消费者375/分发/体积通过。整体禁用及跨区域草稿守卫有实际回归证据；复杂复制拖放范围矩阵继续待审，不作159项完成声明。
