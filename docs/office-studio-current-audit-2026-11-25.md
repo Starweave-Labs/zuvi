@@ -47,7 +47,7 @@
 | W035 | WordArt与SmartArt | 未实现 | 没有对应图形编辑节点 | 缺 WordArt/SmartArt 结构和原生保存 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W036 | 图表与嵌入对象 | 未实现 | Word 内无图表数据/嵌入对象内核 | 缺创建、数据编辑、激活和保存；嵌入对象拒绝 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W037 | 数学公式 | 部分实现 | ZUVI结构/局部格式/段落对齐、MathML画布HTML打印、OMML与真实DOCX两次重开、历史取消及明暗320px专项通过 | 多oMath同组已补模型/实际入口/原生两次重开及明暗320px；更多原生复杂区域组合和操作系统IME未证实，本轮全仓检查/E2E271通过，完整验收仍待补 | `studio-word-math.ts`；`office-studio-word-math.spec.ts`；`word-math/README.md` |
-| W038 | 超链接 | 部分实现 | 外部链接创建编辑删除与 DOCX 保存 | 缺内部书签链接；原生内部链接拒绝 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
+| W038 | 超链接 | 部分实现 | 内外链接/显示文字混合格式、原生anchor两次重开、历史/草稿/IME及跨区域跳转 | 最后续修全E2E和完整交互矩阵待闭环 | `docs/audits/2026-11-26/word-bookmarks/` |
 | W039 | 纸张方向页边距 | 部分实现 | A4/Letter、方向、统一页边距 | 缺按节、自定义纸张及四侧独立边距；多节拒绝 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W040 | 分页符与空白页 | 部分实现 | 显式 pageBreak 可插入和原生保存 | 连续画布没有完整空白页管理及页级删除验收 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W041 | 分节符四种类型 | 未实现 | 页面设置仅单节 | 四种分节类型缺模型/入口，原生分节拒绝 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
@@ -61,7 +61,7 @@
 | W049 | 大纲导航 | 基础实现 | 标题层级列表与光标跳转，随文档更新 | 全部修改/只读/跨区域浏览器验收矩阵待补 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W050 | 自动目录域 | 未实现 | 目录标签仅提供大纲导航 | 缺 TOC 域生成、页码链接、更新删除 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W051 | 脚注与尾注 | 未实现 | 没有脚注/尾注节点 | 引用原生内容拒绝；缺编号、转换与正文联动 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
-| W052 | 书签 | 未实现 | DOCX bookmarkStart/End 被跳过 | 书签身份会丢失；缺校验、管理、跳转、保存 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
+| W052 | 书签 | 部分实现 | 原生起止身份/跨段范围、管理/名称校验/历史/删除修复、只读跳转和两次DOCX重开 | 跨区域草稿变化及复杂拖放/复制待审，最终全E2E进行中 | `docs/audits/2026-11-26/word-bookmarks/` |
 | W053 | 交叉引用 | 未实现 | 仅外部链接和页码域 | 缺高级引用与目标更新 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W054 | 题注与图表目录 | 未实现 | 没有题注类型与编号模型 | 缺章节号、题注和图表目录 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |
 | W055 | 域代码与更新 | 部分实现 | PAGE/NUMPAGES 域读写 | 缺任意域代码、锁定、刷新和编辑器结果计算 | `StudioWord.tsx:156`；`studio-word-codec.ts:60` |

@@ -1,4 +1,6 @@
 'use client';
+import { WordBookmark, wordBookmarkName, wordBookmarks, wordGoToBookmark } from './studio-word-bookmarks';
+import { StudioWordBookmarkDialog } from './StudioWordBookmarkDialog';
 import { StudioWordMathDialog } from './StudioWordMathDialog';
 import { WordMath, wordSetMath } from './studio-word-math-extension';
 import { StudioWordImageCropDialog } from './StudioWordImageCropDialog';
@@ -131,6 +133,7 @@ const PageBreak = Node.create({
 const numberedContent=(root:StudioRichNode,styles:StudioWordParagraphStyle[],catalog?:WordNumberingCatalog)=>materializeWordNumbering(materializeStudioWordStyles(root,styles),catalog);
 
 const EXTENSIONS = [
+  WordBookmark,
   StarterKit.configure({
     heading: { levels: [1, 2, 3, 4, 5, 6] },
     link: { openOnClick: false, autolink: false, defaultProtocol: 'https' },
@@ -435,7 +438,12 @@ export function StudioWord({
   const [rowDialog, setRowDialog] = React.useState<{ editor: Editor; doc: Editor['state']['doc']; selection: Editor['state']['selection']; rows: ReturnType<typeof wordSelectedRows> } | null>(null);
   const [tableColumns, setTableColumns] = React.useState('3');
   const [tableHeader, setTableHeader] = React.useState(true);
+  const [bookmarkEditor, setBookmarkEditor] = React.useState<Editor | null>(null);
   const [linkOpen, setLinkOpen] = React.useState(false);
+  const linkSnapshot = React.useRef<{ editor: Editor; doc: Editor['state']['doc']; selection: Editor['state']['selection'] } | null>(null);
+  const [linkComposing, setLinkComposing] = React.useState(false);
+  const [linkText, setLinkText] = React.useState('');
+  const linkInitialText = React.useRef('');
   const [linkHref, setLinkHref] = React.useState('');
   const [linkError, setLinkError] = React.useState('');
   const [contentRequest, setContentRequest] = React.useState(0);
@@ -948,26 +956,57 @@ export function StudioWord({
     updateImage(patch);
   };
 
-  const applyLink = () => {
+  const openLink = () => {
     if (!editor || !editable) return;
+    editor.commands.extendMarkRange('link');
+    const text = editor.state.doc.textBetween(editor.state.selection.from, editor.state.selection.to, '\n', '\ufffc');
+    linkInitialText.current = text; setLinkText(text);
+    setLinkHref(editor.getAttributes('link').href || ''); setLinkError('');
+    linkSnapshot.current = { editor, doc: editor.state.doc, selection: editor.state.selection };
+    setLinkOpen(true);
+  };
+  const applyLink = () => {
+    if (!editor || !editable || editor.view.composing || linkComposing) return;
+    const snapshot = linkSnapshot.current;
+    if (!snapshot || snapshot.editor !== editor || snapshot.doc !== editor.state.doc) { setLinkError('文档已变化，请重新打开链接编辑。'); return; }
     const href = linkHref.trim();
-    if (!href) {
-      editor.chain().focus().extendMarkRange('link').unsetLink().run();
-    } else {
-      let protocol = '';
-      try {
-        protocol = new URL(href).protocol;
-      } catch {
-        setLinkError('请输入完整的 https://、http:// 或 mailto: 地址。');
-        return;
+    try {
+      if (href.startsWith('#')) {
+        const name = wordBookmarkName(href.slice(1));
+        if (![bodyEditor, ...Object.values(regions)].some(item => item && wordBookmarks(item.state.doc).some(range => range.name === name))) throw new Error('目标书签不存在。');
+      } else if (href && !['https:', 'http:', 'mailto:'].includes(new URL(href).protocol)) throw new Error('链接仅支持 https://、http:// 和 mailto: 地址。');
+      const changedText = href && linkText !== linkInitialText.current;
+      if (changedText && (!linkText || /[\r\n\ufffc]/.test(linkText))) throw new Error('链接显示文字不能为空，也不能包含换行或对象。');
+      if (changedText) {
+        if (snapshot.selection.$from.parent !== snapshot.selection.$to.parent) throw new Error('显示文字替换须位于同一段落。');
+        snapshot.doc.nodesBetween(snapshot.selection.from, snapshot.selection.to, node => {
+          if (node.isInline && !node.isText) throw new Error('选区含书签或对象，请仅选择链接文字。');
+        });
       }
-      if (!['https:', 'http:', 'mailto:'].includes(protocol)) {
-        setLinkError('链接仅支持 https://、http:// 和 mailto: 地址。');
-        return;
+      const transaction = closeHistory(editor.state.tr).setSelection(snapshot.selection);
+      const from = snapshot.selection.from;
+      let to = snapshot.selection.to;
+      if (changedText) {
+        const runs: { text: string; marks: ReturnType<typeof snapshot.doc.resolve>['marks'] extends () => infer M ? M : never }[] = [];
+        snapshot.doc.nodesBetween(from, to, (node, pos) => {
+          if (node.isText) runs.push({ text: node.text!.slice(Math.max(0, from - pos), Math.min(node.nodeSize, to - pos)), marks: node.marks.filter(mark => mark.type.name !== 'link') });
+        });
+        const originalMarks = runs.flatMap(run => Array.from({ length: run.text.length }, () => run.marks));
+        const fallback = snapshot.doc.resolve(from).marks().filter(mark => mark.type.name !== 'link');
+        let offset = 0;
+        const replacement = Array.from(linkText, character => {
+          const marks = originalMarks[Math.min(offset, originalMarks.length - 1)] || fallback;
+          offset += character.length;
+          return editor.schema.text(character, marks);
+        });
+        transaction.replaceWith(from, to, replacement);
+        to = from + linkText.length;
       }
-      editor.chain().focus().extendMarkRange('link').setLink({ href }).run();
-    }
-    setLinkOpen(false);
+      if (href && from === to) throw new Error('请选择链接显示文字，或输入显示文字。');
+      transaction.removeMark(from, to, editor.schema.marks.link);
+      if (href) transaction.addMark(from, to, editor.schema.marks.link.create({ href }));
+      editor.view.dispatch(transaction.scrollIntoView()); editor.view.focus(); setLinkOpen(false);
+    } catch (cause) { setLinkError((cause as Error).message || '请输入完整链接地址。'); }
   };
 
   const fontOptions = FONT_OPTIONS;
@@ -1240,6 +1279,18 @@ export function StudioWord({
       data-readonly={!editable || undefined}
       data-nonprinting={showNonprinting || undefined}
       onClick={(event) => {
+        const anchor = event.target instanceof Element ? event.target.closest('a[href^="#"]') : null;
+        if (anchor && (!editable || event.ctrlKey || event.metaKey)) {
+          event.preventDefault();
+          const name = anchor.getAttribute('href')!.slice(1);
+          for (const [targetRegion, current] of [['content', bodyEditor], ['header', regions.header], ['footer', regions.footer]] as const) {
+            if (!current || current.isDestroyed) continue;
+            try {
+              if (wordGoToBookmark(current, name, true)) { setRegion(targetRegion); break; }
+            } catch { /* An invalid region does not prevent checking other regions. */ }
+          }
+          return;
+        }
         const image =
           event.target instanceof HTMLElement ? event.target.closest('img[data-word-image]') : null;
         if (!image) return;
@@ -2092,9 +2143,7 @@ export function StudioWord({
               disabled={toolsDisabled}
               onMouseDown={keepSelection}
               onClick={() => {
-                setLinkHref(editor?.getAttributes('link').href || '');
-                setLinkError('');
-                setLinkOpen(true);
+                openLink();
               }}
             >
               链接
@@ -2420,6 +2469,9 @@ export function StudioWord({
           </RibbonGroup>
         </Tabs.Panel>
         <Tabs.Panel value="references" className="zuvi-studio-word-tool-row">
+          <RibbonGroup label="书签">
+            <Button variant="ghost" size="sm" disabled={!editor} onMouseDown={keepSelection} onClick={() => { if (editor) setBookmarkEditor(editor); }}>书签</Button>
+          </RibbonGroup>
           <RibbonGroup label="目录">
             <Button
               variant="ghost"
@@ -2452,9 +2504,7 @@ export function StudioWord({
               disabled={toolsDisabled}
               onMouseDown={keepSelection}
               onClick={() => {
-                setLinkHref(editor?.getAttributes('link').href || '');
-                setLinkError('');
-                setLinkOpen(true);
+                openLink();
               }}
             >
               链接
@@ -3201,6 +3251,7 @@ export function StudioWord({
           </Modal.Footer>
         </Modal.Content>
       </Modal>
+      {bookmarkEditor && <StudioWordBookmarkDialog editor={bookmarkEditor} otherEditors={[bodyEditor, ...Object.values(regions)].filter((item): item is Editor => !!item && item !== bookmarkEditor)} onClose={() => setBookmarkEditor(null)} />}
       <Modal open={linkOpen && editable} onOpenChange={setLinkOpen}>
         <Modal.Content size="sm">
           <Modal.Header>
@@ -3212,6 +3263,8 @@ export function StudioWord({
               链接地址
               <Input
                 aria-label="链接地址"
+                onCompositionStart={() => setLinkComposing(true)}
+                onCompositionEnd={() => setLinkComposing(false)}
                 value={linkHref}
                 onChange={(event) => {
                   setLinkHref(event.target.value);
@@ -3223,7 +3276,12 @@ export function StudioWord({
                 }}
               />
             </label>
-            <p className="zuvi-studio-word-link-note">选择正文后添加链接；留空会移除当前链接。</p>
+            <label>显示文字<Input aria-label="链接显示文字" value={linkText} onChange={event => setLinkText(event.target.value)} onCompositionStart={() => setLinkComposing(true)} onCompositionEnd={() => setLinkComposing(false)} /></label>
+            <Select aria-label="内部书签目标" value={linkHref.startsWith('#') ? linkHref : ''} options={[{ value: '', label: '选择内部书签' }, ...[bodyEditor, ...Object.values(regions)].filter((item): item is Editor => !!item && !item.isDestroyed).flatMap(item => { try { return wordBookmarks(item.state.doc).map(range => ({ value: '#' + range.name, label: range.name })); } catch { return []; } })]} onChange={value => { if (value) setLinkHref(value); }} />
+            <Button disabled={!linkHref.startsWith('#')} onClick={() => {
+              for (const item of [bodyEditor, ...Object.values(regions)]) if (item && wordGoToBookmark(item, linkHref.slice(1), true)) { setLinkOpen(false); break; }
+            }}>跳转内部链接</Button>
+            <p className="zuvi-studio-word-link-note">选择正文后添加链接；内部目标使用 #书签名称，留空会移除当前链接。</p>
             {linkError ? (
               <p role="alert" className="zuvi-studio-word-link-error">
                 {linkError}
@@ -3234,7 +3292,7 @@ export function StudioWord({
             <Button variant="ghost" onClick={() => setLinkOpen(false)}>
               取消
             </Button>
-            <Button onClick={applyLink}>应用链接</Button>
+            <Button disabled={linkComposing} onClick={applyLink}>应用链接</Button>
           </Modal.Footer>
         </Modal.Content>
       </Modal>

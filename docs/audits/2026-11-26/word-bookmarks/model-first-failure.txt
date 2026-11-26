@@ -1,0 +1,29 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ❯ src/components/OfficeStudio/studio-word-bookmarks.test.ts (4 tests | 1 failed) 74ms
+   × Word bookmark ranges > rejects duplicate and invalid names without changing data; guards readonly and composing 9ms
+     → Cannot set property composing of #<EditorView> which has only a getter
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/OfficeStudio/studio-word-bookmarks.test.ts > Word bookmark ranges > rejects duplicate and invalid names without changing data; guards readonly and composing
+TypeError: Cannot set property composing of #<EditorView> which has only a getter
+ ❯ src/components/OfficeStudio/studio-word-bookmarks.test.ts:43:43
+     41|     expect(wordAddBookmark(editor, 'Other')).toBe(false); expect(wordR…
+     42|     expect(wordGoToBookmark(editor, 'Here')).toBe(true); expect(editor…
+     43|     editor.setEditable(true); editor.view.composing = true;
+       |                                           ^
+     44|     expect(wordAddBookmark(editor, 'Other')).toBe(false); expect(wordR…
+     45|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  14:17:36
+   Duration  944ms (transform 56ms, setup 129ms, collect 118ms, tests 74ms, environment 374ms, prepare 56ms)
+
+undefined
+/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run src/components/OfficeStudio/studio-word-bookmarks.test.ts --reporter=dot

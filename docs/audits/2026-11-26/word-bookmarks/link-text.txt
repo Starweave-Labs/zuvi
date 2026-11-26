@@ -1,0 +1,10 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/StudioWord.test.tsx (112 tests | 111 skipped) 318ms
+   ✓ edits existing link display text and address in one transaction while retaining bold formatting 317ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 111 skipped (112)
+   Start at  14:32:55
+   Duration  1.98s (transform 648ms, setup 123ms, collect 976ms, tests 318ms, environment 354ms, prepare 40ms)

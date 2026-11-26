@@ -46,6 +46,7 @@ export function wordMeasureCellLines(
     const current = walker.currentNode;
     if (current.nodeType === 1) {
       const element = current as HTMLElement;
+      if (element.matches('[data-word-bookmark]')) { position++; continue; }
       if (element.matches('[data-word-math]')) {
         const rect = element.getBoundingClientRect();
         if (rect.height > 0) {
@@ -395,7 +396,7 @@ function measure(editor: Editor): WordLayoutBlock[] {
               }
             }
           }
-          if (inline.tagName === 'BR' || inline.matches('img,[data-word-page-number],[data-word-math]')) offset++;
+          if (inline.tagName === 'BR' || inline.matches('img,[data-word-page-number],[data-word-math],[data-word-bookmark]')) offset++;
           continue;
         }
         const text = walker.currentNode as Text;

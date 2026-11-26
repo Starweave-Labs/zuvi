@@ -248,6 +248,7 @@ function rich(
   }
 
   if (node.type === 'mathEquation' || node.type === 'pageNumber' || node.type === 'tableFormula') return text;
+  if (node.type === 'wordBookmark') return '';
   if (node.type === 'hardBreak') return '<br>';
   if (node.type === 'horizontalRule') return '<hr>';
   if (node.type === 'pageBreak') return '<div class="studio-print-break"></div>';

@@ -2487,41 +2487,36 @@
       ],
       "historicalStatus": "基础已有",
       "status": "audited-partial-acceptance-pending",
-      "evidence": [],
+      "evidence": [
+        "docs/audits/2026-11-26/word-bookmarks/README.md"
+      ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
+        "date": "2026-11-26",
+        "sourceCommit": "579dbcb",
         "implementation": "部分实现",
-        "implementedBehavior": "外部链接创建编辑删除与 DOCX 保存",
+        "implementedBehavior": "书签范围/名称/原生身份、管理入口、历史/删除修复、跨区域身份和内部链接/显示文字编辑/跳转已实现；实际原生两次重开与明暗320px切片通过",
         "functionalGaps": [
-          "缺内部书签链接；原生内部链接拒绝"
+          "整体禁用及跨区域变化草稿验收待补",
+          "复杂拖放/复制与范围交互矩阵待审计"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 156,
-            "anchor": "const EXTENSIONS"
-          },
-          {
-            "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
-            "line": 60,
-            "anchor": "const UNSUPPORTED_CONTENT"
-          },
-          {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 78,
-            "anchor": "export interface StudioWordDocument"
+            "path": "docs/audits/2026-11-26/word-bookmarks/README.md",
+            "line": 1,
+            "anchor": "W052 书签与 W038 内部链接进行中"
           }
         ],
         "existingTestFiles": [
           "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
           "docs/tests/office-studio-word.test.mjs"
         ],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "testEvidenceNote": "2571 UI, 333 docs, 99 native/print, 274 full E2E passed; type/lint/build/browser/Registry92/consumer375/distribution/size passed. Remaining interaction audit is not proven complete.",
+        "sourceState": "working-tree-uncommitted"
       },
       "gaps": [
-        "缺内部书签链接；原生内部链接拒绝"
+        "整体禁用及跨区域变化草稿验收待补",
+        "复杂拖放/复制与范围交互矩阵待审计"
       ]
     },
     {
@@ -3312,39 +3307,34 @@
         "docs/tests/office-studio-word.test.mjs"
       ],
       "historicalStatus": "缺失",
-      "status": "audited-not-implemented",
-      "evidence": [],
+      "status": "audited-partial-acceptance-pending",
+      "evidence": [
+        "docs/audits/2026-11-26/word-bookmarks/README.md"
+      ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "未实现",
-        "implementedBehavior": "DOCX bookmarkStart/End 被跳过",
+        "date": "2026-11-26",
+        "sourceCommit": "579dbcb",
+        "implementation": "部分实现",
+        "implementedBehavior": "书签范围/名称/原生身份、管理入口、历史/删除修复、跨区域身份和内部链接/显示文字编辑/跳转已实现；实际原生两次重开与明暗320px切片通过",
         "functionalGaps": [
-          "书签身份会丢失；缺校验、管理、跳转、保存"
+          "整体禁用及跨区域变化草稿验收待补",
+          "复杂拖放/复制与范围交互矩阵待审计"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 156,
-            "anchor": "const EXTENSIONS"
-          },
-          {
-            "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
-            "line": 60,
-            "anchor": "const UNSUPPORTED_CONTENT"
-          },
-          {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 78,
-            "anchor": "export interface StudioWordDocument"
+            "path": "docs/audits/2026-11-26/word-bookmarks/README.md",
+            "line": 1,
+            "anchor": "W052 书签与 W038 内部链接进行中"
           }
         ],
         "existingTestFiles": [],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "testEvidenceNote": "2571 UI, 333 docs, 99 native/print, 274 full E2E passed; type/lint/build/browser/Registry92/consumer375/distribution/size passed. Remaining interaction audit is not proven complete.",
+        "sourceState": "working-tree-uncommitted"
       },
       "gaps": [
-        "书签身份会丢失；缺校验、管理、跳转、保存"
+        "整体禁用及跨区域变化草稿验收待补",
+        "复杂拖放/复制与范围交互矩阵待审计"
       ]
     },
     {

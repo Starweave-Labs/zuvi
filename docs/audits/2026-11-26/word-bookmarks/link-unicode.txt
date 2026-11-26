@@ -1,0 +1,9 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/StudioWord.test.tsx (113 tests | 112 skipped) 225ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 112 skipped (113)
+   Start at  14:34:56
+   Duration  1.85s (transform 621ms, setup 128ms, collect 905ms, tests 225ms, environment 318ms, prepare 52ms)

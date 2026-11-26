@@ -1,0 +1,23 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/studio-word-bookmarks.test.ts (4 tests) 81ms
+ ✓ src/components/OfficeStudio/StudioWord.test.tsx (110 tests) 20179ms
+   ✓ Word paragraph dialog and ruler > edits inherited tab stops through ZUVI controls with precision checks, cancellation and one history step 505ms
+   ✓ Word paragraph dialog and ruler > applies mixed paragraph values in one history step and keeps untouched values separate 383ms
+   ✓ Word paragraph dialog and ruler > keeps mixed pagination flags unchanged until edited, commits once, and blocks an open dialog after permission changes 449ms
+   ✓ Word character metrics dialog > retains invalid drafts, disables an open dialog on permission changes and cancels without writing 335ms
+   ✓ Word character metrics dialog > blocks an invalid font draft before opening and preserves an unchanged metrics dialog without history 394ms
+   ✓ StudioWord Office ribbon actions > shows nonprinting characters in the body, table, header and footer without changing data, selection or document history 487ms
+   ✓ StudioWord Office ribbon actions > applies font family and size to the selected range and restores them with undo and redo 347ms
+   ✓ StudioWord named paragraph styles > creates, applies, modifies and deletes a named style with real undo and redo 576ms
+   ✓ StudioWord structured editing > restores rejected controlled edits so the canvas and saved model agree 491ms
+   ✓ StudioWord structured editing > changes picture wrapping, position and anchor flags and restores them with undo 590ms
+   ✓ applies image crop through the toolbar, cancels drafts and restores crop with undo and redo 486ms
+   ✓ edits an existing math structure through the dialog with separate undo and redo 358ms
+   ✓ edits a math group independently in the actual header region with undo and redo 344ms
+
+ Test Files  2 passed (2)
+      Tests  114 passed (114)
+   Start at  14:26:04
+   Duration  21.83s (transform 649ms, setup 243ms, collect 1.07s, tests 20.26s, environment 732ms, prepare 103ms)

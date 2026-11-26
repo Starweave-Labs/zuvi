@@ -38,6 +38,7 @@ import {
   BorderStyle,
   Document as DocxDocument,
   ExternalHyperlink,
+  InternalHyperlink,
   Footer,
   Header,
   HeadingLevel,
@@ -258,7 +259,38 @@ function safeFont(input: string): string {
   return input;
 }
 
+function bookmarkName(input: unknown): string {
+  if (typeof input !== 'string' || !/^[\p{L}_][\p{L}\p{N}_]{0,39}$/u.test(input)) unsupported('书签名称');
+  return input as string;
+}
+function validateBookmarks(roots: StudioRichNode[], importing = false) {
+  const names = new Set<string>(), ids = new Set<string>();
+  for (const root of roots) {
+    const open = new Map<string, string>();
+    const visit = (node: StudioRichNode) => {
+      if (node.type === 'wordBookmark') {
+        checkAttrs(node, ['id', 'name', 'end']);
+        const id = node.attrs?.id;
+        if (importing && node.attrs?.end && node.attrs.name === '') node.attrs.name = open.get(String(id));
+        const name = bookmarkName(node.attrs?.name);
+        if (typeof id !== 'string' || !/^\d+$/.test(id) || typeof node.attrs?.end !== 'boolean') unsupported('书签标记');
+        if (node.attrs.end) {
+          if (open.get(id as string) !== name) unsupported('书签起止范围');
+          open.delete(id as string);
+        } else {
+          if (ids.has(id as string) || names.has(name)) unsupported('重复书签名称或编号');
+          ids.add(id as string); names.add(name); open.set(id as string, name);
+        }
+      }
+      node.content?.forEach(visit);
+    };
+    visit(root);
+    if (open.size) unsupported('书签缺少结束标记');
+  }
+}
+
 function safeLink(input: string): string {
+  if (input.startsWith('#')) return '#' + bookmarkName(input.slice(1));
   let protocol = '';
   try {
     protocol = new URL(input).protocol;
@@ -1117,7 +1149,14 @@ function parseParagraph(element: Element, context: ImportContext): ParsedParagra
       inline.push({ type: 'mathEquation', attrs: { equation: readWordMath(item) } }); continue;
     }
     if (item.namespaceURI !== W) unsupported('公式或扩展对象');
-    if (['pPr', 'proofErr', 'bookmarkStart', 'bookmarkEnd'].includes(item.localName)) continue;
+    if (['pPr', 'proofErr'].includes(item.localName)) continue;
+    if (['bookmarkStart', 'bookmarkEnd'].includes(item.localName)) {
+      const id = attr(item, 'id');
+      if (!/^\d+$/.test(id) || attr(item, 'colFirst') || attr(item, 'colLast')) unsupported('书签编号或列范围');
+      const name = item.localName === 'bookmarkStart' ? bookmarkName(attr(item, 'name')) : '';
+      inline.push({ type: 'wordBookmark', attrs: { id, name, end: item.localName === 'bookmarkEnd' } });
+      continue;
+    }
     if (item.localName === 'r' && child(item, 'fldChar')) {
       const parsed = parseComplexField(paragraphItems, index, appearance, context);
       inline.push(...parsed.nodes);
@@ -1151,10 +1190,13 @@ function parseParagraph(element: Element, context: ImportContext): ParsedParagra
     else if (item.localName === 'hyperlink') {
       const id = item.getAttributeNS(R, 'id') || item.getAttribute('r:id') || '';
       const target = context.relationships.get(id);
-      if (!target || attr(item, 'anchor')) unsupported('文档内部链接');
+      const anchor = attr(item, 'anchor');
+      if (anchor && id) unsupported('同时具有外部与内部目标的链接');
+      if (!target && !anchor) unsupported('缺失的链接目标');
+      const href = anchor ? '#' + bookmarkName(anchor) : safeLink(target!);
       for (const run of elements(item)) {
         if (run.localName !== 'r') unsupported('链接内容');
-        inline.push(...parseRun(run, context, appearance, safeLink(target)));
+        inline.push(...parseRun(run, context, appearance, href));
       }
     } else unsupported('段落内的对象、控件或修订');
   }
@@ -1588,6 +1630,7 @@ export async function importStudioWord(source: Blob, name: string): Promise<Stud
     regionDocuments[region] = model;
     if (region === 'footer' && containsCurrentPageNumber(model)) regionDocuments.pageNumbers = true;
   }
+  validateBookmarks([{ type: 'doc', content }, ...Object.values(regionDocuments).filter((value): value is StudioRichNode => typeof value === 'object')], true);
   const definitions = [...context.styleModels.values()];
   for (const definition of nativeNumbering.catalog.definitions)
     for (const level of definition.levels)
@@ -1796,6 +1839,13 @@ function inlineChildren(
   inherited?: Required<StudioWordCharacterStyle>
 ): ParagraphChild[] {
   return nodes.map((node) => {
+    if (node.type === 'wordBookmark') {
+      const name = bookmarkName(node.attrs?.name), id = String(node.attrs?.id);
+      const escape = (text: string) => text.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+      return ImportedXmlComponent.fromXmlString(node.attrs?.end
+        ? `<w:bookmarkEnd xmlns:w="${W}" w:id="${escape(id)}"/>`
+        : `<w:bookmarkStart xmlns:w="${W}" w:id="${escape(id)}" w:name="${escape(name)}"/>`) as unknown as ParagraphChild;
+    }
     if (node.type === 'hardBreak') return new TextRun({ break: 1 });
     if (node.type === 'tableFormula') {
       checkAttrs(node, ['formula', 'result']);
@@ -1881,7 +1931,7 @@ function inlineChildren(
         },
         run: options,
       });
-      return href ? new ExternalHyperlink({ link: href, children: [run] }) : run;
+      return href ? (href.startsWith('#') ? new InternalHyperlink({ anchor: href.slice(1), children: [run] }) : new ExternalHyperlink({ link: href, children: [run] })) : run;
     }
     if (node.type !== 'text') throw new Error(`DOCX 导出尚未支持 ${node.type} 行内元素。`);
     const { options, href } = runOptions(node, inherited);
@@ -1894,7 +1944,7 @@ function inlineChildren(
             .flatMap((part, index) => (index ? [new Tab(), part] : [part])),
         })
       : new MetricTextRun(options);
-    return href ? new ExternalHyperlink({ link: href, children: [run] }) : run;
+    return href ? (href.startsWith('#') ? new InternalHyperlink({ anchor: href.slice(1), children: [run] }) : new ExternalHyperlink({ link: href, children: [run] })) : run;
   });
 }
 
@@ -1925,6 +1975,7 @@ function embeddedImageData(input: unknown) {
 
 /** Export the structured editor model as a real, editable DOCX. */
 export async function exportStudioWord(document: StudioWordDocument): Promise<Blob> {
+  validateBookmarks([document.content, ...(document.header ? [document.header] : []), ...(document.footer ? [document.footer] : [])]);
   if (document.content.type !== 'doc') throw new Error('Word 文档模型无效。');
   if (
     !['A4', 'Letter'].includes(document.page.size) ||

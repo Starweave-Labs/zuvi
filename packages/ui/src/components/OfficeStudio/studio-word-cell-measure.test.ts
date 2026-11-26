@@ -110,3 +110,8 @@ it.each([false, true])('keeps a wrapped equation on a separate physical line (RT
     { from: 4, to: 5, top: 10, bottom: 50 },
   ]);
 });
+
+it('counts zero-width bookmark atoms without changing physical line height', () => {
+  rects(range => ({ top: 0, bottom: 20, left: range.startContainer.textContent === 'a' ? 0 : 5, right: range.startContainer.textContent === 'a' ? 5 : 10 }));
+  expect(wordMeasureCellLines(paragraph('a<span data-word-bookmark="0"></span>b'), 3, 0)).toEqual([{ from: 3, to: 6, top: 0, bottom: 20 }]);
+});

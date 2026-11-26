@@ -1779,3 +1779,40 @@ test('native equations retain independent region and table trees with Unicode th
     assert.equal(find(current.content, 'table').length, 1);
   }
 });
+
+test('native cross-paragraph bookmarks retain identity and edited text through two DOCX saves', async () => {
+  let document = await importStudioWord(await fixture('<w:p><w:bookmarkStart w:id="42" w:name="范围_1"/><w:r><w:t>first</w:t></w:r></w:p><w:p><w:r><w:t>second</w:t></w:r><w:bookmarkEnd w:id="42"/></w:p>'), 'Bookmarks.docx');
+  document.content.content[0].content[1].text = 'edited';
+  for (let round = 0; round < 2; round++) {
+    const file = await exportStudioWord(document);
+    const zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const xml = parse(await zip.file('word/document.xml').async('string'));
+    assert.equal(xml.getElementsByTagNameNS(W, 'bookmarkStart')[0].getAttributeNS(W, 'name'), '范围_1');
+    assert.equal(xml.getElementsByTagNameNS(W, 'bookmarkEnd')[0].getAttributeNS(W, 'id'), '42');
+    document = await importStudioWord(file, 'Reopened.docx');
+    assert.equal(document.content.content[0].content[0].attrs.name, '范围_1');
+    assert.equal(document.content.content[1].content[1].attrs.name, '范围_1');
+    assert.equal(document.content.content[0].content[1].text, 'edited');
+  }
+});
+test('native malformed or duplicate bookmarks fail rather than silently losing ranges', async () => {
+  for (const body of [
+    '<w:p><w:bookmarkStart w:id="1" w:name="Here"/></w:p>',
+    '<w:p><w:bookmarkEnd w:id="1"/></w:p>',
+    '<w:p><w:bookmarkStart w:id="1" w:name="Here"/><w:bookmarkEnd w:id="1"/><w:bookmarkStart w:id="2" w:name="Here"/><w:bookmarkEnd w:id="2"/></w:p>',
+    '<w:p><w:bookmarkStart w:id="1" w:name="1bad"/><w:bookmarkEnd w:id="1"/></w:p>',
+  ]) await assert.rejects(importStudioWord(await fixture(body), 'Bad.docx'), /书签/);
+});
+
+test('native internal bookmark hyperlinks retain display formatting and anchor across two saves', async () => {
+  let document = await importStudioWord(await fixture('<w:p><w:bookmarkStart w:id="7" w:name="Here"/><w:r><w:t>target</w:t></w:r><w:bookmarkEnd w:id="7"/></w:p><w:p><w:hyperlink w:anchor="Here"><w:r><w:rPr><w:b/></w:rPr><w:t>Go here</w:t></w:r></w:hyperlink></w:p>'), 'Internal.docx');
+  for (let round = 0; round < 2; round++) {
+    const link = document.content.content[1].content[0];
+    assert.equal(link.text, 'Go here'); assert.ok(link.marks.some(mark => mark.type === 'bold'));
+    assert.equal(link.marks.find(mark => mark.type === 'link').attrs.href, '#Here');
+    const file = await exportStudioWord(document), zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const xml = parse(await zip.file('word/document.xml').async('string'));
+    assert.equal(xml.getElementsByTagNameNS(W, 'hyperlink')[0].getAttributeNS(W, 'anchor'), 'Here');
+    document = await importStudioWord(file, 'Reopened.docx');
+  }
+});

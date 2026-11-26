@@ -1,0 +1,46 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ❯ src/components/OfficeStudio/studio-word-bookmarks.test.ts (7 tests | 2 failed) 93ms
+   × removes an orphaned marker with the original delete and restores both endpoints in one undo 10ms
+     → expected [] to have a length of 1 but got +0
+   × pastes bookmarked content as formatted text without duplicating source identities 8ms
+     → ClipboardEvent is not defined
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/OfficeStudio/studio-word-bookmarks.test.ts > removes an orphaned marker with the original delete and restores both endpoints in one undo
+AssertionError: expected [] to have a length of 1 but got +0
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ src/components/OfficeStudio/studio-word-bookmarks.test.ts:72:43
+     70|   expect(editor.state.doc.textContent).toBe('rstsecond');
+     71|   editor.commands.undo();
+     72|   expect(wordBookmarks(editor.state.doc)).toHaveLength(1);
+       |                                           ^
+     73|   expect(editor.state.doc.textContent).toBe('firstsecond');
+     74|   editor.commands.redo(); expect(wordBookmarks(editor.state.doc)).toEq…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/components/OfficeStudio/studio-word-bookmarks.test.ts > pastes bookmarked content as formatted text without duplicating source identities
+ReferenceError: ClipboardEvent is not defined
+ ❯ EditorView.pasteHTML ../../node_modules/.pnpm/prosemirror-view@1.42.9/node_modules/prosemirror-view/dist/index.js:5925:60
+ ❯ src/components/OfficeStudio/studio-word-bookmarks.test.ts:79:15
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 5 passed (7)
+   Start at  14:27:52
+   Duration  752ms (transform 38ms, setup 105ms, collect 77ms, tests 93ms, environment 302ms, prepare 34ms)
+
+undefined
+/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run src/components/OfficeStudio/studio-word-bookmarks.test.ts --reporter=dot

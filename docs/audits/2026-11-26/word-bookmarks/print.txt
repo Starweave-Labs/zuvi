@@ -1,0 +1,195 @@
+TAP version 13
+# Subtest: Word print repeats only consecutive leading complete header rows
+ok 1 - Word print repeats only consecutive leading complete header rows
+  ---
+  duration_ms: 27.947875
+  ...
+# Subtest: Word print applies row minimum height and explicit split policy while automatic height ignores its value
+ok 2 - Word print applies row minimum height and explicit split policy while automatic height ignores its value
+  ---
+  duration_ms: 4.731167
+  ...
+# Subtest: Word print uses explicit keep and widow values while title defaults retain the next paragraph
+ok 3 - Word print uses explicit keep and widow values while title defaults retain the next paragraph
+  ---
+  duration_ms: 4.234542
+  ...
+# Subtest: Word print retains native tab characters and resolved leaders for the measurement pass without inserting document text
+ok 4 - Word print retains native tab characters and resolved leaders for the measurement pass without inserting document text
+  ---
+  duration_ms: 10.587709
+  ...
+# Subtest: Word print preserves point paragraph geometry and exact/minimum line-rule metadata
+ok 5 - Word print preserves point paragraph geometry and exact/minimum line-rule metadata
+  ---
+  duration_ms: 6.006458
+  ...
+# Subtest: Word prints character spacing and baseline movement without changing point size or source text
+ok 6 - Word prints character spacing and baseline movement without changing point size or source text
+  ---
+  duration_ms: 12.615125
+  ...
+# Subtest: custom number format text, Chinese dates and selected color sections print with conditional color taking priority
+ok 7 - custom number format text, Chinese dates and selected color sections print with conditional color taking priority
+  ---
+  duration_ms: 36.400959
+  ...
+# Subtest: Word printing retains whitespace and line breaks without any nonprinting view glyphs or decorations
+ok 8 - Word printing retains whitespace and line breaks without any nonprinting view glyphs or decorations
+  ---
+  duration_ms: 2.795
+  ...
+# Subtest: Word print keeps floating images, wrap contours and page-coordinate placement in the printed document
+ok 9 - Word print keeps floating images, wrap contours and page-coordinate placement in the printed document
+  ---
+  duration_ms: 5.005833
+  ...
+# Subtest: sheet print respects widths, vertical alignment, blank border-only cells and merged outer edges
+ok 10 - sheet print respects widths, vertical alignment, blank border-only cells and merged outer edges
+  ---
+  duration_ms: 16.035458
+  ...
+# Subtest: Word print content repeats headers for explicit pages, preserves page fields and safely embeds images
+ok 11 - Word print content repeats headers for explicit pages, preserves page fields and safely embeds images
+  ---
+  duration_ms: 3.958333
+  ...
+# Subtest: document text, hyperlinks, labels and style attributes cannot inject script into printable HTML
+ok 12 - document text, hyperlinks, labels and style attributes cannot inject script into printable HTML
+  ---
+  duration_ms: 2.583791
+  ...
+# Subtest: Excel print uses computed values, filters and merged cells, and includes the actual chart series
+ok 13 - Excel print uses computed values, filters and merged cells, and includes the actual chart series
+  ---
+  duration_ms: 7.339709
+  ...
+# Subtest: Excel cell fonts retain point sizes, formulas and conditional styling while legacy cells inherit defaults
+ok 14 - Excel cell fonts retain point sizes, formulas and conditional styling while legacy cells inherit defaults
+  ---
+  duration_ms: 7.935625
+  ...
+# Subtest: unknown Excel font names cannot create CSS declarations or HTML even with quotes and XML whitespace
+ok 15 - unknown Excel font names cannot create CSS declarations or HTML even with quotes and XML whitespace
+  ---
+  duration_ms: 6.302291
+  ...
+# Subtest: invalid Excel font controls and out-of-range point sizes fail the print model gate
+ok 16 - invalid Excel font controls and out-of-range point sizes fail the print model gate
+  ---
+  duration_ms: 0.653042
+  ...
+# Subtest: Excel print escapes native hyperlink text, tooltip and validated external destinations
+ok 17 - Excel print escapes native hyperlink text, tooltip and validated external destinations
+  ---
+  duration_ms: 3.752666
+  ...
+# Subtest: Excel print preserves unsupported protocols, paths and workbook locations as plain text
+ok 18 - Excel print preserves unsupported protocols, paths and workbook locations as plain text
+  ---
+  duration_ms: 4.832625
+  ...
+# Subtest: Excel hyperlinks retain typed values, formatted formula results and empty or failing formulas
+ok 19 - Excel hyperlinks retain typed values, formatted formula results and empty or failing formulas
+  ---
+  duration_ms: 6.738458
+  ...
+# Subtest: blank hyperlinks stay printable from a frozen read-only snapshot without adding editing controls
+ok 20 - blank hyperlinks stay printable from a frozen read-only snapshot without adding editing controls
+  ---
+  duration_ms: 5.836666
+  ...
+# Subtest: Excel print resolves top-level HYPERLINK formulas while preserving calculated labels
+ok 21 - Excel print resolves top-level HYPERLINK formulas while preserving calculated labels
+  ---
+  duration_ms: 6.018708
+  ...
+# Subtest: a hyperlink outside populated cells cannot bypass the print area limit
+ok 22 - a hyperlink outside populated cells cannot bypass the print area limit
+  ---
+  duration_ms: 0.159125
+  ...
+# Subtest: oversized print regions and invalid models fail before constructing a printable frame
+ok 23 - oversized print regions and invalid models fail before constructing a printable frame
+  ---
+  duration_ms: 2.587042
+  ...
+# Subtest: printing calls the document frame and releases it after the print dialog ends
+ok 24 - printing calls the document frame and releases it after the print dialog ends
+  ---
+  duration_ms: 6.180292
+  ...
+# Subtest: Excel print renders recalculated conditional styles and number formats, including styled empty cells
+ok 25 - Excel print renders recalculated conditional styles and number formats, including styled empty cells
+  ---
+  duration_ms: 19.217458
+  ...
+# Subtest: conditional formatting cannot silently extend printing beyond its cell budget
+ok 26 - conditional formatting cannot silently extend printing beyond its cell budget
+  ---
+  duration_ms: 2.252834
+  ...
+# Subtest: PDF printing uses the exported file and releases its object URL after printing
+ok 27 - PDF printing uses the exported file and releases its object URL after printing
+  ---
+  duration_ms: 106.217041
+  ...
+# Subtest: a failed PDF print preview cleans up its file and ignores a late load event
+ok 28 - a failed PDF print preview cleans up its file and ignores a late load event
+  ---
+  duration_ms: 20.130791
+  ...
+# Subtest: a timed-out print preview never starts printing when a late font load completes
+ok 29 - a timed-out print preview never starts printing when a late font load completes
+  ---
+  duration_ms: 20.26925
+  ...
+# Subtest: Sheet print uses actual row sizes and keeps merged content whose original row is hidden
+ok 30 - Sheet print uses actual row sizes and keeps merged content whose original row is hidden
+  ---
+  duration_ms: 4.912125
+  ...
+# Subtest: array print includes the entire computed region without persisting synthetic result cells
+ok 31 - array print includes the entire computed region without persisting synthetic result cells
+  ---
+  duration_ms: 5.691833
+  ...
+# Subtest: Word print sums fixed merged cell height without persisting print attributes
+ok 32 - Word print sums fixed merged cell height without persisting print attributes
+  ---
+  duration_ms: 5.51675
+  ...
+# Subtest: Word formula print uses the current escaped cached result and preserves character marks
+ok 33 - Word formula print uses the current escaped cached result and preserves character marks
+  ---
+  duration_ms: 4.471875
+  ...
+# Subtest: Word image crop prints a clipped original raster frame and resets without modifying source
+ok 34 - Word image crop prints a clipped original raster frame and resets without modifying source
+  ---
+  duration_ms: 4.913125
+  ...
+# Subtest: Word equations print semantic MathML fractions and matrices with escaped text
+ok 35 - Word equations print semantic MathML fractions and matrices with escaped text
+  ---
+  duration_ms: 4.277625
+  ...
+# Subtest: Word display formulas retain their alignment and semantic MathML when printed
+ok 36 - Word display formulas retain their alignment and semantic MathML when printed
+  ---
+  duration_ms: 2.880042
+  ...
+# Subtest: Word multi-equation groups print independent members and their local styles with spacing
+ok 37 - Word multi-equation groups print independent members and their local styles with spacing
+  ---
+  duration_ms: 2.892875
+  ...
+1..37
+# tests 37
+# suites 0
+# pass 37
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1056.055458

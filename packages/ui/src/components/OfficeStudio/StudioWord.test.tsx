@@ -2806,3 +2806,116 @@ it.each(['header', 'footer'] as const)('edits a math group independently in the 
   fireEvent.click(screen.getByRole('button', { name: '重做' }));
   await waitFor(() => expect(box.querySelectorAll('math mtext')[1]).toHaveTextContent(region + '+1'));
 });
+
+it('creates and removes bookmarks through the actual dialog with atomic history and duplicate validation', async () => {
+  const { textbox } = await mount();
+  const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+  act(() => editor.commands.setTextSelection({ from: 2, to: 5 }));
+  fireEvent.click(screen.getByRole('tab', { name: '引用' }));
+  fireEvent.click(screen.getByRole('button', { name: '书签' }));
+  fireEvent.change(screen.getByLabelText('书签名称'), { target: { value: 'Here' } });
+  fireEvent.click(screen.getByRole('button', { name: '添加书签' }));
+  await waitFor(() => expect(textbox.querySelectorAll('[data-word-bookmark]')).toHaveLength(2));
+  fireEvent.change(screen.getByLabelText('书签名称'), { target: { value: 'Here' } });
+  fireEvent.click(screen.getByRole('button', { name: '添加书签' }));
+  expect(screen.getByRole('alert')).toHaveTextContent('同名');
+  fireEvent.click(screen.getByRole('button', { name: '删除书签 Here' }));
+  await waitFor(() => expect(textbox.querySelectorAll('[data-word-bookmark]')).toHaveLength(0));
+  fireEvent.click(screen.getByRole('button', { name: '关闭' }));
+  fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+  fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await waitFor(() => expect(textbox.querySelectorAll('[data-word-bookmark]')).toHaveLength(2));
+  fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await waitFor(() => expect(textbox.querySelectorAll('[data-word-bookmark]')).toHaveLength(0));
+});
+
+it('applies an internal bookmark link through the actual link dialog and preserves it through undo', async () => {
+  const model = documentModel('Target and link');
+  model.content.content![0].content!.unshift({ type: 'wordBookmark', attrs: { id: '9', name: 'Here', end: false } });
+  model.content.content![0].content!.push({ type: 'wordBookmark', attrs: { id: '9', name: 'Here', end: true } });
+  const { textbox } = await mount({ document: model });
+  const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+  act(() => editor.commands.setTextSelection({ from: 13, to: 17 }));
+  fireEvent.click(screen.getByRole('tab', { name: '引用' }));
+  fireEvent.click(screen.getByRole('button', { name: '链接' }));
+  fireEvent.change(screen.getByLabelText('链接地址'), { target: { value: '#Here' } });
+  fireEvent.click(screen.getByRole('button', { name: '应用链接' }));
+  await waitFor(() => expect(textbox.querySelector('a')).toHaveAttribute('href', '#Here'));
+  fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+  fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await waitFor(() => expect(textbox.querySelector('a')).toBeNull());
+  fireEvent.click(screen.getByRole('button', { name: '重做' }));
+  await waitFor(() => expect(textbox.querySelector('a')).toHaveAttribute('href', '#Here'));
+});
+
+it('keeps bookmark browsing available in readonly and disables mutation', async () => {
+  const model = documentModel('Target');
+  model.content.content![0].content!.unshift({ type: 'wordBookmark', attrs: { id: '1', name: 'Here', end: false } });
+  model.content.content![0].content!.push({ type: 'wordBookmark', attrs: { id: '1', name: 'Here', end: true } });
+  const { textbox, onChange } = await mount({ document: model, readOnly: true });
+  fireEvent.click(screen.getByRole('tab', { name: '引用' }));
+  fireEvent.click(screen.getByRole('button', { name: '书签' }));
+  fireEvent.change(screen.getByLabelText('书签名称'), { target: { value: 'Other' } });
+  expect(screen.getByRole('button', { name: '添加书签' })).toBeDisabled();
+  expect(screen.getByRole('button', { name: '删除书签 Here' })).toBeDisabled();
+  fireEvent.click(screen.getByRole('button', { name: '跳转书签 Here' }));
+  const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+  expect(editor.state.selection.from).toBe(2);
+  expect(editor.state.selection.to).toBe(8);
+  expect(onChange).not.toHaveBeenCalled();
+});
+
+it('edits existing link display text and address in one transaction while retaining bold formatting', async () => {
+  const model = documentModel('Old');
+  model.content.content![0].content![0].marks = [{ type: 'bold' }, { type: 'link', attrs: { href: 'https://example.com' } }];
+  const { textbox } = await mount({ document: model });
+  const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+  act(() => editor.commands.setTextSelection(2));
+  fireEvent.click(screen.getByRole('tab', { name: '引用' }));
+  fireEvent.click(screen.getByRole('button', { name: '链接' }));
+  expect(screen.getByLabelText('链接显示文字')).toHaveValue('Old');
+  fireEvent.change(screen.getByLabelText('链接显示文字'), { target: { value: 'New label' } });
+  fireEvent.change(screen.getByLabelText('链接地址'), { target: { value: 'https://example.org' } });
+  fireEvent.click(screen.getByRole('button', { name: '应用链接' }));
+  await waitFor(() => expect(textbox.querySelector('a')).toHaveTextContent('New label'));
+  expect(textbox.querySelector('strong')).toHaveTextContent('New label');
+  expect(textbox.querySelector('a')).toHaveAttribute('href', 'https://example.org');
+  fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+  fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await waitFor(() => expect(textbox.querySelector('a')).toHaveTextContent('Old'));
+  expect(textbox.querySelector('a')).toHaveAttribute('href', 'https://example.com');
+});
+
+it('retains mixed character marks and complete Unicode when replacing a link label', async () => {
+  const model = documentModel();
+  model.content.content![0].content = [
+    { type: 'text', text: 'AB', marks: [{ type: 'bold' }, { type: 'link', attrs: { href: 'https://example.com' } }] },
+    { type: 'text', text: 'CD', marks: [{ type: 'italic' }, { type: 'link', attrs: { href: 'https://example.com' } }] },
+  ];
+  const { textbox } = await mount({ document: model });
+  const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+  act(() => editor.commands.setTextSelection(2));
+  fireEvent.click(screen.getByRole('tab', { name: '引用' }));
+  fireEvent.click(screen.getByRole('button', { name: '链接' }));
+  fireEvent.change(screen.getByLabelText('链接显示文字'), { target: { value: 'XY🧮Z' } });
+  fireEvent.click(screen.getByRole('button', { name: '应用链接' }));
+  await waitFor(() => expect(textbox.querySelector('a')).toHaveTextContent('XY🧮Z'));
+  expect(textbox.querySelector('strong')).toHaveTextContent('XY');
+  expect(textbox.querySelector('em')).toHaveTextContent('🧮Z');
+});
+
+it('opens an internal link across regions in readonly without editing document data', async () => {
+  const model = documentModel('Go');
+  model.content.content![0].content![0].marks = [{ type: 'link', attrs: { href: '#HeaderTarget' } }];
+  model.header = { type: 'doc', content: [{ type: 'paragraph', content: [
+    { type: 'wordBookmark', attrs: { id: '3', name: 'HeaderTarget', end: false } },
+    { type: 'text', text: 'Header' },
+    { type: 'wordBookmark', attrs: { id: '3', name: 'HeaderTarget', end: true } },
+  ] }] };
+  const { textbox, onChange } = await mount({ document: model, readOnly: true });
+  const header = await screen.findByRole('textbox', { name: 'Word 页眉' });
+  fireEvent.click(textbox.querySelector('a')!);
+  await waitFor(() => expect((header as HTMLElement & { editor: Editor }).editor.state.selection.from).toBe(2));
+  expect((header as HTMLElement & { editor: Editor }).editor.state.selection.to).toBe(8);
+  expect(onChange).not.toHaveBeenCalled();
+});
