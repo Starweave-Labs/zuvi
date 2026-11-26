@@ -2782,3 +2782,27 @@ it('edits a second equation group member through the actual dialog and undoes th
   fireEvent.click(screen.getByRole('button', { name: '重做' }));
   await waitFor(() => expect(textbox.querySelectorAll('math mtext')[1]).toHaveTextContent('y+1'));
 });
+
+it.each(['header', 'footer'] as const)('edits a math group independently in the actual %s region with undo and redo', async region => {
+  const value = documentModel();
+  const equation = { kind: 'display', align: 'centerGroup', body: { kind: 'text', text: 'x' }, following: [{ kind: 'text', text: 'y' }] };
+  value[region] = { type: 'doc', content: [{ type: 'paragraph', content: [{ type: 'mathEquation', attrs: { equation } }] }] };
+  const { textbox, onChange } = await mount({ document: value });
+  fireEvent.doubleClick(screen.getByLabelText(region === 'header' ? '页眉区域' : '页脚区域'));
+  const box = await screen.findByRole('textbox', { name: region === 'header' ? 'Word 页眉' : 'Word 页脚' });
+  await waitFor(() => expect(box).toHaveAttribute('contenteditable', 'true'));
+  const regionEditor = (box as HTMLElement & { editor: Editor }).editor;
+  act(() => { box.focus(); regionEditor.commands.setNodeSelection(1); });
+  fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+  fireEvent.click(screen.getByRole('button', { name: '数学公式' }));
+  fireEvent.change(screen.getByRole('textbox', { name: '公式 组内第2公式文字' }), { target: { value: region + '+1' } });
+  fireEvent.click(screen.getByRole('button', { name: '保存数学公式' }));
+  await waitFor(() => expect(box.querySelectorAll('math mtext')[1]).toHaveTextContent(region + '+1'));
+  expect(textbox).toHaveTextContent('项目评审内容');
+  expect(onChange.mock.lastCall?.[0][region].content[0].content[0].attrs.equation.following[0].text).toBe(region + '+1');
+  fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+  fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await waitFor(() => expect(box.querySelectorAll('math mtext')[1]).toHaveTextContent('y'));
+  fireEvent.click(screen.getByRole('button', { name: '重做' }));
+  await waitFor(() => expect(box.querySelectorAll('math mtext')[1]).toHaveTextContent(region + '+1'));
+});

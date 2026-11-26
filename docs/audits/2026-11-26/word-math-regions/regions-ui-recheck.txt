@@ -1,0 +1,11 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/StudioWord.test.tsx (108 tests | 106 skipped) 921ms
+   ✓ edits a math group independently in the actual header region with undo and redo 570ms
+   ✓ edits a math group independently in the actual footer region with undo and redo 350ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed | 106 skipped (108)
+   Start at  13:39:48
+   Duration  2.71s (transform 733ms, setup 125ms, collect 1.05s, tests 921ms, environment 359ms, prepare 47ms)

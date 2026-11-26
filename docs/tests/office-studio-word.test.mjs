@@ -1757,3 +1757,25 @@ test('native multi-equation paragraph groups retain independent editable trees a
     assert.deepEqual(JSON.parse(JSON.stringify(find(current.content, 'mathEquation')[0].attrs.equation)), expected);
   }
 });
+
+test('native equations retain independent region and table trees with Unicode through repeated saves', async () => {
+  const math = (label) => ({ type: 'mathEquation', attrs: { equation: { kind: 'display', align: 'centerGroup', body: { kind: 'fraction', numerator: { kind: 'text', text: label + '\r𝑥', format: { color: '#aa2244' } }, denominator: { kind: 'text', text: '2' } }, following: [{ kind: 'text', text: label + '=1' }] } } });
+  let current = model([p(text('正文前'), math('正文'), text('正文后')), { type: 'table', content: [{ type: 'tableRow', content: [{ type: 'tableCell', attrs: { colspan: 1, rowspan: 1, colwidth: [180] }, content: [p(math('表格'))] }] }] }]);
+  current.header = { type: 'doc', content: [p(text('页眉前'), math('页眉'))] };
+  current.footer = { type: 'doc', content: [p(math('页脚'), { type: 'pageNumber', attrs: { kind: 'current' } })] };
+  const expected = ['content', 'header', 'footer'].map(region => JSON.parse(JSON.stringify(find(current[region], 'mathEquation').map(node => node.attrs.equation))));
+  for (let pass = 0; pass < 2; pass++) {
+    const file = await exportStudioWord(current);
+    const zip = await JSZip.loadAsync(await file.arrayBuffer());
+    for (const part of ['word/document.xml', 'word/header1.xml', 'word/footer1.xml']) {
+      const xml = await zip.file(part).async('string');
+      assert.match(xml, /&#13;/);
+      assert.match(xml, /<m:oMathPara/);
+    }
+    current = await importStudioWord(file, 'Region-equations.docx');
+    for (const [index, region] of ['content', 'header', 'footer'].entries())
+      assert.deepEqual(JSON.parse(JSON.stringify(find(current[region], 'mathEquation').map(node => node.attrs.equation))), expected[index]);
+    assert.equal(find(current.footer, 'pageNumber').length, 1);
+    assert.equal(find(current.content, 'table').length, 1);
+  }
+});

@@ -88,3 +88,25 @@ it.each([false, true])('keeps disjoint raised/lowered glyph boxes on the same li
     { from: 3, to: 5, top: 0, bottom: 56 },
   ]);
 });
+
+it('measures an equation as one atomic position and includes its whole height without walking internal text', () => {
+  const p = paragraph('a<span data-word-math="" contenteditable="false"><math><mfrac><mtext>numerator</mtext><mtext>denominator</mtext></mfrac></math></span>b');
+  const formula = p.querySelector('[data-word-math]')!;
+  Object.defineProperty(formula, 'getBoundingClientRect', { value: () => ({ top: 0, bottom: 60, height: 60, left: 5, right: 25, width: 20 }) });
+  rects(range => {
+    if (!['a', 'b'].includes(range.startContainer.textContent!)) throw new Error('Equation internal text must be atomic');
+    return { top: 20, bottom: 40, left: range.startContainer.textContent === 'a' ? 0 : 25, right: range.startContainer.textContent === 'a' ? 5 : 30 };
+  });
+  expect(wordMeasureCellLines(p, 3, 0)).toEqual([{ from: 3, to: 6, top: 0, bottom: 60 }]);
+});
+
+it.each([false, true])('keeps a wrapped equation on a separate physical line (RTL: %s)', rtl => {
+  const p = paragraph('a<span data-word-math="" contenteditable="false"><math><mtext>x</mtext></math></span>');
+  p.style.direction = rtl ? 'rtl' : 'ltr';
+  Object.defineProperty(p.querySelector('[data-word-math]')!, 'getBoundingClientRect', { value: () => ({ top: 10, bottom: 50, height: 40, left: rtl ? 80 : 0, right: rtl ? 100 : 20, width: 20 }) });
+  rects(() => ({ top: 0, bottom: 20, left: rtl ? 0 : 80, right: rtl ? 20 : 100 }));
+  expect(wordMeasureCellLines(p, 3, 0)).toEqual([
+    { from: 3, to: 4, top: 0, bottom: 20 },
+    { from: 4, to: 5, top: 10, bottom: 50 },
+  ]);
+});

@@ -2425,11 +2425,12 @@
       "evidence": [
         "docs/audits/2026-11-26/word-math/README.md",
         "e2e/office-studio-word-math.spec.ts",
-        "docs/audits/2026-11-26/word-math-groups/README.md"
+        "docs/audits/2026-11-26/word-math-groups/README.md",
+        "docs/audits/2026-11-26/word-math-regions/README.md"
       ],
       "currentAudit": {
         "date": "2026-11-26",
-        "sourceCommit": "4e2b150",
+        "sourceCommit": "b94fd0b",
         "sourceState": "working-tree-uncommitted",
         "implementation": "部分实现",
         "implementedBehavior": "ZUVI结构与局部格式、段落对齐、事务历史/取消/权限快照，MathML画布HTML打印，OMML及真实DOCX两次重开与明暗320px专项通过",
@@ -2458,7 +2459,7 @@
           "docs/tests/office-studio-word.test.mjs",
           "docs/tests/studio-print.test.mjs"
         ],
-        "testEvidenceNote": "125 Word/math, 95 native/print, 2552 UI, 329 docs and 271 full E2E passed; type/lint/build/browser/Registry92/consumer373/distribution/size passed. Independent native group members verified through two saves and browser light/dark/320px. Remaining structure/layout gaps prevent full acceptance."
+        "testEvidenceNote": "125 Word/math, 95 native/print, 2552 UI, 329 docs and 271 full E2E passed; type/lint/build/browser/Registry92/consumer373/distribution/size passed. Independent native group members verified through two saves and browser light/dark/320px. Remaining structure/layout gaps prevent full acceptance. Region audit: 127 Word/math and 96 native/print passed; header/footer actual browser edit/history/two DOCX reopens passed. Typography, body table and Unicode region persistence verified; broader layout matrix still pending. Latest regions/layout: 2557 UI, 330 docs, 96 native/print, 20 pagination/cell and 2 browser suites passed; edited tall fraction, undo/redo, two DOCX reopens, actual two-page PDF and light/dark/320px evidence. Full E2E 273 passed (13.4m), final gates passed; W037 remains partial."
       },
       "gaps": [
         "更多原生结构/复杂区域与布局组合尚未完整支持和验收",

@@ -45,6 +45,23 @@ export function wordMeasureCellLines(
   while (walker.nextNode()) {
     const current = walker.currentNode;
     if (current.nodeType === 1) {
+      const element = current as HTMLElement;
+      if (element.matches('[data-word-math]')) {
+        const rect = element.getBoundingClientRect();
+        if (rect.height > 0) {
+          const previous = lines.at(-1);
+          const y = rect.top - top, bottom = rect.bottom - top;
+          const wrapped = previous && y > previous.top + 1 &&
+            (rtl ? rect.right > previousRight + 1 : rect.left < previousLeft - 1);
+          const advances = rtl ? rect.right < previousRight - 1 : rect.left > previousLeft + 1;
+          const overlaps = previous && y < previous.bottom && bottom > previous.top;
+          if (previous && !hardBreak && !wrapped && (overlaps || advances)) {
+            previous.to = position + 1; previous.top = Math.min(previous.top, y); previous.bottom = Math.max(previous.bottom, bottom);
+          } else lines.push({ from: position, to: position + 1, top: y, bottom });
+          hardBreak = false; previousLeft = rect.left; previousRight = rect.right;
+        }
+        position++;
+      }
       if ((current as HTMLElement).matches('br:not(.ProseMirror-trailingBreak)')) {
         position++;
         hardBreak = true;
@@ -52,6 +69,7 @@ export function wordMeasureCellLines(
       continue;
     }
     const text = current as Text;
+    if (text.parentElement?.closest('[data-word-math]')) continue;
     let shift = 0;
     for (
       let parent = text.parentElement;
@@ -357,7 +375,7 @@ function measure(editor: Editor): WordLayoutBlock[] {
         if (walker.currentNode.nodeType === 1) {
           const inline = walker.currentNode as HTMLElement;
           if (inline.matches('.ProseMirror-separator,.ProseMirror-trailingBreak')) continue;
-          if (inline.tagName === 'IMG') {
+          if (inline.tagName === 'IMG' || inline.matches('[data-word-math]')) {
             const wrap = inline.closest('[data-wrap]')?.getAttribute('data-wrap');
             if (!wrap || wrap === 'inline') {
               const rect = inline.getBoundingClientRect();
@@ -377,7 +395,7 @@ function measure(editor: Editor): WordLayoutBlock[] {
               }
             }
           }
-          if (inline.tagName === 'BR' || inline.matches('img,[data-word-page-number]')) offset++;
+          if (inline.tagName === 'BR' || inline.matches('img,[data-word-page-number],[data-word-math]')) offset++;
           continue;
         }
         const text = walker.currentNode as Text;

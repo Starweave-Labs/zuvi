@@ -1,0 +1,78 @@
+[
+  {
+    "file": "regions-round-1.docx",
+    "part": "word/document.xml",
+    "equations": 0,
+    "fractions": 0,
+    "equationText": []
+  },
+  {
+    "file": "regions-round-1.docx",
+    "part": "word/header1.xml",
+    "equations": 2,
+    "fractions": 0,
+    "equationText": [
+      "header",
+      "header+1"
+    ]
+  },
+  {
+    "file": "regions-round-1.docx",
+    "part": "word/footer1.xml",
+    "equations": 2,
+    "fractions": 0,
+    "equationText": [
+      "footer",
+      "footer+1"
+    ]
+  },
+  {
+    "file": "regions-round-2.docx",
+    "part": "word/document.xml",
+    "equations": 0,
+    "fractions": 0,
+    "equationText": []
+  },
+  {
+    "file": "regions-round-2.docx",
+    "part": "word/header1.xml",
+    "equations": 2,
+    "fractions": 0,
+    "equationText": [
+      "header",
+      "header+1"
+    ]
+  },
+  {
+    "file": "regions-round-2.docx",
+    "part": "word/footer1.xml",
+    "equations": 2,
+    "fractions": 0,
+    "equationText": [
+      "footer",
+      "footer+1"
+    ]
+  },
+  {
+    "file": "layout-round-1.docx",
+    "part": "word/document.xml",
+    "equations": 3,
+    "fractions": 3,
+    "equationText": [
+      "x+1ab",
+      "xi22",
+      "y"
+    ]
+  },
+  {
+    "file": "layout-round-2.docx",
+    "part": "word/document.xml",
+    "equations": 3,
+    "fractions": 3,
+    "equationText": [
+      "x+1ab",
+      "xi22",
+      "y"
+    ]
+  }
+]

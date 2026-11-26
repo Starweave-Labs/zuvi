@@ -1,0 +1,10 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/studio-word-pagination.test.ts (10 tests) 6ms
+ ✓ src/components/OfficeStudio/studio-word-cell-measure.test.ts (8 tests) 45ms
+
+ Test Files  2 passed (2)
+      Tests  18 passed (18)
+   Start at  13:46:24
+   Duration  934ms (transform 140ms, setup 251ms, collect 203ms, tests 51ms, environment 721ms, prepare 109ms)
