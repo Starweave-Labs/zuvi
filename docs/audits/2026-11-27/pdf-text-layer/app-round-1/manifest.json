@@ -1,0 +1,149 @@
+{
+  "status": "2 passed; readonly test timed out after cross-page search; later OfficeStudioPage HMR present in raw trace. Diagnose before changing behavior.",
+  "files": [
+    {
+      "original": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-text-layer.spec.ts",
+      "snapshot": "office-studio-pdf-text-layer.spec.ts.txt",
+      "sha256": "74ab4c8bef39b631413891fe4f749e1d9bbb0770118ad6658259e543a6cfa497",
+      "size": 26980
+    },
+    {
+      "original": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-adapter.ts",
+      "snapshot": "studio-pdf-adapter.ts.txt",
+      "sha256": "9005f0aba3aa95067e9c34aaccdc69eb522ffed835246a0c6e12878fd9e6f6f6",
+      "size": 32041
+    },
+    {
+      "original": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-text-layer/app-source.pdf",
+      "snapshot": "app-source.pdf",
+      "sha256": "1b04446506254849c7d574ef33a254c1bfc9bfb93a008303150a9768fa945276",
+      "size": 2859
+    },
+    {
+      "original": "/tmp/zuvi-pdf-text-layer-app-e2e.txt",
+      "snapshot": "zuvi-pdf-text-layer-app-e2e.txt",
+      "sha256": "f64b10c5c9de64a933958ead908029b949d267f5b95e3ce2b688baf24384011e",
+      "size": 3409
+    },
+    {
+      "original": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui/dist/StudioPdf-DDMkwBs-.js",
+      "snapshot": "StudioPdf-DDMkwBs-.js.txt",
+      "sha256": "e24d2010abf8046ed5d46a74625af8d54cd0b7d003bfd684b2c21ae3a2bbce6a",
+      "size": 119406
+    },
+    {
+      "original": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-text-layer/app-created-squiggly.pdf",
+      "snapshot": "app-created-squiggly.pdf",
+      "sha256": "c97cda31f5df068a3e9c840b29509c9dce635e6bc0cb184352947cb7ab9cb98f",
+      "size": 10567
+    },
+    {
+      "original": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-text-layer/app-created-strikeout.pdf",
+      "snapshot": "app-created-strikeout.pdf",
+      "sha256": "8a55391a47d566c9ed3cb17b1ec77a7521d8b5178f5c2fcba0ed98fbcd80bdb1",
+      "size": 9172
+    },
+    {
+      "original": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-text-layer/app-text-markups-round-1.pdf",
+      "snapshot": "app-text-markups-round-1.pdf",
+      "sha256": "c97cda31f5df068a3e9c840b29509c9dce635e6bc0cb184352947cb7ab9cb98f",
+      "size": 10567
+    },
+    {
+      "original": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-text-layer/app-text-markups-round-2.pdf",
+      "snapshot": "app-text-markups-round-2.pdf",
+      "sha256": "c97cda31f5df068a3e9c840b29509c9dce635e6bc0cb184352947cb7ab9cb98f",
+      "size": 10567
+    },
+    {
+      "original": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-text-layer/app-created-highlight.pdf",
+      "snapshot": "app-created-highlight.pdf",
+      "sha256": "5442cd3fe2a425d4e159b34f125258cfee3f5c1ccd8944a72a062de0b0378ed8",
+      "size": 6852
+    },
+    {
+      "original": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-text-layer/app-created-underline.pdf",
+      "snapshot": "app-created-underline.pdf",
+      "sha256": "0f487db2c821a16ddeeaf7ea36b92501b6d7f58960c1052e496e25fab07d66c4",
+      "size": 7949
+    },
+    {
+      "original": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-text-layer/app-markups-results.json",
+      "snapshot": "app-markups-results.json",
+      "sha256": "2651a8ab8b397c2dc1c95fc1e8f6caefde4a64650093e0bfd156236b149d86ca",
+      "size": 2407
+    },
+    {
+      "original": "/tmp/zuvi-pdf-text-layer-app-e2e/office-studio-pdf-text-lay-71816-urce-bytes-in-readonly-mode-chromium/trace.zip",
+      "snapshot": "trace.zip",
+      "sha256": "11c6d4669f991e62194fc295685f72c679c8336625d21e598cf92b8ef8cbceac",
+      "size": 4359223
+    },
+    {
+      "original": "/tmp/zuvi-pdf-text-layer-app-e2e/office-studio-pdf-text-lay-71816-urce-bytes-in-readonly-mode-chromium/error-context.md",
+      "snapshot": "error-context.md",
+      "sha256": "f5d160e229d8755248d79f73c81a63453554beef7337969334e64f365a11c10e",
+      "size": 39718
+    },
+    {
+      "snapshot": "app-poppler-round-2-2.png",
+      "sha256": "84762b53e05b260cc7dec39827bf25e6496eeabe28ef4078af8782ba284f42fc",
+      "size": 15768,
+      "note": "Additional original first-pass render or structural result preserved before subsequent fixture/App verification"
+    },
+    {
+      "snapshot": "app-poppler-round-2-1.png",
+      "sha256": "a922b1323ea36023b0a1fc79881dd1cc6fd592da7b556f70b946bfbe88e01b9d",
+      "size": 29200,
+      "note": "Additional original first-pass render or structural result preserved before subsequent fixture/App verification"
+    },
+    {
+      "snapshot": "independent-round-trips.json",
+      "sha256": "5ad09885e67728dae29331f2f04a3a812dec931fcdd8f30ac9509cc58ece0890",
+      "size": 18831,
+      "note": "Additional original first-pass render or structural result preserved before subsequent fixture/App verification"
+    },
+    {
+      "snapshot": "app-poppler-round-1-2.png",
+      "sha256": "84762b53e05b260cc7dec39827bf25e6496eeabe28ef4078af8782ba284f42fc",
+      "size": 15768,
+      "note": "Additional original first-pass render or structural result preserved before subsequent fixture/App verification"
+    },
+    {
+      "snapshot": "app-poppler-round-1-1.png",
+      "sha256": "a922b1323ea36023b0a1fc79881dd1cc6fd592da7b556f70b946bfbe88e01b9d",
+      "size": 29200,
+      "note": "Additional original first-pass render or structural result preserved before subsequent fixture/App verification"
+    },
+    {
+      "snapshot": "app-poppler-source-1.png",
+      "sha256": "0df02661a3c6fdde225656000b9fa07f10056af9b9a6e3c4c0955707ea848641",
+      "size": 26458,
+      "note": "Additional original first-pass render or structural result preserved before subsequent fixture/App verification"
+    },
+    {
+      "snapshot": "app-poppler-source-2.png",
+      "sha256": "84762b53e05b260cc7dec39827bf25e6496eeabe28ef4078af8782ba284f42fc",
+      "size": 15768,
+      "note": "Additional original first-pass render or structural result preserved before subsequent fixture/App verification"
+    },
+    {
+      "snapshot": "independent-source.json",
+      "sha256": "c81b60e3af5e6d94e7f57095321e1becbd795a0442920ac360737244530146a2",
+      "size": 8166,
+      "note": "Additional original first-pass render or structural result preserved before subsequent fixture/App verification"
+    },
+    {
+      "snapshot": "app-text-markups-reopened.png",
+      "sha256": "ec525e5f1f4ca8e0ac4ae9ab4536e34de96a19f6aa0bc6f17eb5e6d1a6020fd1",
+      "size": 179624,
+      "note": "Additional original first-pass render or structural result preserved before subsequent fixture/App verification"
+    },
+    {
+      "snapshot": "renderer-poppler-source.png",
+      "sha256": "db6189b6332d77e8f4bb8df552dc9359e1ea7bf1f5cd59f820430898f3bbcbaf",
+      "size": 34962,
+      "note": "Additional original first-pass render or structural result preserved before subsequent fixture/App verification"
+    }
+  ]
+}

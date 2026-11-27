@@ -1,0 +1,44 @@
+[
+  {
+    "original": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/all-native-types-light.png",
+    "file": "all-native-types-light.png",
+    "sha256": "5a37d908f3da31d6914ed50dbad0fc018c5ec1de5f205084f3fcc6c8fb57e8e8",
+    "size": 137702
+  },
+  {
+    "original": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/fixture-native-twelve-types.pdf",
+    "file": "fixture-native-twelve-types.pdf",
+    "sha256": "7a4e322ddf8384e9631f64f8add9e940458270b07f203aae438bfb46a5032965",
+    "size": 1693707
+  },
+  {
+    "original": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-adapter.ts",
+    "file": "studio-pdf-adapter.ts.txt",
+    "sha256": "bc563267722b06474af8ae717d6b7767031403a0f6507cf4d4a4d9d56232b5b1",
+    "size": 32169
+  },
+  {
+    "original": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui/src/components/OfficeStudio/StudioPdfTextLayer.css",
+    "file": "StudioPdfTextLayer.css.txt",
+    "sha256": "358ed64bdf8ccec3c32181a91ed0e3619083d00d034504cbc16167de28e7e1e6",
+    "size": 3958
+  },
+  {
+    "original": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui/src/components/OfficeStudio/StudioPdfTextLayer.tsx",
+    "file": "StudioPdfTextLayer.tsx.txt",
+    "sha256": "a88594cfd6a58a4c98adcb04b79216f56167924a9baef7c6d5fdc72ad2d51c91",
+    "size": 3400
+  },
+  {
+    "original": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui/src/components/OfficeStudio/StudioPdfAnnotationPaintLayer.tsx",
+    "file": "StudioPdfAnnotationPaintLayer.tsx.txt",
+    "sha256": "1e1d5ccba4cdf1b0e8b523374d45d3c3b825565f62c7271f14950fb36bedeaa4",
+    "size": 2754
+  },
+  {
+    "original": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui/dist/StudioPdf-BcID4U53.js",
+    "file": "StudioPdf-BcID4U53.js.txt",
+    "sha256": "2da90d32b87969e2c64721f5a65eba566be1c881989e8ddb33e90a59ad3be979",
+    "size": 122373
+  }
+]

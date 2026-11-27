@@ -1,0 +1,530 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-27",
+  "authoritativeLedger": "docs/onlyoffice-feature-ledger-2026-11-13.json",
+  "whole159Complete": false,
+  "repositoryClosureOwner": "root",
+  "repositoryClosureComplete": false,
+  "sourceRange": {
+    "baseHead": "077e307da018a6a9a96b4d07d70bf8e44a803c84",
+    "workingTreeChanges": true,
+    "provenance": "current-evidence-manifest.json"
+  },
+  "counts": {
+    "currentUiFiles": 5,
+    "currentUiTests": 183,
+    "currentNativeTests": 74,
+    "latestActualBrowserTests": 1,
+    "latestNativeDocx": 3,
+    "latestNativePages": 3,
+    "historicalBasicNativeDocx": 4
+  },
+  "items": [
+    {
+      "id": "W001",
+      "feature": "字体与小数字号",
+      "originalAcceptance": "选区与插入点分别应用，保留原选区",
+      "commonAcceptance": [
+        {
+          "requirement": "操作前后数据及格式",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Mixed selection and caret fonts/sizes, preserved selection and other marks: StudioWord.basic-format.test.tsx (16 tests included in current 183 run)."
+        },
+        {
+          "requirement": "选区、焦点、IME和取消",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Caret snapshot, numeric/font IME, Escape, invalid draft and editor IME: basic-format actual draft/geometry flow and current shared prepareCharacterAction tests."
+        },
+        {
+          "requirement": "一次撤销、重做",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Font/size operations and later typed run undo/redo each preserve originals: basic-format model/real toolbar assertions."
+        },
+        {
+          "requirement": "只读和禁用命令",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Basic-format readOnly/disabled inputs, commands and keyboard variants; current 183 run."
+        },
+        {
+          "requirement": "原生文件保存重开",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "word-basic-format source, two actual DOCX exports and after-cancel export: inspect-native.py and four native PNGs."
+        },
+        {
+          "requirement": "失败后原数据不变",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Invalid font size/IME cancellation retains model and source; recovered actual after-cancel DOCX has source effective run values."
+        }
+      ],
+      "implementationSources": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-word-tools.ts"
+      ],
+      "primaryEvidence": "../word-basic-format",
+      "currentFocusedUiLog": "validation/ui-183-passed.txt",
+      "currentNativeLog": "validation/native-74-passed.txt",
+      "actualBrowser": "../word-basic-format/validation/browser-two-passed.json",
+      "browserGeometry": "../word-basic-format/drafts-permissions-geometry.json",
+      "sourceBoundary": "Historical basic/format/case/metrics artifacts retain their recorded SHA; latest 5270 and current UI/native proofs use code in current-evidence-manifest.json. Historical metrics unit-position files are superseded for native compatibility.",
+      "pendingExactFinalIntegrationRefresh": [
+        "e2e/office-studio-word-basic-format.spec.ts"
+      ],
+      "recommendation": "feature-evidence-ready-after-root-final-gates"
+    },
+    {
+      "id": "W003",
+      "feature": "粗体斜体下划线删除线",
+      "originalAcceptance": "混合选区状态、取消格式、撤销重做",
+      "commonAcceptance": [
+        {
+          "requirement": "操作前后数据及格式",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Four mixed buttons display aria-pressed=mixed and apply/clear every selected run; 16 basic-format tests included in current 183."
+        },
+        {
+          "requirement": "选区、焦点、IME和取消",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Preserved range/focus and shared input/editor IME guards, Escape draft cancellation: basic-format tests and real draft flow."
+        },
+        {
+          "requirement": "一次撤销、重做",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Four marks each independently undo/redo apply and removal."
+        },
+        {
+          "requirement": "只读和禁用命令",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Basic-format readonly/disabled toolbar plus keyboard variants."
+        },
+        {
+          "requirement": "原生文件保存重开",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "word-basic-format independent native four-run flags inspection through two actual DOCX reopens."
+        },
+        {
+          "requirement": "失败后原数据不变",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Rejected IME or invalid draft changes no data; unselected runs and source characters remain."
+        }
+      ],
+      "implementationSources": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-word-tools.ts"
+      ],
+      "primaryEvidence": "../word-basic-format",
+      "currentFocusedUiLog": "validation/ui-183-passed.txt",
+      "currentNativeLog": "validation/native-74-passed.txt",
+      "actualBrowser": "../word-basic-format/validation/browser-two-passed.json",
+      "browserGeometry": "../word-basic-format/drafts-permissions-geometry.json",
+      "sourceBoundary": "Historical basic/format/case/metrics artifacts retain their recorded SHA; latest 5270 and current UI/native proofs use code in current-evidence-manifest.json. Historical metrics unit-position files are superseded for native compatibility.",
+      "pendingExactFinalIntegrationRefresh": [
+        "e2e/office-studio-word-basic-format.spec.ts"
+      ],
+      "recommendation": "feature-evidence-ready-after-root-final-gates"
+    },
+    {
+      "id": "W004",
+      "feature": "上标与下标",
+      "originalAcceptance": "互斥切换、取消后恢复基线",
+      "commonAcceptance": [
+        {
+          "requirement": "操作前后数据及格式",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Superscript/subscript mutually replace and cancel to baseline: dedicated basic-format test."
+        },
+        {
+          "requirement": "选区、焦点、IME和取消",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Selection, focus and shared IME guard covered by current 183 UI tests and basic-format actual flow."
+        },
+        {
+          "requirement": "一次撤销、重做",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Three sequential toggles each undo/redo to exact model."
+        },
+        {
+          "requirement": "只读和禁用命令",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Basic-format readOnly/disabled command and keyboard refusal."
+        },
+        {
+          "requirement": "原生文件保存重开",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Basic-format actual DOCX superscript/subscript val and logical 12pt sizes through two saves."
+        },
+        {
+          "requirement": "失败后原数据不变",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Blocked IME/invalid draft retains model; cancel returns baseline before undo restoration."
+        }
+      ],
+      "implementationSources": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-word-tools.ts"
+      ],
+      "primaryEvidence": "../word-basic-format",
+      "currentFocusedUiLog": "validation/ui-183-passed.txt",
+      "currentNativeLog": "validation/native-74-passed.txt",
+      "actualBrowser": "../word-basic-format/validation/browser-two-passed.json",
+      "browserGeometry": "../word-basic-format/drafts-permissions-geometry.json",
+      "sourceBoundary": "Historical basic/format/case/metrics artifacts retain their recorded SHA; latest 5270 and current UI/native proofs use code in current-evidence-manifest.json. Historical metrics unit-position files are superseded for native compatibility.",
+      "pendingExactFinalIntegrationRefresh": [
+        "e2e/office-studio-word-basic-format.spec.ts"
+      ],
+      "recommendation": "feature-evidence-ready-after-root-final-gates"
+    },
+    {
+      "id": "W006",
+      "feature": "文本高亮与清除高亮",
+      "originalAcceptance": "选中文字和后续输入均可应用及清除",
+      "commonAcceptance": [
+        {
+          "requirement": "操作前后数据及格式",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Selected and caret highlight/clear, including mixed later highlight and H/C separate marks; current 16 basic tests."
+        },
+        {
+          "requirement": "选区、焦点、IME和取消",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Selection/focus retained; color menu cancel and shared IME/draft refusal plus actual 320px menu."
+        },
+        {
+          "requirement": "一次撤销、重做",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Highlight/clear and H/C subsequent typing have independent history boundaries."
+        },
+        {
+          "requirement": "只读和禁用命令",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Basic-format readOnly/disabled highlight menu and character shortcut refusal."
+        },
+        {
+          "requirement": "原生文件保存重开",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Basic-format actual source and two native DOCX exports: H highlighted, C clear; independent XML and native PNG."
+        },
+        {
+          "requirement": "失败后原数据不变",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Invalid draft/IME refusal and menu cancellation retain original data and unrelated fonts."
+        }
+      ],
+      "implementationSources": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-word-tools.ts"
+      ],
+      "primaryEvidence": "../word-basic-format",
+      "currentFocusedUiLog": "validation/ui-183-passed.txt",
+      "currentNativeLog": "validation/native-74-passed.txt",
+      "actualBrowser": "../word-basic-format/validation/browser-two-passed.json",
+      "browserGeometry": "../word-basic-format/drafts-permissions-geometry.json",
+      "sourceBoundary": "Historical basic/format/case/metrics artifacts retain their recorded SHA; latest 5270 and current UI/native proofs use code in current-evidence-manifest.json. Historical metrics unit-position files are superseded for native compatibility.",
+      "pendingExactFinalIntegrationRefresh": [
+        "e2e/office-studio-word-basic-format.spec.ts"
+      ],
+      "recommendation": "feature-evidence-ready-after-root-final-gates"
+    },
+    {
+      "id": "W002",
+      "feature": "增大与缩小字号",
+      "originalAcceptance": "按字号阶梯处理混合字号及上下限",
+      "commonAcceptance": [
+        {
+          "requirement": "操作前后数据及格式",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Current Word.test.tsx ladder boundaries 1..409, mixed independent sizes; latest actual guards flow retains 14/18pt result after both increase/decrease and history."
+        },
+        {
+          "requirement": "选区、焦点、IME和取消",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Shared getStyles for empty header, prepared character action and preserved active-region/selection; latest actual header14→16→H."
+        },
+        {
+          "requirement": "一次撤销、重做",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Latest actual mixed size increase undo/redo, decrease and undo check exact body snapshots; existing caret step test."
+        },
+        {
+          "requirement": "只读和禁用命令",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Word.test.tsx readOnly and disabled variants; latest actual readonly six buttons."
+        },
+        {
+          "requirement": "原生文件保存重开",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "final-browser-run source/two actual exports: lower bold14pt/italic18pt and header H16pt; native inspection resolves original header14pt."
+        },
+        {
+          "requirement": "失败后原数据不变",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Composing model guard and shared invalid-input guard refuse before transaction; before-fix empty style throw repaired and no pageerrors in actual flow."
+        }
+      ],
+      "implementationSources": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-word-tools.ts"
+      ],
+      "primaryEvidence": ".",
+      "currentFocusedUiLog": "validation/ui-183-passed.txt",
+      "currentNativeLog": "validation/native-74-passed.txt",
+      "actualBrowser": "final-browser-run/run.json",
+      "browserGeometry": "final-browser-run/results-light.png/results-dark.png/metrics-dark-320.png",
+      "sourceBoundary": "Historical basic/format/case/metrics artifacts retain their recorded SHA; latest 5270 and current UI/native proofs use code in current-evidence-manifest.json. Historical metrics unit-position files are superseded for native compatibility.",
+      "pendingExactFinalIntegrationRefresh": [
+        "e2e/office-studio-word-case-size.spec.ts"
+      ],
+      "recommendation": "feature-evidence-ready-after-root-final-gates"
+    },
+    {
+      "id": "W007",
+      "feature": "大小写转换",
+      "originalAcceptance": "句首大写、大小写、词首大写及切换",
+      "commonAcceptance": [
+        {
+          "requirement": "操作前后数据及格式",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Five actual menus preserve same-locale final sigma; new five parameter UI cases, length/marks mapping and selected-word context; latest source/two files validate Greek/İ/ß."
+        },
+        {
+          "requirement": "选区、焦点、IME和取消",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Current tests cover reversed ranges, paragraphs, caret and Unicode length mapping; shared editor/IME guard remains; actual selected paragraphs keep links."
+        },
+        {
+          "requirement": "一次撤销、重做",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Five new mode tests each exact undo/redo; existing sentence/title actual flow and caret undo evidence."
+        },
+        {
+          "requirement": "只读和禁用命令",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Word.test.tsx readonly/disabled menu variants plus latest actual readonly six commands."
+        },
+        {
+          "requirement": "原生文件保存重开",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "final-browser-run source and two native exports independently validate five case outputs, five links, original bold/italic and 14/18 or12/16 sizes, length i+combining dot."
+        },
+        {
+          "requirement": "失败后原数据不变",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Blocked IME/draft path leaves source intact; unselected text/surrogates retained in current dedicated guard tests."
+        }
+      ],
+      "implementationSources": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-word-tools.ts"
+      ],
+      "primaryEvidence": ".",
+      "currentFocusedUiLog": "validation/ui-183-passed.txt",
+      "currentNativeLog": "validation/native-74-passed.txt",
+      "actualBrowser": "final-browser-run/run.json",
+      "browserGeometry": "final-browser-run/results-light.png/results-dark.png/metrics-dark-320.png",
+      "sourceBoundary": "Historical basic/format/case/metrics artifacts retain their recorded SHA; latest 5270 and current UI/native proofs use code in current-evidence-manifest.json. Historical metrics unit-position files are superseded for native compatibility.",
+      "pendingExactFinalIntegrationRefresh": [
+        "e2e/office-studio-word-case-size.spec.ts"
+      ],
+      "recommendation": "feature-evidence-ready-after-root-final-gates"
+    },
+    {
+      "id": "W008",
+      "feature": "格式刷单次与连续",
+      "originalAcceptance": "复制字符和段落格式，单次结束或连续刷，Esc退出",
+      "commonAcceptance": [
+        {
+          "requirement": "操作前后数据及格式",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Current continuous and single source/target UI tests preserve exact character and paragraph formatting and links; latest actual single paint after IME."
+        },
+        {
+          "requirement": "选区、焦点、IME和取消",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "New armed target composition guard: latest actual snapshot unchanged, composition ends then selection paints; original continuous Esc exact test remains."
+        },
+        {
+          "requirement": "一次撤销、重做",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Current continuous paint test undo restores only last target; single model tests and old exact native-format browser flow include undo/redo."
+        },
+        {
+          "requirement": "只读和禁用命令",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Current editor.isEditable/model and toolbar readOnly/disabled checks; latest actual readonly button."
+        },
+        {
+          "requirement": "原生文件保存重开",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Existing exact formats-roundtrip1/2 DOCX files and native audit prove continuous painting/paragraph/links. Current actual target paints source18pt/bold/blue/right and reopens twice."
+        },
+        {
+          "requirement": "失败后原数据不变",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Latest actual composition refusal equals original model. Armed selection effect also checks existing input error and composing before change."
+        }
+      ],
+      "implementationSources": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-word-tools.ts"
+      ],
+      "primaryEvidence": ".",
+      "currentFocusedUiLog": "validation/ui-183-passed.txt",
+      "currentNativeLog": "validation/native-74-passed.txt",
+      "actualBrowser": "final-browser-run/run.json",
+      "browserGeometry": "final-browser-run/results-light.png/results-dark.png/metrics-dark-320.png",
+      "sourceBoundary": "Historical basic/format/case/metrics artifacts retain their recorded SHA; latest 5270 and current UI/native proofs use code in current-evidence-manifest.json. Historical metrics unit-position files are superseded for native compatibility.",
+      "pendingExactFinalIntegrationRefresh": [
+        "e2e/office-studio-word-format.spec.ts"
+      ],
+      "recommendation": "feature-evidence-ready-after-root-final-gates"
+    },
+    {
+      "id": "W009",
+      "feature": "清除字符与段落格式",
+      "originalAcceptance": "保留文字、结构和链接，明确清除范围",
+      "commonAcceptance": [
+        {
+          "requirement": "操作前后数据及格式",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Current heading/list/link preservation test specifies character+paragraph clearing, and old exact format-native flow checks heading/list structure after real clear."
+        },
+        {
+          "requirement": "选区、焦点、IME和取消",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Latest actual body composition clear refusal, end/apply and undo. Shared prepareCharacterAction preserves draft/permission guards."
+        },
+        {
+          "requirement": "一次撤销、重做",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Current UI heading clear undo/redo plus latest actual source clear undo equals snapshot."
+        },
+        {
+          "requirement": "只读和禁用命令",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Current model/toolbar readOnly/disabled checks and latest actual six-command refusal."
+        },
+        {
+          "requirement": "原生文件保存重开",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Existing exact formats-roundtrip1/2 native files prove cleared heading/link/list preservation; full final same format spec refresh is pending."
+        },
+        {
+          "requirement": "失败后原数据不变",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Latest actual composition refusal preserves full body JSON; new model composing guard rejects before transaction."
+        }
+      ],
+      "implementationSources": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-word-tools.ts"
+      ],
+      "primaryEvidence": ".",
+      "currentFocusedUiLog": "validation/ui-183-passed.txt",
+      "currentNativeLog": "validation/native-74-passed.txt",
+      "actualBrowser": "final-browser-run/run.json",
+      "browserGeometry": "final-browser-run/results-light.png/results-dark.png/metrics-dark-320.png",
+      "sourceBoundary": "Historical basic/format/case/metrics artifacts retain their recorded SHA; latest 5270 and current UI/native proofs use code in current-evidence-manifest.json. Historical metrics unit-position files are superseded for native compatibility.",
+      "pendingExactFinalIntegrationRefresh": [
+        "e2e/office-studio-word-format.spec.ts"
+      ],
+      "recommendation": "feature-evidence-ready-after-root-final-gates"
+    },
+    {
+      "id": "W010",
+      "feature": "字符间距与位置",
+      "originalAcceptance": "加宽紧缩、提升降低并按度量显示",
+      "commonAcceptance": [
+        {
+          "requirement": "操作前后数据及格式",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Current model eight tests cover expanded/condensed/raised/lowered, mixed marks and native precision. Latest actual spacing0.3pt/position-1.5pt and preview."
+        },
+        {
+          "requirement": "选区、焦点、IME和取消",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "IME numeric draft disabled; actual .3/1.25pt position rejected with step0.5 error, 1.5 recovery; cancellation/mixed untouched in existing exact dialog tests."
+        },
+        {
+          "requirement": "一次撤销、重做",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Current eight model tests plus two new actual dialog UI cases verify one undo/redo preserving all marks; existing metrics actual flow has caret/history."
+        },
+        {
+          "requirement": "只读和禁用命令",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Model readonly guard, UI disabled/readOnly entry, latest actual six-button refusal."
+        },
+        {
+          "requirement": "原生文件保存重开",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Current 74 native tests cover body/text/image/all four complex PAGE runs/style/header/footer/±500/zero, two saves; final actual DOCX files contain spacing6/position-3 and native glyph coords match integer reference."
+        },
+        {
+          "requirement": "失败后原数据不变",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Invalid model metric patch validates all before dispatch; UI invalid half-points and IME reject with model unchanged. Native invalid precision rejects without mutation."
+        }
+      ],
+      "implementationSources": [
+        "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
+        "packages/ui/src/components/OfficeStudio/studio-word-character-layout.ts",
+        "packages/ui/src/components/OfficeStudio/StudioWordCharacterDialog.tsx",
+        "docs/src/pages/collaboration/office-studio/studio-word-codec.ts"
+      ],
+      "primaryEvidence": ".",
+      "currentFocusedUiLog": "validation/ui-183-passed.txt",
+      "currentNativeLog": "validation/native-74-passed.txt",
+      "actualBrowser": "final-browser-run/run.json",
+      "browserGeometry": "final-browser-run/results-light.png/results-dark.png/metrics-dark-320.png",
+      "sourceBoundary": "Historical basic/format/case/metrics artifacts retain their recorded SHA; latest 5270 and current UI/native proofs use code in current-evidence-manifest.json. Historical metrics unit-position files are superseded for native compatibility.",
+      "pendingExactFinalIntegrationRefresh": [
+        "e2e/office-studio-word-metrics.spec.ts"
+      ],
+      "recommendation": "feature-evidence-ready-after-root-final-gates"
+    },
+    {
+      "id": "W005",
+      "feature": "字体颜色与主题颜色",
+      "originalAcceptance": "自动颜色、主题色及透明度保存",
+      "commonAcceptance": [
+        {
+          "requirement": "操作前后数据及格式",
+          "status": "required-color-scope-incomplete",
+          "evidence": "Ordinary HEX behavior does not implement automatic color, theme identity or alpha native preservation."
+        },
+        {
+          "requirement": "选区、焦点、IME和取消",
+          "status": "required-color-scope-incomplete",
+          "evidence": "Ordinary HEX behavior does not implement automatic color, theme identity or alpha native preservation."
+        },
+        {
+          "requirement": "一次撤销、重做",
+          "status": "required-color-scope-incomplete",
+          "evidence": "Ordinary HEX behavior does not implement automatic color, theme identity or alpha native preservation."
+        },
+        {
+          "requirement": "只读和禁用命令",
+          "status": "required-color-scope-incomplete",
+          "evidence": "Ordinary HEX behavior does not implement automatic color, theme identity or alpha native preservation."
+        },
+        {
+          "requirement": "原生文件保存重开",
+          "status": "required-color-scope-incomplete",
+          "evidence": "Ordinary HEX behavior does not implement automatic color, theme identity or alpha native preservation."
+        },
+        {
+          "requirement": "失败后原数据不变",
+          "status": "required-color-scope-incomplete",
+          "evidence": "Ordinary HEX behavior does not implement automatic color, theme identity or alpha native preservation."
+        }
+      ],
+      "recommendation": "incomplete",
+      "specificMissing": [
+        "automatic-color model and actual entry",
+        "theme-color identity retained through native saves",
+        "alpha model/entry and native retention"
+      ],
+      "plannedBatch": "W005 with W021; no new locale/theme scope added here"
+    }
+  ]
+}

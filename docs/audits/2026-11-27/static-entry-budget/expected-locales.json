@@ -1,0 +1,2472 @@
+{
+  "zhCN": {
+    "code": "zh-CN",
+    "accessibility": {
+      "loading": "加载中",
+      "removeTag": "移除标签",
+      "breadcrumb": "面包屑",
+      "colorPicker": "颜色选择器",
+      "colorPanel": "颜色选择面板",
+      "saturationBrightness": "饱和度与亮度",
+      "colorValue": "饱和度 {s}%，亮度 {v}%",
+      "hue": "色相",
+      "hex": "十六进制颜色值",
+      "searchResults": "搜索结果",
+      "noMatch": "暂无匹配",
+      "searchCascader": "搜索级联选项",
+      "column": "第 {index} 列",
+      "increase": "增加",
+      "decrease": "减少",
+      "mentions": "提及建议",
+      "imagePreview": "图片预览",
+      "closePreview": "关闭预览",
+      "backTop": "返回顶部",
+      "slider": "滑块",
+      "rating": "评分",
+      "ratingValue": "{index} 分",
+      "floatAction": "悬浮操作",
+      "removeItem": "移除 {item}",
+      "qrCode": "二维码：{value}",
+      "anchor": "锚点导航",
+      "copy": "复制",
+      "copied": "已复制",
+      "sourceList": "源列表",
+      "targetList": "目标列表",
+      "selectAllSource": "全选源列表",
+      "selectAllTarget": "全选目标列表",
+      "searchSource": "搜索源列表",
+      "searchTarget": "搜索目标列表"
+    },
+    "form": {
+      "required": "该项为必填",
+      "minNumber": "数值不能小于 {min}",
+      "maxNumber": "数值不能大于 {max}",
+      "minLength": "长度不能少于 {min}",
+      "maxLength": "长度不能超过 {max}",
+      "pattern": "格式不正确",
+      "validator": "校验不通过"
+    },
+    "result": {
+      "403": "403",
+      "404": "404",
+      "500": "500",
+      "success": "操作成功",
+      "error": "操作失败",
+      "warning": "警告",
+      "info": "提示"
+    },
+    "select": {
+      "placeholder": "请选择",
+      "empty": "暂无选项"
+    },
+    "sideNav": {
+      "navigation": "导航",
+      "collapse": "收窄导航",
+      "expand": "展开导航",
+      "expandGroup": "展开分组 {label}",
+      "collapseGroup": "收起分组 {label}"
+    },
+    "splitter": {
+      "panelLabel": "面板 {index}",
+      "resizeHandle": "调整面板大小",
+      "expandPanel": "展开面板",
+      "collapsePanel": "折叠面板"
+    },
+    "commandPalette": {
+      "title": "命令面板",
+      "search": "搜索命令",
+      "placeholder": "搜索命令…",
+      "loading": "正在加载命令",
+      "empty": "没有匹配的命令",
+      "results": "找到 {count} 条命令"
+    },
+    "statistic": {
+      "countdown": "倒计时"
+    },
+    "chart": {
+      "chart": "数据图表",
+      "loading": "正在加载图表…",
+      "error": "图表加载失败",
+      "retry": "重试",
+      "empty": "暂无图表数据",
+      "noVisible": "所有数据系列已隐藏",
+      "showAll": "显示全部系列",
+      "legend": "图表图例",
+      "dataTable": "查看图表数据",
+      "category": "分类",
+      "series": "系列",
+      "value": "数值",
+      "x": "X 轴",
+      "y": "Y 轴",
+      "percent": "占比",
+      "instructions": "方向键浏览，Home/End 首尾，Enter/Space 选择，Esc 关闭提示。",
+      "invalidData": "图表数据格式不正确",
+      "zoomHint": "滚轮/双指/+/- 缩放；双击/Esc 重置",
+      "brushHint": "拖拽框选范围",
+      "resetZoom": "重置范围",
+      "downloadCsv": "导出 CSV"
+    },
+    "dataGrid": {
+      "grid": "数据网格",
+      "loading": "正在加载数据…",
+      "error": "数据网格加载失败",
+      "retry": "重试",
+      "empty": "暂无数据",
+      "selectAll": "全选",
+      "selectRow": "选择 {label}",
+      "sortLabel": "按 {label} 排序",
+      "resizeColumn": "调整 {label} 列宽",
+      "filterLabel": "筛选 {label}",
+      "filterEmpty": "无匹配的筛选项"
+    },
+    "globe": {
+      "label": "3D 地球可视化",
+      "loading": "正在加载地球…",
+      "rotate": "开始旋转",
+      "pause": "暂停旋转",
+      "zoomIn": "放大",
+      "zoomOut": "缩小",
+      "reset": "重置视角",
+      "points": "点位列表",
+      "noPoints": "暂无点位",
+      "instructions": "使用方向键旋转，+ / - 缩放，Home 重置视角。",
+      "fallback": "已切换为 2D 地球，点位数据仍可查看",
+      "error": "地球加载失败",
+      "retry": "重试 3D",
+      "latitude": "纬度",
+      "longitude": "经度",
+      "value": "数值",
+      "search": "搜索点位",
+      "searchPlaceholder": "搜索点位名称、分类或数值…",
+      "clearSearch": "清除搜索",
+      "searchResults": "找到 {count} 个点位",
+      "noResults": "没有匹配的点位",
+      "legend": "点位分类",
+      "showAll": "显示全部分类",
+      "hiddenSelection": "所选点位已被当前筛选隐藏",
+      "focusPoint": "定位到 {name}",
+      "arcs": "连接列表",
+      "noArcs": "暂无连接",
+      "selectedArc": "所选连接"
+    },
+    "combobox": {
+      "placeholder": "请输入或选择",
+      "clear": "清除选择",
+      "showOptions": "展开选项",
+      "hideOptions": "收起选项",
+      "loading": "加载中",
+      "empty": "暂无匹配选项",
+      "results": "找到 {count} 项"
+    },
+    "input": {
+      "clear": "清除",
+      "showPassword": "显示密码",
+      "hidePassword": "隐藏密码",
+      "search": "搜索"
+    },
+    "modal": {
+      "close": "关闭"
+    },
+    "drawer": {
+      "close": "关闭"
+    },
+    "message": {
+      "close": "关闭"
+    },
+    "pagination": {
+      "prev": "上一页",
+      "next": "下一页",
+      "jumper": "跳至",
+      "label": "分页",
+      "jumperLabel": "跳至页码",
+      "unit": "页"
+    },
+    "empty": {
+      "description": "暂无数据"
+    },
+    "date": {
+      "today": "今天",
+      "previousMonth": "上一月",
+      "nextMonth": "下一月",
+      "previousYear": "上一年",
+      "nextYear": "下一年",
+      "monthFormat": "{year}年{month}月",
+      "placeholder": "请选择日期",
+      "inputLabel": "日期",
+      "panelLabel": "选择日期",
+      "weekdayFormat": "星期{name}",
+      "weekdays": [
+        "一",
+        "二",
+        "三",
+        "四",
+        "五",
+        "六",
+        "日"
+      ]
+    },
+    "transfer": {
+      "search": "搜索",
+      "itemUnit": "项",
+      "moveRight": "移动到目标列表",
+      "moveLeft": "移动到源列表"
+    },
+    "timePicker": {
+      "ok": "确定",
+      "cancel": "取消",
+      "placeholder": "请选择时间",
+      "hour": "时",
+      "minute": "分",
+      "second": "秒"
+    },
+    "popconfirm": {
+      "ok": "确定",
+      "cancel": "取消"
+    },
+    "app": {
+      "confirm": "确认"
+    },
+    "tour": {
+      "prev": "上一步",
+      "next": "下一步",
+      "finish": "完成"
+    },
+    "upload": {
+      "text": "点击上传",
+      "dragText": "点击或拖拽文件到此处",
+      "remove": "删除文件"
+    },
+    "steps": {
+      "label": "步骤条"
+    },
+    "dateRange": {
+      "startPlaceholder": "开始日期",
+      "endPlaceholder": "结束日期",
+      "separator": "至",
+      "panelLabel": "选择日期范围"
+    }
+  },
+  "enUS": {
+    "code": "en-US",
+    "accessibility": {
+      "loading": "Loading",
+      "removeTag": "Remove tag",
+      "breadcrumb": "Breadcrumb",
+      "colorPicker": "Color picker",
+      "colorPanel": "Color selection",
+      "saturationBrightness": "Saturation and brightness",
+      "colorValue": "Saturation {s}%, brightness {v}%",
+      "hue": "Hue",
+      "hex": "Hex color",
+      "searchResults": "Search results",
+      "noMatch": "No matches",
+      "searchCascader": "Search cascader options",
+      "column": "Column {index}",
+      "increase": "Increase",
+      "decrease": "Decrease",
+      "mentions": "Mention suggestions",
+      "imagePreview": "Image preview",
+      "closePreview": "Close preview",
+      "backTop": "Back to top",
+      "slider": "Slider",
+      "rating": "Rating",
+      "ratingValue": "{index} stars",
+      "floatAction": "Floating action",
+      "removeItem": "Remove {item}",
+      "qrCode": "QR code: {value}",
+      "anchor": "Anchor navigation",
+      "copy": "Copy",
+      "copied": "Copied",
+      "sourceList": "Source list",
+      "targetList": "Target list",
+      "selectAllSource": "Select all source items",
+      "selectAllTarget": "Select all target items",
+      "searchSource": "Search source list",
+      "searchTarget": "Search target list"
+    },
+    "form": {
+      "required": "This field is required",
+      "minNumber": "Value must be at least {min}",
+      "maxNumber": "Value must be at most {max}",
+      "minLength": "Use at least {min} characters",
+      "maxLength": "Use at most {max} characters",
+      "pattern": "Invalid format",
+      "validator": "Validation failed"
+    },
+    "result": {
+      "403": "403",
+      "404": "404",
+      "500": "500",
+      "success": "Success",
+      "error": "Operation failed",
+      "warning": "Warning",
+      "info": "Information"
+    },
+    "select": {
+      "placeholder": "Select...",
+      "empty": "No options"
+    },
+    "sideNav": {
+      "navigation": "Navigation",
+      "collapse": "Collapse navigation",
+      "expand": "Expand navigation",
+      "expandGroup": "Expand group {label}",
+      "collapseGroup": "Collapse group {label}"
+    },
+    "splitter": {
+      "panelLabel": "Panel {index}",
+      "resizeHandle": "Resize panel",
+      "expandPanel": "Expand panel",
+      "collapsePanel": "Collapse panel"
+    },
+    "commandPalette": {
+      "title": "Command palette",
+      "search": "Search commands",
+      "placeholder": "Type a command…",
+      "loading": "Loading commands",
+      "empty": "No matching commands",
+      "results": "{count} commands found"
+    },
+    "statistic": {
+      "countdown": "Countdown"
+    },
+    "chart": {
+      "chart": "Data chart",
+      "loading": "Loading chart…",
+      "error": "Unable to load the chart",
+      "retry": "Retry",
+      "empty": "No chart data",
+      "noVisible": "All data series are hidden",
+      "showAll": "Show all series",
+      "legend": "Chart legend",
+      "dataTable": "View chart data",
+      "category": "Category",
+      "series": "Series",
+      "value": "Value",
+      "x": "X axis",
+      "y": "Y axis",
+      "percent": "Percentage",
+      "instructions": "Arrows: browse; Home/End: first/last; Enter/Space: select; Esc: close tooltip.",
+      "invalidData": "Invalid chart data",
+      "zoomHint": "Wheel/pinch/+/-: zoom; double-click/Esc: reset",
+      "brushHint": "Drag to zoom a range",
+      "resetZoom": "Reset range",
+      "downloadCsv": "Export CSV"
+    },
+    "dataGrid": {
+      "grid": "Data grid",
+      "loading": "Loading data…",
+      "error": "Unable to load the data grid",
+      "retry": "Retry",
+      "empty": "No data",
+      "selectAll": "Select all",
+      "selectRow": "Select {label}",
+      "sortLabel": "Sort by {label}",
+      "resizeColumn": "Resize {label} column",
+      "filterLabel": "Filter {label}",
+      "filterEmpty": "No matching filter options"
+    },
+    "globe": {
+      "label": "3D globe visualization",
+      "loading": "Loading globe…",
+      "rotate": "Start rotation",
+      "pause": "Pause rotation",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "reset": "Reset view",
+      "points": "Point list",
+      "noPoints": "No points",
+      "instructions": "Use arrow keys to rotate, + / - to zoom, and Home to reset the view.",
+      "fallback": "Switched to a 2D globe; point data is still available",
+      "error": "Unable to load the globe",
+      "retry": "Retry 3D",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "value": "Value",
+      "search": "Search points",
+      "searchPlaceholder": "Search point names, categories or values…",
+      "clearSearch": "Clear search",
+      "searchResults": "{count} points found",
+      "noResults": "No matching points",
+      "legend": "Point categories",
+      "showAll": "Show all categories",
+      "hiddenSelection": "The selected point is hidden by the current filters",
+      "focusPoint": "Focus on {name}",
+      "arcs": "Connection list",
+      "noArcs": "No connections",
+      "selectedArc": "Selected connection"
+    },
+    "combobox": {
+      "placeholder": "Type or select...",
+      "clear": "Clear selection",
+      "showOptions": "Show options",
+      "hideOptions": "Hide options",
+      "loading": "Loading",
+      "empty": "No matching options",
+      "results": "{count} results"
+    },
+    "input": {
+      "clear": "Clear",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "search": "Search"
+    },
+    "modal": {
+      "close": "Close"
+    },
+    "drawer": {
+      "close": "Close"
+    },
+    "message": {
+      "close": "Close"
+    },
+    "pagination": {
+      "prev": "Previous",
+      "next": "Next",
+      "jumper": "Go to",
+      "label": "Pagination",
+      "jumperLabel": "Go to page",
+      "unit": ""
+    },
+    "empty": {
+      "description": "No data"
+    },
+    "date": {
+      "today": "Today",
+      "previousMonth": "Previous month",
+      "nextMonth": "Next month",
+      "previousYear": "Previous year",
+      "nextYear": "Next year",
+      "monthFormat": "{year}-{month}",
+      "placeholder": "Select date",
+      "inputLabel": "Date",
+      "panelLabel": "Select date",
+      "weekdayFormat": "{name}",
+      "weekdays": [
+        "Mo",
+        "Tu",
+        "We",
+        "Th",
+        "Fr",
+        "Sa",
+        "Su"
+      ]
+    },
+    "transfer": {
+      "search": "Search",
+      "itemUnit": "items",
+      "moveRight": "Move to target",
+      "moveLeft": "Move to source"
+    },
+    "timePicker": {
+      "ok": "OK",
+      "cancel": "Cancel",
+      "placeholder": "Select time",
+      "hour": "Hour",
+      "minute": "Minute",
+      "second": "Second"
+    },
+    "popconfirm": {
+      "ok": "OK",
+      "cancel": "Cancel"
+    },
+    "app": {
+      "confirm": "Confirm"
+    },
+    "tour": {
+      "prev": "Previous",
+      "next": "Next",
+      "finish": "Finish"
+    },
+    "upload": {
+      "text": "Click to upload",
+      "dragText": "Click or drag files here",
+      "remove": "Remove file"
+    },
+    "steps": {
+      "label": "Steps"
+    },
+    "dateRange": {
+      "startPlaceholder": "Start date",
+      "endPlaceholder": "End date",
+      "separator": "to",
+      "panelLabel": "Select date range"
+    }
+  },
+  "zhTW": {
+    "code": "zh-TW",
+    "accessibility": {
+      "loading": "載入中",
+      "removeTag": "移除標籤",
+      "breadcrumb": "麵包屑",
+      "colorPicker": "顏色選擇器",
+      "colorPanel": "顏色選擇面板",
+      "saturationBrightness": "飽和度與亮度",
+      "colorValue": "飽和度 {s}%，亮度 {v}%",
+      "hue": "色相",
+      "hex": "十六進位顏色值",
+      "searchResults": "搜尋結果",
+      "noMatch": "暫無符合項目",
+      "searchCascader": "搜尋級聯選項",
+      "column": "第 {index} 欄",
+      "increase": "增加",
+      "decrease": "減少",
+      "mentions": "提及建議",
+      "imagePreview": "圖片預覽",
+      "closePreview": "關閉預覽",
+      "backTop": "返回頂部",
+      "slider": "滑桿",
+      "rating": "評分",
+      "ratingValue": "{index} 分",
+      "floatAction": "懸浮操作",
+      "removeItem": "移除 {item}",
+      "qrCode": "QR 碼：{value}",
+      "anchor": "錨點導航",
+      "copy": "複製",
+      "copied": "已複製",
+      "sourceList": "來源列表",
+      "targetList": "目標列表",
+      "selectAllSource": "全選來源列表",
+      "selectAllTarget": "全選目標列表",
+      "searchSource": "搜尋來源列表",
+      "searchTarget": "搜尋目標列表"
+    },
+    "form": {
+      "required": "此項為必填",
+      "minNumber": "數值不能小於 {min}",
+      "maxNumber": "數值不能大於 {max}",
+      "minLength": "長度不能少於 {min}",
+      "maxLength": "長度不能超過 {max}",
+      "pattern": "格式不正確",
+      "validator": "驗證未通過"
+    },
+    "result": {
+      "403": "403",
+      "404": "404",
+      "500": "500",
+      "success": "操作成功",
+      "error": "操作失敗",
+      "warning": "警告",
+      "info": "提示"
+    },
+    "select": {
+      "placeholder": "請選擇",
+      "empty": "暫無選項"
+    },
+    "sideNav": {
+      "navigation": "導覽",
+      "collapse": "收窄導覽",
+      "expand": "展開導覽",
+      "expandGroup": "展開分組 {label}",
+      "collapseGroup": "收起分組 {label}"
+    },
+    "splitter": {
+      "panelLabel": "面板 {index}",
+      "resizeHandle": "調整面板大小",
+      "expandPanel": "展開面板",
+      "collapsePanel": "摺疊面板"
+    },
+    "commandPalette": {
+      "title": "命令面板",
+      "search": "搜尋命令",
+      "placeholder": "搜尋命令…",
+      "loading": "正在載入命令",
+      "empty": "沒有符合的命令",
+      "results": "找到 {count} 個命令"
+    },
+    "statistic": {
+      "countdown": "倒數計時"
+    },
+    "chart": {
+      "chart": "資料圖表",
+      "loading": "載入中…",
+      "error": "載入失敗",
+      "retry": "重試",
+      "empty": "暫無資料",
+      "noVisible": "系列已隱藏",
+      "showAll": "顯示全部",
+      "legend": "圖例",
+      "dataTable": "查看資料",
+      "category": "分類",
+      "series": "系列",
+      "value": "數值",
+      "x": "X 軸",
+      "y": "Y 軸",
+      "percent": "占比",
+      "instructions": "方向鍵瀏覽；Home/End 首尾；Enter/Space 選取；Esc 關閉提示",
+      "invalidData": "資料格式錯誤",
+      "zoomHint": "滾輪/雙指/+/- 縮放；雙擊/Esc 重置",
+      "brushHint": "拖曳框選範圍",
+      "resetZoom": "重置範圍",
+      "downloadCsv": "匯出 CSV"
+    },
+    "dataGrid": {
+      "grid": "資料網格",
+      "loading": "正在載入資料…",
+      "error": "資料網格載入失敗",
+      "retry": "重試",
+      "empty": "暫無資料",
+      "selectAll": "全選",
+      "selectRow": "選擇 {label}",
+      "sortLabel": "依 {label} 排序",
+      "resizeColumn": "調整 {label} 欄寬",
+      "filterLabel": "篩選 {label}",
+      "filterEmpty": "沒有符合的篩選項目"
+    },
+    "globe": {
+      "label": "3D 地球視覺化",
+      "loading": "正在載入地球…",
+      "rotate": "開始旋轉",
+      "pause": "暫停旋轉",
+      "zoomIn": "放大",
+      "zoomOut": "縮小",
+      "reset": "重設視角",
+      "points": "點位列表",
+      "noPoints": "暫無點位",
+      "instructions": "使用方向鍵旋轉，+ / - 縮放，Home 重設視角。",
+      "fallback": "已切換為 2D 地球，仍可查看點位資料",
+      "error": "地球載入失敗",
+      "retry": "重試 3D",
+      "latitude": "緯度",
+      "longitude": "經度",
+      "value": "數值",
+      "search": "搜尋點位",
+      "searchPlaceholder": "搜尋點位名稱、分類或數值…",
+      "clearSearch": "清除搜尋",
+      "searchResults": "找到 {count} 個點位",
+      "noResults": "沒有符合的點位",
+      "legend": "點位分類",
+      "showAll": "顯示全部分類",
+      "hiddenSelection": "所選點位已被目前的篩選隱藏",
+      "focusPoint": "定位至 {name}",
+      "arcs": "連線列表",
+      "noArcs": "暫無連線",
+      "selectedArc": "所選連線"
+    },
+    "combobox": {
+      "placeholder": "請輸入或選擇",
+      "clear": "清除選擇",
+      "showOptions": "展開選項",
+      "hideOptions": "收起選項",
+      "loading": "載入中",
+      "empty": "暫無符合的選項",
+      "results": "找到 {count} 項"
+    },
+    "input": {
+      "clear": "清除",
+      "showPassword": "顯示密碼",
+      "hidePassword": "隱藏密碼",
+      "search": "搜尋"
+    },
+    "modal": {
+      "close": "關閉"
+    },
+    "drawer": {
+      "close": "關閉"
+    },
+    "message": {
+      "close": "關閉"
+    },
+    "pagination": {
+      "prev": "上一頁",
+      "next": "下一頁",
+      "jumper": "跳至",
+      "label": "分頁",
+      "jumperLabel": "跳至頁碼",
+      "unit": "頁"
+    },
+    "empty": {
+      "description": "暫無資料"
+    },
+    "date": {
+      "today": "今天",
+      "previousMonth": "上個月",
+      "nextMonth": "下個月",
+      "previousYear": "前一年",
+      "nextYear": "後一年",
+      "monthFormat": "{year}年{month}月",
+      "placeholder": "請選擇日期",
+      "inputLabel": "日期",
+      "panelLabel": "選擇日期",
+      "weekdayFormat": "星期{name}",
+      "weekdays": [
+        "一",
+        "二",
+        "三",
+        "四",
+        "五",
+        "六",
+        "日"
+      ]
+    },
+    "transfer": {
+      "search": "搜尋",
+      "itemUnit": "項",
+      "moveRight": "移至目標列表",
+      "moveLeft": "移至來源列表"
+    },
+    "timePicker": {
+      "ok": "確定",
+      "cancel": "取消",
+      "placeholder": "請選擇時間",
+      "hour": "時",
+      "minute": "分",
+      "second": "秒"
+    },
+    "popconfirm": {
+      "ok": "確定",
+      "cancel": "取消"
+    },
+    "app": {
+      "confirm": "確認"
+    },
+    "tour": {
+      "prev": "上一步",
+      "next": "下一步",
+      "finish": "完成"
+    },
+    "upload": {
+      "text": "點擊上傳",
+      "dragText": "點擊或拖曳檔案到此處",
+      "remove": "刪除檔案"
+    },
+    "steps": {
+      "label": "步驟條"
+    },
+    "dateRange": {
+      "startPlaceholder": "開始日期",
+      "endPlaceholder": "結束日期",
+      "separator": "至",
+      "panelLabel": "選擇日期範圍"
+    }
+  },
+  "jaJP": {
+    "code": "ja-JP",
+    "accessibility": {
+      "loading": "読み込み中",
+      "removeTag": "タグを削除",
+      "breadcrumb": "パンくずリスト",
+      "colorPicker": "カラーピッカー",
+      "colorPanel": "色の選択",
+      "saturationBrightness": "彩度と明度",
+      "colorValue": "彩度 {s}%、明度 {v}%",
+      "hue": "色相",
+      "hex": "16進数カラー",
+      "searchResults": "検索結果",
+      "noMatch": "一致する項目なし",
+      "searchCascader": "カスケードを検索",
+      "column": "列 {index}",
+      "increase": "増やす",
+      "decrease": "減らす",
+      "mentions": "メンション候補",
+      "imagePreview": "画像プレビュー",
+      "closePreview": "プレビューを閉じる",
+      "backTop": "先頭に戻る",
+      "slider": "スライダー",
+      "rating": "評価",
+      "ratingValue": "{index} つ星",
+      "floatAction": "フローティング操作",
+      "removeItem": "{item} を削除",
+      "qrCode": "QR コード：{value}",
+      "anchor": "アンカー",
+      "copy": "コピー",
+      "copied": "コピーしました",
+      "sourceList": "元のリスト",
+      "targetList": "選択済みリスト",
+      "selectAllSource": "元の項目をすべて選択",
+      "selectAllTarget": "選択済み項目をすべて選択",
+      "searchSource": "元のリストを検索",
+      "searchTarget": "選択済みリストを検索"
+    },
+    "form": {
+      "required": "必須項目です",
+      "minNumber": "値は {min} 以上にしてください",
+      "maxNumber": "値は {max} 以下にしてください",
+      "minLength": "{min} 文字以上にしてください",
+      "maxLength": "{max} 文字以下にしてください",
+      "pattern": "形式が正しくありません",
+      "validator": "検証に失敗しました"
+    },
+    "result": {
+      "403": "403",
+      "404": "404",
+      "500": "500",
+      "success": "完了",
+      "error": "操作に失敗しました",
+      "warning": "警告",
+      "info": "情報"
+    },
+    "select": {
+      "placeholder": "選択してください",
+      "empty": "データがありません"
+    },
+    "sideNav": {
+      "navigation": "ナビゲーション",
+      "collapse": "ナビゲーションを折りたたむ",
+      "expand": "ナビゲーションを展開",
+      "expandGroup": "グループを展開 {label}",
+      "collapseGroup": "グループを折りたたむ {label}"
+    },
+    "splitter": {
+      "panelLabel": "パネル {index}",
+      "resizeHandle": "ペインのサイズを変更",
+      "expandPanel": "ペインを展開",
+      "collapsePanel": "ペインを折りたたむ"
+    },
+    "commandPalette": {
+      "title": "コマンドパレット",
+      "search": "コマンドを検索",
+      "placeholder": "コマンドを検索…",
+      "loading": "コマンドを読み込み中",
+      "empty": "一致するコマンドがありません",
+      "results": "{count} 件のコマンド"
+    },
+    "statistic": {
+      "countdown": "カウントダウン"
+    },
+    "chart": {
+      "chart": "チャート",
+      "loading": "読み込み中…",
+      "error": "読み込み失敗",
+      "retry": "再試行",
+      "empty": "データなし",
+      "noVisible": "系列は非表示",
+      "showAll": "すべて表示",
+      "legend": "凡例",
+      "dataTable": "データを見る",
+      "category": "分類",
+      "series": "系列",
+      "value": "値",
+      "x": "X 軸",
+      "y": "Y 軸",
+      "percent": "割合",
+      "instructions": "矢印: 移動; Home/End: 先頭/末尾; Enter/Space: 選択; Esc: ヒントを閉じる",
+      "invalidData": "データ形式エラー",
+      "zoomHint": "ホイール/ピンチ/+/-: 拡大; ダブルクリック/Esc: 解除",
+      "brushHint": "ドラッグで範囲拡大",
+      "resetZoom": "範囲解除",
+      "downloadCsv": "CSV 出力"
+    },
+    "dataGrid": {
+      "grid": "データグリッド",
+      "loading": "データを読み込み中…",
+      "error": "データグリッドの読み込みに失敗しました",
+      "retry": "再試行",
+      "empty": "データがありません",
+      "selectAll": "すべて選択",
+      "selectRow": "{label} を選択",
+      "sortLabel": "{label} を並べ替え",
+      "resizeColumn": "{label} の列幅を変更",
+      "filterLabel": "{label} を絞り込み",
+      "filterEmpty": "一致する絞り込み項目がありません"
+    },
+    "globe": {
+      "label": "3D 地球の可視化",
+      "loading": "地球を読み込み中…",
+      "rotate": "回転を開始",
+      "pause": "回転を一時停止",
+      "zoomIn": "拡大",
+      "zoomOut": "縮小",
+      "reset": "視点をリセット",
+      "points": "地点一覧",
+      "noPoints": "地点がありません",
+      "instructions": "矢印キーで回転、+ / - で拡大・縮小、Home で視点をリセットします。",
+      "fallback": "2D 地球に切り替えました。地点データは引き続き確認できます",
+      "error": "地球を読み込めませんでした",
+      "retry": "3D を再試行",
+      "latitude": "緯度",
+      "longitude": "経度",
+      "value": "値",
+      "search": "地点を検索",
+      "searchPlaceholder": "地点名、カテゴリ、値を検索…",
+      "clearSearch": "検索をクリア",
+      "searchResults": "{count} 件の地点が見つかりました",
+      "noResults": "一致する地点がありません",
+      "legend": "地点のカテゴリ",
+      "showAll": "すべてのカテゴリを表示",
+      "hiddenSelection": "選択した地点は現在のフィルターで非表示になっています",
+      "focusPoint": "{name} に移動",
+      "arcs": "接続一覧",
+      "noArcs": "接続がありません",
+      "selectedArc": "選択した接続"
+    },
+    "combobox": {
+      "placeholder": "入力または選択してください",
+      "clear": "選択をクリア",
+      "showOptions": "選択肢を表示",
+      "hideOptions": "選択肢を非表示",
+      "loading": "読み込み中",
+      "empty": "一致する選択肢がありません",
+      "results": "{count} 件の結果"
+    },
+    "input": {
+      "clear": "クリア",
+      "showPassword": "パスワードを表示",
+      "hidePassword": "パスワードを隠す",
+      "search": "検索"
+    },
+    "modal": {
+      "close": "閉じる"
+    },
+    "drawer": {
+      "close": "閉じる"
+    },
+    "message": {
+      "close": "閉じる"
+    },
+    "pagination": {
+      "prev": "前へ",
+      "next": "次へ",
+      "jumper": "移動",
+      "label": "ページネーション",
+      "jumperLabel": "ページ移動",
+      "unit": "ページ"
+    },
+    "empty": {
+      "description": "データなし"
+    },
+    "date": {
+      "today": "今日",
+      "previousMonth": "前月",
+      "nextMonth": "翌月",
+      "previousYear": "前年",
+      "nextYear": "翌年",
+      "monthFormat": "{year}年{month}月",
+      "placeholder": "日付を選択",
+      "inputLabel": "日付",
+      "panelLabel": "日付選択",
+      "weekdayFormat": "{name}曜日",
+      "weekdays": [
+        "月",
+        "火",
+        "水",
+        "木",
+        "金",
+        "土",
+        "日"
+      ]
+    },
+    "transfer": {
+      "search": "検索",
+      "itemUnit": "件",
+      "moveRight": "右へ移動",
+      "moveLeft": "左へ移動"
+    },
+    "timePicker": {
+      "ok": "決定",
+      "cancel": "キャンセル",
+      "placeholder": "時間を選択",
+      "hour": "時",
+      "minute": "分",
+      "second": "秒"
+    },
+    "popconfirm": {
+      "ok": "決定",
+      "cancel": "キャンセル"
+    },
+    "app": {
+      "confirm": "確認"
+    },
+    "tour": {
+      "prev": "前へ",
+      "next": "次へ",
+      "finish": "完了"
+    },
+    "upload": {
+      "text": "クリックしてアップロード",
+      "dragText": "クリックまたはファイルをドラッグ",
+      "remove": "ファイルを削除"
+    },
+    "steps": {
+      "label": "ステップ"
+    },
+    "dateRange": {
+      "startPlaceholder": "開始日",
+      "endPlaceholder": "終了日",
+      "separator": "〜",
+      "panelLabel": "期間を選択"
+    }
+  },
+  "koKR": {
+    "code": "ko-KR",
+    "accessibility": {
+      "loading": "로딩 중",
+      "removeTag": "태그 제거",
+      "breadcrumb": "탐색 경로",
+      "colorPicker": "색상 선택기",
+      "colorPanel": "색상 선택 패널",
+      "saturationBrightness": "채도 및 밝기",
+      "colorValue": "채도 {s}%, 밝기 {v}%",
+      "hue": "색조",
+      "hex": "16진수 색상",
+      "searchResults": "검색 결과",
+      "noMatch": "일치하는 항목 없음",
+      "searchCascader": "계층 옵션 검색",
+      "column": "열 {index}",
+      "increase": "증가",
+      "decrease": "감소",
+      "mentions": "멘션 제안",
+      "imagePreview": "이미지 미리보기",
+      "closePreview": "미리보기 닫기",
+      "backTop": "맨 위로",
+      "slider": "슬라이더",
+      "rating": "평점",
+      "ratingValue": "별 {index}개",
+      "floatAction": "플로팅 작업",
+      "removeItem": "{item} 제거",
+      "qrCode": "QR 코드: {value}",
+      "anchor": "앵커 탐색",
+      "copy": "복사",
+      "copied": "복사됨",
+      "sourceList": "원본 목록",
+      "targetList": "대상 목록",
+      "selectAllSource": "원본 전체 선택",
+      "selectAllTarget": "대상 전체 선택",
+      "searchSource": "원본 검색",
+      "searchTarget": "대상 검색"
+    },
+    "form": {
+      "required": "필수 항목입니다",
+      "minNumber": "값은 {min} 이상이어야 합니다",
+      "maxNumber": "값은 {max} 이하여야 합니다",
+      "minLength": "{min}자 이상 입력하세요",
+      "maxLength": "{max}자 이하로 입력하세요",
+      "pattern": "잘못된 형식입니다",
+      "validator": "검증 실패"
+    },
+    "result": {
+      "403": "403",
+      "404": "404",
+      "500": "500",
+      "success": "성공",
+      "error": "작업 실패",
+      "warning": "경고",
+      "info": "안내"
+    },
+    "select": {
+      "placeholder": "선택하세요",
+      "empty": "옵션 없음"
+    },
+    "sideNav": {
+      "navigation": "탐색",
+      "collapse": "탐색 축소",
+      "expand": "탐색 펼치기",
+      "expandGroup": "그룹 펼치기 {label}",
+      "collapseGroup": "그룹 접기 {label}"
+    },
+    "splitter": {
+      "panelLabel": "패널 {index}",
+      "resizeHandle": "패널 크기 조정",
+      "expandPanel": "패널 펼치기",
+      "collapsePanel": "패널 접기"
+    },
+    "commandPalette": {
+      "title": "명령 팔레트",
+      "search": "명령 검색",
+      "placeholder": "명령 검색…",
+      "loading": "명령을 불러오는 중",
+      "empty": "일치하는 명령이 없습니다",
+      "results": "명령 {count}개"
+    },
+    "statistic": {
+      "countdown": "카운트다운"
+    },
+    "chart": {
+      "chart": "차트",
+      "loading": "불러오는 중…",
+      "error": "불러오기 실패",
+      "retry": "재시도",
+      "empty": "데이터 없음",
+      "noVisible": "계열 숨김",
+      "showAll": "전체 표시",
+      "legend": "범례",
+      "dataTable": "데이터 보기",
+      "category": "분류",
+      "series": "계열",
+      "value": "값",
+      "x": "X 축",
+      "y": "Y 축",
+      "percent": "비율",
+      "instructions": "방향키: 탐색; Home/End: 처음/끝; Enter/Space: 선택; Esc: 설명 닫기",
+      "invalidData": "잘못된 데이터",
+      "zoomHint": "휠/두 손가락/+/-: 확대; 두 번 클릭/Esc: 초기화",
+      "brushHint": "드래그로 범위 확대",
+      "resetZoom": "범위 초기화",
+      "downloadCsv": "CSV 내보내기"
+    },
+    "dataGrid": {
+      "grid": "데이터 그리드",
+      "loading": "데이터를 불러오는 중…",
+      "error": "데이터 그리드를 불러오지 못했습니다",
+      "retry": "재시도",
+      "empty": "데이터가 없습니다",
+      "selectAll": "모두 선택",
+      "selectRow": "{label} 선택",
+      "sortLabel": "{label} 기준 정렬",
+      "resizeColumn": "{label} 열 너비 조정",
+      "filterLabel": "{label} 필터링",
+      "filterEmpty": "일치하는 필터 항목이 없습니다"
+    },
+    "globe": {
+      "label": "3D 지구 시각화",
+      "loading": "지구를 불러오는 중…",
+      "rotate": "회전 시작",
+      "pause": "회전 일시 정지",
+      "zoomIn": "확대",
+      "zoomOut": "축소",
+      "reset": "시점 초기화",
+      "points": "지점 목록",
+      "noPoints": "지점 없음",
+      "instructions": "방향키로 회전하고 + / -로 확대·축소하며 Home으로 시점을 초기화합니다.",
+      "fallback": "2D 지구로 전환했습니다. 지점 데이터는 계속 확인할 수 있습니다",
+      "error": "지구를 불러오지 못했습니다",
+      "retry": "3D 다시 시도",
+      "latitude": "위도",
+      "longitude": "경도",
+      "value": "값",
+      "search": "지점 검색",
+      "searchPlaceholder": "지점 이름, 분류 또는 값 검색…",
+      "clearSearch": "검색 지우기",
+      "searchResults": "지점 {count}개를 찾았습니다",
+      "noResults": "일치하는 지점이 없습니다",
+      "legend": "지점 분류",
+      "showAll": "모든 분류 표시",
+      "hiddenSelection": "선택한 지점이 현재 필터에 의해 숨겨져 있습니다",
+      "focusPoint": "{name}(으)로 이동",
+      "arcs": "연결 목록",
+      "noArcs": "연결 없음",
+      "selectedArc": "선택한 연결"
+    },
+    "combobox": {
+      "placeholder": "입력하거나 선택하세요",
+      "clear": "선택 지우기",
+      "showOptions": "옵션 표시",
+      "hideOptions": "옵션 숨기기",
+      "loading": "불러오는 중",
+      "empty": "일치하는 옵션 없음",
+      "results": "{count}개 결과"
+    },
+    "input": {
+      "clear": "지우기",
+      "showPassword": "비밀번호 표시",
+      "hidePassword": "비밀번호 숨기기",
+      "search": "검색"
+    },
+    "modal": {
+      "close": "닫기"
+    },
+    "drawer": {
+      "close": "닫기"
+    },
+    "message": {
+      "close": "닫기"
+    },
+    "pagination": {
+      "prev": "이전",
+      "next": "다음",
+      "jumper": "이동",
+      "label": "페이지네이션",
+      "jumperLabel": "페이지 이동",
+      "unit": "페이지"
+    },
+    "empty": {
+      "description": "데이터 없음"
+    },
+    "date": {
+      "today": "오늘",
+      "previousMonth": "이전 달",
+      "nextMonth": "다음 달",
+      "previousYear": "이전 해",
+      "nextYear": "다음 해",
+      "monthFormat": "{year}년 {month}월",
+      "placeholder": "날짜 선택",
+      "inputLabel": "날짜",
+      "panelLabel": "날짜 선택",
+      "weekdayFormat": "{name}요일",
+      "weekdays": [
+        "월",
+        "화",
+        "수",
+        "목",
+        "금",
+        "토",
+        "일"
+      ]
+    },
+    "transfer": {
+      "search": "검색",
+      "itemUnit": "개",
+      "moveRight": "오른쪽으로 이동",
+      "moveLeft": "왼쪽으로 이동"
+    },
+    "timePicker": {
+      "ok": "확인",
+      "cancel": "취소",
+      "placeholder": "시간 선택",
+      "hour": "시",
+      "minute": "분",
+      "second": "초"
+    },
+    "popconfirm": {
+      "ok": "확인",
+      "cancel": "취소"
+    },
+    "app": {
+      "confirm": "확인"
+    },
+    "tour": {
+      "prev": "이전",
+      "next": "다음",
+      "finish": "완료"
+    },
+    "upload": {
+      "text": "클릭하여 업로드",
+      "dragText": "클릭 또는 파일을 끌어다 놓기",
+      "remove": "파일 삭제"
+    },
+    "steps": {
+      "label": "단계"
+    },
+    "dateRange": {
+      "startPlaceholder": "시작 날짜",
+      "endPlaceholder": "종료 날짜",
+      "separator": "부터",
+      "panelLabel": "기간 선택"
+    }
+  },
+  "frFR": {
+    "code": "fr-FR",
+    "accessibility": {
+      "loading": "Chargement",
+      "removeTag": "Supprimer le tag",
+      "breadcrumb": "Fil d'Ariane",
+      "colorPicker": "Sélecteur de couleurs",
+      "colorPanel": "Sélection de couleur",
+      "saturationBrightness": "Saturation et luminosité",
+      "colorValue": "Saturation {s} %, luminosité {v} %",
+      "hue": "Teinte",
+      "hex": "Couleur hexadécimale",
+      "searchResults": "Résultats de recherche",
+      "noMatch": "Aucun résultat",
+      "searchCascader": "Rechercher dans les options en cascade",
+      "column": "Colonne {index}",
+      "increase": "Augmenter",
+      "decrease": "Diminuer",
+      "mentions": "Suggestions de mention",
+      "imagePreview": "Aperçu de l'image",
+      "closePreview": "Fermer l'aperçu",
+      "backTop": "Retour en haut",
+      "slider": "Curseur",
+      "rating": "Note",
+      "ratingValue": "{index} étoiles",
+      "floatAction": "Action flottante",
+      "removeItem": "Supprimer {item}",
+      "qrCode": "Code QR : {value}",
+      "anchor": "Navigation par ancres",
+      "copy": "Copier",
+      "copied": "Copié",
+      "sourceList": "Liste source",
+      "targetList": "Liste cible",
+      "selectAllSource": "Tout sélectionner dans la liste source",
+      "selectAllTarget": "Tout sélectionner dans la liste cible",
+      "searchSource": "Rechercher dans la liste source",
+      "searchTarget": "Rechercher dans la liste cible"
+    },
+    "form": {
+      "required": "Ce champ est obligatoire",
+      "minNumber": "La valeur doit être au moins {min}",
+      "maxNumber": "La valeur doit être au plus {max}",
+      "minLength": "Utilisez au moins {min} caractères",
+      "maxLength": "Utilisez au plus {max} caractères",
+      "pattern": "Format invalide",
+      "validator": "Échec de la validation"
+    },
+    "result": {
+      "403": "403",
+      "404": "404",
+      "500": "500",
+      "success": "Opération réussie",
+      "error": "Échec de l'opération",
+      "warning": "Avertissement",
+      "info": "Information"
+    },
+    "select": {
+      "placeholder": "Sélectionner...",
+      "empty": "Aucune option"
+    },
+    "sideNav": {
+      "navigation": "Navigation",
+      "collapse": "Réduire la navigation",
+      "expand": "Développer la navigation",
+      "expandGroup": "Développer le groupe {label}",
+      "collapseGroup": "Réduire le groupe {label}"
+    },
+    "splitter": {
+      "panelLabel": "Panneau {index}",
+      "resizeHandle": "Redimensionner le panneau",
+      "expandPanel": "Développer le panneau",
+      "collapsePanel": "Réduire le panneau"
+    },
+    "commandPalette": {
+      "title": "Palette de commandes",
+      "search": "Rechercher des commandes",
+      "placeholder": "Rechercher une commande…",
+      "loading": "Chargement des commandes",
+      "empty": "Aucune commande correspondante",
+      "results": "{count} commandes trouvées"
+    },
+    "statistic": {
+      "countdown": "Compte à rebours"
+    },
+    "chart": {
+      "chart": "Graphique",
+      "loading": "Chargement…",
+      "error": "Échec du chargement",
+      "retry": "Réessayer",
+      "empty": "Aucune donnée",
+      "noVisible": "Séries masquées",
+      "showAll": "Tout afficher",
+      "legend": "Légende",
+      "dataTable": "Voir les données",
+      "category": "Catégorie",
+      "series": "Série",
+      "value": "Valeur",
+      "x": "Axe X",
+      "y": "Axe Y",
+      "percent": "Part",
+      "instructions": "Flèches: parcourir; Home/End: début/fin; Enter/Space: sélectionner; Esc: fermer",
+      "invalidData": "Données invalides",
+      "zoomHint": "Molette/pincement/+/-: zoom; double-clic/Esc: reset",
+      "brushHint": "Glisser pour zoomer",
+      "resetZoom": "Réinitialiser",
+      "downloadCsv": "Exporter CSV"
+    },
+    "dataGrid": {
+      "grid": "Grille de données",
+      "loading": "Chargement des données…",
+      "error": "Impossible de charger la grille",
+      "retry": "Réessayer",
+      "empty": "Aucune donnée",
+      "selectAll": "Tout sélectionner",
+      "selectRow": "Sélectionner {label}",
+      "sortLabel": "Trier par {label}",
+      "resizeColumn": "Redimensionner la colonne {label}",
+      "filterLabel": "Filtrer {label}",
+      "filterEmpty": "Aucune option de filtre correspondante"
+    },
+    "globe": {
+      "label": "Visualisation du globe en 3D",
+      "loading": "Chargement du globe…",
+      "rotate": "Démarrer la rotation",
+      "pause": "Suspendre la rotation",
+      "zoomIn": "Zoom avant",
+      "zoomOut": "Zoom arrière",
+      "reset": "Réinitialiser la vue",
+      "points": "Liste des points",
+      "noPoints": "Aucun point",
+      "instructions": "Utilisez les flèches pour tourner, + / - pour zoomer et Home pour réinitialiser la vue.",
+      "fallback": "Passage au globe en 2D ; les données des points restent disponibles",
+      "error": "Impossible de charger le globe",
+      "retry": "Réessayer la 3D",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "value": "Valeur",
+      "search": "Rechercher des points",
+      "searchPlaceholder": "Rechercher des noms, catégories ou valeurs…",
+      "clearSearch": "Effacer la recherche",
+      "searchResults": "{count} points trouvés",
+      "noResults": "Aucun point correspondant",
+      "legend": "Catégories de points",
+      "showAll": "Afficher toutes les catégories",
+      "hiddenSelection": "Le point sélectionné est masqué par les filtres actuels",
+      "focusPoint": "Centrer sur {name}",
+      "arcs": "Liste des connexions",
+      "noArcs": "Aucune connexion",
+      "selectedArc": "Connexion sélectionnée"
+    },
+    "combobox": {
+      "placeholder": "Saisir ou sélectionner...",
+      "clear": "Effacer la sélection",
+      "showOptions": "Afficher les options",
+      "hideOptions": "Masquer les options",
+      "loading": "Chargement",
+      "empty": "Aucune option correspondante",
+      "results": "{count} résultats"
+    },
+    "input": {
+      "clear": "Effacer",
+      "showPassword": "Afficher le mot de passe",
+      "hidePassword": "Masquer le mot de passe",
+      "search": "Rechercher"
+    },
+    "modal": {
+      "close": "Fermer"
+    },
+    "drawer": {
+      "close": "Fermer"
+    },
+    "message": {
+      "close": "Fermer"
+    },
+    "pagination": {
+      "prev": "Précédent",
+      "next": "Suivant",
+      "jumper": "Aller à",
+      "label": "Pagination",
+      "jumperLabel": "Aller à la page",
+      "unit": ""
+    },
+    "empty": {
+      "description": "Aucune donnée"
+    },
+    "date": {
+      "today": "Aujourd'hui",
+      "previousMonth": "Mois précédent",
+      "nextMonth": "Mois suivant",
+      "previousYear": "Année précédente",
+      "nextYear": "Année suivante",
+      "monthFormat": "{month}/{year}",
+      "placeholder": "Sélectionner une date",
+      "inputLabel": "Date",
+      "panelLabel": "Sélectionner une date",
+      "weekdayFormat": "{name}",
+      "weekdays": [
+        "lu",
+        "ma",
+        "me",
+        "je",
+        "ve",
+        "sa",
+        "di"
+      ]
+    },
+    "transfer": {
+      "search": "Rechercher",
+      "itemUnit": "éléments",
+      "moveRight": "Déplacer vers la cible",
+      "moveLeft": "Déplacer vers la source"
+    },
+    "timePicker": {
+      "ok": "OK",
+      "cancel": "Annuler",
+      "placeholder": "Sélectionner l'heure",
+      "hour": "Heure",
+      "minute": "Minute",
+      "second": "Seconde"
+    },
+    "popconfirm": {
+      "ok": "OK",
+      "cancel": "Annuler"
+    },
+    "app": {
+      "confirm": "Confirmer"
+    },
+    "tour": {
+      "prev": "Précédent",
+      "next": "Suivant",
+      "finish": "Terminer"
+    },
+    "upload": {
+      "text": "Cliquez pour importer",
+      "dragText": "Cliquez ou déposez des fichiers ici",
+      "remove": "Supprimer le fichier"
+    },
+    "steps": {
+      "label": "Étapes"
+    },
+    "dateRange": {
+      "startPlaceholder": "Date de début",
+      "endPlaceholder": "Date de fin",
+      "separator": "au",
+      "panelLabel": "Sélectionner une période"
+    }
+  },
+  "deDE": {
+    "code": "de-DE",
+    "accessibility": {
+      "loading": "Wird geladen",
+      "removeTag": "Tag entfernen",
+      "breadcrumb": "Breadcrumb-Navigation",
+      "colorPicker": "Farbwähler",
+      "colorPanel": "Farbauswahl",
+      "saturationBrightness": "Sättigung und Helligkeit",
+      "colorValue": "Sättigung {s} %, Helligkeit {v} %",
+      "hue": "Farbton",
+      "hex": "Hexadezimaler Farbwert",
+      "searchResults": "Suchergebnisse",
+      "noMatch": "Keine Treffer",
+      "searchCascader": "Kaskadenoptionen durchsuchen",
+      "column": "Spalte {index}",
+      "increase": "Erhöhen",
+      "decrease": "Verringern",
+      "mentions": "Erwähnungsvorschläge",
+      "imagePreview": "Bildvorschau",
+      "closePreview": "Vorschau schließen",
+      "backTop": "Nach oben",
+      "slider": "Schieberegler",
+      "rating": "Bewertung",
+      "ratingValue": "{index} Sterne",
+      "floatAction": "Schwebende Aktion",
+      "removeItem": "{item} entfernen",
+      "qrCode": "QR-Code: {value}",
+      "anchor": "Anker-Navigation",
+      "copy": "Kopieren",
+      "copied": "Kopiert",
+      "sourceList": "Quellliste",
+      "targetList": "Zielliste",
+      "selectAllSource": "Alle Quellelemente auswählen",
+      "selectAllTarget": "Alle Zielelemente auswählen",
+      "searchSource": "Quellliste durchsuchen",
+      "searchTarget": "Zielliste durchsuchen"
+    },
+    "form": {
+      "required": "Dieses Feld ist erforderlich",
+      "minNumber": "Der Wert muss mindestens {min} sein",
+      "maxNumber": "Der Wert darf höchstens {max} sein",
+      "minLength": "Verwenden Sie mindestens {min} Zeichen",
+      "maxLength": "Verwenden Sie höchstens {max} Zeichen",
+      "pattern": "Ungültiges Format",
+      "validator": "Validierung fehlgeschlagen"
+    },
+    "result": {
+      "403": "403",
+      "404": "404",
+      "500": "500",
+      "success": "Erfolg",
+      "error": "Vorgang fehlgeschlagen",
+      "warning": "Warnung",
+      "info": "Information"
+    },
+    "select": {
+      "placeholder": "Auswählen...",
+      "empty": "Keine Optionen"
+    },
+    "sideNav": {
+      "navigation": "Navigation",
+      "collapse": "Navigation einklappen",
+      "expand": "Navigation ausklappen",
+      "expandGroup": "Gruppe aufklappen {label}",
+      "collapseGroup": "Gruppe zuklappen {label}"
+    },
+    "splitter": {
+      "panelLabel": "Bereich {index}",
+      "resizeHandle": "Panelgröße ändern",
+      "expandPanel": "Panel ausklappen",
+      "collapsePanel": "Panel einklappen"
+    },
+    "commandPalette": {
+      "title": "Befehlspalette",
+      "search": "Befehle suchen",
+      "placeholder": "Befehl suchen…",
+      "loading": "Befehle werden geladen",
+      "empty": "Keine passenden Befehle",
+      "results": "{count} Befehle gefunden"
+    },
+    "statistic": {
+      "countdown": "Countdown"
+    },
+    "chart": {
+      "chart": "Diagramm",
+      "loading": "Laden…",
+      "error": "Laden fehlgeschlagen",
+      "retry": "Erneut versuchen",
+      "empty": "Keine Daten",
+      "noVisible": "Reihen ausgeblendet",
+      "showAll": "Alle anzeigen",
+      "legend": "Legende",
+      "dataTable": "Daten anzeigen",
+      "category": "Kategorie",
+      "series": "Reihe",
+      "value": "Wert",
+      "x": "X-Achse",
+      "y": "Y-Achse",
+      "percent": "Anteil",
+      "instructions": "Pfeile: Daten; Home/End: Anfang/Ende; Enter/Space: Auswahl; Esc: Tooltip schließen",
+      "invalidData": "Ungültige Daten",
+      "zoomHint": "Rad/Pinch/+/-: Zoom; Doppelklick/Esc: Reset",
+      "brushHint": "Bereich ziehen",
+      "resetZoom": "Zurücksetzen",
+      "downloadCsv": "CSV exportieren"
+    },
+    "dataGrid": {
+      "grid": "Datentabelle",
+      "loading": "Daten werden geladen…",
+      "error": "Datentabelle konnte nicht geladen werden",
+      "retry": "Wiederholen",
+      "empty": "Keine Daten",
+      "selectAll": "Alle auswählen",
+      "selectRow": "{label} auswählen",
+      "sortLabel": "Nach {label} sortieren",
+      "resizeColumn": "Spaltenbreite von {label} ändern",
+      "filterLabel": "{label} filtern",
+      "filterEmpty": "Keine passenden Filteroptionen"
+    },
+    "globe": {
+      "label": "3D-Globusvisualisierung",
+      "loading": "Globus wird geladen…",
+      "rotate": "Drehung starten",
+      "pause": "Drehung pausieren",
+      "zoomIn": "Vergrößern",
+      "zoomOut": "Verkleinern",
+      "reset": "Ansicht zurücksetzen",
+      "points": "Punkteliste",
+      "noPoints": "Keine Punkte",
+      "instructions": "Mit den Pfeiltasten drehen, mit + / - zoomen und mit Home die Ansicht zurücksetzen.",
+      "fallback": "Zum 2D-Globus gewechselt; Punktdaten sind weiterhin verfügbar",
+      "error": "Globus konnte nicht geladen werden",
+      "retry": "3D erneut versuchen",
+      "latitude": "Breitengrad",
+      "longitude": "Längengrad",
+      "value": "Wert",
+      "search": "Punkte suchen",
+      "searchPlaceholder": "Punktnamen, Kategorien oder Werte suchen…",
+      "clearSearch": "Suche löschen",
+      "searchResults": "{count} Punkte gefunden",
+      "noResults": "Keine passenden Punkte",
+      "legend": "Punktkategorien",
+      "showAll": "Alle Kategorien anzeigen",
+      "hiddenSelection": "Der ausgewählte Punkt ist durch die aktuellen Filter ausgeblendet",
+      "focusPoint": "Auf {name} zentrieren",
+      "arcs": "Verbindungsliste",
+      "noArcs": "Keine Verbindungen",
+      "selectedArc": "Ausgewählte Verbindung"
+    },
+    "combobox": {
+      "placeholder": "Eingeben oder auswählen...",
+      "clear": "Auswahl löschen",
+      "showOptions": "Optionen anzeigen",
+      "hideOptions": "Optionen ausblenden",
+      "loading": "Laden",
+      "empty": "Keine passenden Optionen",
+      "results": "{count} Ergebnisse"
+    },
+    "input": {
+      "clear": "Löschen",
+      "showPassword": "Passwort anzeigen",
+      "hidePassword": "Passwort verbergen",
+      "search": "Suchen"
+    },
+    "modal": {
+      "close": "Schließen"
+    },
+    "drawer": {
+      "close": "Schließen"
+    },
+    "message": {
+      "close": "Schließen"
+    },
+    "pagination": {
+      "prev": "Zurück",
+      "next": "Weiter",
+      "jumper": "Gehe zu",
+      "label": "Paginierung",
+      "jumperLabel": "Gehe zu Seite",
+      "unit": ""
+    },
+    "empty": {
+      "description": "Keine Daten"
+    },
+    "date": {
+      "today": "Heute",
+      "previousMonth": "Voriger Monat",
+      "nextMonth": "Nächster Monat",
+      "previousYear": "Voriges Jahr",
+      "nextYear": "Nächstes Jahr",
+      "monthFormat": "{month}/{year}",
+      "placeholder": "Datum auswählen",
+      "inputLabel": "Datum",
+      "panelLabel": "Datum auswählen",
+      "weekdayFormat": "{name}",
+      "weekdays": [
+        "Mo",
+        "Di",
+        "Mi",
+        "Do",
+        "Fr",
+        "Sa",
+        "So"
+      ]
+    },
+    "transfer": {
+      "search": "Suchen",
+      "itemUnit": "Elemente",
+      "moveRight": "Zur Zielliste verschieben",
+      "moveLeft": "Zur Quellliste verschieben"
+    },
+    "timePicker": {
+      "ok": "OK",
+      "cancel": "Abbrechen",
+      "placeholder": "Uhrzeit auswählen",
+      "hour": "Stunde",
+      "minute": "Minute",
+      "second": "Sekunde"
+    },
+    "popconfirm": {
+      "ok": "OK",
+      "cancel": "Abbrechen"
+    },
+    "app": {
+      "confirm": "Bestätigen"
+    },
+    "tour": {
+      "prev": "Zurück",
+      "next": "Weiter",
+      "finish": "Fertigstellen"
+    },
+    "upload": {
+      "text": "Zum Hochladen klicken",
+      "dragText": "Klicken oder Dateien hierher ziehen",
+      "remove": "Datei entfernen"
+    },
+    "steps": {
+      "label": "Schritte"
+    },
+    "dateRange": {
+      "startPlaceholder": "Startdatum",
+      "endPlaceholder": "Enddatum",
+      "separator": "bis",
+      "panelLabel": "Zeitraum auswählen"
+    }
+  },
+  "esES": {
+    "code": "es-ES",
+    "accessibility": {
+      "loading": "Cargando",
+      "removeTag": "Eliminar etiqueta",
+      "breadcrumb": "Migas de pan",
+      "colorPicker": "Selector de color",
+      "colorPanel": "Selección de color",
+      "saturationBrightness": "Saturación y brillo",
+      "colorValue": "Saturación {s} %, brillo {v} %",
+      "hue": "Tono",
+      "hex": "Color hexadecimal",
+      "searchResults": "Resultados de búsqueda",
+      "noMatch": "Sin coincidencias",
+      "searchCascader": "Buscar opciones en cascada",
+      "column": "Columna {index}",
+      "increase": "Aumentar",
+      "decrease": "Disminuir",
+      "mentions": "Sugerencias de mención",
+      "imagePreview": "Vista previa de imagen",
+      "closePreview": "Cerrar vista previa",
+      "backTop": "Volver arriba",
+      "slider": "Deslizador",
+      "rating": "Valoración",
+      "ratingValue": "{index} estrellas",
+      "floatAction": "Acción flotante",
+      "removeItem": "Eliminar {item}",
+      "qrCode": "Código QR: {value}",
+      "anchor": "Navegación por anclas",
+      "copy": "Copiar",
+      "copied": "Copiado",
+      "sourceList": "Lista de origen",
+      "targetList": "Lista de destino",
+      "selectAllSource": "Seleccionar todos los elementos de origen",
+      "selectAllTarget": "Seleccionar todos los elementos de destino",
+      "searchSource": "Buscar en la lista de origen",
+      "searchTarget": "Buscar en la lista de destino"
+    },
+    "form": {
+      "required": "Este campo es obligatorio",
+      "minNumber": "El valor debe ser al menos {min}",
+      "maxNumber": "El valor debe ser como máximo {max}",
+      "minLength": "Utilice al menos {min} caracteres",
+      "maxLength": "Utilice como máximo {max} caracteres",
+      "pattern": "Formato no válido",
+      "validator": "Error de validación"
+    },
+    "result": {
+      "403": "403",
+      "404": "404",
+      "500": "500",
+      "success": "Éxito",
+      "error": "La operación ha fallado",
+      "warning": "Advertencia",
+      "info": "Información"
+    },
+    "select": {
+      "placeholder": "Seleccionar...",
+      "empty": "Sin opciones"
+    },
+    "sideNav": {
+      "navigation": "Navegación",
+      "collapse": "Contraer navegación",
+      "expand": "Expandir navegación",
+      "expandGroup": "Expandir grupo {label}",
+      "collapseGroup": "Contraer grupo {label}"
+    },
+    "splitter": {
+      "panelLabel": "Panel {index}",
+      "resizeHandle": "Cambiar tamaño del panel",
+      "expandPanel": "Expandir panel",
+      "collapsePanel": "Contraer panel"
+    },
+    "commandPalette": {
+      "title": "Paleta de comandos",
+      "search": "Buscar comandos",
+      "placeholder": "Buscar comandos…",
+      "loading": "Cargando comandos",
+      "empty": "No hay comandos que coincidan",
+      "results": "{count} comandos encontrados"
+    },
+    "statistic": {
+      "countdown": "Cuenta regresiva"
+    },
+    "chart": {
+      "chart": "Gráfico",
+      "loading": "Cargando…",
+      "error": "Error de carga",
+      "retry": "Reintentar",
+      "empty": "Sin datos",
+      "noVisible": "Series ocultas",
+      "showAll": "Mostrar todo",
+      "legend": "Leyenda",
+      "dataTable": "Ver datos",
+      "category": "Categoría",
+      "series": "Serie",
+      "value": "Valor",
+      "x": "Eje X",
+      "y": "Eje Y",
+      "percent": "Porcentaje",
+      "instructions": "Flechas: recorrer; Home/End: inicio/fin; Enter/Space: seleccionar; Esc: cerrar ayuda",
+      "invalidData": "Datos no válidos",
+      "zoomHint": "Rueda/pinza/+/-: zoom; doble clic/Esc: reset",
+      "brushHint": "Arrastrar para ampliar",
+      "resetZoom": "Restablecer",
+      "downloadCsv": "Exportar CSV"
+    },
+    "dataGrid": {
+      "grid": "Cuadrícula de datos",
+      "loading": "Cargando datos…",
+      "error": "No se pudo cargar la cuadrícula",
+      "retry": "Reintentar",
+      "empty": "Sin datos",
+      "selectAll": "Seleccionar todo",
+      "selectRow": "Seleccionar {label}",
+      "sortLabel": "Ordenar por {label}",
+      "resizeColumn": "Cambiar ancho de {label}",
+      "filterLabel": "Filtrar {label}",
+      "filterEmpty": "No hay opciones de filtro coincidentes"
+    },
+    "globe": {
+      "label": "Visualización del globo en 3D",
+      "loading": "Cargando el globo…",
+      "rotate": "Iniciar rotación",
+      "pause": "Pausar rotación",
+      "zoomIn": "Acercar",
+      "zoomOut": "Alejar",
+      "reset": "Restablecer vista",
+      "points": "Lista de puntos",
+      "noPoints": "Sin puntos",
+      "instructions": "Usa las flechas para girar, + / - para acercar o alejar y Home para restablecer la vista.",
+      "fallback": "Se ha cambiado al globo en 2D; los datos de los puntos siguen disponibles",
+      "error": "No se pudo cargar el globo",
+      "retry": "Reintentar 3D",
+      "latitude": "Latitud",
+      "longitude": "Longitud",
+      "value": "Valor",
+      "search": "Buscar puntos",
+      "searchPlaceholder": "Buscar nombres, categorías o valores…",
+      "clearSearch": "Borrar búsqueda",
+      "searchResults": "{count} puntos encontrados",
+      "noResults": "No hay puntos coincidentes",
+      "legend": "Categorías de puntos",
+      "showAll": "Mostrar todas las categorías",
+      "hiddenSelection": "El punto seleccionado está oculto por los filtros actuales",
+      "focusPoint": "Centrar en {name}",
+      "arcs": "Lista de conexiones",
+      "noArcs": "Sin conexiones",
+      "selectedArc": "Conexión seleccionada"
+    },
+    "combobox": {
+      "placeholder": "Escriba o seleccione...",
+      "clear": "Borrar selección",
+      "showOptions": "Mostrar opciones",
+      "hideOptions": "Ocultar opciones",
+      "loading": "Cargando",
+      "empty": "No hay opciones coincidentes",
+      "results": "{count} resultados"
+    },
+    "input": {
+      "clear": "Borrar",
+      "showPassword": "Mostrar contraseña",
+      "hidePassword": "Ocultar contraseña",
+      "search": "Buscar"
+    },
+    "modal": {
+      "close": "Cerrar"
+    },
+    "drawer": {
+      "close": "Cerrar"
+    },
+    "message": {
+      "close": "Cerrar"
+    },
+    "pagination": {
+      "prev": "Anterior",
+      "next": "Siguiente",
+      "jumper": "Ir a",
+      "label": "Paginación",
+      "jumperLabel": "Ir a la página",
+      "unit": ""
+    },
+    "empty": {
+      "description": "Sin datos"
+    },
+    "date": {
+      "today": "Hoy",
+      "previousMonth": "Mes anterior",
+      "nextMonth": "Mes siguiente",
+      "previousYear": "Año anterior",
+      "nextYear": "Año siguiente",
+      "monthFormat": "{month}/{year}",
+      "placeholder": "Seleccionar fecha",
+      "inputLabel": "Fecha",
+      "panelLabel": "Seleccionar fecha",
+      "weekdayFormat": "{name}",
+      "weekdays": [
+        "lu",
+        "ma",
+        "mi",
+        "ju",
+        "vi",
+        "sá",
+        "do"
+      ]
+    },
+    "transfer": {
+      "search": "Buscar",
+      "itemUnit": "elementos",
+      "moveRight": "Mover al destino",
+      "moveLeft": "Mover al origen"
+    },
+    "timePicker": {
+      "ok": "Aceptar",
+      "cancel": "Cancelar",
+      "placeholder": "Seleccionar hora",
+      "hour": "Hora",
+      "minute": "Minuto",
+      "second": "Segundo"
+    },
+    "popconfirm": {
+      "ok": "Aceptar",
+      "cancel": "Cancelar"
+    },
+    "app": {
+      "confirm": "Confirmar"
+    },
+    "tour": {
+      "prev": "Anterior",
+      "next": "Siguiente",
+      "finish": "Finalizar"
+    },
+    "upload": {
+      "text": "Haz clic para subir",
+      "dragText": "Haz clic o arrastra los archivos aquí",
+      "remove": "Eliminar archivo"
+    },
+    "steps": {
+      "label": "Pasos"
+    },
+    "dateRange": {
+      "startPlaceholder": "Fecha de inicio",
+      "endPlaceholder": "Fecha de fin",
+      "separator": "a",
+      "panelLabel": "Seleccionar rango de fechas"
+    }
+  },
+  "ruRU": {
+    "code": "ru-RU",
+    "accessibility": {
+      "loading": "Загрузка",
+      "removeTag": "Удалить тег",
+      "breadcrumb": "Навигационная цепочка",
+      "colorPicker": "Выбор цвета",
+      "colorPanel": "Панель выбора цвета",
+      "saturationBrightness": "Насыщенность и яркость",
+      "colorValue": "Насыщенность {s}%, яркость {v}%",
+      "hue": "Тон",
+      "hex": "Шестнадцатеричный цвет",
+      "searchResults": "Результаты поиска",
+      "noMatch": "Совпадений нет",
+      "searchCascader": "Поиск по каскадным опциям",
+      "column": "Столбец {index}",
+      "increase": "Увеличить",
+      "decrease": "Уменьшить",
+      "mentions": "Подсказки упоминаний",
+      "imagePreview": "Просмотр изображения",
+      "closePreview": "Закрыть просмотр",
+      "backTop": "Наверх",
+      "slider": "Ползунок",
+      "rating": "Оценка",
+      "ratingValue": "{index} звёзд",
+      "floatAction": "Плавающее действие",
+      "removeItem": "Удалить {item}",
+      "qrCode": "QR-код: {value}",
+      "anchor": "Якорная навигация",
+      "copy": "Копировать",
+      "copied": "Скопировано",
+      "sourceList": "Исходный список",
+      "targetList": "Целевой список",
+      "selectAllSource": "Выбрать все элементы источника",
+      "selectAllTarget": "Выбрать все элементы цели",
+      "searchSource": "Поиск в исходном списке",
+      "searchTarget": "Поиск в целевом списке"
+    },
+    "form": {
+      "required": "Обязательное поле",
+      "minNumber": "Значение должно быть не меньше {min}",
+      "maxNumber": "Значение должно быть не больше {max}",
+      "minLength": "Используйте не менее {min} символов",
+      "maxLength": "Используйте не более {max} символов",
+      "pattern": "Неверный формат",
+      "validator": "Ошибка проверки"
+    },
+    "result": {
+      "403": "403",
+      "404": "404",
+      "500": "500",
+      "success": "Успешно",
+      "error": "Не удалось выполнить операцию",
+      "warning": "Предупреждение",
+      "info": "Информация"
+    },
+    "select": {
+      "placeholder": "Выберите...",
+      "empty": "Нет вариантов"
+    },
+    "sideNav": {
+      "navigation": "Навигация",
+      "collapse": "Свернуть навигацию",
+      "expand": "Развернуть навигацию",
+      "expandGroup": "Развернуть группу {label}",
+      "collapseGroup": "Свернуть группу {label}"
+    },
+    "splitter": {
+      "panelLabel": "Панель {index}",
+      "resizeHandle": "Изменить размер панели",
+      "expandPanel": "Развернуть панель",
+      "collapsePanel": "Свернуть панель"
+    },
+    "commandPalette": {
+      "title": "Палитра команд",
+      "search": "Поиск команд",
+      "placeholder": "Поиск команды…",
+      "loading": "Загрузка команд",
+      "empty": "Нет подходящих команд",
+      "results": "Найдено команд: {count}"
+    },
+    "statistic": {
+      "countdown": "Обратный отсчёт"
+    },
+    "chart": {
+      "chart": "Диаграмма",
+      "loading": "Загрузка…",
+      "error": "Ошибка загрузки",
+      "retry": "Повторить",
+      "empty": "Нет данных",
+      "noVisible": "Ряды скрыты",
+      "showAll": "Показать все",
+      "legend": "Легенда",
+      "dataTable": "Данные",
+      "category": "Категория",
+      "series": "Ряд",
+      "value": "Значение",
+      "x": "Ось X",
+      "y": "Ось Y",
+      "percent": "Доля",
+      "instructions": "Стрелки: данные; Home/End: начало/конец; Enter/Space: выбор; Esc: закрыть подсказку",
+      "invalidData": "Неверные данные",
+      "zoomHint": "Колесо/жест/+/-: масштаб; двойной щелчок/Esc: сброс",
+      "brushHint": "Выберите диапазон",
+      "resetZoom": "Сброс диапазона",
+      "downloadCsv": "Экспорт CSV"
+    },
+    "dataGrid": {
+      "grid": "Таблица данных",
+      "loading": "Загрузка данных…",
+      "error": "Не удалось загрузить таблицу",
+      "retry": "Повторить",
+      "empty": "Нет данных",
+      "selectAll": "Выбрать все",
+      "selectRow": "Выбрать {label}",
+      "sortLabel": "Сортировать по {label}",
+      "resizeColumn": "Изменить ширину столбца {label}",
+      "filterLabel": "Фильтровать {label}",
+      "filterEmpty": "Нет подходящих вариантов фильтра"
+    },
+    "globe": {
+      "label": "3D-визуализация глобуса",
+      "loading": "Загрузка глобуса…",
+      "rotate": "Начать вращение",
+      "pause": "Приостановить вращение",
+      "zoomIn": "Увеличить",
+      "zoomOut": "Уменьшить",
+      "reset": "Сбросить вид",
+      "points": "Список точек",
+      "noPoints": "Нет точек",
+      "instructions": "Вращайте стрелками, меняйте масштаб с помощью + / - и сбрасывайте вид клавишей Home.",
+      "fallback": "Включён 2D-глобус; данные точек по-прежнему доступны",
+      "error": "Не удалось загрузить глобус",
+      "retry": "Повторить 3D",
+      "latitude": "Широта",
+      "longitude": "Долгота",
+      "value": "Значение",
+      "search": "Поиск точек",
+      "searchPlaceholder": "Поиск по названиям, категориям или значениям…",
+      "clearSearch": "Очистить поиск",
+      "searchResults": "Найдено точек: {count}",
+      "noResults": "Нет подходящих точек",
+      "legend": "Категории точек",
+      "showAll": "Показать все категории",
+      "hiddenSelection": "Выбранная точка скрыта текущими фильтрами",
+      "focusPoint": "Перейти к {name}",
+      "arcs": "Список соединений",
+      "noArcs": "Нет соединений",
+      "selectedArc": "Выбранное соединение"
+    },
+    "combobox": {
+      "placeholder": "Введите или выберите...",
+      "clear": "Очистить выбор",
+      "showOptions": "Показать варианты",
+      "hideOptions": "Скрыть варианты",
+      "loading": "Загрузка",
+      "empty": "Нет подходящих вариантов",
+      "results": "Результатов: {count}"
+    },
+    "input": {
+      "clear": "Очистить",
+      "showPassword": "Показать пароль",
+      "hidePassword": "Скрыть пароль",
+      "search": "Найти"
+    },
+    "modal": {
+      "close": "Закрыть"
+    },
+    "drawer": {
+      "close": "Закрыть"
+    },
+    "message": {
+      "close": "Закрыть"
+    },
+    "pagination": {
+      "prev": "Назад",
+      "next": "Вперёд",
+      "jumper": "Перейти к",
+      "label": "Пагинация",
+      "jumperLabel": "Перейти к странице",
+      "unit": ""
+    },
+    "empty": {
+      "description": "Нет данных"
+    },
+    "date": {
+      "today": "Сегодня",
+      "previousMonth": "Прошлый месяц",
+      "nextMonth": "Следующий месяц",
+      "previousYear": "Прошлый год",
+      "nextYear": "Следующий год",
+      "monthFormat": "{month}/{year}",
+      "placeholder": "Выберите дату",
+      "inputLabel": "Дата",
+      "panelLabel": "Выбор даты",
+      "weekdayFormat": "{name}",
+      "weekdays": [
+        "пн",
+        "вт",
+        "ср",
+        "чт",
+        "пт",
+        "сб",
+        "вс"
+      ]
+    },
+    "transfer": {
+      "search": "Поиск",
+      "itemUnit": "элементов",
+      "moveRight": "Переместить в целевой список",
+      "moveLeft": "Переместить в исходный список"
+    },
+    "timePicker": {
+      "ok": "ОК",
+      "cancel": "Отмена",
+      "placeholder": "Выберите время",
+      "hour": "Часы",
+      "minute": "Минуты",
+      "second": "Секунды"
+    },
+    "popconfirm": {
+      "ok": "ОК",
+      "cancel": "Отмена"
+    },
+    "app": {
+      "confirm": "Подтвердить"
+    },
+    "tour": {
+      "prev": "Назад",
+      "next": "Далее",
+      "finish": "Завершить"
+    },
+    "upload": {
+      "text": "Нажмите для загрузки",
+      "dragText": "Нажмите или перетащите файлы сюда",
+      "remove": "Удалить файл"
+    },
+    "steps": {
+      "label": "Шаги"
+    },
+    "dateRange": {
+      "startPlaceholder": "Дата начала",
+      "endPlaceholder": "Дата окончания",
+      "separator": "по",
+      "panelLabel": "Выбор диапазона дат"
+    }
+  },
+  "ptBR": {
+    "code": "pt-BR",
+    "accessibility": {
+      "loading": "Carregando",
+      "removeTag": "Remover tag",
+      "breadcrumb": "Trilha de navegação",
+      "colorPicker": "Seletor de cores",
+      "colorPanel": "Seleção de cor",
+      "saturationBrightness": "Saturação e brilho",
+      "colorValue": "Saturação {s}%, brilho {v}%",
+      "hue": "Matiz",
+      "hex": "Cor hexadecimal",
+      "searchResults": "Resultados da busca",
+      "noMatch": "Nenhum resultado",
+      "searchCascader": "Pesquisar opções em cascata",
+      "column": "Coluna {index}",
+      "increase": "Aumentar",
+      "decrease": "Diminuir",
+      "mentions": "Sugestões de menção",
+      "imagePreview": "Pré-visualização da imagem",
+      "closePreview": "Fechar pré-visualização",
+      "backTop": "Voltar ao topo",
+      "slider": "Controle deslizante",
+      "rating": "Avaliação",
+      "ratingValue": "{index} estrelas",
+      "floatAction": "Ação flutuante",
+      "removeItem": "Remover {item}",
+      "qrCode": "Código QR: {value}",
+      "anchor": "Navegação por âncoras",
+      "copy": "Copiar",
+      "copied": "Copiado",
+      "sourceList": "Lista de origem",
+      "targetList": "Lista de destino",
+      "selectAllSource": "Selecionar todos os itens de origem",
+      "selectAllTarget": "Selecionar todos os itens de destino",
+      "searchSource": "Pesquisar na lista de origem",
+      "searchTarget": "Pesquisar na lista de destino"
+    },
+    "form": {
+      "required": "Este campo é obrigatório",
+      "minNumber": "O valor deve ser no mínimo {min}",
+      "maxNumber": "O valor deve ser no máximo {max}",
+      "minLength": "Use pelo menos {min} caracteres",
+      "maxLength": "Use no máximo {max} caracteres",
+      "pattern": "Formato inválido",
+      "validator": "Falha na validação"
+    },
+    "result": {
+      "403": "403",
+      "404": "404",
+      "500": "500",
+      "success": "Sucesso",
+      "error": "Falha na operação",
+      "warning": "Aviso",
+      "info": "Informação"
+    },
+    "select": {
+      "placeholder": "Selecione...",
+      "empty": "Sem opções"
+    },
+    "sideNav": {
+      "navigation": "Navegação",
+      "collapse": "Recolher navegação",
+      "expand": "Expandir navegação",
+      "expandGroup": "Expandir grupo {label}",
+      "collapseGroup": "Recolher grupo {label}"
+    },
+    "splitter": {
+      "panelLabel": "Painel {index}",
+      "resizeHandle": "Redimensionar painel",
+      "expandPanel": "Expandir painel",
+      "collapsePanel": "Recolher painel"
+    },
+    "commandPalette": {
+      "title": "Paleta de comandos",
+      "search": "Pesquisar comandos",
+      "placeholder": "Pesquisar comandos…",
+      "loading": "Carregando comandos",
+      "empty": "Nenhum comando correspondente",
+      "results": "{count} comandos encontrados"
+    },
+    "statistic": {
+      "countdown": "Contagem regressiva"
+    },
+    "chart": {
+      "chart": "Gráfico",
+      "loading": "Carregando…",
+      "error": "Falha ao carregar",
+      "retry": "Tentar novamente",
+      "empty": "Sem dados",
+      "noVisible": "Séries ocultas",
+      "showAll": "Mostrar todas",
+      "legend": "Legenda",
+      "dataTable": "Ver dados",
+      "category": "Categoria",
+      "series": "Série",
+      "value": "Valor",
+      "x": "Eixo X",
+      "y": "Eixo Y",
+      "percent": "Porcentagem",
+      "instructions": "Setas: percorrer; Home/End: início/fim; Enter/Space: selecionar; Esc: fechar dica",
+      "invalidData": "Dados inválidos",
+      "zoomHint": "Roda/pinça/+/-: zoom; duplo clique/Esc: reset",
+      "brushHint": "Arraste para ampliar",
+      "resetZoom": "Redefinir",
+      "downloadCsv": "Exportar CSV"
+    },
+    "dataGrid": {
+      "grid": "Grade de dados",
+      "loading": "Carregando dados…",
+      "error": "Não foi possível carregar a grade",
+      "retry": "Tentar novamente",
+      "empty": "Sem dados",
+      "selectAll": "Selecionar tudo",
+      "selectRow": "Selecionar {label}",
+      "sortLabel": "Ordenar por {label}",
+      "resizeColumn": "Redimensionar coluna {label}",
+      "filterLabel": "Filtrar {label}",
+      "filterEmpty": "Nenhuma opção de filtro correspondente"
+    },
+    "globe": {
+      "label": "Visualização do globo em 3D",
+      "loading": "Carregando o globo…",
+      "rotate": "Iniciar rotação",
+      "pause": "Pausar rotação",
+      "zoomIn": "Ampliar",
+      "zoomOut": "Reduzir",
+      "reset": "Redefinir visualização",
+      "points": "Lista de pontos",
+      "noPoints": "Nenhum ponto",
+      "instructions": "Use as setas para girar, + / - para ampliar ou reduzir e Home para redefinir a visualização.",
+      "fallback": "Globo alterado para 2D; os dados dos pontos continuam disponíveis",
+      "error": "Não foi possível carregar o globo",
+      "retry": "Tentar 3D novamente",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "value": "Valor",
+      "search": "Pesquisar pontos",
+      "searchPlaceholder": "Pesquisar nomes, categorias ou valores…",
+      "clearSearch": "Limpar pesquisa",
+      "searchResults": "{count} pontos encontrados",
+      "noResults": "Nenhum ponto correspondente",
+      "legend": "Categorias de pontos",
+      "showAll": "Mostrar todas as categorias",
+      "hiddenSelection": "O ponto selecionado está oculto pelos filtros atuais",
+      "focusPoint": "Centralizar em {name}",
+      "arcs": "Lista de conexões",
+      "noArcs": "Nenhuma conexão",
+      "selectedArc": "Conexão selecionada"
+    },
+    "combobox": {
+      "placeholder": "Digite ou selecione...",
+      "clear": "Limpar seleção",
+      "showOptions": "Mostrar opções",
+      "hideOptions": "Ocultar opções",
+      "loading": "Carregando",
+      "empty": "Nenhuma opção correspondente",
+      "results": "{count} resultados"
+    },
+    "input": {
+      "clear": "Limpar",
+      "showPassword": "Mostrar senha",
+      "hidePassword": "Ocultar senha",
+      "search": "Pesquisar"
+    },
+    "modal": {
+      "close": "Fechar"
+    },
+    "drawer": {
+      "close": "Fechar"
+    },
+    "message": {
+      "close": "Fechar"
+    },
+    "pagination": {
+      "prev": "Anterior",
+      "next": "Próximo",
+      "jumper": "Ir para",
+      "label": "Paginação",
+      "jumperLabel": "Ir para a página",
+      "unit": ""
+    },
+    "empty": {
+      "description": "Sem dados"
+    },
+    "date": {
+      "today": "Hoje",
+      "previousMonth": "Mês anterior",
+      "nextMonth": "Próximo mês",
+      "previousYear": "Ano anterior",
+      "nextYear": "Próximo ano",
+      "monthFormat": "{month}/{year}",
+      "placeholder": "Selecione a data",
+      "inputLabel": "Data",
+      "panelLabel": "Selecionar data",
+      "weekdayFormat": "{name}",
+      "weekdays": [
+        "seg",
+        "ter",
+        "qua",
+        "qui",
+        "sex",
+        "sáb",
+        "dom"
+      ]
+    },
+    "transfer": {
+      "search": "Pesquisar",
+      "itemUnit": "itens",
+      "moveRight": "Mover para o destino",
+      "moveLeft": "Mover para a origem"
+    },
+    "timePicker": {
+      "ok": "OK",
+      "cancel": "Cancelar",
+      "placeholder": "Selecione o horário",
+      "hour": "Hora",
+      "minute": "Minuto",
+      "second": "Segundo"
+    },
+    "popconfirm": {
+      "ok": "OK",
+      "cancel": "Cancelar"
+    },
+    "app": {
+      "confirm": "Confirmar"
+    },
+    "tour": {
+      "prev": "Anterior",
+      "next": "Próximo",
+      "finish": "Concluir"
+    },
+    "upload": {
+      "text": "Clique para enviar",
+      "dragText": "Clique ou arraste arquivos aqui",
+      "remove": "Remover arquivo"
+    },
+    "steps": {
+      "label": "Etapas"
+    },
+    "dateRange": {
+      "startPlaceholder": "Data de início",
+      "endPlaceholder": "Data de término",
+      "separator": "a",
+      "panelLabel": "Selecionar período de datas"
+    }
+  }
+}

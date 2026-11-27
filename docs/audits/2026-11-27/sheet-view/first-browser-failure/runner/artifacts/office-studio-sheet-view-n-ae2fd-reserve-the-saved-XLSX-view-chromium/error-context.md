@@ -1,0 +1,3556 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: office-studio-sheet-view.spec.ts >> native small zoom, invalid draft cancellation and read-only preview preserve the saved XLSX view
+- Location: e2e/office-studio-sheet-view.spec.ts:320:1
+
+# Error details
+
+```
+TypeError: Cannot read properties of undefined (reading 'locked')
+```
+
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - link "Z ZUVI v1.1.0" [ref=e6] [cursor=pointer]:
+          - /url: "#/"
+          - generic [ref=e7]: Z
+          - generic [ref=e8]: ZUVI
+          - generic [ref=e9]: v1.1.0
+        - generic [ref=e10]: 开发文档 / OfficeStudio 独立文档工作台
+      - generic [ref=e11]:
+        - button "打开文档命令面板" [ref=e12] [cursor=pointer]:
+          - generic [ref=e16]: 搜索页面或命令
+          - generic [ref=e17]: ⌘ / Ctrl K
+        - button "切换暗色" [ref=e18] [cursor=pointer]
+        - link "GitHub" [ref=e19] [cursor=pointer]:
+          - /url: https://github.com/Starweave-Labs/zuvi
+      - status
+    - generic [ref=e20]:
+      - generic [ref=e21]:
+        - generic [ref=e22]: 文档
+        - generic [ref=e23]: 组件、规范与实践
+      - search "搜索文档导航" [ref=e24]:
+        - searchbox "按名称过滤导航项" [ref=e25]
+      - navigation "文档导航" [ref=e26]:
+        - generic [ref=e27]:
+          - group "开始" [ref=e28]:
+            - list [ref=e30]:
+              - listitem [ref=e31]:
+                - link "概览" [ref=e32] [cursor=pointer]:
+                  - /url: "#/"
+              - listitem [ref=e34]:
+                - link "设计令牌" [ref=e35] [cursor=pointer]:
+                  - /url: "#/tokens"
+              - listitem [ref=e37]:
+                - link "主题调参" [ref=e38] [cursor=pointer]:
+                  - /url: "#/theme"
+              - listitem [ref=e40]:
+                - link "国际化与翻译" [ref=e41] [cursor=pointer]:
+                  - /url: "#/i18n"
+              - listitem [ref=e43]:
+                - link "设计资源" [ref=e44] [cursor=pointer]:
+                  - /url: "#/design"
+              - listitem [ref=e46]:
+                - link "图标库" [ref=e47] [cursor=pointer]:
+                  - /url: "#/icons"
+              - listitem [ref=e49]:
+                - link "页面搭建器" [ref=e50] [cursor=pointer]:
+                  - /url: "#/builder"
+              - listitem [ref=e52]:
+                - link "业务区块" [ref=e53] [cursor=pointer]:
+                  - /url: "#/blocks"
+              - listitem [ref=e55]:
+                - link "内容协作实验室" [ref=e56] [cursor=pointer]:
+                  - /url: "#/collaboration"
+              - listitem [ref=e58]:
+                - link "组件创意工坊" [ref=e59] [cursor=pointer]:
+                  - /url: "#/lab"
+          - group "基础组件" [ref=e61]:
+            - list [ref=e63]:
+              - listitem [ref=e64]:
+                - link "Button 按钮" [ref=e65] [cursor=pointer]:
+                  - /url: "#/components/button"
+              - listitem [ref=e67]:
+                - link "Typography 排版" [ref=e68] [cursor=pointer]:
+                  - /url: "#/components/typography"
+          - group "布局" [ref=e70]:
+            - list [ref=e72]:
+              - listitem [ref=e73]:
+                - link "Splitter 可调分栏" [ref=e74] [cursor=pointer]:
+                  - /url: "#/components/splitter"
+              - listitem [ref=e76]:
+                - link "Divider 分割线" [ref=e77] [cursor=pointer]:
+                  - /url: "#/components/divider"
+              - listitem [ref=e79]:
+                - link "Layout 布局" [ref=e80] [cursor=pointer]:
+                  - /url: "#/components/layout"
+          - group "导航" [ref=e82]:
+            - list [ref=e84]:
+              - listitem [ref=e85]:
+                - link "CommandPalette 命令面板" [ref=e86] [cursor=pointer]:
+                  - /url: "#/components/command-palette"
+              - listitem [ref=e88]:
+                - link "SideNav 侧边导航" [ref=e89] [cursor=pointer]:
+                  - /url: "#/components/side-nav"
+              - listitem [ref=e91]:
+                - link "Tabs 标签页" [ref=e92] [cursor=pointer]:
+                  - /url: "#/components/tabs"
+              - listitem [ref=e94]:
+                - link "DropdownMenu 下拉菜单" [ref=e95] [cursor=pointer]:
+                  - /url: "#/components/dropdown-menu"
+              - listitem [ref=e97]:
+                - link "Pagination 分页" [ref=e98] [cursor=pointer]:
+                  - /url: "#/components/pagination"
+              - listitem [ref=e100]:
+                - link "Breadcrumb 面包屑" [ref=e101] [cursor=pointer]:
+                  - /url: "#/components/breadcrumb"
+              - listitem [ref=e103]:
+                - link "Affix 固钉" [ref=e104] [cursor=pointer]:
+                  - /url: "#/components/affix"
+              - listitem [ref=e106]:
+                - link "BackTop 返回顶部" [ref=e107] [cursor=pointer]:
+                  - /url: "#/components/back-top"
+              - listitem [ref=e109]:
+                - link "FloatButton 悬浮按钮" [ref=e110] [cursor=pointer]:
+                  - /url: "#/components/float-button"
+              - listitem [ref=e112]:
+                - link "Steps 步骤条" [ref=e113] [cursor=pointer]:
+                  - /url: "#/components/steps"
+              - listitem [ref=e115]:
+                - link "Anchor 锚点" [ref=e116] [cursor=pointer]:
+                  - /url: "#/components/anchor"
+          - group "数据录入" [ref=e118]:
+            - list [ref=e120]:
+              - listitem [ref=e121]:
+                - link "Input 输入框" [ref=e122] [cursor=pointer]:
+                  - /url: "#/components/input"
+              - listitem [ref=e124]:
+                - link "Checkbox 复选框" [ref=e125] [cursor=pointer]:
+                  - /url: "#/components/checkbox"
+              - listitem [ref=e127]:
+                - link "Radio 单选框" [ref=e128] [cursor=pointer]:
+                  - /url: "#/components/radio"
+              - listitem [ref=e130]:
+                - link "Switch 开关" [ref=e131] [cursor=pointer]:
+                  - /url: "#/components/switch"
+              - listitem [ref=e133]:
+                - link "Select 选择器" [ref=e134] [cursor=pointer]:
+                  - /url: "#/components/select"
+              - listitem [ref=e136]:
+                - link "Combobox 自动完成" [ref=e137] [cursor=pointer]:
+                  - /url: "#/components/combobox"
+              - listitem [ref=e139]:
+                - link "OfficeEditor 文档编辑器" [ref=e140] [cursor=pointer]:
+                  - /url: "#/components/office-editor"
+              - listitem [ref=e142]:
+                - link "OfficeStudio 独立文档工作台" [ref=e143] [cursor=pointer]:
+                  - /url: "#/components/office-studio"
+              - listitem [ref=e145]:
+                - link "Form 表单" [ref=e146] [cursor=pointer]:
+                  - /url: "#/components/form"
+              - listitem [ref=e148]:
+                - link "Slider 滑块" [ref=e149] [cursor=pointer]:
+                  - /url: "#/components/slider"
+              - listitem [ref=e151]:
+                - link "Rate 评分" [ref=e152] [cursor=pointer]:
+                  - /url: "#/components/rate"
+              - listitem [ref=e154]:
+                - link "InputNumber 数字输入" [ref=e155] [cursor=pointer]:
+                  - /url: "#/components/input-number"
+              - listitem [ref=e157]:
+                - link "ColorPicker 取色器" [ref=e158] [cursor=pointer]:
+                  - /url: "#/components/color-picker"
+              - listitem [ref=e160]:
+                - link "DatePicker 日期选择" [ref=e161] [cursor=pointer]:
+                  - /url: "#/components/date-picker"
+              - listitem [ref=e163]:
+                - link "TreeSelect 树选择" [ref=e164] [cursor=pointer]:
+                  - /url: "#/components/tree-select"
+              - listitem [ref=e166]:
+                - link "Transfer 穿梭框" [ref=e167] [cursor=pointer]:
+                  - /url: "#/components/transfer"
+              - listitem [ref=e169]:
+                - link "Cascader 级联选择" [ref=e170] [cursor=pointer]:
+                  - /url: "#/components/cascader"
+              - listitem [ref=e172]:
+                - link "TimePicker 时间选择" [ref=e173] [cursor=pointer]:
+                  - /url: "#/components/time-picker"
+              - listitem [ref=e175]:
+                - link "Mentions 提及" [ref=e176] [cursor=pointer]:
+                  - /url: "#/components/mentions"
+              - listitem [ref=e178]:
+                - link "Segmented 分段控制器" [ref=e179] [cursor=pointer]:
+                  - /url: "#/components/segmented"
+              - listitem [ref=e181]:
+                - link "Upload 上传" [ref=e182] [cursor=pointer]:
+                  - /url: "#/components/upload"
+              - listitem [ref=e184]:
+                - link "DateRangePicker 日期范围" [ref=e185] [cursor=pointer]:
+                  - /url: "#/components/date-range-picker"
+          - group "数据展示" [ref=e187]:
+            - list [ref=e189]:
+              - listitem [ref=e190]:
+                - link "Table 表格" [ref=e191] [cursor=pointer]:
+                  - /url: "#/components/table"
+              - listitem [ref=e193]:
+                - link "Chart 数据图表" [ref=e194] [cursor=pointer]:
+                  - /url: "#/components/chart"
+              - listitem [ref=e196]:
+                - link "Globe 3D 地球" [ref=e197] [cursor=pointer]:
+                  - /url: "#/components/globe"
+              - listitem [ref=e199]:
+                - link "Badge 徽标" [ref=e200] [cursor=pointer]:
+                  - /url: "#/components/badge"
+              - listitem [ref=e202]:
+                - link "Tag 标签" [ref=e203] [cursor=pointer]:
+                  - /url: "#/components/tag"
+              - listitem [ref=e205]:
+                - link "Avatar 头像" [ref=e206] [cursor=pointer]:
+                  - /url: "#/components/avatar"
+              - listitem [ref=e208]:
+                - link "Card 卡片" [ref=e209] [cursor=pointer]:
+                  - /url: "#/components/card"
+              - listitem [ref=e211]:
+                - link "Empty 空状态" [ref=e212] [cursor=pointer]:
+                  - /url: "#/components/empty"
+              - listitem [ref=e214]:
+                - link "Calendar 日历" [ref=e215] [cursor=pointer]:
+                  - /url: "#/components/calendar"
+              - listitem [ref=e217]:
+                - link "Descriptions 描述列表" [ref=e218] [cursor=pointer]:
+                  - /url: "#/components/descriptions"
+              - listitem [ref=e220]:
+                - link "Statistic 统计数值" [ref=e221] [cursor=pointer]:
+                  - /url: "#/components/statistic"
+              - listitem [ref=e223]:
+                - link "Timeline 时间轴" [ref=e224] [cursor=pointer]:
+                  - /url: "#/components/timeline"
+              - listitem [ref=e226]:
+                - link "VirtualTable 虚拟滚动表格" [ref=e227] [cursor=pointer]:
+                  - /url: "#/components/virtual-table"
+              - listitem [ref=e229]:
+                - link "DataGrid 数据网格" [ref=e230] [cursor=pointer]:
+                  - /url: "#/components/data-grid"
+              - listitem [ref=e232]:
+                - link "Tree 树形控件" [ref=e233] [cursor=pointer]:
+                  - /url: "#/components/tree"
+              - listitem [ref=e235]:
+                - link "Collapse 折叠面板" [ref=e236] [cursor=pointer]:
+                  - /url: "#/components/collapse"
+              - listitem [ref=e238]:
+                - link "List 列表" [ref=e239] [cursor=pointer]:
+                  - /url: "#/components/list"
+              - listitem [ref=e241]:
+                - link "Image 图片" [ref=e242] [cursor=pointer]:
+                  - /url: "#/components/image"
+              - listitem [ref=e244]:
+                - link "QRCode 二维码" [ref=e245] [cursor=pointer]:
+                  - /url: "#/components/qrcode"
+              - listitem [ref=e247]:
+                - link "Watermark 水印" [ref=e248] [cursor=pointer]:
+                  - /url: "#/components/watermark"
+          - group "数据可视化" [ref=e250]:
+            - list [ref=e252]:
+              - listitem [ref=e253]:
+                - link "图表画廊" [ref=e254] [cursor=pointer]:
+                  - /url: "#/charts"
+              - listitem [ref=e256]:
+                - link "交互与联动" [ref=e257] [cursor=pointer]:
+                  - /url: "#/charts/interactions"
+              - listitem [ref=e259]:
+                - link "可视化实验室" [ref=e260] [cursor=pointer]:
+                  - /url: "#/charts/playground"
+          - group "反馈" [ref=e262]:
+            - list [ref=e264]:
+              - listitem [ref=e265]:
+                - link "Modal 对话框" [ref=e266] [cursor=pointer]:
+                  - /url: "#/components/modal"
+              - listitem [ref=e268]:
+                - link "Message 全局提示" [ref=e269] [cursor=pointer]:
+                  - /url: "#/components/message"
+              - listitem [ref=e271]:
+                - link "Tooltip 文字提示" [ref=e272] [cursor=pointer]:
+                  - /url: "#/components/tooltip"
+              - listitem [ref=e274]:
+                - link "Popover 气泡卡片" [ref=e275] [cursor=pointer]:
+                  - /url: "#/components/popover"
+              - listitem [ref=e277]:
+                - link "Alert 警告提示" [ref=e278] [cursor=pointer]:
+                  - /url: "#/components/alert"
+              - listitem [ref=e280]:
+                - link "Skeleton 骨架屏" [ref=e281] [cursor=pointer]:
+                  - /url: "#/components/skeleton"
+              - listitem [ref=e283]:
+                - link "Drawer 抽屉" [ref=e284] [cursor=pointer]:
+                  - /url: "#/components/drawer"
+              - listitem [ref=e286]:
+                - link "Spin 加载中" [ref=e287] [cursor=pointer]:
+                  - /url: "#/components/spin"
+              - listitem [ref=e289]:
+                - link "Progress 进度条" [ref=e290] [cursor=pointer]:
+                  - /url: "#/components/progress"
+              - listitem [ref=e292]:
+                - link "Notification 通知提醒框" [ref=e293] [cursor=pointer]:
+                  - /url: "#/components/notification"
+              - listitem [ref=e295]:
+                - link "Popconfirm 气泡确认" [ref=e296] [cursor=pointer]:
+                  - /url: "#/components/popconfirm"
+              - listitem [ref=e298]:
+                - link "Tour 漫游引导" [ref=e299] [cursor=pointer]:
+                  - /url: "#/components/tour"
+              - listitem [ref=e301]:
+                - link "Result 结果" [ref=e302] [cursor=pointer]:
+                  - /url: "#/components/result"
+          - group "全局配置" [ref=e304]:
+            - list [ref=e306]:
+              - listitem [ref=e307]:
+                - link "ConfigProvider 全局配置" [ref=e308] [cursor=pointer]:
+                  - /url: "#/components/config"
+              - listitem [ref=e310]:
+                - link "App 容器" [ref=e311] [cursor=pointer]:
+                  - /url: "#/components/app"
+      - generic [ref=e313]: React 19 · CSS 变量驱动
+    - main [ref=e314]:
+      - generic [ref=e315]:
+        - heading "OfficeStudio 独立文档工作台" [level=1] [ref=e316]
+        - paragraph [ref=e317]: 使用 ZUVI 的工具栏、菜单和表单，在页面内直接编辑文档。Word、Excel、PDF 共用文件操作与保存状态，编辑内容保存在当前浏览器，也可以导出为实际文件。
+        - generic [ref=e318]:
+          - generic [ref=e319]: ZUVI 界面
+          - generic [ref=e321]: 页面内编辑
+          - generic [ref=e323]: 本地恢复
+          - generic [ref=e325]: DOCX / XLSX / PDF
+        - region "从预览，到完成一份文档" [ref=e327]:
+          - generic [ref=e328]:
+            - heading "从预览，到完成一份文档" [level=3] [ref=e329]
+            - paragraph [ref=e330]: 选择一种文档开始。修改会自动保存到当前浏览器；导出后可在 Word、Excel 或 PDF 阅读器中继续使用。
+          - generic [ref=e332]:
+            - group "选择示例文档" [ref=e333]:
+              - button "Word 文档排版 · 图片与页眉页脚" [ref=e334] [cursor=pointer]:
+                - generic [ref=e335]:
+                  - generic [aria-hidden] [ref=e336]: W
+                  - generic [ref=e337]:
+                    - strong [ref=e338]: Word
+                    - generic [ref=e339]: 文档排版 · 图片与页眉页脚
+              - button "Excel 行列编辑 · 公式与图表" [pressed] [ref=e340] [cursor=pointer]:
+                - generic [ref=e341]:
+                  - generic [aria-hidden] [ref=e342]: E
+                  - generic [ref=e343]:
+                    - strong [ref=e344]: Excel
+                    - generic [ref=e345]: 行列编辑 · 公式与图表
+              - button "PDF 全文查找 · 批注与手写" [ref=e346] [cursor=pointer]:
+                - generic [ref=e347]:
+                  - generic [aria-hidden] [ref=e348]: P
+                  - generic [ref=e349]:
+                    - strong [ref=e350]: PDF
+                    - generic [ref=e351]: 全文查找 · 批注与手写
+            - generic [ref=e352]:
+              - generic [ref=e353]: 本地文档
+              - generic [ref=e354]:
+                - generic [ref=e355]: 打开本地文档
+                - button "打开本地文档 Preview.xlsx" [ref=e356] [cursor=pointer]:
+                  - generic [ref=e357]: Preview.xlsx
+              - button "历史版本" [ref=e358] [cursor=pointer]
+              - switch "只读预览" [ref=e360] [cursor=pointer]
+            - region "Excel 文档编辑器" [ref=e364]:
+              - generic [ref=e365]:
+                - generic [ref=e366]:
+                  - generic [ref=e371]: Excel
+                  - generic "可编辑 · ⌘ / Ctrl S 保存" [ref=e372]:
+                    - status "已保存" [ref=e373]
+                - textbox "文档名称" [ref=e378]: Preview.xlsx
+                - generic [ref=e379]:
+                  - button "新建" [ref=e381] [cursor=pointer]
+                  - button "导入" [ref=e384] [cursor=pointer]
+                  - button "导出文件" [ref=e389] [cursor=pointer]
+                  - button "打印" [ref=e395] [cursor=pointer]
+                  - button "保存" [ref=e402] [cursor=pointer]
+                  - button "全屏编辑" [ref=e409] [cursor=pointer]
+              - generic [ref=e417]:
+                - generic [ref=e418]:
+                  - generic [ref=e419]:
+                    - button "文件" [ref=e422] [cursor=pointer]
+                    - tablist "表格工具栏" [ref=e423]:
+                      - tab "开始" [ref=e424] [cursor=pointer]
+                      - tab "插入" [ref=e425] [cursor=pointer]
+                      - tab "布局" [ref=e426] [cursor=pointer]
+                      - tab "公式" [ref=e427] [cursor=pointer]
+                      - tab "数据" [ref=e428] [cursor=pointer]
+                      - tab "视图" [selected] [ref=e429] [cursor=pointer]
+                  - tabpanel "视图" [ref=e430]:
+                    - generic [ref=e431]:
+                      - generic [ref=e432]:
+                        - generic [ref=e433]:
+                          - button "缩小工作表" [disabled] [ref=e434]:
+                            - generic [ref=e435]: −
+                          - textbox "工作表缩放百分比" [ref=e437]: "25"
+                          - generic [aria-hidden] [ref=e438]: "%"
+                          - button "放大工作表" [ref=e439] [cursor=pointer]:
+                            - generic [ref=e440]: ＋
+                        - generic [ref=e441]:
+                          - generic [ref=e442]: 工作表缩放预设
+                          - button "工作表缩放预设 25%" [ref=e443] [cursor=pointer]:
+                            - generic [ref=e444]: 25%
+                        - generic [ref=e445]: 缩放
+                      - generic [ref=e446]:
+                        - generic [ref=e447] [cursor=pointer]:
+                          - checkbox "显示网格线" [checked] [ref=e448]
+                          - generic [ref=e450]: 显示网格线
+                        - generic [ref=e451] [cursor=pointer]:
+                          - checkbox "显示行列标题" [checked] [ref=e452]
+                          - generic [ref=e454]: 显示行列标题
+                        - generic [ref=e455]: 显示
+                      - generic [ref=e456]:
+                        - generic [ref=e457]:
+                          - button "冻结首行" [ref=e458] [cursor=pointer]
+                          - button "冻结首列" [ref=e460] [cursor=pointer]
+                          - button "取消冻结" [ref=e462] [cursor=pointer]
+                        - generic [ref=e464]: 冻结窗格
+                - generic [ref=e465]:
+                  - textbox "单元格地址" [ref=e467]: C4
+                  - generic [aria-hidden] [ref=e468]: ƒx
+                  - textbox "表格公式栏" [ref=e470]:
+                    - /placeholder: 输入内容或公式
+                    - text: "10"
+                - grid "Main 单元格网格" [ref=e472]:
+                  - generic [ref=e473]:
+                    - row [ref=e474]:
+                      - columnheader "行号" [ref=e475]
+                      - columnheader "A A 列宽" [ref=e476]:
+                        - generic [ref=e477]: A
+                        - separator "A 列宽" [ref=e478]
+                      - columnheader "C C 列宽" [ref=e479]:
+                        - generic [ref=e480]: C
+                        - separator "C 列宽" [ref=e481]
+                      - columnheader "D D 列宽" [ref=e482]:
+                        - generic [ref=e483]: D
+                        - separator "D 列宽" [ref=e484]
+                      - columnheader "E E 列宽" [ref=e485]:
+                        - generic [ref=e486]: E
+                        - separator "E 列宽" [ref=e487]
+                      - columnheader "F F 列宽" [ref=e488]:
+                        - generic [ref=e489]: F
+                        - separator "F 列宽" [ref=e490]
+                      - columnheader "G G 列宽" [ref=e491]:
+                        - generic [ref=e492]: G
+                        - separator "G 列宽" [ref=e493]
+                      - columnheader "H H 列宽" [ref=e494]:
+                        - generic [ref=e495]: H
+                        - separator "H 列宽" [ref=e496]
+                      - columnheader "I I 列宽" [ref=e497]:
+                        - generic [ref=e498]: I
+                        - separator "I 列宽" [ref=e499]
+                      - columnheader "J J 列宽" [ref=e500]:
+                        - generic [ref=e501]: J
+                        - separator "J 列宽" [ref=e502]
+                      - columnheader "K K 列宽" [ref=e503]:
+                        - generic [ref=e504]: K
+                        - separator "K 列宽" [ref=e505]
+                      - columnheader "L L 列宽" [ref=e506]:
+                        - generic [ref=e507]: L
+                        - separator "L 列宽" [ref=e508]
+                      - columnheader "M M 列宽" [ref=e509]:
+                        - generic [ref=e510]: M
+                        - separator "M 列宽" [ref=e511]
+                      - columnheader "N N 列宽" [ref=e512]:
+                        - generic [ref=e513]: "N"
+                        - separator "N 列宽" [ref=e514]
+                      - columnheader "O O 列宽" [ref=e515]:
+                        - generic [ref=e516]: O
+                        - separator "O 列宽" [ref=e517]
+                      - columnheader "P P 列宽" [ref=e518]:
+                        - generic [ref=e519]: P
+                        - separator "P 列宽" [ref=e520]
+                      - columnheader "Q Q 列宽" [ref=e521]:
+                        - generic [ref=e522]: Q
+                        - separator "Q 列宽" [ref=e523]
+                      - columnheader "R R 列宽" [ref=e524]:
+                        - generic [ref=e525]: R
+                        - separator "R 列宽" [ref=e526]
+                      - columnheader "S S 列宽" [ref=e527]:
+                        - generic [ref=e528]: S
+                        - separator "S 列宽" [ref=e529]
+                      - columnheader "T T 列宽" [ref=e530]:
+                        - generic [ref=e531]: T
+                        - separator "T 列宽" [ref=e532]
+                      - columnheader "U U 列宽" [ref=e533]:
+                        - generic [ref=e534]: U
+                        - separator "U 列宽" [ref=e535]
+                      - columnheader "V V 列宽" [ref=e536]:
+                        - generic [ref=e537]: V
+                        - separator "V 列宽" [ref=e538]
+                      - columnheader "W W 列宽" [ref=e539]:
+                        - generic [ref=e540]: W
+                        - separator "W 列宽" [ref=e541]
+                      - columnheader "X X 列宽" [ref=e542]:
+                        - generic [ref=e543]: X
+                        - separator "X 列宽" [ref=e544]
+                      - columnheader "Y Y 列宽" [ref=e545]:
+                        - generic [ref=e546]: "Y"
+                        - separator "Y 列宽" [ref=e547]
+                      - columnheader "Z Z 列宽" [ref=e548]:
+                        - generic [ref=e549]: Z
+                        - separator "Z 列宽" [ref=e550]
+                    - row [ref=e551]:
+                      - rowheader "1 1 行高" [ref=e552]:
+                        - generic [ref=e553]: "1"
+                        - separator "1 行高" [ref=e554]
+                      - gridcell "A1" [ref=e555]:
+                        - generic: "1"
+                      - gridcell "C1" [ref=e556]
+                      - gridcell "D1" [ref=e557]
+                      - gridcell "E1" [ref=e558]
+                      - gridcell "F1" [ref=e559]
+                      - gridcell "G1" [ref=e560]
+                      - gridcell "H1" [ref=e561]
+                      - gridcell "I1" [ref=e562]
+                      - gridcell "J1" [ref=e563]
+                      - gridcell "K1" [ref=e564]
+                      - gridcell "L1" [ref=e565]
+                      - gridcell "M1" [ref=e566]
+                      - gridcell "N1" [ref=e567]
+                      - gridcell "O1" [ref=e568]
+                      - gridcell "P1" [ref=e569]
+                      - gridcell "Q1" [ref=e570]
+                      - gridcell "R1" [ref=e571]
+                      - gridcell "S1" [ref=e572]
+                      - gridcell "T1" [ref=e573]
+                      - gridcell "U1" [ref=e574]
+                      - gridcell "V1" [ref=e575]
+                      - gridcell "W1" [ref=e576]
+                      - gridcell "X1" [ref=e577]
+                      - gridcell "Y1" [ref=e578]
+                      - gridcell "Z1" [ref=e579]
+                    - row [ref=e580]:
+                      - rowheader "3 3 行高" [ref=e581]:
+                        - generic [ref=e582]: "3"
+                        - separator "3 行高" [ref=e583]
+                      - gridcell "A3" [ref=e584]
+                      - gridcell "C3" [ref=e585]
+                      - gridcell "D3" [ref=e586]
+                      - gridcell "E3" [ref=e587]
+                      - gridcell "F3" [ref=e588]
+                      - gridcell "G3" [ref=e589]
+                      - gridcell "H3" [ref=e590]
+                      - gridcell "I3" [ref=e591]
+                      - gridcell "J3" [ref=e592]
+                      - gridcell "K3" [ref=e593]
+                      - gridcell "L3" [ref=e594]
+                      - gridcell "M3" [ref=e595]
+                      - gridcell "N3" [ref=e596]
+                      - gridcell "O3" [ref=e597]
+                      - gridcell "P3" [ref=e598]
+                      - gridcell "Q3" [ref=e599]
+                      - gridcell "R3" [ref=e600]
+                      - gridcell "S3" [ref=e601]
+                      - gridcell "T3" [ref=e602]
+                      - gridcell "U3" [ref=e603]
+                      - gridcell "V3" [ref=e604]
+                      - gridcell "W3" [ref=e605]
+                      - gridcell "X3" [ref=e606]
+                      - gridcell "Y3" [ref=e607]
+                      - gridcell "Z3" [ref=e608]
+                    - row [ref=e609]:
+                      - rowheader "4 4 行高" [ref=e610]:
+                        - generic [ref=e611]: "4"
+                        - separator "4 行高" [ref=e612]
+                      - gridcell "A4" [ref=e613]
+                      - gridcell "C4" [selected] [ref=e614]:
+                        - generic: "10"
+                      - gridcell "D4" [ref=e615]
+                      - gridcell "E4" [ref=e616]
+                      - gridcell "F4" [ref=e617]
+                      - gridcell "G4" [ref=e618]
+                      - gridcell "H4" [ref=e619]
+                      - gridcell "I4" [ref=e620]
+                      - gridcell "J4" [ref=e621]
+                      - gridcell "K4" [ref=e622]
+                      - gridcell "L4" [ref=e623]
+                      - gridcell "M4" [ref=e624]
+                      - gridcell "N4" [ref=e625]
+                      - gridcell "O4" [ref=e626]
+                      - gridcell "P4" [ref=e627]
+                      - gridcell "Q4" [ref=e628]
+                      - gridcell "R4" [ref=e629]
+                      - gridcell "S4" [ref=e630]
+                      - gridcell "T4" [ref=e631]
+                      - gridcell "U4" [ref=e632]
+                      - gridcell "V4" [ref=e633]
+                      - gridcell "W4" [ref=e634]
+                      - gridcell "X4" [ref=e635]
+                      - gridcell "Y4" [ref=e636]
+                      - gridcell "Z4" [ref=e637]
+                    - row [ref=e638]:
+                      - rowheader "5 5 行高" [ref=e639]:
+                        - generic [ref=e640]: "5"
+                        - separator "5 行高" [ref=e641]
+                      - gridcell "A5" [ref=e642]
+                      - gridcell "C5" [ref=e643]
+                      - gridcell "D5" [ref=e644]
+                      - gridcell "E5" [ref=e645]
+                      - gridcell "F5" [ref=e646]
+                      - gridcell "G5" [ref=e647]
+                      - gridcell "H5" [ref=e648]
+                      - gridcell "I5" [ref=e649]
+                      - gridcell "J5" [ref=e650]
+                      - gridcell "K5" [ref=e651]
+                      - gridcell "L5" [ref=e652]
+                      - gridcell "M5" [ref=e653]
+                      - gridcell "N5" [ref=e654]
+                      - gridcell "O5" [ref=e655]
+                      - gridcell "P5" [ref=e656]
+                      - gridcell "Q5" [ref=e657]
+                      - gridcell "R5" [ref=e658]
+                      - gridcell "S5" [ref=e659]
+                      - gridcell "T5" [ref=e660]
+                      - gridcell "U5" [ref=e661]
+                      - gridcell "V5" [ref=e662]
+                      - gridcell "W5" [ref=e663]
+                      - gridcell "X5" [ref=e664]
+                      - gridcell "Y5" [ref=e665]
+                      - gridcell "Z5" [ref=e666]
+                    - row [ref=e667]:
+                      - rowheader "6 6 行高" [ref=e668]:
+                        - generic [ref=e669]: "6"
+                        - separator "6 行高" [ref=e670]
+                      - gridcell "A6" [ref=e671]
+                      - gridcell "C6" [ref=e672]
+                      - gridcell "D6" [ref=e673]
+                      - gridcell "E6" [ref=e674]
+                      - gridcell "F6" [ref=e675]
+                      - gridcell "G6" [ref=e676]
+                      - gridcell "H6" [ref=e677]
+                      - gridcell "I6" [ref=e678]
+                      - gridcell "J6" [ref=e679]
+                      - gridcell "K6" [ref=e680]
+                      - gridcell "L6" [ref=e681]
+                      - gridcell "M6" [ref=e682]
+                      - gridcell "N6" [ref=e683]
+                      - gridcell "O6" [ref=e684]
+                      - gridcell "P6" [ref=e685]
+                      - gridcell "Q6" [ref=e686]
+                      - gridcell "R6" [ref=e687]
+                      - gridcell "S6" [ref=e688]
+                      - gridcell "T6" [ref=e689]
+                      - gridcell "U6" [ref=e690]
+                      - gridcell "V6" [ref=e691]
+                      - gridcell "W6" [ref=e692]
+                      - gridcell "X6" [ref=e693]
+                      - gridcell "Y6" [ref=e694]
+                      - gridcell "Z6" [ref=e695]
+                    - row [ref=e696]:
+                      - rowheader "7 7 行高" [ref=e697]:
+                        - generic [ref=e698]: "7"
+                        - separator "7 行高" [ref=e699]
+                      - gridcell "A7" [ref=e700]
+                      - gridcell "C7" [ref=e701]
+                      - gridcell "D7" [ref=e702]
+                      - gridcell "E7" [ref=e703]
+                      - gridcell "F7" [ref=e704]
+                      - gridcell "G7" [ref=e705]
+                      - gridcell "H7" [ref=e706]
+                      - gridcell "I7" [ref=e707]
+                      - gridcell "J7" [ref=e708]
+                      - gridcell "K7" [ref=e709]
+                      - gridcell "L7" [ref=e710]
+                      - gridcell "M7" [ref=e711]
+                      - gridcell "N7" [ref=e712]
+                      - gridcell "O7" [ref=e713]
+                      - gridcell "P7" [ref=e714]
+                      - gridcell "Q7" [ref=e715]
+                      - gridcell "R7" [ref=e716]
+                      - gridcell "S7" [ref=e717]
+                      - gridcell "T7" [ref=e718]
+                      - gridcell "U7" [ref=e719]
+                      - gridcell "V7" [ref=e720]
+                      - gridcell "W7" [ref=e721]
+                      - gridcell "X7" [ref=e722]
+                      - gridcell "Y7" [ref=e723]
+                      - gridcell "Z7" [ref=e724]
+                    - row [ref=e725]:
+                      - rowheader "8 8 行高" [ref=e726]:
+                        - generic [ref=e727]: "8"
+                        - separator "8 行高" [ref=e728]
+                      - gridcell "A8" [ref=e729]
+                      - gridcell "C8" [ref=e730]
+                      - gridcell "D8" [ref=e731]
+                      - gridcell "E8" [ref=e732]
+                      - gridcell "F8" [ref=e733]
+                      - gridcell "G8" [ref=e734]
+                      - gridcell "H8" [ref=e735]
+                      - gridcell "I8" [ref=e736]
+                      - gridcell "J8" [ref=e737]
+                      - gridcell "K8" [ref=e738]
+                      - gridcell "L8" [ref=e739]
+                      - gridcell "M8" [ref=e740]
+                      - gridcell "N8" [ref=e741]
+                      - gridcell "O8" [ref=e742]
+                      - gridcell "P8" [ref=e743]
+                      - gridcell "Q8" [ref=e744]
+                      - gridcell "R8" [ref=e745]
+                      - gridcell "S8" [ref=e746]
+                      - gridcell "T8" [ref=e747]
+                      - gridcell "U8" [ref=e748]
+                      - gridcell "V8" [ref=e749]
+                      - gridcell "W8" [ref=e750]
+                      - gridcell "X8" [ref=e751]
+                      - gridcell "Y8" [ref=e752]
+                      - gridcell "Z8" [ref=e753]
+                    - row [ref=e754]:
+                      - rowheader "9 9 行高" [ref=e755]:
+                        - generic [ref=e756]: "9"
+                        - separator "9 行高" [ref=e757]
+                      - gridcell "A9" [ref=e758]
+                      - gridcell "C9" [ref=e759]:
+                        - generic: VISIBLE_MERGE
+                      - gridcell "F9" [ref=e760]
+                      - gridcell "G9" [ref=e761]
+                      - gridcell "H9" [ref=e762]
+                      - gridcell "I9" [ref=e763]
+                      - gridcell "J9" [ref=e764]
+                      - gridcell "K9" [ref=e765]
+                      - gridcell "L9" [ref=e766]
+                      - gridcell "M9" [ref=e767]
+                      - gridcell "N9" [ref=e768]
+                      - gridcell "O9" [ref=e769]
+                      - gridcell "P9" [ref=e770]
+                      - gridcell "Q9" [ref=e771]
+                      - gridcell "R9" [ref=e772]
+                      - gridcell "S9" [ref=e773]
+                      - gridcell "T9" [ref=e774]
+                      - gridcell "U9" [ref=e775]
+                      - gridcell "V9" [ref=e776]
+                      - gridcell "W9" [ref=e777]
+                      - gridcell "X9" [ref=e778]
+                      - gridcell "Y9" [ref=e779]
+                      - gridcell "Z9" [ref=e780]
+                    - row [ref=e781]:
+                      - rowheader "10 10 行高" [ref=e782]:
+                        - generic [ref=e783]: "10"
+                        - separator "10 行高" [ref=e784]
+                      - gridcell "A10" [ref=e785]
+                      - gridcell "C10" [ref=e786]
+                      - gridcell "D10" [ref=e787]
+                      - gridcell "E10" [ref=e788]
+                      - gridcell "F10" [ref=e789]
+                      - gridcell "G10" [ref=e790]
+                      - gridcell "H10" [ref=e791]
+                      - gridcell "I10" [ref=e792]
+                      - gridcell "J10" [ref=e793]
+                      - gridcell "K10" [ref=e794]
+                      - gridcell "L10" [ref=e795]
+                      - gridcell "M10" [ref=e796]
+                      - gridcell "N10" [ref=e797]
+                      - gridcell "O10" [ref=e798]
+                      - gridcell "P10" [ref=e799]
+                      - gridcell "Q10" [ref=e800]
+                      - gridcell "R10" [ref=e801]
+                      - gridcell "S10" [ref=e802]
+                      - gridcell "T10" [ref=e803]
+                      - gridcell "U10" [ref=e804]
+                      - gridcell "V10" [ref=e805]
+                      - gridcell "W10" [ref=e806]
+                      - gridcell "X10" [ref=e807]
+                      - gridcell "Y10" [ref=e808]
+                      - gridcell "Z10" [ref=e809]
+                    - row [ref=e810]:
+                      - rowheader "11 11 行高" [ref=e811]:
+                        - generic [ref=e812]: "11"
+                        - separator "11 行高" [ref=e813]
+                      - gridcell "A11" [ref=e814]
+                      - gridcell "C11" [ref=e815]
+                      - gridcell "D11" [ref=e816]
+                      - gridcell "E11" [ref=e817]
+                      - gridcell "F11" [ref=e818]
+                      - gridcell "G11" [ref=e819]
+                      - gridcell "H11" [ref=e820]
+                      - gridcell "I11" [ref=e821]
+                      - gridcell "J11" [ref=e822]
+                      - gridcell "K11" [ref=e823]
+                      - gridcell "L11" [ref=e824]
+                      - gridcell "M11" [ref=e825]
+                      - gridcell "N11" [ref=e826]
+                      - gridcell "O11" [ref=e827]
+                      - gridcell "P11" [ref=e828]
+                      - gridcell "Q11" [ref=e829]
+                      - gridcell "R11" [ref=e830]
+                      - gridcell "S11" [ref=e831]
+                      - gridcell "T11" [ref=e832]
+                      - gridcell "U11" [ref=e833]
+                      - gridcell "V11" [ref=e834]
+                      - gridcell "W11" [ref=e835]
+                      - gridcell "X11" [ref=e836]
+                      - gridcell "Y11" [ref=e837]
+                      - gridcell "Z11" [ref=e838]
+                    - row [ref=e839]:
+                      - rowheader "12 12 行高" [ref=e840]:
+                        - generic [ref=e841]: "12"
+                        - separator "12 行高" [ref=e842]
+                      - gridcell "A12" [ref=e843]:
+                        - generic:
+                          - generic:
+                            - generic: Zoom
+                            - generic: keeps
+                            - generic: wrappe
+                            - generic: d text
+                            - generic: and
+                            - generic: the
+                            - generic: docum
+                            - generic: ent
+                            - generic: row
+                            - generic: height.
+                      - gridcell "C12" [ref=e844]
+                      - gridcell "D12" [ref=e845]
+                      - gridcell "E12" [ref=e846]
+                      - gridcell "F12" [ref=e847]
+                      - gridcell "G12" [ref=e848]
+                      - gridcell "H12" [ref=e849]
+                      - gridcell "I12" [ref=e850]
+                      - gridcell "J12" [ref=e851]
+                      - gridcell "K12" [ref=e852]
+                      - gridcell "L12" [ref=e853]
+                      - gridcell "M12" [ref=e854]
+                      - gridcell "N12" [ref=e855]
+                      - gridcell "O12" [ref=e856]
+                      - gridcell "P12" [ref=e857]
+                      - gridcell "Q12" [ref=e858]
+                      - gridcell "R12" [ref=e859]
+                      - gridcell "S12" [ref=e860]
+                      - gridcell "T12" [ref=e861]
+                      - gridcell "U12" [ref=e862]
+                      - gridcell "V12" [ref=e863]
+                      - gridcell "W12" [ref=e864]
+                      - gridcell "X12" [ref=e865]
+                      - gridcell "Y12" [ref=e866]
+                      - gridcell "Z12" [ref=e867]
+                    - row [ref=e868]:
+                      - rowheader "13 13 行高" [ref=e869]:
+                        - generic [ref=e870]: "13"
+                        - separator "13 行高" [ref=e871]
+                      - gridcell "A13" [ref=e872]
+                      - gridcell "C13" [ref=e873]:
+                        - generic: CENTER_HEADING
+                      - gridcell "D13" [ref=e874]
+                      - gridcell "E13" [ref=e875]
+                      - gridcell "F13" [ref=e876]
+                      - gridcell "G13" [ref=e877]
+                      - gridcell "H13" [ref=e878]
+                      - gridcell "I13" [ref=e879]
+                      - gridcell "J13" [ref=e880]
+                      - gridcell "K13" [ref=e881]
+                      - gridcell "L13" [ref=e882]
+                      - gridcell "M13" [ref=e883]
+                      - gridcell "N13" [ref=e884]
+                      - gridcell "O13" [ref=e885]
+                      - gridcell "P13" [ref=e886]
+                      - gridcell "Q13" [ref=e887]
+                      - gridcell "R13" [ref=e888]
+                      - gridcell "S13" [ref=e889]
+                      - gridcell "T13" [ref=e890]
+                      - gridcell "U13" [ref=e891]
+                      - gridcell "V13" [ref=e892]
+                      - gridcell "W13" [ref=e893]
+                      - gridcell "X13" [ref=e894]
+                      - gridcell "Y13" [ref=e895]
+                      - gridcell "Z13" [ref=e896]
+                    - row [ref=e897]:
+                      - rowheader "14 14 行高" [ref=e898]:
+                        - generic [ref=e899]: "14"
+                        - separator "14 行高" [ref=e900]
+                      - gridcell "A14" [ref=e901]
+                      - gridcell "C14" [ref=e902]
+                      - gridcell "D14" [ref=e903]
+                      - gridcell "E14" [ref=e904]
+                      - gridcell "F14" [ref=e905]:
+                        - generic: "20"
+                      - gridcell "G14" [ref=e906]
+                      - gridcell "H14" [ref=e907]
+                      - gridcell "I14" [ref=e908]
+                      - gridcell "J14" [ref=e909]
+                      - gridcell "K14" [ref=e910]
+                      - gridcell "L14" [ref=e911]
+                      - gridcell "M14" [ref=e912]
+                      - gridcell "N14" [ref=e913]
+                      - gridcell "O14" [ref=e914]
+                      - gridcell "P14" [ref=e915]
+                      - gridcell "Q14" [ref=e916]
+                      - gridcell "R14" [ref=e917]
+                      - gridcell "S14" [ref=e918]
+                      - gridcell "T14" [ref=e919]
+                      - gridcell "U14" [ref=e920]
+                      - gridcell "V14" [ref=e921]
+                      - gridcell "W14" [ref=e922]
+                      - gridcell "X14" [ref=e923]
+                      - gridcell "Y14" [ref=e924]
+                      - gridcell "Z14" [ref=e925]
+                    - row [ref=e926]:
+                      - rowheader "15 15 行高" [ref=e927]:
+                        - generic [ref=e928]: "15"
+                        - separator "15 行高" [ref=e929]
+                      - gridcell "A15" [ref=e930]
+                      - gridcell "C15" [ref=e931]
+                      - gridcell "D15" [ref=e932]
+                      - gridcell "E15" [ref=e933]
+                      - gridcell "F15" [ref=e934]
+                      - gridcell "G15" [ref=e935]
+                      - gridcell "H15" [ref=e936]
+                      - gridcell "I15" [ref=e937]
+                      - gridcell "J15" [ref=e938]
+                      - gridcell "K15" [ref=e939]
+                      - gridcell "L15" [ref=e940]
+                      - gridcell "M15" [ref=e941]
+                      - gridcell "N15" [ref=e942]
+                      - gridcell "O15" [ref=e943]
+                      - gridcell "P15" [ref=e944]
+                      - gridcell "Q15" [ref=e945]
+                      - gridcell "R15" [ref=e946]
+                      - gridcell "S15" [ref=e947]
+                      - gridcell "T15" [ref=e948]
+                      - gridcell "U15" [ref=e949]
+                      - gridcell "V15" [ref=e950]
+                      - gridcell "W15" [ref=e951]
+                      - gridcell "X15" [ref=e952]
+                      - gridcell "Y15" [ref=e953]
+                      - gridcell "Z15" [ref=e954]
+                    - row [ref=e955]:
+                      - rowheader "16 16 行高" [ref=e956]:
+                        - generic [ref=e957]: "16"
+                        - separator "16 行高" [ref=e958]
+                      - gridcell "A16" [ref=e959]
+                      - gridcell "C16" [ref=e960]
+                      - gridcell "D16" [ref=e961]
+                      - gridcell "E16" [ref=e962]
+                      - gridcell "F16" [ref=e963]
+                      - gridcell "G16" [ref=e964]
+                      - gridcell "H16" [ref=e965]
+                      - gridcell "I16" [ref=e966]
+                      - gridcell "J16" [ref=e967]
+                      - gridcell "K16" [ref=e968]
+                      - gridcell "L16" [ref=e969]
+                      - gridcell "M16" [ref=e970]
+                      - gridcell "N16" [ref=e971]
+                      - gridcell "O16" [ref=e972]
+                      - gridcell "P16" [ref=e973]
+                      - gridcell "Q16" [ref=e974]
+                      - gridcell "R16" [ref=e975]
+                      - gridcell "S16" [ref=e976]
+                      - gridcell "T16" [ref=e977]
+                      - gridcell "U16" [ref=e978]
+                      - gridcell "V16" [ref=e979]
+                      - gridcell "W16" [ref=e980]
+                      - gridcell "X16" [ref=e981]
+                      - gridcell "Y16" [ref=e982]
+                      - gridcell "Z16" [ref=e983]
+                    - row [ref=e984]:
+                      - rowheader "17 17 行高" [ref=e985]:
+                        - generic [ref=e986]: "17"
+                        - separator "17 行高" [ref=e987]
+                      - gridcell "A17" [ref=e988]
+                      - gridcell "C17" [ref=e989]
+                      - gridcell "D17" [ref=e990]
+                      - gridcell "E17" [ref=e991]
+                      - gridcell "F17" [ref=e992]
+                      - gridcell "G17" [ref=e993]
+                      - gridcell "H17" [ref=e994]
+                      - gridcell "I17" [ref=e995]
+                      - gridcell "J17" [ref=e996]
+                      - gridcell "K17" [ref=e997]
+                      - gridcell "L17" [ref=e998]
+                      - gridcell "M17" [ref=e999]
+                      - gridcell "N17" [ref=e1000]
+                      - gridcell "O17" [ref=e1001]
+                      - gridcell "P17" [ref=e1002]
+                      - gridcell "Q17" [ref=e1003]
+                      - gridcell "R17" [ref=e1004]
+                      - gridcell "S17" [ref=e1005]
+                      - gridcell "T17" [ref=e1006]
+                      - gridcell "U17" [ref=e1007]
+                      - gridcell "V17" [ref=e1008]
+                      - gridcell "W17" [ref=e1009]
+                      - gridcell "X17" [ref=e1010]
+                      - gridcell "Y17" [ref=e1011]
+                      - gridcell "Z17" [ref=e1012]
+                    - row [ref=e1013]:
+                      - rowheader "18 18 行高" [ref=e1014]:
+                        - generic [ref=e1015]: "18"
+                        - separator "18 行高" [ref=e1016]
+                      - gridcell "A18" [ref=e1017]
+                      - gridcell "C18" [ref=e1018]
+                      - gridcell "D18" [ref=e1019]
+                      - gridcell "E18" [ref=e1020]
+                      - gridcell "F18" [ref=e1021]
+                      - gridcell "G18" [ref=e1022]
+                      - gridcell "H18" [ref=e1023]
+                      - gridcell "I18" [ref=e1024]
+                      - gridcell "J18" [ref=e1025]
+                      - gridcell "K18" [ref=e1026]
+                      - gridcell "L18" [ref=e1027]
+                      - gridcell "M18" [ref=e1028]
+                      - gridcell "N18" [ref=e1029]
+                      - gridcell "O18" [ref=e1030]
+                      - gridcell "P18" [ref=e1031]
+                      - gridcell "Q18" [ref=e1032]
+                      - gridcell "R18" [ref=e1033]
+                      - gridcell "S18" [ref=e1034]
+                      - gridcell "T18" [ref=e1035]
+                      - gridcell "U18" [ref=e1036]
+                      - gridcell "V18" [ref=e1037]
+                      - gridcell "W18" [ref=e1038]
+                      - gridcell "X18" [ref=e1039]
+                      - gridcell "Y18" [ref=e1040]
+                      - gridcell "Z18" [ref=e1041]
+                    - row [ref=e1042]:
+                      - rowheader "19 19 行高" [ref=e1043]:
+                        - generic [ref=e1044]: "19"
+                        - separator "19 行高" [ref=e1045]
+                      - gridcell "A19" [ref=e1046]
+                      - gridcell "C19" [ref=e1047]
+                      - gridcell "D19" [ref=e1048]
+                      - gridcell "E19" [ref=e1049]
+                      - gridcell "F19" [ref=e1050]
+                      - gridcell "G19" [ref=e1051]
+                      - gridcell "H19" [ref=e1052]
+                      - gridcell "I19" [ref=e1053]
+                      - gridcell "J19" [ref=e1054]
+                      - gridcell "K19" [ref=e1055]
+                      - gridcell "L19" [ref=e1056]
+                      - gridcell "M19" [ref=e1057]
+                      - gridcell "N19" [ref=e1058]
+                      - gridcell "O19" [ref=e1059]
+                      - gridcell "P19" [ref=e1060]
+                      - gridcell "Q19" [ref=e1061]
+                      - gridcell "R19" [ref=e1062]
+                      - gridcell "S19" [ref=e1063]
+                      - gridcell "T19" [ref=e1064]
+                      - gridcell "U19" [ref=e1065]
+                      - gridcell "V19" [ref=e1066]
+                      - gridcell "W19" [ref=e1067]
+                      - gridcell "X19" [ref=e1068]
+                      - gridcell "Y19" [ref=e1069]
+                      - gridcell "Z19" [ref=e1070]
+                    - row [ref=e1071]:
+                      - rowheader "20 20 行高" [ref=e1072]:
+                        - generic [ref=e1073]: "20"
+                        - separator "20 行高" [ref=e1074]
+                      - gridcell "A20" [ref=e1075]
+                      - gridcell "C20" [ref=e1076]
+                      - gridcell "D20" [ref=e1077]
+                      - gridcell "E20" [ref=e1078]
+                      - gridcell "F20" [ref=e1079]
+                      - gridcell "G20" [ref=e1080]
+                      - gridcell "H20" [ref=e1081]
+                      - gridcell "I20" [ref=e1082]
+                      - gridcell "J20" [ref=e1083]
+                      - gridcell "K20" [ref=e1084]
+                      - gridcell "L20" [ref=e1085]
+                      - gridcell "M20" [ref=e1086]
+                      - gridcell "N20" [ref=e1087]
+                      - gridcell "O20" [ref=e1088]
+                      - gridcell "P20" [ref=e1089]
+                      - gridcell "Q20" [ref=e1090]
+                      - gridcell "R20" [ref=e1091]
+                      - gridcell "S20" [ref=e1092]
+                      - gridcell "T20" [ref=e1093]
+                      - gridcell "U20" [ref=e1094]
+                      - gridcell "V20" [ref=e1095]
+                      - gridcell "W20" [ref=e1096]
+                      - gridcell "X20" [ref=e1097]
+                      - gridcell "Y20" [ref=e1098]
+                      - gridcell "Z20" [ref=e1099]
+                    - row [ref=e1100]:
+                      - rowheader "21 21 行高" [ref=e1101]:
+                        - generic [ref=e1102]: "21"
+                        - separator "21 行高" [ref=e1103]
+                      - gridcell "A21" [ref=e1104]
+                      - gridcell "C21" [ref=e1105]
+                      - gridcell "D21" [ref=e1106]
+                      - gridcell "E21" [ref=e1107]
+                      - gridcell "F21" [ref=e1108]
+                      - gridcell "G21" [ref=e1109]
+                      - gridcell "H21" [ref=e1110]
+                      - gridcell "I21" [ref=e1111]
+                      - gridcell "J21" [ref=e1112]
+                      - gridcell "K21" [ref=e1113]
+                      - gridcell "L21" [ref=e1114]
+                      - gridcell "M21" [ref=e1115]
+                      - gridcell "N21" [ref=e1116]
+                      - gridcell "O21" [ref=e1117]
+                      - gridcell "P21" [ref=e1118]
+                      - gridcell "Q21" [ref=e1119]
+                      - gridcell "R21" [ref=e1120]
+                      - gridcell "S21" [ref=e1121]
+                      - gridcell "T21" [ref=e1122]
+                      - gridcell "U21" [ref=e1123]
+                      - gridcell "V21" [ref=e1124]
+                      - gridcell "W21" [ref=e1125]
+                      - gridcell "X21" [ref=e1126]
+                      - gridcell "Y21" [ref=e1127]
+                      - gridcell "Z21" [ref=e1128]
+                    - row [ref=e1129]:
+                      - rowheader "22 22 行高" [ref=e1130]:
+                        - generic [ref=e1131]: "22"
+                        - separator "22 行高" [ref=e1132]
+                      - gridcell "A22" [ref=e1133]
+                      - gridcell "C22" [ref=e1134]
+                      - gridcell "D22" [ref=e1135]
+                      - gridcell "E22" [ref=e1136]
+                      - gridcell "F22" [ref=e1137]
+                      - gridcell "G22" [ref=e1138]
+                      - gridcell "H22" [ref=e1139]
+                      - gridcell "I22" [ref=e1140]
+                      - gridcell "J22" [ref=e1141]
+                      - gridcell "K22" [ref=e1142]
+                      - gridcell "L22" [ref=e1143]
+                      - gridcell "M22" [ref=e1144]
+                      - gridcell "N22" [ref=e1145]
+                      - gridcell "O22" [ref=e1146]
+                      - gridcell "P22" [ref=e1147]
+                      - gridcell "Q22" [ref=e1148]
+                      - gridcell "R22" [ref=e1149]
+                      - gridcell "S22" [ref=e1150]
+                      - gridcell "T22" [ref=e1151]
+                      - gridcell "U22" [ref=e1152]
+                      - gridcell "V22" [ref=e1153]
+                      - gridcell "W22" [ref=e1154]
+                      - gridcell "X22" [ref=e1155]
+                      - gridcell "Y22" [ref=e1156]
+                      - gridcell "Z22" [ref=e1157]
+                    - row [ref=e1158]:
+                      - rowheader "23 23 行高" [ref=e1159]:
+                        - generic [ref=e1160]: "23"
+                        - separator "23 行高" [ref=e1161]
+                      - gridcell "A23" [ref=e1162]
+                      - gridcell "C23" [ref=e1163]
+                      - gridcell "D23" [ref=e1164]
+                      - gridcell "E23" [ref=e1165]
+                      - gridcell "F23" [ref=e1166]
+                      - gridcell "G23" [ref=e1167]
+                      - gridcell "H23" [ref=e1168]
+                      - gridcell "I23" [ref=e1169]
+                      - gridcell "J23" [ref=e1170]
+                      - gridcell "K23" [ref=e1171]
+                      - gridcell "L23" [ref=e1172]
+                      - gridcell "M23" [ref=e1173]
+                      - gridcell "N23" [ref=e1174]
+                      - gridcell "O23" [ref=e1175]
+                      - gridcell "P23" [ref=e1176]
+                      - gridcell "Q23" [ref=e1177]
+                      - gridcell "R23" [ref=e1178]
+                      - gridcell "S23" [ref=e1179]
+                      - gridcell "T23" [ref=e1180]
+                      - gridcell "U23" [ref=e1181]
+                      - gridcell "V23" [ref=e1182]
+                      - gridcell "W23" [ref=e1183]
+                      - gridcell "X23" [ref=e1184]
+                      - gridcell "Y23" [ref=e1185]
+                      - gridcell "Z23" [ref=e1186]
+                    - row [ref=e1187]:
+                      - rowheader "24 24 行高" [ref=e1188]:
+                        - generic [ref=e1189]: "24"
+                        - separator "24 行高" [ref=e1190]
+                      - gridcell "A24" [ref=e1191]
+                      - gridcell "C24" [ref=e1192]
+                      - gridcell "D24" [ref=e1193]
+                      - gridcell "E24" [ref=e1194]
+                      - gridcell "F24" [ref=e1195]
+                      - gridcell "G24" [ref=e1196]
+                      - gridcell "H24" [ref=e1197]
+                      - gridcell "I24" [ref=e1198]
+                      - gridcell "J24" [ref=e1199]
+                      - gridcell "K24" [ref=e1200]
+                      - gridcell "L24" [ref=e1201]
+                      - gridcell "M24" [ref=e1202]
+                      - gridcell "N24" [ref=e1203]
+                      - gridcell "O24" [ref=e1204]
+                      - gridcell "P24" [ref=e1205]
+                      - gridcell "Q24" [ref=e1206]
+                      - gridcell "R24" [ref=e1207]
+                      - gridcell "S24" [ref=e1208]
+                      - gridcell "T24" [ref=e1209]
+                      - gridcell "U24" [ref=e1210]
+                      - gridcell "V24" [ref=e1211]
+                      - gridcell "W24" [ref=e1212]
+                      - gridcell "X24" [ref=e1213]
+                      - gridcell "Y24" [ref=e1214]
+                      - gridcell "Z24" [ref=e1215]
+                    - row [ref=e1216]:
+                      - rowheader "25 25 行高" [ref=e1217]:
+                        - generic [ref=e1218]: "25"
+                        - separator "25 行高" [ref=e1219]
+                      - gridcell "A25" [ref=e1220]
+                      - gridcell "C25" [ref=e1221]
+                      - gridcell "D25" [ref=e1222]
+                      - gridcell "E25" [ref=e1223]
+                      - gridcell "F25" [ref=e1224]
+                      - gridcell "G25" [ref=e1225]
+                      - gridcell "H25" [ref=e1226]
+                      - gridcell "I25" [ref=e1227]
+                      - gridcell "J25" [ref=e1228]
+                      - gridcell "K25" [ref=e1229]
+                      - gridcell "L25" [ref=e1230]
+                      - gridcell "M25" [ref=e1231]
+                      - gridcell "N25" [ref=e1232]
+                      - gridcell "O25" [ref=e1233]
+                      - gridcell "P25" [ref=e1234]
+                      - gridcell "Q25" [ref=e1235]
+                      - gridcell "R25" [ref=e1236]
+                      - gridcell "S25" [ref=e1237]
+                      - gridcell "T25" [ref=e1238]
+                      - gridcell "U25" [ref=e1239]
+                      - gridcell "V25" [ref=e1240]
+                      - gridcell "W25" [ref=e1241]
+                      - gridcell "X25" [ref=e1242]
+                      - gridcell "Y25" [ref=e1243]
+                      - gridcell "Z25" [ref=e1244]
+                    - row [ref=e1245]:
+                      - rowheader "26 26 行高" [ref=e1246]:
+                        - generic [ref=e1247]: "26"
+                        - separator "26 行高" [ref=e1248]
+                      - gridcell "A26" [ref=e1249]
+                      - gridcell "C26" [ref=e1250]
+                      - gridcell "D26" [ref=e1251]
+                      - gridcell "E26" [ref=e1252]
+                      - gridcell "F26" [ref=e1253]
+                      - gridcell "G26" [ref=e1254]
+                      - gridcell "H26" [ref=e1255]
+                      - gridcell "I26" [ref=e1256]
+                      - gridcell "J26" [ref=e1257]
+                      - gridcell "K26" [ref=e1258]
+                      - gridcell "L26" [ref=e1259]
+                      - gridcell "M26" [ref=e1260]
+                      - gridcell "N26" [ref=e1261]
+                      - gridcell "O26" [ref=e1262]
+                      - gridcell "P26" [ref=e1263]
+                      - gridcell "Q26" [ref=e1264]
+                      - gridcell "R26" [ref=e1265]
+                      - gridcell "S26" [ref=e1266]
+                      - gridcell "T26" [ref=e1267]
+                      - gridcell "U26" [ref=e1268]
+                      - gridcell "V26" [ref=e1269]
+                      - gridcell "W26" [ref=e1270]
+                      - gridcell "X26" [ref=e1271]
+                      - gridcell "Y26" [ref=e1272]
+                      - gridcell "Z26" [ref=e1273]
+                    - row [ref=e1274]:
+                      - rowheader "27 27 行高" [ref=e1275]:
+                        - generic [ref=e1276]: "27"
+                        - separator "27 行高" [ref=e1277]
+                      - gridcell "A27" [ref=e1278]
+                      - gridcell "C27" [ref=e1279]
+                      - gridcell "D27" [ref=e1280]
+                      - gridcell "E27" [ref=e1281]
+                      - gridcell "F27" [ref=e1282]
+                      - gridcell "G27" [ref=e1283]
+                      - gridcell "H27" [ref=e1284]
+                      - gridcell "I27" [ref=e1285]
+                      - gridcell "J27" [ref=e1286]
+                      - gridcell "K27" [ref=e1287]
+                      - gridcell "L27" [ref=e1288]
+                      - gridcell "M27" [ref=e1289]
+                      - gridcell "N27" [ref=e1290]
+                      - gridcell "O27" [ref=e1291]
+                      - gridcell "P27" [ref=e1292]
+                      - gridcell "Q27" [ref=e1293]
+                      - gridcell "R27" [ref=e1294]
+                      - gridcell "S27" [ref=e1295]
+                      - gridcell "T27" [ref=e1296]
+                      - gridcell "U27" [ref=e1297]
+                      - gridcell "V27" [ref=e1298]
+                      - gridcell "W27" [ref=e1299]
+                      - gridcell "X27" [ref=e1300]
+                      - gridcell "Y27" [ref=e1301]
+                      - gridcell "Z27" [ref=e1302]
+                    - row [ref=e1303]:
+                      - rowheader "28 28 行高" [ref=e1304]:
+                        - generic [ref=e1305]: "28"
+                        - separator "28 行高" [ref=e1306]
+                      - gridcell "A28" [ref=e1307]
+                      - gridcell "C28" [ref=e1308]
+                      - gridcell "D28" [ref=e1309]
+                      - gridcell "E28" [ref=e1310]
+                      - gridcell "F28" [ref=e1311]
+                      - gridcell "G28" [ref=e1312]
+                      - gridcell "H28" [ref=e1313]
+                      - gridcell "I28" [ref=e1314]
+                      - gridcell "J28" [ref=e1315]
+                      - gridcell "K28" [ref=e1316]
+                      - gridcell "L28" [ref=e1317]
+                      - gridcell "M28" [ref=e1318]
+                      - gridcell "N28" [ref=e1319]
+                      - gridcell "O28" [ref=e1320]
+                      - gridcell "P28" [ref=e1321]
+                      - gridcell "Q28" [ref=e1322]
+                      - gridcell "R28" [ref=e1323]
+                      - gridcell "S28" [ref=e1324]
+                      - gridcell "T28" [ref=e1325]
+                      - gridcell "U28" [ref=e1326]
+                      - gridcell "V28" [ref=e1327]
+                      - gridcell "W28" [ref=e1328]
+                      - gridcell "X28" [ref=e1329]
+                      - gridcell "Y28" [ref=e1330]
+                      - gridcell "Z28" [ref=e1331]
+                    - row [ref=e1332]:
+                      - rowheader "29 29 行高" [ref=e1333]:
+                        - generic [ref=e1334]: "29"
+                        - separator "29 行高" [ref=e1335]
+                      - gridcell "A29" [ref=e1336]
+                      - gridcell "C29" [ref=e1337]
+                      - gridcell "D29" [ref=e1338]
+                      - gridcell "E29" [ref=e1339]
+                      - gridcell "F29" [ref=e1340]
+                      - gridcell "G29" [ref=e1341]
+                      - gridcell "H29" [ref=e1342]
+                      - gridcell "I29" [ref=e1343]
+                      - gridcell "J29" [ref=e1344]
+                      - gridcell "K29" [ref=e1345]
+                      - gridcell "L29" [ref=e1346]
+                      - gridcell "M29" [ref=e1347]
+                      - gridcell "N29" [ref=e1348]
+                      - gridcell "O29" [ref=e1349]
+                      - gridcell "P29" [ref=e1350]
+                      - gridcell "Q29" [ref=e1351]
+                      - gridcell "R29" [ref=e1352]
+                      - gridcell "S29" [ref=e1353]
+                      - gridcell "T29" [ref=e1354]
+                      - gridcell "U29" [ref=e1355]
+                      - gridcell "V29" [ref=e1356]
+                      - gridcell "W29" [ref=e1357]
+                      - gridcell "X29" [ref=e1358]
+                      - gridcell "Y29" [ref=e1359]
+                      - gridcell "Z29" [ref=e1360]
+                    - row [ref=e1361]:
+                      - rowheader "30 30 行高" [ref=e1362]:
+                        - generic [ref=e1363]: "30"
+                        - separator "30 行高" [ref=e1364]
+                      - gridcell "A30" [ref=e1365]
+                      - gridcell "C30" [ref=e1366]
+                      - gridcell "D30" [ref=e1367]
+                      - gridcell "E30" [ref=e1368]
+                      - gridcell "F30" [ref=e1369]
+                      - gridcell "G30" [ref=e1370]
+                      - gridcell "H30" [ref=e1371]
+                      - gridcell "I30" [ref=e1372]
+                      - gridcell "J30" [ref=e1373]
+                      - gridcell "K30" [ref=e1374]
+                      - gridcell "L30" [ref=e1375]
+                      - gridcell "M30" [ref=e1376]
+                      - gridcell "N30" [ref=e1377]
+                      - gridcell "O30" [ref=e1378]
+                      - gridcell "P30" [ref=e1379]
+                      - gridcell "Q30" [ref=e1380]
+                      - gridcell "R30" [ref=e1381]
+                      - gridcell "S30" [ref=e1382]
+                      - gridcell "T30" [ref=e1383]
+                      - gridcell "U30" [ref=e1384]
+                      - gridcell "V30" [ref=e1385]
+                      - gridcell "W30" [ref=e1386]
+                      - gridcell "X30" [ref=e1387]
+                      - gridcell "Y30" [ref=e1388]
+                      - gridcell "Z30" [ref=e1389]
+                    - row [ref=e1390]:
+                      - rowheader "31 31 行高" [ref=e1391]:
+                        - generic [ref=e1392]: "31"
+                        - separator "31 行高" [ref=e1393]
+                      - gridcell "A31" [ref=e1394]
+                      - gridcell "C31" [ref=e1395]
+                      - gridcell "D31" [ref=e1396]
+                      - gridcell "E31" [ref=e1397]
+                      - gridcell "F31" [ref=e1398]
+                      - gridcell "G31" [ref=e1399]
+                      - gridcell "H31" [ref=e1400]
+                      - gridcell "I31" [ref=e1401]
+                      - gridcell "J31" [ref=e1402]
+                      - gridcell "K31" [ref=e1403]
+                      - gridcell "L31" [ref=e1404]
+                      - gridcell "M31" [ref=e1405]
+                      - gridcell "N31" [ref=e1406]
+                      - gridcell "O31" [ref=e1407]
+                      - gridcell "P31" [ref=e1408]
+                      - gridcell "Q31" [ref=e1409]
+                      - gridcell "R31" [ref=e1410]
+                      - gridcell "S31" [ref=e1411]
+                      - gridcell "T31" [ref=e1412]
+                      - gridcell "U31" [ref=e1413]
+                      - gridcell "V31" [ref=e1414]
+                      - gridcell "W31" [ref=e1415]
+                      - gridcell "X31" [ref=e1416]
+                      - gridcell "Y31" [ref=e1417]
+                      - gridcell "Z31" [ref=e1418]
+                    - row [ref=e1419]:
+                      - rowheader "32 32 行高" [ref=e1420]:
+                        - generic [ref=e1421]: "32"
+                        - separator "32 行高" [ref=e1422]
+                      - gridcell "A32" [ref=e1423]
+                      - gridcell "C32" [ref=e1424]
+                      - gridcell "D32" [ref=e1425]
+                      - gridcell "E32" [ref=e1426]
+                      - gridcell "F32" [ref=e1427]
+                      - gridcell "G32" [ref=e1428]
+                      - gridcell "H32" [ref=e1429]
+                      - gridcell "I32" [ref=e1430]
+                      - gridcell "J32" [ref=e1431]
+                      - gridcell "K32" [ref=e1432]
+                      - gridcell "L32" [ref=e1433]
+                      - gridcell "M32" [ref=e1434]
+                      - gridcell "N32" [ref=e1435]
+                      - gridcell "O32" [ref=e1436]
+                      - gridcell "P32" [ref=e1437]
+                      - gridcell "Q32" [ref=e1438]
+                      - gridcell "R32" [ref=e1439]
+                      - gridcell "S32" [ref=e1440]
+                      - gridcell "T32" [ref=e1441]
+                      - gridcell "U32" [ref=e1442]
+                      - gridcell "V32" [ref=e1443]
+                      - gridcell "W32" [ref=e1444]
+                      - gridcell "X32" [ref=e1445]
+                      - gridcell "Y32" [ref=e1446]
+                      - gridcell "Z32" [ref=e1447]
+                    - row [ref=e1448]:
+                      - rowheader "33 33 行高" [ref=e1449]:
+                        - generic [ref=e1450]: "33"
+                        - separator "33 行高" [ref=e1451]
+                      - gridcell "A33" [ref=e1452]
+                      - gridcell "C33" [ref=e1453]
+                      - gridcell "D33" [ref=e1454]
+                      - gridcell "E33" [ref=e1455]
+                      - gridcell "F33" [ref=e1456]
+                      - gridcell "G33" [ref=e1457]
+                      - gridcell "H33" [ref=e1458]
+                      - gridcell "I33" [ref=e1459]
+                      - gridcell "J33" [ref=e1460]
+                      - gridcell "K33" [ref=e1461]
+                      - gridcell "L33" [ref=e1462]
+                      - gridcell "M33" [ref=e1463]
+                      - gridcell "N33" [ref=e1464]
+                      - gridcell "O33" [ref=e1465]
+                      - gridcell "P33" [ref=e1466]
+                      - gridcell "Q33" [ref=e1467]
+                      - gridcell "R33" [ref=e1468]
+                      - gridcell "S33" [ref=e1469]
+                      - gridcell "T33" [ref=e1470]
+                      - gridcell "U33" [ref=e1471]
+                      - gridcell "V33" [ref=e1472]
+                      - gridcell "W33" [ref=e1473]
+                      - gridcell "X33" [ref=e1474]
+                      - gridcell "Y33" [ref=e1475]
+                      - gridcell "Z33" [ref=e1476]
+                    - row [ref=e1477]:
+                      - rowheader "34 34 行高" [ref=e1478]:
+                        - generic [ref=e1479]: "34"
+                        - separator "34 行高" [ref=e1480]
+                      - gridcell "A34" [ref=e1481]
+                      - gridcell "C34" [ref=e1482]
+                      - gridcell "D34" [ref=e1483]
+                      - gridcell "E34" [ref=e1484]
+                      - gridcell "F34" [ref=e1485]
+                      - gridcell "G34" [ref=e1486]
+                      - gridcell "H34" [ref=e1487]
+                      - gridcell "I34" [ref=e1488]
+                      - gridcell "J34" [ref=e1489]
+                      - gridcell "K34" [ref=e1490]
+                      - gridcell "L34" [ref=e1491]
+                      - gridcell "M34" [ref=e1492]
+                      - gridcell "N34" [ref=e1493]
+                      - gridcell "O34" [ref=e1494]
+                      - gridcell "P34" [ref=e1495]
+                      - gridcell "Q34" [ref=e1496]
+                      - gridcell "R34" [ref=e1497]
+                      - gridcell "S34" [ref=e1498]
+                      - gridcell "T34" [ref=e1499]
+                      - gridcell "U34" [ref=e1500]
+                      - gridcell "V34" [ref=e1501]
+                      - gridcell "W34" [ref=e1502]
+                      - gridcell "X34" [ref=e1503]
+                      - gridcell "Y34" [ref=e1504]
+                      - gridcell "Z34" [ref=e1505]
+                    - row [ref=e1506]:
+                      - rowheader "35 35 行高" [ref=e1507]:
+                        - generic [ref=e1508]: "35"
+                        - separator "35 行高" [ref=e1509]
+                      - gridcell "A35" [ref=e1510]
+                      - gridcell "C35" [ref=e1511]
+                      - gridcell "D35" [ref=e1512]
+                      - gridcell "E35" [ref=e1513]
+                      - gridcell "F35" [ref=e1514]
+                      - gridcell "G35" [ref=e1515]
+                      - gridcell "H35" [ref=e1516]
+                      - gridcell "I35" [ref=e1517]
+                      - gridcell "J35" [ref=e1518]
+                      - gridcell "K35" [ref=e1519]
+                      - gridcell "L35" [ref=e1520]
+                      - gridcell "M35" [ref=e1521]
+                      - gridcell "N35" [ref=e1522]
+                      - gridcell "O35" [ref=e1523]
+                      - gridcell "P35" [ref=e1524]
+                      - gridcell "Q35" [ref=e1525]
+                      - gridcell "R35" [ref=e1526]
+                      - gridcell "S35" [ref=e1527]
+                      - gridcell "T35" [ref=e1528]
+                      - gridcell "U35" [ref=e1529]
+                      - gridcell "V35" [ref=e1530]
+                      - gridcell "W35" [ref=e1531]
+                      - gridcell "X35" [ref=e1532]
+                      - gridcell "Y35" [ref=e1533]
+                      - gridcell "Z35" [ref=e1534]
+                    - row [ref=e1535]:
+                      - rowheader "36 36 行高" [ref=e1536]:
+                        - generic [ref=e1537]: "36"
+                        - separator "36 行高" [ref=e1538]
+                      - gridcell "A36" [ref=e1539]
+                      - gridcell "C36" [ref=e1540]
+                      - gridcell "D36" [ref=e1541]
+                      - gridcell "E36" [ref=e1542]
+                      - gridcell "F36" [ref=e1543]
+                      - gridcell "G36" [ref=e1544]
+                      - gridcell "H36" [ref=e1545]
+                      - gridcell "I36" [ref=e1546]
+                      - gridcell "J36" [ref=e1547]
+                      - gridcell "K36" [ref=e1548]
+                      - gridcell "L36" [ref=e1549]
+                      - gridcell "M36" [ref=e1550]
+                      - gridcell "N36" [ref=e1551]
+                      - gridcell "O36" [ref=e1552]
+                      - gridcell "P36" [ref=e1553]
+                      - gridcell "Q36" [ref=e1554]
+                      - gridcell "R36" [ref=e1555]
+                      - gridcell "S36" [ref=e1556]
+                      - gridcell "T36" [ref=e1557]
+                      - gridcell "U36" [ref=e1558]
+                      - gridcell "V36" [ref=e1559]
+                      - gridcell "W36" [ref=e1560]
+                      - gridcell "X36" [ref=e1561]
+                      - gridcell "Y36" [ref=e1562]
+                      - gridcell "Z36" [ref=e1563]
+                    - row [ref=e1564]:
+                      - rowheader "37 37 行高" [ref=e1565]:
+                        - generic [ref=e1566]: "37"
+                        - separator "37 行高" [ref=e1567]
+                      - gridcell "A37" [ref=e1568]
+                      - gridcell "C37" [ref=e1569]
+                      - gridcell "D37" [ref=e1570]
+                      - gridcell "E37" [ref=e1571]
+                      - gridcell "F37" [ref=e1572]
+                      - gridcell "G37" [ref=e1573]
+                      - gridcell "H37" [ref=e1574]
+                      - gridcell "I37" [ref=e1575]
+                      - gridcell "J37" [ref=e1576]
+                      - gridcell "K37" [ref=e1577]
+                      - gridcell "L37" [ref=e1578]
+                      - gridcell "M37" [ref=e1579]
+                      - gridcell "N37" [ref=e1580]
+                      - gridcell "O37" [ref=e1581]
+                      - gridcell "P37" [ref=e1582]
+                      - gridcell "Q37" [ref=e1583]
+                      - gridcell "R37" [ref=e1584]
+                      - gridcell "S37" [ref=e1585]
+                      - gridcell "T37" [ref=e1586]
+                      - gridcell "U37" [ref=e1587]
+                      - gridcell "V37" [ref=e1588]
+                      - gridcell "W37" [ref=e1589]
+                      - gridcell "X37" [ref=e1590]
+                      - gridcell "Y37" [ref=e1591]
+                      - gridcell "Z37" [ref=e1592]
+                    - row [ref=e1593]:
+                      - rowheader "38 38 行高" [ref=e1594]:
+                        - generic [ref=e1595]: "38"
+                        - separator "38 行高" [ref=e1596]
+                      - gridcell "A38" [ref=e1597]
+                      - gridcell "C38" [ref=e1598]
+                      - gridcell "D38" [ref=e1599]
+                      - gridcell "E38" [ref=e1600]
+                      - gridcell "F38" [ref=e1601]
+                      - gridcell "G38" [ref=e1602]
+                      - gridcell "H38" [ref=e1603]
+                      - gridcell "I38" [ref=e1604]
+                      - gridcell "J38" [ref=e1605]
+                      - gridcell "K38" [ref=e1606]
+                      - gridcell "L38" [ref=e1607]
+                      - gridcell "M38" [ref=e1608]
+                      - gridcell "N38" [ref=e1609]
+                      - gridcell "O38" [ref=e1610]
+                      - gridcell "P38" [ref=e1611]
+                      - gridcell "Q38" [ref=e1612]
+                      - gridcell "R38" [ref=e1613]
+                      - gridcell "S38" [ref=e1614]
+                      - gridcell "T38" [ref=e1615]
+                      - gridcell "U38" [ref=e1616]
+                      - gridcell "V38" [ref=e1617]
+                      - gridcell "W38" [ref=e1618]
+                      - gridcell "X38" [ref=e1619]
+                      - gridcell "Y38" [ref=e1620]
+                      - gridcell "Z38" [ref=e1621]
+                    - row [ref=e1622]:
+                      - rowheader "39 39 行高" [ref=e1623]:
+                        - generic [ref=e1624]: "39"
+                        - separator "39 行高" [ref=e1625]
+                      - gridcell "A39" [ref=e1626]
+                      - gridcell "C39" [ref=e1627]
+                      - gridcell "D39" [ref=e1628]
+                      - gridcell "E39" [ref=e1629]
+                      - gridcell "F39" [ref=e1630]
+                      - gridcell "G39" [ref=e1631]
+                      - gridcell "H39" [ref=e1632]
+                      - gridcell "I39" [ref=e1633]
+                      - gridcell "J39" [ref=e1634]
+                      - gridcell "K39" [ref=e1635]
+                      - gridcell "L39" [ref=e1636]
+                      - gridcell "M39" [ref=e1637]
+                      - gridcell "N39" [ref=e1638]
+                      - gridcell "O39" [ref=e1639]
+                      - gridcell "P39" [ref=e1640]
+                      - gridcell "Q39" [ref=e1641]
+                      - gridcell "R39" [ref=e1642]
+                      - gridcell "S39" [ref=e1643]
+                      - gridcell "T39" [ref=e1644]
+                      - gridcell "U39" [ref=e1645]
+                      - gridcell "V39" [ref=e1646]
+                      - gridcell "W39" [ref=e1647]
+                      - gridcell "X39" [ref=e1648]
+                      - gridcell "Y39" [ref=e1649]
+                      - gridcell "Z39" [ref=e1650]
+                    - row [ref=e1651]:
+                      - rowheader "40 40 行高" [ref=e1652]:
+                        - generic [ref=e1653]: "40"
+                        - separator "40 行高" [ref=e1654]
+                      - gridcell "A40" [ref=e1655]
+                      - gridcell "C40" [ref=e1656]
+                      - gridcell "D40" [ref=e1657]
+                      - gridcell "E40" [ref=e1658]
+                      - gridcell "F40" [ref=e1659]
+                      - gridcell "G40" [ref=e1660]
+                      - gridcell "H40" [ref=e1661]
+                      - gridcell "I40" [ref=e1662]
+                      - gridcell "J40" [ref=e1663]
+                      - gridcell "K40" [ref=e1664]
+                      - gridcell "L40" [ref=e1665]
+                      - gridcell "M40" [ref=e1666]
+                      - gridcell "N40" [ref=e1667]
+                      - gridcell "O40" [ref=e1668]
+                      - gridcell "P40" [ref=e1669]
+                      - gridcell "Q40" [ref=e1670]
+                      - gridcell "R40" [ref=e1671]
+                      - gridcell "S40" [ref=e1672]
+                      - gridcell "T40" [ref=e1673]
+                      - gridcell "U40" [ref=e1674]
+                      - gridcell "V40" [ref=e1675]
+                      - gridcell "W40" [ref=e1676]
+                      - gridcell "X40" [ref=e1677]
+                      - gridcell "Y40" [ref=e1678]
+                      - gridcell "Z40" [ref=e1679]
+                    - row [ref=e1680]:
+                      - rowheader "41 41 行高" [ref=e1681]:
+                        - generic [ref=e1682]: "41"
+                        - separator "41 行高" [ref=e1683]
+                      - gridcell "A41" [ref=e1684]
+                      - gridcell "C41" [ref=e1685]
+                      - gridcell "D41" [ref=e1686]
+                      - gridcell "E41" [ref=e1687]
+                      - gridcell "F41" [ref=e1688]
+                      - gridcell "G41" [ref=e1689]
+                      - gridcell "H41" [ref=e1690]
+                      - gridcell "I41" [ref=e1691]
+                      - gridcell "J41" [ref=e1692]
+                      - gridcell "K41" [ref=e1693]
+                      - gridcell "L41" [ref=e1694]
+                      - gridcell "M41" [ref=e1695]
+                      - gridcell "N41" [ref=e1696]
+                      - gridcell "O41" [ref=e1697]
+                      - gridcell "P41" [ref=e1698]
+                      - gridcell "Q41" [ref=e1699]
+                      - gridcell "R41" [ref=e1700]
+                      - gridcell "S41" [ref=e1701]
+                      - gridcell "T41" [ref=e1702]
+                      - gridcell "U41" [ref=e1703]
+                      - gridcell "V41" [ref=e1704]
+                      - gridcell "W41" [ref=e1705]
+                      - gridcell "X41" [ref=e1706]
+                      - gridcell "Y41" [ref=e1707]
+                      - gridcell "Z41" [ref=e1708]
+                    - row [ref=e1709]:
+                      - rowheader "42 42 行高" [ref=e1710]:
+                        - generic [ref=e1711]: "42"
+                        - separator "42 行高" [ref=e1712]
+                      - gridcell "A42" [ref=e1713]
+                      - gridcell "C42" [ref=e1714]
+                      - gridcell "D42" [ref=e1715]
+                      - gridcell "E42" [ref=e1716]
+                      - gridcell "F42" [ref=e1717]
+                      - gridcell "G42" [ref=e1718]
+                      - gridcell "H42" [ref=e1719]
+                      - gridcell "I42" [ref=e1720]
+                      - gridcell "J42" [ref=e1721]
+                      - gridcell "K42" [ref=e1722]
+                      - gridcell "L42" [ref=e1723]
+                      - gridcell "M42" [ref=e1724]
+                      - gridcell "N42" [ref=e1725]
+                      - gridcell "O42" [ref=e1726]
+                      - gridcell "P42" [ref=e1727]
+                      - gridcell "Q42" [ref=e1728]
+                      - gridcell "R42" [ref=e1729]
+                      - gridcell "S42" [ref=e1730]
+                      - gridcell "T42" [ref=e1731]
+                      - gridcell "U42" [ref=e1732]
+                      - gridcell "V42" [ref=e1733]
+                      - gridcell "W42" [ref=e1734]
+                      - gridcell "X42" [ref=e1735]
+                      - gridcell "Y42" [ref=e1736]
+                      - gridcell "Z42" [ref=e1737]
+                    - row [ref=e1738]:
+                      - rowheader "43 43 行高" [ref=e1739]:
+                        - generic [ref=e1740]: "43"
+                        - separator "43 行高" [ref=e1741]
+                      - gridcell "A43" [ref=e1742]
+                      - gridcell "C43" [ref=e1743]
+                      - gridcell "D43" [ref=e1744]
+                      - gridcell "E43" [ref=e1745]
+                      - gridcell "F43" [ref=e1746]
+                      - gridcell "G43" [ref=e1747]
+                      - gridcell "H43" [ref=e1748]
+                      - gridcell "I43" [ref=e1749]
+                      - gridcell "J43" [ref=e1750]
+                      - gridcell "K43" [ref=e1751]
+                      - gridcell "L43" [ref=e1752]
+                      - gridcell "M43" [ref=e1753]
+                      - gridcell "N43" [ref=e1754]
+                      - gridcell "O43" [ref=e1755]
+                      - gridcell "P43" [ref=e1756]
+                      - gridcell "Q43" [ref=e1757]
+                      - gridcell "R43" [ref=e1758]
+                      - gridcell "S43" [ref=e1759]
+                      - gridcell "T43" [ref=e1760]
+                      - gridcell "U43" [ref=e1761]
+                      - gridcell "V43" [ref=e1762]
+                      - gridcell "W43" [ref=e1763]
+                      - gridcell "X43" [ref=e1764]
+                      - gridcell "Y43" [ref=e1765]
+                      - gridcell "Z43" [ref=e1766]
+                    - row [ref=e1767]:
+                      - rowheader "44 44 行高" [ref=e1768]:
+                        - generic [ref=e1769]: "44"
+                        - separator "44 行高" [ref=e1770]
+                      - gridcell "A44" [ref=e1771]
+                      - gridcell "C44" [ref=e1772]
+                      - gridcell "D44" [ref=e1773]
+                      - gridcell "E44" [ref=e1774]
+                      - gridcell "F44" [ref=e1775]
+                      - gridcell "G44" [ref=e1776]
+                      - gridcell "H44" [ref=e1777]
+                      - gridcell "I44" [ref=e1778]
+                      - gridcell "J44" [ref=e1779]
+                      - gridcell "K44" [ref=e1780]
+                      - gridcell "L44" [ref=e1781]
+                      - gridcell "M44" [ref=e1782]
+                      - gridcell "N44" [ref=e1783]
+                      - gridcell "O44" [ref=e1784]
+                      - gridcell "P44" [ref=e1785]
+                      - gridcell "Q44" [ref=e1786]
+                      - gridcell "R44" [ref=e1787]
+                      - gridcell "S44" [ref=e1788]
+                      - gridcell "T44" [ref=e1789]
+                      - gridcell "U44" [ref=e1790]
+                      - gridcell "V44" [ref=e1791]
+                      - gridcell "W44" [ref=e1792]
+                      - gridcell "X44" [ref=e1793]
+                      - gridcell "Y44" [ref=e1794]
+                      - gridcell "Z44" [ref=e1795]
+                    - row [ref=e1796]:
+                      - rowheader "45 45 行高" [ref=e1797]:
+                        - generic [ref=e1798]: "45"
+                        - separator "45 行高" [ref=e1799]
+                      - gridcell "A45" [ref=e1800]
+                      - gridcell "C45" [ref=e1801]
+                      - gridcell "D45" [ref=e1802]
+                      - gridcell "E45" [ref=e1803]
+                      - gridcell "F45" [ref=e1804]
+                      - gridcell "G45" [ref=e1805]
+                      - gridcell "H45" [ref=e1806]
+                      - gridcell "I45" [ref=e1807]
+                      - gridcell "J45" [ref=e1808]
+                      - gridcell "K45" [ref=e1809]
+                      - gridcell "L45" [ref=e1810]
+                      - gridcell "M45" [ref=e1811]
+                      - gridcell "N45" [ref=e1812]
+                      - gridcell "O45" [ref=e1813]
+                      - gridcell "P45" [ref=e1814]
+                      - gridcell "Q45" [ref=e1815]
+                      - gridcell "R45" [ref=e1816]
+                      - gridcell "S45" [ref=e1817]
+                      - gridcell "T45" [ref=e1818]
+                      - gridcell "U45" [ref=e1819]
+                      - gridcell "V45" [ref=e1820]
+                      - gridcell "W45" [ref=e1821]
+                      - gridcell "X45" [ref=e1822]
+                      - gridcell "Y45" [ref=e1823]
+                      - gridcell "Z45" [ref=e1824]
+                    - row [ref=e1825]:
+                      - rowheader "46 46 行高" [ref=e1826]:
+                        - generic [ref=e1827]: "46"
+                        - separator "46 行高" [ref=e1828]
+                      - gridcell "A46" [ref=e1829]
+                      - gridcell "C46" [ref=e1830]
+                      - gridcell "D46" [ref=e1831]
+                      - gridcell "E46" [ref=e1832]
+                      - gridcell "F46" [ref=e1833]
+                      - gridcell "G46" [ref=e1834]
+                      - gridcell "H46" [ref=e1835]
+                      - gridcell "I46" [ref=e1836]
+                      - gridcell "J46" [ref=e1837]
+                      - gridcell "K46" [ref=e1838]
+                      - gridcell "L46" [ref=e1839]
+                      - gridcell "M46" [ref=e1840]
+                      - gridcell "N46" [ref=e1841]
+                      - gridcell "O46" [ref=e1842]
+                      - gridcell "P46" [ref=e1843]
+                      - gridcell "Q46" [ref=e1844]
+                      - gridcell "R46" [ref=e1845]
+                      - gridcell "S46" [ref=e1846]
+                      - gridcell "T46" [ref=e1847]
+                      - gridcell "U46" [ref=e1848]
+                      - gridcell "V46" [ref=e1849]
+                      - gridcell "W46" [ref=e1850]
+                      - gridcell "X46" [ref=e1851]
+                      - gridcell "Y46" [ref=e1852]
+                      - gridcell "Z46" [ref=e1853]
+                    - row [ref=e1854]:
+                      - rowheader "47 47 行高" [ref=e1855]:
+                        - generic [ref=e1856]: "47"
+                        - separator "47 行高" [ref=e1857]
+                      - gridcell "A47" [ref=e1858]
+                      - gridcell "C47" [ref=e1859]
+                      - gridcell "D47" [ref=e1860]
+                      - gridcell "E47" [ref=e1861]
+                      - gridcell "F47" [ref=e1862]
+                      - gridcell "G47" [ref=e1863]
+                      - gridcell "H47" [ref=e1864]
+                      - gridcell "I47" [ref=e1865]
+                      - gridcell "J47" [ref=e1866]
+                      - gridcell "K47" [ref=e1867]
+                      - gridcell "L47" [ref=e1868]
+                      - gridcell "M47" [ref=e1869]
+                      - gridcell "N47" [ref=e1870]
+                      - gridcell "O47" [ref=e1871]
+                      - gridcell "P47" [ref=e1872]
+                      - gridcell "Q47" [ref=e1873]
+                      - gridcell "R47" [ref=e1874]
+                      - gridcell "S47" [ref=e1875]
+                      - gridcell "T47" [ref=e1876]
+                      - gridcell "U47" [ref=e1877]
+                      - gridcell "V47" [ref=e1878]
+                      - gridcell "W47" [ref=e1879]
+                      - gridcell "X47" [ref=e1880]
+                      - gridcell "Y47" [ref=e1881]
+                      - gridcell "Z47" [ref=e1882]
+                    - row [ref=e1883]:
+                      - rowheader "48 48 行高" [ref=e1884]:
+                        - generic [ref=e1885]: "48"
+                        - separator "48 行高" [ref=e1886]
+                      - gridcell "A48" [ref=e1887]
+                      - gridcell "C48" [ref=e1888]
+                      - gridcell "D48" [ref=e1889]
+                      - gridcell "E48" [ref=e1890]
+                      - gridcell "F48" [ref=e1891]
+                      - gridcell "G48" [ref=e1892]
+                      - gridcell "H48" [ref=e1893]
+                      - gridcell "I48" [ref=e1894]
+                      - gridcell "J48" [ref=e1895]
+                      - gridcell "K48" [ref=e1896]
+                      - gridcell "L48" [ref=e1897]
+                      - gridcell "M48" [ref=e1898]
+                      - gridcell "N48" [ref=e1899]
+                      - gridcell "O48" [ref=e1900]
+                      - gridcell "P48" [ref=e1901]
+                      - gridcell "Q48" [ref=e1902]
+                      - gridcell "R48" [ref=e1903]
+                      - gridcell "S48" [ref=e1904]
+                      - gridcell "T48" [ref=e1905]
+                      - gridcell "U48" [ref=e1906]
+                      - gridcell "V48" [ref=e1907]
+                      - gridcell "W48" [ref=e1908]
+                      - gridcell "X48" [ref=e1909]
+                      - gridcell "Y48" [ref=e1910]
+                      - gridcell "Z48" [ref=e1911]
+                    - row [ref=e1912]:
+                      - rowheader "49 49 行高" [ref=e1913]:
+                        - generic [ref=e1914]: "49"
+                        - separator "49 行高" [ref=e1915]
+                      - gridcell "A49" [ref=e1916]
+                      - gridcell "C49" [ref=e1917]
+                      - gridcell "D49" [ref=e1918]
+                      - gridcell "E49" [ref=e1919]
+                      - gridcell "F49" [ref=e1920]
+                      - gridcell "G49" [ref=e1921]
+                      - gridcell "H49" [ref=e1922]
+                      - gridcell "I49" [ref=e1923]
+                      - gridcell "J49" [ref=e1924]
+                      - gridcell "K49" [ref=e1925]
+                      - gridcell "L49" [ref=e1926]
+                      - gridcell "M49" [ref=e1927]
+                      - gridcell "N49" [ref=e1928]
+                      - gridcell "O49" [ref=e1929]
+                      - gridcell "P49" [ref=e1930]
+                      - gridcell "Q49" [ref=e1931]
+                      - gridcell "R49" [ref=e1932]
+                      - gridcell "S49" [ref=e1933]
+                      - gridcell "T49" [ref=e1934]
+                      - gridcell "U49" [ref=e1935]
+                      - gridcell "V49" [ref=e1936]
+                      - gridcell "W49" [ref=e1937]
+                      - gridcell "X49" [ref=e1938]
+                      - gridcell "Y49" [ref=e1939]
+                      - gridcell "Z49" [ref=e1940]
+                    - row [ref=e1941]:
+                      - rowheader "50 50 行高" [ref=e1942]:
+                        - generic [ref=e1943]: "50"
+                        - separator "50 行高" [ref=e1944]
+                      - gridcell "A50" [ref=e1945]
+                      - gridcell "C50" [ref=e1946]
+                      - gridcell "D50" [ref=e1947]
+                      - gridcell "E50" [ref=e1948]
+                      - gridcell "F50" [ref=e1949]
+                      - gridcell "G50" [ref=e1950]
+                      - gridcell "H50" [ref=e1951]
+                      - gridcell "I50" [ref=e1952]
+                      - gridcell "J50" [ref=e1953]
+                      - gridcell "K50" [ref=e1954]
+                      - gridcell "L50" [ref=e1955]
+                      - gridcell "M50" [ref=e1956]
+                      - gridcell "N50" [ref=e1957]
+                      - gridcell "O50" [ref=e1958]
+                      - gridcell "P50" [ref=e1959]
+                      - gridcell "Q50" [ref=e1960]
+                      - gridcell "R50" [ref=e1961]
+                      - gridcell "S50" [ref=e1962]
+                      - gridcell "T50" [ref=e1963]
+                      - gridcell "U50" [ref=e1964]
+                      - gridcell "V50" [ref=e1965]
+                      - gridcell "W50" [ref=e1966]
+                      - gridcell "X50" [ref=e1967]
+                      - gridcell "Y50" [ref=e1968]
+                      - gridcell "Z50" [ref=e1969]
+                    - row [ref=e1970]:
+                      - rowheader "51 51 行高" [ref=e1971]:
+                        - generic [ref=e1972]: "51"
+                        - separator "51 行高" [ref=e1973]
+                      - gridcell "A51" [ref=e1974]
+                      - gridcell "C51" [ref=e1975]
+                      - gridcell "D51" [ref=e1976]
+                      - gridcell "E51" [ref=e1977]
+                      - gridcell "F51" [ref=e1978]
+                      - gridcell "G51" [ref=e1979]
+                      - gridcell "H51" [ref=e1980]
+                      - gridcell "I51" [ref=e1981]
+                      - gridcell "J51" [ref=e1982]
+                      - gridcell "K51" [ref=e1983]
+                      - gridcell "L51" [ref=e1984]
+                      - gridcell "M51" [ref=e1985]
+                      - gridcell "N51" [ref=e1986]
+                      - gridcell "O51" [ref=e1987]
+                      - gridcell "P51" [ref=e1988]
+                      - gridcell "Q51" [ref=e1989]
+                      - gridcell "R51" [ref=e1990]
+                      - gridcell "S51" [ref=e1991]
+                      - gridcell "T51" [ref=e1992]
+                      - gridcell "U51" [ref=e1993]
+                      - gridcell "V51" [ref=e1994]
+                      - gridcell "W51" [ref=e1995]
+                      - gridcell "X51" [ref=e1996]
+                      - gridcell "Y51" [ref=e1997]
+                      - gridcell "Z51" [ref=e1998]
+                    - row [ref=e1999]:
+                      - rowheader "52 52 行高" [ref=e2000]:
+                        - generic [ref=e2001]: "52"
+                        - separator "52 行高" [ref=e2002]
+                      - gridcell "A52" [ref=e2003]
+                      - gridcell "C52" [ref=e2004]
+                      - gridcell "D52" [ref=e2005]
+                      - gridcell "E52" [ref=e2006]
+                      - gridcell "F52" [ref=e2007]
+                      - gridcell "G52" [ref=e2008]
+                      - gridcell "H52" [ref=e2009]
+                      - gridcell "I52" [ref=e2010]
+                      - gridcell "J52" [ref=e2011]
+                      - gridcell "K52" [ref=e2012]
+                      - gridcell "L52" [ref=e2013]
+                      - gridcell "M52" [ref=e2014]
+                      - gridcell "N52" [ref=e2015]
+                      - gridcell "O52" [ref=e2016]
+                      - gridcell "P52" [ref=e2017]
+                      - gridcell "Q52" [ref=e2018]
+                      - gridcell "R52" [ref=e2019]
+                      - gridcell "S52" [ref=e2020]
+                      - gridcell "T52" [ref=e2021]
+                      - gridcell "U52" [ref=e2022]
+                      - gridcell "V52" [ref=e2023]
+                      - gridcell "W52" [ref=e2024]
+                      - gridcell "X52" [ref=e2025]
+                      - gridcell "Y52" [ref=e2026]
+                      - gridcell "Z52" [ref=e2027]
+                    - row [ref=e2028]:
+                      - rowheader "53 53 行高" [ref=e2029]:
+                        - generic [ref=e2030]: "53"
+                        - separator "53 行高" [ref=e2031]
+                      - gridcell "A53" [ref=e2032]
+                      - gridcell "C53" [ref=e2033]
+                      - gridcell "D53" [ref=e2034]
+                      - gridcell "E53" [ref=e2035]
+                      - gridcell "F53" [ref=e2036]
+                      - gridcell "G53" [ref=e2037]
+                      - gridcell "H53" [ref=e2038]
+                      - gridcell "I53" [ref=e2039]
+                      - gridcell "J53" [ref=e2040]
+                      - gridcell "K53" [ref=e2041]
+                      - gridcell "L53" [ref=e2042]
+                      - gridcell "M53" [ref=e2043]
+                      - gridcell "N53" [ref=e2044]
+                      - gridcell "O53" [ref=e2045]
+                      - gridcell "P53" [ref=e2046]
+                      - gridcell "Q53" [ref=e2047]
+                      - gridcell "R53" [ref=e2048]
+                      - gridcell "S53" [ref=e2049]
+                      - gridcell "T53" [ref=e2050]
+                      - gridcell "U53" [ref=e2051]
+                      - gridcell "V53" [ref=e2052]
+                      - gridcell "W53" [ref=e2053]
+                      - gridcell "X53" [ref=e2054]
+                      - gridcell "Y53" [ref=e2055]
+                      - gridcell "Z53" [ref=e2056]
+                    - row [ref=e2057]:
+                      - rowheader "54 54 行高" [ref=e2058]:
+                        - generic [ref=e2059]: "54"
+                        - separator "54 行高" [ref=e2060]
+                      - gridcell "A54" [ref=e2061]
+                      - gridcell "C54" [ref=e2062]
+                      - gridcell "D54" [ref=e2063]
+                      - gridcell "E54" [ref=e2064]
+                      - gridcell "F54" [ref=e2065]
+                      - gridcell "G54" [ref=e2066]
+                      - gridcell "H54" [ref=e2067]
+                      - gridcell "I54" [ref=e2068]
+                      - gridcell "J54" [ref=e2069]
+                      - gridcell "K54" [ref=e2070]
+                      - gridcell "L54" [ref=e2071]
+                      - gridcell "M54" [ref=e2072]
+                      - gridcell "N54" [ref=e2073]
+                      - gridcell "O54" [ref=e2074]
+                      - gridcell "P54" [ref=e2075]
+                      - gridcell "Q54" [ref=e2076]
+                      - gridcell "R54" [ref=e2077]
+                      - gridcell "S54" [ref=e2078]
+                      - gridcell "T54" [ref=e2079]
+                      - gridcell "U54" [ref=e2080]
+                      - gridcell "V54" [ref=e2081]
+                      - gridcell "W54" [ref=e2082]
+                      - gridcell "X54" [ref=e2083]
+                      - gridcell "Y54" [ref=e2084]
+                      - gridcell "Z54" [ref=e2085]
+                    - row [ref=e2086]:
+                      - rowheader "55 55 行高" [ref=e2087]:
+                        - generic [ref=e2088]: "55"
+                        - separator "55 行高" [ref=e2089]
+                      - gridcell "A55" [ref=e2090]
+                      - gridcell "C55" [ref=e2091]
+                      - gridcell "D55" [ref=e2092]
+                      - gridcell "E55" [ref=e2093]
+                      - gridcell "F55" [ref=e2094]
+                      - gridcell "G55" [ref=e2095]
+                      - gridcell "H55" [ref=e2096]
+                      - gridcell "I55" [ref=e2097]
+                      - gridcell "J55" [ref=e2098]
+                      - gridcell "K55" [ref=e2099]
+                      - gridcell "L55" [ref=e2100]
+                      - gridcell "M55" [ref=e2101]
+                      - gridcell "N55" [ref=e2102]
+                      - gridcell "O55" [ref=e2103]
+                      - gridcell "P55" [ref=e2104]
+                      - gridcell "Q55" [ref=e2105]
+                      - gridcell "R55" [ref=e2106]
+                      - gridcell "S55" [ref=e2107]
+                      - gridcell "T55" [ref=e2108]
+                      - gridcell "U55" [ref=e2109]
+                      - gridcell "V55" [ref=e2110]
+                      - gridcell "W55" [ref=e2111]
+                      - gridcell "X55" [ref=e2112]
+                      - gridcell "Y55" [ref=e2113]
+                      - gridcell "Z55" [ref=e2114]
+                    - row [ref=e2115]:
+                      - rowheader "56 56 行高" [ref=e2116]:
+                        - generic [ref=e2117]: "56"
+                        - separator "56 行高" [ref=e2118]
+                      - gridcell "A56" [ref=e2119]
+                      - gridcell "C56" [ref=e2120]
+                      - gridcell "D56" [ref=e2121]
+                      - gridcell "E56" [ref=e2122]
+                      - gridcell "F56" [ref=e2123]
+                      - gridcell "G56" [ref=e2124]
+                      - gridcell "H56" [ref=e2125]
+                      - gridcell "I56" [ref=e2126]
+                      - gridcell "J56" [ref=e2127]
+                      - gridcell "K56" [ref=e2128]
+                      - gridcell "L56" [ref=e2129]
+                      - gridcell "M56" [ref=e2130]
+                      - gridcell "N56" [ref=e2131]
+                      - gridcell "O56" [ref=e2132]
+                      - gridcell "P56" [ref=e2133]
+                      - gridcell "Q56" [ref=e2134]
+                      - gridcell "R56" [ref=e2135]
+                      - gridcell "S56" [ref=e2136]
+                      - gridcell "T56" [ref=e2137]
+                      - gridcell "U56" [ref=e2138]
+                      - gridcell "V56" [ref=e2139]
+                      - gridcell "W56" [ref=e2140]
+                      - gridcell "X56" [ref=e2141]
+                      - gridcell "Y56" [ref=e2142]
+                      - gridcell "Z56" [ref=e2143]
+                    - row [ref=e2144]:
+                      - rowheader "57 57 行高" [ref=e2145]:
+                        - generic [ref=e2146]: "57"
+                        - separator "57 行高" [ref=e2147]
+                      - gridcell "A57" [ref=e2148]
+                      - gridcell "C57" [ref=e2149]
+                      - gridcell "D57" [ref=e2150]
+                      - gridcell "E57" [ref=e2151]
+                      - gridcell "F57" [ref=e2152]
+                      - gridcell "G57" [ref=e2153]
+                      - gridcell "H57" [ref=e2154]
+                      - gridcell "I57" [ref=e2155]
+                      - gridcell "J57" [ref=e2156]
+                      - gridcell "K57" [ref=e2157]
+                      - gridcell "L57" [ref=e2158]
+                      - gridcell "M57" [ref=e2159]
+                      - gridcell "N57" [ref=e2160]
+                      - gridcell "O57" [ref=e2161]
+                      - gridcell "P57" [ref=e2162]
+                      - gridcell "Q57" [ref=e2163]
+                      - gridcell "R57" [ref=e2164]
+                      - gridcell "S57" [ref=e2165]
+                      - gridcell "T57" [ref=e2166]
+                      - gridcell "U57" [ref=e2167]
+                      - gridcell "V57" [ref=e2168]
+                      - gridcell "W57" [ref=e2169]
+                      - gridcell "X57" [ref=e2170]
+                      - gridcell "Y57" [ref=e2171]
+                      - gridcell "Z57" [ref=e2172]
+                    - row [ref=e2173]:
+                      - rowheader "58 58 行高" [ref=e2174]:
+                        - generic [ref=e2175]: "58"
+                        - separator "58 行高" [ref=e2176]
+                      - gridcell "A58" [ref=e2177]
+                      - gridcell "C58" [ref=e2178]
+                      - gridcell "D58" [ref=e2179]
+                      - gridcell "E58" [ref=e2180]
+                      - gridcell "F58" [ref=e2181]
+                      - gridcell "G58" [ref=e2182]
+                      - gridcell "H58" [ref=e2183]
+                      - gridcell "I58" [ref=e2184]
+                      - gridcell "J58" [ref=e2185]
+                      - gridcell "K58" [ref=e2186]
+                      - gridcell "L58" [ref=e2187]
+                      - gridcell "M58" [ref=e2188]
+                      - gridcell "N58" [ref=e2189]
+                      - gridcell "O58" [ref=e2190]
+                      - gridcell "P58" [ref=e2191]
+                      - gridcell "Q58" [ref=e2192]
+                      - gridcell "R58" [ref=e2193]
+                      - gridcell "S58" [ref=e2194]
+                      - gridcell "T58" [ref=e2195]
+                      - gridcell "U58" [ref=e2196]
+                      - gridcell "V58" [ref=e2197]
+                      - gridcell "W58" [ref=e2198]
+                      - gridcell "X58" [ref=e2199]
+                      - gridcell "Y58" [ref=e2200]
+                      - gridcell "Z58" [ref=e2201]
+                    - row [ref=e2202]:
+                      - rowheader "59 59 行高" [ref=e2203]:
+                        - generic [ref=e2204]: "59"
+                        - separator "59 行高" [ref=e2205]
+                      - gridcell "A59" [ref=e2206]
+                      - gridcell "C59" [ref=e2207]
+                      - gridcell "D59" [ref=e2208]
+                      - gridcell "E59" [ref=e2209]
+                      - gridcell "F59" [ref=e2210]
+                      - gridcell "G59" [ref=e2211]
+                      - gridcell "H59" [ref=e2212]
+                      - gridcell "I59" [ref=e2213]
+                      - gridcell "J59" [ref=e2214]
+                      - gridcell "K59" [ref=e2215]
+                      - gridcell "L59" [ref=e2216]
+                      - gridcell "M59" [ref=e2217]
+                      - gridcell "N59" [ref=e2218]
+                      - gridcell "O59" [ref=e2219]
+                      - gridcell "P59" [ref=e2220]
+                      - gridcell "Q59" [ref=e2221]
+                      - gridcell "R59" [ref=e2222]
+                      - gridcell "S59" [ref=e2223]
+                      - gridcell "T59" [ref=e2224]
+                      - gridcell "U59" [ref=e2225]
+                      - gridcell "V59" [ref=e2226]
+                      - gridcell "W59" [ref=e2227]
+                      - gridcell "X59" [ref=e2228]
+                      - gridcell "Y59" [ref=e2229]
+                      - gridcell "Z59" [ref=e2230]
+                    - row [ref=e2231]:
+                      - rowheader "60 60 行高" [ref=e2232]:
+                        - generic [ref=e2233]: "60"
+                        - separator "60 行高" [ref=e2234]
+                      - gridcell "A60" [ref=e2235]
+                      - gridcell "C60" [ref=e2236]
+                      - gridcell "D60" [ref=e2237]
+                      - gridcell "E60" [ref=e2238]
+                      - gridcell "F60" [ref=e2239]
+                      - gridcell "G60" [ref=e2240]
+                      - gridcell "H60" [ref=e2241]
+                      - gridcell "I60" [ref=e2242]
+                      - gridcell "J60" [ref=e2243]
+                      - gridcell "K60" [ref=e2244]
+                      - gridcell "L60" [ref=e2245]
+                      - gridcell "M60" [ref=e2246]
+                      - gridcell "N60" [ref=e2247]
+                      - gridcell "O60" [ref=e2248]
+                      - gridcell "P60" [ref=e2249]
+                      - gridcell "Q60" [ref=e2250]
+                      - gridcell "R60" [ref=e2251]
+                      - gridcell "S60" [ref=e2252]
+                      - gridcell "T60" [ref=e2253]
+                      - gridcell "U60" [ref=e2254]
+                      - gridcell "V60" [ref=e2255]
+                      - gridcell "W60" [ref=e2256]
+                      - gridcell "X60" [ref=e2257]
+                      - gridcell "Y60" [ref=e2258]
+                      - gridcell "Z60" [ref=e2259]
+                    - row [ref=e2260]:
+                      - rowheader "61 61 行高" [ref=e2261]:
+                        - generic [ref=e2262]: "61"
+                        - separator "61 行高" [ref=e2263]
+                      - gridcell "A61" [ref=e2264]
+                      - gridcell "C61" [ref=e2265]
+                      - gridcell "D61" [ref=e2266]
+                      - gridcell "E61" [ref=e2267]
+                      - gridcell "F61" [ref=e2268]
+                      - gridcell "G61" [ref=e2269]
+                      - gridcell "H61" [ref=e2270]
+                      - gridcell "I61" [ref=e2271]
+                      - gridcell "J61" [ref=e2272]
+                      - gridcell "K61" [ref=e2273]
+                      - gridcell "L61" [ref=e2274]
+                      - gridcell "M61" [ref=e2275]
+                      - gridcell "N61" [ref=e2276]
+                      - gridcell "O61" [ref=e2277]
+                      - gridcell "P61" [ref=e2278]
+                      - gridcell "Q61" [ref=e2279]
+                      - gridcell "R61" [ref=e2280]
+                      - gridcell "S61" [ref=e2281]
+                      - gridcell "T61" [ref=e2282]
+                      - gridcell "U61" [ref=e2283]
+                      - gridcell "V61" [ref=e2284]
+                      - gridcell "W61" [ref=e2285]
+                      - gridcell "X61" [ref=e2286]
+                      - gridcell "Y61" [ref=e2287]
+                      - gridcell "Z61" [ref=e2288]
+                    - row [ref=e2289]:
+                      - rowheader "62 62 行高" [ref=e2290]:
+                        - generic [ref=e2291]: "62"
+                        - separator "62 行高" [ref=e2292]
+                      - gridcell "A62" [ref=e2293]
+                      - gridcell "C62" [ref=e2294]
+                      - gridcell "D62" [ref=e2295]
+                      - gridcell "E62" [ref=e2296]
+                      - gridcell "F62" [ref=e2297]
+                      - gridcell "G62" [ref=e2298]
+                      - gridcell "H62" [ref=e2299]
+                      - gridcell "I62" [ref=e2300]
+                      - gridcell "J62" [ref=e2301]
+                      - gridcell "K62" [ref=e2302]
+                      - gridcell "L62" [ref=e2303]
+                      - gridcell "M62" [ref=e2304]
+                      - gridcell "N62" [ref=e2305]
+                      - gridcell "O62" [ref=e2306]
+                      - gridcell "P62" [ref=e2307]
+                      - gridcell "Q62" [ref=e2308]
+                      - gridcell "R62" [ref=e2309]
+                      - gridcell "S62" [ref=e2310]
+                      - gridcell "T62" [ref=e2311]
+                      - gridcell "U62" [ref=e2312]
+                      - gridcell "V62" [ref=e2313]
+                      - gridcell "W62" [ref=e2314]
+                      - gridcell "X62" [ref=e2315]
+                      - gridcell "Y62" [ref=e2316]
+                      - gridcell "Z62" [ref=e2317]
+                    - row [ref=e2318]:
+                      - rowheader "63 63 行高" [ref=e2319]:
+                        - generic [ref=e2320]: "63"
+                        - separator "63 行高" [ref=e2321]
+                      - gridcell "A63" [ref=e2322]
+                      - gridcell "C63" [ref=e2323]
+                      - gridcell "D63" [ref=e2324]
+                      - gridcell "E63" [ref=e2325]
+                      - gridcell "F63" [ref=e2326]
+                      - gridcell "G63" [ref=e2327]
+                      - gridcell "H63" [ref=e2328]
+                      - gridcell "I63" [ref=e2329]
+                      - gridcell "J63" [ref=e2330]
+                      - gridcell "K63" [ref=e2331]
+                      - gridcell "L63" [ref=e2332]
+                      - gridcell "M63" [ref=e2333]
+                      - gridcell "N63" [ref=e2334]
+                      - gridcell "O63" [ref=e2335]
+                      - gridcell "P63" [ref=e2336]
+                      - gridcell "Q63" [ref=e2337]
+                      - gridcell "R63" [ref=e2338]
+                      - gridcell "S63" [ref=e2339]
+                      - gridcell "T63" [ref=e2340]
+                      - gridcell "U63" [ref=e2341]
+                      - gridcell "V63" [ref=e2342]
+                      - gridcell "W63" [ref=e2343]
+                      - gridcell "X63" [ref=e2344]
+                      - gridcell "Y63" [ref=e2345]
+                      - gridcell "Z63" [ref=e2346]
+                    - row [ref=e2347]:
+                      - rowheader "64 64 行高" [ref=e2348]:
+                        - generic [ref=e2349]: "64"
+                        - separator "64 行高" [ref=e2350]
+                      - gridcell "A64" [ref=e2351]
+                      - gridcell "C64" [ref=e2352]
+                      - gridcell "D64" [ref=e2353]
+                      - gridcell "E64" [ref=e2354]
+                      - gridcell "F64" [ref=e2355]
+                      - gridcell "G64" [ref=e2356]
+                      - gridcell "H64" [ref=e2357]
+                      - gridcell "I64" [ref=e2358]
+                      - gridcell "J64" [ref=e2359]
+                      - gridcell "K64" [ref=e2360]
+                      - gridcell "L64" [ref=e2361]
+                      - gridcell "M64" [ref=e2362]
+                      - gridcell "N64" [ref=e2363]
+                      - gridcell "O64" [ref=e2364]
+                      - gridcell "P64" [ref=e2365]
+                      - gridcell "Q64" [ref=e2366]
+                      - gridcell "R64" [ref=e2367]
+                      - gridcell "S64" [ref=e2368]
+                      - gridcell "T64" [ref=e2369]
+                      - gridcell "U64" [ref=e2370]
+                      - gridcell "V64" [ref=e2371]
+                      - gridcell "W64" [ref=e2372]
+                      - gridcell "X64" [ref=e2373]
+                      - gridcell "Y64" [ref=e2374]
+                      - gridcell "Z64" [ref=e2375]
+                    - row [ref=e2376]:
+                      - rowheader "65 65 行高" [ref=e2377]:
+                        - generic [ref=e2378]: "65"
+                        - separator "65 行高" [ref=e2379]
+                      - gridcell "A65" [ref=e2380]
+                      - gridcell "C65" [ref=e2381]
+                      - gridcell "D65" [ref=e2382]
+                      - gridcell "E65" [ref=e2383]
+                      - gridcell "F65" [ref=e2384]
+                      - gridcell "G65" [ref=e2385]
+                      - gridcell "H65" [ref=e2386]
+                      - gridcell "I65" [ref=e2387]
+                      - gridcell "J65" [ref=e2388]
+                      - gridcell "K65" [ref=e2389]
+                      - gridcell "L65" [ref=e2390]
+                      - gridcell "M65" [ref=e2391]
+                      - gridcell "N65" [ref=e2392]
+                      - gridcell "O65" [ref=e2393]
+                      - gridcell "P65" [ref=e2394]
+                      - gridcell "Q65" [ref=e2395]
+                      - gridcell "R65" [ref=e2396]
+                      - gridcell "S65" [ref=e2397]
+                      - gridcell "T65" [ref=e2398]
+                      - gridcell "U65" [ref=e2399]
+                      - gridcell "V65" [ref=e2400]
+                      - gridcell "W65" [ref=e2401]
+                      - gridcell "X65" [ref=e2402]
+                      - gridcell "Y65" [ref=e2403]
+                      - gridcell "Z65" [ref=e2404]
+                    - row [ref=e2405]:
+                      - rowheader "66 66 行高" [ref=e2406]:
+                        - generic [ref=e2407]: "66"
+                        - separator "66 行高" [ref=e2408]
+                      - gridcell "A66" [ref=e2409]
+                      - gridcell "C66" [ref=e2410]
+                      - gridcell "D66" [ref=e2411]
+                      - gridcell "E66" [ref=e2412]
+                      - gridcell "F66" [ref=e2413]
+                      - gridcell "G66" [ref=e2414]
+                      - gridcell "H66" [ref=e2415]
+                      - gridcell "I66" [ref=e2416]
+                      - gridcell "J66" [ref=e2417]
+                      - gridcell "K66" [ref=e2418]
+                      - gridcell "L66" [ref=e2419]
+                      - gridcell "M66" [ref=e2420]
+                      - gridcell "N66" [ref=e2421]
+                      - gridcell "O66" [ref=e2422]
+                      - gridcell "P66" [ref=e2423]
+                      - gridcell "Q66" [ref=e2424]
+                      - gridcell "R66" [ref=e2425]
+                      - gridcell "S66" [ref=e2426]
+                      - gridcell "T66" [ref=e2427]
+                      - gridcell "U66" [ref=e2428]
+                      - gridcell "V66" [ref=e2429]
+                      - gridcell "W66" [ref=e2430]
+                      - gridcell "X66" [ref=e2431]
+                      - gridcell "Y66" [ref=e2432]
+                      - gridcell "Z66" [ref=e2433]
+                    - row [ref=e2434]:
+                      - rowheader "67 67 行高" [ref=e2435]:
+                        - generic [ref=e2436]: "67"
+                        - separator "67 行高" [ref=e2437]
+                      - gridcell "A67" [ref=e2438]
+                      - gridcell "C67" [ref=e2439]
+                      - gridcell "D67" [ref=e2440]
+                      - gridcell "E67" [ref=e2441]
+                      - gridcell "F67" [ref=e2442]
+                      - gridcell "G67" [ref=e2443]
+                      - gridcell "H67" [ref=e2444]
+                      - gridcell "I67" [ref=e2445]
+                      - gridcell "J67" [ref=e2446]
+                      - gridcell "K67" [ref=e2447]
+                      - gridcell "L67" [ref=e2448]
+                      - gridcell "M67" [ref=e2449]
+                      - gridcell "N67" [ref=e2450]
+                      - gridcell "O67" [ref=e2451]
+                      - gridcell "P67" [ref=e2452]
+                      - gridcell "Q67" [ref=e2453]
+                      - gridcell "R67" [ref=e2454]
+                      - gridcell "S67" [ref=e2455]
+                      - gridcell "T67" [ref=e2456]
+                      - gridcell "U67" [ref=e2457]
+                      - gridcell "V67" [ref=e2458]
+                      - gridcell "W67" [ref=e2459]
+                      - gridcell "X67" [ref=e2460]
+                      - gridcell "Y67" [ref=e2461]
+                      - gridcell "Z67" [ref=e2462]
+                    - row [ref=e2463]:
+                      - rowheader "68 68 行高" [ref=e2464]:
+                        - generic [ref=e2465]: "68"
+                        - separator "68 行高" [ref=e2466]
+                      - gridcell "A68" [ref=e2467]
+                      - gridcell "C68" [ref=e2468]
+                      - gridcell "D68" [ref=e2469]
+                      - gridcell "E68" [ref=e2470]
+                      - gridcell "F68" [ref=e2471]
+                      - gridcell "G68" [ref=e2472]
+                      - gridcell "H68" [ref=e2473]
+                      - gridcell "I68" [ref=e2474]
+                      - gridcell "J68" [ref=e2475]
+                      - gridcell "K68" [ref=e2476]
+                      - gridcell "L68" [ref=e2477]
+                      - gridcell "M68" [ref=e2478]
+                      - gridcell "N68" [ref=e2479]
+                      - gridcell "O68" [ref=e2480]
+                      - gridcell "P68" [ref=e2481]
+                      - gridcell "Q68" [ref=e2482]
+                      - gridcell "R68" [ref=e2483]
+                      - gridcell "S68" [ref=e2484]
+                      - gridcell "T68" [ref=e2485]
+                      - gridcell "U68" [ref=e2486]
+                      - gridcell "V68" [ref=e2487]
+                      - gridcell "W68" [ref=e2488]
+                      - gridcell "X68" [ref=e2489]
+                      - gridcell "Y68" [ref=e2490]
+                      - gridcell "Z68" [ref=e2491]
+                    - row [ref=e2492]:
+                      - rowheader "69 69 行高" [ref=e2493]:
+                        - generic [ref=e2494]: "69"
+                        - separator "69 行高" [ref=e2495]
+                      - gridcell "A69" [ref=e2496]
+                      - gridcell "C69" [ref=e2497]
+                      - gridcell "D69" [ref=e2498]
+                      - gridcell "E69" [ref=e2499]
+                      - gridcell "F69" [ref=e2500]
+                      - gridcell "G69" [ref=e2501]
+                      - gridcell "H69" [ref=e2502]
+                      - gridcell "I69" [ref=e2503]
+                      - gridcell "J69" [ref=e2504]
+                      - gridcell "K69" [ref=e2505]
+                      - gridcell "L69" [ref=e2506]
+                      - gridcell "M69" [ref=e2507]
+                      - gridcell "N69" [ref=e2508]
+                      - gridcell "O69" [ref=e2509]
+                      - gridcell "P69" [ref=e2510]
+                      - gridcell "Q69" [ref=e2511]
+                      - gridcell "R69" [ref=e2512]
+                      - gridcell "S69" [ref=e2513]
+                      - gridcell "T69" [ref=e2514]
+                      - gridcell "U69" [ref=e2515]
+                      - gridcell "V69" [ref=e2516]
+                      - gridcell "W69" [ref=e2517]
+                      - gridcell "X69" [ref=e2518]
+                      - gridcell "Y69" [ref=e2519]
+                      - gridcell "Z69" [ref=e2520]
+                    - row [ref=e2521]:
+                      - rowheader "70 70 行高" [ref=e2522]:
+                        - generic [ref=e2523]: "70"
+                        - separator "70 行高" [ref=e2524]
+                      - gridcell "A70" [ref=e2525]
+                      - gridcell "C70" [ref=e2526]
+                      - gridcell "D70" [ref=e2527]
+                      - gridcell "E70" [ref=e2528]
+                      - gridcell "F70" [ref=e2529]
+                      - gridcell "G70" [ref=e2530]
+                      - gridcell "H70" [ref=e2531]
+                      - gridcell "I70" [ref=e2532]
+                      - gridcell "J70" [ref=e2533]
+                      - gridcell "K70" [ref=e2534]
+                      - gridcell "L70" [ref=e2535]
+                      - gridcell "M70" [ref=e2536]
+                      - gridcell "N70" [ref=e2537]
+                      - gridcell "O70" [ref=e2538]
+                      - gridcell "P70" [ref=e2539]
+                      - gridcell "Q70" [ref=e2540]
+                      - gridcell "R70" [ref=e2541]
+                      - gridcell "S70" [ref=e2542]
+                      - gridcell "T70" [ref=e2543]
+                      - gridcell "U70" [ref=e2544]
+                      - gridcell "V70" [ref=e2545]
+                      - gridcell "W70" [ref=e2546]
+                      - gridcell "X70" [ref=e2547]
+                      - gridcell "Y70" [ref=e2548]
+                      - gridcell "Z70" [ref=e2549]
+                    - row [ref=e2550]:
+                      - rowheader "71 71 行高" [ref=e2551]:
+                        - generic [ref=e2552]: "71"
+                        - separator "71 行高" [ref=e2553]
+                      - gridcell "A71" [ref=e2554]
+                      - gridcell "C71" [ref=e2555]
+                      - gridcell "D71" [ref=e2556]
+                      - gridcell "E71" [ref=e2557]
+                      - gridcell "F71" [ref=e2558]
+                      - gridcell "G71" [ref=e2559]
+                      - gridcell "H71" [ref=e2560]
+                      - gridcell "I71" [ref=e2561]
+                      - gridcell "J71" [ref=e2562]
+                      - gridcell "K71" [ref=e2563]
+                      - gridcell "L71" [ref=e2564]
+                      - gridcell "M71" [ref=e2565]
+                      - gridcell "N71" [ref=e2566]
+                      - gridcell "O71" [ref=e2567]
+                      - gridcell "P71" [ref=e2568]
+                      - gridcell "Q71" [ref=e2569]
+                      - gridcell "R71" [ref=e2570]
+                      - gridcell "S71" [ref=e2571]
+                      - gridcell "T71" [ref=e2572]
+                      - gridcell "U71" [ref=e2573]
+                      - gridcell "V71" [ref=e2574]
+                      - gridcell "W71" [ref=e2575]
+                      - gridcell "X71" [ref=e2576]
+                      - gridcell "Y71" [ref=e2577]
+                      - gridcell "Z71" [ref=e2578]
+                    - row [ref=e2579]:
+                      - rowheader "72 72 行高" [ref=e2580]:
+                        - generic [ref=e2581]: "72"
+                        - separator "72 行高" [ref=e2582]
+                      - gridcell "A72" [ref=e2583]
+                      - gridcell "C72" [ref=e2584]
+                      - gridcell "D72" [ref=e2585]
+                      - gridcell "E72" [ref=e2586]
+                      - gridcell "F72" [ref=e2587]
+                      - gridcell "G72" [ref=e2588]
+                      - gridcell "H72" [ref=e2589]
+                      - gridcell "I72" [ref=e2590]
+                      - gridcell "J72" [ref=e2591]
+                      - gridcell "K72" [ref=e2592]
+                      - gridcell "L72" [ref=e2593]
+                      - gridcell "M72" [ref=e2594]
+                      - gridcell "N72" [ref=e2595]
+                      - gridcell "O72" [ref=e2596]
+                      - gridcell "P72" [ref=e2597]
+                      - gridcell "Q72" [ref=e2598]
+                      - gridcell "R72" [ref=e2599]
+                      - gridcell "S72" [ref=e2600]
+                      - gridcell "T72" [ref=e2601]
+                      - gridcell "U72" [ref=e2602]
+                      - gridcell "V72" [ref=e2603]
+                      - gridcell "W72" [ref=e2604]
+                      - gridcell "X72" [ref=e2605]
+                      - gridcell "Y72" [ref=e2606]
+                      - gridcell "Z72" [ref=e2607]
+                    - row [ref=e2608]:
+                      - rowheader "73 73 行高" [ref=e2609]:
+                        - generic [ref=e2610]: "73"
+                        - separator "73 行高" [ref=e2611]
+                      - gridcell "A73" [ref=e2612]
+                      - gridcell "C73" [ref=e2613]
+                      - gridcell "D73" [ref=e2614]
+                      - gridcell "E73" [ref=e2615]
+                      - gridcell "F73" [ref=e2616]
+                      - gridcell "G73" [ref=e2617]
+                      - gridcell "H73" [ref=e2618]
+                      - gridcell "I73" [ref=e2619]
+                      - gridcell "J73" [ref=e2620]
+                      - gridcell "K73" [ref=e2621]
+                      - gridcell "L73" [ref=e2622]
+                      - gridcell "M73" [ref=e2623]
+                      - gridcell "N73" [ref=e2624]
+                      - gridcell "O73" [ref=e2625]
+                      - gridcell "P73" [ref=e2626]
+                      - gridcell "Q73" [ref=e2627]
+                      - gridcell "R73" [ref=e2628]
+                      - gridcell "S73" [ref=e2629]
+                      - gridcell "T73" [ref=e2630]
+                      - gridcell "U73" [ref=e2631]
+                      - gridcell "V73" [ref=e2632]
+                      - gridcell "W73" [ref=e2633]
+                      - gridcell "X73" [ref=e2634]
+                      - gridcell "Y73" [ref=e2635]
+                      - gridcell "Z73" [ref=e2636]
+                    - row [ref=e2637]:
+                      - rowheader "74 74 行高" [ref=e2638]:
+                        - generic [ref=e2639]: "74"
+                        - separator "74 行高" [ref=e2640]
+                      - gridcell "A74" [ref=e2641]
+                      - gridcell "C74" [ref=e2642]
+                      - gridcell "D74" [ref=e2643]
+                      - gridcell "E74" [ref=e2644]
+                      - gridcell "F74" [ref=e2645]
+                      - gridcell "G74" [ref=e2646]
+                      - gridcell "H74" [ref=e2647]
+                      - gridcell "I74" [ref=e2648]
+                      - gridcell "J74" [ref=e2649]
+                      - gridcell "K74" [ref=e2650]
+                      - gridcell "L74" [ref=e2651]
+                      - gridcell "M74" [ref=e2652]
+                      - gridcell "N74" [ref=e2653]
+                      - gridcell "O74" [ref=e2654]
+                      - gridcell "P74" [ref=e2655]
+                      - gridcell "Q74" [ref=e2656]
+                      - gridcell "R74" [ref=e2657]
+                      - gridcell "S74" [ref=e2658]
+                      - gridcell "T74" [ref=e2659]
+                      - gridcell "U74" [ref=e2660]
+                      - gridcell "V74" [ref=e2661]
+                      - gridcell "W74" [ref=e2662]
+                      - gridcell "X74" [ref=e2663]
+                      - gridcell "Y74" [ref=e2664]
+                      - gridcell "Z74" [ref=e2665]
+                    - row [ref=e2666]:
+                      - rowheader "75 75 行高" [ref=e2667]:
+                        - generic [ref=e2668]: "75"
+                        - separator "75 行高" [ref=e2669]
+                      - gridcell "A75" [ref=e2670]
+                      - gridcell "C75" [ref=e2671]
+                      - gridcell "D75" [ref=e2672]
+                      - gridcell "E75" [ref=e2673]
+                      - gridcell "F75" [ref=e2674]
+                      - gridcell "G75" [ref=e2675]
+                      - gridcell "H75" [ref=e2676]
+                      - gridcell "I75" [ref=e2677]
+                      - gridcell "J75" [ref=e2678]
+                      - gridcell "K75" [ref=e2679]
+                      - gridcell "L75" [ref=e2680]
+                      - gridcell "M75" [ref=e2681]
+                      - gridcell "N75" [ref=e2682]
+                      - gridcell "O75" [ref=e2683]
+                      - gridcell "P75" [ref=e2684]
+                      - gridcell "Q75" [ref=e2685]
+                      - gridcell "R75" [ref=e2686]
+                      - gridcell "S75" [ref=e2687]
+                      - gridcell "T75" [ref=e2688]
+                      - gridcell "U75" [ref=e2689]
+                      - gridcell "V75" [ref=e2690]
+                      - gridcell "W75" [ref=e2691]
+                      - gridcell "X75" [ref=e2692]
+                      - gridcell "Y75" [ref=e2693]
+                      - gridcell "Z75" [ref=e2694]
+                    - row [ref=e2695]:
+                      - rowheader "76 76 行高" [ref=e2696]:
+                        - generic [ref=e2697]: "76"
+                        - separator "76 行高" [ref=e2698]
+                      - gridcell "A76" [ref=e2699]
+                      - gridcell "C76" [ref=e2700]
+                      - gridcell "D76" [ref=e2701]
+                      - gridcell "E76" [ref=e2702]
+                      - gridcell "F76" [ref=e2703]
+                      - gridcell "G76" [ref=e2704]
+                      - gridcell "H76" [ref=e2705]
+                      - gridcell "I76" [ref=e2706]
+                      - gridcell "J76" [ref=e2707]
+                      - gridcell "K76" [ref=e2708]
+                      - gridcell "L76" [ref=e2709]
+                      - gridcell "M76" [ref=e2710]
+                      - gridcell "N76" [ref=e2711]
+                      - gridcell "O76" [ref=e2712]
+                      - gridcell "P76" [ref=e2713]
+                      - gridcell "Q76" [ref=e2714]
+                      - gridcell "R76" [ref=e2715]
+                      - gridcell "S76" [ref=e2716]
+                      - gridcell "T76" [ref=e2717]
+                      - gridcell "U76" [ref=e2718]
+                      - gridcell "V76" [ref=e2719]
+                      - gridcell "W76" [ref=e2720]
+                      - gridcell "X76" [ref=e2721]
+                      - gridcell "Y76" [ref=e2722]
+                      - gridcell "Z76" [ref=e2723]
+                    - row [ref=e2724]:
+                      - rowheader "77 77 行高" [ref=e2725]:
+                        - generic [ref=e2726]: "77"
+                        - separator "77 行高" [ref=e2727]
+                      - gridcell "A77" [ref=e2728]
+                      - gridcell "C77" [ref=e2729]
+                      - gridcell "D77" [ref=e2730]
+                      - gridcell "E77" [ref=e2731]
+                      - gridcell "F77" [ref=e2732]
+                      - gridcell "G77" [ref=e2733]
+                      - gridcell "H77" [ref=e2734]
+                      - gridcell "I77" [ref=e2735]
+                      - gridcell "J77" [ref=e2736]
+                      - gridcell "K77" [ref=e2737]
+                      - gridcell "L77" [ref=e2738]
+                      - gridcell "M77" [ref=e2739]
+                      - gridcell "N77" [ref=e2740]
+                      - gridcell "O77" [ref=e2741]
+                      - gridcell "P77" [ref=e2742]
+                      - gridcell "Q77" [ref=e2743]
+                      - gridcell "R77" [ref=e2744]
+                      - gridcell "S77" [ref=e2745]
+                      - gridcell "T77" [ref=e2746]
+                      - gridcell "U77" [ref=e2747]
+                      - gridcell "V77" [ref=e2748]
+                      - gridcell "W77" [ref=e2749]
+                      - gridcell "X77" [ref=e2750]
+                      - gridcell "Y77" [ref=e2751]
+                      - gridcell "Z77" [ref=e2752]
+                    - row [ref=e2753]:
+                      - rowheader "78 78 行高" [ref=e2754]:
+                        - generic [ref=e2755]: "78"
+                        - separator "78 行高" [ref=e2756]
+                      - gridcell "A78" [ref=e2757]
+                      - gridcell "C78" [ref=e2758]
+                      - gridcell "D78" [ref=e2759]
+                      - gridcell "E78" [ref=e2760]
+                      - gridcell "F78" [ref=e2761]
+                      - gridcell "G78" [ref=e2762]
+                      - gridcell "H78" [ref=e2763]
+                      - gridcell "I78" [ref=e2764]
+                      - gridcell "J78" [ref=e2765]
+                      - gridcell "K78" [ref=e2766]
+                      - gridcell "L78" [ref=e2767]
+                      - gridcell "M78" [ref=e2768]
+                      - gridcell "N78" [ref=e2769]
+                      - gridcell "O78" [ref=e2770]
+                      - gridcell "P78" [ref=e2771]
+                      - gridcell "Q78" [ref=e2772]
+                      - gridcell "R78" [ref=e2773]
+                      - gridcell "S78" [ref=e2774]
+                      - gridcell "T78" [ref=e2775]
+                      - gridcell "U78" [ref=e2776]
+                      - gridcell "V78" [ref=e2777]
+                      - gridcell "W78" [ref=e2778]
+                      - gridcell "X78" [ref=e2779]
+                      - gridcell "Y78" [ref=e2780]
+                      - gridcell "Z78" [ref=e2781]
+                    - row [ref=e2782]:
+                      - rowheader "79 79 行高" [ref=e2783]:
+                        - generic [ref=e2784]: "79"
+                        - separator "79 行高" [ref=e2785]
+                      - gridcell "A79" [ref=e2786]
+                      - gridcell "C79" [ref=e2787]
+                      - gridcell "D79" [ref=e2788]
+                      - gridcell "E79" [ref=e2789]
+                      - gridcell "F79" [ref=e2790]
+                      - gridcell "G79" [ref=e2791]
+                      - gridcell "H79" [ref=e2792]
+                      - gridcell "I79" [ref=e2793]
+                      - gridcell "J79" [ref=e2794]
+                      - gridcell "K79" [ref=e2795]
+                      - gridcell "L79" [ref=e2796]
+                      - gridcell "M79" [ref=e2797]
+                      - gridcell "N79" [ref=e2798]
+                      - gridcell "O79" [ref=e2799]
+                      - gridcell "P79" [ref=e2800]
+                      - gridcell "Q79" [ref=e2801]
+                      - gridcell "R79" [ref=e2802]
+                      - gridcell "S79" [ref=e2803]
+                      - gridcell "T79" [ref=e2804]
+                      - gridcell "U79" [ref=e2805]
+                      - gridcell "V79" [ref=e2806]
+                      - gridcell "W79" [ref=e2807]
+                      - gridcell "X79" [ref=e2808]
+                      - gridcell "Y79" [ref=e2809]
+                      - gridcell "Z79" [ref=e2810]
+                    - row [ref=e2811]:
+                      - rowheader "80 80 行高" [ref=e2812]:
+                        - generic [ref=e2813]: "80"
+                        - separator "80 行高" [ref=e2814]
+                      - gridcell "A80" [ref=e2815]
+                      - gridcell "C80" [ref=e2816]
+                      - gridcell "D80" [ref=e2817]
+                      - gridcell "E80" [ref=e2818]
+                      - gridcell "F80" [ref=e2819]
+                      - gridcell "G80" [ref=e2820]
+                      - gridcell "H80" [ref=e2821]
+                      - gridcell "I80" [ref=e2822]
+                      - gridcell "J80" [ref=e2823]
+                      - gridcell "K80" [ref=e2824]
+                      - gridcell "L80" [ref=e2825]
+                      - gridcell "M80" [ref=e2826]
+                      - gridcell "N80" [ref=e2827]
+                      - gridcell "O80" [ref=e2828]
+                      - gridcell "P80" [ref=e2829]
+                      - gridcell "Q80" [ref=e2830]
+                      - gridcell "R80" [ref=e2831]
+                      - gridcell "S80" [ref=e2832]
+                      - gridcell "T80" [ref=e2833]
+                      - gridcell "U80" [ref=e2834]
+                      - gridcell "V80" [ref=e2835]
+                      - gridcell "W80" [ref=e2836]
+                      - gridcell "X80" [ref=e2837]
+                      - gridcell "Y80" [ref=e2838]
+                      - gridcell "Z80" [ref=e2839]
+                    - row [ref=e2840]:
+                      - rowheader "81 81 行高" [ref=e2841]:
+                        - generic [ref=e2842]: "81"
+                        - separator "81 行高" [ref=e2843]
+                      - gridcell "A81" [ref=e2844]
+                      - gridcell "C81" [ref=e2845]
+                      - gridcell "D81" [ref=e2846]
+                      - gridcell "E81" [ref=e2847]
+                      - gridcell "F81" [ref=e2848]
+                      - gridcell "G81" [ref=e2849]
+                      - gridcell "H81" [ref=e2850]
+                      - gridcell "I81" [ref=e2851]
+                      - gridcell "J81" [ref=e2852]
+                      - gridcell "K81" [ref=e2853]
+                      - gridcell "L81" [ref=e2854]
+                      - gridcell "M81" [ref=e2855]
+                      - gridcell "N81" [ref=e2856]
+                      - gridcell "O81" [ref=e2857]
+                      - gridcell "P81" [ref=e2858]
+                      - gridcell "Q81" [ref=e2859]
+                      - gridcell "R81" [ref=e2860]
+                      - gridcell "S81" [ref=e2861]
+                      - gridcell "T81" [ref=e2862]
+                      - gridcell "U81" [ref=e2863]
+                      - gridcell "V81" [ref=e2864]
+                      - gridcell "W81" [ref=e2865]
+                      - gridcell "X81" [ref=e2866]
+                      - gridcell "Y81" [ref=e2867]
+                      - gridcell "Z81" [ref=e2868]
+                    - row [ref=e2869]:
+                      - rowheader "82 82 行高" [ref=e2870]:
+                        - generic [ref=e2871]: "82"
+                        - separator "82 行高" [ref=e2872]
+                      - gridcell "A82" [ref=e2873]
+                      - gridcell "C82" [ref=e2874]
+                      - gridcell "D82" [ref=e2875]
+                      - gridcell "E82" [ref=e2876]
+                      - gridcell "F82" [ref=e2877]
+                      - gridcell "G82" [ref=e2878]
+                      - gridcell "H82" [ref=e2879]
+                      - gridcell "I82" [ref=e2880]
+                      - gridcell "J82" [ref=e2881]
+                      - gridcell "K82" [ref=e2882]
+                      - gridcell "L82" [ref=e2883]
+                      - gridcell "M82" [ref=e2884]
+                      - gridcell "N82" [ref=e2885]
+                      - gridcell "O82" [ref=e2886]
+                      - gridcell "P82" [ref=e2887]
+                      - gridcell "Q82" [ref=e2888]
+                      - gridcell "R82" [ref=e2889]
+                      - gridcell "S82" [ref=e2890]
+                      - gridcell "T82" [ref=e2891]
+                      - gridcell "U82" [ref=e2892]
+                      - gridcell "V82" [ref=e2893]
+                      - gridcell "W82" [ref=e2894]
+                      - gridcell "X82" [ref=e2895]
+                      - gridcell "Y82" [ref=e2896]
+                      - gridcell "Z82" [ref=e2897]
+                    - row [ref=e2898]:
+                      - rowheader "83 83 行高" [ref=e2899]:
+                        - generic [ref=e2900]: "83"
+                        - separator "83 行高" [ref=e2901]
+                      - gridcell "A83" [ref=e2902]
+                      - gridcell "C83" [ref=e2903]
+                      - gridcell "D83" [ref=e2904]
+                      - gridcell "E83" [ref=e2905]
+                      - gridcell "F83" [ref=e2906]
+                      - gridcell "G83" [ref=e2907]
+                      - gridcell "H83" [ref=e2908]
+                      - gridcell "I83" [ref=e2909]
+                      - gridcell "J83" [ref=e2910]
+                      - gridcell "K83" [ref=e2911]
+                      - gridcell "L83" [ref=e2912]
+                      - gridcell "M83" [ref=e2913]
+                      - gridcell "N83" [ref=e2914]
+                      - gridcell "O83" [ref=e2915]
+                      - gridcell "P83" [ref=e2916]
+                      - gridcell "Q83" [ref=e2917]
+                      - gridcell "R83" [ref=e2918]
+                      - gridcell "S83" [ref=e2919]
+                      - gridcell "T83" [ref=e2920]
+                      - gridcell "U83" [ref=e2921]
+                      - gridcell "V83" [ref=e2922]
+                      - gridcell "W83" [ref=e2923]
+                      - gridcell "X83" [ref=e2924]
+                      - gridcell "Y83" [ref=e2925]
+                      - gridcell "Z83" [ref=e2926]
+                    - row [ref=e2927]:
+                      - rowheader "84 84 行高" [ref=e2928]:
+                        - generic [ref=e2929]: "84"
+                        - separator "84 行高" [ref=e2930]
+                      - gridcell "A84" [ref=e2931]
+                      - gridcell "C84" [ref=e2932]
+                      - gridcell "D84" [ref=e2933]
+                      - gridcell "E84" [ref=e2934]
+                      - gridcell "F84" [ref=e2935]
+                      - gridcell "G84" [ref=e2936]
+                      - gridcell "H84" [ref=e2937]
+                      - gridcell "I84" [ref=e2938]
+                      - gridcell "J84" [ref=e2939]
+                      - gridcell "K84" [ref=e2940]
+                      - gridcell "L84" [ref=e2941]
+                      - gridcell "M84" [ref=e2942]
+                      - gridcell "N84" [ref=e2943]
+                      - gridcell "O84" [ref=e2944]
+                      - gridcell "P84" [ref=e2945]
+                      - gridcell "Q84" [ref=e2946]
+                      - gridcell "R84" [ref=e2947]
+                      - gridcell "S84" [ref=e2948]
+                      - gridcell "T84" [ref=e2949]
+                      - gridcell "U84" [ref=e2950]
+                      - gridcell "V84" [ref=e2951]
+                      - gridcell "W84" [ref=e2952]
+                      - gridcell "X84" [ref=e2953]
+                      - gridcell "Y84" [ref=e2954]
+                      - gridcell "Z84" [ref=e2955]
+                    - row [ref=e2956]:
+                      - rowheader "85 85 行高" [ref=e2957]:
+                        - generic [ref=e2958]: "85"
+                        - separator "85 行高" [ref=e2959]
+                      - gridcell "A85" [ref=e2960]
+                      - gridcell "C85" [ref=e2961]
+                      - gridcell "D85" [ref=e2962]
+                      - gridcell "E85" [ref=e2963]
+                      - gridcell "F85" [ref=e2964]
+                      - gridcell "G85" [ref=e2965]
+                      - gridcell "H85" [ref=e2966]
+                      - gridcell "I85" [ref=e2967]
+                      - gridcell "J85" [ref=e2968]
+                      - gridcell "K85" [ref=e2969]
+                      - gridcell "L85" [ref=e2970]
+                      - gridcell "M85" [ref=e2971]
+                      - gridcell "N85" [ref=e2972]
+                      - gridcell "O85" [ref=e2973]
+                      - gridcell "P85" [ref=e2974]
+                      - gridcell "Q85" [ref=e2975]
+                      - gridcell "R85" [ref=e2976]
+                      - gridcell "S85" [ref=e2977]
+                      - gridcell "T85" [ref=e2978]
+                      - gridcell "U85" [ref=e2979]
+                      - gridcell "V85" [ref=e2980]
+                      - gridcell "W85" [ref=e2981]
+                      - gridcell "X85" [ref=e2982]
+                      - gridcell "Y85" [ref=e2983]
+                      - gridcell "Z85" [ref=e2984]
+                    - row [ref=e2985]:
+                      - rowheader "86 86 行高" [ref=e2986]:
+                        - generic [ref=e2987]: "86"
+                        - separator "86 行高" [ref=e2988]
+                      - gridcell "A86" [ref=e2989]
+                      - gridcell "C86" [ref=e2990]
+                      - gridcell "D86" [ref=e2991]
+                      - gridcell "E86" [ref=e2992]
+                      - gridcell "F86" [ref=e2993]
+                      - gridcell "G86" [ref=e2994]
+                      - gridcell "H86" [ref=e2995]
+                      - gridcell "I86" [ref=e2996]
+                      - gridcell "J86" [ref=e2997]
+                      - gridcell "K86" [ref=e2998]
+                      - gridcell "L86" [ref=e2999]
+                      - gridcell "M86" [ref=e3000]
+                      - gridcell "N86" [ref=e3001]
+                      - gridcell "O86" [ref=e3002]
+                      - gridcell "P86" [ref=e3003]
+                      - gridcell "Q86" [ref=e3004]
+                      - gridcell "R86" [ref=e3005]
+                      - gridcell "S86" [ref=e3006]
+                      - gridcell "T86" [ref=e3007]
+                      - gridcell "U86" [ref=e3008]
+                      - gridcell "V86" [ref=e3009]
+                      - gridcell "W86" [ref=e3010]
+                      - gridcell "X86" [ref=e3011]
+                      - gridcell "Y86" [ref=e3012]
+                      - gridcell "Z86" [ref=e3013]
+                    - row [ref=e3014]:
+                      - rowheader "87 87 行高" [ref=e3015]:
+                        - generic [ref=e3016]: "87"
+                        - separator "87 行高" [ref=e3017]
+                      - gridcell "A87" [ref=e3018]
+                      - gridcell "C87" [ref=e3019]
+                      - gridcell "D87" [ref=e3020]
+                      - gridcell "E87" [ref=e3021]
+                      - gridcell "F87" [ref=e3022]
+                      - gridcell "G87" [ref=e3023]
+                      - gridcell "H87" [ref=e3024]
+                      - gridcell "I87" [ref=e3025]
+                      - gridcell "J87" [ref=e3026]
+                      - gridcell "K87" [ref=e3027]
+                      - gridcell "L87" [ref=e3028]
+                      - gridcell "M87" [ref=e3029]
+                      - gridcell "N87" [ref=e3030]
+                      - gridcell "O87" [ref=e3031]
+                      - gridcell "P87" [ref=e3032]
+                      - gridcell "Q87" [ref=e3033]
+                      - gridcell "R87" [ref=e3034]
+                      - gridcell "S87" [ref=e3035]
+                      - gridcell "T87" [ref=e3036]
+                      - gridcell "U87" [ref=e3037]
+                      - gridcell "V87" [ref=e3038]
+                      - gridcell "W87" [ref=e3039]
+                      - gridcell "X87" [ref=e3040]
+                      - gridcell "Y87" [ref=e3041]
+                      - gridcell "Z87" [ref=e3042]
+                    - row [ref=e3043]:
+                      - rowheader "88 88 行高" [ref=e3044]:
+                        - generic [ref=e3045]: "88"
+                        - separator "88 行高" [ref=e3046]
+                      - gridcell "A88" [ref=e3047]
+                      - gridcell "C88" [ref=e3048]
+                      - gridcell "D88" [ref=e3049]
+                      - gridcell "E88" [ref=e3050]
+                      - gridcell "F88" [ref=e3051]
+                      - gridcell "G88" [ref=e3052]
+                      - gridcell "H88" [ref=e3053]
+                      - gridcell "I88" [ref=e3054]
+                      - gridcell "J88" [ref=e3055]
+                      - gridcell "K88" [ref=e3056]
+                      - gridcell "L88" [ref=e3057]
+                      - gridcell "M88" [ref=e3058]
+                      - gridcell "N88" [ref=e3059]
+                      - gridcell "O88" [ref=e3060]
+                      - gridcell "P88" [ref=e3061]
+                      - gridcell "Q88" [ref=e3062]
+                      - gridcell "R88" [ref=e3063]
+                      - gridcell "S88" [ref=e3064]
+                      - gridcell "T88" [ref=e3065]
+                      - gridcell "U88" [ref=e3066]
+                      - gridcell "V88" [ref=e3067]
+                      - gridcell "W88" [ref=e3068]
+                      - gridcell "X88" [ref=e3069]
+                      - gridcell "Y88" [ref=e3070]
+                      - gridcell "Z88" [ref=e3071]
+                    - row [ref=e3072]:
+                      - rowheader "89 89 行高" [ref=e3073]:
+                        - generic [ref=e3074]: "89"
+                        - separator "89 行高" [ref=e3075]
+                      - gridcell "A89" [ref=e3076]
+                      - gridcell "C89" [ref=e3077]
+                      - gridcell "D89" [ref=e3078]
+                      - gridcell "E89" [ref=e3079]
+                      - gridcell "F89" [ref=e3080]
+                      - gridcell "G89" [ref=e3081]
+                      - gridcell "H89" [ref=e3082]
+                      - gridcell "I89" [ref=e3083]
+                      - gridcell "J89" [ref=e3084]
+                      - gridcell "K89" [ref=e3085]
+                      - gridcell "L89" [ref=e3086]
+                      - gridcell "M89" [ref=e3087]
+                      - gridcell "N89" [ref=e3088]
+                      - gridcell "O89" [ref=e3089]
+                      - gridcell "P89" [ref=e3090]
+                      - gridcell "Q89" [ref=e3091]
+                      - gridcell "R89" [ref=e3092]
+                      - gridcell "S89" [ref=e3093]
+                      - gridcell "T89" [ref=e3094]
+                      - gridcell "U89" [ref=e3095]
+                      - gridcell "V89" [ref=e3096]
+                      - gridcell "W89" [ref=e3097]
+                      - gridcell "X89" [ref=e3098]
+                      - gridcell "Y89" [ref=e3099]
+                      - gridcell "Z89" [ref=e3100]
+                    - row [ref=e3101]:
+                      - rowheader "90 90 行高" [ref=e3102]:
+                        - generic [ref=e3103]: "90"
+                        - separator "90 行高" [ref=e3104]
+                      - gridcell "A90" [ref=e3105]
+                      - gridcell "C90" [ref=e3106]
+                      - gridcell "D90" [ref=e3107]
+                      - gridcell "E90" [ref=e3108]
+                      - gridcell "F90" [ref=e3109]
+                      - gridcell "G90" [ref=e3110]
+                      - gridcell "H90" [ref=e3111]
+                      - gridcell "I90" [ref=e3112]
+                      - gridcell "J90" [ref=e3113]
+                      - gridcell "K90" [ref=e3114]
+                      - gridcell "L90" [ref=e3115]
+                      - gridcell "M90" [ref=e3116]
+                      - gridcell "N90" [ref=e3117]
+                      - gridcell "O90" [ref=e3118]
+                      - gridcell "P90" [ref=e3119]
+                      - gridcell "Q90" [ref=e3120]
+                      - gridcell "R90" [ref=e3121]
+                      - gridcell "S90" [ref=e3122]
+                      - gridcell "T90" [ref=e3123]
+                      - gridcell "U90" [ref=e3124]
+                      - gridcell "V90" [ref=e3125]
+                      - gridcell "W90" [ref=e3126]
+                      - gridcell "X90" [ref=e3127]
+                      - gridcell "Y90" [ref=e3128]
+                      - gridcell "Z90" [ref=e3129]
+                    - row [ref=e3130]:
+                      - rowheader "91 91 行高" [ref=e3131]:
+                        - generic [ref=e3132]: "91"
+                        - separator "91 行高" [ref=e3133]
+                      - gridcell "A91" [ref=e3134]
+                      - gridcell "C91" [ref=e3135]
+                      - gridcell "D91" [ref=e3136]
+                      - gridcell "E91" [ref=e3137]
+                      - gridcell "F91" [ref=e3138]
+                      - gridcell "G91" [ref=e3139]
+                      - gridcell "H91" [ref=e3140]
+                      - gridcell "I91" [ref=e3141]
+                      - gridcell "J91" [ref=e3142]
+                      - gridcell "K91" [ref=e3143]
+                      - gridcell "L91" [ref=e3144]
+                      - gridcell "M91" [ref=e3145]
+                      - gridcell "N91" [ref=e3146]
+                      - gridcell "O91" [ref=e3147]
+                      - gridcell "P91" [ref=e3148]
+                      - gridcell "Q91" [ref=e3149]
+                      - gridcell "R91" [ref=e3150]
+                      - gridcell "S91" [ref=e3151]
+                      - gridcell "T91" [ref=e3152]
+                      - gridcell "U91" [ref=e3153]
+                      - gridcell "V91" [ref=e3154]
+                      - gridcell "W91" [ref=e3155]
+                      - gridcell "X91" [ref=e3156]
+                      - gridcell "Y91" [ref=e3157]
+                      - gridcell "Z91" [ref=e3158]
+                    - row [ref=e3159]:
+                      - rowheader "92 92 行高" [ref=e3160]:
+                        - generic [ref=e3161]: "92"
+                        - separator "92 行高" [ref=e3162]
+                      - gridcell "A92" [ref=e3163]
+                      - gridcell "C92" [ref=e3164]
+                      - gridcell "D92" [ref=e3165]
+                      - gridcell "E92" [ref=e3166]
+                      - gridcell "F92" [ref=e3167]
+                      - gridcell "G92" [ref=e3168]
+                      - gridcell "H92" [ref=e3169]
+                      - gridcell "I92" [ref=e3170]
+                      - gridcell "J92" [ref=e3171]
+                      - gridcell "K92" [ref=e3172]
+                      - gridcell "L92" [ref=e3173]
+                      - gridcell "M92" [ref=e3174]
+                      - gridcell "N92" [ref=e3175]
+                      - gridcell "O92" [ref=e3176]
+                      - gridcell "P92" [ref=e3177]
+                      - gridcell "Q92" [ref=e3178]
+                      - gridcell "R92" [ref=e3179]
+                      - gridcell "S92" [ref=e3180]
+                      - gridcell "T92" [ref=e3181]
+                      - gridcell "U92" [ref=e3182]
+                      - gridcell "V92" [ref=e3183]
+                      - gridcell "W92" [ref=e3184]
+                      - gridcell "X92" [ref=e3185]
+                      - gridcell "Y92" [ref=e3186]
+                      - gridcell "Z92" [ref=e3187]
+                    - row [ref=e3188]:
+                      - rowheader "93 93 行高" [ref=e3189]:
+                        - generic [ref=e3190]: "93"
+                        - separator "93 行高" [ref=e3191]
+                      - gridcell "A93" [ref=e3192]
+                      - gridcell "C93" [ref=e3193]
+                      - gridcell "D93" [ref=e3194]
+                      - gridcell "E93" [ref=e3195]
+                      - gridcell "F93" [ref=e3196]
+                      - gridcell "G93" [ref=e3197]
+                      - gridcell "H93" [ref=e3198]
+                      - gridcell "I93" [ref=e3199]
+                      - gridcell "J93" [ref=e3200]
+                      - gridcell "K93" [ref=e3201]
+                      - gridcell "L93" [ref=e3202]
+                      - gridcell "M93" [ref=e3203]
+                      - gridcell "N93" [ref=e3204]
+                      - gridcell "O93" [ref=e3205]
+                      - gridcell "P93" [ref=e3206]
+                      - gridcell "Q93" [ref=e3207]
+                      - gridcell "R93" [ref=e3208]
+                      - gridcell "S93" [ref=e3209]
+                      - gridcell "T93" [ref=e3210]
+                      - gridcell "U93" [ref=e3211]
+                      - gridcell "V93" [ref=e3212]
+                      - gridcell "W93" [ref=e3213]
+                      - gridcell "X93" [ref=e3214]
+                      - gridcell "Y93" [ref=e3215]
+                      - gridcell "Z93" [ref=e3216]
+                    - row [ref=e3217]:
+                      - rowheader "94 94 行高" [ref=e3218]:
+                        - generic [ref=e3219]: "94"
+                        - separator "94 行高" [ref=e3220]
+                      - gridcell "A94" [ref=e3221]
+                      - gridcell "C94" [ref=e3222]
+                      - gridcell "D94" [ref=e3223]
+                      - gridcell "E94" [ref=e3224]
+                      - gridcell "F94" [ref=e3225]
+                      - gridcell "G94" [ref=e3226]
+                      - gridcell "H94" [ref=e3227]
+                      - gridcell "I94" [ref=e3228]
+                      - gridcell "J94" [ref=e3229]
+                      - gridcell "K94" [ref=e3230]
+                      - gridcell "L94" [ref=e3231]
+                      - gridcell "M94" [ref=e3232]
+                      - gridcell "N94" [ref=e3233]
+                      - gridcell "O94" [ref=e3234]
+                      - gridcell "P94" [ref=e3235]
+                      - gridcell "Q94" [ref=e3236]
+                      - gridcell "R94" [ref=e3237]
+                      - gridcell "S94" [ref=e3238]
+                      - gridcell "T94" [ref=e3239]
+                      - gridcell "U94" [ref=e3240]
+                      - gridcell "V94" [ref=e3241]
+                      - gridcell "W94" [ref=e3242]
+                      - gridcell "X94" [ref=e3243]
+                      - gridcell "Y94" [ref=e3244]
+                      - gridcell "Z94" [ref=e3245]
+                  - button "填充柄" [ref=e3246]
+                - generic [ref=e3247]:
+                  - tablist "工作表" [ref=e3249]:
+                    - tab "Main" [selected] [ref=e3250] [cursor=pointer]
+                    - tab "HiddenMaster" [ref=e3251] [cursor=pointer]
+                    - tab "SmallNative" [ref=e3252] [cursor=pointer]
+                  - button "新增工作表" [ref=e3253] [cursor=pointer]
+                  - button "删除工作表" [ref=e3256] [cursor=pointer]
+                  - status "工作表视图已更新；可撤销。" [ref=e3261]
+                  - generic "C4 · 求和 10 · 平均 10" [ref=e3262]
+            - paragraph [ref=e3263]: 文件保存在当前浏览器的本地文档空间。需要长期留存时，请导出文件。
+          - group [ref=e3264]:
+            - generic "示例代码" [ref=e3265] [cursor=pointer]:
+              - generic [aria-hidden] [ref=e3266]: </>
+              - text: 示例代码
+              - generic [aria-hidden] [ref=e3267]: 展开 / 收起
+        - heading "编辑能力" [level=2] [ref=e3268]
+        - table [ref=e3270]:
+          - rowgroup [ref=e3271]:
+            - row [ref=e3272]:
+              - columnheader "文档" [ref=e3273]
+              - columnheader "支持的操作" [ref=e3274]
+              - columnheader "当前范围" [ref=e3275]
+          - rowgroup [ref=e3276]:
+            - row [ref=e3277]:
+              - cell "Word" [ref=e3278]
+              - cell "字体与小数字号输入、正文排版、列表、表格、图片、页眉页脚、页码、查找替换、页面设置、撤销重做；导入与导出 DOCX" [ref=e3279]
+              - cell "支持内嵌图片与单节文档。修订、目录、浮动对象等复杂结构会提示暂不支持。" [ref=e3280]
+            - row [ref=e3281]:
+              - cell "Excel" [ref=e3282]
+              - cell "单元格与矩形选区、字体与小数字号输入、手动与自动行高/列宽、查找替换、边框与垂直对齐、清除格式、公式和跨表引用、格式、复制粘贴、工作表增删、行列插入删除、合并、冻结、排序、筛选、柱状图与折线图；导入与导出 XLSX" [ref=e3283]
+              - cell "10,000 行、256 列、32 张表、100,000 个已使用单元格。透视、宏、数组公式及复杂图表暂不支持。" [ref=e3284]
+            - row [ref=e3285]:
+              - cell "PDF" [ref=e3286]
+              - cell "分页与缩略图、缩放、旋转、全文查找、文字与高亮、矩形和手写批注、已有表单、撤销重做；导出 PDF" [ref=e3287]
+              - cell "批注和表单编辑。任意原始文字修改、原文重排及扫描件 OCR 暂不支持。" [ref=e3288]
+        - heading "组件接入" [level=2] [ref=e3289]
+        - paragraph [ref=e3290]: UI 组件使用 Tiptap / ProseMirror 和公式计算库；文件适配使用 docx、ExcelJS、pdf-lib 与 PDF.js。本页无需文档服务器。宿主可以替换保存与导入导出回调，接入自己的文件系统。
+        - paragraph [ref=e3291]:
+          - text: PDF 的 worker、字体与渲染由
+          - code [ref=e3292]: pdfRenderer
+          - text: 提供。本页的适配代码位于
+          - code [ref=e3293]: docs/src/pages/collaboration/office-studio/
+          - text: 。组件自 v0.4.0 起随
+          - code [ref=e3294]: "@zuvi/react"
+          - text: 和 Registry 发布。
+        - region "组件属性表，可横向滚动" [ref=e3295]:
+          - table [ref=e3296]:
+            - rowgroup [ref=e3297]:
+              - row [ref=e3298]:
+                - columnheader "属性名" [ref=e3299]
+                - columnheader "类型" [ref=e3300]
+                - columnheader "默认值" [ref=e3301]
+                - columnheader "说明" [ref=e3302]
+            - rowgroup [ref=e3303]:
+              - row [ref=e3304]:
+                - cell "value / defaultValue" [ref=e3305]
+                - cell [ref=e3306]:
+                  - code [ref=e3307]: OfficeStudioDocument
+                - cell [ref=e3308]:
+                  - code [ref=e3309]: —
+                - cell "受控文档或非受控初始文档；支持 Word、Excel、PDF 三种模型。" [ref=e3310]
+              - row [ref=e3311]:
+                - cell "onChange" [ref=e3312]
+                - cell [ref=e3313]:
+                  - code [ref=e3314]: (document) => void
+                - cell [ref=e3315]:
+                  - code [ref=e3316]: —
+                - cell "内容或文件名称变化。" [ref=e3317]
+              - row [ref=e3318]:
+                - cell "source / pdfRenderer" [ref=e3319]
+                - cell [ref=e3320]:
+                  - code [ref=e3321]: Blob / StudioPdfRenderer
+                - cell [ref=e3322]:
+                  - code [ref=e3323]: —
+                - cell "原始文件及 PDF 渲染适配；worker 资源由宿主管理。" [ref=e3324]
+              - row [ref=e3325]:
+                - cell "onSave / onExport / onPrint" [ref=e3326]
+                - cell [ref=e3327]:
+                  - code [ref=e3328]: (document) => void | Promise<void>
+                - cell [ref=e3329]:
+                  - code [ref=e3330]: —
+                - cell "宿主处理保存、导出或打印；返回后更新状态，失败可重试。" [ref=e3331]
+              - row [ref=e3332]:
+                - cell "onImport / onCreate" [ref=e3333]
+                - cell [ref=e3334]:
+                  - code [ref=e3335]: (file | kind) => void | Promise<void>
+                - cell [ref=e3336]:
+                  - code [ref=e3337]: —
+                - cell "宿主解析文件或创建模型，并更新受控值。" [ref=e3338]
+              - row [ref=e3339]:
+                - cell "readOnly / disabled" [ref=e3340]
+                - cell [ref=e3341]:
+                  - code [ref=e3342]: boolean
+                - cell [ref=e3343]:
+                  - code [ref=e3344]: "false"
+                - cell "只读预览或禁用编辑与文件操作。" [ref=e3345]
+              - row [ref=e3346]:
+                - cell "saveState" [ref=e3347]
+                - cell [ref=e3348]:
+                  - code [ref=e3349]: "'saved' | 'saving' | 'unsaved' | 'error'"
+                - cell [ref=e3350]:
+                  - code [ref=e3351]: —
+                - cell "宿主自动保存状态。" [ref=e3352]
+              - row [ref=e3353]:
+                - cell "height" [ref=e3354]
+                - cell [ref=e3355]:
+                  - code [ref=e3356]: number | string
+                - cell [ref=e3357]:
+                  - code [ref=e3358]: "760"
+                - cell "编辑器高度；100% 需要父容器设置确定高度。" [ref=e3359]
+              - row [ref=e3360]:
+                - cell "fullscreen / onFullscreenChange" [ref=e3361]
+                - cell [ref=e3362]:
+                  - code [ref=e3363]: boolean / (value) => void
+                - cell [ref=e3364]:
+                  - code [ref=e3365]: —
+                - cell "全屏布局，切换时编辑内容保持挂载。" [ref=e3366]
+              - row [ref=e3367]:
+                - cell "ref" [ref=e3368]
+                - cell [ref=e3369]:
+                  - code [ref=e3370]: OfficeStudioHandle
+                - cell [ref=e3371]:
+                  - code [ref=e3372]: —
+                - cell "getDocument()、save()、export()、print()、setFullscreen()。" [ref=e3373]
+              - row [ref=e3374]:
+                - cell "classNames" [ref=e3375]
+                - cell [ref=e3376]:
+                  - code [ref=e3377]: "{ root?; header?; title?; actions?; stage?; status?; error? }"
+                - cell [ref=e3378]:
+                  - code [ref=e3379]: —
+                - cell "追加语义结构类名，配合 data-part 与 CSS 变量定制。" [ref=e3380]
+  - text: ✓ ✓
+```
+
+# Test source
+
+```ts
+  277 |     const native = result.workbook.getWorksheet('Main')!;
+  278 |     expect(native.getCell('C5').value).toBe(11);
+  279 |     expect(native.getCell('C7').value).toBe(13);
+  280 |     expect(native.getCell('F14').value).toMatchObject({ formula: 'C4*2', result: 20 });
+  281 |     expect(native.model.merges).toContain('C9:E9');
+  282 |     expect(native.getColumn('B').hidden).toBe(true);
+  283 |     expect(native.getRow(2).hidden).toBe(true);
+  284 |     expect(native.getColumn('A').width).toBe(16);
+  285 |     expect(native.pageSetup.scale).toBe(83);
+  286 |     expect(native.pageSetup.showGridLines).toBe(true);
+  287 |     expect(native.pageSetup.showRowColHeaders).toBe(true);
+  288 |     expect(result.workbook.views[0].activeTab).toBe(0);
+  289 |     expect(result.workbook.views[1].activeTab).toBe(1);
+  290 |     expect(result.workbook.worksheets[result.workbook.views[1].activeTab!].name).toBe(
+  291 |       'HiddenMaster'
+  292 |     );
+  293 |     rounds.push({
+  294 |       file,
+  295 |       sha256: hash(bytes),
+  296 |       primary: result.views[1],
+  297 |       secondary: result.views[0],
+  298 |     });
+  299 |     await importFile(page, bytes, `View-reopened-${round}.xlsx`);
+  300 |     await expect(root).toHaveAttribute('data-sheet-zoom', '400');
+  301 |     await expect(root).toHaveAttribute('data-headers', 'false');
+  302 |     await range(page, 'C7');
+  303 |     await expect(cell('C7')).toHaveText('13');
+  304 |   }
+  305 |   await page.screenshot({
+  306 |     path: path.join(audit, 'view-reopened-400.png'),
+  307 |     fullPage: true,
+  308 |     animations: 'disabled',
+  309 |   });
+  310 |   await writeFile(
+  311 |     path.join(audit, 'browser-roundtrip-evidence.json'),
+  312 |     JSON.stringify(
+  313 |       { source: { file: 'view-source.xlsx', sha256: hash(source) }, initial, merged, rounds },
+  314 |       null,
+  315 |       2
+  316 |     ) + '\n'
+  317 |   );
+  318 | });
+  319 | 
+  320 | test('native small zoom, invalid draft cancellation and read-only preview preserve the saved XLSX view', async ({
+  321 |   page,
+  322 | }) => {
+  323 |   test.setTimeout(90000);
+  324 |   await mkdir(audit, { recursive: true });
+  325 |   const source = await fixture();
+  326 |   await writeFile(path.join(audit, 'view-preview-source.xlsx'), source);
+  327 |   await page.goto('/#/components/office-studio');
+  328 |   await importFile(page, source, 'Preview.xlsx');
+  329 |   await page.getByRole('tab', { name: 'SmallNative', exact: true }).click();
+  330 |   await page.getByRole('tab', { name: '视图', exact: true }).click();
+  331 |   const root = page.locator('.zuvi-studio-sheet');
+  332 |   const input = page.getByRole('textbox', { name: '工作表缩放百分比', exact: true });
+  333 |   await expect(root).toHaveAttribute('data-sheet-zoom', '10');
+  334 |   await expect(input).toHaveValue('10');
+  335 |   await expect(page.getByRole('button', { name: '缩小工作表', exact: true })).toBeDisabled();
+  336 |   await input.fill('250');
+  337 |   await input.press('Escape');
+  338 |   await expect(input).toHaveValue('10');
+  339 |   const afterCancel = await exportFile(page);
+  340 |   await writeFile(path.join(audit, 'view-after-cancel.xlsx'), afterCancel);
+  341 |   const cancelled = new ExcelJS.Workbook();
+  342 |   await cancelled.xlsx.load(afterCancel);
+  343 |   expect(cancelled.getWorksheet('SmallNative')!.views[0].zoomScale).toBe(10);
+  344 |   await input.fill('401');
+  345 |   await page.getByRole('button', { name: '导出文件', exact: true }).click();
+  346 |   await expect(root).toHaveAttribute('data-studio-input-error');
+  347 |   await expect(page.locator('.zuvi-office-studio')).toContainText('25 至 400');
+  348 |   await input.press('Escape');
+  349 |   await expect(root).not.toHaveAttribute('data-studio-input-error');
+  350 |   await page.getByRole('button', { name: '放大工作表', exact: true }).click();
+  351 |   await expect(root).toHaveAttribute('data-sheet-zoom', '25');
+  352 |   await page.getByRole('grid').press('Control+z');
+  353 |   await expect(root).toHaveAttribute('data-sheet-zoom', '10');
+  354 |   await page.getByRole('switch', { name: '只读预览', exact: true }).click();
+  355 |   await zoom(page, 75);
+  356 |   await page.getByRole('checkbox', { name: '显示行列标题', exact: true }).check();
+  357 |   await expect(page.getByRole('rowheader').first()).toBeVisible();
+  358 |   const previewBytes = await exportFile(page);
+  359 |   await writeFile(path.join(audit, 'view-readonly-preview.xlsx'), previewBytes);
+  360 |   const previewNative = new ExcelJS.Workbook();
+  361 |   await previewNative.xlsx.load(previewBytes);
+  362 |   expect(previewNative.getWorksheet('SmallNative')!.views[0].zoomScale).toBe(10);
+  363 |   expect(previewNative.getWorksheet('SmallNative')!.views[0].showRowColHeaders).toBe(false);
+  364 |   await page.getByRole('switch', { name: '只读预览', exact: true }).click();
+  365 |   await expect(root).toHaveAttribute('data-sheet-zoom', '10');
+  366 |   await expect(root).toHaveAttribute('data-headers', 'false');
+  367 |   await page.getByRole('tab', { name: 'Main', exact: true }).click();
+  368 |   await range(page, 'C4');
+  369 |   await page.getByRole('tab', { name: '开始', exact: true }).click();
+  370 |   await page.getByRole('button', { name: '保护所选区域', exact: true }).click();
+  371 |   await page.getByRole('tab', { name: '视图', exact: true }).click();
+  372 |   await zoom(page, 25);
+  373 |   const protectedBytes = await exportFile(page);
+  374 |   await writeFile(path.join(audit, 'view-protected.xlsx'), protectedBytes);
+  375 |   const nativeProtected = new ExcelJS.Workbook();
+  376 |   await nativeProtected.xlsx.load(protectedBytes);
+> 377 |   expect(nativeProtected.getWorksheet('Main')!.getCell('C4').protection.locked).toBe(true);
+      |                                                                        ^ TypeError: Cannot read properties of undefined (reading 'locked')
+  378 |   expect((await nativeView(protectedBytes)).views[1]).toContain('zoomScale="25"');
+  379 |   await page.screenshot({
+  380 |     path: path.join(audit, 'view-preview-guards.png'),
+  381 |     fullPage: true,
+  382 |     animations: 'disabled',
+  383 |   });
+  384 |   await writeFile(
+  385 |     path.join(audit, 'browser-preview-evidence.json'),
+  386 |     JSON.stringify(
+  387 |       {
+  388 |         source: hash(source),
+  389 |         cancel: hash(afterCancel),
+  390 |         readOnly: hash(previewBytes),
+  391 |         protected: hash(protectedBytes),
+  392 |         nativeZoom: 10,
+  393 |         localPreviewZoom: 75,
+  394 |         protectedViewZoom: 25,
+  395 |       },
+  396 |       null,
+  397 |       2
+  398 |     ) + '\n'
+  399 |   );
+  400 | });
+  401 | 
+  402 | test('view geometry, hidden merge masters and print stay consistent in light, dark and 320px layouts', async ({
+  403 |   page,
+  404 |   context,
+  405 | }) => {
+  406 |   test.setTimeout(150000);
+  407 |   await mkdir(audit, { recursive: true });
+  408 |   await installPrintCapture(page);
+  409 |   const source = await fixture();
+  410 |   await writeFile(path.join(audit, 'view-visual-source.xlsx'), source);
+  411 |   await page.goto('/#/components/office-studio');
+  412 |   await importFile(page, source, 'Visual.xlsx');
+  413 |   await page.getByRole('tab', { name: '视图', exact: true }).click();
+  414 |   const cell = (address: string) => page.getByRole('gridcell', { name: address, exact: true });
+  415 |   await page.evaluate(() => document.fonts.ready);
+  416 |   await range(page, 'A12');
+  417 |   const base = await geometry(cell('A12'));
+  418 |   const print100 = await capturePrint(page);
+  419 |   await writeFile(path.join(audit, 'view-print-100.html'), print100);
+  420 |   await zoom(page, 400);
+  421 |   await range(page, 'A12');
+  422 |   const enlarged = await geometry(cell('A12'));
+  423 |   expect(enlarged.width).toBeCloseTo(base.width * 4, 1);
+  424 |   expect(enlarged.height).toBeCloseTo(base.height * 4, 1);
+  425 |   expect(enlarged.lines).toHaveLength(base.lines.length);
+  426 |   for (let index = 0; index < base.lines.length; index++) {
+  427 |     expect(enlarged.lines[index].x).toBeCloseTo(base.lines[index].x * 4, 1);
+  428 |     expect(enlarged.lines[index].y).toBeCloseTo(base.lines[index].y * 4, 1);
+  429 |   }
+  430 |   await page.getByRole('checkbox', { name: '显示网格线', exact: true }).uncheck();
+  431 |   await page.getByRole('checkbox', { name: '显示行列标题', exact: true }).uncheck();
+  432 |   const print400 = await capturePrint(page);
+  433 |   await writeFile(path.join(audit, 'view-print-400.html'), print400);
+  434 |   expect(print400).toBe(print100);
+  435 |   const preview = await context.newPage();
+  436 |   await preview.setContent(print400);
+  437 |   await preview.evaluate(() => document.fonts.ready);
+  438 |   const printed = await geometry(
+  439 |     preview
+  440 |       .locator('.studio-print-sheet')
+  441 |       .first()
+  442 |       .locator('td')
+  443 |       .filter({ hasText: wrapped })
+  444 |       .first()
+  445 |   );
+  446 |   expect(printed.width).toBeCloseTo(base.width, 1);
+  447 |   expect(printed.height).toBeCloseTo(base.height, 1);
+  448 |   expect(printed.lines).toHaveLength(base.lines.length);
+  449 |   await preview.screenshot({
+  450 |     path: path.join(audit, 'view-print.png'),
+  451 |     fullPage: true,
+  452 |     animations: 'disabled',
+  453 |   });
+  454 |   await preview.pdf({
+  455 |     path: path.join(audit, 'view-print.pdf'),
+  456 |     preferCSSPageSize: true,
+  457 |     printBackground: true,
+  458 |   });
+  459 |   await preview.close();
+  460 |   await page.getByRole('tab', { name: 'HiddenMaster', exact: true }).click();
+  461 |   await zoom(page, 25);
+  462 |   await range(page, 'A1');
+  463 |   const hidden25 = await geometry(cell('A1'));
+  464 |   expect(hidden25.width).toBeCloseTo(base.width / 2, 1);
+  465 |   expect(hidden25.height).toBeGreaterThan(9.2);
+  466 |   await expect(cell('A1')).toHaveText('HIDDEN_MASTER');
+  467 |   await expect(cell('D3')).toHaveText('CONTROL_ROW');
+  468 |   await expect(cell('A3')).toHaveCount(0);
+  469 |   await expect(cell('D1')).toHaveCount(0);
+  470 |   await zoom(page, 400);
+  471 |   await range(page, 'A1');
+  472 |   const hidden400 = await geometry(cell('A1'));
+  473 |   expect(hidden400.width).toBeCloseTo(hidden25.width * 16, 1);
+  474 |   expect(hidden400.height).toBeCloseTo(hidden25.height * 16, 1);
+  475 |   await page.getByRole('tab', { name: 'Main', exact: true }).click();
+  476 |   await zoom(page, 25);
+  477 |   await range(page, 'A1');
+```

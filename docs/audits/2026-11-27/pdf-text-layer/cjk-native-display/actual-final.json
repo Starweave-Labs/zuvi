@@ -1,0 +1,866 @@
+{
+  "sourceHash": "7a4e322ddf8384e9631f64f8add9e940458270b07f203aae438bfb46a5032965",
+  "persisted": "7a4e322ddf8384e9631f64f8add9e940458270b07f203aae438bfb46a5032965",
+  "dom": [
+    {
+      "text": "中文自由文本：原生迁入后保留",
+      "role": "comment",
+      "position": "absolute",
+      "color": "rgba(0, 0, 0, 0)",
+      "opacity": "0",
+      "display": "block"
+    }
+  ],
+  "fonts": [
+    {
+      "family": "g_d0_sf2",
+      "status": "loaded"
+    },
+    {
+      "family": "g_d0_f3",
+      "status": "loaded"
+    }
+  ],
+  "paints": [
+    {
+      "text": "N",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "a",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "t",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "i",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "v",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "e",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": " ",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "P",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "D",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "F",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": " ",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "h",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "o",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "s",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "t",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": " ",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "m",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "i",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "g",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "r",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "a",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "t",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "i",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "o",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "n",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": ":",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": " ",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "p",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "a",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "g",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "e",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": " ",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "1",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "O",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "r",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "i",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "g",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "i",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "n",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "a",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "l",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": " ",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "C",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "o",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "n",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "t",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "e",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "n",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "t",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "s",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": " ",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "r",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "e",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "m",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "a",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "i",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "n",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": " ",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "i",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "n",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "d",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "e",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "p",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "e",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "n",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "d",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "e",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "n",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "t",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": " ",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "f",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "r",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "o",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "m",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": " ",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "n",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "a",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "t",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "i",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "v",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "e",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": " ",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "a",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "n",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "n",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "o",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "t",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "a",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "t",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "i",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "o",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "n",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "s",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": ".",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "",
+      "font": "16px g_d0_f3, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "",
+      "font": "16px g_d0_f3, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "",
+      "font": "16px g_d0_f3, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "",
+      "font": "16px g_d0_f3, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "",
+      "font": "16px g_d0_f3, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "",
+      "font": "16px g_d0_f3, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "􀙃",
+      "font": "16px g_d0_f3, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "",
+      "font": "16px g_d0_f3, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "",
+      "font": "16px g_d0_f3, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "􀃋",
+      "font": "16px g_d0_f3, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "",
+      "font": "16px g_d0_f3, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "",
+      "font": "16px g_d0_f3, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "",
+      "font": "16px g_d0_f3, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "",
+      "font": "16px g_d0_f3, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "A",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "c",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "c",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "e",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "p",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "t",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "e",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "d",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": " ",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "f",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "i",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "e",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "l",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "d",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "s",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": " ",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "a",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "n",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "d",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": " ",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "a",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "n",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "n",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "o",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "t",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "a",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "t",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "i",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "o",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "n",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    },
+    {
+      "text": "s",
+      "font": "16px Helvetica, g_d0_sf2, sans-serif",
+      "width": 500,
+      "height": 700
+    }
+  ],
+  "canvasHashes": [
+    "52e05035bd0f7c768de244a1f4171546af57eead627e5326ad76d179bc873492",
+    "536180906cd96061d1ffedbb404173899f69beb49573906f8f985c5c285ca6ea"
+  ],
+  "cjkPaintCount": 14,
+  "canvasPixelsEqualBaseline": true
+}

@@ -1,0 +1,11 @@
+[WebServer] (node:6113) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:6125) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+[WebServer] [BABEL] Note: The code generator has deoptimised the styling of /var/folders/9n/_523pt1s3gqg0f165zsdbldc0000gn/T/zuvi-office-e2e-vite-5282-6107/deps/react-dom_client.js?v=5db5f614 as it exceeds the max of 500KB.
+  ✓  1 [chromium] › e2e/office-studio-word-rows.spec.ts:1330:1 › multi-cell row fragments keep independent text and aligned page gaps through native reopen (6.0s)
+
+  1 passed (7.2s)

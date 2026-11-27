@@ -1,0 +1,1 @@
+pypdf host migration passed: 6 PDFs;12 types, stable IDs/page aliases, fields, IRT/P, original Contents, two reopen/edit saves.

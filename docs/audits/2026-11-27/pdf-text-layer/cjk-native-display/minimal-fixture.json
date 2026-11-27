@@ -1,0 +1,7 @@
+{
+  "source": "actual-source.pdf",
+  "minimal": "minimal-freetext.pdf",
+  "minimalSHA": "a5ad733bac3ef609eae1c43447562f06b40f3f320df9b61276f363a118e3cab9",
+  "singleFreeText": true,
+  "appearanceBytesUnchanged": true
+}

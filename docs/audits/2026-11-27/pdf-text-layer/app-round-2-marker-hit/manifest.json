@@ -1,0 +1,100 @@
+{
+  "status": "4 passed; first PDF reopen prevents mouse selection of an existing native Highlight; pointer drag selects native highlight and adds Undo history instead of text Range. No final round-2 PDF produced by this run.",
+  "files": [
+    {
+      "snapshot": "StudioPdfNativeLayer.tsx.txt",
+      "sha256": "1ca8e24b7696fcf5a0d67e583f51e55c7e0e0ca8b4597be81539f4c3cc76c4c1",
+      "size": 14599
+    },
+    {
+      "snapshot": "studio-pdf-adapter.ts.txt",
+      "sha256": "bc563267722b06474af8ae717d6b7767031403a0f6507cf4d4a4d9d56232b5b1",
+      "size": 32169
+    },
+    {
+      "snapshot": "StudioPdf-DQwi1Ic5.js.txt",
+      "sha256": "c864a29db8fe11e4cdf4f4c28212f278d5166e2b968d37e32d7817c778d8ded0",
+      "size": 121794
+    },
+    {
+      "snapshot": "StudioPdf.css",
+      "sha256": "fc03f5146dab56efd24db3a2994a24efe269e5e7ba7210d13d6b07f3b438ebe1",
+      "size": 20817
+    },
+    {
+      "snapshot": "zuvi-pdf-text-layer-final-app-e2e.txt",
+      "sha256": "3fb84c84ccd906cb0e887fc9d06b7398cd1b16dae73b9bbfda8e8fe83bbaa570",
+      "size": 3631
+    },
+    {
+      "snapshot": "app-created-squiggly.pdf",
+      "sha256": "b998e112a26db2a99774e7adc4d22f83415c8ab8d3c68a28e93e4526d2ec7b12",
+      "size": 10566
+    },
+    {
+      "snapshot": "app-created-strikeout.pdf",
+      "sha256": "33fe52794383c86acd6b729832397a249a00da533500cc2a9d32ed35603cea75",
+      "size": 9171
+    },
+    {
+      "snapshot": "trace.zip",
+      "sha256": "6b798a30d75a45abd424fe55e424957b3bd0ce1841b78d20c250e35de4db7351",
+      "size": 15321848
+    },
+    {
+      "snapshot": "app-selection-results.json",
+      "sha256": "83eabbab860d0ea9360701d396fb875d0ccb1984a641568bb858698be5e589f4",
+      "size": 6676
+    },
+    {
+      "snapshot": "office-studio-pdf-text-layer.spec.ts.txt",
+      "sha256": "3b19f2ed30cc8fed76d063917d310390db708d9641907cd7c17784da33b672d6",
+      "size": 33759
+    },
+    {
+      "snapshot": "app-source.pdf",
+      "sha256": "d140a29b836d3ce801f8ddc9ac0c7ad37c3e5dd7c465b72361bfd096ca10e528",
+      "size": 2859
+    },
+    {
+      "snapshot": "app-text-markups-round-1.pdf",
+      "sha256": "b998e112a26db2a99774e7adc4d22f83415c8ab8d3c68a28e93e4526d2ec7b12",
+      "size": 10566
+    },
+    {
+      "snapshot": "app-created-highlight.pdf",
+      "sha256": "8ab641ee64ff4a7661e381f3286c7e9bfe15ebcc2ef52ae746bddd2155fdd642",
+      "size": 6852
+    },
+    {
+      "snapshot": "components-browser-results.json",
+      "sha256": "ac4e17cd1508f8801ee185ea287665e5f27674fed6aee3418d7a895cc787428f",
+      "size": 226
+    },
+    {
+      "snapshot": "error-context.md",
+      "sha256": "952166c0e019f280a4e7ddf50ca29df490af1a223a74a074a27ca2950e403e44",
+      "size": 55589
+    },
+    {
+      "snapshot": "app-markup-source.pdf",
+      "sha256": "a3601ff83db696eb4267fefce005be7a6d67b79a520a25e9bc30b56154f30d7e",
+      "size": 2857
+    },
+    {
+      "snapshot": "app-created-underline.pdf",
+      "sha256": "fcd6fc862be7210dddfd4ec7cf65ee46c847bcce4ab987e8a22180aff8cc3fc4",
+      "size": 7949
+    },
+    {
+      "snapshot": "concurrent-browser-results.json",
+      "sha256": "1496f902b38f032dd928cda413ace62faa8c28274bfcb37affa453a12fab1828",
+      "size": 123
+    },
+    {
+      "snapshot": "last-browser-frame.jpeg",
+      "sha256": "637eb48d533a6e68e4f449b5eb697774b65555b1fb49795c3a30e27b630e842e",
+      "size": 64883
+    }
+  ]
+}

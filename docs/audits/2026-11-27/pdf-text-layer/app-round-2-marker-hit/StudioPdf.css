@@ -1,0 +1,873 @@
+.zuvi-studio-pdf {
+  --zuvi-studio-pdf-paper: #fff;
+  --zuvi-studio-pdf-ink: #243044;
+  --zuvi-studio-pdf-muted-ink: #687589;
+  --zuvi-studio-pdf-accent: var(--zuvi-office-studio-accent, var(--zuvi-color-primary));
+  --zuvi-studio-pdf-ribbon-height: 84px;
+  --zuvi-studio-pdf-sidebar-width: 260px;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  color: var(--zuvi-color-fg);
+}
+
+.zuvi-studio-pdf-ribbon {
+  flex: none;
+  min-width: 0;
+  border-bottom: 1px solid var(--zuvi-color-border);
+}
+
+.zuvi-studio-pdf-ribbon-controls,
+.zuvi-studio-pdf-ribbon-panel {
+  display: flex;
+  align-items: stretch;
+  min-width: 0;
+}
+
+.zuvi-studio-pdf-ribbon-controls {
+  box-sizing: border-box;
+  min-height: var(--zuvi-studio-pdf-ribbon-height);
+  padding: 5px 8px;
+  overflow-x: auto;
+  background: var(--zuvi-office-studio-ribbon-bg, var(--zuvi-color-bg-subtle));
+}
+
+.zuvi-studio-pdf-ribbon-panel {
+  flex: none;
+  margin: 0;
+  padding: 0;
+}
+
+.zuvi-studio-pdf-ribbon-group {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 3px;
+  padding-inline: 10px;
+  border-right: 1px solid var(--zuvi-color-border);
+}
+
+.zuvi-studio-pdf-ribbon-panel > .zuvi-studio-pdf-ribbon-group:last-child {
+  border-right: 0;
+}
+
+.zuvi-studio-pdf-ribbon-group-body {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 3px;
+}
+
+.zuvi-studio-pdf-ribbon-stack {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+}
+
+.zuvi-studio-pdf-ribbon-caption {
+  color: var(--zuvi-color-fg-muted);
+  font-size: 11px;
+  line-height: 14px;
+  text-align: center;
+}
+
+.zuvi-studio-pdf .zuvi-studio-pdf-ribbon-tool {
+  --zuvi-studio-ribbon-control-height: 52px;
+  --zuvi-button-height: 52px;
+  display: flex;
+  min-width: 52px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  padding: 3px 7px;
+}
+
+.zuvi-studio-pdf-ribbon-tool .zuvi-button-icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+.zuvi-studio-pdf-statusbar,
+.zuvi-studio-pdf-navigation,
+.zuvi-studio-pdf-zoom {
+  display: flex;
+  align-items: center;
+}
+
+.zuvi-studio-pdf-statusbar {
+  box-sizing: border-box;
+  flex: none;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+  height: 25px;
+  padding-inline: 8px;
+  border-top: 1px solid var(--zuvi-color-border);
+  background: var(--zuvi-office-studio-ribbon-bg, var(--zuvi-color-bg-subtle));
+  color: var(--zuvi-color-fg-muted);
+  font-size: 12px;
+}
+
+.zuvi-studio-pdf-navigation,
+.zuvi-studio-pdf-zoom {
+  flex: none;
+  gap: 3px;
+}
+
+.zuvi-studio-pdf-statusbar .zuvi-button,
+.zuvi-studio-pdf-panel-switch .zuvi-button {
+  --zuvi-button-height: 24px;
+  --zuvi-button-padding-x: 4px;
+  --zuvi-button-font-size: 12px;
+  --zuvi-button-radius: 2px;
+}
+
+.zuvi-studio-pdf-statusbar .zuvi-select {
+  width: 76px;
+}
+
+.zuvi-studio-pdf-statusbar .zuvi-select-trigger {
+  min-height: 24px;
+  height: 24px;
+  padding: 2px 5px;
+  border: 0;
+  border-radius: 2px;
+  background: transparent;
+  font-size: 12px;
+}
+
+.zuvi-studio-pdf-zoom-listbox {
+  top: auto;
+  bottom: calc(100% + 4px);
+}
+
+.zuvi-studio-pdf-navigation .zuvi-input-number {
+  --zuvi-input-number-height: 24px;
+  --zuvi-input-number-padding-x: 4px;
+  --zuvi-input-number-radius: 2px;
+  width: 72px;
+}
+
+.zuvi-studio-pdf-navigation .zuvi-input-number input {
+  font-size: 12px;
+  text-align: center;
+}
+
+.zuvi-studio-pdf-navigation > span,
+.zuvi-studio-pdf-status-mode {
+  white-space: nowrap;
+}
+
+.zuvi-studio-pdf-status-mode {
+  margin-right: auto;
+  cursor: help;
+}
+
+.zuvi-studio-pdf-status-mode:focus-visible {
+  outline: 2px solid var(--zuvi-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.zuvi-studio-pdf-panel-switch .zuvi-button[aria-pressed='true'] {
+  background: var(--zuvi-color-primary-subtle);
+  border-color: color-mix(in srgb, var(--zuvi-color-primary) 42%, var(--zuvi-color-border));
+  color: var(--zuvi-color-primary-subtle-fg);
+}
+
+.zuvi-studio-pdf-side-navigation {
+  display: flex;
+  flex: 0 0 38px;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  order: -2;
+  padding-block: 6px;
+  border-right: 1px solid var(--zuvi-color-border);
+  background: var(--zuvi-office-studio-ribbon-bg, var(--zuvi-color-bg-subtle));
+}
+
+.zuvi-studio-pdf-side-navigation .zuvi-button {
+  --zuvi-button-height: 30px;
+  --zuvi-button-radius: 1px;
+  width: 30px;
+  padding: 0;
+}
+
+.zuvi-studio-pdf-side-navigation .zuvi-button[aria-pressed='true'] {
+  background: var(--zuvi-color-primary-subtle);
+  border-color: color-mix(in srgb, var(--zuvi-color-primary) 42%, var(--zuvi-color-border));
+  color: var(--zuvi-color-primary-subtle-fg);
+  box-shadow: inset 2px 0 var(--zuvi-color-primary);
+}
+
+.zuvi-studio-pdf-alert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 16px;
+  background: var(--zuvi-color-warning-subtle);
+  color: var(--zuvi-color-warning-subtle-fg);
+  font-size: 13px;
+}
+
+.zuvi-studio-pdf-workspace {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.zuvi-studio-pdf-viewport {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  padding: 28px;
+  overflow: auto;
+  background: var(--zuvi-office-studio-canvas-bg, var(--zuvi-color-bg-muted));
+  overscroll-behavior: contain;
+}
+
+.zuvi-studio-pdf-paper {
+  position: relative;
+  flex: none;
+  margin: 0 auto;
+  overflow: hidden;
+  background: var(--zuvi-studio-pdf-paper);
+  outline: 1px solid var(--zuvi-color-border-strong);
+  box-shadow: var(--zuvi-shadow-md);
+}
+
+.zuvi-studio-pdf-paper[data-tool='text'] {
+  cursor: text;
+}
+
+.zuvi-studio-pdf-paper[data-tool='highlight'],
+.zuvi-studio-pdf-paper[data-tool='rectangle'],
+.zuvi-studio-pdf-paper[data-tool='ink'] {
+  cursor: crosshair;
+}
+
+.zuvi-studio-pdf-paper[data-tool='rectangle'],
+.zuvi-studio-pdf-paper[data-tool='ink'] {
+  touch-action: none;
+}
+
+.zuvi-studio-pdf-search-hit,
+.zuvi-studio-pdf-drawing-preview {
+  pointer-events: none;
+}
+
+.zuvi-studio-pdf-paper > canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.zuvi-studio-pdf-annotations,
+.zuvi-studio-pdf-form-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.zuvi-studio-pdf-annotations {
+  overflow: visible;
+  font-family: Helvetica, Arial, 'Noto Sans SC', sans-serif;
+}
+
+.zuvi-studio-pdf-annotations [role='button'] {
+  cursor: move;
+  outline: none;
+  touch-action: none;
+}
+
+.zuvi-studio-pdf-paper:not([data-tool='select']) .zuvi-studio-pdf-annotations [role='button'] {
+  pointer-events: none;
+}
+
+.zuvi-studio-pdf-mark-hit {
+  fill: transparent;
+  stroke: transparent;
+  pointer-events: all;
+}
+
+.zuvi-studio-pdf-annotations [data-selected] .zuvi-studio-pdf-mark-hit,
+.zuvi-studio-pdf-annotations [role='button']:focus-visible .zuvi-studio-pdf-mark-hit {
+  stroke: var(--zuvi-color-primary);
+  stroke-width: 1;
+  stroke-dasharray: 4 3;
+  vector-effect: non-scaling-stroke;
+}
+
+.zuvi-studio-pdf-mark-resize {
+  fill: var(--zuvi-studio-pdf-paper);
+  stroke: var(--zuvi-color-primary);
+  stroke-width: 2;
+  cursor: nwse-resize;
+  pointer-events: all;
+  touch-action: none;
+  vector-effect: non-scaling-stroke;
+}
+
+.zuvi-studio-pdf-form-layer {
+  pointer-events: none;
+}
+
+.zuvi-studio-pdf-widget {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  pointer-events: auto;
+}
+
+.zuvi-studio-pdf-widget-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+}
+
+.zuvi-studio-pdf-widget-content[data-designed] .zuvi-studio-pdf-widget-input {
+  --zuvi-input-bg: transparent;
+  --zuvi-input-fg: inherit;
+  --zuvi-input-disabled-bg: transparent;
+  --zuvi-input-disabled-fg: inherit;
+  --zuvi-select-trigger-bg: transparent;
+  --zuvi-select-trigger-fg: inherit;
+}
+
+.zuvi-studio-pdf-widget-content[data-designed] .zuvi-input,
+.zuvi-studio-pdf-widget-content[data-designed] .zuvi-select-trigger {
+  border: 0;
+}
+
+.zuvi-studio-pdf-widget-radio-group {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.zuvi-studio-pdf-widget-content .zuvi-studio-pdf-widget-input {
+  --zuvi-input-height: 100%;
+  --zuvi-input-padding-x: 0;
+  --zuvi-input-font-size: inherit;
+  --zuvi-input-radius: 1px;
+  --zuvi-input-bg: var(--zuvi-studio-pdf-paper);
+  --zuvi-input-fg: var(--zuvi-studio-pdf-ink);
+  --zuvi-input-disabled-bg: var(--zuvi-studio-pdf-paper);
+  --zuvi-input-disabled-fg: var(--zuvi-studio-pdf-muted-ink);
+  --zuvi-input-textarea-min-height: 0;
+  --zuvi-select-trigger-height: 100%;
+  --zuvi-select-trigger-font-size: inherit;
+  --zuvi-select-trigger-radius: 1px;
+  --zuvi-select-trigger-bg: var(--zuvi-studio-pdf-paper);
+  --zuvi-select-trigger-fg: var(--zuvi-studio-pdf-ink);
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+}
+
+.zuvi-studio-pdf-widget-content .zuvi-input,
+.zuvi-studio-pdf-widget-content .zuvi-select-trigger {
+  border: 1px dashed color-mix(in oklab, var(--zuvi-color-primary) 36%, transparent);
+}
+
+.zuvi-studio-pdf-widget-content .zuvi-studio-pdf-widget-value {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  margin: 0;
+  padding: 1px 3px;
+  font: inherit;
+  resize: none;
+}
+
+.zuvi-studio-pdf-widget-content .zuvi-input:focus-within,
+.zuvi-studio-pdf-widget-content .zuvi-select-trigger:focus-visible {
+  border-style: solid;
+  outline: 2px solid color-mix(in oklab, var(--zuvi-color-primary) 25%, transparent);
+  outline-offset: 1px;
+}
+
+.zuvi-studio-pdf-widget-content .zuvi-studio-pdf-widget-value:disabled {
+  opacity: 1;
+  color: var(--zuvi-studio-pdf-muted-ink);
+  -webkit-text-fill-color: var(--zuvi-studio-pdf-muted-ink);
+}
+
+.zuvi-studio-pdf-widget-content > .zuvi-studio-pdf-widget-check {
+  --zuvi-checkbox-size: 100%;
+  --zuvi-checkbox-gap: 0;
+  --zuvi-radio-size: 100%;
+  --zuvi-radio-gap: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.zuvi-studio-pdf-widget-content > .zuvi-studio-pdf-widget-check:has(:disabled) {
+  cursor: not-allowed;
+}
+
+.zuvi-studio-pdf-widget-content .zuvi-select-trigger:disabled {
+  background: var(--zuvi-studio-pdf-paper);
+}
+
+.zuvi-studio-pdf-page-caption {
+  display: block;
+  width: max-content;
+  margin: 16px auto 0;
+  color: var(--zuvi-color-fg-muted);
+  font-size: 12px;
+}
+
+.zuvi-studio-pdf-placeholder,
+.zuvi-studio-pdf-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--zuvi-color-fg-muted);
+}
+
+.zuvi-studio-pdf-placeholder {
+  flex-direction: column;
+  gap: 12px;
+  min-height: 300px;
+  font-size: 13px;
+}
+
+.zuvi-studio-pdf-placeholder > svg {
+  width: 32px;
+  height: 32px;
+  color: var(--zuvi-color-primary);
+}
+
+.zuvi-studio-pdf-loading {
+  position: sticky;
+  top: 20px;
+  z-index: 1;
+  width: max-content;
+  margin: 0 auto;
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: var(--zuvi-color-bg);
+  box-shadow: var(--zuvi-shadow-md);
+  font-size: 13px;
+}
+
+.zuvi-studio-pdf-inspector {
+  display: flex;
+  flex: 0 0 var(--zuvi-studio-pdf-sidebar-width);
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  border-left: 1px solid var(--zuvi-color-border);
+  background: var(--zuvi-color-bg);
+}
+
+.zuvi-studio-pdf-inspector[data-side='left'] {
+  order: -1;
+  border-right: 1px solid var(--zuvi-color-border);
+  border-left: 0;
+}
+
+.zuvi-studio-pdf-panel-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  padding: 4px;
+  border-bottom: 1px solid var(--zuvi-color-border);
+}
+
+.zuvi-studio-pdf-panel-body form[role='search'] {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.zuvi-studio-pdf-search-navigation {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--zuvi-color-fg-muted);
+  font-size: 12px;
+}
+
+.zuvi-studio-pdf-search-navigation > span {
+  flex: 1;
+}
+
+.zuvi-studio-pdf-thumbnail {
+  flex-shrink: 0;
+  min-height: 210px;
+  padding: 12px;
+  font-size: 12px;
+}
+
+.zuvi-studio-pdf-thumbnail > .zuvi-button-label {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.zuvi-studio-pdf-thumbnail[aria-pressed='true'] {
+  border-color: var(--zuvi-color-primary);
+  background: var(--zuvi-color-primary-subtle);
+  color: var(--zuvi-color-primary);
+}
+
+.zuvi-studio-pdf-thumbnail-paper {
+  position: relative;
+  display: grid;
+  width: 160px;
+  min-height: 170px;
+  place-items: center;
+  overflow: hidden;
+  background: var(--zuvi-studio-pdf-paper);
+  box-shadow: var(--zuvi-shadow-sm);
+}
+
+.zuvi-studio-pdf-thumbnail-paper > canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.zuvi-studio-pdf-thumbnail-paper > span {
+  position: absolute;
+  color: var(--zuvi-studio-pdf-muted-ink);
+}
+
+.zuvi-studio-pdf-panel-switch .zuvi-button {
+  flex: 1;
+  min-width: 0;
+}
+
+.zuvi-studio-pdf-panel-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+  padding: 12px;
+  overflow: auto;
+}
+
+.zuvi-studio-pdf-panel-body > strong {
+  font-size: 12px;
+}
+
+.zuvi-studio-pdf-panel-body label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.zuvi-studio-pdf-panel-body .zuvi-input-number,
+.zuvi-studio-pdf-field .zuvi-select {
+  width: 100%;
+}
+
+.zuvi-studio-pdf-color {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.zuvi-studio-pdf-color > .zuvi-color-picker {
+  flex: none;
+}
+
+.zuvi-studio-pdf-mark-sizes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.zuvi-studio-pdf-hint {
+  margin: 0;
+  color: var(--zuvi-color-fg-muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.zuvi-studio-pdf-mark-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding-top: 14px;
+  border-top: 1px solid var(--zuvi-color-border);
+}
+
+.zuvi-studio-pdf-mark-list > .zuvi-studio-pdf-list-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
+  height: auto;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid var(--zuvi-color-border);
+  border-radius: 2px;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  white-space: normal;
+  cursor: pointer;
+}
+
+.zuvi-studio-pdf-mark-list > .zuvi-studio-pdf-list-item[aria-pressed='true'] {
+  border-color: var(--zuvi-color-primary);
+  background: var(--zuvi-color-primary-subtle);
+}
+
+.zuvi-studio-pdf-list-item > .zuvi-button-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 0;
+}
+
+.zuvi-studio-pdf-list-item > .zuvi-button-label > span:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.zuvi-studio-pdf-mark-list strong {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.zuvi-studio-pdf-mark-list small,
+.zuvi-studio-pdf-field > small {
+  overflow: hidden;
+  color: var(--zuvi-color-fg-muted);
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.zuvi-studio-pdf-mark-dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  margin-top: 4px;
+  border-radius: 50%;
+}
+
+.zuvi-studio-pdf-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+@media (max-width: 720px) {
+  .zuvi-studio-pdf-inspector {
+    flex-basis: 220px;
+  }
+
+  .zuvi-studio-pdf-ribbon-controls {
+    padding-inline: 4px;
+  }
+
+  .zuvi-studio-pdf-ribbon-group {
+    padding-inline: 6px;
+  }
+
+  .zuvi-studio-pdf-viewport {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 520px) {
+  .zuvi-studio-pdf-workspace {
+    flex-direction: column;
+  }
+
+  .zuvi-studio-pdf-inspector,
+  .zuvi-studio-pdf-inspector[data-side='left'] {
+    flex-basis: 220px;
+    order: 1;
+    border-top: 1px solid var(--zuvi-color-border);
+    border-right: 0;
+    border-left: 0;
+  }
+
+  .zuvi-studio-pdf-side-navigation {
+    flex-basis: auto;
+    flex-direction: row;
+    padding: 3px 8px;
+    border-right: 0;
+    border-bottom: 1px solid var(--zuvi-color-border);
+  }
+
+  .zuvi-studio-pdf-statusbar {
+    gap: 3px;
+    padding-inline: 3px;
+  }
+
+  .zuvi-studio-pdf-status-mode {
+    display: none;
+  }
+}
+
+.zuvi-studio-pdf-replies {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--zuvi-space-2);
+  padding: var(--zuvi-space-2);
+  border: 1px solid var(--zuvi-color-border-subtle);
+  border-radius: var(--zuvi-radius-md);
+  background: var(--zuvi-color-bg-subtle);
+}
+
+.zuvi-studio-pdf-replies-title {
+  font-size: var(--zuvi-text-xs);
+  font-weight: var(--zuvi-weight-medium);
+  color: var(--zuvi-color-fg-muted);
+}
+
+.zuvi-studio-pdf-reply {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--zuvi-space-2);
+}
+
+.zuvi-studio-pdf-reply-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: var(--zuvi-text-sm);
+  line-height: var(--zuvi-leading-normal);
+}
+
+.zuvi-studio-pdf-reply-input {
+  display: flex;
+  gap: var(--zuvi-space-2);
+}
+
+.zuvi-studio-pdf-reply-input .zuvi-input {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.zuvi-studio-pdf-field-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.zuvi-studio-pdf-field-form > label,
+.zuvi-studio-pdf-widget-editor > label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+}
+.zuvi-studio-pdf-field-flags {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-block: 12px;
+}
+.zuvi-studio-pdf-widget-editor {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--zuvi-color-border);
+  border-radius: var(--zuvi-radius-md);
+  margin-block: 12px;
+  min-width: 0;
+}
+.zuvi-studio-pdf-list-field {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+}
+.zuvi-studio-pdf-image-field {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  position: relative;
+}
+.zuvi-studio-pdf-image-field img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.zuvi-studio-pdf-image-field input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  width: 100%;
+  cursor: pointer;
+}
+@media (max-width: 480px) {
+  .zuvi-studio-pdf-field-form,
+  .zuvi-studio-pdf-widget-editor {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.zuvi-studio-pdf-page-item { display: flex; align-items: flex-start; gap: 8px; margin-block: 8px; }
+.zuvi-studio-pdf-page-item .zuvi-studio-pdf-thumbnail { flex: 1; min-width: 0; }
+.zuvi-studio-pdf-page-dialog label { display: block; margin-block: 12px; }
+
+.zuvi-studio-pdf-compose-dialog {
+  max-inline-size: calc(100vw - 32px);
+  max-block-size: calc(100dvh - 32px);
+}
+.zuvi-studio-pdf-compose-dialog form { display: flex; flex-direction: column; gap: 12px; }
+.zuvi-studio-pdf-compose-dialog label { display: flex; flex-direction: column; gap: 6px; }
+.zuvi-studio-pdf-compose-dialog label.zuvi-studio-pdf-compose-check { flex-direction: row; align-items: flex-start; }
+.zuvi-studio-pdf-compose-dialog p { margin: 0; }
+.zuvi-studio-pdf-compose-file { overflow-wrap: anywhere; }
+.zuvi-studio-pdf-passive-field p { margin-block: 6px; color: var(--zuvi-color-fg-muted); font-size: 12px; }
+
+.zuvi-studio-pdf-native-layer,
+.zuvi-studio-pdf-native-preview { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.zuvi-studio-pdf-native-layer { z-index: 3; }
+.zuvi-studio-pdf-native-layer[data-drawing] { pointer-events: auto; cursor: crosshair; touch-action: none; }
+.zuvi-studio-pdf-native-hit.zuvi-button { position: absolute; min-width: 0; min-height: 0; padding: 0; border: 1px solid transparent; border-radius: 0; background: transparent; pointer-events: auto; touch-action: none; }
+.zuvi-studio-pdf-native-hit.zuvi-button:hover { background: transparent; border-color: var(--zuvi-color-border); }
+.zuvi-studio-pdf-native-hit.zuvi-button[aria-pressed='true'] { border-color: var(--zuvi-color-primary); box-shadow: 0 0 0 1px var(--zuvi-color-primary); }
+.zuvi-studio-pdf-native-resize { position: absolute; right: -4px; bottom: -4px; width: 8px; height: 8px; background: var(--zuvi-color-primary); cursor: nwse-resize; }
+.zuvi-studio-pdf-native-dialog { width: min(620px, calc(100vw - 24px)); }
+.zuvi-studio-pdf-native-property-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.zuvi-studio-pdf-native-property-grid > label, .zuvi-studio-pdf-native-property-color { display: flex; min-width: 0; flex-direction: column; gap: 5px; }
+.zuvi-studio-pdf-native-property-grid > label > small { color: var(--zuvi-color-fg-muted); font-size: 11px; }
+.zuvi-studio-pdf-native-property-text, .zuvi-studio-pdf-native-property-grid > p { grid-column: 1 / -1; }
+.zuvi-studio-pdf-native-thread { display: flex; flex-direction: column; gap: 9px; padding-block: 8px; border-block: 1px solid var(--zuvi-color-border); }
+.zuvi-studio-pdf-native-thread small { display: block; font-size: 11px; color: var(--zuvi-color-fg-muted); }
+.zuvi-studio-pdf-native-content { white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; }
+.zuvi-studio-pdf-native-actions { display: flex; flex-wrap: wrap; gap: 6px; }

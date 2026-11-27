@@ -1,0 +1,88 @@
+{
+  "reason": "First browser run: draft/IME/theme/320px/readonly passed; caret fixture _Typed_ triggered the existing Markdown input rule before native export. Product runtime not changed for retry.",
+  "files": [
+    {
+      "path": "office-studio-word-basic-format.spec.ts.txt",
+      "bytes": 17637,
+      "sha256": "aeb7aacab572024c81ae7f1380422e39c1d0573913e827d89da9c8be127c43df"
+    },
+    {
+      "path": "build-provenance.json",
+      "bytes": 1817,
+      "sha256": "73a4f9bee19773365eab6014d298a030c5ebec06316e42fdc7e6be09029094eb"
+    },
+    {
+      "path": "controls-light.png",
+      "bytes": 117116,
+      "sha256": "fc8b0b30c0997624414828be4eff9372c36de8f2618c1f65bd383ace887f1569"
+    },
+    {
+      "path": "controls-dark.png",
+      "bytes": 117451,
+      "sha256": "9c14963be49a8104b9d2c4825a95aabca4e34e516a700f58892f7aa5d008ac22"
+    },
+    {
+      "path": "highlight-dark-320.png",
+      "bytes": 49834,
+      "sha256": "2de5ef1478237aca73df3f338432cecc2c9384feb746aa640a31fc61cebbab1a"
+    },
+    {
+      "path": "font-light-320.png",
+      "bytes": 41267,
+      "sha256": "d00ea9da8429bf6cc411acb7e72dcfdb65c29b5da887888a0f04e03ee8064934"
+    },
+    {
+      "path": "drafts-permissions-geometry.json",
+      "bytes": 44170,
+      "sha256": "365a89ad108ab8571c3e397bc9f091f1cb696d2e90a2aa4f2dbda1a5517ad49c"
+    },
+    {
+      "path": "run.txt.raw.gz",
+      "bytes": 1191,
+      "sha256": "5735cb6aeed3472b002e1cb5aa5cebe9a91863493fe3dc590775dc70afc1debe",
+      "uncompressed": {
+        "bytes": 3652,
+        "sha256": "26e0245d237911087302bbe9110d6c3a6927d2436a8f67eaee280911669d9c01"
+      }
+    },
+    {
+      "path": "run.txt",
+      "bytes": 3650,
+      "sha256": "24616329c0528c0925d6a3b7a6191edebb49f964cc01a05a4b6d92ac163e7d0e"
+    },
+    {
+      "path": "run.json",
+      "bytes": 13249,
+      "sha256": "bc67564db51ef7306eb8aa747e75e7917d2f4bd596f50e7e07dfb67c21838437"
+    },
+    {
+      "path": "playwright/.last-run.json",
+      "bytes": 96,
+      "sha256": "fe12c5e16c7de484a40efa11e8706cf93f601f00f5d58e2b1c69669e892ed139"
+    },
+    {
+      "path": "playwright/office-studio-word-basic-f-d2d38--actual-native-DOCX-exports-chromium/trace.zip",
+      "bytes": 8493801,
+      "sha256": "6ffe2bb8e470acb24d30754c65fd86528fb043c1b4e235d562ae30fa7d022f61"
+    },
+    {
+      "path": "playwright/office-studio-word-basic-f-d2d38--actual-native-DOCX-exports-chromium/error-context.md.raw.gz",
+      "bytes": 3959,
+      "sha256": "00f58d8ad6883d5f0eef75c5c7777cc50140a733fc13df4797ceaac110e0fdc8",
+      "uncompressed": {
+        "bytes": 15381,
+        "sha256": "9d19d91380284dce465e04f0635df41debd34565e229c346b39340c3dd188dca"
+      }
+    },
+    {
+      "path": "playwright/office-studio-word-basic-f-d2d38--actual-native-DOCX-exports-chromium/error-context.md",
+      "bytes": 15376,
+      "sha256": "6ab5e80ada5e33c0a77a8f7ac3da29ad860a7df959293906d4280d4ba6711158"
+    },
+    {
+      "path": "source.docx",
+      "bytes": 37023,
+      "sha256": "20bca06d49172dc1f554d25b121fd288a143ce9c3b6c996fc9c6b9e5b334bc39"
+    }
+  ]
+}

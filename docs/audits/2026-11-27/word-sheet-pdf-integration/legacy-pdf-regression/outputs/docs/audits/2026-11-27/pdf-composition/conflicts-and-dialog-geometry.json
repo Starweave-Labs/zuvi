@@ -1,0 +1,69 @@
+{
+  "before": {
+    "id": "3593f7d6-2609-43a6-8d5d-67130a4d776e",
+    "revision": 1,
+    "document": {
+      "version": 1,
+      "id": "3593f7d6-2609-43a6-8d5d-67130a4d776e",
+      "name": "Conflict.pdf",
+      "kind": "pdf",
+      "pageCount": 2,
+      "sourcePageCount": 2,
+      "pages": [
+        {
+          "id": "99ab6da5-59d7-4036-8be6-b42d17190d47",
+          "sourcePage": 0,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 300,
+            "top": 400
+          }
+        },
+        {
+          "id": "3a0372a9-caa2-48ba-b47e-e23c65e80ee8",
+          "sourcePage": 1,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 310,
+            "top": 410
+          }
+        }
+      ],
+      "marks": [],
+      "rotations": {},
+      "fields": [
+        {
+          "name": "Shared",
+          "readOnly": false,
+          "type": "text",
+          "value": "Current",
+          "multiline": false,
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 279.5,
+              "width": 131,
+              "height": 31,
+              "rotation": 0
+            }
+          ]
+        }
+      ]
+    },
+    "sourceHash": "725eb16b4dc7167ce463bb302bdb4d926c44e94bf5b4a8a0ffc002022d806448",
+    "sourceSize": 2460
+  },
+  "bounds": {
+    "x": 16,
+    "y": 50.609375,
+    "width": 288,
+    "height": 618.78125
+  },
+  "sizes": {
+    "width": 288,
+    "scroll": 288
+  }
+}

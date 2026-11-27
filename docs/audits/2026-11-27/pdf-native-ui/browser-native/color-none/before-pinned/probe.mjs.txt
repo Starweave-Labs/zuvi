@@ -1,0 +1,38 @@
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { createRequire } from 'node:module';
+import { createHash } from 'node:crypto';
+import { pdfTestRuntime } from './before-runtime.mjs';
+const repo='/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59';
+const require=createRequire(repo+'/docs/package.json'),lib=require('pdf-lib');
+const graph=pdfTestRuntime(), base='../src/pages/collaboration/office-studio/';
+const codec=graph.load(base+'studio-pdf-codec.ts'), editor=graph.load(base+'studio-pdf-annotation-editor.ts').createStudioPdfAnnotationEditor();
+const bytes=await readFile(repo+'/docs/audits/2026-11-27/pdf-native-annotations/host-migration/original.pdf');
+const out=import.meta.dirname;await writeFile(out+'/original.pdf',bytes);
+const now=()=>new Date().toISOString();
+const text=value=>value?.decodeText?.()??value?.toString?.()??'';
+async function snapshot(current,id,file){
+ const bytes=new Uint8Array(await current.source.arrayBuffer());await writeFile(out+'/'+file+'.pdf',bytes);
+ const pdf=await lib.PDFDocument.load(bytes);let dict;
+ for(const page of pdf.getPages())for(const ref of page.node.Annots()?.asArray()??[]){const d=pdf.context.lookup(ref);if(text(d.lookup(lib.PDFName.of('ZuviAnnotationId')))===id)dict=d;}
+ const array=key=>{const v=dict.lookup(lib.PDFName.of(key));return v instanceof lib.PDFArray?v.asArray().map(n=>n.asNumber()):v===undefined?'absent':text(v);};
+ const ap=dict.lookup(lib.PDFName.of('AP')).lookup(lib.PDFName.of('N'));
+ const inspected=await editor.inspect(current), annotation=inspected.snapshot.annotations.find(a=>a.id===id);
+ return {file:file+'.pdf',sha256:createHash('sha256').update(bytes).digest('hex'),C:array('C'),IC:array('IC'),color:annotation.color,fill:annotation.fill,opacity:annotation.opacity,stroke:annotation.stroke,
+ AP:new TextDecoder().decode(lib.decodePDFRawStream(ap).decode())};
+}
+const results=[];
+for(const kind of ['square','highlight','freeText']){
+ const source=new Blob([new Uint8Array(bytes)],{type:'application/pdf'});let current={source,document:await codec.importStudioPdf(source,'Color-clear.pdf',{native:true})};
+ const id='clear-'+kind,pageId=current.document.pages[0].id;
+ const annotation=kind==='square'?{id,pageId,kind,rect:[40,350,200,410],color:[1,0,0],fill:null,stroke:{width:2}}:
+ kind==='highlight'?{id,pageId,kind,rect:[40,350,230,372],quadPoints:[40,372,230,372,40,350,230,350],color:[1,0,0]}:
+ {id,pageId,kind,rect:[40,430,260,490],contents:'Clear green border',color:null,fill:[0,0.8,0.2],stroke:{width:1},font:{family:'Helvetica',size:14,color:[0.1,0.2,0.3]}};
+ const apply=command=>editor.apply({snapshot:current,command:{type:'mark',command},now:now()});
+ current=await apply({type:'create',annotation,now:now()});const initial=await snapshot(current,id,kind+'-initial');
+ current=await apply({type:'update',id,patch:kind==='freeText'?{kind,fill:null}:{kind,color:null},now:now()});const cleared=await snapshot(current,id,kind+'-cleared');
+ const reopened=await codec.importStudioPdf(current.source,'Reopened.pdf',{native:true});current={source:current.source,document:reopened};
+ current=await apply({type:'update',id,patch:kind==='freeText'?{kind,stroke:{width:2}}:{kind,opacity:0.5},now:now()});const repainted=await snapshot(current,id,kind+'-repainted');
+ results.push({kind,initial,cleared,repainted});
+}
+await writeFile(out+'/results.json',JSON.stringify({status:'reproduced',results},null,2));
+for(const result of results)console.log(result.kind,JSON.stringify({clearedC:result.cleared.C,clearedIC:result.cleared.IC,readColor:result.cleared.color,readFill:result.cleared.fill,repaintC:result.repainted.C,repaintIC:result.repainted.IC,clearAP:result.cleared.AP,repaintAP:result.repainted.AP}));

@@ -1,0 +1,79 @@
+{
+  "document": {
+    "version": 1,
+    "id": "75c7b8a5-5c8b-4cfe-8749-01097814998a",
+    "name": "Native-original.pdf",
+    "kind": "pdf",
+    "pageCount": 2,
+    "sourcePageCount": 2,
+    "pages": [
+      {
+        "id": "d0872401-d67b-4fb8-a9c4-4ac351d889eb",
+        "sourcePage": 0,
+        "bounds": {
+          "left": 0,
+          "bottom": 0,
+          "right": 500,
+          "top": 700
+        }
+      },
+      {
+        "id": "3df50604-f983-4fff-8762-4668d03beb2a",
+        "sourcePage": 1,
+        "bounds": {
+          "left": 0,
+          "bottom": 0,
+          "right": 500,
+          "top": 700
+        }
+      }
+    ],
+    "marks": [],
+    "rotations": {},
+    "fields": [
+      {
+        "name": "reviewer",
+        "readOnly": false,
+        "type": "text",
+        "value": "Initial",
+        "multiline": false,
+        "widgets": [
+          {
+            "page": 0,
+            "x": 29.5,
+            "y": 29.5,
+            "width": 261,
+            "height": 31,
+            "rotation": 0
+          },
+          {
+            "page": 1,
+            "x": 29.5,
+            "y": 29.5,
+            "width": 261,
+            "height": 31,
+            "rotation": 0
+          }
+        ]
+      },
+      {
+        "name": "confirmed",
+        "readOnly": false,
+        "type": "checkbox",
+        "value": false,
+        "widgets": [
+          {
+            "page": 1,
+            "x": 319.5,
+            "y": 29.5,
+            "width": 21,
+            "height": 21,
+            "rotation": 0
+          }
+        ]
+      }
+    ]
+  },
+  "revision": 1,
+  "sourceHash": "78eb0a7b35b23c633d9e1f07b6beb58a572448254c408fe671ff12ac794bee4e"
+}

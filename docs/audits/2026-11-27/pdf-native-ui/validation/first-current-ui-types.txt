@@ -1,0 +1,40 @@
+
+> @zuvi/react@1.1.0 typecheck /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+> tsc --noEmit
+
+src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx(71,5): error TS2322: Type 'Mock<(snapshot: any, settings: any) => Promise<StudioPdfAnnotationPreview | { source: any; revision: any; rendersCurrentPageOrder: boolean; nativeBodyIds: never[]; noApIconIds: never[]; requiresAnnotationLayer: boolean; binding: { ...; }; }>>' is not assignable to type '(snapshot: StudioPdfSnapshot, options?: { signal?: AbortSignal | undefined; } | undefined) => Promise<StudioPdfAnnotationPreview>'.
+  Type 'Promise<StudioPdfAnnotationPreview | { source: any; revision: any; rendersCurrentPageOrder: boolean; nativeBodyIds: never[]; noApIconIds: never[]; requiresAnnotationLayer: boolean; binding: { ...; }; }>' is not assignable to type 'Promise<StudioPdfAnnotationPreview>'.
+    Type 'StudioPdfAnnotationPreview | { source: any; revision: any; rendersCurrentPageOrder: boolean; nativeBodyIds: never[]; noApIconIds: never[]; requiresAnnotationLayer: boolean; binding: { ...; }; }' is not assignable to type 'StudioPdfAnnotationPreview'.
+      Type '{ source: any; revision: any; rendersCurrentPageOrder: boolean; nativeBodyIds: never[]; noApIconIds: never[]; requiresAnnotationLayer: boolean; binding: { rendersCurrentPageOrder: boolean; pageCount: any; sourcePageCount: any; pages: any; rotations: {}; }; }' is not assignable to type 'StudioPdfAnnotationPreview'.
+        The types of 'binding.rendersCurrentPageOrder' are incompatible between these types.
+          Type 'boolean' is not assignable to type 'true'.
+src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx(74,46): error TS7006: Parameter 'page' implicitly has an 'any' type.
+src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx(74,52): error TS7006: Parameter 'sourcePage' implicitly has an 'any' type.
+src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx(162,93): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement', gave the following error.
+    Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+  Overload 2 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement', gave the following error.
+    Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx(190,51): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement', gave the following error.
+    Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+  Overload 2 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement', gave the following error.
+    Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx(226,83): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement', gave the following error.
+    Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+  Overload 2 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement', gave the following error.
+    Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx(244,51): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement', gave the following error.
+    Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+  Overload 2 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement', gave the following error.
+    Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+src/components/OfficeStudio/StudioPdf.tsx(454,84): error TS18047: 'nativePreview' is possibly 'null'.
+src/components/OfficeStudio/StudioPdf.tsx(454,127): error TS18047: 'nativePreview' is possibly 'null'.
+src/components/OfficeStudio/StudioPdf.tsx(454,184): error TS18047: 'nativePreview' is possibly 'null'.
+src/components/OfficeStudio/StudioPdf.tsx(454,227): error TS18047: 'nativePreview' is possibly 'null'.
+src/components/OfficeStudio/StudioPdf.tsx(454,279): error TS18047: 'nativePreview' is possibly 'null'.
+/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @zuvi/react@1.1.0 typecheck: `tsc --noEmit`
+Exit status 2

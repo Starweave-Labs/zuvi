@@ -1,0 +1,127 @@
+{
+  "scope": "Word four original character requirements; failed diagnostics retained separately from passing evidence",
+  "checks": {
+    "dedicatedUi": 16,
+    "wordUi": 140,
+    "fontControl": 6,
+    "uiTotal": 162,
+    "nativeWordRegression": 72,
+    "browserFlows": 2,
+    "recoveryBrowserFlows": 1,
+    "wholeRepositoryGates": "owned by root after final integration"
+  },
+  "logs": [
+    {
+      "path": "validation/initial-ui-seven-failures.txt",
+      "originalPath": "/tmp/zuvi-word-basic-format-before.txt",
+      "bytes": 97911,
+      "sha256": "ee0272ef5fd8961ab58bada26b02a9a9aaada768a776a36475683404d5efa4fc"
+    },
+    {
+      "path": "validation/input-boundaries-five-failures.txt",
+      "originalPath": "/tmp/zuvi-word-basic-format-input-boundaries-before.txt",
+      "bytes": 13782,
+      "sha256": "393a3ca53db0095c89d9f4e3a25729fe8ecbf6f73403eb88cc80c28042b3bc0d"
+    },
+    {
+      "path": "validation/intermediate-header-style-review.txt",
+      "originalPath": "/tmp/zuvi-word-basic-format-first-fix.txt",
+      "bytes": 6399,
+      "sha256": "54b892367fce82200fcb2cb6c96b96395a22edebfc49c69bf70ddbdecbe089bd"
+    },
+    {
+      "path": "validation/initial-test-types.txt",
+      "originalPath": "/tmp/zuvi-word-basic-format-types.txt",
+      "bytes": 12385,
+      "sha256": "7273217a89c83146eccb936a2bdc1e85adecf7e9845d79ea7150b64cf285b5c5"
+    },
+    {
+      "path": "validation/ui-162-passed.txt",
+      "originalPath": "/tmp/zuvi-word-basic-format-second-fix.txt",
+      "bytes": 3125,
+      "sha256": "143677e578a3b65bb3a2c6c27bfebbb5bafe0d7849e0ac01c35faf82d5e7ef3e",
+      "rawOriginal": {
+        "path": "validation/ui-162-passed.txt.raw.gz",
+        "bytes": 1307,
+        "sha256": "a7357e4ce9a6bbe5fc7559234b34cc499cd399b2367c9f3aea427a295319654b",
+        "uncompressedBytes": 3126,
+        "uncompressedSha256": "48db7e46e412e33255dbcedf3e78bc42fa0b6154e83cc1599c28c284ebe4ad94",
+        "change": "Readable copy changes trailing whitespace and excess blank EOF only."
+      }
+    },
+    {
+      "path": "validation/ui-types.txt",
+      "originalPath": "/tmp/zuvi-word-basic-format-types-final.txt",
+      "bytes": 147,
+      "sha256": "f31feb7516e618a7f9fffa299eb1139961e0fd56426eb6830164f5b7c2c8781b",
+      "rawOriginal": {
+        "path": "validation/ui-types.txt.raw.gz",
+        "bytes": 148,
+        "sha256": "4cc7be1aced5ab7d9710ab16fbab874db010d931353c3275fa9ac13ee74c1737",
+        "uncompressedBytes": 148,
+        "uncompressedSha256": "68ec6d80c2b25b081d386c6e6a0dc0ed1f04d85de012b574555495bfb768041b",
+        "change": "Readable copy changes trailing whitespace and excess blank EOF only."
+      }
+    },
+    {
+      "path": "validation/scoped-lint.txt",
+      "originalPath": "/tmp/zuvi-word-basic-format-all-scoped-lint.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "validation/ui-build.txt",
+      "originalPath": "/tmp/zuvi-word-basic-format-ui-build.txt",
+      "bytes": 2717,
+      "sha256": "f1ed0cb0131d599fd365fed3b0aecf3ef601ad622915e2ffddc351a69a034816"
+    },
+    {
+      "path": "validation/docx-regression-72.txt",
+      "originalPath": "/tmp/zuvi-word-basic-format-docx-regression.txt",
+      "bytes": 17541,
+      "sha256": "87f4fbc96e1515c3f14513a2bbb237ccd6bde5828f9e85120bd7938812b86687"
+    },
+    {
+      "path": "validation/browser-two-passed.txt",
+      "originalPath": "/tmp/zuvi-word-basic-format-browser-third.txt",
+      "bytes": 818,
+      "sha256": "750c266da0c5769705379f3cd0b84b74343b3c69be879db425da525266e6a917"
+    },
+    {
+      "path": "validation/browser-two-passed.json",
+      "originalPath": "/tmp/zuvi-word-basic-format-browser-third.json",
+      "bytes": 6051,
+      "sha256": "9d837522392cabf123f92c3010a6d144084f6af84b61bdd93f66a3a8a730a153"
+    },
+    {
+      "path": "validation/recovery-browser-one-passed.txt",
+      "originalPath": "/tmp/zuvi-word-basic-format-recovery-browser.txt",
+      "bytes": 623,
+      "sha256": "d02ecd4e8930a457934ae2523fb01165034020ac9ad98e80886155311cb81101"
+    },
+    {
+      "path": "validation/recovery-browser-one-passed.json",
+      "originalPath": "/tmp/zuvi-word-basic-format-recovery-browser.json",
+      "bytes": 4974,
+      "sha256": "70630d3d66ab9bb7272309117808bbc1327f61b19b766eb9c6701f5bc01ad36d"
+    },
+    {
+      "path": "validation/native-inspection.txt",
+      "originalPath": "/tmp/zuvi-word-basic-format-native-inspection-final.txt",
+      "bytes": 148,
+      "sha256": "d4e3b2520fb23212e2503e106c02714e2375d07f97930919d3fea740f6dc3650"
+    },
+    {
+      "path": "validation/render-three.txt",
+      "originalPath": "/tmp/zuvi-word-basic-format-render-all.txt",
+      "bytes": 496,
+      "sha256": "14e583683a8fc83186fb05b1413267ee1e7bdb1af9436a5bf02870523863c699"
+    },
+    {
+      "path": "validation/render-recovery.txt",
+      "originalPath": "/tmp/zuvi-word-basic-format-render-recovery.txt",
+      "bytes": 168,
+      "sha256": "43bcdc5b804776784509a92843eb0c68137f42d37bcab1aa325fe32f07c333d7"
+    }
+  ]
+}

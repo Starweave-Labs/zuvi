@@ -1,0 +1,63 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/StudioFontControl.test.tsx (6 tests) 465ms
+ ✓ src/components/OfficeStudio/StudioWord.basic-format.test.tsx (10 tests) 2276ms
+   ✓ Word basic character acceptance > presents a mixed 粗体 selection and changes the whole range in one undo event 383ms
+   ✓ Word basic character acceptance > switches superscript and subscript exclusively, cancels to baseline and restores each transaction 327ms
+ ❯ src/components/OfficeStudio/StudioWord.test.tsx (140 tests | 1 failed) 26259ms
+   ✓ Word paragraph dialog and ruler > edits inherited tab stops through ZUVI controls with precision checks, cancellation and one history step 681ms
+   ✓ Word paragraph dialog and ruler > applies mixed paragraph values in one history step and keeps untouched values separate 425ms
+   ✓ Word paragraph dialog and ruler > retains invalid dialog drafts and disables an open dialog after permission changes 344ms
+   ✓ Word paragraph dialog and ruler > keeps mixed pagination flags unchanged until edited, commits once, and blocks an open dialog after permission changes 464ms
+   × Word paragraph dialog and ruler > edits a named header style using shared definitions and restores its direct indent in one undo 79ms
+     → 段落样式 review 不存在。
+   ✓ Word character metrics dialog > applies metrics in the header editor while preserving the body 309ms
+   ✓ StudioWord Office ribbon actions > shows nonprinting characters in the body, table, header and footer without changing data, selection or document history 320ms
+   ✓ StudioWord Office ribbon actions > toggles rulers, navigates headings and changes zoom in read-only mode without document edits 342ms
+   ✓ StudioWord named paragraph styles > creates, applies, modifies and deletes a named style with real undo and redo 605ms
+   ✓ StudioWord structured editing > restores rejected controlled edits so the canvas and saved model agree 511ms
+   ✓ StudioWord structured editing > changes picture wrapping, position and anchor flags and restores them with undo 592ms
+   ✓ Word text and table conversion entry > converts through the actual ribbon with a preview and independent undo/redo transactions 405ms
+   ✓ inserts a table formula through ZUVI dialog, keeps cancelled drafts and refreshes in a separate undo transaction 430ms
+   ✓ applies image crop through the toolbar, cancels drafts and restores crop with undo and redo 458ms
+   ✓ inserts a structured fraction through the actual math dialog and undoes it atomically 413ms
+   ✓ edits a math group independently in the actual footer region with undo and redo 329ms
+   ✓ StudioWord cell table defaults and spacing > edits only the dirty bottom table default and leaves cell overrides separate from inherited values 344ms
+   ✓ StudioWord cell table defaults and spacing > edits only the dirty left table default and leaves cell overrides separate from inherited values 339ms
+   ✓ StudioWord cell table defaults and spacing > keeps restoring defaults in the draft until apply, cancels without writes, and removes only the selected cell direct margins 310ms
+   ✓ StudioWord cell table defaults and spacing > clears only an emptied default side and an emptied spacing attribute without materializing inherited cell margins 435ms
+   ✓ StudioWord cell properties > preserves the original model and selection through IME, invalid precision and cancelling an actual draft 307ms
+   ✓ StudioWord cell properties > edits actual header table cells with independent undo and redo 317ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/OfficeStudio/StudioWord.test.tsx > Word paragraph dialog and ruler > edits a named header style using shared definitions and restores its direct indent in one undo
+Error: 段落样式 review 不存在。
+ ❯ Module.resolveStudioWordParagraphStyle src/components/OfficeStudio/studio-word-styles.ts:222:22
+    220|     throw new Error('段落样式存在循环继承。');
+    221|   const source = [...WORD_BUILTIN_STYLES, ...styles].find((style) => s…
+    222|   if (!source) throw new Error(`段落样式 ${id} 不存在。`);
+       |                      ^
+    223|   const base = source.basedOn
+    224|     ? resolveStudioWordParagraphStyle(styles, source.basedOn, [...path…
+ ❯ collect src/components/OfficeStudio/studio-word-tools.ts:605:23
+ ❯ Module.wordSelectionCharacterFormat src/components/OfficeStudio/studio-word-tools.ts:620:20
+ ❯ selector src/components/OfficeStudio/StudioWord.tsx:667:12
+ ❯ memoizedSelector ../../node_modules/.pnpm/use-sync-external-store@1.7.0_react@19.3.1/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim/with-selector.development.js:47:30
+ ❯ ../../node_modules/.pnpm/use-sync-external-store@1.7.0_react@19.3.1/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim/with-selector.development.js:71:22
+ ❯ updateSyncExternalStore ../../node_modules/.pnpm/react-dom@19.3.1_react@19.3.1/node_modules/react-dom/cjs/react-dom-client.development.js:8559:31
+ ❯ Object.useSyncExternalStore ../../node_modules/.pnpm/react-dom@19.3.1_react@19.3.1/node_modules/react-dom/cjs/react-dom-client.development.js:29207:16
+ ❯ process.env.NODE_ENV.exports.useSyncExternalStore ../../node_modules/.pnpm/react@19.3.1/node_modules/react/cjs/react.development.js:1316:34
+ ❯ process.env.NODE_ENV.exports.useSyncExternalStoreWithSelector ../../node_modules/.pnpm/use-sync-external-store@1.7.0_react@19.3.1/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim/with-selector.development.js:82:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  1 failed | 155 passed (156)
+   Start at  04:01:42
+   Duration  28.23s (transform 925ms, setup 393ms, collect 2.93s, tests 29.00s, environment 1.11s, prepare 173ms)
+
+undefined
+/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run src/components/OfficeStudio/StudioWord.basic-format.test.tsx src/components/OfficeStudio/StudioWord.test.tsx src/components/OfficeStudio/StudioFontControl.test.tsx --reporter=dot

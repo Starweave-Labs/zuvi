@@ -1,0 +1,148 @@
+{
+  "version": 1,
+  "id": "98f78cbb-efd8-4acd-be9c-584420da97d6",
+  "name": "Persisted-legacy.pdf",
+  "kind": "pdf",
+  "pageCount": 2,
+  "sourcePageCount": 2,
+  "pages": [
+    {
+      "id": "066be673-f806-4b31-bb02-1c45847e7bd0",
+      "sourcePage": 0,
+      "bounds": {
+        "left": 0,
+        "bottom": 0,
+        "right": 500,
+        "top": 700
+      }
+    },
+    {
+      "id": "7bc0b091-29c7-4c61-a66e-e618cff955a3",
+      "sourcePage": 1,
+      "bounds": {
+        "left": 0,
+        "bottom": 0,
+        "right": 500,
+        "top": 700
+      }
+    }
+  ],
+  "marks": [
+    {
+      "id": "legacy-ui-text",
+      "type": "text",
+      "page": 0,
+      "x": 45,
+      "y": 570,
+      "size": 14,
+      "color": "#253044",
+      "text": "旧中文批注继续编辑",
+      "replies": [
+        {
+          "id": "legacy-ui-reply",
+          "text": "旧回复保留一次"
+        }
+      ]
+    },
+    {
+      "id": "legacy-ui-highlight",
+      "type": "highlight",
+      "page": 0,
+      "x": 45,
+      "y": 520,
+      "width": 250,
+      "height": 18,
+      "size": 12,
+      "text": "Old highlight",
+      "color": "#f5c542"
+    },
+    {
+      "id": "legacy-ui-square",
+      "type": "rectangle",
+      "page": 0,
+      "x": 45,
+      "y": 430,
+      "width": 180,
+      "height": 45,
+      "size": 12,
+      "text": "Old square",
+      "color": "#253044",
+      "lineWidth": 2
+    },
+    {
+      "id": "legacy-ui-ink",
+      "type": "ink",
+      "page": 0,
+      "x": 270,
+      "y": 420,
+      "width": 140,
+      "height": 50,
+      "size": 12,
+      "text": "Old ink",
+      "color": "#253044",
+      "lineWidth": 2,
+      "points": [
+        [
+          270,
+          430
+        ],
+        [
+          315,
+          465
+        ],
+        [
+          360,
+          420
+        ],
+        [
+          410,
+          460
+        ]
+      ]
+    }
+  ],
+  "rotations": {},
+  "fields": [
+    {
+      "name": "reviewer",
+      "readOnly": false,
+      "type": "text",
+      "value": "Initial",
+      "multiline": false,
+      "widgets": [
+        {
+          "page": 0,
+          "x": 29.5,
+          "y": 29.5,
+          "width": 261,
+          "height": 31,
+          "rotation": 0
+        },
+        {
+          "page": 1,
+          "x": 29.5,
+          "y": 29.5,
+          "width": 261,
+          "height": 31,
+          "rotation": 0
+        }
+      ]
+    },
+    {
+      "name": "confirmed",
+      "readOnly": false,
+      "type": "checkbox",
+      "value": false,
+      "widgets": [
+        {
+          "page": 1,
+          "x": 319.5,
+          "y": 29.5,
+          "width": 21,
+          "height": 21,
+          "rotation": 0
+        }
+      ]
+    }
+  ]
+}

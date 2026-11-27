@@ -1,0 +1,307 @@
+{
+  "status": "verified-current-slice",
+  "version": 1,
+  "ledgerScope": [
+    "P012",
+    "P014",
+    "P015",
+    "P016"
+  ],
+  "nativeTypes": [
+    "FreeText",
+    "Text",
+    "Highlight",
+    "Underline",
+    "StrikeOut",
+    "Squiggly",
+    "Square",
+    "Ink",
+    "Circle",
+    "Line",
+    "Polygon",
+    "PolyLine"
+  ],
+  "sourceContract": {
+    "modules": 31,
+    "typescript": "5.9.3",
+    "sha256": "785c530ded568cf2f2d97ce1e67b5cde445ca5145c535444bb65e4969abb0d1f"
+  },
+  "sharedDependencies": [
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-compose.ts",
+      "bytes": 39885,
+      "sha256": "8b1cfc139d0cfae8ab2acf71802c9f46f1e3d8a0f1e5ab529ddb06cbf3642f98"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-compose-source.ts",
+      "bytes": 23617,
+      "sha256": "73a3238e00a030827373a6883436054aa96e6c08708368f8e8551f555917c244"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-compose-resources.ts",
+      "bytes": 12674,
+      "sha256": "47d4be9a2d3fcdebfa6acc920b572fc492b3a3bc32197836efa2eebdf0381b15"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-compose-navigation.ts",
+      "bytes": 18425,
+      "sha256": "b437ac06b4c8ca9c88149c7a3ed37a716e146763607f76978fc11cf06e8da134"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-compose-catalog.ts",
+      "bytes": 45628,
+      "sha256": "7b1076c40cde0697ea8722d76b5934605532bb65910b1e0f8a08a3ecdd3f5873"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-compose-utils.ts",
+      "bytes": 13008,
+      "sha256": "ecfe1520a83a9711bfeca427b02dcd13253af3097dd08c3a5709af47c2fc2e13"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-compose-types.ts",
+      "bytes": 6648,
+      "sha256": "63e87cc58c5e18e76442d7395d20e4a86ce42578b0805d313722ad62deb4fb56"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-compose-sha256.ts",
+      "bytes": 2991,
+      "sha256": "b7c06aa1b9bcf366a5e598d4bd12a61766e430d7cad39df347b4d1fec450dae9"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-page-codec.ts",
+      "bytes": 32827,
+      "sha256": "15ab0dc39e218d66c740e05f657b626ccf6d77ff8c41432c2d7dcdc0ea17ef5b"
+    }
+  ],
+  "tests": {
+    "currentNativeCodecComposition": {
+      "pass": 150,
+      "fail": 0,
+      "command": "node --test --test-reporter=spec docs/tests/studio-pdf-native*.test.mjs docs/tests/studio-pdf-codec.test.mjs docs/tests/studio-pdf-composition.test.mjs"
+    },
+    "historicalIsolated": {
+      "pass": 117,
+      "fail": 0,
+      "native": 110,
+      "highLevelComposition": 7
+    },
+    "priorCombinedMigration": {
+      "pass": 143,
+      "fail": 0
+    },
+    "historicalCombinedLegacyLoader": {
+      "pass": 130,
+      "fail": 14,
+      "total": 144,
+      "reason": "Legacy codec pageCommands VM lacked require for the newly imported studio-pdf-source-id helper."
+    },
+    "codecAndFullLowLevelCompositionResolution": {
+      "pass": 134,
+      "fail": 0,
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/validation/codec-and-compose.txt",
+      "bytes": 31112,
+      "sha256": "a7e254018047eef3d0c7756ae2cf732db997b1ca09c9ae7fdda225dbd22a7b7c"
+    }
+  },
+  "strictSourceNoEmit": {
+    "exitCode": 0,
+    "config": "strict-source-types.json"
+  },
+  "eslint": {
+    "exitCode": 0,
+    "log": "logs/eslint-current.txt"
+  },
+  "archivalHostFileQA": {
+    "generatedBeforeNoneFix": true,
+    "sourceContract": {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/source-contract-before-none.json",
+      "bytes": 9310,
+      "sha256": "37052312cec696d63bc2ef2f0972f970f5297da317264e4d3d30b62dd2295cbd"
+    },
+    "independentPypdf": {
+      "files": 6,
+      "status": "passed"
+    },
+    "poppler": {
+      "pages": 10,
+      "status": "passed"
+    },
+    "pdfjs": {
+      "pages": 3,
+      "status": "passed",
+      "version": "6.5.438"
+    }
+  },
+  "actualCurrentBrowserAndNativeQA": {
+    "pass": 10,
+    "fail": 0,
+    "pdfs": 19,
+    "popplerPages": 20,
+    "pdfjsPages": 18,
+    "appPngs": 13,
+    "manifest": {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/manifest.json",
+      "bytes": 72402,
+      "sha256": "57dadddd7ea86c5bf548e3c66825aaac6e13c3e999df4e69da73f5c2e030ae1f"
+    }
+  },
+  "pdfs": [
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/copy-edited.pdf",
+      "bytes": 1710247,
+      "sha256": "179d55d05e59752fdbe6cf710b426b84cb4257830b87e7a5d5e1465ee0ff382f"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/legacy-migrated.pdf",
+      "bytes": 1640231,
+      "sha256": "4833d7ffc34f9f98b64b1f086663aa4607e9f8093dc885a03aeafa13df0c6214"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/merged-round-1.pdf",
+      "bytes": 3404742,
+      "sha256": "45027189c208a2b79468f5a426b4670ec2ff85d12130d06a5dd943de9c2a9fcf"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/merged-round-2.pdf",
+      "bytes": 3405329,
+      "sha256": "114c3d0fc03f285c45a9d6e18bc52aeb11481c72cdd25d0a14a5969b3f283d48"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/native-twelve-types.pdf",
+      "bytes": 1693707,
+      "sha256": "7a4e322ddf8384e9631f64f8add9e940458270b07f203aae438bfb46a5032965"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/original.pdf",
+      "bytes": 3929,
+      "sha256": "78eb0a7b35b23c633d9e1f07b6beb58a572448254c408fe671ff12ac794bee4e"
+    }
+  ],
+  "preservedPrototype": {
+    "tests": 124,
+    "evidence": [
+      {
+        "path": "/tmp/zuvi-pdf-native-marks-typescript/tests-final.txt",
+        "bytes": 14009,
+        "sha256": "4a7dd7d9c4fe7efc72761a651062389ad169c89f7700ee2a4a1279612aeeff13"
+      },
+      {
+        "path": "/tmp/zuvi-pdf-native-marks-typescript/evidence-before-default-paint/model-edit.ts",
+        "bytes": 15000,
+        "sha256": "d00235dd0b07d3b18b6446084e1b0cd183c30de133afa47ee50d949aefebe80b"
+      },
+      {
+        "path": "/tmp/zuvi-pdf-native-marks-typescript/evidence-before-default-paint/source-contract-verification.json",
+        "bytes": 10036,
+        "sha256": "b6c56a8fd38daa9e1362972ed2d563b3d924097180caa2b3e1fccebdb2e9fedc"
+      },
+      {
+        "path": "/tmp/zuvi-pdf-native-marks-typescript/evidence-before-default-paint/workspace-render/mixed-prepared-page-1.png",
+        "bytes": 12954,
+        "sha256": "162980466eeadeb8ccbb33a7fcee61fda10cee167a73a369555c5d2bb474b5a8"
+      }
+    ]
+  },
+  "remaining": [
+    "Original 159-item full-ledger and final repository gates remain root-owned",
+    "P009-P011/P013 individual acceptance is outside this slice"
+  ],
+  "proofFiles": [
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/independent-pypdf.json",
+      "bytes": 221508,
+      "sha256": "f71c8309601867967dc1b555cca71f3971adad9128fb83d226db48e8c6170c22",
+      "name": "independent-pypdf.json"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/poppler.json",
+      "bytes": 4459,
+      "sha256": "2ff332ecc75c23fdf5edda306aa70609731cc1677339b9aa044011be3f76816d",
+      "name": "poppler.json"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/pdfjs.json",
+      "bytes": 1788,
+      "sha256": "b71a645c48246f8f1269b7521d0b6b64976d48e45825043fc004cddd53609afa",
+      "name": "pdfjs.json"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/visual-review.json",
+      "bytes": 4494,
+      "sha256": "0eee269645ff6e759088aef4b7fb00f0c762b88e64938e5bc04f9e1837762c42",
+      "name": "visual-review.json"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/source-contract.json",
+      "bytes": 9310,
+      "sha256": "785c530ded568cf2f2d97ce1e67b5cde445ca5145c535444bb65e4969abb0d1f",
+      "name": "source-contract.json"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/source-contract-before-none.json",
+      "bytes": 9310,
+      "sha256": "37052312cec696d63bc2ef2f0972f970f5297da317264e4d3d30b62dd2295cbd",
+      "name": "source-contract-before-none.json"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/verification-input-output.json",
+      "bytes": 373764,
+      "sha256": "243f98da3af3a6d8639eac67b598afa5200b801d420af9400d6a70ceaf87a6a4",
+      "name": "verification-input-output.json"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/README.md",
+      "bytes": 6874,
+      "sha256": "2a151cde6311c868ace28faa447d640d0665e43ae5bb770985ef99365c70d07b",
+      "name": "README.md"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/logs/native-and-composition-117.txt",
+      "bytes": 13293,
+      "sha256": "ab9585c83e9c6ce2af4eb6f2f772b3972d6355df1829bcbfa02b29c874ed1251",
+      "name": "native-and-composition-117.txt"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/logs/prior-migration-143.txt",
+      "bytes": 16597,
+      "sha256": "ec1369a7026af821b8090f2ed9ca695ef8eb16b29c69544699dc090f53f38671",
+      "name": "prior-migration-143.txt"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/logs/legacy-codec-loader-failure-144.txt",
+      "bytes": 32571,
+      "sha256": "c78d1378da92da32f25ebdd304c3eb7ce066bce4289f7b0a415a5dd887f14e55",
+      "name": "legacy-codec-loader-failure-144.txt"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/logs/first-new-preview-fixture-kind-failure.txt",
+      "bytes": 2545,
+      "sha256": "ca97131d1c03372b3120482851cfd8ec838841447fe8cfb53190886a28f12548",
+      "name": "first-new-preview-fixture-kind-failure.txt"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/logs/native-codec-composition-150.txt",
+      "bytes": 17526,
+      "sha256": "407c52f74e1a90bba03a61676eec65fc992a9b9e41a1bc32dcd755fc56794243",
+      "name": "native-codec-composition-150.txt"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/logs/none-and-colors-45.txt",
+      "bytes": 5155,
+      "sha256": "bb9c2c6539b5ad05ac772493d81957478f7f323a2a6fde1fff0f903461b91f45",
+      "name": "none-and-colors-45.txt"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/logs/strict-source-noemit-current.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "name": "strict-source-noemit-current.txt"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/logs/eslint-current.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "name": "eslint-current.txt"
+    }
+  ]
+}

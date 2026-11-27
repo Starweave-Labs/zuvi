@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "status": "original-bytes-preserved",
+  "records": [
+    {
+      "variant": "before-pinned",
+      "original": {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/before-pinned/probe.mjs.txt",
+        "bytes": 3764,
+        "sha256": "d734f060357d84e788ac3c6b795dc625d18554911ebfb7759a60d84e443e3a77"
+      },
+      "runnable": {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/before-pinned/probe.mjs",
+        "bytes": 4154,
+        "sha256": "6d909c64a6c7bb84b0fe345a8a1bf1e7b0028933c8bf36741ad1a5f30f24d444"
+      },
+      "originalMatchesFrozenTmp": true,
+      "changes": [
+        "Explicit node:buffer Blob and node:util TextDecoder imports",
+        "Removed unused mkdir import; readdir validates an empty replay directory",
+        "Replay requires a separate existing empty output directory and refuses the fixed evidence directory"
+      ],
+      "note": "Original probe bytes and existing original/clear/repaint PDF evidence remain unchanged. The runnable variant only repairs QA imports and isolates replay output."
+    },
+    {
+      "variant": "after-fixed",
+      "original": {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/after-fixed/probe.mjs.txt",
+        "bytes": 3871,
+        "sha256": "3133ba589b9f786f1efba3fa27f75cd402ceb00704379e9e61a6d71d8fc4cd2e"
+      },
+      "runnable": {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/after-fixed/probe.mjs",
+        "bytes": 4261,
+        "sha256": "f3736485ae1593fa114295a8a12e069d8a5764e5a1eb1f3bd09a66927a2a6282"
+      },
+      "originalMatchesFrozenTmp": true,
+      "changes": [
+        "Explicit node:buffer Blob and node:util TextDecoder imports",
+        "Removed unused mkdir import; readdir validates an empty replay directory",
+        "Replay requires a separate existing empty output directory and refuses the fixed evidence directory"
+      ],
+      "note": "Original probe bytes and existing original/clear/repaint PDF evidence remain unchanged. The runnable variant only repairs QA imports and isolates replay output."
+    }
+  ]
+}

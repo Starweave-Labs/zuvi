@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "status": "all-original-bytes-verified-in-content-addressed-archive",
+  "source": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-complete-rerun-output/.playwright-artifacts-0",
+  "retainedOriginals": ".release/audit-backups/paused-267-playwright-transient",
+  "archive": ".release/audit-backups/paused-267-transient-evidence.zip",
+  "archiveBytes": 929858305,
+  "archiveSha256": "416d60a3b6ef8bbe99ddb6de9eb37d929bba3255732507a9b3c4745b0f5fcebb",
+  "objects": 30462,
+  "originalBytes": 2057816740,
+  "uniqueBlobs": 23235,
+  "runStatus": "interrupted-without-final-report",
+  "recovery": "Read manifest.json; each original relative path maps to its exact blobs/<sha256> member. Symlink members store link-target bytes, not external file contents.",
+  "manifestPathBase": "docs",
+  "portableObjectInventory": "paused-267-transient-manifest.json.gz",
+  "archiveAvailability": "Retained locally under ignored .release; incomplete internal trace cache is not portable acceptance evidence. Completed run reports and named test traces are committed separately."
+}

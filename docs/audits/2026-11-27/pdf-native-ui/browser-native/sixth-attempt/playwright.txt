@@ -1,0 +1,50 @@
+[WebServer] (node:70005) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:70018) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+[WebServer] [BABEL] Note: The code generator has deoptimised the styling of /var/folders/9n/_523pt1s3gqg0f165zsdbldc0000gn/T/zuvi-office-e2e-vite-5275-69999/deps/react-dom_client.js?v=24f1dd70 as it exceeds the max of 500KB.
+  ✓  1 [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:313:1 › P012 creates and formats CJK FreeText with transactional history, IME drafts, native AP and two reopens (13.7s)
+  ✓  2 [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:426:1 › P016 creates native shapes, arrow, polyline and ink through real pointers and edits fill, dash, ends and vertices (19.8s)
+  ✘  3 [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:516:1 › P015 reads native notes, writes authored IRT replies and resolve/reopen state, and deletes replies/parents transactionally (27.1s)
+  ✓  4 [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:621:1 › native read-only/locked commands and cancelling a pending CJK font preparation preserve source and history (5.4s)
+
+
+  1) [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:516:1 › P015 reads native notes, writes authored IRT replies and resolve/reopen state, and deletes replies/parents transactionally 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('第二条原生回复', { exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('第二条原生回复', { exact: true }) with timeout 5000ms
+      - waiting for getByText('第二条原生回复', { exact: true })
+
+
+      543 |   await expect(page.getByText('第二条原生回复', { exact: true })).toHaveCount(0);
+      544 |   await page.getByRole('button', { name: '撤销', exact: true }).click(); await waitReady(page);
+    > 545 |   await expect(page.getByText('第二条原生回复', { exact: true })).toBeVisible();
+          |                                                            ^
+      546 |   await page.getByRole('button', { name: '删除选中标注', exact: true }).click(); await expect(hit(page, id)).toHaveCount(0); await waitReady(page);
+      547 |   const deleted = await exported(page, 'p015-parent-deleted.pdf');
+      548 |   expect((await inspect(deleted)).annotations.some(item => item.id === id || item.replyTo === id)).toBe(false);
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-native-annotations.spec.ts:545:60
+
+    Error Context: ../../../../../../tmp/zuvi-pdf-native-ui-sixth-results/office-studio-pdf-native-a-92e5d-ies-parents-transactionally-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../tmp/zuvi-pdf-native-ui-sixth-results/office-studio-pdf-native-a-92e5d-ies-parents-transactionally-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../../../tmp/zuvi-pdf-native-ui-sixth-results/office-studio-pdf-native-a-92e5d-ies-parents-transactionally-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:516:1 › P015 reads native notes, writes authored IRT replies and resolve/reopen state, and deletes replies/parents transactionally 
+  3 passed (1.2m)

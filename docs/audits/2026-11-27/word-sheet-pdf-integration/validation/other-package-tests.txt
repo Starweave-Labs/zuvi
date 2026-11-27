@@ -1,0 +1,128 @@
+Scope: 4 of 9 workspace projects
+packages/blocks test$ vitest run
+packages/cli test$ vitest run
+packages/mcp test$ pnpm build && node --test tests/*.test.mjs
+packages/i18n test$ vitest run
+packages/cli test:  RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/cli
+packages/mcp test: > @zuvi/mcp@1.1.0 build /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/mcp
+packages/mcp test: > tsc -p tsconfig.json && node ../../registry/scripts/bundle.mjs mcp
+packages/i18n test:  RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/i18n
+packages/blocks test:  RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/blocks
+packages/cli test:  ✓ src/index.test.ts (26 tests) 877ms
+packages/cli test:    ✓ 真实 registry 契约校验（76 组件 + 16 业务块） > 安装 OfficeStudio 时包含三种编辑内核、公式声明及 ZUVI 控件依赖 552ms
+packages/cli test:  Test Files  1 passed (1)
+packages/cli test:       Tests  26 passed (26)
+packages/cli test:    Start at  06:50:09
+packages/cli test:    Duration  1.98s (transform 287ms, setup 0ms, collect 355ms, tests 877ms, environment 0ms, prepare 79ms)
+packages/cli test: Done
+packages/i18n test:  ✓ src/providers/deepl.test.ts (1 test) 5ms
+packages/i18n test:  ✓ src/providers/openai.test.ts (4 tests) 57ms
+packages/i18n test:  ✓ src/providers/custom.test.ts (1 test) 6ms
+packages/i18n test:  ✓ src/providers/youdao.test.ts (2 tests) 15ms
+packages/mcp test: TAP version 13
+packages/i18n test:  ✓ src/useAutoTranslate.test.tsx (29 tests) 803ms
+packages/i18n test:  Test Files  5 passed (5)
+packages/i18n test:       Tests  37 passed (37)
+packages/i18n test:    Start at  06:50:09
+packages/i18n test:    Duration  3.45s (transform 211ms, setup 0ms, collect 753ms, tests 885ms, environment 6.40s, prepare 1.26s)
+packages/i18n test: Done
+packages/mcp test: # Subtest: catalog resolves every shipped component from bundled data
+packages/mcp test: ok 1 - catalog resolves every shipped component from bundled data
+packages/mcp test:   ---
+packages/mcp test:   duration_ms: 7.47275
+packages/mcp test:   ...
+packages/mcp test: # Subtest: server reports the published package version
+packages/mcp test: ok 2 - server reports the published package version
+packages/mcp test:   ---
+packages/mcp test:   duration_ms: 0.986583
+packages/mcp test:   ...
+packages/mcp test: # Subtest: explicit false survives JSX generation
+packages/mcp test: ok 3 - explicit false survives JSX generation
+packages/mcp test:   ---
+packages/mcp test:   duration_ms: 0.227792
+packages/mcp test:   ...
+packages/mcp test: # Subtest: all components have generated examples with real imports and required props
+packages/mcp test: ok 4 - all components have generated examples with real imports and required props
+packages/mcp test:   ---
+packages/mcp test:   duration_ms: 138.351333
+packages/mcp test:   ...
+packages/mcp test: # Subtest: Office examples accept backend configuration and expose standalone document creation
+packages/mcp test: ok 5 - Office examples accept backend configuration and expose standalone document creation
+packages/mcp test:   ---
+packages/mcp test:   duration_ms: 0.148542
+packages/mcp test:   ...
+packages/mcp test: # Subtest: Globe example uses numeric categorized points, a named arc and opt-in exploration props
+packages/mcp test: ok 6 - Globe example uses numeric categorized points, a named arc and opt-in exploration props
+packages/mcp test:   ---
+packages/mcp test:   duration_ms: 1.183542
+packages/mcp test:   ...
+packages/mcp test: # Subtest: Globe example honors caller data, false flags, zero duration and independent selections
+packages/mcp test: ok 7 - Globe example honors caller data, false flags, zero duration and independent selections
+packages/mcp test:   ---
+packages/mcp test:   duration_ms: 0.8445
+packages/mcp test:   ...
+packages/mcp test: # Subtest: Chart source metadata exposes 13 discriminants, 17 forms and separate opt-in defaults
+packages/mcp test: ok 8 - Chart source metadata exposes 13 discriminants, 17 forms and separate opt-in defaults
+packages/mcp test:   ---
+packages/mcp test:   duration_ms: 0.200666
+packages/mcp test:   ...
+packages/mcp test: # Subtest: Chart source generator produces valid named examples for all 17 forms without mixed data families
+packages/mcp test: ok 9 - Chart source generator produces valid named examples for all 17 forms without mixed data families
+packages/mcp test:   ---
+packages/mcp test:   duration_ms: 42.773083
+packages/mcp test:   ...
+packages/mcp test: # Subtest: Chart source generation preserves caller data, explicit false flags and null selection/ranges
+packages/mcp test: ok 10 - Chart source generation preserves caller data, explicit false flags and null selection/ranges
+packages/mcp test:   ---
+packages/mcp test:   duration_ms: 13.957
+packages/mcp test:   ...
+packages/mcp test: # Subtest: Chart bundled metadata and generation match source after dist/data refresh
+packages/mcp test: ok 11 - Chart bundled metadata and generation match source after dist/data refresh
+packages/mcp test:   ---
+packages/mcp test:   duration_ms: 3.744041
+packages/mcp test:   ...
+packages/mcp test: # Subtest: RPC gives useful failures and recognizes all three tools
+packages/mcp test: ok 12 - RPC gives useful failures and recognizes all three tools
+packages/mcp test:   ---
+packages/mcp test:   duration_ms: 24.313916
+packages/mcp test:   ...
+packages/mcp test: # Subtest: stdio server handles split input and exits after EOF
+packages/mcp test: ok 13 - stdio server handles split input and exits after EOF
+packages/mcp test:   ---
+packages/mcp test:   duration_ms: 48.458167
+packages/mcp test:   ...
+packages/mcp test: 1..13
+packages/mcp test: # tests 13
+packages/mcp test: # suites 0
+packages/mcp test: # pass 13
+packages/mcp test: # fail 0
+packages/mcp test: # cancelled 0
+packages/mcp test: # skipped 0
+packages/mcp test: # todo 0
+packages/mcp test: # duration_ms 804.486625
+packages/mcp test: Done
+packages/blocks test:  ✓ tests/permission.test.tsx (5 tests) 402ms
+packages/blocks test:  ✓ tests/kanban.test.tsx (5 tests) 563ms
+packages/blocks test:    ✓ kanban block > activates focused cards with Enter and Space 339ms
+packages/blocks test:  ✓ tests/timeline-feed.test.tsx (8 tests) 660ms
+packages/blocks test:  ✓ tests/profile-edit.test.tsx (6 tests) 711ms
+packages/blocks test:  ✓ tests/settings.test.tsx (5 tests) 720ms
+packages/blocks test:  ✓ tests/search-result.test.tsx (4 tests) 775ms
+packages/blocks test:  ✓ tests/wizard.test.tsx (4 tests) 793ms
+packages/blocks test:    ✓ wizard block > walks through all three steps and finishes with aggregated values 428ms
+packages/blocks test:  ✓ tests/order-list.test.tsx (4 tests) 809ms
+packages/blocks test:    ✓ order-list block > filters orders by status through the Select and reports the change 340ms
+packages/blocks test:  ✓ tests/table-page.test.tsx (6 tests) 1042ms
+packages/blocks test:    ✓ table-page block > submits the typed keyword and reports the chosen filter field and value 594ms
+packages/blocks test:  ✓ tests/blocks.test.tsx (5 tests) 1805ms
+packages/blocks test:    ✓ business block forms > validates a login before delivering the public values 626ms
+packages/blocks test:    ✓ business block forms > validates required project fields, blocks loading submits, and preserves public values 982ms
+packages/blocks test:  ✓ tests/error-pages.test.tsx (4 tests) 203ms
+packages/blocks test:  ✓ tests/list-detail.test.tsx (4 tests) 131ms
+packages/blocks test:  ✓ tests/data-screen.test.tsx (4 tests) 221ms
+packages/blocks test:  ✓ tests/user-center.test.tsx (4 tests) 270ms
+packages/blocks test:  Test Files  14 passed (14)
+packages/blocks test:       Tests  68 passed (68)
+packages/blocks test:    Start at  06:50:09
+packages/blocks test:    Duration  7.36s (transform 2.28s, setup 4.66s, collect 28.14s, tests 9.11s, environment 14.43s, prepare 2.39s)
+packages/blocks test: Done

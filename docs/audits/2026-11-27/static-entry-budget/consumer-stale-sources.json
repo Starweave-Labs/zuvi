@@ -1,0 +1,59 @@
+{
+  "capturedAt": "2026-11-26T21:59:20.790Z",
+  "registryEqual": true,
+  "sources": 487,
+  "stale": [
+    {
+      "file": "packages/ui/src/config/locale.ts",
+      "reason": "bundled source differs"
+    },
+    {
+      "file": "packages/ui/src/components/OfficeStudio/OfficeStudio.tsx",
+      "reason": "bundled source differs"
+    },
+    {
+      "file": "packages/ui/src/components/OfficeStudio/StudioPdf.css",
+      "reason": "bundled source differs"
+    },
+    {
+      "file": "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+      "reason": "bundled source differs"
+    },
+    {
+      "file": "packages/ui/src/components/OfficeStudio/StudioSheet.css",
+      "reason": "bundled source differs"
+    },
+    {
+      "file": "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+      "reason": "bundled source differs"
+    },
+    {
+      "file": "packages/ui/src/components/OfficeStudio/StudioSheetText.tsx",
+      "reason": "bundled source differs"
+    },
+    {
+      "file": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+      "reason": "bundled source differs"
+    },
+    {
+      "file": "packages/ui/src/components/OfficeStudio/index.ts",
+      "reason": "bundled source differs"
+    },
+    {
+      "file": "packages/ui/src/components/OfficeStudio/studio-model.ts",
+      "reason": "bundled source differs"
+    },
+    {
+      "file": "packages/ui/src/components/OfficeStudio/studio-pdf-pages.ts",
+      "reason": "bundled source differs"
+    },
+    {
+      "file": "packages/ui/src/components/OfficeStudio/studio-types.ts",
+      "reason": "bundled source differs"
+    },
+    {
+      "file": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
+      "reason": "bundled source differs"
+    }
+  ]
+}

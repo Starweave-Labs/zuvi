@@ -1,0 +1,12 @@
+{
+  "disabledCopy": "KEEP_DISABLED",
+  "disabledAnnotationSelections": [],
+  "cancelled": {
+    "error": "AbortError",
+    "children": 0
+  },
+  "unmountedLayers": 0,
+  "beforeCleanup": 1,
+  "afterCleanup": 0,
+  "errors": []
+}

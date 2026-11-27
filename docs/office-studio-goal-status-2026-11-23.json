@@ -4,7 +4,11 @@
   "sourceLedger": "docs/onlyoffice-feature-ledger-2026-11-13.json",
   "historicalLedgerDate": "2026-11-13",
   "auditStarted": "2026-11-23",
-  "products": ["Word", "Excel", "PDF"],
+  "products": [
+    "Word",
+    "Excel",
+    "PDF"
+  ],
   "requiredItems": 159,
   "completionProven": false,
   "items": [
@@ -28,39 +32,95 @@
         "docs/tests/office-studio-word.test.mjs"
       ],
       "historicalStatus": "基础已有",
-      "status": "audited-basic-acceptance-pending",
-      "evidence": [],
+      "status": "verified-original-acceptance",
+      "evidence": [
+        "docs/audits/2026-11-27/word-character-guards/original-acceptance-matrix.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/source-freeze-final.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/continuation-native-summary.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json"
+      ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "基础实现",
-        "implementedBehavior": "选区字体与字号输入，Enter/失焦/Escape、IME 与历史",
-        "functionalGaps": ["插入点后续输入、混合字体与全部文件/浏览器矩阵仍需逐项闭环"],
-        "acceptance": "not-proven-complete",
+        "date": "2026-11-27",
+        "sourceCommit": "3c751e02a8d4be6e19797ad5c0a55c1077d29107",
+        "implementation": "完整验收",
+        "implementedBehavior": "选区与插入点分别应用，保留原选区",
+        "functionalGaps": [],
+        "acceptance": "original-ledger-acceptance-verified",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 156,
-            "anchor": "const EXTENSIONS"
+            "path": "docs/audits/2026-11-27/word-character-guards/original-acceptance-matrix.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
-            "line": 60,
-            "anchor": "const UNSUPPORTED_CONTENT"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/source-freeze-final.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 78,
-            "anchor": "export interface StudioWordDocument"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
+          },
+          {
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/continuation-native-summary.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
+          },
+          {
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           }
         ],
         "existingTestFiles": [
-          "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
-          "docs/tests/office-studio-word.test.mjs"
+          "e2e/office-studio-word-basic-format.spec.ts",
+          "e2e/office-studio-word-character-guards.spec.ts"
         ],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "testEvidenceNote": "Individual matrices, native files and a single frozen 316/316 browser run verify original acceptance and applicable common criteria. No whole-goal completion claim."
       },
-      "gaps": ["插入点后续输入、混合字体与全部文件/浏览器矩阵仍需逐项闭环"]
+      "gaps": [],
+      "auditHistory": [
+        {
+          "status": "audited-basic-acceptance-pending",
+          "gaps": [
+            "插入点后续输入、混合字体与全部文件/浏览器矩阵仍需逐项闭环"
+          ],
+          "currentAudit": {
+            "date": "2026-11-25",
+            "sourceCommit": "2382530",
+            "implementation": "基础实现",
+            "implementedBehavior": "选区字体与字号输入，Enter/失焦/Escape、IME 与历史",
+            "functionalGaps": [
+              "插入点后续输入、混合字体与全部文件/浏览器矩阵仍需逐项闭环"
+            ],
+            "acceptance": "not-proven-complete",
+            "evidence": [
+              {
+                "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+                "line": 156,
+                "anchor": "const EXTENSIONS"
+              },
+              {
+                "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
+                "line": 60,
+                "anchor": "const UNSUPPORTED_CONTENT"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
+                "line": 78,
+                "anchor": "export interface StudioWordDocument"
+              }
+            ],
+            "existingTestFiles": [
+              "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+              "docs/tests/office-studio-word.test.mjs"
+            ],
+            "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+          }
+        }
+      ]
     },
     {
       "id": "W002",
@@ -82,55 +142,110 @@
         "docs/tests/office-studio-word.test.mjs"
       ],
       "historicalStatus": "缺失",
-      "status": "implemented-case-size-slice-verified-full-acceptance-audit-pending",
+      "status": "verified-original-acceptance",
       "evidence": [
         "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx: mixed font sizes, bounds, caret input, five case modes, Unicode selections, history and permissions",
         "packages/ui/src/components/OfficeStudio/studio-word-tools.ts: per-run font ladder and mark-preserving case transformation",
         "e2e/office-studio-word-case-size.spec.ts: native DOCX import/edit/export/reopen twice and light/dark/320px workflow",
-        "docs/audits/2026-11-25/word-case-size/: native DOCX files and browser screenshots"
+        "docs/audits/2026-11-25/word-case-size/: native DOCX files and browser screenshots",
+        "docs/audits/2026-11-27/word-character-guards/original-acceptance-matrix.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/source-freeze-final.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/continuation-native-summary.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json"
       ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "切片验证",
-        "implementedBehavior": "常用字号阶梯、混合字号分别调整、上下限和插入点后续输入，单事务撤销重做",
-        "functionalGaps": ["完整共通验收矩阵、复杂样式继承及外部排版软件字号行为仍待核对"],
-        "acceptance": "not-proven-complete",
+        "date": "2026-11-27",
+        "sourceCommit": "3c751e02a8d4be6e19797ad5c0a55c1077d29107",
+        "implementation": "完整验收",
+        "implementedBehavior": "按字号阶梯处理混合字号及上下限",
+        "functionalGaps": [],
+        "acceptance": "original-ledger-acceptance-verified",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 156,
-            "anchor": "const EXTENSIONS"
+            "path": "docs/audits/2026-11-27/word-character-guards/original-acceptance-matrix.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
-            "line": 60,
-            "anchor": "const UNSUPPORTED_CONTENT"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/source-freeze-final.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 78,
-            "anchor": "export interface StudioWordDocument"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
-            "line": 739,
-            "anchor": "wordStepFontSize"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/continuation-native-summary.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "e2e/office-studio-word-case-size.spec.ts",
-            "line": 25,
-            "anchor": "test("
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           }
         ],
         "existingTestFiles": [
-          "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
-          "docs/tests/office-studio-word.test.mjs",
-          "e2e/office-studio-word-case-size.spec.ts"
+          "e2e/office-studio-word-case-size.spec.ts",
+          "e2e/office-studio-word-character-guards.spec.ts"
         ],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "testEvidenceNote": "Individual matrices, native files and a single frozen 316/316 browser run verify original acceptance and applicable common criteria. No whole-goal completion claim."
       },
-      "gaps": ["完整共通验收矩阵、复杂样式继承及外部排版软件字号行为仍待核对"]
+      "gaps": [],
+      "auditHistory": [
+        {
+          "status": "implemented-case-size-slice-verified-full-acceptance-audit-pending",
+          "gaps": [
+            "完整共通验收矩阵、复杂样式继承及外部排版软件字号行为仍待核对"
+          ],
+          "currentAudit": {
+            "date": "2026-11-25",
+            "sourceCommit": "2382530",
+            "implementation": "切片验证",
+            "implementedBehavior": "常用字号阶梯、混合字号分别调整、上下限和插入点后续输入，单事务撤销重做",
+            "functionalGaps": [
+              "完整共通验收矩阵、复杂样式继承及外部排版软件字号行为仍待核对"
+            ],
+            "acceptance": "not-proven-complete",
+            "evidence": [
+              {
+                "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+                "line": 156,
+                "anchor": "const EXTENSIONS"
+              },
+              {
+                "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
+                "line": 60,
+                "anchor": "const UNSUPPORTED_CONTENT"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
+                "line": 78,
+                "anchor": "export interface StudioWordDocument"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
+                "line": 739,
+                "anchor": "wordStepFontSize"
+              },
+              {
+                "path": "e2e/office-studio-word-case-size.spec.ts",
+                "line": 25,
+                "anchor": "test("
+              }
+            ],
+            "existingTestFiles": [
+              "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+              "docs/tests/office-studio-word.test.mjs",
+              "e2e/office-studio-word-case-size.spec.ts"
+            ],
+            "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+          }
+        }
+      ]
     },
     {
       "id": "W003",
@@ -152,39 +267,95 @@
         "docs/tests/office-studio-word.test.mjs"
       ],
       "historicalStatus": "基础已有",
-      "status": "audited-basic-acceptance-pending",
-      "evidence": [],
+      "status": "verified-original-acceptance",
+      "evidence": [
+        "docs/audits/2026-11-27/word-character-guards/original-acceptance-matrix.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/source-freeze-final.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/continuation-native-summary.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json"
+      ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "基础实现",
-        "implementedBehavior": "粗体斜体下划线删除线、选区工具状态、撤销",
-        "functionalGaps": ["混合状态、取消后重做和逐格式 DOCX/UI 对应证据待补"],
-        "acceptance": "not-proven-complete",
+        "date": "2026-11-27",
+        "sourceCommit": "3c751e02a8d4be6e19797ad5c0a55c1077d29107",
+        "implementation": "完整验收",
+        "implementedBehavior": "混合选区状态、取消格式、撤销重做",
+        "functionalGaps": [],
+        "acceptance": "original-ledger-acceptance-verified",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 156,
-            "anchor": "const EXTENSIONS"
+            "path": "docs/audits/2026-11-27/word-character-guards/original-acceptance-matrix.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
-            "line": 60,
-            "anchor": "const UNSUPPORTED_CONTENT"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/source-freeze-final.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 78,
-            "anchor": "export interface StudioWordDocument"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
+          },
+          {
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/continuation-native-summary.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
+          },
+          {
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           }
         ],
         "existingTestFiles": [
-          "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
-          "docs/tests/office-studio-word.test.mjs"
+          "e2e/office-studio-word-basic-format.spec.ts",
+          "e2e/office-studio-word-character-guards.spec.ts"
         ],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "testEvidenceNote": "Individual matrices, native files and a single frozen 316/316 browser run verify original acceptance and applicable common criteria. No whole-goal completion claim."
       },
-      "gaps": ["混合状态、取消后重做和逐格式 DOCX/UI 对应证据待补"]
+      "gaps": [],
+      "auditHistory": [
+        {
+          "status": "audited-basic-acceptance-pending",
+          "gaps": [
+            "混合状态、取消后重做和逐格式 DOCX/UI 对应证据待补"
+          ],
+          "currentAudit": {
+            "date": "2026-11-25",
+            "sourceCommit": "2382530",
+            "implementation": "基础实现",
+            "implementedBehavior": "粗体斜体下划线删除线、选区工具状态、撤销",
+            "functionalGaps": [
+              "混合状态、取消后重做和逐格式 DOCX/UI 对应证据待补"
+            ],
+            "acceptance": "not-proven-complete",
+            "evidence": [
+              {
+                "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+                "line": 156,
+                "anchor": "const EXTENSIONS"
+              },
+              {
+                "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
+                "line": 60,
+                "anchor": "const UNSUPPORTED_CONTENT"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
+                "line": 78,
+                "anchor": "export interface StudioWordDocument"
+              }
+            ],
+            "existingTestFiles": [
+              "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+              "docs/tests/office-studio-word.test.mjs"
+            ],
+            "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+          }
+        }
+      ]
     },
     {
       "id": "W004",
@@ -206,44 +377,100 @@
         "docs/tests/office-studio-word.test.mjs"
       ],
       "historicalStatus": "基础已有",
-      "status": "audited-basic-acceptance-pending",
-      "evidence": [],
+      "status": "verified-original-acceptance",
+      "evidence": [
+        "docs/audits/2026-11-27/word-character-guards/original-acceptance-matrix.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/source-freeze-final.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/continuation-native-summary.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json"
+      ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "基础实现",
-        "implementedBehavior": "上标下标互斥 Mark 与原生 DOCX 保存",
-        "functionalGaps": ["交替切换、取消恢复基线的完整 UI/文件矩阵待补"],
-        "acceptance": "not-proven-complete",
+        "date": "2026-11-27",
+        "sourceCommit": "3c751e02a8d4be6e19797ad5c0a55c1077d29107",
+        "implementation": "完整验收",
+        "implementedBehavior": "互斥切换、取消后恢复基线",
+        "functionalGaps": [],
+        "acceptance": "original-ledger-acceptance-verified",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 156,
-            "anchor": "const EXTENSIONS"
+            "path": "docs/audits/2026-11-27/word-character-guards/original-acceptance-matrix.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
-            "line": 60,
-            "anchor": "const UNSUPPORTED_CONTENT"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/source-freeze-final.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 78,
-            "anchor": "export interface StudioWordDocument"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
-            "line": 516,
-            "anchor": "WordSubscript"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/continuation-native-summary.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
+          },
+          {
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           }
         ],
         "existingTestFiles": [
-          "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
-          "docs/tests/office-studio-word.test.mjs"
+          "e2e/office-studio-word-basic-format.spec.ts",
+          "e2e/office-studio-word-character-guards.spec.ts"
         ],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "testEvidenceNote": "Individual matrices, native files and a single frozen 316/316 browser run verify original acceptance and applicable common criteria. No whole-goal completion claim."
       },
-      "gaps": ["交替切换、取消恢复基线的完整 UI/文件矩阵待补"]
+      "gaps": [],
+      "auditHistory": [
+        {
+          "status": "audited-basic-acceptance-pending",
+          "gaps": [
+            "交替切换、取消恢复基线的完整 UI/文件矩阵待补"
+          ],
+          "currentAudit": {
+            "date": "2026-11-25",
+            "sourceCommit": "2382530",
+            "implementation": "基础实现",
+            "implementedBehavior": "上标下标互斥 Mark 与原生 DOCX 保存",
+            "functionalGaps": [
+              "交替切换、取消恢复基线的完整 UI/文件矩阵待补"
+            ],
+            "acceptance": "not-proven-complete",
+            "evidence": [
+              {
+                "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+                "line": 156,
+                "anchor": "const EXTENSIONS"
+              },
+              {
+                "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
+                "line": 60,
+                "anchor": "const UNSUPPORTED_CONTENT"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
+                "line": 78,
+                "anchor": "export interface StudioWordDocument"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
+                "line": 516,
+                "anchor": "WordSubscript"
+              }
+            ],
+            "existingTestFiles": [
+              "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+              "docs/tests/office-studio-word.test.mjs"
+            ],
+            "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+          }
+        }
+      ]
     },
     {
       "id": "W005",
@@ -272,7 +499,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "RGB 字体颜色；导入解析主题色为直接色",
-        "functionalGaps": ["缺文档主题色引用、自动颜色和透明度往返"],
+        "functionalGaps": [
+          "缺文档主题色引用、自动颜色和透明度往返"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -297,7 +526,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺文档主题色引用、自动颜色和透明度往返"]
+      "gaps": [
+        "缺文档主题色引用、自动颜色和透明度往返"
+      ]
     },
     {
       "id": "W006",
@@ -319,44 +550,100 @@
         "docs/tests/office-studio-word.test.mjs"
       ],
       "historicalStatus": "缺失",
-      "status": "audited-basic-acceptance-pending",
-      "evidence": [],
+      "status": "verified-original-acceptance",
+      "evidence": [
+        "docs/audits/2026-11-27/word-character-guards/original-acceptance-matrix.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/source-freeze-final.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/continuation-native-summary.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json"
+      ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "基础实现",
-        "implementedBehavior": "文字背景高亮菜单与无颜色清除",
-        "functionalGaps": ["后续输入、混合高亮及独立 DOCX 往返证据待补"],
-        "acceptance": "not-proven-complete",
+        "date": "2026-11-27",
+        "sourceCommit": "3c751e02a8d4be6e19797ad5c0a55c1077d29107",
+        "implementation": "完整验收",
+        "implementedBehavior": "选中文字和后续输入均可应用及清除",
+        "functionalGaps": [],
+        "acceptance": "original-ledger-acceptance-verified",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 156,
-            "anchor": "const EXTENSIONS"
+            "path": "docs/audits/2026-11-27/word-character-guards/original-acceptance-matrix.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
-            "line": 60,
-            "anchor": "const UNSUPPORTED_CONTENT"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/source-freeze-final.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 78,
-            "anchor": "export interface StudioWordDocument"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
-            "line": 926,
-            "anchor": "wordSetHighlight"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/continuation-native-summary.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
+          },
+          {
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           }
         ],
         "existingTestFiles": [
-          "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
-          "docs/tests/office-studio-word.test.mjs"
+          "e2e/office-studio-word-basic-format.spec.ts",
+          "e2e/office-studio-word-character-guards.spec.ts"
         ],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "testEvidenceNote": "Individual matrices, native files and a single frozen 316/316 browser run verify original acceptance and applicable common criteria. No whole-goal completion claim."
       },
-      "gaps": ["后续输入、混合高亮及独立 DOCX 往返证据待补"]
+      "gaps": [],
+      "auditHistory": [
+        {
+          "status": "audited-basic-acceptance-pending",
+          "gaps": [
+            "后续输入、混合高亮及独立 DOCX 往返证据待补"
+          ],
+          "currentAudit": {
+            "date": "2026-11-25",
+            "sourceCommit": "2382530",
+            "implementation": "基础实现",
+            "implementedBehavior": "文字背景高亮菜单与无颜色清除",
+            "functionalGaps": [
+              "后续输入、混合高亮及独立 DOCX 往返证据待补"
+            ],
+            "acceptance": "not-proven-complete",
+            "evidence": [
+              {
+                "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+                "line": 156,
+                "anchor": "const EXTENSIONS"
+              },
+              {
+                "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
+                "line": 60,
+                "anchor": "const UNSUPPORTED_CONTENT"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
+                "line": 78,
+                "anchor": "export interface StudioWordDocument"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
+                "line": 926,
+                "anchor": "wordSetHighlight"
+              }
+            ],
+            "existingTestFiles": [
+              "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+              "docs/tests/office-studio-word.test.mjs"
+            ],
+            "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+          }
+        }
+      ]
     },
     {
       "id": "W007",
@@ -378,55 +665,110 @@
         "docs/tests/office-studio-word.test.mjs"
       ],
       "historicalStatus": "缺失",
-      "status": "implemented-case-size-slice-verified-full-acceptance-audit-pending",
+      "status": "verified-original-acceptance",
       "evidence": [
         "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx: mixed font sizes, bounds, caret input, five case modes, Unicode selections, history and permissions",
         "packages/ui/src/components/OfficeStudio/studio-word-tools.ts: per-run font ladder and mark-preserving case transformation",
         "e2e/office-studio-word-case-size.spec.ts: native DOCX import/edit/export/reopen twice and light/dark/320px workflow",
-        "docs/audits/2026-11-25/word-case-size/: native DOCX files and browser screenshots"
+        "docs/audits/2026-11-25/word-case-size/: native DOCX files and browser screenshots",
+        "docs/audits/2026-11-27/word-character-guards/original-acceptance-matrix.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/source-freeze-final.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/continuation-native-summary.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json"
       ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "切片验证",
-        "implementedBehavior": "句首/词首大写、全部大小写/切换，跨文字格式保留链接，Unicode 变长选区和光标所在单词",
-        "functionalGaps": ["完整共通验收矩阵及地区语言特殊大小写/句子边界规则仍待核对"],
-        "acceptance": "not-proven-complete",
+        "date": "2026-11-27",
+        "sourceCommit": "3c751e02a8d4be6e19797ad5c0a55c1077d29107",
+        "implementation": "完整验收",
+        "implementedBehavior": "句首大写、大小写、词首大写及切换",
+        "functionalGaps": [],
+        "acceptance": "original-ledger-acceptance-verified",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 156,
-            "anchor": "const EXTENSIONS"
+            "path": "docs/audits/2026-11-27/word-character-guards/original-acceptance-matrix.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
-            "line": 60,
-            "anchor": "const UNSUPPORTED_CONTENT"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/source-freeze-final.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 78,
-            "anchor": "export interface StudioWordDocument"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
-            "line": 791,
-            "anchor": "wordTransformSelectionCase"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/continuation-native-summary.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "e2e/office-studio-word-case-size.spec.ts",
-            "line": 25,
-            "anchor": "test("
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           }
         ],
         "existingTestFiles": [
-          "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
-          "docs/tests/office-studio-word.test.mjs",
-          "e2e/office-studio-word-case-size.spec.ts"
+          "e2e/office-studio-word-case-size.spec.ts",
+          "e2e/office-studio-word-character-guards.spec.ts"
         ],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "testEvidenceNote": "Individual matrices, native files and a single frozen 316/316 browser run verify original acceptance and applicable common criteria. No whole-goal completion claim."
       },
-      "gaps": ["完整共通验收矩阵及地区语言特殊大小写/句子边界规则仍待核对"]
+      "gaps": [],
+      "auditHistory": [
+        {
+          "status": "implemented-case-size-slice-verified-full-acceptance-audit-pending",
+          "gaps": [
+            "完整共通验收矩阵及地区语言特殊大小写/句子边界规则仍待核对"
+          ],
+          "currentAudit": {
+            "date": "2026-11-25",
+            "sourceCommit": "2382530",
+            "implementation": "切片验证",
+            "implementedBehavior": "句首/词首大写、全部大小写/切换，跨文字格式保留链接，Unicode 变长选区和光标所在单词",
+            "functionalGaps": [
+              "完整共通验收矩阵及地区语言特殊大小写/句子边界规则仍待核对"
+            ],
+            "acceptance": "not-proven-complete",
+            "evidence": [
+              {
+                "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+                "line": 156,
+                "anchor": "const EXTENSIONS"
+              },
+              {
+                "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
+                "line": 60,
+                "anchor": "const UNSUPPORTED_CONTENT"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
+                "line": 78,
+                "anchor": "export interface StudioWordDocument"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
+                "line": 791,
+                "anchor": "wordTransformSelectionCase"
+              },
+              {
+                "path": "e2e/office-studio-word-case-size.spec.ts",
+                "line": 25,
+                "anchor": "test("
+              }
+            ],
+            "existingTestFiles": [
+              "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+              "docs/tests/office-studio-word.test.mjs",
+              "e2e/office-studio-word-case-size.spec.ts"
+            ],
+            "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+          }
+        }
+      ]
     },
     {
       "id": "W008",
@@ -448,52 +790,107 @@
         "docs/tests/office-studio-word.test.mjs"
       ],
       "historicalStatus": "缺失",
-      "status": "implemented-format-slice-verified-full-acceptance-audit-pending",
+      "status": "verified-original-acceptance",
       "evidence": [
-        "e2e/office-studio-word-format.spec.ts: format painting/clear preserves links and structure through repeated DOCX export/reopen, light/dark/320px"
+        "e2e/office-studio-word-format.spec.ts: format painting/clear preserves links and structure through repeated DOCX export/reopen, light/dark/320px",
+        "docs/audits/2026-11-27/word-character-guards/original-acceptance-matrix.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/source-freeze-final.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/continuation-native-summary.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json"
       ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "切片验证",
-        "implementedBehavior": "字符和段落格式、单次/连续刷、Esc 结束；幂等设置目标格式且保留链接",
-        "functionalGaps": ["完整原始验收、跨区域/自动更新样式相互影响和全部混合格式仍需核对"],
-        "acceptance": "not-proven-complete",
+        "date": "2026-11-27",
+        "sourceCommit": "3c751e02a8d4be6e19797ad5c0a55c1077d29107",
+        "implementation": "完整验收",
+        "implementedBehavior": "复制字符和段落格式，单次结束或连续刷，Esc退出",
+        "functionalGaps": [],
+        "acceptance": "original-ledger-acceptance-verified",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 156,
-            "anchor": "const EXTENSIONS"
+            "path": "docs/audits/2026-11-27/word-character-guards/original-acceptance-matrix.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
-            "line": 60,
-            "anchor": "const UNSUPPORTED_CONTENT"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/source-freeze-final.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 78,
-            "anchor": "export interface StudioWordDocument"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
-            "line": 975,
-            "anchor": "wordCaptureFormat"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/continuation-native-summary.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "e2e/office-studio-word-format.spec.ts",
-            "line": 29,
-            "anchor": "test("
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           }
         ],
         "existingTestFiles": [
-          "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
-          "docs/tests/office-studio-word.test.mjs",
-          "e2e/office-studio-word-format.spec.ts"
+          "e2e/office-studio-word-format.spec.ts",
+          "e2e/office-studio-word-character-guards.spec.ts"
         ],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "testEvidenceNote": "Individual matrices, native files and a single frozen 316/316 browser run verify original acceptance and applicable common criteria. No whole-goal completion claim."
       },
-      "gaps": ["完整原始验收、跨区域/自动更新样式相互影响和全部混合格式仍需核对"]
+      "gaps": [],
+      "auditHistory": [
+        {
+          "status": "implemented-format-slice-verified-full-acceptance-audit-pending",
+          "gaps": [
+            "完整原始验收、跨区域/自动更新样式相互影响和全部混合格式仍需核对"
+          ],
+          "currentAudit": {
+            "date": "2026-11-25",
+            "sourceCommit": "2382530",
+            "implementation": "切片验证",
+            "implementedBehavior": "字符和段落格式、单次/连续刷、Esc 结束；幂等设置目标格式且保留链接",
+            "functionalGaps": [
+              "完整原始验收、跨区域/自动更新样式相互影响和全部混合格式仍需核对"
+            ],
+            "acceptance": "not-proven-complete",
+            "evidence": [
+              {
+                "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+                "line": 156,
+                "anchor": "const EXTENSIONS"
+              },
+              {
+                "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
+                "line": 60,
+                "anchor": "const UNSUPPORTED_CONTENT"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
+                "line": 78,
+                "anchor": "export interface StudioWordDocument"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
+                "line": 975,
+                "anchor": "wordCaptureFormat"
+              },
+              {
+                "path": "e2e/office-studio-word-format.spec.ts",
+                "line": 29,
+                "anchor": "test("
+              }
+            ],
+            "existingTestFiles": [
+              "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+              "docs/tests/office-studio-word.test.mjs",
+              "e2e/office-studio-word-format.spec.ts"
+            ],
+            "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+          }
+        }
+      ]
     },
     {
       "id": "W009",
@@ -515,53 +912,108 @@
         "docs/tests/office-studio-word.test.mjs"
       ],
       "historicalStatus": "部分",
-      "status": "implemented-format-slice-verified-full-acceptance-audit-pending",
+      "status": "verified-original-acceptance",
       "evidence": [
         "e2e/office-studio-word-format.spec.ts: format painting/clear preserves links and structure through repeated DOCX export/reopen, light/dark/320px",
-        "2026-11-26：自动/最小行距字符基线参与行框、固定行距维持固定高度；0/±12pt真实DOCX导入与两次重开、降低/抬升几何及明暗320px切片通过，见docs/audits/2026-11-26/word-baseline-line-rules/。完整需求仍未验收。"
+        "2026-11-26：自动/最小行距字符基线参与行框、固定行距维持固定高度；0/±12pt真实DOCX导入与两次重开、降低/抬升几何及明暗320px切片通过，见docs/audits/2026-11-26/word-baseline-line-rules/。完整需求仍未验收。",
+        "docs/audits/2026-11-27/word-character-guards/original-acceptance-matrix.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/source-freeze-final.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/continuation-native-summary.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json"
       ],
       "currentAudit": {
-        "date": "2026-11-26",
-        "sourceCommit": "437a6fd",
-        "implementation": "切片验证",
-        "implementedBehavior": "清除直接字符/段落格式，保留标题级别、列表/表格结构与链接；DOCX 重开保持取消格式 自动/最小行距基线位移参与行框，固定行距保留固定高度，HTML旧格式兼容和显式零位移重开已验证；0/±12pt原生DOCX三次测量切片通过。",
-        "functionalGaps": ["空插入点、混合选区与跨区域完整验收仍待补齐"],
-        "acceptance": "not-proven-complete",
+        "date": "2026-11-27",
+        "sourceCommit": "3c751e02a8d4be6e19797ad5c0a55c1077d29107",
+        "implementation": "完整验收",
+        "implementedBehavior": "保留文字、结构和链接，明确清除范围",
+        "functionalGaps": [],
+        "acceptance": "original-ledger-acceptance-verified",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
-            "line": 156,
-            "anchor": "const EXTENSIONS"
-          },
-          {
-            "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
-            "line": 60,
-            "anchor": "const UNSUPPORTED_CONTENT"
-          },
-          {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 78,
-            "anchor": "export interface StudioWordDocument"
-          },
-          {
-            "path": "e2e/office-studio-word-format.spec.ts",
-            "line": 29,
-            "anchor": "test("
-          },
-          {
-            "path": "docs/audits/2026-11-26/word-baseline-line-rules/README.md",
+            "path": "docs/audits/2026-11-27/word-character-guards/original-acceptance-matrix.json",
             "line": 1,
-            "anchor": "字符基线与行距规则修复切片"
+            "anchor": "original acceptance evidence"
+          },
+          {
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/source-freeze-final.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
+          },
+          {
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
+          },
+          {
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/continuation-native-summary.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
+          },
+          {
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           }
         ],
         "existingTestFiles": [
-          "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
-          "docs/tests/office-studio-word.test.mjs",
-          "e2e/office-studio-word-format.spec.ts"
+          "e2e/office-studio-word-format.spec.ts",
+          "e2e/office-studio-word-character-guards.spec.ts"
         ],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "testEvidenceNote": "Individual matrices, native files and a single frozen 316/316 browser run verify original acceptance and applicable common criteria. No whole-goal completion claim."
       },
-      "gaps": ["空插入点、混合选区与跨区域完整验收仍待补齐"]
+      "gaps": [],
+      "auditHistory": [
+        {
+          "status": "implemented-format-slice-verified-full-acceptance-audit-pending",
+          "gaps": [
+            "空插入点、混合选区与跨区域完整验收仍待补齐"
+          ],
+          "currentAudit": {
+            "date": "2026-11-26",
+            "sourceCommit": "437a6fd",
+            "implementation": "切片验证",
+            "implementedBehavior": "清除直接字符/段落格式，保留标题级别、列表/表格结构与链接；DOCX 重开保持取消格式 自动/最小行距基线位移参与行框，固定行距保留固定高度，HTML旧格式兼容和显式零位移重开已验证；0/±12pt原生DOCX三次测量切片通过。",
+            "functionalGaps": [
+              "空插入点、混合选区与跨区域完整验收仍待补齐"
+            ],
+            "acceptance": "not-proven-complete",
+            "evidence": [
+              {
+                "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+                "line": 156,
+                "anchor": "const EXTENSIONS"
+              },
+              {
+                "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
+                "line": 60,
+                "anchor": "const UNSUPPORTED_CONTENT"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
+                "line": 78,
+                "anchor": "export interface StudioWordDocument"
+              },
+              {
+                "path": "e2e/office-studio-word-format.spec.ts",
+                "line": 29,
+                "anchor": "test("
+              },
+              {
+                "path": "docs/audits/2026-11-26/word-baseline-line-rules/README.md",
+                "line": 1,
+                "anchor": "字符基线与行距规则修复切片"
+              }
+            ],
+            "existingTestFiles": [
+              "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+              "docs/tests/office-studio-word.test.mjs",
+              "e2e/office-studio-word-format.spec.ts"
+            ],
+            "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+          }
+        }
+      ]
     },
     {
       "id": "W010",
@@ -583,64 +1035,115 @@
         "docs/tests/office-studio-word.test.mjs"
       ],
       "historicalStatus": "缺失",
-      "status": "implemented-character-metrics-slice-verified-full-acceptance-audit-pending",
+      "status": "verified-original-acceptance",
       "evidence": [
         "2026-11-25：加入字符间距与位置弹窗和 pt 预览，支持加宽/紧缩/提升/降低、混合值保持、按选区逐 run 保留字号/链接/上下标、单事务撤销重做、光标处后续输入及权限/草稿守卫。",
-        "7 项模型、4 项新增 Word UI、33 项 DOCX、26 项打印及真实 DOCX 两次导出重开、明暗/320px 已通过；原有浮动图片与样式浏览器用例通过。证据在 docs/audits/2026-11-25/word-metrics/。"
+        "7 项模型、4 项新增 Word UI、33 项 DOCX、26 项打印及真实 DOCX 两次导出重开、明暗/320px 已通过；原有浮动图片与样式浏览器用例通过。证据在 docs/audits/2026-11-25/word-metrics/。",
+        "docs/audits/2026-11-27/word-character-guards/original-acceptance-matrix.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/source-freeze-final.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/continuation-native-summary.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json"
       ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "3c67dac",
-        "implementation": "切片验证",
-        "implementedBehavior": "textStyle 字符间距/基线位置与样式继承、修改、格式刷、清除和页码域字符同步；混合选区保留原字号/链接/上下标，未改字段保留各自值；文本插入点后续输入、按度量预览、一次撤销/重做，错误草稿与权限变化守卫。DOCX 支持 signed twips/half-points 和通用单位，原生显式零覆盖、图片 Run 零值及页码域结束标记保留；打印按原字号/度量显示。",
-        "functionalGaps": [
-          "字符度量限定 ±500pt，间距按 0.05pt、位置按 0.5pt；其他精度/更大原生值、复杂字体与浮动对象/完整自动分页组合及外部 Word/WPS 排版仍待完整验收。"
-        ],
-        "acceptance": "not-proven-complete",
+        "date": "2026-11-27",
+        "sourceCommit": "3c751e02a8d4be6e19797ad5c0a55c1077d29107",
+        "implementation": "完整验收",
+        "implementedBehavior": "加宽紧缩、提升降低并按度量显示",
+        "functionalGaps": [],
+        "acceptance": "original-ledger-acceptance-verified",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-word-character-layout.ts",
-            "line": 73,
-            "anchor": "export function wordSetCharacterLayout"
+            "path": "docs/audits/2026-11-27/word-character-guards/original-acceptance-matrix.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-word-metrics.ts",
-            "line": 6,
-            "anchor": "export function wordMetricPoints"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/source-freeze-final.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioWordCharacterDialog.tsx",
-            "line": 13,
-            "anchor": "export function StudioWordCharacterDialog"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
-            "line": 1545,
-            "anchor": "class MetricTextRun"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/continuation-native-summary.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
-            "line": 728,
-            "anchor": "Field terminators"
-          },
-          {
-            "path": "e2e/office-studio-word-metrics.spec.ts",
-            "line": 28,
-            "anchor": "character metrics preserve native"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           }
         ],
         "existingTestFiles": [
-          "packages/ui/src/components/OfficeStudio/studio-word-character-layout.test.ts",
-          "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
-          "docs/tests/office-studio-word.test.mjs",
-          "docs/tests/studio-print.test.mjs",
-          "e2e/office-studio-word-metrics.spec.ts"
+          "e2e/office-studio-word-metrics.spec.ts",
+          "e2e/office-studio-word-character-guards.spec.ts"
         ],
-        "testEvidenceNote": "7 dedicated model tests, 4 new UI tests, 33 native DOCX and 26 printing tests passed; browser evidence covers repeated native reopening, original typography, caret input, explicit zero, both themes and 320px. Full gates are recorded in the completion log; full external-application and complex-layout acceptance remains pending.",
-        "sourceState": "Includes the W010 continuation changes committed with this audit."
+        "testEvidenceNote": "Individual matrices, native files and a single frozen 316/316 browser run verify original acceptance and applicable common criteria. No whole-goal completion claim."
       },
-      "gaps": [
-        "字符度量限定 ±500pt，间距按 0.05pt、位置按 0.5pt；其他精度/更大原生值、复杂字体与浮动对象/完整自动分页组合及外部 Word/WPS 排版仍待完整验收。"
+      "gaps": [],
+      "auditHistory": [
+        {
+          "status": "implemented-character-metrics-slice-verified-full-acceptance-audit-pending",
+          "gaps": [
+            "字符度量限定 ±500pt，间距按 0.05pt、位置按 0.5pt；其他精度/更大原生值、复杂字体与浮动对象/完整自动分页组合及外部 Word/WPS 排版仍待完整验收。"
+          ],
+          "currentAudit": {
+            "date": "2026-11-25",
+            "sourceCommit": "3c67dac",
+            "implementation": "切片验证",
+            "implementedBehavior": "textStyle 字符间距/基线位置与样式继承、修改、格式刷、清除和页码域字符同步；混合选区保留原字号/链接/上下标，未改字段保留各自值；文本插入点后续输入、按度量预览、一次撤销/重做，错误草稿与权限变化守卫。DOCX 支持 signed twips/half-points 和通用单位，原生显式零覆盖、图片 Run 零值及页码域结束标记保留；打印按原字号/度量显示。",
+            "functionalGaps": [
+              "字符度量限定 ±500pt，间距按 0.05pt、位置按 0.5pt；其他精度/更大原生值、复杂字体与浮动对象/完整自动分页组合及外部 Word/WPS 排版仍待完整验收。"
+            ],
+            "acceptance": "not-proven-complete",
+            "evidence": [
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-word-character-layout.ts",
+                "line": 73,
+                "anchor": "export function wordSetCharacterLayout"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-word-metrics.ts",
+                "line": 6,
+                "anchor": "export function wordMetricPoints"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/StudioWordCharacterDialog.tsx",
+                "line": 13,
+                "anchor": "export function StudioWordCharacterDialog"
+              },
+              {
+                "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
+                "line": 1545,
+                "anchor": "class MetricTextRun"
+              },
+              {
+                "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
+                "line": 728,
+                "anchor": "Field terminators"
+              },
+              {
+                "path": "e2e/office-studio-word-metrics.spec.ts",
+                "line": 28,
+                "anchor": "character metrics preserve native"
+              }
+            ],
+            "existingTestFiles": [
+              "packages/ui/src/components/OfficeStudio/studio-word-character-layout.test.ts",
+              "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+              "docs/tests/office-studio-word.test.mjs",
+              "docs/tests/studio-print.test.mjs",
+              "e2e/office-studio-word-metrics.spec.ts"
+            ],
+            "testEvidenceNote": "7 dedicated model tests, 4 new UI tests, 33 native DOCX and 26 printing tests passed; browser evidence covers repeated native reopening, original typography, caret input, explicit zero, both themes and 320px. Full gates are recorded in the completion log; full external-application and complex-layout acceptance remains pending.",
+            "sourceState": "Includes the W010 continuation changes committed with this audit."
+          }
+        }
       ]
     },
     {
@@ -1268,13 +1771,17 @@
         "e2e/office-studio-word-styles.spec.ts: three real browser workflows passed",
         "docs/audits/2026-11-23/word-styles/: seven reviewed browser screenshots"
       ],
-      "remainingVerification": ["requirement-by-requirement full-plan audit"],
+      "remainingVerification": [
+        "requirement-by-requirement full-plan audit"
+      ],
       "currentAudit": {
         "date": "2026-11-25",
         "sourceCommit": "2382530",
         "implementation": "切片验证",
         "implementedBehavior": "标题正文样式应用、回显和原生关联",
-        "functionalGaps": ["原始逐项验收审计和全部共通边界仍未闭环"],
+        "functionalGaps": [
+          "原始逐项验收审计和全部共通边界仍未闭环"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -1306,7 +1813,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["原始逐项验收审计和全部共通边界仍未闭环"]
+      "gaps": [
+        "原始逐项验收审计和全部共通边界仍未闭环"
+      ]
     },
     {
       "id": "W020",
@@ -1337,13 +1846,17 @@
         "e2e/office-studio-word-styles.spec.ts: three real browser workflows passed",
         "docs/audits/2026-11-23/word-styles/: seven reviewed browser screenshots"
       ],
-      "remainingVerification": ["requirement-by-requirement full-plan audit"],
+      "remainingVerification": [
+        "requirement-by-requirement full-plan audit"
+      ],
       "currentAudit": {
         "date": "2026-11-25",
         "sourceCommit": "2382530",
         "implementation": "切片验证",
         "implementedBehavior": "命名/继承/后续/自动更新样式与 DOCX 重开",
-        "functionalGaps": ["跨区域事务和全部共通边界仍需完整验收核对"],
+        "functionalGaps": [
+          "跨区域事务和全部共通边界仍需完整验收核对"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -1375,7 +1888,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["跨区域事务和全部共通边界仍需完整验收核对"]
+      "gaps": [
+        "跨区域事务和全部共通边界仍需完整验收核对"
+      ]
     },
     {
       "id": "W021",
@@ -1404,7 +1919,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "主题在导入时解析为实际字体/颜色",
-        "functionalGaps": ["缺可编辑文档主题与主题引用传播"],
+        "functionalGaps": [
+          "缺可编辑文档主题与主题引用传播"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -1426,7 +1943,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺可编辑文档主题与主题引用传播"]
+      "gaps": [
+        "缺可编辑文档主题与主题引用传播"
+      ]
     },
     {
       "id": "W022",
@@ -1455,7 +1974,9 @@
         "sourceCommit": "2382530",
         "implementation": "基础实现",
         "implementedBehavior": "建表、增删行列、标题行与删除表格",
-        "functionalGaps": ["跨行列选区取消和一次撤销需独立 UI/文件闭环"],
+        "functionalGaps": [
+          "跨行列选区取消和一次撤销需独立 UI/文件闭环"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -1480,7 +2001,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["跨行列选区取消和一次撤销需独立 UI/文件闭环"]
+      "gaps": [
+        "跨行列选区取消和一次撤销需独立 UI/文件闭环"
+      ]
     },
     {
       "id": "W023",
@@ -1509,7 +2032,9 @@
         "sourceCommit": "2382530",
         "implementation": "基础实现",
         "implementedBehavior": "矩形合并拆分，原生 colspan/rowspan 往返",
-        "functionalGaps": ["拆分内容分配、复杂跨合并选区和失败保留证据待补"],
+        "functionalGaps": [
+          "拆分内容分配、复杂跨合并选区和失败保留证据待补"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -1534,7 +2059,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["拆分内容分配、复杂跨合并选区和失败保留证据待补"]
+      "gaps": [
+        "拆分内容分配、复杂跨合并选区和失败保留证据待补"
+      ]
     },
     {
       "id": "W024",
@@ -1563,7 +2090,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "单元格背景和默认表格边框",
-        "functionalGaps": ["缺单边/内外边框、主题表样式编辑及原生保留"],
+        "functionalGaps": [
+          "缺单边/内外边框、主题表样式编辑及原生保留"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -1588,7 +2117,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺单边/内外边框、主题表样式编辑及原生保留"]
+      "gaps": [
+        "缺单边/内外边框、主题表样式编辑及原生保留"
+      ]
     },
     {
       "id": "W025",
@@ -1784,7 +2315,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["跨纵向合并、多行或超高表头、属性切换/取消/IME及复杂布局完整矩阵仍待验收。"]
+      "gaps": [
+        "跨纵向合并、多行或超高表头、属性切换/取消/IME及复杂布局完整矩阵仍待验收。"
+      ]
     },
     {
       "id": "W028",
@@ -1982,7 +2515,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺表格引用公式与域刷新；未知域拒绝"]
+      "gaps": [
+        "缺表格引用公式与域刷新；未知域拒绝"
+      ]
     },
     {
       "id": "W031",
@@ -2014,7 +2549,9 @@
         "sourceCommit": "5f09ac6 + current W031 changes",
         "implementation": "部分实现",
         "implementedBehavior": "内嵌图片导入/插入、比例尺寸、删除；独立替换保留显示框/位置/说明/marks，重置裁剪，单事务历史/权限/IME/过期文档/受控拒绝；PNG→JPEG两次DOCX重开及明暗320px浏览器切片通过",
-        "functionalGaps": ["完整插入/尺寸/替换跨区域和全部布局组合仍需验收"],
+        "functionalGaps": [
+          "完整插入/尺寸/替换跨区域和全部布局组合仍需验收"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -2036,7 +2573,9 @@
         ],
         "testEvidenceNote": "UI2525/docs318 no skips, final frozen E2E269 and all distribution gates passed; full cross-region/layout matrix remains incomplete."
       },
-      "gaps": ["完整插入/尺寸/替换跨区域和全部布局组合仍需验收"]
+      "gaps": [
+        "完整插入/尺寸/替换跨区域和全部布局组合仍需验收"
+      ]
     },
     {
       "id": "W032",
@@ -2096,7 +2635,9 @@
         ],
         "testEvidenceNote": "UI2519/docs316 no skips and final frozen E2E268 passed; native browser slice passed. Complex crop/layout combinations remain incomplete."
       },
-      "gaps": ["复杂原生裁剪（负srcRect/非零fillRect）仍拒绝；浮动/缩放/分页等全部布局组合尚未闭环"]
+      "gaps": [
+        "复杂原生裁剪（负srcRect/非零fillRect）仍拒绝；浮动/缩放/分页等全部布局组合尚未闭环"
+      ]
     },
     {
       "id": "W033",
@@ -2134,7 +2675,9 @@
         "sourceCommit": "2382530",
         "implementation": "切片验证",
         "implementedBehavior": "六种环绕、锚点、定位、层级、移动与 DOCX 往返",
-        "functionalGaps": ["完整自动分页、复杂避让和跨页布局未完成"],
+        "functionalGaps": [
+          "完整自动分页、复杂避让和跨页布局未完成"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -2166,7 +2709,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["完整自动分页、复杂避让和跨页布局未完成"]
+      "gaps": [
+        "完整自动分页、复杂避让和跨页布局未完成"
+      ]
     },
     {
       "id": "W034",
@@ -2195,7 +2740,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "Word 节点仅支持文字表格图片等基础内容",
-        "functionalGaps": ["缺形状/文本框绘制文字及排列、原生对象往返"],
+        "functionalGaps": [
+          "缺形状/文本框绘制文字及排列、原生对象往返"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -2217,7 +2764,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺形状/文本框绘制文字及排列、原生对象往返"]
+      "gaps": [
+        "缺形状/文本框绘制文字及排列、原生对象往返"
+      ]
     },
     {
       "id": "W035",
@@ -2246,7 +2795,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "没有对应图形编辑节点",
-        "functionalGaps": ["缺 WordArt/SmartArt 结构和原生保存"],
+        "functionalGaps": [
+          "缺 WordArt/SmartArt 结构和原生保存"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -2268,7 +2819,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺 WordArt/SmartArt 结构和原生保存"]
+      "gaps": [
+        "缺 WordArt/SmartArt 结构和原生保存"
+      ]
     },
     {
       "id": "W036",
@@ -2297,7 +2850,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "Word 内无图表数据/嵌入对象内核",
-        "functionalGaps": ["缺创建、数据编辑、激活和保存；嵌入对象拒绝"],
+        "functionalGaps": [
+          "缺创建、数据编辑、激活和保存；嵌入对象拒绝"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -2319,7 +2874,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺创建、数据编辑、激活和保存；嵌入对象拒绝"]
+      "gaps": [
+        "缺创建、数据编辑、激活和保存；嵌入对象拒绝"
+      ]
     },
     {
       "id": "W037",
@@ -2381,7 +2938,10 @@
         ],
         "testEvidenceNote": "125 Word/math, 95 native/print, 2552 UI, 329 docs and 271 full E2E passed; type/lint/build/browser/Registry92/consumer373/distribution/size passed. Independent native group members verified through two saves and browser light/dark/320px. Remaining structure/layout gaps prevent full acceptance. Region audit: 127 Word/math and 96 native/print passed; header/footer actual browser edit/history/two DOCX reopens passed. Typography, body table and Unicode region persistence verified; broader layout matrix still pending. Latest regions/layout: 2557 UI, 330 docs, 96 native/print, 20 pagination/cell and 2 browser suites passed; edited tall fraction, undo/redo, two DOCX reopens, actual two-page PDF and light/dark/320px evidence. Full E2E 273 passed (13.4m), final gates passed; W037 remains partial."
       },
-      "gaps": ["更多原生结构/复杂区域与布局组合尚未完整支持和验收", "操作系统真实IME候选交互未证实"]
+      "gaps": [
+        "更多原生结构/复杂区域与布局组合尚未完整支持和验收",
+        "操作系统真实IME候选交互未证实"
+      ]
     },
     {
       "id": "W038",
@@ -2404,13 +2964,17 @@
       ],
       "historicalStatus": "基础已有",
       "status": "audited-partial-acceptance-pending",
-      "evidence": ["docs/audits/2026-11-26/word-bookmarks/README.md"],
+      "evidence": [
+        "docs/audits/2026-11-26/word-bookmarks/README.md"
+      ],
       "currentAudit": {
         "date": "2026-11-26",
         "sourceCommit": "6721365",
         "implementation": "部分实现",
         "implementedBehavior": "书签范围/名称/原生身份、管理入口、历史/删除修复、跨区域身份和内部链接/显示文字编辑/跳转已实现；实际原生两次重开与明暗320px切片通过",
-        "functionalGaps": ["复杂拖放/复制与范围交互矩阵待审计"],
+        "functionalGaps": [
+          "复杂拖放/复制与范围交互矩阵待审计"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -2426,7 +2990,9 @@
         "testEvidenceNote": "Latest permission guards: 2575 UI, 333 docs and 274 full E2E passed; type/lint/build/browser/Registry92/consumer375/distribution/size passed. Disabled and cross-region draft guards verified in actual UI tests.",
         "sourceState": "working-tree-uncommitted"
       },
-      "gaps": ["复杂拖放/复制与范围交互矩阵待审计"]
+      "gaps": [
+        "复杂拖放/复制与范围交互矩阵待审计"
+      ]
     },
     {
       "id": "W039",
@@ -2455,7 +3021,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "A4/Letter、方向、统一页边距",
-        "functionalGaps": ["缺按节、自定义纸张及四侧独立边距；多节拒绝"],
+        "functionalGaps": [
+          "缺按节、自定义纸张及四侧独立边距；多节拒绝"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -2480,7 +3048,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺按节、自定义纸张及四侧独立边距；多节拒绝"]
+      "gaps": [
+        "缺按节、自定义纸张及四侧独立边距；多节拒绝"
+      ]
     },
     {
       "id": "W040",
@@ -2509,7 +3079,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "显式 pageBreak 可插入和原生保存",
-        "functionalGaps": ["连续画布没有完整空白页管理及页级删除验收"],
+        "functionalGaps": [
+          "连续画布没有完整空白页管理及页级删除验收"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -2534,7 +3106,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["连续画布没有完整空白页管理及页级删除验收"]
+      "gaps": [
+        "连续画布没有完整空白页管理及页级删除验收"
+      ]
     },
     {
       "id": "W041",
@@ -2563,7 +3137,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "页面设置仅单节",
-        "functionalGaps": ["四种分节类型缺模型/入口，原生分节拒绝"],
+        "functionalGaps": [
+          "四种分节类型缺模型/入口，原生分节拒绝"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -2585,7 +3161,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["四种分节类型缺模型/入口，原生分节拒绝"]
+      "gaps": [
+        "四种分节类型缺模型/入口，原生分节拒绝"
+      ]
     },
     {
       "id": "W042",
@@ -2614,7 +3192,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "单栏画布",
-        "functionalGaps": ["缺分栏与栏间分页；多栏 DOCX 拒绝"],
+        "functionalGaps": [
+          "缺分栏与栏间分页；多栏 DOCX 拒绝"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -2636,7 +3216,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺分栏与栏间分页；多栏 DOCX 拒绝"]
+      "gaps": [
+        "缺分栏与栏间分页；多栏 DOCX 拒绝"
+      ]
     },
     {
       "id": "W043",
@@ -2665,7 +3247,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "默认页眉页脚编辑、距离和字段",
-        "functionalGaps": ["不同首页/奇偶页/节继承未实现，原生拒绝"],
+        "functionalGaps": [
+          "不同首页/奇偶页/节继承未实现，原生拒绝"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -2690,7 +3274,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["不同首页/奇偶页/节继承未实现，原生拒绝"]
+      "gaps": [
+        "不同首页/奇偶页/节继承未实现，原生拒绝"
+      ]
     },
     {
       "id": "W044",
@@ -2719,7 +3305,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "PAGE/NUMPAGES 域原生保存，画布占位 1",
-        "functionalGaps": ["缺起始值、格式、续节和编辑器域计算"],
+        "functionalGaps": [
+          "缺起始值、格式、续节和编辑器域计算"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -2749,7 +3337,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺起始值、格式、续节和编辑器域计算"]
+      "gaps": [
+        "缺起始值、格式、续节和编辑器域计算"
+      ]
     },
     {
       "id": "W045",
@@ -2778,7 +3368,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "纸张背景为界面样式",
-        "functionalGaps": ["缺文档水印/背景模型、透明度与节范围"],
+        "functionalGaps": [
+          "缺文档水印/背景模型、透明度与节范围"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -2800,7 +3392,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺文档水印/背景模型、透明度与节范围"]
+      "gaps": [
+        "缺文档水印/背景模型、透明度与节范围"
+      ]
     },
     {
       "id": "W046",
@@ -2900,7 +3494,9 @@
         "sourceCommit": "b758b19",
         "implementation": "部分实现",
         "implementedBehavior": "水平标尺首行/悬挂/左右缩进支持键盘、拖动预览、取消和单事务提交，按表格单元格计算原点；标题导航与缩放已有。",
-        "functionalGaps": ["缺页边距标尺编辑、真实页缩略图与光标页同步；完整分页依赖仍未实现。"],
+        "functionalGaps": [
+          "缺页边距标尺编辑、真实页缩略图与光标页同步；完整分页依赖仍未实现。"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -2931,7 +3527,9 @@
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete.",
         "sourceState": "Includes paragraph-ruler changes committed with this audit."
       },
-      "gaps": ["缺页边距标尺编辑、真实页缩略图与光标页同步；完整分页依赖仍未实现。"]
+      "gaps": [
+        "缺页边距标尺编辑、真实页缩略图与光标页同步；完整分页依赖仍未实现。"
+      ]
     },
     {
       "id": "W048",
@@ -2960,7 +3558,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "打印 HTML 与图片定位/环绕",
-        "functionalGaps": ["精确分页、页范围/纸张/域计算及真实打印验收待实现"],
+        "functionalGaps": [
+          "精确分页、页范围/纸张/域计算及真实打印验收待实现"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -2985,7 +3585,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["精确分页、页范围/纸张/域计算及真实打印验收待实现"]
+      "gaps": [
+        "精确分页、页范围/纸张/域计算及真实打印验收待实现"
+      ]
     },
     {
       "id": "W049",
@@ -3014,7 +3616,9 @@
         "sourceCommit": "2382530",
         "implementation": "基础实现",
         "implementedBehavior": "标题层级列表与光标跳转，随文档更新",
-        "functionalGaps": ["全部修改/只读/跨区域浏览器验收矩阵待补"],
+        "functionalGaps": [
+          "全部修改/只读/跨区域浏览器验收矩阵待补"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -3044,7 +3648,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["全部修改/只读/跨区域浏览器验收矩阵待补"]
+      "gaps": [
+        "全部修改/只读/跨区域浏览器验收矩阵待补"
+      ]
     },
     {
       "id": "W050",
@@ -3073,7 +3679,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "目录标签仅提供大纲导航",
-        "functionalGaps": ["缺 TOC 域生成、页码链接、更新删除"],
+        "functionalGaps": [
+          "缺 TOC 域生成、页码链接、更新删除"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -3095,7 +3703,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺 TOC 域生成、页码链接、更新删除"]
+      "gaps": [
+        "缺 TOC 域生成、页码链接、更新删除"
+      ]
     },
     {
       "id": "W051",
@@ -3124,7 +3734,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "没有脚注/尾注节点",
-        "functionalGaps": ["引用原生内容拒绝；缺编号、转换与正文联动"],
+        "functionalGaps": [
+          "引用原生内容拒绝；缺编号、转换与正文联动"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -3146,7 +3758,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["引用原生内容拒绝；缺编号、转换与正文联动"]
+      "gaps": [
+        "引用原生内容拒绝；缺编号、转换与正文联动"
+      ]
     },
     {
       "id": "W052",
@@ -3169,13 +3783,17 @@
       ],
       "historicalStatus": "缺失",
       "status": "audited-partial-acceptance-pending",
-      "evidence": ["docs/audits/2026-11-26/word-bookmarks/README.md"],
+      "evidence": [
+        "docs/audits/2026-11-26/word-bookmarks/README.md"
+      ],
       "currentAudit": {
         "date": "2026-11-26",
         "sourceCommit": "6721365",
         "implementation": "部分实现",
         "implementedBehavior": "书签范围/名称/原生身份、管理入口、历史/删除修复、跨区域身份和内部链接/显示文字编辑/跳转已实现；实际原生两次重开与明暗320px切片通过",
-        "functionalGaps": ["复杂拖放/复制与范围交互矩阵待审计"],
+        "functionalGaps": [
+          "复杂拖放/复制与范围交互矩阵待审计"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -3188,7 +3806,9 @@
         "testEvidenceNote": "Latest permission guards: 2575 UI, 333 docs and 274 full E2E passed; type/lint/build/browser/Registry92/consumer375/distribution/size passed. Disabled and cross-region draft guards verified in actual UI tests.",
         "sourceState": "working-tree-uncommitted"
       },
-      "gaps": ["复杂拖放/复制与范围交互矩阵待审计"]
+      "gaps": [
+        "复杂拖放/复制与范围交互矩阵待审计"
+      ]
     },
     {
       "id": "W053",
@@ -3217,7 +3837,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "仅外部链接和页码域",
-        "functionalGaps": ["缺高级引用与目标更新"],
+        "functionalGaps": [
+          "缺高级引用与目标更新"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -3239,7 +3861,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺高级引用与目标更新"]
+      "gaps": [
+        "缺高级引用与目标更新"
+      ]
     },
     {
       "id": "W054",
@@ -3268,7 +3892,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "没有题注类型与编号模型",
-        "functionalGaps": ["缺章节号、题注和图表目录"],
+        "functionalGaps": [
+          "缺章节号、题注和图表目录"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -3290,7 +3916,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺章节号、题注和图表目录"]
+      "gaps": [
+        "缺章节号、题注和图表目录"
+      ]
     },
     {
       "id": "W055",
@@ -3319,7 +3947,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "PAGE/NUMPAGES 域读写",
-        "functionalGaps": ["缺任意域代码、锁定、刷新和编辑器结果计算"],
+        "functionalGaps": [
+          "缺任意域代码、锁定、刷新和编辑器结果计算"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -3349,7 +3979,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺任意域代码、锁定、刷新和编辑器结果计算"]
+      "gaps": [
+        "缺任意域代码、锁定、刷新和编辑器结果计算"
+      ]
     },
     {
       "id": "W056",
@@ -3378,7 +4010,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "当前正文/页眉/页脚区域文字与格式查找替换",
-        "functionalGaps": ["缺整词、特殊字符及跨区域一次完整查询/替换"],
+        "functionalGaps": [
+          "缺整词、特殊字符及跨区域一次完整查询/替换"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -3408,7 +4042,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺整词、特殊字符及跨区域一次完整查询/替换"]
+      "gaps": [
+        "缺整词、特殊字符及跨区域一次完整查询/替换"
+      ]
     },
     {
       "id": "W057",
@@ -3437,7 +4073,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "编辑区 spellcheck=false",
-        "functionalGaps": ["缺建议、忽略词典与语言设置"],
+        "functionalGaps": [
+          "缺建议、忽略词典与语言设置"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -3459,7 +4097,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺建议、忽略词典与语言设置"]
+      "gaps": [
+        "缺建议、忽略词典与语言设置"
+      ]
     },
     {
       "id": "W058",
@@ -3488,7 +4128,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "无 Word 批注线程模型",
-        "functionalGaps": ["原生批注锚点拒绝；回复、解决/重开未实现"],
+        "functionalGaps": [
+          "原生批注锚点拒绝；回复、解决/重开未实现"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -3510,7 +4152,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["原生批注锚点拒绝；回复、解决/重开未实现"]
+      "gaps": [
+        "原生批注锚点拒绝；回复、解决/重开未实现"
+      ]
     },
     {
       "id": "W059",
@@ -3539,7 +4183,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "普通本地编辑历史",
-        "functionalGaps": ["缺带作者时间的插入删除/格式修订；DOCX 修订拒绝"],
+        "functionalGaps": [
+          "缺带作者时间的插入删除/格式修订；DOCX 修订拒绝"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -3561,7 +4207,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺带作者时间的插入删除/格式修订；DOCX 修订拒绝"]
+      "gaps": [
+        "缺带作者时间的插入删除/格式修订；DOCX 修订拒绝"
+      ]
     },
     {
       "id": "W060",
@@ -3590,7 +4238,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "无修订模型",
-        "functionalGaps": ["缺接受拒绝、原始最终和标记视图"],
+        "functionalGaps": [
+          "缺接受拒绝、原始最终和标记视图"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -3612,7 +4262,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺接受拒绝、原始最终和标记视图"]
+      "gaps": [
+        "缺接受拒绝、原始最终和标记视图"
+      ]
     },
     {
       "id": "W061",
@@ -3641,7 +4293,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "单个 Word 文档内核",
-        "functionalGaps": ["缺结构/格式比较与可审阅修订合并"],
+        "functionalGaps": [
+          "缺结构/格式比较与可审阅修订合并"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -3663,7 +4317,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺结构/格式比较与可审阅修订合并"]
+      "gaps": [
+        "缺结构/格式比较与可审阅修订合并"
+      ]
     },
     {
       "id": "W062",
@@ -3692,7 +4348,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "无合并数据源或字段",
-        "functionalGaps": ["缺预览与逐记录原生导出"],
+        "functionalGaps": [
+          "缺预览与逐记录原生导出"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -3714,7 +4372,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺预览与逐记录原生导出"]
+      "gaps": [
+        "缺预览与逐记录原生导出"
+      ]
     },
     {
       "id": "W063",
@@ -3743,7 +4403,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "普通富文本节点",
-        "functionalGaps": ["sdt 控件拒绝；缺四种内容控件与边界"],
+        "functionalGaps": [
+          "sdt 控件拒绝；缺四种内容控件与边界"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -3765,7 +4427,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["sdt 控件拒绝；缺四种内容控件与边界"]
+      "gaps": [
+        "sdt 控件拒绝；缺四种内容控件与边界"
+      ]
     },
     {
       "id": "W064",
@@ -3794,7 +4458,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "Word 不包含表单字段契约",
-        "functionalGaps": ["缺类型、必填只读提示及原生保存"],
+        "functionalGaps": [
+          "缺类型、必填只读提示及原生保存"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -3816,7 +4482,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺类型、必填只读提示及原生保存"]
+      "gaps": [
+        "缺类型、必填只读提示及原生保存"
+      ]
     },
     {
       "id": "W065",
@@ -3845,7 +4513,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "无字段角色或填写模式",
-        "functionalGaps": ["缺角色分配/颜色/验证"],
+        "functionalGaps": [
+          "缺角色分配/颜色/验证"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -3867,7 +4537,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺角色分配/颜色/验证"]
+      "gaps": [
+        "缺角色分配/颜色/验证"
+      ]
     },
     {
       "id": "X001",
@@ -3897,7 +4569,9 @@
         "sourceCommit": "2382530",
         "implementation": "基础实现",
         "implementedBehavior": "矩形选区、地址导航、公式栏提交取消、IME/草稿守卫",
-        "functionalGaps": ["完整共通验收矩阵与窄屏文件编辑证据待补"],
+        "functionalGaps": [
+          "完整共通验收矩阵与窄屏文件编辑证据待补"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -3927,7 +4601,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["完整共通验收矩阵与窄屏文件编辑证据待补"]
+      "gaps": [
+        "完整共通验收矩阵与窄屏文件编辑证据待补"
+      ]
     },
     {
       "id": "X002",
@@ -3957,7 +4633,9 @@
         "sourceCommit": "02df344",
         "implementation": "部分实现",
         "implementedBehavior": "普通 TSV/内部富剪贴板复制粘贴和公式重定位；2026-11-25 补齐虚拟选区 Ctrl/Command+C 的真实复制路径、只读/禁用/IME/草稿守卫，选择性粘贴快照已由浏览器实测。普通剪切移动仍未实现。",
-        "functionalGaps": ["无 onCut/剪切移动引用迁移；普通剪切语义未实现"],
+        "functionalGaps": [
+          "无 onCut/剪切移动引用迁移；普通剪切语义未实现"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -4000,7 +4678,9 @@
         "testEvidenceNote": "Keyboard virtual-range copy, read-only/disabled/IME/draft behavior and browser Paste Special are covered by the X012 continuation; ordinary cut/reference migration remains pending.",
         "sourceState": "Includes the keyboard-copy prerequisite fix committed with the X012 audit."
       },
-      "gaps": ["无 onCut/剪切移动引用迁移；普通剪切语义未实现"]
+      "gaps": [
+        "无 onCut/剪切移动引用迁移；普通剪切语义未实现"
+      ]
     },
     {
       "id": "X003",
@@ -4032,7 +4712,9 @@
         "sourceCommit": "2382530",
         "implementation": "基础实现",
         "implementedBehavior": "仅公式含常量与相对引用平移",
-        "functionalGaps": ["独立浏览器原生文件链路和共通边界待补"],
+        "functionalGaps": [
+          "独立浏览器原生文件链路和共通边界待补"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -4068,7 +4750,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["独立浏览器原生文件链路和共通边界待补"]
+      "gaps": [
+        "独立浏览器原生文件链路和共通边界待补"
+      ]
     },
     {
       "id": "X004",
@@ -4100,7 +4784,9 @@
         "sourceCommit": "2382530",
         "implementation": "基础实现",
         "implementedBehavior": "冻结复制时公式值，保留标量类型",
-        "functionalGaps": ["独立浏览器 XLSX 往返与空白/错误类型验收待补"],
+        "functionalGaps": [
+          "独立浏览器 XLSX 往返与空白/错误类型验收待补"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -4136,7 +4822,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["独立浏览器 XLSX 往返与空白/错误类型验收待补"]
+      "gaps": [
+        "独立浏览器 XLSX 往返与空白/错误类型验收待补"
+      ]
     },
     {
       "id": "X005",
@@ -4168,7 +4856,9 @@
         "sourceCommit": "2382530",
         "implementation": "基础实现",
         "implementedBehavior": "目标内容保留、格式默认覆盖",
-        "functionalGaps": ["完整默认/混合格式和原生浏览器往返待补"],
+        "functionalGaps": [
+          "完整默认/混合格式和原生浏览器往返待补"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -4204,7 +4894,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["完整默认/混合格式和原生浏览器往返待补"]
+      "gaps": [
+        "完整默认/混合格式和原生浏览器往返待补"
+      ]
     },
     {
       "id": "X006",
@@ -4236,7 +4928,9 @@
         "sourceCommit": "2382530",
         "implementation": "基础实现",
         "implementedBehavior": "公式或值与数字格式两种粘贴",
-        "functionalGaps": ["完整函数缓存类型及浏览器往返待补"],
+        "functionalGaps": [
+          "完整函数缓存类型及浏览器往返待补"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -4272,7 +4966,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["完整函数缓存类型及浏览器往返待补"]
+      "gaps": [
+        "完整函数缓存类型及浏览器往返待补"
+      ]
     },
     {
       "id": "X007",
@@ -4304,7 +5000,9 @@
         "sourceCommit": "2382530",
         "implementation": "基础实现",
         "implementedBehavior": "源格式快照覆盖目标旧格式",
-        "functionalGaps": ["主题/复杂样式仍不支持；完整支持契约验收待补"],
+        "functionalGaps": [
+          "主题/复杂样式仍不支持；完整支持契约验收待补"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -4340,7 +5038,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["主题/复杂样式仍不支持；完整支持契约验收待补"]
+      "gaps": [
+        "主题/复杂样式仍不支持；完整支持契约验收待补"
+      ]
     },
     {
       "id": "X008",
@@ -4372,7 +5072,9 @@
         "sourceCommit": "2382530",
         "implementation": "基础实现",
         "implementedBehavior": "复制内容/其他格式而保留目标边框",
-        "functionalGaps": ["合并区域复杂边界与浏览器文件链路待补"],
+        "functionalGaps": [
+          "合并区域复杂边界与浏览器文件链路待补"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -4408,7 +5110,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["合并区域复杂边界与浏览器文件链路待补"]
+      "gaps": [
+        "合并区域复杂边界与浏览器文件链路待补"
+      ]
     },
     {
       "id": "X009",
@@ -4440,7 +5144,9 @@
         "sourceCommit": "2382530",
         "implementation": "基础实现",
         "implementedBehavior": "源列宽映射且目标内容保留",
-        "functionalGaps": ["窄屏入口和原生导出后的独立列宽验收待补"],
+        "functionalGaps": [
+          "窄屏入口和原生导出后的独立列宽验收待补"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -4476,7 +5182,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["窄屏入口和原生导出后的独立列宽验收待补"]
+      "gaps": [
+        "窄屏入口和原生导出后的独立列宽验收待补"
+      ]
     },
     {
       "id": "X010",
@@ -4508,7 +5216,9 @@
         "sourceCommit": "2382530",
         "implementation": "基础实现",
         "implementedBehavior": "转置引用、合并与超链接映射",
-        "functionalGaps": ["完整合并冲突、取消/IME与原生浏览器链路待补"],
+        "functionalGaps": [
+          "完整合并冲突、取消/IME与原生浏览器链路待补"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -4544,7 +5254,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["完整合并冲突、取消/IME与原生浏览器链路待补"]
+      "gaps": [
+        "完整合并冲突、取消/IME与原生浏览器链路待补"
+      ]
     },
     {
       "id": "X011",
@@ -4574,7 +5286,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "内部复制可保留原生超链接",
-        "functionalGaps": ["缺链接源单元格、图片与条件规则重定位粘贴"],
+        "functionalGaps": [
+          "缺链接源单元格、图片与条件规则重定位粘贴"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -4604,7 +5318,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺链接源单元格、图片与条件规则重定位粘贴"]
+      "gaps": [
+        "缺链接源单元格、图片与条件规则重定位粘贴"
+      ]
     },
     {
       "id": "X012",
@@ -4715,7 +5431,9 @@
         "sourceCommit": "2382530",
         "implementation": "基础实现",
         "implementedBehavior": "范围/工作簿、通配符、大小写整格、公式/值查找替换",
-        "functionalGaps": ["按格式搜索不在本项当前支持范围；原生浏览器全矩阵待补"],
+        "functionalGaps": [
+          "按格式搜索不在本项当前支持范围；原生浏览器全矩阵待补"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -4751,7 +5469,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["按格式搜索不在本项当前支持范围；原生浏览器全矩阵待补"]
+      "gaps": [
+        "按格式搜索不在本项当前支持范围；原生浏览器全矩阵待补"
+      ]
     },
     {
       "id": "X014",
@@ -4781,7 +5501,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "单一 anchor/focus 矩形",
-        "functionalGaps": ["缺 Ctrl 追加非连续范围模型及批量命令"],
+        "functionalGaps": [
+          "缺 Ctrl 追加非连续范围模型及批量命令"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -4808,7 +5530,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺 Ctrl 追加非连续范围模型及批量命令"]
+      "gaps": [
+        "缺 Ctrl 追加非连续范围模型及批量命令"
+      ]
     },
     {
       "id": "X015",
@@ -4843,7 +5567,9 @@
         "sourceCommit": "2382530",
         "implementation": "切片验证",
         "implementedBehavior": "Ctrl/Command 方向键跨数据块导航，Shift 保留起点扩展；隐藏行列、合并与数组结果参与导航",
-        "functionalGaps": ["全部合并/冻结/滚动组合及完整原始共通验收仍待审计"],
+        "functionalGaps": [
+          "全部合并/冻结/滚动组合及完整原始共通验收仍待审计"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -4880,7 +5606,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["全部合并/冻结/滚动组合及完整原始共通验收仍待审计"]
+      "gaps": [
+        "全部合并/冻结/滚动组合及完整原始共通验收仍待审计"
+      ]
     },
     {
       "id": "X016",
@@ -4910,7 +5638,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "填充柄预览、数字日期/文本、取消与单事务",
-        "functionalGaps": ["复杂滚动/冻结/合并坐标、公式种子和原生浏览器链路待核对"],
+        "functionalGaps": [
+          "复杂滚动/冻结/合并坐标、公式种子和原生浏览器链路待核对"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -4946,7 +5676,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["复杂滚动/冻结/合并坐标、公式种子和原生浏览器链路待核对"]
+      "gaps": [
+        "复杂滚动/冻结/合并坐标、公式种子和原生浏览器链路待核对"
+      ]
     },
     {
       "id": "X017",
@@ -4979,7 +5711,9 @@
         "sourceCommit": "b43bc71",
         "implementation": "切片验证",
         "implementedBehavior": "向下/向右复制及数字/日期/文本线性序列；支持默认/显式/双种子步长、包含端点的停止值，数字精度、ISO/序号日期转换、补零文本、逐轨道停止。实际填充地址用于验证提示；停止后的数据/格式/合并/链接/保护/数组不写入，失败整批不变，一次撤销重做。原生 XLSX 两次重开、明暗/320px 已验证。向下/向右相对公式复制和单次历史操作也已纳入同一份 XLSX 往返。",
-        "functionalGaps": ["原始共通验收的全部适用隐藏/冻结/合并/滚动组合仍待逐项核对。"],
+        "functionalGaps": [
+          "原始共通验收的全部适用隐藏/冻结/合并/滚动组合仍待逐项核对。"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -5017,7 +5751,9 @@
         "testEvidenceNote": "35 fill-model and 81 Sheet UI tests, 42 native XLSX codec tests and browser roundtrips cover relative formulas, date steps, text suffixes and stop values. Full repository checks are recorded in the completion log; the complete applicable common-acceptance matrix remains pending.",
         "sourceState": "Includes the X017 series-stop continuation changes committed with this audit."
       },
-      "gaps": ["原始共通验收的全部适用隐藏/冻结/合并/滚动组合仍待逐项核对。"]
+      "gaps": [
+        "原始共通验收的全部适用隐藏/冻结/合并/滚动组合仍待逐项核对。"
+      ]
     },
     {
       "id": "X018",
@@ -5122,7 +5858,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "字体小数、加粗斜体下划线与颜色保存",
-        "functionalGaps": ["混合选区回显/默认字体契约及更多文字格式待补"],
+        "functionalGaps": [
+          "混合选区回显/默认字体契约及更多文字格式待补"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -5152,7 +5890,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["混合选区回显/默认字体契约及更多文字格式待补"]
+      "gaps": [
+        "混合选区回显/默认字体契约及更多文字格式待补"
+      ]
     },
     {
       "id": "X020",
@@ -5268,7 +6008,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "所有/外侧/无边框、六线型与颜色",
-        "functionalGaps": ["缺单边/内横内竖/斜线；复杂合并边界待补"],
+        "functionalGaps": [
+          "缺单边/内横内竖/斜线；复杂合并边界待补"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -5298,7 +6040,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺单边/内横内竖/斜线；复杂合并边界待补"]
+      "gaps": [
+        "缺单边/内横内竖/斜线；复杂合并边界待补"
+      ]
     },
     {
       "id": "X022",
@@ -5328,7 +6072,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "直接 RGB 填充/无填充",
-        "functionalGaps": ["缺主题引用和色调往返；普通源样式保留不代表编辑支持"],
+        "functionalGaps": [
+          "缺主题引用和色调往返；普通源样式保留不代表编辑支持"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -5358,7 +6104,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺主题引用和色调往返；普通源样式保留不代表编辑支持"]
+      "gaps": [
+        "缺主题引用和色调往返；普通源样式保留不代表编辑支持"
+      ]
     },
     {
       "id": "X023",
@@ -5578,7 +6326,9 @@
         "sourceCommit": "2382530",
         "implementation": "基础实现",
         "implementedBehavior": "合并冲突/非空拒绝、拆分和 XLSX 保存",
-        "functionalGaps": ["完整浏览器失败恢复/历史/原生重开矩阵待补"],
+        "functionalGaps": [
+          "完整浏览器失败恢复/历史/原生重开矩阵待补"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -5608,7 +6358,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["完整浏览器失败恢复/历史/原生重开矩阵待补"]
+      "gaps": [
+        "完整浏览器失败恢复/历史/原生重开矩阵待补"
+      ]
     },
     {
       "id": "X026",
@@ -5638,7 +6390,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "清空内容、清除格式和链接/规则独立管理",
-        "functionalGaps": ["缺统一清除分项菜单、批注管理/选择性清除"],
+        "functionalGaps": [
+          "缺统一清除分项菜单、批注管理/选择性清除"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -5668,7 +6422,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺统一清除分项菜单、批注管理/选择性清除"]
+      "gaps": [
+        "缺统一清除分项菜单、批注管理/选择性清除"
+      ]
     },
     {
       "id": "X027",
@@ -5698,7 +6454,9 @@
         "sourceCommit": "2382530",
         "implementation": "基础实现",
         "implementedBehavior": "行列结构日志、公式尺寸合并规则图表链接迁移",
-        "functionalGaps": ["数组新增边界及全原生浏览器矩阵待完整审计"],
+        "functionalGaps": [
+          "数组新增边界及全原生浏览器矩阵待完整审计"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -5734,7 +6492,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["数组新增边界及全原生浏览器矩阵待完整审计"]
+      "gaps": [
+        "数组新增边界及全原生浏览器矩阵待完整审计"
+      ]
     },
     {
       "id": "X028",
@@ -5764,7 +6524,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "只支持整行/整列结构编辑",
-        "functionalGaps": ["缺单元格右下左上移位及引用变更"],
+        "functionalGaps": [
+          "缺单元格右下左上移位及引用变更"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -5796,7 +6558,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺单元格右下左上移位及引用变更"]
+      "gaps": [
+        "缺单元格右下左上移位及引用变更"
+      ]
     },
     {
       "id": "X029",
@@ -5826,7 +6590,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "行高列宽拖动/键盘/自动适配",
-        "functionalGaps": ["复杂合并字体测量、读入隐藏尺寸和文件链路待补"],
+        "functionalGaps": [
+          "复杂合并字体测量、读入隐藏尺寸和文件链路待补"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -5856,7 +6622,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["复杂合并字体测量、读入隐藏尺寸和文件链路待补"]
+      "gaps": [
+        "复杂合并字体测量、读入隐藏尺寸和文件链路待补"
+      ]
     },
     {
       "id": "X030",
@@ -5886,7 +6654,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "手动隐藏行列、全列恢复、导航跳隐藏",
-        "functionalGaps": ["行选区显示/隐藏独立入口不完整，隐藏列仅活动列操作"],
+        "functionalGaps": [
+          "行选区显示/隐藏独立入口不完整，隐藏列仅活动列操作"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -5916,7 +6686,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["行选区显示/隐藏独立入口不完整，隐藏列仅活动列操作"]
+      "gaps": [
+        "行选区显示/隐藏独立入口不完整，隐藏列仅活动列操作"
+      ]
     },
     {
       "id": "X031",
@@ -5946,7 +6718,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "新增删除重命名/选表和跨表引用迁移",
-        "functionalGaps": ["缺工作表复制移动隐藏及恢复；隐藏工作表原文件拒绝"],
+        "functionalGaps": [
+          "缺工作表复制移动隐藏及恢复；隐藏工作表原文件拒绝"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -5976,7 +6750,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺工作表复制移动隐藏及恢复；隐藏工作表原文件拒绝"]
+      "gaps": [
+        "缺工作表复制移动隐藏及恢复；隐藏工作表原文件拒绝"
+      ]
     },
     {
       "id": "X032",
@@ -6006,7 +6782,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "源结构保存时部分保留 outlineLevel",
-        "functionalGaps": ["无分组/层级 UI 和独立模型，不能按透传视为实现"],
+        "functionalGaps": [
+          "无分组/层级 UI 和独立模型，不能按透传视为实现"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -6033,7 +6811,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["无分组/层级 UI 和独立模型，不能按透传视为实现"]
+      "gaps": [
+        "无分组/层级 UI 和独立模型，不能按透传视为实现"
+      ]
     },
     {
       "id": "X033",
@@ -6063,7 +6843,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "解析器、跨表引用、循环/预算/错误传播",
-        "functionalGaps": ["支持函数/引用子集及导入缓存边界仍需逐函数审计"],
+        "functionalGaps": [
+          "支持函数/引用子集及导入缓存边界仍需逐函数审计"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -6093,7 +6875,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["支持函数/引用子集及导入缓存边界仍需逐函数审计"]
+      "gaps": [
+        "支持函数/引用子集及导入缓存边界仍需逐函数审计"
+      ]
     },
     {
       "id": "X034",
@@ -6123,7 +6907,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "无名称模型和管理器",
-        "functionalGaps": ["命名区域文件拒绝；作用域/冲突/引用更新缺失"],
+        "functionalGaps": [
+          "命名区域文件拒绝；作用域/冲突/引用更新缺失"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -6150,7 +6936,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["命名区域文件拒绝；作用域/冲突/引用更新缺失"]
+      "gaps": [
+        "命名区域文件拒绝；作用域/冲突/引用更新缺失"
+      ]
     },
     {
       "id": "X035",
@@ -6180,7 +6968,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "普通单元格引用",
-        "functionalGaps": ["原生数据表拒绝，缺结构化引用和自动扩展"],
+        "functionalGaps": [
+          "原生数据表拒绝，缺结构化引用和自动扩展"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -6207,7 +6997,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["原生数据表拒绝，缺结构化引用和自动扩展"]
+      "gaps": [
+        "原生数据表拒绝，缺结构化引用和自动扩展"
+      ]
     },
     {
       "id": "X036",
@@ -6249,7 +7041,9 @@
         "sourceCommit": "2382530",
         "implementation": "切片验证",
         "implementedBehavior": "固定/动态数组、矩阵、溢出/保护冲突、结果格限制和 XLSX 往返",
-        "functionalGaps": ["更多动态函数/外部应用重算及完整共通验收仍待完成"],
+        "functionalGaps": [
+          "更多动态函数/外部应用重算及完整共通验收仍待完成"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -6286,7 +7080,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["更多动态函数/外部应用重算及完整共通验收仍待完成"]
+      "gaps": [
+        "更多动态函数/外部应用重算及完整共通验收仍待完成"
+      ]
     },
     {
       "id": "X037",
@@ -6316,7 +7112,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "SUM/AVERAGE/COUNT/IF 插入按钮和简短提示",
-        "functionalGaps": ["缺分类向导、参数校验、引用选择/预览"],
+        "functionalGaps": [
+          "缺分类向导、参数校验、引用选择/预览"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -6346,7 +7144,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺分类向导、参数校验、引用选择/预览"]
+      "gaps": [
+        "缺分类向导、参数校验、引用选择/预览"
+      ]
     },
     {
       "id": "X038",
@@ -6376,7 +7176,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "解析器提供数学统计逻辑，数组支持已补",
-        "functionalGaps": ["没有逐函数完整参数/空值/数组/误差证据"],
+        "functionalGaps": [
+          "没有逐函数完整参数/空值/数组/误差证据"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -6406,7 +7208,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["没有逐函数完整参数/空值/数组/误差证据"]
+      "gaps": [
+        "没有逐函数完整参数/空值/数组/误差证据"
+      ]
     },
     {
       "id": "X039",
@@ -6436,7 +7240,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "日期 1900 日历与 HYPERLINK/IF 语义专项修正",
-        "functionalGaps": ["其他文本查询函数、地区语义仍需逐函数核对"],
+        "functionalGaps": [
+          "其他文本查询函数、地区语义仍需逐函数核对"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -6466,7 +7272,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["其他文本查询函数、地区语义仍需逐函数核对"]
+      "gaps": [
+        "其他文本查询函数、地区语义仍需逐函数核对"
+      ]
     },
     {
       "id": "X040",
@@ -6496,7 +7304,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "依赖解析器可调用部分财务工程统计函数",
-        "functionalGaps": ["未证明全部函数精度/边界和原生缓存一致"],
+        "functionalGaps": [
+          "未证明全部函数精度/边界和原生缓存一致"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -6526,7 +7336,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["未证明全部函数精度/边界和原生缓存一致"]
+      "gaps": [
+        "未证明全部函数精度/边界和原生缓存一致"
+      ]
     },
     {
       "id": "X041",
@@ -6556,7 +7368,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "公式栏可看活动公式",
-        "functionalGaps": ["无前后依赖箭头、跨表追踪与全表显示公式"],
+        "functionalGaps": [
+          "无前后依赖箭头、跨表追踪与全表显示公式"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -6583,7 +7397,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["无前后依赖箭头、跨表追踪与全表显示公式"]
+      "gaps": [
+        "无前后依赖箭头、跨表追踪与全表显示公式"
+      ]
     },
     {
       "id": "X042",
@@ -6613,7 +7429,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "当前自动计算、全量加载重算",
-        "functionalGaps": ["缺手动/迭代设置和单变量求解控制"],
+        "functionalGaps": [
+          "缺手动/迭代设置和单变量求解控制"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -6640,7 +7458,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺手动/迭代设置和单变量求解控制"]
+      "gaps": [
+        "缺手动/迭代设置和单变量求解控制"
+      ]
     },
     {
       "id": "X043",
@@ -6670,7 +7490,9 @@
         "sourceCommit": "2382530",
         "implementation": "基础实现",
         "implementedBehavior": "多键优先级/方向、稳定排序、引用调整",
-        "functionalGaps": ["扩展选区询问、浏览器原生排序链路和全边界待补"],
+        "functionalGaps": [
+          "扩展选区询问、浏览器原生排序链路和全边界待补"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -6700,7 +7522,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["扩展选区询问、浏览器原生排序链路和全边界待补"]
+      "gaps": [
+        "扩展选区询问、浏览器原生排序链路和全边界待补"
+      ]
     },
     {
       "id": "X044",
@@ -6729,7 +7553,9 @@
         "docs/tests/studio-excel.test.mjs: native color filters, DXF pooling, repeated saves and clear",
         "e2e/office-studio-sheet-colors.spec.ts: import/filter/export/clear/undo/reimport passed"
       ],
-      "remainingVerification": ["complete original X044 acceptance"],
+      "remainingVerification": [
+        "complete original X044 acceptance"
+      ],
       "gaps": [
         "Original complete-auto-filter acceptance still includes value lists, date hierarchies and multiple criteria.",
         "缺值列表、日期层级、同列多个条件"
@@ -6739,7 +7565,9 @@
         "sourceCommit": "2382530",
         "implementation": "切片验证",
         "implementedBehavior": "文字/数字单条件和字体填充颜色原生保存",
-        "functionalGaps": ["缺值列表、日期层级、同列多个条件"],
+        "functionalGaps": [
+          "缺值列表、日期层级、同列多个条件"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -6799,7 +7627,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "TSV 解析用于粘贴",
-        "functionalGaps": ["缺分隔/固定宽度分列、预览与列类型"],
+        "functionalGaps": [
+          "缺分隔/固定宽度分列、预览与列类型"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -6826,7 +7656,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺分隔/固定宽度分列、预览与列类型"]
+      "gaps": [
+        "缺分隔/固定宽度分列、预览与列类型"
+      ]
     },
     {
       "id": "X046",
@@ -6856,7 +7688,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "没有去重命令",
-        "functionalGaps": ["缺表头/比较列、类型空值语义及计数"],
+        "functionalGaps": [
+          "缺表头/比较列、类型空值语义及计数"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -6883,7 +7717,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺表头/比较列、类型空值语义及计数"]
+      "gaps": [
+        "缺表头/比较列、类型空值语义及计数"
+      ]
     },
     {
       "id": "X047",
@@ -6913,7 +7749,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "七类规则管理、来源/空白/提示/严重度、事务校验",
-        "functionalGaps": ["命名来源/复杂范围/扩展 XML 不支持；完整原要求逐项闭环待补"],
+        "functionalGaps": [
+          "命名来源/复杂范围/扩展 XML 不支持；完整原要求逐项闭环待补"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -6954,7 +7792,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["命名来源/复杂范围/扩展 XML 不支持；完整原要求逐项闭环待补"]
+      "gaps": [
+        "命名来源/复杂范围/扩展 XML 不支持；完整原要求逐项闭环待补"
+      ]
     },
     {
       "id": "X048",
@@ -6984,7 +7824,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "八类条件格式、色阶、优先级/停止和原生保存",
-        "functionalGaps": ["缺数据条/图标集、完整阈值与复杂差异样式"],
+        "functionalGaps": [
+          "缺数据条/图标集、完整阈值与复杂差异样式"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -7025,7 +7867,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺数据条/图标集、完整阈值与复杂差异样式"]
+      "gaps": [
+        "缺数据条/图标集、完整阈值与复杂差异样式"
+      ]
     },
     {
       "id": "X049",
@@ -7055,7 +7899,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "普通工作簿内公式和原生超链接",
-        "functionalGaps": ["外部计算链接/连接文件拒绝；来源更新和权限失败恢复缺失"],
+        "functionalGaps": [
+          "外部计算链接/连接文件拒绝；来源更新和权限失败恢复缺失"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -7082,7 +7928,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["外部计算链接/连接文件拒绝；来源更新和权限失败恢复缺失"]
+      "gaps": [
+        "外部计算链接/连接文件拒绝；来源更新和权限失败恢复缺失"
+      ]
     },
     {
       "id": "X050",
@@ -7112,7 +7960,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "普通区域可筛选排序",
-        "functionalGaps": ["原生 Table 对象拒绝，缺表样式/汇总/自动扩展"],
+        "functionalGaps": [
+          "原生 Table 对象拒绝，缺表样式/汇总/自动扩展"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -7139,7 +7989,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["原生 Table 对象拒绝，缺表样式/汇总/自动扩展"]
+      "gaps": [
+        "原生 Table 对象拒绝，缺表样式/汇总/自动扩展"
+      ]
     },
     {
       "id": "X051",
@@ -7169,7 +8021,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "没有原生 Table 模型",
-        "functionalGaps": ["缺范围重命名/转普通区域和结构引用迁移"],
+        "functionalGaps": [
+          "缺范围重命名/转普通区域和结构引用迁移"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -7196,7 +8050,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺范围重命名/转普通区域和结构引用迁移"]
+      "gaps": [
+        "缺范围重命名/转普通区域和结构引用迁移"
+      ]
     },
     {
       "id": "X052",
@@ -7226,7 +8082,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "没有透视缓存或字段模型",
-        "functionalGaps": ["透视文件拒绝，创建/字段拖放/汇总缺失"],
+        "functionalGaps": [
+          "透视文件拒绝，创建/字段拖放/汇总缺失"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -7253,7 +8111,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["透视文件拒绝，创建/字段拖放/汇总缺失"]
+      "gaps": [
+        "透视文件拒绝，创建/字段拖放/汇总缺失"
+      ]
     },
     {
       "id": "X053",
@@ -7283,7 +8143,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "普通单元格求和/计数",
-        "functionalGaps": ["透视值汇总及显示方式缺失"],
+        "functionalGaps": [
+          "透视值汇总及显示方式缺失"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -7310,7 +8172,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["透视值汇总及显示方式缺失"]
+      "gaps": [
+        "透视值汇总及显示方式缺失"
+      ]
     },
     {
       "id": "X054",
@@ -7340,7 +8204,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "普通区域排序筛选",
-        "functionalGaps": ["透视分组/展开/刷新缺失"],
+        "functionalGaps": [
+          "透视分组/展开/刷新缺失"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -7367,7 +8233,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["透视分组/展开/刷新缺失"]
+      "gaps": [
+        "透视分组/展开/刷新缺失"
+      ]
     },
     {
       "id": "X055",
@@ -7397,7 +8265,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "没有透视模型",
-        "functionalGaps": ["钻取/新表明细/计算字段缺失"],
+        "functionalGaps": [
+          "钻取/新表明细/计算字段缺失"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -7424,7 +8294,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["钻取/新表明细/计算字段缺失"]
+      "gaps": [
+        "钻取/新表明细/计算字段缺失"
+      ]
     },
     {
       "id": "X056",
@@ -7454,7 +8326,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "没有切片器/时间线对象",
-        "functionalGaps": ["原生对象拒绝，多选/连接和保存缺失"],
+        "functionalGaps": [
+          "原生对象拒绝，多选/连接和保存缺失"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -7481,7 +8355,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["原生对象拒绝，多选/连接和保存缺失"]
+      "gaps": [
+        "原生对象拒绝，多选/连接和保存缺失"
+      ]
     },
     {
       "id": "X057",
@@ -7511,7 +8387,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "原生二维柱状/折线、标题/数据范围保存",
-        "functionalGaps": ["系列分类独立编辑入口不完整，完整浏览器链路待补"],
+        "functionalGaps": [
+          "系列分类独立编辑入口不完整，完整浏览器链路待补"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -7541,7 +8419,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["系列分类独立编辑入口不完整，完整浏览器链路待补"]
+      "gaps": [
+        "系列分类独立编辑入口不完整，完整浏览器链路待补"
+      ]
     },
     {
       "id": "X058",
@@ -7571,7 +8451,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "图表类型限 bar/line",
-        "functionalGaps": ["缺饼散点面积雷达组合/次轴等，复杂原生图表拒绝"],
+        "functionalGaps": [
+          "缺饼散点面积雷达组合/次轴等，复杂原生图表拒绝"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -7598,7 +8480,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺饼散点面积雷达组合/次轴等，复杂原生图表拒绝"]
+      "gaps": [
+        "缺饼散点面积雷达组合/次轴等，复杂原生图表拒绝"
+      ]
     },
     {
       "id": "X059",
@@ -7628,7 +8512,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "图表标题可修改，基本 SVG 轴/图例",
-        "functionalGaps": ["缺轴格式、数据标签、趋势线/误差线与布局编辑"],
+        "functionalGaps": [
+          "缺轴格式、数据标签、趋势线/误差线与布局编辑"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -7658,7 +8544,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺轴格式、数据标签、趋势线/误差线与布局编辑"]
+      "gaps": [
+        "缺轴格式、数据标签、趋势线/误差线与布局编辑"
+      ]
     },
     {
       "id": "X060",
@@ -7688,7 +8576,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "无 Sparkline 模型",
-        "functionalGaps": ["缺数据范围/分组/坐标与原生保存"],
+        "functionalGaps": [
+          "缺数据范围/分组/坐标与原生保存"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -7715,7 +8605,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺数据范围/分组/坐标与原生保存"]
+      "gaps": [
+        "缺数据范围/分组/坐标与原生保存"
+      ]
     },
     {
       "id": "X061",
@@ -7745,7 +8637,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "Sheet 没有图片形状对象",
-        "functionalGaps": ["图片/绘图/嵌入文件拒绝，锚点裁剪排列缺失"],
+        "functionalGaps": [
+          "图片/绘图/嵌入文件拒绝，锚点裁剪排列缺失"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -7772,7 +8666,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["图片/绘图/嵌入文件拒绝，锚点裁剪排列缺失"]
+      "gaps": [
+        "图片/绘图/嵌入文件拒绝，锚点裁剪排列缺失"
+      ]
     },
     {
       "id": "X062",
@@ -7802,7 +8698,9 @@
         "sourceCommit": "2382530",
         "implementation": "基础实现",
         "implementedBehavior": "冻结首行首列/指定模型边界、取消与原生保存",
-        "functionalGaps": ["全部滚动/合并/隐藏/只读浏览器矩阵待补"],
+        "functionalGaps": [
+          "全部滚动/合并/隐藏/只读浏览器矩阵待补"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -7832,7 +8730,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["全部滚动/合并/隐藏/只读浏览器矩阵待补"]
+      "gaps": [
+        "全部滚动/合并/隐藏/只读浏览器矩阵待补"
+      ]
     },
     {
       "id": "X063",
@@ -7862,7 +8762,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "仅冻结窗格",
-        "functionalGaps": ["拆分窗格文件拒绝，缺命名视图和独立滚动"],
+        "functionalGaps": [
+          "拆分窗格文件拒绝，缺命名视图和独立滚动"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -7889,7 +8791,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["拆分窗格文件拒绝，缺命名视图和独立滚动"]
+      "gaps": [
+        "拆分窗格文件拒绝，缺命名视图和独立滚动"
+      ]
     },
     {
       "id": "X064",
@@ -7912,41 +8816,96 @@
         "docs/tests/studio-excel.test.mjs"
       ],
       "historicalStatus": "部分",
-      "status": "audited-not-implemented",
-      "evidence": [],
+      "status": "verified-original-acceptance",
+      "evidence": [
+        "docs/audits/2026-11-27/sheet-view/audit-evidence.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/source-freeze-final.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/continuation-native-summary.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json"
+      ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "未实现",
-        "implementedBehavior": "固定画布网格/标题",
-        "functionalGaps": ["缺 25–400% 缩放、网格标题显示和文件属性编辑"],
-        "acceptance": "not-proven-complete",
+        "date": "2026-11-27",
+        "sourceCommit": "3c751e02a8d4be6e19797ad5c0a55c1077d29107",
+        "implementation": "完整验收",
+        "implementedBehavior": "25至400缩放、隐藏标题网格与文件属性",
+        "functionalGaps": [],
+        "acceptance": "original-ledger-acceptance-verified",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
-            "line": 284,
-            "anchor": "const blocked"
+            "path": "docs/audits/2026-11-27/sheet-view/audit-evidence.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts",
-            "line": 1267,
-            "anchor": "async function checkSupportedWorkbook"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/source-freeze-final.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 136,
-            "anchor": "export interface StudioSheet"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
-            "line": 401,
-            "anchor": "studioPatchCells"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/continuation-native-summary.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
+          },
+          {
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           }
         ],
-        "existingTestFiles": [],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "existingTestFiles": [
+          "e2e/office-studio-sheet-view.spec.ts"
+        ],
+        "testEvidenceNote": "Individual matrices, native files and a single frozen 316/316 browser run verify original acceptance and applicable common criteria. No whole-goal completion claim."
       },
-      "gaps": ["缺 25–400% 缩放、网格标题显示和文件属性编辑"]
+      "gaps": [],
+      "auditHistory": [
+        {
+          "status": "audited-not-implemented",
+          "gaps": [
+            "缺 25–400% 缩放、网格标题显示和文件属性编辑"
+          ],
+          "currentAudit": {
+            "date": "2026-11-25",
+            "sourceCommit": "2382530",
+            "implementation": "未实现",
+            "implementedBehavior": "固定画布网格/标题",
+            "functionalGaps": [
+              "缺 25–400% 缩放、网格标题显示和文件属性编辑"
+            ],
+            "acceptance": "not-proven-complete",
+            "evidence": [
+              {
+                "path": "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+                "line": 284,
+                "anchor": "const blocked"
+              },
+              {
+                "path": "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts",
+                "line": 1267,
+                "anchor": "async function checkSupportedWorkbook"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
+                "line": 136,
+                "anchor": "export interface StudioSheet"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+                "line": 401,
+                "anchor": "studioPatchCells"
+              }
+            ],
+            "existingTestFiles": [],
+            "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+          }
+        }
+      ]
     },
     {
       "id": "X065",
@@ -7976,7 +8935,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "原文件打印范围可透传/结构迁移",
-        "functionalGaps": ["无多个区域/标题行列编辑与当前表/全书打印选择"],
+        "functionalGaps": [
+          "无多个区域/标题行列编辑与当前表/全书打印选择"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -8006,7 +8967,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["无多个区域/标题行列编辑与当前表/全书打印选择"]
+      "gaps": [
+        "无多个区域/标题行列编辑与当前表/全书打印选择"
+      ]
     },
     {
       "id": "X066",
@@ -8036,7 +8999,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "原文件页面设置和断页可保留",
-        "functionalGaps": ["缺编辑纸张边距/断页/缩放到页和分页预览"],
+        "functionalGaps": [
+          "缺编辑纸张边距/断页/缩放到页和分页预览"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -8066,7 +9031,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺编辑纸张边距/断页/缩放到页和分页预览"]
+      "gaps": [
+        "缺编辑纸张边距/断页/缩放到页和分页预览"
+      ]
     },
     {
       "id": "X067",
@@ -8096,7 +9063,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "普通源页眉页脚与打印选项保留",
-        "functionalGaps": ["缺字段编辑、打印居中/黑白/网格选项 UI 与准确预览"],
+        "functionalGaps": [
+          "缺字段编辑、打印居中/黑白/网格选项 UI 与准确预览"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -8126,7 +9095,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺字段编辑、打印居中/黑白/网格选项 UI 与准确预览"]
+      "gaps": [
+        "缺字段编辑、打印居中/黑白/网格选项 UI 与准确预览"
+      ]
     },
     {
       "id": "X068",
@@ -8156,7 +9127,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "本地范围保护/取消和无密码原生保存",
-        "functionalGaps": ["完整工作表/工作簿结构锁、密码/可编辑范围互操作未实现"],
+        "functionalGaps": [
+          "完整工作表/工作簿结构锁、密码/可编辑范围互操作未实现"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -8186,7 +9159,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["完整工作表/工作簿结构锁、密码/可编辑范围互操作未实现"]
+      "gaps": [
+        "完整工作表/工作簿结构锁、密码/可编辑范围互操作未实现"
+      ]
     },
     {
       "id": "P001",
@@ -8215,7 +9190,9 @@
         "sourceCommit": "2382530",
         "implementation": "基础实现",
         "implementedBehavior": "原页预览、分页缩略图/懒绘制、页码缩放旋转同步",
-        "functionalGaps": ["完整真实浏览器导航/空页/只读/宽度矩阵待补"],
+        "functionalGaps": [
+          "完整真实浏览器导航/空页/只读/宽度矩阵待补"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -8251,7 +9228,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["完整真实浏览器导航/空页/只读/宽度矩阵待补"]
+      "gaps": [
+        "完整真实浏览器导航/空页/只读/宽度矩阵待补"
+      ]
     },
     {
       "id": "P002",
@@ -8273,50 +9252,105 @@
         "docs/tests/studio-pdf-codec.test.mjs"
       ],
       "historicalStatus": "部分",
-      "status": "audited-partial-acceptance-pending",
-      "evidence": [],
+      "status": "verified-original-acceptance",
+      "evidence": [
+        "docs/audits/2026-11-27/pdf-text-layer/README.md",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/source-freeze-final.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/continuation-native-summary.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json"
+      ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "部分实现",
-        "implementedBehavior": "逐页提取文字、全文查找、命中坐标导航",
-        "functionalGaps": ["无可选择文本层，原文选择复制未实现"],
-        "acceptance": "not-proven-complete",
+        "date": "2026-11-27",
+        "sourceCommit": "3c751e02a8d4be6e19797ad5c0a55c1077d29107",
+        "implementation": "完整验收",
+        "implementedBehavior": "逐页文本、命中坐标、选区复制与空文本页",
+        "functionalGaps": [],
+        "acceptance": "original-ledger-acceptance-verified",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 350,
-            "anchor": "export interface StudioPdfDocument"
+            "path": "docs/audits/2026-11-27/pdf-text-layer/README.md",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
-            "line": 411,
-            "anchor": "const canModify"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/source-freeze-final.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
-            "line": 231,
-            "anchor": "export async function importStudioPdf"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
-            "line": 145,
-            "anchor": "readFields"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/continuation-native-summary.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-pdf-adapter.ts",
-            "line": 104,
-            "anchor": "async search"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           }
         ],
         "existingTestFiles": [
-          "packages/ui/src/components/OfficeStudio/StudioPdf.test.tsx",
-          "docs/tests/studio-pdf-codec.test.mjs",
-          "docs/tests/studio-pdf-adapter.test.mjs"
+          "e2e/office-studio-pdf-text-layer.spec.ts"
         ],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "testEvidenceNote": "Individual matrices, native files and a single frozen 316/316 browser run verify original acceptance and applicable common criteria. No whole-goal completion claim."
       },
-      "gaps": ["无可选择文本层，原文选择复制未实现"]
+      "gaps": [],
+      "auditHistory": [
+        {
+          "status": "audited-partial-acceptance-pending",
+          "gaps": [
+            "无可选择文本层，原文选择复制未实现"
+          ],
+          "currentAudit": {
+            "date": "2026-11-25",
+            "sourceCommit": "2382530",
+            "implementation": "部分实现",
+            "implementedBehavior": "逐页提取文字、全文查找、命中坐标导航",
+            "functionalGaps": [
+              "无可选择文本层，原文选择复制未实现"
+            ],
+            "acceptance": "not-proven-complete",
+            "evidence": [
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
+                "line": 350,
+                "anchor": "export interface StudioPdfDocument"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+                "line": 411,
+                "anchor": "const canModify"
+              },
+              {
+                "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
+                "line": 231,
+                "anchor": "export async function importStudioPdf"
+              },
+              {
+                "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
+                "line": 145,
+                "anchor": "readFields"
+              },
+              {
+                "path": "docs/src/pages/collaboration/office-studio/studio-pdf-adapter.ts",
+                "line": 104,
+                "anchor": "async search"
+              }
+            ],
+            "existingTestFiles": [
+              "packages/ui/src/components/OfficeStudio/StudioPdf.test.tsx",
+              "docs/tests/studio-pdf-codec.test.mjs",
+              "docs/tests/studio-pdf-adapter.test.mjs"
+            ],
+            "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+          }
+        }
+      ]
     },
     {
       "id": "P003",
@@ -8345,7 +9379,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "左侧导航只有搜索批注缩略图表单",
-        "functionalGaps": ["缺 PDF 原目录读取/层级编辑与保存"],
+        "functionalGaps": [
+          "缺 PDF 原目录读取/层级编辑与保存"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -8372,7 +9408,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺 PDF 原目录读取/层级编辑与保存"]
+      "gaps": [
+        "缺 PDF 原目录读取/层级编辑与保存"
+      ]
     },
     {
       "id": "P004",
@@ -8770,7 +9808,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "只在原页叠加模型内容",
-        "functionalGaps": ["缺原页字体图片路径解析/可编辑转换"],
+        "functionalGaps": [
+          "缺原页字体图片路径解析/可编辑转换"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -8797,7 +9837,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺原页字体图片路径解析/可编辑转换"]
+      "gaps": [
+        "缺原页字体图片路径解析/可编辑转换"
+      ]
     },
     {
       "id": "P010",
@@ -8826,7 +9868,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "原文 canvas 只读",
-        "functionalGaps": ["缺段落重排、字体映射、真实原内容修改"],
+        "functionalGaps": [
+          "缺段落重排、字体映射、真实原内容修改"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -8853,7 +9897,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺段落重排、字体映射、真实原内容修改"]
+      "gaps": [
+        "缺段落重排、字体映射、真实原内容修改"
+      ]
     },
     {
       "id": "P011",
@@ -8882,7 +9928,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "新增标注位置/大小可编辑，局部移动",
-        "functionalGaps": ["缺对象层级/分组、原文字段落属性与图像裁剪"],
+        "functionalGaps": [
+          "缺对象层级/分组、原文字段落属性与图像裁剪"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -8912,7 +9960,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺对象层级/分组、原文字段落属性与图像裁剪"]
+      "gaps": [
+        "缺对象层级/分组、原文字段落属性与图像裁剪"
+      ]
     },
     {
       "id": "P012",
@@ -8934,44 +9984,100 @@
         "docs/tests/studio-pdf-codec.test.mjs"
       ],
       "historicalStatus": "部分",
-      "status": "audited-partial-acceptance-pending",
-      "evidence": [],
+      "status": "verified-original-acceptance",
+      "evidence": [
+        "docs/audits/2026-11-27/pdf-native-ui/browser-native/acceptance-matrix.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/source-freeze-final.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/continuation-native-summary.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json"
+      ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "部分实现",
-        "implementedBehavior": "新增文字和格式/位置大小",
-        "functionalGaps": ["导出写页面内容流，非原生 FreeText 批注；重开未恢复标注编辑身份"],
-        "acceptance": "not-proven-complete",
+        "date": "2026-11-27",
+        "sourceCommit": "3c751e02a8d4be6e19797ad5c0a55c1077d29107",
+        "implementation": "完整验收",
+        "implementedBehavior": "文本格式、位置大小、原生注释保存",
+        "functionalGaps": [],
+        "acceptance": "original-ledger-acceptance-verified",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 350,
-            "anchor": "export interface StudioPdfDocument"
+            "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/acceptance-matrix.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
-            "line": 411,
-            "anchor": "const canModify"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/source-freeze-final.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
-            "line": 231,
-            "anchor": "export async function importStudioPdf"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
-            "line": 761,
-            "anchor": "drawText"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/continuation-native-summary.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
+          },
+          {
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           }
         ],
         "existingTestFiles": [
-          "packages/ui/src/components/OfficeStudio/StudioPdf.test.tsx",
-          "docs/tests/studio-pdf-codec.test.mjs"
+          "e2e/office-studio-pdf-native-annotations.spec.ts",
+          "e2e/office-studio-pdf-text-layer.spec.ts"
         ],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "testEvidenceNote": "Individual matrices, native files and a single frozen 316/316 browser run verify original acceptance and applicable common criteria. No whole-goal completion claim."
       },
-      "gaps": ["导出写页面内容流，非原生 FreeText 批注；重开未恢复标注编辑身份"]
+      "gaps": [],
+      "auditHistory": [
+        {
+          "status": "audited-partial-acceptance-pending",
+          "gaps": [
+            "导出写页面内容流，非原生 FreeText 批注；重开未恢复标注编辑身份"
+          ],
+          "currentAudit": {
+            "date": "2026-11-25",
+            "sourceCommit": "2382530",
+            "implementation": "部分实现",
+            "implementedBehavior": "新增文字和格式/位置大小",
+            "functionalGaps": [
+              "导出写页面内容流，非原生 FreeText 批注；重开未恢复标注编辑身份"
+            ],
+            "acceptance": "not-proven-complete",
+            "evidence": [
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
+                "line": 350,
+                "anchor": "export interface StudioPdfDocument"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+                "line": 411,
+                "anchor": "const canModify"
+              },
+              {
+                "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
+                "line": 231,
+                "anchor": "export async function importStudioPdf"
+              },
+              {
+                "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
+                "line": 761,
+                "anchor": "drawText"
+              }
+            ],
+            "existingTestFiles": [
+              "packages/ui/src/components/OfficeStudio/StudioPdf.test.tsx",
+              "docs/tests/studio-pdf-codec.test.mjs"
+            ],
+            "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+          }
+        }
+      ]
     },
     {
       "id": "P013",
@@ -9000,7 +10106,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "可创建图片表单字段显示图片",
-        "functionalGaps": ["缺独立页面图片与原生超链接编辑/目标页保存"],
+        "functionalGaps": [
+          "缺独立页面图片与原生超链接编辑/目标页保存"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -9030,7 +10138,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺独立页面图片与原生超链接编辑/目标页保存"]
+      "gaps": [
+        "缺独立页面图片与原生超链接编辑/目标页保存"
+      ]
     },
     {
       "id": "P014",
@@ -9052,44 +10162,100 @@
         "docs/tests/studio-pdf-codec.test.mjs"
       ],
       "historicalStatus": "部分",
-      "status": "audited-partial-acceptance-pending",
-      "evidence": [],
+      "status": "verified-original-acceptance",
+      "evidence": [
+        "docs/audits/2026-11-27/pdf-native-ui/browser-native/acceptance-matrix.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/source-freeze-final.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/continuation-native-summary.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json"
+      ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "部分实现",
-        "implementedBehavior": "矩形透明高亮",
-        "functionalGaps": ["缺文字 QuadPoints、下划线/删除线/波浪线；导出非原生文字批注"],
-        "acceptance": "not-proven-complete",
+        "date": "2026-11-27",
+        "sourceCommit": "3c751e02a8d4be6e19797ad5c0a55c1077d29107",
+        "implementation": "完整验收",
+        "implementedBehavior": "文字QuadPoints、颜色透明度及移除",
+        "functionalGaps": [],
+        "acceptance": "original-ledger-acceptance-verified",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 350,
-            "anchor": "export interface StudioPdfDocument"
+            "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/acceptance-matrix.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
-            "line": 411,
-            "anchor": "const canModify"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/source-freeze-final.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
-            "line": 231,
-            "anchor": "export async function importStudioPdf"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
-            "line": 718,
-            "anchor": "drawRectangle"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/continuation-native-summary.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
+          },
+          {
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           }
         ],
         "existingTestFiles": [
-          "packages/ui/src/components/OfficeStudio/StudioPdf.test.tsx",
-          "docs/tests/studio-pdf-codec.test.mjs"
+          "e2e/office-studio-pdf-native-annotations.spec.ts",
+          "e2e/office-studio-pdf-text-layer.spec.ts"
         ],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "testEvidenceNote": "Individual matrices, native files and a single frozen 316/316 browser run verify original acceptance and applicable common criteria. No whole-goal completion claim."
       },
-      "gaps": ["缺文字 QuadPoints、下划线/删除线/波浪线；导出非原生文字批注"]
+      "gaps": [],
+      "auditHistory": [
+        {
+          "status": "audited-partial-acceptance-pending",
+          "gaps": [
+            "缺文字 QuadPoints、下划线/删除线/波浪线；导出非原生文字批注"
+          ],
+          "currentAudit": {
+            "date": "2026-11-25",
+            "sourceCommit": "2382530",
+            "implementation": "部分实现",
+            "implementedBehavior": "矩形透明高亮",
+            "functionalGaps": [
+              "缺文字 QuadPoints、下划线/删除线/波浪线；导出非原生文字批注"
+            ],
+            "acceptance": "not-proven-complete",
+            "evidence": [
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
+                "line": 350,
+                "anchor": "export interface StudioPdfDocument"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+                "line": 411,
+                "anchor": "const canModify"
+              },
+              {
+                "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
+                "line": 231,
+                "anchor": "export async function importStudioPdf"
+              },
+              {
+                "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
+                "line": 718,
+                "anchor": "drawRectangle"
+              }
+            ],
+            "existingTestFiles": [
+              "packages/ui/src/components/OfficeStudio/StudioPdf.test.tsx",
+              "docs/tests/studio-pdf-codec.test.mjs"
+            ],
+            "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+          }
+        }
+      ]
     },
     {
       "id": "P015",
@@ -9111,44 +10277,100 @@
         "docs/tests/studio-pdf-codec.test.mjs"
       ],
       "historicalStatus": "部分",
-      "status": "audited-partial-acceptance-pending",
-      "evidence": [],
+      "status": "verified-original-acceptance",
+      "evidence": [
+        "docs/audits/2026-11-27/pdf-native-ui/browser-native/acceptance-matrix.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/source-freeze-final.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/continuation-native-summary.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json"
+      ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "部分实现",
-        "implementedBehavior": "模型内标注列表及回复增删",
-        "functionalGaps": ["缺原生便利贴/回复作者时间/解决状态；PDF 导出回复未保存"],
-        "acceptance": "not-proven-complete",
+        "date": "2026-11-27",
+        "sourceCommit": "3c751e02a8d4be6e19797ad5c0a55c1077d29107",
+        "implementation": "完整验收",
+        "implementedBehavior": "原生批注读取、回复作者时间与状态",
+        "functionalGaps": [],
+        "acceptance": "original-ledger-acceptance-verified",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 350,
-            "anchor": "export interface StudioPdfDocument"
+            "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/acceptance-matrix.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
-            "line": 411,
-            "anchor": "const canModify"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/source-freeze-final.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
-            "line": 231,
-            "anchor": "export async function importStudioPdf"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
-            "line": 145,
-            "anchor": "readFields"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/continuation-native-summary.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
+          },
+          {
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           }
         ],
         "existingTestFiles": [
-          "packages/ui/src/components/OfficeStudio/StudioPdf.test.tsx",
-          "docs/tests/studio-pdf-codec.test.mjs"
+          "e2e/office-studio-pdf-native-annotations.spec.ts",
+          "e2e/office-studio-pdf-text-layer.spec.ts"
         ],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "testEvidenceNote": "Individual matrices, native files and a single frozen 316/316 browser run verify original acceptance and applicable common criteria. No whole-goal completion claim."
       },
-      "gaps": ["缺原生便利贴/回复作者时间/解决状态；PDF 导出回复未保存"]
+      "gaps": [],
+      "auditHistory": [
+        {
+          "status": "audited-partial-acceptance-pending",
+          "gaps": [
+            "缺原生便利贴/回复作者时间/解决状态；PDF 导出回复未保存"
+          ],
+          "currentAudit": {
+            "date": "2026-11-25",
+            "sourceCommit": "2382530",
+            "implementation": "部分实现",
+            "implementedBehavior": "模型内标注列表及回复增删",
+            "functionalGaps": [
+              "缺原生便利贴/回复作者时间/解决状态；PDF 导出回复未保存"
+            ],
+            "acceptance": "not-proven-complete",
+            "evidence": [
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
+                "line": 350,
+                "anchor": "export interface StudioPdfDocument"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+                "line": 411,
+                "anchor": "const canModify"
+              },
+              {
+                "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
+                "line": 231,
+                "anchor": "export async function importStudioPdf"
+              },
+              {
+                "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
+                "line": 145,
+                "anchor": "readFields"
+              }
+            ],
+            "existingTestFiles": [
+              "packages/ui/src/components/OfficeStudio/StudioPdf.test.tsx",
+              "docs/tests/studio-pdf-codec.test.mjs"
+            ],
+            "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+          }
+        }
+      ]
     },
     {
       "id": "P016",
@@ -9170,44 +10392,100 @@
         "docs/tests/studio-pdf-codec.test.mjs"
       ],
       "historicalStatus": "部分",
-      "status": "audited-partial-acceptance-pending",
-      "evidence": [],
+      "status": "verified-original-acceptance",
+      "evidence": [
+        "docs/audits/2026-11-27/pdf-native-ui/browser-native/acceptance-matrix.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/source-freeze-final.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/continuation-native-summary.json",
+        "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json"
+      ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "部分实现",
-        "implementedBehavior": "笔迹/矩形拖动、宽度、位置和原生矢量内容",
-        "functionalGaps": ["缺椭圆/箭头/多边形、完整填充/透明度及原生可编辑批注"],
-        "acceptance": "not-proven-complete",
+        "date": "2026-11-27",
+        "sourceCommit": "3c751e02a8d4be6e19797ad5c0a55c1077d29107",
+        "implementation": "完整验收",
+        "implementedBehavior": "几何拖动、线型填充、透明度与原生保存",
+        "functionalGaps": [],
+        "acceptance": "original-ledger-acceptance-verified",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 350,
-            "anchor": "export interface StudioPdfDocument"
+            "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/acceptance-matrix.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
-            "line": 411,
-            "anchor": "const canModify"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/source-freeze-final.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
-            "line": 231,
-            "anchor": "export async function importStudioPdf"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
-            "line": 718,
-            "anchor": "drawRectangle"
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/continuation-native-summary.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
+          },
+          {
+            "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json",
+            "line": 1,
+            "anchor": "original acceptance evidence"
           }
         ],
         "existingTestFiles": [
-          "packages/ui/src/components/OfficeStudio/StudioPdf.test.tsx",
-          "docs/tests/studio-pdf-codec.test.mjs"
+          "e2e/office-studio-pdf-native-annotations.spec.ts",
+          "e2e/office-studio-pdf-text-layer.spec.ts"
         ],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "testEvidenceNote": "Individual matrices, native files and a single frozen 316/316 browser run verify original acceptance and applicable common criteria. No whole-goal completion claim."
       },
-      "gaps": ["缺椭圆/箭头/多边形、完整填充/透明度及原生可编辑批注"]
+      "gaps": [],
+      "auditHistory": [
+        {
+          "status": "audited-partial-acceptance-pending",
+          "gaps": [
+            "缺椭圆/箭头/多边形、完整填充/透明度及原生可编辑批注"
+          ],
+          "currentAudit": {
+            "date": "2026-11-25",
+            "sourceCommit": "2382530",
+            "implementation": "部分实现",
+            "implementedBehavior": "笔迹/矩形拖动、宽度、位置和原生矢量内容",
+            "functionalGaps": [
+              "缺椭圆/箭头/多边形、完整填充/透明度及原生可编辑批注"
+            ],
+            "acceptance": "not-proven-complete",
+            "evidence": [
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
+                "line": 350,
+                "anchor": "export interface StudioPdfDocument"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+                "line": 411,
+                "anchor": "const canModify"
+              },
+              {
+                "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
+                "line": 231,
+                "anchor": "export async function importStudioPdf"
+              },
+              {
+                "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
+                "line": 718,
+                "anchor": "drawRectangle"
+              }
+            ],
+            "existingTestFiles": [
+              "packages/ui/src/components/OfficeStudio/StudioPdf.test.tsx",
+              "docs/tests/studio-pdf-codec.test.mjs"
+            ],
+            "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+          }
+        }
+      ]
     },
     {
       "id": "P017",
@@ -9236,7 +10514,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "手写签名作为 ink 轨迹，图片表单可承载图片",
-        "functionalGaps": ["缺预设/自定义图章和独立签名图片批注，未覆盖图章原生外观流"],
+        "functionalGaps": [
+          "缺预设/自定义图章和独立签名图片批注，未覆盖图章原生外观流"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -9266,7 +10546,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺预设/自定义图章和独立签名图片批注，未覆盖图章原生外观流"]
+      "gaps": [
+        "缺预设/自定义图章和独立签名图片批注，未覆盖图章原生外观流"
+      ]
     },
     {
       "id": "P018",
@@ -9374,7 +10656,9 @@
         "sourceCommit": "2382530",
         "implementation": "切片验证",
         "implementedBehavior": "文本日期图片字段创建/重复控件/原生保存",
-        "functionalGaps": ["日期外部动作/更多原生字段格式和完整共通验收待审"],
+        "functionalGaps": [
+          "日期外部动作/更多原生字段格式和完整共通验收待审"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -9417,7 +10701,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["日期外部动作/更多原生字段格式和完整共通验收待审"]
+      "gaps": [
+        "日期外部动作/更多原生字段格式和完整共通验收待审"
+      ]
     },
     {
       "id": "P020",
@@ -9457,7 +10743,9 @@
         "sourceCommit": "2382530",
         "implementation": "切片验证",
         "implementedBehavior": "复选单选下拉列表、导出标签/值、多选默认值",
-        "functionalGaps": ["完整原生字段兼容和共通验收审计待完成"],
+        "functionalGaps": [
+          "完整原生字段兼容和共通验收审计待完成"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -9500,7 +10788,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["完整原生字段兼容和共通验收审计待完成"]
+      "gaps": [
+        "完整原生字段兼容和共通验收审计待完成"
+      ]
     },
     {
       "id": "P021",
@@ -9540,7 +10830,9 @@
         "sourceCommit": "2382530",
         "implementation": "切片验证",
         "implementedBehavior": "布局/外观、必填只读多行字符上限提示边框",
-        "functionalGaps": ["填写时必填的提交策略、任意原文件设计兼容仍需审计"],
+        "functionalGaps": [
+          "填写时必填的提交策略、任意原文件设计兼容仍需审计"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -9583,7 +10875,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["填写时必填的提交策略、任意原文件设计兼容仍需审计"]
+      "gaps": [
+        "填写时必填的提交策略、任意原文件设计兼容仍需审计"
+      ]
     },
     {
       "id": "P022",
@@ -9612,7 +10906,9 @@
         "sourceCommit": "2382530",
         "implementation": "部分实现",
         "implementedBehavior": "本编辑器日期 YYYY-MM-DD 验证",
-        "functionalGaps": ["缺数字范围、原生动作/计算顺序与外部格式校验"],
+        "functionalGaps": [
+          "缺数字范围、原生动作/计算顺序与外部格式校验"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -9642,7 +10938,9 @@
         ],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺数字范围、原生动作/计算顺序与外部格式校验"]
+      "gaps": [
+        "缺数字范围、原生动作/计算顺序与外部格式校验"
+      ]
     },
     {
       "id": "P023",
@@ -9736,7 +11034,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "高亮只叠加色块",
-        "functionalGaps": ["缺真正内容/图片/元数据删除及搜索后脱敏"],
+        "functionalGaps": [
+          "缺真正内容/图片/元数据删除及搜索后脱敏"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -9763,7 +11063,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺真正内容/图片/元数据删除及搜索后脱敏"]
+      "gaps": [
+        "缺真正内容/图片/元数据删除及搜索后脱敏"
+      ]
     },
     {
       "id": "P025",
@@ -9792,7 +11094,9 @@
         "sourceCommit": "2382530",
         "implementation": "未实现",
         "implementedBehavior": "加密文件直接拒绝",
-        "functionalGaps": ["缺密码读写和修改打印复制权限保存"],
+        "functionalGaps": [
+          "缺密码读写和修改打印复制权限保存"
+        ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
@@ -9819,7 +11123,9 @@
         "existingTestFiles": [],
         "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
       },
-      "gaps": ["缺密码读写和修改打印复制权限保存"]
+      "gaps": [
+        "缺密码读写和修改打印复制权限保存"
+      ]
     },
     {
       "id": "P026",
@@ -9891,10 +11197,22 @@
   "currentAuditSourceCommit": "2382530",
   "currentAuditItems": 159,
   "currentImplementationCounts": {
-    "基础实现": 22,
-    "切片验证": 35,
-    "部分实现": 53,
-    "未实现": 49
+    "完整验收": 15,
+    "部分实现": 48,
+    "切片验证": 30,
+    "未实现": 48,
+    "基础实现": 18
   },
-  "lastEvidenceUpdate": "2026-11-27"
+  "lastEvidenceUpdate": "2026-11-27",
+  "verifiedOriginalAcceptanceCount": 15,
+  "remainingOriginalAcceptanceCount": 144,
+  "lastIntegration": {
+    "sourceCommit": "3c751e02a8d4be6e19797ad5c0a55c1077d29107",
+    "date": "2026-11-27",
+    "browserPassed": 316,
+    "browserFailed": 0,
+    "browserSkipped": 0,
+    "browserRetries": 0,
+    "verification": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json"
+  }
 }

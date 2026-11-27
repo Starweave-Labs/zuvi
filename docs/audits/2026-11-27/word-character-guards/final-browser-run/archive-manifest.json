@@ -1,0 +1,126 @@
+{
+  "scope": "Immutable final 5270 actual-browser artifacts before root whole-site E2E can regenerate top-level audit outputs.",
+  "count": {
+    "browserTests": 1,
+    "nativeDocx": 3,
+    "nativePages": 3,
+    "screenshotsReviewed": 3
+  },
+  "entries": [
+    {
+      "path": "browser-roundtrips.json",
+      "bytes": 26831,
+      "sha256": "73a84ac52eb6392b6e623adbc736bcef451917a5d93481daec1c75437db5d1c2"
+    },
+    {
+      "path": "create-fixture.py",
+      "bytes": 2663,
+      "sha256": "f06a492c85ddd4ab1ee48da2c76af0e30eac87ff5e4e5089a7343c090c406677"
+    },
+    {
+      "path": "inspect-native.py",
+      "bytes": 7542,
+      "sha256": "64a7e9433182b74c0c0ec4683347035b775a9880ea5f503e97e050229247995b"
+    },
+    {
+      "path": "metrics-dark-320.png",
+      "bytes": 50599,
+      "sha256": "e2eccedaf8055b07cabe540afd06fc1af751fb2a763a041ba9632c87dffac444"
+    },
+    {
+      "path": "native-inspection.json",
+      "bytes": 22690,
+      "sha256": "2307d4a7666fd114a246c99b287141f603ebd5e77bdc62cf4879617162420182"
+    },
+    {
+      "path": "office-studio-word-character-guards.spec.ts.txt",
+      "bytes": 10756,
+      "sha256": "a1eedd1dc7796d7fa8de03f2a0b242c51042d03e84ea710a9b238e677a937b61"
+    },
+    {
+      "path": "playwright/.last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    {
+      "path": "render-native.py",
+      "bytes": 1541,
+      "sha256": "6476ec386e338ec48dc71fc0c35a29b5e70c5f521a30c46b815a1add4100add0"
+    },
+    {
+      "path": "results-dark.png",
+      "bytes": 128947,
+      "sha256": "2a816d0d63c3b13986f79fc109f487ad54a125effd7d1bb262b6d76cfbbf5329"
+    },
+    {
+      "path": "results-light.png",
+      "bytes": 128740,
+      "sha256": "114a44b796b1311e3343ce65981ae3d60fee446935ba9073a1409bb04ae235cb"
+    },
+    {
+      "path": "roundtrip-1-render/page-1.png",
+      "bytes": 48734,
+      "sha256": "600138e3847066f6f1c29ea6b130a76358eb85fb1111a5ac0a8ffb8ce42bfd50"
+    },
+    {
+      "path": "roundtrip-1-render/roundtrip-1.pdf",
+      "bytes": 47337,
+      "sha256": "b641f64bdcdddf9968ec174c1239967e484072bdf25c0d660bc4d115e85e9f8c"
+    },
+    {
+      "path": "roundtrip-1.docx",
+      "bytes": 51877,
+      "sha256": "736fccdac5ad6f4ec7a122d39781b4b945097eea4382deec503fb6910499a0a4"
+    },
+    {
+      "path": "roundtrip-2-render/page-1.png",
+      "bytes": 48734,
+      "sha256": "600138e3847066f6f1c29ea6b130a76358eb85fb1111a5ac0a8ffb8ce42bfd50"
+    },
+    {
+      "path": "roundtrip-2-render/roundtrip-2.pdf",
+      "bytes": 47307,
+      "sha256": "48e735cb404e2448ac2f5a8b7816bca347037d4fcf85a1cffefd70c4cc947ace"
+    },
+    {
+      "path": "roundtrip-2.docx",
+      "bytes": 51871,
+      "sha256": "739f3ddce55f76d9979a0206fac329080d6e694bce4c6ccecd65a4bd9218c0ac"
+    },
+    {
+      "path": "run.json",
+      "bytes": 5113,
+      "sha256": "f71d5ce8bf81c61b9ab129531ce189bb6c34c3450e21c7e602ac72deb50581f4"
+    },
+    {
+      "path": "run.txt",
+      "bytes": 878,
+      "sha256": "119fb67c1c3a45a3aa238c0dabfdf4f75850d37448361486acd1b2cd2f5822d9"
+    },
+    {
+      "path": "run.txt.raw.gz",
+      "bytes": 506,
+      "sha256": "8e79f5e0a80ca933e12731bfa0bc26eff4526469ca192627eded32e084f4f161"
+    },
+    {
+      "path": "source-before-final-browser.json",
+      "bytes": 2513,
+      "sha256": "65048a0e14009db81760fb207f2824bf170df0354eeec3aa04cf18136313a493"
+    },
+    {
+      "path": "source-render/page-1.png",
+      "bytes": 45732,
+      "sha256": "c584808d76fec3917d301c0a4271f543b2e37398969a68d469a994971ae3b31d"
+    },
+    {
+      "path": "source-render/source.pdf",
+      "bytes": 38402,
+      "sha256": "7a714bf2764c54dd20fec211dbcbc428066a6ef314b35a40cd1ca12a30fdb817"
+    },
+    {
+      "path": "source.docx",
+      "bytes": 37606,
+      "sha256": "a6633ea9cd6941c436bbcdd7dfd717f4eaedde552d421553c797d2e3d75ba5ef"
+    }
+  ]
+}

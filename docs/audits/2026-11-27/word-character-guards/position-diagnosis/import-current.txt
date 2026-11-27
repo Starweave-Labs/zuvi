@@ -1,0 +1,112 @@
+[
+  {
+    "form": "unit-form",
+    "target": {
+      "type": "text",
+      "text": "target",
+      "marks": [
+        {
+          "type": "bold"
+        },
+        {
+          "type": "textStyle",
+          "attrs": {
+            "fontFamily": "Arial",
+            "fontSize": "18pt",
+            "color": "#0055aa",
+            "letterSpacing": "0.3pt",
+            "baselineShift": "-1.5pt"
+          }
+        }
+      ]
+    },
+    "header": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "spaceAfter": 8,
+            "lineHeightRule": "auto",
+            "lineHeight": 1.15,
+            "lineHeightBasis": "auto",
+            "paragraphStyleDirectAttrs": [],
+            "paragraphStyle": "imported-27",
+            "paragraphStyleMaterialized": true
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "H",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "fontFamily": "Noto Sans SC",
+                    "fontSize": "16pt",
+                    "color": "#1f2937"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "form": "integer-half-points",
+    "target": {
+      "type": "text",
+      "text": "target",
+      "marks": [
+        {
+          "type": "bold"
+        },
+        {
+          "type": "textStyle",
+          "attrs": {
+            "fontFamily": "Arial",
+            "fontSize": "18pt",
+            "color": "#0055aa",
+            "letterSpacing": "0.3pt",
+            "baselineShift": "-1.5pt"
+          }
+        }
+      ]
+    },
+    "header": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "spaceAfter": 8,
+            "lineHeightRule": "auto",
+            "lineHeight": 1.15,
+            "lineHeightBasis": "auto",
+            "paragraphStyleDirectAttrs": [],
+            "paragraphStyle": "imported-27",
+            "paragraphStyleMaterialized": true
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "H",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "fontFamily": "Noto Sans SC",
+                    "fontSize": "16pt",
+                    "color": "#1f2937"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

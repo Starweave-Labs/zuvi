@@ -1,0 +1,201 @@
+{
+  "schemaVersion": 1,
+  "status": "restored-baseline-with-run-bytes-retained",
+  "createdAt": "2026-11-27T04:11:43.044254+00:00",
+  "cue": "root-post-focused-position-rows-pass-2026-11-27",
+  "runLabel": "position-rows-focused",
+  "baselineManifest": {
+    "bytes": 1034350,
+    "sha256": "2d7a91b50c98614d3be0b91c3e8f2266cd1ab6c6cde161940c12f0a9ea850b8c"
+  },
+  "snapshotPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/.release/audit-backups/word-sheet-pdf-20261127",
+  "restoredBaselineFiles": 3485,
+  "restoredBaselineBytes": 634240868,
+  "unchangedFiles": 3476,
+  "changedFiles": 9,
+  "addedFiles": 0,
+  "missingFilesRestored": [],
+  "regenerated": [
+    {
+      "originalPath": "docs/audits/2026-11-26/word-cell-fragments/multi-cell-dark-320.png",
+      "change": "changed",
+      "before": {
+        "kind": "file",
+        "bytes": 36750,
+        "sha256": "e4d864bc52696d9fa973efeb100c6d567f1e5b5f5899c3bafb4932687e07d17c"
+      },
+      "after": {
+        "kind": "file",
+        "bytes": 36493,
+        "sha256": "b4e4d4dcde8d0529aade8a07e812ced2b9d4e81bec93c05b2aa002e1910489c0"
+      },
+      "archivePath": "regenerated-history/position-rows-focused/files/2026-11-26/word-cell-fragments/multi-cell-dark-320.png",
+      "encoding": "original-bytes",
+      "archive": {
+        "bytes": 36493,
+        "sha256": "b4e4d4dcde8d0529aade8a07e812ced2b9d4e81bec93c05b2aa002e1910489c0"
+      }
+    },
+    {
+      "originalPath": "docs/audits/2026-11-26/word-cell-fragments/multi-cell-dark.png",
+      "change": "changed",
+      "before": {
+        "kind": "file",
+        "bytes": 161234,
+        "sha256": "d21873edbc90ea001ec6ec7aeff49d1a3deb80ac479530b3bdd51bcb8c819873"
+      },
+      "after": {
+        "kind": "file",
+        "bytes": 161798,
+        "sha256": "dddac27a622780af403e300258e08f0cc8bfd02e9b6f00607b7fd95f14f832d9"
+      },
+      "archivePath": "regenerated-history/position-rows-focused/files/2026-11-26/word-cell-fragments/multi-cell-dark.png",
+      "encoding": "original-bytes",
+      "archive": {
+        "bytes": 161798,
+        "sha256": "dddac27a622780af403e300258e08f0cc8bfd02e9b6f00607b7fd95f14f832d9"
+      }
+    },
+    {
+      "originalPath": "docs/audits/2026-11-26/word-cell-fragments/multi-cell-evidence.json",
+      "change": "changed",
+      "before": {
+        "kind": "file",
+        "bytes": 201,
+        "sha256": "08fe35aadc8e37933b429eac1a3cf6ea50d760e2c136e6f99059db8902fdd714"
+      },
+      "after": {
+        "kind": "file",
+        "bytes": 201,
+        "sha256": "2b722de6ce335354ac881a1689947ec31dd6a92838e1b1a58885992f9f49a116"
+      },
+      "archivePath": "regenerated-history/position-rows-focused/files/2026-11-26/word-cell-fragments/multi-cell-evidence.json",
+      "encoding": "original-bytes",
+      "archive": {
+        "bytes": 201,
+        "sha256": "2b722de6ce335354ac881a1689947ec31dd6a92838e1b1a58885992f9f49a116"
+      }
+    },
+    {
+      "originalPath": "docs/audits/2026-11-26/word-cell-fragments/multi-cell-light-320.png",
+      "change": "changed",
+      "before": {
+        "kind": "file",
+        "bytes": 29706,
+        "sha256": "ad887e33584563e54843426412e069d19e9e13ed09e682127ec59c53f0cffb5e"
+      },
+      "after": {
+        "kind": "file",
+        "bytes": 30033,
+        "sha256": "07c9f3a282e3f05c60aed5eb38e583f3c6a29a9df9d6df2daf0839e95ce41294"
+      },
+      "archivePath": "regenerated-history/position-rows-focused/files/2026-11-26/word-cell-fragments/multi-cell-light-320.png",
+      "encoding": "original-bytes",
+      "archive": {
+        "bytes": 30033,
+        "sha256": "07c9f3a282e3f05c60aed5eb38e583f3c6a29a9df9d6df2daf0839e95ce41294"
+      }
+    },
+    {
+      "originalPath": "docs/audits/2026-11-26/word-cell-fragments/multi-cell-light.png",
+      "change": "changed",
+      "before": {
+        "kind": "file",
+        "bytes": 151261,
+        "sha256": "8f65547caf8749eb8b4de3ecfbdfe5984ffab569370564a3960780aa0058be14"
+      },
+      "after": {
+        "kind": "file",
+        "bytes": 150127,
+        "sha256": "cd79abed1a7ff3e0673fc92ca0f5a8a4b4d7f750ef50fc5e2914ba37f39e4d81"
+      },
+      "archivePath": "regenerated-history/position-rows-focused/files/2026-11-26/word-cell-fragments/multi-cell-light.png",
+      "encoding": "original-bytes",
+      "archive": {
+        "bytes": 150127,
+        "sha256": "cd79abed1a7ff3e0673fc92ca0f5a8a4b4d7f750ef50fc5e2914ba37f39e4d81"
+      }
+    },
+    {
+      "originalPath": "docs/audits/2026-11-26/word-cell-fragments/multi-cell-print.pdf",
+      "change": "changed",
+      "before": {
+        "kind": "file",
+        "bytes": 28162,
+        "sha256": "1febee5969f1dc9907beb83d5e4db01e993b980fc84178247c349415ea903339"
+      },
+      "after": {
+        "kind": "file",
+        "bytes": 28154,
+        "sha256": "1bfe219808e8ea4270e02b0d9e0b947069a82b551e679b7b3602c27ce09b22be"
+      },
+      "archivePath": "regenerated-history/position-rows-focused/files/2026-11-26/word-cell-fragments/multi-cell-print.pdf",
+      "encoding": "original-bytes",
+      "archive": {
+        "bytes": 28154,
+        "sha256": "1bfe219808e8ea4270e02b0d9e0b947069a82b551e679b7b3602c27ce09b22be"
+      }
+    },
+    {
+      "originalPath": "docs/audits/2026-11-26/word-cell-fragments/multi-cell-roundtrip-1.docx",
+      "change": "changed",
+      "before": {
+        "kind": "file",
+        "bytes": 10585,
+        "sha256": "9d7694c3d72dd68975cf755f113865cdce21a84cc71fb89a245b2c91cbfb3954"
+      },
+      "after": {
+        "kind": "file",
+        "bytes": 10571,
+        "sha256": "7a7bf890a3390e7e07a3a919800536066ad49b1f18b226084499dbcc11998d0e"
+      },
+      "archivePath": "regenerated-history/position-rows-focused/files/2026-11-26/word-cell-fragments/multi-cell-roundtrip-1.docx",
+      "encoding": "original-bytes",
+      "archive": {
+        "bytes": 10571,
+        "sha256": "7a7bf890a3390e7e07a3a919800536066ad49b1f18b226084499dbcc11998d0e"
+      }
+    },
+    {
+      "originalPath": "docs/audits/2026-11-26/word-cell-fragments/multi-cell-roundtrip-2.docx",
+      "change": "changed",
+      "before": {
+        "kind": "file",
+        "bytes": 10603,
+        "sha256": "312b39c870183750680177b6ff9414c7fa5574d439e75fe7baa498fe8dff6cb8"
+      },
+      "after": {
+        "kind": "file",
+        "bytes": 10590,
+        "sha256": "b9c4a9f10237875a0c3bdd6b2a1512eab162f055d55fb7c2096b4d99e373bf97"
+      },
+      "archivePath": "regenerated-history/position-rows-focused/files/2026-11-26/word-cell-fragments/multi-cell-roundtrip-2.docx",
+      "encoding": "original-bytes",
+      "archive": {
+        "bytes": 10590,
+        "sha256": "b9c4a9f10237875a0c3bdd6b2a1512eab162f055d55fb7c2096b4d99e373bf97"
+      }
+    },
+    {
+      "originalPath": "docs/audits/2026-11-26/word-cell-fragments/multi-cell-source.docx",
+      "change": "changed",
+      "before": {
+        "kind": "file",
+        "bytes": 10240,
+        "sha256": "17a6861be115d9d0a7d8334518ab6b5d53a6a88e3c83fa92fa9229a9f0cd581c"
+      },
+      "after": {
+        "kind": "file",
+        "bytes": 10240,
+        "sha256": "f9386927dbeaf1bbcea66ddb6bc013a461605bc316f3cf59e2e9c1353b2be6a7"
+      },
+      "archivePath": "regenerated-history/position-rows-focused/files/2026-11-26/word-cell-fragments/multi-cell-source.docx",
+      "encoding": "original-bytes",
+      "archive": {
+        "bytes": 10240,
+        "sha256": "f9386927dbeaf1bbcea66ddb6bc013a461605bc316f3cf59e2e9c1353b2be6a7"
+      }
+    }
+  ],
+  "otherRunArchivesUntouched": true
+}

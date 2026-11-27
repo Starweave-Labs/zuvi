@@ -1,0 +1,14 @@
+import {readFileSync} from 'node:fs';
+const patched={"/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui/src/components/OfficeStudio/StudioWord.tsx": "/tmp/zuvi-word-neighbor-audit/patched/StudioWord.tsx", "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui/src/components/OfficeStudio/studio-word-tools.ts": "/tmp/zuvi-word-neighbor-audit/patched/studio-word-tools.ts", "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui/src/components/OfficeStudio/StudioWordCharacterDialog.tsx": "/tmp/zuvi-word-neighbor-audit/patched/StudioWordCharacterDialog.tsx", "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui/src/components/OfficeStudio/studio-word-character-layout.ts": "/tmp/zuvi-word-neighbor-audit/patched/studio-word-character-layout.ts"};
+export default {
+  plugins: [{ name: 'word-neighbor-private-prototype', enforce: 'pre', load(id) { const path=patched[id.split('?')[0]]; if(path)return readFileSync(path,'utf8'); } }],
+  root: '/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui',
+  esbuild: { jsx: 'automatic' },
+  server: { fs: { allow: ['/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59', '/private/tmp'] } },
+  test: {
+    environment: 'jsdom',
+    setupFiles: ['/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui/src/test/setup.ts'],
+    include: ['/private/tmp/zuvi-word-neighbor-audit/neighbor.test.ts'],
+    css: false,
+  },
+};

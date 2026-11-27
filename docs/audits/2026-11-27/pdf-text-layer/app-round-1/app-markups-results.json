@@ -1,0 +1,75 @@
+{
+  "operations": [
+    {
+      "label": "高亮",
+      "subtype": "Highlight",
+      "before": "67b7221d50c315e15388ee07bfda3500558cffe083f653c36a8f2c13e3176f4f",
+      "after": "5442cd3fe2a425d4e159b34f125258cfee3f5c1ccd8944a72a062de0b0378ed8",
+      "quads": "[ 108.04689136656842 464.36 198.29399974368832 464.36 108.04689136656842 445.86 198.29399974368832 445.86 ]"
+    },
+    {
+      "label": "下划线",
+      "subtype": "Underline",
+      "before": "5442cd3fe2a425d4e159b34f125258cfee3f5c1ccd8944a72a062de0b0378ed8",
+      "after": "0f487db2c821a16ddeeaf7ea36b92501b6d7f58960c1052e496e25fab07d66c4",
+      "quads": "[ 70 431.488 124.25687720305415 431.488 70 416.688 124.25687720305415 416.688 ]"
+    },
+    {
+      "label": "删除线",
+      "subtype": "StrikeOut",
+      "before": "0f487db2c821a16ddeeaf7ea36b92501b6d7f58960c1052e496e25fab07d66c4",
+      "after": "8a55391a47d566c9ed3cb17b1ec77a7521d8b5178f5c2fcba0ed98fbcd80bdb1",
+      "quads": "[ 175.14496140912286 410.41166385747704 220.29360166869844 431.4648205658022 181.3997116828852 396.99830860933463 226.54835194246078 418.0514653176598 ]"
+    },
+    {
+      "label": "波浪线",
+      "subtype": "Squiggly",
+      "before": "8a55391a47d566c9ed3cb17b1ec77a7521d8b5178f5c2fcba0ed98fbcd80bdb1",
+      "after": "c97cda31f5df068a3e9c840b29509c9dce635e6bc0cb184352947cb7ab9cb98f",
+      "quads": "[ 203.88652911273442 464.36 300.08000000000004 464.36 203.88652911273442 445.86 300.08000000000004 445.86 ]"
+    }
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "hash": "c97cda31f5df068a3e9c840b29509c9dce635e6bc0cb184352947cb7ab9cb98f",
+      "subtypes": [
+        "/Square",
+        "/Square",
+        "/Square",
+        "/Text",
+        "/Highlight",
+        "/Widget",
+        "/Highlight",
+        "/Underline",
+        "/StrikeOut",
+        "/Squiggly"
+      ]
+    },
+    {
+      "round": 2,
+      "hash": "c97cda31f5df068a3e9c840b29509c9dce635e6bc0cb184352947cb7ab9cb98f",
+      "subtypes": [
+        "/Square",
+        "/Square",
+        "/Square",
+        "/Text",
+        "/Highlight",
+        "/Widget",
+        "/Highlight",
+        "/Underline",
+        "/StrikeOut",
+        "/Squiggly"
+      ]
+    }
+  ],
+  "originalStreams": [
+    [
+      "12b6822216521bde06f4f66e031b170f7811e6d13c4289829c42511e1b6b8508"
+    ],
+    [
+      "6f8ef253926ce068d16dc68a5118d39054d88364041780d4aaf344fe466a3ed9"
+    ]
+  ],
+  "errors": []
+}

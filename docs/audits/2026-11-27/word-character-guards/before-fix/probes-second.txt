@@ -1,0 +1,468 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ × ../../../../../../../../private/tmp/zuvi-word-neighbor-audit/neighbor.test.ts > W009 clear format should not change the document while the body is composing
+   → expected { type: 'doc', attrs: { …(3) }, …(1) } to deeply equal { type: 'doc', attrs: { …(3) }, …(1) }
+ × ../../../../../../../../private/tmp/zuvi-word-neighbor-audit/neighbor.test.ts > W010 apply should keep a valid numeric IME draft outside the document until composition ends
+   → expected { type: 'doc', attrs: { …(3) }, …(1) } to deeply equal { type: 'doc', attrs: { …(3) }, …(1) }
+ × ../../../../../../../../private/tmp/zuvi-word-neighbor-audit/neighbor.test.ts > W002 empty styled header should step its shared inherited font size
+   → expected [ '段落样式 review 不存在。' ] to deeply equal []
+ × ../../../../../../../../private/tmp/zuvi-word-neighbor-audit/neighbor.test.ts > W008 armed format painting should not write a target selection during composition
+   → expected { type: 'doc', attrs: { …(3) }, …(1) } to deeply equal { type: 'doc', attrs: { …(3) }, …(1) }
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  ../../../../../../../../private/tmp/zuvi-word-neighbor-audit/neighbor.test.ts > W009 clear format should not change the document while the body is composing
+AssertionError: expected { type: 'doc', attrs: { …(3) }, …(1) } to deeply equal { type: 'doc', attrs: { …(3) }, …(1) }
+
+- Expected
++ Received
+
+  Object {
+    "attrs": Object {
+      "numberingDefinitions": null,
+      "numberingInstances": null,
+      "paragraphStyles": null,
+    },
+    "content": Array [
+      Object {
+        "attrs": Object {
+          "indentFirstLine": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "keepLines": null,
+          "keepNext": null,
+          "lineHeight": null,
+          "lineHeightBasis": null,
+          "lineHeightRule": null,
+          "numbering": null,
+          "numberingDisabled": false,
+-         "paragraphStyle": null,
++         "paragraphStyle": "paragraph",
+          "paragraphStyleDirectAttrs": null,
+          "paragraphStyleFallback": null,
+-         "paragraphStyleMaterialized": false,
+-         "paragraphStyleSnapshot": null,
++         "paragraphStyleMaterialized": true,
++         "paragraphStyleSnapshot": Object {
++           "headingLevel": 0,
++           "paragraph": Object {
++             "indentFirstLine": 0,
++             "indentLeft": 0,
++             "indentRight": 0,
++             "keepLines": false,
++             "keepNext": false,
++             "lineHeight": 1.75,
++             "lineHeightBasis": "auto",
++             "lineHeightRule": "auto",
++             "spaceAfter": 7.8,
++             "spaceBefore": 0,
++             "textAlign": "left",
++             "widowControl": true,
++           },
++           "run": Object {
++             "backgroundColor": null,
++             "baselineShift": 0,
++             "bold": false,
++             "color": "#1f2937",
++             "fontFamily": "Noto Sans SC",
++             "fontSize": 12,
++             "italic": false,
++             "letterSpacing": 0,
++             "strike": false,
++             "underline": false,
++           },
++           "surface": Object {},
++           "tabStops": Array [],
++         },
+          "paragraphSurface": null,
+          "spaceAfter": null,
+          "spaceBefore": null,
+          "tabStops": null,
+          "textAlign": null,
+          "widowControl": null,
+        },
+        "content": Array [
+-         Object {
+-           "marks": Array [
+-             Object {
+-               "attrs": Object {
+-                 "backgroundColor": null,
+-                 "baselineShift": null,
+-                 "color": "#0055aa",
+-                 "fontFamily": null,
+-                 "fontSize": "18pt",
+-                 "letterSpacing": null,
+-                 "lineHeight": null,
+-               },
+-               "type": "textStyle",
+-             },
+          Object {
+-               "type": "bold",
+-             },
+-           ],
+            "text": "SOURCE",
+            "type": "text",
+          },
+        ],
+        "type": "paragraph",
+      },
+      Object {
+        "attrs": Object {
+          "indentFirstLine": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "keepLines": null,
+          "keepNext": null,
+          "lineHeight": null,
+          "lineHeightBasis": null,
+          "lineHeightRule": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "paragraphStyle": null,
+          "paragraphStyleDirectAttrs": null,
+          "paragraphStyleFallback": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleSnapshot": null,
+          "paragraphSurface": null,
+          "spaceAfter": null,
+          "spaceBefore": null,
+          "tabStops": null,
+          "textAlign": null,
+          "widowControl": null,
+        },
+        "content": Array [
+          Object {
+            "marks": Array [
+              Object {
+                "type": "italic",
+              },
+            ],
+            "text": "target",
+            "type": "text",
+          },
+        ],
+        "type": "paragraph",
+      },
+    ],
+    "type": "doc",
+  }
+
+ ❯ ../../../../../../../../private/tmp/zuvi-word-neighbor-audit/neighbor.test.ts:39:28
+     37|   const button = screen.getByRole('button', { name: '清除格式' });
+     38|   fireEvent.mouseDown(button); fireEvent.click(button);
+     39|   expect(editor.getJSON()).toEqual(before);
+       |                            ^
+     40|   fireEvent.compositionEnd(body);
+     41| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  ../../../../../../../../private/tmp/zuvi-word-neighbor-audit/neighbor.test.ts > W010 apply should keep a valid numeric IME draft outside the document until composition ends
+AssertionError: expected { type: 'doc', attrs: { …(3) }, …(1) } to deeply equal { type: 'doc', attrs: { …(3) }, …(1) }
+
+- Expected
++ Received
+
+  Object {
+    "attrs": Object {
+      "numberingDefinitions": null,
+      "numberingInstances": null,
+      "paragraphStyles": null,
+    },
+    "content": Array [
+      Object {
+        "attrs": Object {
+          "indentFirstLine": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "keepLines": null,
+          "keepNext": null,
+          "lineHeight": null,
+          "lineHeightBasis": null,
+          "lineHeightRule": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "paragraphStyle": null,
+          "paragraphStyleDirectAttrs": null,
+          "paragraphStyleFallback": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleSnapshot": null,
+          "paragraphSurface": null,
+          "spaceAfter": null,
+          "spaceBefore": null,
+          "tabStops": null,
+          "textAlign": null,
+          "widowControl": null,
+        },
+        "content": Array [
+          Object {
+            "marks": Array [
+              Object {
+                "attrs": Object {
+                  "backgroundColor": null,
+                  "baselineShift": null,
+                  "color": "#0055aa",
+                  "fontFamily": null,
+                  "fontSize": "18pt",
+-                 "letterSpacing": null,
++                 "letterSpacing": "2pt",
+                  "lineHeight": null,
+                },
+                "type": "textStyle",
+              },
+              Object {
+                "type": "bold",
+              },
+            ],
+            "text": "SOURCE",
+            "type": "text",
+          },
+        ],
+        "type": "paragraph",
+      },
+      Object {
+        "attrs": Object {
+          "indentFirstLine": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "keepLines": null,
+          "keepNext": null,
+          "lineHeight": null,
+          "lineHeightBasis": null,
+          "lineHeightRule": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "paragraphStyle": null,
+          "paragraphStyleDirectAttrs": null,
+          "paragraphStyleFallback": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleSnapshot": null,
+          "paragraphSurface": null,
+          "spaceAfter": null,
+          "spaceBefore": null,
+          "tabStops": null,
+          "textAlign": null,
+          "widowControl": null,
+        },
+        "content": Array [
+          Object {
+            "marks": Array [
+              Object {
+                "type": "italic",
+              },
+            ],
+            "text": "target",
+            "type": "text",
+          },
+        ],
+        "type": "paragraph",
+      },
+    ],
+    "type": "doc",
+  }
+
+ ❯ ../../../../../../../../private/tmp/zuvi-word-neighbor-audit/neighbor.test.ts:52:28
+     50|   fireEvent.compositionStart(input); fireEvent.change(input, { target:…
+     51|   fireEvent.click(screen.getByRole('button', { name: '应用字符格式' })…
+     52|   expect(editor.getJSON()).toEqual(before);
+       |                            ^
+     53| });
+     54|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  ../../../../../../../../private/tmp/zuvi-word-neighbor-audit/neighbor.test.ts > W002 empty styled header should step its shared inherited font size
+AssertionError: expected [ '段落样式 review 不存在。' ] to deeply equal []
+
+- Expected
++ Received
+
+- Array []
++ Array [
++   "段落样式 review 不存在。",
++ ]
+
+ ❯ ../../../../../../../../private/tmp/zuvi-word-neighbor-audit/neighbor.test.ts:69:18
+     67|   window.addEventListener('error', listener);
+     68|   try { fireEvent.click(screen.getByRole('button', { name: '增大字号' …
+     69|   expect(errors).toEqual([]);
+       |                  ^
+     70|   expect(screen.getByRole('combobox', { name: '字号' })).toHaveValue('…
+     71| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  ../../../../../../../../private/tmp/zuvi-word-neighbor-audit/neighbor.test.ts > W008 armed format painting should not write a target selection during composition
+AssertionError: expected { type: 'doc', attrs: { …(3) }, …(1) } to deeply equal { type: 'doc', attrs: { …(3) }, …(1) }
+
+- Expected
++ Received
+
+  Object {
+    "attrs": Object {
+      "numberingDefinitions": null,
+      "numberingInstances": null,
+      "paragraphStyles": null,
+    },
+    "content": Array [
+      Object {
+        "attrs": Object {
+          "indentFirstLine": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "keepLines": null,
+          "keepNext": null,
+          "lineHeight": null,
+          "lineHeightBasis": null,
+          "lineHeightRule": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "paragraphStyle": null,
+          "paragraphStyleDirectAttrs": null,
+          "paragraphStyleFallback": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleSnapshot": null,
+          "paragraphSurface": null,
+          "spaceAfter": null,
+          "spaceBefore": null,
+          "tabStops": null,
+          "textAlign": null,
+          "widowControl": null,
+        },
+        "content": Array [
+          Object {
+            "marks": Array [
+              Object {
+                "attrs": Object {
+                  "backgroundColor": null,
+                  "baselineShift": null,
+                  "color": "#0055aa",
+                  "fontFamily": null,
+                  "fontSize": "18pt",
+                  "letterSpacing": null,
+                  "lineHeight": null,
+                },
+                "type": "textStyle",
+              },
+              Object {
+                "type": "bold",
+              },
+            ],
+            "text": "SOURCE",
+            "type": "text",
+          },
+        ],
+        "type": "paragraph",
+      },
+      Object {
+        "attrs": Object {
+          "indentFirstLine": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "keepLines": null,
+          "keepNext": null,
+          "lineHeight": null,
+          "lineHeightBasis": null,
+          "lineHeightRule": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "paragraphStyle": null,
+-         "paragraphStyleDirectAttrs": null,
++         "paragraphStyleDirectAttrs": Array [
++           "textAlign",
++           "indentLeft",
++           "indentRight",
++           "indentFirstLine",
++           "spaceBefore",
++           "spaceAfter",
++           "lineHeight",
++           "lineHeightRule",
++           "widowControl",
++           "keepNext",
++           "keepLines",
++         ],
+          "paragraphStyleFallback": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleSnapshot": null,
+-         "paragraphSurface": null,
++         "paragraphSurface": Object {
++           "borders": Object {
++             "bar": Object {
++               "style": "nil",
++             },
++             "between": Object {
++               "style": "nil",
++             },
++             "bottom": Object {
++               "style": "nil",
++             },
++             "left": Object {
++               "style": "nil",
++             },
++             "right": Object {
++               "style": "nil",
++             },
++             "top": Object {
++               "style": "nil",
++             },
++           },
++           "shading": Object {
++             "pattern": "nil",
++           },
++         },
+          "spaceAfter": null,
+          "spaceBefore": null,
+-         "tabStops": null,
++         "tabStops": Array [],
+          "textAlign": null,
+          "widowControl": null,
+        },
+        "content": Array [
+          Object {
+            "marks": Array [
+              Object {
+-               "type": "italic",
++               "attrs": Object {
++                 "backgroundColor": null,
++                 "baselineShift": null,
++                 "color": "#0055aa",
++                 "fontFamily": null,
++                 "fontSize": "18pt",
++                 "letterSpacing": null,
++                 "lineHeight": null,
++               },
++               "type": "textStyle",
++             },
++             Object {
++               "type": "bold",
+              },
+            ],
+            "text": "target",
+            "type": "text",
+          },
+        ],
+        "type": "paragraph",
+      },
+    ],
+    "type": "doc",
+  }
+
+ ❯ ../../../../../../../../private/tmp/zuvi-word-neighbor-audit/neighbor.test.ts:80:28
+     78|   act(() => editor.commands.setTextSelection({ from: 9, to: 15 }));
+     79|   await new Promise(resolve => setTimeout(resolve, 20));
+     80|   expect(editor.getJSON()).toEqual(before);
+       |                            ^
+     81| });
+     82|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+ Test Files  1 failed (1)
+      Tests  4 failed (4)
+   Start at  06:59:39
+   Duration  1.93s (transform 555ms, setup 71ms, collect 847ms, tests 666ms, environment 184ms, prepare 34ms)
+
+undefined
+/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run --config /tmp/zuvi-word-neighbor-audit/vitest.config.mjs --reporter=verbose

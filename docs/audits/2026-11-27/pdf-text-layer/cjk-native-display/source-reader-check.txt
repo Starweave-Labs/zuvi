@@ -1,0 +1,95 @@
+TAP version 13
+# Subtest: loads local worker/assets and maps original plus additional rotation with CSS-pixel coordinates at device resolution
+ok 1 - loads local worker/assets and maps original plus additional rotation with CSS-pixel coordinates at device resolution
+  ---
+  duration_ms: 52.273458
+  ...
+# Subtest: a late completed old render cannot overwrite the newer page on the same destination canvas
+ok 2 - a late completed old render cannot overwrite the newer page on the same destination canvas
+  ---
+  duration_ms: 0.814291
+  ...
+# Subtest: independent thumbnail and page canvases do not cancel each other, and cancelling a thumbnail leaves the main render active
+ok 3 - independent thumbnail and page canvases do not cancel each other, and cancelling a thumbnail leaves the main render active
+  ---
+  duration_ms: 0.590459
+  ...
+# Subtest: aborting during page loading prevents task creation; disposal cancels pending tasks and prevents canvas writes
+ok 4 - aborting during page loading prevents task creation; disposal cancels pending tasks and prevents canvas writes
+  ---
+  duration_ms: 0.515167
+  ...
+# Subtest: rejects invalid page, zoom, rotation, page dimensions and unavailable contexts before committing a canvas
+ok 5 - rejects invalid page, zoom, rotation, page dimensions and unavailable contexts before committing a canvas
+  ---
+  duration_ms: 2.357167
+  ...
+# Subtest: encrypted loading errors and unsupported page counts dispose the PDF.js loading task
+ok 6 - encrypted loading errors and unsupported page counts dispose the PDF.js loading task
+  ---
+  duration_ms: 0.949584
+  ...
+# Subtest: finds text across formatting runs and returns original PDF rectangles for horizontal and rotated text
+ok 7 - finds text across formatting runs and returns original PDF rectangles for horizontal and rotated text
+  ---
+  duration_ms: 1.182666
+  ...
+# Subtest: aborting or destroying a search during extraction prevents stale results and further page loads
+ok 8 - aborting or destroying a search during extraction prevents stale results and further page loads
+  ---
+  duration_ms: 0.897209
+  ...
+# Subtest: limits queries, extraction and result counts without rendering or loading unnecessary pages
+ok 9 - limits queries, extraction and result counts without rendering or loading unnecessary pages
+  ---
+  duration_ms: 3.891417
+  ...
+# Subtest: searches actual PDF.js extracted page text from a real generated PDF
+ok 10 - searches actual PDF.js extracted page text from a real generated PDF
+  ---
+  duration_ms: 284.1575
+  ...
+# Subtest: reads visible page bounds without painting or applying page rotation
+ok 11 - reads visible page bounds without painting or applying page rotation
+  ---
+  duration_ms: 0.747417
+  ...
+# Subtest: partial source glyph selection uses actual advances rather than equal character counts
+ok 12 - partial source glyph selection uses actual advances rather than equal character counts
+  ---
+  duration_ms: 86.677458
+  ...
+# Subtest: page rotation does not rotate stored PDF QuadPoints and run rotation remains intact
+ok 13 - page rotation does not rotate stored PDF QuadPoints and run rotation remains intact
+  ---
+  duration_ms: 9.539542
+  ...
+# Subtest: RTL logical offsets are measured from the opposite end of the source run
+ok 14 - RTL logical offsets are measured from the opposite end of the source run
+  ---
+  duration_ms: 8.401583
+  ...
+# Subtest: vertical writing uses the source vertical advance and glyph orientation
+ok 15 - vertical writing uses the source vertical advance and glyph orientation
+  ---
+  duration_ms: 6.073541
+  ...
+# Subtest: unrelated DOM selections are not returned, and destruction removes only its owned selection
+ok 16 - unrelated DOM selections are not returned, and destruction removes only its owned selection
+  ---
+  duration_ms: 4.311333
+  ...
+# Subtest: a cancelled source page load never creates a text layer or changes the container
+ok 17 - a cancelled source page load never creates a text layer or changes the container
+  ---
+  duration_ms: 3.850625
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 17
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 564.413083

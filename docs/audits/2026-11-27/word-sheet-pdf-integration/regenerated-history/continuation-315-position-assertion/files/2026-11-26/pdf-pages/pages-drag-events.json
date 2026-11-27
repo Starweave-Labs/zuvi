@@ -1,0 +1,53 @@
+[
+  {
+    "type": "dragstart",
+    "target": "BUTTON",
+    "targetClass": "zuvi-button zuvi-studio-pdf-thumbnail",
+    "row": "0",
+    "currentTarget": "#document",
+    "x": 461,
+    "y": 366,
+    "effect": "none"
+  },
+  {
+    "type": "dragover",
+    "target": "DIV",
+    "targetClass": "zuvi-studio-pdf-page-item",
+    "row": "1",
+    "currentTarget": "#document",
+    "x": 352,
+    "y": 701,
+    "effect": "move"
+  },
+  {
+    "type": "drop",
+    "target": "DIV",
+    "targetClass": "zuvi-studio-pdf-page-item",
+    "row": "1",
+    "currentTarget": "#document",
+    "x": 352,
+    "y": 701,
+    "effect": "move"
+  },
+  {
+    "type": "drop",
+    "target": "DIV",
+    "targetClass": "zuvi-studio-pdf-page-item",
+    "row": "1",
+    "currentTarget": "DIV",
+    "currentRow": "1",
+    "x": 352,
+    "y": 701,
+    "effect": "move"
+  },
+  {
+    "type": "dragend",
+    "target": "BUTTON",
+    "targetClass": "zuvi-button zuvi-studio-pdf-thumbnail",
+    "row": "0",
+    "currentTarget": "#document",
+    "x": 352,
+    "y": 701,
+    "effect": "move"
+  }
+]

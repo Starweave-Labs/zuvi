@@ -1,0 +1,6 @@
+
+/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui/src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx
+  344:3  error  'f' is never reassigned. Use 'const' instead  prefer-const
+
+✖ 1 problem (1 error, 0 warnings)
+

@@ -1,0 +1,342 @@
+{
+  "sha256": "fe3c60cc71616b9ec6e744108be0f41d57b3e0021be67a4ec0174a995f5f0f0b",
+  "pages": 2,
+  "contents": [
+    {
+      "page": 0,
+      "sha256": "39499225e0a03b412a3b72654467bc454e3d59212da89ea3ed0803f5de91b538",
+      "decodedSha256": "a27ea56756d4ce7307ad9d878027785ec9d27b634dd3080418897479bf5dc6fe"
+    },
+    {
+      "page": 1,
+      "sha256": "61712ea49d4cb5647ae6897ca030212abccd06b173a0cbd6ec660948f291f3b0",
+      "decodedSha256": "c00ffa3e1e77f6555d54c9b1fe3fbe0be25657fa86a4d7cb2f9377282702ce08"
+    }
+  ],
+  "annotations": [
+    {
+      "id": "annotation:ad6da678a4977f0b2f957f536ca5fd67",
+      "subtype": "Widget",
+      "contents": "",
+      "rect": [
+        29.5,
+        29.5,
+        290.5,
+        60.5
+      ],
+      "page": 0,
+      "author": "",
+      "created": "",
+      "modified": "",
+      "color": [],
+      "fill": [],
+      "quads": [],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 1,
+      "border": {
+        "width": 1,
+        "style": ""
+      },
+      "appearanceSha256": "c0d73a278ee569019dfbe79bbf50c06ac881d9338c97635a9736c4247932051f",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "357603c3-5e86-4a2d-8c35-dd8fe9ad5b2f",
+      "subtype": "Highlight",
+      "contents": "ative PDF h",
+      "rect": [
+        41.553813442371585,
+        661.688,
+        125.13342806031184,
+        676.488
+      ],
+      "page": 0,
+      "author": "",
+      "created": "D:20261127035547Z",
+      "modified": "D:20261127035548Z",
+      "color": [
+        0.8784313725490196,
+        0.5019607843137255,
+        0.12549019607843137
+      ],
+      "fill": [],
+      "quads": [
+        41.553813442371585,
+        676.488,
+        125.13342806031183,
+        676.488,
+        41.553813442371585,
+        661.688,
+        125.13342806031183,
+        661.688
+      ],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 0.45,
+      "border": {
+        "width": 1,
+        "style": "S"
+      },
+      "appearanceSha256": "172f45bedd9ce7163bf94893b0ac271ffad97e0df05f71486385a419552d024f",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "71cb4407-803a-4701-88f4-228e876e59f7",
+      "subtype": "Underline",
+      "contents": "igration: pa",
+      "rect": [
+        164.24765652951706,
+        661.688,
+        243.40573064145167,
+        676.488
+      ],
+      "page": 0,
+      "author": "",
+      "created": "D:20261127035549Z",
+      "modified": "D:20261127035550Z",
+      "color": [
+        0.8784313725490196,
+        0.5019607843137255,
+        0.12549019607843137
+      ],
+      "fill": [],
+      "quads": [
+        164.24765652951706,
+        676.488,
+        243.40573064145167,
+        676.488,
+        164.24765652951706,
+        661.688,
+        243.40573064145167,
+        661.688
+      ],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 0.45,
+      "border": {
+        "width": 1,
+        "style": "S"
+      },
+      "appearanceSha256": "45d9ae5f1ceb39e25fde5321297c85eb2c32b9c31874b80ea08af5e7d54c935f",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "93aad792-8fc3-4ffb-a68e-15164ecd29ea",
+      "subtype": "StrikeOut",
+      "contents": "ginal Contents remain",
+      "rect": [
+        43.32843138977215,
+        637.93,
+        140.5918050700069,
+        647.18
+      ],
+      "page": 0,
+      "author": "",
+      "created": "D:20261127035551Z",
+      "modified": "D:20261127035552Z",
+      "color": [
+        0.8784313725490196,
+        0.5019607843137255,
+        0.12549019607843137
+      ],
+      "fill": [],
+      "quads": [
+        43.32843138977215,
+        647.18,
+        140.5918050700069,
+        647.18,
+        43.32843138977215,
+        637.93,
+        140.5918050700069,
+        637.93
+      ],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 0.45,
+      "border": {
+        "width": 1,
+        "style": "S"
+      },
+      "appearanceSha256": "0477aca5a6f318602095f685befece77a54cc9df6f93b1c2eb810e72c9427a57",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "3c9dc68e-1661-452e-90cb-223203f796dd",
+      "subtype": "Squiggly",
+      "contents": "ent from native annot",
+      "rect": [
+        184.51704214465158,
+        637.93,
+        278.45074908209347,
+        647.18
+      ],
+      "page": 0,
+      "author": "",
+      "created": "D:20261127035553Z",
+      "modified": "D:20261127035554Z",
+      "color": [
+        0.8784313725490196,
+        0.5019607843137255,
+        0.12549019607843137
+      ],
+      "fill": [],
+      "quads": [
+        184.51704214465158,
+        647.18,
+        278.45074908209347,
+        647.18,
+        184.51704214465158,
+        637.93,
+        278.45074908209347,
+        637.93
+      ],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 0.45,
+      "border": {
+        "width": 1,
+        "style": "S"
+      },
+      "appearanceSha256": "4639d9fbe772ad56a929fa963d8c322e3a97a22b29c5c2aaa452a2ff947918db",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "f3b533a3-6b63-4cb7-b2c8-e51803047d0a",
+      "subtype": "Underline",
+      "contents": "",
+      "rect": [
+        41.553813442371585,
+        661.688,
+        125.13342806031184,
+        676.488
+      ],
+      "page": 0,
+      "author": "",
+      "created": "D:20261127035555Z",
+      "modified": "D:20261127035555Z",
+      "color": [
+        0.9607843137254902,
+        0.7725490196078432,
+        0.25882352941176473
+      ],
+      "fill": [],
+      "quads": [
+        41.553813442371585,
+        676.488,
+        125.13342806031183,
+        676.488,
+        41.553813442371585,
+        661.688,
+        125.13342806031183,
+        661.688
+      ],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 1,
+      "border": {
+        "width": 1,
+        "style": "S"
+      },
+      "appearanceSha256": "932c3ca343e34188c2a200169f3aaf89799db62f7ac89588085e546cd265fa9e",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "annotation:2cc250fcf5fea6e0aab56fe4725e2a56",
+      "subtype": "Widget",
+      "contents": "",
+      "rect": [
+        29.5,
+        29.5,
+        290.5,
+        60.5
+      ],
+      "page": 1,
+      "author": "",
+      "created": "",
+      "modified": "",
+      "color": [],
+      "fill": [],
+      "quads": [],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 1,
+      "border": {
+        "width": 1,
+        "style": ""
+      },
+      "appearanceSha256": "c0d73a278ee569019dfbe79bbf50c06ac881d9338c97635a9736c4247932051f",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "annotation:73948d967ff4ebb85cab2c066eb855cc",
+      "subtype": "Widget",
+      "contents": "",
+      "rect": [
+        319.5,
+        29.5,
+        340.5,
+        50.5
+      ],
+      "page": 1,
+      "author": "",
+      "created": "",
+      "modified": "",
+      "color": [],
+      "fill": [],
+      "quads": [],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 1,
+      "border": {
+        "width": 1,
+        "style": ""
+      },
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    }
+  ],
+  "fields": [
+    {
+      "name": "reviewer",
+      "readOnly": false,
+      "widgets": 2
+    },
+    {
+      "name": "confirmed",
+      "readOnly": false,
+      "widgets": 1
+    }
+  ]
+}

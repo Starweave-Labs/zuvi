@@ -1,0 +1,968 @@
+{
+  "baseline": [
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/README.md",
+      "bytes": 5093,
+      "sha256": "ef225380472410eeb76008e9b568c1657d7675c85df53b454d8ee109670ffb1b"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/before-composition-history.pdf",
+      "bytes": 1645260,
+      "sha256": "2a158d1b8c48c3bcba366191cb523817497777ab7075172630eca3366f23bb5e"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/browser-run-final.txt",
+      "bytes": 1014,
+      "sha256": "ca06b78dd105a83b4dd64109ccab2d611040205372f06d194f61cdbc690b02d6"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/combined-light.png",
+      "bytes": 177358,
+      "sha256": "b4cbfc022e8d377e19b5348a2b59873e4708c00b01efab3de9a33350d83d4414"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/combined-round-1.pdf",
+      "bytes": 1643408,
+      "sha256": "d9dfa18eec89ad6a078e045e3d02c891964ec2a0ed8390adbb21ab385380cae7"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/combined-round-2.pdf",
+      "bytes": 1643408,
+      "sha256": "d9dfa18eec89ad6a078e045e3d02c891964ec2a0ed8390adbb21ab385380cae7"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/conflicts-and-dialog-geometry.json",
+      "bytes": 1495,
+      "sha256": "1122aeb15cb0bb2896fa4cab139e91596304aea686f99a39381b39be17b2dbd1"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/extract-dialog-dark-320.png",
+      "bytes": 47269,
+      "sha256": "8f9f4eca7ae761e37460c365e468a6d64779408e8fd741134ba96df6c1d77fa1"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-browser-primary-service/archive.json",
+      "bytes": 3611,
+      "sha256": "ea84eaf596ffc826091c28e9047077b16ded652a5d3e43ef3f264b5fd5a6f116"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-browser-primary-service/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/error-context.md",
+      "bytes": 38516,
+      "sha256": "8dd90cefec470caa21ea336aba6b8238925d6005c0d9c113e9d62c4dacc33586"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-browser-primary-service/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/error-context.md.raw.gz",
+      "bytes": 10262,
+      "sha256": "31902986594aebeb54c70b5cc2eefa3c472f1eba7156ab7602dc99a32a604fc8"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-browser-primary-service/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/trace.zip",
+      "bytes": 2264379,
+      "sha256": "f32ec7d9fecdd2b2ae70855d33c93a13150e0ab93cffff09457e64ace87c5a06"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-browser-primary-service/office-studio-pdf-composit-0d74b-s-undo-and-repeated-reopens-chromium/error-context.md",
+      "bytes": 50369,
+      "sha256": "d52aff3f2d87eed85773de858c50674081828991c1b74db68e42ce69ddb9f03e"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-browser-primary-service/office-studio-pdf-composit-0d74b-s-undo-and-repeated-reopens-chromium/error-context.md.raw.gz",
+      "bytes": 11942,
+      "sha256": "e2050970a0116cbacb44b3d7a5b1ce85465a13949653eb738230d3304cd8ddac"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-browser-primary-service/office-studio-pdf-composit-0d74b-s-undo-and-repeated-reopens-chromium/trace.zip",
+      "bytes": 2206771,
+      "sha256": "5d8063e6851e2a043bd74935b135f30ffc3bd41ce5a57eeb9fdcc14340a804ea"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-browser-primary-service/office-studio-pdf-composit-7c290-ogs-in-light-dark-and-320px-chromium/error-context.md",
+      "bytes": 50285,
+      "sha256": "6a6f120b4fcf1d041886cfb79285436516501928cce4663f89632ecc6f6332ad"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-browser-primary-service/office-studio-pdf-composit-7c290-ogs-in-light-dark-and-320px-chromium/error-context.md.raw.gz",
+      "bytes": 11916,
+      "sha256": "c54ca5d561a4ab5a81857c7cdc2f977809a15e2f0d6081bda51b7645093a5847"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-browser-primary-service/office-studio-pdf-composit-7c290-ogs-in-light-dark-and-320px-chromium/trace.zip",
+      "bytes": 2264587,
+      "sha256": "55ea161bd96fc426cd849302c7de6c290f2d8df3a0db54fd796ff53e45b93b2d"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-browser-primary-service/run.txt",
+      "bytes": 9246,
+      "sha256": "9cf8f5025efcf31b1078bcc4f64e267064748f07e6339d988a2dca381a1a2953"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-browser-primary-service/run.txt.raw.gz",
+      "bytes": 2022,
+      "sha256": "5c6cf337020de652fa0c1f5f630f7a898abbbd498e8f69af116a40c91c6e7e48"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-worktree-browser-locators/archive.json",
+      "bytes": 2501,
+      "sha256": "c37ef5b42bb306cce38150d98a06417dd9f56d52cf284fab7f1b4f8d22b09d21"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-worktree-browser-locators/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/error-context.md",
+      "bytes": 63146,
+      "sha256": "d0085a856f78c7b6eb47247fbd4a0a383b5fb6fd3fe8594a95929a82d0077922"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-worktree-browser-locators/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/error-context.md.raw.gz",
+      "bytes": 13754,
+      "sha256": "990518e91a59e05004762719eec08ade4df9d8ac249060b7bac718287de201dc"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-worktree-browser-locators/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/trace.zip",
+      "bytes": 16165549,
+      "sha256": "2c6a46ac4468c1ed93c33fbebb9fcd1a0208b203e2ca5173d30f388b33aeebcb"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-worktree-browser-locators/office-studio-pdf-composit-0d74b-s-undo-and-repeated-reopens-chromium/error-context.md",
+      "bytes": 52626,
+      "sha256": "05d84f0cab8c964d912379c1822efe5b3125008f6e28a467e1d9d88bc3a178bf"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-worktree-browser-locators/office-studio-pdf-composit-0d74b-s-undo-and-repeated-reopens-chromium/error-context.md.raw.gz",
+      "bytes": 12516,
+      "sha256": "e5d1e082341a6838521dd5b3324e6af4657422c554fe34ff708cd25891be02ab"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-worktree-browser-locators/office-studio-pdf-composit-0d74b-s-undo-and-repeated-reopens-chromium/trace.zip",
+      "bytes": 3816786,
+      "sha256": "a0bc005412106deee0ef5988e77a29a60b575954306627761a3c3bbd5560f996"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-worktree-browser-locators/run.txt",
+      "bytes": 7987,
+      "sha256": "869a6025b0b61c08111958ebdf40ebc7f803464176e296f273d0d0b48963479f"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-worktree-browser-locators/run.txt.raw.gz",
+      "bytes": 2120,
+      "sha256": "767c505f4dca82aee4ea21af3a8aa97e2681380d9c809081094989933eec16fe"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/incoming-source.pdf",
+      "bytes": 2617,
+      "sha256": "d03ef7838e6c0e98cde68c2fb34d63632bc7ffa30abed1c5383850ce6dde95c7"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/independent-native-verification.json",
+      "bytes": 24509,
+      "sha256": "1209dfffdbc0717fe352119c2a63c98f5ef7ccdf6963d4594332ef51ed610db7"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/merge-dialog-dark-320.png",
+      "bytes": 51603,
+      "sha256": "cb7bcbd02b8b902551f1fc014f07daa95e4c29ea3fcd97da441c5323cee0ccee"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/merge-dialog-dark.png",
+      "bytes": 167731,
+      "sha256": "e9a5ce54d15e018c817b54837a221f1a6ca1d4fd0465bc2299bb6335235a67b8"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/merge-dialog-light.png",
+      "bytes": 177292,
+      "sha256": "519d28c31ce0202892d9b639c1c8720fc42f211abe0b1a9745610dac91829730"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/catalog-original.pdf",
+      "bytes": 3051,
+      "sha256": "396c36136286d2639bf199f26351382fdef0f2294ea512afbd9b2f0680cd3b81"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/catalog-preparation-and-optional-null-results.json",
+      "bytes": 3841,
+      "sha256": "051f81adb38613f5ffe262d1342f7b018e9833f736a50571da756c610060362a"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/catalog-preparation-and-optional-null.mjs.txt",
+      "bytes": 6333,
+      "sha256": "ea04c4308e65ca53770d652a8062a22f22b106be1e41af968b20369da4473471"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/catalog-virtual-move-adapter.pdf",
+      "bytes": 2725,
+      "sha256": "5ff2e3fbe684bb7869f5e5742c7c39c1bef4440b34a90bdb37860495cc08c2a2"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/catalog-virtual-move-prepared.pdf",
+      "bytes": 2024,
+      "sha256": "a9a4eb2b118f894334fba0bbf8ac7425a4213812081b85534eb2116ffd5f88e8"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/combined-kids-direct.pdf",
+      "bytes": 3461,
+      "sha256": "a07898e02b7a69dfbbdd4ca9e5cd743466fad44637c9280b6dd7e4cf6e74c698"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/combined-kids-indirect.pdf",
+      "bytes": 3505,
+      "sha256": "9d84b5af25daf225b48610c7694622fcba88fa3cfc85396439536c35005c520b"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/combined-root-parent-direct.pdf",
+      "bytes": 3463,
+      "sha256": "2e24d5faa54dffeb7e4003dea53c9cdb6f5e23c9483338a576222407621227a8"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/combined-root-parent-indirect.pdf",
+      "bytes": 3507,
+      "sha256": "f4875098ceac06342be64adef73550a9e51e50f6aa258fb63d43dde4f25e3563"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/direct-null-DV.pdf",
+      "bytes": 2231,
+      "sha256": "7b01422a6ed2731bf1473137b799ac53af28bf23be3cbc0b4d2fb311f6ad9450"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/direct-null-Ff.pdf",
+      "bytes": 2225,
+      "sha256": "8471a477f46f2a9d2f74b51100e9ac97ad576a4001fd56bcc393ef3bf1d7dbeb"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/direct-null-MaxLen.pdf",
+      "bytes": 2235,
+      "sha256": "5e30861704774085c8b74f52ca57bcf586e93d2d9df64b352522d6bcb3d1a7db"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/direct-null-Q.pdf",
+      "bytes": 2230,
+      "sha256": "9f15a39dc8f4048d521d5557fcfecf2bd8f10c9e3ec46d76e1b64ff983439f67"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/direct-null-V.pdf",
+      "bytes": 2216,
+      "sha256": "53b71bf6ae9f0d939bfa370369c89db3d58011df246fda306d803402cf281d8d"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/direct-null-inherited-password.pdf",
+      "bytes": 2345,
+      "sha256": "0ae6eadfe96c4f48f45295be859a674da9907325b9444d3d1a87c725f064f65b"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/first-catalog-preparation-and-optional-null-results.json",
+      "bytes": 5700,
+      "sha256": "13e5ebee01e92cebae8d9c6d904295ae964ab1fafd756324815a641e7746d9d5"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/first-null-and-inheritance-results.json",
+      "bytes": 3251,
+      "sha256": "dcabb272d4b0930fd79d06e054437a30191c998df981af9b9780bcd8c79d819d"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/first-null-presence-and-wrappers-results.json",
+      "bytes": 13605,
+      "sha256": "305c5051d7c2ec4f116ba2361dd521be80dc473839bbcb5254fb6b5a80a78a47"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/fixed-inheritance-verification.json",
+      "bytes": 1703,
+      "sha256": "8fbc2b18b33b335cae223e938fd2b85d3a98e29595b2b4d4e216dfc34ad6db81"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/fixed-inherited-password-ff-indirect-two-saves.pdf",
+      "bytes": 3226,
+      "sha256": "e9a649cdc29de224bc3c95191eb425b2511b951169db3d84b0f80cde30205d12"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/fixed-inherited-radio-ff-indirect-two-saves.pdf",
+      "bytes": 7527,
+      "sha256": "d89f4b4fc35829d68f9573cb2459fa4be58b275a9bf73a592307d0b81958883f"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/fixed-inherited-text-ft-indirect-two-saves.pdf",
+      "bytes": 3223,
+      "sha256": "52544d6c98f5ce465d01d7e161ab1058540f08b8aa2efae60e92329d81973369"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/fixed-inherited-text-v-indirect-two-saves.pdf",
+      "bytes": 3223,
+      "sha256": "52544d6c98f5ce465d01d7e161ab1058540f08b8aa2efae60e92329d81973369"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/indirect-null-DV.pdf",
+      "bytes": 2275,
+      "sha256": "492128398941b8438e3d28bc18296b2eebdff2f80b5191c0d6b765b8f9352337"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/indirect-null-Ff.pdf",
+      "bytes": 2269,
+      "sha256": "4c270db686b17bf746389467f4d9d4949b2ae9bf070a68ced9a502557ab13132"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/indirect-null-MaxLen.pdf",
+      "bytes": 2279,
+      "sha256": "6989014289539da59727dc612ebf5edce251decec4881fb994cb19c1b19332a0"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/indirect-null-Q.pdf",
+      "bytes": 2274,
+      "sha256": "9f73b90962960df757419de05dcbbc71aae7d7de8f7c9d952be59482429e5bfd"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/indirect-null-V.pdf",
+      "bytes": 2260,
+      "sha256": "081ddfd06140600fc7748e1ce9005f551d019fab4d936e83c31c499d12bcd4d4"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/indirect-null-inherited-password.pdf",
+      "bytes": 2389,
+      "sha256": "741e857bdaa3653f032e2855e5b1263c07f36262decf3d05ed37c9b785897a05"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/inherited-password-ff-direct.pdf",
+      "bytes": 3616,
+      "sha256": "967d7fe7b2b8548514f2ca09da0e4e1659c4703b8e8b37fc20d8835bf5f037a0"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/inherited-password-ff-indirect.pdf",
+      "bytes": 3660,
+      "sha256": "0d9bda53ac5c4de7f777a7c2472250b817975ca31b2fdb6878c813d3965b4c0f"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/inherited-radio-ff-direct.pdf",
+      "bytes": 8383,
+      "sha256": "196e0f7ae0278d82e7e09517f1f2fcc947183cf21dede0e480d32007230875c9"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/inherited-radio-ff-indirect.pdf",
+      "bytes": 8427,
+      "sha256": "8657a0078becb290b77733b133feefaea4ded7eae92229efecef13f1c0f7f6bb"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/inherited-text-ft-direct.pdf",
+      "bytes": 3613,
+      "sha256": "9751ef990991636b86f1e2cb330f5357b7b8ed6e5186b53a3b11e6b29f63ff27"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/inherited-text-ft-indirect.pdf",
+      "bytes": 3657,
+      "sha256": "8414d1063063cbd4f5b3594add0aa6ab3830ec29659d680659c2bbccca8716cf"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/inherited-text-v-direct.pdf",
+      "bytes": 3612,
+      "sha256": "0a39e60bd9a03266b7e0c102f00423fab9ee6fad466d9473be04bfb1e882a809"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/inherited-text-v-indirect.pdf",
+      "bytes": 3656,
+      "sha256": "29392b2a881d43e770c9e760c4064e7f335a5af6af167a98a48fdd55083655ef"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/null-and-inheritance-results.json",
+      "bytes": 3018,
+      "sha256": "7a388bac0c1ea9019d538527f9fab682fe417b65beef34c987e5e7da3314fef1"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/null-and-inheritance.mjs.txt",
+      "bytes": 7650,
+      "sha256": "49ea7d67eb84fcc9f5aee42f6bc956f4fc39b9d748d329dd8db2ed9abff7108e"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/null-presence-and-wrappers-results.json",
+      "bytes": 18178,
+      "sha256": "f9a92fdc0afb40141a6256ab64d48dc1293ac9301f40c6e78077f330b7338406"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/null-presence-and-wrappers.mjs.txt",
+      "bytes": 7143,
+      "sha256": "1c63398573c1a59051c131570bbabdfaccad4c297f9e36e1d21ee29de98a5006"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/root-parent-direct.pdf",
+      "bytes": 3532,
+      "sha256": "9ecc780973115b8c5e5491c5a755fd593a4dc6a9c397937c48da735b991a88fe"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/root-parent-indirect.pdf",
+      "bytes": 3576,
+      "sha256": "6df4936ed3f865053e9d425fa638861df76209688abd533c43bbfb16529e095a"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/verify-fixed-inheritance.mjs.txt",
+      "bytes": 3443,
+      "sha256": "5ca2ba77262a54100623051e4fb0830b24922ddc93b324b0df3bbe62e2441d1b"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/widget-ft-direct.pdf",
+      "bytes": 3528,
+      "sha256": "32b54acded81c90caf93846883b2f059ac7fecdc2cd48074310f4a846f02ec88"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/widget-ft-indirect.pdf",
+      "bytes": 3572,
+      "sha256": "1a95198c2ab8f54296147a6d6ab679bfcd9ab18a314043473290582cc42022df"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/widget-p-direct.pdf",
+      "bytes": 3518,
+      "sha256": "8d49798e6a3faba0a6475d61ddaaf606052c292f9e04a76c684838aa5eff5c7a"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/widget-p-indirect.pdf",
+      "bytes": 3562,
+      "sha256": "53ad20d351a53d7fe0296ed7d12d2c1338bb9cddde5d9e26e010c87e8f48b297"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/widget-t-direct.pdf",
+      "bytes": 3527,
+      "sha256": "69b23181f72cb777ac7ae60b27bb828567829d238531946ca22efa23e2f14e11"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-field-review/widget-t-indirect.pdf",
+      "bytes": 3571,
+      "sha256": "24dc1e0bac301694e15549156d5068b5cfeb5ccf0451ef0b1d2485ac52747c07"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-page-catalog/output/pdf/catalog-complex-extracted.pdf",
+      "bytes": 2757,
+      "sha256": "f2741d9bba1a81e2cf2cbac05b878a4c5e7d6f96d1a79c07229e205be3d00515"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-page-catalog/output/pdf/catalog-complex-original.pdf",
+      "bytes": 5727,
+      "sha256": "62b0357f6afa0562e694fedb8d5498fb5a24b7ca8d62304b1b123386d402f796"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-page-catalog/output/pdf/catalog-complex-prepared.pdf",
+      "bytes": 4744,
+      "sha256": "0f3b7a020085a1b3fe6332ff4d32d1b6c667b1217f09b95e836942ba3376a923"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-page-catalog/output/pdf/independent-page-catalog-verification.json",
+      "bytes": 1705,
+      "sha256": "bf3d873c2f38af8cfc971f3c73e290a349ff27b17c2db2bc80b4856c9d39f735"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-page-catalog/render/catalog-extracted-contact.png",
+      "bytes": 22705,
+      "sha256": "0dcb42ebe063cf0541064d1243aa47b40b8510df9b543cb8c643d795ef25b3b4"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-page-catalog/render/extracted-1.png",
+      "bytes": 4777,
+      "sha256": "62c5186489cf37333c22bdc0ba8d196196da188e5617e1c3096fc347a9e82184"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-page-catalog/render/extracted-2.png",
+      "bytes": 1455,
+      "sha256": "9bd92aaf5b6411a852b2c22af534b5b538dd154d7f936e2b7e621235a29c925a"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-page-catalog/render/extracted-3.png",
+      "bytes": 5951,
+      "sha256": "2899500f06b61d8c736614e70d2a3482b481025b0514f1cf8209eb593810e9cc"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-page-catalog/render/extracted-4.png",
+      "bytes": 5024,
+      "sha256": "68b619ce42f4537d0f26086aa18e76a7d75fd90c5040e9f3bb3909de530c7da6"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-page-catalog/verify_page_catalog.py",
+      "bytes": 3528,
+      "sha256": "b47cae976ac4f6f937aa629fa708a355db074d9a12454b631cf50fd6dbfce0cc"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-render/before-composition-history-1.png",
+      "bytes": 26730,
+      "sha256": "67aa28f27e99f5f22091c2f454b3e5f4d465140c920ae08c43e5c3d4cf682ca5"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-render/before-composition-history-2.png",
+      "bytes": 22093,
+      "sha256": "18249ee787c0fcf8123135cdefcb7f98f06e833914eb3aa8f904fe6a22c60a19"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-render/before-composition-history-3.png",
+      "bytes": 26730,
+      "sha256": "67aa28f27e99f5f22091c2f454b3e5f4d465140c920ae08c43e5c3d4cf682ca5"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-render/before-composition-history-contact.png",
+      "bytes": 58916,
+      "sha256": "cbc97cfb324e34472b2f7c409c1140e45160818842f9639f11dcb9e62dfaf156"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-render/combined-round-2-1.png",
+      "bytes": 26730,
+      "sha256": "67aa28f27e99f5f22091c2f454b3e5f4d465140c920ae08c43e5c3d4cf682ca5"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-render/combined-round-2-2.png",
+      "bytes": 7831,
+      "sha256": "c60784b303d95f8c8d71da68e88538cdca4703eed63c081a22aec266c7f79ee4"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-render/combined-round-2-3.png",
+      "bytes": 11308,
+      "sha256": "ca589faa3e1359251991c9ba2f3b42ab6a174c56ca252860c02a9be3d36bf920"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-render/combined-round-2-4.png",
+      "bytes": 22093,
+      "sha256": "18249ee787c0fcf8123135cdefcb7f98f06e833914eb3aa8f904fe6a22c60a19"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-render/combined-round-2-5.png",
+      "bytes": 26730,
+      "sha256": "67aa28f27e99f5f22091c2f454b3e5f4d465140c920ae08c43e5c3d4cf682ca5"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-render/combined-round-2-contact.png",
+      "bytes": 104671,
+      "sha256": "804fcaf0a17328ba157cd30b70d9a13a406158c14f70c1e3109418f04520a321"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-render/incoming-source-1.png",
+      "bytes": 11308,
+      "sha256": "ca589faa3e1359251991c9ba2f3b42ab6a174c56ca252860c02a9be3d36bf920"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-render/incoming-source-2.png",
+      "bytes": 7831,
+      "sha256": "c60784b303d95f8c8d71da68e88538cdca4703eed63c081a22aec266c7f79ee4"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-render/incoming-source-contact.png",
+      "bytes": 21277,
+      "sha256": "3979074320fe23f1c0324f369fa3cbdb7f8ef59f1c587f6cabc841cace11e789"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-render/primary-source-1.png",
+      "bytes": 26766,
+      "sha256": "bc881cae087025136acb401e502c8bd0caca4878d52c1bff8b9cb7149dffbddb"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-render/primary-source-2.png",
+      "bytes": 22093,
+      "sha256": "18249ee787c0fcf8123135cdefcb7f98f06e833914eb3aa8f904fe6a22c60a19"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-render/primary-source-contact.png",
+      "bytes": 53701,
+      "sha256": "734c34a1a080b5ccc2c6d45a1b6f9c540605ea1aa13f4e97fd88a4517288e7dc"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-render/radio-cleared-1.png",
+      "bytes": 7538,
+      "sha256": "5853cc9acbe4d6316957cd0ed31040a2e2cb1e562ddd3a83a6cb1a2f1d883ddb"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-render/radio-cleared-contact.png",
+      "bytes": 9573,
+      "sha256": "b18e2d1220cf42fa22d9d481d099fc3e3b5b70e9ca7c10df1a2ab13733290103"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-render/radio-round-2-1.png",
+      "bytes": 7728,
+      "sha256": "c7e409371af11e4eee6a3f8dffb9a432b5d5beced57738c2a1d09ec542fd70df"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-render/radio-round-2-contact.png",
+      "bytes": 9682,
+      "sha256": "66b4f6013f5564763a5c2a1d745c99bcc7c8176ccb3ced042cc459de25d078a8"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-render/radio-source-1.png",
+      "bytes": 7538,
+      "sha256": "5853cc9acbe4d6316957cd0ed31040a2e2cb1e562ddd3a83a6cb1a2f1d883ddb"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-render/radio-source-2.png",
+      "bytes": 8298,
+      "sha256": "518a9906ecf524b1b5bd45b34ef23d9fd422e6e949ff2a0fa56e3cf8b6a46fff"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-render/radio-source-contact.png",
+      "bytes": 18213,
+      "sha256": "41e67b7312589ae903731e54da15e3132769ac1fad26e7e92b47e2f1f8570f42"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-render/source.json",
+      "bytes": 6622,
+      "sha256": "2d106d4fd0637d4a9a7a96f47d6bc5a1b7d741e0462349860cc693910a65ed76"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/native-review-archive.json",
+      "bytes": 16638,
+      "sha256": "69737c7ab8f01ff45c0d8e3489e8dbb73b900dca1aff6e8d785194aca3f20ddf"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/paired-history-and-refresh.json",
+      "bytes": 32808,
+      "sha256": "f3eb54e6e7ac3b2a9ef274af8c76a65990fc8328442afdd875e8f0e65e6f9d39"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/primary-source.pdf",
+      "bytes": 16756,
+      "sha256": "ad05fb8acced772b57e7ddf0a7f4278987ffb003af30b5bdb19f898b614458d9"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/radio-cleared.pdf",
+      "bytes": 2648,
+      "sha256": "c22ac2cbc6383fec947a723aa46ac7b26af35dc2dc82242965edbf3d308a8340"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/radio-policy.json",
+      "bytes": 2785,
+      "sha256": "47f5023668d3902861124eb54aee54d96df86b94643423299207c7546d1445ba"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/radio-round-1.pdf",
+      "bytes": 2212,
+      "sha256": "857135bdc871e49e5d0b47d1e0440ff4e459537d3cdbf5e6261953dca961bd82"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/radio-round-2.pdf",
+      "bytes": 2212,
+      "sha256": "857135bdc871e49e5d0b47d1e0440ff4e459537d3cdbf5e6261953dca961bd82"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/radio-source.pdf",
+      "bytes": 4652,
+      "sha256": "152cbca0689c165dd24d6b4782ffbecefd8eda402a1eb72a2efe382566007ce1"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/second-worktree-browser-history-close/archive.json",
+      "bytes": 2217,
+      "sha256": "4efa378e1008f1cf89c7d3dc0868462486a1125ff4ddcb83ef3d5b10c5ac2bfc"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/second-worktree-browser-history-close/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/error-context.md",
+      "bytes": 53852,
+      "sha256": "9ef1b99db8ef671e80f666a74f170971de90fac24b2f258ac1a569db5a2497f0"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/second-worktree-browser-history-close/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/error-context.md.raw.gz",
+      "bytes": 12432,
+      "sha256": "d95b84784e2d018f9b84d59332443248b8e0b62544903a793e73f60dcca3451f"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/second-worktree-browser-history-close/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/trace.zip",
+      "bytes": 16260119,
+      "sha256": "c9f8362fd8095886ba82e19b4ab068c86a794810be509e85423a0648aa078f11"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/second-worktree-browser-history-close/run.txt",
+      "bytes": 4402,
+      "sha256": "2698c636d5f7d987330694b4451308a558d54178c6bc07690be0aa9c20f23729"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/second-worktree-browser-history-close/run.txt.raw.gz",
+      "bytes": 1437,
+      "sha256": "cf983ca693de61418309384279c381780ef23e997fb1727ada3ca3ad38b0f810"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/verify-native.py",
+      "bytes": 7886,
+      "sha256": "e79774c7bb9da76428d720d17b80e6763f5de6c0d2e9c9795ef656d5fb07310c"
+    },
+    {
+      "path": "docs/audits/2026-11-26/pdf-pages/README.md",
+      "bytes": 2104,
+      "sha256": "2b90218e67214c1c16e7e51f62f5a5d0669bd8bbe1e3c4157f76bf2ec042cdf7"
+    },
+    {
+      "path": "docs/audits/2026-11-26/pdf-pages/first-browser-analysis.md",
+      "bytes": 1515,
+      "sha256": "0f02a2a96760f24eca5b809bc85342661e9d883feb1c253498d520cb5126e9bd"
+    },
+    {
+      "path": "docs/audits/2026-11-26/pdf-pages/native-render/page-1.png",
+      "bytes": 1530,
+      "sha256": "c4549dc432b3375c48c2e5af59093d756dcdcf111cf763fafee2e548e725f449"
+    },
+    {
+      "path": "docs/audits/2026-11-26/pdf-pages/native-render/page-2.png",
+      "bytes": 9292,
+      "sha256": "b0692bfe3e073886848bd288928d23e77d82a78e9cce459db5e7b363766b7e98"
+    },
+    {
+      "path": "docs/audits/2026-11-26/pdf-pages/native-render/source.json",
+      "bytes": 262,
+      "sha256": "7ae851960131b26313c4f7923993caf2fb8c9b32c40abb1e77e68c6ad0c22116"
+    },
+    {
+      "path": "docs/audits/2026-11-26/pdf-pages/pages-dark.png",
+      "bytes": 151590,
+      "sha256": "28b89be83e6e48dd19c54819769df24eefa1f93d7fce81cc8e0c8a61bccd076d"
+    },
+    {
+      "path": "docs/audits/2026-11-26/pdf-pages/pages-dialog-dark-320.png",
+      "bytes": 48899,
+      "sha256": "81e0c6710c535e999d6d00220373d65bcd60717e1e0c052450c3dc1abcddb018"
+    },
+    {
+      "path": "docs/audits/2026-11-26/pdf-pages/pages-drag-events.json",
+      "bytes": 1047,
+      "sha256": "04e4bd91cc7f4b3b332d533679edcdc31f93d7ab1c1853b10170530f12f52407"
+    },
+    {
+      "path": "docs/audits/2026-11-26/pdf-pages/pages-dragged.pdf",
+      "bytes": 2028,
+      "sha256": "0343fc30ef6f97151c17e7a28a4bafdf453379872be0307a28255d77f9e00a7c"
+    },
+    {
+      "path": "docs/audits/2026-11-26/pdf-pages/pages-light.png",
+      "bytes": 150129,
+      "sha256": "b6b6c48c42d3e5df80283e20cefdd2a99febfaee027c386784c8f3d5cfc11c60"
+    },
+    {
+      "path": "docs/audits/2026-11-26/pdf-pages/pages-round-1.pdf",
+      "bytes": 2046,
+      "sha256": "9b4a0c11775bab9eb027333ee2761d1c35e9158c0ffc12a9f8e05fbb54ff49c4"
+    },
+    {
+      "path": "docs/audits/2026-11-26/pdf-pages/pages-round-2.pdf",
+      "bytes": 2046,
+      "sha256": "9b4a0c11775bab9eb027333ee2761d1c35e9158c0ffc12a9f8e05fbb54ff49c4"
+    },
+    {
+      "path": "docs/audits/2026-11-26/pdf-pages/pages-source.pdf",
+      "bytes": 2028,
+      "sha256": "23d7a28138bc02f98d4d4308ff10bd534d3e7489535a14791a720a07f9cbaea0"
+    }
+  ],
+  "changes": [
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/before-composition-checkpoint.pdf",
+      "before": null,
+      "after": {
+        "bytes": 1699796,
+        "sha256": "a2116253a317c7a2be509968e1aa8e050e5ffa03d3a6e2178ee54003f6e62b5a"
+      },
+      "preserved": "docs/audits/2026-11-27/word-sheet-pdf-integration/legacy-pdf-regression/outputs/docs/audits/2026-11-27/pdf-composition/before-composition-checkpoint.pdf"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/before-composition-history.pdf",
+      "before": {
+        "path": "docs/audits/2026-11-27/pdf-composition/before-composition-history.pdf",
+        "bytes": 1645260,
+        "sha256": "2a158d1b8c48c3bcba366191cb523817497777ab7075172630eca3366f23bb5e"
+      },
+      "after": {
+        "bytes": 1699796,
+        "sha256": "a2116253a317c7a2be509968e1aa8e050e5ffa03d3a6e2178ee54003f6e62b5a"
+      },
+      "preserved": "docs/audits/2026-11-27/word-sheet-pdf-integration/legacy-pdf-regression/outputs/docs/audits/2026-11-27/pdf-composition/before-composition-history.pdf"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/combined-light.png",
+      "before": {
+        "path": "docs/audits/2026-11-27/pdf-composition/combined-light.png",
+        "bytes": 177358,
+        "sha256": "b4cbfc022e8d377e19b5348a2b59873e4708c00b01efab3de9a33350d83d4414"
+      },
+      "after": {
+        "bytes": 177387,
+        "sha256": "4645e2f790605795cffbbdae559af13bd4eafd6a9d59a4d9355105cf06c97648"
+      },
+      "preserved": "docs/audits/2026-11-27/word-sheet-pdf-integration/legacy-pdf-regression/outputs/docs/audits/2026-11-27/pdf-composition/combined-light.png"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/combined-round-1.pdf",
+      "before": {
+        "path": "docs/audits/2026-11-27/pdf-composition/combined-round-1.pdf",
+        "bytes": 1643408,
+        "sha256": "d9dfa18eec89ad6a078e045e3d02c891964ec2a0ed8390adbb21ab385380cae7"
+      },
+      "after": {
+        "bytes": 1700037,
+        "sha256": "ac1ba18c233bf7803d84804e3c39a0b3f26babadf073c45e5315a66cdc79b251"
+      },
+      "preserved": "docs/audits/2026-11-27/word-sheet-pdf-integration/legacy-pdf-regression/outputs/docs/audits/2026-11-27/pdf-composition/combined-round-1.pdf"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/combined-round-2.pdf",
+      "before": {
+        "path": "docs/audits/2026-11-27/pdf-composition/combined-round-2.pdf",
+        "bytes": 1643408,
+        "sha256": "d9dfa18eec89ad6a078e045e3d02c891964ec2a0ed8390adbb21ab385380cae7"
+      },
+      "after": {
+        "bytes": 1700037,
+        "sha256": "ac1ba18c233bf7803d84804e3c39a0b3f26babadf073c45e5315a66cdc79b251"
+      },
+      "preserved": "docs/audits/2026-11-27/word-sheet-pdf-integration/legacy-pdf-regression/outputs/docs/audits/2026-11-27/pdf-composition/combined-round-2.pdf"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/conflicts-and-dialog-geometry.json",
+      "before": {
+        "path": "docs/audits/2026-11-27/pdf-composition/conflicts-and-dialog-geometry.json",
+        "bytes": 1495,
+        "sha256": "1122aeb15cb0bb2896fa4cab139e91596304aea686f99a39381b39be17b2dbd1"
+      },
+      "after": {
+        "bytes": 1495,
+        "sha256": "2e23ed1885c5d42bc88071aecb374305a3a9163a1c46b26911dd0829f843350b"
+      },
+      "preserved": "docs/audits/2026-11-27/word-sheet-pdf-integration/legacy-pdf-regression/outputs/docs/audits/2026-11-27/pdf-composition/conflicts-and-dialog-geometry.json"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/merge-dialog-dark.png",
+      "before": {
+        "path": "docs/audits/2026-11-27/pdf-composition/merge-dialog-dark.png",
+        "bytes": 167731,
+        "sha256": "e9a5ce54d15e018c817b54837a221f1a6ca1d4fd0465bc2299bb6335235a67b8"
+      },
+      "after": {
+        "bytes": 170258,
+        "sha256": "ceee9a121cb6acb43457ead7539e6f8bb4287990d74d9e45408dccfedb1367c3"
+      },
+      "preserved": "docs/audits/2026-11-27/word-sheet-pdf-integration/legacy-pdf-regression/outputs/docs/audits/2026-11-27/pdf-composition/merge-dialog-dark.png"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/merge-dialog-light.png",
+      "before": {
+        "path": "docs/audits/2026-11-27/pdf-composition/merge-dialog-light.png",
+        "bytes": 177292,
+        "sha256": "519d28c31ce0202892d9b639c1c8720fc42f211abe0b1a9745610dac91829730"
+      },
+      "after": {
+        "bytes": 180297,
+        "sha256": "90532bf7debf0e065cf48f2f40075a8b11cd1afdb690bfc007da31811cd2fe85"
+      },
+      "preserved": "docs/audits/2026-11-27/word-sheet-pdf-integration/legacy-pdf-regression/outputs/docs/audits/2026-11-27/pdf-composition/merge-dialog-light.png"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/paired-history-and-refresh.json",
+      "before": {
+        "path": "docs/audits/2026-11-27/pdf-composition/paired-history-and-refresh.json",
+        "bytes": 32808,
+        "sha256": "f3eb54e6e7ac3b2a9ef274af8c76a65990fc8328442afdd875e8f0e65e6f9d39"
+      },
+      "after": {
+        "bytes": 37058,
+        "sha256": "c023398f0969e9835463cd92e50a86c21963a43aa12a6a6373096c5200b82cb1"
+      },
+      "preserved": "docs/audits/2026-11-27/word-sheet-pdf-integration/legacy-pdf-regression/outputs/docs/audits/2026-11-27/pdf-composition/paired-history-and-refresh.json"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/radio-policy.json",
+      "before": {
+        "path": "docs/audits/2026-11-27/pdf-composition/radio-policy.json",
+        "bytes": 2785,
+        "sha256": "47f5023668d3902861124eb54aee54d96df86b94643423299207c7546d1445ba"
+      },
+      "after": {
+        "bytes": 2785,
+        "sha256": "22384945c9a478f442608090d1a89ad2746c44fe2a41d673b8ef5685359d510b"
+      },
+      "preserved": "docs/audits/2026-11-27/word-sheet-pdf-integration/legacy-pdf-regression/outputs/docs/audits/2026-11-27/pdf-composition/radio-policy.json"
+    },
+    {
+      "path": "docs/audits/2026-11-26/pdf-pages/pages-dark.png",
+      "before": {
+        "path": "docs/audits/2026-11-26/pdf-pages/pages-dark.png",
+        "bytes": 151590,
+        "sha256": "28b89be83e6e48dd19c54819769df24eefa1f93d7fce81cc8e0c8a61bccd076d"
+      },
+      "after": {
+        "bytes": 147652,
+        "sha256": "ed347c0af9e493fb30b1e67efe76b6f39c74afc877c14b92adb51540f31930db"
+      },
+      "preserved": "docs/audits/2026-11-27/word-sheet-pdf-integration/legacy-pdf-regression/outputs/docs/audits/2026-11-26/pdf-pages/pages-dark.png"
+    },
+    {
+      "path": "docs/audits/2026-11-26/pdf-pages/pages-dialog-dark-320.png",
+      "before": {
+        "path": "docs/audits/2026-11-26/pdf-pages/pages-dialog-dark-320.png",
+        "bytes": 48899,
+        "sha256": "81e0c6710c535e999d6d00220373d65bcd60717e1e0c052450c3dc1abcddb018"
+      },
+      "after": {
+        "bytes": 46015,
+        "sha256": "e056087edb346587a31352d70507f26227b7e05f4b54330e62741ed40e0405b1"
+      },
+      "preserved": "docs/audits/2026-11-27/word-sheet-pdf-integration/legacy-pdf-regression/outputs/docs/audits/2026-11-26/pdf-pages/pages-dialog-dark-320.png"
+    },
+    {
+      "path": "docs/audits/2026-11-26/pdf-pages/pages-drag-events.json",
+      "before": {
+        "path": "docs/audits/2026-11-26/pdf-pages/pages-drag-events.json",
+        "bytes": 1047,
+        "sha256": "04e4bd91cc7f4b3b332d533679edcdc31f93d7ab1c1853b10170530f12f52407"
+      },
+      "after": {
+        "bytes": 1047,
+        "sha256": "1a916ec2385597b3c4794fbf3a7b853d96e3d731b2216d6c4d58f8310e31e9a5"
+      },
+      "preserved": "docs/audits/2026-11-27/word-sheet-pdf-integration/legacy-pdf-regression/outputs/docs/audits/2026-11-26/pdf-pages/pages-drag-events.json"
+    },
+    {
+      "path": "docs/audits/2026-11-26/pdf-pages/pages-dragged.pdf",
+      "before": {
+        "path": "docs/audits/2026-11-26/pdf-pages/pages-dragged.pdf",
+        "bytes": 2028,
+        "sha256": "0343fc30ef6f97151c17e7a28a4bafdf453379872be0307a28255d77f9e00a7c"
+      },
+      "after": {
+        "bytes": 3904,
+        "sha256": "636ecbcd902c9ac7ef0f5e52abb08cd4b668b96b2579ca12cc3906be882a2943"
+      },
+      "preserved": "docs/audits/2026-11-27/word-sheet-pdf-integration/legacy-pdf-regression/outputs/docs/audits/2026-11-26/pdf-pages/pages-dragged.pdf"
+    },
+    {
+      "path": "docs/audits/2026-11-26/pdf-pages/pages-light.png",
+      "before": {
+        "path": "docs/audits/2026-11-26/pdf-pages/pages-light.png",
+        "bytes": 150129,
+        "sha256": "b6b6c48c42d3e5df80283e20cefdd2a99febfaee027c386784c8f3d5cfc11c60"
+      },
+      "after": {
+        "bytes": 146195,
+        "sha256": "c5b2caa12a74fbf44bed956e2453c68b21bd03e221603aa89376ac7ff9a63213"
+      },
+      "preserved": "docs/audits/2026-11-27/word-sheet-pdf-integration/legacy-pdf-regression/outputs/docs/audits/2026-11-26/pdf-pages/pages-light.png"
+    },
+    {
+      "path": "docs/audits/2026-11-26/pdf-pages/pages-round-1.pdf",
+      "before": {
+        "path": "docs/audits/2026-11-26/pdf-pages/pages-round-1.pdf",
+        "bytes": 2046,
+        "sha256": "9b4a0c11775bab9eb027333ee2761d1c35e9158c0ffc12a9f8e05fbb54ff49c4"
+      },
+      "after": {
+        "bytes": 5457,
+        "sha256": "2371a77a0b6a6835a15d70738584e247ce31fd0d6adf8fa4c3fbcadc1ccf6b61"
+      },
+      "preserved": "docs/audits/2026-11-27/word-sheet-pdf-integration/legacy-pdf-regression/outputs/docs/audits/2026-11-26/pdf-pages/pages-round-1.pdf"
+    },
+    {
+      "path": "docs/audits/2026-11-26/pdf-pages/pages-round-2.pdf",
+      "before": {
+        "path": "docs/audits/2026-11-26/pdf-pages/pages-round-2.pdf",
+        "bytes": 2046,
+        "sha256": "9b4a0c11775bab9eb027333ee2761d1c35e9158c0ffc12a9f8e05fbb54ff49c4"
+      },
+      "after": {
+        "bytes": 5457,
+        "sha256": "2371a77a0b6a6835a15d70738584e247ce31fd0d6adf8fa4c3fbcadc1ccf6b61"
+      },
+      "preserved": "docs/audits/2026-11-27/word-sheet-pdf-integration/legacy-pdf-regression/outputs/docs/audits/2026-11-26/pdf-pages/pages-round-2.pdf"
+    },
+    {
+      "path": "docs/audits/2026-11-26/pdf-pages/pages-source.pdf",
+      "before": {
+        "path": "docs/audits/2026-11-26/pdf-pages/pages-source.pdf",
+        "bytes": 2028,
+        "sha256": "23d7a28138bc02f98d4d4308ff10bd534d3e7489535a14791a720a07f9cbaea0"
+      },
+      "after": {
+        "bytes": 2029,
+        "sha256": "5624b5ff91b6bb8bd5a04c6828847d4cb73c887645bd38638f44267fbf626b19"
+      },
+      "preserved": "docs/audits/2026-11-27/word-sheet-pdf-integration/legacy-pdf-regression/outputs/docs/audits/2026-11-26/pdf-pages/pages-source.pdf"
+    }
+  ],
+  "restoredFiles": 146,
+  "allBaselineBytesVerified": true
+}

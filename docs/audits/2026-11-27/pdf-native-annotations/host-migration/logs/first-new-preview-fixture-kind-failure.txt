@@ -1,0 +1,29 @@
+✖ a nonempty restored recipe previews current page order, edited copied marks, fields and rotation without accepting a new pair (406.553542ms)
+✔ native inspect is read-only; accepted CJK creation checkpoints fields, IDs and recipe without touching the original Blob (1301.754875ms)
+✔ legacy four kinds and replies migrate once with captured IDs/time and remain compatibility projections (1944.843833ms)
+✔ continuous page copies of edited copies preserve interleaved edits/replies/new marks and support old pair undo (470.39025ms)
+✔ forged provenance, native projections, locked commands and aborted font preparation return no candidate mutation (419.600666ms)
+✔ accepted native source composes with a second annotated PDF, restores scopes and edits after two real reopen cycles (296.307666ms)
+✔ field-only source rewrites stamp preexisting fallback annotation IDs and leave native appearances and streams unchanged (250.771917ms)
+✔ page metadata rotation applies only the new delta after pending native source preparation (194.506125ms)
+✔ signed sources remain unchanged and failed native fitting/font coverage accepts no source or model mutation (212.517459ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 8
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5740.532042
+
+✖ failing tests:
+
+test at docs/tests/studio-pdf-native-editor.test.mjs:47:1
+✖ a nonempty restored recipe previews current page order, edited copied marks, fields and rotation without accepting a new pair (406.553542ms)
+  Error: Annotation patch kind does not match an editable source.
+      at toNativeAnnotationPatch (eval at load (file:///Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/tests/studio-pdf-test-runtime.mjs:21:21), <anonymous>:219:15)
+      at applyWorkspaceMark (eval at load (file:///Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/tests/studio-pdf-test-runtime.mjs:21:21), <anonymous>:68:123)
+      at NativePdfWorkspace.accept (eval at load (file:///Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/tests/studio-pdf-test-runtime.mjs:21:21), <anonymous>:76:67)
+      at TestContext.<anonymous> (file:///Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/tests/studio-pdf-native-editor.test.mjs:66:25)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)

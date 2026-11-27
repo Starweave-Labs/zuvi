@@ -1,0 +1,15 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/OfficeStudio.test.tsx (18 tests) 4213ms
+   ✓ OfficeStudio > rejects saving, exporting, printing and replacing a spreadsheet with an invalid pending input 1268ms
+   ✓ OfficeStudio > prints a committed document from the ref and allows printing in read-only preview 341ms
+   ✓ OfficeStudio > updates every item in an open file menu after readOnly changes 405ms
+   ✓ OfficeStudio > imperative save and export commit the real focused spreadsheet draft before taking a snapshot 780ms
+   ✓ OfficeStudio pending font input > commits font drafts before save, export and print and rejects an invalid size snapshot 422ms
+
+ Test Files  1 passed (1)
+      Tests  18 passed (18)
+   Start at  06:30:57
+   Duration  5.22s (transform 541ms, setup 100ms, collect 406ms, tests 4.21s, environment 292ms, prepare 43ms)
+

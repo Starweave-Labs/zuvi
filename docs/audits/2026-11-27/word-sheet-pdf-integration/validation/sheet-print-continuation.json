@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "path": "docs/audits/2026-11-27/sheet-view/view-print.pdf",
+  "sha256": "45703eeba2ae14b45d6acae5d557461c06e4a580f79255bf8255d7b68d180b44",
+  "pages": 4,
+  "allTextFound": true,
+  "links": [
+    {
+      "page": 3,
+      "uri": "https://example.com/sheet-view-master"
+    }
+  ],
+  "screen100and400PrintHtmlIdentical": true,
+  "baselinePageTextIdentical": true,
+  "textCheck": "First ad-hoc literal-substring check rejected line-wrapped words; direct comparison confirms identical per-page extracted text to the accepted PDF. Full glyph order is checked after removing extraction whitespace, preserving all letters and punctuation.",
+  "literalSubstringChecks": {
+    "Zoom keeps wrapped text and the document row height.": false,
+    "HIDDEN_MASTER": false,
+    "CONTROL_ROW": true,
+    "NATIVE_SMALL": true,
+    "VISIBLE_MERGE": true
+  }
+}

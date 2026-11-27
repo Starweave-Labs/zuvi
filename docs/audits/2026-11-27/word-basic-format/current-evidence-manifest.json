@@ -1,0 +1,464 @@
+{
+  "scope": "W001/W003/W004/W006 original acceptance and six common dimensions; all-repository closure remains owned by root",
+  "sourceProvenance": "build-provenance.json",
+  "code": [
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+      "bytes": 141550,
+      "sha256": "975c53bf6073584b441e833c279e4390843ea930228d9b528e33c6940ec9a5fb"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
+      "bytes": 46372,
+      "sha256": "4e5bde67f48207d365ac0db709aceddff6a27199bb983affc7f0a179ffabdc3b"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWord.basic-format.test.tsx",
+      "bytes": 15294,
+      "sha256": "c1d26c4d9f15539be9e89415969856f10d66b3644a37ca05c5c2bda58b3329bc"
+    },
+    {
+      "path": "e2e/office-studio-word-basic-format.spec.ts",
+      "bytes": 18211,
+      "sha256": "9561a0fb3b1d6d888b99e6ec2605c74f4e60bc3e53f762a3504a50f4c644c262"
+    }
+  ],
+  "rendered": [
+    {
+      "document": "source.docx",
+      "pdf": "source-render/source.pdf",
+      "pages": 1,
+      "text": "Word basic formatting sample\nMixed plain Mixed rich\nClear styles\nCaret base\nScript 23\nHighlight target\nHighlight caret\nUntouched link\n中文小数字号样本"
+    },
+    {
+      "document": "roundtrip-1.docx",
+      "pdf": "roundtrip-1-render/roundtrip-1.pdf",
+      "pages": 1,
+      "text": "Word basic formatting sample\nMixed plain Mixed rich\nClear styles\nCaret Typedbase\nScript 23\nHighlight target\nHighlight HCcaret\nUntouched link\n中文小数字号样本"
+    },
+    {
+      "document": "roundtrip-2.docx",
+      "pdf": "roundtrip-2-render/roundtrip-2.pdf",
+      "pages": 1,
+      "text": "Word basic formatting sample\nMixed plain Mixed rich\nClear styles\nCaret Typedbase\nScript 23\nHighlight target\nHighlight HCcaret\nUntouched link\n中文小数字号样本"
+    },
+    {
+      "document": "after-cancel.docx",
+      "pdf": "after-cancel-render/after-cancel.pdf",
+      "pages": 1,
+      "text": "Word basic formatting sample\nMixed plain Mixed rich\nClear styles\nCaret base\nScript 23\nHighlight target\nHighlight caret\nUntouched link\n中文小数字号样本"
+    }
+  ],
+  "entries": [
+    {
+      "path": "README.md",
+      "bytes": 5820,
+      "sha256": "f6aba499148acb3ef5e9a846199ac8df2bd637fde8a10503e11ff564719f05f6"
+    },
+    {
+      "path": "after-cancel-render/after-cancel.pdf",
+      "bytes": 38705,
+      "sha256": "6c4b136a74af9230b0a54c3dbf864e429695c8dd8b8ff6036c9b9b612b3860e0"
+    },
+    {
+      "path": "after-cancel-render/page-1.png",
+      "bytes": 56053,
+      "sha256": "190d731baae24e1b65ccd0b10bc0e923400fe89eaae0a4b8faf71f14703dc4dd"
+    },
+    {
+      "path": "after-cancel.docx",
+      "bytes": 46725,
+      "sha256": "049f660b7f37f68eab115d1008992dceacf3a1a65be610523e8529f1c325f4c3"
+    },
+    {
+      "path": "build-provenance.json",
+      "bytes": 2237,
+      "sha256": "22c8e326847debd0bb2bb2f979c6dfb1a5ab6974cb49772e5b278de2d085944e"
+    },
+    {
+      "path": "controls-dark.png",
+      "bytes": 168754,
+      "sha256": "9814186f64369bfd2162022a2833840769ec73d3e48e43663d7e73a28d94231b"
+    },
+    {
+      "path": "controls-light.png",
+      "bytes": 166043,
+      "sha256": "bb4cb9c2d6a121e2d0500a8771c4317949f3454c769ac2dbe54b516ae55b5a60"
+    },
+    {
+      "path": "create-fixture.py",
+      "bytes": 2967,
+      "sha256": "35c3bcbb671ac5466b7666b3d8d28339bd89a703bff96e6e6b13f80e09a5b532"
+    },
+    {
+      "path": "drafts-permissions-geometry.json",
+      "bytes": 46608,
+      "sha256": "5ef2be3dc4be37405df538fa93002fa65b15a351c25085a127ca13d18070bc92"
+    },
+    {
+      "path": "first-browser-run/archive-manifest.json",
+      "bytes": 3066,
+      "sha256": "941b927ca22eafe2c8a1d09e8c958bb0716b3ff49603c87f6907090701298247"
+    },
+    {
+      "path": "first-browser-run/build-provenance.json",
+      "bytes": 1817,
+      "sha256": "73a4f9bee19773365eab6014d298a030c5ebec06316e42fdc7e6be09029094eb"
+    },
+    {
+      "path": "first-browser-run/controls-dark.png",
+      "bytes": 117451,
+      "sha256": "9c14963be49a8104b9d2c4825a95aabca4e34e516a700f58892f7aa5d008ac22"
+    },
+    {
+      "path": "first-browser-run/controls-light.png",
+      "bytes": 117116,
+      "sha256": "fc8b0b30c0997624414828be4eff9372c36de8f2618c1f65bd383ace887f1569"
+    },
+    {
+      "path": "first-browser-run/drafts-permissions-geometry.json",
+      "bytes": 44170,
+      "sha256": "365a89ad108ab8571c3e397bc9f091f1cb696d2e90a2aa4f2dbda1a5517ad49c"
+    },
+    {
+      "path": "first-browser-run/font-light-320.png",
+      "bytes": 41267,
+      "sha256": "d00ea9da8429bf6cc411acb7e72dcfdb65c29b5da887888a0f04e03ee8064934"
+    },
+    {
+      "path": "first-browser-run/highlight-dark-320.png",
+      "bytes": 49834,
+      "sha256": "2de5ef1478237aca73df3f338432cecc2c9384feb746aa640a31fc61cebbab1a"
+    },
+    {
+      "path": "first-browser-run/office-studio-word-basic-format.spec.ts.txt",
+      "bytes": 17637,
+      "sha256": "aeb7aacab572024c81ae7f1380422e39c1d0573913e827d89da9c8be127c43df"
+    },
+    {
+      "path": "first-browser-run/playwright/.last-run.json",
+      "bytes": 96,
+      "sha256": "fe12c5e16c7de484a40efa11e8706cf93f601f00f5d58e2b1c69669e892ed139"
+    },
+    {
+      "path": "first-browser-run/playwright/office-studio-word-basic-f-d2d38--actual-native-DOCX-exports-chromium/error-context.md",
+      "bytes": 15376,
+      "sha256": "6ab5e80ada5e33c0a77a8f7ac3da29ad860a7df959293906d4280d4ba6711158"
+    },
+    {
+      "path": "first-browser-run/playwright/office-studio-word-basic-f-d2d38--actual-native-DOCX-exports-chromium/error-context.md.raw.gz",
+      "bytes": 3959,
+      "sha256": "00f58d8ad6883d5f0eef75c5c7777cc50140a733fc13df4797ceaac110e0fdc8"
+    },
+    {
+      "path": "first-browser-run/playwright/office-studio-word-basic-f-d2d38--actual-native-DOCX-exports-chromium/trace.zip",
+      "bytes": 8493801,
+      "sha256": "6ffe2bb8e470acb24d30754c65fd86528fb043c1b4e235d562ae30fa7d022f61"
+    },
+    {
+      "path": "first-browser-run/run.json",
+      "bytes": 13249,
+      "sha256": "bc67564db51ef7306eb8aa747e75e7917d2f4bd596f50e7e07dfb67c21838437"
+    },
+    {
+      "path": "first-browser-run/run.txt",
+      "bytes": 3650,
+      "sha256": "24616329c0528c0925d6a3b7a6191edebb49f964cc01a05a4b6d92ac163e7d0e"
+    },
+    {
+      "path": "first-browser-run/run.txt.raw.gz",
+      "bytes": 1191,
+      "sha256": "5735cb6aeed3472b002e1cb5aa5cebe9a91863493fe3dc590775dc70afc1debe"
+    },
+    {
+      "path": "first-browser-run/source.docx",
+      "bytes": 37023,
+      "sha256": "20bca06d49172dc1f554d25b121fd288a143ce9c3b6c996fc9c6b9e5b334bc39"
+    },
+    {
+      "path": "font-light-320.png",
+      "bytes": 44674,
+      "sha256": "2998684032d8e8cd76bf847e7c547e9b4180ba13be268b69e7053052621f0bfb"
+    },
+    {
+      "path": "fonts/NotoSansSC.ttf",
+      "bytes": 2522504,
+      "sha256": "5dfdc76232d051caffa7633c064dc1824694c771e6b4b929442e2b9d6550f770"
+    },
+    {
+      "path": "fonts/OFL.txt",
+      "bytes": 4314,
+      "sha256": "18aabf190848725e2576eefb5c29ba06aac1029d02132252a7f312eac2e50cf3"
+    },
+    {
+      "path": "fonts/source-manifest.json",
+      "bytes": 955,
+      "sha256": "f86e09fb6cd7f49eae37ddeb198922fe91c417d3657dba083e5cd47318a925b4"
+    },
+    {
+      "path": "formats-light.png",
+      "bytes": 167553,
+      "sha256": "d9665b07079ef8e7d3b97ac5010d63bb3e22a4f93619f134befbd83ec7e8a0c0"
+    },
+    {
+      "path": "highlight-dark-320.png",
+      "bytes": 46540,
+      "sha256": "812748761a46043fd06d43b210decc242485aafe886ad292a30ac33fc60b3779"
+    },
+    {
+      "path": "inspect-native.py",
+      "bytes": 7162,
+      "sha256": "90b45cd71fd46c01bf96d509cfac918c52da0608c6f764d533ae7e5386179f35"
+    },
+    {
+      "path": "native-inspection.json",
+      "bytes": 21923,
+      "sha256": "cc6e03b467590b45de2ee557197ff77ed6ba1c4ef6bf3fa200cce81145120152"
+    },
+    {
+      "path": "native-roundtrips.json",
+      "bytes": 34028,
+      "sha256": "101f3045394da3bdcb07bace659f647f68bf357f33c0da73b0a21fc66145f0ac"
+    },
+    {
+      "path": "render-native.py",
+      "bytes": 1414,
+      "sha256": "62feddf03a251c3642cef32437447fe14da57a5806fe0958eef23b7f50772b99"
+    },
+    {
+      "path": "roundtrip-1-render/page-1.png",
+      "bytes": 57011,
+      "sha256": "7e4b522eec0f54f4c543bd6451b0f2a6d66e77231b858b3dc71b36dc56a7f60e"
+    },
+    {
+      "path": "roundtrip-1-render/roundtrip-1.pdf",
+      "bytes": 42532,
+      "sha256": "a2c84bb66f2288bc05380587c95287d9de7f852e901976eb2c435c4989515da1"
+    },
+    {
+      "path": "roundtrip-1.docx",
+      "bytes": 47756,
+      "sha256": "f00d0825178ee1eece1cadbe5f82f6226d9b3d930df55e978506ca06989ed89b"
+    },
+    {
+      "path": "roundtrip-2-render/page-1.png",
+      "bytes": 57011,
+      "sha256": "7e4b522eec0f54f4c543bd6451b0f2a6d66e77231b858b3dc71b36dc56a7f60e"
+    },
+    {
+      "path": "roundtrip-2-render/roundtrip-2.pdf",
+      "bytes": 42477,
+      "sha256": "dcbb9eddbde15b9b6f34c2af37bf567eb5bbb7e2c11c9ddb40362070a91d3634"
+    },
+    {
+      "path": "roundtrip-2.docx",
+      "bytes": 47745,
+      "sha256": "13bdd08e5ea53cbfc9e963d8c5b9fffe459ceac58a4730d342856ce1350e1cb7"
+    },
+    {
+      "path": "second-browser-run/archive-manifest.json",
+      "bytes": 3645,
+      "sha256": "41d0fe1d11a6cb7bf1994e26017fc50c1ff36487575ea1844ec6d89c058a160e"
+    },
+    {
+      "path": "second-browser-run/build-provenance.json",
+      "bytes": 1817,
+      "sha256": "73a4f9bee19773365eab6014d298a030c5ebec06316e42fdc7e6be09029094eb"
+    },
+    {
+      "path": "second-browser-run/controls-dark.png",
+      "bytes": 117451,
+      "sha256": "9c14963be49a8104b9d2c4825a95aabca4e34e516a700f58892f7aa5d008ac22"
+    },
+    {
+      "path": "second-browser-run/controls-light.png",
+      "bytes": 117116,
+      "sha256": "fc8b0b30c0997624414828be4eff9372c36de8f2618c1f65bd383ace887f1569"
+    },
+    {
+      "path": "second-browser-run/drafts-permissions-geometry.json",
+      "bytes": 44170,
+      "sha256": "365a89ad108ab8571c3e397bc9f091f1cb696d2e90a2aa4f2dbda1a5517ad49c"
+    },
+    {
+      "path": "second-browser-run/font-light-320.png",
+      "bytes": 41256,
+      "sha256": "ffe1663090d8d0d5057baa4b6a5e801b0fe63d19aa337a000fdc57595b58b0a3"
+    },
+    {
+      "path": "second-browser-run/highlight-dark-320.png",
+      "bytes": 49834,
+      "sha256": "2de5ef1478237aca73df3f338432cecc2c9384feb746aa640a31fc61cebbab1a"
+    },
+    {
+      "path": "second-browser-run/office-studio-word-basic-format.spec.ts.txt",
+      "bytes": 17655,
+      "sha256": "e5af721f4c2891ca28202d93d1a5311c1453929c444d72cf1999d6f4fc04ab50"
+    },
+    {
+      "path": "second-browser-run/playwright/.last-run.json",
+      "bytes": 96,
+      "sha256": "fe12c5e16c7de484a40efa11e8706cf93f601f00f5d58e2b1c69669e892ed139"
+    },
+    {
+      "path": "second-browser-run/playwright/office-studio-word-basic-f-d2d38--actual-native-DOCX-exports-chromium/error-context.md",
+      "bytes": 53308,
+      "sha256": "abc8b60faf22508b87364489a7f621e2ee5fd284ef20145e796126e7503bb268"
+    },
+    {
+      "path": "second-browser-run/playwright/office-studio-word-basic-f-d2d38--actual-native-DOCX-exports-chromium/error-context.md.raw.gz",
+      "bytes": 11193,
+      "sha256": "a6244a8369d00469056aa86ec486765e2c0c3dee523b3803c39a4661ba5ee679"
+    },
+    {
+      "path": "second-browser-run/playwright/office-studio-word-basic-f-d2d38--actual-native-DOCX-exports-chromium/trace.zip",
+      "bytes": 10502498,
+      "sha256": "556f5a06c1319e0775e863a9ac2a79c9a7c4a4feaa9ace1c9a379cd1895ca0f1"
+    },
+    {
+      "path": "second-browser-run/roundtrip-1.docx",
+      "bytes": 47809,
+      "sha256": "65cf610bbad2b136a0a67476027bc2d578bf5496f46fda6c2afa9f5c97ad6aa4"
+    },
+    {
+      "path": "second-browser-run/run.json",
+      "bytes": 11943,
+      "sha256": "97ce1b55c5dcdc6cd1a13a12013724f37445c3af13cf62483bf0aef160761517"
+    },
+    {
+      "path": "second-browser-run/run.txt",
+      "bytes": 3245,
+      "sha256": "86b7b3c9d8030bc4557863557657a39e4373196a6290c2053a9894af428bada6"
+    },
+    {
+      "path": "second-browser-run/run.txt.raw.gz",
+      "bytes": 996,
+      "sha256": "8c1e6746d51417ca0f77b8a296fd6efc3026d9173d125b7e638ba542f11a0a86"
+    },
+    {
+      "path": "second-browser-run/source-render-before-font-review/page-1.png",
+      "bytes": 49973,
+      "sha256": "83b27b3b5db1fd19c34765756b94dc8b03096b845840b88ae3b78c8cc8592439"
+    },
+    {
+      "path": "second-browser-run/source-render-before-font-review/source.pdf",
+      "bytes": 38036,
+      "sha256": "8a9a970127509714f5336863559cb43bc221581f16d07ef5cc479d481d648e67"
+    },
+    {
+      "path": "second-browser-run/source.docx",
+      "bytes": 37023,
+      "sha256": "20bca06d49172dc1f554d25b121fd288a143ce9c3b6c996fc9c6b9e5b334bc39"
+    },
+    {
+      "path": "source-render/page-1.png",
+      "bytes": 55927,
+      "sha256": "1e046ac607d191d063e11eda42f2238aa7f8f137723cda596d302858c7b854b3"
+    },
+    {
+      "path": "source-render/source.pdf",
+      "bytes": 38053,
+      "sha256": "3b86edf5b96a51d1ae20fa9eccfb25a89ae78c590c6277e612ed4cf7ffd8a7f5"
+    },
+    {
+      "path": "source.docx",
+      "bytes": 37046,
+      "sha256": "53eedd5e818f88c8c203c67fe07b3974248a0f34349bcbb4ef0ba64c0da18135"
+    },
+    {
+      "path": "validation/browser-two-passed.json",
+      "bytes": 6051,
+      "sha256": "9d837522392cabf123f92c3010a6d144084f6af84b61bdd93f66a3a8a730a153"
+    },
+    {
+      "path": "validation/browser-two-passed.txt",
+      "bytes": 818,
+      "sha256": "750c266da0c5769705379f3cd0b84b74343b3c69be879db425da525266e6a917"
+    },
+    {
+      "path": "validation/docx-regression-72.txt",
+      "bytes": 17541,
+      "sha256": "87f4fbc96e1515c3f14513a2bbb237ccd6bde5828f9e85120bd7938812b86687"
+    },
+    {
+      "path": "validation/initial-test-types.txt",
+      "bytes": 12385,
+      "sha256": "7273217a89c83146eccb936a2bdc1e85adecf7e9845d79ea7150b64cf285b5c5"
+    },
+    {
+      "path": "validation/initial-ui-seven-failures.txt",
+      "bytes": 97911,
+      "sha256": "ee0272ef5fd8961ab58bada26b02a9a9aaada768a776a36475683404d5efa4fc"
+    },
+    {
+      "path": "validation/input-boundaries-five-failures.txt",
+      "bytes": 13782,
+      "sha256": "393a3ca53db0095c89d9f4e3a25729fe8ecbf6f73403eb88cc80c28042b3bc0d"
+    },
+    {
+      "path": "validation/intermediate-header-style-review.txt",
+      "bytes": 6399,
+      "sha256": "54b892367fce82200fcb2cb6c96b96395a22edebfc49c69bf70ddbdecbe089bd"
+    },
+    {
+      "path": "validation/native-inspection.txt",
+      "bytes": 148,
+      "sha256": "d4e3b2520fb23212e2503e106c02714e2375d07f97930919d3fea740f6dc3650"
+    },
+    {
+      "path": "validation/recovery-browser-one-passed.json",
+      "bytes": 4974,
+      "sha256": "70630d3d66ab9bb7272309117808bbc1327f61b19b766eb9c6701f5bc01ad36d"
+    },
+    {
+      "path": "validation/recovery-browser-one-passed.txt",
+      "bytes": 623,
+      "sha256": "d02ecd4e8930a457934ae2523fb01165034020ac9ad98e80886155311cb81101"
+    },
+    {
+      "path": "validation/render-recovery.txt",
+      "bytes": 168,
+      "sha256": "43bcdc5b804776784509a92843eb0c68137f42d37bcab1aa325fe32f07c333d7"
+    },
+    {
+      "path": "validation/render-three.txt",
+      "bytes": 496,
+      "sha256": "14e583683a8fc83186fb05b1413267ee1e7bdb1af9436a5bf02870523863c699"
+    },
+    {
+      "path": "validation/scoped-lint.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "validation/ui-162-passed.txt",
+      "bytes": 3125,
+      "sha256": "143677e578a3b65bb3a2c6c27bfebbb5bafe0d7849e0ac01c35faf82d5e7ef3e"
+    },
+    {
+      "path": "validation/ui-162-passed.txt.raw.gz",
+      "bytes": 1307,
+      "sha256": "a7357e4ce9a6bbe5fc7559234b34cc499cd399b2367c9f3aea427a295319654b"
+    },
+    {
+      "path": "validation/ui-build.txt",
+      "bytes": 2717,
+      "sha256": "f1ed0cb0131d599fd365fed3b0aecf3ef601ad622915e2ffddc351a69a034816"
+    },
+    {
+      "path": "validation/ui-types.txt",
+      "bytes": 147,
+      "sha256": "f31feb7516e618a7f9fffa299eb1139961e0fd56426eb6830164f5b7c2c8781b"
+    },
+    {
+      "path": "validation/ui-types.txt.raw.gz",
+      "bytes": 148,
+      "sha256": "4cc7be1aced5ab7d9710ab16fbab874db010d931353c3275fa9ac13ee74c1737"
+    },
+    {
+      "path": "validation-manifest.json",
+      "bytes": 5055,
+      "sha256": "ee75b60ee95dd5657191c2fa899f3b693a3931d81d139f6811b4297e70986dac"
+    }
+  ]
+}

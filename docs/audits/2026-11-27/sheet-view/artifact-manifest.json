@@ -1,0 +1,748 @@
+{
+  "item": "X064",
+  "finalBrowserPort": 5272,
+  "finalBrowserPassed": 3,
+  "verifiedFiles": 148,
+  "files": [
+    {
+      "file": "README.md",
+      "bytes": 6911,
+      "sha256": "e14b97f9fd3149af75aa9761f7e418278d057f64a4eb80c7c1e2d177d6093700"
+    },
+    {
+      "file": "audit-evidence.json",
+      "bytes": 2986,
+      "sha256": "413e222ee8fc6469f7415d8511fe0362da1f043c9acee4f49a4cee30f9b5b48c"
+    },
+    {
+      "file": "browser-final/manifest.json",
+      "bytes": 4323,
+      "sha256": "c4209a5107aab2482f8c5188d8fbed780bf70dbebc074e8378ae25f6d5adeb5c"
+    },
+    {
+      "file": "browser-final/outputs/view-after-cancel.xlsx",
+      "bytes": 9872,
+      "sha256": "1d9837038576b7ed4912b426194bdf2debf464cfb02cfac084afed2012825f40"
+    },
+    {
+      "file": "browser-final/outputs/view-dark-1280.png",
+      "bytes": 176591,
+      "sha256": "dd2576b853d20e8fc06bc32acf23a0edadd3f7a5c2e373ffd44ba9f36d79f68b"
+    },
+    {
+      "file": "browser-final/outputs/view-dark-320.png",
+      "bytes": 43149,
+      "sha256": "6ae0a92ae60aac3189c03e60f35caa2f87f60cdccde50a7f1c1c8a719c8cc8e4"
+    },
+    {
+      "file": "browser-final/outputs/view-editor-320.png",
+      "bytes": 16741,
+      "sha256": "58ae5a6bbce9e8326c2bd25f3ea9a3a3f06a91c905305940c2bd59170c16cad3"
+    },
+    {
+      "file": "browser-final/outputs/view-fill-400.png",
+      "bytes": 163823,
+      "sha256": "b25c8365f95301eab61c988b2bd0661adf2111b8c0a22caa2e08784fe11bdf39"
+    },
+    {
+      "file": "browser-final/outputs/view-light-1280.png",
+      "bytes": 173609,
+      "sha256": "56d1fda5283e7284f15467b96579f5d84e5af00b98087fbb9418978d23eb57a8"
+    },
+    {
+      "file": "browser-final/outputs/view-light-320.png",
+      "bytes": 42138,
+      "sha256": "fa590a2c344b469af393c1f27f8413d6a1d354fc60d708143b45b7e369691e54"
+    },
+    {
+      "file": "browser-final/outputs/view-preview-guards.png",
+      "bytes": 104641,
+      "sha256": "08febeff2bd497ae668fb3dfda43e7ae11258be9d668036919c96227f7599128"
+    },
+    {
+      "file": "browser-final/outputs/view-preview-source.xlsx",
+      "bytes": 9121,
+      "sha256": "6cee28a7e9a2d2217aac50a336b85c28fc2efaf3822ec87a82e42f81609237de"
+    },
+    {
+      "file": "browser-final/outputs/view-print-100.html",
+      "bytes": 47156,
+      "sha256": "ac92fe96790f1aa163d37004abf5178d7d118710a3c2bf49f7d15e6ef698b14c"
+    },
+    {
+      "file": "browser-final/outputs/view-print-400.html",
+      "bytes": 47156,
+      "sha256": "ac92fe96790f1aa163d37004abf5178d7d118710a3c2bf49f7d15e6ef698b14c"
+    },
+    {
+      "file": "browser-final/outputs/view-print.pdf",
+      "bytes": 52103,
+      "sha256": "079ee57fe7a1401cc4c993912035d0db6efb191c5688dd211cde844d73e7e3bc"
+    },
+    {
+      "file": "browser-final/outputs/view-print.png",
+      "bytes": 54666,
+      "sha256": "ec1d9334f02b7efa9688290bed4eb500979759aa6a6351f3d7815c0dc635a7a4"
+    },
+    {
+      "file": "browser-final/outputs/view-protected.xlsx",
+      "bytes": 10036,
+      "sha256": "ce225a8edf5115d7f79dfcb0b1a6dbc2e9ed74f8ae8fbb5fcdab8cbfbce8908a"
+    },
+    {
+      "file": "browser-final/outputs/view-readonly-preview.xlsx",
+      "bytes": 9872,
+      "sha256": "63233144830db62124dab5d02059917249327dafa92c102db1625e89ae69559a"
+    },
+    {
+      "file": "browser-final/outputs/view-reopened-400.png",
+      "bytes": 170523,
+      "sha256": "55e7caed00f741af3c63c07b20eaf2f3a6f7af296eec35e7ca86926fced2a908"
+    },
+    {
+      "file": "browser-final/outputs/view-roundtrip-1.xlsx",
+      "bytes": 9913,
+      "sha256": "77cd10153597a108100fce3ec5be0a4eccf4a8545d4898ba8bb3d65246e38dad"
+    },
+    {
+      "file": "browser-final/outputs/view-roundtrip-2.xlsx",
+      "bytes": 9905,
+      "sha256": "c4553492973daaa379cfe8a474a8e2755230aca6634d154885676888552ae007"
+    },
+    {
+      "file": "browser-final/outputs/view-source.xlsx",
+      "bytes": 9121,
+      "sha256": "4505adbdf1fe53220228924be4fe10e80263edcc4e38600d088aeea67d3f02f2"
+    },
+    {
+      "file": "browser-final/outputs/view-visual-source.xlsx",
+      "bytes": 9121,
+      "sha256": "4d51179dd21705b913484b450fa6d52c4a4f600d69e9ec230b211dc6b6f96882"
+    },
+    {
+      "file": "browser-final/runner/StudioSheet-DtZGxBC4.js.txt",
+      "bytes": 250247,
+      "sha256": "4dab9e6c80ed90daf81c187df2d688ce6c2a364f485c1c9d5d369e6276d29f6c"
+    },
+    {
+      "file": "browser-final/runner/artifacts/.last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    {
+      "file": "browser-final/runner/office-studio-sheet-view.spec.ts.txt",
+      "bytes": 24941,
+      "sha256": "836da2b35da6e4bc2fcf4b49c088d6cf83dfb224981686248bec6087d5df4c41"
+    },
+    {
+      "file": "browser-final/runner/results.json",
+      "bytes": 7110,
+      "sha256": "0f893557253e21292323a8c9c4418284b4634c894025e1debbb45b2465713301"
+    },
+    {
+      "file": "browser-final/runner/run.log",
+      "bytes": 958,
+      "sha256": "82c4dedeee7040262632caa090398d1d79e2e291782ae2a185b4d1a1d925068e"
+    },
+    {
+      "file": "browser-final/runner/source-manifest.json",
+      "bytes": 271,
+      "sha256": "a0ef8ce6ed1c270637245e7013240a94c34dc7c1cadc50e942fdab7c98ba0e98"
+    },
+    {
+      "file": "browser-preview-evidence.json",
+      "bytes": 401,
+      "sha256": "d18039453d7f445b0e24b8c08a4c790a6aa949d9383c0a7c9ccb31317bdebf76"
+    },
+    {
+      "file": "browser-roundtrip-evidence.json",
+      "bytes": 2614,
+      "sha256": "f8764886dc8fc0cfdd67cedc14dda56858b9397b57b521f926503101061db3ba"
+    },
+    {
+      "file": "browser-visual-print-evidence.json",
+      "bytes": 6654,
+      "sha256": "fb41b2f9b234d85f84dcbf2cb2ab4cf84cfa7e8cb32a238d10348fa12501eba4"
+    },
+    {
+      "file": "first-browser-failure/README.md",
+      "bytes": 1136,
+      "sha256": "50a139480ca1c5b951f24b74891bfa6173eb90fa240ba347827783bb1eab5767"
+    },
+    {
+      "file": "first-browser-failure/StudioSheet-C865rpBe.js.txt",
+      "bytes": 250247,
+      "sha256": "0236cccb700e0cb882ee3daa68f65f79f4e8a549bda8cc5ce0a4313c342af39c"
+    },
+    {
+      "file": "first-browser-failure/archive.json",
+      "bytes": 3760,
+      "sha256": "f6598e62c36ce75c8e51ce2914b448142fad6d8cc80c71776b00fecdbce60ae4"
+    },
+    {
+      "file": "first-browser-failure/office-studio-sheet-view.spec.ts.txt",
+      "bytes": 23374,
+      "sha256": "beab59b5ac64f3219491d9014623eaf5eb021908a5bdb2b337f51993aa9792fa"
+    },
+    {
+      "file": "first-browser-failure/runner/artifacts/.last-run.json",
+      "bytes": 194,
+      "sha256": "ba9f94938bb931db68aae5d4e5d7320532f62b2016e59fc6a2eb72a6e6a888d4"
+    },
+    {
+      "file": "first-browser-failure/runner/artifacts/office-studio-sheet-view-n-ae2fd-reserve-the-saved-XLSX-view-chromium/error-context.md",
+      "bytes": 183155,
+      "sha256": "381d990d1f0a778cf9c75afba9390bbcd6f6605a891951fb1ebb9f557c891420"
+    },
+    {
+      "file": "first-browser-failure/runner/artifacts/office-studio-sheet-view-n-ae2fd-reserve-the-saved-XLSX-view-chromium/trace.zip",
+      "bytes": 14070417,
+      "sha256": "28cb2d0b5ec8e4482585946b8a3d0bcb268246c3945234e090f473a007a3493c"
+    },
+    {
+      "file": "first-browser-failure/runner/artifacts/office-studio-sheet-view-v-47471-ight-dark-and-320px-layouts-chromium/error-context.md",
+      "bytes": 42518,
+      "sha256": "378ffedac640b30c9ce9ebce7524ca01e8a4026f9bef83db0def7f2e4c68f956"
+    },
+    {
+      "file": "first-browser-failure/runner/artifacts/office-studio-sheet-view-v-47471-ight-dark-and-320px-layouts-chromium/trace.zip",
+      "bytes": 5621950,
+      "sha256": "3640f6f287ab9de1126401b889a4c4767a88a26b321cafed6e39f3538bc59c8f"
+    },
+    {
+      "file": "first-browser-failure/runner/artifacts/office-studio-sheet-view-v-8cdd6-nates-over-two-XLSX-reopens-chromium/error-context.md",
+      "bytes": 43671,
+      "sha256": "dc0b161aa5eff70b43e615f93cdd679be146354fca6f341a32645ad51c00bda3"
+    },
+    {
+      "file": "first-browser-failure/runner/artifacts/office-studio-sheet-view-v-8cdd6-nates-over-two-XLSX-reopens-chromium/trace.zip",
+      "bytes": 4469617,
+      "sha256": "d10ff562d76a4adb65321ff6b184dfba5eb11f07b535c968f8ae78eb85bfee7b"
+    },
+    {
+      "file": "first-browser-failure/runner/results.json",
+      "bytes": 19202,
+      "sha256": "54be2c558b618fbc9151da7ad59933b167418184acdeb4bc1536ecca9428baec"
+    },
+    {
+      "file": "first-browser-failure/runner/run.log",
+      "bytes": 7671,
+      "sha256": "b8fd822688da216e1023f28cae367fca685705a45b3710da3bed09a9187e285c"
+    },
+    {
+      "file": "first-browser-failure/view-after-cancel.xlsx",
+      "bytes": 9862,
+      "sha256": "156cbce65d1819b68865771c192e311ea85f55341b4cc920f76354d8786e7a12"
+    },
+    {
+      "file": "first-browser-failure/view-fill-400.png",
+      "bytes": 163819,
+      "sha256": "4593b724fca55accd316ad126521f31fc6a95f431576f18efce1770fd3546940"
+    },
+    {
+      "file": "first-browser-failure/view-preview-source.xlsx",
+      "bytes": 9112,
+      "sha256": "8b17d40748005cca56b4956e8fae773ab6227cb4923af15d7135d6182aa9cf32"
+    },
+    {
+      "file": "first-browser-failure/view-print-100.html",
+      "bytes": 47156,
+      "sha256": "26de5d83cfacc3d64214d5f41cd4635836c700e31bd1d38cad89f5b30798371a"
+    },
+    {
+      "file": "first-browser-failure/view-print-400.html",
+      "bytes": 47156,
+      "sha256": "26de5d83cfacc3d64214d5f41cd4635836c700e31bd1d38cad89f5b30798371a"
+    },
+    {
+      "file": "first-browser-failure/view-protected.xlsx",
+      "bytes": 10026,
+      "sha256": "26e7b0660ce48f7d33f9962cbd37b0de2f55254cd3f370d83eb1d2d03c3ebcfe"
+    },
+    {
+      "file": "first-browser-failure/view-readonly-preview.xlsx",
+      "bytes": 9862,
+      "sha256": "86e96fdfc384e48eb1aabe99f13ff5baf95148c24394345b983c325cd94759f2"
+    },
+    {
+      "file": "first-browser-failure/view-source.xlsx",
+      "bytes": 9112,
+      "sha256": "256bc989465de40102e8208fc977bc207da9c56812b7eb8c2b1a890e5dbaff71"
+    },
+    {
+      "file": "first-browser-failure/view-visual-source.xlsx",
+      "bytes": 9112,
+      "sha256": "f122d12aad1e05f42dce234481c96b1667a281cf6d593249c5c657485c0ab9e6"
+    },
+    {
+      "file": "focused/bundle-size.log",
+      "bytes": 669,
+      "sha256": "3f61a93d6c96f6b66aa36dcfb70c0986068aba9589c57e9cf3b869f6f9abbf36"
+    },
+    {
+      "file": "focused/evidence-lint.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "focused/lint.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "focused/native-tests.log",
+      "bytes": 17411,
+      "sha256": "8fba53fdabc1967dbdf167d362bb04dafaf1aa029bb63fce0caae100353344ae"
+    },
+    {
+      "file": "focused/ui-tests.log",
+      "bytes": 2222,
+      "sha256": "d6d7198401710208dea67ea850da3d07013924058354a240e8796d49c56cbbf3"
+    },
+    {
+      "file": "focused/ui-types-current-pdf-wip.log",
+      "bytes": 1273,
+      "sha256": "e19f0c0e690a3f07b6a197940ccf1140b4f4b3c3b6267ddd933ea71471385803"
+    },
+    {
+      "file": "focused/ui-types.log",
+      "bytes": 148,
+      "sha256": "68ec6d80c2b25b081d386c6e6a0dc0ed1f04d85de012b574555495bfb768041b"
+    },
+    {
+      "file": "focused-evidence.json",
+      "bytes": 2329,
+      "sha256": "dbf349c2cdc1ef3effe16de4df1cebc7df907b375340ac71ba775614b97a9153"
+    },
+    {
+      "file": "independent-native-evidence.json",
+      "bytes": 2319,
+      "sha256": "5daaebb72c2737a96836a08a47335d4c8e6890e58cd8bb9f2c28f5c1a03e65f0"
+    },
+    {
+      "file": "independent-print-evidence.json",
+      "bytes": 512,
+      "sha256": "22acd0b354543286a2558a1df5c3d33f293d1f6c5821654225b684916f57d03f"
+    },
+    {
+      "file": "print-render/contact.png",
+      "bytes": 75018,
+      "sha256": "8526f1ec4c3a2da24cef0c90e4e41bc43c894e4d788a48fcb062a1a19af672fd"
+    },
+    {
+      "file": "print-render/extracted-text.txt",
+      "bytes": 177,
+      "sha256": "b0ea09e7df71ad80b0025c5b20f76a69611b158b2a3f347f09f046a0a1ae1d23"
+    },
+    {
+      "file": "print-render/view-1.png",
+      "bytes": 36797,
+      "sha256": "115e991bc3cd7f0fe072d39b98f05cc3cb92b42ba172adcea910ded73670dbfd"
+    },
+    {
+      "file": "print-render/view-2.png",
+      "bytes": 4920,
+      "sha256": "3599826ce129177f5305b05dd5ba7154a7af514929e70b16b0c15ab9943d9710"
+    },
+    {
+      "file": "print-render/view-3.png",
+      "bytes": 17943,
+      "sha256": "87f3d2e63c15c305ea162b93965b17de5973f28c4e0694f733cb16b8dd818fff"
+    },
+    {
+      "file": "print-render/view-4.png",
+      "bytes": 10418,
+      "sha256": "7e7017cd955fc0fdfc5f0002e0aa3f1f774f992ce411242d7cfd60a0429911dd"
+    },
+    {
+      "file": "prototype-id-review/StudioSheet-before-map.tsx.txt",
+      "bytes": 183489,
+      "sha256": "65214050a549a10669adb2ca1c45da2ebc7037aeee71c3875cabd218643e9b9d"
+    },
+    {
+      "file": "prototype-id-review/archive.json",
+      "bytes": 584,
+      "sha256": "7b19cb46f7e68933682763858e60b1d4f5621ae4aeac19d299f285c67b1661a4"
+    },
+    {
+      "file": "prototype-id-review/prototype-before.log",
+      "bytes": 3039,
+      "sha256": "85d1482747c8d0188c0b3f8a02cfbbec38ecd62f082d4afbababf9e65bca0966"
+    },
+    {
+      "file": "reference/DocumentHolder.js.txt",
+      "bytes": 26238,
+      "sha256": "656d0bcfcfa20f3f2c11c7b5a97362190dc8d130e97a9eb786e44ac076684382"
+    },
+    {
+      "file": "reference/WorkbookView.js.txt",
+      "bytes": 283580,
+      "sha256": "5f2d308f99ff578659de0bfb0c8074bec37a2fa7e6c0d02b43921ef3bac016f8"
+    },
+    {
+      "file": "reference/api.js.txt",
+      "bytes": 387172,
+      "sha256": "501f0b8f3e334bd443920c5f12ac52aefa74c1a9eb066a69c31be39aa27de5bd"
+    },
+    {
+      "file": "reference/exceljs-sheet-view-xform.js.txt",
+      "bytes": 6262,
+      "sha256": "782fb944503577ca2cd70ebef6c539ab88434b223f1c4d45924f6ef282b14a6f"
+    },
+    {
+      "file": "reference-evidence.json",
+      "bytes": 2526,
+      "sha256": "fdffb3bc75fec387fa14da57b6ce7c56208a66bf2aec22b4c1c61df8dea25ef3"
+    },
+    {
+      "file": "root-integration/first-workspace-native-view.txt",
+      "bytes": 21503,
+      "sha256": "518054e0860b1fb973454357c3246146c86924371b44a188d34ab276545271c4"
+    },
+    {
+      "file": "root-integration/workspace-native-view.txt",
+      "bytes": 9892,
+      "sha256": "052113d6adf5f242097dadf59b5daed7d189317dd8136652d00ec2565e46e44b"
+    },
+    {
+      "file": "second-browser-failure/archive.json",
+      "bytes": 3588,
+      "sha256": "e5958d01da687dc55045aa68d5eb1dd97f4d4b62e267cb0e0021bf6e6be4edb5"
+    },
+    {
+      "file": "second-browser-failure/office-studio-sheet-view.spec.ts.txt",
+      "bytes": 23908,
+      "sha256": "48d6cdbf4db2f83a1afbf9d1d53130d4242b482e4a1d11f09b0f27147534f138"
+    },
+    {
+      "file": "second-browser-failure/runner/artifacts/.last-run.json",
+      "bytes": 96,
+      "sha256": "6f3ecf5a3f248712581cad7b43d0572e4576c5a2d9cbc2a488d9a53af002cdee"
+    },
+    {
+      "file": "second-browser-failure/runner/artifacts/office-studio-sheet-view-v-47471-ight-dark-and-320px-layouts-chromium/error-context.md",
+      "bytes": 41104,
+      "sha256": "cf5be3e5ded32f2914b7a5d575e729a633db253d4fc96dffb744232908836604"
+    },
+    {
+      "file": "second-browser-failure/runner/artifacts/office-studio-sheet-view-v-47471-ight-dark-and-320px-layouts-chromium/trace.zip",
+      "bytes": 8006977,
+      "sha256": "f37506e0bcb2694d2108659123686655ed73feec8532ead0851da1b02413edd9"
+    },
+    {
+      "file": "second-browser-failure/runner/results.json",
+      "bytes": 12133,
+      "sha256": "423444b1ff5d14f17d974acd314f1483a0ab08e443162edbf59013b95043bb24"
+    },
+    {
+      "file": "second-browser-failure/runner/run.log",
+      "bytes": 3076,
+      "sha256": "dcd0f568da1ef0dae52b628a3c0ae9e303b01cc512a0dcfdfc55a4baa7aa5c16"
+    },
+    {
+      "file": "second-browser-failure/view-after-cancel.xlsx",
+      "bytes": 9862,
+      "sha256": "009a5519a7d304eba41b3e1dd13495e787fc32388c4bf970ae160c8291123e56"
+    },
+    {
+      "file": "second-browser-failure/view-fill-400.png",
+      "bytes": 163819,
+      "sha256": "4593b724fca55accd316ad126521f31fc6a95f431576f18efce1770fd3546940"
+    },
+    {
+      "file": "second-browser-failure/view-preview-guards.png",
+      "bytes": 157088,
+      "sha256": "2cb3be668147a509a35e1d7a86b52f2769f34425ff57480682ed627f0835033c"
+    },
+    {
+      "file": "second-browser-failure/view-preview-source.xlsx",
+      "bytes": 9112,
+      "sha256": "fa4b5ec7493b18e1759c644cd9e5ce7045d914872d6deeac92ab3e9ca242b06c"
+    },
+    {
+      "file": "second-browser-failure/view-print-100.html",
+      "bytes": 47156,
+      "sha256": "26de5d83cfacc3d64214d5f41cd4635836c700e31bd1d38cad89f5b30798371a"
+    },
+    {
+      "file": "second-browser-failure/view-print-400.html",
+      "bytes": 47156,
+      "sha256": "26de5d83cfacc3d64214d5f41cd4635836c700e31bd1d38cad89f5b30798371a"
+    },
+    {
+      "file": "second-browser-failure/view-print.pdf",
+      "bytes": 52100,
+      "sha256": "fab324a1fa9fe95d6c64ca3af44e8fc5bc85d336245c26293ed2066748ee945d"
+    },
+    {
+      "file": "second-browser-failure/view-print.png",
+      "bytes": 54565,
+      "sha256": "859953296335ce4e2706f0d06d446fb130c9f1d557797f829de06c5fff03fbce"
+    },
+    {
+      "file": "second-browser-failure/view-protected.xlsx",
+      "bytes": 10026,
+      "sha256": "daa1ba58be5c02bdd22f0c21d400ef8d21ae8567ca748e0a034b2fa7338434b8"
+    },
+    {
+      "file": "second-browser-failure/view-readonly-preview.xlsx",
+      "bytes": 9862,
+      "sha256": "66d5fd17ae323ca0c52b597f8283be38329a3efd58b432c436cdeaf266dde9a6"
+    },
+    {
+      "file": "second-browser-failure/view-reopened-400.png",
+      "bytes": 170517,
+      "sha256": "c70b8f169a425aec6d65b435fd0e54825431ed1411a25aeb86d45e68159010ba"
+    },
+    {
+      "file": "second-browser-failure/view-roundtrip-1.xlsx",
+      "bytes": 9902,
+      "sha256": "bd41cab4405bf3c3315e92a302524d553c95e499bf3692b1357d897bc6968385"
+    },
+    {
+      "file": "second-browser-failure/view-roundtrip-2.xlsx",
+      "bytes": 9894,
+      "sha256": "55247961a57ec5ee9f0417768f8c19656f7cebdb6ba65a0b2180ecc9fa5f8123"
+    },
+    {
+      "file": "second-browser-failure/view-source.xlsx",
+      "bytes": 9112,
+      "sha256": "5672859944e4bb702b770b53de5de121b2c7e13fbc3f13d8176da754043214c4"
+    },
+    {
+      "file": "second-browser-failure/view-visual-source.xlsx",
+      "bytes": 9112,
+      "sha256": "d6c09f7fceefa2c352708a535f6da40eb7d0c9d18153551f2aafc2cc712c4233"
+    },
+    {
+      "file": "third-browser-failure/archive.json",
+      "bytes": 4205,
+      "sha256": "9322385db22638d601e7fe22569270db1d8a351a6511715aad9cafd1d3d970d6"
+    },
+    {
+      "file": "third-browser-failure/office-studio-sheet-view.spec.ts.txt",
+      "bytes": 24366,
+      "sha256": "815b5911d9db2095bb49fa50b90ab259aed8643f44917e0fa7480dbd90a1eddf"
+    },
+    {
+      "file": "third-browser-failure/runner/artifacts/.last-run.json",
+      "bytes": 96,
+      "sha256": "6f3ecf5a3f248712581cad7b43d0572e4576c5a2d9cbc2a488d9a53af002cdee"
+    },
+    {
+      "file": "third-browser-failure/runner/artifacts/office-studio-sheet-view-v-47471-ight-dark-and-320px-layouts-chromium/error-context.md",
+      "bytes": 94516,
+      "sha256": "1826cd3b2cd98970d174470c668c42125c468a62a8f172d9ca33b44d66f03adc"
+    },
+    {
+      "file": "third-browser-failure/runner/artifacts/office-studio-sheet-view-v-47471-ight-dark-and-320px-layouts-chromium/trace.zip",
+      "bytes": 8933908,
+      "sha256": "024d9bcb90004727bad406201025b39959f05387f15950a76197ffc8d65c3d7c"
+    },
+    {
+      "file": "third-browser-failure/runner/results.json",
+      "bytes": 11379,
+      "sha256": "5d74638f5bb4e333faaaca9b6d15db137c6dccf2b3354f981f4c70f7d65263dc"
+    },
+    {
+      "file": "third-browser-failure/runner/run.log",
+      "bytes": 2941,
+      "sha256": "4379bb82b51587ecab6834b8667cc809114ef5239156681f3cfa12cef7c20544"
+    },
+    {
+      "file": "third-browser-failure/view-after-cancel.xlsx",
+      "bytes": 9862,
+      "sha256": "9e6d503368b0553ae49beb2d79415054ba25243e52f5ccb65c840dac3fa07620"
+    },
+    {
+      "file": "third-browser-failure/view-dark-1280.png",
+      "bytes": 176581,
+      "sha256": "6c631408c5019fde3711d0bf42945f0adbe004c902627b61a53dfce76934a6fa"
+    },
+    {
+      "file": "third-browser-failure/view-dark-320.png",
+      "bytes": 43123,
+      "sha256": "c732d394a0a9e9b86e8a1804472b0db3a78497249cdb9a6f390e2eb50170c36b"
+    },
+    {
+      "file": "third-browser-failure/view-fill-400.png",
+      "bytes": 163819,
+      "sha256": "4593b724fca55accd316ad126521f31fc6a95f431576f18efce1770fd3546940"
+    },
+    {
+      "file": "third-browser-failure/view-light-1280.png",
+      "bytes": 173618,
+      "sha256": "aa1a2b6f734c667e02f080a354785beed44c638e4bc45553d2934b38b941a0b1"
+    },
+    {
+      "file": "third-browser-failure/view-light-320.png",
+      "bytes": 37516,
+      "sha256": "869e088fe5e1943b8b1b438ab55179531143e1017fd7149035df6e857f12874d"
+    },
+    {
+      "file": "third-browser-failure/view-preview-guards.png",
+      "bytes": 156979,
+      "sha256": "0d9480b602691f1ccc19ab88ebce5b4e1d8f33ea0a9933985499450fd2ded05f"
+    },
+    {
+      "file": "third-browser-failure/view-preview-source.xlsx",
+      "bytes": 9112,
+      "sha256": "4cea99f47613bc80acced0e6c4e132e60e0d1ed9ecd858adb0503af593124e1b"
+    },
+    {
+      "file": "third-browser-failure/view-print-100.html",
+      "bytes": 47156,
+      "sha256": "26de5d83cfacc3d64214d5f41cd4635836c700e31bd1d38cad89f5b30798371a"
+    },
+    {
+      "file": "third-browser-failure/view-print-400.html",
+      "bytes": 47156,
+      "sha256": "26de5d83cfacc3d64214d5f41cd4635836c700e31bd1d38cad89f5b30798371a"
+    },
+    {
+      "file": "third-browser-failure/view-print.pdf",
+      "bytes": 52100,
+      "sha256": "834502f05d0f4de6cff7ed6034658d765b0e58509493e4db18d04b6be43d2253"
+    },
+    {
+      "file": "third-browser-failure/view-print.png",
+      "bytes": 54565,
+      "sha256": "859953296335ce4e2706f0d06d446fb130c9f1d557797f829de06c5fff03fbce"
+    },
+    {
+      "file": "third-browser-failure/view-protected.xlsx",
+      "bytes": 10026,
+      "sha256": "24d2070b8a8f091daf7c0de97e25066f7a3742aec2fbad7a1b528e0f5db65891"
+    },
+    {
+      "file": "third-browser-failure/view-readonly-preview.xlsx",
+      "bytes": 9862,
+      "sha256": "ea3a75539109dbb337b23820abc7bd9a1e3cf2125ad22ea176d155a8e2a5011c"
+    },
+    {
+      "file": "third-browser-failure/view-reopened-400.png",
+      "bytes": 170555,
+      "sha256": "7cf78162805a1a62ccf15bed6cb5af5086106f8fec11b875bd9c4b57fbf9262e"
+    },
+    {
+      "file": "third-browser-failure/view-roundtrip-1.xlsx",
+      "bytes": 9903,
+      "sha256": "2d34027d2b90afb0a4a03c379b0b427f679e1d4e8013d7849605dfa9a110d025"
+    },
+    {
+      "file": "third-browser-failure/view-roundtrip-2.xlsx",
+      "bytes": 9895,
+      "sha256": "d337fb0d457197fac32bc6c098bd0ca460b1d42a96cf9730dcc83d153aa56008"
+    },
+    {
+      "file": "third-browser-failure/view-source.xlsx",
+      "bytes": 9113,
+      "sha256": "d3ca60cdf11b974ec5cc35368c5e2374bd0de7e15391ee0bbd8e7825f23e3fbb"
+    },
+    {
+      "file": "third-browser-failure/view-visual-source.xlsx",
+      "bytes": 9112,
+      "sha256": "884c441981a8b61bcfd69ff50188b0daccd1f6014e1ac6ba73b08660ce250609"
+    },
+    {
+      "file": "view-after-cancel.xlsx",
+      "bytes": 9872,
+      "sha256": "1d9837038576b7ed4912b426194bdf2debf464cfb02cfac084afed2012825f40"
+    },
+    {
+      "file": "view-dark-1280.png",
+      "bytes": 176591,
+      "sha256": "dd2576b853d20e8fc06bc32acf23a0edadd3f7a5c2e373ffd44ba9f36d79f68b"
+    },
+    {
+      "file": "view-dark-320.png",
+      "bytes": 43149,
+      "sha256": "6ae0a92ae60aac3189c03e60f35caa2f87f60cdccde50a7f1c1c8a719c8cc8e4"
+    },
+    {
+      "file": "view-editor-320.png",
+      "bytes": 16741,
+      "sha256": "58ae5a6bbce9e8326c2bd25f3ea9a3a3f06a91c905305940c2bd59170c16cad3"
+    },
+    {
+      "file": "view-fill-400.png",
+      "bytes": 163823,
+      "sha256": "b25c8365f95301eab61c988b2bd0661adf2111b8c0a22caa2e08784fe11bdf39"
+    },
+    {
+      "file": "view-light-1280.png",
+      "bytes": 173609,
+      "sha256": "56d1fda5283e7284f15467b96579f5d84e5af00b98087fbb9418978d23eb57a8"
+    },
+    {
+      "file": "view-light-320.png",
+      "bytes": 42138,
+      "sha256": "fa590a2c344b469af393c1f27f8413d6a1d354fc60d708143b45b7e369691e54"
+    },
+    {
+      "file": "view-preview-guards.png",
+      "bytes": 104641,
+      "sha256": "08febeff2bd497ae668fb3dfda43e7ae11258be9d668036919c96227f7599128"
+    },
+    {
+      "file": "view-preview-source.xlsx",
+      "bytes": 9121,
+      "sha256": "6cee28a7e9a2d2217aac50a336b85c28fc2efaf3822ec87a82e42f81609237de"
+    },
+    {
+      "file": "view-print-100.html",
+      "bytes": 47156,
+      "sha256": "ac92fe96790f1aa163d37004abf5178d7d118710a3c2bf49f7d15e6ef698b14c"
+    },
+    {
+      "file": "view-print-400.html",
+      "bytes": 47156,
+      "sha256": "ac92fe96790f1aa163d37004abf5178d7d118710a3c2bf49f7d15e6ef698b14c"
+    },
+    {
+      "file": "view-print.pdf",
+      "bytes": 52103,
+      "sha256": "079ee57fe7a1401cc4c993912035d0db6efb191c5688dd211cde844d73e7e3bc"
+    },
+    {
+      "file": "view-print.png",
+      "bytes": 54666,
+      "sha256": "ec1d9334f02b7efa9688290bed4eb500979759aa6a6351f3d7815c0dc635a7a4"
+    },
+    {
+      "file": "view-protected.xlsx",
+      "bytes": 10036,
+      "sha256": "ce225a8edf5115d7f79dfcb0b1a6dbc2e9ed74f8ae8fbb5fcdab8cbfbce8908a"
+    },
+    {
+      "file": "view-readonly-preview.xlsx",
+      "bytes": 9872,
+      "sha256": "63233144830db62124dab5d02059917249327dafa92c102db1625e89ae69559a"
+    },
+    {
+      "file": "view-reopened-400.png",
+      "bytes": 170523,
+      "sha256": "55e7caed00f741af3c63c07b20eaf2f3a6f7af296eec35e7ca86926fced2a908"
+    },
+    {
+      "file": "view-roundtrip-1.xlsx",
+      "bytes": 9913,
+      "sha256": "77cd10153597a108100fce3ec5be0a4eccf4a8545d4898ba8bb3d65246e38dad"
+    },
+    {
+      "file": "view-roundtrip-2.xlsx",
+      "bytes": 9905,
+      "sha256": "c4553492973daaa379cfe8a474a8e2755230aca6634d154885676888552ae007"
+    },
+    {
+      "file": "view-source.xlsx",
+      "bytes": 9121,
+      "sha256": "4505adbdf1fe53220228924be4fe10e80263edcc4e38600d088aeea67d3f02f2"
+    },
+    {
+      "file": "view-visual-source.xlsx",
+      "bytes": 9121,
+      "sha256": "4d51179dd21705b913484b450fa6d52c4a4f600d69e9ec230b211dc6b6f96882"
+    }
+  ]
+}

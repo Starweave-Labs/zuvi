@@ -1,0 +1,18 @@
+
+> zuvi@0.1.0 lint /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59
+> eslint .
+
+
+/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/after-fixed/probe.mjs
+   1:31  error  'mkdir' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+  21:9   error  'TextDecoder' is not defined                                             no-undef
+  25:19  error  'Blob' is not defined                                                    no-undef
+
+/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/before-pinned/probe.mjs
+   1:31  error  'mkdir' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+  21:9   error  'TextDecoder' is not defined                                             no-undef
+  25:19  error  'Blob' is not defined                                                    no-undef
+
+✖ 6 problems (6 errors, 0 warnings)
+
+ ELIFECYCLE  Command failed with exit code 1.

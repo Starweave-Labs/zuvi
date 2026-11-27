@@ -1,0 +1,35 @@
+[WebServer] (node:10485) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:10498) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+[WebServer] [BABEL] Note: The code generator has deoptimised the styling of /var/folders/9n/_523pt1s3gqg0f165zsdbldc0000gn/T/zuvi-office-e2e-vite-5270-10479/deps/react-dom_client.js?v=6bf8d728 as it exceeds the max of 500KB.
+  ✘  1 [chromium] › e2e/office-studio-word-character-guards.spec.ts:32:1 › guards character operations during IME, steps a shared empty header and saves all five Unicode case modes through two real DOCX reopens (4.6s)
+
+
+  1) [chromium] › e2e/office-studio-word-character-guards.spec.ts:32:1 › guards character operations during IME, steps a shared empty header and saves all five Unicode case modes through two real DOCX reopens 
+
+    Error: locator.evaluate: TypeError: Cannot read properties of null (reading 'focus')
+        at eval (eval at evaluate (:370:30), <anonymous>:2:48)
+        at UtilityScript.evaluate (<anonymous>:372:16)
+        at UtilityScript.<anonymous> (<anonymous>:1:44)
+        at eval (eval at evaluate (:370:30), <anonymous>:2:48)
+        at UtilityScript.evaluate (<anonymous>:372:16)
+        at UtilityScript.<anonymous> (<anonymous>:1:44)
+        at select (/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-character-guards.spec.ts:13:14)
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-character-guards.spec.ts:74:81
+
+    Error Context: ../../../../../../tmp/zuvi-word-character-guards-browser-first-output/office-studio-word-charact-52599-rough-two-real-DOCX-reopens-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../tmp/zuvi-word-character-guards-browser-first-output/office-studio-word-charact-52599-rough-two-real-DOCX-reopens-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../../../tmp/zuvi-word-character-guards-browser-first-output/office-studio-word-charact-52599-rough-two-real-DOCX-reopens-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/office-studio-word-character-guards.spec.ts:32:1 › guards character operations during IME, steps a shared empty header and saves all five Unicode case modes through two real DOCX reopens 

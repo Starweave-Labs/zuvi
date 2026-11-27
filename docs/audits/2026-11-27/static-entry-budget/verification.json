@@ -1,0 +1,76 @@
+{
+  "capturedAt": "2026-11-26T21:58:25.522Z",
+  "source": "packages/ui/src/config/locale.ts",
+  "sourceSha256": "0a9996874c06dae278f0f81fc53d72a5bea9c874d8bfd0c72c388fef62104c13",
+  "staticModules": [
+    {
+      "file": "index.js",
+      "bytes": 3914,
+      "gzip": 1754,
+      "sha256": "1590a60fe3b26ec25974cbb5c40849dc1e00e2624bbbb0ee121330ec6a3be2a1",
+      "map": true
+    },
+    {
+      "file": "index-BIY81bCp.js",
+      "bytes": 420254,
+      "gzip": 122380,
+      "sha256": "9ef0009f10ebed9e12b9569b9f91d6ff8507eea7ab7541728296c80c1c29c27f",
+      "map": true
+    }
+  ],
+  "bytes": 424168,
+  "gzip": 124134,
+  "budget": 124928,
+  "buildLog": "ui-build.log",
+  "equivalence": {
+    "typed": true,
+    "locales": 10,
+    "sections": 17,
+    "sectionComparisons": 170,
+    "retainedStrings": 1320,
+    "exportNames": [
+      "zhCN",
+      "enUS",
+      "zhTW",
+      "jaJP",
+      "koKR",
+      "frFR",
+      "deDE",
+      "esES",
+      "ruRU",
+      "ptBR"
+    ],
+    "checks": [
+      "all values",
+      "all keys and key order",
+      "property descriptors and prototypes",
+      "locale objects independent",
+      "partial merge and weekdays array copy",
+      "mutation isolation"
+    ],
+    "baselineSourceSha256": "c0b89cf247f394a3598f985a558ebb15658b220fa55f9841b1dc89edea338dbf",
+    "compactedSourceSha256": "0a9996874c06dae278f0f81fc53d72a5bea9c874d8bfd0c72c388fef62104c13"
+  },
+  "configProviderTests": 14,
+  "headroom": 794,
+  "verification": {
+    "uiBuild": "passed",
+    "uiDeclarationDiagnostics": "none",
+    "browserBuild": "passed",
+    "distribution": "passed",
+    "configProvider": {
+      "passed": 14,
+      "failed": 0
+    },
+    "consumer": {
+      "status": "blocked-by-stale-cli-sources",
+      "registryEqual": true,
+      "checkedSources": 487,
+      "staleSources": 13,
+      "rebuilt": false
+    },
+    "localeSourceEsmCommonJsFixture": "passed",
+    "scopedLint": "passed",
+    "staticHashesUnchangedAfterChecks": true
+  }
+}

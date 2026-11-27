@@ -1,0 +1,95 @@
+{
+  "status": "rendered-awaiting-visual",
+  "pages": [
+    {
+      "pdf": "p012-freetext-round-1.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/p012-freetext-round-1-page-1.png"
+    },
+    {
+      "pdf": "p012-freetext-round-2.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/p012-freetext-round-2-page-1.png"
+    },
+    {
+      "pdf": "p014-markers-round-1.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/p014-markers-round-1-page-1.png"
+    },
+    {
+      "pdf": "p014-markers-round-2.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/p014-markers-round-2-page-1.png"
+    },
+    {
+      "pdf": "p016-geometry-round-1.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/p016-geometry-round-1-page-1.png"
+    },
+    {
+      "pdf": "p016-geometry-round-2.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/p016-geometry-round-2-page-1.png"
+    },
+    {
+      "pdf": "gesture-history-round-1.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/gesture-history-round-1-page-1.png"
+    },
+    {
+      "pdf": "gesture-history-round-2.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/gesture-history-round-2-page-1.png"
+    },
+    {
+      "pdf": "p015-discussion-round-1.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/p015-discussion-round-1-page-1.png"
+    },
+    {
+      "pdf": "p015-discussion-round-2.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/p015-discussion-round-2-page-1.png"
+    },
+    {
+      "pdf": "legacy-migration-round-1.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/legacy-migration-round-1-page-1.png"
+    },
+    {
+      "pdf": "legacy-migration-round-2.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/legacy-migration-round-2-page-1.png"
+    },
+    {
+      "pdf": "nonempty-recipe-round-1.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/nonempty-recipe-round-1-page-1.png"
+    },
+    {
+      "pdf": "nonempty-recipe-round-1.pdf",
+      "page": 2,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/nonempty-recipe-round-1-page-2.png"
+    },
+    {
+      "pdf": "nonempty-recipe-round-1.pdf",
+      "page": 3,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/nonempty-recipe-round-1-page-3.png"
+    },
+    {
+      "pdf": "nonempty-recipe-round-2.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/nonempty-recipe-round-2-page-1.png"
+    },
+    {
+      "pdf": "nonempty-recipe-round-2.pdf",
+      "page": 2,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/nonempty-recipe-round-2-page-2.png"
+    },
+    {
+      "pdf": "nonempty-recipe-round-2.pdf",
+      "page": 3,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/nonempty-recipe-round-2-page-3.png"
+    }
+  ]
+}

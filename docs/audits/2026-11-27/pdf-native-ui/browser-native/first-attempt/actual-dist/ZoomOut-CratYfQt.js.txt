@@ -1,0 +1,2 @@
+"use client";import{jsxs as r,jsx as t}from"react/jsx-runtime";import{S as c}from"./index-Dfwfv4f2.js";function i({spin:i,...n}){return r(c,{...n,children:[t("circle",{cx:"11",cy:"11",r:"8"}),t("path",{d:"m21 21-4.35-4.35"}),t("path",{d:"M11 8v6"}),t("path",{d:"M8 11h6"})]})}function n({spin:i,...n}){return r(c,{...n,children:[t("circle",{cx:"11",cy:"11",r:"8"}),t("path",{d:"m21 21-4.35-4.35"}),t("path",{d:"M8 11h6"})]})}export{i as Z,n as a};
+//# sourceMappingURL=ZoomOut-CratYfQt.js.map

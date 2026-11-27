@@ -1,0 +1,15 @@
+[WebServer] (node:81848) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:81869) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 5 tests using 1 worker
+
+[WebServer] [BABEL] Note: The code generator has deoptimised the styling of /var/folders/9n/_523pt1s3gqg0f165zsdbldc0000gn/T/zuvi-office-e2e-vite-5276-81841/deps/react-dom_client.js?v=2db0e89a as it exceeds the max of 500KB.
+  ✓  1 [chromium] › e2e/office-studio-pdf-composition.spec.ts:71:1 › merges native pages and fields with editable marks, paired history, persistence, old-version export and two PDF reopens (23.4s)
+  ✓  2 [chromium] › e2e/office-studio-pdf-composition.spec.ts:132:1 › extracts radio pages with an explicit value policy, native V/DV checks, undo and repeated reopens (6.6s)
+  ✓  3 [chromium] › e2e/office-studio-pdf-composition.spec.ts:148:1 › keeps rejected field conflicts unchanged and verifies the actual merge and extraction dialogs in light, dark and 320px (4.7s)
+  ✓  4 [chromium] › e2e/office-studio-pdf-pages.spec.ts:45:1 › edits native PDF page dimensions, copies and removes pages, and preserves fields through history and two reopens (10.7s)
+  ✓  5 [chromium] › e2e/office-studio-pdf-pages.spec.ts:152:1 › moves native page references by dragging a thumbnail after the final page (2.7s)
+
+  5 passed (51.7s)

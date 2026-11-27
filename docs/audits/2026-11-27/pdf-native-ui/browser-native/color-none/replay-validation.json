@@ -1,0 +1,260 @@
+{
+  "status": "passed",
+  "scope": "QA probe import/output isolation only; no production changes",
+  "variants": [
+    {
+      "variant": "before-pinned",
+      "exitCode": 0,
+      "output": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/before-pinned",
+      "semanticMatchesOriginalEvidence": true,
+      "originalFilesUnchanged": [
+        {
+          "name": "freeText-cleared.pdf",
+          "sha256": "2ef29a2d5b45ec3017272faace903e6e56e5e21f6cc8d70579fd2f36d0d3cd21"
+        },
+        {
+          "name": "freeText-initial.pdf",
+          "sha256": "5e37bb96c26dc04f05008a6dafb2c20d25b4367f5604b6916afd8d65e9e72313"
+        },
+        {
+          "name": "freeText-repainted.pdf",
+          "sha256": "222c03d7eb2fef24593f44987089eb026e8b8130ec35d1c9ed668e69e3ee769e"
+        },
+        {
+          "name": "highlight-cleared.pdf",
+          "sha256": "1fcb549d1a16e91492230f7378877281c79b7ad5067560d84759caecbd015753"
+        },
+        {
+          "name": "highlight-initial.pdf",
+          "sha256": "8f09fd8facf2d4bb1894026284671ada52ba8ddae5a995722cda8f11755524da"
+        },
+        {
+          "name": "highlight-repainted.pdf",
+          "sha256": "304d12325e8d0f3cf5f86216b595fb39a577ef55a8c159d0eb41e91fe3b26321"
+        },
+        {
+          "name": "original.pdf",
+          "sha256": "78eb0a7b35b23c633d9e1f07b6beb58a572448254c408fe671ff12ac794bee4e"
+        },
+        {
+          "name": "probe.mjs.txt",
+          "sha256": "d734f060357d84e788ac3c6b795dc625d18554911ebfb7759a60d84e443e3a77"
+        },
+        {
+          "name": "probe.txt",
+          "sha256": "334d7e267c6dc791f9f6c8ecd4fa5c676dd4b01a5b237c41d2fcb0d7a730f198"
+        },
+        {
+          "name": "results.json",
+          "sha256": "4cfdc6b39d99c374933af961645d9afd76f3c91fdaf71e06c34cfbb4a4bd88b2"
+        },
+        {
+          "name": "square-cleared.pdf",
+          "sha256": "36ab7b7a1bcb9015bc6daf591900477473d7842d92c14fed9b3ad12442348934"
+        },
+        {
+          "name": "square-initial.pdf",
+          "sha256": "e27000ec4b3b60838e3b4c65ed7d97c8b2058501327606fa1b7cf97b1393acaf"
+        },
+        {
+          "name": "square-repainted.pdf",
+          "sha256": "877212a08beeb5a82eac10c13ebb504567a7065a2ecf83fa8145a4cf40901d9c"
+        }
+      ],
+      "guards": {
+        "missingOutput": "rejected",
+        "nonemptyOutput": "rejected"
+      },
+      "replayFiles": [
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/before-pinned/freeText-cleared.pdf",
+          "bytes": 7438,
+          "sha256": "c5324dfcc7b4728b6cdea41596ac787e2c87078ff2303817b6f583c2301acedb"
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/before-pinned/freeText-initial.pdf",
+          "bytes": 7094,
+          "sha256": "98b5c406a7d56479239b55f61b69753110f0ec0318233920e832de82b8890249"
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/before-pinned/freeText-repainted.pdf",
+          "bytes": 7814,
+          "sha256": "e5ad6b930c947aa698b2acdbbe87df8039a5d93640917121d01c8f6a668abbbd"
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/before-pinned/highlight-cleared.pdf",
+          "bytes": 7160,
+          "sha256": "a19481821e0f39bbeb8b6bcc00fc5383dedb913fc1f7201e86f716b47c95c62c"
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/before-pinned/highlight-initial.pdf",
+          "bytes": 6894,
+          "sha256": "c386f0b818b096c49cb50cb55c888cb9c68c0dfa3fce3f4fe59b906de4ebe34f"
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/before-pinned/highlight-repainted.pdf",
+          "bytes": 7471,
+          "sha256": "1882eaf15accb0d352ae9acd458a6a35ecc5ca702b82e469895727fa0b85a02b"
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/before-pinned/original.pdf",
+          "bytes": 3929,
+          "sha256": "78eb0a7b35b23c633d9e1f07b6beb58a572448254c408fe671ff12ac794bee4e"
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/before-pinned/replay.txt",
+          "bytes": 987,
+          "sha256": "334d7e267c6dc791f9f6c8ecd4fa5c676dd4b01a5b237c41d2fcb0d7a730f198"
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/before-pinned/results.json",
+          "bytes": 5230,
+          "sha256": "e9e8d9e702744ffdd2a929b3de4f6870e158788eda66013f920dfff6ce06f897"
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/before-pinned/square-cleared.pdf",
+          "bytes": 7064,
+          "sha256": "23aada48bd13bab07681692d3a4bf82dfa7b3d5c433b283992957a79709fc0c9"
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/before-pinned/square-initial.pdf",
+          "bytes": 6804,
+          "sha256": "31cb2980dbb92ce19258cc98c14135753af8aa4087c3331cbc0d96c352721734"
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/before-pinned/square-repainted.pdf",
+          "bytes": 7348,
+          "sha256": "d1132a9c10db44cbcaf10edf4728fd0c579310f9ca8223c585a7a647721b0f24"
+        }
+      ],
+      "executedTemporaryDirectory": "/tmp/zuvi-pdf-native-none-probe-before-pinned-ByN3ZU"
+    },
+    {
+      "variant": "after-fixed",
+      "exitCode": 0,
+      "output": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/after-fixed",
+      "semanticMatchesOriginalEvidence": true,
+      "originalFilesUnchanged": [
+        {
+          "name": "freeText-cleared.pdf",
+          "sha256": "62fd395f3d4e47384f8735cf1b6f4031d7c98073142da8c568defc2345c5e273"
+        },
+        {
+          "name": "freeText-initial.pdf",
+          "sha256": "30e4f4faf3d9d3671ceacb64398bff25f574f4ad9820ab65048d3b2bb579f8c1"
+        },
+        {
+          "name": "freeText-repainted.pdf",
+          "sha256": "e4ac6f0762a59dec2c707e40701699400b46ac6c2b03d7ce13bc9523facc9f45"
+        },
+        {
+          "name": "highlight-cleared.pdf",
+          "sha256": "6d7da243a27e10982472d84e13f0b50155548043ba754b925344f9f51c8693de"
+        },
+        {
+          "name": "highlight-initial.pdf",
+          "sha256": "3d4e45f8fbd721a7fbfe0910eefbaee3cf89d5908f10341d3bd42412141b7c7a"
+        },
+        {
+          "name": "highlight-repainted.pdf",
+          "sha256": "dff0cf4f4e683d2927424a02b57f38299eabdad58ff378e95d7d895381d4187a"
+        },
+        {
+          "name": "original.pdf",
+          "sha256": "78eb0a7b35b23c633d9e1f07b6beb58a572448254c408fe671ff12ac794bee4e"
+        },
+        {
+          "name": "probe.mjs.txt",
+          "sha256": "3133ba589b9f786f1efba3fa27f75cd402ceb00704379e9e61a6d71d8fc4cd2e"
+        },
+        {
+          "name": "probe.txt",
+          "sha256": "048ae607152f0aade85e004abf3ad321a96cb031f72e4423bba3070171b3b6a8"
+        },
+        {
+          "name": "results.json",
+          "sha256": "0a5e12ed5641d777860e97c34e4e1132a1126d03747a58f3156acd2bde2bda8a"
+        },
+        {
+          "name": "square-cleared.pdf",
+          "sha256": "a62c5db4a4f034f5df02f44640ebc01ae4c3d5638f5e2f76c23f0d1c1bb80f01"
+        },
+        {
+          "name": "square-initial.pdf",
+          "sha256": "083f2f21fba85d8a293c44d0bfb40cb8519ca6c05f6d081465a59724a89e6c23"
+        },
+        {
+          "name": "square-repainted.pdf",
+          "sha256": "844c71cdfafce2cea37f0d3957d37a597908eb1e63727aed4e219dab0ccd2cb7"
+        }
+      ],
+      "guards": {
+        "missingOutput": "rejected",
+        "nonemptyOutput": "rejected"
+      },
+      "replayFiles": [
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/after-fixed/freeText-cleared.pdf",
+          "bytes": 7453,
+          "sha256": "0d16fc7ef9aa9e49b98524ca36952ffafb3b2b2a5aeaab40a3cc2b56425d8b81"
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/after-fixed/freeText-initial.pdf",
+          "bytes": 7101,
+          "sha256": "0310a50a05806b535a4c36c05047dcce2f008be101d2550dba6343a190c76578"
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/after-fixed/freeText-repainted.pdf",
+          "bytes": 7815,
+          "sha256": "7f346feca29abaf207b4d0f1da6867c154597ffb83c6b74b57733cb70ad28aca"
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/after-fixed/highlight-cleared.pdf",
+          "bytes": 7175,
+          "sha256": "6e89bb82a1fd4bba7e858fb8c628195fe5096d204c3a8bab7bc1da3727dd5b05"
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/after-fixed/highlight-initial.pdf",
+          "bytes": 6902,
+          "sha256": "11cf5cc116d45bf4af4f147ca9d285a9b6400e2198c355eb628dddbd27ce6591"
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/after-fixed/highlight-repainted.pdf",
+          "bytes": 7454,
+          "sha256": "5906d9679af1940d32e20403da6b5f16a78110bed7c9a0b1b7ff097743454e72"
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/after-fixed/original.pdf",
+          "bytes": 3929,
+          "sha256": "78eb0a7b35b23c633d9e1f07b6beb58a572448254c408fe671ff12ac794bee4e"
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/after-fixed/replay.txt",
+          "bytes": 817,
+          "sha256": "048ae607152f0aade85e004abf3ad321a96cb031f72e4423bba3070171b3b6a8"
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/after-fixed/results.json",
+          "bytes": 5042,
+          "sha256": "52c8b07c840c5b4ba07b152c67da9121f5c6d7b7932ae143f9833c5d611231e4"
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/after-fixed/square-cleared.pdf",
+          "bytes": 7079,
+          "sha256": "1b41e813cc048a86f66e3fa2739cfde239667888436982e35d2be270b716011e"
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/after-fixed/square-initial.pdf",
+          "bytes": 6812,
+          "sha256": "01538de883510a76957ecedf2b042894163059781b004cabd7d97e57feddb83b"
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/after-fixed/square-repainted.pdf",
+          "bytes": 7358,
+          "sha256": "a6155e1d965e0a41d94deab3c1c825fe3d3e08e0681afd6aa2eb9f5782a1ab2e"
+        }
+      ],
+      "executedTemporaryDirectory": "/tmp/zuvi-pdf-native-none-probe-after-fixed-hRQgs0"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "documents": [
+    {
+      "path": "docs/audits/2026-11-27/word-basic-format/source-render/page-1.png",
+      "sha256": "1e046ac607d191d063e11eda42f2238aa7f8f137723cda596d302858c7b854b3",
+      "matchesAcceptedBaselinePixels": true,
+      "pages": 1
+    },
+    {
+      "path": "docs/audits/2026-11-27/word-basic-format/roundtrip-1-render/page-1.png",
+      "sha256": "7e4b522eec0f54f4c543bd6451b0f2a6d66e77231b858b3dc71b36dc56a7f60e",
+      "matchesAcceptedBaselinePixels": true,
+      "pages": 1
+    },
+    {
+      "path": "docs/audits/2026-11-27/word-basic-format/roundtrip-2-render/page-1.png",
+      "sha256": "7e4b522eec0f54f4c543bd6451b0f2a6d66e77231b858b3dc71b36dc56a7f60e",
+      "matchesAcceptedBaselinePixels": true,
+      "pages": 1
+    },
+    {
+      "path": "docs/audits/2026-11-27/word-basic-format/after-cancel-render/page-1.png",
+      "sha256": "190d731baae24e1b65ccd0b10bc0e923400fe89eaae0a4b8faf71f14703dc4dd",
+      "matchesAcceptedBaselinePixels": true,
+      "pages": 1
+    }
+  ]
+}

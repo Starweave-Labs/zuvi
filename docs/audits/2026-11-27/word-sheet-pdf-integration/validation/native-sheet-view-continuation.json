@@ -1,0 +1,68 @@
+{
+  "status": "passed",
+  "scope": "Independent ZIP/XML parsing of current browser downloads; no application importer used",
+  "rounds": [
+    {
+      "path": "docs/audits/2026-11-27/sheet-view/view-roundtrip-1.xlsx",
+      "sha256": "5647ead939336d090aa615e3fb764948e81dc8515e43f3f4acda123e6aa8721f",
+      "primaryView": {
+        "workbookViewId": "0",
+        "zoomScale": "400",
+        "zoomScaleNormal": "175",
+        "showGridLines": "0",
+        "showRowColHeaders": "0",
+        "showZeros": "false",
+        "showOutlineSymbols": "0",
+        "topLeftCell": "D9"
+      },
+      "secondaryView": {
+        "workbookViewId": "1",
+        "zoomScale": "300",
+        "zoomScaleNormal": "120",
+        "showGridLines": "1",
+        "showRowColHeaders": "false",
+        "showZeros": "0",
+        "topLeftCell": "K15"
+      },
+      "C7": 13,
+      "formula": "C4*2",
+      "formulaCache": 20,
+      "printScale": 83,
+      "windowActiveTabs": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "path": "docs/audits/2026-11-27/sheet-view/view-roundtrip-2.xlsx",
+      "sha256": "dfcc8984059f1debf4467c0eaac8194cad42b1514a79300780b2b87215e197e8",
+      "primaryView": {
+        "workbookViewId": "0",
+        "zoomScale": "400",
+        "zoomScaleNormal": "175",
+        "showGridLines": "0",
+        "showRowColHeaders": "0",
+        "showZeros": "false",
+        "showOutlineSymbols": "0",
+        "topLeftCell": "D9"
+      },
+      "secondaryView": {
+        "workbookViewId": "1",
+        "zoomScale": "300",
+        "zoomScaleNormal": "120",
+        "showGridLines": "1",
+        "showRowColHeaders": "false",
+        "showZeros": "0",
+        "topLeftCell": "K15"
+      },
+      "C7": 13,
+      "formula": "C4*2",
+      "formulaCache": 20,
+      "printScale": 83,
+      "windowActiveTabs": [
+        "0",
+        "1"
+      ]
+    }
+  ]
+}

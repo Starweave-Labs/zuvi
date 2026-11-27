@@ -1,0 +1,49 @@
+[WebServer] (node:53365) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:53381) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:336:1 › P014 saves four text markers from actual original-text selections with exact native quads, alpha, removal and undo (7.7s)
+
+
+  1) [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:336:1 › P014 saves four text markers from actual original-text selections with exact native quads, alpha, removal and undo 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator:  locator('.zuvi-studio-pdf-paper > canvas').first()
+    Expected: visible
+    Received: hidden
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeVisible" locator('.zuvi-studio-pdf-paper > canvas').first() with timeout 5000ms
+      - waiting for locator('.zuvi-studio-pdf-paper > canvas').first()
+        7 × locator resolved to <canvas role="img" aria-label="PDF 第 1 页原文"></canvas>
+          - unexpected value "hidden"
+
+
+      87 |
+      88 | async function waitReady(page: Page) {
+    > 89 |   await expect(page.locator('.zuvi-studio-pdf-paper > canvas').first()).toBeVisible();
+         |                                                                         ^
+      90 |   await expect(page.getByLabel('PDF 批注署名', { exact: true })).toBeEnabled();
+      91 | }
+      92 | async function waitSaved(page: Page) {
+        at waitReady (/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-native-annotations.spec.ts:89:73)
+        at open (/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-native-annotations.spec.ts:115:9)
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-native-annotations.spec.ts:338:20
+
+    Error Context: ../../../../../../tmp/zuvi-pdf-native-ui-second-results/office-studio-pdf-native-a-de44e-uads-alpha-removal-and-undo-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../tmp/zuvi-pdf-native-ui-second-results/office-studio-pdf-native-a-de44e-uads-alpha-removal-and-undo-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../../../tmp/zuvi-pdf-native-ui-second-results/office-studio-pdf-native-a-de44e-uads-alpha-removal-and-undo-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:336:1 › P014 saves four text markers from actual original-text selections with exact native quads, alpha, removal and undo 

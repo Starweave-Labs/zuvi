@@ -1,0 +1,838 @@
+{
+  "scope": "W001/W003/W004/W006 actual native DOCX source and two browser exports",
+  "source": {
+    "path": "source.docx",
+    "bytes": 37046,
+    "sha256": "53eedd5e818f88c8c203c67fe07b3974248a0f34349bcbb4ef0ba64c0da18135",
+    "rows": [
+      {
+        "text": "Word basic formatting sample",
+        "runs": [
+          {
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "size": 18.0,
+            "color": "000000",
+            "background": null,
+            "script": "baseline",
+            "family": "Arial",
+            "text": "Word basic formatting sample"
+          }
+        ]
+      },
+      {
+        "text": "Mixed plain Mixed rich",
+        "runs": [
+          {
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "size": 12.0,
+            "color": "000000",
+            "background": null,
+            "script": "baseline",
+            "family": "Arial",
+            "text": "Mixed plain "
+          },
+          {
+            "bold": true,
+            "italic": true,
+            "underline": true,
+            "strike": true,
+            "size": 14.5,
+            "color": "000000",
+            "background": "FFFF00",
+            "script": "baseline",
+            "family": "Times New Roman",
+            "text": "Mixed rich"
+          }
+        ]
+      },
+      {
+        "text": "Clear styles",
+        "runs": [
+          {
+            "bold": true,
+            "italic": true,
+            "underline": true,
+            "strike": true,
+            "size": 12.0,
+            "color": "000000",
+            "background": null,
+            "script": "baseline",
+            "family": "Arial",
+            "text": "Clear styles"
+          }
+        ]
+      },
+      {
+        "text": "Caret base",
+        "runs": [
+          {
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "size": 12.0,
+            "color": "000000",
+            "background": null,
+            "script": "baseline",
+            "family": "Arial",
+            "text": "Caret base"
+          }
+        ]
+      },
+      {
+        "text": "Script 23",
+        "runs": [
+          {
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "size": 12.0,
+            "color": "000000",
+            "background": null,
+            "script": "baseline",
+            "family": "Arial",
+            "text": "Script 23"
+          }
+        ]
+      },
+      {
+        "text": "Highlight target",
+        "runs": [
+          {
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "size": 12.0,
+            "color": "000000",
+            "background": null,
+            "script": "baseline",
+            "family": "Arial",
+            "text": "Highlight target"
+          }
+        ]
+      },
+      {
+        "text": "Highlight caret",
+        "runs": [
+          {
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "size": 12.0,
+            "color": "000000",
+            "background": null,
+            "script": "baseline",
+            "family": "Arial",
+            "text": "Highlight caret"
+          }
+        ]
+      },
+      {
+        "text": "Untouched link",
+        "runs": [
+          {
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "size": 12.0,
+            "color": "000000",
+            "background": null,
+            "script": "baseline",
+            "family": "Arial",
+            "text": "Untouched link"
+          }
+        ]
+      },
+      {
+        "text": "中文小数字号样本",
+        "runs": [
+          {
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "size": 12.5,
+            "color": "000000",
+            "background": null,
+            "script": "baseline",
+            "family": "Noto Sans SC",
+            "text": "中文小数字号样本"
+          }
+        ]
+      }
+    ],
+    "links": [
+      {
+        "text": "Untouched link",
+        "target": "https://example.com/kept-link"
+      }
+    ]
+  },
+  "rounds": [
+    {
+      "path": "roundtrip-1.docx",
+      "bytes": 47756,
+      "sha256": "f00d0825178ee1eece1cadbe5f82f6226d9b3d930df55e978506ca06989ed89b",
+      "rows": [
+        {
+          "text": "Word basic formatting sample",
+          "runs": [
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 18.0,
+              "color": "000000",
+              "background": null,
+              "script": "baseline",
+              "family": "Arial",
+              "text": "Word basic formatting sample"
+            }
+          ]
+        },
+        {
+          "text": "Mixed plain Mixed rich",
+          "runs": [
+            {
+              "bold": true,
+              "italic": true,
+              "underline": true,
+              "strike": true,
+              "size": 12.0,
+              "color": "000000",
+              "background": null,
+              "script": "baseline",
+              "family": "Arial",
+              "text": "Mixed plain Mixed rich"
+            }
+          ]
+        },
+        {
+          "text": "Clear styles",
+          "runs": [
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "background": null,
+              "script": "baseline",
+              "family": "Arial",
+              "text": "Clear styles"
+            }
+          ]
+        },
+        {
+          "text": "Caret Typedbase",
+          "runs": [
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "background": null,
+              "script": "baseline",
+              "family": "Arial",
+              "text": "Caret "
+            },
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 17.5,
+              "color": "000000",
+              "background": null,
+              "script": "baseline",
+              "family": "Times New Roman",
+              "text": "Typed"
+            },
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "background": null,
+              "script": "baseline",
+              "family": "Arial",
+              "text": "base"
+            }
+          ]
+        },
+        {
+          "text": "Script 23",
+          "runs": [
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "background": null,
+              "script": "baseline",
+              "family": "Arial",
+              "text": "Script "
+            },
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "background": null,
+              "script": "superscript",
+              "family": "Arial",
+              "text": "2"
+            },
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "background": null,
+              "script": "subscript",
+              "family": "Arial",
+              "text": "3"
+            }
+          ]
+        },
+        {
+          "text": "Highlight target",
+          "runs": [
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "background": "FFFF00",
+              "script": "baseline",
+              "family": "Arial",
+              "text": "Highlight target"
+            }
+          ]
+        },
+        {
+          "text": "Highlight HCcaret",
+          "runs": [
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "background": null,
+              "script": "baseline",
+              "family": "Arial",
+              "text": "Highlight "
+            },
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "background": "FFFF00",
+              "script": "baseline",
+              "family": "Arial",
+              "text": "H"
+            },
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "background": null,
+              "script": "baseline",
+              "family": "Arial",
+              "text": "Ccaret"
+            }
+          ]
+        },
+        {
+          "text": "Untouched link",
+          "runs": [
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "background": null,
+              "script": "baseline",
+              "family": "Arial",
+              "text": "Untouched link"
+            }
+          ]
+        },
+        {
+          "text": "中文小数字号样本",
+          "runs": [
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.5,
+              "color": "000000",
+              "background": null,
+              "script": "baseline",
+              "family": "Noto Sans SC",
+              "text": "中文小数字号样本"
+            }
+          ]
+        }
+      ],
+      "links": [
+        {
+          "text": "Untouched link",
+          "target": "https://example.com/kept-link"
+        }
+      ]
+    },
+    {
+      "path": "roundtrip-2.docx",
+      "bytes": 47745,
+      "sha256": "13bdd08e5ea53cbfc9e963d8c5b9fffe459ceac58a4730d342856ce1350e1cb7",
+      "rows": [
+        {
+          "text": "Word basic formatting sample",
+          "runs": [
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 18.0,
+              "color": "000000",
+              "background": null,
+              "script": "baseline",
+              "family": "Arial",
+              "text": "Word basic formatting sample"
+            }
+          ]
+        },
+        {
+          "text": "Mixed plain Mixed rich",
+          "runs": [
+            {
+              "bold": true,
+              "italic": true,
+              "underline": true,
+              "strike": true,
+              "size": 12.0,
+              "color": "000000",
+              "background": null,
+              "script": "baseline",
+              "family": "Arial",
+              "text": "Mixed plain Mixed rich"
+            }
+          ]
+        },
+        {
+          "text": "Clear styles",
+          "runs": [
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "background": null,
+              "script": "baseline",
+              "family": "Arial",
+              "text": "Clear styles"
+            }
+          ]
+        },
+        {
+          "text": "Caret Typedbase",
+          "runs": [
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "background": null,
+              "script": "baseline",
+              "family": "Arial",
+              "text": "Caret "
+            },
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 17.5,
+              "color": "000000",
+              "background": null,
+              "script": "baseline",
+              "family": "Times New Roman",
+              "text": "Typed"
+            },
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "background": null,
+              "script": "baseline",
+              "family": "Arial",
+              "text": "base"
+            }
+          ]
+        },
+        {
+          "text": "Script 23",
+          "runs": [
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "background": null,
+              "script": "baseline",
+              "family": "Arial",
+              "text": "Script "
+            },
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "background": null,
+              "script": "superscript",
+              "family": "Arial",
+              "text": "2"
+            },
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "background": null,
+              "script": "subscript",
+              "family": "Arial",
+              "text": "3"
+            }
+          ]
+        },
+        {
+          "text": "Highlight target",
+          "runs": [
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "background": "FFFF00",
+              "script": "baseline",
+              "family": "Arial",
+              "text": "Highlight target"
+            }
+          ]
+        },
+        {
+          "text": "Highlight HCcaret",
+          "runs": [
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "background": null,
+              "script": "baseline",
+              "family": "Arial",
+              "text": "Highlight "
+            },
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "background": "FFFF00",
+              "script": "baseline",
+              "family": "Arial",
+              "text": "H"
+            },
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "background": null,
+              "script": "baseline",
+              "family": "Arial",
+              "text": "Ccaret"
+            }
+          ]
+        },
+        {
+          "text": "Untouched link",
+          "runs": [
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "background": null,
+              "script": "baseline",
+              "family": "Arial",
+              "text": "Untouched link"
+            }
+          ]
+        },
+        {
+          "text": "中文小数字号样本",
+          "runs": [
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.5,
+              "color": "000000",
+              "background": null,
+              "script": "baseline",
+              "family": "Noto Sans SC",
+              "text": "中文小数字号样本"
+            }
+          ]
+        }
+      ],
+      "links": [
+        {
+          "text": "Untouched link",
+          "target": "https://example.com/kept-link"
+        }
+      ]
+    }
+  ],
+  "afterCancel": {
+    "path": "after-cancel.docx",
+    "bytes": 46725,
+    "sha256": "049f660b7f37f68eab115d1008992dceacf3a1a65be610523e8529f1c325f4c3",
+    "rows": [
+      {
+        "text": "Word basic formatting sample",
+        "runs": [
+          {
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "size": 18.0,
+            "color": "000000",
+            "background": null,
+            "script": "baseline",
+            "family": "Arial",
+            "text": "Word basic formatting sample"
+          }
+        ]
+      },
+      {
+        "text": "Mixed plain Mixed rich",
+        "runs": [
+          {
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "size": 12.0,
+            "color": "000000",
+            "background": null,
+            "script": "baseline",
+            "family": "Arial",
+            "text": "Mixed plain "
+          },
+          {
+            "bold": true,
+            "italic": true,
+            "underline": true,
+            "strike": true,
+            "size": 14.5,
+            "color": "000000",
+            "background": "FFFF00",
+            "script": "baseline",
+            "family": "Times New Roman",
+            "text": "Mixed rich"
+          }
+        ]
+      },
+      {
+        "text": "Clear styles",
+        "runs": [
+          {
+            "bold": true,
+            "italic": true,
+            "underline": true,
+            "strike": true,
+            "size": 12.0,
+            "color": "000000",
+            "background": null,
+            "script": "baseline",
+            "family": "Arial",
+            "text": "Clear styles"
+          }
+        ]
+      },
+      {
+        "text": "Caret base",
+        "runs": [
+          {
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "size": 12.0,
+            "color": "000000",
+            "background": null,
+            "script": "baseline",
+            "family": "Arial",
+            "text": "Caret base"
+          }
+        ]
+      },
+      {
+        "text": "Script 23",
+        "runs": [
+          {
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "size": 12.0,
+            "color": "000000",
+            "background": null,
+            "script": "baseline",
+            "family": "Arial",
+            "text": "Script 23"
+          }
+        ]
+      },
+      {
+        "text": "Highlight target",
+        "runs": [
+          {
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "size": 12.0,
+            "color": "000000",
+            "background": null,
+            "script": "baseline",
+            "family": "Arial",
+            "text": "Highlight target"
+          }
+        ]
+      },
+      {
+        "text": "Highlight caret",
+        "runs": [
+          {
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "size": 12.0,
+            "color": "000000",
+            "background": null,
+            "script": "baseline",
+            "family": "Arial",
+            "text": "Highlight caret"
+          }
+        ]
+      },
+      {
+        "text": "Untouched link",
+        "runs": [
+          {
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "size": 12.0,
+            "color": "000000",
+            "background": null,
+            "script": "baseline",
+            "family": "Arial",
+            "text": "Untouched link"
+          }
+        ]
+      },
+      {
+        "text": "中文小数字号样本",
+        "runs": [
+          {
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "size": 12.5,
+            "color": "000000",
+            "background": null,
+            "script": "baseline",
+            "family": "Noto Sans SC",
+            "text": "中文小数字号样本"
+          }
+        ]
+      }
+    ],
+    "links": [
+      {
+        "text": "Untouched link",
+        "target": "https://example.com/kept-link"
+      }
+    ]
+  },
+  "checks": "canonical run values, original body and link, UTF-8 Chinese, half-points, repeated reopening and cancelled-draft export recovery passed"
+}

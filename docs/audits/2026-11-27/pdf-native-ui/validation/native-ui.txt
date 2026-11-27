@@ -1,0 +1,28 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > forwards the native editor through OfficeStudio and accepts one immutable source/model pair with transactional history 673ms
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > keeps unchanged native device colors out of a contents-only property patch, and cancels or applies an unchanged draft without history
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > rejects invalid numeric drafts and IME submission while preserving the property draft for correction
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > keeps creation and reply inputs enabled throughout IME while refusing acceptance until composition ends
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > does not submit stale native snapshots when a property draft was opened before an external model replacement
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > discards an eventual prepared native result when readOnly becomes active
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > discards an eventual prepared native result when disabled becomes active
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > discards an eventual prepared native result after the current document is replaced
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > discards an eventual prepared native result after the current source is replaced
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > discards an eventual prepared native result after the current editor is replaced
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > aborts a pending property apply on cancel and ignores its eventual source without adding history
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > retains both the current pair and undo/redo entries when the controlled host rejects application or restoration
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > does not offer native source mutation without a complete host contract: {"provider":false}
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > does not offer native source mutation without a complete host contract: {"callback":false}
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > permits read-only selection and properties while disabling move, deletion, contents, replies and history
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > keeps signed-source commands disabled and refuses editing while signature inspection is pending
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > submits keyboard movement and deletion once, ignores IME shortcuts, and restores each accepted pair independently
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > refuses model-only mutations of native projections when no annotation provider is installed
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > uses native capability flags for properties even when the overall source is editable
+
+ Test Files  1 passed (1)
+      Tests  19 passed (19)
+   Start at  06:04:26
+   Duration  3.79s (transform 463ms, setup 114ms, collect 686ms, tests 2.50s, environment 298ms, prepare 43ms)
+

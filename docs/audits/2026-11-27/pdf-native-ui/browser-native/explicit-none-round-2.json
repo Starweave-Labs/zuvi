@@ -1,0 +1,224 @@
+{
+  "sha256": "7a7d67c2ba2f1d39387bbf13ab90dddca3fce1f3524250bd4d40a8c74e74217d",
+  "pages": 2,
+  "contents": [
+    {
+      "page": 0,
+      "sha256": "39499225e0a03b412a3b72654467bc454e3d59212da89ea3ed0803f5de91b538",
+      "decodedSha256": "a27ea56756d4ce7307ad9d878027785ec9d27b634dd3080418897479bf5dc6fe"
+    },
+    {
+      "page": 1,
+      "sha256": "61712ea49d4cb5647ae6897ca030212abccd06b173a0cbd6ec660948f291f3b0",
+      "decodedSha256": "c00ffa3e1e77f6555d54c9b1fe3fbe0be25657fa86a4d7cb2f9377282702ce08"
+    }
+  ],
+  "annotations": [
+    {
+      "id": "annotation:ad6da678a4977f0b2f957f536ca5fd67",
+      "subtype": "Widget",
+      "contents": "",
+      "rect": [
+        29.5,
+        29.5,
+        290.5,
+        60.5
+      ],
+      "page": 0,
+      "author": "",
+      "created": "",
+      "modified": "",
+      "color": [],
+      "fill": [],
+      "quads": [],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 1,
+      "border": {
+        "width": 1,
+        "style": ""
+      },
+      "appearanceSha256": "c0d73a278ee569019dfbe79bbf50c06ac881d9338c97635a9736c4247932051f",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "33ee7f1c-951a-4083-ab9c-ae0f8a5d3514",
+      "subtype": "Square",
+      "contents": "",
+      "rect": [
+        40,
+        520,
+        170,
+        570
+      ],
+      "page": 0,
+      "author": "",
+      "created": "D:20261126235752Z",
+      "modified": "D:20261126235803Z",
+      "color": [],
+      "fill": [],
+      "quads": [],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 0.5,
+      "border": {
+        "width": 2,
+        "style": "S"
+      },
+      "appearanceSha256": "3c618dbe35f9158fbdf0ec340f97fed94769667d07bf5ce83f78ef7287699148",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "418669b4-aca0-4067-90a3-368efe45d5d6",
+      "subtype": "Highlight",
+      "contents": "",
+      "rect": [
+        230,
+        530,
+        420,
+        550
+      ],
+      "page": 0,
+      "author": "",
+      "created": "D:20261126235752Z",
+      "modified": "D:20261126235805Z",
+      "color": [],
+      "fill": [],
+      "quads": [
+        230,
+        550,
+        420,
+        550,
+        230,
+        530,
+        420,
+        530
+      ],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 0.5,
+      "border": {
+        "width": 1,
+        "style": "S"
+      },
+      "appearanceSha256": "15e1918c1611a18b38e3f105946def28f8e87f1c935ec2ef0cae4e4c5b0e937f",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "9044baaa-b24e-4223-89ab-8ae972a88a99",
+      "subtype": "FreeText",
+      "contents": "Visible text with no border",
+      "rect": [
+        40,
+        430,
+        260,
+        470
+      ],
+      "page": 0,
+      "author": "",
+      "created": "D:20261126235753Z",
+      "modified": "D:20261126235807Z",
+      "color": [],
+      "fill": [],
+      "quads": [],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 1,
+      "border": {
+        "width": 3,
+        "style": "S"
+      },
+      "appearanceSha256": "de3145ba74b7d7c8a3edb11cb8210208594ff8efeba64b29988cfc2d1809619d",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "annotation:2cc250fcf5fea6e0aab56fe4725e2a56",
+      "subtype": "Widget",
+      "contents": "",
+      "rect": [
+        29.5,
+        29.5,
+        290.5,
+        60.5
+      ],
+      "page": 1,
+      "author": "",
+      "created": "",
+      "modified": "",
+      "color": [],
+      "fill": [],
+      "quads": [],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 1,
+      "border": {
+        "width": 1,
+        "style": ""
+      },
+      "appearanceSha256": "c0d73a278ee569019dfbe79bbf50c06ac881d9338c97635a9736c4247932051f",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "annotation:73948d967ff4ebb85cab2c066eb855cc",
+      "subtype": "Widget",
+      "contents": "",
+      "rect": [
+        319.5,
+        29.5,
+        340.5,
+        50.5
+      ],
+      "page": 1,
+      "author": "",
+      "created": "",
+      "modified": "",
+      "color": [],
+      "fill": [],
+      "quads": [],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 1,
+      "border": {
+        "width": 1,
+        "style": ""
+      },
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    }
+  ],
+  "fields": [
+    {
+      "name": "reviewer",
+      "readOnly": false,
+      "widgets": 2
+    },
+    {
+      "name": "confirmed",
+      "readOnly": false,
+      "widgets": 1
+    }
+  ]
+}

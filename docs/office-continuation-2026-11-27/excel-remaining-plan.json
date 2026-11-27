@@ -1,0 +1,4667 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-27",
+  "task": "Excel剩余67项只读技术拆分",
+  "worktree": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59",
+  "branch": "codex/finish-office-studio",
+  "headAtInspection": "077e307da018a6a9a96b4d07d70bf8e44a803c84",
+  "sourceLedger": "docs/onlyoffice-feature-ledger-2026-11-13.json",
+  "sourceStatus": "docs/office-studio-goal-status-2026-11-23.json",
+  "sourceStateNote": "按工作树实际内容读取；HEAD不代表未提交源码。只写本计划md/json，不改源码测试台账审计，不构建/测试/浏览器/启动服务。",
+  "remainingItemCount": 67,
+  "excludedItems": [
+    {
+      "id": "X064",
+      "reason": "已有本批专项实现/原生/浏览器证据，等待根最终统一门禁正式销项",
+      "evidence": "docs/audits/2026-11-27/sheet-view/README.md"
+    }
+  ],
+  "recordedRemainingCounts": {
+    "基础实现": 14,
+    "部分实现": 23,
+    "切片验证": 9,
+    "未实现": 21
+  },
+  "recordedCountsCaveat": "基础14/部分23/切片9/未实现21是当前台账分类，不是本次完成数。",
+  "overallEffort": "XL",
+  "effortScale": {
+    "S": "局部验收或小修，无持久化模型变化",
+    "M": "既有基础上的独立模块/入口及有限验收闭环",
+    "L": "跨模型/UI/原生/引用迁移，多轮专项集成",
+    "XL": "新对象/计算/布局子系统与依赖链，不能按项数线性估算"
+  },
+  "scheduleStatement": "Excel原始剩余为数周级以上工程量；按熟悉代码人员持续投入、逐波串行集成及原生/浏览器验收的量级判断，不承诺日历日期。函数/透视/对象有限范围未定量前不给小时天数或可靠上限。",
+  "scopeRules": [
+    "只覆盖原Excel68项中的67项，X064排除",
+    "原始acceptance及六项commonAcceptance是完成依据，其他remaining只作线索",
+    "切片/模型测试/整站回归均不等于完整完成，每个原始行为需可追溯",
+    "只选改变实现或结果的代表边界，不穷举应用/地区/字体/浏览器笛卡尔积",
+    "保留自研和无新增后端范围"
+  ],
+  "sourceAnchors": [
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
+      "line": 116,
+      "anchor": "export interface StudioCell"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
+      "line": 168,
+      "anchor": "export interface StudioSheetChart"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
+      "line": 176,
+      "anchor": "export interface StudioSheetFilter"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
+      "line": 290,
+      "anchor": "export interface StudioSheet {"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+      "line": 361,
+      "anchor": "export interface SheetSelection"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+      "line": 922,
+      "anchor": "export function studioPasteCells"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+      "line": 1351,
+      "anchor": "export function studioCalculate"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+      "line": 2138,
+      "anchor": "export function studioSetRowHeight"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+      "line": 2512,
+      "anchor": "export function studioSetColumnsHidden"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+      "line": 2669,
+      "anchor": "export function studioSortRangeByKeys"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+      "line": 2217,
+      "anchor": "function copySelection"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+      "line": 2294,
+      "anchor": "function onPaste"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+      "line": 1917,
+      "anchor": "function applyFilter"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+      "line": 2879,
+      "anchor": "隐藏列"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioSheetSortDialog.tsx",
+      "line": 11,
+      "anchor": "export interface StudioSortDialogState"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-sheet-structure.ts",
+      "line": 586,
+      "anchor": "export function studioChangeSheetStructure"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-sheet-editing.ts",
+      "line": 314,
+      "anchor": "export function studioApplyBorders"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-sheet-rules.ts",
+      "line": 380,
+      "anchor": "export function studioConditionalCellStyle"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts",
+      "line": 1703,
+      "anchor": "async function checkSupportedWorkbook"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts",
+      "line": 1070,
+      "anchor": "function importedChart"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts",
+      "line": 1781,
+      "anchor": "function importedCell"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts",
+      "line": 2398,
+      "anchor": "function updateCell"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts",
+      "line": 2719,
+      "anchor": "export async function exportStudioExcel"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts",
+      "line": 3627,
+      "anchor": "contentTypes = contentTypes.replace("
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-print.ts",
+      "line": 626,
+      "anchor": "function sheetTable("
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-print.ts",
+      "line": 785,
+      "anchor": ": 'A4 landscape';"
+    }
+  ],
+  "batches": [
+    {
+      "id": "E01",
+      "title": "已有编辑查找导航合并冻结收尾",
+      "itemIds": [
+        "X001",
+        "X013",
+        "X015",
+        "X025",
+        "X062"
+      ],
+      "effort": "M",
+      "workType": "acceptance-first",
+      "currentSourceFinding": "公式栏/矩形selection、通配符查找替换、Ctrl数据块导航、merge/split和freeze有代码，X015有原生/浏览器专项。",
+      "implementationAndAcceptanceBoundary": "逐原始短语及共同要求补缺证据，发现可复现缺陷才补实现；核对当前非左上角非空内容拒绝提示是否满足原始非空警告。",
+      "primaryFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-editing.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-navigation.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts"
+      ],
+      "existingTestFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx",
+        "packages/ui/src/components/OfficeStudio/StudioSheetSearch.test.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-navigation.test.ts",
+        "e2e/office-studio-sheet-navigation.spec.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "stages": [
+        "有限验收矩阵映射已有证据",
+        "补实际编辑/历史/权限/原生重开缺项",
+        "依赖合入后回归焦点与坐标"
+      ],
+      "dependsOn": [],
+      "coordinatesWith": [
+        "E04",
+        "E06",
+        "E17"
+      ],
+      "mergeRisk": "导航/焦点/滚动/冻结坐标共享，不重做已有功能。"
+    },
+    {
+      "id": "E02",
+      "title": "选择性粘贴既有契约收尾",
+      "itemIds": [
+        "X003",
+        "X004",
+        "X005",
+        "X006",
+        "X007",
+        "X008",
+        "X009",
+        "X010",
+        "X012"
+      ],
+      "effort": "M",
+      "workType": "acceptance-first",
+      "currentSourceFinding": "多种paste mode、typed快照、相对公式、列宽、转置/合并/链接与skip/运算均有模型，原生有version3 Paste Special和运算两轮保存。",
+      "implementationAndAcceptanceBoundary": "九项分别验收默认样式覆盖、复制时缓存类型、无边框保留、转置冲突原子性；不把X012专项等同全部粘贴完成。",
+      "primaryFiles": [
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx"
+      ],
+      "existingTestFiles": [
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.test.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-paste-options.test.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx",
+        "docs/tests/studio-excel.test.mjs",
+        "e2e/office-studio-sheet-paste-options.spec.ts"
+      ],
+      "stages": [
+        "确认各模式原文合同",
+        "复用原生快照夹具补证据",
+        "仅修真实类型/格式差异"
+      ],
+      "dependsOn": [],
+      "coordinatesWith": [
+        "E03",
+        "E05",
+        "E12"
+      ],
+      "mergeRisk": "clipboard schema和默认样式共享，hyperlink复制不等于图片/规则粘贴。"
+    },
+    {
+      "id": "E03",
+      "title": "普通剪切格内格式和链接图片规则粘贴",
+      "itemIds": [
+        "X002",
+        "X011"
+      ],
+      "effort": "XL",
+      "workType": "implementation",
+      "currentSourceFinding": "UI只有onCopy/onPaste，无onCut。StudioCell是单input和整格格式，无rich runs；clipboard有hyperlinks但没有图片/条件规则负载。",
+      "implementationAndAcceptanceBoundary": "剪切来源身份/目标移动/外部受影响引用迁移和一次事务；格内富文本单独模型编辑；规则重定位与链接图片分阶段，X011等E16。",
+      "primaryFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "packages/ui/src/components/OfficeStudio/studio-types.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-structure.ts",
+        "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts"
+      ],
+      "existingTestFiles": [
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.test.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "stages": [
+        "剪切事务与引用移动",
+        "格内富文本/剪贴板/原生",
+        "规则/源定位",
+        "依赖E16完成链接图片"
+      ],
+      "dependsOn": [],
+      "coordinatesWith": [
+        "E06",
+        "E09",
+        "E12",
+        "E16"
+      ],
+      "mergeRisk": "copy+clear不能代替cut；未改源richText可保留不等于可编辑/复制richText。"
+    },
+    {
+      "id": "E04",
+      "title": "多段选区和填充格式刷交互",
+      "itemIds": [
+        "X014",
+        "X016",
+        "X017",
+        "X018"
+      ],
+      "effort": "L",
+      "workType": "mixed",
+      "currentSourceFinding": "SheetSelection只有anchor/focus，无Ctrl追加多段；填充柄、线性数字日期文本stop、单次连续格式刷已有专项。",
+      "implementationAndAcceptanceBoundary": "先补验X016/17/18；多段选区须定义命令适用/拒绝及旧矩形适配，不把增长/任意日期策略自动新增为X017要求。",
+      "primaryFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-fill.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-painter.ts"
+      ],
+      "existingTestFiles": [
+        "packages/ui/src/components/OfficeStudio/studio-sheet-fill.test.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-painter.test.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx",
+        "e2e/office-studio-sheet-series.spec.ts",
+        "e2e/office-studio-sheet-painter.spec.ts"
+      ],
+      "stages": [
+        "已有三项有限收尾",
+        "多段模型和命令能力表",
+        "鼠标键盘/IME取消/权限历史/坐标"
+      ],
+      "dependsOn": [],
+      "coordinatesWith": [
+        "E01",
+        "E05",
+        "E06",
+        "E17"
+      ],
+      "mergeRisk": "多段影响格式/清除/粘贴/排序，先统一接口再串行接线。"
+    },
+    {
+      "id": "E05",
+      "title": "字体数字颜色边框和文字测量",
+      "itemIds": [
+        "X019",
+        "X020",
+        "X021",
+        "X022",
+        "X023",
+        "X024",
+        "X029"
+      ],
+      "effort": "L",
+      "workType": "mixed",
+      "currentSourceFinding": "整格字体/小数字号/number format、RGB填充、四边框和共享text/auto row存在。边框仅all/outer/none，无斜线/可编辑theme/tint身份。",
+      "implementationAndAcceptanceBoundary": "混合字体回显、单边/内横内竖/斜线、主题引用色调和合并测量逐原项闭环；X020/23/24先有限原文差距审计，README全部外部变体不是新门槛。",
+      "primaryFiles": [
+        "packages/ui/src/components/OfficeStudio/studio-types.ts",
+        "packages/ui/src/components/OfficeStudio/studio-cell-format-core.ts",
+        "packages/ui/src/components/OfficeStudio/studio-cell-style.ts",
+        "packages/ui/src/components/OfficeStudio/studio-number-format.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-editing.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-text-layout.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-text-display.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheetTextDialog.tsx",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts",
+        "docs/src/pages/collaboration/office-studio/studio-print.ts"
+      ],
+      "existingTestFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheetText.test.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-editing.test.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-text-layout.test.ts",
+        "docs/tests/studio-excel.test.mjs",
+        "docs/tests/studio-print.test.mjs",
+        "e2e/office-studio-sheet-number-format.spec.ts",
+        "e2e/office-studio-sheet-text.spec.ts"
+      ],
+      "stages": [
+        "已有文字/数字格式/字体收尾",
+        "边框方向斜线模型原生",
+        "主题色身份/tint",
+        "合并适配和打印一致"
+      ],
+      "dependsOn": [],
+      "coordinatesWith": [
+        "E02",
+        "E06",
+        "E12",
+        "E18"
+      ],
+      "mergeRisk": "theme flatten为RGB非无损；字号/font0/行高单位和X064逻辑尺寸须保留。"
+    },
+    {
+      "id": "E06",
+      "title": "结构编辑行列隐藏工作表分组",
+      "itemIds": [
+        "X027",
+        "X028",
+        "X030",
+        "X031",
+        "X032"
+      ],
+      "effort": "XL",
+      "workType": "mixed",
+      "currentSourceFinding": "整行列insert/delete有引用/尺寸/合并/规则/图表/链接迁移和log。hidden集合存在但列UI仅活动列，行借0行高；无局部移位/复制移动隐藏表/outline模型。",
+      "implementationAndAcceptanceBoundary": "先X030独立显隐保原尺寸和X027补验；再X028局部变换、X031稳定sheet身份/跨表引用、X032嵌套层级与汇总位置。",
+      "primaryFiles": [
+        "packages/ui/src/components/OfficeStudio/studio-sheet-structure.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "packages/ui/src/components/OfficeStudio/studio-types.ts",
+        "packages/ui/src/components/OfficeStudio/studio-model.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts"
+      ],
+      "existingTestFiles": [
+        "packages/ui/src/components/OfficeStudio/studio-sheet-structure.test.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.test.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx",
+        "docs/tests/studio-excel.test.mjs",
+        "docs/tests/studio-sheet-view.test.mjs"
+      ],
+      "stages": [
+        "X030和X027",
+        "X028局部四向移位",
+        "X031表身份/复制顺序隐藏",
+        "X032outline/折叠原生"
+      ],
+      "dependsOn": [],
+      "coordinatesWith": [
+        "E04",
+        "E09",
+        "E12",
+        "E13",
+        "E17",
+        "E18",
+        "E19"
+      ],
+      "mergeRisk": "整行列日志不等于局部cell shift；hidden/filter/outline独立，复制表需新name/rel身份。"
+    },
+    {
+      "id": "E07",
+      "title": "内容格式批注链接规则分项清除",
+      "itemIds": [
+        "X026"
+      ],
+      "effort": "L",
+      "workType": "implementation",
+      "currentSourceFinding": "已有清input/格式/链接/独立规则管理，缺统一菜单。模型无可编辑批注，源note透传不是显式清除能力。",
+      "implementationAndAcceptanceBoundary": "统一五类精确范围和一次事务，补批注寻址/原生删除；未选类别、不相交规则保持。",
+      "primaryFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-editing.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "packages/ui/src/components/OfficeStudio/studio-types.ts",
+        "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts"
+      ],
+      "existingTestFiles": [
+        "packages/ui/src/components/OfficeStudio/studio-sheet-editing.test.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-hyperlinks.test.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-rules.test.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "stages": [
+        "五类命令计划",
+        "批注寻址与显式原生删除",
+        "混合对象历史权限失败原生"
+      ],
+      "dependsOn": [],
+      "coordinatesWith": [
+        "E02",
+        "E05",
+        "E12"
+      ],
+      "mergeRisk": "undefined保留与空集合显式删除要一致，导出不能恢复已清源note。"
+    },
+    {
+      "id": "E08",
+      "title": "公式内核数组函数向导计算控制",
+      "itemIds": [
+        "X033",
+        "X036",
+        "X037",
+        "X038",
+        "X039",
+        "X040",
+        "X042"
+      ],
+      "effort": "XL",
+      "workType": "mixed",
+      "currentSourceFinding": "fast-formula-parser封装已有1900日历/错误/循环/预算/数组，X036有专项；UI仅SUM/AVERAGE/COUNT/IF模板，无分类参数向导、计算模式或Goal Seek状态。",
+      "implementationAndAcceptanceBoundary": "先核定原三类函数有限清单及参数/空值/数组/错误/精度样本，再按族并行。数组按原矩阵/溢出/限制收尾；计算模式迭代求解控制独立状态机，不扩成新分析工具。",
+      "primaryFiles": [
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-arrays.ts",
+        "packages/ui/src/components/OfficeStudio/studio-types.ts",
+        "packages/ui/src/components/OfficeStudio/studio-model.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts"
+      ],
+      "existingTestFiles": [
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.test.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-arrays.test.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx",
+        "docs/tests/studio-excel.test.mjs",
+        "e2e/office-studio-sheet-arrays.spec.ts"
+      ],
+      "stages": [
+        "解析预算错误/数组有限验收",
+        "X038/39/40按族纯适配与数据",
+        "分类参数引用选择/预览",
+        "计算模式迭代/求解取消无收敛及缓存"
+      ],
+      "dependsOn": [],
+      "coordinatesWith": [
+        "E09",
+        "E13",
+        "E14"
+      ],
+      "mergeRisk": "studioCalculate由一个owner接入，函数族独立模块；库存在不是全函数验收。"
+    },
+    {
+      "id": "E09",
+      "title": "名称依赖追踪和外部链接",
+      "itemIds": [
+        "X034",
+        "X041",
+        "X049"
+      ],
+      "effort": "XL",
+      "workType": "implementation",
+      "currentSourceFinding": "自定义definedNames/externalLinks导入拒绝；结构重写遇names/非A1/动态引用会拒绝；无公开依赖图/箭头/全表显示公式。",
+      "implementationAndAcceptanceBoundary": "共享引用身份/解析层，依次names作用域冲突更新、依赖追踪跨表定位/显示公式、外链来源更新许可/失败保值，保持无新增后端。",
+      "primaryFiles": [
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-structure.ts",
+        "packages/ui/src/components/OfficeStudio/studio-types.ts",
+        "packages/ui/src/components/OfficeStudio/studio-model.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts"
+      ],
+      "existingTestFiles": [
+        "packages/ui/src/components/OfficeStudio/studio-sheet-structure.test.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.test.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "stages": [
+        "引用身份/解析接口",
+        "names和definedNames原生",
+        "依赖追踪/显示公式",
+        "有限外链来源/更新事务"
+      ],
+      "dependsOn": [],
+      "coordinatesWith": [
+        "E03",
+        "E06",
+        "E08",
+        "E12",
+        "E13"
+      ],
+      "mergeRisk": "names/table/external共同影响移动排序改名，不能只解除拒绝而丢元数据。"
+    },
+    {
+      "id": "E10",
+      "title": "排序扩展选区与完整自动筛选",
+      "itemIds": [
+        "X043",
+        "X044"
+      ],
+      "effort": "L",
+      "workType": "mixed",
+      "currentSourceFinding": "多键优先级/逐键方向/稳定排序与表头选择存在，无扩展询问。filter每列单operator/value，原生拒绝多值/动态筛选；颜色专项未覆盖值列表日期树同列多条件。",
+      "implementationAndAcceptanceBoundary": "X043补连续数据块扩展询问及实际原生；X044条件联合补值列表/日期层级/多条件并保留颜色清除/手动隐藏。",
+      "primaryFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheetSortDialog.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "packages/ui/src/components/OfficeStudio/studio-types.ts",
+        "packages/ui/src/components/OfficeStudio/studio-model.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts"
+      ],
+      "existingTestFiles": [
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.test.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx",
+        "docs/tests/studio-excel.test.mjs",
+        "e2e/office-studio-sheet-colors.spec.ts"
+      ],
+      "stages": [
+        "X043扩展范围询问/验收",
+        "X044条件联合/值列表日期",
+        "UI/native filter XML/颜色池回归"
+      ],
+      "dependsOn": [],
+      "coordinatesWith": [
+        "E06",
+        "E08",
+        "E12",
+        "E13"
+      ],
+      "mergeRisk": "筛选隐藏不能覆盖manual hide；类型日期序号明确，排序不能误移旁列。"
+    },
+    {
+      "id": "E11",
+      "title": "文本分列和删除重复项",
+      "itemIds": [
+        "X045",
+        "X046"
+      ],
+      "effort": "L",
+      "workType": "implementation",
+      "currentSourceFinding": "data tab只有验证排序筛选，未见分列/去重模型和入口。typed input/范围/原子patch可复用，整行结构API不是选区内压缩。",
+      "implementationAndAcceptanceBoundary": "两个纯计划器可并行：分隔/固定宽度/引号/预览/列类型；表头/比较列/空值类型/计数。先查去重区域压缩及引用语义。",
+      "primaryFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-editing.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-structure.ts",
+        "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts"
+      ],
+      "existingTestFiles": [
+        "packages/ui/src/components/OfficeStudio/studio-sheet-editing.test.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "stages": [
+        "固定参考核对范围类型",
+        "分列解析/预览计划器",
+        "去重比较键/行映射/计数",
+        "共用事务冲突/实际交互原生"
+      ],
+      "dependsOn": [],
+      "coordinatesWith": [
+        "E06",
+        "E08",
+        "E12"
+      ],
+      "mergeRisk": "拟新独立text-columns/duplicates及弹窗后小范围接线；不能whole-row delete破坏旁列或猜显示文本相等。"
+    },
+    {
+      "id": "E12",
+      "title": "数据验证和条件格式完整管理",
+      "itemIds": [
+        "X047",
+        "X048"
+      ],
+      "effort": "L",
+      "workType": "implementation",
+      "currentSourceFinding": "DV有常用类型提示，source限单A1行列；CF有cellIs/expression/text/重复/top10/平均/colorScale和priority/stop，无dataBar/iconSet/完整threshold。",
+      "implementationAndAcceptanceBoundary": "按原始范围/下拉来源/allowBlank/提示收尾；CF补数据条图标阈值/差异样式/优先级停止管理，源XML透传不是UI管理。",
+      "primaryFiles": [
+        "packages/ui/src/components/OfficeStudio/studio-types.ts",
+        "packages/ui/src/components/OfficeStudio/studio-model.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-rules.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheetRuleDialog.tsx",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts",
+        "docs/src/pages/collaboration/office-studio/studio-print.ts"
+      ],
+      "existingTestFiles": [
+        "packages/ui/src/components/OfficeStudio/studio-sheet-rules.test.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx",
+        "docs/tests/studio-excel.test.mjs",
+        "docs/tests/studio-print.test.mjs"
+      ],
+      "stages": [
+        "DV范围来源提示",
+        "CF阈值/数据条图标纯模型",
+        "顺序stop样式和原生"
+      ],
+      "dependsOn": [],
+      "coordinatesWith": [
+        "E05",
+        "E06",
+        "E08",
+        "E09",
+        "E10"
+      ],
+      "mergeRisk": "CF绘制/颜色筛选/打印共享style；names来源依赖E09但不阻塞其他DV。"
+    },
+    {
+      "id": "E13",
+      "title": "结构化表与结构化引用",
+      "itemIds": [
+        "X035",
+        "X050",
+        "X051"
+      ],
+      "effort": "XL",
+      "workType": "implementation",
+      "currentSourceFinding": "无Table模型，原生tables目录拒绝，结构重写不接受结构化引用。",
+      "implementationAndAcceptanceBoundary": "共享Table身份/列名/范围/样式/表头/筛选/带状/汇总/扩展与结构引用，再做改名/转区域，三项同一合同。",
+      "primaryFiles": [
+        "packages/ui/src/components/OfficeStudio/studio-types.ts",
+        "packages/ui/src/components/OfficeStudio/studio-model.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-structure.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts",
+        "docs/src/pages/collaboration/office-studio/studio-print.ts"
+      ],
+      "existingTestFiles": [
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.test.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-structure.test.ts",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "stages": [
+        "Table原生parts/关系/身份",
+        "结构引用求值迁移",
+        "样式汇总自动扩展",
+        "改名/转区域保内容样式引用"
+      ],
+      "dependsOn": [
+        "E09:引用身份与names契约"
+      ],
+      "coordinatesWith": [
+        "E06",
+        "E08",
+        "E10",
+        "E12",
+        "E18",
+        "E19"
+      ],
+      "mergeRisk": "解除tables拒绝后只保cells不是支持；table/names/filter/改名交叉。"
+    },
+    {
+      "id": "E14",
+      "title": "透视缓存字段布局钻取切片器",
+      "itemIds": [
+        "X052",
+        "X053",
+        "X054",
+        "X055",
+        "X056"
+      ],
+      "effort": "XL",
+      "workType": "implementation",
+      "currentSourceFinding": "无pivot/cache/slicer/timeline模型，相应原生目录拒绝，无创建字段布局。",
+      "implementationAndAcceptanceBoundary": "先缓存和行列值筛选字段布局，再值显示/分组排序刷新、明细计算字段，最后slicer/timeline连接与原生；汇总网格不等于透视。",
+      "primaryFiles": [
+        "packages/ui/src/components/OfficeStudio/studio-types.ts",
+        "packages/ui/src/components/OfficeStudio/studio-model.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts"
+      ],
+      "existingTestFiles": [
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "stages": [
+        "X052原生cache/字段布局",
+        "X053值显示/X054分组刷新",
+        "X055钻取新表计算字段",
+        "X056对象多选连接保存"
+      ],
+      "dependsOn": [
+        "E08:求值类型和聚合契约"
+      ],
+      "coordinatesWith": [
+        "E06",
+        "E09",
+        "E10",
+        "E13",
+        "E16"
+      ],
+      "mergeRisk": "先固定cache ID/来源/刷新协议，独立cache/layout/codec；不能五项各自造汇总结果。"
+    },
+    {
+      "id": "E15",
+      "title": "图表族系列布局迷你图",
+      "itemIds": [
+        "X057",
+        "X058",
+        "X059",
+        "X060"
+      ],
+      "effort": "XL",
+      "workType": "mixed",
+      "currentSourceFinding": "chart仅id/type(bar|line)/title/range，导入限本表连续二维簇状柱/标准线；无次轴标签趋势误差或sparkline。",
+      "implementationAndAcceptanceBoundary": "先X057独立系列分类编辑和原生，再X058/59图表族组合轴/布局标签趋势误差，迷你图独立范围位置分组坐标。",
+      "primaryFiles": [
+        "packages/ui/src/components/OfficeStudio/studio-types.ts",
+        "packages/ui/src/components/OfficeStudio/studio-model.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts",
+        "docs/src/pages/collaboration/office-studio/studio-print.ts"
+      ],
+      "existingTestFiles": [
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.test.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx",
+        "docs/tests/studio-excel.test.mjs",
+        "docs/tests/studio-print.test.mjs"
+      ],
+      "stages": [
+        "X057编辑/闭环",
+        "X058图表族轴系列",
+        "X059布局标签趋势误差",
+        "X060迷你图原生分组"
+      ],
+      "dependsOn": [],
+      "coordinatesWith": [
+        "E05",
+        "E06",
+        "E08",
+        "E16",
+        "E18"
+      ],
+      "mergeRisk": "与E16共享drawing关系；当前导出删除重建charts/drawings，先统一part所有权。SVG渲染不是原生图表。"
+    },
+    {
+      "id": "E16",
+      "title": "图片形状嵌入对象",
+      "itemIds": [
+        "X061"
+      ],
+      "effort": "XL",
+      "workType": "implementation",
+      "currentSourceFinding": "无绘图对象模型，media/embeddings与drawing pic/sp/grpSp拒绝，现chart drawing导出会重建。",
+      "implementationAndAcceptanceBoundary": "对象ID/锚点/裁剪/尺寸/排列/媒体关系与命中移动/保护/打印/重开一致；嵌入对象有限类型待查，不扩成任意宏执行。",
+      "primaryFiles": [
+        "packages/ui/src/components/OfficeStudio/studio-types.ts",
+        "packages/ui/src/components/OfficeStudio/studio-model.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts",
+        "docs/src/pages/collaboration/office-studio/studio-print.ts"
+      ],
+      "existingTestFiles": [
+        "docs/tests/studio-excel.test.mjs",
+        "docs/tests/studio-print.test.mjs"
+      ],
+      "stages": [
+        "对象媒体part/rel合同",
+        "图片形状锚点裁剪交互",
+        "有限嵌入对象和排列",
+        "原生打印及X011整合"
+      ],
+      "dependsOn": [],
+      "coordinatesWith": [
+        "E03",
+        "E06",
+        "E14",
+        "E15",
+        "E18",
+        "E19"
+      ],
+      "mergeRisk": "先统一drawing分配器；行列移动/隐藏/冻结/缩放的锚点保文档单位。"
+    },
+    {
+      "id": "E17",
+      "title": "拆分窗格和命名视图",
+      "itemIds": [
+        "X063"
+      ],
+      "effort": "XL",
+      "workType": "implementation",
+      "currentSourceFinding": "只有一个虚拟grid和freeze，主视图非frozen/frozenSplit pane拒绝；X064保其他窗口metadata不是拆分编辑。",
+      "implementationAndAcceptanceBoundary": "独立滚动窗格/命名视图筛选隔离/保存恢复及customSheetViews，复用X064逻辑屏幕分离和冻结合同。",
+      "primaryFiles": [
+        "packages/ui/src/components/OfficeStudio/studio-sheet-view.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheetViewControls.tsx",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.css",
+        "packages/ui/src/components/OfficeStudio/studio-types.ts",
+        "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts"
+      ],
+      "existingTestFiles": [
+        "packages/ui/src/components/OfficeStudio/StudioSheetView.test.tsx",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-view.test.ts",
+        "docs/tests/studio-sheet-view.test.mjs",
+        "e2e/office-studio-sheet-view.spec.ts"
+      ],
+      "stages": [
+        "窗格视图身份原生",
+        "独立滚动命中/选区编辑",
+        "命名视图筛选隔离保存"
+      ],
+      "dependsOn": [],
+      "coordinatesWith": [
+        "E01",
+        "E04",
+        "E06",
+        "E10"
+      ],
+      "mergeRisk": "X064仅作回归基线不重列待办；复制DOM不等于独立窗格编辑。"
+    },
+    {
+      "id": "E18",
+      "title": "打印区域页面布局页眉页脚",
+      "itemIds": [
+        "X065",
+        "X066",
+        "X067"
+      ],
+      "effort": "XL",
+      "workType": "implementation",
+      "currentSourceFinding": "pageSetup/printArea/printTitles/断页源保留或随结构迁移；模型无print setup。实际打印全book/A4横向12mm，无区域标题页眉页脚真实分页。",
+      "implementationAndAcceptanceBoundary": "统一打印设置/分页计划，多区域标题/当前表全书、纸张边距方向断页fit/预览、字段居中黑白网格逐项闭环。",
+      "primaryFiles": [
+        "packages/ui/src/components/OfficeStudio/studio-types.ts",
+        "packages/ui/src/components/OfficeStudio/studio-model.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts",
+        "docs/src/pages/collaboration/office-studio/studio-print.ts"
+      ],
+      "existingTestFiles": [
+        "docs/tests/studio-excel.test.mjs",
+        "docs/tests/studio-print.test.mjs",
+        "e2e/office-studio-sheet-view.spec.ts"
+      ],
+      "stages": [
+        "模型hydration原生",
+        "多区域重复标题/当前表全书",
+        "纸张断页缩放/统一预览",
+        "页眉页脚字段选项"
+      ],
+      "dependsOn": [],
+      "coordinatesWith": [
+        "E05",
+        "E06",
+        "E08",
+        "E15",
+        "E16"
+      ],
+      "mergeRisk": "print.ts由Word等共用，仅改Excel分支；屏幕zoom/grid/headers与print设置独立。"
+    },
+    {
+      "id": "E19",
+      "title": "工作表工作簿范围保护",
+      "itemIds": [
+        "X068"
+      ],
+      "effort": "XL",
+      "workType": "implementation",
+      "currentSourceFinding": "仅本地protectedRanges与无密码sheet.protect，普通原生sheetProtection密码/workbookProtection拒绝，无结构锁/原生可编辑范围身份。",
+      "implementationAndAcceptanceBoundary": "原三层保护/范围/密码往返，统一能力表与原生hash保留验证，不扩成文件加密或账号后端。",
+      "primaryFiles": [
+        "packages/ui/src/components/OfficeStudio/studio-types.ts",
+        "packages/ui/src/components/OfficeStudio/studio-model.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts"
+      ],
+      "existingTestFiles": [
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.test.ts",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx",
+        "docs/tests/studio-excel.test.mjs"
+      ],
+      "stages": [
+        "层级权限原生hash",
+        "结构锁范围授权各入口",
+        "密码草稿错误取消原生重开"
+      ],
+      "dependsOn": [],
+      "coordinatesWith": [
+        "E03",
+        "E04",
+        "E06",
+        "E08",
+        "E13",
+        "E16"
+      ],
+      "mergeRisk": "不能仅禁toolbar；源保护字节保留不是完整在线保护。"
+    }
+  ],
+  "recommendedNext": [
+    {
+      "rank": 1,
+      "itemId": "X030",
+      "effort": "M",
+      "why": "高频且已有持久化/hidden集合/导航，边界较小，不引入新对象体系。",
+      "implementation": "拟新增可见性纯命令模块，独立设置/移除manual hidden rows/columns，保留旧行高列宽和auto/fixed身份；集成者小范围接线。",
+      "acceptance": "选区隐藏/显示、全表显示、隐藏列与键盘导航，保尺寸公式及筛选状态，原共同验收和两轮XLSX。",
+      "risk": "studioSetRowHeight正值或undefined会改高度或mode，不能直接冒充仅显示原行高。",
+      "entrypoints": [
+        {
+          "path": "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+          "line": 2879,
+          "anchor": "隐藏列"
+        },
+        {
+          "path": "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+          "line": 2512,
+          "anchor": "export function studioSetColumnsHidden"
+        },
+        {
+          "path": "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+          "line": 2138,
+          "anchor": "export function studioSetRowHeight"
+        },
+        {
+          "path": "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+          "line": 2497,
+          "anchor": "export function studioHiddenRows"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "itemId": "X046",
+      "effort": "M",
+      "why": "真实缺失且业务结果直观，比较键/变更计划器可独立开发，主grid耦合较低。",
+      "implementation": "拟新增studio-sheet-duplicates.ts及独立ZUVI弹窗（本次未创建）。先typed keys/保留删除行映射/计数，再一次事务应用。",
+      "acceptance": "原始表头/比较列/空值类型/删除计数及六条共同要求，旁列/未选范围保持，原生导入执行历史与两轮保存。",
+      "risk": "先查固定参考区域压缩/整行删除/相等语义；whole-row delete不是已证实复用结论。若广泛引用迁移则升L，先做X043。",
+      "entrypoints": [
+        {
+          "path": "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+          "line": 3120,
+          "anchor": "<Tabs.Panel value=\"data\">"
+        },
+        {
+          "path": "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+          "line": 1276,
+          "anchor": "export function studioInputValue"
+        },
+        {
+          "path": "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+          "line": 433,
+          "anchor": "export function studioPatchCells"
+        },
+        {
+          "path": "packages/ui/src/components/OfficeStudio/studio-sheet-structure.ts",
+          "line": 586,
+          "anchor": "export function studioChangeSheetStructure"
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "itemId": "X044",
+      "effort": "L",
+      "why": "值列表日期层级同列多条件明显提高可用性，已有颜色筛选/native XML基础。",
+      "implementation": "先条件判别联合和旧结构迁移，独立匹配/值列表/日期模块与弹窗；schema/validator/codec由一位owner串行接入。",
+      "acceptance": "原值列表/日期层级/多条件/颜色/清除，不改值公式，保手动隐藏和DXF，实际UI/OOXML/历史两轮重开。",
+      "risk": "不能只增UI而export仍拒绝多值；类型日期序号颜色池同步。",
+      "entrypoints": [
+        {
+          "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
+          "line": 176,
+          "anchor": "export interface StudioSheetFilter"
+        },
+        {
+          "path": "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+          "line": 2391,
+          "anchor": "export function studioSetFilter"
+        },
+        {
+          "path": "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+          "line": 2439,
+          "anchor": "export function studioFilteredRows"
+        },
+        {
+          "path": "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+          "line": 1917,
+          "anchor": "function applyFilter"
+        },
+        {
+          "path": "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts",
+          "line": 1589,
+          "anchor": "const autoFilter = first"
+        },
+        {
+          "path": "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts",
+          "line": 3288,
+          "anchor": "function filterXml("
+        }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": "X001",
+      "feature": "单格公式栏与矩形选区",
+      "group": "编辑",
+      "originalAcceptance": "编辑提交取消、地址导航与选区保持",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-basic-acceptance-pending",
+      "recordedImplementation": "基础实现",
+      "recordedGaps": [
+        "完整共通验收矩阵与窄屏文件编辑证据待补"
+      ],
+      "originalReferencePattern": "CellText",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/view/WorksheetView.js",
+          "line": 14961,
+          "symbol": "setSelection"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 6224,
+          "symbol": "asc_getCellInfo"
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E01",
+      "freshSourceAssessment": "公式栏/矩形selection、通配符查找替换、Ctrl数据块导航、merge/split和freeze有代码，X015有原生/浏览器专项。"
+    },
+    {
+      "id": "X002",
+      "feature": "普通复制剪切粘贴",
+      "group": "编辑",
+      "originalAcceptance": "文本内部格式、剪切移动与公式引用迁移",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-partial-acceptance-pending",
+      "recordedImplementation": "部分实现",
+      "recordedGaps": [
+        "无 onCut/剪切移动引用迁移；普通剪切语义未实现"
+      ],
+      "originalReferencePattern": "asc_Paste",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 482,
+          "symbol": "asc_Paste"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 1032,
+          "symbol": "asc_PasteData"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 1039,
+          "symbol": "asc_PasteHtmlAsText"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 333,
+          "symbol": "asc_Paste"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/Toolbar.js",
+          "line": 671,
+          "symbol": "asc_Paste"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E03",
+      "freshSourceAssessment": "没有onCut或格内rich runs；普通剪切引用迁移和文本内部格式缺失。"
+    },
+    {
+      "id": "X003",
+      "feature": "仅公式粘贴",
+      "group": "编辑",
+      "originalAcceptance": "常量一起粘贴，公式相对引用正确调整",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-basic-acceptance-pending",
+      "recordedImplementation": "基础实现",
+      "recordedGaps": [
+        "独立浏览器原生文件链路和共通边界待补"
+      ],
+      "originalReferencePattern": "SpecialPaste",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 489,
+          "symbol": "asc_SpecialPaste"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 493,
+          "symbol": "asc_SpecialPasteData"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 1010,
+          "symbol": "asc_ShowSpecialPasteButton"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 4433,
+          "symbol": "asc_SpecialPaste"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 4515,
+          "symbol": "asc_SpecialPaste"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E02",
+      "freshSourceAssessment": "多种paste mode、typed快照、相对公式、列宽、转置/合并/链接与skip/运算均有模型，原生有version3 Paste Special和运算两轮保存。"
+    },
+    {
+      "id": "X004",
+      "feature": "仅值粘贴",
+      "group": "编辑",
+      "originalAcceptance": "公式变成复制时结果，文本数字布尔类型保留",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-basic-acceptance-pending",
+      "recordedImplementation": "基础实现",
+      "recordedGaps": [
+        "独立浏览器 XLSX 往返与空白/错误类型验收待补"
+      ],
+      "originalReferencePattern": "SpecialPaste",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 489,
+          "symbol": "asc_SpecialPaste"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 493,
+          "symbol": "asc_SpecialPasteData"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 1010,
+          "symbol": "asc_ShowSpecialPasteButton"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 4433,
+          "symbol": "asc_SpecialPaste"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 4515,
+          "symbol": "asc_SpecialPaste"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E02",
+      "freshSourceAssessment": "多种paste mode、typed快照、相对公式、列宽、转置/合并/链接与skip/运算均有模型，原生有version3 Paste Special和运算两轮保存。"
+    },
+    {
+      "id": "X005",
+      "feature": "仅格式粘贴",
+      "group": "编辑",
+      "originalAcceptance": "保留目标内容，覆盖源格式的默认值",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-basic-acceptance-pending",
+      "recordedImplementation": "基础实现",
+      "recordedGaps": [
+        "完整默认/混合格式和原生浏览器往返待补"
+      ],
+      "originalReferencePattern": "SpecialPaste",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 489,
+          "symbol": "asc_SpecialPaste"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 493,
+          "symbol": "asc_SpecialPasteData"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 1010,
+          "symbol": "asc_ShowSpecialPasteButton"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 4433,
+          "symbol": "asc_SpecialPaste"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 4515,
+          "symbol": "asc_SpecialPaste"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E02",
+      "freshSourceAssessment": "多种paste mode、typed快照、相对公式、列宽、转置/合并/链接与skip/运算均有模型，原生有version3 Paste Special和运算两轮保存。"
+    },
+    {
+      "id": "X006",
+      "feature": "公式或值加数字格式",
+      "group": "编辑",
+      "originalAcceptance": "只复制对应内容和数字格式",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-basic-acceptance-pending",
+      "recordedImplementation": "基础实现",
+      "recordedGaps": [
+        "完整函数缓存类型及浏览器往返待补"
+      ],
+      "originalReferencePattern": "SpecialPaste",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 489,
+          "symbol": "asc_SpecialPaste"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 493,
+          "symbol": "asc_SpecialPasteData"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 1010,
+          "symbol": "asc_ShowSpecialPasteButton"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 4433,
+          "symbol": "asc_SpecialPaste"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 4515,
+          "symbol": "asc_SpecialPaste"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E02",
+      "freshSourceAssessment": "多种paste mode、typed快照、相对公式、列宽、转置/合并/链接与skip/运算均有模型，原生有version3 Paste Special和运算两轮保存。"
+    },
+    {
+      "id": "X007",
+      "feature": "保留源格式粘贴",
+      "group": "编辑",
+      "originalAcceptance": "格式及内容一致，目标旧格式不残留",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-basic-acceptance-pending",
+      "recordedImplementation": "基础实现",
+      "recordedGaps": [
+        "主题/复杂样式仍不支持；完整支持契约验收待补"
+      ],
+      "originalReferencePattern": "SpecialPaste",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 489,
+          "symbol": "asc_SpecialPaste"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 493,
+          "symbol": "asc_SpecialPasteData"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 1010,
+          "symbol": "asc_ShowSpecialPasteButton"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 4433,
+          "symbol": "asc_SpecialPaste"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 4515,
+          "symbol": "asc_SpecialPaste"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E02",
+      "freshSourceAssessment": "source-formatting已有，但theme/格内richText不能由现单格模型完整表达。"
+    },
+    {
+      "id": "X008",
+      "feature": "无边框粘贴",
+      "group": "编辑",
+      "originalAcceptance": "复制其他格式内容，保留目标边框",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-basic-acceptance-pending",
+      "recordedImplementation": "基础实现",
+      "recordedGaps": [
+        "合并区域复杂边界与浏览器文件链路待补"
+      ],
+      "originalReferencePattern": "SpecialPaste",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 489,
+          "symbol": "asc_SpecialPaste"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 493,
+          "symbol": "asc_SpecialPasteData"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 1010,
+          "symbol": "asc_ShowSpecialPasteButton"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 4433,
+          "symbol": "asc_SpecialPaste"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 4515,
+          "symbol": "asc_SpecialPaste"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E02",
+      "freshSourceAssessment": "多种paste mode、typed快照、相对公式、列宽、转置/合并/链接与skip/运算均有模型，原生有version3 Paste Special和运算两轮保存。"
+    },
+    {
+      "id": "X009",
+      "feature": "列宽粘贴",
+      "group": "编辑",
+      "originalAcceptance": "源列宽与目标列映射，内容保持",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-basic-acceptance-pending",
+      "recordedImplementation": "基础实现",
+      "recordedGaps": [
+        "窄屏入口和原生导出后的独立列宽验收待补"
+      ],
+      "originalReferencePattern": "SpecialPaste",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 489,
+          "symbol": "asc_SpecialPaste"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 493,
+          "symbol": "asc_SpecialPasteData"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 1010,
+          "symbol": "asc_ShowSpecialPasteButton"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 4433,
+          "symbol": "asc_SpecialPaste"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 4515,
+          "symbol": "asc_SpecialPaste"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E02",
+      "freshSourceAssessment": "多种paste mode、typed快照、相对公式、列宽、转置/合并/链接与skip/运算均有模型，原生有version3 Paste Special和运算两轮保存。"
+    },
+    {
+      "id": "X010",
+      "feature": "转置粘贴",
+      "group": "编辑",
+      "originalAcceptance": "行列互换，公式与合并映射正确",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-basic-acceptance-pending",
+      "recordedImplementation": "基础实现",
+      "recordedGaps": [
+        "完整合并冲突、取消/IME与原生浏览器链路待补"
+      ],
+      "originalReferencePattern": "SpecialPaste",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 489,
+          "symbol": "asc_SpecialPaste"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 493,
+          "symbol": "asc_SpecialPasteData"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 1010,
+          "symbol": "asc_ShowSpecialPasteButton"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 4433,
+          "symbol": "asc_SpecialPaste"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 4515,
+          "symbol": "asc_SpecialPaste"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E02",
+      "freshSourceAssessment": "多种paste mode、typed快照、相对公式、列宽、转置/合并/链接与skip/运算均有模型，原生有version3 Paste Special和运算两轮保存。"
+    },
+    {
+      "id": "X011",
+      "feature": "粘贴链接图片与条件规则",
+      "group": "编辑",
+      "originalAcceptance": "链接源定位、图片关系及规则重定位",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-partial-acceptance-pending",
+      "recordedImplementation": "部分实现",
+      "recordedGaps": [
+        "缺链接源单元格、图片与条件规则重定位粘贴"
+      ],
+      "originalReferencePattern": "SpecialPaste",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 489,
+          "symbol": "asc_SpecialPaste"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 493,
+          "symbol": "asc_SpecialPasteData"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 1010,
+          "symbol": "asc_ShowSpecialPasteButton"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 4433,
+          "symbol": "asc_SpecialPaste"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 4515,
+          "symbol": "asc_SpecialPaste"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E03",
+      "freshSourceAssessment": "clipboard只含cells/values/widths/merges/hyperlinks，无图片/规则。"
+    },
+    {
+      "id": "X012",
+      "feature": "跳过空格与运算粘贴",
+      "group": "编辑",
+      "originalAcceptance": "跳过真正空格，加减乘除，失败整批撤销",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "implemented-skip-arithmetic-paste-slice-verified-full-acceptance-audit-pending",
+      "recordedImplementation": "切片验证",
+      "recordedGaps": [
+        "算术粘贴实际涉及合并单元格或数组区域时整批拒绝；全部适用混合粘贴/合并/跨应用剪贴板及原始共通验收仍待完整核对。"
+      ],
+      "originalReferencePattern": "SpecialPaste",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 489,
+          "symbol": "asc_SpecialPaste"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 493,
+          "symbol": "asc_SpecialPasteData"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 1010,
+          "symbol": "asc_ShowSpecialPasteButton"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 4433,
+          "symbol": "asc_SpecialPaste"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 4515,
+          "symbol": "asc_SpecialPaste"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E02",
+      "freshSourceAssessment": "多种paste mode、typed快照、相对公式、列宽、转置/合并/链接与skip/运算均有模型，原生有version3 Paste Special和运算两轮保存。"
+    },
+    {
+      "id": "X013",
+      "feature": "查找替换与通配符",
+      "group": "编辑",
+      "originalAcceptance": "范围、大小写、整格、公式和值；格式搜索另补",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-basic-acceptance-pending",
+      "recordedImplementation": "基础实现",
+      "recordedGaps": [
+        "按格式搜索不在本项当前支持范围；原生浏览器全矩阵待补"
+      ],
+      "originalReferencePattern": "findText",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 4402,
+          "symbol": "asc_findText"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 4459,
+          "symbol": "asc_endFindText"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/Search.js",
+          "line": 299,
+          "symbol": "asc_findText"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E01",
+      "freshSourceAssessment": "原始验收明确格式搜索另补；不自动把格式搜索全部加入本项。"
+    },
+    {
+      "id": "X014",
+      "feature": "多段不连续选区",
+      "group": "编辑",
+      "originalAcceptance": "Ctrl追加范围，批量命令适用范围明确",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-not-implemented",
+      "recordedImplementation": "未实现",
+      "recordedGaps": [
+        "缺 Ctrl 追加非连续范围模型及批量命令"
+      ],
+      "originalReferencePattern": "Selection",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/view/WorksheetView.js",
+          "line": 15006,
+          "symbol": "changeSelectionStartPoint"
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E04",
+      "freshSourceAssessment": "SheetSelection只有单组anchor/focus，无Ctrl追加多范围集合。"
+    },
+    {
+      "id": "X015",
+      "feature": "Ctrl方向键与数据块选择",
+      "group": "编辑",
+      "originalAcceptance": "连续与空白边界，Shift组合扩展选区",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "implemented-navigation-slice-verified-full-acceptance-audit-pending",
+      "recordedImplementation": "切片验证",
+      "recordedGaps": [
+        "全部合并/冻结/滚动组合及完整原始共通验收仍待审计"
+      ],
+      "originalReferencePattern": "Selection",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/view/WorksheetView.js",
+          "line": 15325,
+          "symbol": "changeSelectionActivePoint"
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E01",
+      "freshSourceAssessment": "公式栏/矩形selection、通配符查找替换、Ctrl数据块导航、merge/split和freeze有代码，X015有原生/浏览器专项。"
+    },
+    {
+      "id": "X016",
+      "feature": "可拖动填充柄",
+      "group": "编辑",
+      "originalAcceptance": "复制或序列、预览范围、取消与一次撤销",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-partial-acceptance-pending",
+      "recordedImplementation": "部分实现",
+      "recordedGaps": [
+        "复杂滚动/冻结/合并坐标、公式种子和原生浏览器链路待核对"
+      ],
+      "originalReferencePattern": "Fill",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/view/WorksheetView.js",
+          "line": 15596,
+          "symbol": "changeSelectionFillHandle"
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E04",
+      "freshSourceAssessment": "SheetSelection只有anchor/focus，无Ctrl追加多段；填充柄、线性数字日期文本stop、单次连续格式刷已有专项。"
+    },
+    {
+      "id": "X017",
+      "feature": "向下向右与序列填充",
+      "group": "编辑",
+      "originalAcceptance": "相对公式、日期步长、文本数字及停止值",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "implemented-series-stop-slice-verified-full-acceptance-audit-pending",
+      "recordedImplementation": "切片验证",
+      "recordedGaps": [
+        "原始共通验收的全部适用隐藏/冻结/合并/滚动组合仍待逐项核对。"
+      ],
+      "originalReferencePattern": "Fill",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 9717,
+          "symbol": "asc_FillCells"
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E04",
+      "freshSourceAssessment": "SheetSelection只有anchor/focus，无Ctrl追加多段；填充柄、线性数字日期文本stop、单次连续格式刷已有专项。"
+    },
+    {
+      "id": "X018",
+      "feature": "格式刷",
+      "group": "编辑",
+      "originalAcceptance": "单次连续、复制矩形格式、Esc退出",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "implemented-format-painter-slice-verified-full-acceptance-audit-pending",
+      "recordedImplementation": "切片验证",
+      "recordedGaps": [
+        "跨工作表连续刷与所有冻结/滚动/合并组合的完整共通验收仍待审计；当前换表取消，合并布局不一致时整次拒绝。"
+      ],
+      "originalReferencePattern": "PaintFormat",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 6667,
+          "symbol": "asc_formatPainter"
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E04",
+      "freshSourceAssessment": "SheetSelection只有anchor/focus，无Ctrl追加多段；填充柄、线性数字日期文本stop、单次连续格式刷已有专项。"
+    },
+    {
+      "id": "X019",
+      "feature": "字体字号与常用文字格式",
+      "group": "格式",
+      "originalAcceptance": "混合格式回显、小数、默认字体与保存",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-partial-acceptance-pending",
+      "recordedImplementation": "部分实现",
+      "recordedGaps": [
+        "混合选区回显/默认字体契约及更多文字格式待补"
+      ],
+      "originalReferencePattern": "CellFont",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 6304,
+          "symbol": "asc_setCellFontName"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 6318,
+          "symbol": "asc_setCellFontSize"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/Toolbar.js",
+          "line": 1851,
+          "symbol": "asc_setCellFontName"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/Toolbar.js",
+          "line": 1859,
+          "symbol": "asc_setCellFontName"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E05",
+      "freshSourceAssessment": "小数字号及继承/font0已有原生测试，active cell回显不能代替mixed回显。"
+    },
+    {
+      "id": "X020",
+      "feature": "数字格式与自定义格式",
+      "group": "格式",
+      "originalAcceptance": "分节规则、日期时间地区、小数与文本",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "implemented-custom-number-format-slice-verified-full-acceptance-audit-pending",
+      "recordedImplementation": "切片验证",
+      "recordedGaps": [
+        "地区编辑与本地化预览目前支持 en-US/zh-CN，基本八色；其他 LCID/ColorN、1904 日期系统、宽度相关填充及外部 Excel/WPS 完整排版重算仍待验收。"
+      ],
+      "originalReferencePattern": "NumFormat",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 6517,
+          "symbol": "asc_setCellFormat"
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E05",
+      "freshSourceAssessment": "整格字体/小数字号/number format、RGB填充、四边框和共享text/auto row存在。边框仅all/outer/none，无斜线/可编辑theme/tint身份。"
+    },
+    {
+      "id": "X021",
+      "feature": "完整边框与斜线",
+      "group": "格式",
+      "originalAcceptance": "所有单边内横内竖线型颜色及合并边界",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-partial-acceptance-pending",
+      "recordedImplementation": "部分实现",
+      "recordedGaps": [
+        "缺单边/内横内竖/斜线；复杂合并边界待补"
+      ],
+      "originalReferencePattern": "CellBorders",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 6512,
+          "symbol": "asc_setCellBorders"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/Toolbar.js",
+          "line": 888,
+          "symbol": "asc_setCellBorders"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E05",
+      "freshSourceAssessment": "四物理边、all/outer/none存在，单边内线/对角线入口模型不全。"
+    },
+    {
+      "id": "X022",
+      "feature": "填充与主题颜色",
+      "group": "格式",
+      "originalAcceptance": "无填充、主题和色调，保存不失真",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-partial-acceptance-pending",
+      "recordedImplementation": "部分实现",
+      "recordedGaps": [
+        "缺主题引用和色调往返；普通源样式保留不代表编辑支持"
+      ],
+      "originalReferencePattern": "CellBackground",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 6497,
+          "symbol": "asc_setCellBackgroundColor"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/Toolbar.js",
+          "line": 810,
+          "symbol": "asc_setCellBackgroundColor"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E05",
+      "freshSourceAssessment": "RGB/none可编辑；theme/tint身份未在cell颜色模型中。"
+    },
+    {
+      "id": "X023",
+      "feature": "对齐缩进旋转文字",
+      "group": "格式",
+      "originalAcceptance": "常规、分散、跨选区居中、缩进与旋转",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "implemented-sheet-text-layout-slice-verified-full-acceptance-audit-pending",
+      "recordedImplementation": "切片验证",
+      "recordedGaps": [
+        "复杂RTL、竖排多列或斜角换行的原生等价、tab stop、普通文字向相邻空白cell溢出、跨隐藏/冻结边界桥接及多可见纵向合并自动分配尚未完整证实。"
+      ],
+      "originalReferencePattern": "CellAlign",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 6428,
+          "symbol": "asc_setCellAlign"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 1195,
+          "symbol": "asc_setCellAlign"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/Toolbar.js",
+          "line": 931,
+          "symbol": "asc_setCellAlign"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E05",
+      "freshSourceAssessment": "整格字体/小数字号/number format、RGB填充、四边框和共享text/auto row存在。边框仅all/outer/none，无斜线/可编辑theme/tint身份。"
+    },
+    {
+      "id": "X024",
+      "feature": "换行缩小字体",
+      "group": "格式",
+      "originalAcceptance": "显示适配与导出一致，自动行高联动",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "implemented-sheet-text-layout-slice-verified-full-acceptance-audit-pending",
+      "recordedImplementation": "切片验证",
+      "recordedGaps": [
+        "复杂RTL、竖排多列或斜角换行的原生等价、tab stop、普通文字向相邻空白cell溢出、跨隐藏/冻结边界桥接及多可见纵向合并自动分配尚未完整证实。"
+      ],
+      "originalReferencePattern": "TextWrap",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 6454,
+          "symbol": "asc_setCellTextWrap"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/Toolbar.js",
+          "line": 1002,
+          "symbol": "asc_setCellTextWrap"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E05",
+      "freshSourceAssessment": "整格字体/小数字号/number format、RGB填充、四边框和共享text/auto row存在。边框仅all/outer/none，无斜线/可编辑theme/tint身份。"
+    },
+    {
+      "id": "X025",
+      "feature": "合并拆分",
+      "group": "格式",
+      "originalAcceptance": "合并范围冲突、非空警告、文件重开",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-basic-acceptance-pending",
+      "recordedImplementation": "基础实现",
+      "recordedGaps": [
+        "完整浏览器失败恢复/历史/原生重开矩阵待补"
+      ],
+      "originalReferencePattern": "Merge",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 4676,
+          "symbol": "asc_mergeCells"
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E01",
+      "freshSourceAssessment": "公式栏/矩形selection、通配符查找替换、Ctrl数据块导航、merge/split和freeze有代码，X015有原生/浏览器专项。"
+    },
+    {
+      "id": "X026",
+      "feature": "清除分项菜单",
+      "group": "格式",
+      "originalAcceptance": "内容格式批注链接规则分别清除",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-partial-acceptance-pending",
+      "recordedImplementation": "部分实现",
+      "recordedGaps": [
+        "缺统一清除分项菜单、批注管理/选择性清除"
+      ],
+      "originalReferencePattern": "Clean",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 4362,
+          "symbol": "asc_cleanSelection"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 5239,
+          "symbol": "asc_cleanWorksheet"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 5731,
+          "symbol": "cleanSpelling"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E07",
+      "freshSourceAssessment": "缺统一五类菜单和批注寻址显式清除，源note保留不等于实现。"
+    },
+    {
+      "id": "X027",
+      "feature": "行列插入删除",
+      "group": "结构",
+      "originalAcceptance": "公式、尺寸、合并、规则、图表引用同步",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-basic-acceptance-pending",
+      "recordedImplementation": "基础实现",
+      "recordedGaps": [
+        "数组新增边界及全原生浏览器矩阵待完整审计"
+      ],
+      "originalReferencePattern": "InsertCells",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 4668,
+          "symbol": "asc_insertCells"
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E06",
+      "freshSourceAssessment": "整行列insert/delete有引用/尺寸/合并/规则/图表/链接迁移和log。hidden集合存在但列UI仅活动列，行借0行高；无局部移位/复制移动隐藏表/outline模型。"
+    },
+    {
+      "id": "X028",
+      "feature": "单元格插入删除并移位",
+      "group": "结构",
+      "originalAcceptance": "右移下移左移上移引用变更与越界",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-not-implemented",
+      "recordedImplementation": "未实现",
+      "recordedGaps": [
+        "缺单元格右下左上移位及引用变更"
+      ],
+      "originalReferencePattern": "InsertCells",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 4668,
+          "symbol": "asc_insertCells"
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E06",
+      "freshSourceAssessment": "structure edit只含整row/column，无局部四向cell shift。"
+    },
+    {
+      "id": "X029",
+      "feature": "行高列宽自动适配",
+      "group": "结构",
+      "originalAcceptance": "拖动、合并、字体测量和尺寸限制",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-partial-acceptance-pending",
+      "recordedImplementation": "部分实现",
+      "recordedGaps": [
+        "复杂合并字体测量、读入隐藏尺寸和文件链路待补"
+      ],
+      "originalReferencePattern": "RowHeight",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 4582,
+          "symbol": "asc_setRowHeight"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 4585,
+          "symbol": "asc_autoFitRowHeight"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 4577,
+          "symbol": "asc_getRowHeight"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 978,
+          "symbol": "asc_getRowHeight"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 987,
+          "symbol": "asc_setRowHeight"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E05",
+      "freshSourceAssessment": "整格字体/小数字号/number format、RGB填充、四边框和共享text/auto row存在。边框仅all/outer/none，无斜线/可编辑theme/tint身份。"
+    },
+    {
+      "id": "X030",
+      "feature": "独立隐藏显示行列",
+      "group": "结构",
+      "originalAcceptance": "隐藏列、选区显示、全表显示与键盘导航",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-partial-acceptance-pending",
+      "recordedImplementation": "部分实现",
+      "recordedGaps": [
+        "行选区显示/隐藏独立入口不完整，隐藏列仅活动列操作"
+      ],
+      "originalReferencePattern": "Hidden",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 4593,
+          "symbol": "asc_hideRows"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 4569,
+          "symbol": "asc_hideColumns"
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E06",
+      "freshSourceAssessment": "hidden集合持久化存在；行借0行高，列UI只active firstCol及全显。恢复行高会改mode，需独立unhide。"
+    },
+    {
+      "id": "X031",
+      "feature": "工作表复制移动隐藏",
+      "group": "结构",
+      "originalAcceptance": "顺序、重名、跨表公式、隐藏恢复",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-partial-acceptance-pending",
+      "recordedImplementation": "部分实现",
+      "recordedGaps": [
+        "缺工作表复制移动隐藏及恢复；隐藏工作表原文件拒绝"
+      ],
+      "originalReferencePattern": "Worksheet",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 4185,
+          "symbol": "asc_copyWorksheet"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 4116,
+          "symbol": "asc_moveWorksheet"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 3933,
+          "symbol": "asc_showWorksheet"
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E06",
+      "freshSourceAssessment": "新增删除改名已有；复制移动隐藏恢复缺失，hidden sheet原生拒绝。"
+    },
+    {
+      "id": "X032",
+      "feature": "分组与分级显示",
+      "group": "结构",
+      "originalAcceptance": "嵌套层级、汇总位置、展开折叠",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-not-implemented",
+      "recordedImplementation": "未实现",
+      "recordedGaps": [
+        "无分组/层级 UI 和独立模型，不能按透传视为实现"
+      ],
+      "originalReferencePattern": "group",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 4597,
+          "symbol": "asc_group"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 4617,
+          "symbol": "asc_canGroupPivot"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 4626,
+          "symbol": "asc_groupPivot"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DataTab.js",
+          "line": 137,
+          "symbol": "asc_checkAddGroup"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DataTab.js",
+          "line": 137,
+          "symbol": "asc_ungroup"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E06",
+      "freshSourceAssessment": "无outline模型和层级UI，原文件metadata保留非编辑支持。"
+    },
+    {
+      "id": "X033",
+      "feature": "公式解析与计算错误",
+      "group": "公式",
+      "originalAcceptance": "引用、错误传播、循环与计算预算",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-partial-acceptance-pending",
+      "recordedImplementation": "部分实现",
+      "recordedGaps": [
+        "支持函数/引用子集及导入缓存边界仍需逐函数审计"
+      ],
+      "originalReferencePattern": "Formula",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/FormulaObjects/parserFormula.js",
+          "line": 7504,
+          "symbol": "parserFormula"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 4414,
+          "symbol": "calculate"
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E08",
+      "freshSourceAssessment": "fast-formula-parser封装已有1900日历/错误/循环/预算/数组，X036有专项；UI仅SUM/AVERAGE/COUNT/IF模板，无分类参数向导、计算模式或Goal Seek状态。"
+    },
+    {
+      "id": "X034",
+      "feature": "名称管理器",
+      "group": "公式",
+      "originalAcceptance": "工作簿表作用域、冲突、引用更新",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-not-implemented",
+      "recordedImplementation": "未实现",
+      "recordedGaps": [
+        "命名区域文件拒绝；作用域/冲突/引用更新缺失"
+      ],
+      "originalReferencePattern": "DefinedNames",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 3775,
+          "symbol": "asc_setDefinedNames"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 3784,
+          "symbol": "asc_editDefinedNames"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 3793,
+          "symbol": "asc_delDefinedNames"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/CellEditor.js",
+          "line": 323,
+          "symbol": "asc_getDefinedNames"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/CellEditor.js",
+          "line": 336,
+          "symbol": "asc_getDefinedNames"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E09",
+      "freshSourceAssessment": "自定义definedNames拒绝，scope/冲突/引用更新缺失。"
+    },
+    {
+      "id": "X035",
+      "feature": "结构化表引用",
+      "group": "公式",
+      "originalAcceptance": "列名、当前行、汇总行与自动扩展",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-not-implemented",
+      "recordedImplementation": "未实现",
+      "recordedGaps": [
+        "原生数据表拒绝，缺结构化引用和自动扩展"
+      ],
+      "originalReferencePattern": "Table",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/FormulaObjects/parserFormula.js",
+          "line": 7504,
+          "symbol": "parserFormula"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 1216,
+          "symbol": "asc_changeFormatTableInfo"
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E13",
+      "freshSourceAssessment": "tables原生拒绝，模型无Table和结构化引用。"
+    },
+    {
+      "id": "X036",
+      "feature": "数组与动态溢出",
+      "group": "公式",
+      "originalAcceptance": "矩阵结果、溢出冲突、数组编辑限制",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "implemented-array-slice-verified-full-acceptance-audit-pending",
+      "recordedImplementation": "切片验证",
+      "recordedGaps": [
+        "更多动态函数/外部应用重算及完整共通验收仍待完成"
+      ],
+      "originalReferencePattern": "Formula",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 26312,
+          "symbol": "getDynamicRangeByFormula"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/FormulaObjects/parserFormula.js",
+          "line": 4638,
+          "symbol": "checkFormulaArray"
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E08",
+      "freshSourceAssessment": "fast-formula-parser封装已有1900日历/错误/循环/预算/数组，X036有专项；UI仅SUM/AVERAGE/COUNT/IF模板，无分类参数向导、计算模式或Goal Seek状态。"
+    },
+    {
+      "id": "X037",
+      "feature": "函数向导与分类帮助",
+      "group": "公式",
+      "originalAcceptance": "参数校验、引用选择、结果预览",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-partial-acceptance-pending",
+      "recordedImplementation": "部分实现",
+      "recordedGaps": [
+        "缺分类向导、参数校验、引用选择/预览"
+      ],
+      "originalReferencePattern": "getFormulasInfo",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 6749,
+          "symbol": "asc_getFormulasInfo"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/FormulaDialog.js",
+          "line": 391,
+          "symbol": "asc_getFormulasInfo"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/FormulaDialog.js",
+          "line": 482,
+          "symbol": "asc_getFormulasInfo"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E08",
+      "freshSourceAssessment": "四个模板函数按钮不等于分类参数/引用选择/预览向导。"
+    },
+    {
+      "id": "X038",
+      "feature": "数学统计逻辑函数",
+      "group": "公式",
+      "originalAcceptance": "逐函数核对参数类型、空值、数组与错误",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-partial-acceptance-pending",
+      "recordedImplementation": "部分实现",
+      "recordedGaps": [
+        "没有逐函数完整参数/空值/数组/误差证据"
+      ],
+      "originalReferencePattern": "Formula",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/FormulaObjects/mathematicFunctions.js",
+          "line": 5947,
+          "symbol": "cSUM"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/FormulaObjects/logicalFunctions.js",
+          "line": 159,
+          "symbol": "cIF"
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E08",
+      "freshSourceAssessment": "fast-formula-parser封装已有1900日历/错误/循环/预算/数组，X036有专项；UI仅SUM/AVERAGE/COUNT/IF模板，无分类参数向导、计算模式或Goal Seek状态。"
+    },
+    {
+      "id": "X039",
+      "feature": "文本日期查询函数",
+      "group": "公式",
+      "originalAcceptance": "地区日期、查找匹配、引用与字符语义",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-partial-acceptance-pending",
+      "recordedImplementation": "部分实现",
+      "recordedGaps": [
+        "其他文本查询函数、地区语义仍需逐函数核对"
+      ],
+      "originalReferencePattern": "Formula",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/FormulaObjects/dateandtimeFunctions.js",
+          "line": 779,
+          "symbol": "cDATE"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/FormulaObjects/lookupandreferenceFunctions.js",
+          "line": 1505,
+          "symbol": "cHYPERLINK"
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E08",
+      "freshSourceAssessment": "fast-formula-parser封装已有1900日历/错误/循环/预算/数组，X036有专项；UI仅SUM/AVERAGE/COUNT/IF模板，无分类参数向导、计算模式或Goal Seek状态。"
+    },
+    {
+      "id": "X040",
+      "feature": "财务工程数据库函数",
+      "group": "公式",
+      "originalAcceptance": "逐函数验证精度、边界和原文件缓存",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-partial-acceptance-pending",
+      "recordedImplementation": "部分实现",
+      "recordedGaps": [
+        "未证明全部函数精度/边界和原生缓存一致"
+      ],
+      "originalReferencePattern": "Formula",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/FormulaObjects/financialFunctions.js",
+          "line": 3235,
+          "symbol": "cFV"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/FormulaObjects/databaseFunctions.js",
+          "line": 479,
+          "symbol": "cDCOUNT"
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E08",
+      "freshSourceAssessment": "fast-formula-parser封装已有1900日历/错误/循环/预算/数组，X036有专项；UI仅SUM/AVERAGE/COUNT/IF模板，无分类参数向导、计算模式或Goal Seek状态。"
+    },
+    {
+      "id": "X041",
+      "feature": "追踪引用与显示公式",
+      "group": "公式",
+      "originalAcceptance": "前置后置箭头、跨表导航、切换不改值",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-not-implemented",
+      "recordedImplementation": "未实现",
+      "recordedGaps": [
+        "无前后依赖箭头、跨表追踪与全表显示公式"
+      ],
+      "originalReferencePattern": "ShowFormulas",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 4723,
+          "symbol": "asc_setShowFormulas"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 4735,
+          "symbol": "asc_getShowFormulas"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/FormulaDialog.js",
+          "line": 571,
+          "symbol": "asc_setShowFormulas"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/FormulaDialog.js",
+          "line": 584,
+          "symbol": "asc_getShowFormulas"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E09",
+      "freshSourceAssessment": "没有公开依赖graph/箭头/跨表追踪/显示公式。"
+    },
+    {
+      "id": "X042",
+      "feature": "计算设置与单变量求解",
+      "group": "公式",
+      "originalAcceptance": "自动手动计算、迭代及求解过程控制",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-not-implemented",
+      "recordedImplementation": "未实现",
+      "recordedGaps": [
+        "缺手动/迭代设置和单变量求解控制"
+      ],
+      "originalReferencePattern": "GoalSeek",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 9541,
+          "symbol": "asc_StartGoalSeek"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 9555,
+          "symbol": "asc_PauseGoalSeek"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 9562,
+          "symbol": "asc_ContinueGoalSeek"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DataTab.js",
+          "line": 495,
+          "symbol": "asc_StartGoalSeek"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E08",
+      "freshSourceAssessment": "没有计算模式/迭代/求解过程状态。"
+    },
+    {
+      "id": "X043",
+      "feature": "多关键字排序",
+      "group": "数据",
+      "originalAcceptance": "优先级、升降序、扩展选区和稳定排序",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-basic-acceptance-pending",
+      "recordedImplementation": "基础实现",
+      "recordedGaps": [
+        "扩展选区询问、浏览器原生排序链路和全边界待补"
+      ],
+      "originalReferencePattern": "SortProps",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 8080,
+          "symbol": "asc_setSortProps"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 8073,
+          "symbol": "asc_getSortProps"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DataTab.js",
+          "line": 389,
+          "symbol": "asc_getSortProps"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DataTab.js",
+          "line": 397,
+          "symbol": "asc_setSortProps"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E10",
+      "freshSourceAssessment": "多键方向稳定排序和表头已有，无扩展当前selection询问。"
+    },
+    {
+      "id": "X044",
+      "feature": "完整自动筛选",
+      "group": "数据",
+      "originalAcceptance": "值列表、日期层级、多条件、颜色和清除",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "implemented-color-slice-verified-full-filter-acceptance-pending",
+      "recordedImplementation": "切片验证",
+      "recordedGaps": [
+        "Original complete-auto-filter acceptance still includes value lists, date hierarchies and multiple criteria.",
+        "缺值列表、日期层级、同列多个条件"
+      ],
+      "originalReferencePattern": "AutoFilter",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 1124,
+          "symbol": "asc_addAutoFilter"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 1129,
+          "symbol": "asc_changeAutoFilter"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 1137,
+          "symbol": "asc_applyAutoFilter"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 471,
+          "symbol": "asc_applyAutoFilterByType"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 478,
+          "symbol": "asc_reapplyAutoFilter"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E10",
+      "freshSourceAssessment": "每列单operator/value，多值/动态native拒绝，颜色专项不等于完整filter。"
+    },
+    {
+      "id": "X045",
+      "feature": "文本分列",
+      "group": "数据",
+      "originalAcceptance": "分隔固定宽度、引号、预览与列类型",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-not-implemented",
+      "recordedImplementation": "未实现",
+      "recordedGaps": [
+        "缺分隔/固定宽度分列、预览与列类型"
+      ],
+      "originalReferencePattern": "TextToColumns",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 862,
+          "symbol": "asc_TextToColumns"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DataTab.js",
+          "line": 221,
+          "symbol": "asc_TextToColumns"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DataTab.js",
+          "line": 274,
+          "symbol": "asc_TextToColumns"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E11",
+      "freshSourceAssessment": "data tab没有分列/列类型/预览计划器。"
+    },
+    {
+      "id": "X046",
+      "feature": "删除重复项",
+      "group": "数据",
+      "originalAcceptance": "表头与比较列、空值类型及删除计数",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-not-implemented",
+      "recordedImplementation": "未实现",
+      "recordedGaps": [
+        "缺表头/比较列、类型空值语义及计数"
+      ],
+      "originalReferencePattern": "RemoveDuplicates",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 8099,
+          "symbol": "asc_setRemoveDuplicates"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 8093,
+          "symbol": "asc_getRemoveDuplicates"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DataTab.js",
+          "line": 433,
+          "symbol": "asc_getRemoveDuplicates"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DataTab.js",
+          "line": 440,
+          "symbol": "asc_setRemoveDuplicates"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E11",
+      "freshSourceAssessment": "data tab没有去重比较列/类型空值键/删除计数实现。"
+    },
+    {
+      "id": "X047",
+      "feature": "数据验证完整管理",
+      "group": "数据",
+      "originalAcceptance": "规则范围、下拉来源、忽略空格、输入错误提示",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-partial-acceptance-pending",
+      "recordedImplementation": "部分实现",
+      "recordedGaps": [
+        "命名来源/复杂范围/扩展 XML 不支持；完整原要求逐项闭环待补"
+      ],
+      "originalReferencePattern": "DataValidation",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 8289,
+          "symbol": "asc_setDataValidation"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 8279,
+          "symbol": "asc_getDataValidationProps"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DataTab.js",
+          "line": 450,
+          "symbol": "asc_getDataValidationProps"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DataTab.js",
+          "line": 461,
+          "symbol": "asc_getDataValidationProps"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E12",
+      "freshSourceAssessment": "常用DV提示已有，source限单A1行列，names/复杂范围待补。"
+    },
+    {
+      "id": "X048",
+      "feature": "条件格式完整管理",
+      "group": "数据",
+      "originalAcceptance": "数据条图标集、颜色刻度、公式、优先级与停止",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-partial-acceptance-pending",
+      "recordedImplementation": "部分实现",
+      "recordedGaps": [
+        "缺数据条/图标集、完整阈值与复杂差异样式"
+      ],
+      "originalReferencePattern": "Conditional",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 8132,
+          "symbol": "asc_setCF"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 8141,
+          "symbol": "asc_clearCF"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Serialize.js",
+          "line": 7189,
+          "symbol": "WriteConditionalFormattingRule"
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E12",
+      "freshSourceAssessment": "已有priority/stop/colorScale，缺dataBar/iconSet/完整threshold。"
+    },
+    {
+      "id": "X049",
+      "feature": "外部链接与导入",
+      "group": "数据",
+      "originalAcceptance": "引用来源、更新权限、失败保留旧值",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-not-implemented",
+      "recordedImplementation": "未实现",
+      "recordedGaps": [
+        "外部计算链接/连接文件拒绝；来源更新和权限失败恢复缺失"
+      ],
+      "originalReferencePattern": "External",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 9265,
+          "symbol": "asc_updateExternalReferences"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 9272,
+          "symbol": "asc_removeExternalReferences"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 9279,
+          "symbol": "asc_changeExternalReference"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/Main.js",
+          "line": 3235,
+          "symbol": "asc_openExternalReference"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E09",
+      "freshSourceAssessment": "externalLinks/connections/queryTables拒绝，无更新许可/失败保旧值。"
+    },
+    {
+      "id": "X050",
+      "feature": "表样式与汇总行",
+      "group": "结构化表",
+      "originalAcceptance": "表头、筛选、带状行、汇总和自动扩展",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-not-implemented",
+      "recordedImplementation": "未实现",
+      "recordedGaps": [
+        "原生 Table 对象拒绝，缺表样式/汇总/自动扩展"
+      ],
+      "originalReferencePattern": "FormatTable",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 1208,
+          "symbol": "asc_changeSelectionFormatTable"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 1216,
+          "symbol": "asc_changeFormatTableInfo"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 1178,
+          "symbol": "asc_getAddFormatTableOptions"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 873,
+          "symbol": "asc_changeSelectionFormatTable"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/PivotTable.js",
+          "line": 131,
+          "symbol": "asc_changeFormatTableInfo"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E13",
+      "freshSourceAssessment": "无Table身份样式汇总扩展，tables原生拒绝。"
+    },
+    {
+      "id": "X051",
+      "feature": "表范围重命名与转普通区域",
+      "group": "结构化表",
+      "originalAcceptance": "保留内容样式并迁移结构引用",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-not-implemented",
+      "recordedImplementation": "未实现",
+      "recordedGaps": [
+        "缺范围重命名/转普通区域和结构引用迁移"
+      ],
+      "originalReferencePattern": "convertTableToRange",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 1259,
+          "symbol": "asc_convertTableToRange"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/TableDesignTab.js",
+          "line": 271,
+          "symbol": "asc_convertTableToRange"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E13",
+      "freshSourceAssessment": "无Table改名/转区域及结构引用迁移。"
+    },
+    {
+      "id": "X052",
+      "feature": "创建透视表与字段布局",
+      "group": "透视",
+      "originalAcceptance": "缓存、行列值筛选、拖放与汇总",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-not-implemented",
+      "recordedImplementation": "未实现",
+      "recordedGaps": [
+        "透视文件拒绝，创建/字段拖放/汇总缺失"
+      ],
+      "originalReferencePattern": "insertPivot",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 7729,
+          "symbol": "asc_insertPivotNewWorksheet"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 7754,
+          "symbol": "asc_insertPivotExistingWorksheet"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 7776,
+          "symbol": "_asc_insertPivot"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/PivotTable.js",
+          "line": 178,
+          "symbol": "asc_insertPivotExistingWorksheet"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/PivotTable.js",
+          "line": 180,
+          "symbol": "asc_insertPivotNewWorksheet"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E14",
+      "freshSourceAssessment": "无pivot/cache/slicer/timeline模型，相应原生目录拒绝，无创建字段布局。"
+    },
+    {
+      "id": "X053",
+      "feature": "值汇总与显示方式",
+      "group": "透视",
+      "originalAcceptance": "求和计数百分比累计差异及格式",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-not-implemented",
+      "recordedImplementation": "未实现",
+      "recordedGaps": [
+        "透视值汇总及显示方式缺失"
+      ],
+      "originalReferencePattern": "PivotShowValueAs",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 7576,
+          "symbol": "asc_getPivotShowValueAsInfo"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E14",
+      "freshSourceAssessment": "无pivot/cache/slicer/timeline模型，相应原生目录拒绝，无创建字段布局。"
+    },
+    {
+      "id": "X054",
+      "feature": "分组排序筛选刷新",
+      "group": "透视",
+      "originalAcceptance": "日期数字组、展开折叠、数据源变更",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-not-implemented",
+      "recordedImplementation": "未实现",
+      "recordedGaps": [
+        "透视分组/展开/刷新缺失"
+      ],
+      "originalReferencePattern": "groupPivot",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 4617,
+          "symbol": "asc_canGroupPivot"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 4626,
+          "symbol": "asc_groupPivot"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 4639,
+          "symbol": "asc_ungroupPivot"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 510,
+          "symbol": "asc_groupPivot"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 510,
+          "symbol": "asc_ungroupPivot"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E14",
+      "freshSourceAssessment": "无pivot/cache/slicer/timeline模型，相应原生目录拒绝，无创建字段布局。"
+    },
+    {
+      "id": "X055",
+      "feature": "钻取明细与计算字段",
+      "group": "透视",
+      "originalAcceptance": "明细新表、计算字段和缓存一致性",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-not-implemented",
+      "recordedImplementation": "未实现",
+      "recordedGaps": [
+        "钻取/新表明细/计算字段缺失"
+      ],
+      "originalReferencePattern": "pivotShowDetails",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 7660,
+          "symbol": "asc_pivotShowDetails"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 7703,
+          "symbol": "asc_pivotShowDetailsHeader"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 542,
+          "symbol": "asc_pivotShowDetailsHeader"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 776,
+          "symbol": "asc_pivotShowDetails"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E14",
+      "freshSourceAssessment": "无pivot/cache/slicer/timeline模型，相应原生目录拒绝，无创建字段布局。"
+    },
+    {
+      "id": "X056",
+      "feature": "切片器与时间线",
+      "group": "透视",
+      "originalAcceptance": "对象样式、多选、连接透视表与保存",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-not-implemented",
+      "recordedImplementation": "未实现",
+      "recordedGaps": [
+        "原生对象拒绝，多选/连接和保存缺失"
+      ],
+      "originalReferencePattern": "Slicer",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 8259,
+          "symbol": "asc_beforeInsertSlicer"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 8263,
+          "symbol": "asc_insertSlicer"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 8268,
+          "symbol": "asc_setSlicers"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/TableDesignTab.js",
+          "line": 448,
+          "symbol": "asc_beforeInsertSlicer"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/TableDesignTab.js",
+          "line": 454,
+          "symbol": "asc_insertSlicer"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E14",
+      "freshSourceAssessment": "无pivot/cache/slicer/timeline模型，相应原生目录拒绝，无创建字段布局。"
+    },
+    {
+      "id": "X057",
+      "feature": "原生柱状与折线图",
+      "group": "图表",
+      "originalAcceptance": "系列分类编辑、选区范围、保存重开",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-partial-acceptance-pending",
+      "recordedImplementation": "部分实现",
+      "recordedGaps": [
+        "系列分类独立编辑入口不完整，完整浏览器链路待补"
+      ],
+      "originalReferencePattern": "Chart",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 4782,
+          "symbol": "asc_applyChartSettings"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 4802,
+          "symbol": "asc_addChartDrawingObject"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 4827,
+          "symbol": "asc_addChartSpace"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/ChartTab.js",
+          "line": 102,
+          "symbol": "asc_getChartSettings"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/ChartTab.js",
+          "line": 157,
+          "symbol": "asc_getChartSettings"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E15",
+      "freshSourceAssessment": "bar/line连续range有实现，系列分类不可独立配置。"
+    },
+    {
+      "id": "X058",
+      "feature": "饼散点面积雷达组合图",
+      "group": "图表",
+      "originalAcceptance": "坐标轴、系列类型、次轴、图例标签与保存",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-not-implemented",
+      "recordedImplementation": "未实现",
+      "recordedGaps": [
+        "缺饼散点面积雷达组合/次轴等，复杂原生图表拒绝"
+      ],
+      "originalReferencePattern": "Chart",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 4782,
+          "symbol": "asc_applyChartSettings"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 4802,
+          "symbol": "asc_addChartDrawingObject"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 4827,
+          "symbol": "asc_addChartSpace"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/ChartTab.js",
+          "line": 102,
+          "symbol": "asc_getChartSettings"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/ChartTab.js",
+          "line": 157,
+          "symbol": "asc_getChartSettings"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E15",
+      "freshSourceAssessment": "type只bar/line，其他族/组合/次轴缺失。"
+    },
+    {
+      "id": "X059",
+      "feature": "图表布局格式与数据标签",
+      "group": "图表",
+      "originalAcceptance": "标题轴格式、标签定位、趋势线误差线",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-partial-acceptance-pending",
+      "recordedImplementation": "部分实现",
+      "recordedGaps": [
+        "缺轴格式、数据标签、趋势线/误差线与布局编辑"
+      ],
+      "originalReferencePattern": "Chart",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 4782,
+          "symbol": "asc_applyChartSettings"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 4802,
+          "symbol": "asc_addChartDrawingObject"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 4827,
+          "symbol": "asc_addChartSpace"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/ChartTab.js",
+          "line": 102,
+          "symbol": "asc_getChartSettings"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/ChartTab.js",
+          "line": 157,
+          "symbol": "asc_getChartSettings"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E15",
+      "freshSourceAssessment": "chart只有title/range/type，缺轴标签趋势误差线。"
+    },
+    {
+      "id": "X060",
+      "feature": "迷你图",
+      "group": "图表",
+      "originalAcceptance": "数据范围、位置、分组与坐标边界",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-not-implemented",
+      "recordedImplementation": "未实现",
+      "recordedGaps": [
+        "缺数据范围/分组/坐标与原生保存"
+      ],
+      "originalReferencePattern": "Sparkline",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 6172,
+          "symbol": "asc_setSparklineGroup"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 6193,
+          "symbol": "asc_addSparklineGroup"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 3645,
+          "symbol": "_isLockedSparkline"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/SparklineTab.js",
+          "line": 110,
+          "symbol": "asc_setSparklineGroup"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/SparklineTab.js",
+          "line": 149,
+          "symbol": "asc_setSparklineGroup"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E15",
+      "freshSourceAssessment": "无sparkline位置范围分组坐标保存。"
+    },
+    {
+      "id": "X061",
+      "feature": "图片形状与嵌入对象",
+      "group": "图表",
+      "originalAcceptance": "锚点、裁剪、移动尺寸与排列",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-not-implemented",
+      "recordedImplementation": "未实现",
+      "recordedGaps": [
+        "图片/绘图/嵌入文件拒绝，锚点裁剪排列缺失"
+      ],
+      "originalReferencePattern": "Drawing",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 5133,
+          "symbol": "asc_setSelectedDrawingObjectLayer"
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E16",
+      "freshSourceAssessment": "media/embeddings和drawing图片形状拒绝，无锚点裁剪排列。"
+    },
+    {
+      "id": "X062",
+      "feature": "冻结窗格",
+      "group": "视图",
+      "originalAcceptance": "滚动定位、首行首列及取消",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-basic-acceptance-pending",
+      "recordedImplementation": "基础实现",
+      "recordedGaps": [
+        "全部滚动/合并/隐藏/只读浏览器矩阵待补"
+      ],
+      "originalReferencePattern": "freezePane",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 6166,
+          "symbol": "asc_freezePane"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DocumentHolderExt.js",
+          "line": 1070,
+          "symbol": "asc_freezePane"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/Toolbar.js",
+          "line": 4065,
+          "symbol": "asc_freezePane"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E01",
+      "freshSourceAssessment": "公式栏/矩形selection、通配符查找替换、Ctrl数据块导航、merge/split和freeze有代码，X015有原生/浏览器专项。"
+    },
+    {
+      "id": "X063",
+      "feature": "拆分窗格与命名视图",
+      "group": "视图",
+      "originalAcceptance": "独立滚动、视图筛选隔离与保存",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-not-implemented",
+      "recordedImplementation": "未实现",
+      "recordedGaps": [
+        "拆分窗格文件拒绝，缺命名视图和独立滚动"
+      ],
+      "originalReferencePattern": "View",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 1274,
+          "symbol": "asc_setViewMode"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 1633,
+          "symbol": "asc_initPrintPreview"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 1671,
+          "symbol": "asc_updatePrintPreview"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/ChartTab.js",
+          "line": 184,
+          "symbol": "asc_getChartPreviews"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/ChartTab.js",
+          "line": 202,
+          "symbol": "asc_generateChartPreviews"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E17",
+      "freshSourceAssessment": "primary split pane拒绝，一个grid不是独立窗格或命名视图。"
+    },
+    {
+      "id": "X065",
+      "feature": "打印区域与标题行列",
+      "group": "打印",
+      "originalAcceptance": "多个区域、重复标题、当前表或全书",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-partial-acceptance-pending",
+      "recordedImplementation": "部分实现",
+      "recordedGaps": [
+        "无多个区域/标题行列编辑与当前表/全书打印选择"
+      ],
+      "originalReferencePattern": "PrintArea",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 460,
+          "symbol": "asc_ChangePrintArea"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 465,
+          "symbol": "asc_CanAddPrintArea"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 3898,
+          "symbol": "asc_isPrintAreaLocked"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/Toolbar.js",
+          "line": 2737,
+          "symbol": "asc_isPrintAreaLocked"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/Toolbar.js",
+          "line": 4598,
+          "symbol": "asc_isPrintAreaLocked"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E18",
+      "freshSourceAssessment": "源printArea/title保留及迁移非编辑；实际打印全book。"
+    },
+    {
+      "id": "X066",
+      "feature": "页面布局与分页预览",
+      "group": "打印",
+      "originalAcceptance": "纸张边距方向、断页、缩放至页与预览",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-partial-acceptance-pending",
+      "recordedImplementation": "部分实现",
+      "recordedGaps": [
+        "缺编辑纸张边距/断页/缩放到页和分页预览"
+      ],
+      "originalReferencePattern": "PrintPreview",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 1633,
+          "symbol": "asc_initPrintPreview"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 1671,
+          "symbol": "asc_updatePrintPreview"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 1690,
+          "symbol": "asc_drawPrintPreview"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/Print.js",
+          "line": 107,
+          "symbol": "asc_drawPrintPreview"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/Print.js",
+          "line": 142,
+          "symbol": "asc_drawPrintPreview"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E18",
+      "freshSourceAssessment": "固定A4横向12mm，源pageSetup/断页部分保留，不是fit/分页预览。"
+    },
+    {
+      "id": "X067",
+      "feature": "页眉页脚与打印选项",
+      "group": "打印",
+      "originalAcceptance": "页码日期文件名、网格线、居中与黑白",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-partial-acceptance-pending",
+      "recordedImplementation": "部分实现",
+      "recordedGaps": [
+        "缺字段编辑、打印居中/黑白/网格选项 UI 与准确预览"
+      ],
+      "originalReferencePattern": "PageOptions",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 1340,
+          "symbol": "asc_setPageOptions"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 1360,
+          "symbol": "asc_getPageOptions"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/Print.js",
+          "line": 190,
+          "symbol": "asc_getPageOptions"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/Print.js",
+          "line": 211,
+          "symbol": "asc_getPageOptions"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E18",
+      "freshSourceAssessment": "无Excel页眉页脚字段或居中/黑白/网格控制，X064屏幕开关独立。"
+    },
+    {
+      "id": "X068",
+      "feature": "工作表工作簿与范围保护",
+      "group": "保护",
+      "originalAcceptance": "可编辑范围、结构锁、密码及文件往返",
+      "commonAcceptance": [
+        "操作前后数据及格式",
+        "选区、焦点、IME和取消",
+        "一次撤销、重做",
+        "只读和禁用命令",
+        "原生文件保存重开",
+        "失败后原数据不变"
+      ],
+      "recordedStatus": "audited-partial-acceptance-pending",
+      "recordedImplementation": "部分实现",
+      "recordedGaps": [
+        "完整工作表/工作簿结构锁、密码/可编辑范围互操作未实现"
+      ],
+      "originalReferencePattern": "Protected",
+      "originalSourceReferences": [
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 6619,
+          "symbol": "asc_checkProtectedRange"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 8310,
+          "symbol": "asc_setProtectedRanges"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/api.js",
+          "line": 8413,
+          "symbol": "asc_checkProtectedRangesPassword"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/CellEditor.js",
+          "line": 356,
+          "symbol": "asc_isProtectedSheet"
+        },
+        {
+          "repository": "web-apps",
+          "path": "apps/spreadsheeteditor/main/app/controller/DataTab.js",
+          "line": 605,
+          "symbol": "asc_isProtectedWorkbook"
+        },
+        {
+          "repository": "sdkjs",
+          "path": "cell/model/Workbook.js",
+          "line": 1,
+          "symbol": null
+        }
+      ],
+      "completionClaim": false,
+      "batchId": "E19",
+      "freshSourceAssessment": "只有本地protectedRanges和空密码sheet protect，结构/范围/密码不完整。"
+    }
+  ],
+  "readOnlyVerification": {
+    "executedTests": false,
+    "executedBuilds": false,
+    "usedBrowser": false,
+    "startedServices": false,
+    "all67MappedExactlyOnce": true,
+    "x064Excluded": true,
+    "allReferencedExistingPathsChecked": true
+  },
+  "fallbackNext": {
+    "itemId": "X043",
+    "effort": "M",
+    "reason": "若X046固定参考语义恢复延迟，先补连续数据块扩展选区询问及实际原生闭环；现多键方向稳定排序已存在。",
+    "entrypoints": [
+      {
+        "path": "packages/ui/src/components/OfficeStudio/StudioSheetSortDialog.tsx",
+        "line": 11,
+        "anchor": "export interface StudioSortDialogState"
+      },
+      {
+        "path": "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "line": 2669,
+        "anchor": "export function studioSortRangeByKeys"
+      }
+    ]
+  },
+  "existingEvidence": [
+    {
+      "path": "docs/audits/2026-11-27/sheet-view/README.md",
+      "itemIds": [
+        "X064"
+      ],
+      "use": "已有专项实现/原生/实际浏览器证据，排除本计划，根最终门禁尚未取得"
+    },
+    {
+      "path": "docs/audits/2026-11-24/sheet-arrays/verification.json",
+      "itemIds": [
+        "X036"
+      ],
+      "use": "数组专项，保留remaining，不能推出全部函数矩阵"
+    },
+    {
+      "path": "docs/audits/2026-11-25/sheet-navigation/verification.json",
+      "itemIds": [
+        "X015"
+      ],
+      "use": "导航原生/浏览器切片，按原文补共同边界"
+    },
+    {
+      "path": "docs/audits/2026-11-25/sheet-paste-options/README.md",
+      "itemIds": [
+        "X012"
+      ],
+      "use": "运算跳空专项，不包含普通剪切"
+    },
+    {
+      "path": "docs/audits/2026-11-25/sheet-series/README.md",
+      "itemIds": [
+        "X017"
+      ],
+      "use": "线性停止值切片，不自动增加增长/任意日期策略"
+    },
+    {
+      "path": "docs/audits/2026-11-25/sheet-painter/README.md",
+      "itemIds": [
+        "X018"
+      ],
+      "use": "矩形刷/历史/原生切片，跨表行为按原文判断"
+    },
+    {
+      "path": "docs/audits/2026-11-25/sheet-number-format/README.md",
+      "itemIds": [
+        "X020"
+      ],
+      "use": "中美分节格式专项，地区支持范围须有限核定"
+    },
+    {
+      "path": "docs/audits/2026-11-27/sheet-text-layout/README.md",
+      "itemIds": [
+        "X023",
+        "X024",
+        "X029"
+      ],
+      "use": "共享文字几何/auto行高切片，不替代完整原始验收"
+    },
+    {
+      "path": "docs/tests/studio-excel.test.mjs",
+      "itemIds": [
+        "X003",
+        "X004",
+        "X005",
+        "X006",
+        "X007",
+        "X008",
+        "X009",
+        "X010",
+        "X019",
+        "X027",
+        "X030",
+        "X043",
+        "X044",
+        "X047",
+        "X048",
+        "X057",
+        "X062"
+      ],
+      "use": "读取原生测试源码确认对应案例存在，本次未执行"
+    },
+    {
+      "path": "e2e/office-studio-sheet-colors.spec.ts",
+      "itemIds": [
+        "X044"
+      ],
+      "use": "颜色专项脚本存在，不代表完整filter验收"
+    }
+  ],
+  "unknowns": [
+    "X038–X040所需有限函数清单、误差预算和参数矩阵未逐函数核定。inventory所指/private/tmp/zuvi-onlyoffice-reference-20261112当前不存在；应恢复原固定commit参考或使用保存证据，不追赶上游最新函数全集。",
+    "X046区域压缩还是整行删除，以及格式/公式空串/错误/大小写的相等语义待查；不能凭猜测whole-row delete。",
+    "X049无新增后端范围内的外部来源入口和更新权限策略待定，先明确原始外链契约，不扩成ETL或凭据服务。",
+    "X061原始嵌入对象有限类型集合待查，不新增任意OLE/ActiveX/宏执行。",
+    "X019混合/默认字体、X020地区和X023/24复杂布局的README限制哪些阻挡原文验收，需要逐项判定；不把全部浏览器/应用/地区/字体做笛卡尔积。",
+    "本次未独立打开/重算历史XLSX，未执行工程测试/浏览器；已有证据仅按其记录范围使用。根316项冻结回归结果未取得，不声称通过。"
+  ],
+  "parallelExecution": {
+    "duringCurrentFreeze": "当前只写本计划两文件，冻结结束前不开始实现/验收执行。",
+    "firstWave": [
+      "X030可见性纯命令/小入口、X046纯比较计划器、X044条件设计可分工；主组件/schema/codec由集成者串行接入。",
+      "X046固定参考语义恢复延迟时，改做M级X043扩展选区询问和原生验收。"
+    ],
+    "independentStreams": [
+      "E08函数族分数学统计逻辑、文本日期查询、财务工程数据库的纯适配和测试数据，计算内核一位owner。",
+      "E11分列/去重各自计划器；E12 DV/CF各自纯规则模块。",
+      "E15/E16可并行UI/渲染，但须先统一drawing part/rel分配。",
+      "E18独立Excel分页模块，避免Word分支。"
+    ],
+    "serialCriticalChain": [
+      "引用身份E09 → names → E13结构化表/引用。",
+      "计算契约E08 → E14原生cache/透视 → 分组刷新钻取 → slicer/timeline。",
+      "drawing所有权协议 → E15/E16原生写入 → X011链接图片粘贴。",
+      "每波合入 → 专项实际UI/原生/历史权限证据 → 冻结统一门禁 → 根按原条目正式销项。"
+    ]
+  },
+  "sharedFilesAndMergeRules": [
+    {
+      "files": [
+        "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.css"
+      ],
+      "risk": "toolbar/state/selection/history/keyboard共享",
+      "rule": "纯模块/弹窗可并行，同一时段主组件接线只由一位集成者。"
+    },
+    {
+      "files": [
+        "packages/ui/src/components/OfficeStudio/studio-types.ts",
+        "packages/ui/src/components/OfficeStudio/studio-model.ts"
+      ],
+      "risk": "公共schema/strict validator/旧草稿兼容，Word/PDF也共享",
+      "rule": "先固定接口，schema owner统一接入，不放松validator冒充支持。"
+    },
+    {
+      "files": [
+        "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+        "packages/ui/src/components/OfficeStudio/studio-sheet-structure.ts"
+      ],
+      "risk": "patch/计算/引用/排序/剪贴板/log交叉",
+      "rule": "引用与计算各设owner，函数族分独立模块，核心调用点串行。"
+    },
+    {
+      "files": [
+        "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts"
+      ],
+      "risk": "hydrate/原ZIP/ExcelJS/OOXML补丁集中，chart重建可能删drawing",
+      "rule": "先定names/table/pivot/drawing/print/protection的parts/rel所有权，再独立codec模块、串行接入。"
+    },
+    {
+      "files": [
+        "docs/src/pages/collaboration/office-studio/studio-print.ts"
+      ],
+      "risk": "Word/Excel共享HTML和CSS",
+      "rule": "只改Excel分支或独立模块，屏幕视图和打印设置分开。"
+    },
+    {
+      "files": [
+        "docs/tests/studio-excel.test.mjs",
+        "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx",
+        "docs/office-studio-goal-status-2026-11-23.json"
+      ],
+      "risk": "通用fixture/mock和台账多写冲突",
+      "rule": "新增专属测试夹具，不改他人fixture；最终证据和台账仅根依据冻结门禁统一销项。"
+    }
+  ],
+  "definitionOfDone": [
+    "原始acceptance每个短语有实现和证据，或经原文论证的适用边界。",
+    "数据格式、选区焦点、IME取消、一次撤销重做、只读禁用按原共同要求检查。",
+    "真实原生保存重开；有metadata/关系变化时独立查OOXML及第二轮重开。",
+    "受控拒绝不产生部分模型/源字节/历史修改；不能用拒绝提示替代必需行为。",
+    "布局相关才做适用主题/窄屏/打印有限样本，不添加无限外部变体。",
+    "统一门禁由根执行并绑定源码产物，之后才更新台账，本计划不改完成状态。"
+  ],
+  "sourceSha256": {
+    "docs/audits/2026-11-24/sheet-arrays/verification.json": "be97f412526c3ac642a1dc697b2c0dca8a35870c0810489512bd800392427111",
+    "docs/audits/2026-11-25/sheet-navigation/verification.json": "253b84516fb633bf53812373a7ec21fdf3ee1e83e495f5eced033169b12db9fa",
+    "docs/audits/2026-11-25/sheet-number-format/README.md": "e9cadca0dbde2cd1ef3c1915f3e41b1c912fef005975cc5a4000f18948ab85a9",
+    "docs/audits/2026-11-25/sheet-painter/README.md": "ba8e0d9940df2ba652fc1e376741e5cb8c3f2e1b8a4fe29b1ba12d6bdad99655",
+    "docs/audits/2026-11-25/sheet-paste-options/README.md": "4893fc57ced1321d9bee1d630502a9d84c50a072ee23e0109b968fa2f6cd5548",
+    "docs/audits/2026-11-25/sheet-series/README.md": "ccb877f89a48035136b5e8060167a6373631f7671ba9ca1716bde5fd6ed9446d",
+    "docs/audits/2026-11-27/sheet-text-layout/README.md": "675e17324b4d7347331e01500b590e2cc588c6ff11c3d818af620dc7cae3f385",
+    "docs/audits/2026-11-27/sheet-view/README.md": "e14b97f9fd3149af75aa9761f7e418278d057f64a4eb80c7c1e2d177d6093700",
+    "docs/office-studio-goal-status-2026-11-23.json": "753d35a9d9a6db2f0373ea432ed5cc1241d105e82b40e8359ae91152fd8f4824",
+    "docs/onlyoffice-feature-ledger-2026-11-13.json": "f65854ef3bda435f33d29881b32e358eeaaeb85ef2e0a899f6a7a14c949f3f23",
+    "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts": "92231aab069c5a724211b5859230cd9fe1618389f7fda5ae7a00c9f3c8d644f5",
+    "docs/src/pages/collaboration/office-studio/studio-print.ts": "d6d2d767b32bc1c1271e0ec8fe795ef0b862c4e62ce550542a4007729b39eceb",
+    "docs/tests/studio-excel.test.mjs": "1618b44898cd3a03c6217d27c7025334555c221e7b0210e15936dd5e86aa1216",
+    "docs/tests/studio-print.test.mjs": "547d59a36b9f30de8de0d9979694c1bebc3bf21b8be9e7b5676f7ee669cb5e47",
+    "docs/tests/studio-sheet-view.test.mjs": "7bfaf8dbee0605e43ffd6159051d47146b3c66ef068508c7b1f16cf55802bc80",
+    "e2e/office-studio-sheet-arrays.spec.ts": "cb3d920e56b23816ccd7faeb5952e519a9177062b74edbfd224a36f7495633b3",
+    "e2e/office-studio-sheet-colors.spec.ts": "b1299f20232d2ac15b8a579e0206fe10b0ea59833b11e45d1495775e7172b123",
+    "e2e/office-studio-sheet-navigation.spec.ts": "67923179e4c68dddd7b31fbabc9fc27dc97ddad750dbdc09515402937facf1a4",
+    "e2e/office-studio-sheet-number-format.spec.ts": "6f7f9035eb8a8571cd133127d302b665ec7560f2ab77ca2a4c45d69db753d6ae",
+    "e2e/office-studio-sheet-painter.spec.ts": "669adfb0ab2575ac36c4b8f53f07afb7bd2ef0f81b5fd64589049cd7a70c5e52",
+    "e2e/office-studio-sheet-paste-options.spec.ts": "eebe5e8ad078164fe1bc72825494229ef92aabba07d3c6f21150d3d3459207c2",
+    "e2e/office-studio-sheet-series.spec.ts": "7cf65c88e9e5aa1c73194491401403c15393ff3d87a5ee198435cc6c14cac838",
+    "e2e/office-studio-sheet-text.spec.ts": "b3f4a4db22567607ec012a383ed65ba5ad9dbfa99aed3d8c2b19a95e9d49cd66",
+    "e2e/office-studio-sheet-view.spec.ts": "836da2b35da6e4bc2fcf4b49c088d6cf83dfb224981686248bec6087d5df4c41",
+    "packages/ui/src/components/OfficeStudio/StudioSheet.css": "a19e1f3778b48a82cab278bd2831bdba1abdc5737252b5d16d97ae14ba8cbff3",
+    "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx": "a39631b24bbac3adf2291532103ab8f9f41e0c0b798028d140a26e151078953b",
+    "packages/ui/src/components/OfficeStudio/StudioSheet.tsx": "0e0b528a2d554cb47adac7f5f68af6b0c09d5e11021442a57c0b9aceb2f0b3ea",
+    "packages/ui/src/components/OfficeStudio/StudioSheetRuleDialog.tsx": "a2874e8f70ced50ac8baf41ed8bbcf804959efeb5ea3bcee272498325158541c",
+    "packages/ui/src/components/OfficeStudio/StudioSheetSearch.test.tsx": "db817554ca94029a6bfb64f356ead95f2485fad2286a56d4fc4d84c05fb2dacd",
+    "packages/ui/src/components/OfficeStudio/StudioSheetSortDialog.tsx": "95027ceac490470ab16e95773530ea4da8707673a39934d568fc130c5507bd74",
+    "packages/ui/src/components/OfficeStudio/StudioSheetText.test.tsx": "6db60bbf2cf42618780b76d7e1ad7140ec54a599c41e6b51bc9ae0cb8f5b70f7",
+    "packages/ui/src/components/OfficeStudio/StudioSheetTextDialog.tsx": "9398223392f2b8957b7bc42ad608c708354eb4059bb4a6de139445bfe948d5cf",
+    "packages/ui/src/components/OfficeStudio/StudioSheetView.test.tsx": "c3caebb75f2ce29eeb0700cca207ae2cdcc21c267e4554f4b957af53d0316150",
+    "packages/ui/src/components/OfficeStudio/StudioSheetViewControls.tsx": "ce2c340ee92a6feaf8dda8ddbd3eff0cd5467c408e16c55274cf5aa14c52a274",
+    "packages/ui/src/components/OfficeStudio/studio-cell-format-core.ts": "c7d0e4bb183009ef9c5d414a550e120e7ad5ff001c637efef411141ea3a29fcf",
+    "packages/ui/src/components/OfficeStudio/studio-cell-style.ts": "1a97fe34a4ec08c77efe7b655fc6156225d9b14e57d39107e82d3fadd5f3f5f7",
+    "packages/ui/src/components/OfficeStudio/studio-model.ts": "0dc9711e027e5325a4d44f1169c2d5f9da5243491011ec14adbb7c57b5453f17",
+    "packages/ui/src/components/OfficeStudio/studio-number-format.ts": "505bcc59048cad77c88c58241afd9db8435f8096cf4269bfa4894fd268280162",
+    "packages/ui/src/components/OfficeStudio/studio-sheet-arrays.test.ts": "95f2e222543666c2825ae8aa2cab1ff3c5460cf8aa66598c2ca8e40141fcc609",
+    "packages/ui/src/components/OfficeStudio/studio-sheet-arrays.ts": "9929d00471a821f691fab94a5c6edb93ea06a62c62a13747edd6ca42b1b4b6d9",
+    "packages/ui/src/components/OfficeStudio/studio-sheet-editing.test.ts": "c4f988710fa4dba5915e5401a9fef9d3d658dfabc11ecec2a687fbb358f0d7e2",
+    "packages/ui/src/components/OfficeStudio/studio-sheet-editing.ts": "0f11507628a7c93f7eb69d9df6046eb68bf7d69ee9dba706fd7df5980001f257",
+    "packages/ui/src/components/OfficeStudio/studio-sheet-fill.test.ts": "b3751ad071d59fed7f43ebe754c594c840d5b0e092a426644de22ce68a99ed7f",
+    "packages/ui/src/components/OfficeStudio/studio-sheet-fill.ts": "de53464430b1ba58346d1c14f9a9cdf2f4ed43f3265d85ba9da09ef3913fcabc",
+    "packages/ui/src/components/OfficeStudio/studio-sheet-hyperlinks.test.ts": "c51992c8c85c648b7ea9c4a6f64db9bb8e19fa1c3435651045a457c0a9a2f68a",
+    "packages/ui/src/components/OfficeStudio/studio-sheet-model.test.ts": "baf2a55e540ac8e6897ffd7d7148270fe0872364143ff598c3f82fe93cf5d3c7",
+    "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts": "93eed9d602494244cdbe758b2b8ba4510e533178eac9c84a1d2efd21f6ed62d0",
+    "packages/ui/src/components/OfficeStudio/studio-sheet-navigation.test.ts": "2642270745b18b6929aeacbf6dc700ec1ff888eaf5c65b36ea00f9b84df6b7a1",
+    "packages/ui/src/components/OfficeStudio/studio-sheet-navigation.ts": "8ca4c30a237475f2d2575e85fa0d7736ca79c02744d85f25c90b05daa36202dc",
+    "packages/ui/src/components/OfficeStudio/studio-sheet-painter.test.ts": "dc9fcd3c60874d6b28dc9562b7342d34f54ae628f6aeee85bc937d87b1eed41c",
+    "packages/ui/src/components/OfficeStudio/studio-sheet-painter.ts": "426266ce55ada78c6011bfc3c5cca15054940530bf18f7c776e192f100e88ec9",
+    "packages/ui/src/components/OfficeStudio/studio-sheet-paste-options.test.ts": "1b97b56b29b51f46bc54c8bcff096478fdf377331c783a4834eafc53a0c6a709",
+    "packages/ui/src/components/OfficeStudio/studio-sheet-rules.test.ts": "e1f20eb68470e16d6c5ddb004d765a251ab22080c020279408f4f6f0a7c09115",
+    "packages/ui/src/components/OfficeStudio/studio-sheet-rules.ts": "bc6d8e2bba7d0c3860b583139dac7fa455e9475a3eb953039c742ce1f75482a0",
+    "packages/ui/src/components/OfficeStudio/studio-sheet-structure.test.ts": "edf6025d886b36f4d2aedc69141ea869f9b61a7326f183260c2cab2f913bd397",
+    "packages/ui/src/components/OfficeStudio/studio-sheet-structure.ts": "490d314f7cc8a8cc18dee4169276affbc1cfd963b0c4d4900fca05058f85e7f2",
+    "packages/ui/src/components/OfficeStudio/studio-sheet-text-display.ts": "75f414aac31f65bf613ff458c8571d2d7b801c78a241bed47fa1e0cca6501154",
+    "packages/ui/src/components/OfficeStudio/studio-sheet-text-layout.test.ts": "4720b3ecdb823455b974a7720118db3a48f0948a3175826df0878a1dfeaa0c81",
+    "packages/ui/src/components/OfficeStudio/studio-sheet-text-layout.ts": "6241b360cb08074afb3644737d621906ec131d357db9056cf563c2b16b5966ec",
+    "packages/ui/src/components/OfficeStudio/studio-sheet-view.test.ts": "489e3c8938bb7ca7426f2d9d6ceaba9b9963f27edb2b63382cb1b34fe3463ba7",
+    "packages/ui/src/components/OfficeStudio/studio-sheet-view.ts": "99acd1c9517cc6e3fbdf751d8d9d09b3d9dde7d3639b4aa7e2c03d421d3d7192",
+    "packages/ui/src/components/OfficeStudio/studio-types.ts": "87239bce035971b2aba94ef7485f54b956da88b0643956972f1287d53a09e038"
+  }
+}

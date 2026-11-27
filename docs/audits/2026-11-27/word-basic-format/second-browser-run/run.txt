@@ -1,0 +1,40 @@
+[WebServer] (node:51919) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:51940) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+  ✘  1 [chromium] › e2e/office-studio-word-basic-format.spec.ts:103:1 › applies mixed and caret character formats, restores transactions and reopens two actual native DOCX exports (5.6s)
+  ✓  2 [chromium] › e2e/office-studio-word-basic-format.spec.ts:231:1 › keeps invalid and composing drafts unchanged, cancels them and verifies light dark 320px and readonly controls (2.9s)
+
+
+  1) [chromium] › e2e/office-studio-word-basic-format.spec.ts:103:1 › applies mixed and caret character formats, restores transactions and reopens two actual native DOCX exports
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "FFFF00"
+    Received: "ffff00"
+
+      210 |     expect(native.rows.find(row => row.text === 'Script 23')!.runs.find(run => run.text === '2')?.script).toBe('superscript');
+      211 |     expect(native.rows.find(row => row.text === 'Script 23')!.runs.find(run => run.text === '3')?.script).toBe('subscript');
+    > 212 |     expect(native.rows.find(row => row.text === 'Highlight target')!.runs[0].background).toBe('FFFF00');
+          |                                                                                          ^
+      213 |     expect(native.relationships).toContain('https://example.com/kept-link');
+      214 |     await importSource(page, bytes, `Reopened-${round}.docx`);
+      215 |     await expect(mixed.locator('strong')).toHaveText('Mixed plain Mixed rich');
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-basic-format.spec.ts:212:90
+
+    Error Context: ../../../../../../tmp/zuvi-word-basic-format-browser-second-output/office-studio-word-basic-f-d2d38--actual-native-DOCX-exports-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../tmp/zuvi-word-basic-format-browser-second-output/office-studio-word-basic-f-d2d38--actual-native-DOCX-exports-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../../../tmp/zuvi-word-basic-format-browser-second-output/office-studio-word-basic-f-d2d38--actual-native-DOCX-exports-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/office-studio-word-basic-format.spec.ts:103:1 › applies mixed and caret character formats, restores transactions and reopens two actual native DOCX exports
+  1 passed (10.9s)

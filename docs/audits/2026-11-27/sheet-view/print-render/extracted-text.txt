@@ -1,0 +1,25 @@
+Main
+1
+10
+VISIBLE_MERGE
+Zoom
+keeps
+wrappe
+d text
+and
+the
+docum
+ent
+row
+height.
+CENTER_HEADING
+
+20
+
+HiddenMaster
+HIDDEN_MAS
+TER VISIBLE_TAIL
+CONTROL_ROW
+
+SmallNative
+NATIVE_SMALL

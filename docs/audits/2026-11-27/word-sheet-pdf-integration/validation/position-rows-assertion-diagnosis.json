@@ -1,0 +1,21 @@
+{
+  "status": "obsolete-test-expectation-confirmed",
+  "firstRun": {
+    "report": "e2e-continuation.json",
+    "passed": 315,
+    "failed": 1,
+    "skipped": 0
+  },
+  "test": "e2e/office-studio-word-rows.spec.ts:1494 (before fix)",
+  "oldExpectation": "<w:position w:val=\"12pt\"",
+  "nativePositionValues": [
+    "24"
+  ],
+  "meaning": "24 signed half-points = +12pt baseline position; the source fixture already stores 24.",
+  "nativeDownload": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-26/word-cell-fragments/multi-cell-roundtrip-1.docx",
+  "nativeDownloadSha256": "ed2bbfb79cac40dcea8f67663020f05f57d26f3e84d0af646aca7280d35aeea9",
+  "beforeTestSha256": "04b8b11c66d220003b9cd4e0d6b5eb7939e7f2fd4a42c7bf32de52ceca9d2a8c",
+  "fix": "Change only the literal expected native value to 24 and explain its units; preserve all other assertions and timeouts.",
+  "otherLiveAssertions": "No other live w:position XML assertion expecting unit-suffixed pt remains. Source metric fixtures deliberately normalize unit strings to signed integer XML.",
+  "recoveryLauncher": "position-rows-recovery.txt selected zero tests because the grep was anchored to the complete Playwright title; position-rows-focused uses the specific unanchored title."
+}

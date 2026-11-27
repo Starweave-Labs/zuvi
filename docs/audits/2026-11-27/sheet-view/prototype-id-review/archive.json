@@ -1,0 +1,17 @@
+{
+  "issue": "Read-only preview record inherits Object.prototype keys for legal worksheet ids",
+  "files": [
+    {
+      "file": "StudioSheet-before-map.tsx.txt",
+      "originalPath": "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+      "sha256": "65214050a549a10669adb2ca1c45da2ebc7037aeee71c3875cabd218643e9b9d",
+      "bytes": 183489
+    },
+    {
+      "file": "prototype-before.log",
+      "originalPath": "/tmp/zuvi-sheet-view-prototype-before.log",
+      "sha256": "85d1482747c8d0188c0b3f8a02cfbbec38ecd62f082d4afbababf9e65bca0966",
+      "bytes": 3039
+    }
+  ]
+}

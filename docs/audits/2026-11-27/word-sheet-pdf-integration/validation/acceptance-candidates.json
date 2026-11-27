@@ -1,0 +1,1201 @@
+{
+  "status": "pending-final-integration",
+  "items": [
+    {
+      "id": "P002",
+      "feature": "选择复制与全文搜索",
+      "acceptance": "逐页文本、命中坐标、选区复制与空文本页",
+      "matrix": "docs/audits/2026-11-27/pdf-text-layer/README.md",
+      "requiredCurrentSpecs": [
+        "e2e/office-studio-pdf-text-layer.spec.ts"
+      ]
+    },
+    {
+      "id": "P012",
+      "feature": "新增自由文本",
+      "acceptance": "文本格式、位置大小、原生注释保存",
+      "matrix": "docs/audits/2026-11-27/pdf-native-ui/browser-native/acceptance-matrix.json",
+      "commonAcceptance": [
+        {
+          "name": "操作前后数据及格式",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P012 creates and formats CJK FreeText with transactional history, IME drafts, native AP and two reopens",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 313
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "explicit native none colors and border colors survive two PDF reopens and later opacity or line-width edits",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 715
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "真实新增中文 FreeText、内容、对齐、字号、文字颜色、位置尺寸与透明度；显式无边框色二轮不复活。"
+        },
+        {
+          "name": "选区、焦点、IME和取消",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P012 creates and formats CJK FreeText with transactional history, IME drafts, native AP and two reopens",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 313
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P012/P016 moving and resizing show ghosts, cancel without history and accept one undoable pointer transaction",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 481
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "内容 DOM composition 阻止接受；非法宽度保留草稿，Escape 恢复；拖动 ghost 取消无历史。"
+        },
+        {
+          "name": "一次撤销、重做",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P012 creates and formats CJK FreeText with transactional history, IME drafts, native AP and two reopens",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 313
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P012/P016 moving and resizing show ghosts, cancel without history and accept one undoable pointer transaction",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 481
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "legacy four-kind persisted documents migrate through the actual entry once and undo restores the original pair",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 580
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "单次属性接受及 pointerup 单次事务；Undo/Redo 恢复真实 Doc/Blob。"
+        },
+        {
+          "name": "只读和禁用命令",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "native read-only/locked commands and cancelling a pending CJK font preparation preserve source and history",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 637
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "real-UI-disabled-prop",
+              "result": "passed",
+              "sources": [
+                {
+                  "path": "packages/ui/src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx",
+                  "line": 451
+                },
+                {
+                  "path": "packages/ui/src/components/OfficeStudio/StudioPdfNativeLayer.test.tsx",
+                  "line": 170
+                }
+              ],
+              "logs": [
+                "docs/audits/2026-11-27/pdf-native-ui/validation/free-text-border-label-ui.txt",
+                "docs/audits/2026-11-27/pdf-native-ui/validation/current-pdf-ui.txt"
+              ],
+              "boundary": "Actual browser tests source locks/read-only and busy-disabled commands; explicit disabled prop is checked in real UI component tests."
+            }
+          ],
+          "conclusion": "只读/原生锁/异步字体准备中所有写入口被阻断，取消无接受；显式 disabled prop 另有 UI 回归。"
+        },
+        {
+          "name": "原生文件保存重开",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P012 creates and formats CJK FreeText with transactional history, IME drafts, native AP and two reopens",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 313
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "two-native-PDF-reopens-and-independent-read",
+              "result": "passed",
+              "files": [
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/p012-freetext-round-1.pdf",
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/p012-freetext-round-2.pdf"
+              ],
+              "parsed": "docs/audits/2026-11-27/pdf-native-ui/browser-native/independent-pypdf.json",
+              "poppler": "docs/audits/2026-11-27/pdf-native-ui/browser-native/poppler.json",
+              "pdfjs": "docs/audits/2026-11-27/pdf-native-ui/browser-native/pdfjs.json"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "explicit native none colors and border colors survive two PDF reopens and later opacity or line-width edits",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 715
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "two-native-PDF-reopens-and-independent-read",
+              "result": "passed",
+              "files": [
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/explicit-none-round-1.pdf",
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/explicit-none-round-2.pdf"
+              ],
+              "parsed": "docs/audits/2026-11-27/pdf-native-ui/browser-native/independent-pypdf.json",
+              "poppler": "docs/audits/2026-11-27/pdf-native-ui/browser-native/poppler.json",
+              "pdfjs": "docs/audits/2026-11-27/pdf-native-ui/browser-native/pdfjs.json"
+            }
+          ],
+          "conclusion": "两轮导出/导入重开，pypdf 原生 FreeText、AP、CJK、位置、透明度与原 Contents SHA；PDF.js paintCount=1。"
+        },
+        {
+          "name": "失败后原数据不变",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P012 creates and formats CJK FreeText with transactional history, IME drafts, native AP and two reopens",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 313
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "native read-only/locked commands and cancelling a pending CJK font preparation preserve source and history",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 637
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "IME 或无效数值不接受；Escape 及字体准备取消保持 Doc/source/history。"
+        }
+      ],
+      "requiredCurrentSpecs": [
+        "e2e/office-studio-pdf-native-annotations.spec.ts",
+        "e2e/office-studio-pdf-text-layer.spec.ts"
+      ]
+    },
+    {
+      "id": "P014",
+      "feature": "高亮下划线删除线波浪线",
+      "acceptance": "文字QuadPoints、颜色透明度及移除",
+      "matrix": "docs/audits/2026-11-27/pdf-native-ui/browser-native/acceptance-matrix.json",
+      "commonAcceptance": [
+        {
+          "name": "操作前后数据及格式",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P014 saves four text markers from actual original-text selections with exact native quads, alpha, removal and undo",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 368
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "explicit native none colors and border colors survive two PDF reopens and later opacity or line-width edits",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 715
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "四类 marker 从真实原文 mouse selection 建 QuadPoints，编辑颜色/透明度，移除及复原；显式 none 清色持久化。"
+        },
+        {
+          "name": "选区、焦点、IME和取消",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P014 saves four text markers from actual original-text selections with exact native quads, alpha, removal and undo",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 368
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P012 creates and formats CJK FreeText with transactional history, IME drafts, native AP and two reopens",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 313
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "“选择文字”可在已有 marker 下继续 mouse 选择、真实 clipboard 复制与重标；共享属性 IME/草稿取消另在 P012 及 UI 回归覆盖。"
+        },
+        {
+          "name": "一次撤销、重做",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P014 saves four text markers from actual original-text selections with exact native quads, alpha, removal and undo",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 368
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P012/P016 moving and resizing show ghosts, cancel without history and accept one undoable pointer transaction",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 481
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "文字标记专属用例实测删除后的单次 Undo 恢复原 native ID/AP；Redo 由共享完整 pair/history 浏览器及 UI 用例验证。"
+        },
+        {
+          "name": "只读和禁用命令",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "native read-only/locked commands and cancelling a pending CJK font preparation preserve source and history",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 637
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "real-UI-disabled-prop",
+              "result": "passed",
+              "sources": [
+                {
+                  "path": "packages/ui/src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx",
+                  "line": 451
+                },
+                {
+                  "path": "packages/ui/src/components/OfficeStudio/StudioPdfNativeLayer.test.tsx",
+                  "line": 170
+                }
+              ],
+              "logs": [
+                "docs/audits/2026-11-27/pdf-native-ui/validation/free-text-border-label-ui.txt",
+                "docs/audits/2026-11-27/pdf-native-ui/validation/current-pdf-ui.txt"
+              ],
+              "boundary": "Actual browser tests source locks/read-only and busy-disabled commands; explicit disabled prop is checked in real UI component tests."
+            }
+          ],
+          "conclusion": "只读/locked/busy-disabled 统一 host 能力守卫禁止 marker 写入，显式 disabled prop 有 UI 回归。"
+        },
+        {
+          "name": "原生文件保存重开",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P014 saves four text markers from actual original-text selections with exact native quads, alpha, removal and undo",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 368
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "two-native-PDF-reopens-and-independent-read",
+              "result": "passed",
+              "files": [
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/p014-markers-round-1.pdf",
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/p014-markers-round-2.pdf"
+              ],
+              "parsed": "docs/audits/2026-11-27/pdf-native-ui/browser-native/independent-pypdf.json",
+              "poppler": "docs/audits/2026-11-27/pdf-native-ui/browser-native/poppler.json",
+              "pdfjs": "docs/audits/2026-11-27/pdf-native-ui/browser-native/pdfjs.json"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "explicit native none colors and border colors survive two PDF reopens and later opacity or line-width edits",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 715
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "two-native-PDF-reopens-and-independent-read",
+              "result": "passed",
+              "files": [
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/explicit-none-round-1.pdf",
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/explicit-none-round-2.pdf"
+              ],
+              "parsed": "docs/audits/2026-11-27/pdf-native-ui/browser-native/independent-pypdf.json",
+              "poppler": "docs/audits/2026-11-27/pdf-native-ui/browser-native/poppler.json",
+              "pdfjs": "docs/audits/2026-11-27/pdf-native-ui/browser-native/pdfjs.json"
+            }
+          ],
+          "conclusion": "两輪 PDF 原生四类 Subtype、完整 QuadPoints、颜色、CA、ID 与源 Contents SHA；清色后再调透明度不复活。"
+        },
+        {
+          "name": "失败后原数据不变",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P014 saves four text markers from actual original-text selections with exact native quads, alpha, removal and undo",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 368
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "native read-only/locked commands and cancelling a pending CJK font preparation preserve source and history",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 637
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "只读/取消保持原 PDF 字节；真实文本选择不会误触发 native drag 或添加历史。"
+        }
+      ],
+      "requiredCurrentSpecs": [
+        "e2e/office-studio-pdf-native-annotations.spec.ts",
+        "e2e/office-studio-pdf-text-layer.spec.ts"
+      ]
+    },
+    {
+      "id": "P015",
+      "feature": "便利贴与回复解决",
+      "acceptance": "原生批注读取、回复作者时间与状态",
+      "matrix": "docs/audits/2026-11-27/pdf-native-ui/browser-native/acceptance-matrix.json",
+      "commonAcceptance": [
+        {
+          "name": "操作前后数据及格式",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P015 reads native notes, writes authored IRT replies and resolve/reopen state, and deletes replies/parents transactionally",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 519
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "原始跨页回复读取、新便签、署名/作者时间、回复、解决/重新打开、父及回复删除均为原生 IRT/R。"
+        },
+        {
+          "name": "选区、焦点、IME和取消",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P015 reads native notes, writes authored IRT replies and resolve/reopen state, and deletes replies/parents transactionally",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 519
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "回复 DOM composition 下 Enter 不发送，compositionend 后发送；Undo 清除选中后重选父仍显示真实回复。"
+        },
+        {
+          "name": "一次撤销、重做",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P015 reads native notes, writes authored IRT replies and resolve/reopen state, and deletes replies/parents transactionally",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 519
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P012/P016 moving and resizing show ghosts, cancel without history and accept one undoable pointer transaction",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 481
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "讨论专属用例实测父/回复删除后的单次 Undo 恢复完整旧 Doc/Blob 与 IRT 子树；Redo 由共享完整 pair/history 浏览器及 UI 用例验证。"
+        },
+        {
+          "name": "只读和禁用命令",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "native read-only/locked commands and cancelling a pending CJK font preparation preserve source and history",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 637
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "real-UI-disabled-prop",
+              "result": "passed",
+              "sources": [
+                {
+                  "path": "packages/ui/src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx",
+                  "line": 451
+                },
+                {
+                  "path": "packages/ui/src/components/OfficeStudio/StudioPdfNativeLayer.test.tsx",
+                  "line": 170
+                }
+              ],
+              "logs": [
+                "docs/audits/2026-11-27/pdf-native-ui/validation/free-text-border-label-ui.txt",
+                "docs/audits/2026-11-27/pdf-native-ui/validation/current-pdf-ui.txt"
+              ],
+              "boundary": "Actual browser tests source locks/read-only and busy-disabled commands; explicit disabled prop is checked in real UI component tests."
+            }
+          ],
+          "conclusion": "只读下允许查看和选择，删除/内容/回复禁用；source lock/busy-disabled 与显式 disabled 守卫。"
+        },
+        {
+          "name": "原生文件保存重开",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P015 reads native notes, writes authored IRT replies and resolve/reopen state, and deletes replies/parents transactionally",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 519
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "two-native-PDF-reopens-and-independent-read",
+              "result": "passed",
+              "files": [
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/p015-discussion-round-1.pdf",
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/p015-discussion-round-2.pdf"
+              ],
+              "parsed": "docs/audits/2026-11-27/pdf-native-ui/browser-native/independent-pypdf.json",
+              "poppler": "docs/audits/2026-11-27/pdf-native-ui/browser-native/poppler.json",
+              "pdfjs": "docs/audits/2026-11-27/pdf-native-ui/browser-native/pdfjs.json"
+            }
+          ],
+          "conclusion": "两輪保存重开核对 native Text、作者/time、IRT/RT/state；独立 pypdf 无悬空回复，源 AP/Contents 未被双绘。"
+        },
+        {
+          "name": "失败后原数据不变",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P015 reads native notes, writes authored IRT replies and resolve/reopen state, and deletes replies/parents transactionally",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 519
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "native read-only/locked commands and cancelling a pending CJK font preparation preserve source and history",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 637
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "IME Enter 与只读命令不改原 pair；删除的 Undo 恢复 source，未接受的准备取消不进历史。"
+        }
+      ],
+      "requiredCurrentSpecs": [
+        "e2e/office-studio-pdf-native-annotations.spec.ts",
+        "e2e/office-studio-pdf-text-layer.spec.ts"
+      ]
+    },
+    {
+      "id": "P016",
+      "feature": "墨迹矩形椭圆箭头多边形",
+      "acceptance": "几何拖动、线型填充、透明度与原生保存",
+      "matrix": "docs/audits/2026-11-27/pdf-native-ui/browser-native/acceptance-matrix.json",
+      "commonAcceptance": [
+        {
+          "name": "操作前后数据及格式",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P016 creates native shapes, arrow, polyline and ink through real pointers and edits fill, dash, ends and vertices",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 426
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "真实 pointer 创建 Square/Circle/Line/arrow/Polygon/PolyLine/Ink，改填充、线宽、dash、LE、透明度与顶点。"
+        },
+        {
+          "name": "选区、焦点、IME和取消",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P016 creates native shapes, arrow, polyline and ink through real pointers and edits fill, dash, ends and vertices",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 426
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P012/P016 moving and resizing show ghosts, cancel without history and accept one undoable pointer transaction",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 481
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "几何拖动 ghost、Escape 取消；非法顶点保留草稿且不接受；键盘/resize 用实际当前对象。"
+        },
+        {
+          "name": "一次撤销、重做",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P012/P016 moving and resizing show ghosts, cancel without history and accept one undoable pointer transaction",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 481
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "pointerup 一次接受，Undo 恢复完整 old pair；重做、键盘移动和 resize 连续独立历史。"
+        },
+        {
+          "name": "只读和禁用命令",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "native read-only/locked commands and cancelling a pending CJK font preparation preserve source and history",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 637
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "real-UI-disabled-prop",
+              "result": "passed",
+              "sources": [
+                {
+                  "path": "packages/ui/src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx",
+                  "line": 451
+                },
+                {
+                  "path": "packages/ui/src/components/OfficeStudio/StudioPdfNativeLayer.test.tsx",
+                  "line": 170
+                }
+              ],
+              "logs": [
+                "docs/audits/2026-11-27/pdf-native-ui/validation/free-text-border-label-ui.txt",
+                "docs/audits/2026-11-27/pdf-native-ui/validation/current-pdf-ui.txt"
+              ],
+              "boundary": "Actual browser tests source locks/read-only and busy-disabled commands; explicit disabled prop is checked in real UI component tests."
+            }
+          ],
+          "conclusion": "原生 locks、只读、busy-disabled 与 explicit disabled 守卫拒绝 pointer/keyboard 和属性写入。"
+        },
+        {
+          "name": "原生文件保存重开",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P016 creates native shapes, arrow, polyline and ink through real pointers and edits fill, dash, ends and vertices",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 426
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "two-native-PDF-reopens-and-independent-read",
+              "result": "passed",
+              "files": [
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/p016-geometry-round-1.pdf",
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/p016-geometry-round-2.pdf"
+              ],
+              "parsed": "docs/audits/2026-11-27/pdf-native-ui/browser-native/independent-pypdf.json",
+              "poppler": "docs/audits/2026-11-27/pdf-native-ui/browser-native/poppler.json",
+              "pdfjs": "docs/audits/2026-11-27/pdf-native-ui/browser-native/pdfjs.json"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P012/P016 moving and resizing show ghosts, cancel without history and accept one undoable pointer transaction",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 481
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "two-native-PDF-reopens-and-independent-read",
+              "result": "passed",
+              "files": [
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/gesture-history-round-1.pdf",
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/gesture-history-round-2.pdf"
+              ],
+              "parsed": "docs/audits/2026-11-27/pdf-native-ui/browser-native/independent-pypdf.json",
+              "poppler": "docs/audits/2026-11-27/pdf-native-ui/browser-native/poppler.json",
+              "pdfjs": "docs/audits/2026-11-27/pdf-native-ui/browser-native/pdfjs.json"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "explicit native none colors and border colors survive two PDF reopens and later opacity or line-width edits",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 715
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "two-native-PDF-reopens-and-independent-read",
+              "result": "passed",
+              "files": [
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/explicit-none-round-1.pdf",
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/explicit-none-round-2.pdf"
+              ],
+              "parsed": "docs/audits/2026-11-27/pdf-native-ui/browser-native/independent-pypdf.json",
+              "poppler": "docs/audits/2026-11-27/pdf-native-ui/browser-native/poppler.json",
+              "pdfjs": "docs/audits/2026-11-27/pdf-native-ui/browser-native/pdfjs.json"
+            }
+          ],
+          "conclusion": "两轮核对 native几何/AP、Rect/Vertices/LE/InkList、透明度与源 Contents SHA；Square none 后再改 CA 不复活。"
+        },
+        {
+          "name": "失败后原数据不变",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P016 creates native shapes, arrow, polyline and ink through real pointers and edits fill, dash, ends and vertices",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 426
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P012/P016 moving and resizing show ghosts, cancel without history and accept one undoable pointer transaction",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 481
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "native read-only/locked commands and cancelling a pending CJK font preparation preserve source and history",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 637
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "错误顶点草稿、Escape ghost 与字体准备取消均保持原数据/history；保护命令保持原source。"
+        }
+      ],
+      "requiredCurrentSpecs": [
+        "e2e/office-studio-pdf-native-annotations.spec.ts",
+        "e2e/office-studio-pdf-text-layer.spec.ts"
+      ]
+    },
+    {
+      "id": "W001",
+      "feature": "字体与小数字号",
+      "acceptance": "选区与插入点分别应用，保留原选区",
+      "matrix": "docs/audits/2026-11-27/word-character-guards/original-acceptance-matrix.json",
+      "commonAcceptance": [
+        {
+          "requirement": "操作前后数据及格式",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Mixed selection and caret fonts/sizes, preserved selection and other marks: StudioWord.basic-format.test.tsx (16 tests included in current 183 run)."
+        },
+        {
+          "requirement": "选区、焦点、IME和取消",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Caret snapshot, numeric/font IME, Escape, invalid draft and editor IME: basic-format actual draft/geometry flow and current shared prepareCharacterAction tests."
+        },
+        {
+          "requirement": "一次撤销、重做",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Font/size operations and later typed run undo/redo each preserve originals: basic-format model/real toolbar assertions."
+        },
+        {
+          "requirement": "只读和禁用命令",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Basic-format readOnly/disabled inputs, commands and keyboard variants; current 183 run."
+        },
+        {
+          "requirement": "原生文件保存重开",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "word-basic-format source, two actual DOCX exports and after-cancel export: inspect-native.py and four native PNGs."
+        },
+        {
+          "requirement": "失败后原数据不变",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Invalid font size/IME cancellation retains model and source; recovered actual after-cancel DOCX has source effective run values."
+        }
+      ],
+      "requiredCurrentSpecs": [
+        "e2e/office-studio-word-basic-format.spec.ts",
+        "e2e/office-studio-word-character-guards.spec.ts"
+      ]
+    },
+    {
+      "id": "W002",
+      "feature": "增大与缩小字号",
+      "acceptance": "按字号阶梯处理混合字号及上下限",
+      "matrix": "docs/audits/2026-11-27/word-character-guards/original-acceptance-matrix.json",
+      "commonAcceptance": [
+        {
+          "requirement": "操作前后数据及格式",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Current Word.test.tsx ladder boundaries 1..409, mixed independent sizes; latest actual guards flow retains 14/18pt result after both increase/decrease and history."
+        },
+        {
+          "requirement": "选区、焦点、IME和取消",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Shared getStyles for empty header, prepared character action and preserved active-region/selection; latest actual header14→16→H."
+        },
+        {
+          "requirement": "一次撤销、重做",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Latest actual mixed size increase undo/redo, decrease and undo check exact body snapshots; existing caret step test."
+        },
+        {
+          "requirement": "只读和禁用命令",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Word.test.tsx readOnly and disabled variants; latest actual readonly six buttons."
+        },
+        {
+          "requirement": "原生文件保存重开",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "final-browser-run source/two actual exports: lower bold14pt/italic18pt and header H16pt; native inspection resolves original header14pt."
+        },
+        {
+          "requirement": "失败后原数据不变",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Composing model guard and shared invalid-input guard refuse before transaction; before-fix empty style throw repaired and no pageerrors in actual flow."
+        }
+      ],
+      "requiredCurrentSpecs": [
+        "e2e/office-studio-word-case-size.spec.ts",
+        "e2e/office-studio-word-character-guards.spec.ts"
+      ]
+    },
+    {
+      "id": "W003",
+      "feature": "粗体斜体下划线删除线",
+      "acceptance": "混合选区状态、取消格式、撤销重做",
+      "matrix": "docs/audits/2026-11-27/word-character-guards/original-acceptance-matrix.json",
+      "commonAcceptance": [
+        {
+          "requirement": "操作前后数据及格式",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Four mixed buttons display aria-pressed=mixed and apply/clear every selected run; 16 basic-format tests included in current 183."
+        },
+        {
+          "requirement": "选区、焦点、IME和取消",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Preserved range/focus and shared input/editor IME guards, Escape draft cancellation: basic-format tests and real draft flow."
+        },
+        {
+          "requirement": "一次撤销、重做",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Four marks each independently undo/redo apply and removal."
+        },
+        {
+          "requirement": "只读和禁用命令",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Basic-format readonly/disabled toolbar plus keyboard variants."
+        },
+        {
+          "requirement": "原生文件保存重开",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "word-basic-format independent native four-run flags inspection through two actual DOCX reopens."
+        },
+        {
+          "requirement": "失败后原数据不变",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Rejected IME or invalid draft changes no data; unselected runs and source characters remain."
+        }
+      ],
+      "requiredCurrentSpecs": [
+        "e2e/office-studio-word-basic-format.spec.ts",
+        "e2e/office-studio-word-character-guards.spec.ts"
+      ]
+    },
+    {
+      "id": "W004",
+      "feature": "上标与下标",
+      "acceptance": "互斥切换、取消后恢复基线",
+      "matrix": "docs/audits/2026-11-27/word-character-guards/original-acceptance-matrix.json",
+      "commonAcceptance": [
+        {
+          "requirement": "操作前后数据及格式",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Superscript/subscript mutually replace and cancel to baseline: dedicated basic-format test."
+        },
+        {
+          "requirement": "选区、焦点、IME和取消",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Selection, focus and shared IME guard covered by current 183 UI tests and basic-format actual flow."
+        },
+        {
+          "requirement": "一次撤销、重做",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Three sequential toggles each undo/redo to exact model."
+        },
+        {
+          "requirement": "只读和禁用命令",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Basic-format readOnly/disabled command and keyboard refusal."
+        },
+        {
+          "requirement": "原生文件保存重开",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Basic-format actual DOCX superscript/subscript val and logical 12pt sizes through two saves."
+        },
+        {
+          "requirement": "失败后原数据不变",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Blocked IME/invalid draft retains model; cancel returns baseline before undo restoration."
+        }
+      ],
+      "requiredCurrentSpecs": [
+        "e2e/office-studio-word-basic-format.spec.ts",
+        "e2e/office-studio-word-character-guards.spec.ts"
+      ]
+    },
+    {
+      "id": "W006",
+      "feature": "文本高亮与清除高亮",
+      "acceptance": "选中文字和后续输入均可应用及清除",
+      "matrix": "docs/audits/2026-11-27/word-character-guards/original-acceptance-matrix.json",
+      "commonAcceptance": [
+        {
+          "requirement": "操作前后数据及格式",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Selected and caret highlight/clear, including mixed later highlight and H/C separate marks; current 16 basic tests."
+        },
+        {
+          "requirement": "选区、焦点、IME和取消",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Selection/focus retained; color menu cancel and shared IME/draft refusal plus actual 320px menu."
+        },
+        {
+          "requirement": "一次撤销、重做",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Highlight/clear and H/C subsequent typing have independent history boundaries."
+        },
+        {
+          "requirement": "只读和禁用命令",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Basic-format readOnly/disabled highlight menu and character shortcut refusal."
+        },
+        {
+          "requirement": "原生文件保存重开",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Basic-format actual source and two native DOCX exports: H highlighted, C clear; independent XML and native PNG."
+        },
+        {
+          "requirement": "失败后原数据不变",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Invalid draft/IME refusal and menu cancellation retain original data and unrelated fonts."
+        }
+      ],
+      "requiredCurrentSpecs": [
+        "e2e/office-studio-word-basic-format.spec.ts",
+        "e2e/office-studio-word-character-guards.spec.ts"
+      ]
+    },
+    {
+      "id": "W007",
+      "feature": "大小写转换",
+      "acceptance": "句首大写、大小写、词首大写及切换",
+      "matrix": "docs/audits/2026-11-27/word-character-guards/original-acceptance-matrix.json",
+      "commonAcceptance": [
+        {
+          "requirement": "操作前后数据及格式",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Five actual menus preserve same-locale final sigma; new five parameter UI cases, length/marks mapping and selected-word context; latest source/two files validate Greek/İ/ß."
+        },
+        {
+          "requirement": "选区、焦点、IME和取消",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Current tests cover reversed ranges, paragraphs, caret and Unicode length mapping; shared editor/IME guard remains; actual selected paragraphs keep links."
+        },
+        {
+          "requirement": "一次撤销、重做",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Five new mode tests each exact undo/redo; existing sentence/title actual flow and caret undo evidence."
+        },
+        {
+          "requirement": "只读和禁用命令",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Word.test.tsx readonly/disabled menu variants plus latest actual readonly six commands."
+        },
+        {
+          "requirement": "原生文件保存重开",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "final-browser-run source and two native exports independently validate five case outputs, five links, original bold/italic and 14/18 or12/16 sizes, length i+combining dot."
+        },
+        {
+          "requirement": "失败后原数据不变",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Blocked IME/draft path leaves source intact; unselected text/surrogates retained in current dedicated guard tests."
+        }
+      ],
+      "requiredCurrentSpecs": [
+        "e2e/office-studio-word-case-size.spec.ts",
+        "e2e/office-studio-word-character-guards.spec.ts"
+      ]
+    },
+    {
+      "id": "W008",
+      "feature": "格式刷单次与连续",
+      "acceptance": "复制字符和段落格式，单次结束或连续刷，Esc退出",
+      "matrix": "docs/audits/2026-11-27/word-character-guards/original-acceptance-matrix.json",
+      "commonAcceptance": [
+        {
+          "requirement": "操作前后数据及格式",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Current continuous and single source/target UI tests preserve exact character and paragraph formatting and links; latest actual single paint after IME."
+        },
+        {
+          "requirement": "选区、焦点、IME和取消",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "New armed target composition guard: latest actual snapshot unchanged, composition ends then selection paints; original continuous Esc exact test remains."
+        },
+        {
+          "requirement": "一次撤销、重做",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Current continuous paint test undo restores only last target; single model tests and old exact native-format browser flow include undo/redo."
+        },
+        {
+          "requirement": "只读和禁用命令",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Current editor.isEditable/model and toolbar readOnly/disabled checks; latest actual readonly button."
+        },
+        {
+          "requirement": "原生文件保存重开",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Existing exact formats-roundtrip1/2 DOCX files and native audit prove continuous painting/paragraph/links. Current actual target paints source18pt/bold/blue/right and reopens twice."
+        },
+        {
+          "requirement": "失败后原数据不变",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Latest actual composition refusal equals original model. Armed selection effect also checks existing input error and composing before change."
+        }
+      ],
+      "requiredCurrentSpecs": [
+        "e2e/office-studio-word-format.spec.ts",
+        "e2e/office-studio-word-character-guards.spec.ts"
+      ]
+    },
+    {
+      "id": "W009",
+      "feature": "清除字符与段落格式",
+      "acceptance": "保留文字、结构和链接，明确清除范围",
+      "matrix": "docs/audits/2026-11-27/word-character-guards/original-acceptance-matrix.json",
+      "commonAcceptance": [
+        {
+          "requirement": "操作前后数据及格式",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Current heading/list/link preservation test specifies character+paragraph clearing, and old exact format-native flow checks heading/list structure after real clear."
+        },
+        {
+          "requirement": "选区、焦点、IME和取消",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Latest actual body composition clear refusal, end/apply and undo. Shared prepareCharacterAction preserves draft/permission guards."
+        },
+        {
+          "requirement": "一次撤销、重做",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Current UI heading clear undo/redo plus latest actual source clear undo equals snapshot."
+        },
+        {
+          "requirement": "只读和禁用命令",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Current model/toolbar readOnly/disabled checks and latest actual six-command refusal."
+        },
+        {
+          "requirement": "原生文件保存重开",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Existing exact formats-roundtrip1/2 native files prove cleared heading/link/list preservation; full final same format spec refresh is pending."
+        },
+        {
+          "requirement": "失败后原数据不变",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Latest actual composition refusal preserves full body JSON; new model composing guard rejects before transaction."
+        }
+      ],
+      "requiredCurrentSpecs": [
+        "e2e/office-studio-word-format.spec.ts",
+        "e2e/office-studio-word-character-guards.spec.ts"
+      ]
+    },
+    {
+      "id": "W010",
+      "feature": "字符间距与位置",
+      "acceptance": "加宽紧缩、提升降低并按度量显示",
+      "matrix": "docs/audits/2026-11-27/word-character-guards/original-acceptance-matrix.json",
+      "commonAcceptance": [
+        {
+          "requirement": "操作前后数据及格式",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Current model eight tests cover expanded/condensed/raised/lowered, mixed marks and native precision. Latest actual spacing0.3pt/position-1.5pt and preview."
+        },
+        {
+          "requirement": "选区、焦点、IME和取消",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "IME numeric draft disabled; actual .3/1.25pt position rejected with step0.5 error, 1.5 recovery; cancellation/mixed untouched in existing exact dialog tests."
+        },
+        {
+          "requirement": "一次撤销、重做",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Current eight model tests plus two new actual dialog UI cases verify one undo/redo preserving all marks; existing metrics actual flow has caret/history."
+        },
+        {
+          "requirement": "只读和禁用命令",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Model readonly guard, UI disabled/readOnly entry, latest actual six-button refusal."
+        },
+        {
+          "requirement": "原生文件保存重开",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Current 74 native tests cover body/text/image/all four complex PAGE runs/style/header/footer/±500/zero, two saves; final actual DOCX files contain spacing6/position-3 and native glyph coords match integer reference."
+        },
+        {
+          "requirement": "失败后原数据不变",
+          "status": "feature-specific-evidence-verified",
+          "evidence": "Invalid model metric patch validates all before dispatch; UI invalid half-points and IME reject with model unchanged. Native invalid precision rejects without mutation."
+        }
+      ],
+      "requiredCurrentSpecs": [
+        "e2e/office-studio-word-metrics.spec.ts",
+        "e2e/office-studio-word-character-guards.spec.ts"
+      ]
+    },
+    {
+      "id": "X064",
+      "feature": "缩放网格线与标题",
+      "acceptance": "25至400缩放、隐藏标题网格与文件属性",
+      "matrix": "docs/audits/2026-11-27/sheet-view/audit-evidence.json",
+      "requiredCurrentSpecs": [
+        "e2e/office-studio-sheet-view.spec.ts"
+      ]
+    }
+  ]
+}

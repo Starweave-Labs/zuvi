@@ -1,0 +1,48 @@
+{
+  "scope": "W001/W003/W004/W006 browser proof against the fresh UI build; whole 159-item goal remains active",
+  "headAtBuild": "077e307da018a6a9a96b4d07d70bf8e44a803c84",
+  "buildLog": "/tmp/zuvi-word-basic-format-ui-build.txt",
+  "sourceSha256": "20bca06d49172dc1f554d25b121fd288a143ce9c3b6c996fc9c6b9e5b334bc39",
+  "records": [
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+      "bytes": 141550,
+      "sha256": "975c53bf6073584b441e833c279e4390843ea930228d9b528e33c6940ec9a5fb"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
+      "bytes": 46372,
+      "sha256": "4e5bde67f48207d365ac0db709aceddff6a27199bb983affc7f0a179ffabdc3b"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioFontControl.tsx",
+      "bytes": 6010,
+      "sha256": "6870eefde59eb678be37127e2f3ae926787aa435377e9180ab97552e6f8c07f0"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
+      "bytes": 114455,
+      "sha256": "0d55adb234ac575ef2af2b4cdbcd5d11df61e4dce70a077d72d4a044620f07ea"
+    },
+    {
+      "path": "e2e/office-studio-word-basic-format.spec.ts",
+      "bytes": 17637,
+      "sha256": "aeb7aacab572024c81ae7f1380422e39c1d0573913e827d89da9c8be127c43df"
+    },
+    {
+      "path": "packages/ui/dist/StudioWord-CSWO_2yK.js",
+      "bytes": 319857,
+      "sha256": "53a92af4d3de37201d992363a070f5493b5786a804812fbfea96d00be35fe048"
+    },
+    {
+      "path": "packages/ui/dist/StudioFontControl-BZqQgo05.js",
+      "bytes": 3946,
+      "sha256": "84132e673e138f787b99c69d4bab94273a6492ce4f11a3338d8c45c8a26011c0"
+    },
+    {
+      "path": "packages/ui/dist/index.js",
+      "bytes": 3914,
+      "sha256": "9f4594868060d4370d371dbd308abbe793fc168e756fe9ffbb3743cb320f9f83"
+    }
+  ]
+}

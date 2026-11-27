@@ -1,0 +1,107 @@
+/* Text/annotation positioning follows Mozilla PDF.js 6.5.438 (Apache-2.0), scoped to OfficeStudio. */
+.zuvi-studio-pdf-text-layer {
+  position: absolute;
+  inset: 0;
+  overflow: clip;
+  text-align: initial;
+  opacity: 1;
+  line-height: 1;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-size-adjust: none;
+  forced-color-adjust: none;
+  transform-origin: 0 0;
+  z-index: 1;
+  pointer-events: none;
+  --min-font-size: 1;
+  --text-scale-factor: calc(var(--total-scale-factor) * var(--min-font-size));
+  --min-font-size-inv: calc(1 / var(--min-font-size));
+}
+
+.zuvi-studio-pdf-text-layer :is(span, br) {
+  position: absolute;
+  color: transparent;
+  white-space: pre;
+  cursor: text;
+  transform-origin: 0 0;
+  user-select: text;
+  pointer-events: auto;
+}
+
+.zuvi-studio-pdf-text-layer > :not(.markedContent),
+.zuvi-studio-pdf-text-layer .markedContent span:not(.markedContent) {
+  z-index: 1;
+  --font-height: 0;
+  font-size: calc(var(--text-scale-factor) * var(--font-height));
+  --scale-x: 1;
+  --rotate: 0deg;
+  transform: rotate(var(--rotate)) scaleX(var(--scale-x)) scale(var(--min-font-size-inv));
+}
+
+.zuvi-studio-pdf-text-layer .markedContent { display: contents; }
+.zuvi-studio-pdf-text-layer span[role='img'] { user-select: none; cursor: default; }
+.zuvi-studio-pdf-text-layer ::selection { background: rgb(68 121 218 / 0.3); color: transparent; }
+.zuvi-studio-pdf-text-layer[data-disabled] :is(span, br) { pointer-events: none; user-select: none; }
+.zuvi-studio-pdf-text-layer:focus-visible { outline: 1px solid var(--zuvi-color-focus-ring); }
+
+.zuvi-studio-pdf-annotation-paint-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.zuvi-studio-pdf-annotation-paint-layer section {
+  position: absolute;
+  text-align: initial;
+  pointer-events: auto;
+  box-sizing: border-box;
+  transform-origin: 0 0;
+  user-select: none;
+}
+
+.zuvi-studio-pdf-annotation-paint-layer.disabled section { pointer-events: none; }
+.zuvi-studio-pdf-annotation-paint-layer section:focus-visible { outline: 1px solid var(--zuvi-color-focus-ring); }
+.zuvi-studio-pdf-annotation-paint-layer .annotationContent,
+.zuvi-studio-pdf-annotation-paint-layer .textAnnotation img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.zuvi-studio-pdf-annotation-paint-layer .textAnnotation img { inset: 0; }
+.zuvi-studio-pdf-annotation-paint-layer .overlaidText { display: none; }
+.zuvi-studio-pdf-annotation-paint-layer .popupAnnotation { z-index: 20; }
+.zuvi-studio-pdf-annotation-paint-layer .popupWrapper { position: absolute; min-width: 180px; }
+.zuvi-studio-pdf-annotation-paint-layer .popup {
+  padding: 10px;
+  border: 1px solid var(--zuvi-color-border);
+  border-radius: 4px;
+  background: var(--zuvi-color-bg);
+  color: var(--zuvi-color-text);
+  font: 12px/1.5 sans-serif;
+  box-shadow: var(--zuvi-shadow-md);
+}
+
+.zuvi-studio-pdf-text-layer[data-main-rotation='90'],
+.zuvi-studio-pdf-annotation-paint-layer[data-main-rotation='90'] { transform: rotate(90deg) translateY(-100%); }
+.zuvi-studio-pdf-text-layer[data-main-rotation='180'],
+.zuvi-studio-pdf-annotation-paint-layer[data-main-rotation='180'] { transform: rotate(180deg) translate(-100%, -100%); }
+.zuvi-studio-pdf-text-layer[data-main-rotation='270'],
+.zuvi-studio-pdf-annotation-paint-layer[data-main-rotation='270'] { transform: rotate(270deg) translateX(-100%); }
+.zuvi-studio-pdf-annotation-paint-layer[data-main-rotation='90'] .norotate { transform: rotate(270deg); }
+.zuvi-studio-pdf-annotation-paint-layer[data-main-rotation='180'] .norotate { transform: rotate(180deg); }
+.zuvi-studio-pdf-annotation-paint-layer[data-main-rotation='270'] .norotate { transform: rotate(90deg); }
+
+.zuvi-studio-pdf-text-layer-error {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  z-index: 4;
+  padding: 4px 8px;
+  background: var(--zuvi-color-danger-subtle);
+  color: var(--zuvi-color-danger-subtle-fg);
+  font-size: 12px;
+}

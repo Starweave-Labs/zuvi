@@ -1,0 +1,12 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ ../../../../../../../../private/tmp/zuvi-word-neighbor-audit/neighbor.test.ts > W009 clear format should not change the document while the body is composing
+ ✓ ../../../../../../../../private/tmp/zuvi-word-neighbor-audit/neighbor.test.ts > W010 apply should keep a valid numeric IME draft outside the document until composition ends
+ ✓ ../../../../../../../../private/tmp/zuvi-word-neighbor-audit/neighbor.test.ts > W002 empty styled header should step its shared inherited font size
+ ✓ ../../../../../../../../private/tmp/zuvi-word-neighbor-audit/neighbor.test.ts > W008 armed format painting should not write a target selection during composition
+
+ Test Files  1 passed (1)
+      Tests  4 passed | 1 skipped (5)
+   Start at  07:09:10
+   Duration  2.03s (transform 522ms, setup 92ms, collect 771ms, tests 742ms, environment 268ms, prepare 40ms)

@@ -1,0 +1,899 @@
+{
+  "schemaVersion": 1,
+  "scope": [
+    "P012",
+    "P014",
+    "P015",
+    "P016"
+  ],
+  "completionProven": false,
+  "sourceFiles": [
+    {
+      "path": "packages/ui/src/components/OfficeStudio/index.ts",
+      "bytes": 2443,
+      "sha256": "39a7899f5500cbd70f60eb4c75cb048e4d00b32d58f69ebdecdfc579fe55acd1"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/OfficeStudio.css",
+      "bytes": 7301,
+      "sha256": "1eaf0b6363999d65cd616e22f170b563be4440f5f92699701bda3518748e08fb"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/OfficeStudio.tsx",
+      "bytes": 19002,
+      "sha256": "f2b4b4b4045188f3e0e9332a2ed0d7edbe8584fbe9be4c0607deff6bd6d04254"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-cell-font.ts",
+      "bytes": 629,
+      "sha256": "b9a2d70e8db7628506a831ac5a1a0f00dd9946ff2c0482073a14447094a11353"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-cell-format-core.ts",
+      "bytes": 3104,
+      "sha256": "c7d0e4bb183009ef9c5d414a550e120e7ad5ff001c637efef411141ea3a29fcf"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-cell-style.ts",
+      "bytes": 1723,
+      "sha256": "1a97fe34a4ec08c77efe7b655fc6156225d9b14e57d39107e82d3fadd5f3f5f7"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-font-input.ts",
+      "bytes": 1611,
+      "sha256": "32de043a24ee59b57f7d469d1be62925bf879fb28cc444b1a7b6728037d15d98"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-formula-parser.d.ts",
+      "bytes": 700,
+      "sha256": "572ade08d487bfbb86bf6c1c0411ae42072387fb381f96e16fedd57fefa16e6c"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-model.ts",
+      "bytes": 41051,
+      "sha256": "0dc9711e027e5325a4d44f1169c2d5f9da5243491011ec14adbb7c57b5453f17"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-number-format.ts",
+      "bytes": 10078,
+      "sha256": "505bcc59048cad77c88c58241afd9db8435f8096cf4269bfa4894fd268280162"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-pdf-annotation-types.ts",
+      "bytes": 9053,
+      "sha256": "445422b9ecc8d19cb865a65dbeeb916e18aaadf6155c7cfee3c18b2f6758bc32"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-pdf-annotation-workspace-types.ts",
+      "bytes": 1921,
+      "sha256": "908f55e6e309703aabbddbe8975fb16ad4e60c2b4f24d70219e94979ca058f9c"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-pdf-annotations.ts",
+      "bytes": 1756,
+      "sha256": "c04515b67eb9fc4517f1dd20048a06946fd09256943cd10e1f85b9ec4b97e445"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-pdf-composition.ts",
+      "bytes": 1998,
+      "sha256": "c776e669c801b09cc72ab14f5d0c594cc1049d99ccd0f9c4c431c7732c6b962d"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-pdf-fields.ts",
+      "bytes": 12511,
+      "sha256": "d6ae1ea2a5aa53a00002d61918e07e2064c373cf093239fa2911677706f06312"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-pdf-native-ui.ts",
+      "bytes": 7008,
+      "sha256": "9ea9924468a835b5aeb1df3c97feee51c0fbe8b497df74ac367e379cfa6744e2"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-pdf-pages.ts",
+      "bytes": 8717,
+      "sha256": "3901a2b0d2010ecf8e28cb479998e6376a42b8eaa616969a519f8aabdc663877"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-pdf-source-id.ts",
+      "bytes": 3079,
+      "sha256": "59756cdd86c52a53147c2343cf33fd6be2d6de173aef0736539aefea1ecd03ef"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-sheet-arrays.ts",
+      "bytes": 7539,
+      "sha256": "9929d00471a821f691fab94a5c6edb93ea06a62c62a13747edd6ca42b1b4b6d9"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-sheet-editing.ts",
+      "bytes": 15283,
+      "sha256": "0f11507628a7c93f7eb69d9df6046eb68bf7d69ee9dba706fd7df5980001f257"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-sheet-fill.ts",
+      "bytes": 16938,
+      "sha256": "de53464430b1ba58346d1c14f9a9cdf2f4ed43f3265d85ba9da09ef3913fcabc"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-sheet-hyperlinks.ts",
+      "bytes": 29904,
+      "sha256": "762a120b68230490323d020ecd33b7c12e06407207f6a677e5eabc98dd95732b"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-sheet-layout.ts",
+      "bytes": 4268,
+      "sha256": "ccbe427e762eab13e9ccc10041bae651a4a4dc338b469ec70f2a9f007b4bbd94"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+      "bytes": 111568,
+      "sha256": "93eed9d602494244cdbe758b2b8ba4510e533178eac9c84a1d2efd21f6ed62d0"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-sheet-navigation.ts",
+      "bytes": 2771,
+      "sha256": "8ca4c30a237475f2d2575e85fa0d7736ca79c02744d85f25c90b05daa36202dc"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-sheet-painter.ts",
+      "bytes": 5971,
+      "sha256": "426266ce55ada78c6011bfc3c5cca15054940530bf18f7c776e192f100e88ec9"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-sheet-rules.ts",
+      "bytes": 24050,
+      "sha256": "bc6d8e2bba7d0c3860b583139dac7fa455e9475a3eb953039c742ce1f75482a0"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-sheet-structure.ts",
+      "bytes": 27151,
+      "sha256": "490d314f7cc8a8cc18dee4169276affbc1cfd963b0c4d4900fca05058f85e7f2"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-sheet-text-display.ts",
+      "bytes": 12924,
+      "sha256": "75f414aac31f65bf613ff458c8571d2d7b801c78a241bed47fa1e0cca6501154"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-sheet-text-layout.ts",
+      "bytes": 25783,
+      "sha256": "6241b360cb08074afb3644737d621906ec131d357db9056cf563c2b16b5966ec"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-sheet-text-properties.ts",
+      "bytes": 15767,
+      "sha256": "698876e8c82d3217d737acf6768ed2cdd80ec43eae20143b388a973b6d0cdedc"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-sheet-view.ts",
+      "bytes": 8386,
+      "sha256": "99acd1c9517cc6e3fbdf751d8d9d09b3d9dde7d3639b4aa7e2c03d421d3d7192"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
+      "bytes": 20457,
+      "sha256": "87239bce035971b2aba94ef7485f54b956da88b0643956972f1287d53a09e038"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-bookmarks.ts",
+      "bytes": 6706,
+      "sha256": "aa18a2cb5172eb6310d4bf27e8c5764e7ef6115adf4cc5259965948b83faa992"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-cell-command.ts",
+      "bytes": 3852,
+      "sha256": "2112cbfd06313e497a6cb7b2a821663a32e211471000a03d8672b643763df219"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-cell-properties.ts",
+      "bytes": 1950,
+      "sha256": "edcfe5645298bb0fd564348d1b7a7d7ba88106c5fba44ce45abbadc33a88ef12"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-character-layout.ts",
+      "bytes": 4789,
+      "sha256": "5112be361ad09b5861b5b5d3a753285445939742dd097812958270cdc2c8454e"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-column-resize.ts",
+      "bytes": 14449,
+      "sha256": "b0fe84d5450b594d132f1442faf4a1a0afcb062942ae8bbe2a0da3f610853925"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-formula-field.ts",
+      "bytes": 6466,
+      "sha256": "45f19356f339f91277d0a31df183e2b9e26e3ce13e0f641abdbd59b8e0f3d447"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-image-contract.ts",
+      "bytes": 4117,
+      "sha256": "87e22b2f125406056602f7c941908a99ebada9da5505d7d2ea4704c888399c39"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-image-crop-command.ts",
+      "bytes": 1017,
+      "sha256": "5ff4d22585e05dad1381224a571c7809e7f58c03fed3c26ac3efba2323ca98f0"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-image-crop.ts",
+      "bytes": 1810,
+      "sha256": "e4b696a6cb431ee47d099243a6de4acd3ecded981d4de9034908fd8dd4850ca9"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-image-preview.ts",
+      "bytes": 2951,
+      "sha256": "39aa0bd7b30489b50047a2813e5ad361efa0158e1c25fa3f3e1995a3b83365ed"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-image-replace.ts",
+      "bytes": 1642,
+      "sha256": "7e755402d3ed2d3f4da60aa85fa0dd1476d4d3367905bf66501dc39769f434e4"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-images.ts",
+      "bytes": 824,
+      "sha256": "580b864bb20820418445a1761fe07cfd9927a22ecc14e1756fe14b3264b8c260"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-math-extension.ts",
+      "bytes": 5057,
+      "sha256": "6d6e5fd0c3b171ed08b9319da8af2f6717c140a1234f8fcee6dab1be8b411e3a"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-math.ts",
+      "bytes": 11512,
+      "sha256": "15a67476bf629aa14704f4322ebac1b182341c09eb2805023d6a17d44f7734e3"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-metrics.ts",
+      "bytes": 1476,
+      "sha256": "37a858bd80295c290044645a594aa925f69b2b5302ef8aeb19c0f85197accf16"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-nonprinting.ts",
+      "bytes": 3062,
+      "sha256": "89b571aea5bac5dfd0a9ffcaef4bd15db6774e5d03fb490507778de9f9965f28"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-numbering-extension.ts",
+      "bytes": 19635,
+      "sha256": "952b8e1a4c710a1ad96a4be1350743b7490adbe53a2f9db0cc654088d989c937"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-numbering-layout.ts",
+      "bytes": 4810,
+      "sha256": "09020cbf112a814074d03b3d1657e784e355bdf17fee3e3a2fe267b04cb6d590"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-numbering.ts",
+      "bytes": 20727,
+      "sha256": "ccdaf28591aaa62a104f02f970b7727ccedc3d23beed8188652a4868f19ac4bf"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-pagination-extension.ts",
+      "bytes": 32379,
+      "sha256": "fdad7b08ad7ac8a5a7f93b61b56160848a1722d2debca9f457d049ede0a639b3"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-pagination.ts",
+      "bytes": 6982,
+      "sha256": "30458ad8fa82bce5735454f0fc913819a7618f46899c4a27e0508637e8aa171b"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-paragraph-format.ts",
+      "bytes": 3619,
+      "sha256": "ac03043dcb49f940d24d9b1e873aae033426faf8280376090c131d6cd73ce9b4"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-paragraph-layout.ts",
+      "bytes": 10702,
+      "sha256": "cd5cb8502caee16e787fb4158d56e60ad00f561e6ca5f34e237bb3202a14f1cd"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-style-extension.ts",
+      "bytes": 12846,
+      "sha256": "8500d7496130968168918662d7a6825352ceed144087314f8e9af35d2fcaadcd"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-styles.ts",
+      "bytes": 21287,
+      "sha256": "ca1ffe85e420e4861fd4b9c76fc86a7223c1015a8be09941d74d9519698f1b55"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-surface-extension.ts",
+      "bytes": 3404,
+      "sha256": "7a8941fefddaac3e54ce3220c2eef65d575a90e03737117346013253b2658113"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-surface.ts",
+      "bytes": 8337,
+      "sha256": "0a314dd3dced280f88210c4476bc56087b00e2892bec2e09b0e15df4db70fbac"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-tab-extension.ts",
+      "bytes": 8115,
+      "sha256": "a1b82ffb291cb4e71fb01f19b249c6fb54af0103025f7fdef680411edc032950"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-table-cell.ts",
+      "bytes": 6683,
+      "sha256": "d781e04d5a2be3833f9b77dfcbd4719ef284fb0ca02b273d18997235c6e5e3b5"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-table-conversion.ts",
+      "bytes": 10844,
+      "sha256": "70a7259f4517240256d5a8fa12cc46cab55f78b1fa5ee9310e593c9376ffa58b"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-table-extension.ts",
+      "bytes": 11236,
+      "sha256": "69596f7ae25dec78398fa82a9549c2fb3f68b59245d54b6b7249736fc13f3f4f"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-table-formula.ts",
+      "bytes": 9036,
+      "sha256": "d8a1adcb2e8a80431615027c4c52d40b0f56349ce5ebf2a6b39de840bff8af77"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-table-fragments.ts",
+      "bytes": 6193,
+      "sha256": "2f8c6c372648a7e9abe12ea8492f74ae7611df4e3e4748ccb68a250a3d96b2c1"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-table-layout.ts",
+      "bytes": 3568,
+      "sha256": "30029080cebe35d52247446f51af2293e05d4aa07a1fb05dd948ef004cbb8126"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-table-mixed-layout.ts",
+      "bytes": 5462,
+      "sha256": "c9bff48ea14b9d5ef5a68f726d1f70b6cc820839e1e3e00c23c387d656c3db91"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-table-properties.ts",
+      "bytes": 18936,
+      "sha256": "ba3a779a52c80cdb18bb480f9a59175bd89405db513ac816776d10cc1d8ab7f2"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-table-row-conversion.ts",
+      "bytes": 2081,
+      "sha256": "c432a6cdace2dbc93ccc851d12686480a75bf041c8d46f8d25b9864b502575bc"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-table-row-extension.ts",
+      "bytes": 19835,
+      "sha256": "c876630b7d03ca5f5d1205fae59cbe66a8e325140f0de4449bc07631121bdd8c"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-table-row-range.ts",
+      "bytes": 1965,
+      "sha256": "1d6562e4bb4339b1de58dc70f8e2540f3f63baab56de23bb113e3623e6926f84"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-table-rows.ts",
+      "bytes": 2144,
+      "sha256": "abb81cce8159b06680bfcd3c99d9fe5d890465cbe9ace3d6a3ebc0d87ba3561c"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-tabs-dom.ts",
+      "bytes": 3864,
+      "sha256": "f2256a558bf0c1ed569acac17d77ee9cae1d9cb5236730eaa0007d7f889c9c7b"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-tabs.ts",
+      "bytes": 4186,
+      "sha256": "1769d60231fa8ea492df32fd11ab31ec07fb85c65a143921da9f81e90f4ae683"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
+      "bytes": 46372,
+      "sha256": "4e5bde67f48207d365ac0db709aceddff6a27199bb983affc7f0a179ffabdc3b"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioFontControl.css",
+      "bytes": 748,
+      "sha256": "d90dc846bb9a9f7f4d2183e5d5928e09fc3ec6f5107f57d206fdacdeae4228ad"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioFontControl.tsx",
+      "bytes": 6010,
+      "sha256": "6870eefde59eb678be37127e2f3ae926787aa435377e9180ab97552e6f8c07f0"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioPdf.css",
+      "bytes": 20817,
+      "sha256": "fc03f5146dab56efd24db3a2994a24efe269e5e7ba7210d13d6b07f3b438ebe1"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+      "bytes": 135194,
+      "sha256": "d8ccfb94fb63ad37f961776f1b70cec6d850fed44706c6c73867aa87e3fd3ab8"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioPdfAnnotationDialog.tsx",
+      "bytes": 16737,
+      "sha256": "bbe01af3eefe4d8f0b7d57d5f9c99dce871a2163fbe4ae02c059d1d851fad6b0"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioPdfAnnotationPaintLayer.tsx",
+      "bytes": 2754,
+      "sha256": "1e1d5ccba4cdf1b0e8b523374d45d3c3b825565f62c7271f14950fb36bedeaa4"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioPdfComposeDialog.tsx",
+      "bytes": 9807,
+      "sha256": "311af2b677cc4357e843df94050c503d0cf731a761b84699920d1f25ea93d2a4"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioPdfFieldDialog.tsx",
+      "bytes": 19504,
+      "sha256": "cce3d08f38d43715fdff952932a724e94828ca8ed44137dc7fb8d64ce8de9e26"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioPdfNativeInspector.tsx",
+      "bytes": 12977,
+      "sha256": "ef0bb5ef627b9c81fb2113926f970cc667c40bf6ec9e6d1c853f1639ea20f7b0"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioPdfNativeLayer.tsx",
+      "bytes": 14599,
+      "sha256": "1ca8e24b7696fcf5a0d67e583f51e55c7e0e0ca8b4597be81539f4c3cc76c4c1"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioPdfPageDialog.tsx",
+      "bytes": 3396,
+      "sha256": "23c35f66608c7a8b4977dc9b9e1b8b2f093eb4ce3eb1623f6837e2ccffff965e"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioPdfTextLayer.css",
+      "bytes": 3958,
+      "sha256": "358ed64bdf8ccec3c32181a91ed0e3619083d00d034504cbc16167de28e7e1e6"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioPdfTextLayer.tsx",
+      "bytes": 3400,
+      "sha256": "a88594cfd6a58a4c98adcb04b79216f56167924a9baef7c6d5fdc72ad2d51c91"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioRibbon.css",
+      "bytes": 4535,
+      "sha256": "7b3616215c6046c038973d4ae20313678c1af47096dfaf60928558b363762391"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioRibbon.tsx",
+      "bytes": 525,
+      "sha256": "fcb0ef3d078b899b00b5f29a16199367c98bbf95b49dd789607a9ed83b292670"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioSheet.css",
+      "bytes": 21639,
+      "sha256": "a19e1f3778b48a82cab278bd2831bdba1abdc5737252b5d16d97ae14ba8cbff3"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+      "bytes": 183544,
+      "sha256": "0e0b528a2d554cb47adac7f5f68af6b0c09d5e11021442a57c0b9aceb2f0b3ea"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioSheetHyperlinkDialog.tsx",
+      "bytes": 6587,
+      "sha256": "de449a1f6d02a4dd10c6635387b298cb176f959bdd5ebe96144e5bfdda687aa0"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioSheetNumberFormatDialog.tsx",
+      "bytes": 5346,
+      "sha256": "bb3d6c1607c80a747944e6ad629e544f43e50d308b3edd2188605c33b37cfaa9"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioSheetRuleDialog.tsx",
+      "bytes": 36532,
+      "sha256": "a2874e8f70ced50ac8baf41ed8bbcf804959efeb5ea3bcee272498325158541c"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioSheetSearch.tsx",
+      "bytes": 9561,
+      "sha256": "edc6bee579fcd8906303c91f39e982f33084f2add0b18c1011638487403c4cb5"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioSheetSortDialog.tsx",
+      "bytes": 6815,
+      "sha256": "95027ceac490470ab16e95773530ea4da8707673a39934d568fc130c5507bd74"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioSheetText.tsx",
+      "bytes": 2458,
+      "sha256": "17906f433fad100a303270737ff744aeec535d4329a1011323b8b5dcfc95c6b0"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioSheetTextDialog.tsx",
+      "bytes": 10962,
+      "sha256": "9398223392f2b8957b7bc42ad608c708354eb4059bb4a6de139445bfe948d5cf"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioSheetViewControls.tsx",
+      "bytes": 5768,
+      "sha256": "ce2c340ee92a6feaf8dda8ddbd3eff0cd5467c408e16c55274cf5aa14c52a274"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWord.css",
+      "bytes": 39375,
+      "sha256": "a0f58291578e173283b134f84364668cd1b4d67302f9a2adb1c52a2e0f28bb1d"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+      "bytes": 141550,
+      "sha256": "975c53bf6073584b441e833c279e4390843ea930228d9b528e33c6940ec9a5fb"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWordBookmarkDialog.tsx",
+      "bytes": 3672,
+      "sha256": "b2c98fc0f76bd8d322158f0a34e6a2ead362653f370886ed56a84a4bd938affc"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWordCellDialog.tsx",
+      "bytes": 9857,
+      "sha256": "3aea67c52ca6b1a3c43299ae2d95fec16c969ba2c94171296e1265d5dbc6abb8"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWordCharacterDialog.tsx",
+      "bytes": 5537,
+      "sha256": "16fe79eb7f951e48db762575eaee00895b75ddb0aef805906693070e1c872f81"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWordConversionDialog.tsx",
+      "bytes": 6419,
+      "sha256": "92f841bcb07a97c6b3a54742f06594fdfee842cfbd3d4f646842cf7e5042e010"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWordFormulaDialog.tsx",
+      "bytes": 3314,
+      "sha256": "4828a5540882731e956be711cbdb82e3e9fd24adbcbadb7431d1aa4da69bd57e"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWordImageCropDialog.tsx",
+      "bytes": 9232,
+      "sha256": "f853215a92c8c2b2683f13ce6893613c81ddaff882447b186a9ac927f94b0519"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWordImageLayoutTools.tsx",
+      "bytes": 10749,
+      "sha256": "6e6312a57a1117dd131a0ff60516c24a2bc4630dfdf49606b642637a81b3f7ca"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWordMathDialog.tsx",
+      "bytes": 13191,
+      "sha256": "12e8fb157b9eaee11fdb5c4c178db0554529636992a45b3fb103639622ed9352"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWordNumberingDialog.tsx",
+      "bytes": 16780,
+      "sha256": "84e363eb4ddd1daf3b61705271731dc3056ccaec366222d98f6e704f718e30eb"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialog.tsx",
+      "bytes": 11149,
+      "sha256": "44bae04931824d7d0f5c5fc08a4261062be1f3d4349b3cfdef80e705da27fe89"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWordRowDialog.tsx",
+      "bytes": 4763,
+      "sha256": "fd711896450cee42be9a8c48aff646dd55cec38e2bac7a0bda093b4d3ce4844a"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWordRuler.tsx",
+      "bytes": 12883,
+      "sha256": "a5cb0f8227abe6c251617f0bff09336e610e33782c4a0906c34cff65b873b267"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWordStyleDialog.tsx",
+      "bytes": 16882,
+      "sha256": "8f40d7d4fc6f330c1822cc44d4130d90485a3317ee41e91b32e416df4d537e3c"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWordSurfaceDialog.tsx",
+      "bytes": 11878,
+      "sha256": "90b739d16f87d8989ea91d5bd7f33ed69abb5b6e323b1992c5a000b7486e7462"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWordTabsDialog.tsx",
+      "bytes": 6948,
+      "sha256": "eed12bfc40e715530609fe453afade3f8067f0083750b976861d1a5d58cc87b7"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-adapter.ts",
+      "bytes": 32169,
+      "sha256": "bc563267722b06474af8ae717d6b7767031403a0f6507cf4d4a4d9d56232b5b1"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-annotation-editor.ts",
+      "bytes": 8819,
+      "sha256": "aeb76192cdca765f0e6aa95d0a351b74d17c9a19315228b4ebf75bb1c9fc8d0a"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native-document.ts",
+      "bytes": 13725,
+      "sha256": "35f296cf420d91d3427eafd6114a829927be9531d5a7605378cd77ec1dd2d91d"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native-fonts.ts",
+      "bytes": 2937,
+      "sha256": "b3d43f177b9d930df0749c521e5f09f8f204a30d837fc9f05bb6af54d1b97caa"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
+      "bytes": 40023,
+      "sha256": "9137fb6a7bc2871c00cded59cd0f1db1eeb0a48eccd938a1ae0f42652c781c2c"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-compose.ts",
+      "bytes": 39885,
+      "sha256": "8b1cfc139d0cfae8ab2acf71802c9f46f1e3d8a0f1e5ab529ddb06cbf3642f98"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-composition.ts",
+      "bytes": 9863,
+      "sha256": "cf4f4fe166ed1cab38516882532bb0c4649c9afb7329ee821fc5cb39b868573c"
+    },
+    {
+      "path": "docs/src/pages/components/OfficeStudioPage.tsx",
+      "bytes": 21388,
+      "sha256": "73f65510bf9430d0e1d4208d59886fadf2234eb9fc7dec811fc1e5c0a144f29a"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/api.ts",
+      "bytes": 9698,
+      "sha256": "25eb9723988b44e4ac29ed97253aa465385193c57309b68742b0c62fd38ff205"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/appearance-parser.ts",
+      "bytes": 11447,
+      "sha256": "bddce063ae3bc5cd76eeeaab0afbea63729470840d6956aa2266dbd52739ac2c"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/appearance.ts",
+      "bytes": 12631,
+      "sha256": "eeaf0761cf1f7b51f73ed2afe71172a859021d7bfe5f4cdf69f3b76cef205334"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/colors.ts",
+      "bytes": 3410,
+      "sha256": "808d65e8a688d730f9dd71c4b6be77d2e9e96a87f34d238c6f1cd6cd8fc66292"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/constants.ts",
+      "bytes": 1153,
+      "sha256": "cbcdec0f4494e86959fc7e7e8a63ad437bfa20e305338a2c44678f8aa468d2fb"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/export.ts",
+      "bytes": 9981,
+      "sha256": "690a2775d0b6ad164e487b8f90b09b730870c0fe27026b9efe2d8c0c4749c70e"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/font-reader.ts",
+      "bytes": 5326,
+      "sha256": "78925a224189d63182f66ca1feccfbaa8e53546202ce1ca87628a2664d5756b7"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/fonts.ts",
+      "bytes": 5648,
+      "sha256": "1657c54574227f2e51c5e44d9023a1619292fed0bbec24ff2dd74190587faeb1"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/geometry.ts",
+      "bytes": 4075,
+      "sha256": "6404a8d473b0f8dfe7e33d55b7947dcc0d463e223a29d014b8ffdbdfda3668fd"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/host-fonts.ts",
+      "bytes": 2112,
+      "sha256": "458a229094bdfc3297c215495155a387aff38004c185189cb4548d853416a732"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/index.ts",
+      "bytes": 236,
+      "sha256": "3f00b56997d63bf5add1c03ee52c6bc05897a540fde4f0400c998ae0f7253a23"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/mapping.ts",
+      "bytes": 15438,
+      "sha256": "0281e1d06ab42bbb06e8c8a8916c9587549e98ed6cdae2727f175fbfa5a39233"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/model-edit.ts",
+      "bytes": 15198,
+      "sha256": "02399f9ce71453b688ca40b6b1075231659e5ba0a31e862287a2bd4c135e2dfc"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/objects.ts",
+      "bytes": 9787,
+      "sha256": "837230f3b4aecd71b3c8ee4ea87825ce050f8e8a390a908853cd7af1f9c3c2ed"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/parser-types.ts",
+      "bytes": 561,
+      "sha256": "cdd4768ea124a71fd477da0ef748321bb8cb4f4c285dea6cbc73a8195f21f26f"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/public-model.ts",
+      "bytes": 16486,
+      "sha256": "89eb01e11b6228461d8638d3fb280b581cca7639162f7da438629ee55828c414"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/public-types.ts",
+      "bytes": 108,
+      "sha256": "3251160ae2c78b16e88d874b8c358b823233fff83408224bd6c2aeabedede5c1"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/read.ts",
+      "bytes": 17669,
+      "sha256": "b406c14bf31645e6d22228d07111f41cbbd0ef9dcdc46b3a60f5c2853e0076aa"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/runtime.ts",
+      "bytes": 853,
+      "sha256": "df9ddee50100c18eb8b44f4e8b032c324d3814fe417f6edd0a5a1e952dd5b580"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/types.ts",
+      "bytes": 5802,
+      "sha256": "4d87fadf76ad780561e8f8f3a1ceb145525ea74b96181f450547cc467f4e341b"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/workspace-composition.ts",
+      "bytes": 2593,
+      "sha256": "643490ea1c17b9ad244d7e76966a94f73bcf6e29557f98ca9f3f53a7dcaf205b"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/workspace-identities.ts",
+      "bytes": 3590,
+      "sha256": "a41a4b8c6bb8e7fdc5df3939ba894a5ce0b7a4f6af3c9f36ecdf07e70919cee5"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/workspace-model.ts",
+      "bytes": 9916,
+      "sha256": "74bee0b9726d6095d8d686e6a696e50e9180c488cf3174c307b7881aa359308b"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/workspace-types.ts",
+      "bytes": 118,
+      "sha256": "e2e3216cc1b7cf237aefb4594406afbd82c9fe32dfc49dbda29c75cadf4aca8c"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/workspace.ts",
+      "bytes": 8509,
+      "sha256": "3997e649a57bc2bd2cdeb65893c5e46954c5bcdfcc713c252093a8e574395c12"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/write.ts",
+      "bytes": 5891,
+      "sha256": "79b2c204d58f5781bf4311b78417712806185d6d1995d2f33767cba5eb734a21"
+    }
+  ],
+  "files": [
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/generate-manifest.mjs",
+      "bytes": 2435,
+      "sha256": "8cba053e876642b904080525da163982288f54b7dced3ebaab531e8eae8fca31"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/README.md",
+      "bytes": 4705,
+      "sha256": "bf8c49b6296016e0b0804228bd08b1cbc02fc45dd17fa14b8111c70fbbe31dd3"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/validation/browser-build.txt",
+      "bytes": 511,
+      "sha256": "900d8a368b0b61cf1822180b2be361d4ff514ade94c2ada07ea8c399af28b0c0"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/validation/bundle-size.txt",
+      "bytes": 669,
+      "sha256": "b638543fa44c1c2d1bf0b45fd08eaa9e3207fa8ab0b0b519c5e048b8d51d09d4"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/validation/codec-and-compose.txt",
+      "bytes": 31112,
+      "sha256": "a7e254018047eef3d0c7756ae2cf732db997b1ca09c9ae7fdda225dbd22a7b7c"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/validation/current-pdf-ui.txt",
+      "bytes": 1096,
+      "sha256": "2eff9903af8aa33362a09ebb4e84a851e83c4f7265847f170c0ee44e3c1bc009"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/validation/first-current-ui-lint.txt",
+      "bytes": 281,
+      "sha256": "3eefb1eefc3d78e84b2cf8a78dcc38cb67cb508b9f9442955c2da7eae0dd6289"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/validation/first-current-ui-types.txt",
+      "bytes": 4940,
+      "sha256": "d290dad2ec9f97b81f1e5d5e3404d923e5254178e8ecfd75ff4e9373d659664f"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/validation/first-native-model-types.txt",
+      "bytes": 663,
+      "sha256": "4e473193344b976d9e3581abd8030e5b7539e5b1d7a3fe0192bc8a011d9fc078"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/validation/first-native-ui.txt",
+      "bytes": 18419,
+      "sha256": "4c2e73e8e8e31a12b438c8242d1f6d7aeda3b377d26f2f3b769f3cf082aa9e1e"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/validation/first-preview-and-transaction-ui.test.tsx.txt",
+      "bytes": 29780,
+      "sha256": "40e6d033b27d7da1f211f80901a43d5b669359f6ac236fa6c8cd6e414d4c5b2d"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/validation/first-StudioPdf.tsx.txt",
+      "bytes": 121046,
+      "sha256": "a60019a30f5fd21854fa58a1f674918b831f27ce11c4ee47e3ef954006c82ccf"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/validation/first-StudioPdfAnnotationDialog.tsx.txt",
+      "bytes": 12974,
+      "sha256": "c5b4d87678758380a8c9614d3c6a77a5882abc9349857b9f30d8f693270b469c"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/validation/first-StudioPdfNativeLayer.tsx.txt",
+      "bytes": 11847,
+      "sha256": "0e1f52a421128f62b2932733612ebb9c9dc8d76f57579eb62d2107717ea0ca10"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/validation/native-model-and-pages.txt",
+      "bytes": 527,
+      "sha256": "8ac595fac5d941c9a2526b67710b362abda88a3f106fae0624b4512ce7901dba"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/validation/native-ui-and-legacy.txt",
+      "bytes": 1213,
+      "sha256": "bd48ce87094015208ca52a19183518cc0dda1863f3a7b6396b0551b8c9976aa3"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/validation/native-ui.txt",
+      "bytes": 3539,
+      "sha256": "0ad73d9d3ab7ddedb5ca6ade47d46090441bcb22f742967648e307cc4c66e54c"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/validation/preview-and-transaction-ui-second.txt",
+      "bytes": 1066,
+      "sha256": "5ad592d10056e131e2af9819079dfcc093eff1dc03e9e2af2a5605cd2177d366"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/validation/preview-and-transaction-ui.txt",
+      "bytes": 75917,
+      "sha256": "f31939bc2fc0f14619c9010da8340909c70619fa7ef1d77aa3f3e115e2596936"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/validation/second-native-ui.test.tsx.txt",
+      "bytes": 23133,
+      "sha256": "46d8664d253015d2f0ff7a7656d7248f99674bae430c430acce7054d395a2f9c"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/validation/second-native-ui.txt",
+      "bytes": 1007477,
+      "sha256": "ea230b4ff24256b1473a711fb36b3ddf94766cd15530759ea6a685f4f3263eb9"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/validation/third-native-ui.txt",
+      "bytes": 33381,
+      "sha256": "724274d5c2ccb7679f46cef991fbeaa64f87f78a7dca421bf56adffdc3375aa4"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/validation/ui-build.txt",
+      "bytes": 2717,
+      "sha256": "6807a617605efa03d7e7b4c6dd797f0414af6cf83f1449793b023d4b445c79f8"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/validation/ui-lint-source.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/validation/ui-types-source.txt",
+      "bytes": 148,
+      "sha256": "68ec6d80c2b25b081d386c6e6a0dc0ed1f04d85de012b574555495bfb768041b"
+    }
+  ]
+}

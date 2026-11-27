@@ -1,0 +1,42 @@
+
+> @zuvi/react@1.1.0 build /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+> vite build
+
+vite v6.4.5 building for production...
+transforming...
+✓ 535 modules transformed.
+rendering chunks...
+
+[vite:dts] Start generate declaration files...
+computing gzip size...
+dist/style.css                      433.42 kB │ gzip:  56.12 kB
+dist/Type-BeBmUqvf.js                 0.29 kB │ gzip:   0.24 kB │ map:     1.28 kB
+dist/ZoomOut-CratYfQt.js              0.49 kB │ gzip:   0.28 kB │ map:     2.86 kB
+dist/index.js                         3.91 kB │ gzip:   1.75 kB │ map:     0.09 kB
+dist/StudioFontControl-DRQ1CEuC.js    3.95 kB │ gzip:   1.89 kB │ map:    28.28 kB
+dist/DataGridView-BQP2AbTR.js        16.93 kB │ gzip:   5.78 kB │ map:   134.34 kB
+dist/ChartView-C61LQUXS.js           56.90 kB │ gzip:  17.76 kB │ map:   438.29 kB
+dist/GlobeScene-CFi325zq.js         104.98 kB │ gzip:  39.40 kB │ map:   614.44 kB
+dist/StudioPdf-DQwi1Ic5.js          121.79 kB │ gzip:  37.06 kB │ map:   809.02 kB
+dist/StudioSheet-DpPg3hCp.js        250.25 kB │ gzip:  78.09 kB │ map: 1,759.52 kB
+dist/StudioWord-DR6KlwkD.js         319.86 kB │ gzip:  91.66 kB │ map: 2,266.31 kB
+dist/index-Dfwfv4f2.js              420.25 kB │ gzip: 122.38 kB │ map: 3,016.54 kB
+dist/globe-renderer-Dqw1c-Ps.js     557.19 kB │ gzip: 135.07 kB │ map: 5,389.14 kB
+[vite:dts] Start rollup declaration files...
+Analysis will use the bundled TypeScript version 6.0.3
+[vite:dts] Declaration files built in 8738ms.
+
+dist/style.css                       433.42 kB │ gzip:  56.12 kB
+dist/Type-DoYYIXaT.cjs                 0.31 kB │ gzip:   0.25 kB │ map:     0.85 kB
+dist/ZoomOut-v9VGckQC.cjs              0.56 kB │ gzip:   0.29 kB │ map:     1.76 kB
+dist/StudioFontControl-BOJW8ciQ.cjs    4.37 kB │ gzip:   2.08 kB │ map:    14.87 kB
+dist/index.cjs                         5.08 kB │ gzip:   1.40 kB │ map:     0.09 kB
+dist/DataGridView-CGdWZ2fs.cjs        17.23 kB │ gzip:   6.14 kB │ map:    69.59 kB
+dist/ChartView-Bi6bhFDm.cjs           55.88 kB │ gzip:  18.60 kB │ map:   223.71 kB
+dist/GlobeScene-qU02auW_.cjs         104.63 kB │ gzip:  40.82 kB │ map:   279.84 kB
+dist/StudioPdf-WIiFV-h9.cjs          120.27 kB │ gzip:  37.97 kB │ map:   412.09 kB
+dist/StudioSheet-DWGcHAz_.cjs        247.96 kB │ gzip:  80.83 kB │ map:   909.19 kB
+dist/StudioWord-Duxb8gf0.cjs         317.25 kB │ gzip:  94.90 kB │ map: 1,083.06 kB
+dist/index-DrsAJfhy.cjs              416.22 kB │ gzip: 129.54 kB │ map: 1,562.57 kB
+dist/globe-renderer-BFasVJmO.cjs     549.96 kB │ gzip: 138.63 kB │ map: 2,919.05 kB
+✓ built in 18.34s

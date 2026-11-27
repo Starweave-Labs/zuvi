@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "status": "verified-persistent-copy-of-accepted-original-baseline",
+  "createdAt": "2026-11-27T01:43:05.535181+00:00",
+  "cue": "root-workspace-persistent-snapshot-2026-11-27",
+  "snapshotPath": ".release/audit-backups/word-sheet-pdf-20261127",
+  "baselineManifest": {
+    "bytes": 1034350,
+    "sha256": "2d7a91b50c98614d3be0b91c3e8f2266cd1ab6c6cde161940c12f0a9ea850b8c"
+  },
+  "source": "Restored live originals, each matching the accepted original baseline; the missing temporary backup was not used.",
+  "verification": {
+    "verifiedBaselineFiles": 3485,
+    "baselineBytes": 634240868,
+    "ignoredGzipFiles": 95,
+    "missingLiveIgnoredFilesVerifiedFromArchive": []
+  },
+  "note": "The original baseline and snapshot receipt remain unchanged. This persistent directory is ignored by Git and is only a local restore source."
+}

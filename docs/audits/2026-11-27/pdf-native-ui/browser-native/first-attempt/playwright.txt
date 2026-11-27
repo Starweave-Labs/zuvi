@@ -1,0 +1,40 @@
+[WebServer] (node:43354) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:43379) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:322:1 › P014 saves four text markers from actual original-text selections with exact native quads, alpha, removal and undo (3.0m)
+
+
+  1) [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:322:1 › P014 saves four text markers from actual original-text selections with exact native quads, alpha, removal and undo 
+
+    Test timeout of 180000ms exceeded.
+
+    Error: locator.click: Test timeout of 180000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: '高亮', exact: true })
+
+
+      334 |     expect(selected.trim().length).toBeGreaterThan(2);
+      335 |     await page.getByRole('button', { name: labels[tool], exact: true }).click();
+    > 336 |     const applySelection = page.getByRole('button', { name: '应用到所选文字', exact: true });
+          |                                                                         ^
+      337 |     await expect(applySelection).toBeEnabled(); await applySelection.click();
+      338 |     await expect.poll(async () => (await nativeIds(page)).length).toBe(previous.length + 1); await waitReady(page);
+      339 |     const id = (await nativeIds(page)).find(id => !previous.includes(id))!; ids.push(id); selections.push({ id, text: selected });
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-native-annotations.spec.ts:336:73
+
+    Error Context: ../../../../../../tmp/zuvi-pdf-native-ui-first-results/office-studio-pdf-native-a-de44e-uads-alpha-removal-and-undo-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../tmp/zuvi-pdf-native-ui-first-results/office-studio-pdf-native-a-de44e-uads-alpha-removal-and-undo-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../../../tmp/zuvi-pdf-native-ui-first-results/office-studio-pdf-native-a-de44e-uads-alpha-removal-and-undo-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:322:1 › P014 saves four text markers from actual original-text selections with exact native quads, alpha, removal and undo 

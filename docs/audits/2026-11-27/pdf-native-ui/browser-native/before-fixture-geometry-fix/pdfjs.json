@@ -1,0 +1,201 @@
+{
+  "status": "rendered-awaiting-visual",
+  "results": [
+    {
+      "pdf": "p012-freetext-round-1.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-p012-freetext-round-1-page-1.png",
+      "version": "6.5.438",
+      "freeTextBodies": [
+        {
+          "id": "22R",
+          "contents": "中文原生批注\n第二行可编辑",
+          "glyphText": "中文原生批注第二行可编辑",
+          "paintCount": 1
+        }
+      ]
+    },
+    {
+      "pdf": "p012-freetext-round-2.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-p012-freetext-round-2-page-1.png",
+      "version": "6.5.438",
+      "freeTextBodies": [
+        {
+          "id": "22R",
+          "contents": "中文原生批注\n第二行可编辑",
+          "glyphText": "中文原生批注第二行可编辑",
+          "paintCount": 1
+        }
+      ]
+    },
+    {
+      "pdf": "p014-markers-round-1.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-p014-markers-round-1-page-1.png",
+      "version": "6.5.438",
+      "freeTextBodies": []
+    },
+    {
+      "pdf": "p014-markers-round-2.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-p014-markers-round-2-page-1.png",
+      "version": "6.5.438",
+      "freeTextBodies": []
+    },
+    {
+      "pdf": "p016-geometry-round-1.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-p016-geometry-round-1-page-1.png",
+      "version": "6.5.438",
+      "freeTextBodies": []
+    },
+    {
+      "pdf": "p016-geometry-round-2.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-p016-geometry-round-2-page-1.png",
+      "version": "6.5.438",
+      "freeTextBodies": []
+    },
+    {
+      "pdf": "gesture-history-round-1.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-gesture-history-round-1-page-1.png",
+      "version": "6.5.438",
+      "freeTextBodies": [
+        {
+          "id": "22R",
+          "contents": "中文自由文本：原生迁入后保留",
+          "glyphText": "中文自由文本：原生迁入后保留",
+          "paintCount": 1
+        }
+      ]
+    },
+    {
+      "pdf": "gesture-history-round-2.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-gesture-history-round-2-page-1.png",
+      "version": "6.5.438",
+      "freeTextBodies": [
+        {
+          "id": "22R",
+          "contents": "中文自由文本：原生迁入后保留",
+          "glyphText": "中文自由文本：原生迁入后保留",
+          "paintCount": 1
+        }
+      ]
+    },
+    {
+      "pdf": "p015-discussion-round-1.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-p015-discussion-round-1-page-1.png",
+      "version": "6.5.438",
+      "freeTextBodies": [
+        {
+          "id": "22R",
+          "contents": "中文自由文本：原生迁入后保留",
+          "glyphText": "中文自由文本：原生迁入后保留",
+          "paintCount": 1
+        }
+      ]
+    },
+    {
+      "pdf": "p015-discussion-round-2.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-p015-discussion-round-2-page-1.png",
+      "version": "6.5.438",
+      "freeTextBodies": [
+        {
+          "id": "22R",
+          "contents": "中文自由文本：原生迁入后保留",
+          "glyphText": "中文自由文本：原生迁入后保留",
+          "paintCount": 1
+        }
+      ]
+    },
+    {
+      "pdf": "legacy-migration-round-1.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-legacy-migration-round-1-page-1.png",
+      "version": "6.5.438",
+      "freeTextBodies": [
+        {
+          "id": "22R",
+          "contents": "旧中文批注继续编辑",
+          "glyphText": "旧中文批注继续编辑",
+          "paintCount": 1
+        }
+      ]
+    },
+    {
+      "pdf": "legacy-migration-round-2.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-legacy-migration-round-2-page-1.png",
+      "version": "6.5.438",
+      "freeTextBodies": [
+        {
+          "id": "22R",
+          "contents": "旧中文批注继续编辑",
+          "glyphText": "旧中文批注继续编辑",
+          "paintCount": 1
+        }
+      ]
+    },
+    {
+      "pdf": "nonempty-recipe-round-1.pdf",
+      "page": 2,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-nonempty-recipe-round-1-page-2.png",
+      "version": "6.5.438",
+      "freeTextBodies": [
+        {
+          "id": "31R",
+          "contents": "复制记录有独立中文",
+          "glyphText": "复制记录有独立中文",
+          "paintCount": 1
+        }
+      ]
+    },
+    {
+      "pdf": "nonempty-recipe-round-1.pdf",
+      "page": 3,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-nonempty-recipe-round-1-page-3.png",
+      "version": "6.5.438",
+      "freeTextBodies": [
+        {
+          "id": "22R",
+          "contents": "未保存记录原生中文",
+          "glyphText": "未保存记录原生中文",
+          "paintCount": 1
+        }
+      ]
+    },
+    {
+      "pdf": "nonempty-recipe-round-2.pdf",
+      "page": 2,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-nonempty-recipe-round-2-page-2.png",
+      "version": "6.5.438",
+      "freeTextBodies": [
+        {
+          "id": "31R",
+          "contents": "复制记录有独立中文",
+          "glyphText": "复制记录有独立中文",
+          "paintCount": 1
+        }
+      ]
+    },
+    {
+      "pdf": "nonempty-recipe-round-2.pdf",
+      "page": 3,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-nonempty-recipe-round-2-page-3.png",
+      "version": "6.5.438",
+      "freeTextBodies": [
+        {
+          "id": "22R",
+          "contents": "未保存记录原生中文",
+          "glyphText": "未保存记录原生中文",
+          "paintCount": 1
+        }
+      ]
+    }
+  ]
+}

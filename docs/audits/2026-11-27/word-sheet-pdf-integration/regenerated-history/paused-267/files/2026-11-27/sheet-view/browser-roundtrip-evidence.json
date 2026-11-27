@@ -1,0 +1,52 @@
+{
+  "source": {
+    "file": "view-source.xlsx",
+    "sha256": "87f67660bb2b6ce1f60a689f64a7459ab9b7fea0194a6cd597ef5d40de03d324"
+  },
+  "initial": {
+    "width": 117,
+    "height": 20,
+    "left": 322,
+    "top": 680.171875,
+    "textWidth": 117,
+    "lines": [
+      {
+        "text": "1",
+        "x": 100.84375,
+        "y": 2.13336181640625,
+        "width": 8.15625,
+        "height": 16.859375
+      }
+    ]
+  },
+  "merged": {
+    "width": 1404,
+    "height": 152,
+    "left": -14,
+    "top": 948.171875,
+    "textWidth": 1404,
+    "lines": [
+      {
+        "text": "VISIBLE_MERGE",
+        "x": 20,
+        "y": 0.79998779296875,
+        "width": 1024.375,
+        "height": 147.18756103515625
+      }
+    ]
+  },
+  "rounds": [
+    {
+      "file": "view-roundtrip-1.xlsx",
+      "sha256": "96dcc40a6c3ad34ec295f72424695b2a43e5f5ca702cffb7d30be6805333b2a1",
+      "primary": "<sheetView workbookViewId=\"0\" zoomScale=\"400\" zoomScaleNormal=\"175\" showGridLines=\"0\" showRowColHeaders=\"0\" showZeros=\"false\" showOutlineSymbols=\"0\" topLeftCell=\"D9\"><pane state=\"frozen\" xSplit=\"1\" ySplit=\"1\" topLeftCell=\"F8\" activePane=\"bottomRight\"/><selection pane=\"topLeft\" activeCell=\"A1\" sqref=\"A1\"/><selection pane=\"bottomRight\" activeCell=\"G9\" sqref=\"G9:H10\"/></sheetView>",
+      "secondary": "<sheetView workbookViewId=\"1\" zoomScale=\"300\" zoomScaleNormal=\"120\" showGridLines=\"1\" showRowColHeaders=\"false\" showZeros=\"0\" topLeftCell=\"K15\"><pane state=\"split\" xSplit=\"120\" ySplit=\"240\" topLeftCell=\"K15\" activePane=\"bottomRight\"/><selection pane=\"bottomRight\" activeCell=\"K15\" sqref=\"K15:L16\"/></sheetView>"
+    },
+    {
+      "file": "view-roundtrip-2.xlsx",
+      "sha256": "34380f699e0fb48d4530decac06a5211cc03cff8ee6ca1ba582d0cacfc90339c",
+      "primary": "<sheetView workbookViewId=\"0\" zoomScale=\"400\" zoomScaleNormal=\"175\" showGridLines=\"0\" showRowColHeaders=\"0\" showZeros=\"false\" showOutlineSymbols=\"0\" topLeftCell=\"D9\"><pane state=\"frozen\" xSplit=\"1\" ySplit=\"1\" topLeftCell=\"F8\" activePane=\"bottomRight\"/><selection pane=\"topLeft\" activeCell=\"A1\" sqref=\"A1\"/><selection pane=\"bottomRight\" activeCell=\"G9\" sqref=\"G9:H10\"/></sheetView>",
+      "secondary": "<sheetView workbookViewId=\"1\" zoomScale=\"300\" zoomScaleNormal=\"120\" showGridLines=\"1\" showRowColHeaders=\"false\" showZeros=\"0\" topLeftCell=\"K15\"><pane state=\"split\" xSplit=\"120\" ySplit=\"240\" topLeftCell=\"K15\" activePane=\"bottomRight\"/><selection pane=\"bottomRight\" activeCell=\"K15\" sqref=\"K15:L16\"/></sheetView>"
+    }
+  ]
+}

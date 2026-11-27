@@ -1,0 +1,893 @@
+{
+  "ledger": {
+    "path": "docs/onlyoffice-feature-ledger-2026-11-13.json",
+    "sha256": "f65854ef3bda435f33d29881b32e358eeaaeb85ef2e0a899f6a7a14c949f3f23"
+  },
+  "rows": [
+    {
+      "id": "P012",
+      "feature": "新增自由文本",
+      "acceptance": "文本格式、位置大小、原生注释保存",
+      "status": "verified-current-slice",
+      "dimensions": [
+        {
+          "name": "操作前后数据及格式",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P012 creates and formats CJK FreeText with transactional history, IME drafts, native AP and two reopens",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 313
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "explicit native none colors and border colors survive two PDF reopens and later opacity or line-width edits",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 715
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "真实新增中文 FreeText、内容、对齐、字号、文字颜色、位置尺寸与透明度；显式无边框色二轮不复活。"
+        },
+        {
+          "name": "选区、焦点、IME和取消",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P012 creates and formats CJK FreeText with transactional history, IME drafts, native AP and two reopens",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 313
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P012/P016 moving and resizing show ghosts, cancel without history and accept one undoable pointer transaction",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 481
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "内容 DOM composition 阻止接受；非法宽度保留草稿，Escape 恢复；拖动 ghost 取消无历史。"
+        },
+        {
+          "name": "一次撤销、重做",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P012 creates and formats CJK FreeText with transactional history, IME drafts, native AP and two reopens",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 313
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P012/P016 moving and resizing show ghosts, cancel without history and accept one undoable pointer transaction",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 481
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "legacy four-kind persisted documents migrate through the actual entry once and undo restores the original pair",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 580
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "单次属性接受及 pointerup 单次事务；Undo/Redo 恢复真实 Doc/Blob。"
+        },
+        {
+          "name": "只读和禁用命令",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "native read-only/locked commands and cancelling a pending CJK font preparation preserve source and history",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 637
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "real-UI-disabled-prop",
+              "result": "passed",
+              "sources": [
+                {
+                  "path": "packages/ui/src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx",
+                  "line": 451
+                },
+                {
+                  "path": "packages/ui/src/components/OfficeStudio/StudioPdfNativeLayer.test.tsx",
+                  "line": 170
+                }
+              ],
+              "logs": [
+                "docs/audits/2026-11-27/pdf-native-ui/validation/free-text-border-label-ui.txt",
+                "docs/audits/2026-11-27/pdf-native-ui/validation/current-pdf-ui.txt"
+              ],
+              "boundary": "Actual browser tests source locks/read-only and busy-disabled commands; explicit disabled prop is checked in real UI component tests."
+            }
+          ],
+          "conclusion": "只读/原生锁/异步字体准备中所有写入口被阻断，取消无接受；显式 disabled prop 另有 UI 回归。"
+        },
+        {
+          "name": "原生文件保存重开",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P012 creates and formats CJK FreeText with transactional history, IME drafts, native AP and two reopens",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 313
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "two-native-PDF-reopens-and-independent-read",
+              "result": "passed",
+              "files": [
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/p012-freetext-round-1.pdf",
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/p012-freetext-round-2.pdf"
+              ],
+              "parsed": "docs/audits/2026-11-27/pdf-native-ui/browser-native/independent-pypdf.json",
+              "poppler": "docs/audits/2026-11-27/pdf-native-ui/browser-native/poppler.json",
+              "pdfjs": "docs/audits/2026-11-27/pdf-native-ui/browser-native/pdfjs.json"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "explicit native none colors and border colors survive two PDF reopens and later opacity or line-width edits",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 715
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "two-native-PDF-reopens-and-independent-read",
+              "result": "passed",
+              "files": [
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/explicit-none-round-1.pdf",
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/explicit-none-round-2.pdf"
+              ],
+              "parsed": "docs/audits/2026-11-27/pdf-native-ui/browser-native/independent-pypdf.json",
+              "poppler": "docs/audits/2026-11-27/pdf-native-ui/browser-native/poppler.json",
+              "pdfjs": "docs/audits/2026-11-27/pdf-native-ui/browser-native/pdfjs.json"
+            }
+          ],
+          "conclusion": "两轮导出/导入重开，pypdf 原生 FreeText、AP、CJK、位置、透明度与原 Contents SHA；PDF.js paintCount=1。"
+        },
+        {
+          "name": "失败后原数据不变",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P012 creates and formats CJK FreeText with transactional history, IME drafts, native AP and two reopens",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 313
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "native read-only/locked commands and cancelling a pending CJK font preparation preserve source and history",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 637
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "IME 或无效数值不接受；Escape 及字体准备取消保持 Doc/source/history。"
+        }
+      ],
+      "themes": {
+        "light": "verified",
+        "dark": "verified",
+        "width320": "verified"
+      },
+      "themeEvidence": {
+        "test": {
+          "kind": "actual-OfficeStudio-browser",
+          "result": "passed",
+          "test": "all native families retain readable light/dark panes and 320px marker, discussion, line-end and polygon property layouts",
+          "source": {
+            "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+            "line": 684
+          },
+          "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+        },
+        "screenshots": [
+          "docs/audits/2026-11-27/pdf-native-ui/browser-native/p012-light.png",
+          "docs/audits/2026-11-27/pdf-native-ui/browser-native/p012-dark.png",
+          "docs/audits/2026-11-27/pdf-native-ui/browser-native/p012-dark-dialog-320.png"
+        ],
+        "visualReview": "docs/audits/2026-11-27/pdf-native-ui/browser-native/visual-review.json"
+      }
+    },
+    {
+      "id": "P014",
+      "feature": "高亮下划线删除线波浪线",
+      "acceptance": "文字QuadPoints、颜色透明度及移除",
+      "status": "verified-current-slice",
+      "dimensions": [
+        {
+          "name": "操作前后数据及格式",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P014 saves four text markers from actual original-text selections with exact native quads, alpha, removal and undo",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 368
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "explicit native none colors and border colors survive two PDF reopens and later opacity or line-width edits",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 715
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "四类 marker 从真实原文 mouse selection 建 QuadPoints，编辑颜色/透明度，移除及复原；显式 none 清色持久化。"
+        },
+        {
+          "name": "选区、焦点、IME和取消",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P014 saves four text markers from actual original-text selections with exact native quads, alpha, removal and undo",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 368
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P012 creates and formats CJK FreeText with transactional history, IME drafts, native AP and two reopens",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 313
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "“选择文字”可在已有 marker 下继续 mouse 选择、真实 clipboard 复制与重标；共享属性 IME/草稿取消另在 P012 及 UI 回归覆盖。"
+        },
+        {
+          "name": "一次撤销、重做",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P014 saves four text markers from actual original-text selections with exact native quads, alpha, removal and undo",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 368
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P012/P016 moving and resizing show ghosts, cancel without history and accept one undoable pointer transaction",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 481
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "文字标记专属用例实测删除后的单次 Undo 恢复原 native ID/AP；Redo 由共享完整 pair/history 浏览器及 UI 用例验证。"
+        },
+        {
+          "name": "只读和禁用命令",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "native read-only/locked commands and cancelling a pending CJK font preparation preserve source and history",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 637
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "real-UI-disabled-prop",
+              "result": "passed",
+              "sources": [
+                {
+                  "path": "packages/ui/src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx",
+                  "line": 451
+                },
+                {
+                  "path": "packages/ui/src/components/OfficeStudio/StudioPdfNativeLayer.test.tsx",
+                  "line": 170
+                }
+              ],
+              "logs": [
+                "docs/audits/2026-11-27/pdf-native-ui/validation/free-text-border-label-ui.txt",
+                "docs/audits/2026-11-27/pdf-native-ui/validation/current-pdf-ui.txt"
+              ],
+              "boundary": "Actual browser tests source locks/read-only and busy-disabled commands; explicit disabled prop is checked in real UI component tests."
+            }
+          ],
+          "conclusion": "只读/locked/busy-disabled 统一 host 能力守卫禁止 marker 写入，显式 disabled prop 有 UI 回归。"
+        },
+        {
+          "name": "原生文件保存重开",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P014 saves four text markers from actual original-text selections with exact native quads, alpha, removal and undo",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 368
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "two-native-PDF-reopens-and-independent-read",
+              "result": "passed",
+              "files": [
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/p014-markers-round-1.pdf",
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/p014-markers-round-2.pdf"
+              ],
+              "parsed": "docs/audits/2026-11-27/pdf-native-ui/browser-native/independent-pypdf.json",
+              "poppler": "docs/audits/2026-11-27/pdf-native-ui/browser-native/poppler.json",
+              "pdfjs": "docs/audits/2026-11-27/pdf-native-ui/browser-native/pdfjs.json"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "explicit native none colors and border colors survive two PDF reopens and later opacity or line-width edits",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 715
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "two-native-PDF-reopens-and-independent-read",
+              "result": "passed",
+              "files": [
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/explicit-none-round-1.pdf",
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/explicit-none-round-2.pdf"
+              ],
+              "parsed": "docs/audits/2026-11-27/pdf-native-ui/browser-native/independent-pypdf.json",
+              "poppler": "docs/audits/2026-11-27/pdf-native-ui/browser-native/poppler.json",
+              "pdfjs": "docs/audits/2026-11-27/pdf-native-ui/browser-native/pdfjs.json"
+            }
+          ],
+          "conclusion": "两輪 PDF 原生四类 Subtype、完整 QuadPoints、颜色、CA、ID 与源 Contents SHA；清色后再调透明度不复活。"
+        },
+        {
+          "name": "失败后原数据不变",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P014 saves four text markers from actual original-text selections with exact native quads, alpha, removal and undo",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 368
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "native read-only/locked commands and cancelling a pending CJK font preparation preserve source and history",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 637
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "只读/取消保持原 PDF 字节；真实文本选择不会误触发 native drag 或添加历史。"
+        }
+      ],
+      "themes": {
+        "light": "verified",
+        "dark": "verified",
+        "width320": "verified"
+      },
+      "themeEvidence": {
+        "test": {
+          "kind": "actual-OfficeStudio-browser",
+          "result": "passed",
+          "test": "all native families retain readable light/dark panes and 320px marker, discussion, line-end and polygon property layouts",
+          "source": {
+            "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+            "line": 684
+          },
+          "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+        },
+        "screenshots": [
+          "docs/audits/2026-11-27/pdf-native-ui/browser-native/p014-four-markers.png",
+          "docs/audits/2026-11-27/pdf-native-ui/browser-native/all-native-types-dark.png",
+          "docs/audits/2026-11-27/pdf-native-ui/browser-native/marker-dark-properties-320.png"
+        ],
+        "visualReview": "docs/audits/2026-11-27/pdf-native-ui/browser-native/visual-review.json"
+      }
+    },
+    {
+      "id": "P015",
+      "feature": "便利贴与回复解决",
+      "acceptance": "原生批注读取、回复作者时间与状态",
+      "status": "verified-current-slice",
+      "dimensions": [
+        {
+          "name": "操作前后数据及格式",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P015 reads native notes, writes authored IRT replies and resolve/reopen state, and deletes replies/parents transactionally",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 519
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "原始跨页回复读取、新便签、署名/作者时间、回复、解决/重新打开、父及回复删除均为原生 IRT/R。"
+        },
+        {
+          "name": "选区、焦点、IME和取消",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P015 reads native notes, writes authored IRT replies and resolve/reopen state, and deletes replies/parents transactionally",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 519
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "回复 DOM composition 下 Enter 不发送，compositionend 后发送；Undo 清除选中后重选父仍显示真实回复。"
+        },
+        {
+          "name": "一次撤销、重做",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P015 reads native notes, writes authored IRT replies and resolve/reopen state, and deletes replies/parents transactionally",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 519
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P012/P016 moving and resizing show ghosts, cancel without history and accept one undoable pointer transaction",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 481
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "讨论专属用例实测父/回复删除后的单次 Undo 恢复完整旧 Doc/Blob 与 IRT 子树；Redo 由共享完整 pair/history 浏览器及 UI 用例验证。"
+        },
+        {
+          "name": "只读和禁用命令",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "native read-only/locked commands and cancelling a pending CJK font preparation preserve source and history",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 637
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "real-UI-disabled-prop",
+              "result": "passed",
+              "sources": [
+                {
+                  "path": "packages/ui/src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx",
+                  "line": 451
+                },
+                {
+                  "path": "packages/ui/src/components/OfficeStudio/StudioPdfNativeLayer.test.tsx",
+                  "line": 170
+                }
+              ],
+              "logs": [
+                "docs/audits/2026-11-27/pdf-native-ui/validation/free-text-border-label-ui.txt",
+                "docs/audits/2026-11-27/pdf-native-ui/validation/current-pdf-ui.txt"
+              ],
+              "boundary": "Actual browser tests source locks/read-only and busy-disabled commands; explicit disabled prop is checked in real UI component tests."
+            }
+          ],
+          "conclusion": "只读下允许查看和选择，删除/内容/回复禁用；source lock/busy-disabled 与显式 disabled 守卫。"
+        },
+        {
+          "name": "原生文件保存重开",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P015 reads native notes, writes authored IRT replies and resolve/reopen state, and deletes replies/parents transactionally",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 519
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "two-native-PDF-reopens-and-independent-read",
+              "result": "passed",
+              "files": [
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/p015-discussion-round-1.pdf",
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/p015-discussion-round-2.pdf"
+              ],
+              "parsed": "docs/audits/2026-11-27/pdf-native-ui/browser-native/independent-pypdf.json",
+              "poppler": "docs/audits/2026-11-27/pdf-native-ui/browser-native/poppler.json",
+              "pdfjs": "docs/audits/2026-11-27/pdf-native-ui/browser-native/pdfjs.json"
+            }
+          ],
+          "conclusion": "两輪保存重开核对 native Text、作者/time、IRT/RT/state；独立 pypdf 无悬空回复，源 AP/Contents 未被双绘。"
+        },
+        {
+          "name": "失败后原数据不变",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P015 reads native notes, writes authored IRT replies and resolve/reopen state, and deletes replies/parents transactionally",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 519
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "native read-only/locked commands and cancelling a pending CJK font preparation preserve source and history",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 637
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "IME Enter 与只读命令不改原 pair；删除的 Undo 恢复 source，未接受的准备取消不进历史。"
+        }
+      ],
+      "themes": {
+        "light": "verified",
+        "dark": "verified",
+        "width320": "verified"
+      },
+      "themeEvidence": {
+        "test": {
+          "kind": "actual-OfficeStudio-browser",
+          "result": "passed",
+          "test": "all native families retain readable light/dark panes and 320px marker, discussion, line-end and polygon property layouts",
+          "source": {
+            "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+            "line": 684
+          },
+          "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+        },
+        "screenshots": [
+          "docs/audits/2026-11-27/pdf-native-ui/browser-native/discussion-light.png",
+          "docs/audits/2026-11-27/pdf-native-ui/browser-native/all-native-types-dark.png",
+          "docs/audits/2026-11-27/pdf-native-ui/browser-native/discussion-dark-320.png"
+        ],
+        "visualReview": "docs/audits/2026-11-27/pdf-native-ui/browser-native/visual-review.json"
+      }
+    },
+    {
+      "id": "P016",
+      "feature": "墨迹矩形椭圆箭头多边形",
+      "acceptance": "几何拖动、线型填充、透明度与原生保存",
+      "status": "verified-current-slice",
+      "dimensions": [
+        {
+          "name": "操作前后数据及格式",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P016 creates native shapes, arrow, polyline and ink through real pointers and edits fill, dash, ends and vertices",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 426
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "真实 pointer 创建 Square/Circle/Line/arrow/Polygon/PolyLine/Ink，改填充、线宽、dash、LE、透明度与顶点。"
+        },
+        {
+          "name": "选区、焦点、IME和取消",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P016 creates native shapes, arrow, polyline and ink through real pointers and edits fill, dash, ends and vertices",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 426
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P012/P016 moving and resizing show ghosts, cancel without history and accept one undoable pointer transaction",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 481
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "几何拖动 ghost、Escape 取消；非法顶点保留草稿且不接受；键盘/resize 用实际当前对象。"
+        },
+        {
+          "name": "一次撤销、重做",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P012/P016 moving and resizing show ghosts, cancel without history and accept one undoable pointer transaction",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 481
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "pointerup 一次接受，Undo 恢复完整 old pair；重做、键盘移动和 resize 连续独立历史。"
+        },
+        {
+          "name": "只读和禁用命令",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "native read-only/locked commands and cancelling a pending CJK font preparation preserve source and history",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 637
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "real-UI-disabled-prop",
+              "result": "passed",
+              "sources": [
+                {
+                  "path": "packages/ui/src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx",
+                  "line": 451
+                },
+                {
+                  "path": "packages/ui/src/components/OfficeStudio/StudioPdfNativeLayer.test.tsx",
+                  "line": 170
+                }
+              ],
+              "logs": [
+                "docs/audits/2026-11-27/pdf-native-ui/validation/free-text-border-label-ui.txt",
+                "docs/audits/2026-11-27/pdf-native-ui/validation/current-pdf-ui.txt"
+              ],
+              "boundary": "Actual browser tests source locks/read-only and busy-disabled commands; explicit disabled prop is checked in real UI component tests."
+            }
+          ],
+          "conclusion": "原生 locks、只读、busy-disabled 与 explicit disabled 守卫拒绝 pointer/keyboard 和属性写入。"
+        },
+        {
+          "name": "原生文件保存重开",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P016 creates native shapes, arrow, polyline and ink through real pointers and edits fill, dash, ends and vertices",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 426
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "two-native-PDF-reopens-and-independent-read",
+              "result": "passed",
+              "files": [
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/p016-geometry-round-1.pdf",
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/p016-geometry-round-2.pdf"
+              ],
+              "parsed": "docs/audits/2026-11-27/pdf-native-ui/browser-native/independent-pypdf.json",
+              "poppler": "docs/audits/2026-11-27/pdf-native-ui/browser-native/poppler.json",
+              "pdfjs": "docs/audits/2026-11-27/pdf-native-ui/browser-native/pdfjs.json"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P012/P016 moving and resizing show ghosts, cancel without history and accept one undoable pointer transaction",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 481
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "two-native-PDF-reopens-and-independent-read",
+              "result": "passed",
+              "files": [
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/gesture-history-round-1.pdf",
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/gesture-history-round-2.pdf"
+              ],
+              "parsed": "docs/audits/2026-11-27/pdf-native-ui/browser-native/independent-pypdf.json",
+              "poppler": "docs/audits/2026-11-27/pdf-native-ui/browser-native/poppler.json",
+              "pdfjs": "docs/audits/2026-11-27/pdf-native-ui/browser-native/pdfjs.json"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "explicit native none colors and border colors survive two PDF reopens and later opacity or line-width edits",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 715
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "two-native-PDF-reopens-and-independent-read",
+              "result": "passed",
+              "files": [
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/explicit-none-round-1.pdf",
+                "docs/audits/2026-11-27/pdf-native-ui/browser-native/explicit-none-round-2.pdf"
+              ],
+              "parsed": "docs/audits/2026-11-27/pdf-native-ui/browser-native/independent-pypdf.json",
+              "poppler": "docs/audits/2026-11-27/pdf-native-ui/browser-native/poppler.json",
+              "pdfjs": "docs/audits/2026-11-27/pdf-native-ui/browser-native/pdfjs.json"
+            }
+          ],
+          "conclusion": "两轮核对 native几何/AP、Rect/Vertices/LE/InkList、透明度与源 Contents SHA；Square none 后再改 CA 不复活。"
+        },
+        {
+          "name": "失败后原数据不变",
+          "status": "verified",
+          "evidence": [
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P016 creates native shapes, arrow, polyline and ink through real pointers and edits fill, dash, ends and vertices",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 426
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "P012/P016 moving and resizing show ghosts, cancel without history and accept one undoable pointer transaction",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 481
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            },
+            {
+              "kind": "actual-OfficeStudio-browser",
+              "result": "passed",
+              "test": "native read-only/locked commands and cancelling a pending CJK font preparation preserve source and history",
+              "source": {
+                "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+                "line": 637
+              },
+              "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+            }
+          ],
+          "conclusion": "错误顶点草稿、Escape ghost 与字体准备取消均保持原数据/history；保护命令保持原source。"
+        }
+      ],
+      "themes": {
+        "light": "verified",
+        "dark": "verified",
+        "width320": "verified"
+      },
+      "themeEvidence": {
+        "test": {
+          "kind": "actual-OfficeStudio-browser",
+          "result": "passed",
+          "test": "all native families retain readable light/dark panes and 320px marker, discussion, line-end and polygon property layouts",
+          "source": {
+            "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+            "line": 684
+          },
+          "log": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt"
+        },
+        "screenshots": [
+          "docs/audits/2026-11-27/pdf-native-ui/browser-native/p016-geometry.png",
+          "docs/audits/2026-11-27/pdf-native-ui/browser-native/all-native-types-dark.png",
+          "docs/audits/2026-11-27/pdf-native-ui/browser-native/line-end-dark-properties-320.png",
+          "docs/audits/2026-11-27/pdf-native-ui/browser-native/polygon-dark-properties-320.png"
+        ],
+        "visualReview": "docs/audits/2026-11-27/pdf-native-ui/browser-native/visual-review.json"
+      }
+    }
+  ],
+  "notes": [
+    "10 actual OfficeStudio browser tests passed; native/codec/composition150 is separate evidence and is not counted as UI acceptance.",
+    "Browser uses original FontFace/canvas; standalone PDF.js disableFontFace path rendering is independent QA only.",
+    "Explicit disabled prop is covered in root UI tests; browser exercises read-only, busy-disabled commands and source locks.",
+    "IMEs apply to text/reply/property inputs; pointer-created geometry and QuadPoints are verified through real pointer/selection interactions.",
+    "P009-P011/P013 and the original159 final audit remain separate root-owned requirements."
+  ],
+  "updatedAt": "2026-11-27T00:10:21.684Z"
+}

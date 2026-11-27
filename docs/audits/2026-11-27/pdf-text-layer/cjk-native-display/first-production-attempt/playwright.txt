@@ -1,0 +1,54 @@
+[WebServer] (node:7242) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:7265) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+[WebServer] [BABEL] Note: The code generator has deoptimised the styling of /var/folders/9n/_523pt1s3gqg0f165zsdbldc0000gn/T/zuvi-office-e2e-vite-5273-7213/deps/react-dom_client.js?v=46bf1bda as it exceeds the max of 500KB.
+  ✘  1 [chromium] › e2e/office-studio-pdf-cjk-display.spec.ts:72:1 › renders CJK FreeText once in the actual fresh OfficeStudio without diagnostic CSS or changed font options (12.2s)
+  ✓  2 [chromium] › e2e/office-studio-pdf-text-layer.spec.ts:105:1 › uses real PDF.js text selections and one native appearance across crop, UserUnit, rotation and zoom (2.6s)
+  ✓  3 [chromium] › e2e/office-studio-pdf-text-layer.spec.ts:242:1 › selects and copies original PDF text in OfficeStudio, searches real pages and preserves source bytes in readonly mode (6.0s)
+  ✓  4 [chromium] › e2e/office-studio-pdf-text-layer.spec.ts:289:1 › uses real selected PDF glyph QuadPoints for four native text markups and survives history and two reopens (23.1s)
+  ✓  5 [chromium] › e2e/office-studio-pdf-text-layer.spec.ts:350:1 › blocks source copying and annotation selection while disabled and destroys actual browser layer sessions (2.0s)
+  ✓  6 [chromium] › e2e/office-studio-pdf-text-layer.spec.ts:385:1 › preserves another pending real PDF.js TextLayer while a renderer clears its global text caches (2.4s)
+
+
+  1) [chromium] › e2e/office-studio-pdf-cjk-display.spec.ts:72:1 › renders CJK FreeText once in the actual fresh OfficeStudio without diagnostic CSS or changed font options 
+
+    Error: expect(locator).toBeEnabled() failed
+
+    Locator:  getByLabel('PDF 批注署名', { exact: true })
+    Expected: enabled
+    Received: disabled
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeEnabled" getByLabel('PDF 批注署名', { exact: true }) with timeout 5000ms
+      - waiting for getByLabel('PDF 批注署名', { exact: true })
+        5 × locator resolved to <input disabled value="" maxlength="1000" data-part="input" aria-label="PDF 批注署名" class="zuvi-input-field"/>
+          - unexpected value "disabled"
+
+
+      83 |   await page.setViewportSize({ width: 1440, height: 1100 }); await page.goto('/#/components/office-studio');
+      84 |   await page.getByLabel('导入文档文件', { exact: true }).setInputFiles({ name: 'CJK-final.pdf', mimeType: 'application/pdf', buffer: bytes });
+    > 85 |   await expect(page.getByLabel('PDF 批注署名', { exact: true })).toBeEnabled();
+         |                                                              ^
+      86 |   await page.getByRole('button', { name: '全屏编辑', exact: true }).click();
+      87 |   const paper = page.locator('.zuvi-studio-pdf-paper'); await expect(paper.locator('.annotationLayer')).toHaveAttribute('data-ready', 'true');
+      88 |   const result = await paper.evaluate(async element => ({
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-cjk-display.spec.ts:85:62
+
+    Error Context: ../../../../../../tmp/zuvi-pdf-cjk-and-text-final-e2e/office-studio-pdf-cjk-disp-46c4f-CSS-or-changed-font-options-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../tmp/zuvi-pdf-cjk-and-text-final-e2e/office-studio-pdf-cjk-disp-46c4f-CSS-or-changed-font-options-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../../../tmp/zuvi-pdf-cjk-and-text-final-e2e/office-studio-pdf-cjk-disp-46c4f-CSS-or-changed-font-options-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/office-studio-pdf-cjk-display.spec.ts:72:1 › renders CJK FreeText once in the actual fresh OfficeStudio without diagnostic CSS or changed font options 
+  5 passed (56.8s)

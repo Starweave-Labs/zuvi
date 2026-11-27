@@ -1,0 +1,200 @@
+TAP version 13
+# Subtest: IndexedDB restores the real document JSON and Blob only after its commit, and rejects stale revisions
+ok 1 - IndexedDB restores the real document JSON and Blob only after its commit, and rejects stale revisions
+  ---
+  duration_ms: 8.57
+  ...
+# Subtest: concurrent IndexedDB writers cannot silently replace the same document revision
+ok 2 - concurrent IndexedDB writers cannot silently replace the same document revision
+  ---
+  duration_ms: 1.943041
+  ...
+# Subtest: IndexedDB preserves every supported conditional-format and validation shape across saves and database reopen
+ok 3 - IndexedDB preserves every supported conditional-format and validation shape across saves and database reopen
+  ---
+  duration_ms: 16.108917
+  ...
+# Subtest: IndexedDB history restores all Excel rules as a new workbook while keeping the latest rules and original bytes
+ok 4 - IndexedDB history restores all Excel rules as a new workbook while keeping the latest rules and original bytes
+  ---
+  duration_ms: 13.168542
+  ...
+# Subtest: unsupported persisted Excel rules reject atomically without replacing the current model or writing history
+ok 5 - unsupported persisted Excel rules reject atomically without replacing the current model or writing history
+  ---
+  duration_ms: 7.503834
+  ...
+# Subtest: save completion retains new input and the next save uses the committed revision
+ok 6 - save completion retains new input and the next save uses the committed revision
+  ---
+  duration_ms: 1.085667
+  ...
+# Subtest: switching waits for existing persistence and saves the next snapshot before replacing the canvas
+ok 7 - switching waits for existing persistence and saves the next snapshot before replacing the canvas
+  ---
+  duration_ms: 0.895042
+  ...
+# Subtest: storage failure keeps editing data and source exportable; retry persists the newest content
+ok 8 - storage failure keeps editing data and source exportable; retry persists the newest content
+  ---
+  duration_ms: 1.040959
+  ...
+# Subtest: explicit save copy resolves a cross-tab conflict without overwriting the other document
+ok 9 - explicit save copy resolves a cross-tab conflict without overwriting the other document
+  ---
+  duration_ms: 0.847459
+  ...
+# Subtest: saved files restore their latest active document and remain independent from the old officeDrafts database
+ok 10 - saved files restore their latest active document and remain independent from the old officeDrafts database
+  ---
+  duration_ms: 0.607209
+  ...
+# Subtest: failed restoration rejects initialization and a new start can recover the existing files
+ok 11 - failed restoration rejects initialization and a new start can recover the existing files
+  ---
+  duration_ms: 0.389042
+  ...
+# Subtest: input entered while the next document loads stays dirty in the current canvas
+ok 12 - input entered while the next document loads stays dirty in the current canvas
+  ---
+  duration_ms: 0.872541
+  ...
+# Subtest: input entered during the active preference transaction cancels the switch and restores the preference
+ok 13 - input entered during the active preference transaction cancels the switch and restores the preference
+  ---
+  duration_ms: 2.139334
+  ...
+# Subtest: concurrent file replacements reject without changing either canvas and release their lock afterward
+ok 14 - concurrent file replacements reject without changing either canvas and release their lock afterward
+  ---
+  duration_ms: 1.295167
+  ...
+# Subtest: an imported document remains exportable after its first commit fails and a retry leaves the old file intact
+ok 15 - an imported document remains exportable after its first commit fails and a retry leaves the old file intact
+  ---
+  duration_ms: 0.668792
+  ...
+# Subtest: history retains the twenty most recent committed models with their original bytes and ignores stale writers
+ok 16 - history retains the twenty most recent committed models with their original bytes and ignores stale writers
+  ---
+  duration_ms: 29.188208
+  ...
+# Subtest: version restoration creates a separate document while keeping the latest saved file and source intact
+ok 17 - version restoration creates a separate document while keeping the latest saved file and source intact
+  ---
+  duration_ms: 2.061333
+  ...
+# Subtest: new input while loading a historical version cancels restoration without replacing the current canvas
+ok 18 - new input while loading a historical version cancels restoration without replacing the current canvas
+  ---
+  duration_ms: 0.512334
+  ...
+# Subtest: upgrading the original database preserves existing files and starts an empty history
+ok 19 - upgrading the original database preserves existing files and starts an empty history
+  ---
+  duration_ms: 1.6985
+  ...
+# Subtest: a synchronously denied database open can be retried after permission changes
+ok 20 - a synchronously denied database open can be retried after permission changes
+  ---
+  duration_ms: 0.751791
+  ...
+# Subtest: a data clone failure aborts both history and current-file writes
+ok 21 - a data clone failure aborts both history and current-file writes
+  ---
+  duration_ms: 1.202083
+  ...
+# Subtest: the conflict-copy action respects the same document limit as new files and history restoration
+ok 22 - the conflict-copy action respects the same document limit as new files and history restoration
+  ---
+  duration_ms: 7.9215
+  ...
+# Subtest: workspace preparation visits only the active, selected, and newly added files before publishing them
+ok 23 - workspace preparation visits only the active, selected, and newly added files before publishing them
+  ---
+  duration_ms: 0.704583
+  ...
+# Subtest: new input during selected-file preparation cancels replacement and preserves its source and preference
+ok 24 - new input during selected-file preparation cancels replacement and preserves its source and preference
+  ---
+  duration_ms: 0.558125
+  ...
+# Subtest: new input during import preparation cancels the import before committing or replacing the old draft
+ok 25 - new input during import preparation cancels the import before committing or replacing the old draft
+  ---
+  duration_ms: 0.543958
+  ...
+# Subtest: failed initial preparation retains stored files and the active preference, then retries the same file
+ok 26 - failed initial preparation retains stored files and the active preference, then retries the same file
+  ---
+  duration_ms: 0.400625
+  ...
+# Subtest: preparation failures during selection, import, preview and restoration keep the old active file recoverable
+ok 27 - preparation failures during selection, import, preview and restoration keep the old active file recoverable
+  ---
+  duration_ms: 2.405625
+  ...
+# Subtest: prepared document id or kind mismatches reject selection, import and history without publishing invalid data
+ok 28 - prepared document id or kind mismatches reject selection, import and history without publishing invalid data
+  ---
+  duration_ms: 0.84175
+  ...
+# Subtest: IndexedDB history preview and restoration publish prepared links while preserving original versions and bytes
+ok 29 - IndexedDB history preview and restoration publish prepared links while preserving original versions and bytes
+  ---
+  duration_ms: 13.591084
+  ...
+# Subtest: new input while preparing a historical workbook cancels restoration and retains cleared links in the current draft
+ok 30 - new input while preparing a historical workbook cancels restoration and retains cleared links in the current draft
+  ---
+  duration_ms: 4.326125
+  ...
+# Subtest: a delayed history preview rejects after another file opens and cannot replace its active canvas or source
+ok 31 - a delayed history preview rejects after another file opens and cannot replace its active canvas or source
+  ---
+  duration_ms: 0.439958
+  ...
+# Subtest: file preparation keeps non-Excel documents and explicit native empty arrays by reference without loading a parser
+ok 32 - file preparation keeps non-Excel documents and explicit native empty arrays by reference without loading a parser
+  ---
+  duration_ms: 5.912833
+  ...
+# Subtest: file preparation hydrates a missing workbook default font, row mode or native view even when links and point heights are explicit
+ok 33 - file preparation hydrates a missing workbook default font, row mode or native view even when links and point heights are explicit
+  ---
+  duration_ms: 6.587083
+  ...
+# Subtest: file preparation marks missing links empty for CSV and source-free workbooks while preserving known sheets and the old model
+ok 34 - file preparation marks missing links empty for CSV and source-free workbooks while preserving known sheets and the old model
+  ---
+  duration_ms: 11.4555
+  ...
+# Subtest: file preparation dispatches source hydration by XLSX sheet identity and rejects known incompatible MIME types before decoding
+ok 35 - file preparation dispatches source hydration by XLSX sheet identity and rejects known incompatible MIME types before decoding
+  ---
+  duration_ms: 5.733292
+  ...
+# Subtest: a native source edit emits one complete snapshot and survives a save of the previous source in flight
+ok 36 - a native source edit emits one complete snapshot and survives a save of the previous source in flight
+  ---
+  duration_ms: 0.472541
+  ...
+# Subtest: rejects old source/document pairs and invalid native replacements without publishing an intermediate edit
+ok 37 - rejects old source/document pairs and invalid native replacements without publishing an intermediate edit
+  ---
+  duration_ms: 0.32975
+  ...
+# Subtest: IndexedDB refresh and version preview restore their paired native source rather than the newest file bytes
+ok 38 - IndexedDB refresh and version preview restore their paired native source rather than the newest file bytes
+  ---
+  duration_ms: 3.856333
+  ...
+1..38
+# tests 38
+# suites 0
+# pass 38
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 488.546375

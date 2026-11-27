@@ -1,0 +1,380 @@
+{
+  "schemaVersion": 1,
+  "status": "advisory-inventory-not-a-snapshot",
+  "createdAt": "2026-11-26T23:09:40.146779+00:00",
+  "excludes": [
+    "2026-11-27/word-sheet-pdf-integration/validation",
+    "2026-11-27/word-sheet-pdf-integration/regenerated-history",
+    "2026-11-27/word-sheet-pdf-integration/evidence-preservation"
+  ],
+  "topics": [
+    {
+      "topic": "word-basic-format",
+      "files": 83,
+      "bytes": 24110517,
+      "ignored": [],
+      "runtimeCacheObjects": []
+    },
+    {
+      "topic": "sheet-view",
+      "files": 149,
+      "bytes": 47952521,
+      "ignored": [
+        {
+          "path": "docs/audits/2026-11-27/sheet-view/browser-final/runner/run.log",
+          "bytes": 958,
+          "kind": "file",
+          "evidenceClass": "audit-evidence",
+          "ignoredByGit": true
+        },
+        {
+          "path": "docs/audits/2026-11-27/sheet-view/first-browser-failure/runner/run.log",
+          "bytes": 7671,
+          "kind": "file",
+          "evidenceClass": "audit-evidence",
+          "ignoredByGit": true
+        },
+        {
+          "path": "docs/audits/2026-11-27/sheet-view/focused/bundle-size.log",
+          "bytes": 669,
+          "kind": "file",
+          "evidenceClass": "audit-evidence",
+          "ignoredByGit": true
+        },
+        {
+          "path": "docs/audits/2026-11-27/sheet-view/focused/evidence-lint.log",
+          "bytes": 0,
+          "kind": "file",
+          "evidenceClass": "audit-evidence",
+          "ignoredByGit": true
+        },
+        {
+          "path": "docs/audits/2026-11-27/sheet-view/focused/lint.log",
+          "bytes": 0,
+          "kind": "file",
+          "evidenceClass": "audit-evidence",
+          "ignoredByGit": true
+        },
+        {
+          "path": "docs/audits/2026-11-27/sheet-view/focused/native-tests.log",
+          "bytes": 17411,
+          "kind": "file",
+          "evidenceClass": "audit-evidence",
+          "ignoredByGit": true
+        },
+        {
+          "path": "docs/audits/2026-11-27/sheet-view/focused/ui-tests.log",
+          "bytes": 2222,
+          "kind": "file",
+          "evidenceClass": "audit-evidence",
+          "ignoredByGit": true
+        },
+        {
+          "path": "docs/audits/2026-11-27/sheet-view/focused/ui-types-current-pdf-wip.log",
+          "bytes": 1273,
+          "kind": "file",
+          "evidenceClass": "audit-evidence",
+          "ignoredByGit": true
+        },
+        {
+          "path": "docs/audits/2026-11-27/sheet-view/focused/ui-types.log",
+          "bytes": 148,
+          "kind": "file",
+          "evidenceClass": "audit-evidence",
+          "ignoredByGit": true
+        },
+        {
+          "path": "docs/audits/2026-11-27/sheet-view/prototype-id-review/prototype-before.log",
+          "bytes": 3039,
+          "kind": "file",
+          "evidenceClass": "audit-evidence",
+          "ignoredByGit": true
+        },
+        {
+          "path": "docs/audits/2026-11-27/sheet-view/second-browser-failure/runner/run.log",
+          "bytes": 3076,
+          "kind": "file",
+          "evidenceClass": "audit-evidence",
+          "ignoredByGit": true
+        },
+        {
+          "path": "docs/audits/2026-11-27/sheet-view/third-browser-failure/runner/run.log",
+          "bytes": 2941,
+          "kind": "file",
+          "evidenceClass": "audit-evidence",
+          "ignoredByGit": true
+        }
+      ],
+      "runtimeCacheObjects": []
+    },
+    {
+      "topic": "pdf-native-ui",
+      "files": 169,
+      "bytes": 91277779,
+      "ignored": [],
+      "runtimeCacheObjects": []
+    },
+    {
+      "topic": "pdf-text-layer",
+      "files": 90,
+      "bytes": 22474923,
+      "ignored": [
+        {
+          "path": "docs/audits/2026-11-27/pdf-text-layer/verification-adapter-tests-lint.log",
+          "bytes": 0,
+          "kind": "file",
+          "evidenceClass": "audit-evidence",
+          "ignoredByGit": true
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-text-layer/verification-e2e.log",
+          "bytes": 1364,
+          "kind": "file",
+          "evidenceClass": "audit-evidence",
+          "ignoredByGit": true
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-text-layer/verification-independent.log",
+          "bytes": 109,
+          "kind": "file",
+          "evidenceClass": "audit-evidence",
+          "ignoredByGit": true
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-text-layer/verification-lint.log",
+          "bytes": 0,
+          "kind": "file",
+          "evidenceClass": "audit-evidence",
+          "ignoredByGit": true
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-text-layer/verification-source.log",
+          "bytes": 4146,
+          "kind": "file",
+          "evidenceClass": "audit-evidence",
+          "ignoredByGit": true
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-text-layer/verification-types.log",
+          "bytes": 31,
+          "kind": "file",
+          "evidenceClass": "audit-evidence",
+          "ignoredByGit": true
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-text-layer/verification-ui.log",
+          "bytes": 376,
+          "kind": "file",
+          "evidenceClass": "audit-evidence",
+          "ignoredByGit": true
+        }
+      ],
+      "runtimeCacheObjects": []
+    },
+    {
+      "topic": "pdf-native-annotations",
+      "files": 62,
+      "bytes": 20067632,
+      "ignored": [],
+      "runtimeCacheObjects": [
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/font-cache/6ea6834ba045e3f9593f0e9f59a454c7-le64.cache-10",
+          "bytes": 46,
+          "kind": "symlink",
+          "evidenceClass": "runtime-font-cache",
+          "symlinkTarget": "6ea6834ba045e3f9593f0e9f59a454c7-le64.cache-12",
+          "ignoredByGit": false
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/font-cache/6ea6834ba045e3f9593f0e9f59a454c7-le64.cache-11",
+          "bytes": 46,
+          "kind": "symlink",
+          "evidenceClass": "runtime-font-cache",
+          "symlinkTarget": "6ea6834ba045e3f9593f0e9f59a454c7-le64.cache-12",
+          "ignoredByGit": false
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/font-cache/6ea6834ba045e3f9593f0e9f59a454c7-le64.cache-12",
+          "bytes": 64664,
+          "kind": "file",
+          "evidenceClass": "runtime-font-cache",
+          "ignoredByGit": false
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/font-cache/6ea6834ba045e3f9593f0e9f59a454c7-le64.cache-9",
+          "bytes": 46,
+          "kind": "symlink",
+          "evidenceClass": "runtime-font-cache",
+          "symlinkTarget": "6ea6834ba045e3f9593f0e9f59a454c7-le64.cache-12",
+          "ignoredByGit": false
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/font-cache/974e686cde4cc20b082eea20cfe04ef3-le64.cache-10",
+          "bytes": 46,
+          "kind": "symlink",
+          "evidenceClass": "runtime-font-cache",
+          "symlinkTarget": "974e686cde4cc20b082eea20cfe04ef3-le64.cache-12",
+          "ignoredByGit": false
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/font-cache/974e686cde4cc20b082eea20cfe04ef3-le64.cache-11",
+          "bytes": 46,
+          "kind": "symlink",
+          "evidenceClass": "runtime-font-cache",
+          "symlinkTarget": "974e686cde4cc20b082eea20cfe04ef3-le64.cache-12",
+          "ignoredByGit": false
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/font-cache/974e686cde4cc20b082eea20cfe04ef3-le64.cache-12",
+          "bytes": 280536,
+          "kind": "file",
+          "evidenceClass": "runtime-font-cache",
+          "ignoredByGit": false
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/font-cache/974e686cde4cc20b082eea20cfe04ef3-le64.cache-9",
+          "bytes": 46,
+          "kind": "symlink",
+          "evidenceClass": "runtime-font-cache",
+          "symlinkTarget": "974e686cde4cc20b082eea20cfe04ef3-le64.cache-12",
+          "ignoredByGit": false
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/font-cache/CACHEDIR.TAG",
+          "bytes": 200,
+          "kind": "file",
+          "evidenceClass": "runtime-font-cache",
+          "ignoredByGit": false
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/font-cache/b0a71e6bf6a8a1a908413a823d76e21f-le64.cache-10",
+          "bytes": 46,
+          "kind": "symlink",
+          "evidenceClass": "runtime-font-cache",
+          "symlinkTarget": "b0a71e6bf6a8a1a908413a823d76e21f-le64.cache-12",
+          "ignoredByGit": false
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/font-cache/b0a71e6bf6a8a1a908413a823d76e21f-le64.cache-11",
+          "bytes": 46,
+          "kind": "symlink",
+          "evidenceClass": "runtime-font-cache",
+          "symlinkTarget": "b0a71e6bf6a8a1a908413a823d76e21f-le64.cache-12",
+          "ignoredByGit": false
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/font-cache/b0a71e6bf6a8a1a908413a823d76e21f-le64.cache-12",
+          "bytes": 4998392,
+          "kind": "file",
+          "evidenceClass": "runtime-font-cache",
+          "ignoredByGit": false
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/font-cache/b0a71e6bf6a8a1a908413a823d76e21f-le64.cache-9",
+          "bytes": 46,
+          "kind": "symlink",
+          "evidenceClass": "runtime-font-cache",
+          "symlinkTarget": "b0a71e6bf6a8a1a908413a823d76e21f-le64.cache-12",
+          "ignoredByGit": false
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/font-cache/c6cafe6b1a56ed8b739253d6df90ca6a-le64.cache-10",
+          "bytes": 46,
+          "kind": "symlink",
+          "evidenceClass": "runtime-font-cache",
+          "symlinkTarget": "c6cafe6b1a56ed8b739253d6df90ca6a-le64.cache-12",
+          "ignoredByGit": false
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/font-cache/c6cafe6b1a56ed8b739253d6df90ca6a-le64.cache-11",
+          "bytes": 46,
+          "kind": "symlink",
+          "evidenceClass": "runtime-font-cache",
+          "symlinkTarget": "c6cafe6b1a56ed8b739253d6df90ca6a-le64.cache-12",
+          "ignoredByGit": false
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/font-cache/c6cafe6b1a56ed8b739253d6df90ca6a-le64.cache-12",
+          "bytes": 1188152,
+          "kind": "file",
+          "evidenceClass": "runtime-font-cache",
+          "ignoredByGit": false
+        },
+        {
+          "path": "docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/font-cache/c6cafe6b1a56ed8b739253d6df90ca6a-le64.cache-9",
+          "bytes": 46,
+          "kind": "symlink",
+          "evidenceClass": "runtime-font-cache",
+          "symlinkTarget": "c6cafe6b1a56ed8b739253d6df90ca6a-le64.cache-12",
+          "ignoredByGit": false
+        }
+      ]
+    },
+    {
+      "topic": "static-entry-budget",
+      "files": 14,
+      "bytes": 97850,
+      "ignored": [
+        {
+          "path": "docs/audits/2026-11-27/static-entry-budget/browser-build.log",
+          "bytes": 511,
+          "kind": "file",
+          "evidenceClass": "audit-evidence",
+          "ignoredByGit": true
+        },
+        {
+          "path": "docs/audits/2026-11-27/static-entry-budget/bundle-size.log",
+          "bytes": 714,
+          "kind": "file",
+          "evidenceClass": "audit-evidence",
+          "ignoredByGit": true
+        },
+        {
+          "path": "docs/audits/2026-11-27/static-entry-budget/config-provider.log",
+          "bytes": 193,
+          "kind": "file",
+          "evidenceClass": "audit-evidence",
+          "ignoredByGit": true
+        },
+        {
+          "path": "docs/audits/2026-11-27/static-entry-budget/consumer.log",
+          "bytes": 2404,
+          "kind": "file",
+          "evidenceClass": "audit-evidence",
+          "ignoredByGit": true
+        },
+        {
+          "path": "docs/audits/2026-11-27/static-entry-budget/distribution.log",
+          "bytes": 507,
+          "kind": "file",
+          "evidenceClass": "audit-evidence",
+          "ignoredByGit": true
+        },
+        {
+          "path": "docs/audits/2026-11-27/static-entry-budget/lint.log",
+          "bytes": 170,
+          "kind": "file",
+          "evidenceClass": "audit-evidence",
+          "ignoredByGit": true
+        },
+        {
+          "path": "docs/audits/2026-11-27/static-entry-budget/locale-equivalence.log",
+          "bytes": 328,
+          "kind": "file",
+          "evidenceClass": "audit-evidence",
+          "ignoredByGit": true
+        },
+        {
+          "path": "docs/audits/2026-11-27/static-entry-budget/ui-build.log",
+          "bytes": 2717,
+          "kind": "file",
+          "evidenceClass": "audit-evidence",
+          "ignoredByGit": true
+        }
+      ],
+      "runtimeCacheObjects": []
+    }
+  ],
+  "ignoredTopicFiles": 27,
+  "ignoredTopicBytes": 52978
+}

@@ -1,0 +1,76 @@
+{
+  "status": "passed",
+  "files": [
+    {
+      "file": "original.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/original-page-1.png",
+      "pdfSha256": "78eb0a7b35b23c633d9e1f07b6beb58a572448254c408fe671ff12ac794bee4e",
+      "pngSha256": "71e9d2fd757a5e2bd6d408bd659f4b33f8fb76a1da3d6419f9719dc707cea738"
+    },
+    {
+      "file": "legacy-migrated.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/legacy-migrated-page-1.png",
+      "pdfSha256": "4833d7ffc34f9f98b64b1f086663aa4607e9f8093dc885a03aeafa13df0c6214",
+      "pngSha256": "87793f65ed4bba96c63950f40b8272d14e095d09e850fbaae74b7cb4a59c7b4b"
+    },
+    {
+      "file": "native-twelve-types.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/native-twelve-types-page-1.png",
+      "pdfSha256": "7a4e322ddf8384e9631f64f8add9e940458270b07f203aae438bfb46a5032965",
+      "pngSha256": "dee0c6c48edc72fa4b056adb4407b0893ec7f36d4b3cf73f6d231c389e57d6ef"
+    },
+    {
+      "file": "native-twelve-types.pdf",
+      "page": 2,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/native-twelve-types-page-2.png",
+      "pdfSha256": "7a4e322ddf8384e9631f64f8add9e940458270b07f203aae438bfb46a5032965",
+      "pngSha256": "54582ed15e1a9a2ff5ea7e632b4dd7e9cd140b043aaeee182af0e2f121e127e8"
+    },
+    {
+      "file": "copy-edited.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/copy-edited-page-1.png",
+      "pdfSha256": "179d55d05e59752fdbe6cf710b426b84cb4257830b87e7a5d5e1465ee0ff382f",
+      "pngSha256": "b2cf01632ef3c8e2466eecd5c185b5a8aa1570615ee7e1ec9079666fb7ca5d06"
+    },
+    {
+      "file": "copy-edited.pdf",
+      "page": 3,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/copy-edited-page-3.png",
+      "pdfSha256": "179d55d05e59752fdbe6cf710b426b84cb4257830b87e7a5d5e1465ee0ff382f",
+      "pngSha256": "dee0c6c48edc72fa4b056adb4407b0893ec7f36d4b3cf73f6d231c389e57d6ef"
+    },
+    {
+      "file": "merged-round-1.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/merged-round-1-page-1.png",
+      "pdfSha256": "45027189c208a2b79468f5a426b4670ec2ff85d12130d06a5dd943de9c2a9fcf",
+      "pngSha256": "b2cf01632ef3c8e2466eecd5c185b5a8aa1570615ee7e1ec9079666fb7ca5d06"
+    },
+    {
+      "file": "merged-round-1.pdf",
+      "page": 5,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/merged-round-1-page-5.png",
+      "pdfSha256": "45027189c208a2b79468f5a426b4670ec2ff85d12130d06a5dd943de9c2a9fcf",
+      "pngSha256": "dee0c6c48edc72fa4b056adb4407b0893ec7f36d4b3cf73f6d231c389e57d6ef"
+    },
+    {
+      "file": "merged-round-2.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/merged-round-2-page-1.png",
+      "pdfSha256": "114c3d0fc03f285c45a9d6e18bc52aeb11481c72cdd25d0a14a5969b3f283d48",
+      "pngSha256": "b9d6f14aacf0dac5a47465297c578bd454f3e64fbe6f60335cc4ee48e7b813ea"
+    },
+    {
+      "file": "merged-round-2.pdf",
+      "page": 5,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/merged-round-2-page-5.png",
+      "pdfSha256": "114c3d0fc03f285c45a9d6e18bc52aeb11481c72cdd25d0a14a5969b3f283d48",
+      "pngSha256": "dee0c6c48edc72fa4b056adb4407b0893ec7f36d4b3cf73f6d231c389e57d6ef"
+    }
+  ],
+  "visualReview": "visual-review.json"
+}

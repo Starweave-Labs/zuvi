@@ -1,0 +1,112 @@
+{
+  "run": "second 5272 fresh distribution, retries 0",
+  "status": "2 passed, 1 failed",
+  "preservedBeforeRetry": true,
+  "files": [
+    {
+      "file": "view-print.png",
+      "bytes": 54565,
+      "sha256": "859953296335ce4e2706f0d06d446fb130c9f1d557797f829de06c5fff03fbce"
+    },
+    {
+      "file": "view-print.pdf",
+      "bytes": 52100,
+      "sha256": "fab324a1fa9fe95d6c64ca3af44e8fc5bc85d336245c26293ed2066748ee945d"
+    },
+    {
+      "file": "view-roundtrip-2.xlsx",
+      "bytes": 9894,
+      "sha256": "55247961a57ec5ee9f0417768f8c19656f7cebdb6ba65a0b2180ecc9fa5f8123"
+    },
+    {
+      "file": "view-readonly-preview.xlsx",
+      "bytes": 9862,
+      "sha256": "66d5fd17ae323ca0c52b597f8283be38329a3efd58b432c436cdeaf266dde9a6"
+    },
+    {
+      "file": "view-print-400.html",
+      "bytes": 47156,
+      "sha256": "26de5d83cfacc3d64214d5f41cd4635836c700e31bd1d38cad89f5b30798371a"
+    },
+    {
+      "file": "office-studio-sheet-view.spec.ts.txt",
+      "bytes": 23908,
+      "sha256": "48d6cdbf4db2f83a1afbf9d1d53130d4242b482e4a1d11f09b0f27147534f138"
+    },
+    {
+      "file": "view-preview-source.xlsx",
+      "bytes": 9112,
+      "sha256": "fa4b5ec7493b18e1759c644cd9e5ce7045d914872d6deeac92ab3e9ca242b06c"
+    },
+    {
+      "file": "view-visual-source.xlsx",
+      "bytes": 9112,
+      "sha256": "d6c09f7fceefa2c352708a535f6da40eb7d0c9d18153551f2aafc2cc712c4233"
+    },
+    {
+      "file": "view-source.xlsx",
+      "bytes": 9112,
+      "sha256": "5672859944e4bb702b770b53de5de121b2c7e13fbc3f13d8176da754043214c4"
+    },
+    {
+      "file": "view-fill-400.png",
+      "bytes": 163819,
+      "sha256": "4593b724fca55accd316ad126521f31fc6a95f431576f18efce1770fd3546940"
+    },
+    {
+      "file": "view-protected.xlsx",
+      "bytes": 10026,
+      "sha256": "daa1ba58be5c02bdd22f0c21d400ef8d21ae8567ca748e0a034b2fa7338434b8"
+    },
+    {
+      "file": "view-print-100.html",
+      "bytes": 47156,
+      "sha256": "26de5d83cfacc3d64214d5f41cd4635836c700e31bd1d38cad89f5b30798371a"
+    },
+    {
+      "file": "view-preview-guards.png",
+      "bytes": 157088,
+      "sha256": "2cb3be668147a509a35e1d7a86b52f2769f34425ff57480682ed627f0835033c"
+    },
+    {
+      "file": "view-roundtrip-1.xlsx",
+      "bytes": 9902,
+      "sha256": "bd41cab4405bf3c3315e92a302524d553c95e499bf3692b1357d897bc6968385"
+    },
+    {
+      "file": "view-reopened-400.png",
+      "bytes": 170517,
+      "sha256": "c70b8f169a425aec6d65b435fd0e54825431ed1411a25aeb86d45e68159010ba"
+    },
+    {
+      "file": "view-after-cancel.xlsx",
+      "bytes": 9862,
+      "sha256": "009a5519a7d304eba41b3e1dd13495e787fc32388c4bf970ae160c8291123e56"
+    },
+    {
+      "file": "runner/run.log",
+      "bytes": 3076,
+      "sha256": "dcd0f568da1ef0dae52b628a3c0ae9e303b01cc512a0dcfdfc55a4baa7aa5c16"
+    },
+    {
+      "file": "runner/results.json",
+      "bytes": 12133,
+      "sha256": "423444b1ff5d14f17d974acd314f1483a0ab08e443162edbf59013b95043bb24"
+    },
+    {
+      "file": "runner/artifacts/.last-run.json",
+      "bytes": 96,
+      "sha256": "6f3ecf5a3f248712581cad7b43d0572e4576c5a2d9cbc2a488d9a53af002cdee"
+    },
+    {
+      "file": "runner/artifacts/office-studio-sheet-view-v-47471-ight-dark-and-320px-layouts-chromium/trace.zip",
+      "bytes": 8006977,
+      "sha256": "f37506e0bcb2694d2108659123686655ed73feec8532ead0851da1b02413edd9"
+    },
+    {
+      "file": "runner/artifacts/office-studio-sheet-view-v-47471-ight-dark-and-320px-layouts-chromium/error-context.md",
+      "bytes": 41104,
+      "sha256": "cf5be3e5ded32f2914b7a5d575e729a633db253d4fc96dffb744232908836604"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "status": "passed",
+  "results": [
+    {
+      "label": "native-twelve-types",
+      "page": 1,
+      "pdfjsVersion": "6.5.438",
+      "cjkText": "中文自由文本：原生迁入后保留",
+      "paintCount": 1,
+      "pages": 2,
+      "pdfSha256": "7a4e322ddf8384e9631f64f8add9e940458270b07f203aae438bfb46a5032965",
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/pdfjs-native-twelve-types-page-1.png",
+      "pngSha256": "847df2305445a86aca77f19f65bc02d328a2f5fe1cafa65e7e96494fd44c6418"
+    },
+    {
+      "label": "copy-edited",
+      "page": 1,
+      "pdfjsVersion": "6.5.438",
+      "cjkText": "复制页独立中文编辑",
+      "paintCount": 1,
+      "pages": 4,
+      "pdfSha256": "179d55d05e59752fdbe6cf710b426b84cb4257830b87e7a5d5e1465ee0ff382f",
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/pdfjs-copy-edited-page-1.png",
+      "pngSha256": "6bc478b66c71f96fb712331d0799f3f2bb145b35197e314bda0200e33534c559"
+    },
+    {
+      "label": "merged-round-2",
+      "page": 1,
+      "pdfjsVersion": "6.5.438",
+      "cjkText": "重开编辑保留字体",
+      "paintCount": 1,
+      "pages": 6,
+      "pdfSha256": "114c3d0fc03f285c45a9d6e18bc52aeb11481c72cdd25d0a14a5969b3f283d48",
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/pdfjs-merged-round-2-page-1.png",
+      "pngSha256": "e1f1b2e4903b549c48d3235d2960bbc6ecdea47c8ef74bb96f21150e6ec589a5"
+    }
+  ],
+  "visualReview": "visual-review.json"
+}

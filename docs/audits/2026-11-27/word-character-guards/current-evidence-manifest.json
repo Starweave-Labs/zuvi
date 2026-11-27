@@ -1,0 +1,918 @@
+{
+  "scope": "W001/003/004/006 basic retained evidence plus W002/007/008/009/010 current guards/native position; W005 incomplete. No ledger changes and no commit.",
+  "head": "077e307da018a6a9a96b4d07d70bf8e44a803c84",
+  "workingTreeChanges": true,
+  "code": [
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+      "bytes": 141725,
+      "sha256": "ef3515d49ca280402ebd4c1de7fc30df00e430c77e00f7aee5aadda821f239ba"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
+      "bytes": 47129,
+      "sha256": "5a6e307706fc601be2b58676322a4f1a038ea74f4ec4fe8d3a5b5f0cdf3c1e2a"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWordCharacterDialog.tsx",
+      "bytes": 5745,
+      "sha256": "005b4d090ead60f3a554d2addfc6bc378bf15db28ac180549a028979e8c681d0"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-character-layout.ts",
+      "bytes": 4814,
+      "sha256": "3c2ab9e54989fa343a32af43d5c69ca032a530f089731f477d6e80359f2ab201"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-metrics.ts",
+      "bytes": 1476,
+      "sha256": "37a858bd80295c290044645a594aa925f69b2b5302ef8aeb19c0f85197accf16"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWord.character-guards.test.tsx",
+      "bytes": 10535,
+      "sha256": "9e59aa1ad86928ad60b48133e7c0afb2666758c0273a55c4ed70fac9c5d53b8e"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWord.basic-format.test.tsx",
+      "bytes": 15294,
+      "sha256": "c1d26c4d9f15539be9e89415969856f10d66b3644a37ca05c5c2bda58b3329bc"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+      "bytes": 184792,
+      "sha256": "888b0ca967123b0a8e0b74884a44ecd260600e35ddd53c231e0a5dc21f668a37"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-character-layout.test.ts",
+      "bytes": 10343,
+      "sha256": "772e9d7fe523dcd0351143a09b7e7d6c1b546990824d23a34cd7c230b74aec87"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioFontControl.test.tsx",
+      "bytes": 5490,
+      "sha256": "ab0d22332b049839b2d3d641c8459fcc9c63ec770bf40823f220f688adb5501d"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
+      "bytes": 115098,
+      "sha256": "5021af586ff212f145258ff4403cba23f44c4733e9b765583551d9ecefcd811a"
+    },
+    {
+      "path": "docs/tests/office-studio-word.test.mjs",
+      "bytes": 113774,
+      "sha256": "9819dc01697aa00321181b761b168618c6dede41fd2a7ecb0c4aa892f5f98ec4"
+    },
+    {
+      "path": "e2e/office-studio-word-character-guards.spec.ts",
+      "bytes": 10756,
+      "sha256": "a1eedd1dc7796d7fa8de03f2a0b242c51042d03e84ea710a9b238e677a937b61"
+    },
+    {
+      "path": "e2e/office-studio-word-metrics.spec.ts",
+      "bytes": 17466,
+      "sha256": "0e14034516ac9c522bd2e8a976c20238f4fced36b8072e6b6ac57ce9fb08a66e"
+    },
+    {
+      "path": "e2e/office-studio-word-basic-format.spec.ts",
+      "bytes": 18211,
+      "sha256": "9561a0fb3b1d6d888b99e6ec2605c74f4e60bc3e53f762a3504a50f4c644c262"
+    },
+    {
+      "path": "e2e/office-studio-word-format.spec.ts",
+      "bytes": 6971,
+      "sha256": "e124bc5fa7dd66023bfc93d4cf88094c113dd4cc690d9fd4c44a9768106cb3a4"
+    },
+    {
+      "path": "e2e/office-studio-word-case-size.spec.ts",
+      "bytes": 8350,
+      "sha256": "18ad710dc928ebc51edd9c5da80182b6cfae03ffdd1f665dfb961b01610a7f9c"
+    }
+  ],
+  "dist": [
+    {
+      "path": "packages/ui/dist/StudioWord-BkxU2F45.js",
+      "bytes": 320422,
+      "sha256": "fcb8d44d09813fd4c52d004a0f0c5b9547875d164b50160f542760ca7867e821"
+    }
+  ],
+  "rootFreshUiBuild": "validation/ui-build-final.txt",
+  "rootBrowserBuild": "validation/browser-build-final.txt",
+  "rootBundleSize": "validation/bundle-size-final.txt",
+  "entryGzipBytes": 124129,
+  "entryBudgetStrictLessThan": 124928,
+  "codecAfterSourceSHA256": "5021af586ff212f145258ff4403cba23f44c4733e9b765583551d9ecefcd811a",
+  "nativeRendering": {
+    "renderer": "/Users/meaili/.codex/plugins/cache/openai-primary-runtime/documents/26.1123.11515/skills/documents/render_docx.py",
+    "bundledPython": "/Users/meaili/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "bundledLibreOffice": "/Users/meaili/.cache/codex-runtimes/codex-primary-runtime/dependencies/native/libreoffice-headless/libreoffice/LibreOfficeDev.app/Contents/MacOS/soffice",
+    "allThreePagesVisuallyInspected": true,
+    "allThreeBrowserScreenshotsVisuallyInspected": true,
+    "nativeGlyphCoordinateEquivalence": "native-inspection.json"
+  },
+  "frozenActualEvidence": "final-browser-run/archive-manifest.json",
+  "originalFailures": [
+    "before-fix/manifest.json",
+    "first-browser-run/archive-manifest.json",
+    "second-browser-run/archive-manifest.json",
+    "position-diagnosis/before-manifest.json",
+    "position-diagnosis/failure-test-manifest.json",
+    "position-diagnosis/legacy-metrics-before/manifest.json"
+  ],
+  "counts": {
+    "currentUiFiles": 5,
+    "currentUiTests": 183,
+    "currentNativeTests": 74,
+    "latestActualBrowserTests": 1,
+    "latestNativeDocx": 3,
+    "latestNativePages": 3,
+    "historicalBasicNativeDocx": 4
+  },
+  "pending": {
+    "finalWhole316OwnedByRoot": true,
+    "globalClosureOwnedByRoot": true,
+    "legacyMetricsCorrectedScriptNotPrematurelyRerun": true
+  },
+  "entries": [
+    {
+      "path": "README.md",
+      "bytes": 8057,
+      "sha256": "1d17e956267edb8d917ddb38a3bdafd1ffb1fe7a6ff56fc13d86df7fd1d9608d"
+    },
+    {
+      "path": "before-fix/case-context-probe.txt",
+      "bytes": 1718,
+      "sha256": "93681835a9e2b8485b1103e45256ba8c506394d8810c0ac46c3b144b9b3ab48f"
+    },
+    {
+      "path": "before-fix/case-context-probe.txt.raw.gz",
+      "bytes": 825,
+      "sha256": "d9e198038dea4c37c30b519dccb43c2b8f3a293f5fb9dec31a10a7ea2fe2f0cb"
+    },
+    {
+      "path": "before-fix/manifest.json",
+      "bytes": 3498,
+      "sha256": "3c4952fc00b804a62ce195a328a6f09e653954a9ec01c4bc629a49423b82b066"
+    },
+    {
+      "path": "before-fix/neighbor-four.patch",
+      "bytes": 4980,
+      "sha256": "44bde4228eed01b130512394ec23c7367be6eb0434fd03071c344ab381f9f902"
+    },
+    {
+      "path": "before-fix/neighbor-four.test.ts.txt",
+      "bytes": 6560,
+      "sha256": "580a450df841972ef5238a190eef71317436f6bd0e1aaff9adcd562f976a4583"
+    },
+    {
+      "path": "before-fix/neighbor.test.ts.txt",
+      "bytes": 7180,
+      "sha256": "511e4653b6976bf47c4a471475b361c65f953305bdb180046f8c63afb6c509a1"
+    },
+    {
+      "path": "before-fix/patch-source-manifest.json",
+      "bytes": 1202,
+      "sha256": "d168ed60b3065ccada4422e78aa706cf614b97cd82720cef100a9b86ac08c651"
+    },
+    {
+      "path": "before-fix/probes-second.txt",
+      "bytes": 15566,
+      "sha256": "9bef22c959f792bd4df55d01eba01a4435b57a5ea146ba3b8a846accb4b62c3c"
+    },
+    {
+      "path": "before-fix/probes-second.txt.raw.gz",
+      "bytes": 2340,
+      "sha256": "fce49b130ee6d010879e1f1f555b9bce228cdb550abef378ff3046c1e01bd626"
+    },
+    {
+      "path": "before-fix/prototype-four.txt",
+      "bytes": 973,
+      "sha256": "a949606bb2ad5b6595aa1fbd85babf1645bea64cee70b0b4269ec5272ab0ba20"
+    },
+    {
+      "path": "before-fix/prototype-four.txt.raw.gz",
+      "bytes": 478,
+      "sha256": "497a11971b4c5e40e3ad216794c65977ede284e0fe7d1c20cfbb7f4ce43730e1"
+    },
+    {
+      "path": "before-fix/source/StudioWord.tsx.txt",
+      "bytes": 141550,
+      "sha256": "975c53bf6073584b441e833c279e4390843ea930228d9b528e33c6940ec9a5fb"
+    },
+    {
+      "path": "before-fix/source/StudioWordCharacterDialog.tsx.txt",
+      "bytes": 5537,
+      "sha256": "16fe79eb7f951e48db762575eaee00895b75ddb0aef805906693070e1c872f81"
+    },
+    {
+      "path": "before-fix/source/studio-word-character-layout.ts.txt",
+      "bytes": 4789,
+      "sha256": "5112be361ad09b5861b5b5d3a753285445939742dd097812958270cdc2c8454e"
+    },
+    {
+      "path": "before-fix/source/studio-word-tools.ts.txt",
+      "bytes": 46372,
+      "sha256": "4e5bde67f48207d365ac0db709aceddff6a27199bb983affc7f0a179ffabdc3b"
+    },
+    {
+      "path": "before-fix/vitest.config.mjs.txt",
+      "bytes": 574,
+      "sha256": "05bdae45cb15a6d8a80904e596a172d7cf85b72a163ba6ed7149b881f3e80fdc"
+    },
+    {
+      "path": "before-fix/vitest.prototype.config.mjs.txt",
+      "bytes": 1684,
+      "sha256": "fdfedb9dcbeee930a509acb99e6ef4aa4df43a8cf959d390d676eee7357023cf"
+    },
+    {
+      "path": "browser-roundtrips.json",
+      "bytes": 26831,
+      "sha256": "73a84ac52eb6392b6e623adbc736bcef451917a5d93481daec1c75437db5d1c2"
+    },
+    {
+      "path": "create-fixture.py",
+      "bytes": 2663,
+      "sha256": "f06a492c85ddd4ab1ee48da2c76af0e30eac87ff5e4e5089a7343c090c406677"
+    },
+    {
+      "path": "final-browser-run/archive-manifest.json",
+      "bytes": 3878,
+      "sha256": "c61a8da45e4439f92b3d5de0488786af87573a6a5f8e8f86c20fd76a09b65811"
+    },
+    {
+      "path": "final-browser-run/browser-roundtrips.json",
+      "bytes": 26831,
+      "sha256": "73a84ac52eb6392b6e623adbc736bcef451917a5d93481daec1c75437db5d1c2"
+    },
+    {
+      "path": "final-browser-run/create-fixture.py",
+      "bytes": 2663,
+      "sha256": "f06a492c85ddd4ab1ee48da2c76af0e30eac87ff5e4e5089a7343c090c406677"
+    },
+    {
+      "path": "final-browser-run/inspect-native.py",
+      "bytes": 7542,
+      "sha256": "64a7e9433182b74c0c0ec4683347035b775a9880ea5f503e97e050229247995b"
+    },
+    {
+      "path": "final-browser-run/metrics-dark-320.png",
+      "bytes": 50599,
+      "sha256": "e2eccedaf8055b07cabe540afd06fc1af751fb2a763a041ba9632c87dffac444"
+    },
+    {
+      "path": "final-browser-run/native-inspection.json",
+      "bytes": 22690,
+      "sha256": "2307d4a7666fd114a246c99b287141f603ebd5e77bdc62cf4879617162420182"
+    },
+    {
+      "path": "final-browser-run/office-studio-word-character-guards.spec.ts.txt",
+      "bytes": 10756,
+      "sha256": "a1eedd1dc7796d7fa8de03f2a0b242c51042d03e84ea710a9b238e677a937b61"
+    },
+    {
+      "path": "final-browser-run/playwright/.last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    {
+      "path": "final-browser-run/render-native.py",
+      "bytes": 1541,
+      "sha256": "6476ec386e338ec48dc71fc0c35a29b5e70c5f521a30c46b815a1add4100add0"
+    },
+    {
+      "path": "final-browser-run/results-dark.png",
+      "bytes": 128947,
+      "sha256": "2a816d0d63c3b13986f79fc109f487ad54a125effd7d1bb262b6d76cfbbf5329"
+    },
+    {
+      "path": "final-browser-run/results-light.png",
+      "bytes": 128740,
+      "sha256": "114a44b796b1311e3343ce65981ae3d60fee446935ba9073a1409bb04ae235cb"
+    },
+    {
+      "path": "final-browser-run/roundtrip-1-render/page-1.png",
+      "bytes": 48734,
+      "sha256": "600138e3847066f6f1c29ea6b130a76358eb85fb1111a5ac0a8ffb8ce42bfd50"
+    },
+    {
+      "path": "final-browser-run/roundtrip-1-render/roundtrip-1.pdf",
+      "bytes": 47337,
+      "sha256": "b641f64bdcdddf9968ec174c1239967e484072bdf25c0d660bc4d115e85e9f8c"
+    },
+    {
+      "path": "final-browser-run/roundtrip-1.docx",
+      "bytes": 51877,
+      "sha256": "736fccdac5ad6f4ec7a122d39781b4b945097eea4382deec503fb6910499a0a4"
+    },
+    {
+      "path": "final-browser-run/roundtrip-2-render/page-1.png",
+      "bytes": 48734,
+      "sha256": "600138e3847066f6f1c29ea6b130a76358eb85fb1111a5ac0a8ffb8ce42bfd50"
+    },
+    {
+      "path": "final-browser-run/roundtrip-2-render/roundtrip-2.pdf",
+      "bytes": 47307,
+      "sha256": "48e735cb404e2448ac2f5a8b7816bca347037d4fcf85a1cffefd70c4cc947ace"
+    },
+    {
+      "path": "final-browser-run/roundtrip-2.docx",
+      "bytes": 51871,
+      "sha256": "739f3ddce55f76d9979a0206fac329080d6e694bce4c6ccecd65a4bd9218c0ac"
+    },
+    {
+      "path": "final-browser-run/run.json",
+      "bytes": 5113,
+      "sha256": "f71d5ce8bf81c61b9ab129531ce189bb6c34c3450e21c7e602ac72deb50581f4"
+    },
+    {
+      "path": "final-browser-run/run.txt",
+      "bytes": 878,
+      "sha256": "119fb67c1c3a45a3aa238c0dabfdf4f75850d37448361486acd1b2cd2f5822d9"
+    },
+    {
+      "path": "final-browser-run/run.txt.raw.gz",
+      "bytes": 506,
+      "sha256": "8e79f5e0a80ca933e12731bfa0bc26eff4526469ca192627eded32e084f4f161"
+    },
+    {
+      "path": "final-browser-run/source-before-final-browser.json",
+      "bytes": 2513,
+      "sha256": "65048a0e14009db81760fb207f2824bf170df0354eeec3aa04cf18136313a493"
+    },
+    {
+      "path": "final-browser-run/source-render/page-1.png",
+      "bytes": 45732,
+      "sha256": "c584808d76fec3917d301c0a4271f543b2e37398969a68d469a994971ae3b31d"
+    },
+    {
+      "path": "final-browser-run/source-render/source.pdf",
+      "bytes": 38402,
+      "sha256": "7a714bf2764c54dd20fec211dbcbc428066a6ef314b35a40cd1ca12a30fdb817"
+    },
+    {
+      "path": "final-browser-run/source.docx",
+      "bytes": 37606,
+      "sha256": "a6633ea9cd6941c436bbcdd7dfd717f4eaedde552d421553c797d2e3d75ba5ef"
+    },
+    {
+      "path": "final-source/docs/src/pages/collaboration/office-studio/studio-word-codec.ts.txt",
+      "bytes": 115098,
+      "sha256": "5021af586ff212f145258ff4403cba23f44c4733e9b765583551d9ecefcd811a"
+    },
+    {
+      "path": "final-source/docs/tests/office-studio-word.test.mjs.txt",
+      "bytes": 113774,
+      "sha256": "9819dc01697aa00321181b761b168618c6dede41fd2a7ecb0c4aa892f5f98ec4"
+    },
+    {
+      "path": "final-source/e2e/office-studio-word-basic-format.spec.ts.txt",
+      "bytes": 18211,
+      "sha256": "9561a0fb3b1d6d888b99e6ec2605c74f4e60bc3e53f762a3504a50f4c644c262"
+    },
+    {
+      "path": "final-source/e2e/office-studio-word-case-size.spec.ts.txt",
+      "bytes": 8350,
+      "sha256": "18ad710dc928ebc51edd9c5da80182b6cfae03ffdd1f665dfb961b01610a7f9c"
+    },
+    {
+      "path": "final-source/e2e/office-studio-word-character-guards.spec.ts.txt",
+      "bytes": 10756,
+      "sha256": "a1eedd1dc7796d7fa8de03f2a0b242c51042d03e84ea710a9b238e677a937b61"
+    },
+    {
+      "path": "final-source/e2e/office-studio-word-format.spec.ts.txt",
+      "bytes": 6971,
+      "sha256": "e124bc5fa7dd66023bfc93d4cf88094c113dd4cc690d9fd4c44a9768106cb3a4"
+    },
+    {
+      "path": "final-source/e2e/office-studio-word-metrics.spec.ts.txt",
+      "bytes": 17466,
+      "sha256": "0e14034516ac9c522bd2e8a976c20238f4fced36b8072e6b6ac57ce9fb08a66e"
+    },
+    {
+      "path": "final-source/packages/ui/src/components/OfficeStudio/StudioFontControl.test.tsx.txt",
+      "bytes": 5490,
+      "sha256": "ab0d22332b049839b2d3d641c8459fcc9c63ec770bf40823f220f688adb5501d"
+    },
+    {
+      "path": "final-source/packages/ui/src/components/OfficeStudio/StudioWord.basic-format.test.tsx.txt",
+      "bytes": 15294,
+      "sha256": "c1d26c4d9f15539be9e89415969856f10d66b3644a37ca05c5c2bda58b3329bc"
+    },
+    {
+      "path": "final-source/packages/ui/src/components/OfficeStudio/StudioWord.character-guards.test.tsx.txt",
+      "bytes": 10535,
+      "sha256": "9e59aa1ad86928ad60b48133e7c0afb2666758c0273a55c4ed70fac9c5d53b8e"
+    },
+    {
+      "path": "final-source/packages/ui/src/components/OfficeStudio/StudioWord.test.tsx.txt",
+      "bytes": 184792,
+      "sha256": "888b0ca967123b0a8e0b74884a44ecd260600e35ddd53c231e0a5dc21f668a37"
+    },
+    {
+      "path": "final-source/packages/ui/src/components/OfficeStudio/StudioWord.tsx.txt",
+      "bytes": 141725,
+      "sha256": "ef3515d49ca280402ebd4c1de7fc30df00e430c77e00f7aee5aadda821f239ba"
+    },
+    {
+      "path": "final-source/packages/ui/src/components/OfficeStudio/StudioWordCharacterDialog.tsx.txt",
+      "bytes": 5745,
+      "sha256": "005b4d090ead60f3a554d2addfc6bc378bf15db28ac180549a028979e8c681d0"
+    },
+    {
+      "path": "final-source/packages/ui/src/components/OfficeStudio/studio-word-character-layout.test.ts.txt",
+      "bytes": 10343,
+      "sha256": "772e9d7fe523dcd0351143a09b7e7d6c1b546990824d23a34cd7c230b74aec87"
+    },
+    {
+      "path": "final-source/packages/ui/src/components/OfficeStudio/studio-word-character-layout.ts.txt",
+      "bytes": 4814,
+      "sha256": "3c2ab9e54989fa343a32af43d5c69ca032a530f089731f477d6e80359f2ab201"
+    },
+    {
+      "path": "final-source/packages/ui/src/components/OfficeStudio/studio-word-metrics.ts.txt",
+      "bytes": 1476,
+      "sha256": "37a858bd80295c290044645a594aa925f69b2b5302ef8aeb19c0f85197accf16"
+    },
+    {
+      "path": "final-source/packages/ui/src/components/OfficeStudio/studio-word-tools.ts.txt",
+      "bytes": 47129,
+      "sha256": "5a6e307706fc601be2b58676322a4f1a038ea74f4ec4fe8d3a5b5f0cdf3c1e2a"
+    },
+    {
+      "path": "first-browser-run/archive-manifest.json",
+      "bytes": 3625,
+      "sha256": "b472ccc7ac2f196d1ea64789d408f588fcfb3b63a8f6dfe1bb7ea6a994a424dc"
+    },
+    {
+      "path": "first-browser-run/office-studio-word-character-guards.spec.ts.txt",
+      "bytes": 9250,
+      "sha256": "ea65851aa4089b673501f01cab97fcf6b029005d74345d8800d3df59de2c5f87"
+    },
+    {
+      "path": "first-browser-run/playwright/.last-run.json",
+      "bytes": 96,
+      "sha256": "10b199652ed5f51135545ceea794edabd9c16a4504b51828a0ef53acce92dee0"
+    },
+    {
+      "path": "first-browser-run/playwright/office-studio-word-charact-52599-rough-two-real-DOCX-reopens-chromium/error-context.md",
+      "bytes": 40685,
+      "sha256": "490b34fddf74db30d0c9ffaf6285c4a393dcb0d765270c0854ff3f31fba96e70"
+    },
+    {
+      "path": "first-browser-run/playwright/office-studio-word-charact-52599-rough-two-real-DOCX-reopens-chromium/error-context.md.raw.gz",
+      "bytes": 8512,
+      "sha256": "15aff3ef8dec10cc99aa1d558c7ce44ddfc260362791fe8bd574072e622e157c"
+    },
+    {
+      "path": "first-browser-run/playwright/office-studio-word-charact-52599-rough-two-real-DOCX-reopens-chromium/trace.zip",
+      "bytes": 6093821,
+      "sha256": "71d7c7a2f61216619ddab174fd60047c4aa007237c43bb7b5e4c98388ad29f9a"
+    },
+    {
+      "path": "first-browser-run/run.json",
+      "bytes": 8269,
+      "sha256": "18cf52f272a19f2b4f148c00355c97eed64feb93d232a67a765ff300b08173c6"
+    },
+    {
+      "path": "first-browser-run/run.txt",
+      "bytes": 3096,
+      "sha256": "b3ab9a2c186a31462de6d65d492d2d2f5007b21d814b8819a91c7f125150cbab"
+    },
+    {
+      "path": "first-browser-run/run.txt.raw.gz",
+      "bytes": 880,
+      "sha256": "bc30efafa5982fd2b03fc13665b8697bf591ba7b94a2f990cbe84b8e3ec5d8a1"
+    },
+    {
+      "path": "first-browser-run/source-before-browser.json",
+      "bytes": 1528,
+      "sha256": "90122e613c97e73235caed189de034f6da43b4286c930e6efd81012a85d9df2b"
+    },
+    {
+      "path": "first-browser-run/source.docx",
+      "bytes": 37606,
+      "sha256": "a6633ea9cd6941c436bbcdd7dfd717f4eaedde552d421553c797d2e3d75ba5ef"
+    },
+    {
+      "path": "inspect-native.py",
+      "bytes": 7542,
+      "sha256": "64a7e9433182b74c0c0ec4683347035b775a9880ea5f503e97e050229247995b"
+    },
+    {
+      "path": "metrics-dark-320.png",
+      "bytes": 50599,
+      "sha256": "e2eccedaf8055b07cabe540afd06fc1af751fb2a763a041ba9632c87dffac444"
+    },
+    {
+      "path": "native-inspection.json",
+      "bytes": 22690,
+      "sha256": "2307d4a7666fd114a246c99b287141f603ebd5e77bdc62cf4879617162420182"
+    },
+    {
+      "path": "original-acceptance-matrix.json",
+      "bytes": 28119,
+      "sha256": "f189e551284a6fad2b1b25cbe03038119d5fe9a187787653981bcc7fa64fbb2f"
+    },
+    {
+      "path": "position-diagnosis/ST_SignedHpsMeasure-2006.html",
+      "bytes": 6418,
+      "sha256": "8ed05ef95a84c633a27ca32dea601e38b7623ec47bd95e3c11fb4537114b9e7a"
+    },
+    {
+      "path": "position-diagnosis/before-manifest.json",
+      "bytes": 2821,
+      "sha256": "919e418562bffe2c95ac9fc53afd6efa246e8cabc5900666b1b87616fbc36ef8"
+    },
+    {
+      "path": "position-diagnosis/before-signed-two-failures.txt",
+      "bytes": 2104,
+      "sha256": "0343ce8f47c34c67c529dcfc8ddca39ba8b0d16b3ebb6e2156a14f1d995ad46f"
+    },
+    {
+      "path": "position-diagnosis/before-signed-two-failures.txt.raw.gz",
+      "bytes": 744,
+      "sha256": "3f51526162e38fb345b6e797fc9ba18642c116110291dd8a7d1c36d4d78bd352"
+    },
+    {
+      "path": "position-diagnosis/before-source/StudioWordCharacterDialog.tsx.txt",
+      "bytes": 5745,
+      "sha256": "005b4d090ead60f3a554d2addfc6bc378bf15db28ac180549a028979e8c681d0"
+    },
+    {
+      "path": "position-diagnosis/before-source/office-studio-word.test.mjs.txt",
+      "bytes": 109174,
+      "sha256": "41eda6b7f7fc145e4e492cf5b7599243bad3e0e598fd0b122944cefeca8bc698"
+    },
+    {
+      "path": "position-diagnosis/before-source/studio-word-character-layout.ts.txt",
+      "bytes": 4814,
+      "sha256": "3c2ab9e54989fa343a32af43d5c69ca032a530f089731f477d6e80359f2ab201"
+    },
+    {
+      "path": "position-diagnosis/before-source/studio-word-codec.ts.txt",
+      "bytes": 114455,
+      "sha256": "0d55adb234ac575ef2af2b4cdbcd5d11df61e4dce70a077d72d4a044620f07ea"
+    },
+    {
+      "path": "position-diagnosis/before-source/studio-word-metrics.ts.txt",
+      "bytes": 1476,
+      "sha256": "37a858bd80295c290044645a594aa925f69b2b5302ef8aeb19c0f85197accf16"
+    },
+    {
+      "path": "position-diagnosis/failure-test-manifest.json",
+      "bytes": 662,
+      "sha256": "9e6da5b9d4963095c67026c2a74389da2c6637940227853cf84635d3a39c4ebb"
+    },
+    {
+      "path": "position-diagnosis/import-current.mjs.txt",
+      "bytes": 6889,
+      "sha256": "9eccf2e681c5a33fb8a69a989f2a5a669a5052f62a42e6dddce120f7923f3654"
+    },
+    {
+      "path": "position-diagnosis/import-current.txt",
+      "bytes": 2567,
+      "sha256": "f4c2ed36085db87cc6451468bdeb3ce3f3e62a35620e728eb4d6c908927b8304"
+    },
+    {
+      "path": "position-diagnosis/integer-native-render.txt",
+      "bytes": 78,
+      "sha256": "ad8ae1c4276baa608635b13f9fa63929bfdc2e220d92b160128d56777794fa2e"
+    },
+    {
+      "path": "position-diagnosis/integer-position-render/integer-position.pdf",
+      "bytes": 38833,
+      "sha256": "1ee28e15860a44deec3340218912b75c5b63f2305e10d7bc62b4097461c451af"
+    },
+    {
+      "path": "position-diagnosis/integer-position-render/page-1.png",
+      "bytes": 48406,
+      "sha256": "8cf96fcff21fba0a5371da8100c9e4025e34442c16fdc4843741f49cf2193688"
+    },
+    {
+      "path": "position-diagnosis/integer-position.docx",
+      "bytes": 51877,
+      "sha256": "b80b9cf68ab2ec48fd319060b4ffe61fde1fbb9f597674114d7981dbec9f9c80"
+    },
+    {
+      "path": "position-diagnosis/intermediate-native-fixture-error.txt",
+      "bytes": 8980,
+      "sha256": "c5312118f4ccf1a529d9edb9a93c2478a0d6a8a32aeb03dc404b5290c29106d3"
+    },
+    {
+      "path": "position-diagnosis/intermediate-native-fixture-error.txt.raw.gz",
+      "bytes": 3395,
+      "sha256": "20c4dd68b146804e8d289d54db5111c2c64134e30a8221fa15c8aa34159580a2"
+    },
+    {
+      "path": "position-diagnosis/legacy-metrics-before/baseline-line-rules-roundtrip-1.docx",
+      "bytes": 9969,
+      "sha256": "f44192b5d93cdfd534c3fb96aa00519031fc6b2bda32b72745da859e3d96ecfb"
+    },
+    {
+      "path": "position-diagnosis/legacy-metrics-before/baseline-line-rules-roundtrip-2.docx",
+      "bytes": 9985,
+      "sha256": "5ad4c414430e61f047aa1967d795e3d818fd45df4b75613a36f1af5e7fc4bd81"
+    },
+    {
+      "path": "position-diagnosis/legacy-metrics-before/baseline-line-rules-source.docx",
+      "bytes": 9657,
+      "sha256": "c6fa266ba1058e57052993124fc2c611d6a02fb7324f8d3010f17eaaa83533b5"
+    },
+    {
+      "path": "position-diagnosis/legacy-metrics-before/manifest.json",
+      "bytes": 2060,
+      "sha256": "74404355deb603e7cf79d54b852b3fab43ecc0197a508919d5455291cda48597"
+    },
+    {
+      "path": "position-diagnosis/legacy-metrics-before/metrics-roundtrip-1.docx",
+      "bytes": 11679,
+      "sha256": "799aea6a491e48a51dce93307d437fc8d9edee987c92adce4bf9356bc78aecf1"
+    },
+    {
+      "path": "position-diagnosis/legacy-metrics-before/metrics-roundtrip-2.docx",
+      "bytes": 11945,
+      "sha256": "d9eb9ee945a19313c23652e59404c3395c6ade0a81b11c8b1fac9c3658796c32"
+    },
+    {
+      "path": "position-diagnosis/legacy-metrics-before/metrics-source.docx",
+      "bytes": 40370,
+      "sha256": "9bb81f5fed2f9fbf52ac0ca044152365a96032f108604ec1f963f9ede3a22b8d"
+    },
+    {
+      "path": "position-diagnosis/legacy-metrics-before/office-studio-word-metrics.spec.ts.txt",
+      "bytes": 16889,
+      "sha256": "4aec4f53579ff7b075c4e0953d5e8127f806d2587dd3184e0fb38c1a24ece4a8"
+    },
+    {
+      "path": "position-diagnosis/native-position-comparison.json",
+      "bytes": 1379,
+      "sha256": "a43cbd0d546eb2db925eef2eacca228c52bcd87c0e14830fdc9de0a6569f81be"
+    },
+    {
+      "path": "position-diagnosis/native-tests-before-codec-fix.mjs.txt",
+      "bytes": 113575,
+      "sha256": "60faaa6b744bb22289809fdeac971ef0b1347ec03d61d96e647377aeec58e09d"
+    },
+    {
+      "path": "position-diagnosis/raw-native-render.txt",
+      "bytes": 190,
+      "sha256": "a88cf85396fc3dffc1a1ce03075d08a966905bd6a40e8b0d8e690a19fa24d10c"
+    },
+    {
+      "path": "render-native.py",
+      "bytes": 1541,
+      "sha256": "6476ec386e338ec48dc71fc0c35a29b5e70c5f521a30c46b815a1add4100add0"
+    },
+    {
+      "path": "results-dark.png",
+      "bytes": 128947,
+      "sha256": "2a816d0d63c3b13986f79fc109f487ad54a125effd7d1bb262b6d76cfbbf5329"
+    },
+    {
+      "path": "results-light.png",
+      "bytes": 128740,
+      "sha256": "114a44b796b1311e3343ce65981ae3d60fee446935ba9073a1409bb04ae235cb"
+    },
+    {
+      "path": "roundtrip-1-render/page-1.png",
+      "bytes": 48734,
+      "sha256": "600138e3847066f6f1c29ea6b130a76358eb85fb1111a5ac0a8ffb8ce42bfd50"
+    },
+    {
+      "path": "roundtrip-1-render/roundtrip-1.pdf",
+      "bytes": 47337,
+      "sha256": "b641f64bdcdddf9968ec174c1239967e484072bdf25c0d660bc4d115e85e9f8c"
+    },
+    {
+      "path": "roundtrip-1.docx",
+      "bytes": 51877,
+      "sha256": "736fccdac5ad6f4ec7a122d39781b4b945097eea4382deec503fb6910499a0a4"
+    },
+    {
+      "path": "roundtrip-2-render/page-1.png",
+      "bytes": 48734,
+      "sha256": "600138e3847066f6f1c29ea6b130a76358eb85fb1111a5ac0a8ffb8ce42bfd50"
+    },
+    {
+      "path": "roundtrip-2-render/roundtrip-2.pdf",
+      "bytes": 47307,
+      "sha256": "48e735cb404e2448ac2f5a8b7816bca347037d4fcf85a1cffefd70c4cc947ace"
+    },
+    {
+      "path": "roundtrip-2.docx",
+      "bytes": 51871,
+      "sha256": "739f3ddce55f76d9979a0206fac329080d6e694bce4c6ccecd65a4bd9218c0ac"
+    },
+    {
+      "path": "second-browser-run/archive-manifest.json",
+      "bytes": 4641,
+      "sha256": "8f3950ad60267b9cd3eef8ddbe189102500daf4f3a39ef443ada1079202ee324"
+    },
+    {
+      "path": "second-browser-run/native-xml/word/_rels/document.xml.rels",
+      "bytes": 2126,
+      "sha256": "80bba6952148c229b5894c501de3a3a32dc32db62ff8afab711ed4e455a4580f"
+    },
+    {
+      "path": "second-browser-run/native-xml/word/document.xml",
+      "bytes": 7044,
+      "sha256": "ab992862fa9da3f15503364d0d8ca073091ad5d30564a462d25a08edd8f6ab17"
+    },
+    {
+      "path": "second-browser-run/native-xml/word/header1.xml",
+      "bytes": 2234,
+      "sha256": "a9cbf79fcc35e8a67d0d59539e9bcd6081ebc2a74b1f4ae4d26355b853ef8e94"
+    },
+    {
+      "path": "second-browser-run/native-xml/word/styles.xml",
+      "bytes": 12573,
+      "sha256": "f3755cc597c594425efec4eb7cf14dd26eceb778f861ec6b52bbdf3cd9d84fee"
+    },
+    {
+      "path": "second-browser-run/office-studio-word-character-guards.spec.ts.txt",
+      "bytes": 9318,
+      "sha256": "beea2cef99f29e02bda6e1563c4a1133730865d405a24afb03666fc37617f280"
+    },
+    {
+      "path": "second-browser-run/playwright/.last-run.json",
+      "bytes": 96,
+      "sha256": "10b199652ed5f51135545ceea794edabd9c16a4504b51828a0ef53acce92dee0"
+    },
+    {
+      "path": "second-browser-run/playwright/office-studio-word-charact-52599-rough-two-real-DOCX-reopens-chromium/error-context.md",
+      "bytes": 58208,
+      "sha256": "4303b590f848b5ef5e0e0c264e8a8b340ffb81257262c1b75863fc3df4b19423"
+    },
+    {
+      "path": "second-browser-run/playwright/office-studio-word-charact-52599-rough-two-real-DOCX-reopens-chromium/error-context.md.raw.gz",
+      "bytes": 12651,
+      "sha256": "b543b06944d311080d4b11b3ec911460e085d1c223d59d9c4e173e984402d202"
+    },
+    {
+      "path": "second-browser-run/playwright/office-studio-word-charact-52599-rough-two-real-DOCX-reopens-chromium/trace.zip",
+      "bytes": 9538321,
+      "sha256": "301dd91f78dc3bb3b50d88de37ad777c9552336373cb5c5883fcd625223e9952"
+    },
+    {
+      "path": "second-browser-run/roundtrip-1-render/page-1.png",
+      "bytes": 48392,
+      "sha256": "3d0d5ccdf1dc9515b25a43715f0904c949577be741257cb8c0b45629d90da32d"
+    },
+    {
+      "path": "second-browser-run/roundtrip-1-render/roundtrip-1.pdf",
+      "bytes": 38832,
+      "sha256": "b611c4ad7f226bc9ef592610e8266478ff7a71b07485d4d4fa6bfc5da8d92a3b"
+    },
+    {
+      "path": "second-browser-run/roundtrip-1.docx",
+      "bytes": 51881,
+      "sha256": "c0966695ab84cc71308a48cc9d8d24f2926c281604a3cc40cfb8010fe8f6be18"
+    },
+    {
+      "path": "second-browser-run/run.json",
+      "bytes": 36455,
+      "sha256": "7bbeeed03e3991b2859b811199c9559add1722ebe9d7a640cfdd8cf603721d1f"
+    },
+    {
+      "path": "second-browser-run/run.txt",
+      "bytes": 11058,
+      "sha256": "5baf373c0d74b7bfd49c11b43212b431a43a92b8bba804331455284679ef8a5a"
+    },
+    {
+      "path": "second-browser-run/run.txt.raw.gz",
+      "bytes": 2381,
+      "sha256": "b0e8a8ee9d4c9abb7097c97b42e93a37be5a71f2e31675faa345421127f98589"
+    },
+    {
+      "path": "second-browser-run/source.docx",
+      "bytes": 37606,
+      "sha256": "a6633ea9cd6941c436bbcdd7dfd717f4eaedde552d421553c797d2e3d75ba5ef"
+    },
+    {
+      "path": "source-before-browser.json",
+      "bytes": 1528,
+      "sha256": "90122e613c97e73235caed189de034f6da43b4286c930e6efd81012a85d9df2b"
+    },
+    {
+      "path": "source-before-final-browser.json",
+      "bytes": 2513,
+      "sha256": "65048a0e14009db81760fb207f2824bf170df0354eeec3aa04cf18136313a493"
+    },
+    {
+      "path": "source-render/page-1.png",
+      "bytes": 45732,
+      "sha256": "c584808d76fec3917d301c0a4271f543b2e37398969a68d469a994971ae3b31d"
+    },
+    {
+      "path": "source-render/source.pdf",
+      "bytes": 38402,
+      "sha256": "7a714bf2764c54dd20fec211dbcbc428066a6ef314b35a40cd1ca12a30fdb817"
+    },
+    {
+      "path": "source.docx",
+      "bytes": 37606,
+      "sha256": "a6633ea9cd6941c436bbcdd7dfd717f4eaedde552d421553c797d2e3d75ba5ef"
+    },
+    {
+      "path": "validation/browser-build-final.txt",
+      "bytes": 512,
+      "sha256": "cd2763943293c4789888e783bcdf88c15618d5c20b3b332687d49e2d3f5cb22b"
+    },
+    {
+      "path": "validation/browser-one-passed.json",
+      "bytes": 5113,
+      "sha256": "f71d5ce8bf81c61b9ab129531ce189bb6c34c3450e21c7e602ac72deb50581f4"
+    },
+    {
+      "path": "validation/browser-one-passed.json.raw.gz",
+      "bytes": 1593,
+      "sha256": "20e84f92454895a3b27a994a9c8c314879f6a66137fd256f684f2061d684de41"
+    },
+    {
+      "path": "validation/browser-one-passed.txt",
+      "bytes": 878,
+      "sha256": "119fb67c1c3a45a3aa238c0dabfdf4f75850d37448361486acd1b2cd2f5822d9"
+    },
+    {
+      "path": "validation/browser-one-passed.txt.raw.gz",
+      "bytes": 506,
+      "sha256": "8e79f5e0a80ca933e12731bfa0bc26eff4526469ca192627eded32e084f4f161"
+    },
+    {
+      "path": "validation/bundle-size-final.txt",
+      "bytes": 669,
+      "sha256": "93ea853ecbc482bf3f6a92e3b15e30ae7da51364733876b568eff4c2e2fceeda"
+    },
+    {
+      "path": "validation/docs-types.txt",
+      "bytes": 140,
+      "sha256": "ba7e0c5e66d89ed98a3d9af11e2aaf1246817c40d3c878ec259f58a7152b008a"
+    },
+    {
+      "path": "validation/docs-types.txt.raw.gz",
+      "bytes": 143,
+      "sha256": "4ac1bac2b8baefe1871636a29fd225279c5d763b8107b74fef28a1026888085f"
+    },
+    {
+      "path": "validation/e2e-lint.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "validation/native-74-passed.txt",
+      "bytes": 8362,
+      "sha256": "babdd39e210db269ef5927575a6ac6fafbfafdcc864f6419aa8a4d76770479aa"
+    },
+    {
+      "path": "validation/native-74-passed.txt.raw.gz",
+      "bytes": 3141,
+      "sha256": "d1fe8da3867adab30d693c2a5418dd444def78da4499a3d2740eb02a84b6490f"
+    },
+    {
+      "path": "validation/native-inspection.txt",
+      "bytes": 168,
+      "sha256": "c9a2d06fe3748855697931b98c073c61a8bf3f5d5c4d8afec7587ab1c666b0fc"
+    },
+    {
+      "path": "validation/render-three.txt",
+      "bytes": 508,
+      "sha256": "031c593e1f324856174c9fd163c92c982c281fc2255d8e6b44a56394c450bf13"
+    },
+    {
+      "path": "validation/scoped-lint.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "validation/scoped-lint.txt.raw.gz",
+      "bytes": 20,
+      "sha256": "f1b651238a58fe290baec6c5e32f3bdb1943dd2bd582f02569231f7a757c7837"
+    },
+    {
+      "path": "validation/ui-183-passed.txt",
+      "bytes": 5299,
+      "sha256": "b68995009a123c0e799bd34970edb4aa88c10cc667b938965e7fdf343db2c417"
+    },
+    {
+      "path": "validation/ui-183-passed.txt.raw.gz",
+      "bytes": 1905,
+      "sha256": "597ec2bdb15f1088796c4ad5b99b7b4f8723df94eff8781c68d682b66decad28"
+    },
+    {
+      "path": "validation/ui-build-final.txt",
+      "bytes": 2717,
+      "sha256": "dfc09ec59f63890c5bfe672a00ec16803118fa489c308b6c147e8749288f47c3"
+    },
+    {
+      "path": "validation/ui-types.txt",
+      "bytes": 148,
+      "sha256": "68ec6d80c2b25b081d386c6e6a0dc0ed1f04d85de012b574555495bfb768041b"
+    },
+    {
+      "path": "validation/ui-types.txt.raw.gz",
+      "bytes": 148,
+      "sha256": "4cc7be1aced5ab7d9710ab16fbab874db010d931353c3275fa9ac13ee74c1737"
+    }
+  ]
+}

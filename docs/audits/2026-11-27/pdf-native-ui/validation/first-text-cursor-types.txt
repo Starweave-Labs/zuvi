@@ -1,0 +1,9 @@
+
+> @zuvi/react@1.1.0 typecheck /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+> tsc --noEmit
+
+src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx(229,18): error TS7006: Parameter '_page' implicitly has an 'any' type.
+src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx(229,25): error TS7006: Parameter 'container' implicitly has an 'any' type.
+/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @zuvi/react@1.1.0 typecheck: `tsc --noEmit`
+Exit status 2

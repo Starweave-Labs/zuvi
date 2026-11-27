@@ -1,0 +1,9 @@
+test_corrupt_backup_or_invalid_label_cannot_touch_live_bytes (__main__.NamedRunTests) ... ok
+test_links_are_archived_as_link_objects_without_following_targets (__main__.NamedRunTests) ... ok
+test_two_runs_keep_independent_archives_and_restore_same_baseline (__main__.NamedRunTests) ... ok
+test_unindexed_or_corrupt_archive_is_detected (__main__.NamedRunTests) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.312s
+
+OK

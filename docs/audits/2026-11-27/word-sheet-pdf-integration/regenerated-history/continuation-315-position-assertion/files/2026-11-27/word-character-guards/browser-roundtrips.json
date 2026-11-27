@@ -1,0 +1,972 @@
+{
+  "expected": {
+    "type": "doc",
+    "attrs": {
+      "paragraphStyles": [
+        {
+          "id": "imported-4",
+          "name": "Title",
+          "basedOn": "paragraph",
+          "next": "paragraph",
+          "autoUpdate": false,
+          "surface": {},
+          "tabStops": [],
+          "run": {
+            "fontFamily": "宋体",
+            "color": "#000000",
+            "fontSize": 18,
+            "letterSpacing": 0.25
+          },
+          "paragraph": {
+            "spaceAfter": 15,
+            "lineHeight": 1,
+            "lineHeightRule": "auto",
+            "lineHeightBasis": "auto"
+          }
+        },
+        {
+          "id": "imported-13",
+          "name": "List Bullet",
+          "basedOn": "paragraph",
+          "autoUpdate": false,
+          "surface": {},
+          "tabStops": [],
+          "run": {
+            "fontFamily": "Arial"
+          },
+          "paragraph": {
+            "spaceAfter": 8,
+            "lineHeight": 1.15
+          }
+        },
+        {
+          "id": "imported-14",
+          "name": "List Bullet 2",
+          "basedOn": "paragraph",
+          "autoUpdate": false,
+          "surface": {},
+          "tabStops": [],
+          "run": {
+            "fontFamily": "Arial"
+          },
+          "paragraph": {
+            "spaceAfter": 8,
+            "lineHeight": 1.15
+          }
+        },
+        {
+          "id": "imported-15",
+          "name": "List Bullet 3",
+          "basedOn": "paragraph",
+          "autoUpdate": false,
+          "surface": {},
+          "tabStops": [],
+          "run": {
+            "fontFamily": "Arial"
+          },
+          "paragraph": {
+            "spaceAfter": 8,
+            "lineHeight": 1.15
+          }
+        },
+        {
+          "id": "imported-16",
+          "name": "List Number",
+          "basedOn": "paragraph",
+          "autoUpdate": false,
+          "surface": {},
+          "tabStops": [],
+          "run": {
+            "fontFamily": "Arial"
+          },
+          "paragraph": {
+            "spaceAfter": 8,
+            "lineHeight": 1.15
+          }
+        },
+        {
+          "id": "imported-17",
+          "name": "List Number 2",
+          "basedOn": "paragraph",
+          "autoUpdate": false,
+          "surface": {},
+          "tabStops": [],
+          "run": {
+            "fontFamily": "Arial"
+          },
+          "paragraph": {
+            "spaceAfter": 8,
+            "lineHeight": 1.15
+          }
+        },
+        {
+          "id": "imported-18",
+          "name": "List Number 3",
+          "basedOn": "paragraph",
+          "autoUpdate": false,
+          "surface": {},
+          "tabStops": [],
+          "run": {
+            "fontFamily": "Arial"
+          },
+          "paragraph": {
+            "spaceAfter": 8,
+            "lineHeight": 1.15
+          }
+        },
+        {
+          "id": "imported-27",
+          "name": "Review14",
+          "basedOn": "paragraph",
+          "autoUpdate": false,
+          "surface": {},
+          "tabStops": [],
+          "run": {
+            "fontFamily": "Arial",
+            "fontSize": 14
+          },
+          "paragraph": {
+            "spaceAfter": 8,
+            "lineHeight": 1.15
+          }
+        }
+      ],
+      "numberingDefinitions": [
+        {
+          "id": "native-numbering-2",
+          "name": "编号 2",
+          "levels": [
+            {
+              "format": "decimal",
+              "text": "%1.",
+              "start": 1,
+              "paragraphStyle": "imported-18",
+              "alignment": "left",
+              "tabStops": [
+                {
+                  "position": 54,
+                  "alignment": "num"
+                }
+              ],
+              "indentLeft": 54,
+              "indentFirstLine": -18
+            }
+          ]
+        },
+        {
+          "id": "native-numbering-3",
+          "name": "编号 3",
+          "levels": [
+            {
+              "format": "decimal",
+              "text": "%1.",
+              "start": 1,
+              "paragraphStyle": "imported-17",
+              "alignment": "left",
+              "tabStops": [
+                {
+                  "position": 36,
+                  "alignment": "num"
+                }
+              ],
+              "indentLeft": 36,
+              "indentFirstLine": -18
+            }
+          ]
+        },
+        {
+          "id": "native-numbering-5",
+          "name": "编号 5",
+          "levels": [
+            {
+              "format": "bullet",
+              "text": "",
+              "start": 1,
+              "paragraphStyle": "imported-15",
+              "alignment": "left",
+              "tabStops": [
+                {
+                  "position": 54,
+                  "alignment": "num"
+                }
+              ],
+              "indentLeft": 54,
+              "indentFirstLine": -18,
+              "fontFamily": "Symbol"
+            }
+          ]
+        },
+        {
+          "id": "native-numbering-6",
+          "name": "编号 6",
+          "levels": [
+            {
+              "format": "bullet",
+              "text": "",
+              "start": 1,
+              "paragraphStyle": "imported-14",
+              "alignment": "left",
+              "tabStops": [
+                {
+                  "position": 36,
+                  "alignment": "num"
+                }
+              ],
+              "indentLeft": 36,
+              "indentFirstLine": -18,
+              "fontFamily": "Symbol"
+            }
+          ]
+        },
+        {
+          "id": "native-numbering-7",
+          "name": "编号 7",
+          "levels": [
+            {
+              "format": "decimal",
+              "text": "%1.",
+              "start": 1,
+              "paragraphStyle": "imported-16",
+              "alignment": "left",
+              "tabStops": [
+                {
+                  "position": 18,
+                  "alignment": "num"
+                }
+              ],
+              "indentLeft": 18,
+              "indentFirstLine": -18
+            }
+          ]
+        },
+        {
+          "id": "native-numbering-8",
+          "name": "编号 8",
+          "levels": [
+            {
+              "format": "bullet",
+              "text": "",
+              "start": 1,
+              "paragraphStyle": "imported-13",
+              "alignment": "left",
+              "tabStops": [
+                {
+                  "position": 18,
+                  "alignment": "num"
+                }
+              ],
+              "indentLeft": 18,
+              "indentFirstLine": -18,
+              "fontFamily": "Symbol"
+            }
+          ]
+        }
+      ],
+      "numberingInstances": [
+        {
+          "id": "native-instance-1",
+          "definitionId": "native-numbering-8"
+        },
+        {
+          "id": "native-instance-2",
+          "definitionId": "native-numbering-6"
+        },
+        {
+          "id": "native-instance-3",
+          "definitionId": "native-numbering-5"
+        },
+        {
+          "id": "native-instance-5",
+          "definitionId": "native-numbering-7"
+        },
+        {
+          "id": "native-instance-6",
+          "definitionId": "native-numbering-3"
+        },
+        {
+          "id": "native-instance-7",
+          "definitionId": "native-numbering-2"
+        }
+      ]
+    },
+    "content": [
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphStyleSnapshot": {
+            "tabStops": [],
+            "surface": {},
+            "run": {
+              "fontFamily": "宋体",
+              "fontSize": 18,
+              "letterSpacing": 0.25,
+              "baselineShift": 0,
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "color": "#000000",
+              "backgroundColor": null
+            },
+            "paragraph": {
+              "textAlign": "left",
+              "indentLeft": 0,
+              "indentRight": 0,
+              "indentFirstLine": 0,
+              "spaceBefore": 0,
+              "spaceAfter": 15,
+              "lineHeight": 1,
+              "lineHeightRule": "auto",
+              "lineHeightBasis": "auto",
+              "widowControl": true,
+              "keepNext": false,
+              "keepLines": false
+            },
+            "headingLevel": 0
+          },
+          "paragraphStyleMaterialized": true,
+          "paragraphStyleFallback": null,
+          "paragraphStyle": "imported-4",
+          "textAlign": null,
+          "widowControl": null,
+          "keepNext": null,
+          "keepLines": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "indentFirstLine": null,
+          "spaceBefore": null,
+          "spaceAfter": 15,
+          "lineHeight": 1,
+          "lineHeightRule": "auto",
+          "lineHeightBasis": "auto",
+          "paragraphStyleDirectAttrs": [],
+          "paragraphSurface": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "tabStops": null
+        },
+        "content": [
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#000000",
+                  "fontSize": "18pt",
+                  "lineHeight": null,
+                  "letterSpacing": "0.25pt",
+                  "baselineShift": null,
+                  "fontFamily": "Arial"
+                }
+              }
+            ],
+            "text": "Word character guard sample"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphStyleSnapshot": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleFallback": null,
+          "paragraphStyle": null,
+          "textAlign": "right",
+          "widowControl": null,
+          "keepNext": null,
+          "keepLines": null,
+          "indentLeft": 18,
+          "indentRight": null,
+          "indentFirstLine": null,
+          "spaceBefore": null,
+          "spaceAfter": 10,
+          "lineHeight": 1.15,
+          "lineHeightRule": "auto",
+          "lineHeightBasis": "auto",
+          "paragraphStyleDirectAttrs": [
+            "textAlign",
+            "indentLeft"
+          ],
+          "paragraphSurface": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "tabStops": null
+        },
+        "content": [
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#0055aa",
+                  "fontSize": "18pt",
+                  "lineHeight": null,
+                  "letterSpacing": null,
+                  "baselineShift": null,
+                  "fontFamily": "Arial"
+                }
+              },
+              {
+                "type": "bold"
+              }
+            ],
+            "text": "SOURCE"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphStyleSnapshot": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleFallback": null,
+          "paragraphStyle": null,
+          "textAlign": "right",
+          "widowControl": null,
+          "keepNext": null,
+          "keepLines": null,
+          "indentLeft": 18,
+          "indentRight": null,
+          "indentFirstLine": null,
+          "spaceBefore": null,
+          "spaceAfter": 10,
+          "lineHeight": 1.15,
+          "lineHeightRule": "auto",
+          "lineHeightBasis": "auto",
+          "paragraphStyleDirectAttrs": [
+            "textAlign",
+            "indentLeft",
+            "indentRight",
+            "indentFirstLine",
+            "spaceBefore",
+            "spaceAfter",
+            "lineHeight",
+            "lineHeightRule",
+            "widowControl",
+            "keepNext",
+            "keepLines"
+          ],
+          "paragraphSurface": {
+            "borders": {
+              "top": {
+                "style": "nil"
+              },
+              "bottom": {
+                "style": "nil"
+              },
+              "left": {
+                "style": "nil"
+              },
+              "right": {
+                "style": "nil"
+              },
+              "between": {
+                "style": "nil"
+              },
+              "bar": {
+                "style": "nil"
+              }
+            },
+            "shading": {
+              "pattern": "nil"
+            }
+          },
+          "numbering": null,
+          "numberingDisabled": false,
+          "tabStops": []
+        },
+        "content": [
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#0055aa",
+                  "fontSize": "18pt",
+                  "lineHeight": null,
+                  "letterSpacing": "0.3pt",
+                  "baselineShift": "-1.5pt",
+                  "fontFamily": "Arial"
+                }
+              },
+              {
+                "type": "bold"
+              }
+            ],
+            "text": "target"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphStyleSnapshot": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleFallback": null,
+          "paragraphStyle": null,
+          "textAlign": null,
+          "widowControl": null,
+          "keepNext": null,
+          "keepLines": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "indentFirstLine": null,
+          "spaceBefore": null,
+          "spaceAfter": 10,
+          "lineHeight": 1.15,
+          "lineHeightRule": "auto",
+          "lineHeightBasis": "auto",
+          "paragraphStyleDirectAttrs": [],
+          "paragraphSurface": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "tabStops": null
+        },
+        "content": [
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#000000",
+                  "fontSize": "14pt",
+                  "lineHeight": null,
+                  "letterSpacing": null,
+                  "baselineShift": null,
+                  "fontFamily": "Arial"
+                }
+              },
+              {
+                "type": "bold"
+              }
+            ],
+            "text": "lower ο"
+          },
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://example.com/lower",
+                  "target": "_blank",
+                  "rel": "noopener noreferrer nofollow",
+                  "class": null,
+                  "title": null
+                }
+              },
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#000000",
+                  "fontSize": "18pt",
+                  "lineHeight": null,
+                  "letterSpacing": null,
+                  "baselineShift": null,
+                  "fontFamily": "Arial"
+                }
+              },
+              {
+                "type": "italic"
+              }
+            ],
+            "text": "ς"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphStyleSnapshot": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleFallback": null,
+          "paragraphStyle": null,
+          "textAlign": null,
+          "widowControl": null,
+          "keepNext": null,
+          "keepLines": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "indentFirstLine": null,
+          "spaceBefore": null,
+          "spaceAfter": 10,
+          "lineHeight": 1.15,
+          "lineHeightRule": "auto",
+          "lineHeightBasis": "auto",
+          "paragraphStyleDirectAttrs": [],
+          "paragraphSurface": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "tabStops": null
+        },
+        "content": [
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#000000",
+                  "fontSize": "12pt",
+                  "lineHeight": null,
+                  "letterSpacing": null,
+                  "baselineShift": null,
+                  "fontFamily": "Arial"
+                }
+              },
+              {
+                "type": "bold"
+              }
+            ],
+            "text": "Title Ο"
+          },
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://example.com/title",
+                  "target": "_blank",
+                  "rel": "noopener noreferrer nofollow",
+                  "class": null,
+                  "title": null
+                }
+              },
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#000000",
+                  "fontSize": "16pt",
+                  "lineHeight": null,
+                  "letterSpacing": null,
+                  "baselineShift": null,
+                  "fontFamily": "Arial"
+                }
+              },
+              {
+                "type": "italic"
+              }
+            ],
+            "text": "ς"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphStyleSnapshot": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleFallback": null,
+          "paragraphStyle": null,
+          "textAlign": null,
+          "widowControl": null,
+          "keepNext": null,
+          "keepLines": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "indentFirstLine": null,
+          "spaceBefore": null,
+          "spaceAfter": 10,
+          "lineHeight": 1.15,
+          "lineHeightRule": "auto",
+          "lineHeightBasis": "auto",
+          "paragraphStyleDirectAttrs": [],
+          "paragraphSurface": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "tabStops": null
+        },
+        "content": [
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#000000",
+                  "fontSize": "12pt",
+                  "lineHeight": null,
+                  "letterSpacing": null,
+                  "baselineShift": null,
+                  "fontFamily": "Arial"
+                }
+              },
+              {
+                "type": "bold"
+              }
+            ],
+            "text": "Sentence. Ο"
+          },
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://example.com/sentence",
+                  "target": "_blank",
+                  "rel": "noopener noreferrer nofollow",
+                  "class": null,
+                  "title": null
+                }
+              },
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#000000",
+                  "fontSize": "16pt",
+                  "lineHeight": null,
+                  "letterSpacing": null,
+                  "baselineShift": null,
+                  "fontFamily": "Arial"
+                }
+              },
+              {
+                "type": "italic"
+              }
+            ],
+            "text": "ς"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphStyleSnapshot": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleFallback": null,
+          "paragraphStyle": null,
+          "textAlign": null,
+          "widowControl": null,
+          "keepNext": null,
+          "keepLines": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "indentFirstLine": null,
+          "spaceBefore": null,
+          "spaceAfter": 10,
+          "lineHeight": 1.15,
+          "lineHeightRule": "auto",
+          "lineHeightBasis": "auto",
+          "paragraphStyleDirectAttrs": [],
+          "paragraphSurface": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "tabStops": null
+        },
+        "content": [
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#000000",
+                  "fontSize": "12pt",
+                  "lineHeight": null,
+                  "letterSpacing": null,
+                  "baselineShift": null,
+                  "fontFamily": "Arial"
+                }
+              },
+              {
+                "type": "bold"
+              }
+            ],
+            "text": "toggle ο"
+          },
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://example.com/toggle",
+                  "target": "_blank",
+                  "rel": "noopener noreferrer nofollow",
+                  "class": null,
+                  "title": null
+                }
+              },
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#000000",
+                  "fontSize": "16pt",
+                  "lineHeight": null,
+                  "letterSpacing": null,
+                  "baselineShift": null,
+                  "fontFamily": "Arial"
+                }
+              },
+              {
+                "type": "italic"
+              }
+            ],
+            "text": "ς"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphStyleSnapshot": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleFallback": null,
+          "paragraphStyle": null,
+          "textAlign": null,
+          "widowControl": null,
+          "keepNext": null,
+          "keepLines": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "indentFirstLine": null,
+          "spaceBefore": null,
+          "spaceAfter": 10,
+          "lineHeight": 1.15,
+          "lineHeightRule": "auto",
+          "lineHeightBasis": "auto",
+          "paragraphStyleDirectAttrs": [],
+          "paragraphSurface": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "tabStops": null
+        },
+        "content": [
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#000000",
+                  "fontSize": "12pt",
+                  "lineHeight": null,
+                  "letterSpacing": null,
+                  "baselineShift": null,
+                  "fontFamily": "Arial"
+                }
+              },
+              {
+                "type": "bold"
+              }
+            ],
+            "text": "UPPER Ο"
+          },
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://example.com/upper",
+                  "target": "_blank",
+                  "rel": "noopener noreferrer nofollow",
+                  "class": null,
+                  "title": null
+                }
+              },
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#000000",
+                  "fontSize": "16pt",
+                  "lineHeight": null,
+                  "letterSpacing": null,
+                  "baselineShift": null,
+                  "fontFamily": "Arial"
+                }
+              },
+              {
+                "type": "italic"
+              }
+            ],
+            "text": "Σ"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphStyleSnapshot": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleFallback": null,
+          "paragraphStyle": null,
+          "textAlign": null,
+          "widowControl": null,
+          "keepNext": null,
+          "keepLines": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "indentFirstLine": null,
+          "spaceBefore": null,
+          "spaceAfter": 10,
+          "lineHeight": 1.15,
+          "lineHeightRule": "auto",
+          "lineHeightBasis": "auto",
+          "paragraphStyleDirectAttrs": [],
+          "paragraphSurface": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "tabStops": null
+        },
+        "content": [
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#000000",
+                  "fontSize": "12pt",
+                  "lineHeight": null,
+                  "letterSpacing": null,
+                  "baselineShift": null,
+                  "fontFamily": "Arial"
+                }
+              },
+              {
+                "type": "bold"
+              }
+            ],
+            "text": "length i̇σος ß"
+          }
+        ]
+      }
+    ]
+  },
+  "rounds": [
+    {
+      "round": 1,
+      "bytes": 51877,
+      "sha256": "497f864cee53fd0ae84fcaa6c762b613063bc8d41657519b6472ac065ae332ce",
+      "texts": "Word character guard sampleSOURCEtargetlower οςTitle ΟςSentence. Οςtoggle οςUPPER ΟΣlength i̇σος ß"
+    },
+    {
+      "round": 2,
+      "bytes": 51871,
+      "sha256": "4cb05303bedd9488c21ab29ddede5835b8c9b43c3c948c6598c900133f04dae9",
+      "texts": "Word character guard sampleSOURCEtargetlower οςTitle ΟςSentence. Οςtoggle οςUPPER ΟΣlength i̇σος ß"
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,132 @@
+{
+  "run": "third 5272 fresh distribution, retries 0",
+  "status": "2 passed, 1 failed",
+  "preservedBeforeRetry": true,
+  "files": [
+    {
+      "file": "view-print.png",
+      "bytes": 54565,
+      "sha256": "859953296335ce4e2706f0d06d446fb130c9f1d557797f829de06c5fff03fbce"
+    },
+    {
+      "file": "view-print.pdf",
+      "bytes": 52100,
+      "sha256": "834502f05d0f4de6cff7ed6034658d765b0e58509493e4db18d04b6be43d2253"
+    },
+    {
+      "file": "view-roundtrip-2.xlsx",
+      "bytes": 9895,
+      "sha256": "d337fb0d457197fac32bc6c098bd0ca460b1d42a96cf9730dcc83d153aa56008"
+    },
+    {
+      "file": "view-readonly-preview.xlsx",
+      "bytes": 9862,
+      "sha256": "ea3a75539109dbb337b23820abc7bd9a1e3cf2125ad22ea176d155a8e2a5011c"
+    },
+    {
+      "file": "view-light-1280.png",
+      "bytes": 173618,
+      "sha256": "aa1a2b6f734c667e02f080a354785beed44c638e4bc45553d2934b38b941a0b1"
+    },
+    {
+      "file": "view-print-400.html",
+      "bytes": 47156,
+      "sha256": "26de5d83cfacc3d64214d5f41cd4635836c700e31bd1d38cad89f5b30798371a"
+    },
+    {
+      "file": "office-studio-sheet-view.spec.ts.txt",
+      "bytes": 24366,
+      "sha256": "815b5911d9db2095bb49fa50b90ab259aed8643f44917e0fa7480dbd90a1eddf"
+    },
+    {
+      "file": "view-preview-source.xlsx",
+      "bytes": 9112,
+      "sha256": "4cea99f47613bc80acced0e6c4e132e60e0d1ed9ecd858adb0503af593124e1b"
+    },
+    {
+      "file": "view-visual-source.xlsx",
+      "bytes": 9112,
+      "sha256": "884c441981a8b61bcfd69ff50188b0daccd1f6014e1ac6ba73b08660ce250609"
+    },
+    {
+      "file": "view-source.xlsx",
+      "bytes": 9113,
+      "sha256": "d3ca60cdf11b974ec5cc35368c5e2374bd0de7e15391ee0bbd8e7825f23e3fbb"
+    },
+    {
+      "file": "view-fill-400.png",
+      "bytes": 163819,
+      "sha256": "4593b724fca55accd316ad126521f31fc6a95f431576f18efce1770fd3546940"
+    },
+    {
+      "file": "view-protected.xlsx",
+      "bytes": 10026,
+      "sha256": "24d2070b8a8f091daf7c0de97e25066f7a3742aec2fbad7a1b528e0f5db65891"
+    },
+    {
+      "file": "view-dark-1280.png",
+      "bytes": 176581,
+      "sha256": "6c631408c5019fde3711d0bf42945f0adbe004c902627b61a53dfce76934a6fa"
+    },
+    {
+      "file": "view-print-100.html",
+      "bytes": 47156,
+      "sha256": "26de5d83cfacc3d64214d5f41cd4635836c700e31bd1d38cad89f5b30798371a"
+    },
+    {
+      "file": "view-preview-guards.png",
+      "bytes": 156979,
+      "sha256": "0d9480b602691f1ccc19ab88ebce5b4e1d8f33ea0a9933985499450fd2ded05f"
+    },
+    {
+      "file": "view-dark-320.png",
+      "bytes": 43123,
+      "sha256": "c732d394a0a9e9b86e8a1804472b0db3a78497249cdb9a6f390e2eb50170c36b"
+    },
+    {
+      "file": "view-roundtrip-1.xlsx",
+      "bytes": 9903,
+      "sha256": "2d34027d2b90afb0a4a03c379b0b427f679e1d4e8013d7849605dfa9a110d025"
+    },
+    {
+      "file": "view-light-320.png",
+      "bytes": 37516,
+      "sha256": "869e088fe5e1943b8b1b438ab55179531143e1017fd7149035df6e857f12874d"
+    },
+    {
+      "file": "view-reopened-400.png",
+      "bytes": 170555,
+      "sha256": "7cf78162805a1a62ccf15bed6cb5af5086106f8fec11b875bd9c4b57fbf9262e"
+    },
+    {
+      "file": "view-after-cancel.xlsx",
+      "bytes": 9862,
+      "sha256": "9e6d503368b0553ae49beb2d79415054ba25243e52f5ccb65c840dac3fa07620"
+    },
+    {
+      "file": "runner/run.log",
+      "bytes": 2941,
+      "sha256": "4379bb82b51587ecab6834b8667cc809114ef5239156681f3cfa12cef7c20544"
+    },
+    {
+      "file": "runner/results.json",
+      "bytes": 11379,
+      "sha256": "5d74638f5bb4e333faaaca9b6d15db137c6dccf2b3354f981f4c70f7d65263dc"
+    },
+    {
+      "file": "runner/artifacts/.last-run.json",
+      "bytes": 96,
+      "sha256": "6f3ecf5a3f248712581cad7b43d0572e4576c5a2d9cbc2a488d9a53af002cdee"
+    },
+    {
+      "file": "runner/artifacts/office-studio-sheet-view-v-47471-ight-dark-and-320px-layouts-chromium/trace.zip",
+      "bytes": 8933908,
+      "sha256": "024d9bcb90004727bad406201025b39959f05387f15950a76197ffc8d65c3d7c"
+    },
+    {
+      "file": "runner/artifacts/office-studio-sheet-view-v-47471-ight-dark-and-320px-layouts-chromium/error-context.md",
+      "bytes": 94516,
+      "sha256": "1826cd3b2cd98970d174470c668c42125c468a62a8f172d9ca33b44d66f03adc"
+    }
+  ]
+}

@@ -1,0 +1,538 @@
+import { expect, test, type Locator, type Page } from '@playwright/test';
+import { createHash } from 'node:crypto';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import path from 'node:path';
+import ExcelJS from '../docs/node_modules/exceljs/excel.js';
+import JSZip from '../docs/node_modules/jszip/lib/index.js';
+
+const audit = path.resolve('docs/audits/2026-11-27/sheet-view');
+const mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+const hash = (bytes: Buffer | string) => createHash('sha256').update(bytes).digest('hex');
+const wrapped = 'Zoom keeps wrapped text and the document row height.';
+const secondaryView =
+  '<sheetView workbookViewId="1" zoomScale="300" zoomScaleNormal="120" showGridLines="1" showRowColHeaders="false" showZeros="0" topLeftCell="K15"><pane state="split" xSplit="120" ySplit="240" topLeftCell="K15" activePane="bottomRight"/><selection pane="bottomRight" activeCell="K15" sqref="K15:L16"/></sheetView>';
+const primaryView =
+  '<sheetView workbookViewId="0" zoomScale="100" zoomScaleNormal="175" showGridLines="true" showRowColHeaders="1" showZeros="false" showOutlineSymbols="0" topLeftCell="D9"><pane state="frozen" xSplit="1" ySplit="1" topLeftCell="F8" activePane="bottomRight"/><selection pane="topLeft" activeCell="A1" sqref="A1"/><selection pane="bottomRight" activeCell="G9" sqref="G9:H10"/></sheetView>';
+async function fixture() {
+  const workbook = new ExcelJS.Workbook();
+  workbook.views = [
+    { x: 0, y: 0, width: 1200, height: 800, activeTab: 0 },
+    { x: 50, y: 50, width: 800, height: 600, activeTab: 1 },
+  ];
+  const main = workbook.addWorksheet('Main');
+  main.views = [{ state: 'frozen', xSplit: 1, ySplit: 1 }];
+  for (const column of ['A', 'B', 'C', 'D', 'E', 'F']) main.getColumn(column).width = 16;
+  main.getColumn('B').hidden = true;
+  main.getCell('A2').value = 'Hidden row';
+  main.getRow(2).hidden = true;
+  main.getCell('A1').value = 1;
+  main.getCell('A1').border = { right: { style: 'double', color: { argb: 'FF123456' } } };
+  main.getCell('C4').value = 10;
+  main.mergeCells('C9:E9');
+  main.getCell('C9').value = 'VISIBLE_MERGE';
+  main.getCell('C9').font = { name: 'Arial', size: 24 };
+  main.getCell('A12').value = wrapped;
+  main.getCell('A12').font = { name: 'Arial', size: 24 };
+  main.getCell('A12').alignment = { wrapText: true };
+  main.getCell('C13').value = 'CENTER_HEADING';
+  main.getCell('C13').font = { name: 'Arial', size: 24 };
+  for (const column of ['C', 'D', 'E'])
+    main.getCell(`${column}13`).alignment = {
+      horizontal: 'centerContinuous',
+      shrinkToFit: column === 'C',
+    };
+  main.getCell('F14').value = { formula: 'C4*2', result: 20 };
+  main.pageSetup = {
+    orientation: 'landscape',
+    scale: 83,
+    showGridLines: true,
+    showRowColHeaders: true,
+    printArea: 'A1:F14',
+  };
+  const hidden = workbook.addWorksheet('HiddenMaster');
+  for (const column of ['A', 'B', 'C', 'D']) hidden.getColumn(column).width = 16;
+  hidden.getColumn('A').hidden = true;
+  hidden.mergeCells('A1:C2');
+  hidden.getCell('A1').value = {
+    text: 'HIDDEN_MASTER',
+    hyperlink: 'https://example.com/sheet-view-master',
+  };
+  hidden.getCell('A1').font = { name: 'Arial', size: 24 };
+  hidden.getCell('A1').alignment = { wrapText: true };
+  hidden.getRow(1).hidden = true;
+  hidden.getCell('D2').value = 'VISIBLE_TAIL';
+  hidden.getCell('D3').value = 'CONTROL_ROW';
+  hidden.views = [{ state: 'frozen', xSplit: 3, ySplit: 3 }];
+  const small = workbook.addWorksheet('SmallNative');
+  small.getCell('A1').value = 'NATIVE_SMALL';
+  small.views = [
+    { state: 'normal', zoomScale: 10, showGridLines: false, showRowColHeaders: false },
+  ];
+  const zip = await JSZip.loadAsync(Buffer.from(await workbook.xlsx.writeBuffer()));
+  const raw = await zip.file('xl/worksheets/sheet1.xml')!.async('string');
+  zip.file(
+    'xl/worksheets/sheet1.xml',
+    raw.replace(
+      /<sheetViews\b[^>]*>[\s\S]*?<\/sheetViews>/,
+      `<sheetViews>${secondaryView}${primaryView}</sheetViews>`
+    )
+  );
+  return zip.generateAsync({ type: 'nodebuffer', compression: 'DEFLATE' });
+}
+async function importFile(page: Page, bytes: Buffer, name: string) {
+  await page
+    .getByLabel('导入文档文件', { exact: true })
+    .setInputFiles({ name, mimeType, buffer: bytes });
+  await expect(page.getByRole('textbox', { name: '文档名称', exact: true })).toHaveValue(name);
+}
+async function range(page: Page, value: string) {
+  const input = page.getByLabel('单元格地址', { exact: true });
+  await input.fill(value);
+  await input.press('Enter');
+}
+async function zoom(page: Page, value: number) {
+  const input = page.getByRole('textbox', { name: '工作表缩放百分比', exact: true });
+  await input.fill(String(value));
+  await input.press('Enter');
+  await expect(page.locator('.zuvi-studio-sheet')).toHaveAttribute(
+    'data-sheet-zoom',
+    String(value)
+  );
+}
+async function exportFile(page: Page) {
+  const pending = page.waitForEvent('download');
+  await page.getByRole('button', { name: '导出文件', exact: true }).click();
+  return readFile((await (await pending).path())!);
+}
+async function geometry(locator: Locator) {
+  return locator.evaluate((element) => {
+    const box = element.getBoundingClientRect();
+    const text = element.querySelector<HTMLElement>(
+      '.zuvi-studio-sheet-text,.studio-print-text-clip'
+    )!;
+    return {
+      width: box.width,
+      height: box.height,
+      left: box.left,
+      top: box.top,
+      textWidth: text.getBoundingClientRect().width,
+      lines: Array.from(
+        element.querySelectorAll<HTMLElement>(
+          '.zuvi-studio-sheet-text-transform>span,.studio-print-text-transform>span'
+        ),
+        (line) => {
+          const bounds = line.getBoundingClientRect();
+          return {
+            text: line.textContent,
+            x: bounds.left - box.left,
+            y: bounds.top - box.top,
+            width: bounds.width,
+            height: bounds.height,
+          };
+        }
+      ),
+    };
+  });
+}
+async function nativeView(bytes: Buffer) {
+  const zip = await JSZip.loadAsync(bytes);
+  const xml = await zip.file('xl/worksheets/sheet1.xml')!.async('string');
+  const views = xml.match(/<sheetView\b[\s\S]*?<\/sheetView>|<sheetView\b[^>]*\/>/g)!;
+  const native = new ExcelJS.Workbook();
+  await native.xlsx.load(bytes);
+  return { xml, views, workbook: native };
+}
+function attributes(tag: string) {
+  return Object.fromEntries(
+    Array.from(tag.matchAll(/\s([A-Za-z][\w:]*)="([^"]*)"/g), (match) => [match[1], match[2]])
+  );
+}
+async function installPrintCapture(page: Page) {
+  await page.addInitScript(() => {
+    window.print = () => {
+      window.parent.postMessage(
+        { type: 'sheet-view-print', html: document.documentElement.outerHTML },
+        '*'
+      );
+      window.dispatchEvent(new Event('afterprint'));
+    };
+    window.addEventListener('message', (event) => {
+      if (event.data?.type === 'sheet-view-print')
+        (window as Window & { sheetViewPrint?: string }).sheetViewPrint = event.data.html;
+    });
+  });
+}
+async function capturePrint(page: Page) {
+  await page.evaluate(() => {
+    (window as Window & { sheetViewPrint?: string }).sheetViewPrint = undefined;
+  });
+  await page.getByRole('button', { name: '打印', exact: true }).click();
+  await expect
+    .poll(() =>
+      page.evaluate(() => (window as Window & { sheetViewPrint?: string }).sheetViewPrint)
+    )
+    .toBeTruthy();
+  return page.evaluate(() => (window as Window & { sheetViewPrint?: string }).sheetViewPrint!);
+}
+
+test('view zoom and visibility use correct grid, fill, resize and native coordinates over two XLSX reopens', async ({
+  page,
+}) => {
+  test.setTimeout(150000);
+  await page.setViewportSize({ width: 1440, height: 1100 });
+  await mkdir(audit, { recursive: true });
+  const source = await fixture();
+  await writeFile(path.join(audit, 'view-source.xlsx'), source);
+  await page.goto('/#/components/office-studio');
+  await importFile(page, source, 'View.xlsx');
+  await page.getByRole('tab', { name: '视图', exact: true }).click();
+  const root = page.locator('.zuvi-studio-sheet');
+  const cell = (address: string) => page.getByRole('gridcell', { name: address, exact: true });
+  const initial = await geometry(cell('A1'));
+  await zoom(page, 25);
+  expect((await geometry(cell('A1'))).width).toBeCloseTo(initial.width / 4, 1);
+  await expect(page.getByRole('button', { name: '缩小工作表', exact: true })).toBeDisabled();
+  await cell('C4').click();
+  await page.getByRole('grid').press('Shift+ArrowDown');
+  await expect(page.getByLabel('单元格地址', { exact: true })).toHaveValue('C5');
+  await range(page, 'C4');
+  await zoom(page, 400);
+  expect((await geometry(cell('A1'))).width).toBeCloseTo(initial.width * 4, 1);
+  await expect(page.getByRole('button', { name: '放大工作表', exact: true })).toBeDisabled();
+  const grid = page.getByRole('grid');
+  await grid.evaluate((element) => {
+    element.scrollLeft = 117;
+    element.scrollTop = 96;
+  });
+  await expect
+    .poll(() => cell('A1').evaluate((element) => element.getBoundingClientRect().width))
+    .toBeCloseTo(initial.width * 4, 1);
+  const c4 = await cell('C4').boundingBox(),
+    c7 = await cell('C7').boundingBox();
+  const handle = await page.getByRole('button', { name: '填充柄', exact: true }).boundingBox();
+  expect(handle!.x + 4).toBeCloseTo(c4!.x + c4!.width, 1);
+  expect(handle!.y + 4).toBeCloseTo(c4!.y + c4!.height, 1);
+  await page.mouse.move(handle!.x + 4, handle!.y + 4);
+  await page.mouse.down();
+  await page.mouse.move(c7!.x + c7!.width / 2, c7!.y + c7!.height / 2, { steps: 8 });
+  await expect(page.locator('.zuvi-studio-sheet-fill-preview')).toHaveCount(1);
+  await page.screenshot({
+    path: path.join(audit, 'view-fill-400.png'),
+    fullPage: true,
+    animations: 'disabled',
+  });
+  await page.mouse.up();
+  for (const [address, value] of [
+    ['C5', '11'],
+    ['C6', '12'],
+    ['C7', '13'],
+  ])
+    await expect(cell(address)).toHaveText(value);
+  await page.getByRole('grid').press('Control+z');
+  await expect(cell('C7')).toHaveText('');
+  await page.getByRole('grid').press('Control+Shift+z');
+  await expect(cell('C7')).toHaveText('13');
+  const resize = page.getByRole('separator', { name: 'A 列宽', exact: true });
+  const resizeBox = await resize.boundingBox();
+  await page.mouse.move(resizeBox!.x + resizeBox!.width / 2, resizeBox!.y + resizeBox!.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(
+    resizeBox!.x + resizeBox!.width / 2 + 40,
+    resizeBox!.y + resizeBox!.height / 2,
+    { steps: 4 }
+  );
+  await page.mouse.up();
+  expect((await geometry(cell('A1'))).width).toBeCloseTo(initial.width * 4 + 40, 1);
+  await page.getByRole('grid').press('Control+z');
+  expect((await geometry(cell('A1'))).width).toBeCloseTo(initial.width * 4, 1);
+  await page.getByRole('checkbox', { name: '显示网格线', exact: true }).uncheck();
+  await expect(cell('A1')).toHaveCSS('border-right-color', 'rgb(18, 52, 86)');
+  await expect(cell('C4')).toHaveCSS('border-right-color', 'rgba(0, 0, 0, 0)');
+  await page.getByRole('checkbox', { name: '显示行列标题', exact: true }).uncheck();
+  await expect(page.getByRole('rowheader')).toHaveCount(0);
+  await expect(page.getByRole('columnheader')).toHaveCount(0);
+  await expect(grid).toHaveAttribute('aria-rowcount', '200');
+  await expect(cell('C4')).toHaveAttribute('aria-colindex', '3');
+  await range(page, 'C9');
+  await expect(cell('C9')).toHaveText('VISIBLE_MERGE');
+  const merged = await geometry(cell('C9'));
+  expect(merged.width).toBeCloseTo(initial.width * 12, 1);
+  const rounds = [];
+  for (let round = 1; round <= 2; round++) {
+    const bytes = await exportFile(page);
+    const file = `view-roundtrip-${round}.xlsx`;
+    await writeFile(path.join(audit, file), bytes);
+    const result = await nativeView(bytes);
+    expect(result.views).toHaveLength(2);
+    expect(result.views[0]).toBe(secondaryView);
+    expect(attributes(result.views[1].match(/^<sheetView\b[^>]*>/)![0])).toEqual({
+      ...attributes(primaryView.match(/^<sheetView\b[^>]*>/)![0]),
+      zoomScale: '400',
+      showGridLines: '0',
+      showRowColHeaders: '0',
+    });
+    expect(result.views[1].slice(result.views[1].indexOf('>') + 1)).toBe(
+      primaryView.slice(primaryView.indexOf('>') + 1)
+    );
+    const native = result.workbook.getWorksheet('Main')!;
+    expect(native.getCell('C5').value).toBe(11);
+    expect(native.getCell('C7').value).toBe(13);
+    expect(native.getCell('F14').value).toMatchObject({ formula: 'C4*2', result: 20 });
+    expect(native.model.merges).toContain('C9:E9');
+    expect(native.getColumn('B').hidden).toBe(true);
+    expect(native.getRow(2).hidden).toBe(true);
+    expect(native.getColumn('A').width).toBe(16);
+    expect(native.pageSetup.scale).toBe(83);
+    expect(native.pageSetup.showGridLines).toBe(true);
+    expect(native.pageSetup.showRowColHeaders).toBe(true);
+    expect(result.workbook.views[0].activeTab).toBe(0);
+    expect(result.workbook.views[1].activeTab).toBe(1);
+    expect(result.workbook.worksheets[result.workbook.views[1].activeTab!].name).toBe(
+      'HiddenMaster'
+    );
+    rounds.push({
+      file,
+      sha256: hash(bytes),
+      primary: result.views[1],
+      secondary: result.views[0],
+    });
+    await importFile(page, bytes, `View-reopened-${round}.xlsx`);
+    await expect(root).toHaveAttribute('data-sheet-zoom', '400');
+    await expect(root).toHaveAttribute('data-headers', 'false');
+    await range(page, 'C7');
+    await expect(cell('C7')).toHaveText('13');
+  }
+  await page.screenshot({
+    path: path.join(audit, 'view-reopened-400.png'),
+    fullPage: true,
+    animations: 'disabled',
+  });
+  await writeFile(
+    path.join(audit, 'browser-roundtrip-evidence.json'),
+    JSON.stringify(
+      { source: { file: 'view-source.xlsx', sha256: hash(source) }, initial, merged, rounds },
+      null,
+      2
+    ) + '\n'
+  );
+});
+
+test('native small zoom, invalid draft cancellation and read-only preview preserve the saved XLSX view', async ({
+  page,
+}) => {
+  test.setTimeout(90000);
+  await mkdir(audit, { recursive: true });
+  const source = await fixture();
+  await writeFile(path.join(audit, 'view-preview-source.xlsx'), source);
+  await page.goto('/#/components/office-studio');
+  await importFile(page, source, 'Preview.xlsx');
+  await page.getByRole('tab', { name: 'SmallNative', exact: true }).click();
+  await page.getByRole('tab', { name: '视图', exact: true }).click();
+  const root = page.locator('.zuvi-studio-sheet');
+  const input = page.getByRole('textbox', { name: '工作表缩放百分比', exact: true });
+  await expect(root).toHaveAttribute('data-sheet-zoom', '10');
+  await expect(input).toHaveValue('10');
+  await expect(page.getByRole('button', { name: '缩小工作表', exact: true })).toBeDisabled();
+  await input.fill('250');
+  await input.press('Escape');
+  await expect(input).toHaveValue('10');
+  const afterCancel = await exportFile(page);
+  await writeFile(path.join(audit, 'view-after-cancel.xlsx'), afterCancel);
+  const cancelled = new ExcelJS.Workbook();
+  await cancelled.xlsx.load(afterCancel);
+  expect(cancelled.getWorksheet('SmallNative')!.views[0].zoomScale).toBe(10);
+  await input.fill('401');
+  await page.getByRole('button', { name: '导出文件', exact: true }).click();
+  await expect(root).toHaveAttribute('data-studio-input-error');
+  await expect(page.locator('.zuvi-office-studio')).toContainText('25 至 400');
+  await input.press('Escape');
+  await expect(root).not.toHaveAttribute('data-studio-input-error');
+  await page.getByRole('button', { name: '放大工作表', exact: true }).click();
+  await expect(root).toHaveAttribute('data-sheet-zoom', '25');
+  await page.getByRole('grid').press('Control+z');
+  await expect(root).toHaveAttribute('data-sheet-zoom', '10');
+  await page.getByRole('switch', { name: '只读预览', exact: true }).click();
+  await zoom(page, 75);
+  await page.getByRole('checkbox', { name: '显示行列标题', exact: true }).check();
+  await expect(page.getByRole('rowheader').first()).toBeVisible();
+  const previewBytes = await exportFile(page);
+  await writeFile(path.join(audit, 'view-readonly-preview.xlsx'), previewBytes);
+  const previewNative = new ExcelJS.Workbook();
+  await previewNative.xlsx.load(previewBytes);
+  expect(previewNative.getWorksheet('SmallNative')!.views[0].zoomScale).toBe(10);
+  expect(previewNative.getWorksheet('SmallNative')!.views[0].showRowColHeaders).toBe(false);
+  await page.getByRole('switch', { name: '只读预览', exact: true }).click();
+  await expect(root).toHaveAttribute('data-sheet-zoom', '10');
+  await expect(root).toHaveAttribute('data-headers', 'false');
+  await page.getByRole('tab', { name: 'Main', exact: true }).click();
+  await range(page, 'C4');
+  await page.getByRole('tab', { name: '开始', exact: true }).click();
+  await page.getByRole('button', { name: '保护所选区域', exact: true }).click();
+  await page.getByRole('tab', { name: '视图', exact: true }).click();
+  await zoom(page, 25);
+  const protectedBytes = await exportFile(page);
+  await writeFile(path.join(audit, 'view-protected.xlsx'), protectedBytes);
+  const nativeProtected = new ExcelJS.Workbook();
+  await nativeProtected.xlsx.load(protectedBytes);
+  expect(nativeProtected.getWorksheet('Main')!.getCell('C4').protection.locked).toBe(true);
+  expect((await nativeView(protectedBytes)).views[1]).toContain('zoomScale="25"');
+  await page.screenshot({
+    path: path.join(audit, 'view-preview-guards.png'),
+    fullPage: true,
+    animations: 'disabled',
+  });
+  await writeFile(
+    path.join(audit, 'browser-preview-evidence.json'),
+    JSON.stringify(
+      {
+        source: hash(source),
+        cancel: hash(afterCancel),
+        readOnly: hash(previewBytes),
+        protected: hash(protectedBytes),
+        nativeZoom: 10,
+        localPreviewZoom: 75,
+        protectedViewZoom: 25,
+      },
+      null,
+      2
+    ) + '\n'
+  );
+});
+
+test('view geometry, hidden merge masters and print stay consistent in light, dark and 320px layouts', async ({
+  page,
+  context,
+}) => {
+  test.setTimeout(150000);
+  await mkdir(audit, { recursive: true });
+  await installPrintCapture(page);
+  const source = await fixture();
+  await writeFile(path.join(audit, 'view-visual-source.xlsx'), source);
+  await page.goto('/#/components/office-studio');
+  await importFile(page, source, 'Visual.xlsx');
+  await page.getByRole('tab', { name: '视图', exact: true }).click();
+  const cell = (address: string) => page.getByRole('gridcell', { name: address, exact: true });
+  await page.evaluate(() => document.fonts.ready);
+  await range(page, 'A12');
+  const base = await geometry(cell('A12'));
+  const print100 = await capturePrint(page);
+  await writeFile(path.join(audit, 'view-print-100.html'), print100);
+  await zoom(page, 400);
+  await range(page, 'A12');
+  const enlarged = await geometry(cell('A12'));
+  expect(enlarged.width).toBeCloseTo(base.width * 4, 1);
+  expect(enlarged.height).toBeCloseTo(base.height * 4, 1);
+  expect(enlarged.lines).toHaveLength(base.lines.length);
+  for (let index = 0; index < base.lines.length; index++) {
+    expect(enlarged.lines[index].x).toBeCloseTo(base.lines[index].x * 4, 1);
+    expect(enlarged.lines[index].y).toBeCloseTo(base.lines[index].y * 4, 1);
+  }
+  await page.getByRole('checkbox', { name: '显示网格线', exact: true }).uncheck();
+  await page.getByRole('checkbox', { name: '显示行列标题', exact: true }).uncheck();
+  const print400 = await capturePrint(page);
+  await writeFile(path.join(audit, 'view-print-400.html'), print400);
+  expect(print400).toBe(print100);
+  const preview = await context.newPage();
+  await preview.setContent(print400);
+  await preview.evaluate(() => document.fonts.ready);
+  const printed = await geometry(
+    preview
+      .locator('.studio-print-sheet')
+      .first()
+      .locator('td')
+      .filter({ hasText: wrapped })
+      .first()
+  );
+  expect(printed.width).toBeCloseTo(base.width, 1);
+  expect(printed.height).toBeCloseTo(base.height, 1);
+  expect(printed.lines).toHaveLength(base.lines.length);
+  await preview.screenshot({
+    path: path.join(audit, 'view-print.png'),
+    fullPage: true,
+    animations: 'disabled',
+  });
+  await preview.pdf({
+    path: path.join(audit, 'view-print.pdf'),
+    preferCSSPageSize: true,
+    printBackground: true,
+  });
+  await preview.close();
+  await page.getByRole('tab', { name: 'HiddenMaster', exact: true }).click();
+  await zoom(page, 25);
+  await range(page, 'A1');
+  const hidden25 = await geometry(cell('A1'));
+  expect(hidden25.width).toBeCloseTo(base.width / 2, 1);
+  expect(hidden25.height).toBeGreaterThan(9.2);
+  await expect(cell('A1')).toHaveText('HIDDEN_MASTER');
+  await expect(cell('D3')).toHaveText('CONTROL_ROW');
+  await expect(cell('A3')).toHaveCount(0);
+  await expect(cell('D1')).toHaveCount(0);
+  await zoom(page, 400);
+  await range(page, 'A1');
+  const hidden400 = await geometry(cell('A1'));
+  expect(hidden400.width).toBeCloseTo(hidden25.width * 16, 1);
+  expect(hidden400.height).toBeCloseTo(hidden25.height * 16, 1);
+  await page.getByRole('tab', { name: 'Main', exact: true }).click();
+  await zoom(page, 25);
+  await range(page, 'A1');
+  await page.getByRole('grid').evaluate((element) => {
+    element.scrollLeft = 0;
+    element.scrollTop = 0;
+  });
+  const screenshots = [];
+  for (const width of [1280, 320]) {
+    await page.setViewportSize({ width, height: width === 320 ? 720 : 1000 });
+    for (const theme of ['light', 'dark']) {
+      if (theme === 'dark')
+        await page.getByRole('button', { name: '切换暗色', exact: true }).click();
+      const file = `view-${theme}-${width}.png`;
+      await page
+        .getByRole('textbox', { name: '工作表缩放百分比', exact: true })
+        .scrollIntoViewIfNeeded();
+      await page.screenshot({
+        path: path.join(audit, file),
+        fullPage: true,
+        animations: 'disabled',
+      });
+      const dimensions = await page.locator('.zuvi-studio-sheet').evaluate((element) => ({
+        width: element.getBoundingClientRect().width,
+        documentWidth: document.documentElement.scrollWidth,
+        viewport: innerWidth,
+      }));
+      expect(dimensions.documentWidth).toBeLessThanOrEqual(width);
+      expect(dimensions.width).toBeLessThanOrEqual(width);
+      screenshots.push({ file, width, theme, dimensions });
+      if (theme === 'dark')
+        await page.getByRole('button', { name: '切换浅色', exact: true }).click();
+    }
+  }
+  await range(page, 'C4');
+  await cell('C4').dblclick();
+  const editor = page.getByRole('textbox', { name: '编辑 C4', exact: true });
+  await expect(editor).toBeFocused();
+  const editorBox = await editor.boundingBox();
+  expect(editorBox!.height).toBeGreaterThanOrEqual(23);
+  expect(editorBox!.width).toBeGreaterThanOrEqual(100);
+  await editor.fill('25');
+  await editor.press('Escape');
+  await expect(cell('C4')).toHaveText('10');
+  await writeFile(
+    path.join(audit, 'browser-visual-print-evidence.json'),
+    JSON.stringify(
+      {
+        source: hash(source),
+        base,
+        enlarged,
+        printed,
+        print100: hash(print100),
+        print400: hash(print400),
+        hidden25,
+        hidden400,
+        screenshots,
+        editor: editorBox,
+      },
+      null,
+      2
+    ) + '\n'
+  );
+});

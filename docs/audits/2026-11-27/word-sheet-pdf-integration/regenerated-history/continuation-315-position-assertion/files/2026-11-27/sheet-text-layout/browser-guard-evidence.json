@@ -1,0 +1,9 @@
+{
+  "sourceHash": "a92e9356f6a0191ebba4c583a68bef0cd160f889932e291dd1fe4b73175fe0ea",
+  "outputHash": "d351330c119f8f61f1e1f2d5ab3edebdfb36db0453540886e482762bd4c29801",
+  "invalidDraftRejected": true,
+  "cancelClearedGuard": true,
+  "protectedBatchRejected": true,
+  "undoStepsForProtection": 1,
+  "redoRestoredProtection": true
+}

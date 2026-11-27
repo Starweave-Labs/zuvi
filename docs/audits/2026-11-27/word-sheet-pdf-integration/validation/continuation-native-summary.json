@@ -1,0 +1,286 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "recordedAt": "2026-11-27T04:06:54.331296+00:00",
+  "counts": {
+    "wordDocx": 7,
+    "wordRenderedPages": 7,
+    "pdfNativeAnnotationFiles": 19,
+    "pdfNativeRenderedPages": 20,
+    "sheetXlsx": 2,
+    "sheetPrintPages": 4
+  },
+  "proofs": [
+    {
+      "path": "docs/audits/2026-11-27/word-basic-format/native-inspection.json",
+      "bytes": 21923,
+      "sha256": "fe0704981274300088912a993a9ba01bcde2e132794ab8b3e5f807458a40912e",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/word-basic-format/native-inspection.json",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/word-character-guards/native-inspection.json",
+      "bytes": 22690,
+      "sha256": "9bd3651254edd338315b4f261a9ad3e08d6d92167593874eb3eac20a8c459d6f",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/word-character-guards/native-inspection.json",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/independent-pypdf.json",
+      "bytes": 278291,
+      "sha256": "8c5af8017669a6a729dec0d597baa0df2586e3da235fa680883719c9b6136d5b",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/pdf-native-ui/browser-native/independent-pypdf.json",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-text-layer/independent-round-trips.json",
+      "bytes": 18838,
+      "sha256": "d213ae085636daa6d5fb9465d28005528e0f7ef924f1d17936a14bc7bf298ec5",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/pdf-text-layer/independent-round-trips.json",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/native-sheet-view-continuation.json",
+      "bytes": 1852,
+      "sha256": "d562c08754f93e948a71ba5c520e4b920c253df70beb38a12df5c6ccb101e4a1",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/native-sheet-view-continuation.json",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/sheet-print-continuation.json",
+      "bytes": 866,
+      "sha256": "158bfe35b1ccfe4a61202c0a984be209d1d84f6ed2fa06db64872a7bc2d54c03",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/sheet-print-continuation.json",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/native-pdf-visual-continuation.json",
+      "bytes": 8280,
+      "sha256": "5c54d62920a3b2ef183eb4464afd7fa2ccfda481ecd9b41225348c943195b750",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/native-pdf-visual-continuation.json",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/word-basic-render-comparison-continuation.json",
+      "bytes": 1030,
+      "sha256": "228fd4b8920b720e566ff0a2e418c288a895ea92fddbe1864bf604de62bfe6f5",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/word-basic-render-comparison-continuation.json",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/word-guards-render-comparison-continuation.json",
+      "bytes": 1085,
+      "sha256": "94063db42c2a3259000c0dcb0435c5bfd28e734cd37848a3081fcebe4545688b",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/word-guards-render-comparison-continuation.json",
+      "encoding": "original-bytes"
+    }
+  ],
+  "currentRunInputs": [
+    {
+      "path": "docs/audits/2026-11-27/word-basic-format/source.docx",
+      "bytes": 37046,
+      "sha256": "53eedd5e818f88c8c203c67fe07b3974248a0f34349bcbb4ef0ba64c0da18135",
+      "retainedPath": "docs/audits/2026-11-27/word-basic-format/source.docx",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/word-basic-format/roundtrip-1.docx",
+      "bytes": 47756,
+      "sha256": "fb7e7cfd4735f8762c817444c2189d8b17210bf9dde94bb6326f5c0062208fc8",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/word-basic-format/roundtrip-1.docx",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/word-basic-format/roundtrip-2.docx",
+      "bytes": 47745,
+      "sha256": "40615052aea744d3db7647a1817255352190f4ec7c031d0da35c446d66143295",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/word-basic-format/roundtrip-2.docx",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/word-basic-format/after-cancel.docx",
+      "bytes": 46725,
+      "sha256": "a1139821c07128dc33d7536153f8b47b8aa9b31407b3b380d4dc710edb1ba0d2",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/word-basic-format/after-cancel.docx",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/word-character-guards/source.docx",
+      "bytes": 37606,
+      "sha256": "a6633ea9cd6941c436bbcdd7dfd717f4eaedde552d421553c797d2e3d75ba5ef",
+      "retainedPath": "docs/audits/2026-11-27/word-character-guards/source.docx",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/word-character-guards/roundtrip-1.docx",
+      "bytes": 51877,
+      "sha256": "497f864cee53fd0ae84fcaa6c762b613063bc8d41657519b6472ac065ae332ce",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/word-character-guards/roundtrip-1.docx",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/word-character-guards/roundtrip-2.docx",
+      "bytes": 51871,
+      "sha256": "4cb05303bedd9488c21ab29ddede5835b8c9b43c3c948c6598c900133f04dae9",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/word-character-guards/roundtrip-2.docx",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/sheet-view/view-roundtrip-1.xlsx",
+      "bytes": 9913,
+      "sha256": "5647ead939336d090aa615e3fb764948e81dc8515e43f3f4acda123e6aa8721f",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/sheet-view/view-roundtrip-1.xlsx",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/sheet-view/view-roundtrip-2.xlsx",
+      "bytes": 9905,
+      "sha256": "dfcc8984059f1debf4467c0eaac8194cad42b1514a79300780b2b87215e197e8",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/sheet-view/view-roundtrip-2.xlsx",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/sheet-view/view-print.pdf",
+      "bytes": 52103,
+      "sha256": "45703eeba2ae14b45d6acae5d557461c06e4a580f79255bf8255d7b68d180b44",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/sheet-view/view-print.pdf",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p012-freetext-round-1.pdf",
+      "bytes": 1680532,
+      "sha256": "dd3b560b96465df36fb40772f67df2684c2f4180ddeb02018062089cd4ed5fc1",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/pdf-native-ui/browser-native/p012-freetext-round-1.pdf",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p012-freetext-round-2.pdf",
+      "bytes": 1680532,
+      "sha256": "dd3b560b96465df36fb40772f67df2684c2f4180ddeb02018062089cd4ed5fc1",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/pdf-native-ui/browser-native/p012-freetext-round-2.pdf",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p014-markers-round-1.pdf",
+      "bytes": 14008,
+      "sha256": "fe3c60cc71616b9ec6e744108be0f41d57b3e0021be67a4ec0174a995f5f0f0b",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/pdf-native-ui/browser-native/p014-markers-round-1.pdf",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p014-markers-round-2.pdf",
+      "bytes": 14008,
+      "sha256": "fe3c60cc71616b9ec6e744108be0f41d57b3e0021be67a4ec0174a995f5f0f0b",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/pdf-native-ui/browser-native/p014-markers-round-2.pdf",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p016-geometry-round-1.pdf",
+      "bytes": 16214,
+      "sha256": "c40e20bb5739680d8f2d193c873cd6ead2904c9b01ccbb5f01dde640cdb0d45e",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/pdf-native-ui/browser-native/p016-geometry-round-1.pdf",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p016-geometry-round-2.pdf",
+      "bytes": 16214,
+      "sha256": "c40e20bb5739680d8f2d193c873cd6ead2904c9b01ccbb5f01dde640cdb0d45e",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/pdf-native-ui/browser-native/p016-geometry-round-2.pdf",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/gesture-history-round-1.pdf",
+      "bytes": 1694005,
+      "sha256": "058e4c1f0b674c355afbf020e74fae1bb3667a9f45561dd656987ae4478a1c91",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/pdf-native-ui/browser-native/gesture-history-round-1.pdf",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/gesture-history-round-2.pdf",
+      "bytes": 1694005,
+      "sha256": "058e4c1f0b674c355afbf020e74fae1bb3667a9f45561dd656987ae4478a1c91",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/pdf-native-ui/browser-native/gesture-history-round-2.pdf",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p015-discussion-round-1.pdf",
+      "bytes": 1699169,
+      "sha256": "ca4420571e516d5c9e3fbd66aee666e69ecc6d39f63f1c539ef71c526d65d93f",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/pdf-native-ui/browser-native/p015-discussion-round-1.pdf",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p015-discussion-round-2.pdf",
+      "bytes": 1699169,
+      "sha256": "ca4420571e516d5c9e3fbd66aee666e69ecc6d39f63f1c539ef71c526d65d93f",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/pdf-native-ui/browser-native/p015-discussion-round-2.pdf",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/legacy-migration-round-1.pdf",
+      "bytes": 1684861,
+      "sha256": "8e1ef61c1cfcb7c6d8676926ac66afbf86df6c975e719180f90e822134067433",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/pdf-native-ui/browser-native/legacy-migration-round-1.pdf",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/legacy-migration-round-2.pdf",
+      "bytes": 1684861,
+      "sha256": "8e1ef61c1cfcb7c6d8676926ac66afbf86df6c975e719180f90e822134067433",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/pdf-native-ui/browser-native/legacy-migration-round-2.pdf",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/nonempty-recipe-round-1.pdf",
+      "bytes": 1639697,
+      "sha256": "2c0e96051e598bebd22918bfe653633c460750e9e91dd943b94a5ee5e4e67980",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/pdf-native-ui/browser-native/nonempty-recipe-round-1.pdf",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/nonempty-recipe-round-2.pdf",
+      "bytes": 1639697,
+      "sha256": "2c0e96051e598bebd22918bfe653633c460750e9e91dd943b94a5ee5e4e67980",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/pdf-native-ui/browser-native/nonempty-recipe-round-2.pdf",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/explicit-none-round-1.pdf",
+      "bytes": 1683016,
+      "sha256": "2cfdd35913bb08409d5f608287c7597d73ee995a109d6b23caeb9d1a76ceecbd",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/pdf-native-ui/browser-native/explicit-none-round-1.pdf",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/explicit-none-round-2.pdf",
+      "bytes": 1683966,
+      "sha256": "7ece58d499a4ac6ab4963c42c6fd4ceb03d05813036302a10fad0a77e0ff6e8a",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/pdf-native-ui/browser-native/explicit-none-round-2.pdf",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/permissions-readonly.pdf",
+      "bytes": 1695351,
+      "sha256": "dcc3aebe0976734bbc1d2115d16d3c873e85f07a7a2a4311be4661fb346fb0cd",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/pdf-native-ui/browser-native/permissions-readonly.pdf",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p015-resolved.pdf",
+      "bytes": 1698140,
+      "sha256": "0b2786cac529d0e912b9cc8b46a67063ae3861c9340b2e04ad5bf9fde949c354",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/pdf-native-ui/browser-native/p015-resolved.pdf",
+      "encoding": "original-bytes"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p015-parent-deleted.pdf",
+      "bytes": 1699127,
+      "sha256": "14b7af566170024d0ced1a1eff6d5b34c517435420044b05377fdaa834358e55",
+      "retainedPath": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/continuation-315-position-assertion/files/2026-11-27/pdf-native-ui/browser-native/p015-parent-deleted.pdf",
+      "encoding": "original-bytes"
+    }
+  ],
+  "visualReview": "Seven DOCX and twenty native annotation page renders are pixel-identical to accepted images; current Word guard, CJK FreeText, explicit-none pages and PDF page montage inspected.",
+  "textProbeCorrection": "Initial literal substring check did not handle line-wrapped PDF words. Same per-page text as baseline and complete glyph sequences were independently verified; sheet-print-continuation.json preserves the diagnostic.",
+  "restorationReceipt": "docs/audits/2026-11-27/word-sheet-pdf-integration/evidence-preservation/continuation-315-position-assertion-restoration.json"
+}

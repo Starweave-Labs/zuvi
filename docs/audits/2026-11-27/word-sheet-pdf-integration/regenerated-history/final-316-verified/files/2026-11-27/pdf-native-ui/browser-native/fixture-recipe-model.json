@@ -1,0 +1,201 @@
+{
+  "version": 1,
+  "id": "055c6c5c-4b8b-47c4-84a0-c0e506be4b9d",
+  "name": "Persisted-recipe.pdf",
+  "kind": "pdf",
+  "pageCount": 3,
+  "sourcePageCount": 2,
+  "pages": [
+    {
+      "id": "a8d5830c-13f2-43a5-b82d-68b8e9779150",
+      "sourcePage": 1,
+      "bounds": {
+        "left": 0,
+        "bottom": 0,
+        "right": 500,
+        "top": 700
+      }
+    },
+    {
+      "id": "recipe-ui-copy",
+      "sourcePage": 0,
+      "copyGroup": "recipe-ui-copy-group",
+      "bounds": {
+        "left": 0,
+        "bottom": 0,
+        "right": 500,
+        "top": 700
+      }
+    },
+    {
+      "id": "6ac171a7-bac9-4850-be98-0949038ba784",
+      "sourcePage": 0,
+      "bounds": {
+        "left": 0,
+        "bottom": 0,
+        "right": 500,
+        "top": 700
+      }
+    }
+  ],
+  "marks": [
+    {
+      "id": "annotation-copy:5e23a1843eb175e22fada57b34a1328a",
+      "nativeId": "annotation-copy:5e23a1843eb175e22fada57b34a1328a",
+      "page": 1,
+      "type": "text",
+      "x": 47,
+      "y": 462,
+      "width": 285,
+      "height": 50,
+      "text": "复制记录有独立中文",
+      "size": 16,
+      "color": "#1a334d",
+      "lineWidth": 0
+    },
+    {
+      "id": "recipe-ui-main",
+      "nativeId": "recipe-ui-main",
+      "page": 2,
+      "type": "text",
+      "x": 47,
+      "y": 462,
+      "width": 285,
+      "height": 50,
+      "text": "未保存记录原生中文",
+      "size": 16,
+      "color": "#1a334d",
+      "lineWidth": 0
+    }
+  ],
+  "rotations": {
+    "1": 90
+  },
+  "fields": [
+    {
+      "name": "reviewer",
+      "readOnly": false,
+      "type": "text",
+      "value": "Recipe current field",
+      "multiline": false,
+      "widgets": [
+        {
+          "page": 1,
+          "x": 29.5,
+          "y": 29.5,
+          "width": 261,
+          "height": 31,
+          "rotation": 0
+        },
+        {
+          "page": 2,
+          "x": 29.5,
+          "y": 29.5,
+          "width": 261,
+          "height": 31,
+          "rotation": 0
+        },
+        {
+          "page": 0,
+          "x": 29.5,
+          "y": 29.5,
+          "width": 261,
+          "height": 31,
+          "rotation": 0
+        }
+      ]
+    },
+    {
+      "name": "confirmed",
+      "readOnly": false,
+      "type": "checkbox",
+      "value": false,
+      "widgets": [
+        {
+          "page": 0,
+          "x": 319.5,
+          "y": 29.5,
+          "width": 21,
+          "height": 21,
+          "rotation": 0
+        }
+      ]
+    }
+  ],
+  "nativeAnnotations": {
+    "version": 1,
+    "sourceHash": "78eb0a7b35b23c633d9e1f07b6beb58a572448254c408fe671ff12ac794bee4e",
+    "bindings": [
+      {
+        "sourcePage": 0,
+        "nativePageId": "page:97f43569436890f2ea772a586bc771db",
+        "uiPageId": "6ac171a7-bac9-4850-be98-0949038ba784"
+      },
+      {
+        "sourcePage": 1,
+        "nativePageId": "page:57ccfbd736417fb5be6ee3245be0529f",
+        "uiPageId": "a8d5830c-13f2-43a5-b82d-68b8e9779150"
+      }
+    ],
+    "commands": [
+      {
+        "type": "mark",
+        "command": {
+          "type": "create",
+          "now": "2026-11-27T04:21:52.248Z",
+          "annotation": {
+            "id": "recipe-ui-main",
+            "pageId": "6ac171a7-bac9-4850-be98-0949038ba784",
+            "kind": "freeText",
+            "rect": [
+              45,
+              430,
+              330,
+              480
+            ],
+            "contents": "未保存记录原生中文",
+            "font": {
+              "family": "Noto Sans SC",
+              "size": 16,
+              "color": [
+                0.1,
+                0.2,
+                0.3
+              ]
+            }
+          }
+        }
+      },
+      {
+        "type": "layout",
+        "targets": [
+          {
+            "id": "a8d5830c-13f2-43a5-b82d-68b8e9779150",
+            "fromPageId": "a8d5830c-13f2-43a5-b82d-68b8e9779150"
+          },
+          {
+            "id": "recipe-ui-copy",
+            "fromPageId": "6ac171a7-bac9-4850-be98-0949038ba784",
+            "copyGroup": "recipe-ui-copy-group"
+          },
+          {
+            "id": "6ac171a7-bac9-4850-be98-0949038ba784",
+            "fromPageId": "6ac171a7-bac9-4850-be98-0949038ba784"
+          }
+        ]
+      },
+      {
+        "type": "mark",
+        "command": {
+          "type": "update",
+          "id": "annotation-copy:5e23a1843eb175e22fada57b34a1328a",
+          "patch": {
+            "kind": "freeText",
+            "contents": "复制记录有独立中文"
+          },
+          "now": "2026-11-27T04:21:52.248Z"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,4 @@
+source: 10 locales preserve all values, key order, descriptors, and independent objects
+ESM: 10 locales preserve all values, key order, descriptors, and independent objects
+CommonJS: 10 locales preserve all values, key order, descriptors, and independent objects
+Locale typecheck and partial merge / weekdays copy checks passed

@@ -1,0 +1,81 @@
+{
+  "operations": [
+    {
+      "label": "高亮",
+      "subtype": "Highlight",
+      "before": "e06948a453bff60272fb254b7f9a0bfd0a85c56571f0c04d098f59fb0a9f1d58",
+      "after": "580b3888ba71941b2f62944541b01da6ef366a6ef14f41dcce1000f3dd152077",
+      "quads": "[ 108.04689136656842 464.36 198.29399974368832 464.36 108.04689136656842 445.86 198.29399974368832 445.86 ]"
+    },
+    {
+      "label": "下划线",
+      "subtype": "Underline",
+      "before": "580b3888ba71941b2f62944541b01da6ef366a6ef14f41dcce1000f3dd152077",
+      "after": "c18fbfc6f1917e05fdbf0a5331561803953ea2559bd5e958b555060f117b0141",
+      "quads": "[ 70 431.488 124.25687720305415 431.488 70 416.688 124.25687720305415 416.688 ]"
+    },
+    {
+      "label": "删除线",
+      "subtype": "StrikeOut",
+      "before": "c18fbfc6f1917e05fdbf0a5331561803953ea2559bd5e958b555060f117b0141",
+      "after": "78d4ec95c4a192868f060f082d5e5e60488ba0fb21affcc155be8d2bc1425808",
+      "quads": "[ 175.14496140912286 340.41166385747704 220.29360166869841 361.4648205658022 181.3997116828852 326.99830860933463 226.54835194246076 348.0514653176598 ]"
+    },
+    {
+      "label": "波浪线",
+      "subtype": "Squiggly",
+      "before": "78d4ec95c4a192868f060f082d5e5e60488ba0fb21affcc155be8d2bc1425808",
+      "after": "5f0f07475c022716cfaf4350c717cfbe164010d1ddd7215e2720c250512bea2e",
+      "quads": "[ 203.88652911273442 464.36 300.08000000000004 464.36 203.88652911273442 445.86 300.08000000000004 445.86 ]"
+    }
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "hash": "5f0f07475c022716cfaf4350c717cfbe164010d1ddd7215e2720c250512bea2e",
+      "subtypes": [
+        "/Square",
+        "/Square",
+        "/Square",
+        "/Text",
+        "/Highlight",
+        "/Widget",
+        "/Highlight",
+        "/Underline",
+        "/StrikeOut",
+        "/Squiggly"
+      ],
+      "markedTextMouseCopy": "ECTABLE",
+      "sourceUnchanged": true,
+      "copyUndoDisabled": true
+    },
+    {
+      "round": 2,
+      "hash": "5f0f07475c022716cfaf4350c717cfbe164010d1ddd7215e2720c250512bea2e",
+      "subtypes": [
+        "/Square",
+        "/Square",
+        "/Square",
+        "/Text",
+        "/Highlight",
+        "/Widget",
+        "/Highlight",
+        "/Underline",
+        "/StrikeOut",
+        "/Squiggly"
+      ],
+      "markedTextMouseCopy": "ECTABLE",
+      "sourceUnchanged": true,
+      "copyUndoDisabled": true
+    }
+  ],
+  "originalStreams": [
+    [
+      "7efa696a67703091498587251f9206df7008a9ed568a76213c77db23a3fd888c"
+    ],
+    [
+      "6f8ef253926ce068d16dc68a5118d39054d88364041780d4aaf344fe466a3ed9"
+    ]
+  ],
+  "errors": []
+}
