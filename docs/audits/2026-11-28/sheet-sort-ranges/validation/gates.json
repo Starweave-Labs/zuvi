@@ -1,0 +1,123 @@
+[
+  {
+    "name": "registry-generate",
+    "command": [
+      "node",
+      "registry/scripts/generate.mjs"
+    ],
+    "startedAt": "2026-11-27T17:45:33.367436+00:00",
+    "finishedAt": "2026-11-27T17:45:33.504323+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "build",
+    "command": [
+      "pnpm",
+      "build"
+    ],
+    "startedAt": "2026-11-27T17:45:33.504615+00:00",
+    "finishedAt": "2026-11-27T17:46:05.203233+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "browser-build",
+    "command": [
+      "pnpm",
+      "--filter",
+      "@zuvi/react",
+      "build:browser"
+    ],
+    "startedAt": "2026-11-27T17:46:05.204640+00:00",
+    "finishedAt": "2026-11-27T17:46:08.503051+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "ui",
+    "command": [
+      "pnpm",
+      "--filter",
+      "@zuvi/react",
+      "exec",
+      "vitest",
+      "run",
+      "--minWorkers=1",
+      "--maxWorkers=4"
+    ],
+    "startedAt": "2026-11-27T17:46:08.503382+00:00",
+    "finishedAt": "2026-11-27T17:47:15.571688+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "docs",
+    "command": [
+      "pnpm",
+      "--filter",
+      "@zuvi/docs",
+      "test"
+    ],
+    "startedAt": "2026-11-27T17:47:15.572232+00:00",
+    "finishedAt": "2026-11-27T17:47:58.374743+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "types",
+    "command": [
+      "pnpm",
+      "typecheck"
+    ],
+    "startedAt": "2026-11-27T17:47:58.375291+00:00",
+    "finishedAt": "2026-11-27T17:48:17.256163+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "lint",
+    "command": [
+      "pnpm",
+      "lint"
+    ],
+    "startedAt": "2026-11-27T17:48:17.256808+00:00",
+    "finishedAt": "2026-11-27T17:48:28.533364+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "registry",
+    "command": [
+      "node",
+      "registry/scripts/generate.mjs",
+      "--check"
+    ],
+    "startedAt": "2026-11-27T17:48:28.533769+00:00",
+    "finishedAt": "2026-11-27T17:48:28.639581+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "consumer",
+    "command": [
+      "node",
+      "scripts/check-consumer.mjs"
+    ],
+    "startedAt": "2026-11-27T17:48:28.639916+00:00",
+    "finishedAt": "2026-11-27T17:48:35.007416+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "distribution",
+    "command": [
+      "node",
+      "scripts/check-distribution.mjs"
+    ],
+    "startedAt": "2026-11-27T17:48:35.007964+00:00",
+    "finishedAt": "2026-11-27T17:48:44.800785+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "bundle-size",
+    "command": [
+      "node",
+      "scripts/check-bundle-size.mjs"
+    ],
+    "startedAt": "2026-11-27T17:48:44.801187+00:00",
+    "finishedAt": "2026-11-27T17:48:45.477944+00:00",
+    "exitCode": 0
+  }
+]

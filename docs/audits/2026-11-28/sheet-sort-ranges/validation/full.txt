@@ -1,0 +1,26 @@
+[WebServer] (node:2510) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:2522) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 16 tests using 1 worker
+
+[WebServer] [BABEL] Note: The code generator has deoptimised the styling of /var/folders/9n/_523pt1s3gqg0f165zsdbldc0000gn/T/zuvi-office-e2e-vite-5302-2504/deps/react-dom_client.js?v=6e627143 as it exceeds the max of 500KB.
+  ✓   1 [chromium] › e2e/office-studio-sheet-arrays.spec.ts:9:1 › fixed and dynamic array formulas edit atomically, report conflicts and survive two native XLSX reopen cycles (11.6s)
+  ✓   2 [chromium] › e2e/office-studio-sheet-colors.spec.ts:6:1 › color filters survive editing, undo, export and reimport in the actual workbook UI (4.2s)
+  ✓   3 [chromium] › e2e/office-studio-sheet-duplicates.spec.ts:80:1 › duplicate records keep typed blanks, first rows, styles, links and outside data through history and two native reopens (8.9s)
+  ✓   4 [chromium] › e2e/office-studio-sheet-navigation.spec.ts:7:1 › Ctrl and Command Shift navigation retain the anchor, skip hidden data and format the native XLSX range atomically (5.1s)
+  ✓   5 [chromium] › e2e/office-studio-sheet-number-format.spec.ts:7:1 › custom formats preserve native values and formulas, preview regions, undo atomically and reopen twice in both themes and at 320px (9.4s)
+  ✓   6 [chromium] › e2e/office-studio-sheet-painter.spec.ts:7:1 › format painter applies rectangular snapshots atomically and retains native XLSX styles and content after reopening (9.1s)
+  ✓   7 [chromium] › e2e/office-studio-sheet-paste-options.spec.ts:7:1 › skip blanks and arithmetic Paste Special preserve native data and formulas, cancel errors atomically and distinguish reopened empty text (27.2s)
+  ✓   8 [chromium] › e2e/office-studio-sheet-series.spec.ts:8:1 › series stop drafts, per-track bounds and one-step history preserve native XLSX tails through repeated reopenings (14.4s)
+  ✓   9 [chromium] › e2e/office-studio-sheet-sort-ranges.spec.ts:9:1 › sorting preserves complete external ranges, calculated values and history through two native reopens (4.9s)
+  ✓  10 [chromium] › e2e/office-studio-sheet-text.spec.ts:170:1 › advanced text editing, native default font, automatic rows, print and two XLSX reopens use the actual editor (18.8s)
+  ✓  11 [chromium] › e2e/office-studio-sheet-text.spec.ts:567:1 › an upstream dynamic array grows beyond stored rows and exports current auto caches on the first save (5.5s)
+  ✓  12 [chromium] › e2e/office-studio-sheet-text.spec.ts:624:1 › text formatting holds invalid drafts, cancels cleanly and rejects protected batches before adding history (4.3s)
+  ✓  13 [chromium] › e2e/office-studio-sheet-view.spec.ts:179:1 › view zoom and visibility use correct grid, fill, resize and native coordinates over two XLSX reopens (8.5s)
+  ✓  14 [chromium] › e2e/office-studio-sheet-view.spec.ts:322:1 › native small zoom, invalid draft cancellation and read-only preview preserve the saved XLSX view (29.6s)
+  ✓  15 [chromium] › e2e/office-studio-sheet-view.spec.ts:407:1 › view geometry, hidden merge masters and print stay consistent in light, dark and 320px layouts (13.4s)
+  ✓  16 [chromium] › e2e/office-studio-sheet-visibility.spec.ts:73:1 › row and column visibility preserves sizing, history and native filter overlap through two reopens (10.7s)
+
+  16 passed (3.1m)

@@ -7827,46 +7827,103 @@
       ],
       "historicalStatus": "部分",
       "status": "audited-basic-acceptance-pending",
-      "evidence": [],
+      "evidence": [
+        "docs/audits/2026-11-28/sheet-sort-ranges/README.md",
+        "docs/audits/2026-11-28/sheet-sort-ranges/verification.json",
+        "docs/audits/2026-11-28/sheet-sort-ranges/validation/full.json",
+        "docs/audits/2026-11-28/sheet-sort-ranges/validation/source-freeze.json",
+        "docs/audits/2026-11-28/sheet-sort-ranges/validation/native-first.txt"
+      ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
+        "date": "2026-11-28",
+        "sourceCommit": "42c477a851815aa9acb6f049052d6360e428c496",
         "implementation": "基础实现",
-        "implementedBehavior": "多键优先级/方向、稳定排序、引用调整",
+        "implementedBehavior": "多键优先级/方向、稳定排序；修复外表A1区域尾端继承限定符，记录移动后完整保留外表区域及缓存。本表同记录区域分别迁移，越界或不安全依赖整次拒绝。",
         "functionalGaps": [
-          "扩展选区询问、浏览器原生排序链路和全边界待补"
+          "扩展选区询问以及多关键字实际流程的完整原始验收仍待补齐。"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
-            "line": 284,
-            "anchor": "const blocked"
+            "path": "docs/audits/2026-11-28/sheet-sort-ranges/README.md",
+            "line": 1,
+            "anchor": "bounded sorting reference fix; original X043 remains incomplete"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts",
-            "line": 1267,
-            "anchor": "async function checkSupportedWorkbook"
+            "path": "docs/audits/2026-11-28/sheet-sort-ranges/verification.json",
+            "line": 1,
+            "anchor": "bounded sorting reference fix; original X043 remains incomplete"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 136,
-            "anchor": "export interface StudioSheet"
+            "path": "docs/audits/2026-11-28/sheet-sort-ranges/validation/full.json",
+            "line": 1,
+            "anchor": "bounded sorting reference fix; original X043 remains incomplete"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
-            "line": 2391,
-            "anchor": "studioSortRangeByKeys"
+            "path": "docs/audits/2026-11-28/sheet-sort-ranges/validation/source-freeze.json",
+            "line": 1,
+            "anchor": "bounded sorting reference fix; original X043 remains incomplete"
+          },
+          {
+            "path": "docs/audits/2026-11-28/sheet-sort-ranges/validation/native-first.txt",
+            "line": 1,
+            "anchor": "bounded sorting reference fix; original X043 remains incomplete"
           }
         ],
         "existingTestFiles": [
-          "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx",
-          "docs/tests/studio-excel.test.mjs"
+          "packages/ui/src/components/OfficeStudio/studio-sheet-sort-ranges.test.ts",
+          "docs/tests/studio-sheet-sort-ranges.test.mjs",
+          "e2e/office-studio-sheet-sort-ranges.spec.ts"
         ],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "testEvidenceNote": "Current source passes UI2941/docs682, all public gates and all16 Excel browser tests. Preceding319 whole-site run is bound to db48794; no claim of a whole-site rerun after this local fix."
       },
       "gaps": [
-        "扩展选区询问、浏览器原生排序链路和全边界待补"
+        "扩展选区询问以及多关键字实际流程的完整原始验收仍待补齐。"
+      ],
+      "auditHistory": [
+        {
+          "status": "audited-basic-acceptance-pending",
+          "gaps": [
+            "扩展选区询问、浏览器原生排序链路和全边界待补"
+          ],
+          "currentAudit": {
+            "date": "2026-11-25",
+            "sourceCommit": "2382530",
+            "implementation": "基础实现",
+            "implementedBehavior": "多键优先级/方向、稳定排序、引用调整",
+            "functionalGaps": [
+              "扩展选区询问、浏览器原生排序链路和全边界待补"
+            ],
+            "acceptance": "not-proven-complete",
+            "evidence": [
+              {
+                "path": "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+                "line": 284,
+                "anchor": "const blocked"
+              },
+              {
+                "path": "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts",
+                "line": 1267,
+                "anchor": "async function checkSupportedWorkbook"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
+                "line": 136,
+                "anchor": "export interface StudioSheet"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+                "line": 2391,
+                "anchor": "studioSortRangeByKeys"
+              }
+            ],
+            "existingTestFiles": [
+              "packages/ui/src/components/OfficeStudio/StudioSheet.test.tsx",
+              "docs/tests/studio-excel.test.mjs"
+            ],
+            "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+          }
+        }
       ]
     },
     {
@@ -11682,5 +11739,15 @@
       "browserRetries": 0,
       "verification": "docs/audits/2026-11-27/sheet-visibility/verification.json"
     }
-  ]
+  ],
+  "lastPatch": {
+    "date": "2026-11-28",
+    "sourceCommit": "42c477a851815aa9acb6f049052d6360e428c496",
+    "item": "X043",
+    "complete": false,
+    "browserScope": "Excel",
+    "browserPassed": 16,
+    "wholeSiteRerunAfterPatch": false,
+    "verification": "docs/audits/2026-11-28/sheet-sort-ranges/verification.json"
+  }
 }

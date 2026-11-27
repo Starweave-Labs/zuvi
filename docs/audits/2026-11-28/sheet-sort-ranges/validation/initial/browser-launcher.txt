@@ -1,0 +1,1 @@
+{"status": "completed", "startedAt": "2026-11-27T17:49:35.269786+00:00", "port": 5300, "workers": 1, "retries": 0, "sourceFreeze": "source-freeze.json", "exitCode": 1, "finishedAt": "2026-11-27T17:53:02.217728+00:00", "stats": {"startTime": "2026-11-27T17:49:35.827Z", "duration": 206364.469, "expected": 15, "skipped": 0, "unexpected": 1, "flaky": 0}}

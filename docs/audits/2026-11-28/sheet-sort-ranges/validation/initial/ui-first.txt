@@ -1,0 +1,76 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/studio-sheet-model.test.ts (56 tests) 776ms
+   ✓ Office Studio sheet calculations > preserves real parser errors and scalar labels when each source module uses a separate realm 584ms
+ ✓ src/components/OfficeStudio/studio-sheet-duplicates.test.ts (19 tests) 106ms
+ ✓ src/components/OfficeStudio/StudioSheet.duplicates.test.tsx (5 tests) 1219ms
+   ✓ duplicate removal through actual spreadsheet controls > compares selected columns, retains the header, reports counts and restores one history step 460ms
+ ✓ src/components/OfficeStudio/StudioSheet.test.tsx (86 tests) 42874ms
+   ✓ StudioSheet Office editing details > commits a valid cell draft before keyboard copying and blocks invalid drafts without replacing the previous snapshot 777ms
+   ✓ StudioSheet Office editing details > captures a keyboard copy without DOM text selection, allows read-only copying and guards disabled/IME events 791ms
+   ✓ StudioSheet Office editing details > skips formatted blank sources, multiplies zeros and booleans, and restores the complete paste with one undo/redo 671ms
+   ✓ StudioSheet Office editing details > keeps divide-by-zero failure inside Paste Special and allows correction without a partial write 607ms
+   ✓ StudioSheet Office editing details > retains Paste Special option drafts across permissions and cancels them without changing the document 667ms
+   ✓ StudioSheet Office editing details > validates stop drafts, fills only through a decimal boundary and undoes the batch without warning about the untouched tail 480ms
+   ✓ StudioSheet Office editing details > fills through an ISO date stop across the leap day and keeps invalid date drafts reviewable 550ms
+   ✓ StudioSheet Office editing details > preserves stop drafts across read-only and disabled states, cancels without a write, then fills padded text from two seeds 966ms
+   ✓ StudioSheet Office editing details > clears displayed fill and keeps the full painted selection when its last row is hidden 427ms
+   ✓ StudioSheet Office editing details > paints a complete pointer selection once, and restores the whole operation with undo/redo 674ms
+   ✓ StudioSheet Office editing details > keeps a frozen source in continuous mode, cancels previews and stops on Escape or permission changes 595ms
+   ✓ StudioSheet Office editing details > applies a keyboard-selected target on Enter and retains the brush after an atomic failure 808ms
+   ✓ StudioSheet Office editing details > blocks invalid input before copying and cancels the painter when changing sheets or importing another document 1943ms
+   ✓ StudioSheet Office editing details > creates dynamic and fixed arrays through the dialog, protects results and restores one transaction with undo/redo 886ms
+   ✓ StudioSheet Office editing details > creates a fixed array with Ctrl+Shift+Enter, ignores IME Enter and cancels the dialog without a transaction 402ms
+   ✓ StudioSheet Office editing details > protects a selected range, rejects a spill through it and restores the array after unprotecting 664ms
+   ✓ StudioSheet Office editing details > opens search with shortcuts, replaces only captured selection and undoes once 348ms
+   ✓ StudioSheet Office editing details > searches across worksheets and temporarily reveals hidden matches without changing hidden rows 358ms
+   ✓ StudioSheet Office editing details > sets selected column widths, validates inputs, restores default and supports undo 504ms
+   ✓ StudioSheet hyperlinks > keeps empty formula and hidden numeric displays while showing labels for truly empty linked cells 483ms
+   ✓ StudioSheet hyperlinks > preserves numeric input when editing link metadata and undoes display text with its link in one step 521ms
+   ✓ StudioSheet hyperlinks > keeps both the input and link unchanged when edited display text fails data validation 356ms
+   ✓ StudioSheet hyperlinks > scrolls to same-sheet links and expands another sheet view without editing its saved dimensions in read-only mode 400ms
+   ✓ StudioSheet hyperlinks > copies hyperlink ranges in the version 3 clipboard and pastes values and links together 469ms
+   ✓ StudioSheet rules and fill > creates, recalculates and deletes a conditional format with undo and rule editing 1019ms
+   ✓ StudioSheet rules and fill > uses a numeric validation list and preserves a rejected draft across pointer selection and atomic paste 762ms
+   ✓ StudioSheet rules and fill > creates a validation rule and permits warning values while marking them invalid 597ms
+   ✓ StudioSheet rules and fill > summarizes actual invalid destinations for warning rules with error prompts true after unchanged fill, series and ragged paste 863ms
+   ✓ StudioSheet rules and fill > summarizes actual invalid destinations for information rules with error prompts true after unchanged fill, series and ragged paste 894ms
+   ✓ StudioSheet rules and fill > summarizes actual invalid destinations for warning rules with error prompts false after unchanged fill, series and ragged paste 974ms
+   ✓ StudioSheet rules and fill > fills relative formulas and full direct styles using the toolbar and keyboard 603ms
+   ✓ StudioSheet rules and fill > fills a leap-day date series and prevents changes in read-only rule inspection 644ms
+   ✓ StudioSheet rules and fill > rejects a toolbar fill atomically when a destination violates its validation 390ms
+   ✓ StudioSheet > edits selected fonts and sizes, keeps links and values, and restores both with undo 525ms
+   ✓ StudioSheet > edits a cell and recalculates dependencies; blur followed by formatting preserves the new value 838ms
+   ✓ StudioSheet > preserves a staged disabled cell input until editing resumes 722ms
+   ✓ StudioSheet > preserves a staged readOnly cell input until editing resumes 457ms
+   ✓ StudioSheet > preserves a staged disabled formula input until editing resumes 512ms
+   ✓ StudioSheet > preserves a staged readOnly formula input until editing resumes 327ms
+   ✓ StudioSheet > returns to the staged cell after another sheet is viewed while read-only 876ms
+   ✓ StudioSheet > pastes and copies a rectangular selection, then undoes and redoes the batch 496ms
+   ✓ StudioSheet > opens Paste Special for an internal copy, pastes the copied value once and undoes atomically 441ms
+   ✓ StudioSheet > relocates internally copied formulas and keeps external TSV formulas unchanged 664ms
+   ✓ StudioSheet > deletes an unreferenced active sheet with undo and redo while protecting formulas and the final sheet 575ms
+   ✓ StudioSheet > inserts and deletes selected rows and columns with pending input, dependent formulas and full undo snapshots 1105ms
+   ✓ StudioSheet > rejects out-of-capacity insertion without changing the model 308ms
+   ✓ StudioSheet > inserts an automatic sum below the selection and preserves the formula when the formula bar gains focus 351ms
+   ✓ StudioSheet > keeps the large sheet windowed and navigates to cells beyond the initial viewport 404ms
+   ✓ StudioSheet > allows viewing other sheets in read-only mode without allowing document mutations 421ms
+   ✓ StudioSheet > adds and renames a worksheet and updates dependent formula references 747ms
+   ✓ StudioSheet > prevents destructive merges, merges empty descendants with editable master, and splits via the same toolbar 1163ms
+   ✓ StudioSheet > keeps frozen rows and columns mounted and pinned after the virtual viewport scrolls 390ms
+   ✓ StudioSheet > freezes only visible rows inside the actual freeze boundary when filtering hides earlier rows 312ms
+   ✓ StudioSheet > sorts data with formulas, filters rows without deletion, and creates an editable chart from the same cells 1198ms
+   ✓ StudioSheet > sorts by multiple keys with per-level directions from the sort dialog 331ms
+   ✓ StudioSheet > filters rows by fill color through the color criterion picker 857ms
+   ✓ StudioSheet row sizes and font drafts > sets selected row heights, rejects malformed input, hides with zero and restores dimensions with undo 1076ms
+   ✓ StudioSheet row sizes and font drafts > applies a typed decimal font size to the retained selected range, then cancels a draft without editing it 380ms
+   ✓ StudioSheet 填充柄 > 拖拽经数据验证：warning 汇总、stop 原子取消 349ms
+   ✓ StudioSheet Ctrl+方向键数据块导航 > Command+Shift works in readonly mode and disabled/composing events leave selection unchanged 333ms
+ ✓ src/components/OfficeStudio/studio-sheet-sort-ranges.test.ts (5 tests) 71ms
+
+ Test Files  5 passed (5)
+      Tests  171 passed (171)
+   Start at  01:43:57
+   Duration  45.42s (transform 1.08s, setup 497ms, collect 1.97s, tests 45.05s, environment 1.49s, prepare 196ms)
+
