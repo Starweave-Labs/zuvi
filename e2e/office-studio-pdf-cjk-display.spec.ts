@@ -100,8 +100,18 @@ test('renders CJK FreeText once in the actual fresh OfficeStudio without diagnos
   expect(result.dom).toHaveLength(1); expect(result.dom[0]).toMatchObject({ text: contents, role: 'comment', position: 'absolute', color: 'rgba(0, 0, 0, 0)', opacity: '0' });
   expect(result.dom[0].display).not.toBe('none');
   const cjk = result.paints.filter(value => /px g_d\d+_f\d+,/.test(value.font)); expect(cjk).toHaveLength([...contents].length);
-  const baseline = JSON.parse(await readFile(baselineFile, 'utf8')) as { after: { canvases: string[] } };
-  expect(result.canvasHashes).toEqual(baseline.after.canvases);
+  // 基线是 macOS 字体光栅化的画布哈希；Linux 光栅化必然不同，因此仅在有匹配基线的
+  // 平台（darwin，或显式注入 ZUVI_CJK_BASELINE）比对像素，其余平台保留结构/绘制/
+  // 持久化断言。嵌入 canvas 的一致性已由上一个用例的同会话前后对比覆盖。
+  const comparePixels = process.platform === 'darwin' || !!process.env.ZUVI_CJK_BASELINE;
+  let canvasPixelsEqualBaseline: boolean;
+  if (comparePixels) {
+    const baseline = JSON.parse(await readFile(baselineFile, 'utf8')) as { after: { canvases: string[] } };
+    expect(result.canvasHashes).toEqual(baseline.after.canvases);
+    canvasPixelsEqualBaseline = true;
+  } else {
+    canvasPixelsEqualBaseline = false;
+  }
   await page.screenshot({ path: path.join(audit, 'actual-production-fixed.png'), fullPage: true, animations: 'disabled' });
   const persisted = await page.evaluate(async () => {
     const modulePath = '/src/pages/collaboration/office-studio/studio-storage.ts';
@@ -111,5 +121,5 @@ test('renders CJK FreeText once in the actual fresh OfficeStudio without diagnos
     return [...new Uint8Array(await crypto.subtle.digest('SHA-256', await file.source.arrayBuffer()))].map(value => value.toString(16).padStart(2, '0')).join('');
   });
   expect(persisted).toBe(sourceHash);
-  await writeFile(path.join(audit, 'actual-final.json'), JSON.stringify({ sourceHash, persisted, ...result, cjkPaintCount: cjk.length, canvasPixelsEqualBaseline: true }, null, 2) + '\n');
+  await writeFile(path.join(audit, 'actual-final.json'), JSON.stringify({ sourceHash, persisted, ...result, cjkPaintCount: cjk.length, canvasPixelsEqualBaseline, pixelBaselinePlatform: comparePixels ? process.platform : 'none' }, null, 2) + '\n');
 });
