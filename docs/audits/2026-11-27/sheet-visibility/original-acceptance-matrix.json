@@ -1,0 +1,81 @@
+{
+  "sourceCommit": "14dde22a9767e40355d91a54634a95e88a0a23d6",
+  "date": "2026-11-27",
+  "whole159Complete": false,
+  "items": [
+    {
+      "id": "W018",
+      "originalAcceptance": "显示空格制表与段落结束，导出不写入可见符号",
+      "status": "verified-original-acceptance",
+      "commonAcceptance": [
+        {
+          "criterion": "操作前后数据及格式",
+          "evidence": "Inline/widget decorations display space, tab and paragraph markers while JSON, HTML, original text and formatting remain unchanged; actual component changes no document data.",
+          "status": "verified"
+        },
+        {
+          "criterion": "选区、焦点、IME和取消",
+          "evidence": "The toolbar preserves selection; IME and input-control shortcuts are isolated. Closing the pure view removes decorations without a data draft; actual browser input retains the intended caret position.",
+          "status": "verified"
+        },
+        {
+          "criterion": "一次撤销、重做",
+          "evidence": "View transactions use addToHistory=false. Model history depths, component text formatting undo/redo and actual browser text editing undo/redo remain correct after view toggles.",
+          "status": "verified"
+        },
+        {
+          "criterion": "只读和禁用命令",
+          "evidence": "readOnly permits local viewing; disabled blocks all toggle routes and shortcuts. Component tests verify no onChange, and the browser verifies read-only viewing.",
+          "status": "verified"
+        },
+        {
+          "criterion": "原生文件保存重开",
+          "evidence": "The final frozen browser run imports native DOCX, edits, downloads/reopens twice, resets the local preference and displays tabs again. Independent ZIP/XML checks all body/header/footer text has no injected view symbols.",
+          "status": "verified"
+        },
+        {
+          "criterion": "失败后原数据不变",
+          "evidence": "Disabled/IME/input-control refusals issue no update or onChange. Toggling view does not modify serialized data or partially accept a data transaction.",
+          "status": "verified"
+        }
+      ]
+    },
+    {
+      "id": "X030",
+      "originalAcceptance": "隐藏列、选区显示、全表显示与键盘导航",
+      "status": "verified-original-acceptance",
+      "commonAcceptance": [
+        {
+          "criterion": "操作前后数据及格式",
+          "evidence": "Selected-range and whole-sheet commands keep cell objects, formulas, dimensions, auto/fixed identities, other sheets and filters; model/UI and independent native XML checks pass.",
+          "status": "verified"
+        },
+        {
+          "criterion": "选区、焦点、IME和取消",
+          "evidence": "Visible focus recovery, merged-cell navigation, Home/End and extended selection skip hidden columns/rows; IME and invalid drafts refuse mutation, Escape recovers the original draft.",
+          "status": "verified"
+        },
+        {
+          "criterion": "一次撤销、重做",
+          "evidence": "Each hide/show uses the existing single transaction; model/UI and the actual imported-file browser flow verify one undo and redo. No-op commands retain document identity.",
+          "status": "verified"
+        },
+        {
+          "criterion": "只读和禁用命令",
+          "evidence": "All six write commands are disabled in readOnly and disabled component states; actual browser verifies the read-only controls. Navigation remains available in readOnly mode.",
+          "status": "verified"
+        },
+        {
+          "criterion": "原生文件保存重开",
+          "evidence": "Real XLSX source is imported, edited and downloaded/reopened twice; independent ZIP/XML verifies manual/filter overlap, row heights, sizing modes, widths and formula/cache. External unhide and legacy row insertion have native regressions.",
+          "status": "verified"
+        },
+        {
+          "criterion": "失败后原数据不变",
+          "evidence": "Invalid ranges, all-hidden requests and malformed metadata fail atomically; invalid source bytes, legacy source/model and blocked command data remain unchanged.",
+          "status": "verified"
+        }
+      ]
+    }
+  ]
+}

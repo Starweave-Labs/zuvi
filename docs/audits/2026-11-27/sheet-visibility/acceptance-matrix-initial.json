@@ -1,0 +1,43 @@
+{
+  "id": "X030",
+  "originalAcceptance": "隐藏列、选区显示、全表显示与键盘导航",
+  "commonAcceptance": [
+    {
+      "criterion": "操作前后数据及格式",
+      "evidence": "Model keeps cells, dimensions and auto/fixed identities; range commands affect all selected columns/rows and keep other sheets and filters.",
+      "status": "awaiting-final-integration"
+    },
+    {
+      "criterion": "选区、焦点、IME和取消",
+      "evidence": "Grid focus and visible destination after hiding; composition and invalid editing block the command; Escape restores the original draft.",
+      "status": "awaiting-final-integration"
+    },
+    {
+      "criterion": "一次撤销、重做",
+      "evidence": "Independent hide/show transactions and undo/redo, plus no-op identity checks.",
+      "status": "awaiting-final-integration"
+    },
+    {
+      "criterion": "只读和禁用命令",
+      "evidence": "All six write controls disabled in component tests; actual browser read-only check and ordinary/extended navigation tests.",
+      "status": "awaiting-final-integration"
+    },
+    {
+      "criterion": "原生文件保存重开",
+      "evidence": "Actual imported XLSX, two download/reopen passes, raw native hidden flags and dimensions plus manual/filter overlap; selected/all show and final reopen.",
+      "status": "awaiting-final-integration"
+    },
+    {
+      "criterion": "失败后原数据不变",
+      "evidence": "Atomic invalid-range/all-hidden refusal; invalid metadata import keeps bytes; legacy export hydration does not mutate model or source.",
+      "status": "awaiting-final-integration"
+    }
+  ],
+  "nativeInteroperability": {
+    "standardHiddenFlags": true,
+    "manualFilterOverlap": "Ignorable urn:zuvi:office-studio manualHiddenRows attribute; intersected with native hidden flags on import. Ordinary external files without the attribute retain the existing filtered/manual inference. External native unhide removes stale manual markers.",
+    "legacyHydration": "Source indexes map through structure edits before manual/filter decisions are combined.",
+    "autoRowHeight": "Automatic export may refresh height caches; manual commands retain the original model height/mode objects."
+  },
+  "whole159Complete": false
+}

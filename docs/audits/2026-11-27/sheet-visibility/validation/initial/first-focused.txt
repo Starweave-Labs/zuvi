@@ -1,0 +1,11 @@
+[WebServer] (node:4035) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:4056) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+[WebServer] [BABEL] Note: The code generator has deoptimised the styling of /var/folders/9n/_523pt1s3gqg0f165zsdbldc0000gn/T/zuvi-office-e2e-vite-5287-3940/deps/react-dom_client.js?v=4fe4398c as it exceeds the max of 500KB.
+  ✓  1 [chromium] › e2e/office-studio-sheet-visibility.spec.ts:73:1 › row and column visibility preserves sizing, history and native filter overlap through two reopens (22.2s)
+
+  1 passed (27.3s)

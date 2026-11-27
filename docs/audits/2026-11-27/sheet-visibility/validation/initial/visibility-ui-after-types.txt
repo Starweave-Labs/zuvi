@@ -1,0 +1,16 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/StudioSheet.visibility.test.tsx (10 tests) 14124ms
+   ✓ visibility through the actual sheet controls > changes all selected columns, restores only the selection, then shows all with individual history 3084ms
+   ✓ visibility through the actual sheet controls > restores hidden row dimensions and modes through selection and all-row commands while preserving filtering 2708ms
+   ✓ visibility through the actual sheet controls > skips hidden columns after merged cells and retains a visible merge with hidden origins 2174ms
+   ✓ visibility through the actual sheet controls > keeps ordinary and extended navigation on visible columns including the final boundary 979ms
+   ✓ visibility through the actual sheet controls > rejects IME and invalid input without a visibility transaction, then recovers after cancellation 2352ms
+   ✓ visibility through the actual sheet controls > guards all six write commands in read-only and disabled states and refuses all-column hiding 2789ms
+
+ Test Files  1 passed (1)
+      Tests  10 passed (10)
+   Start at  14:35:10
+   Duration  21.03s (transform 2.62s, setup 397ms, collect 4.00s, tests 14.12s, environment 1.73s, prepare 227ms)
+
