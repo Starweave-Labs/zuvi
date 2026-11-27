@@ -124,6 +124,11 @@ import {
   type SheetDuplicatesDialogState,
 } from './StudioSheetDuplicatesDialog';
 import { studioRemoveSheetDuplicates } from './studio-sheet-duplicates';
+import {
+  StudioSheetFilterValuesDialog,
+  STUDIO_FILTER_VALUES_LIMIT,
+  type SheetFilterValuesDialogState,
+} from './StudioSheetFilterValuesDialog';
 import { StudioRibbonTabs } from './StudioRibbon';
 import { StudioSheetHyperlinkDialog } from './StudioSheetHyperlinkDialog';
 import {
@@ -284,6 +289,8 @@ export function StudioSheet({
   const [duplicatesDialog, setDuplicatesDialog] = React.useState<SheetDuplicatesDialogState | null>(
     null
   );
+  const [filterValuesDraft, setFilterValuesDraft] = React.useState<readonly string[] | null>(null);
+  const [valuesDialog, setValuesDialog] = React.useState<SheetFilterValuesDialogState | null>(null);
   const [linkDialog, setLinkDialog] = React.useState<SheetHyperlinkDialogState | null>(null);
   const [numberDialog, setNumberDialog] = React.useState<SheetNumberFormatDialogState | null>(null);
   const [textDialog, setTextDialog] = React.useState<SheetTextDialogState | null>(null);
@@ -644,6 +651,7 @@ export function StudioSheet({
   React.useEffect(() => {
     if (document !== expectedRef.current) {
       setDuplicatesDialog(null);
+      setValuesDialog(null);
       setNumberDialog(null);
       setTextDialog(null);
       setTextDraftError('');
@@ -692,6 +700,8 @@ export function StudioSheet({
     cancelPainter();
     setFilterColumn('A');
     setFilterValue('');
+    setFilterValuesDraft(null);
+    setValuesDialog(null);
     setSelectedChart('');
     setRuleDialog(null);
     setLinkDialog(null);
@@ -1989,12 +1999,21 @@ export function StudioSheet({
     );
   }
 
-  function applyFilter() {
+  function applyFilter(valuesOverride?: readonly string[]) {
     if (!sheet) return;
     const current = latestRef.current.sheets.find((item) => item.id === sheet.id)!;
     const range = filterRange || current.filter?.range || studioRangeAddress(bounds);
     const columns = range === current.filter?.range ? { ...current.filter.columns } : {};
-    if (filterValue !== '')
+    if (filterOperator === 'values') {
+      const selected = valuesOverride ?? filterValuesDraft;
+      if (selected === null) {
+        openFilterValuesDialog();
+        return;
+      }
+      if (selected.length)
+        columns[filterColumn] = { operator: 'values', value: '', values: [...selected] };
+      else delete columns[filterColumn];
+    } else if (filterValue !== '')
       columns[filterColumn] = { operator: filterOperator, value: filterValue };
     else delete columns[filterColumn];
     transform(
@@ -2002,6 +2021,47 @@ export function StudioSheet({
       '已应用筛选，源数据与公式均保留。'
     );
     setFilterRange(range);
+  }
+
+  /** 值列表候选取自筛选区域数据行（不含标题行）的计算显示值，'' 代表空白。 */
+  function openFilterValuesDialog(initialSelected?: readonly string[]) {
+    if (!sheet) return;
+    const current = latestRef.current;
+    const currentSheet = current.sheets.find((item) => item.id === sheet.id)!;
+    const range = studioParseRange(
+      filterRange || currentSheet.filter?.range || studioRangeAddress(bounds)
+    );
+    if (!range) {
+      setNotice('筛选区域无效，请填写如 A3:D6 的矩形区域。');
+      return;
+    }
+    const calculation = studioCalculate(current);
+    const options: string[] = [];
+    const seen = new Set<string>();
+    let truncated = 0;
+    for (let row = range.firstRow + 1; row <= range.lastRow; row++) {
+      const address = `${filterColumn}${row}`;
+      const cell = currentSheet.cells[address];
+      const value =
+        calculation.values.get(`${currentSheet.id}:${address}`) ??
+        studioInputValue(cell?.input ?? '', cell?.numberFormat, cell?.valueType);
+      const token = value === null || value === undefined || value === '' ? '' : String(value);
+      if (seen.has(token)) continue;
+      if (seen.size >= STUDIO_FILTER_VALUES_LIMIT) {
+        truncated++;
+        continue;
+      }
+      seen.add(token);
+      options.push(token);
+    }
+    setValuesDialog({
+      column: filterColumn,
+      range: studioRangeAddress(range),
+      options,
+      truncated,
+      // 无既有条件时默认全选，取消勾选即隐藏对应行。
+      selected: initialSelected ?? filterValuesDraft ?? options,
+    });
   }
 
   function addChart(type: StudioSheetChart['type']) {
@@ -2483,6 +2543,7 @@ export function StudioSheet({
           !heightDialog &&
           !textDialog &&
           !duplicatesDialog &&
+          !valuesDialog &&
           !widthDialog &&
           !pasteDialog &&
           !ruleDialog &&
@@ -3333,8 +3394,15 @@ export function StudioSheet({
                   onChange={(column) => {
                     setFilterColumn(column);
                     const condition = sheet.filter?.columns[column];
-                    setFilterOperator(condition?.operator ?? 'contains');
+                    const operator = condition?.operator ?? 'contains';
+                    setFilterOperator(operator);
                     setFilterValue(condition?.value ?? '');
+                    if (operator === 'values') {
+                      const selected =
+                        condition?.operator === 'values' ? [...(condition.values ?? [])] : undefined;
+                      setFilterValuesDraft(selected ?? null);
+                      openFilterValuesDialog(selected);
+                    } else setFilterValuesDraft(null);
                   }}
                 />
                 <Select
@@ -3349,10 +3417,21 @@ export function StudioSheet({
                     { value: 'less', label: '小于' },
                     { value: 'fontColor', label: '字体颜色' },
                     { value: 'fillColor', label: '填充颜色' },
+                    { value: 'values', label: '值列表' },
                   ]}
                   onChange={(value) => {
                     const next = value as StudioSheetFilter['columns'][string]['operator'];
                     setFilterOperator(next);
+                    if (next === 'values') {
+                      setFilterValue('');
+                      const condition = sheet.filter?.columns[filterColumn];
+                      const selected =
+                        condition?.operator === 'values' ? [...(condition.values ?? [])] : undefined;
+                      setFilterValuesDraft(selected ?? null);
+                      openFilterValuesDialog(selected);
+                      return;
+                    }
+                    setFilterValuesDraft(null);
                     // 切到颜色算子时给出默认色，切回文本算子时清空颜色值。
                     setFilterValue((previous) =>
                       value === 'fontColor'
@@ -3382,6 +3461,15 @@ export function StudioSheet({
                     disabled={blocked}
                     onChange={(color) => setFilterValue(color)}
                   />
+                ) : filterOperator === 'values' ? (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    disabled={blocked}
+                    onClick={() => openFilterValuesDialog()}
+                  >
+                    选择值{filterValuesDraft ? `（${filterValuesDraft.length}）` : ''}
+                  </Button>
                 ) : (
                   <Input
                     size="sm"
@@ -3395,7 +3483,7 @@ export function StudioSheet({
                     }}
                   />
                 )}
-                <Button size="sm" disabled={blocked} onClick={applyFilter}>
+                <Button size="sm" disabled={blocked} onClick={() => applyFilter()}>
                   应用筛选
                 </Button>
                 <Button
@@ -4740,6 +4828,17 @@ export function StudioSheet({
                 '。' +
                 (result.removedCount ? '可一次撤销恢复。' : '')
             );
+          }}
+        />
+      )}
+      {valuesDialog && (
+        <StudioSheetFilterValuesDialog
+          state={valuesDialog}
+          blocked={!!blocked}
+          onClose={() => setValuesDialog(null)}
+          onSave={(selected) => {
+            setFilterValuesDraft(selected);
+            applyFilter(selected);
           }}
         />
       )}

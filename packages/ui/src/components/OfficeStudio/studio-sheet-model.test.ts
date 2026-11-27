@@ -945,6 +945,74 @@ describe('Office Studio advanced sheet operations', () => {
     ).toThrow('#hex');
   });
 
+  it('按值列表筛选：空白哨兵、大小写不敏感、列间 AND 与校验拒绝', () => {
+    let document = dataFixture();
+    document.sheets[0].cells = {
+      A1: { input: '名称' },
+      B1: { input: '金额' },
+      A2: { input: '开发' },
+      B2: { input: '10' },
+      A3: { input: 'design' },
+      B3: { input: '20' },
+      A4: { input: '' },
+      B4: { input: '30' },
+    };
+    document = studioSetFilter(document, 'main', {
+      range: 'A1:B4',
+      columns: { A: { operator: 'values', value: '', values: ['开发', ''] } },
+    });
+    // '开发' 保留；'' 命中空白行 A4；'design' 不在列表中被隐藏。
+    expect([...studioFilteredRows(document.sheets[0], studioCalculate(document))]).toEqual([3]);
+
+    document = studioSetFilter(document, 'main', {
+      range: 'A1:B4',
+      columns: { A: { operator: 'values', value: '', values: ['Design'] } },
+    });
+    // 值列表匹配大小写不敏感：'Design' 命中 'design'。
+    expect([...studioFilteredRows(document.sheets[0], studioCalculate(document))]).toEqual([2, 4]);
+
+    document = studioSetFilter(document, 'main', {
+      range: 'A1:B4',
+      columns: {
+        A: { operator: 'values', value: '', values: ['开发', 'design'] },
+        B: { operator: 'values', value: '', values: ['10', '20'] },
+      },
+    });
+    // 列间 AND：A 列保留第 2/3 行，B 列金额 10/20 同样保留第 2/3 行，仅隐藏空白金额的第 4 行。
+    expect([...studioFilteredRows(document.sheets[0], studioCalculate(document))]).toEqual([4]);
+
+    // 值列表校验：value 必须为空、values 必须是不重复的非空数组；其他算子不得携带 values。
+    expect(() =>
+      studioSetFilter(document, 'main', {
+        range: 'A1:B4',
+        columns: { A: { operator: 'values', value: '开发', values: ['开发'] } },
+      })
+    ).toThrow('筛选条件');
+    expect(() =>
+      studioSetFilter(document, 'main', {
+        range: 'A1:B4',
+        columns: { A: { operator: 'values', value: '', values: ['开发', '开发'] } },
+      })
+    ).toThrow('筛选条件');
+    expect(() =>
+      studioSetFilter(document, 'main', {
+        range: 'A1:B4',
+        columns: { A: { operator: 'values', value: '' } },
+      })
+    ).toThrow('筛选条件');
+    expect(() =>
+      studioSetFilter(document, 'main', {
+        range: 'A1:B4',
+        columns: { A: { operator: 'equals', value: '开发', values: ['开发'] } },
+      })
+    ).toThrow('筛选条件');
+    // 合法值列表在清除后恢复全部行。
+    document = studioSetFilter(document, 'main');
+    expect(
+      studioFilteredRows(document.sheets[0], studioCalculate(document)).size
+    ).toBe(0);
+  });
+
   it('sorts complete rows by calculated values, relocates relative formulas, and preserves absolute references and formula strings', () => {
     const original = dataFixture();
     const sorted = studioSortRange(original, 'main', selection, 2, 'asc');

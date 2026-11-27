@@ -266,6 +266,33 @@ describe('persisted OfficeStudio models', () => {
     expect(isOfficeStudioDocument(document)).toBe(true);
   });
 
+  it('accepts persisted value-list filters and refuses malformed value selections', () => {
+    const document = createOfficeStudioDocument('excel') as StudioExcelDocument;
+    const sheet = document.sheets[0];
+    sheet.filter = {
+      range: 'A3:D6',
+      columns: {
+        A: { operator: 'values', value: '', values: ['开发', '设计', ''] },
+        D: { operator: 'greater', value: '1000' },
+      },
+    };
+    expect(isOfficeStudioDocument(document)).toBe(true);
+    sheet.filter.columns.A.value = '开发';
+    expect(isOfficeStudioDocument(document)).toBe(false);
+    sheet.filter.columns.A.value = '';
+    sheet.filter.columns.A.values = [];
+    expect(isOfficeStudioDocument(document)).toBe(false);
+    sheet.filter.columns.A.values = ['开发', '开发'];
+    expect(isOfficeStudioDocument(document)).toBe(false);
+    sheet.filter.columns.A.values = ['开发', 10] as unknown as string[];
+    expect(isOfficeStudioDocument(document)).toBe(false);
+    sheet.filter.columns.A.values = ['开发'];
+    sheet.filter.columns.D.values = ['1000'];
+    expect(isOfficeStudioDocument(document)).toBe(false);
+    delete sheet.filter.columns.D.values;
+    expect(isOfficeStudioDocument(document)).toBe(true);
+  });
+
   it('rejects persisted frozen panes that exceed codec limits or cut through merged cells', () => {
     const document = createOfficeStudioDocument('excel') as StudioExcelDocument;
     const sheet = document.sheets[0];

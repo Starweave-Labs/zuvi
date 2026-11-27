@@ -2070,6 +2070,7 @@
         "packages/ui/src/components/OfficeStudio/StudioSheet.css",
         "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
         "packages/ui/src/components/OfficeStudio/StudioSheetDuplicatesDialog.tsx",
+        "packages/ui/src/components/OfficeStudio/StudioSheetFilterValuesDialog.tsx",
         "packages/ui/src/components/OfficeStudio/StudioSheetHyperlinkDialog.tsx",
         "packages/ui/src/components/OfficeStudio/StudioSheetNumberFormatDialog.tsx",
         "packages/ui/src/components/OfficeStudio/StudioSheetRuleDialog.tsx",

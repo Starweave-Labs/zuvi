@@ -1623,12 +1623,14 @@ async function readMetadata(zip: JSZip): Promise<Map<number, SheetMetadata>> {
         const label = studioColumnLabel(range.firstCol + id);
         if (filter.columns[label]) throw new Error('工作表包含重复的筛选列。');
         if (
-          filters.length + customs.length + colors.length !== 1 ||
+          colors.length + customs.length > 1 ||
+          (colors.length && filters.length) ||
+          (customs.length && filters.length) ||
           first(column, S, 'top10') ||
           first(column, S, 'dynamicFilter') ||
           first(column, S, 'iconFilter')
         )
-          throw new Error('当前支持每列单一文字、数字或颜色条件，暂不支持多值或动态筛选。');
+          throw new Error('当前支持文字、数字、颜色与值列表筛选，暂不支持混合、置顶或动态筛选。');
         if (colors.length) {
           const color = colors[0];
           ruleShape(color, [], ['dxfId', 'cellColor']);
@@ -1641,11 +1643,11 @@ async function readMetadata(zip: JSZip): Promise<Map<number, SheetMetadata>> {
           filter.columns[label] = { operator: fill ? 'fillColor' : 'fontColor', value };
           continue;
         }
-        const condition = filters[0] ?? customs[0];
-        const value = condition.getAttribute('val') ?? '';
-        let operator: 'contains' | 'equals' | 'greater' | 'less' = 'equals';
-        let comparison = value;
         if (customs.length) {
+          const condition = customs[0];
+          const value = condition.getAttribute('val') ?? '';
+          let operator: 'contains' | 'equals' | 'greater' | 'less' = 'equals';
+          let comparison = value;
           const native = condition.getAttribute('operator') ?? 'equal';
           if (native === 'greaterThan') operator = 'greater';
           else if (native === 'lessThan') operator = 'less';
@@ -1656,11 +1658,23 @@ async function readMetadata(zip: JSZip): Promise<Map<number, SheetMetadata>> {
           } else if (/[?*]/.test(value.replace(/~[~*?]/g, '')))
             throw new Error('暂不支持复杂通配符筛选。');
           else comparison = value.replace(/~([~*?])/g, '$1');
+          filter.columns[label] = { operator, value: comparison };
+          continue;
         }
-        filter.columns[label] = {
-          operator,
-          value: comparison,
-        };
+        // 值列表：<filters> 下的多个 <filter val> 加 <blankFilter/>；单一文字值仍映射为 equals。
+        const filtersNode = first(column, S, 'filters');
+        if (!filtersNode) throw new Error('工作表包含不受支持的筛选列。');
+        ruleShape(filtersNode, ['filter', 'blankFilter'], []);
+        const blankSelected = xmlElements(filtersNode, S, 'blankFilter').length > 0;
+        const entries = filters.map((entry) => entry.getAttribute('val') ?? '');
+        if (blankSelected) entries.push('');
+        const values = [...new Set(entries)];
+        if (values.length > 200) throw new Error('工作表筛选值过多，当前最多支持 200 个。');
+        if (values.length === 1 && !blankSelected) {
+          filter.columns[label] = { operator: 'equals', value: values[0]! };
+          continue;
+        }
+        filter.columns[label] = { operator: 'values', value: '', values };
       }
     }
     const charts: StudioSheetChart[] = [];
@@ -3323,6 +3337,13 @@ function filterXml(sheet: StudioSheet, colors: Map<SheetColorFilter, number>): s
   const conditions = Object.entries(sheet.filter.columns)
     .map(([label, condition]) => {
       const id = studioParseAddress(`${label}1`)!.col - range.firstCol;
+      if (condition.operator === 'values') {
+        const entries = [...new Set(condition.values ?? [])];
+        const body = `<filters>${entries
+          .map((entry) => (entry === '' ? '<blankFilter/>' : `<filter val="${escapeXml(entry)}"/>`))
+          .join('')}</filters>`;
+        return `<filterColumn colId="${id}">${body}</filterColumn>`;
+      }
       if (condition.operator === 'fontColor' || condition.operator === 'fillColor') {
         const style = colors.get(condition);
         if (style === undefined) throw new Error('导出的颜色筛选缺少差异样式。');

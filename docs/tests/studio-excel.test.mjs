@@ -528,6 +528,105 @@ test('invalid native color filter references and duplicate columns are rejected 
   }
 });
 
+test('value-list filters round-trip multiple filter entries and blankFilter across XLSX saves', async () => {
+  const workbook = new ExcelJS.Workbook();
+  const sheet = workbook.addWorksheet('值列表');
+  sheet.addRows([
+    ['项目', '金额'],
+    ['开发', 10],
+    ['设计', 20],
+    ['验证', 30],
+    [null, 40],
+  ]);
+  let source = await asBlob(workbook);
+  let document = await codec.importStudioExcel(source, '值列表.xlsx');
+  const id = document.sheets[0].id;
+  document = model.studioSetFilter(document, id, {
+    range: 'A1:B5',
+    columns: { A: { operator: 'values', value: '', values: ['开发', ''] } },
+  });
+  assert.deepEqual(
+    Array.from(model.studioFilteredRows(document.sheets[0], model.studioCalculate(document))),
+    [3, 4]
+  );
+  for (let round = 0; round < 2; round++) {
+    source = await codec.exportStudioExcel(document, source);
+    const zip = await JSZip.loadAsync(await source.arrayBuffer());
+    const xml = new dom.window.DOMParser().parseFromString(
+      await zip.file('xl/worksheets/sheet1.xml').async('string'),
+      'application/xml'
+    );
+    const filtersNode = xml.getElementsByTagName('filters')[0];
+    assert.deepEqual(
+      [...filtersNode.getElementsByTagName('filter')].map((entry) => entry.getAttribute('val')),
+      ['开发']
+    );
+    assert.equal(filtersNode.getElementsByTagName('blankFilter').length, 1);
+    const reopened = await readWorkbook(source);
+    assert.equal(reopened.worksheets[0].getRow(2).hidden, false);
+    assert.equal(reopened.worksheets[0].getRow(3).hidden, true);
+    assert.equal(reopened.worksheets[0].getRow(4).hidden, true);
+    document = await codec.importStudioExcel(source, document.name);
+  }
+  // codec 在 vm realm 中执行：先拷贝回测试 realm 再做严格深度比较。
+  const imported = document.sheets[0].filter.columns.A;
+  assert.deepEqual({ ...imported, values: [...imported.values] }, {
+    operator: 'values',
+    value: '',
+    values: ['开发', ''],
+  });
+});
+
+test('importing native multi-value, blank-only and dynamic filter columns maps or rejects precisely', async () => {
+  const workbook = new ExcelJS.Workbook();
+  const sheet = workbook.addWorksheet('多值');
+  sheet.addRows([['标题'], ['甲'], ['乙']]);
+  const source = await asBlob(workbook);
+  const inject = async (filtersXml) => {
+    const zip = await JSZip.loadAsync(await source.arrayBuffer());
+    const xml = await zip.file('xl/worksheets/sheet1.xml').async('string');
+    zip.file(
+      'xl/worksheets/sheet1.xml',
+      xml.replace('</worksheet>', `<autoFilter ref="A1:A3">${filtersXml}</autoFilter></worksheet>`)
+    );
+    return new Blob([await zip.generateAsync({ type: 'uint8array' })]);
+  };
+  const multi = await codec.importStudioExcel(
+    await inject('<filterColumn colId="0"><filters><filter val="甲"/><filter val="乙"/></filters></filterColumn>'),
+    '多值.xlsx'
+  );
+  const multiCondition = multi.sheets[0].filter.columns.A;
+  assert.deepEqual({ ...multiCondition, values: [...multiCondition.values] }, {
+    operator: 'values',
+    value: '',
+    values: ['甲', '乙'],
+  });
+  const blankOnly = await codec.importStudioExcel(
+    await inject('<filterColumn colId="0"><filters><blankFilter/></filters></filterColumn>'),
+    '多值.xlsx'
+  );
+  const blankCondition = blankOnly.sheets[0].filter.columns.A;
+  assert.deepEqual({ ...blankCondition, values: [...blankCondition.values] }, {
+    operator: 'values',
+    value: '',
+    values: [''],
+  });
+  const single = await codec.importStudioExcel(
+    await inject('<filterColumn colId="0"><filters><filter val="甲"/></filters></filterColumn>'),
+    '多值.xlsx'
+  );
+  assert.deepEqual({ ...single.sheets[0].filter.columns.A }, { operator: 'equals', value: '甲' });
+  await assert.rejects(
+    codec.importStudioExcel(
+      await inject(
+        '<filterColumn colId="0"><dynamicFilter type="aboveAverage" dynamicVal="0"/></filterColumn>'
+      ),
+      '多值.xlsx'
+    ),
+    /动态筛选/
+  );
+});
+
 async function asBlob(workbook) {
   return new Blob([await workbook.xlsx.writeBuffer()]);
 }

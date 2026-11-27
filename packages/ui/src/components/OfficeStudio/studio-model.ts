@@ -652,11 +652,21 @@ function sheetFeatures(sheet: Record<string, unknown>, rows: number, columns: nu
           position.column >= range.firstColumn &&
           position.column <= range.lastColumn &&
           record(rule) &&
-          ['contains', 'equals', 'greater', 'less', 'fontColor', 'fillColor'].includes(
+          ['contains', 'equals', 'greater', 'less', 'fontColor', 'fillColor', 'values'].includes(
             String(rule.operator)
           ) &&
           typeof rule.value === 'string' &&
           rule.value.length <= 32767 &&
+          (String(rule.operator) !== 'values' ||
+            (rule.value === '' &&
+              Array.isArray(rule.values) &&
+              rule.values.length > 0 &&
+              rule.values.length <= 200 &&
+              new Set(rule.values as string[]).size === rule.values.length &&
+              (rule.values as unknown[]).every(
+                (entry) => typeof entry === 'string' && entry.length <= 1000
+              ))) &&
+          (String(rule.operator) === 'values' || rule.values === undefined) &&
           (!['fontColor', 'fillColor'].includes(String(rule.operator)) ||
             /^#(?:[\da-f]{3}|[\da-f]{6})$/i.test(rule.value)) &&
           (!['greater', 'less'].includes(String(rule.operator)) ||

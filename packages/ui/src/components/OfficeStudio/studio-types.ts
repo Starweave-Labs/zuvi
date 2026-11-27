@@ -185,8 +185,12 @@ export interface StudioSheetFilter {
         | 'less'
         /** 按单元格字体颜色/填充颜色筛选；value 为 #hex，缺失颜色的行不匹配。 */
         | 'fontColor'
-        | 'fillColor';
+        | 'fillColor'
+        /** 值列表筛选：values 为选中的显示值集合，'' 匹配空白单元格，列间 AND、列表内 OR。 */
+        | 'values';
       value: string;
+      /** 仅 'values' 算子使用；此时 value 必须为空字符串。 */
+      values?: readonly string[];
     }
   >;
 }

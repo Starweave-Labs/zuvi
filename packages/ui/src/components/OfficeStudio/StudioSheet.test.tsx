@@ -1923,6 +1923,59 @@ describe('StudioSheet', () => {
     expect(screen.getByRole('button', { name: '应用筛选' })).toBeDisabled();
     expect(screen.getByRole('button', { name: '清除筛选' })).toBeDisabled();
   });
+
+  it('filters rows through the value-list dialog and removes the column when nothing stays selected', async () => {
+    const user = userEvent.setup();
+    const document = documentFixture();
+    document.sheets[0].cells = {
+      A1: { input: '名称' },
+      B1: { input: '金额' },
+      A2: { input: '开发' },
+      B2: { input: '10' },
+      A3: { input: '设计' },
+      B3: { input: '20' },
+      A4: { input: '验证' },
+      B4: { input: '30' },
+    };
+    const state = setup({ document });
+    const address = screen.getByRole('textbox', { name: '单元格地址' });
+    fireEvent.change(address, { target: { value: 'A1:B4' } });
+    fireEvent.keyDown(address, { key: 'Enter' });
+    await user.click(screen.getByRole('tab', { name: '数据' }));
+
+    // 切到值列表算子：自动打开弹窗并默认全选候选取自 A 列数据行
+    await user.click(screen.getByRole('button', { name: /^筛选条件/ }));
+    const listbox = screen
+      .getAllByRole('listbox')
+      .find((element) => element.getAttribute('data-open') === 'true')!;
+    await user.click(within(listbox).getByRole('option', { name: '值列表' }));
+    const dialog = screen.getByRole('dialog', { name: '筛选值列表' });
+    for (const name of ['开发', '设计', '验证'])
+      expect(within(dialog).getByRole('checkbox', { name })).toBeChecked();
+
+    // 取消勾选「设计」并应用：A3 所在行被隐藏，模型记录 values 条件
+    await user.click(within(dialog).getByRole('checkbox', { name: '设计' }));
+    await user.click(within(dialog).getByRole('button', { name: '应用值列表' }));
+    expect(state.current().sheets[0].filter?.columns.A).toEqual({
+      operator: 'values',
+      value: '',
+      values: ['开发', '验证'],
+    });
+    expect(screen.queryByRole('gridcell', { name: 'A3' })).toBeNull();
+    expect(screen.getByRole('gridcell', { name: 'A2' })).toBeInTheDocument();
+    expect(screen.getByRole('gridcell', { name: 'A4' })).toBeInTheDocument();
+    expect(screen.queryByRole('dialog', { name: '筛选值列表' })).toBeNull();
+
+    // 再打开时草稿保留已选两项；全部取消勾选应用后清除该列条件，恢复全部行
+    await user.click(screen.getByRole('button', { name: '选择值（2）' }));
+    const reopened = screen.getByRole('dialog', { name: '筛选值列表' });
+    expect(within(reopened).getByRole('checkbox', { name: '开发' })).toBeChecked();
+    expect(within(reopened).getByRole('checkbox', { name: '设计' })).not.toBeChecked();
+    await user.click(within(reopened).getByRole('button', { name: '全不选' }));
+    await user.click(within(reopened).getByRole('button', { name: '应用值列表' }));
+    expect(state.current().sheets[0].filter?.columns.A).toBeUndefined();
+    expect(screen.getByRole('gridcell', { name: 'A3' })).toBeInTheDocument();
+  });
 });
 
 describe('StudioSheet row sizes and font drafts', () => {

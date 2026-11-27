@@ -2420,19 +2420,37 @@ export function studioSetFilter(
       const col = studioParseAddress(`${label}1`)?.col;
       const colorOperator =
         condition.operator === 'fontColor' || condition.operator === 'fillColor';
+      const valuesOperator = condition.operator === 'values';
+      const values = condition.values;
       if (
         !col ||
         col < range.firstCol ||
         col > range.lastCol ||
-        !['contains', 'equals', 'greater', 'less', 'fontColor', 'fillColor'].includes(
-          condition.operator
-        ) ||
+        ![
+          'contains',
+          'equals',
+          'greater',
+          'less',
+          'fontColor',
+          'fillColor',
+          'values',
+        ].includes(condition.operator) ||
         typeof condition.value !== 'string' ||
         condition.value.length > 1000 ||
         (colorOperator && !/^#(?:[0-9a-f]{3}|[0-9a-f]{6})$/i.test(condition.value)) ||
-        (['greater', 'less'].includes(condition.operator) && !numericInput.test(condition.value))
+        (['greater', 'less'].includes(condition.operator) && !numericInput.test(condition.value)) ||
+        (valuesOperator &&
+          (condition.value !== '' ||
+            !Array.isArray(values) ||
+            values.length === 0 ||
+            values.length > 200 ||
+            new Set(values as string[]).size !== values.length ||
+            values.some((entry) => typeof entry !== 'string' || entry.length > 1000))) ||
+        (!valuesOperator && values !== undefined)
       )
-        throw new Error('筛选条件无效，数值比较需填写有效数字，颜色筛选需填写 #hex 颜色。');
+        throw new Error(
+          '筛选条件无效，数值比较需填写有效数字，颜色筛选需填写 #hex 颜色，值列表需提供不重复的选中值。'
+        );
     }
   }
   return {
@@ -2488,10 +2506,21 @@ export function studioFilteredRows(sheet: StudioSheet, calculation: SheetCalcula
           : condition.operator === 'fillColor'
             ? studioHexColor(displayStyle?.background)
             : null;
+      // 值列表匹配显示值：空白（缺格、空输入或空结果）统一记为 ''，与值列表中的 '' 条目比较。
+      const selectedValues =
+        condition.operator === 'values' ? (condition.values ?? []) : null;
+      const token = selectedValues
+        ? (result === null || result === undefined || result === ''
+            ? ''
+            : String(result)
+          ).toLocaleLowerCase()
+        : '';
       const matches =
         colorOperator !== null
           ? colorOperator === studioHexColor(expected)
-          : condition.operator === 'contains'
+          : selectedValues !== null
+            ? selectedValues.some((entry) => entry.toLocaleLowerCase() === token)
+            : condition.operator === 'contains'
             ? text.includes(expected)
             : condition.operator === 'equals'
               ? text === expected

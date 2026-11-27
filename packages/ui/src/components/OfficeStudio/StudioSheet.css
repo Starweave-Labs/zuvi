@@ -719,6 +719,31 @@
   overflow: auto;
 }
 
+.zuvi-studio-sheet-filter-values-dialog {
+  width: min(480px, calc(100vw - 32px));
+}
+
+.zuvi-studio-sheet-filter-values-dialog .zuvi-modal-body,
+.zuvi-studio-sheet-filter-values-dialog form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--zuvi-space-3);
+}
+
+.zuvi-studio-sheet-filter-values-dialog p {
+  margin: 0;
+  font-size: var(--zuvi-text-sm);
+  overflow-wrap: anywhere;
+}
+
+.zuvi-studio-sheet-filter-values-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--zuvi-space-1);
+  max-height: 240px;
+  overflow: auto;
+}
+
 .zuvi-studio-sheet-link-dialog .zuvi-modal-body {
   display: flex;
   flex-direction: column;
