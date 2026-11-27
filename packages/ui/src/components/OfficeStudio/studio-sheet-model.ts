@@ -2683,13 +2683,21 @@ function sortFormula(
   sheetName: string,
   range: StudioRange
 ): string {
-  if (!input.startsWith('=')) return input;
-  if (sourceRow === targetRow) return input;
-  // Sorting moves records. References to other sheets stay attached to their
-  // original cells; complex local dependencies are refused rather than redirected.
+  if (!input.startsWith('=') || sourceRow === targetRow) return input;
   studioTranslateFormula(input, 0, 0);
+  const moveEndpoint = (fixedCol: string, column: string, fixedRow: string, row: string) => {
+    const unchanged = `${fixedCol}${column}${fixedRow}${row}`;
+    if (fixedRow) return unchanged;
+    const position = studioParseAddress(`${column}${row}`);
+    if (!position) return unchanged;
+    if (position.row !== sourceRow || position.col < range.firstCol || position.col > range.lastCol)
+      throw new Error('排序公式包含跨行或选区外的相对引用，请扩大选区或使用固定行引用后重试。');
+    return `${fixedCol}${column}${targetRow}`;
+  };
+  // Treat A1:B1 as one reference: the end inherits the start's sheet.
+  // Parsing endpoints independently would wrongly move the B1 in Other!A1:B1.
   const token =
-    /"(?:[^"]|"")*"|((?:'(?:[^']|'')+'|[\p{L}_][\p{L}\p{N}_.]*)!)?(\$?)([A-Z]{1,3})(\$?)([1-9]\d*)(?![\p{L}\p{N}_.(])/giu;
+    /"(?:[^"]|"")*"|((?:'(?:[^']|'')+'|[\p{L}_][\p{L}\p{N}_.]*)!)?(\$?)([A-Z]{1,3})(\$?)([1-9]\d*)(?:(\s*:\s*)(\$?)([A-Z]{1,3})(\$?)([1-9]\d*))?(?![\p{L}\p{N}_.(])/giu;
   return input.replace(
     token,
     (
@@ -2699,6 +2707,11 @@ function sortFormula(
       column: string,
       fixedRow: string,
       row: string,
+      separator: string | undefined,
+      endFixedCol: string,
+      endColumn: string,
+      endFixedRow: string,
+      endRow: string,
       offset: number
     ) => {
       if (
@@ -2712,16 +2725,11 @@ function sortFormula(
         const target = raw.startsWith("'") ? raw.slice(1, -1).replace(/''/g, "'") : raw;
         if (target.toLocaleLowerCase() !== sheetName.toLocaleLowerCase()) return match;
       }
-      if (fixedRow) return match;
-      const position = studioParseAddress(`${column}${row}`);
-      if (!position) return match;
-      if (
-        position.row !== sourceRow ||
-        position.col < range.firstCol ||
-        position.col > range.lastCol
-      )
-        throw new Error('排序公式包含跨行或选区外的相对引用，请扩大选区或使用固定行引用后重试。');
-      return `${sheet ?? ''}${fixedCol}${column}${targetRow}`;
+      const start = moveEndpoint(fixedCol, column, fixedRow, row);
+      const end = separator
+        ? separator + moveEndpoint(endFixedCol, endColumn, endFixedRow, endRow)
+        : '';
+      return `${sheet ?? ''}${start}${end}`;
     }
   );
 }
