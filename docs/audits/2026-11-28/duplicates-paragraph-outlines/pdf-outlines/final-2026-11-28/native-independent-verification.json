@@ -1,0 +1,121 @@
+{
+  "checkedBy": "Direct PDFDict/PDFArray inspection, without the outline module",
+  "requirementComplete": false,
+  "samples": [
+    {
+      "path": ".release/office-continuation/pdf-outlines/final-2026-11-28/native-verified/source.pdf",
+      "bytes": 3321,
+      "sha256": "76ce9e2f361b3686c0a0079caff58d7799e8bdc1696d8a3137889ee078297af9",
+      "pageCount": 3,
+      "streams": [
+        [
+          "be77ef0cb12f8c451cef2f950fc9dada779ae09db301e67489c26fa9d08274e3"
+        ],
+        [
+          "95ccce18953df9afa583d74bbff7032dd7ab9647fdd3dbd702c06168359624de"
+        ],
+        [
+          "121b1c063ef7061b0841ec18a4625e44417f03c7ac752898eadf01964419a004"
+        ]
+      ],
+      "tree": [
+        {
+          "title": "章节",
+          "count": 1,
+          "children": [
+            {
+              "title": "Second page",
+              "pageIndex": 1,
+              "children": []
+            }
+          ]
+        },
+        {
+          "title": "Passive vendor action",
+          "children": [],
+          "passiveAction": "<<\n/S /VendorAction\n/Payload <FEFF0070007200650073006500720076006500200077006900740068006F0075007400200065007800650063007500740069006E0067>\n>>"
+        }
+      ]
+    },
+    {
+      "path": ".release/office-continuation/pdf-outlines/final-2026-11-28/native-verified/roundtrip-1.pdf",
+      "bytes": 3496,
+      "sha256": "a3aeb43063c55fb164ba04eec6edd17caa55153b9346484d35f7734412a627c5",
+      "pageCount": 3,
+      "streams": [
+        [
+          "be77ef0cb12f8c451cef2f950fc9dada779ae09db301e67489c26fa9d08274e3"
+        ],
+        [
+          "95ccce18953df9afa583d74bbff7032dd7ab9647fdd3dbd702c06168359624de"
+        ],
+        [
+          "121b1c063ef7061b0841ec18a4625e44417f03c7ac752898eadf01964419a004"
+        ]
+      ],
+      "tree": [
+        {
+          "title": "修改后的章节",
+          "count": 2,
+          "children": [
+            {
+              "title": "Second page",
+              "pageIndex": 1,
+              "children": []
+            },
+            {
+              "title": "Third page",
+              "pageIndex": 2,
+              "children": []
+            }
+          ]
+        },
+        {
+          "title": "Passive vendor action",
+          "children": [],
+          "passiveAction": "<<\n/S /VendorAction\n/Payload <FEFF0070007200650073006500720076006500200077006900740068006F0075007400200065007800650063007500740069006E0067>\n>>"
+        }
+      ]
+    },
+    {
+      "path": ".release/office-continuation/pdf-outlines/final-2026-11-28/native-verified/roundtrip-2.pdf",
+      "bytes": 3496,
+      "sha256": "a3aeb43063c55fb164ba04eec6edd17caa55153b9346484d35f7734412a627c5",
+      "pageCount": 3,
+      "streams": [
+        [
+          "be77ef0cb12f8c451cef2f950fc9dada779ae09db301e67489c26fa9d08274e3"
+        ],
+        [
+          "95ccce18953df9afa583d74bbff7032dd7ab9647fdd3dbd702c06168359624de"
+        ],
+        [
+          "121b1c063ef7061b0841ec18a4625e44417f03c7ac752898eadf01964419a004"
+        ]
+      ],
+      "tree": [
+        {
+          "title": "修改后的章节",
+          "count": 2,
+          "children": [
+            {
+              "title": "Second page",
+              "pageIndex": 1,
+              "children": []
+            },
+            {
+              "title": "Third page",
+              "pageIndex": 2,
+              "children": []
+            }
+          ]
+        },
+        {
+          "title": "Passive vendor action",
+          "children": [],
+          "passiveAction": "<<\n/S /VendorAction\n/Payload <FEFF0070007200650073006500720076006500200077006900740068006F0075007400200065007800650063007500740069006E0067>\n>>"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+
+> @zuvi/docs@0.2.1 typecheck /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs
+> tsc --noEmit
+
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(178,5): error TS2322: Type 'PDFObject | undefined' is not assignable to type 'PDFDict'.
+  Type 'undefined' is not assignable to type 'PDFDict'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(188,39): error TS2339: Property 'entries' does not exist on type 'PDFObject'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(207,12): error TS2339: Property 'asArray' does not exist on type 'PDFObject'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(207,31): error TS7006: Parameter 'child' implicitly has an 'any' type.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(212,34): error TS2339: Property 'size' does not exist on type 'PDFObject'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(213,36): error TS2339: Property 'get' does not exist on type 'PDFObject'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(216,17): error TS18048: 'key' is possibly 'undefined'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(216,21): error TS2339: Property 'decodeText' does not exist on type 'PDFObject'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(216,42): error TS2339: Property 'get' does not exist on type 'PDFObject'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(242,19): error TS18048: 'value' is possibly 'undefined'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(242,25): error TS2339: Property 'get' does not exist on type 'PDFObject'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(250,31): error TS18048: 'value' is possibly 'undefined'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(250,37): error TS2339: Property 'get' does not exist on type 'PDFObject'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(251,24): error TS18048: 'value' is possibly 'undefined'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(252,8): error TS2339: Property 'asArray' does not exist on type 'PDFObject'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(254,13): error TS7006: Parameter 'raw' implicitly has an 'any' type.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(258,16): error TS18048: 'coordinate' is possibly 'undefined'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(258,27): error TS2339: Property 'asNumber' does not exist on type 'PDFObject'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(261,20): error TS2345: Argument of type '{ pageId: string | undefined; view: { kind: PdfOutlineViewKind; parameters: any; }; }' is not assignable to parameter of type 'PdfOutlinePageTarget'.
+  Types of property 'pageId' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(262,5): error TS2322: Type '{ pageId: string | undefined; view: { kind: PdfOutlineViewKind; parameters: any; }; }' is not assignable to type 'PdfOutlinePageTarget'.
+  Types of property 'pageId' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(285,14): error TS2345: Argument of type 'PDFObject | undefined' is not assignable to parameter of type 'PDFObject'.
+  Type 'undefined' is not assignable to type 'PDFObject'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(292,9): error TS18048: 'action' is possibly 'undefined'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(292,16): error TS2339: Property 'lookup' does not exist on type 'PDFObject'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(292,64): error TS18048: 'action' is possibly 'undefined'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(292,71): error TS2339: Property 'get' does not exist on type 'PDFObject'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(293,21): error TS18048: 'action' is possibly 'undefined'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(293,28): error TS2339: Property 'get' does not exist on type 'PDFObject'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(341,28): error TS2345: Argument of type 'PDFObject' is not assignable to parameter of type 'PDFRef'.
+  Type 'PDFObject' is missing the following properties from type 'PDFRef': objectNumber, generationNumber, tag
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(343,16): error TS18048: 'title' is possibly 'undefined'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(343,22): error TS2339: Property 'decodeText' does not exist on type 'PDFObject'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(358,57): error TS2739: Type 'PDFObject' is missing the following properties from type 'PDFRef': objectNumber, generationNumber, tag
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(359,38): error TS2345: Argument of type 'PDFObject' is not assignable to parameter of type 'PDFRef'.
+  Type 'PDFObject' is missing the following properties from type 'PDFRef': objectNumber, generationNumber, tag
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(361,7): error TS2739: Type 'PDFObject' is missing the following properties from type 'PDFRef': objectNumber, generationNumber, tag
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(362,7): error TS2739: Type 'PDFObject' is missing the following properties from type 'PDFRef': objectNumber, generationNumber, tag
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(522,12): error TS18048: 'parent' is possibly 'undefined'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(544,37): error TS18048: 'selected' is possibly 'undefined'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(545,40): error TS18048: 'selected' is possibly 'undefined'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(547,9): error TS18048: 'selected' is possibly 'undefined'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(548,47): error TS18048: 'selected' is possibly 'undefined'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(550,40): error TS18048: 'selected' is possibly 'undefined'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(550,62): error TS18048: 'selected' is possibly 'undefined'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(554,20): error TS18048: 'selected' is possibly 'undefined'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(555,7): error TS18048: 'selected' is possibly 'undefined'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(555,29): error TS18048: 'selected' is possibly 'undefined'.
+src/pages/collaboration/office-studio/studio-pdf-outlines.ts(556,54): error TS18048: 'selected' is possibly 'undefined'.
+/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @zuvi/docs@0.2.1 typecheck: `tsc --noEmit`
+Exit status 2

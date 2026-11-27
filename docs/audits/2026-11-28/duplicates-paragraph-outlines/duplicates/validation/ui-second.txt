@@ -1,0 +1,11 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/StudioSheet.duplicates.test.tsx (5 tests) 1000ms
+   ✓ duplicate removal through actual spreadsheet controls > compares selected columns, retains the header, reports counts and restores one history step 450ms
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  18:53:53
+   Duration  3.42s (transform 771ms, setup 168ms, collect 1.15s, tests 1000ms, environment 859ms, prepare 63ms)
+

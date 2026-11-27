@@ -1,0 +1,281 @@
+{
+  "config": {
+    "argv": [
+      "/Users/meaili/.nvm/versions/node/v20.20.0/bin/node",
+      "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/node_modules/.pnpm/@playwright+test@1.65.0/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "e2e/playwright.config.ts",
+      "e2e/office-studio-sheet-duplicates.spec.ts",
+      "e2e/office-studio-word-paragraph-acceptance.spec.ts",
+      "--workers=1",
+      "--retries=0",
+      "--output=.release/office-continuation/duplicates/validation/focused-first-output",
+      "--reporter=list,json"
+    ],
+    "configFile": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/playwright.config.ts",
+    "rootDir": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/.release/office-continuation/duplicates/validation/focused-first-output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/.release/office-continuation/duplicates/validation/focused-first-output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "chromium",
+        "testDir": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e",
+        "snapshotDir": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e",
+        "testIgnore": [],
+        "testMatch": "**/*.spec.ts",
+        "timeout": 30000,
+        "use": {
+          "baseURL": "http://localhost:5294",
+          "viewport": {
+            "width": 1280,
+            "height": 800
+          },
+          "trace": "retain-on-failure",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.8127.18 Safari/537.36",
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "chromium"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "chromium"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.65.0",
+    "workers": 1,
+    "webServer": {
+      "command": "pnpm --filter @zuvi/docs dev --port 5294 --strictPort --force",
+      "env": {
+        "ZUVI_E2E_VITE_CACHE_DIR": "/var/folders/9n/_523pt1s3gqg0f165zsdbldc0000gn/T/zuvi-office-e2e-vite-5294-54776"
+      },
+      "url": "http://localhost:5294",
+      "reuseExistingServer": true,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "office-studio-sheet-duplicates.spec.ts",
+      "file": "office-studio-sheet-duplicates.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "duplicate records keep typed blanks, first rows, styles, links and outside data through history and two native reopens",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5542,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\"\u001b[39m\nReceived: \u001b[31m{\"formula\": \"\\\"\\\"\"}\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\"\u001b[39m\nReceived: \u001b[31m{\"formula\": \"\\\"\\\"\"}\u001b[39m\n    at native (/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-sheet-duplicates.spec.ts:76:37)\n    at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-sheet-duplicates.spec.ts:112:5",
+                    "location": {
+                      "file": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-sheet-duplicates.spec.ts",
+                      "column": 37,
+                      "line": 76
+                    },
+                    "snippet": " \u001b[90m 74 |\u001b[39m   expect(sheet\u001b[33m.\u001b[39mgetCell(\u001b[32m'A4'\u001b[39m)\u001b[33m.\u001b[39mvalue)\u001b[33m.\u001b[39mtoBe(\u001b[36mtrue\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 75 |\u001b[39m   expect(sheet\u001b[33m.\u001b[39mgetCell(\u001b[32m'A5'\u001b[39m)\u001b[33m.\u001b[39mvalue)\u001b[33m.\u001b[39mtoBeNull()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 76 |\u001b[39m   expect(sheet\u001b[33m.\u001b[39mgetCell(\u001b[32m'A6'\u001b[39m)\u001b[33m.\u001b[39mvalue)\u001b[33m.\u001b[39mtoBe(\u001b[32m''\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 77 |\u001b[39m   expect(sheet\u001b[33m.\u001b[39mgetCell(\u001b[32m'A7'\u001b[39m)\u001b[33m.\u001b[39mvalue)\u001b[33m.\u001b[39mtoBe(\u001b[35m2\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 78 |\u001b[39m   expect(sheet\u001b[33m.\u001b[39mgetCell(\u001b[32m'C7'\u001b[39m)\u001b[33m.\u001b[39mvalue)\u001b[33m.\u001b[39mtoEqual({ formula\u001b[33m:\u001b[39m \u001b[32m'A7*10'\u001b[39m\u001b[33m,\u001b[39m result\u001b[33m:\u001b[39m \u001b[35m20\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 79 |\u001b[39m   expect(sheet\u001b[33m.\u001b[39mgetCell(\u001b[32m'B3'\u001b[39m)\u001b[33m.\u001b[39mfont\u001b[33m.\u001b[39mitalic)\u001b[33m.\u001b[39mtoBe(\u001b[36mtrue\u001b[39m)\u001b[33m;\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-sheet-duplicates.spec.ts",
+                        "column": 37,
+                        "line": 76
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\"\u001b[39m\nReceived: \u001b[31m{\"formula\": \"\\\"\\\"\"}\u001b[39m\n\n  74 |   expect(sheet.getCell('A4').value).toBe(true);\n  75 |   expect(sheet.getCell('A5').value).toBeNull();\n> 76 |   expect(sheet.getCell('A6').value).toBe('');\n     |                                     ^\n  77 |   expect(sheet.getCell('A7').value).toBe(2);\n  78 |   expect(sheet.getCell('C7').value).toEqual({ formula: 'A7*10', result: 20 });\n  79 |   expect(sheet.getCell('B3').font.italic).toBe(true);\n    at native (/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-sheet-duplicates.spec.ts:76:37)\n    at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-sheet-duplicates.spec.ts:112:5"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-27T17:07:58.309Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/.release/office-continuation/duplicates/validation/focused-first-output/office-studio-sheet-duplic-06345-tory-and-two-native-reopens-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/.release/office-continuation/duplicates/validation/focused-first-output/office-studio-sheet-duplic-06345-tory-and-two-native-reopens-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-sheet-duplicates.spec.ts",
+                    "column": 37,
+                    "line": 76
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "c21a3b3b905f4556dcb5-5b35c8317b8e4659732e",
+          "file": "office-studio-sheet-duplicates.spec.ts",
+          "line": 90,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "office-studio-word-paragraph-acceptance.spec.ts",
+      "file": "office-studio-word-paragraph-acceptance.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "original paragraph requirements retain four alignments, indent and line units, tab stops and every border edge over real DOCX reopens",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 8886,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCSS\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('textbox', { name: 'Word 文档正文', exact: true }).locator('p').filter({ hasText: /^Alignment center/ })\nExpected: \u001b[32m\"\u001b[7mlef\u001b[27mt\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mstar\u001b[27mt\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCSS\" getByRole('textbox', { name: 'Word 文档正文', exact: true }).locator('p').filter({ hasText: /^Alignment center/ }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('textbox', { name: 'Word 文档正文', exact: true }).locator('p').filter({ hasText: /^Alignment center/ })\u001b[22m\n\u001b[2m    14 × locator resolved to <p data-word-tabs=\"[]\" data-word-surface=\"{}\" data-word-default-tab=\"36\" data-word-decimal-symbol=\".\" data-word-paragraph-direct=\"[]\">…</p>\u001b[22m\n\u001b[2m       - unexpected value \"start\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCSS\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('textbox', { name: 'Word 文档正文', exact: true }).locator('p').filter({ hasText: /^Alignment center/ })\nExpected: \u001b[32m\"\u001b[7mlef\u001b[27mt\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mstar\u001b[27mt\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCSS\" getByRole('textbox', { name: 'Word 文档正文', exact: true }).locator('p').filter({ hasText: /^Alignment center/ }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('textbox', { name: 'Word 文档正文', exact: true }).locator('p').filter({ hasText: /^Alignment center/ })\u001b[22m\n\u001b[2m    14 × locator resolved to <p data-word-tabs=\"[]\" data-word-surface=\"{}\" data-word-default-tab=\"36\" data-word-decimal-symbol=\".\" data-word-paragraph-direct=\"[]\">…</p>\u001b[22m\n\u001b[2m       - unexpected value \"start\"\u001b[22m\n\n    at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-paragraph-acceptance.spec.ts:194:28",
+                    "location": {
+                      "file": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-paragraph-acceptance.spec.ts",
+                      "column": 28,
+                      "line": 194
+                    },
+                    "snippet": " \u001b[90m 192 |\u001b[39m     \u001b[36mif\u001b[39m (key \u001b[33m===\u001b[39m \u001b[32m'center'\u001b[39m) {\n \u001b[90m 193 |\u001b[39m       \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[32m'撤销'\u001b[39m\u001b[33m,\u001b[39m exact\u001b[33m:\u001b[39m \u001b[36mtrue\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 194 |\u001b[39m       \u001b[36mawait\u001b[39m expect(target)\u001b[33m.\u001b[39mtoHaveCSS(\u001b[32m'text-align'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'left'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 195 |\u001b[39m       \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[32m'重做'\u001b[39m\u001b[33m,\u001b[39m exact\u001b[33m:\u001b[39m \u001b[36mtrue\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 196 |\u001b[39m       \u001b[36mawait\u001b[39m expect(target)\u001b[33m.\u001b[39mtoHaveCSS(\u001b[32m'text-align'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'center'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 197 |\u001b[39m     }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-paragraph-acceptance.spec.ts",
+                        "column": 28,
+                        "line": 194
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCSS\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('textbox', { name: 'Word 文档正文', exact: true }).locator('p').filter({ hasText: /^Alignment center/ })\nExpected: \u001b[32m\"\u001b[7mlef\u001b[27mt\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mstar\u001b[27mt\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCSS\" getByRole('textbox', { name: 'Word 文档正文', exact: true }).locator('p').filter({ hasText: /^Alignment center/ }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('textbox', { name: 'Word 文档正文', exact: true }).locator('p').filter({ hasText: /^Alignment center/ })\u001b[22m\n\u001b[2m    14 × locator resolved to <p data-word-tabs=\"[]\" data-word-surface=\"{}\" data-word-default-tab=\"36\" data-word-decimal-symbol=\".\" data-word-paragraph-direct=\"[]\">…</p>\u001b[22m\n\u001b[2m       - unexpected value \"start\"\u001b[22m\n\n\n  192 |     if (key === 'center') {\n  193 |       await page.getByRole('button', { name: '撤销', exact: true }).click();\n> 194 |       await expect(target).toHaveCSS('text-align', 'left');\n      |                            ^\n  195 |       await page.getByRole('button', { name: '重做', exact: true }).click();\n  196 |       await expect(target).toHaveCSS('text-align', 'center');\n  197 |     }\n    at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-paragraph-acceptance.spec.ts:194:28"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-27T17:08:04.771Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/.release/office-continuation/duplicates/validation/focused-first-output/office-studio-word-paragra-a4dc1-edge-over-real-DOCX-reopens-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/.release/office-continuation/duplicates/validation/focused-first-output/office-studio-word-paragra-a4dc1-edge-over-real-DOCX-reopens-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-paragraph-acceptance.spec.ts",
+                    "column": 28,
+                    "line": 194
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "4abffe5bb50a05a5dfff-b230715ae49f7448631a",
+          "file": "office-studio-word-paragraph-acceptance.spec.ts",
+          "line": 71,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-27T17:07:56.388Z",
+    "duration": 17605.759000000002,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

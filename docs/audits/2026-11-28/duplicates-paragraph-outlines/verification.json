@@ -1,0 +1,125 @@
+{
+  "date": "2026-11-28",
+  "status": "passed",
+  "sourceCommit": "db48794f8a0112b8b4527fef2a0dff27f1ea6fad",
+  "originalAcceptanceCandidates": [
+    "X046",
+    "W011",
+    "W012",
+    "W013",
+    "W016"
+  ],
+  "P003Complete": false,
+  "whole159Complete": false,
+  "browser": {
+    "startTime": "2026-11-27T17:19:51.649Z",
+    "duration": 1250459.008,
+    "expected": 319,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "units": {
+    "ui": 2936,
+    "docs": 680,
+    "nativeDuplicates": 5,
+    "nativeOutlines": 9
+  },
+  "sourceFreeze": {
+    "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+    "bytes": 262451,
+    "sha256": "dbb810547d5365d14dc8777c68a0a465223cf1fa4d72d25ff4631c56aaa0052a"
+  },
+  "nativeXlsx": [
+    {
+      "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/duplicates/browser/roundtrip-1.xlsx",
+      "bytes": 8505,
+      "sha256": "c7de6adaeadaed7f2b6038f67cd109d0dc36ea8d028abeec59ea8a11db5896c4",
+      "nativeValues": {
+        "A2": {
+          "number": 1.0
+        },
+        "A3": {
+          "text": "1"
+        },
+        "A4": {
+          "boolean": true
+        },
+        "A5": null,
+        "A6": {
+          "text": ""
+        },
+        "A7": {
+          "number": 2.0
+        },
+        "C7": {
+          "formula": "A7*10",
+          "cache": "20"
+        }
+      }
+    },
+    {
+      "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/duplicates/browser/roundtrip-2.xlsx",
+      "bytes": 8505,
+      "sha256": "2a5e43053f2af8e7a3bd2753cf816adeaa644e3fa22a3d7588b446ddafa8c3f3",
+      "nativeValues": {
+        "A2": {
+          "number": 1.0
+        },
+        "A3": {
+          "text": "1"
+        },
+        "A4": {
+          "boolean": true
+        },
+        "A5": null,
+        "A6": {
+          "text": ""
+        },
+        "A7": {
+          "number": 2.0
+        },
+        "C7": {
+          "formula": "A7*10",
+          "cache": "20"
+        }
+      }
+    },
+    {
+      "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/duplicates/browser/source.xlsx",
+      "bytes": 7992,
+      "sha256": "3b888d6ef501318f54ea65daf6577d7a48a1e1764e1bb64bd79b87af44253cc4",
+      "nativeValues": {
+        "A2": {
+          "number": 1.0
+        },
+        "A3": {
+          "number": 1.0
+        },
+        "A4": {
+          "text": "1"
+        },
+        "A5": {
+          "boolean": true
+        },
+        "A6": null,
+        "A7": null,
+        "C7": {
+          "number": 60.0
+        }
+      }
+    }
+  ],
+  "nativeWordVerification": {
+    "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+    "bytes": 28052,
+    "sha256": "3b4c763a0f0d3e9354f0e3e2ebd378d4afb7cb909ba6519accbc0332746b754f"
+  },
+  "historicalFilesRestored": 5530,
+  "regeneratedRetainedAt": ".release/office-continuation/2026-11-28-integration/validation/regenerated",
+  "pdfOutlineMilestone": {
+    "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/pdf-outlines/final-2026-11-28/verification.json",
+    "bytes": 1851,
+    "sha256": "e373b67bdf6470fd993f8c8c83b56f085c24910df72aa0dd380dcad22f62b25d"
+  }
+}

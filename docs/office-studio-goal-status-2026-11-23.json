@@ -1166,59 +1166,118 @@
         "docs/tests/office-studio-word.test.mjs"
       ],
       "historicalStatus": "基础已有",
-      "status": "implemented-paragraph-layout-slice-verified-full-acceptance-audit-pending",
+      "status": "verified-original-acceptance",
       "evidence": [
         "2026-11-25：段落弹窗接入对齐、左右/首行/悬挂缩进、段前段后与三种行距；标尺支持拖动预览/取消/一次提交、键盘和表格单元格坐标。原生 DOCX 两次保存重开及明暗/320px 通过。",
-        "2026-11-25：页眉/页脚段落与标尺读取正文共享样式定义，命名页眉的修改、一次撤销重做及原生重开有独立证据。"
+        "2026-11-25：页眉/页脚段落与标尺读取正文共享样式定义，命名页眉的修改、一次撤销重做及原生重开有独立证据。",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json"
       ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "b758b19",
-        "implementation": "切片验证",
-        "implementedBehavior": "段落设置、混合值保持、原子事务与权限/草稿守卫；标尺首行、悬挂、左/右缩进的拖动预览/取消/键盘、抓取偏移及单元格坐标。三种行距与段前段后、样式原始单位继承及显式匹配值的直接格式所有权、格式刷/清除/打印联动；真实 DOCX 两次重开和明暗/320px 通过。",
-        "functionalGaps": [
-          "缩进/段间距范围 ±500pt/0–500pt，步长 0.05pt；倍数行距 0.5–10，固定/最小值 1–500pt。复杂混合字体的精确裁切、完整自动分页与外部 Word/WPS 布局仍待完整验收。"
-        ],
-        "acceptance": "not-proven-complete",
+        "date": "2026-11-28",
+        "sourceCommit": "db48794f8a0112b8b4527fef2a0dff27f1ea6fad",
+        "implementation": "完整验收",
+        "implementedBehavior": "左右居中两端，首行悬挂缩进",
+        "functionalGaps": [],
+        "acceptance": "original-ledger-acceptance-verified",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialog.tsx",
-            "line": 21,
-            "anchor": "export function StudioWordParagraphDialog"
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+            "line": 1,
+            "anchor": "final original and applicable common acceptance"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioWordRuler.tsx",
-            "line": 41,
-            "anchor": "export function StudioWordRuler"
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+            "line": 1,
+            "anchor": "final original and applicable common acceptance"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-word-paragraph-layout.ts",
-            "line": 187,
-            "anchor": "export function wordSetParagraphFormat"
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+            "line": 1,
+            "anchor": "final original and applicable common acceptance"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
-            "line": 403,
-            "anchor": "function paragraphProperties"
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+            "line": 1,
+            "anchor": "final original and applicable common acceptance"
           },
           {
-            "path": "e2e/office-studio-word-paragraph.spec.ts",
-            "line": 26,
-            "anchor": "paragraph dialog and ruler preserve"
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+            "line": 1,
+            "anchor": "final original and applicable common acceptance"
+          },
+          {
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json",
+            "line": 1,
+            "anchor": "final original and applicable common acceptance"
           }
         ],
         "existingTestFiles": [
-          "packages/ui/src/components/OfficeStudio/studio-word-paragraph-layout.test.ts",
-          "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+          "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialogs.test.tsx",
           "docs/tests/office-studio-word.test.mjs",
           "docs/tests/studio-print.test.mjs",
-          "e2e/office-studio-word-paragraph.spec.ts"
+          "e2e/office-studio-word-paragraph-acceptance.spec.ts"
         ],
-        "testEvidenceNote": "8 dedicated model tests, 5 new UI cases and real browser/native DOCX reopening passed, including shared named header styles and history. Full repository checks are recorded in the completion log; complex-layout acceptance remains pending.",
-        "sourceState": "Includes the paragraph-layout continuation changes committed with this audit."
+        "testEvidenceNote": "The final frozen 319/319 browser run, source/build identities, full unit/gate logs and independent DOCX/XLSX checks prove the finite original requirements. Initial failures remain archived; no whole-goal completion claim."
       },
-      "gaps": [
-        "缩进/段间距范围 ±500pt/0–500pt，步长 0.05pt；倍数行距 0.5–10，固定/最小值 1–500pt。复杂混合字体的精确裁切、完整自动分页与外部 Word/WPS 布局仍待完整验收。"
+      "gaps": [],
+      "auditHistory": [
+        {
+          "status": "implemented-paragraph-layout-slice-verified-full-acceptance-audit-pending",
+          "gaps": [
+            "缩进/段间距范围 ±500pt/0–500pt，步长 0.05pt；倍数行距 0.5–10，固定/最小值 1–500pt。复杂混合字体的精确裁切、完整自动分页与外部 Word/WPS 布局仍待完整验收。"
+          ],
+          "currentAudit": {
+            "date": "2026-11-25",
+            "sourceCommit": "b758b19",
+            "implementation": "切片验证",
+            "implementedBehavior": "段落设置、混合值保持、原子事务与权限/草稿守卫；标尺首行、悬挂、左/右缩进的拖动预览/取消/键盘、抓取偏移及单元格坐标。三种行距与段前段后、样式原始单位继承及显式匹配值的直接格式所有权、格式刷/清除/打印联动；真实 DOCX 两次重开和明暗/320px 通过。",
+            "functionalGaps": [
+              "缩进/段间距范围 ±500pt/0–500pt，步长 0.05pt；倍数行距 0.5–10，固定/最小值 1–500pt。复杂混合字体的精确裁切、完整自动分页与外部 Word/WPS 布局仍待完整验收。"
+            ],
+            "acceptance": "not-proven-complete",
+            "evidence": [
+              {
+                "path": "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialog.tsx",
+                "line": 21,
+                "anchor": "export function StudioWordParagraphDialog"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/StudioWordRuler.tsx",
+                "line": 41,
+                "anchor": "export function StudioWordRuler"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-word-paragraph-layout.ts",
+                "line": 187,
+                "anchor": "export function wordSetParagraphFormat"
+              },
+              {
+                "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
+                "line": 403,
+                "anchor": "function paragraphProperties"
+              },
+              {
+                "path": "e2e/office-studio-word-paragraph.spec.ts",
+                "line": 26,
+                "anchor": "paragraph dialog and ruler preserve"
+              }
+            ],
+            "existingTestFiles": [
+              "packages/ui/src/components/OfficeStudio/studio-word-paragraph-layout.test.ts",
+              "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+              "docs/tests/office-studio-word.test.mjs",
+              "docs/tests/studio-print.test.mjs",
+              "e2e/office-studio-word-paragraph.spec.ts"
+            ],
+            "testEvidenceNote": "8 dedicated model tests, 5 new UI cases and real browser/native DOCX reopening passed, including shared named header styles and history. Full repository checks are recorded in the completion log; complex-layout acceptance remains pending.",
+            "sourceState": "Includes the paragraph-layout continuation changes committed with this audit."
+          }
+        }
       ]
     },
     {
@@ -1241,59 +1300,118 @@
         "docs/tests/office-studio-word.test.mjs"
       ],
       "historicalStatus": "部分",
-      "status": "implemented-paragraph-layout-slice-verified-full-acceptance-audit-pending",
+      "status": "verified-original-acceptance",
       "evidence": [
         "2026-11-25：段落弹窗接入对齐、左右/首行/悬挂缩进、段前段后与三种行距；标尺支持拖动预览/取消/一次提交、键盘和表格单元格坐标。原生 DOCX 两次保存重开及明暗/320px 通过。",
-        "2026-11-25：页眉/页脚段落与标尺读取正文共享样式定义，命名页眉的修改、一次撤销重做及原生重开有独立证据。"
+        "2026-11-25：页眉/页脚段落与标尺读取正文共享样式定义，命名页眉的修改、一次撤销重做及原生重开有独立证据。",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json"
       ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "b758b19",
-        "implementation": "切片验证",
-        "implementedBehavior": "段落设置、混合值保持、原子事务与权限/草稿守卫；标尺首行、悬挂、左/右缩进的拖动预览/取消/键盘、抓取偏移及单元格坐标。三种行距与段前段后、样式原始单位继承及显式匹配值的直接格式所有权、格式刷/清除/打印联动；真实 DOCX 两次重开和明暗/320px 通过。",
-        "functionalGaps": [
-          "缩进/段间距范围 ±500pt/0–500pt，步长 0.05pt；倍数行距 0.5–10，固定/最小值 1–500pt。复杂混合字体的精确裁切、完整自动分页与外部 Word/WPS 布局仍待完整验收。"
-        ],
-        "acceptance": "not-proven-complete",
+        "date": "2026-11-28",
+        "sourceCommit": "db48794f8a0112b8b4527fef2a0dff27f1ea6fad",
+        "implementation": "完整验收",
+        "implementedBehavior": "单倍多倍固定值最小值及单位转换",
+        "functionalGaps": [],
+        "acceptance": "original-ledger-acceptance-verified",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialog.tsx",
-            "line": 21,
-            "anchor": "export function StudioWordParagraphDialog"
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+            "line": 1,
+            "anchor": "final original and applicable common acceptance"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioWordRuler.tsx",
-            "line": 41,
-            "anchor": "export function StudioWordRuler"
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+            "line": 1,
+            "anchor": "final original and applicable common acceptance"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-word-paragraph-layout.ts",
-            "line": 187,
-            "anchor": "export function wordSetParagraphFormat"
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+            "line": 1,
+            "anchor": "final original and applicable common acceptance"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
-            "line": 403,
-            "anchor": "function paragraphProperties"
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+            "line": 1,
+            "anchor": "final original and applicable common acceptance"
           },
           {
-            "path": "e2e/office-studio-word-paragraph.spec.ts",
-            "line": 26,
-            "anchor": "paragraph dialog and ruler preserve"
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+            "line": 1,
+            "anchor": "final original and applicable common acceptance"
+          },
+          {
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json",
+            "line": 1,
+            "anchor": "final original and applicable common acceptance"
           }
         ],
         "existingTestFiles": [
-          "packages/ui/src/components/OfficeStudio/studio-word-paragraph-layout.test.ts",
-          "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+          "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialogs.test.tsx",
           "docs/tests/office-studio-word.test.mjs",
           "docs/tests/studio-print.test.mjs",
-          "e2e/office-studio-word-paragraph.spec.ts"
+          "e2e/office-studio-word-paragraph-acceptance.spec.ts"
         ],
-        "testEvidenceNote": "8 dedicated model tests, 5 new UI cases and real browser/native DOCX reopening passed, including shared named header styles and history. Full repository checks are recorded in the completion log; complex-layout acceptance remains pending.",
-        "sourceState": "Includes the paragraph-layout continuation changes committed with this audit."
+        "testEvidenceNote": "The final frozen 319/319 browser run, source/build identities, full unit/gate logs and independent DOCX/XLSX checks prove the finite original requirements. Initial failures remain archived; no whole-goal completion claim."
       },
-      "gaps": [
-        "缩进/段间距范围 ±500pt/0–500pt，步长 0.05pt；倍数行距 0.5–10，固定/最小值 1–500pt。复杂混合字体的精确裁切、完整自动分页与外部 Word/WPS 布局仍待完整验收。"
+      "gaps": [],
+      "auditHistory": [
+        {
+          "status": "implemented-paragraph-layout-slice-verified-full-acceptance-audit-pending",
+          "gaps": [
+            "缩进/段间距范围 ±500pt/0–500pt，步长 0.05pt；倍数行距 0.5–10，固定/最小值 1–500pt。复杂混合字体的精确裁切、完整自动分页与外部 Word/WPS 布局仍待完整验收。"
+          ],
+          "currentAudit": {
+            "date": "2026-11-25",
+            "sourceCommit": "b758b19",
+            "implementation": "切片验证",
+            "implementedBehavior": "段落设置、混合值保持、原子事务与权限/草稿守卫；标尺首行、悬挂、左/右缩进的拖动预览/取消/键盘、抓取偏移及单元格坐标。三种行距与段前段后、样式原始单位继承及显式匹配值的直接格式所有权、格式刷/清除/打印联动；真实 DOCX 两次重开和明暗/320px 通过。",
+            "functionalGaps": [
+              "缩进/段间距范围 ±500pt/0–500pt，步长 0.05pt；倍数行距 0.5–10，固定/最小值 1–500pt。复杂混合字体的精确裁切、完整自动分页与外部 Word/WPS 布局仍待完整验收。"
+            ],
+            "acceptance": "not-proven-complete",
+            "evidence": [
+              {
+                "path": "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialog.tsx",
+                "line": 21,
+                "anchor": "export function StudioWordParagraphDialog"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/StudioWordRuler.tsx",
+                "line": 41,
+                "anchor": "export function StudioWordRuler"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-word-paragraph-layout.ts",
+                "line": 187,
+                "anchor": "export function wordSetParagraphFormat"
+              },
+              {
+                "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
+                "line": 403,
+                "anchor": "function paragraphProperties"
+              },
+              {
+                "path": "e2e/office-studio-word-paragraph.spec.ts",
+                "line": 26,
+                "anchor": "paragraph dialog and ruler preserve"
+              }
+            ],
+            "existingTestFiles": [
+              "packages/ui/src/components/OfficeStudio/studio-word-paragraph-layout.test.ts",
+              "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+              "docs/tests/office-studio-word.test.mjs",
+              "docs/tests/studio-print.test.mjs",
+              "e2e/office-studio-word-paragraph.spec.ts"
+            ],
+            "testEvidenceNote": "8 dedicated model tests, 5 new UI cases and real browser/native DOCX reopening passed, including shared named header styles and history. Full repository checks are recorded in the completion log; complex-layout acceptance remains pending.",
+            "sourceState": "Includes the paragraph-layout continuation changes committed with this audit."
+          }
+        }
       ]
     },
     {
@@ -1316,60 +1434,119 @@
         "docs/tests/office-studio-word.test.mjs"
       ],
       "historicalStatus": "缺失",
-      "status": "implemented-tab-stops-slice-verified-full-acceptance-audit-pending",
+      "status": "verified-original-acceptance",
       "evidence": [
         "2026-11-25：左/中/右/小数点制表位和点线/短线/实线/中点前导符的 ZUVI 编辑入口、原生指令模型、混合段落位置增量、样式继承/自动更新、清除、草稿/只读/禁用/IME守卫及历史已接入。",
         "e2e/office-studio-word-tabs.spec.ts：实际 DOCX 导入、修改/清除/取消/历史、缩放/非打印标记、页眉/表格坐标、打印与两次 DOCX 重开，明暗/320px；证据位于 docs/audits/2026-11-25/word-tabs/。",
-        "2026-11-25：补齐原生点号/逗号小数符号，千位分隔符不误识别；两种 DOCX 连续两次重开和浏览器对齐通过。默认间隔在读写/渲染前严格验证。"
+        "2026-11-25：补齐原生点号/逗号小数符号，千位分隔符不误识别；两种 DOCX 连续两次重开和浏览器对齐通过。默认间隔在读写/渲染前严格验证。",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json"
       ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "9cf1532",
-        "implementation": "切片验证",
-        "implementedBehavior": "左/中/右/小数点制表位，点线/短线/实线/中点前导符；位置增量保留混合段落其他制表位，显式清除继承，自动样式联动，格式刷/清除联动；显示装饰保留制表字符/选区/历史，默认间隔及点号/逗号小数符号原生保存，千位分隔符不误识别、页眉/表格、缩放及打印对齐，DOCX 两次重开和明暗/320px。",
-        "functionalGaps": [
-          "每段落/样式合并最多 64 个制表位指令，位置 0–1584pt、步长 0.05pt。bar/num/heavy 等扩展仍拒绝导入。多行长文本、段落其他对齐、RTL、复杂浮动和完整自动分页的布局组合仍待完整验收。"
-        ],
-        "acceptance": "not-proven-complete",
+        "date": "2026-11-28",
+        "sourceCommit": "db48794f8a0112b8b4527fef2a0dff27f1ea6fad",
+        "implementation": "完整验收",
+        "implementedBehavior": "左中右小数点制表位，点线前导符",
+        "functionalGaps": [],
+        "acceptance": "original-ledger-acceptance-verified",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioWordTabsDialog.tsx",
-            "line": 23,
-            "anchor": "export function StudioWordTabsDialog"
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+            "line": 1,
+            "anchor": "final original and applicable common acceptance"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-word-tab-extension.ts",
-            "line": 22,
-            "anchor": "export function wordSetTabStops"
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+            "line": 1,
+            "anchor": "final original and applicable common acceptance"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-word-tabs.ts",
-            "line": 24,
-            "anchor": "export function wordTabStops"
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+            "line": 1,
+            "anchor": "final original and applicable common acceptance"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
-            "line": 489,
-            "anchor": "function paragraphTabs"
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+            "line": 1,
+            "anchor": "final original and applicable common acceptance"
           },
           {
-            "path": "e2e/office-studio-word-tabs.spec.ts",
-            "line": 59,
-            "anchor": "Word tab positions and leaders align"
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+            "line": 1,
+            "anchor": "final original and applicable common acceptance"
+          },
+          {
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json",
+            "line": 1,
+            "anchor": "final original and applicable common acceptance"
           }
         ],
         "existingTestFiles": [
-          "packages/ui/src/components/OfficeStudio/studio-word-tabs.test.ts",
-          "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+          "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialogs.test.tsx",
           "docs/tests/office-studio-word.test.mjs",
           "docs/tests/studio-print.test.mjs",
-          "e2e/office-studio-word-tabs.spec.ts"
+          "e2e/office-studio-word-paragraph-acceptance.spec.ts"
         ],
-        "testEvidenceNote": "Dedicated tab model, UI and native/browser evidence establish the current slice. Full repository results are recorded with the audit; complete layout combinations remain pending.",
-        "sourceState": "Includes tab-stop continuation changes committed with this audit."
+        "testEvidenceNote": "The final frozen 319/319 browser run, source/build identities, full unit/gate logs and independent DOCX/XLSX checks prove the finite original requirements. Initial failures remain archived; no whole-goal completion claim."
       },
-      "gaps": [
-        "每段落/样式合并最多 64 个制表位指令，位置 0–1584pt、步长 0.05pt。bar/num/heavy 等扩展仍拒绝导入。多行长文本、段落其他对齐、RTL、复杂浮动和完整自动分页的布局组合仍待完整验收。"
+      "gaps": [],
+      "auditHistory": [
+        {
+          "status": "implemented-tab-stops-slice-verified-full-acceptance-audit-pending",
+          "gaps": [
+            "每段落/样式合并最多 64 个制表位指令，位置 0–1584pt、步长 0.05pt。bar/num/heavy 等扩展仍拒绝导入。多行长文本、段落其他对齐、RTL、复杂浮动和完整自动分页的布局组合仍待完整验收。"
+          ],
+          "currentAudit": {
+            "date": "2026-11-25",
+            "sourceCommit": "9cf1532",
+            "implementation": "切片验证",
+            "implementedBehavior": "左/中/右/小数点制表位，点线/短线/实线/中点前导符；位置增量保留混合段落其他制表位，显式清除继承，自动样式联动，格式刷/清除联动；显示装饰保留制表字符/选区/历史，默认间隔及点号/逗号小数符号原生保存，千位分隔符不误识别、页眉/表格、缩放及打印对齐，DOCX 两次重开和明暗/320px。",
+            "functionalGaps": [
+              "每段落/样式合并最多 64 个制表位指令，位置 0–1584pt、步长 0.05pt。bar/num/heavy 等扩展仍拒绝导入。多行长文本、段落其他对齐、RTL、复杂浮动和完整自动分页的布局组合仍待完整验收。"
+            ],
+            "acceptance": "not-proven-complete",
+            "evidence": [
+              {
+                "path": "packages/ui/src/components/OfficeStudio/StudioWordTabsDialog.tsx",
+                "line": 23,
+                "anchor": "export function StudioWordTabsDialog"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-word-tab-extension.ts",
+                "line": 22,
+                "anchor": "export function wordSetTabStops"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-word-tabs.ts",
+                "line": 24,
+                "anchor": "export function wordTabStops"
+              },
+              {
+                "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
+                "line": 489,
+                "anchor": "function paragraphTabs"
+              },
+              {
+                "path": "e2e/office-studio-word-tabs.spec.ts",
+                "line": 59,
+                "anchor": "Word tab positions and leaders align"
+              }
+            ],
+            "existingTestFiles": [
+              "packages/ui/src/components/OfficeStudio/studio-word-tabs.test.ts",
+              "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+              "docs/tests/office-studio-word.test.mjs",
+              "docs/tests/studio-print.test.mjs",
+              "e2e/office-studio-word-tabs.spec.ts"
+            ],
+            "testEvidenceNote": "Dedicated tab model, UI and native/browser evidence establish the current slice. Full repository results are recorded with the audit; complete layout combinations remain pending.",
+            "sourceState": "Includes tab-stop continuation changes committed with this audit."
+          }
+        }
       ]
     },
     {
@@ -1546,54 +1723,113 @@
         "docs/tests/office-studio-word.test.mjs"
       ],
       "historicalStatus": "缺失",
-      "status": "implemented-paragraph-surface-slice-verified-full-acceptance-audit-pending",
+      "status": "verified-original-acceptance",
       "evidence": [
         "2026-11-26：实际 ZUVI 逐边/线型/宽度/距文字/颜色及底纹控件、混合保持、草稿/取消/权限/事务、样式继承/自动更新和格式刷/清除。",
-        "docs/audits/2026-11-26/word-surface/: 真实 DOCX 来源、两次保存重开、打印及明暗/320px 浏览器证据。"
+        "docs/audits/2026-11-26/word-surface/: 真实 DOCX 来源、两次保存重开、打印及明暗/320px 浏览器证据。",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json"
       ],
       "currentAudit": {
-        "date": "2026-11-26",
-        "sourceCommit": "2d9efe1",
-        "implementation": "切片验证",
-        "implementedBehavior": "逐边边框线型/宽度/距文字/颜色/阴影框架及底纹模型，实际 ZUVI 编辑、混合字段保持、取消/错误/只读/禁用/IME守卫及单事务；样式继承/直接覆盖/自动更新、格式刷/清除与未编辑样式字段保留；原生 DOCX pBdr/shd 和两次重开、打印及明暗/320px。",
-        "functionalGaps": [
-          "原生复杂线型（波浪/三线等）预览尚采用 CSS 近似，段间/页间边框连接及复杂样式/浮动/RTL/真实分页组合仍待完整验收。宽度 0.25–12pt（1/8pt）、距离 0–31pt 整数，RGB/auto；完整主题引用仍待验证。"
-        ],
-        "acceptance": "not-proven-complete",
+        "date": "2026-11-28",
+        "sourceCommit": "db48794f8a0112b8b4527fef2a0dff27f1ea6fad",
+        "implementation": "完整验收",
+        "implementedBehavior": "边框每边、线型、距离、底纹及取消",
+        "functionalGaps": [],
+        "acceptance": "original-ledger-acceptance-verified",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioWordSurfaceDialog.tsx",
-            "line": 56,
-            "anchor": "export function StudioWordSurfaceDialog"
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+            "line": 1,
+            "anchor": "final original and applicable common acceptance"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-word-surface-extension.ts",
-            "line": 23,
-            "anchor": "export function wordSetParagraphSurface"
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+            "line": 1,
+            "anchor": "final original and applicable common acceptance"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-word-surface-codec.ts",
-            "line": 19,
-            "anchor": "export function readWordSurface"
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+            "line": 1,
+            "anchor": "final original and applicable common acceptance"
           },
           {
-            "path": "e2e/office-studio-word-surface.spec.ts",
-            "line": 10,
-            "anchor": "paragraph borders and shading edit"
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+            "line": 1,
+            "anchor": "final original and applicable common acceptance"
+          },
+          {
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+            "line": 1,
+            "anchor": "final original and applicable common acceptance"
+          },
+          {
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json",
+            "line": 1,
+            "anchor": "final original and applicable common acceptance"
           }
         ],
         "existingTestFiles": [
-          "packages/ui/src/components/OfficeStudio/studio-word-surface.test.ts",
-          "packages/ui/src/components/OfficeStudio/StudioWordSurfaceDialog.test.tsx",
+          "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialogs.test.tsx",
           "docs/tests/office-studio-word.test.mjs",
           "docs/tests/studio-print.test.mjs",
-          "e2e/office-studio-word-surface.spec.ts"
+          "e2e/office-studio-word-paragraph-acceptance.spec.ts"
         ],
-        "testEvidenceNote": "Current four-edge/direct/style/native/browser/print slice passed. Complex border rendering and the entire original acceptance matrix remain pending.",
-        "sourceState": "Includes paragraph-surface continuation changes committed with this audit."
+        "testEvidenceNote": "The final frozen 319/319 browser run, source/build identities, full unit/gate logs and independent DOCX/XLSX checks prove the finite original requirements. Initial failures remain archived; no whole-goal completion claim."
       },
-      "gaps": [
-        "原生复杂线型（波浪/三线等）预览尚采用 CSS 近似，段间/页间边框连接及复杂样式/浮动/RTL/真实分页组合仍待完整验收。宽度 0.25–12pt（1/8pt）、距离 0–31pt 整数，RGB/auto；完整主题引用仍待验证。"
+      "gaps": [],
+      "auditHistory": [
+        {
+          "status": "implemented-paragraph-surface-slice-verified-full-acceptance-audit-pending",
+          "gaps": [
+            "原生复杂线型（波浪/三线等）预览尚采用 CSS 近似，段间/页间边框连接及复杂样式/浮动/RTL/真实分页组合仍待完整验收。宽度 0.25–12pt（1/8pt）、距离 0–31pt 整数，RGB/auto；完整主题引用仍待验证。"
+          ],
+          "currentAudit": {
+            "date": "2026-11-26",
+            "sourceCommit": "2d9efe1",
+            "implementation": "切片验证",
+            "implementedBehavior": "逐边边框线型/宽度/距文字/颜色/阴影框架及底纹模型，实际 ZUVI 编辑、混合字段保持、取消/错误/只读/禁用/IME守卫及单事务；样式继承/直接覆盖/自动更新、格式刷/清除与未编辑样式字段保留；原生 DOCX pBdr/shd 和两次重开、打印及明暗/320px。",
+            "functionalGaps": [
+              "原生复杂线型（波浪/三线等）预览尚采用 CSS 近似，段间/页间边框连接及复杂样式/浮动/RTL/真实分页组合仍待完整验收。宽度 0.25–12pt（1/8pt）、距离 0–31pt 整数，RGB/auto；完整主题引用仍待验证。"
+            ],
+            "acceptance": "not-proven-complete",
+            "evidence": [
+              {
+                "path": "packages/ui/src/components/OfficeStudio/StudioWordSurfaceDialog.tsx",
+                "line": 56,
+                "anchor": "export function StudioWordSurfaceDialog"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-word-surface-extension.ts",
+                "line": 23,
+                "anchor": "export function wordSetParagraphSurface"
+              },
+              {
+                "path": "docs/src/pages/collaboration/office-studio/studio-word-surface-codec.ts",
+                "line": 19,
+                "anchor": "export function readWordSurface"
+              },
+              {
+                "path": "e2e/office-studio-word-surface.spec.ts",
+                "line": 10,
+                "anchor": "paragraph borders and shading edit"
+              }
+            ],
+            "existingTestFiles": [
+              "packages/ui/src/components/OfficeStudio/studio-word-surface.test.ts",
+              "packages/ui/src/components/OfficeStudio/StudioWordSurfaceDialog.test.tsx",
+              "docs/tests/office-studio-word.test.mjs",
+              "docs/tests/studio-print.test.mjs",
+              "e2e/office-studio-word-surface.spec.ts"
+            ],
+            "testEvidenceNote": "Current four-edge/direct/style/native/browser/print slice passed. Complex border rendering and the entire original acceptance matrix remain pending.",
+            "sourceState": "Includes paragraph-surface continuation changes committed with this audit."
+          }
+        }
       ]
     },
     {
@@ -7788,44 +8024,104 @@
         "docs/tests/studio-excel.test.mjs"
       ],
       "historicalStatus": "缺失",
-      "status": "audited-not-implemented",
-      "evidence": [],
+      "status": "verified-original-acceptance",
+      "evidence": [
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json"
+      ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "未实现",
-        "implementedBehavior": "没有去重命令",
-        "functionalGaps": [
-          "缺表头/比较列、类型空值语义及计数"
-        ],
-        "acceptance": "not-proven-complete",
+        "date": "2026-11-28",
+        "sourceCommit": "db48794f8a0112b8b4527fef2a0dff27f1ea6fad",
+        "implementation": "完整验收",
+        "implementedBehavior": "表头与比较列、空值类型及删除计数",
+        "functionalGaps": [],
+        "acceptance": "original-ledger-acceptance-verified",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
-            "line": 284,
-            "anchor": "const blocked"
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+            "line": 1,
+            "anchor": "final original and applicable common acceptance"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts",
-            "line": 1267,
-            "anchor": "async function checkSupportedWorkbook"
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+            "line": 1,
+            "anchor": "final original and applicable common acceptance"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 136,
-            "anchor": "export interface StudioSheet"
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+            "line": 1,
+            "anchor": "final original and applicable common acceptance"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
-            "line": 401,
-            "anchor": "studioPatchCells"
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+            "line": 1,
+            "anchor": "final original and applicable common acceptance"
+          },
+          {
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+            "line": 1,
+            "anchor": "final original and applicable common acceptance"
+          },
+          {
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json",
+            "line": 1,
+            "anchor": "final original and applicable common acceptance"
           }
         ],
-        "existingTestFiles": [],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "existingTestFiles": [
+          "packages/ui/src/components/OfficeStudio/studio-sheet-duplicates.test.ts",
+          "packages/ui/src/components/OfficeStudio/StudioSheet.duplicates.test.tsx",
+          "docs/tests/studio-sheet-duplicates.test.mjs",
+          "e2e/office-studio-sheet-duplicates.spec.ts"
+        ],
+        "testEvidenceNote": "The final frozen 319/319 browser run, source/build identities, full unit/gate logs and independent DOCX/XLSX checks prove the finite original requirements. Initial failures remain archived; no whole-goal completion claim."
       },
-      "gaps": [
-        "缺表头/比较列、类型空值语义及计数"
+      "gaps": [],
+      "auditHistory": [
+        {
+          "status": "audited-not-implemented",
+          "gaps": [
+            "缺表头/比较列、类型空值语义及计数"
+          ],
+          "currentAudit": {
+            "date": "2026-11-25",
+            "sourceCommit": "2382530",
+            "implementation": "未实现",
+            "implementedBehavior": "没有去重命令",
+            "functionalGaps": [
+              "缺表头/比较列、类型空值语义及计数"
+            ],
+            "acceptance": "not-proven-complete",
+            "evidence": [
+              {
+                "path": "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+                "line": 284,
+                "anchor": "const blocked"
+              },
+              {
+                "path": "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts",
+                "line": 1267,
+                "anchor": "async function checkSupportedWorkbook"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
+                "line": 136,
+                "anchor": "export interface StudioSheet"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+                "line": 401,
+                "anchor": "studioPatchCells"
+              }
+            ],
+            "existingTestFiles": [],
+            "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+          }
+        }
       ]
     },
     {
@@ -9479,44 +9775,89 @@
         "docs/tests/studio-pdf-codec.test.mjs"
       ],
       "historicalStatus": "缺失",
-      "status": "audited-not-implemented",
-      "evidence": [],
+      "status": "audited-partial-acceptance-pending",
+      "evidence": [
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/pdf-outlines/design.md",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/pdf-outlines/final-2026-11-28/verification.json",
+        "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json"
+      ],
       "currentAudit": {
-        "date": "2026-11-25",
-        "sourceCommit": "2382530",
-        "implementation": "未实现",
-        "implementedBehavior": "左侧导航只有搜索批注缩略图表单",
+        "date": "2026-11-28",
+        "sourceCommit": "db48794f8a0112b8b4527fef2a0dff27f1ea6fad",
+        "implementation": "部分实现",
+        "implementedBehavior": "独立 loaded-PDF 目录树读取、层级纯编辑及原生写入；稳定页身份、标准视图与命名目标、被动动作和私有字典保全。",
         "functionalGaps": [
-          "缺 PDF 原目录读取/层级编辑与保存"
+          "独立目录内核尚未接入宿主可序列化模型、来源身份绑定与导入导出。",
+          "层级面板、原目录导航、权限/IME/焦点/取消、Blob/模型配对历史、页面命令目标同步及真实浏览器两轮保存重开尚未完成。"
         ],
         "acceptance": "not-proven-complete",
         "evidence": [
           {
-            "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
-            "line": 350,
-            "anchor": "export interface StudioPdfDocument"
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/pdf-outlines/design.md",
+            "line": 1,
+            "anchor": "standalone kernel milestone only"
           },
           {
-            "path": "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
-            "line": 411,
-            "anchor": "const canModify"
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/pdf-outlines/final-2026-11-28/verification.json",
+            "line": 1,
+            "anchor": "standalone kernel milestone only"
           },
           {
-            "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
-            "line": 231,
-            "anchor": "export async function importStudioPdf"
-          },
-          {
-            "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
-            "line": 145,
-            "anchor": "readFields"
+            "path": "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+            "line": 1,
+            "anchor": "standalone kernel milestone only"
           }
         ],
-        "existingTestFiles": [],
-        "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+        "existingTestFiles": [
+          "docs/tests/studio-pdf-outlines.test.mjs"
+        ],
+        "testEvidenceNote": "Nine native tests and three independently inspected PDF samples pass; actual editor integration and original P003 acceptance remain incomplete."
       },
       "gaps": [
-        "缺 PDF 原目录读取/层级编辑与保存"
+        "独立目录内核尚未接入宿主可序列化模型、来源身份绑定与导入导出。",
+        "层级面板、原目录导航、权限/IME/焦点/取消、Blob/模型配对历史、页面命令目标同步及真实浏览器两轮保存重开尚未完成。"
+      ],
+      "auditHistory": [
+        {
+          "status": "audited-not-implemented",
+          "gaps": [
+            "缺 PDF 原目录读取/层级编辑与保存"
+          ],
+          "currentAudit": {
+            "date": "2026-11-25",
+            "sourceCommit": "2382530",
+            "implementation": "未实现",
+            "implementedBehavior": "左侧导航只有搜索批注缩略图表单",
+            "functionalGaps": [
+              "缺 PDF 原目录读取/层级编辑与保存"
+            ],
+            "acceptance": "not-proven-complete",
+            "evidence": [
+              {
+                "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
+                "line": 350,
+                "anchor": "export interface StudioPdfDocument"
+              },
+              {
+                "path": "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+                "line": 411,
+                "anchor": "const canModify"
+              },
+              {
+                "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
+                "line": 231,
+                "anchor": "export async function importStudioPdf"
+              },
+              {
+                "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
+                "line": 145,
+                "anchor": "readFields"
+              }
+            ],
+            "existingTestFiles": [],
+            "testEvidenceNote": "Existing test files establish slices only. No per-item browser/native/history/permission matrix has been claimed complete."
+          }
+        }
       ]
     },
     {
@@ -11304,23 +11645,23 @@
   "currentAuditSourceCommit": "2382530",
   "currentAuditItems": 159,
   "currentImplementationCounts": {
-    "完整验收": 17,
-    "部分实现": 47,
-    "切片验证": 29,
-    "未实现": 48,
+    "完整验收": 22,
+    "部分实现": 48,
+    "切片验证": 25,
+    "未实现": 46,
     "基础实现": 18
   },
-  "lastEvidenceUpdate": "2026-11-27",
-  "verifiedOriginalAcceptanceCount": 17,
-  "remainingOriginalAcceptanceCount": 142,
+  "lastEvidenceUpdate": "2026-11-28",
+  "verifiedOriginalAcceptanceCount": 22,
+  "remainingOriginalAcceptanceCount": 137,
   "lastIntegration": {
-    "sourceCommit": "14dde22a9767e40355d91a54634a95e88a0a23d6",
-    "date": "2026-11-27",
-    "browserPassed": 317,
+    "sourceCommit": "db48794f8a0112b8b4527fef2a0dff27f1ea6fad",
+    "date": "2026-11-28",
+    "browserPassed": 319,
     "browserFailed": 0,
     "browserSkipped": 0,
     "browserRetries": 0,
-    "verification": "docs/audits/2026-11-27/sheet-visibility/verification.json"
+    "verification": "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json"
   },
   "integrationHistory": [
     {
@@ -11331,6 +11672,15 @@
       "browserSkipped": 0,
       "browserRetries": 0,
       "verification": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/verification-final.json"
+    },
+    {
+      "sourceCommit": "14dde22a9767e40355d91a54634a95e88a0a23d6",
+      "date": "2026-11-27",
+      "browserPassed": 317,
+      "browserFailed": 0,
+      "browserSkipped": 0,
+      "browserRetries": 0,
+      "verification": "docs/audits/2026-11-27/sheet-visibility/verification.json"
     }
   ]
 }

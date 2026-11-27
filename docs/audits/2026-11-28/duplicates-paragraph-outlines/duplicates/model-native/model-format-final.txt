@@ -1,0 +1,10 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/studio-sheet-duplicates.test.ts (16 tests) 45ms
+
+ Test Files  1 passed (1)
+      Tests  16 passed (16)
+   Start at  01:01:59
+   Duration  751ms (transform 137ms, setup 110ms, collect 187ms, tests 45ms, environment 299ms, prepare 31ms)
+

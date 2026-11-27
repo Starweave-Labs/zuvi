@@ -1,0 +1,27 @@
+{
+  "capturedAt": "2026-11-27T17:02:36.355613+00:00",
+  "gitHead": "d0ffefd93313dc30a95381db619cf77932dfdb91",
+  "productionFilesChangedInThisArchiveTurn": false,
+  "files": [
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-outlines.ts",
+      "bytes": 24296,
+      "sha256": "308ec30520d4f4351c093af91ec4dc3e8abd5fc5dd378f739804b1f32b3873fa"
+    },
+    {
+      "path": "docs/tests/studio-pdf-outlines.test.mjs",
+      "bytes": 16724,
+      "sha256": "4927fdd0ee77c3d58b4637ac5b71231f78aca304cbd93a9541528904570d1277"
+    },
+    {
+      "path": "docs/tests/studio-pdf-test-runtime.mjs",
+      "bytes": 1842,
+      "sha256": "c51c8d02e9a09254ccfcc17bc43ca58b17fcae4a68b9168f183750037ada9fdb"
+    },
+    {
+      "path": ".release/office-continuation/pdf-outlines/generate-native.mjs",
+      "bytes": 4687,
+      "sha256": "497ac6ce0e2ff1a09c0a07b8fe479367307f3ac207f7fa983bb894b2f3316588"
+    }
+  ]
+}

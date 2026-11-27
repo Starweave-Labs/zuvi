@@ -1,0 +1,49 @@
+{
+  "date": "2026-11-28",
+  "checkedAt": "2026-11-27T17:06:43.499420+00:00",
+  "milestone": "P003 standalone loaded-PDF outline kernel",
+  "P003Complete": false,
+  "productionSourceChangedInArchiveTurn": false,
+  "sourceIdentities": {
+    "bytes": 926,
+    "sha256": "e682eb9c1e321ced248f630c08c38e83b6a8502481954daa1e3fbf9cd21c9399"
+  },
+  "sourceFilesUnchangedAfterNativeGeneration": true,
+  "tests": {
+    "passed": 9,
+    "failed": 0,
+    "skipped": 0,
+    "log": ".release/office-continuation/pdf-outlines/final-2026-11-28/native-tests-verified.txt"
+  },
+  "independentNativeSamples": 3,
+  "nativeSourceUnchanged": true,
+  "nativeSamples": [
+    {
+      "path": ".release/office-continuation/pdf-outlines/final-2026-11-28/native-verified/source.pdf",
+      "bytes": 3321,
+      "sha256": "76ce9e2f361b3686c0a0079caff58d7799e8bdc1696d8a3137889ee078297af9"
+    },
+    {
+      "path": ".release/office-continuation/pdf-outlines/final-2026-11-28/native-verified/roundtrip-1.pdf",
+      "bytes": 3496,
+      "sha256": "a3aeb43063c55fb164ba04eec6edd17caa55153b9346484d35f7734412a627c5"
+    },
+    {
+      "path": ".release/office-continuation/pdf-outlines/final-2026-11-28/native-verified/roundtrip-2.pdf",
+      "bytes": 3496,
+      "sha256": "a3aeb43063c55fb164ba04eec6edd17caa55153b9346484d35f7734412a627c5"
+    }
+  ],
+  "lint": "passed",
+  "typecheck": "earlier final source passed; no new shared build or typecheck in archive turn",
+  "pending": [
+    "Shared outline type/model and sourceHash binding",
+    "Host import/export and source rebasing",
+    "Real hierarchy UI and navigation",
+    "IME/focus/cancel/readOnly/disabled checks",
+    "Paired Blob/model single undo/redo",
+    "Page command target policy",
+    "Two real browser native roundtrips and visual checks"
+  ],
+  "design": ".release/office-continuation/pdf-outlines/design.md"
+}

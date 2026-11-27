@@ -1,0 +1,1176 @@
+{
+  "reviewDate": "2026-11-28",
+  "recordedAt": "2026-11-27T17:03:51.040175+00:00",
+  "reviewedHead": "d0ffefd93313dc30a95381db619cf77932dfdb91",
+  "sourceState": "Three independent dialog fixes plus independent component and browser tests are uncommitted; final source commit is assigned by root after integration.",
+  "items": [
+    "W011",
+    "W012",
+    "W013",
+    "W016"
+  ],
+  "currentFocused": {
+    "uiModelAndDialog": 42,
+    "actualWordComponent": 8,
+    "nativeAndPrint": 9,
+    "nameFilteredComponentSkips": 132,
+    "nameFilteredNativeSkips": 110
+  },
+  "uiTypecheck": "The first UI typecheck failed only in another task's StudioSheet.duplicates.test.tsx exact options. This is not reported as a passing check; root must complete final typecheck.",
+  "browserRunWasRepeated": false,
+  "previous317Browser": [
+    {
+      "title": "paragraph dialog and ruler preserve native indent and line rules with cancellation, history and repeated DOCX reopening",
+      "ok": true,
+      "tags": [],
+      "tests": [
+        {
+          "timeout": 30000,
+          "annotations": [],
+          "expectedStatus": "passed",
+          "projectId": "chromium",
+          "projectName": "chromium",
+          "results": [
+            {
+              "workerIndex": 0,
+              "parallelIndex": 0,
+              "status": "passed",
+              "duration": 9694,
+              "errors": [],
+              "stdout": [],
+              "stderr": [],
+              "retry": 0,
+              "startTime": "2026-11-27T07:42:21.578Z",
+              "annotations": [],
+              "attachments": []
+            }
+          ],
+          "status": "expected"
+        }
+      ],
+      "id": "fb2f566392c0a44d0eeb-e9bf488e7e83a78b6f8a",
+      "file": "office-studio-word-paragraph.spec.ts",
+      "line": 26,
+      "column": 1
+    },
+    {
+      "title": "paragraph borders and shading edit per side, cancel and undo atomically, print and reopen real DOCX twice",
+      "ok": true,
+      "tags": [],
+      "tests": [
+        {
+          "timeout": 30000,
+          "annotations": [],
+          "expectedStatus": "passed",
+          "projectId": "chromium",
+          "projectName": "chromium",
+          "results": [
+            {
+              "workerIndex": 0,
+              "parallelIndex": 0,
+              "status": "passed",
+              "duration": 6947,
+              "errors": [],
+              "stdout": [],
+              "stderr": [],
+              "retry": 0,
+              "startTime": "2026-11-27T07:43:32.290Z",
+              "annotations": [],
+              "attachments": []
+            }
+          ],
+          "status": "expected"
+        }
+      ],
+      "id": "210a24c68e1fd31bf23b-29389dbd75e383e884df",
+      "file": "office-studio-word-surface.spec.ts",
+      "line": 10,
+      "column": 1
+    },
+    {
+      "title": "decimal tabs use the native decimal symbol rather than a thousands separator",
+      "ok": true,
+      "tags": [],
+      "tests": [
+        {
+          "timeout": 30000,
+          "annotations": [],
+          "expectedStatus": "passed",
+          "projectId": "chromium",
+          "projectName": "chromium",
+          "results": [
+            {
+              "workerIndex": 0,
+              "parallelIndex": 0,
+              "status": "passed",
+              "duration": 2740,
+              "errors": [],
+              "stdout": [],
+              "stderr": [],
+              "retry": 0,
+              "startTime": "2026-11-27T07:43:39.257Z",
+              "annotations": [],
+              "attachments": []
+            }
+          ],
+          "status": "expected"
+        }
+      ],
+      "id": "1fc03a0b513a363cb16e-4d4f0d0fb89765763514",
+      "file": "office-studio-word-tabs.spec.ts",
+      "line": 36,
+      "column": 1
+    },
+    {
+      "title": "Word tab positions and leaders align in the real editor, cancel and undo atomically, print and survive two DOCX reopenings",
+      "ok": true,
+      "tags": [],
+      "tests": [
+        {
+          "timeout": 30000,
+          "annotations": [],
+          "expectedStatus": "passed",
+          "projectId": "chromium",
+          "projectName": "chromium",
+          "results": [
+            {
+              "workerIndex": 0,
+              "parallelIndex": 0,
+              "status": "passed",
+              "duration": 7659,
+              "errors": [],
+              "stdout": [],
+              "stderr": [],
+              "retry": 0,
+              "startTime": "2026-11-27T07:43:42.005Z",
+              "annotations": [],
+              "attachments": []
+            }
+          ],
+          "status": "expected"
+        }
+      ],
+      "id": "1fc03a0b513a363cb16e-09790aa5883539976a53",
+      "file": "office-studio-word-tabs.spec.ts",
+      "line": 59,
+      "column": 1
+    }
+  ],
+  "previousBrowserIsFinalAfterDialogFixes": false,
+  "sourceFiles": [
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+      "bytes": 141725,
+      "sha256": "ef3515d49ca280402ebd4c1de7fc30df00e430c77e00f7aee5aadda821f239ba",
+      "previous317SourceMatches": true
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialog.tsx",
+      "bytes": 11558,
+      "sha256": "ed752aedfe4bc29c9fd9334b753e7392d7c755e9f7b8e9d28adfdda94e0f10c3",
+      "previous317SourceMatches": false
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWordTabsDialog.tsx",
+      "bytes": 9335,
+      "sha256": "70caaa25b366a069eca53aaa634f7ea8ff24178029e692aaa87e9a81976a7656",
+      "previous317SourceMatches": false
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWordSurfaceDialog.tsx",
+      "bytes": 12287,
+      "sha256": "4e1de92bbc9d3993b41648523199c413f876b8b87a693b8daca855fc6e3cd5ee",
+      "previous317SourceMatches": false
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-paragraph-format.ts",
+      "bytes": 3619,
+      "sha256": "ac03043dcb49f940d24d9b1e873aae033426faf8280376090c131d6cd73ce9b4",
+      "previous317SourceMatches": true
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-paragraph-layout.ts",
+      "bytes": 10702,
+      "sha256": "cd5cb8502caee16e787fb4158d56e60ad00f561e6ca5f34e237bb3202a14f1cd",
+      "previous317SourceMatches": true
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-tab-extension.ts",
+      "bytes": 8115,
+      "sha256": "a1b82ffb291cb4e71fb01f19b249c6fb54af0103025f7fdef680411edc032950",
+      "previous317SourceMatches": true
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-tabs.ts",
+      "bytes": 4186,
+      "sha256": "1769d60231fa8ea492df32fd11ab31ec07fb85c65a143921da9f81e90f4ae683",
+      "previous317SourceMatches": true
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-tabs-dom.ts",
+      "bytes": 3864,
+      "sha256": "f2256a558bf0c1ed569acac17d77ee9cae1d9cb5236730eaa0007d7f889c9c7b",
+      "previous317SourceMatches": true
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-surface.ts",
+      "bytes": 8337,
+      "sha256": "0a314dd3dced280f88210c4476bc56087b00e2892bec2e09b0e15df4db70fbac",
+      "previous317SourceMatches": true
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-surface-extension.ts",
+      "bytes": 3404,
+      "sha256": "7a8941fefddaac3e54ce3220c2eef65d575a90e03737117346013253b2658113",
+      "previous317SourceMatches": true
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-paragraph-layout.test.ts",
+      "bytes": 11013,
+      "sha256": "4bf1bb7c037926696cfbf2909778f5b1a166b74e99aa8cbfca80b57aad534d2d",
+      "previous317SourceMatches": true
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-tabs.test.ts",
+      "bytes": 8333,
+      "sha256": "12ae7310413926ec957dd18f359c5cc91c5c6429bbafd5c1068f57d070b9a3e8",
+      "previous317SourceMatches": true
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-surface.test.ts",
+      "bytes": 6284,
+      "sha256": "662b264b27fe13998af76bf300e62457550a250e4a0a368b57dbdef7fa59ffed",
+      "previous317SourceMatches": true
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWordSurfaceDialog.test.tsx",
+      "bytes": 3460,
+      "sha256": "8dcfb96cf187c24f44a62d24d344684c2c6f4621dad360b272104b08e3308124",
+      "previous317SourceMatches": true
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialogs.test.tsx",
+      "bytes": 5884,
+      "sha256": "477ab2a29495604e5dbb701465dc8c5bc0e553130b887ec3c2b7fd54397e19e6",
+      "previous317SourceMatches": false
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
+      "bytes": 115098,
+      "sha256": "5021af586ff212f145258ff4403cba23f44c4733e9b765583551d9ecefcd811a",
+      "previous317SourceMatches": true
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-word-surface-codec.ts",
+      "bytes": 4372,
+      "sha256": "d0fc2de9db7ba6fc5a3f118013e622d30b98e00d14ba11331fc1140107dd4953",
+      "previous317SourceMatches": true
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-print.ts",
+      "bytes": 49686,
+      "sha256": "d6d2d767b32bc1c1271e0ec8fe795ef0b862c4e62ce550542a4007729b39eceb",
+      "previous317SourceMatches": true
+    },
+    {
+      "path": "docs/tests/office-studio-word.test.mjs",
+      "bytes": 113774,
+      "sha256": "9819dc01697aa00321181b761b168618c6dede41fd2a7ecb0c4aa892f5f98ec4",
+      "previous317SourceMatches": true
+    },
+    {
+      "path": "docs/tests/studio-print.test.mjs",
+      "bytes": 61551,
+      "sha256": "547d59a36b9f30de8de0d9979694c1bebc3bf21b8be9e7b5676f7ee669cb5e47",
+      "previous317SourceMatches": true
+    },
+    {
+      "path": "e2e/office-studio-word-paragraph.spec.ts",
+      "bytes": 11033,
+      "sha256": "ebbb6157e2f08cff029f21caddbb891d57905816992998dd9d2d1f2cd7c98e13",
+      "previous317SourceMatches": true
+    },
+    {
+      "path": "e2e/office-studio-word-tabs.spec.ts",
+      "bytes": 12369,
+      "sha256": "96684363f7809cf4c9b774b5f04500e722731a84adaf5790c2d9b123ebdaef52",
+      "previous317SourceMatches": true
+    },
+    {
+      "path": "e2e/office-studio-word-surface.spec.ts",
+      "bytes": 6854,
+      "sha256": "e67a09f611075ffb7fec081636a9c49c4ba49a81e4614b0b6535fc405934ac84",
+      "previous317SourceMatches": true
+    },
+    {
+      "path": "e2e/office-studio-word-paragraph-acceptance.spec.ts",
+      "bytes": 14269,
+      "sha256": "2f0ea7da29bc8e0a3c61614b10f7db712da014c8dc7501de123d116efbe77227",
+      "previous317SourceMatches": false
+    }
+  ],
+  "historicalArtifacts": [
+    {
+      "path": ".release/office-continuation/x030/validation/resumed/regenerated/2026-11-25/word-paragraph/paragraph-dialog-dark-320.png",
+      "bytes": 48555,
+      "sha256": "3251b3834a7afc7af525d613ae5597f01ee61cdee1f06d3cf52a7d4da60b1bb6"
+    },
+    {
+      "path": ".release/office-continuation/x030/validation/resumed/regenerated/2026-11-25/word-paragraph/paragraph-dialog-dark.png",
+      "bytes": 133939,
+      "sha256": "561b3f75aa945b33bc7f4bcfab06d34437c8c96e7a1e049c075c08ad88190005"
+    },
+    {
+      "path": ".release/office-continuation/x030/validation/resumed/regenerated/2026-11-25/word-paragraph/paragraph-dialog-light-320.png",
+      "bytes": 48872,
+      "sha256": "bc0ba8df357e0860502f9f6b35da88074c82a2b468638b96a313e3dc5e55790f"
+    },
+    {
+      "path": ".release/office-continuation/x030/validation/resumed/regenerated/2026-11-25/word-paragraph/paragraph-dialog-light.png",
+      "bytes": 139327,
+      "sha256": "5c1c5c06f7d0f6dbb7aa658ee937d779a75313f99351f6df39431986b941000e"
+    },
+    {
+      "path": ".release/office-continuation/x030/validation/resumed/regenerated/2026-11-25/word-paragraph/paragraph-results-light.png",
+      "bytes": 115389,
+      "sha256": "3097a4b912ccddcc1192db475070ef94641e944ffe16800928021833d2b35288"
+    },
+    {
+      "path": ".release/office-continuation/x030/validation/resumed/regenerated/2026-11-25/word-paragraph/paragraph-roundtrip-1.docx",
+      "bytes": 40588,
+      "sha256": "4a92cf0dfd229688d839cf3d53e2306c23c0a7c08f48084403619ef02aeb89e4",
+      "nativeParagraphs": [
+        {
+          "text": "First paragraph",
+          "attrs": {
+            "spacing": {
+              "after": "120",
+              "line": "480",
+              "lineRule": "exact"
+            },
+            "ind": {
+              "left": "1000",
+              "right": "200",
+              "hanging": "220"
+            }
+          }
+        },
+        {
+          "text": "Second paragraph",
+          "attrs": {
+            "spacing": {
+              "after": "180",
+              "line": "600",
+              "lineRule": "atLeast"
+            },
+            "ind": {
+              "left": "600",
+              "right": "200",
+              "hanging": "240"
+            }
+          }
+        },
+        {
+          "text": "Two linesSecond line",
+          "attrs": {
+            "spacing": {
+              "line": "480",
+              "lineRule": "exact"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": ".release/office-continuation/x030/validation/resumed/regenerated/2026-11-25/word-paragraph/paragraph-roundtrip-2.docx",
+      "bytes": 41206,
+      "sha256": "ab44895dbcf0c55a66f22ab6cdf82704b4f24f1e29a1039258004d6cca2f0f6e",
+      "nativeParagraphs": [
+        {
+          "text": "First paragraph",
+          "attrs": {
+            "spacing": {
+              "after": "120",
+              "line": "480",
+              "lineRule": "exact"
+            },
+            "ind": {
+              "left": "1000",
+              "right": "200",
+              "hanging": "220"
+            }
+          }
+        },
+        {
+          "text": "Second paragraph",
+          "attrs": {
+            "spacing": {
+              "after": "180",
+              "line": "600",
+              "lineRule": "atLeast"
+            },
+            "ind": {
+              "left": "600",
+              "right": "200",
+              "hanging": "240"
+            }
+          }
+        },
+        {
+          "text": "Two linesSecond line",
+          "attrs": {
+            "spacing": {
+              "after": "156",
+              "line": "480",
+              "lineRule": "exact"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": ".release/office-continuation/x030/validation/resumed/regenerated/2026-11-25/word-paragraph/paragraph-source.docx",
+      "bytes": 10486,
+      "sha256": "1de2b3768d4dff04548416854adbd598036502fde1bf040269ac0b1f748d8dfc",
+      "nativeParagraphs": [
+        {
+          "text": "First paragraph",
+          "attrs": {
+            "spacing": {
+              "after": "120",
+              "line": "360",
+              "lineRule": "auto"
+            },
+            "ind": {
+              "left": "160",
+              "firstLine": "80"
+            }
+          }
+        },
+        {
+          "text": "Second paragraph",
+          "attrs": {
+            "spacing": {
+              "after": "180",
+              "line": "360",
+              "lineRule": "exact"
+            },
+            "ind": {
+              "left": "320",
+              "hanging": "80"
+            }
+          }
+        },
+        {
+          "text": "Two linesSecond line",
+          "attrs": {}
+        }
+      ]
+    },
+    {
+      "path": ".release/office-continuation/x030/validation/resumed/regenerated/2026-11-25/word-tabs/tabs-comma-roundtrip-1.docx",
+      "bytes": 9820,
+      "sha256": "9f12aa07c6d9eb1bda9aec50273a24063e019e81dd9aea60cf03ef1cabf314b6",
+      "nativeParagraphs": [
+        {
+          "text": "Group1.234,50",
+          "attrs": {
+            "tabs": [
+              {
+                "element": "tab",
+                "attrs": {
+                  "val": "decimal",
+                  "pos": "3600",
+                  "leader": "dot"
+                }
+              }
+            ],
+            "spacing": {}
+          }
+        }
+      ]
+    },
+    {
+      "path": ".release/office-continuation/x030/validation/resumed/regenerated/2026-11-25/word-tabs/tabs-comma-roundtrip-2.docx",
+      "bytes": 9920,
+      "sha256": "caf413ce538a09c090b79ba06418a3688ec01a0fc818055de50bff6ee1ebc5e5",
+      "nativeParagraphs": [
+        {
+          "text": "Group1.234,50",
+          "attrs": {
+            "tabs": [
+              {
+                "element": "tab",
+                "attrs": {
+                  "val": "decimal",
+                  "pos": "3600",
+                  "leader": "dot"
+                }
+              }
+            ],
+            "spacing": {
+              "after": "156",
+              "line": "420",
+              "lineRule": "auto"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": ".release/office-continuation/x030/validation/resumed/regenerated/2026-11-25/word-tabs/tabs-comma-source.docx",
+      "bytes": 34901,
+      "sha256": "03c4cc875cc8eb61cb5979ee6b14eb9502d66784974854031d8c494f5854815a",
+      "nativeParagraphs": [
+        {
+          "text": "Group1.234,50",
+          "attrs": {
+            "tabs": [
+              {
+                "element": "tab",
+                "attrs": {
+                  "val": "decimal",
+                  "pos": "3600",
+                  "leader": "dot"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": ".release/office-continuation/x030/validation/resumed/regenerated/2026-11-25/word-tabs/tabs-dialog-dark-320.png",
+      "bytes": 48618,
+      "sha256": "9a7580e0922f365d8881c8e2548e94f1be01984178052459789aa20ed5ac8b60"
+    },
+    {
+      "path": ".release/office-continuation/x030/validation/resumed/regenerated/2026-11-25/word-tabs/tabs-dialog-dark.png",
+      "bytes": 126435,
+      "sha256": "371992e1f4300d7612ecff03c8a886c8197693b0112424c629c6f1ca71c4e06f"
+    },
+    {
+      "path": ".release/office-continuation/x030/validation/resumed/regenerated/2026-11-25/word-tabs/tabs-dialog-light-320.png",
+      "bytes": 50138,
+      "sha256": "de54b92587021b0cd7d3bc70117b62b3d05cedeb2e310afbea353513fc84156f"
+    },
+    {
+      "path": ".release/office-continuation/x030/validation/resumed/regenerated/2026-11-25/word-tabs/tabs-dialog-light.png",
+      "bytes": 133327,
+      "sha256": "3b185b4587775e5d71ce0ceca4ef7f1fdaf4c318e9644fd701c05ffa3e5010be"
+    },
+    {
+      "path": ".release/office-continuation/x030/validation/resumed/regenerated/2026-11-25/word-tabs/tabs-period-roundtrip-1.docx",
+      "bytes": 9821,
+      "sha256": "b31360944cf642270195b6f844ab41be29b7a9a3fc6548365f6a57cbb29b2c7e",
+      "nativeParagraphs": [
+        {
+          "text": "Group1,234.50",
+          "attrs": {
+            "tabs": [
+              {
+                "element": "tab",
+                "attrs": {
+                  "val": "decimal",
+                  "pos": "3600",
+                  "leader": "dot"
+                }
+              }
+            ],
+            "spacing": {}
+          }
+        }
+      ]
+    },
+    {
+      "path": ".release/office-continuation/x030/validation/resumed/regenerated/2026-11-25/word-tabs/tabs-period-roundtrip-2.docx",
+      "bytes": 9921,
+      "sha256": "77e37c6764fd7e430defc22baaa3b3a6b39ddccfbcf1abb22742c0d94e329d08",
+      "nativeParagraphs": [
+        {
+          "text": "Group1,234.50",
+          "attrs": {
+            "tabs": [
+              {
+                "element": "tab",
+                "attrs": {
+                  "val": "decimal",
+                  "pos": "3600",
+                  "leader": "dot"
+                }
+              }
+            ],
+            "spacing": {
+              "after": "156",
+              "line": "420",
+              "lineRule": "auto"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": ".release/office-continuation/x030/validation/resumed/regenerated/2026-11-25/word-tabs/tabs-period-source.docx",
+      "bytes": 34901,
+      "sha256": "bbbca938c7db4470f9035a8ec8d468410c57987d2f9e3698b595650d1eebb866",
+      "nativeParagraphs": [
+        {
+          "text": "Group1,234.50",
+          "attrs": {
+            "tabs": [
+              {
+                "element": "tab",
+                "attrs": {
+                  "val": "decimal",
+                  "pos": "3600",
+                  "leader": "dot"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": ".release/office-continuation/x030/validation/resumed/regenerated/2026-11-25/word-tabs/tabs-results-light.png",
+      "bytes": 115231,
+      "sha256": "29b6aa743c1387d33a4a5393aabf8b63428b6e5aa3ecb40d5791964233472ea2"
+    },
+    {
+      "path": ".release/office-continuation/x030/validation/resumed/regenerated/2026-11-25/word-tabs/tabs-roundtrip-1.docx",
+      "bytes": 10982,
+      "sha256": "e8af5eae4a672b21835770d7a39d6e43ef120fbae85d80d8ee3ec268476f1246",
+      "nativeParagraphs": [
+        {
+          "text": "LeftAppleAdded",
+          "attrs": {
+            "tabs": [
+              {
+                "element": "tab",
+                "attrs": {
+                  "val": "left",
+                  "pos": "3600",
+                  "leader": "dot"
+                }
+              }
+            ],
+            "spacing": {}
+          }
+        },
+        {
+          "text": "CenterMixed width",
+          "attrs": {
+            "tabs": [
+              {
+                "element": "tab",
+                "attrs": {
+                  "val": "center",
+                  "pos": "3600",
+                  "leader": "dot"
+                }
+              }
+            ],
+            "spacing": {}
+          }
+        },
+        {
+          "text": "RightTail",
+          "attrs": {
+            "tabs": [
+              {
+                "element": "tab",
+                "attrs": {
+                  "val": "right",
+                  "pos": "3600",
+                  "leader": "dot"
+                }
+              }
+            ],
+            "spacing": {}
+          }
+        },
+        {
+          "text": "Decimal123.45",
+          "attrs": {
+            "tabs": [
+              {
+                "element": "tab",
+                "attrs": {
+                  "val": "clear",
+                  "pos": "3600"
+                }
+              },
+              {
+                "element": "tab",
+                "attrs": {
+                  "val": "decimal",
+                  "pos": "4201",
+                  "leader": "dot"
+                }
+              }
+            ],
+            "spacing": {}
+          }
+        },
+        {
+          "text": "CellAligned",
+          "attrs": {
+            "tabs": [
+              {
+                "element": "tab",
+                "attrs": {
+                  "val": "left",
+                  "pos": "1440",
+                  "leader": "hyphen"
+                }
+              }
+            ],
+            "spacing": {
+              "after": "0",
+              "before": "0"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": ".release/office-continuation/x030/validation/resumed/regenerated/2026-11-25/word-tabs/tabs-roundtrip-2.docx",
+      "bytes": 11227,
+      "sha256": "3a76bde403fb809957bc5b96b8b7d191255a2317702cba1f8817ec43c4c17046",
+      "nativeParagraphs": [
+        {
+          "text": "LeftAppleAdded",
+          "attrs": {
+            "tabs": [
+              {
+                "element": "tab",
+                "attrs": {
+                  "val": "left",
+                  "pos": "3600",
+                  "leader": "dot"
+                }
+              }
+            ],
+            "spacing": {
+              "after": "156",
+              "line": "420",
+              "lineRule": "auto"
+            }
+          }
+        },
+        {
+          "text": "CenterMixed width",
+          "attrs": {
+            "tabs": [
+              {
+                "element": "tab",
+                "attrs": {
+                  "val": "center",
+                  "pos": "3600",
+                  "leader": "dot"
+                }
+              }
+            ],
+            "spacing": {
+              "after": "156",
+              "line": "420",
+              "lineRule": "auto"
+            }
+          }
+        },
+        {
+          "text": "RightTail",
+          "attrs": {
+            "tabs": [
+              {
+                "element": "tab",
+                "attrs": {
+                  "val": "right",
+                  "pos": "3600",
+                  "leader": "dot"
+                }
+              }
+            ],
+            "spacing": {
+              "after": "156",
+              "line": "420",
+              "lineRule": "auto"
+            }
+          }
+        },
+        {
+          "text": "Decimal123.45",
+          "attrs": {
+            "tabs": [
+              {
+                "element": "tab",
+                "attrs": {
+                  "val": "clear",
+                  "pos": "3600"
+                }
+              },
+              {
+                "element": "tab",
+                "attrs": {
+                  "val": "decimal",
+                  "pos": "4201",
+                  "leader": "dot"
+                }
+              }
+            ],
+            "spacing": {
+              "after": "156",
+              "line": "420",
+              "lineRule": "auto"
+            }
+          }
+        },
+        {
+          "text": "CellAligned",
+          "attrs": {
+            "tabs": [
+              {
+                "element": "tab",
+                "attrs": {
+                  "val": "left",
+                  "pos": "1440",
+                  "leader": "hyphen"
+                }
+              }
+            ],
+            "spacing": {
+              "after": "0",
+              "before": "0",
+              "line": "420",
+              "lineRule": "auto"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": ".release/office-continuation/x030/validation/resumed/regenerated/2026-11-25/word-tabs/tabs-source.docx",
+      "bytes": 10598,
+      "sha256": "13c6d968d3d33a775f795337c8857b2644af5514fd16e14c40169b2362ebf4d5",
+      "nativeParagraphs": [
+        {
+          "text": "LeftApple",
+          "attrs": {
+            "tabs": [
+              {
+                "element": "tab",
+                "attrs": {
+                  "val": "left",
+                  "pos": "3600",
+                  "leader": "dot"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "text": "CenterMixed width",
+          "attrs": {
+            "tabs": [
+              {
+                "element": "tab",
+                "attrs": {
+                  "val": "center",
+                  "pos": "3600",
+                  "leader": "dot"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "text": "RightTail",
+          "attrs": {
+            "tabs": [
+              {
+                "element": "tab",
+                "attrs": {
+                  "val": "right",
+                  "pos": "3600",
+                  "leader": "dot"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "text": "Decimal123.45",
+          "attrs": {
+            "tabs": [
+              {
+                "element": "tab",
+                "attrs": {
+                  "val": "decimal",
+                  "pos": "3600",
+                  "leader": "dot"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "text": "CellAligned",
+          "attrs": {
+            "tabs": [
+              {
+                "element": "tab",
+                "attrs": {
+                  "val": "left",
+                  "pos": "1440",
+                  "leader": "hyphen"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": ".release/office-continuation/x030/validation/resumed/regenerated/2026-11-26/word-surface/surface-dialog-dark-320.png",
+      "bytes": 35056,
+      "sha256": "1e302378c1313cff07be3ae9f3a42bf90f138eaf6e83f5579104a2ab9e0d40a8"
+    },
+    {
+      "path": ".release/office-continuation/x030/validation/resumed/regenerated/2026-11-26/word-surface/surface-dialog-dark.png",
+      "bytes": 130792,
+      "sha256": "8718aae34ac4fd7a324c3fd6179fdd7b17a9a18310e542aa87945753339b7885"
+    },
+    {
+      "path": ".release/office-continuation/x030/validation/resumed/regenerated/2026-11-26/word-surface/surface-dialog-light-320.png",
+      "bytes": 35856,
+      "sha256": "a0837495f3c0bf7bd6bf45c5bb1cacf710583e8ec32994b7c3d549038a1521b5"
+    },
+    {
+      "path": ".release/office-continuation/x030/validation/resumed/regenerated/2026-11-26/word-surface/surface-results-light.png",
+      "bytes": 106695,
+      "sha256": "968d51c9596590f6ad34168e188466e6753ef87a49235fcfdcbca553616c4586"
+    },
+    {
+      "path": ".release/office-continuation/x030/validation/resumed/regenerated/2026-11-26/word-surface/surface-roundtrip-1.docx",
+      "bytes": 9887,
+      "sha256": "42587a862d95e1f04d533f4d758e913b9bde5de1d50d478ffca938deecf56e3a",
+      "nativeParagraphs": [
+        {
+          "text": "First surface",
+          "attrs": {
+            "spacing": {},
+            "pBdr": [
+              {
+                "element": "left",
+                "attrs": {
+                  "val": "single",
+                  "sz": "8",
+                  "space": "3",
+                  "color": "112233"
+                }
+              },
+              {
+                "element": "right",
+                "attrs": {
+                  "val": "dashed",
+                  "sz": "12",
+                  "space": "4",
+                  "color": "445566"
+                }
+              }
+            ],
+            "shd": {
+              "val": "clear",
+              "fill": "ccffee"
+            }
+          }
+        },
+        {
+          "text": "Second surface",
+          "attrs": {
+            "spacing": {},
+            "pBdr": [
+              {
+                "element": "bottom",
+                "attrs": {
+                  "val": "dotted",
+                  "sz": "4",
+                  "color": "556677"
+                }
+              },
+              {
+                "element": "right",
+                "attrs": {
+                  "val": "dashed",
+                  "sz": "12",
+                  "space": "4",
+                  "color": "445566"
+                }
+              }
+            ],
+            "shd": {
+              "val": "clear",
+              "fill": "ccffee"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": ".release/office-continuation/x030/validation/resumed/regenerated/2026-11-26/word-surface/surface-roundtrip-2.docx",
+      "bytes": 9982,
+      "sha256": "12e44e2c6a4077d1781eeb31d2d80356466c24f83d9e239ee3ef6be0ee6668e5",
+      "nativeParagraphs": [
+        {
+          "text": "First surface",
+          "attrs": {
+            "spacing": {
+              "after": "156",
+              "line": "420",
+              "lineRule": "auto"
+            },
+            "pBdr": [
+              {
+                "element": "left",
+                "attrs": {
+                  "val": "single",
+                  "sz": "8",
+                  "space": "3",
+                  "color": "112233"
+                }
+              },
+              {
+                "element": "right",
+                "attrs": {
+                  "val": "dashed",
+                  "sz": "12",
+                  "space": "4",
+                  "color": "445566"
+                }
+              }
+            ],
+            "shd": {
+              "val": "clear",
+              "fill": "ccffee"
+            }
+          }
+        },
+        {
+          "text": "Second surface",
+          "attrs": {
+            "spacing": {
+              "after": "156",
+              "line": "420",
+              "lineRule": "auto"
+            },
+            "pBdr": [
+              {
+                "element": "bottom",
+                "attrs": {
+                  "val": "dotted",
+                  "sz": "4",
+                  "color": "556677"
+                }
+              },
+              {
+                "element": "right",
+                "attrs": {
+                  "val": "dashed",
+                  "sz": "12",
+                  "space": "4",
+                  "color": "445566"
+                }
+              }
+            ],
+            "shd": {
+              "val": "clear",
+              "fill": "ccffee"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": ".release/office-continuation/x030/validation/resumed/regenerated/2026-11-26/word-surface/surface-source.docx",
+      "bytes": 9562,
+      "sha256": "cf8fe4d6fb80ab9989afabdea54cb9dabcb847ada632ed88c2b45afaf28c134d",
+      "nativeParagraphs": [
+        {
+          "text": "First surface",
+          "attrs": {
+            "pBdr": [
+              {
+                "element": "left",
+                "attrs": {
+                  "val": "single",
+                  "color": "112233",
+                  "sz": "8",
+                  "space": "3"
+                }
+              }
+            ],
+            "shd": {
+              "fill": "FFEECC",
+              "val": "clear"
+            }
+          }
+        },
+        {
+          "text": "Second surface",
+          "attrs": {
+            "pBdr": [
+              {
+                "element": "bottom",
+                "attrs": {
+                  "val": "dotted",
+                  "color": "556677",
+                  "sz": "4"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "logs": [
+    {
+      "path": ".release/office-continuation/paragraph-acceptance/dialogs-before.txt",
+      "bytes": 4924,
+      "sha256": "6ffbca218cba26767783621e32a734a8f6616839ce950e2f4b952de33e2c33d9"
+    },
+    {
+      "path": ".release/office-continuation/paragraph-acceptance/dialogs-models-final.txt",
+      "bytes": 709,
+      "sha256": "5be1820da9711098604b4910cf8dbb948238790b087a6fb38f0d50e1001c0b62"
+    },
+    {
+      "path": ".release/office-continuation/paragraph-acceptance/component-current.txt",
+      "bytes": 1128,
+      "sha256": "8c9205b9fa62aee047cba53c58224a33b5498b4095e822d5f90a8dba082d580f"
+    },
+    {
+      "path": ".release/office-continuation/paragraph-acceptance/native-print-current.txt",
+      "bytes": 33201,
+      "sha256": "15dee7848a7da7134903005e45fa8376814c3b8783825132caa88bd646eb8011"
+    },
+    {
+      "path": ".release/office-continuation/paragraph-acceptance/docs-types.txt",
+      "bytes": 140,
+      "sha256": "ba7e0c5e66d89ed98a3d9af11e2aaf1246817c40d3c878ec259f58a7152b008a"
+    },
+    {
+      "path": ".release/office-continuation/paragraph-acceptance/ui-types.txt",
+      "bytes": 3176,
+      "sha256": "4bce14db7cb267c0e0332b47eae9a1ac796c9fc89927cdc68628bf59cce83049"
+    },
+    {
+      "path": ".release/office-continuation/paragraph-acceptance/e2e-list.txt",
+      "bytes": 247,
+      "sha256": "0d020d4e9f1e4d5c8d12e5075f2a54505ff83a8b3e93825568693ac7b07a757f"
+    }
+  ],
+  "nextBrowserSpec": "e2e/office-studio-word-paragraph-acceptance.spec.ts",
+  "nextBrowserOutput": ".release/office-continuation/paragraph-acceptance/browser",
+  "whole159Complete": false
+}

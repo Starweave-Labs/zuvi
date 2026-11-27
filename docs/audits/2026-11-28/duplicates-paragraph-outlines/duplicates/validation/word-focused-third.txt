@@ -1,0 +1,11 @@
+[WebServer] (node:62451) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:62468) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+[WebServer] [BABEL] Note: The code generator has deoptimised the styling of /var/folders/9n/_523pt1s3gqg0f165zsdbldc0000gn/T/zuvi-office-e2e-vite-5296-62440/deps/react-dom_client.js?v=2a1b20be as it exceeds the max of 500KB.
+  ✓  1 [chromium] › e2e/office-studio-word-paragraph-acceptance.spec.ts:72:1 › original paragraph requirements retain four alignments, indent and line units, tab stops and every border edge over real DOCX reopens (18.0s)
+
+  1 passed (19.9s)

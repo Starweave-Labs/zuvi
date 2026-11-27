@@ -1,0 +1,819 @@
+{
+  "date": "2026-11-28",
+  "sourceCommit": "db48794f8a0112b8b4527fef2a0dff27f1ea6fad",
+  "whole159Complete": false,
+  "P003Complete": false,
+  "items": [
+    {
+      "id": "W011",
+      "feature": "对齐与缩进",
+      "originalAcceptance": "左右居中两端，首行悬挂缩进",
+      "status": "verified-original-acceptance",
+      "currentBehavior": "The four alignment values and positive first-line/negative hanging point indents are represented by the existing paragraph command, dialog and native codec. New browser coverage explicitly exercises all four alignment buttons and both special indents.",
+      "originalAcceptanceEvidence": [
+        {
+          "path": "packages/ui/src/components/OfficeStudio/studio-word-paragraph-format.ts",
+          "line": 48,
+          "note": "Validates left/center/right/justify and signed native point distances."
+        },
+        {
+          "path": "packages/ui/src/components/OfficeStudio/studio-word-paragraph-layout.test.ts",
+          "line": 139,
+          "note": "Mixed selected paragraphs/headings retain text/marks, use one transaction and preserve independent first-line positions."
+        },
+        {
+          "path": "docs/tests/office-studio-word.test.mjs",
+          "line": 249,
+          "note": "Native both alignment, firstLine/hanging, left/right indent aliases and two saves retain point values and marks."
+        }
+      ],
+      "commonAcceptance": [
+        {
+          "criterion": "操作前后数据及格式",
+          "status": "verified",
+          "currentEvidence": [
+            {
+              "path": "packages/ui/src/components/OfficeStudio/studio-word-paragraph-layout.test.ts",
+              "line": 139,
+              "note": "Text, links and run formatting are unchanged for selected paragraphs/headings."
+            },
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+              "line": 184,
+              "note": "Actual component applies mixed values once and retains untouched paragraph spacing."
+            }
+          ],
+          "finalEvidence": [
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json"
+          ]
+        },
+        {
+          "criterion": "选区、焦点、IME和取消",
+          "status": "verified",
+          "currentEvidence": [
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialogs.test.tsx",
+              "line": 62,
+              "note": "Twelve cases across all three dialogs: valid numeric composition/apply, IME Enter, invalid draft, permissions, IME Escape, failed onSave and cancellation."
+            },
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialogs.test.tsx",
+              "line": 103,
+              "note": "Permission changes retain the composing draft; composition ending does not bypass blocked state."
+            },
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialogs.test.tsx",
+              "line": 124,
+              "note": "Rejected save retains the draft; composition and cancellation do not issue another save."
+            },
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+              "line": 306,
+              "note": "Ruler preview does not write data; Escape restores preview before pointer release commits."
+            }
+          ],
+          "finalEvidence": [
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json"
+          ]
+        },
+        {
+          "criterion": "一次撤销、重做",
+          "status": "verified",
+          "currentEvidence": [
+            {
+              "path": "packages/ui/src/components/OfficeStudio/studio-word-paragraph-layout.test.ts",
+              "line": 139,
+              "note": "Checks undo depth +1, exact original JSON on undo and corrected values on redo."
+            },
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+              "line": 184,
+              "note": "Actual component invokes onChange once, then undo/redo restores each indent."
+            }
+          ],
+          "finalEvidence": [
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json"
+          ]
+        },
+        {
+          "criterion": "只读和禁用命令",
+          "status": "verified",
+          "currentEvidence": [
+            {
+              "path": "packages/ui/src/components/OfficeStudio/studio-word-paragraph-layout.test.ts",
+              "line": 184,
+              "note": "Read-only rejects mutation."
+            },
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+              "line": 211,
+              "note": "Open dialog retains invalid draft after readOnly change; input and apply disable."
+            },
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+              "line": 290,
+              "note": "Disabled ruler cannot change data."
+            }
+          ],
+          "finalEvidence": [
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json"
+          ]
+        },
+        {
+          "criterion": "原生文件保存重开",
+          "status": "verified",
+          "currentEvidence": [
+            {
+              "path": "docs/tests/office-studio-word.test.mjs",
+              "line": 249,
+              "note": "Two native DOCX cycles preserve firstLine/hanging, left/right, alignment, text and bold."
+            }
+          ],
+          "finalEvidence": [
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json"
+          ]
+        },
+        {
+          "criterion": "失败后原数据不变",
+          "status": "verified",
+          "currentEvidence": [
+            {
+              "path": "packages/ui/src/components/OfficeStudio/studio-word-paragraph-layout.test.ts",
+              "line": 184,
+              "note": "Invalid mixed batch throws before editing any selected paragraph."
+            },
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialogs.test.tsx",
+              "line": 124,
+              "note": "Rejected onSave leaves draft open for correction/cancel."
+            }
+          ],
+          "finalEvidence": [
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json"
+          ]
+        }
+      ],
+      "pending": [
+        "Execute the new real editor spec for four alignment buttons, positive first-line and hanging values, then verify both native roundtrips and the final build/source identity."
+      ],
+      "outOfScopeBlockersNotAdded": "No requirement for all fonts/directions/floats/pagination combinations is added to the original finite acceptance.",
+      "sourceCommit": "db48794f8a0112b8b4527fef2a0dff27f1ea6fad",
+      "finalBrowserReport": "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json"
+    },
+    {
+      "id": "W012",
+      "feature": "行距段前段后",
+      "originalAcceptance": "单倍多倍固定值最小值及单位转换",
+      "status": "verified-original-acceptance",
+      "currentBehavior": "Existing model uses auto multipliers and exact/atLeast points; native units are 240 per auto line and 20 per point. Independent style raw-unit inheritance is tested. New browser spec explicitly sets 1x and checks the actual computed lineHeight/fontSize ratio, then sets 1.5x, exact 18pt and minimum 24pt with before/after spacing. Both native rounds require the 1x paragraph to retain auto/line240.",
+      "originalAcceptanceEvidence": [
+        {
+          "path": "packages/ui/src/components/OfficeStudio/studio-word-paragraph-format.ts",
+          "line": 27,
+          "note": "Separates auto line units (240) from points (20)."
+        },
+        {
+          "path": "packages/ui/src/components/OfficeStudio/studio-word-paragraph-layout.test.ts",
+          "line": 130,
+          "note": "Native precision and multiplier/point validation."
+        },
+        {
+          "path": "packages/ui/src/components/OfficeStudio/studio-word-paragraph-layout.test.ts",
+          "line": 226,
+          "note": "Inherited raw units and changes of inherited rule convert independently."
+        },
+        {
+          "path": "docs/tests/office-studio-word.test.mjs",
+          "line": 249,
+          "note": "auto/exact/atLeast import and repeated native serialization."
+        }
+      ],
+      "commonAcceptance": [
+        {
+          "criterion": "操作前后数据及格式",
+          "status": "verified",
+          "currentEvidence": [
+            {
+              "path": "packages/ui/src/components/OfficeStudio/studio-word-paragraph-layout.test.ts",
+              "line": 139,
+              "note": "Formatting preserves text/marks while setting spacing and native line rules."
+            },
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+              "line": 184,
+              "note": "Untouched mixed spaceAfter values remain distinct."
+            }
+          ],
+          "finalEvidence": [
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json"
+          ]
+        },
+        {
+          "criterion": "选区、焦点、IME和取消",
+          "status": "verified",
+          "currentEvidence": [
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialogs.test.tsx",
+              "line": 62,
+              "note": "Twelve cases across all three dialogs: valid numeric composition/apply, IME Enter, invalid draft, permissions, IME Escape, failed onSave and cancellation."
+            },
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialogs.test.tsx",
+              "line": 103,
+              "note": "Permission changes retain the composing draft; composition ending does not bypass blocked state."
+            },
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialogs.test.tsx",
+              "line": 124,
+              "note": "Rejected save retains the draft; composition and cancellation do not issue another save."
+            },
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+              "line": 211,
+              "note": "Invalid numeric draft remains editable and cancel writes no data."
+            }
+          ],
+          "finalEvidence": [
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json"
+          ]
+        },
+        {
+          "criterion": "一次撤销、重做",
+          "status": "verified",
+          "currentEvidence": [
+            {
+              "path": "packages/ui/src/components/OfficeStudio/studio-word-paragraph-layout.test.ts",
+              "line": 139,
+              "note": "One transaction includes line/paragraph spacing."
+            },
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+              "line": 184,
+              "note": "Actual component one application, undo and redo."
+            }
+          ],
+          "finalEvidence": [
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json"
+          ]
+        },
+        {
+          "criterion": "只读和禁用命令",
+          "status": "verified",
+          "currentEvidence": [
+            {
+              "path": "packages/ui/src/components/OfficeStudio/studio-word-paragraph-layout.test.ts",
+              "line": 184,
+              "note": "Read-only refuses the command."
+            },
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+              "line": 211,
+              "note": "Permission change disables apply and fields without discarding draft."
+            }
+          ],
+          "finalEvidence": [
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json"
+          ]
+        },
+        {
+          "criterion": "原生文件保存重开",
+          "status": "verified",
+          "currentEvidence": [
+            {
+              "path": "docs/tests/office-studio-word.test.mjs",
+              "line": 249,
+              "note": "Native exact, minimum and auto units preserve point values over two saves."
+            },
+            {
+              "path": "docs/tests/office-studio-word.test.mjs",
+              "line": 289,
+              "note": "Independent style rule/value inheritance and explicit zero overrides preserve native units."
+            },
+            {
+              "path": "docs/tests/studio-print.test.mjs",
+              "line": 120,
+              "note": "Print retains point geometry and exact/minimum rule metadata."
+            }
+          ],
+          "finalEvidence": [
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json"
+          ]
+        },
+        {
+          "criterion": "失败后原数据不变",
+          "status": "verified",
+          "currentEvidence": [
+            {
+              "path": "packages/ui/src/components/OfficeStudio/studio-word-paragraph-layout.test.ts",
+              "line": 184,
+              "note": "Invalid multiplier batch refuses before mutation."
+            },
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialogs.test.tsx",
+              "line": 83,
+              "note": "Invalid/blocked draft cancels without calling onSave."
+            }
+          ],
+          "finalEvidence": [
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json"
+          ]
+        }
+      ],
+      "pending": [
+        "Execute the authored 1x/1.5x/exact/minimum/before-after real-editor flow and inspect two native cycles, including the 1x computed ratio and auto/line240 assertions.",
+        "Complete the final shared build/type/lint/consumer/distribution gates."
+      ],
+      "outOfScopeBlockersNotAdded": "No requirement for all fonts/directions/floats/pagination combinations is added to the original finite acceptance.",
+      "sourceCommit": "db48794f8a0112b8b4527fef2a0dff27f1ea6fad",
+      "finalBrowserReport": "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json"
+    },
+    {
+      "id": "W013",
+      "feature": "制表位与前导符",
+      "originalAcceptance": "左中右小数点制表位，点线前导符",
+      "status": "verified-original-acceptance",
+      "currentBehavior": "Existing tab model includes left/center/right/decimal, dot leader, native direct deltas and clear directives. Measurement is a view decoration and retains the original tab characters. New local composition guard also blocks setting/clearing draft tab entries before composition ends.",
+      "originalAcceptanceEvidence": [
+        {
+          "path": "packages/ui/src/components/OfficeStudio/studio-word-tabs.test.ts",
+          "line": 52,
+          "note": "Calculates left/center/right/decimal alignment from following-text widths."
+        },
+        {
+          "path": "packages/ui/src/components/OfficeStudio/studio-word-tabs.test.ts",
+          "line": 27,
+          "note": "Native precision, ordered stops and explicit clear directives."
+        },
+        {
+          "path": "docs/tests/office-studio-word.test.mjs",
+          "line": 212,
+          "note": "left/center/right/decimal definitions, dot/hyphen/underscore leaders and two native saves."
+        }
+      ],
+      "commonAcceptance": [
+        {
+          "criterion": "操作前后数据及格式",
+          "status": "verified",
+          "currentEvidence": [
+            {
+              "path": "packages/ui/src/components/OfficeStudio/studio-word-tabs.test.ts",
+              "line": 63,
+              "note": "Mixed selected paragraphs preserve text, marks and unmodified positions."
+            },
+            {
+              "path": "docs/tests/studio-print.test.mjs",
+              "line": 107,
+              "note": "Print retains native tab text and measurement-only leaders."
+            }
+          ],
+          "finalEvidence": [
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json"
+          ]
+        },
+        {
+          "criterion": "选区、焦点、IME和取消",
+          "status": "verified",
+          "currentEvidence": [
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialogs.test.tsx",
+              "line": 62,
+              "note": "Twelve cases across all three dialogs: valid numeric composition/apply, IME Enter, invalid draft, permissions, IME Escape, failed onSave and cancellation."
+            },
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialogs.test.tsx",
+              "line": 103,
+              "note": "Permission changes retain the composing draft; composition ending does not bypass blocked state."
+            },
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialogs.test.tsx",
+              "line": 124,
+              "note": "Rejected save retains the draft; composition and cancellation do not issue another save."
+            },
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+              "line": 88,
+              "note": "Actual component opens the selected paragraphs, rejects invalid precision and cancel writes no data."
+            }
+          ],
+          "finalEvidence": [
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json"
+          ]
+        },
+        {
+          "criterion": "一次撤销、重做",
+          "status": "verified",
+          "currentEvidence": [
+            {
+              "path": "packages/ui/src/components/OfficeStudio/studio-word-tabs.test.ts",
+              "line": 63,
+              "note": "One history entry, no-op is false, undo restores original JSON and redo retains tab characters."
+            },
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+              "line": 88,
+              "note": "Actual entry applies once and restores stops by undo/redo."
+            }
+          ],
+          "finalEvidence": [
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json"
+          ]
+        },
+        {
+          "criterion": "只读和禁用命令",
+          "status": "verified",
+          "currentEvidence": [
+            {
+              "path": "packages/ui/src/components/OfficeStudio/studio-word-tabs.test.ts",
+              "line": 63,
+              "note": "Readonly cannot clear stops."
+            },
+            {
+              "path": "packages/ui/src/components/OfficeStudio/studio-word-tab-extension.ts",
+              "line": 22,
+              "note": "Command rejects destroyed/readOnly/composing editors before planning."
+            },
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialogs.test.tsx",
+              "line": 103,
+              "note": "Blocked dialog retains draft, application stays disabled after composition ends."
+            }
+          ],
+          "finalEvidence": [
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json"
+          ]
+        },
+        {
+          "criterion": "原生文件保存重开",
+          "status": "verified",
+          "currentEvidence": [
+            {
+              "path": "docs/tests/office-studio-word.test.mjs",
+              "line": 212,
+              "note": "Native definitions, leaders, inherited clears and default interval survive edit/two saves."
+            },
+            {
+              "path": "docs/tests/office-studio-word.test.mjs",
+              "line": 570,
+              "note": "Actual native tab characters, text and formatting survive repeated saves."
+            }
+          ],
+          "finalEvidence": [
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json"
+          ]
+        },
+        {
+          "criterion": "失败后原数据不变",
+          "status": "verified",
+          "currentEvidence": [
+            {
+              "path": "docs/tests/office-studio-word.test.mjs",
+              "line": 238,
+              "note": "Unsupported/malformed/duplicate native tabs reject the complete document."
+            },
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialogs.test.tsx",
+              "line": 124,
+              "note": "Rejected onSave preserves the tab draft and cancellation does not resave."
+            }
+          ],
+          "finalEvidence": [
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json"
+          ]
+        }
+      ],
+      "pending": [
+        "Execute new spec after rebuilding to verify all four tab alignments/dot leaders and local IME guard against the current dialog source.",
+        "Reuse the old current-byte tab measurement/core native evidence only with its historical pre-dialog-fix classification; final current-build browser result is required."
+      ],
+      "outOfScopeBlockersNotAdded": "No requirement for all fonts/directions/floats/pagination combinations is added to the original finite acceptance.",
+      "sourceCommit": "db48794f8a0112b8b4527fef2a0dff27f1ea6fad",
+      "finalBrowserReport": "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json"
+    },
+    {
+      "id": "W016",
+      "feature": "段落边框与底纹",
+      "originalAcceptance": "边框每边、线型、距离、底纹及取消",
+      "status": "verified-original-acceptance",
+      "currentBehavior": "Each top/right/bottom/left border has independent line style/width/distance/color; surface deltas retain untouched edges. Native nil clears and shading are preserved. New browser spec sets four different edges and separately removes all outer edges plus shading.",
+      "originalAcceptanceEvidence": [
+        {
+          "path": "packages/ui/src/components/OfficeStudio/studio-word-surface.test.ts",
+          "line": 65,
+          "note": "Validates native eighth-point widths, integral distances and supported line styles."
+        },
+        {
+          "path": "packages/ui/src/components/OfficeStudio/studio-word-surface.test.ts",
+          "line": 89,
+          "note": "Mixed paragraphs retain each untouched edge while editing right edge and shading."
+        },
+        {
+          "path": "docs/tests/office-studio-word.test.mjs",
+          "line": 151,
+          "note": "Independent edges, distance, shading, text/marks and two native cycles."
+        },
+        {
+          "path": "docs/tests/office-studio-word.test.mjs",
+          "line": 166,
+          "note": "Explicit nil and inherited edges stay distinct."
+        }
+      ],
+      "commonAcceptance": [
+        {
+          "criterion": "操作前后数据及格式",
+          "status": "verified",
+          "currentEvidence": [
+            {
+              "path": "packages/ui/src/components/OfficeStudio/studio-word-surface.test.ts",
+              "line": 89,
+              "note": "Text, links and each unedited edge remain unchanged."
+            },
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWordSurfaceDialog.test.tsx",
+              "line": 13,
+              "note": "Renaming a style retains untouched surface/tabs definitions."
+            }
+          ],
+          "finalEvidence": [
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json"
+          ]
+        },
+        {
+          "criterion": "选区、焦点、IME和取消",
+          "status": "verified",
+          "currentEvidence": [
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialogs.test.tsx",
+              "line": 62,
+              "note": "Twelve cases across all three dialogs: valid numeric composition/apply, IME Enter, invalid draft, permissions, IME Escape, failed onSave and cancellation."
+            },
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialogs.test.tsx",
+              "line": 103,
+              "note": "Permission changes retain the composing draft; composition ending does not bypass blocked state."
+            },
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialogs.test.tsx",
+              "line": 124,
+              "note": "Rejected save retains the draft; composition and cancellation do not issue another save."
+            },
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWordSurfaceDialog.test.tsx",
+              "line": 19,
+              "note": "Mixed edge draft invalid precision/cancel calls no onSave."
+            }
+          ],
+          "finalEvidence": [
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json"
+          ]
+        },
+        {
+          "criterion": "一次撤销、重做",
+          "status": "verified",
+          "currentEvidence": [
+            {
+              "path": "packages/ui/src/components/OfficeStudio/studio-word-surface.test.ts",
+              "line": 89,
+              "note": "Selected surface command undoes to exact original and redoes edge properties."
+            },
+            {
+              "path": "packages/ui/src/components/OfficeStudio/studio-word-surface.test.ts",
+              "line": 123,
+              "note": "Automatic-style updates share one undo group."
+            }
+          ],
+          "finalEvidence": [
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json"
+          ]
+        },
+        {
+          "criterion": "只读和禁用命令",
+          "status": "verified",
+          "currentEvidence": [
+            {
+              "path": "packages/ui/src/components/OfficeStudio/studio-word-surface.test.ts",
+              "line": 132,
+              "note": "Readonly/composition refuse command without model/history changes."
+            },
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWordSurfaceDialog.test.tsx",
+              "line": 39,
+              "note": "Permission change retains draft and disables apply."
+            },
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialogs.test.tsx",
+              "line": 103,
+              "note": "Composition and blocked state cannot race application."
+            }
+          ],
+          "finalEvidence": [
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json"
+          ]
+        },
+        {
+          "criterion": "原生文件保存重开",
+          "status": "verified",
+          "currentEvidence": [
+            {
+              "path": "docs/tests/office-studio-word.test.mjs",
+              "line": 151,
+              "note": "Native pBdr/shd edge styles, distance, shadow/frame and shaded pattern retain identity over two saves."
+            },
+            {
+              "path": "docs/tests/office-studio-word.test.mjs",
+              "line": 166,
+              "note": "Native explicit nil stays separate from inherited base edge."
+            }
+          ],
+          "finalEvidence": [
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json"
+          ]
+        },
+        {
+          "criterion": "失败后原数据不变",
+          "status": "verified",
+          "currentEvidence": [
+            {
+              "path": "packages/ui/src/components/OfficeStudio/studio-word-surface.test.ts",
+              "line": 132,
+              "note": "Invalid batch leaves complete original JSON unchanged."
+            },
+            {
+              "path": "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialogs.test.tsx",
+              "line": 124,
+              "note": "onSave exception leaves valid draft visible and cancel does not issue another save."
+            }
+          ],
+          "finalEvidence": [
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/original-acceptance-matrix.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/source-freeze.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/word-native-final.json",
+            "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/gates.json"
+          ]
+        }
+      ],
+      "pending": [
+        "Execute new real-editor spec for each of four outer edges, independent styles/distance, clear-all borders and no-shading, then inspect two native reopens.",
+        "Final current-build browser evidence must include the local dialog IME fix; old surface screenshots and browser run remain historical."
+      ],
+      "outOfScopeBlockersNotAdded": "No requirement for all fonts/directions/floats/pagination combinations is added to the original finite acceptance.",
+      "sourceCommit": "db48794f8a0112b8b4527fef2a0dff27f1ea6fad",
+      "finalBrowserReport": "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json"
+    },
+    {
+      "id": "X046",
+      "originalAcceptance": "表头与比较列、空值类型及删除计数",
+      "commonAcceptance": [
+        {
+          "criterion": "操作前后数据及格式",
+          "evidence": "Typed exact tuples distinguish numbers/text/booleans/true blank/explicit empty text/formula results. Stable first records, optional header and comparison columns; source formatting and hyperlinks move, outside cells/dimensions/sheets remain.",
+          "status": "verified"
+        },
+        {
+          "criterion": "选区、焦点、IME和取消",
+          "evidence": "Actual component retains selection and grid focus, refuses IME and invalid cell drafts, preserves invalid column choices, cancels without a data write and closes stale external documents.",
+          "status": "verified"
+        },
+        {
+          "criterion": "一次撤销、重做",
+          "evidence": "Actual imported XLSX workflow and component test verify exactly one undo/redo for the complete removal. Duplicate-free no-op keeps document identity and adds no history.",
+          "status": "verified"
+        },
+        {
+          "criterion": "只读和禁用命令",
+          "evidence": "readOnly and disabled guard the actual write entry and open configuration; permission changes retain configuration. Actual browser verifies read-only write refusal.",
+          "status": "verified"
+        },
+        {
+          "criterion": "原生文件保存重开",
+          "evidence": "Actual browser imports source XLSX, selects columns and header, removes duplicates, downloads/reopens twice; independent ZIP/XML verifies typed empty values, formula/cache and outside cells. Five native tests cover style defaults, links and external ranges.",
+          "status": "verified"
+        },
+        {
+          "criterion": "失败后原数据不变",
+          "evidence": "Merges, arrays, protected/rule intersections, invalid comparisons and unsafe references reject atomically. Source model and native input bytes remain unchanged. No record or hyperlink is partially moved.",
+          "status": "verified"
+        }
+      ],
+      "status": "verified-original-acceptance",
+      "sourceCommit": "db48794f8a0112b8b4527fef2a0dff27f1ea6fad",
+      "finalBrowserReport": "docs/audits/2026-11-28/duplicates-paragraph-outlines/validation/full.json"
+    }
+  ]
+}
