@@ -13,6 +13,18 @@ import {
 import JSZip from '../docs/node_modules/jszip/lib/index.js';
 
 const audit = path.resolve('docs/audits/2026-11-25/word-metrics');
+async function nativePositions(bytes: ArrayBuffer | Buffer) {
+  const zip = await JSZip.loadAsync(bytes);
+  for (const part of ['word/document.xml', 'word/styles.xml', 'word/header1.xml', 'word/footer1.xml']) {
+    const entry = zip.file(part);
+    if (!entry) continue;
+    zip.file(part, (await entry.async('string')).replace(
+      /(<w:position\b[^>]*\bw:val=")([+-]?(?:\d+(?:\.\d*)?|\.\d+))pt(")/g,
+      (_match, start, points, end) => `${start}${Math.round(Number(points) * 2)}${end}`
+    ));
+  }
+  return zip.generateAsync({ type: 'nodebuffer' });
+}
 async function select(node: Locator, caret = false) {
   await node.evaluate((element, empty) => {
     (element.closest('[contenteditable="true"]') as HTMLElement).focus();
@@ -100,7 +112,7 @@ test('character metrics preserve native typography, zero overrides, caret input,
         : run
     )
   );
-  const source = await zip.generateAsync({ type: 'nodebuffer' });
+  const source = await nativePositions(await zip.generateAsync({ type: 'nodebuffer' }));
   await writeFile(path.join(audit, 'metrics-source.docx'), source);
   await page.goto('/#/components/office-studio');
   const importFile = (name: string, buffer: Buffer) =>
@@ -189,10 +201,10 @@ test('character metrics preserve native typography, zero overrides, caret input,
     const native = await JSZip.loadAsync(bytes);
     const text = await native.file('word/document.xml')!.async('string');
     expect(text).toContain('w:spacing w:val="24"');
-    expect(text).toContain('w:position w:val="-2.5pt"');
+    expect(text).toContain('w:position w:val="-5"');
     expect(text).toContain('w:spacing w:val="0"');
     expect(await native.file('word/header1.xml')!.async('string')).toContain(
-      'w:position w:val="1.5pt"'
+      'w:position w:val="3"'
     );
     await importFile(`Reopened-${pass}.docx`, bytes);
     await expect(page.getByRole('textbox', { name: '文档名称', exact: true })).toHaveValue(
@@ -241,7 +253,7 @@ test('baseline shifts expand automatic line boxes while exact line rules retain 
 }) => {
   const directory = path.resolve('docs/audits/2026-11-26/word-baseline-line-rules');
   await mkdir(directory, { recursive: true });
-  const source = Buffer.from(
+  const source = await nativePositions(
     await Packer.toArrayBuffer(
       new Document({
         sections: [
@@ -358,10 +370,10 @@ test('baseline shifts expand automatic line boxes while exact line rules retain 
     await writeFile(path.join(directory, `baseline-line-rules-roundtrip-${pass + 1}.docx`), bytes);
     const xml = await (await JSZip.loadAsync(bytes)).file('word/document.xml')!.async('string');
     expect(xml).toContain('w:lineRule="exact"');
-    expect(xml.match(/w:position w:val="12pt"/g)).toHaveLength(3);
-    expect(xml).toContain('w:position w:val="-12pt"');
+    expect(xml.match(/w:position w:val="24"/g)).toHaveLength(3);
+    expect(xml).toContain('w:position w:val="-24"');
     expect(xml).toContain('w:lineRule="atLeast"');
-    expect(xml).toContain('w:position w:val="0pt"');
+    expect(xml).toContain('w:position w:val="0"');
     await importFile(`Baseline-reopened-${pass + 1}.docx`, bytes);
     await expect(page.getByRole('textbox', { name: '文档名称', exact: true })).toHaveValue(
       `Baseline-reopened-${pass + 1}.docx`

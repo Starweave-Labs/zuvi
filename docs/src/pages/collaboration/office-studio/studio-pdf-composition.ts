@@ -1,7 +1,10 @@
-import type { StudioPdfComposer, StudioPdfComposeRequest, StudioPdfComposeResult } from '@zuvi/react';
+import type { StudioPdfComposer, StudioPdfComposeRequest, StudioPdfComposeResult } from '../../../../../packages/ui/src/components/OfficeStudio/studio-types';
 import { pdfPages } from '../../../../../packages/ui/src/components/OfficeStudio/studio-pdf-pages';
 import { exportStudioPdf, importStudioPdf } from './studio-pdf-codec';
 import { composePdf, PdfComposeError, type StudioPdfComposeReport } from './studio-pdf-compose';
+import { studioPdfAnnotationEditor } from './studio-pdf-annotation-editor';
+import { composeNativeAnnotationSources } from './studio-pdf-native/workspace-composition';
+import { nativePdfWorkspace, withNativePdfState } from './studio-pdf-native-document';
 
 function abort(signal?: AbortSignal) {
   if (signal?.aborted) throw new DOMException('PDF 页面组合已取消。', 'AbortError');
@@ -42,6 +45,46 @@ function warnings(report: StudioPdfComposeReport): string[] {
   return result;
 }
 
+async function composeNativeStudioPdf(request: StudioPdfComposeRequest): Promise<StudioPdfComposeResult & { report: StudioPdfComposeReport; sourceHash: string }> {
+  abort(request.signal);
+  const capturedNow = new Date().toISOString(), incomingScope = crypto.randomUUID();
+  const prepared = await studioPdfAnnotationEditor.apply({
+    snapshot: request.snapshot, command: { type: 'migrate' }, now: capturedNow, signal: request.signal,
+  });
+  const current = pdfPages(prepared.document);
+  const sources = [{ id: 'current', bytes: new Uint8Array(await prepared.source.arrayBuffer()) }];
+  const pages = request.pages.map((page) => ({ sourceId: 'current', sourcePage: page, instanceId: current[page].id }));
+  if (request.mode === 'merge') {
+    if (!request.incoming || !Number.isInteger(request.insertAt) || request.insertAt! < 0 || request.insertAt! > current.length
+      || request.pages.length !== current.length || request.pages.some((page, index) => page !== index)) {
+      throw new Error('合并时请保留全部当前页面并选择有效的插入位置。');
+    }
+    const incoming = await inspectStudioPdfComposition(request.incoming.source, { signal: request.signal });
+    selectedPages(request.incoming.pages, incoming.pageCount);
+    if (pages.length + request.incoming.pages.length > 200) throw new Error('合并后的 PDF 最多支持 200 页。');
+    sources.push({ id: 'incoming', bytes: new Uint8Array(await request.incoming.source.arrayBuffer()) });
+    pages.splice(request.insertAt!, 0, ...request.incoming.pages.map((page) => ({ sourceId: 'incoming', sourcePage: page, instanceId: crypto.randomUUID() })));
+  } else if (request.incoming !== undefined || request.insertAt !== undefined) throw new Error('提取页面不接受加入文件或插入位置。');
+  let result;
+  try {
+    result = await composeNativeAnnotationSources(sources.map((source) => source.id === 'incoming'
+      ? { ...source, incomingScope } : source), pages, {
+      conflicts: request.conflicts, catalogPolicy: 'primary', orphanRadioValue: request.orphanRadioValue,
+    });
+  } catch (cause) { throw compositionError(cause, request); }
+  abort(request.signal);
+  const source = new Blob([new Uint8Array(result.bytes)], { type: 'application/pdf' });
+  const imported = await importStudioPdf(source, request.name?.trim() || prepared.document.name, {
+    pageIds: pages.map((page) => page.instanceId), native: true,
+  });
+  const workspace = await nativePdfWorkspace(imported, source, request.signal);
+  abort(request.signal);
+  return {
+    document: withNativePdfState({ ...imported, id: request.snapshot.document.id }, workspace),
+    source, warnings: warnings(result.report), report: result.report, sourceHash: result.sourceHash,
+  };
+}
+
 /** Rebase native fields and page edits, retaining editable marks in the model exactly once. */
 export async function composeStudioPdf(request: StudioPdfComposeRequest): Promise<StudioPdfComposeResult & { report: StudioPdfComposeReport; sourceHash: string }> {
   abort(request.signal);
@@ -51,6 +94,9 @@ export async function composeStudioPdf(request: StudioPdfComposeRequest): Promis
   if (request.mode !== 'merge' && request.mode !== 'extract') throw new Error('PDF 页面组合类型无效。');
   const outputName = request.name?.trim() || document.name;
   if (!outputName || outputName.length > 200 || /[\r\n]/.test(outputName)) throw new Error('PDF 文档名称无效。');
+  if (document.nativeAnnotations || document.marks.some((mark) => mark.nativeId !== undefined)) {
+    return composeNativeStudioPdf(request);
+  }
   // Native fields, rotations, dimensions and virtual page mapping become the new base.
   // Pending marks stay editable; burning them in here would draw them twice on later exports.
   const prepared = await exportStudioPdf({ ...document, marks: [] }, source);
@@ -75,7 +121,7 @@ export async function composeStudioPdf(request: StudioPdfComposeRequest): Promis
   }
   abort(request.signal);
   const output = new Blob([new Uint8Array(result.bytes)], { type: 'application/pdf' });
-  const imported = await importStudioPdf(output, outputName);
+  const imported = await importStudioPdf(output, outputName, { native: false });
   abort(request.signal);
   const mapped = new Map(pages.flatMap((page, index) => page.sourceId === 'current' ? [[page.sourcePage, index] as const] : []));
   return {

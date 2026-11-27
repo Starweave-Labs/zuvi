@@ -42,6 +42,7 @@ export function StudioWordCharacterDialog({
   );
   const [dirty, setDirty] = React.useState<Partial<Record<WordMetric, boolean>>>({});
   const [saveError, setSaveError] = React.useState('');
+  const [composing, setComposing] = React.useState(false);
   const patch: Partial<Record<WordMetric, number>> = {};
   const preview: Record<WordMetric, number> = {
     letterSpacing: values.letterSpacing ?? 0,
@@ -97,6 +98,8 @@ export function StudioWordCharacterDialog({
                 inputMode="decimal"
                 value={drafts[key]}
                 disabled={blocked || modes[key] === 'normal' || modes[key] === 'keep'}
+                onCompositionStart={() => setComposing(true)}
+                onCompositionEnd={() => setComposing(false)}
                 onChange={(event) => {
                   setDrafts((current) => ({ ...current, [key]: event.target.value }));
                   setDirty((current) => ({ ...current, [key]: true }));
@@ -135,9 +138,9 @@ export function StudioWordCharacterDialog({
             取消
           </Button>
           <Button
-            disabled={blocked || !!issue}
+            disabled={blocked || composing || !!issue}
             onClick={() => {
-              if (blocked || issue) return;
+              if (blocked || composing || issue) return;
               try {
                 onSave(patch);
                 onClose();

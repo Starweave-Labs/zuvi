@@ -1491,7 +1491,8 @@ test('multi-cell row fragments keep independent text and aligned page gaps throu
     await writeFile(path.join(directory, `multi-cell-roundtrip-${pass}.docx`), bytes);
     const xml = await (await JSZip.loadAsync(bytes)).file('word/document.xml')!.async('string');
     expect(xml).toContain('Cell A 80');
-    expect(xml).toContain('<w:position w:val="12pt"');
+    // Native baseline position uses signed half-points: 12pt is stored as 24.
+    expect(xml).toContain('<w:position w:val="24"');
     expect(xml).toContain('Cell B 50 edited');
     expect(xml).not.toContain('data-word-cell-page-gap');
     expect(xml).not.toContain('data-word-natural-row-height');

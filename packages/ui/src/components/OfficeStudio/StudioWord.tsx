@@ -109,6 +109,7 @@ import {
   wordReadImage,
   wordReplaceMatches,
   wordSetHighlight,
+  wordSelectionCharacterFormat,
   wordStepFontSize,
   wordTransformSelectionCase,
 } from './studio-word-tools';
@@ -663,12 +664,7 @@ export function StudioWord({
       const paragraph = current.getAttributes('paragraph');
       const numbered=wordNumberingContext(current);
       return {
-        bold: current.isActive('bold'),
-        italic: current.isActive('italic'),
-        underline: current.isActive('underline'),
-        strike: current.isActive('strike'),
-        superscript: current.isActive('superscript'),
-        subscript: current.isActive('subscript'),
+        ...wordSelectionCharacterFormat(current, paragraphStyles),
         image: current.isActive('image') ? current.getAttributes('image') : null,
         matches: wordFindMatches(current, searchQuery, matchCase, formatCriteria),
         bullet: current.isActive('bulletList') || numbered?.level.format === 'bullet',
@@ -681,10 +677,7 @@ export function StudioWord({
           'left') as string,
         from: current.state.selection.from,
         to: current.state.selection.to,
-        font: (style.fontFamily || 'Noto Sans SC') as string,
-        fontSize: (style.fontSize || '12pt') as string,
         color: (style.color || '#000000') as string,
-        highlight: (style.backgroundColor || '') as string,
         style:
           ((current.getAttributes('heading').paragraphStyle ||
             paragraph.paragraphStyle) as string) ||
@@ -1021,6 +1014,7 @@ export function StudioWord({
     editor: Editor;
     selection: Editor['state']['selection'];
     doc: Editor['state']['doc'];
+    storedMarks: Editor['state']['storedMarks'];
   } | null>(null);
   const rememberFontSelection = () => {
     if (editor && !editor.isDestroyed)
@@ -1028,6 +1022,7 @@ export function StudioWord({
         editor,
         selection: editor.state.selection,
         doc: editor.state.doc,
+        storedMarks: editor.state.storedMarks,
       };
   };
   const commitFont = (kind: 'family' | 'size', value: string, reason: StudioFontCommitReason) => {
@@ -1038,11 +1033,14 @@ export function StudioWord({
       !saved ||
       saved.editor !== editor ||
       editor.isDestroyed ||
+      editor.view.composing ||
       saved.doc !== editor.state.doc
     )
       return false;
     const chain = editor.chain().command(({ tr }) => {
+      closeHistory(tr);
       tr.setSelection(saved.selection);
+      if (saved.selection.empty) tr.setStoredMarks(saved.storedMarks);
       return true;
     });
     if (reason !== 'blur') chain.focus();
@@ -1149,12 +1147,19 @@ export function StudioWord({
   }, [document.id, editable]);
   const formatPainterRef = React.useRef<WordFormatSnapshot | null>(null);
   formatPainterRef.current = formatPainter;
+  const prepareCharacterAction = () =>
+    prepareTabAction() && !!editor && !editor.isDestroyed && editor.isEditable &&
+    editor === activeEditorRef.current && latest.current.editable;
+  const toggleCharacterFormat = (mark: string) => {
+    if (!prepareCharacterAction() || !editor) return;
+    editor.chain().focus().command(({ tr }) => { closeHistory(tr); return true; }).toggleMark(mark).run();
+  };
   const stepFontSize = (delta: number) => {
-    if (!editor || !editable) return;
+    if (!prepareCharacterAction() || !editor) return;
     wordStepFontSize(editor, delta);
   };
   const setHighlight = (color: string | null) => {
-    if (!editor || !editable) return;
+    if (!prepareCharacterAction() || !editor) return;
     wordSetHighlight(editor, color);
     setHighlightOpen(false);
   };
@@ -1167,7 +1172,7 @@ export function StudioWord({
     }
   };
   const armFormatPainter = (continuous = false) => {
-    if (!editor || !editable || !selection?.selectedText) return;
+    if (!prepareCharacterAction() || !editor || !selection?.selectedText) return;
     setFormatPainter(wordCaptureFormat(editor));
     setContinuousPainter(continuous);
     painterTargetRef.current = `${region}:${editor.state.selection.from}:${editor.state.selection.to}`;
@@ -1179,7 +1184,8 @@ export function StudioWord({
   // Apply each new selection once; continuous mode remains armed until Escape.
   React.useEffect(() => {
     const snapshot = formatPainterRef.current;
-    if (!snapshot || !editor || !editable) return;
+    if (!snapshot || !editor || !editable || editor.view.composing) return;
+    if (editor.view.dom.closest('.zuvi-studio-word')?.querySelector('[data-studio-input-error]')) return;
     if (editor.state.selection.empty) return;
     const target = `${region}:${editor.state.selection.from}:${editor.state.selection.to}`;
     if (painterTargetRef.current === target) return;
@@ -1454,7 +1460,7 @@ export function StudioWord({
                 label="字体"
                 kind="family"
                 options={fontOptions}
-                value={selection?.font || 'Noto Sans SC'}
+                value={selection?.font ?? 'Noto Sans SC'}
                 disabled={toolsDisabled}
                 contextKey={fontContextKey}
                 className="zuvi-studio-word-font"
@@ -1468,7 +1474,7 @@ export function StudioWord({
                 maxSize={409}
                 sizeStep={0.5}
                 options={sizeOptions}
-                value={(selection?.fontSize || '12pt').replace(/pt$/i, '')}
+                value={(selection?.fontSize ?? '12pt').replace(/pt$/i, '')}
                 disabled={toolsDisabled}
                 contextKey={fontContextKey}
                 className="zuvi-studio-word-size"
@@ -1542,7 +1548,7 @@ export function StudioWord({
                 size="sm"
                 disabled={toolsDisabled}
                 onMouseDown={keepSelection}
-                onClick={() => editor?.chain().focus().toggleBold().run()}
+                onClick={() => toggleCharacterFormat('bold')}
               >
                 <Bold size={16} />
               </Button>
@@ -1554,7 +1560,7 @@ export function StudioWord({
                 size="sm"
                 disabled={toolsDisabled}
                 onMouseDown={keepSelection}
-                onClick={() => editor?.chain().focus().toggleItalic().run()}
+                onClick={() => toggleCharacterFormat('italic')}
               >
                 <Italic size={16} />
               </Button>
@@ -1565,7 +1571,7 @@ export function StudioWord({
                 size="sm"
                 disabled={toolsDisabled}
                 onMouseDown={keepSelection}
-                onClick={() => editor?.chain().focus().toggleUnderline().run()}
+                onClick={() => toggleCharacterFormat('underline')}
               >
                 <span className="zuvi-studio-word-underline">U</span>
               </Button>
@@ -1576,7 +1582,7 @@ export function StudioWord({
                 size="sm"
                 disabled={toolsDisabled}
                 onMouseDown={keepSelection}
-                onClick={() => editor?.chain().focus().toggleStrike().run()}
+                onClick={() => toggleCharacterFormat('strike')}
               >
                 <s>S</s>
               </Button>
@@ -1587,7 +1593,7 @@ export function StudioWord({
                 size="sm"
                 disabled={toolsDisabled}
                 onMouseDown={keepSelection}
-                onClick={() => editor?.chain().focus().toggleMark('superscript').run()}
+                onClick={() => toggleCharacterFormat('superscript')}
               >
                 x<sup>2</sup>
               </Button>
@@ -1598,7 +1604,7 @@ export function StudioWord({
                 size="sm"
                 disabled={toolsDisabled}
                 onMouseDown={keepSelection}
-                onClick={() => editor?.chain().focus().toggleMark('subscript').run()}
+                onClick={() => toggleCharacterFormat('subscript')}
               >
                 x<sub>2</sub>
               </Button>
@@ -1618,7 +1624,7 @@ export function StudioWord({
                 disabled={toolsDisabled}
                 onMouseDown={keepSelection}
                 onClick={() => {
-                  if (editor) wordClearFormat(editor);
+                  if (prepareCharacterAction() && editor) wordClearFormat(editor);
                 }}
               >
                 <span aria-hidden="true" className="zuvi-studio-word-clear-format">
@@ -1637,7 +1643,7 @@ export function StudioWord({
                   onMouseDown={keepSelection}
                   aria-label="文字高亮"
                   title="文字高亮"
-                  aria-pressed={selection?.highlight ? true : undefined}
+                  aria-pressed={selection?.highlightMixed ? 'mixed' : selection?.hasHighlight ? true : undefined}
                   disabled={toolsDisabled}
                 >
                   <Droplet size={16} />
@@ -1651,11 +1657,11 @@ export function StudioWord({
                   <DropdownMenu.Label>高亮颜色</DropdownMenu.Label>
                   <DropdownMenu.Item
                     onSelect={() => setHighlight(null)}
-                    disabled={!selection?.highlight}
+                    disabled={!selection?.hasHighlight}
                   >
                     <span className="zuvi-studio-word-highlight-row">
                       无颜色
-                      {!selection?.highlight ? <Check size={14} aria-hidden="true" /> : null}
+                      {!selection?.hasHighlight ? <Check size={14} aria-hidden="true" /> : null}
                     </span>
                   </DropdownMenu.Item>
                   <DropdownMenu.Separator />

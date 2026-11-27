@@ -45,6 +45,7 @@ export function OfficeStudio({
   source,
   pdfRenderer,
   pdfComposer,
+  pdfAnnotations,
   onPdfSourceChange,
   onSave,
   onExport,
@@ -301,6 +302,7 @@ export function OfficeStudio({
     source,
     pdfRenderer,
     pdfComposer,
+    pdfAnnotations,
     onPdfSourceChange: value !== undefined ? onPdfSourceChange : undefined,
   };
   const consume = (task: Promise<void>) => {

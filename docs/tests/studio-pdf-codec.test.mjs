@@ -1,17 +1,15 @@
 /* global structuredClone */
 import assert from 'node:assert/strict';
 import { Blob, Buffer } from 'node:buffer';
-import { createHash, webcrypto } from 'node:crypto';
+import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import test from 'node:test';
 import { URL } from 'node:url';
-import { runInNewContext } from 'node:vm';
 import { trueTypeFromWoff } from '../../scripts/office-fonts.mjs';
 import { pdfTestRuntime } from './studio-pdf-test-runtime.mjs';
 
 const require = createRequire(new URL('../package.json', import.meta.url));
-const ts = require('typescript');
 const {
   PDFDocument,
   PDFArray,
@@ -820,9 +818,7 @@ test('repeated radio export options stay synchronized across pages and survive r
 
 
 function pageCommands() {
-  const exports = {};
-  runInNewContext(ts.transpileModule(readFileSync(new URL('../../packages/ui/src/components/OfficeStudio/studio-pdf-pages.ts', import.meta.url), 'utf8'), { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS } }).outputText, { exports, crypto: webcrypto });
-  return exports;
+  return pdfTestRuntime().load('../../packages/ui/src/components/OfficeStudio/studio-pdf-pages.ts');
 }
 
 test('inserts real blank pages, remaps native widgets and keeps source streams and repeated rotation idempotent', async () => {

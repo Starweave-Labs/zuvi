@@ -7,6 +7,9 @@ export async function prepareStudioFile(file: StudioStoredFile): Promise<OfficeS
   if (document.kind !== 'excel') return document;
   const importedXlsx = document.sheets.some((sheet) => /^xlsx-sheet-\d+$/.test(sheet.id));
   const missingFont = !!file.source && importedXlsx && document.defaultFont === undefined;
+  const missingView =
+    !!file.source &&
+    document.sheets.some((sheet) => /^xlsx-sheet-\d+$/.test(sheet.id) && sheet.view === undefined);
   const missingLayout =
     !!file.source &&
     document.sheets.some(
@@ -19,6 +22,7 @@ export async function prepareStudioFile(file: StudioStoredFile): Promise<OfficeS
     );
   if (
     !missingFont &&
+    !missingView &&
     !missingLayout &&
     document.sheets.every((sheet) => sheet.hyperlinks !== undefined)
   )

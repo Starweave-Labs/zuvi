@@ -1,9 +1,19 @@
 'use client';
 
-import { getDocument, GlobalWorkerOptions, type RenderTask } from 'pdfjs-dist';
-import type { TextItem } from 'pdfjs-dist/types/src/display/api';
+import { AnnotationLayer, TextLayer, getDocument, GlobalWorkerOptions, type RenderTask } from 'pdfjs-dist';
+import { PDFDict, PDFDocument, PDFName, PDFNumber } from 'pdf-lib';
+import type { PDFDocumentProxy, PDFPageProxy, TextContent, TextItem } from 'pdfjs-dist/types/src/display/api';
+import type { PageViewport } from 'pdfjs-dist/types/src/display/page_viewport';
 import workerUrl from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
-import type { StudioPdfRenderer, StudioPdfSearchResult, StudioPdfSession } from '@zuvi/react';
+import noteIcon from 'pdfjs-dist/web/images/annotation-note.svg?url';
+import commentIcon from 'pdfjs-dist/web/images/annotation-comment.svg?url';
+import helpIcon from 'pdfjs-dist/web/images/annotation-help.svg?url';
+import insertIcon from 'pdfjs-dist/web/images/annotation-insert.svg?url';
+import keyIcon from 'pdfjs-dist/web/images/annotation-key.svg?url';
+import newParagraphIcon from 'pdfjs-dist/web/images/annotation-newparagraph.svg?url';
+import paragraphIcon from 'pdfjs-dist/web/images/annotation-paragraph.svg?url';
+import noIcon from 'pdfjs-dist/web/images/annotation-noicon.svg?url';
+import type { StudioPdfPage, StudioPdfRenderer, StudioPdfSearchResult, StudioPdfSession, StudioPdfTextSelection } from '@zuvi/react';
 
 GlobalWorkerOptions.workerSrc = workerUrl;
 
@@ -20,6 +30,113 @@ interface SearchSegment {
   from: number;
   to: number;
   rect: StudioPdfSearchResult['rect'];
+}
+
+type LayerOptions = Parameters<StudioPdfSession['render']>[2];
+interface AnnotationData extends Record<string, unknown> {
+  id: string;
+  subtype: string;
+  rect: [number, number, number, number];
+  annotationFlags: number;
+  hasAppearance?: boolean;
+  hasOwnCanvas?: boolean;
+  noRotate?: boolean;
+  noHTML?: boolean;
+  hidden?: boolean;
+}
+interface LayerFrame {
+  sourcePage: number;
+  descriptor?: StudioPdfPage;
+  scale: number;
+  rotation: number;
+  viewport: PageViewport;
+  page: PDFPageProxy;
+  ratio: number;
+  annotations: AnnotationData[];
+  canvases: Map<string, HTMLCanvasElement>;
+  base: HTMLCanvasElement;
+  standalone: HTMLCanvasElement;
+}
+const markupTypes = new Set(['FreeText', 'Text', 'Highlight', 'Underline', 'StrikeOut', 'Squiggly', 'Square', 'Circle', 'Line', 'Polygon', 'PolyLine', 'Ink', 'Stamp']);
+const annotationIcons: Record<string, string> = { note: noteIcon, comment: commentIcon, help: helpIcon,
+  insert: insertIcon, key: keyIcon, newparagraph: newParagraphIcon, paragraph: paragraphIcon, noicon: noIcon };
+const annotationData = (value: unknown): value is AnnotationData => {
+  if (!value || typeof value !== 'object') return false;
+  const data = value as Record<string, unknown>;
+  return typeof data.id === 'string' && typeof data.subtype === 'string' && Array.isArray(data.rect) &&
+    data.rect.length === 4 && data.rect.every(Number.isFinite);
+};
+
+/** Normalize UserUnit into scale so PDF.js's own-annotation canvas has the same matrix and extent. */
+function layerViewport(page: PDFPageProxy, options: LayerOptions, blank = false): PageViewport {
+  const unit = blank ? 1 : page.userUnit;
+  const rotation = quarterTurn((blank ? 0 : page.rotate) + options.rotation);
+  const viewport = page.getViewport({ scale: options.scale, rotation });
+  if (!options.page?.size && unit === 1) return viewport;
+  const [left, bottom, right, top] = blank ? [0, 0, 0, 0] : page.view;
+  const Viewport = viewport.constructor as new (options: { viewBox: number[]; userUnit: number; scale: number; rotation: number }) => PageViewport;
+  return new Viewport({ viewBox: options.page?.size ? [left, bottom, left + options.page.size.width, bottom + options.page.size.height] : [left, bottom, right, top],
+    userUnit: 1, scale: options.scale * unit, rotation });
+}
+function layerCss(container: HTMLDivElement, viewport: PageViewport) {
+  container.style.setProperty('--scale-factor', String(viewport.scale));
+  container.style.setProperty('--total-scale-factor', String(viewport.scale * viewport.userUnit));
+  container.style.setProperty('--scale-round-x', '0.001px');
+  container.style.setProperty('--scale-round-y', '0.001px');
+}
+function canvasCopy(canvas: HTMLCanvasElement) {
+  const copy = canvas.ownerDocument.createElement('canvas');
+  copy.width = canvas.width; copy.height = canvas.height;
+  const context = copy.getContext('2d');
+  if (!context) throw new Error('当前环境无法保存 PDF 外观画布。');
+  context.drawImage(canvas, 0, 0);
+  return copy;
+}
+function pdfjsId(key: string): string | undefined {
+  const match = /^(\d+)\s+(\d+)\s+R$/.exec(key);
+  return match ? `${match[1]}R${match[2] === '0' ? '' : match[2]}` : undefined;
+}
+
+/** Text offsets follow the actual TextLayer DOM order; geometry retains each source run's orientation. */
+function textLayerSelection(container: HTMLDivElement, layer: TextLayer, content: TextContent): StudioPdfTextSelection | undefined {
+  const selection = container.ownerDocument.getSelection();
+  if (!selection || !selection.rangeCount || selection.isCollapsed) return;
+  const range = selection.getRangeAt(0);
+  if (!container.contains(range.startContainer) || !container.contains(range.endContainer)) return;
+  const selectedText = selection.toString();
+  if (!selectedText) return;
+  const items = content.items.filter((item): item is TextItem => 'str' in item);
+  const measure = container.ownerDocument.createElement('canvas').getContext('2d');
+  if (!measure) throw new Error('当前环境无法测量 PDF 选中文字。');
+  const quads: number[] = [];
+  layer.textDivs.forEach((div, index) => {
+    const item = items[index];
+    if (!item?.str || !div.isConnected || !range.intersectsNode(div)) return;
+    const local = container.ownerDocument.createRange(); local.selectNodeContents(div);
+    let start = 0, end = div.textContent?.length ?? 0;
+    if (div.contains(range.startContainer)) { const prefix = local.cloneRange(); prefix.setEnd(range.startContainer, range.startOffset); start = prefix.toString().length; }
+    if (div.contains(range.endContainer)) { const prefix = local.cloneRange(); prefix.setEnd(range.endContainer, range.endOffset); end = prefix.toString().length; }
+    if (end <= start) return;
+    const computed = container.ownerDocument.defaultView!.getComputedStyle(div);
+    measure.font = `${computed.fontStyle} ${computed.fontWeight} ${computed.fontSize} ${computed.fontFamily}`;
+    const total = measure.measureText(item.str).width;
+    if (!Number.isFinite(total) || total <= 0) return;
+    let from = measure.measureText(item.str.slice(0, start)).width / total;
+    let to = measure.measureText(item.str.slice(0, end)).width / total;
+    if (item.dir === 'rtl') [from, to] = [1 - to, 1 - from];
+    const [a, b, c, d, x, y] = item.transform, baseLength = Math.hypot(a, b) || 1, upLength = Math.hypot(c, d) || 1;
+    const style = content.styles[item.fontName], vertical = !!style?.vertical;
+    const base = vertical ? [-c / upLength, -d / upLength] : [a / baseLength, b / baseLength];
+    const up = vertical ? [a / baseLength, b / baseLength] : [c / upLength, d / upLength];
+    const width = Math.abs(vertical ? item.height : item.width), height = Math.abs(vertical ? item.width : item.height) || upLength;
+    const ascent = Number.isFinite(style?.ascent) ? style.ascent : 0.8, descent = Number.isFinite(style?.descent) ? style.descent : -0.2;
+    const corner = (along: number, above: number) => [x + base[0] * along * width + up[0] * above * height, y + base[1] * along * width + up[1] * above * height];
+    quads.push(...corner(from, ascent), ...corner(to, ascent), ...corner(from, descent), ...corner(to, descent));
+  });
+  if (!quads.length || !quads.every(Number.isFinite)) return;
+  const xs = quads.filter((_, index) => index % 2 === 0), ys = quads.filter((_, index) => index % 2 === 1);
+  const x = Math.min(...xs), y = Math.min(...ys);
+  return { text: selectedText, quadPoints: quads, rect: { x, y, width: Math.max(...xs) - x, height: Math.max(...ys) - y } };
 }
 
 const searchable = (text: string) =>
@@ -65,14 +182,15 @@ export const studioPdfRenderer: StudioPdfRenderer = {
   async load(source): Promise<StudioPdfSession> {
     if (!source.size || source.size > 50 * 1024 * 1024)
       throw new Error('请选择非空且不超过 50 MB 的 PDF 文件。');
-    const loading = getDocument({
-      data: new Uint8Array(await source.arrayBuffer()),
+    const sourceBytes = new Uint8Array(await source.arrayBuffer());
+    const pdfSettings = {
       disableWorkerRendering: true,
       cMapUrl: `${import.meta.env.BASE_URL}office-pdf-assets/cmaps/`,
       cMapPacked: true,
       standardFontDataUrl: `${import.meta.env.BASE_URL}office-pdf-assets/standard_fonts/`,
       wasmUrl: `${import.meta.env.BASE_URL}office-pdf-assets/wasm/`,
-    });
+    };
+    const loading = getDocument({ ...pdfSettings, data: new Uint8Array(sourceBytes) });
     let pdf;
     try {
       pdf = await loading.promise;
@@ -89,6 +207,38 @@ export const studioPdfRenderer: StudioPdfRenderer = {
     let disposing: Promise<void> | undefined;
     const pending = new Map<HTMLCanvasElement, PendingRender>();
     const textCache = new Map<number, { text: string; segments: SearchSegment[] }>();
+    const frames = new WeakMap<HTMLCanvasElement, LayerFrame>();
+    const layers = new Set<() => void>();
+    const paintLayers = new Map<HTMLCanvasElement, () => void>();
+    const textLayers = new Map<HTMLDivElement, () => void>();
+    let createdTextLayer = false;
+    let noZoomPdf: Promise<PDFDocumentProxy> | undefined;
+    let noZoomLoading: ReturnType<typeof getDocument> | undefined;
+    const renderPdf = async () => {
+      if (!noZoomPdf) noZoomPdf = (async () => {
+        // Only this temporary view changes flags. Export/storage always keep the source Blob.
+        const view = await PDFDocument.load(new Uint8Array(sourceBytes), { updateMetadata: false });
+        for (const page of view.getPages()) for (const entry of page.node.Annots()?.asArray() ?? []) {
+          const dict = view.context.lookup(entry);
+          if (!(dict instanceof PDFDict)) continue;
+          const subtype = dict.lookup(PDFName.of('Subtype')), flags = dict.lookup(PDFName.of('F'));
+          if (subtype instanceof PDFName && markupTypes.has(subtype.decodeText()) && flags instanceof PDFNumber && (flags.asNumber() & 8))
+            dict.set(PDFName.of('F'), PDFNumber.of(flags.asNumber() | 16));
+        }
+        if (destroyed) throw abortError();
+        noZoomLoading = getDocument({ ...pdfSettings, data: new Uint8Array(await view.save({ updateFieldAppearances: false })) });
+        const result = await noZoomLoading.promise;
+        if (destroyed) { await noZoomLoading.destroy(); throw abortError(); }
+        return result;
+      })();
+      return noZoomPdf;
+    };
+    const restoreCanvas = (canvas: HTMLCanvasElement, image: HTMLCanvasElement) => {
+      const context = canvas.getContext('2d');
+      if (!context) throw new Error('当前环境无法恢复 PDF 画布。');
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.drawImage(image, 0, 0);
+    };
 
     return {
       pageCount: pdf.numPages,
@@ -104,6 +254,119 @@ export const studioPdfRenderer: StudioPdfRenderer = {
         if (destroyed) throw new Error('PDF 渲染会话已关闭。');
         const [left, bottom, right, top] = page.view;
         return { left, bottom, right: descriptor?.size ? left + descriptor.size.width : right, top: descriptor?.size ? bottom + descriptor.size.height : top };
+      },
+      async renderTextLayer(pageIndex, container, options) {
+        textLayers.get(container)?.();
+        let active = true, layer: TextLayer | undefined;
+        const dispose = () => {
+          if (!active) return;
+          active = false; layer?.cancel(); layers.delete(dispose);
+          if (textLayers.get(container) === dispose) {
+            const selected = container.ownerDocument.getSelection();
+            if (selected?.anchorNode && container.contains(selected.anchorNode)) selected.removeAllRanges();
+            container.replaceChildren(); textLayers.delete(container);
+          }
+          options.signal?.removeEventListener('abort', dispose);
+        };
+        textLayers.set(container, dispose); layers.add(dispose);
+        options.signal?.addEventListener('abort', dispose, { once: true });
+        const assertCurrent = () => { if (!active || destroyed || options.signal?.aborted || textLayers.get(container) !== dispose) throw abortError(); };
+        try {
+          assertCurrent();
+          container.replaceChildren();
+          if (options.page && options.page.sourcePage === undefined) return { selection: () => undefined, destroy: dispose };
+          const sourcePage = options.page?.sourcePage ?? pageIndex;
+          if (!Number.isInteger(sourcePage) || sourcePage < 0 || sourcePage >= pdf.numPages) throw new Error('PDF 文本层页码无效。');
+          const page = await pdf.getPage(sourcePage + 1); assertCurrent();
+          const content = await page.getTextContent(); assertCurrent();
+          const items = content.items.filter((item): item is TextItem => 'str' in item);
+          if (items.length > 100000 || items.reduce((length, item) => length + item.str.length, 0) > 1_000_000) throw new Error('此 PDF 页面文字过多，无法完整选择。');
+          const viewport = layerViewport(page, options);
+          layerCss(container, viewport);
+          createdTextLayer = true;
+          layer = new TextLayer({ textContentSource: content, container, viewport });
+          await layer.render(); assertCurrent();
+          return { selection: () => {
+            if (!active || destroyed || textLayers.get(container) !== dispose) return;
+            return textLayerSelection(container, layer!, content);
+          }, destroy: dispose };
+        } catch (error) {
+          dispose();
+          if (destroyed || options.signal?.aborted || !active && error instanceof Error && ['AbortException', 'AbortError'].includes(error.name)) throw abortError();
+          throw error;
+        }
+      },
+      async renderAnnotationLayer(pageIndex, container, options) {
+        paintLayers.get(options.canvas)?.();
+        const frame = frames.get(options.canvas);
+        const blank = !!options.page && options.page.sourcePage === undefined;
+        const sourcePage = blank ? 0 : options.page?.sourcePage ?? pageIndex;
+        if (!frame || frame.sourcePage !== sourcePage || frame.scale !== options.scale || frame.rotation !== options.rotation || frame.descriptor !== options.page)
+          throw new Error('请先渲染当前 PDF 页面，再显示批注外观。');
+        let active = true, layer: AnnotationLayer | undefined, detachEvents = () => {};
+        const dispose = () => {
+          if (!active) return;
+          active = false; detachEvents(); layer?.destroy(); layers.delete(dispose);
+          if (paintLayers.get(options.canvas) === dispose) {
+            if (!destroyed && frames.get(options.canvas) === frame) restoreCanvas(options.canvas, frame.standalone);
+            paintLayers.delete(options.canvas); container.replaceChildren();
+          }
+          options.signal?.removeEventListener('abort', dispose);
+        };
+        paintLayers.set(options.canvas, dispose); layers.add(dispose);
+        options.signal?.addEventListener('abort', dispose, { once: true });
+        const assertCurrent = () => { if (!active || destroyed || options.signal?.aborted || paintLayers.get(options.canvas) !== dispose || frames.get(options.canvas) !== frame) throw abortError(); };
+        const semanticIds = new Map<string, string>();
+        for (const annotation of options.annotations ?? []) {
+          if (!annotation.key) continue;
+          const reference = pdfjsId(annotation.key), direct = /^direct:(\d+):(\d+)$/.exec(annotation.key);
+          if (reference) semanticIds.set(reference, annotation.id);
+          else if (direct && Number(direct[1]) === sourcePage && frame.annotations[Number(direct[2])]) semanticIds.set(frame.annotations[Number(direct[2])].id, annotation.id);
+        }
+        const select = (event: Event) => {
+          const target = event.target;
+          if (!(target instanceof Element)) return;
+          const rawId = target.closest('[data-annotation-id]')?.getAttribute('data-annotation-id');
+          const id = rawId && semanticIds.get(rawId);
+          if (id) options.onSelect?.(id);
+        };
+        const keySelect = (event: KeyboardEvent) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); select(event); } };
+        container.addEventListener('click', select); container.addEventListener('keydown', keySelect);
+        detachEvents = () => { container.removeEventListener('click', select); container.removeEventListener('keydown', keySelect); };
+        try {
+          assertCurrent(); container.replaceChildren(); container.style.visibility = '';
+          if (blank) return { destroy: dispose };
+          container.style.visibility = 'hidden';
+          layerCss(container, frame.viewport);
+          const { SimpleLinkService } = await import('pdfjs-dist/web/pdf_viewer.mjs');
+          assertCurrent();
+          const viewport = frame.viewport.clone({ dontFlip: true }), linkService = new SimpleLinkService();
+          layer = new AnnotationLayer({ div: container, accessibilityManager: undefined,
+            annotationCanvasMap: new Map(frame.canvases), annotationEditorUIManager: undefined,
+            page: frame.page, viewport, structTreeLayer: undefined, commentManager: undefined,
+            linkService, annotationStorage: undefined });
+          const annotations = frame.annotations.filter(annotation => markupTypes.has(annotation.subtype) || annotation.subtype === 'Popup')
+            .filter(annotation => !(annotation.annotationFlags & (1 | 2 | 32)) && !annotation.noHTML);
+          await layer.render({ annotations, div: container, page: frame.page, viewport, linkService,
+            renderForms: false, enableScripting: false, enableAnnotationEditing: false, fieldObjects: null });
+          assertCurrent();
+          for (const element of container.querySelectorAll<HTMLElement>('[data-annotation-id]')) {
+            const id = element.getAttribute('data-annotation-id'), annotation = frame.annotations.find(entry => entry.id === id);
+            if (!annotation) continue;
+            if (annotation.annotationFlags & 8) {
+              const unit = frame.viewport.scale / frame.scale;
+              element.style.width = `${(annotation.rect[2] - annotation.rect[0]) * unit}px`;
+              element.style.height = `${(annotation.rect[3] - annotation.rect[1]) * unit}px`;
+              element.dataset.noZoom = 'true';
+            }
+            const image = element.querySelector<HTMLImageElement>('img[data-l10n-id="pdfjs-text-annotation-type"]');
+            if (image) { image.src = annotationIcons[String(annotation.name).toLowerCase()] ?? noteIcon; image.alt = 'PDF 便利贴'; }
+            const semantic = id && semanticIds.get(id);
+            if (semantic) { element.dataset.studioAnnotationId = semantic; element.setAttribute('aria-label', `PDF 批注 ${String(annotation.contentsObj && typeof annotation.contentsObj === 'object' ? (annotation.contentsObj as Record<string, unknown>).str ?? '' : '').slice(0, 48) || annotation.subtype}`); }
+          }
+          restoreCanvas(options.canvas, frame.base); container.style.visibility = '';
+          return { destroy: dispose };
+        } catch (error) { dispose(); if (destroyed || options.signal?.aborted) throw abortError(); throw error; }
       },
       async search(query, options = {}) {
         const assertCurrent = () => {
@@ -171,6 +434,8 @@ export const studioPdfRenderer: StudioPdfRenderer = {
         if (!Number.isFinite(options.rotation) || options.rotation % 90 !== 0)
           throw new Error('PDF 页面旋转须为 90 度的整数倍。');
 
+        frames.delete(canvas);
+        paintLayers.get(canvas)?.();
         pending.get(canvas)?.cancel();
         const request: PendingRender = {
           cancelled: false,
@@ -194,17 +459,16 @@ export const studioPdfRenderer: StudioPdfRenderer = {
 
         try {
           const blank = !!options.page && options.page.sourcePage === undefined;
-          const page = await pdf.getPage(blank ? 1 : (options.page?.sourcePage ?? pageIndex) + 1);
+          const sourcePage = blank ? 0 : (options.page?.sourcePage ?? pageIndex);
+          const originalPage = await pdf.getPage(sourcePage + 1);
           assertCurrent();
-          let viewport = page.getViewport({
-            scale: options.scale,
-            rotation: quarterTurn((blank ? 0 : page.rotate) + options.rotation),
-          });
-          if (options.page?.size) {
-            const [left, bottom] = blank ? [0, 0] : page.view;
-            const SizedViewport = viewport.constructor as new (options: { viewBox: number[]; userUnit: number; scale: number; rotation: number }) => typeof viewport;
-            viewport = new SizedViewport({ viewBox: [left, bottom, left + options.page.size.width, bottom + options.page.size.height], userUnit: blank ? 1 : page.userUnit, scale: options.scale, rotation: quarterTurn((blank ? 0 : page.rotate) + options.rotation) });
-          }
+          const originalAnnotations: unknown[] = blank ? [] : await originalPage.getAnnotations({ intent: 'any' });
+          assertCurrent();
+          const annotations = originalAnnotations.filter(annotationData);
+          const needsNoZoom = annotations.some(annotation => markupTypes.has(annotation.subtype) && (annotation.annotationFlags & 8) && !(annotation.annotationFlags & (1 | 2 | 32)));
+          const page = needsNoZoom ? await (await renderPdf()).getPage(sourcePage + 1) : originalPage;
+          assertCurrent();
+          const viewport = layerViewport(page, options, blank);
           if (
             !Number.isFinite(viewport.width) ||
             !Number.isFinite(viewport.height) ||
@@ -228,22 +492,58 @@ export const studioPdfRenderer: StudioPdfRenderer = {
           temporary.height = Math.ceil(viewport.height * ratio);
           const context = temporary.getContext('2d');
           if (!context) throw new Error('当前环境无法创建 PDF 画布。');
+          const annotationCanvasMap = new Map<string, HTMLCanvasElement>();
           if (blank) { context.fillStyle = 'white'; context.fillRect(0, 0, temporary.width, temporary.height); } else {
           request.task = page.render({
             canvas: temporary,
             canvasContext: context,
             viewport,
             transform: ratio === 1 ? undefined : [ratio, 0, 0, ratio, 0, 0],
+            annotationCanvasMap,
           });
           await request.task.promise;
           }
           assertCurrent();
+
+          const renderedAnnotations: unknown[] = blank ? [] : await page.getAnnotations({ intent: 'any' });
+          assertCurrent();
+          const originalById = new Map(annotations.map(annotation => [annotation.id, annotation]));
+          const resolvedAnnotations = renderedAnnotations.filter(annotationData).map(annotation => {
+            const original = originalById.get(annotation.id);
+            return original ? { ...annotation, annotationFlags: original.annotationFlags, noRotate: original.noRotate } : annotation;
+          });
+          const paintCanvas = (annotation: AnnotationData, value: HTMLCanvasElement) => {
+            const [x, y] = viewport.convertToViewportPoint(annotation.rect[0], annotation.rect[3]);
+            const scale = viewport.scale * viewport.userUnit / (annotation.annotationFlags & 8 ? options.scale : 1);
+            context.save();
+            context.translate(x * ratio, y * ratio);
+            if (!annotation.noRotate) context.rotate(viewport.rotation * Math.PI / 180);
+            context.drawImage(value, 0, 0, (annotation.rect[2] - annotation.rect[0]) * scale * ratio, (annotation.rect[3] - annotation.rect[1]) * scale * ratio);
+            context.restore();
+          };
+          const own = new Map<string, HTMLCanvasElement>();
+          for (const [id, value] of annotationCanvasMap) {
+            const annotation = resolvedAnnotations.find(entry => entry.id === id);
+            if (!annotation) continue;
+            if (annotation.subtype === 'Widget' || annotation.noHTML || !markupTypes.has(annotation.subtype)) {
+              const values: unknown[] = Array.isArray(value) ? value : [value];
+              for (const image of values) if (image && typeof image === 'object' && 'getContext' in image) paintCanvas(annotation, image as HTMLCanvasElement);
+            } else own.set(id, value);
+          }
+          const base = own.size ? canvasCopy(temporary) : temporary;
+          for (const [id, value] of own) {
+            const annotation = resolvedAnnotations.find(entry => entry.id === id)!;
+            paintCanvas(annotation, value);
+          }
+          const frame: LayerFrame = { sourcePage, descriptor: options.page, scale: options.scale, rotation: options.rotation,
+            viewport, page, ratio, annotations: resolvedAnnotations, canvases: own, base, standalone: temporary };
 
           const destination = canvas.getContext('2d');
           if (!destination) throw new Error('当前环境无法显示 PDF 画布。');
           canvas.width = temporary.width;
           canvas.height = temporary.height;
           destination.drawImage(temporary, 0, 0);
+          frames.set(canvas, frame);
           return {
             width: viewport.width,
             height: viewport.height,
@@ -264,7 +564,11 @@ export const studioPdfRenderer: StudioPdfRenderer = {
           for (const request of pending.values()) request.cancel();
           pending.clear();
           textCache.clear();
-          disposing = loading.destroy();
+          for (const dispose of [...layers]) dispose();
+          layers.clear(); paintLayers.clear(); textLayers.clear();
+          disposing = Promise.all([loading.destroy(), noZoomLoading?.destroy()]).then(() => {
+            if (createdTextLayer) TextLayer.cleanup();
+          });
         }
         return disposing;
       },

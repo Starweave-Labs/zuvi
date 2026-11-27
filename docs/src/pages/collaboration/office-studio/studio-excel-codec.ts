@@ -62,6 +62,7 @@ import type {
   StudioSheetDataValidation,
   StudioSheetHyperlink,
   StudioSheetStructureEdit,
+  StudioSheetView,
 } from '../../../../../packages/ui/src/components/OfficeStudio/studio-types';
 
 const XLSX_MIME = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
@@ -277,11 +278,116 @@ interface SheetMetadata {
   hyperlinks: StudioSheetHyperlink[];
   merges: string[];
   freeze?: StudioSheet['freeze'];
+  view: StudioSheetView;
+  sheetViews?: string;
   filter?: StudioSheet['filter'];
   charts: StudioSheetChart[];
   conditionalFormats: StudioSheetConditionalFormat[];
   dataValidations: StudioSheetDataValidation[];
   pageBreaks: { rowBreaks: NativePageBreak[]; colBreaks: NativePageBreak[] };
+}
+
+function primarySheetView(views: Element | undefined): Element | undefined {
+  const entries = Array.from(views?.children ?? []).filter(
+    (node) => node.namespaceURI === S && node.localName === 'sheetView'
+  );
+  return (
+    entries.find((node) => Number(node.getAttribute('workbookViewId') ?? 0) === 0) ?? entries[0]
+  );
+}
+
+function nativeSheetView(node: Element | undefined): StudioSheetView {
+  const rawZoom = node?.getAttribute('zoomScale');
+  const zoom = rawZoom === null || rawZoom === undefined ? 100 : Number(rawZoom);
+  if (
+    (rawZoom !== null && rawZoom !== undefined && !/^\+?\d+$/.test(rawZoom.trim())) ||
+    !Number.isInteger(zoom) ||
+    zoom < 10 ||
+    zoom > 400
+  )
+    throw new Error('原生缩放比例须为 10 至 400 之间的整数。');
+  const boolean = (attribute: string) => {
+    const raw = node?.getAttribute(attribute);
+    if (raw === null || raw === undefined) return true;
+    if (!/^(?:0|1|true|false)$/.test(raw.trim())) throw new Error('工作表视图显示属性无效。');
+    return raw.trim() === '1' || raw.trim() === 'true';
+  };
+  return {
+    zoom,
+    showGridLines: boolean('showGridLines'),
+    showRowColHeaders: boolean('showRowColHeaders'),
+  };
+}
+
+/** Restore all source windows; authoring only patches the primary view and its freeze pane. */
+function writeNativeSheetView(xml: XMLDocument, sheet: StudioSheet, source?: SheetMetadata) {
+  let views = first(xml, S, 'sheetViews');
+  if (source) {
+    if (source.sheetViews) {
+      const restored = xml.importNode(xmlDocument(source.sheetViews).documentElement, true);
+      if (views) views.replaceWith(restored);
+      else
+        xml.documentElement.insertBefore(
+          restored,
+          first(xml, S, 'sheetFormatPr') ??
+            first(xml, S, 'cols') ??
+            first(xml, S, 'sheetData') ??
+            null
+        );
+      views = restored;
+    } else {
+      views?.remove();
+      views = undefined;
+    }
+  }
+  const baseline = source?.view ?? nativeSheetView(primarySheetView(views));
+  const desired = sheet.view ?? baseline;
+  const freeze = sheet.freeze;
+  const freezeChanged =
+    freeze !== undefined
+      ? freeze.rows !== (source?.freeze?.rows ?? 0) ||
+        freeze.columns !== (source?.freeze?.columns ?? 0)
+      : !!sheet.structureEdits?.length && !!source?.freeze;
+  const viewChanged = (['zoom', 'showGridLines', 'showRowColHeaders'] as const).some(
+    (key) => desired[key] !== baseline[key]
+  );
+  if (!views && !viewChanged && !freezeChanged) return;
+  if (!views) {
+    views = xml.createElementNS(S, 'sheetViews');
+    xml.documentElement.insertBefore(
+      views,
+      first(xml, S, 'sheetFormatPr') ?? first(xml, S, 'cols') ?? first(xml, S, 'sheetData') ?? null
+    );
+  }
+  let primary = primarySheetView(views);
+  if (!primary) {
+    primary = xml.createElementNS(S, 'sheetView');
+    primary.setAttribute('workbookViewId', '0');
+    views.appendChild(primary);
+  }
+  if (desired.zoom !== baseline.zoom) primary.setAttribute('zoomScale', String(desired.zoom));
+  for (const key of ['showGridLines', 'showRowColHeaders'] as const)
+    if (desired[key] !== baseline[key]) primary.setAttribute(key, desired[key] ? '1' : '0');
+  if (!freezeChanged) return;
+  for (const node of Array.from(primary.children))
+    if (node.namespaceURI === S && (node.localName === 'pane' || node.localName === 'selection'))
+      node.remove();
+  if (!freeze || (!freeze.rows && !freeze.columns)) return;
+  const pane = xml.createElementNS(S, 'pane');
+  pane.setAttribute('state', 'frozen');
+  if (freeze.columns) pane.setAttribute('xSplit', String(freeze.columns));
+  if (freeze.rows) pane.setAttribute('ySplit', String(freeze.rows));
+  const topLeft = `${studioColumnLabel(freeze.columns + 1)}${freeze.rows + 1}`;
+  const activePane =
+    freeze.rows && freeze.columns ? 'bottomRight' : freeze.rows ? 'bottomLeft' : 'topRight';
+  pane.setAttribute('topLeftCell', topLeft);
+  pane.setAttribute('activePane', activePane);
+  primary.insertBefore(pane, primary.firstChild);
+  const selection = xml.createElementNS(S, 'selection');
+  selection.setAttribute('pane', activePane);
+  selection.setAttribute('activeCell', topLeft);
+  selection.setAttribute('sqref', topLeft);
+  primary.insertBefore(selection, pane.nextSibling);
 }
 
 interface NativeWorkbookFontDefaults {
@@ -1469,7 +1575,10 @@ async function readMetadata(zip: JSZip): Promise<Map<number, SheetMetadata>> {
       )
         throw new Error('工作簿合并占位单元格超出支持范围，请缩小区域后重试。');
     }
-    const pane = first(xml, S, 'pane');
+    const sheetViews = first(xml, S, 'sheetViews');
+    const primaryView = primarySheetView(sheetViews);
+    const view = nativeSheetView(primaryView);
+    const pane = primaryView && first(primaryView, S, 'pane');
     let freeze: StudioSheet['freeze'];
     if (pane?.getAttribute('state') === 'frozen' || pane?.getAttribute('state') === 'frozenSplit')
       freeze = {
@@ -1570,6 +1679,8 @@ async function readMetadata(zip: JSZip): Promise<Map<number, SheetMetadata>> {
       hyperlinks,
       merges,
       freeze,
+      view,
+      sheetViews: sheetViews ? serializeXml(sheetViews) : undefined,
       filter,
       charts,
       ...readSheetRules(xml, styles, sheetId),
@@ -1958,6 +2069,7 @@ function importedDocument(
         ? {
             merges: advanced.merges,
             freeze: advanced.freeze,
+            view: advanced.view,
             filter: advanced.filter,
             charts: advanced.charts,
             hyperlinks: advanced.hyperlinks,
@@ -2226,6 +2338,22 @@ function hydrateDefaultFontFromMetadata(
   return font ? { ...document, defaultFont: { ...font } } : document;
 }
 
+function hydrateSheetViewFromMetadata(
+  document: StudioExcelDocument,
+  metadata: Map<number, SheetMetadata>
+): StudioExcelDocument {
+  let changed = false;
+  const sheets = document.sheets.map((sheet) => {
+    if (sheet.view !== undefined) return sheet;
+    const id = /^xlsx-sheet-(\d+)$/.exec(sheet.id);
+    const native = id ? metadata.get(Number(id[1])) : undefined;
+    if (!native) return sheet;
+    changed = true;
+    return { ...sheet, view: { ...native.view } };
+  });
+  return changed ? { ...document, sheets } : document;
+}
+
 /** Restore missing source metadata before editing an older workspace or history entry. */
 export async function hydrateStudioExcelHyperlinks(
   document: StudioExcelDocument,
@@ -2239,15 +2367,19 @@ export async function hydrateStudioExcelHyperlinks(
         sheet.defaultRowHeight !== undefined &&
         sheet.rowHeights !== undefined &&
         sheet.rowHeightModes !== undefined &&
-        sheet.hiddenRows !== undefined
+        sheet.hiddenRows !== undefined &&
+        (!/^xlsx-sheet-\d+$/.test(sheet.id) || sheet.view !== undefined)
     )
   )
     return document;
   validateDocument(document);
   const metadata = await checkSupportedWorkbook(source);
   const linked = hydrateHyperlinksFromMetadata(document, metadata);
-  const hydrated = hydrateDefaultFontFromMetadata(
-    hydrateRowLayoutFromMetadata(hydrateLegacyTextFormats(linked, metadata), metadata),
+  const hydrated = hydrateSheetViewFromMetadata(
+    hydrateDefaultFontFromMetadata(
+      hydrateRowLayoutFromMetadata(hydrateLegacyTextFormats(linked, metadata), metadata),
+      metadata
+    ),
     metadata
   );
   validateDocument(hydrated);
@@ -2600,11 +2732,14 @@ export async function exportStudioExcel(
       loaded.metadata
     );
     document = hydrateDefaultFontFromMetadata(document, loaded.metadata);
+    document = hydrateSheetViewFromMetadata(document, loaded.metadata);
     validateDocument(document);
   }
   if (globalThis.document?.fonts) await globalThis.document.fonts.ready;
   document = exportAutoRowHeights(document, original);
   const workbook = loaded?.workbook ?? new ExcelJS.Workbook();
+  // Worksheet ids can be reused after deletion; keep the original objects for window tabs.
+  const sourceWindowSheets = [...workbook.worksheets];
   if (!source) workbook.creator = 'ZUVI Office Studio';
   const matched = new Map<string, ExcelJS.Worksheet>();
   for (const sheet of document.sheets) {
@@ -2746,20 +2881,6 @@ export async function exportStudioExcel(
         for (const [address, border] of editedBorders)
           target.getCell(address).style = { ...target.getCell(address).style, border };
     }
-    if (sheet.freeze) {
-      target.views =
-        sheet.freeze.rows || sheet.freeze.columns
-          ? [
-              {
-                state: 'frozen',
-                xSplit: sheet.freeze.columns,
-                ySplit: sheet.freeze.rows,
-                topLeftCell: `${studioColumnLabel(sheet.freeze.columns + 1)}${sheet.freeze.rows + 1}`,
-              },
-            ]
-          : [{ state: 'normal' }];
-    } else if (edits.length && target.views?.some((view) => view.state === 'frozen'))
-      target.views = target.views.map((view) => ({ ...view, state: 'normal' }));
     if (previouslyFilteredRows)
       for (let row = previouslyFilteredRows.firstRow; row <= previouslyFilteredRows.lastRow; row++)
         target.getRow(row).hidden = false;
@@ -2830,11 +2951,18 @@ export async function exportStudioExcel(
     0,
     workbook.worksheets.findIndex((sheet) => sheet.name === activeName)
   );
+  const windowTab = (index: number | undefined, fallback: number) => {
+    const sourceIndex = index ?? 0;
+    if (!Number.isInteger(sourceIndex) || sourceIndex < 0) return fallback;
+    const sourceSheet = sourceWindowSheets[sourceIndex];
+    const currentIndex = sourceSheet ? workbook.worksheets.indexOf(sourceSheet) : -1;
+    return currentIndex >= 0 ? currentIndex : fallback;
+  };
   workbook.views = workbook.views?.length
-    ? workbook.views.map((view) => ({
+    ? workbook.views.map((view, index) => ({
         ...view,
-        activeTab,
-        firstSheet: Math.min(document.sheets.length - 1, Math.max(0, view.firstSheet ?? 0)),
+        activeTab: index === 0 ? activeTab : windowTab(view.activeTab, activeTab),
+        firstSheet: windowTab(view.firstSheet, 0),
       }))
     : [{ x: 0, y: 0, width: 1200, height: 800, visibility: 'visible', firstSheet: 0, activeTab }];
   const bytes = await workbook.xlsx.writeBuffer();
@@ -2960,6 +3088,7 @@ async function writeNativeTextParts(
     if (!sheet || !part || !zip.file(part)) throw new Error('无法保存工作表文字布局。');
     const xml = xmlDocument(await zip.file(part)!.async('string'));
     const native = sources.get(sheet.id);
+    writeNativeSheetView(xml, sheet, native);
     const edits = sheet.structureEdits ?? [];
     const rawCells = new Map<string, Record<string, string>>();
     const explicitCells = new Set<string>();

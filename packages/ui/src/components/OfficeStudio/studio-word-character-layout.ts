@@ -76,7 +76,7 @@ export function wordSetCharacterLayout(
   editor: Editor,
   values: Partial<Record<WordMetric, number>>
 ) {
-  if (!editor.isEditable || editor.isDestroyed) return false;
+  if (!editor.isEditable || editor.isDestroyed || editor.view.composing) return false;
   const entries = (Object.entries(values) as [WordMetric, number][]).map(
     ([key, value]): [WordMetric, number] => {
       if (!metrics.includes(key) || typeof value !== 'number')

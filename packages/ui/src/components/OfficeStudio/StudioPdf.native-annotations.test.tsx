@@ -1,0 +1,908 @@
+import { useState } from 'react';
+import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import { afterEach, expect, it, vi } from 'vitest';
+import StudioPdf from './StudioPdf';
+import { OfficeStudio } from './OfficeStudio';
+import { StudioPdfAnnotationDialog } from './StudioPdfAnnotationDialog';
+import { isOfficeStudioDocument } from './studio-model';
+import type { PdfAnnotation, PdfFreeTextAnnotation } from './studio-pdf-annotation-types';
+import type {
+  StudioPdfAnnotationEditor,
+  StudioPdfAnnotationRequest,
+  StudioPdfAnnotationInspection,
+} from './studio-pdf-annotations';
+import type {
+  StudioPdfDocument,
+  StudioPdfRenderer,
+  StudioPdfSnapshot,
+  StudioPdfSession,
+} from './studio-types';
+
+afterEach(cleanup);
+function deferred<T>() {
+  let resolve!: (value: T) => void;
+  const promise = new Promise<T>((done) => {
+    resolve = done;
+  });
+  return { promise, resolve };
+}
+const capabilities = {
+  move: true,
+  resize: true,
+  reshape: true,
+  contents: true,
+  appearance: true,
+  remove: true,
+  reply: true,
+};
+function textAnnotation(): PdfFreeTextAnnotation {
+  return {
+    id: 'native-text',
+    kind: 'freeText',
+    pageId: 'first',
+    rect: [40, 300, 240, 350],
+    contents: '原生中文',
+    author: '作者',
+    capabilities,
+    color: [0.6, 0.4, 0.2],
+    fill: [0, 0, 0],
+    opacity: 0.7,
+    stroke: { width: 0, style: 'S', lineCap: 0, lineJoin: 0, miterLimit: 10 },
+    font: { family: 'Noto Sans SC', size: 16, color: [0.1, 0.2, 0.3] },
+    align: 0,
+    rectDifferences: [0, 0, 0, 0],
+    lineHeight: 19.2,
+    native: {
+      key: '12 0 R',
+      subtype: 'FreeText',
+      flags: 4,
+      baselineHash: 'a'.repeat(64),
+      hasAppearance: true,
+      sourceColors: { stroke: { space: 'cmyk', components: [0, 0.2, 0.4, 0.4] } },
+    },
+  };
+}
+function initial(): StudioPdfSnapshot {
+  return {
+    source: new Blob(['%PDF-Original']),
+    document: {
+      version: 1,
+      kind: 'pdf',
+      id: 'source',
+      name: 'Source.pdf',
+      pageCount: 2,
+      sourcePageCount: 2,
+      pages: [
+        { id: 'first', sourcePage: 0 },
+        { id: 'second', sourcePage: 1 },
+      ],
+      marks: [],
+      fields: [
+        {
+          name: 'name',
+          type: 'text',
+          value: 'Original',
+          readOnly: false,
+          widgets: [{ page: 0, x: 20, y: 20, width: 160, height: 24 }],
+        },
+      ],
+      rotations: {},
+      nativeAnnotations: {
+        version: 1,
+        sourceHash: 'a'.repeat(64),
+        bindings: [0, 1].map((sourcePage) => ({
+          sourcePage,
+          nativePageId: `page-${sourcePage}`,
+          uiPageId: sourcePage ? 'second' : 'first',
+        })),
+        commands: [],
+      },
+    },
+  };
+}
+function host(
+  options: {
+    office?: boolean;
+    provider?: boolean;
+    callback?: boolean;
+    signed?: boolean;
+    apply?: StudioPdfAnnotationEditor['apply'];
+    inspect?: StudioPdfAnnotationEditor['inspect'];
+    preview?: StudioPdfAnnotationEditor['preview'];
+    search?: StudioPdfSession['search'];
+    textLayer?: boolean;
+    model?: StudioPdfSnapshot;
+  } = {}
+) {
+  const first = options.model ?? initial();
+  const annotations = new Map<Blob, PdfAnnotation[]>([[first.source, [textAnnotation()]]]);
+  const counts = new Map<Blob, number>([[first.source, first.document.pageCount]]);
+  let latest = first,
+    accepted = true,
+    sequence = 0;
+  const inspection = (snapshot: StudioPdfSnapshot): StudioPdfAnnotationInspection => ({
+    state: snapshot.document.nativeAnnotations!,
+    snapshot: {
+      version: 1,
+      sourceHash: snapshot.document.nativeAnnotations!.sourceHash,
+      signed: options.signed ?? false,
+      annotations: annotations.get(snapshot.source) ?? [textAnnotation()],
+      deleted: [],
+      removedLinks: [],
+      removedPopups: [],
+      pages: snapshot.document.pages!.map((page) => ({
+        id: page.id,
+        sourcePage: page.sourcePage,
+        media: { x: 0, y: 0, width: 400, height: 500 },
+        crop: { x: 0, y: 0, width: 400, height: 500 },
+        rotation: 0,
+        userUnit: 1,
+      })),
+      canvasPages: snapshot.document.pages!,
+      effects: { removedReplies: [], removedLinks: [], removedPopups: [] },
+    },
+  });
+  const candidate = (request: StudioPdfAnnotationRequest): StudioPdfSnapshot => {
+    const original = request.snapshot.document,
+      next = request.next ?? original;
+    const source = new Blob([`%PDF-Prepared-${++sequence}`]);
+    const document: StudioPdfDocument = {
+      ...next,
+      sourcePageCount: next.pageCount,
+      rotations: {},
+      pages: next.pages!.map((page, sourcePage) => ({ ...page, sourcePage })),
+      nativeAnnotations: {
+        version: 1,
+        sourceHash: String(sequence).padStart(64, '0'),
+        commands: [],
+        bindings: next.pages!.map((page, sourcePage) => ({
+          sourcePage,
+          nativePageId: `native-${page.id}`,
+          uiPageId: page.id,
+        })),
+      },
+    };
+    // The host fixture supplies a completed immutable candidate; native serialization is tested by the real host suites.
+    let projected = annotations.get(request.snapshot.source) ?? [textAnnotation()];
+    if (request.command.type === 'mark') {
+      const command = request.command.command;
+      if (command.type === 'update')
+        projected = projected.map((item) =>
+          item.id === command.id ? ({ ...item, ...command.patch } as PdfAnnotation) : item
+        );
+      if (command.type === 'remove') projected = projected.filter((item) => item.id !== command.id);
+      if (command.type === 'create')
+        projected = [
+          ...projected,
+          { ...textAnnotation(), ...command.annotation, capabilities } as PdfAnnotation,
+        ];
+    }
+    annotations.set(source, projected);
+    counts.set(source, document.pageCount);
+    expect(isOfficeStudioDocument(document)).toBe(true);
+    return { source, document };
+  };
+  const editor: StudioPdfAnnotationEditor = {
+    inspect: vi.fn<StudioPdfAnnotationEditor['inspect']>(async (snapshot, settings) =>
+      options.inspect ? options.inspect(snapshot, settings) : inspection(snapshot)
+    ),
+    apply: vi.fn<StudioPdfAnnotationEditor['apply']>(async (request) =>
+      options.apply ? options.apply(request) : candidate(request)
+    ),
+    preview: vi.fn<StudioPdfAnnotationEditor['preview']>(async (snapshot, settings) =>
+      options.preview
+        ? options.preview(snapshot, settings)
+        : {
+            source: snapshot.source,
+            revision: snapshot.document.nativeAnnotations!.sourceHash,
+            rendersCurrentPageOrder: true,
+            nativeBodyIds: [],
+            noApIconIds: [],
+            requiresAnnotationLayer: true,
+            binding: {
+              rendersCurrentPageOrder: true,
+              pageCount: snapshot.document.pageCount,
+              sourcePageCount: snapshot.document.sourcePageCount!,
+              pages: snapshot.document.pages!.map((page, sourcePage) => ({
+                id: page.id,
+                sourcePage,
+              })),
+              rotations: {},
+            },
+          }
+    ),
+  };
+  const renderPage = vi.fn<StudioPdfSession['render']>(async (_page, _canvas, settings) => ({
+    width: 400 * settings.scale,
+    height: 500 * settings.scale,
+    toPdfPoint: (x, y) => [x / settings.scale, 500 - y / settings.scale],
+    toViewportPoint: (x, y) => [x * settings.scale, (500 - y) * settings.scale],
+  }));
+  const renderer: StudioPdfRenderer = {
+    load: vi.fn(async (blob) => ({
+      pageCount: counts.get(blob) ?? 2,
+      supportsPageMapping: true,
+      destroy: vi.fn(),
+      render: renderPage,
+      search: options.search,
+      renderTextLayer: options.textLayer
+        ? async (_page: number, container: HTMLDivElement) => {
+            const span = container.ownerDocument.createElement('span');
+            span.textContent = 'Original selectable text';
+            container.replaceChildren(span);
+            return { selection: () => undefined, destroy: () => container.replaceChildren() };
+          }
+        : undefined,
+    })),
+  };
+  const modelChange = vi.fn(),
+    sourceChange = vi.fn();
+  let update!: (next: StudioPdfSnapshot) => void;
+  let permissions!: (next: { readOnly: boolean; disabled: boolean }) => void;
+  let replaceEditor!: (next: StudioPdfAnnotationEditor) => void;
+  function Host() {
+    const [snapshot, setSnapshot] = useState(first),
+      [access, setAccess] = useState({ readOnly: false, disabled: false });
+    const [currentEditor, setEditor] = useState(editor);
+    latest = snapshot;
+    update = setSnapshot;
+    permissions = setAccess;
+    replaceEditor = setEditor;
+    const props = {
+      source: snapshot.source,
+      pdfRenderer: renderer,
+      pdfAnnotations: options.provider === false ? undefined : currentEditor,
+      onChange: (document: StudioPdfDocument) => {
+        modelChange(document);
+        setSnapshot((previous) => ({ ...previous, document }));
+      },
+      onPdfSourceChange:
+        options.callback === false
+          ? undefined
+          : (change: { previous: StudioPdfSnapshot; next: StudioPdfSnapshot }) => {
+              sourceChange(change);
+              if (!accepted) return false;
+              expect(change.previous.document).toBe(snapshot.document);
+              expect(change.previous.source).toBe(snapshot.source);
+              setSnapshot(change.next);
+              return true;
+            },
+      ...access,
+    };
+    return options.office ? (
+      <OfficeStudio
+        value={snapshot.document}
+        {...props}
+        onChange={(document) => {
+          if (document.kind === 'pdf') props.onChange(document);
+        }}
+      />
+    ) : (
+      <StudioPdf document={snapshot.document} {...props} />
+    );
+  }
+  render(<Host />);
+  return {
+    first,
+    editor,
+    renderer,
+    renderPage,
+    candidate,
+    inspection,
+    snapshot: () => latest,
+    modelChange,
+    sourceChange,
+    update,
+    permissions,
+    replaceEditor,
+    reject: (value: boolean) => {
+      accepted = !value;
+    },
+  };
+}
+function expectPair(actual: StudioPdfSnapshot, expected: StudioPdfSnapshot) {
+  expect(actual.document).toBe(expected.document);
+  expect(actual.source).toBe(expected.source);
+}
+async function ready() {
+  await waitFor(() =>
+    expect(screen.getByRole('region', { name: 'PDF 页面编辑区' })).toHaveAttribute(
+      'aria-busy',
+      'false'
+    )
+  );
+}
+const hit = () => screen.getByRole('button', { name: 'PDF 批注 文字 原生中文' });
+async function properties() {
+  fireEvent.click(hit());
+  fireEvent.click(screen.getByRole('button', { name: '编辑批注属性' }));
+  return screen.getByRole('dialog', { name: '文字属性' });
+}
+async function changeText(value: string) {
+  const dialog = await properties();
+  fireEvent.change(within(dialog).getByLabelText('PDF 批注内容'), { target: { value } });
+  fireEvent.click(within(dialog).getByRole('button', { name: '应用批注属性' }));
+  await waitFor(() =>
+    expect(screen.queryByRole('dialog', { name: '文字属性' })).not.toBeInTheDocument()
+  );
+  await ready();
+}
+
+it('forwards the native editor through OfficeStudio and accepts one immutable source/model pair with transactional history', async () => {
+  const f = host({ office: true });
+  await ready();
+  await changeText('修改后的中文');
+  expect(f.modelChange).not.toHaveBeenCalled();
+  expect(f.sourceChange).toHaveBeenCalledTimes(1);
+  const changed = f.snapshot();
+  expect(changed.source).not.toBe(f.first.source);
+  expect(f.editor.apply).toHaveBeenCalledWith(
+    expect.objectContaining({
+      snapshot: f.first,
+      command: {
+        type: 'mark',
+        command: expect.objectContaining({
+          type: 'update',
+          id: 'native-text',
+          patch: { kind: 'freeText', contents: '修改后的中文' },
+        }),
+      },
+    })
+  );
+  fireEvent.change(screen.getByLabelText('PDF 页面表单 name'), {
+    target: { value: 'Edited field' },
+  });
+  fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  expect(f.snapshot().source).toBe(changed.source);
+  expect(f.snapshot().document.fields[0].value).toBe('Original');
+  fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await ready();
+  expectPair(f.snapshot(), f.first);
+  fireEvent.click(screen.getByRole('button', { name: '重做' }));
+  await ready();
+  expectPair(f.snapshot(), changed);
+  expect(f.sourceChange).toHaveBeenCalledTimes(3);
+});
+
+it('keeps unchanged native device colors out of a contents-only property patch, and cancels or applies an unchanged draft without history', async () => {
+  const f = host();
+  await ready();
+  const dialog = await properties();
+  fireEvent.change(within(dialog).getByLabelText('PDF 批注内容'), {
+    target: { value: 'Discarded' },
+  });
+  fireEvent.click(within(dialog).getByRole('button', { name: '取消' }));
+  expect(f.editor.apply).not.toHaveBeenCalled();
+  expectPair(f.snapshot(), f.first);
+  const unchanged = await properties();
+  fireEvent.click(within(unchanged).getByRole('button', { name: '应用批注属性' }));
+  expect(f.editor.apply).not.toHaveBeenCalled();
+  expect(screen.getByRole('button', { name: '撤销' })).toBeDisabled();
+  await changeText('Contents only');
+  const command = vi.mocked(f.editor.apply).mock.calls[0][0].command;
+  expect(
+    command.type === 'mark' && command.command.type === 'update' && command.command.patch
+  ).toEqual({ kind: 'freeText', contents: 'Contents only' });
+});
+
+it('rejects invalid numeric drafts and IME submission while preserving the property draft for correction', async () => {
+  const f = host();
+  await ready();
+  const dialog = await properties(),
+    input = within(dialog).getByLabelText('PDF 批注字号');
+  fireEvent.change(input, { target: { value: 'bad' } });
+  fireEvent.click(within(dialog).getByRole('button', { name: '应用批注属性' }));
+  expect(within(dialog).getByRole('alert')).toHaveTextContent('有效的数值');
+  expect(f.editor.apply).not.toHaveBeenCalled();
+  fireEvent.change(input, { target: { value: '18' } });
+  fireEvent.compositionStart(input);
+  fireEvent.click(within(dialog).getByRole('button', { name: '应用批注属性' }));
+  expect(f.editor.apply).not.toHaveBeenCalled();
+  fireEvent.compositionEnd(input);
+  fireEvent.click(within(dialog).getByRole('button', { name: '应用批注属性' }));
+  await ready();
+  await waitFor(() => expect(f.sourceChange).toHaveBeenCalledTimes(1));
+  const command = vi.mocked(f.editor.apply).mock.calls[0][0].command;
+  expect(
+    command.type === 'mark' && command.command.type === 'update' && command.command.patch
+  ).toEqual({ kind: 'freeText', font: { size: 18 }, lineHeight: 21.599999999999998 });
+});
+
+it('keeps creation and reply inputs enabled throughout IME while refusing acceptance until composition ends', async () => {
+  const f = host();
+  await ready();
+  fireEvent.click(screen.getByRole('button', { name: '文字' }));
+  const input = screen.getByLabelText('PDF 新增文字');
+  fireEvent.compositionStart(input);
+  fireEvent.change(input, { target: { value: '正在输入中文' } });
+  expect(input).toBeEnabled();
+  fireEvent.click(screen.getByRole('button', { name: '放在当前页中央' }));
+  expect(f.editor.apply).not.toHaveBeenCalled();
+  fireEvent.compositionEnd(input);
+  fireEvent.click(screen.getByRole('button', { name: '放在当前页中央' }));
+  await waitFor(() => expect(f.sourceChange).toHaveBeenCalledTimes(1));
+  await ready();
+  fireEvent.click(hit());
+  const reply = screen.getByLabelText('PDF 回复内容');
+  fireEvent.compositionStart(reply);
+  fireEvent.change(reply, { target: { value: '输入回复' } });
+  expect(reply).toBeEnabled();
+  fireEvent.keyDown(reply, { key: 'Enter', isComposing: true });
+  expect(f.editor.apply).toHaveBeenCalledTimes(1);
+  fireEvent.compositionEnd(reply);
+  fireEvent.keyDown(reply, { key: 'Enter' });
+  await waitFor(() => expect(f.editor.apply).toHaveBeenCalledTimes(2));
+});
+
+it('does not submit stale native snapshots when a property draft was opened before an external model replacement', async () => {
+  const f = host();
+  await ready();
+  const dialog = await properties();
+  fireEvent.change(within(dialog).getByLabelText('PDF 批注内容'), {
+    target: { value: 'Old draft' },
+  });
+  act(() => f.update({ ...f.first, document: { ...f.first.document, name: 'External.pdf' } }));
+  const current = f.snapshot();
+  fireEvent.click(within(dialog).getByRole('button', { name: '应用批注属性' }));
+  expect(f.editor.apply).not.toHaveBeenCalled();
+  expect(f.snapshot()).toBe(current);
+});
+
+it.each(['readOnly', 'disabled'] as const)(
+  'discards an eventual prepared native result when %s becomes active',
+  async (permission) => {
+    const task = deferred<StudioPdfSnapshot>(),
+      f = host({ apply: () => task.promise });
+    await ready();
+    const dialog = await properties();
+    fireEvent.change(within(dialog).getByLabelText('PDF 批注内容'), {
+      target: { value: 'Pending' },
+    });
+    fireEvent.click(within(dialog).getByRole('button', { name: '应用批注属性' }));
+    await waitFor(() => expect(f.editor.apply).toHaveBeenCalledTimes(1));
+    const request = vi.mocked(f.editor.apply).mock.calls[0][0];
+    act(() =>
+      f.permissions({ readOnly: permission === 'readOnly', disabled: permission === 'disabled' })
+    );
+    expect(request.signal?.aborted).toBe(true);
+    await act(async () => task.resolve(f.candidate(request)));
+    expect(f.sourceChange).not.toHaveBeenCalled();
+    expectPair(f.snapshot(), f.first);
+    expect(screen.getByRole('button', { name: '文字' })).toBeDisabled();
+  }
+);
+
+it.each(['document', 'source', 'editor'] as const)(
+  'discards an eventual prepared native result after the current %s is replaced',
+  async (scope) => {
+    const task = deferred<StudioPdfSnapshot>(),
+      f = host({ apply: () => task.promise });
+    await ready();
+    const dialog = await properties();
+    fireEvent.change(within(dialog).getByLabelText('PDF 批注内容'), {
+      target: { value: 'Pending' },
+    });
+    fireEvent.click(within(dialog).getByRole('button', { name: '应用批注属性' }));
+    await waitFor(() => expect(f.editor.apply).toHaveBeenCalledTimes(1));
+    const request = vi.mocked(f.editor.apply).mock.calls[0][0];
+    act(() => {
+      if (scope === 'editor') f.replaceEditor({ ...f.editor });
+      else
+        f.update({
+          ...f.first,
+          ...(scope === 'source'
+            ? { source: new Blob(['%PDF-Replacement']) }
+            : { document: { ...f.first.document, name: 'Replacement.pdf' } }),
+        });
+    });
+    const current = f.snapshot();
+    await act(async () => task.resolve(f.candidate(request)));
+    expect(f.sourceChange).not.toHaveBeenCalled();
+    expect(f.snapshot()).toBe(current);
+  }
+);
+
+it('aborts a pending property apply on cancel and ignores its eventual source without adding history', async () => {
+  const task = deferred<StudioPdfSnapshot>(),
+    f = host({ apply: () => task.promise });
+  await ready();
+  const dialog = await properties();
+  fireEvent.change(within(dialog).getByLabelText('PDF 批注内容'), { target: { value: 'Pending' } });
+  fireEvent.click(within(dialog).getByRole('button', { name: '应用批注属性' }));
+  await waitFor(() => expect(f.editor.apply).toHaveBeenCalledTimes(1));
+  const request = vi.mocked(f.editor.apply).mock.calls[0][0];
+  fireEvent.click(within(dialog).getByRole('button', { name: '取消' }));
+  expect(request.signal?.aborted).toBe(true);
+  await act(async () => task.resolve(f.candidate(request)));
+  expect(f.sourceChange).not.toHaveBeenCalled();
+  expectPair(f.snapshot(), f.first);
+  expect(screen.getByRole('button', { name: '撤销' })).toBeDisabled();
+});
+
+it('retains both the current pair and undo/redo entries when the controlled host rejects application or restoration', async () => {
+  const f = host();
+  await ready();
+  await changeText('First accepted');
+  const changed = f.snapshot();
+  f.reject(true);
+  fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  expectPair(f.snapshot(), changed);
+  expect(screen.getByRole('button', { name: '重做' })).toBeDisabled();
+  f.reject(false);
+  fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await ready();
+  expectPair(f.snapshot(), f.first);
+  f.reject(true);
+  const dialog = await properties();
+  fireEvent.change(within(dialog).getByLabelText('PDF 批注内容'), {
+    target: { value: 'Rejected' },
+  });
+  fireEvent.click(within(dialog).getByRole('button', { name: '应用批注属性' }));
+  await waitFor(() => expect(within(dialog).getByRole('alert')).toHaveTextContent('未接受'));
+  expectPair(f.snapshot(), f.first);
+  fireEvent.click(within(dialog).getByRole('button', { name: '取消' }));
+  expect(screen.getByRole('button', { name: '重做' })).toBeEnabled();
+  f.reject(false);
+  fireEvent.click(screen.getByRole('button', { name: '重做' }));
+  await ready();
+  expectPair(f.snapshot(), changed);
+});
+
+it.each([{ provider: false }, { callback: false }])(
+  'does not offer native source mutation without a complete host contract: %j',
+  async (options) => {
+    const f = host(options);
+    await ready();
+    if (options.provider !== false)
+      expect(screen.getByRole('button', { name: '文字' })).toBeDisabled();
+    expect(f.editor.apply).not.toHaveBeenCalled();
+    expect(f.sourceChange).not.toHaveBeenCalled();
+  }
+);
+
+it('permits read-only selection and properties while disabling move, deletion, contents, replies and history', async () => {
+  const f = host();
+  await ready();
+  act(() => f.permissions({ readOnly: true, disabled: false }));
+  await ready();
+  fireEvent.click(hit());
+  fireEvent.keyDown(hit(), { key: 'ArrowRight' });
+  fireEvent.keyDown(hit(), { key: 'Delete' });
+  expect(screen.getByLabelText('PDF 回复内容')).toBeDisabled();
+  expect(screen.getByRole('button', { name: '删除选中标注' })).toBeDisabled();
+  fireEvent.click(screen.getByRole('button', { name: '编辑批注属性' }));
+  const dialog = screen.getByRole('dialog', { name: '文字属性' });
+  expect(within(dialog).getByLabelText('PDF 批注内容')).toBeDisabled();
+  expect(within(dialog).getByRole('button', { name: '应用批注属性' })).toBeDisabled();
+  expect(f.editor.apply).not.toHaveBeenCalled();
+  expectPair(f.snapshot(), f.first);
+});
+
+it('keeps signed-source commands disabled and refuses editing while signature inspection is pending', async () => {
+  const task = deferred<StudioPdfAnnotationInspection>(),
+    f = host({ inspect: () => task.promise, signed: true });
+  await waitFor(() => expect(f.renderer.load).toHaveBeenCalled());
+  await waitFor(() => expect(screen.getByLabelText('PDF 页面表单 name')).toBeDisabled());
+  await act(async () => task.resolve(f.inspection(f.first)));
+  await ready();
+  expect(screen.getByRole('button', { name: '文字' })).toBeDisabled();
+  expect(screen.getByRole('button', { name: '旋转当前页' })).toBeDisabled();
+  expectPair(f.snapshot(), f.first);
+});
+
+it('submits keyboard movement and deletion once, ignores IME shortcuts, and restores each accepted pair independently', async () => {
+  const f = host();
+  await ready();
+  fireEvent.click(hit());
+  fireEvent.keyDown(hit(), { key: 'ArrowRight', isComposing: true });
+  expect(f.editor.apply).not.toHaveBeenCalled();
+  fireEvent.keyDown(hit(), { key: 'ArrowRight', shiftKey: true });
+  await waitFor(() => expect(f.sourceChange).toHaveBeenCalledTimes(1));
+  await ready();
+  const moved = f.snapshot();
+  const firstCommand = vi.mocked(f.editor.apply).mock.calls[0][0].command;
+  expect(
+    firstCommand.type === 'mark' &&
+      firstCommand.command.type === 'update' &&
+      firstCommand.command.patch
+  ).toEqual({ kind: 'freeText', rect: [50, 300, 250, 350] });
+  fireEvent.keyDown(hit(), { key: 'Delete' });
+  await waitFor(() => expect(f.sourceChange).toHaveBeenCalledTimes(2));
+  await ready();
+  expect(screen.queryByRole('button', { name: 'PDF 批注 文字 原生中文' })).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await ready();
+  expectPair(f.snapshot(), moved);
+  fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await ready();
+  expectPair(f.snapshot(), f.first);
+});
+
+it('refuses model-only mutations of native projections when no annotation provider is installed', async () => {
+  const first = initial();
+  first.document.marks = [
+    {
+      id: 'projection',
+      nativeId: 'native-text',
+      page: 0,
+      type: 'text',
+      x: 40,
+      y: 300,
+      size: 16,
+      text: '原生投影',
+    },
+  ];
+  const f = host({ provider: false, model: first });
+  await ready();
+  fireEvent.click(within(screen.getByLabelText('PDF 标注列表')).getByRole('button'));
+  expect(screen.getByLabelText('PDF 选中标注文字')).toBeDisabled();
+  expect(screen.getByRole('button', { name: '删除选中标注' })).toBeDisabled();
+  fireEvent.change(screen.getByLabelText('PDF 选中标注文字'), {
+    target: { value: 'Forged UI edit' },
+  });
+  fireEvent.click(screen.getByRole('button', { name: '删除选中标注' }));
+  expect(f.modelChange).not.toHaveBeenCalled();
+  expect(f.snapshot()).toBe(first);
+});
+
+it('uses native capability flags for properties even when the overall source is editable', () => {
+  const annotation = {
+    ...textAnnotation(),
+    capabilities: {
+      ...capabilities,
+      contents: false,
+      move: false,
+      appearance: false,
+      resize: false,
+    },
+  };
+  const apply = vi.fn(async () => true);
+  render(
+    <StudioPdfAnnotationDialog
+      annotation={annotation}
+      disabled={false}
+      busy={false}
+      onApply={apply}
+      onCancel={vi.fn()}
+    />
+  );
+  const dialog = screen.getByRole('dialog', { name: '文字属性' });
+  for (const label of ['PDF 批注内容', 'PDF 批注横坐标', 'PDF 批注字号', 'PDF 批注宽度'])
+    expect(within(dialog).getByLabelText(label)).toBeDisabled();
+  fireEvent.click(within(dialog).getByRole('button', { name: '应用批注属性' }));
+  expect(apply).not.toHaveBeenCalled();
+});
+
+it('shows the effective FreeText border color separately from its background and accepts an explicit clear', async () => {
+  const apply = vi.fn(async () => true);
+  render(
+    <StudioPdfAnnotationDialog
+      annotation={textAnnotation()}
+      disabled={false}
+      busy={false}
+      onApply={apply}
+      onCancel={vi.fn()}
+    />
+  );
+  const dialog = screen.getByRole('dialog', { name: '文字属性' });
+  expect(within(dialog).getByRole('button', { name: 'PDF 批注边框颜色' })).toBeInTheDocument();
+  const clear = within(dialog).getByRole('checkbox', { name: '无边框颜色' });
+  expect(clear).not.toBeChecked();
+  fireEvent.click(clear);
+  fireEvent.click(within(dialog).getByRole('button', { name: '应用批注属性' }));
+  await waitFor(() => expect(apply).toHaveBeenCalledWith({ kind: 'freeText', fill: null }));
+});
+
+function pendingSnapshot() {
+  const value = initial();
+  value.document.pages = [value.document.pages![1], value.document.pages![0]];
+  value.document.rotations = { '0': 90 };
+  value.document.nativeAnnotations!.commands = [
+    {
+      type: 'layout',
+      targets: [
+        { id: 'second', fromPageId: 'second' },
+        { id: 'first', fromPageId: 'first' },
+      ],
+    },
+    {
+      type: 'mark',
+      command: {
+        type: 'update',
+        id: 'native-text',
+        patch: { kind: 'freeText', contents: '重放内容' },
+        now: '2026-11-27T00:00:00.000Z',
+      },
+    },
+  ];
+  return value;
+}
+function previewCandidate(snapshot: StudioPdfSnapshot) {
+  return {
+    source: new Blob(['%PDF-Replayed-View']),
+    revision: 'b'.repeat(64),
+    rendersCurrentPageOrder: true as const,
+    nativeBodyIds: ['native-text'],
+    noApIconIds: [],
+    requiresAnnotationLayer: true,
+    annotations: [{ id: 'native-text', key: '90 0 R', flags: 4 }],
+    binding: {
+      rendersCurrentPageOrder: true as const,
+      pageCount: snapshot.document.pageCount,
+      sourcePageCount: snapshot.document.pageCount,
+      pages: snapshot.document.pages!.map((entry, sourcePage) => ({ id: entry.id, sourcePage })),
+      rotations: {},
+    },
+  };
+}
+
+it('renders a saved native recipe from the derived source and binding without reapplying its page order or rotation', async () => {
+  const first = pendingSnapshot(),
+    preview = previewCandidate(first);
+  const f = host({ model: first, preview: async () => preview });
+  await ready();
+  expect(f.editor.preview).toHaveBeenCalledTimes(1);
+  expect(f.renderer.load).toHaveBeenCalledWith(preview.source);
+  expect(vi.mocked(f.renderer.load).mock.calls.some(([blob]) => blob === first.source)).toBe(false);
+  expect(f.renderPage).toHaveBeenCalledWith(
+    0,
+    expect.anything(),
+    expect.objectContaining({ rotation: 0, page: { id: 'second', sourcePage: 0 } })
+  );
+  fireEvent.click(screen.getByRole('button', { name: 'PDF 页面缩略图侧栏' }));
+  await waitFor(() =>
+    expect(screen.getByRole('button', { name: 'PDF 第 2 页缩略图' })).toBeInTheDocument()
+  );
+  fireEvent.click(screen.getByRole('button', { name: 'PDF 第 2 页缩略图' }));
+  await ready();
+  expect(f.renderPage).toHaveBeenCalledWith(
+    1,
+    expect.anything(),
+    expect.objectContaining({ rotation: 0, page: { id: 'first', sourcePage: 1 } })
+  );
+  expectPair(f.snapshot(), first);
+  expect(f.modelChange).not.toHaveBeenCalled();
+  expect(f.sourceChange).not.toHaveBeenCalled();
+});
+
+it('abandons a preview from an old source and never loads its derived bytes after the source is replaced', async () => {
+  const first = pendingSnapshot(),
+    task = deferred<ReturnType<typeof previewCandidate>>();
+  const f = host({ model: first, preview: () => task.promise });
+  await waitFor(() => expect(f.editor.preview).toHaveBeenCalledTimes(1));
+  const request = vi.mocked(f.editor.preview).mock.calls[0];
+  const replacement = initial();
+  act(() => f.update(replacement));
+  await ready();
+  const oldPreview = previewCandidate(first);
+  await act(async () => task.resolve(oldPreview));
+  expect(request[1]?.signal?.aborted).toBe(true);
+  expect(vi.mocked(f.renderer.load).mock.calls.some(([blob]) => blob === oldPreview.source)).toBe(
+    false
+  );
+  expectPair(f.snapshot(), replacement);
+});
+
+it('reports invalid preview mappings and retries safely without changing the authoritative pair', async () => {
+  const first = pendingSnapshot(),
+    good = previewCandidate(first);
+  let invalid = true;
+  const f = host({
+    model: first,
+    preview: async () =>
+      invalid
+        ? { ...good, binding: { ...good.binding, pages: [...good.binding.pages].reverse() } }
+        : good,
+  });
+  await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent('不完整的页面映射'));
+  expect(f.renderer.load).not.toHaveBeenCalled();
+  expectPair(f.snapshot(), first);
+  invalid = false;
+  fireEvent.click(screen.getByRole('button', { name: '重新加载' }));
+  await ready();
+  expect(f.renderer.load).toHaveBeenCalledWith(good.source);
+  expectPair(f.snapshot(), first);
+  expect(f.sourceChange).not.toHaveBeenCalled();
+});
+
+it('preserves the current search result and page across temporary disabled/read-only transitions', async () => {
+  const search = vi.fn<NonNullable<StudioPdfSession['search']>>(async () => [
+    { page: 0, text: 'Match first', rect: { x: 20, y: 300, width: 100, height: 20 } },
+    { page: 1, text: 'Match second', rect: { x: 20, y: 300, width: 110, height: 20 } },
+  ]);
+  const f = host({ search });
+  await ready();
+  fireEvent.click(screen.getByRole('button', { name: 'PDF 文本查找侧栏' }));
+  const input = screen.getByRole('textbox', { name: 'PDF 查找文字' });
+  fireEvent.change(input, { target: { value: 'Match' } });
+  fireEvent.click(screen.getByRole('button', { name: '查找全部' }));
+  await waitFor(() =>
+    expect(screen.getByRole('button', { name: /Match second/ })).toBeInTheDocument()
+  );
+  fireEvent.click(screen.getByRole('button', { name: /Match second/ }));
+  await ready();
+  expect(screen.getByText('第 2 页 · 100%')).toBeInTheDocument();
+  expect(search).toHaveBeenCalledTimes(1);
+  act(() => f.permissions({ readOnly: false, disabled: true }));
+  act(() => f.permissions({ readOnly: true, disabled: false }));
+  await ready();
+  expect(screen.getByText('第 2 页 · 100%')).toBeInTheDocument();
+  expect(search).toHaveBeenCalledTimes(1);
+  expectPair(f.snapshot(), f.first);
+});
+
+it.each(['empty-source', 'document-id', 'page-map', 'recipe'] as const)(
+  'rejects an incomplete native candidate (%s) before publishing a source change',
+  async (fault) => {
+    const f: ReturnType<typeof host> = host({
+      apply: async (request) => {
+        const value = f.candidate(request);
+        if (fault === 'empty-source') value.source = new Blob();
+        if (fault === 'document-id') value.document.id = 'other-file';
+        if (fault === 'page-map') value.document.pages![0].sourcePage = 1;
+        if (fault === 'recipe') value.document.nativeAnnotations!.sourceHash = 'bad';
+        return value;
+      },
+    });
+    await ready();
+    const dialog = await properties();
+    fireEvent.change(within(dialog).getByLabelText('PDF 批注内容'), {
+      target: { value: 'Rejected candidate' },
+    });
+    fireEvent.click(within(dialog).getByRole('button', { name: '应用批注属性' }));
+    await waitFor(() => expect(within(dialog).getByRole('alert')).toHaveTextContent('不完整'));
+    expect(f.sourceChange).not.toHaveBeenCalled();
+    expectPair(f.snapshot(), f.first);
+    expect(screen.getByRole('button', { name: '撤销', hidden: true })).toBeDisabled();
+  }
+);
+
+it('provides a text cursor that leaves original text enabled, prevents annotation gestures and adds no history', async () => {
+  const f = host({ textLayer: true });
+  await ready();
+  fireEvent.click(screen.getByRole('button', { name: '选择文字' }));
+  expect(screen.getByRole('button', { name: '选择文字' })).toHaveAttribute('aria-pressed', 'true');
+  expect(screen.getByRole('button', { name: '选择' })).toHaveAttribute('aria-pressed', 'false');
+  expect(hit()).toBeDisabled();
+  expect(window.document.querySelector('.zuvi-studio-pdf-paper')).toHaveAttribute(
+    'data-text-selection',
+    'true'
+  );
+  expect(window.document.querySelector('.zuvi-studio-pdf-text-layer')).not.toHaveAttribute(
+    'data-disabled'
+  );
+  fireEvent.keyDown(hit(), { key: 'ArrowRight' });
+  fireEvent.keyDown(hit(), { key: 'Delete' });
+  expect(f.editor.apply).not.toHaveBeenCalled();
+  expectPair(f.snapshot(), f.first);
+  expect(screen.getByRole('button', { name: '撤销' })).toBeDisabled();
+  fireEvent.click(within(screen.getByLabelText('PDF 批注列表')).getByRole('button'));
+  expect(hit()).toBeEnabled();
+  expect(screen.getByRole('button', { name: '选择文字' })).toHaveAttribute('aria-pressed', 'false');
+});
+
+it('retains the text cursor in read-only mode, disables it with the whole editor and returns to annotation mode for new drawing', async () => {
+  const f = host({ textLayer: true });
+  await ready();
+  fireEvent.click(screen.getByRole('button', { name: '选择文字' }));
+  act(() => f.permissions({ readOnly: true, disabled: false }));
+  await ready();
+  expect(screen.getByRole('button', { name: '选择文字' })).toBeEnabled();
+  expect(hit()).toBeDisabled();
+  expect(window.document.querySelector('.zuvi-studio-pdf-text-layer')).not.toHaveAttribute(
+    'data-disabled'
+  );
+  act(() => f.permissions({ readOnly: true, disabled: true }));
+  expect(screen.getByRole('button', { name: '选择文字' })).toBeDisabled();
+  expect(window.document.querySelector('.zuvi-studio-pdf-text-layer')).toHaveAttribute(
+    'data-disabled',
+    'true'
+  );
+  act(() => f.permissions({ readOnly: false, disabled: false }));
+  await ready();
+  fireEvent.click(screen.getByRole('button', { name: '矩形' }));
+  expect(screen.getByRole('button', { name: '选择文字' })).toHaveAttribute('aria-pressed', 'false');
+  expect(hit()).toBeEnabled();
+  expect(f.editor.apply).not.toHaveBeenCalled();
+  expectPair(f.snapshot(), f.first);
+});

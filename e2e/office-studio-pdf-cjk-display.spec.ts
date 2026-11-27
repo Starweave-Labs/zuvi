@@ -1,0 +1,115 @@
+import { expect, test } from '@playwright/test';
+import { createHash } from 'node:crypto';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import path from 'node:path';
+
+const audit = path.resolve(process.env.ZUVI_CJK_AUDIT ?? 'docs/audits/2026-11-27/pdf-text-layer/cjk-native-display');
+const fixture = path.resolve(process.env.ZUVI_CJK_SOURCE ?? 'docs/audits/2026-11-27/pdf-native-ui/browser-native/fixture-native-twelve-types.pdf');
+const baselineFile = path.resolve(process.env.ZUVI_CJK_BASELINE ?? 'docs/audits/2026-11-27/pdf-text-layer/cjk-native-display/baseline/diagnosis.json');
+const contents = '中文自由文本：原生迁入后保留';
+
+test('diagnoses real OfficeStudio CJK FreeText canvas and transparent accessibility DOM independently', async ({ page }) => {
+  test.setTimeout(90000); await mkdir(audit, { recursive: true });
+  const bytes = await readFile(fixture), sourceHash = createHash('sha256').update(bytes).digest('hex');
+  await writeFile(path.join(audit, 'actual-source.pdf'), bytes);
+  const errors: string[] = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.addInitScript(() => {
+    const original = CanvasRenderingContext2D.prototype.fillText;
+    const paints: unknown[] = [];
+    (window as unknown as { pdfGlyphPaints: unknown[] }).pdfGlyphPaints = paints;
+    CanvasRenderingContext2D.prototype.fillText = function(text, x, y, maxWidth) {
+      const matrix = this.getTransform();
+      paints.push({ text, x, y, font: this.font, width: this.canvas.width, height: this.canvas.height,
+        matrix: [matrix.a, matrix.b, matrix.c, matrix.d, matrix.e, matrix.f] });
+      if (maxWidth === undefined) original.call(this, text, x, y); else original.call(this, text, x, y, maxWidth);
+    };
+  });
+  await page.setViewportSize({ width: 1440, height: 1100 });
+  await page.goto('/#/components/office-studio');
+  await page.getByLabel('导入文档文件', { exact: true }).setInputFiles({ name: 'CJK-diagnostic.pdf', mimeType: 'application/pdf', buffer: bytes });
+  await expect(page.getByLabel('PDF 批注署名', { exact: true })).toBeEnabled();
+  await page.getByRole('button', { name: '全屏编辑', exact: true }).click();
+  const paper = page.locator('.zuvi-studio-pdf-paper');
+  await expect(paper.locator('.annotationLayer')).toHaveAttribute('data-ready', 'true');
+  await page.screenshot({ path: path.join(audit, 'actual-before.png'), fullPage: true, animations: 'disabled' });
+  const before = await paper.evaluate(async (element) => {
+    const dom = [...element.querySelectorAll('.annotationTextContent')].map(value => {
+      const style = getComputedStyle(value), rect = value.getBoundingClientRect();
+      return { html: value.outerHTML, text: value.textContent, opacity: style.opacity, color: style.color,
+        position: style.position, font: style.font, fontFamily: style.fontFamily, fontSize: style.fontSize,
+        rect: { x: rect.x, y: rect.y, width: rect.width, height: rect.height },
+        lines: [...value.querySelectorAll('span')].flatMap(span => { const range = document.createRange(); range.selectNodeContents(span); return [...range.getClientRects()].map(rect => ({ x: rect.x, y: rect.y, width: rect.width, height: rect.height })); }) };
+    });
+    const canvases = await Promise.all([...element.querySelectorAll('canvas')].map(async (canvas) => {
+      const blob = await new Promise<Blob>(resolve => canvas.toBlob(value => resolve(value!)));
+      const hash = [...new Uint8Array(await crypto.subtle.digest('SHA-256', await blob.arrayBuffer()))].map(value => value.toString(16).padStart(2, '0')).join('');
+      return { hash, width: canvas.width, height: canvas.height, parent: canvas.parentElement?.className, url: canvas.toDataURL() };
+    }));
+    return { dom, canvases, fontStatus: document.fonts.status, fonts: [...document.fonts].map(font => ({ family: font.family, status: font.status })),
+      paints: (window as unknown as { pdfGlyphPaints: unknown[] }).pdfGlyphPaints };
+  });
+  expect(before.dom.some(value => value.text === contents)).toBe(true);
+  await writeFile(path.join(audit, 'before-dom-and-paints.json'), JSON.stringify({ sourceHash, ...before, canvases: before.canvases.map(({ url: _url, ...value }) => value) }, null, 2) + '\n');
+  for (const [index, canvas] of before.canvases.entries()) await writeFile(path.join(audit, `actual-canvas-${index}.png`), Buffer.from(canvas.url.split(',')[1], 'base64'));
+  // Actual SDK css at pdf_viewer.css:1254. This is a diagnostic override, not a changed renderer option.
+  await page.addStyleTag({ content: '.zuvi-studio-pdf-annotation-paint-layer .annotationTextContent { position:absolute; width:100%; height:100%; opacity:0; color:transparent; user-select:none; }' });
+  await page.screenshot({ path: path.join(audit, 'actual-with-sdk-accessibility-css.png'), fullPage: true, animations: 'disabled' });
+  const after = await paper.evaluate(async element => ({
+    dom: [...element.querySelectorAll('.annotationTextContent')].map(value => ({ text: value.textContent, opacity: getComputedStyle(value).opacity, color: getComputedStyle(value).color })),
+    canvases: await Promise.all([...element.querySelectorAll('canvas')].map(async canvas => {
+      const blob = await new Promise<Blob>(resolve => canvas.toBlob(value => resolve(value!)));
+      return [...new Uint8Array(await crypto.subtle.digest('SHA-256', await blob.arrayBuffer()))].map(value => value.toString(16).padStart(2, '0')).join('');
+    })),
+    paints: (window as unknown as { pdfGlyphPaints: unknown[] }).pdfGlyphPaints,
+  }));
+  expect(after.canvases).toEqual(before.canvases.map(value => value.hash));
+  expect(after.paints).toEqual(before.paints); expect(after.dom.every(value => value.opacity === '0')).toBe(true);
+  expect(errors).toEqual([]);
+  await writeFile(path.join(audit, 'diagnosis.json'), JSON.stringify({ sourceHash, before: before.dom, after, canvasHashesUnchanged: true, paintCallsUnchanged: true, errors }, null, 2) + '\n');
+});
+
+test('renders CJK FreeText once in the actual fresh OfficeStudio without diagnostic CSS or changed font options', async ({ page }) => {
+  test.setTimeout(90000); await mkdir(audit, { recursive: true });
+  const bytes = await readFile(fixture), sourceHash = createHash('sha256').update(bytes).digest('hex');
+  await page.addInitScript(() => {
+    const original = CanvasRenderingContext2D.prototype.fillText;
+    (window as unknown as { cjkPaints: unknown[] }).cjkPaints = [];
+    CanvasRenderingContext2D.prototype.fillText = function(text, x, y, maxWidth) {
+      (window as unknown as { cjkPaints: unknown[] }).cjkPaints.push({ text, font: this.font, width: this.canvas.width, height: this.canvas.height });
+      if (maxWidth === undefined) original.call(this, text, x, y); else original.call(this, text, x, y, maxWidth);
+    };
+  });
+  await page.setViewportSize({ width: 1440, height: 1100 }); await page.goto('/#/components/office-studio');
+  await page.getByLabel('导入文档文件', { exact: true }).setInputFiles({ name: 'CJK-final.pdf', mimeType: 'application/pdf', buffer: bytes });
+  await expect(page.locator('.zuvi-studio-pdf-paper .annotationLayer')).toHaveAttribute('data-ready', 'true', { timeout: 20000 });
+  await expect(page.getByLabel('PDF 批注署名', { exact: true })).toBeEnabled({ timeout: 20000 });
+  await page.getByRole('button', { name: '全屏编辑', exact: true }).click();
+  const paper = page.locator('.zuvi-studio-pdf-paper'); await expect(paper.locator('.annotationLayer')).toHaveAttribute('data-ready', 'true');
+  const result = await paper.evaluate(async element => ({
+    dom: [...element.querySelectorAll('.freeTextAnnotation .annotationTextContent')].map(value => ({ text: value.textContent,
+      role: value.getAttribute('role'), position: getComputedStyle(value).position,
+      color: getComputedStyle(value).color, opacity: getComputedStyle(value).opacity, display: getComputedStyle(value).display })),
+    fonts: [...document.fonts].map(font => ({ family: font.family, status: font.status })),
+    paints: (window as unknown as { cjkPaints: { text: string; font: string; width: number; height: number }[] }).cjkPaints,
+    canvasHashes: await Promise.all([...element.querySelectorAll('canvas')].map(async canvas => {
+      const blob = await new Promise<Blob>(resolve => canvas.toBlob(value => resolve(value!)));
+      return [...new Uint8Array(await crypto.subtle.digest('SHA-256', await blob.arrayBuffer()))].map(value => value.toString(16).padStart(2, '0')).join('');
+    })),
+  }));
+  expect(result.dom).toHaveLength(1); expect(result.dom[0]).toMatchObject({ text: contents, role: 'comment', position: 'absolute', color: 'rgba(0, 0, 0, 0)', opacity: '0' });
+  expect(result.dom[0].display).not.toBe('none');
+  const cjk = result.paints.filter(value => /px g_d\d+_f\d+,/.test(value.font)); expect(cjk).toHaveLength([...contents].length);
+  const baseline = JSON.parse(await readFile(baselineFile, 'utf8')) as { after: { canvases: string[] } };
+  expect(result.canvasHashes).toEqual(baseline.after.canvases);
+  await page.screenshot({ path: path.join(audit, 'actual-production-fixed.png'), fullPage: true, animations: 'disabled' });
+  const persisted = await page.evaluate(async () => {
+    const modulePath = '/src/pages/collaboration/office-studio/studio-storage.ts';
+    const { createStudioStorage } = await import(modulePath);
+    const storage = createStudioStorage(), id = await storage.activeId(), file = id ? await storage.load(id) : undefined;
+    if (!file?.source) throw new Error('Persisted source is missing');
+    return [...new Uint8Array(await crypto.subtle.digest('SHA-256', await file.source.arrayBuffer()))].map(value => value.toString(16).padStart(2, '0')).join('');
+  });
+  expect(persisted).toBe(sourceHash);
+  await writeFile(path.join(audit, 'actual-final.json'), JSON.stringify({ sourceHash, persisted, ...result, cjkPaintCount: cjk.length, canvasPixelsEqualBaseline: true }, null, 2) + '\n');
+});

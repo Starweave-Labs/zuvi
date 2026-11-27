@@ -933,6 +933,7 @@ test('IndexedDB history preview and restoration publish prepared links while pre
   current.name = 'current-with-cleared-links.xlsx';
   current.sheets.forEach((sheet) => {
     sheet.hyperlinks = [];
+    sheet.view = { zoom: 100, showGridLines: true, showRowColHeaders: true };
     sheet.defaultRowHeight = 18;
     sheet.rowHeights = {};
     sheet.rowHeightModes = {};
@@ -953,6 +954,7 @@ test('IndexedDB history preview and restoration publish prepared links while pre
     defaultFont: current.defaultFont,
     sheets: original.sheets.map((sheet, index) => ({
       ...sheet,
+      view: { zoom: 100, showGridLines: true, showRowColHeaders: true },
       hyperlinks: index === 0 ? nativeLinks : [],
       defaultRowHeight: 18,
       rowHeights: {},
@@ -1121,6 +1123,7 @@ test('file preparation keeps non-Excel documents and explicit native empty array
   cleared.defaultFont = { family: 'Calibri', sizePt: 11, bold: false, italic: false };
   cleared.sheets.forEach((sheet) => {
     sheet.hyperlinks = [];
+    sheet.view = { zoom: 100, showGridLines: true, showRowColHeaders: true };
     sheet.defaultRowHeight = 18;
     sheet.rowHeights = {};
     sheet.rowHeightModes = {};
@@ -1136,11 +1139,12 @@ test('file preparation keeps non-Excel documents and explicit native empty array
   assert.equal(loads, 0);
 });
 
-test('file preparation hydrates a missing workbook default font or row mode even when links and point heights are explicit', async () => {
+test('file preparation hydrates a missing workbook default font, row mode or native view even when links and point heights are explicit', async () => {
   const complete = unpreparedExcel();
   complete.defaultFont = { family: 'Arial', sizePt: 9.5, bold: true, italic: true };
   complete.sheets.forEach((sheet) => {
     sheet.hyperlinks = [];
+    sheet.view = { zoom: 100, showGridLines: true, showRowColHeaders: true };
     sheet.defaultRowHeight = 18;
     sheet.rowHeights = { 2: 30 };
     sheet.rowHeightModes = {};
@@ -1151,10 +1155,10 @@ test('file preparation hydrates a missing workbook default font or row mode even
     calls.push({ document, source });
     return complete;
   });
-  for (const missing of ['defaultFont', 'rowHeightModes']) {
+  for (const missing of ['defaultFont', 'rowHeightModes', 'view']) {
     const document = structuredClone(complete);
     if (missing === 'defaultFont') delete document.defaultFont;
-    else delete document.sheets[0].rowHeightModes;
+    else delete document.sheets[0][missing];
     const original = JSON.stringify(document),
       source = new Blob(['native-source'], { type: xlsxType });
     assert.equal(await prepare({ ...record(document), source }), complete);
@@ -1169,12 +1173,12 @@ test('file preparation hydrates a missing workbook default font or row mode even
       /源文件类型不匹配/
     );
   }
-  assert.equal(calls.length, 2);
+  assert.equal(calls.length, 3);
   assert.equal(
     await prepare({ ...record(complete), source: new Blob(['parser must remain lazy']) }),
     complete
   );
-  assert.equal(calls.length, 2);
+  assert.equal(calls.length, 3);
 });
 
 test('file preparation marks missing links empty for CSV and source-free workbooks while preserving known sheets and the old model', async () => {

@@ -386,7 +386,7 @@ test('signed native run spacing and position preserve fonts, scripts, header/foo
         .getAttributeNS(W, 'val'),
       '24'
     );
-    assert.equal(native.getElementsByTagNameNS(W, 'position')[0].getAttributeNS(W, 'val'), '2pt');
+    assert.equal(native.getElementsByTagNameNS(W, 'position')[0].getAttributeNS(W, 'val'), '4');
     document = await importStudioWord(saved, 'Reopened.docx');
     assert.equal(runs()[0].text, 'edited A');
     assert.equal(style(runs()[0]).fontSize, '14pt');
@@ -482,6 +482,69 @@ test('explicit zero run metrics also cancel inherited values on images and page 
     const attrs = node.marks.find((mark) => mark.type === 'textStyle').attrs;
     assert.equal(attrs.letterSpacing, '0pt', node.type);
     assert.equal(attrs.baselineShift, '0pt', node.type);
+  }
+});
+
+test('signed half-point positions on native text, images and fields survive two saves in body, header and footer', async () => {
+  const formatted = (node, baselineShift, letterSpacing = '0.3pt') => ({
+    ...node,
+    marks: [{ type: 'textStyle', attrs: { baselineShift, letterSpacing } }],
+  });
+  let current = model([p(
+    formatted(text('raised'), '1.5pt'),
+    formatted(image({ width: 10, height: 10, alt: 'lowered' }), '-1.5pt'),
+    formatted({ type: 'pageNumber', attrs: { kind: 'current' } }, '0.5pt')
+  )]);
+  current.header = { type: 'doc', content: [p(formatted(text('header'), '500pt', '-0.05pt'))] };
+  current.footer = { type: 'doc', content: [p(formatted(text('footer'), '-500pt', '0pt'))] };
+  for (let round = 0; round < 2; round++) {
+    const saved = await exportStudioWord(current);
+    const zip = await JSZip.loadAsync(await saved.arrayBuffer());
+    for (const [part, expected] of [
+      ['word/document.xml', ['3', '-3', '1', '1', '1', '1']],
+      ['word/header1.xml', ['1000']],
+      ['word/footer1.xml', ['-1000']],
+    ]) {
+      const native = parse(await zip.file(part).async('string'));
+      assert.deepEqual([...native.getElementsByTagNameNS(W, 'position')].map(node => node.getAttributeNS(W, 'val')), expected);
+    }
+    current = await importStudioWord(saved, 'Reopened.docx');
+    const style = node => node.marks.find(mark => mark.type === 'textStyle').attrs;
+    assert.equal(style(find(current.content, 'text')[0]).baselineShift, '1.5pt');
+    assert.equal(style(find(current.content, 'image')[0]).baselineShift, '-1.5pt');
+    assert.equal(style(find(current.content, 'pageNumber')[0]).baselineShift, '0.5pt');
+    assert.equal(style(find(current.header, 'text')[0]).baselineShift, '500pt');
+    assert.equal(style(find(current.footer, 'text')[0]).baselineShift, '-500pt');
+  }
+});
+
+test('signed half-point paragraph style positions and explicit zero overrides retain native identity through two saves', async () => {
+  let current = await importStudioWord(await fixture(
+    '<w:p><w:pPr><w:pStyle w:val="Raised"/></w:pPr><w:r><w:t>inherit</w:t></w:r><w:r><w:rPr><w:position w:val="0"/></w:rPr><w:t>zero</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="Reset"/></w:pPr><w:r><w:t>reset style</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="Lowered"/></w:pPr><w:r><w:t>lowered style</w:t></w:r></w:p>',
+    { 'word/styles.xml': `<w:styles xmlns:w="${W}"><w:style w:type="paragraph" w:styleId="Raised"><w:name w:val="Raised"/><w:rPr><w:position w:val="3"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Lowered"><w:name w:val="Lowered"/><w:rPr><w:position w:val="-3"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Reset"><w:name w:val="Reset"/><w:basedOn w:val="Raised"/><w:rPr><w:position w:val="0"/></w:rPr></w:style></w:styles>` }
+  ), 'Native positions.docx');
+  current.content.content[0].content.push(
+    { ...image({ width: 10, height: 10, alt: 'zero' }), marks: [{ type: 'textStyle', attrs: { baselineShift: '0pt' } }] },
+    { type: 'pageNumber', attrs: { kind: 'current' }, marks: [{ type: 'textStyle', attrs: { baselineShift: '0pt' } }] }
+  );
+  for (let round = 0; round < 2; round++) {
+    const saved = await exportStudioWord(current);
+    const zip = await JSZip.loadAsync(await saved.arrayBuffer());
+    const styles = parse(await zip.file('word/styles.xml').async('string'));
+    for (const [label, expected] of [['Raised', '3'], ['Lowered', '-3'], ['Reset', '0']]) {
+      const style = [...styles.getElementsByTagNameNS(W, 'style')].find(node => node.getElementsByTagNameNS(W, 'name')[0]?.getAttributeNS(W, 'val') === label);
+      assert.equal(style.getElementsByTagNameNS(W, 'position')[0].getAttributeNS(W, 'val'), expected);
+      assert.equal([...style.children].filter(node => node.localName === 'rPr').length, 1);
+    }
+    const native = parse(await zip.file('word/document.xml').async('string'));
+    assert.deepEqual([...native.getElementsByTagNameNS(W, 'position')].map(node => node.getAttributeNS(W, 'val')), ['0', '0', '0', '0', '0', '0']);
+    current = await importStudioWord(saved, 'Reopened.docx');
+    const style = node => node.marks.find(mark => mark.type === 'textStyle').attrs;
+    assert.equal(style(find(current.content, 'text')[0]).baselineShift, '1.5pt');
+    assert.equal(style(find(current.content, 'text')[1]).baselineShift, '0pt');
+    assert.equal(style(find(current.content, 'text')[3]).baselineShift, '-1.5pt');
+    assert.equal(style(find(current.content, 'image')[0]).baselineShift, '0pt');
+    assert.equal(style(find(current.content, 'pageNumber')[0]).baselineShift, '0pt');
   }
 });
 

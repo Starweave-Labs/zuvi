@@ -8,11 +8,13 @@ export function StudioSheetText({
   width,
   height,
   origin,
+  scale = 1,
 }: {
   layout: SheetTextLayout;
   width: number;
   height: number;
   origin?: { left: number; top: number };
+  scale?: number;
 }) {
   const { transform, effectiveFont } = layout;
   return (
@@ -22,6 +24,7 @@ export function StudioSheetText({
       data-text-rotation={layout.verticalGlyphs ? 'vertical' : undefined}
       data-effective-font-size={effectiveFont.sizePt}
       data-shrink-applied={layout.shrinkApplied || undefined}
+      data-text-view-scale={scale}
       style={{
         width,
         height,
@@ -36,7 +39,7 @@ export function StudioSheetText({
       <div
         className="zuvi-studio-sheet-text-transform"
         style={{
-          transform: `matrix(${transform.a},${transform.b},${transform.c},${transform.d},${transform.e},${transform.f})`,
+          transform: `matrix(${transform.a * scale},${transform.b * scale},${transform.c * scale},${transform.d * scale},${transform.e * scale},${transform.f * scale})`,
         }}
       >
         {layout.lines.map((line, index) =>

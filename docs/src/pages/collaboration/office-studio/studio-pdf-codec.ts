@@ -37,7 +37,11 @@ import {
 import fontkit from '@pdf-lib/fontkit';
 import { applyPdfPageLayout, isolatePdfPageBuffers } from './studio-pdf-page-codec';
 import { enumeratePdfFields, hasNativePdfSignature, passivePdfField, PassivePdfField, readPdfFieldWidgets } from './studio-pdf-field-reader';
-import type { StudioPdfDocument, StudioPdfField, StudioPdfMark } from '@zuvi/react';
+import type { StudioPdfDocument, StudioPdfField, StudioPdfMark } from '../../../../../packages/ui/src/components/OfficeStudio/studio-types';
+import type { PdfWorkspaceSourceBinding } from './studio-pdf-native/workspace-types';
+import { readInventory } from './studio-pdf-native/read';
+import { bindWorkspacePdfIdentities } from './studio-pdf-native/workspace-identities';
+import { nativePdfWorkspace, validateNativePdfProjections, withNativePdfState } from './studio-pdf-native-document';
 import {
   pdfFieldIssue,
   pdfFieldKind,
@@ -213,20 +217,31 @@ function readFields(pdf: PDFDocument): StudioPdfField[] {
     });
 }
 
-export async function importStudioPdf(source: Blob, name: string): Promise<StudioPdfDocument> {
+export async function importStudioPdf(
+  source: Blob, name: string, options: { pageIds?: readonly string[]; native?: boolean } = {},
+): Promise<StudioPdfDocument> {
   const pdf = await loadSource(source);
-  return {
+  if (options.pageIds && (options.pageIds.length !== pdf.getPageCount()
+    || options.pageIds.some((id) => typeof id !== 'string' || !id)
+    || new Set(options.pageIds).size !== options.pageIds.length)) throw new Error('PDF 页面身份与原文件不匹配。');
+  const document: StudioPdfDocument = {
     version: 1,
     id: crypto.randomUUID(),
     name: name.trim() || '文档.pdf',
     kind: 'pdf',
     pageCount: pdf.getPageCount(),
     sourcePageCount: pdf.getPageCount(),
-    pages: pdf.getPages().map((page, sourcePage) => ({ id: crypto.randomUUID(), sourcePage, bounds: pageBounds(page) })),
+    pages: pdf.getPages().map((page, sourcePage) => ({ id: options.pageIds?.[sourcePage] ?? crypto.randomUUID(), sourcePage, bounds: pageBounds(page) })),
     marks: [],
     rotations: {},
     fields: readFields(pdf),
   };
+  if (options.native === false) return document;
+  const workspace = await nativePdfWorkspace(document, source);
+  // Pure field documents keep the established legacy path until a native
+  // operation is accepted. Widgets belong to AcroForm, not the annotation pane.
+  if (options.native !== true && workspace.snapshot().annotations.every((annotation) => annotation.native?.subtype === 'Widget')) return document;
+  return withNativePdfState(document, workspace);
 }
 
 function color(value: string | undefined, fallback: string) {
@@ -604,9 +619,15 @@ async function writeDesignedField(pdf: PDFDocument, field: StudioPdfField, font:
 }
 
 /** Apply changes to the original PDF's page streams and original AcroForm. */
-export async function exportStudioPdf(document: StudioPdfDocument, source: Blob): Promise<Blob> {
+export async function exportStudioPdfFields(
+  document: StudioPdfDocument, source: Blob,
+  options: { nativeBindings?: readonly PdfWorkspaceSourceBinding[] } = {},
+): Promise<Blob> {
   const pdf = await loadSource(source);
   const signed = hasNativePdfSignature(pdf);
+  if (options.nativeBindings && !signed) {
+    bindWorkspacePdfIdentities(pdf, readInventory(pdf, new Uint8Array(await source.arrayBuffer())), options.nativeBindings);
+  }
   isolatePdfPageBuffers(pdf);
   const layoutChanged = applyPdfPageLayout(pdf, document);
   const originalFields = readFields(pdf);
@@ -856,4 +877,25 @@ export async function exportStudioPdf(document: StudioPdfDocument, source: Blob)
   return new Blob([new Uint8Array(await pdf.save({ updateFieldAppearances: false }))], {
     type: 'application/pdf',
   });
+}
+
+/** Native recipes are replayed before field/rotation changes; compatibility projections never paint twice. */
+export async function exportStudioPdf(document: StudioPdfDocument, source: Blob): Promise<Blob> {
+  if (!document.nativeAnnotations && !document.marks.some((mark) => mark.nativeId !== undefined)) {
+    return exportStudioPdfFields(document, source);
+  }
+  const workspace = await nativePdfWorkspace(document, source);
+  const snapshot = workspace.snapshot();
+  validateNativePdfProjections(document, snapshot);
+  const legacy = document.marks.filter((mark) => mark.nativeId === undefined);
+  if (!workspace.serialize().commands.length) {
+    return exportStudioPdfFields({ ...document, marks: legacy }, source, { nativeBindings: workspace.serialize().bindings });
+  }
+  const bytes = await workspace.export();
+  const currentSource = new Blob([new Uint8Array(bytes)], { type: 'application/pdf' });
+  const binding = workspace.previewBinding();
+  return exportStudioPdfFields({
+    ...document, marks: legacy, pageCount: binding.pageCount, sourcePageCount: binding.sourcePageCount,
+    pages: [...binding.pages],
+  }, currentSource);
 }

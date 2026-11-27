@@ -1,4 +1,5 @@
 import type { StudioPdfDocument, StudioPdfPage } from './studio-types';
+import { pdfCopiedAnnotationId } from './studio-pdf-source-id';
 
 const identity = () => globalThis.crypto.randomUUID();
 const finite = (value: unknown): value is number => typeof value === 'number' && Number.isFinite(value);
@@ -43,7 +44,11 @@ function remap(document: StudioPdfDocument, next: StudioPdfPage[], copies = new 
     if (previous >= 0) targets.set(previous, [...(targets.get(previous) ?? []), index]);
   });
   const rotations = Object.fromEntries(Object.entries(document.rotations).flatMap(([page, angle]) => (targets.get(Number(page)) ?? []).map(index => [String(index), angle])));
-  const marks = document.marks.flatMap(mark => (targets.get(mark.page) ?? []).map(page => ({ ...mark, page, ...(next[page].id !== old[mark.page].id ? { id: identity() } : {}) })));
+  const marks = document.marks.flatMap(mark => (targets.get(mark.page) ?? []).map(page => {
+    const copied = next[page].id !== old[mark.page].id;
+    const nativeId = copied && mark.nativeId ? pdfCopiedAnnotationId(mark.nativeId, next[page].id) : mark.nativeId;
+    return { ...mark, page, ...(nativeId ? { nativeId } : {}), ...(copied ? { id: nativeId ?? identity() } : {}) };
+  }));
   const fields = document.fields.map(field => {
     if (!field.widgets && !field.hiddenWidgets) return field;
     const mapWidgets = (widgets: StudioPdfDocument['fields'][number]['widgets']) => widgets?.flatMap(widget => (targets.get(widget.page) ?? []).map(page => ({ ...widget, page })));
@@ -54,7 +59,14 @@ function remap(document: StudioPdfDocument, next: StudioPdfPage[], copies = new 
     const value = radio && !options?.includes(String(field.value)) ? '' : field.value;
     return { ...field, ...(widgets ? { widgets } : {}), ...(hiddenWidgets ? { hiddenWidgets } : {}), value, ...(radio ? { options } : {}) };
   });
-  const result = { ...document, sourcePageCount: document.sourcePageCount ?? document.pageCount, pageCount: next.length, pages: next, rotations, marks, fields };
+  const nativeAnnotations = document.nativeAnnotations && {
+    ...document.nativeAnnotations,
+    commands: [...document.nativeAnnotations.commands, { type: 'layout' as const, targets: next.map(page => {
+      const from = copies.get(page.id) ?? (old.some(entry => entry.id === page.id) ? page.id : undefined);
+      return { id: page.id, ...(from ? { fromPageId: from } : {}), ...(copies.has(page.id) ? { copyGroup: page.copyGroup } : {}), ...(page.size ? { size: page.size } : {}) };
+    }) }],
+  };
+  const result = { ...document, sourcePageCount: document.sourcePageCount ?? document.pageCount, pageCount: next.length, pages: next, rotations, marks, fields, ...(nativeAnnotations ? { nativeAnnotations } : {}) };
   pdfPages(result);
   return result;
 }
@@ -82,7 +94,7 @@ export function pdfCopyPages(document: StudioPdfDocument, indices: number[], pos
   const selected = selection(document, indices), pages = [...pdfPages(document)], copies = new Map<string, string>();
   if (!Number.isInteger(position) || position < 0 || position > pages.length) throw new Error('PDF 复制位置无效。');
   const copyGroup = identity();
-  pages.splice(position, 0, ...selected.map(index => { const page = { ...pages[index], id: identity(), copyGroup }; copies.set(page.id, pages[index].id); return page; }));
+  pages.splice(position, 0, ...selected.map(index => { const page = { ...pages[index], id: identity(), copyGroup, originPageId: pages[index].id }; copies.set(page.id, pages[index].id); return page; }));
   return remap(document, pages, copies);
 }
 export function pdfRotatePages(document: StudioPdfDocument, indices: number[], angle: number): StudioPdfDocument {
@@ -97,5 +109,6 @@ export function pdfResizePages(document: StudioPdfDocument, indices: number[], s
   const selected = selection(document, indices), checked = pdfPageSize(size);
   const pages = pdfPages(document);
   if (selected.every(index => { const page = pages[index], current = page.size ?? (page.bounds ? { width: page.bounds.right - page.bounds.left, height: page.bounds.top - page.bounds.bottom } : undefined); return current?.width === checked.width && current?.height === checked.height; })) return document;
-  return { ...document, sourcePageCount: document.sourcePageCount ?? document.pageCount, pages: pages.map((page, index) => selected.includes(index) ? { ...page, size: checked } : page) };
+  const next = pages.map((page, index) => selected.includes(index) ? { ...page, size: checked } : page);
+  return document.nativeAnnotations ? remap(document, next) : { ...document, sourcePageCount: document.sourcePageCount ?? document.pageCount, pages: next };
 }

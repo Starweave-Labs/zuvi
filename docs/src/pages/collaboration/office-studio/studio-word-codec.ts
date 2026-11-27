@@ -1823,9 +1823,16 @@ function runOptions(
   return { options, href };
 }
 
+function nativeRunPosition(position: NonNullable<IRunOptions['position']>) {
+  const points = wordMetricPoints(position, 'baselineShift');
+  if (points === null) unsupported('字符位置的范围/精度');
+  // docx narrows this option to unit strings but serializes it verbatim, including field runs.
+  return String(Math.round(points * 2)) as NonNullable<IRunOptions['position']>;
+}
+
 class MetricTextRun extends TextRun {
   constructor(options: IRunOptions) {
-    super(options);
+    super({ ...options, position: options.position === undefined ? undefined : nativeRunPosition(options.position) });
     // docx omits numeric zero; a zero override must cancel inherited spacing.
     if (options.characterSpacing === 0)
       this.properties.push(new ImportedXmlComponent('w:spacing', { 'w:val': '0' }));
@@ -1834,7 +1841,7 @@ class MetricTextRun extends TextRun {
 
 class MetricImageRun extends ImageRun {
   constructor(options: IImageOptions) {
-    super(options);
+    super({ ...options, run: options.run && { ...options.run, position: options.run.position === undefined ? undefined : nativeRunPosition(options.run.position) } });
     if (options.run?.characterSpacing === 0)
       this.root
         .find((child): child is RunProperties => child instanceof RunProperties)
@@ -2084,7 +2091,7 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
         ? { characterSpacing: Math.round(style.run.letterSpacing * 20) }
         : {}),
       ...(style.run?.baselineShift !== undefined
-        ? { position: `${style.run.baselineShift}pt` as const }
+        ? { position: nativeRunPosition(`${style.run.baselineShift}pt`) }
         : {}),
       ...(style.run?.bold !== undefined ? { bold: style.run.bold } : {}),
       ...(style.run?.italic !== undefined ? { italics: style.run.italic } : {}),

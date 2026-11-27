@@ -333,7 +333,7 @@
   position: sticky;
   top: 0;
   z-index: 5;
-  height: 24px;
+  height: var(--zuvi-studio-sheet-header-height, 24px);
   background: var(--zuvi-color-bg-subtle);
   user-select: none;
 }
@@ -342,8 +342,8 @@
   position: sticky;
   left: 0;
   z-index: 6;
-  width: 40px;
-  height: 24px;
+  width: var(--zuvi-studio-sheet-row-header-width, 40px);
+  height: var(--zuvi-studio-sheet-header-height, 24px);
   border-right: 1px solid var(--zuvi-color-border);
   border-bottom: 1px solid var(--zuvi-color-border);
   background: var(--zuvi-color-bg-subtle);
@@ -367,6 +367,7 @@
 .zuvi-studio-sheet-columnheader {
   position: absolute;
   top: 0;
+  height: var(--zuvi-studio-sheet-header-height, 24px);
 }
 
 .zuvi-studio-sheet-row {
@@ -379,8 +380,18 @@
   position: sticky;
   left: 0;
   z-index: 3;
-  width: 40px;
+  width: var(--zuvi-studio-sheet-row-header-width, 40px);
   user-select: none;
+  font-size: clamp(4px, calc(12px * var(--zuvi-studio-sheet-scale, 1)), 12px);
+}
+.zuvi-studio-sheet-header-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .zuvi-studio-sheet-columnheader[data-selected],
@@ -398,13 +409,32 @@
   height: 24px;
   overflow: hidden;
   box-sizing: border-box;
-  border-right: 1px solid var(--zuvi-color-border);
-  border-bottom: 1px solid var(--zuvi-color-border);
+  border-right: calc(1px * var(--zuvi-studio-sheet-scale, 1)) solid var(--zuvi-color-border);
+  border-bottom: calc(1px * var(--zuvi-studio-sheet-scale, 1)) solid var(--zuvi-color-border);
   background-color: var(--zuvi-color-bg);
   cursor: cell;
   user-select: none;
   font-family: Calibri, Arial, var(--zuvi-font-sans);
   font-size: 11pt;
+}
+
+.zuvi-studio-sheet[data-gridlines='false'] .zuvi-studio-sheet-cell {
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+}
+
+.zuvi-studio-sheet-viewgroup {
+  align-items: flex-start;
+}
+.zuvi-studio-sheet-zoom-input {
+  width: 64px;
+}
+.zuvi-studio-sheet-view-error {
+  align-self: center;
+  flex: none;
+  max-width: 220px;
+  margin: 0 10px;
+  color: var(--zuvi-color-danger);
 }
 
 .zuvi-studio-sheet-cell > span {
@@ -755,9 +785,12 @@
 }
 
 .zuvi-studio-sheet-cell > .zuvi-input {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
   z-index: 3;
   width: 100%;
+  min-width: 112px;
   height: 100%;
   border: 0;
   border-radius: 0;

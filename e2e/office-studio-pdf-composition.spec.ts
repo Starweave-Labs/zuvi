@@ -2,7 +2,7 @@ import { expect, test, type Page, type Locator } from '@playwright/test';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
-import { PDFDocument, PDFName, PDFDict } from '../docs/node_modules/pdf-lib/cjs/index.js';
+import { PDFDocument, PDFName, PDFDict, PDFArray, PDFRawStream } from '../docs/node_modules/pdf-lib/cjs/index.js';
 import { basicPdf, sevenFields, addLink } from '../docs/tests/studio-pdf-compose-fixtures.mjs';
 
 const audit = path.resolve('docs/audits/2026-11-27/pdf-composition');
@@ -18,12 +18,36 @@ async function snapshot(page: Page) {
     const id = await new Promise<string>((resolve, reject) => {
       const request = database.transaction('preferences').objectStore('preferences').get('active'); request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error);
     });
-    const file = await new Promise<{ id: string; revision: number; document: { kind: string; pageCount: number; sourcePageCount: number; name: string; pages: { id: string; sourcePage: number }[]; marks: { id: string; page: number }[]; fields: { name: string; value: string | boolean; type: string; readOnly: boolean; widgets?: { page: number }[] }[] }; source: Blob }>((resolve, reject) => {
+    const file = await new Promise<{ id: string; revision: number; document: { kind: string; pageCount: number; sourcePageCount: number; name: string; pages: { id: string; sourcePage: number }[]; marks: { id: string; nativeId?: string; page: number }[]; nativeAnnotations?: { sourceHash: string; commands: unknown[] }; fields: { name: string; value: string | boolean; type: string; readOnly: boolean; widgets?: { page: number }[] }[] }; source: Blob }>((resolve, reject) => {
       const request = database.transaction('files').objectStore('files').get(id); request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error);
     });
     database.close();
     const digest = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', await file.source.arrayBuffer()))).map((value) => value.toString(16).padStart(2, '0')).join('');
     return { id: file.id, revision: file.revision, document: file.document, sourceHash: digest, sourceSize: file.source.size };
+  });
+}
+async function storedSource(page: Page) {
+  return new Uint8Array(await page.evaluate(async () => {
+    const database = await new Promise<IDBDatabase>((resolve, reject) => {
+      const request = indexedDB.open('zuvi-office-studio', 2); request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error);
+    });
+    try {
+      const id = await new Promise<string>((resolve, reject) => {
+        const request = database.transaction('preferences').objectStore('preferences').get('active'); request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error);
+      });
+      const file = await new Promise<{ source: Blob }>((resolve, reject) => {
+        const request = database.transaction('files').objectStore('files').get(id); request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error);
+      });
+      return Array.from(new Uint8Array(await file.source.arrayBuffer()));
+    } finally { database.close(); }
+  }));
+}
+function sourceStreams(pdf: PDFDocument, page: number) {
+  const contents = pdf.getPages()[page].node.Contents();
+  const entries = contents instanceof PDFArray ? contents.asArray() : contents ? [contents] : [];
+  return entries.map(reference => {
+    const stream = pdf.context.lookup(reference); if (!(stream instanceof PDFRawStream)) throw new Error('Page Contents is not a native stream');
+    return hash(stream.contents);
   });
 }
 async function save(page: Page) {
@@ -60,7 +84,20 @@ test('merges native pages and fields with editable marks, paired history, persis
   await page.getByRole('tab', { name: '开始', exact: true }).click();
   await page.getByRole('button', { name: '复制所选页', exact: true }).click();
   const copy = page.getByRole('dialog', { name: '复制所选 PDF 页面', exact: true }); await copy.getByLabel('PDF 页面插入位置').fill('3'); await copy.getByRole('button', { name: '应用 PDF 页面操作' }).click();
-  await save(page); const before = await snapshot(page); expect(before.document.pageCount).toBe(3); expect(before.document.marks).toHaveLength(2); expect(before.sourceHash).toBe(hash(original));
+  await ready(page); await save(page); const before = await snapshot(page);
+  expect(before.document.pageCount).toBe(3); expect(before.document.sourcePageCount).toBe(3); expect(before.document.marks).toHaveLength(2);
+  expect(before.sourceHash).not.toBe(hash(original));
+  expect(before.document.nativeAnnotations?.sourceHash).toBe(before.sourceHash); expect(before.document.nativeAnnotations?.commands).toEqual([]);
+  expect(before.document.pages.map(entry => entry.sourcePage)).toEqual([0, 1, 2]); expect(before.document.marks.every(mark => !!mark.nativeId)).toBe(true);
+  const preparedBytes = await storedSource(page), prepared = await PDFDocument.load(preparedBytes), originalNative = await PDFDocument.load(original);
+  await writeFile(path.join(audit, 'before-composition-checkpoint.pdf'), preparedBytes);
+  expect(prepared.getPageCount()).toBe(3); expect(prepared.getForm().getTextField('Text').getText()).toBe('合并前的中文');
+  for (const [index, sourcePage] of [0, 1, 0].entries()) expect(sourceStreams(prepared, index)).toEqual(sourceStreams(originalNative, sourcePage));
+  for (const index of [0, 2]) {
+    const squares = prepared.getPages()[index].node.Annots()!.asArray().map(reference => prepared.context.lookup(reference))
+      .filter((dict): dict is PDFDict => dict instanceof PDFDict && dict.lookup(PDFName.of('Subtype')) === PDFName.of('Square'));
+    expect(squares).toHaveLength(1); expect(squares[0].lookup(PDFName.of('AP'))).toBeInstanceOf(PDFDict);
+  }
   let dialog = await merge(page, incoming, 'Incoming.pdf');
   await dialog.getByLabel('合并 PDF 插入位置').fill('2'); await dialog.getByLabel('加入 PDF 页码').fill('2,1'); await dialog.getByRole('button', { name: '取消', exact: true }).click();
   expect(await snapshot(page)).toEqual(before);

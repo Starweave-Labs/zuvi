@@ -18,6 +18,9 @@ export type {
   StudioPdfPage,
   StudioPdfRenderer,
   StudioPdfRenderResult,
+  StudioPdfTextSelection,
+  StudioPdfTextLayerSession,
+  StudioPdfAnnotationLayerSession,
   StudioPdfSession,
   StudioPdfSearchResult,
   StudioPdfSnapshot,
@@ -27,6 +30,7 @@ export type {
   StudioPdfComposeResult,
   StudioRichNode,
   StudioSheet,
+  StudioSheetView,
   StudioSheetChart,
   StudioSheetComparisonOperator,
   StudioSheetConditionalFormat,
@@ -69,3 +73,12 @@ export type {
   SheetAutoRow,
   SheetAutoRowResult,
 } from './studio-sheet-text-layout';
+export type * from './studio-pdf-annotation-types';
+export type * from './studio-pdf-annotation-workspace-types';
+export type {
+  StudioPdfNativeAnnotations,
+  StudioPdfAnnotationRequest,
+  StudioPdfAnnotationPreview,
+  StudioPdfAnnotationEditor,
+  StudioPdfAnnotationInspection,
+} from './studio-pdf-annotations';

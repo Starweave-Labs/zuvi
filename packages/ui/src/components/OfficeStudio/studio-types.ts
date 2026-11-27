@@ -1,4 +1,5 @@
 import type * as React from 'react';
+import type { StudioPdfAnnotationEditor, StudioPdfNativeAnnotations } from './studio-pdf-annotations';
 
 export type OfficeStudioKind = 'word' | 'excel' | 'pdf';
 
@@ -279,7 +280,16 @@ export type StudioSheetDataValidation = StudioSheetDataValidationBase &
     | { type: 'custom'; formula: string }
   );
 
+export interface StudioSheetView {
+  /** Percent. Existing native files may retain 10–24%; authoring uses 25–400%. */
+  zoom: number;
+  showGridLines: boolean;
+  showRowColHeaders: boolean;
+}
+
 export interface StudioSheet {
+  /** Undefined retains a legacy source view; a present value edits the primary sheet view. */
+  view?: StudioSheetView;
   id: string;
   name: string;
   cells: Record<string, StudioCell>;
@@ -337,6 +347,8 @@ export interface StudioPdfMarkReply {
 
 export interface StudioPdfMark {
   id: string;
+  /** A compatibility projection of a native annotation; its body is drawn by the native renderer. */
+  nativeId?: string;
   page: number;
   type: 'text' | 'highlight' | 'rectangle' | 'ink';
   /** Coordinates in PDF points, from the page's bottom-left corner. */
@@ -408,6 +420,8 @@ export interface StudioPdfPage {
   sourcePage?: number;
   /** Pages copied together keep internal destinations within their own copied group. */
   copyGroup?: string;
+  /** Captured current page instance used by a pending copy, before native source rebasing. */
+  originPageId?: string;
   /** Visible original bounds, retained in absolute PDF coordinates. */
   bounds?: { left: number; bottom: number; right: number; top: number };
   /** Explicit canvas size; content coordinates remain unchanged. Required for blank pages. */
@@ -426,6 +440,8 @@ export interface StudioPdfDocument extends StudioDocumentBase {
   pages?: StudioPdfPage[];
   /** Original page count is independent of insertion, removal, and reordering. */
   sourcePageCount?: number;
+  /** Serializable native operations bound to the immutable source; capabilities are host-derived. */
+  nativeAnnotations?: StudioPdfNativeAnnotations;
 }
 
 export type OfficeStudioDocument = StudioWordDocument | StudioExcelDocument | StudioPdfDocument;
@@ -435,6 +451,22 @@ export interface StudioPdfRenderResult {
   height: number;
   toPdfPoint(x: number, y: number): [number, number];
   toViewportPoint(x: number, y: number): [number, number];
+}
+
+export interface StudioPdfTextSelection {
+  text: string;
+  /** Text-space corners in absolute PDF coordinates, in groups of eight. */
+  quadPoints: readonly number[];
+  rect: { x: number; y: number; width: number; height: number };
+}
+
+export interface StudioPdfTextLayerSession {
+  selection(): StudioPdfTextSelection | undefined;
+  destroy(): void;
+}
+
+export interface StudioPdfAnnotationLayerSession {
+  destroy(): void;
 }
 
 export interface StudioPdfSession {
@@ -452,6 +484,21 @@ export interface StudioPdfSession {
     options: { scale: number; rotation: number; signal?: AbortSignal; page?: StudioPdfPage }
   ): Promise<StudioPdfRenderResult>;
   search?(query: string, options?: { signal?: AbortSignal }): Promise<StudioPdfSearchResult[]>;
+  renderTextLayer?(
+    page: number,
+    container: HTMLDivElement,
+    options: { scale: number; rotation: number; signal?: AbortSignal; page?: StudioPdfPage }
+  ): Promise<StudioPdfTextLayerSession>;
+  renderAnnotationLayer?(
+    page: number,
+    container: HTMLDivElement,
+    options: {
+      scale: number; rotation: number; signal?: AbortSignal; page?: StudioPdfPage;
+      canvas: HTMLCanvasElement;
+      annotations?: readonly { id: string; key?: string; flags?: number }[];
+      onSelect?(id: string): void;
+    }
+  ): Promise<StudioPdfAnnotationLayerSession>;
   destroy(): void | Promise<void>;
 }
 
@@ -512,6 +559,7 @@ export interface StudioEditorProps<T extends OfficeStudioDocument> {
   source?: Blob;
   pdfRenderer?: StudioPdfRenderer;
   pdfComposer?: StudioPdfComposer;
+  pdfAnnotations?: StudioPdfAnnotationEditor;
   /** Return true only after synchronously accepting the complete document/source pair. */
   onPdfSourceChange?: (change: StudioPdfSourceChange) => boolean;
 }
@@ -535,6 +583,7 @@ export interface OfficeStudioProps extends Omit<
   source?: Blob;
   pdfRenderer?: StudioPdfRenderer;
   pdfComposer?: StudioPdfComposer;
+  pdfAnnotations?: StudioPdfAnnotationEditor;
   /** Requires a controlled value; atomically compare and replace both the model and source. */
   onPdfSourceChange?: (change: StudioPdfSourceChange) => boolean;
   onSave?: (document: OfficeStudioDocument) => void | Promise<void>;

@@ -591,6 +591,52 @@ export const WordSubscript = Mark.create({
   renderHTML: () => ['sub', 0],
 });
 
+/** Summarize every selected run so ribbon controls cannot mistake mixed values for a no-op. */
+export function wordSelectionCharacterFormat(
+  editor: Editor,
+  styles = getStudioWordParagraphStyles({ type: 'doc', attrs: editor.state.doc.attrs })
+) {
+  const names = ['bold', 'italic', 'underline', 'strike', 'superscript', 'subscript'] as const;
+  const marks = Object.fromEntries(names.map(name => [name, new Set<boolean>()])) as Record<typeof names[number], Set<boolean>>;
+  const fonts = new Map<string, string>(), sizes = new Set<string>(), highlights = new Set<string>();
+  const inheritedRuns = new Map<string, ReturnType<typeof resolveStudioWordParagraphStyle>['run']>();
+  const collect = (run: readonly import('@tiptap/pm/model').Mark[], position: number) => {
+    for (const name of names) marks[name].add(run.some(mark => mark.type.name === name));
+    const attrs = run.find(mark => mark.type.name === 'textStyle')?.attrs ?? {};
+    const parent = editor.state.doc.resolve(position).parent;
+    const id = typeof parent.attrs.paragraphStyle === 'string' ? parent.attrs.paragraphStyle : parent.type.name === 'heading' ? `heading-${parent.attrs.level}` : 'paragraph';
+    let inherited = inheritedRuns.get(id);
+    if (!inherited) {
+      inherited = resolveStudioWordParagraphStyle(styles, id).run;
+      inheritedRuns.set(id, inherited);
+    }
+    const font = String(attrs.fontFamily || inherited.fontFamily);
+    const rawSize = /^(\d+(?:\.\d+)?)(pt|px)$/.exec(String(attrs.fontSize || ''));
+    fonts.set(font.toLowerCase(), font);
+    sizes.add(`${rawSize ? Number(rawSize[1]) * (rawSize[2] === 'px' ? 0.75 : 1) : inherited.fontSize}pt`);
+    highlights.add(String(attrs.backgroundColor || '').toLowerCase());
+  };
+  const { selection } = editor.state;
+  if (!selection.empty) {
+    for (const { $from, $to } of selection.ranges)
+      editor.state.doc.nodesBetween($from.pos, $to.pos, (node, position) => {
+        if ((!node.isText && !node.marks.length) || Math.min($to.pos, position + node.nodeSize) <= Math.max($from.pos, position)) return;
+        collect(node.marks, Math.max($from.pos, position));
+      });
+  }
+  if (!fonts.size) collect(editor.state.storedMarks ?? selection.$from.marks(), selection.from);
+  const state = (name: typeof names[number]): boolean | 'mixed' => marks[name].size > 1 ? 'mixed' : marks[name].has(true);
+  return {
+    bold: state('bold'), italic: state('italic'), underline: state('underline'), strike: state('strike'),
+    superscript: state('superscript'), subscript: state('subscript'),
+    font: fonts.size === 1 ? fonts.values().next().value! : '',
+    fontSize: sizes.size === 1 ? sizes.values().next().value! : '',
+    highlight: highlights.size === 1 ? highlights.values().next().value! : '',
+    hasHighlight: [...highlights].some(color => !!color),
+    highlightMixed: highlights.size > 1,
+  };
+}
+
 export interface WordMatch {
   from: number;
   to: number;
@@ -812,7 +858,9 @@ export function wordStepFontSize(editor: Editor, delta: number): boolean {
     return false;
   editor.view.focus();
   const { from, to, empty } = editor.state.selection;
-  const styles = getStudioWordParagraphStyles(editor.getJSON() as StudioRichNode);
+  const styles = editor.extensionManager.extensions.find(
+    (extension) => extension.name === 'studioWordParagraphStyles'
+  )?.options.getStyles?.() || getStudioWordParagraphStyles(editor.getJSON() as StudioRichNode);
   const defaultSize = (position: number) => {
     const node = editor.state.doc.resolve(position).parent;
     const id =
@@ -901,11 +949,19 @@ export function wordTransformSelectionCase(editor: Editor, mode: WordCaseMode): 
       }
     }
     const transformed = new Map<number, string>();
-    let offset = 0;
+    const uppercase = text.toLocaleUpperCase('zh-Hans-CN');
+    const lowercase = text.toLocaleLowerCase('zh-Hans-CN');
+    let offset = 0, upperOffset = 0, lowerOffset = 0;
     let sentenceStart = true;
     for (const char of text) {
-      const upper = char.toLocaleUpperCase('zh-Hans-CN');
-      const lower = char.toLocaleLowerCase('zh-Hans-CN');
+      // Whole-block casing retains Unicode context (such as final sigma), while
+      // per-character lengths map each output segment back to its original marks.
+      const upperLength = char.toLocaleUpperCase('zh-Hans-CN').length;
+      const lowerLength = char.toLocaleLowerCase('zh-Hans-CN').length;
+      const upper = uppercase.slice(upperOffset, upperOffset + upperLength);
+      const lower = lowercase.slice(lowerOffset, lowerOffset + lowerLength);
+      upperOffset += upperLength;
+      lowerOffset += lowerLength;
       transformed.set(
         offset,
         mode === 'upper'
@@ -995,8 +1051,8 @@ export function wordTransformSelectionCase(editor: Editor, mode: WordCaseMode): 
 }
 
 export function wordSetHighlight(editor: Editor, color: string | null): boolean {
-  if (!editor || editor.isDestroyed) return false;
-  const chain = editor.chain().focus();
+  if (!editor || editor.isDestroyed || !editor.isEditable || editor.view.composing) return false;
+  const chain = editor.chain().focus().command(({ tr }) => { closeHistory(tr); return true; });
   return (color == null ? chain.unsetBackgroundColor() : chain.setBackgroundColor(color)).run();
 }
 
@@ -1031,7 +1087,7 @@ const WORD_PARAGRAPH_FORMAT_ATTRS = [
 
 /** Clear direct character/paragraph formatting without changing links, list/table structure or heading levels. */
 export function wordClearFormat(editor: Editor): boolean {
-  if (!editor || editor.isDestroyed || !editor.isEditable) return false;
+  if (!editor || editor.isDestroyed || !editor.isEditable || editor.view.composing) return false;
   const { from, to } = editor.state.selection;
   const transaction = closeHistory(editor.state.tr);
   for (const type of Object.values(editor.schema.marks)) {
@@ -1088,6 +1144,7 @@ export function wordApplyFormat(editor: Editor, snapshot: WordFormatSnapshot | n
     !editor ||
     editor.isDestroyed ||
     !editor.isEditable ||
+    editor.view.composing ||
     !snapshot ||
     editor.state.selection.empty
   )

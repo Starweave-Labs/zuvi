@@ -697,6 +697,32 @@ function sheetFeatures(sheet: Record<string, unknown>, rows: number, columns: nu
 }
 
 /** Checks persisted JSON before passing it to an editor. No HTML is evaluated. */
+/** Source authority is re-read by the host; this validates the serializable operation contract. */
+function nativePdfRecipe(value: unknown, sourceCount: number): boolean {
+  if (!record(value) || value.version !== 1 || typeof value.sourceHash !== 'string' || !/^[a-f0-9]{64}$/.test(value.sourceHash) ||
+    !arrayOf(value.bindings, 200, binding => record(binding) && integerRange(binding.sourcePage, 0, sourceCount - 1) && nonempty(binding.nativePageId) && nonempty(binding.uiPageId))) return false;
+  const bindings = value.bindings as Record<string, unknown>[];
+  if (bindings.length !== sourceCount || !bindings.every((binding, index) => binding.sourcePage === index) ||
+    new Set(bindings.map(binding => binding.nativePageId)).size !== sourceCount || new Set(bindings.map(binding => binding.uiPageId)).size !== sourceCount) return false;
+  const kinds = ['freeText', 'note', 'highlight', 'underline', 'strikeOut', 'squiggly', 'square', 'circle', 'line', 'polygon', 'polyLine', 'ink'];
+  return arrayOf(value.commands, 100000, entry => {
+    if (!record(entry)) return false;
+    if (entry.type === 'layout') return Array.isArray(entry.targets) && entry.targets.length > 0 &&
+      arrayOf(entry.targets, 200, target => record(target) && nonempty(target.id) && optionalText(target.fromPageId) && optionalText(target.copyGroup) &&
+        (target.size === undefined || record(target.size) && [target.size.width, target.size.height].every(size => finiteRange(size, 1, 14400))) &&
+        (target.fromPageId !== undefined || target.size !== undefined)) && new Set(entry.targets.map(target => (target as Record<string, unknown>).id)).size === entry.targets.length;
+    if (entry.type !== 'mark' || !record(entry.command)) return false;
+    const command = entry.command;
+    if (command.type === 'remove') return nonempty(command.id);
+    if (typeof command.now !== 'string' || !Number.isFinite(Date.parse(command.now))) return false;
+    if (command.type === 'create') return record(command.annotation) && nonempty(command.annotation.id) && nonempty(command.annotation.pageId) && kinds.includes(String(command.annotation.kind)) &&
+      Array.isArray(command.annotation.rect) && command.annotation.rect.length === 4 && command.annotation.rect.every(finite);
+    if (command.type === 'update') return nonempty(command.id) && record(command.patch) && kinds.includes(String(command.patch.kind));
+    if (command.type === 'reply') return nonempty(command.parentId) && record(command.reply) && nonempty(command.reply.id) && typeof command.reply.contents === 'string' && command.reply.contents.length <= 10000 && typeof command.reply.author === 'string' && optionalText(command.reply.pageId);
+    return command.type === 'review' && nonempty(command.parentId) && nonempty(command.id) && ['resolved', 'open'].includes(String(command.status)) && typeof command.author === 'string';
+  });
+}
+
 export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDocument {
   if (
     !record(value) ||
@@ -800,6 +826,10 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
           return false;
         ids.add(sheet.id);
         names.add(sheet.name.toLocaleLowerCase());
+        if (sheet.view !== undefined &&
+          (!record(sheet.view) || !integerRange(sheet.view.zoom, 10, 400) ||
+            typeof sheet.view.showGridLines !== 'boolean' || typeof sheet.view.showRowColHeaders !== 'boolean'))
+          return false;
         if (sheet.hyperlinks !== undefined) {
           if (!Array.isArray(sheet.hyperlinks) || !sheet.hyperlinks.every(studioIsSheetHyperlink))
             return false;
@@ -854,6 +884,7 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
   const pageCount = value.pageCount;
   if (value.sourcePageCount !== undefined && !integerRange(value.sourcePageCount, 1, 200))
     return false;
+  if (value.nativeAnnotations !== undefined && !nativePdfRecipe(value.nativeAnnotations, Number(value.sourcePageCount ?? pageCount))) return false;
   if (value.pages !== undefined) {
     if (!Array.isArray(value.pages) || value.pages.length !== pageCount) return false;
     const pageIds = new Set<string>(),
@@ -862,6 +893,7 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
       if (!record(page) || !nonempty(page.id) || pageIds.has(page.id)) return false;
       pageIds.add(page.id);
       if (page.copyGroup !== undefined && !nonempty(page.copyGroup)) return false;
+      if (page.originPageId !== undefined && !nonempty(page.originPageId)) return false;
       if (
         page.sourcePage !== undefined &&
         !integerRange(page.sourcePage, 0, (sourceCount as number) - 1)
@@ -890,10 +922,11 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
   const fieldNames = new Set<string>();
   let storedPoints = 0;
   return (
-    arrayOf(value.marks, 2000, (mark) => {
+    arrayOf(value.marks, value.nativeAnnotations === undefined ? 2000 : 10000, (mark) => {
       if (!(
         record(mark) &&
         nonempty(mark.id) &&
+        (mark.nativeId === undefined || value.nativeAnnotations !== undefined && nonempty(mark.nativeId)) &&
         !markIds.has(mark.id) &&
         integerRange(mark.page, 0, pageCount - 1) &&
         ['text', 'highlight', 'rectangle', 'ink'].includes(String(mark.type)) &&
@@ -903,8 +936,9 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
         mark.text.length <= 10000 &&
         optionalPositive(mark.width) &&
         optionalPositive(mark.height) &&
-        optionalPositive(mark.lineWidth, 40) &&
-        (mark.lineWidth === undefined || (mark.lineWidth as number) >= 0.5) &&
+        (mark.nativeId === undefined ? optionalPositive(mark.lineWidth, 40) &&
+          (mark.lineWidth === undefined || (mark.lineWidth as number) >= 0.5)
+          : mark.lineWidth === undefined || finiteRange(mark.lineWidth, 0, 72)) &&
         optionalText(mark.color, 256)
       ))
         return false;

@@ -919,7 +919,24 @@ export async function composePdf({
   for (const instance of instances) {
     const source = instance.source,
       nativePage = source.pages[instance.sourcePage],
-      copier = new ClosedPdfCopier(
+      annotationMapping = new Map<string, PDFRef>();
+    // An annotation can refer to a parent or Popup on another selected page.
+    // Resolve within its page-instance group first, then retained source pages.
+    // Field/Widget combined dictionaries need annotation identity in this context.
+    const preferred = [instance,
+      ...source.instances.filter((candidate) => candidate !== instance && candidate.groupId === instance.groupId),
+      ...source.instances.filter((candidate) => candidate.groupId === `source:${source.id}` && candidate.groupId !== instance.groupId),
+    ];
+    for (const candidate of preferred) for (const annotation of candidate.annotations) {
+      const key = annotation.entry instanceof PDFRef ? annotation.entry.toString()
+        : source.pdf.context.getObjectRef(annotation.originalDict)?.toString();
+      if (key && !annotationMapping.has(key)) annotationMapping.set(key, annotation.ref);
+    }
+    instance.mapping = new Map([
+      ...[...source.fieldMapping].filter(([key]) => !source.annotations.has(key)),
+      ...annotationMapping,
+    ]);
+    const copier = new ClosedPdfCopier(
         source,
         target,
         instance.mapping,
