@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "status": "interrupted-no-final-report",
+  "processHandle": 55438,
+  "handleMissing": true,
+  "matchingRunnerProcessObserved": false,
+  "outputPathMissing": "/tmp/zuvi-office-word-sheet-pdf-full-316-output",
+  "jsonReportMissing": "/tmp/zuvi-office-word-sheet-pdf-full-316.json",
+  "lastStartedTest": 149,
+  "recordedPasses": 143,
+  "recordedFailures": 6,
+  "log": {
+    "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final.txt",
+    "bytes": 22659,
+    "sha256": "7b7eb26039f006b68524412d58d67304940363ec7170ac59481f0b2145c60d5b"
+  },
+  "notes": [
+    "No final summary or exit code survives; this is not a completed 316 test run.",
+    "Prior temporary snapshot and runner traces are absent; live evidence recovery is handled separately.",
+    "Production/source/dist SHA remain equal to validation/source-freeze.json.",
+    "No assertions/timeouts/retries changed for recovery."
+  ]
+}

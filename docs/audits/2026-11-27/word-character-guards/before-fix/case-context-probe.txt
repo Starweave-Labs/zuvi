@@ -1,0 +1,32 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ × ../../../../../../../../private/tmp/zuvi-word-neighbor-audit/neighbor.test.ts > W007 lowercase should preserve standard context-sensitive Unicode casing under the existing locale 325ms
+   → expected 'οσ' to be 'ος' // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  ../../../../../../../../private/tmp/zuvi-word-neighbor-audit/neighbor.test.ts > W007 lowercase should preserve standard context-sensitive Unicode casing under the existing locale
+AssertionError: expected 'οσ' to be 'ος' // Object.is equality
+
+Expected: "ος"
+Received: "οσ"
+
+ ❯ ../../../../../../../../private/tmp/zuvi-word-neighbor-audit/neighbor.test.ts:90:52
+     88|   fireEvent.click(screen.getByRole('button', { name: '变更大小写' }));
+     89|   fireEvent.click(await screen.findByRole('menuitem', { name: '全部小…
+     90|   expect(editor.state.doc.firstChild!.textContent).toBe('ΟΣ'.toLocaleL…
+       |                                                    ^
+     91| });
+     92|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 skipped (5)
+   Start at  07:07:42
+   Duration  2.07s (transform 651ms, setup 114ms, collect 1.00s, tests 326ms, environment 381ms, prepare 49ms)
+
+undefined
+/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run --config /tmp/zuvi-word-neighbor-audit/vitest.config.mjs --reporter=verbose --testNamePattern=W007

@@ -1,0 +1,102 @@
+--- a/packages/ui/src/components/OfficeStudio/StudioWord.tsx
++++ b/packages/ui/src/components/OfficeStudio/StudioWord.tsx
+@@ -1172,7 +1172,7 @@
+     }
+   };
+   const armFormatPainter = (continuous = false) => {
+-    if (!editor || !editable || !selection?.selectedText) return;
++    if (!prepareCharacterAction() || !editor || !selection?.selectedText) return;
+     setFormatPainter(wordCaptureFormat(editor));
+     setContinuousPainter(continuous);
+     painterTargetRef.current = `${region}:${editor.state.selection.from}:${editor.state.selection.to}`;
+@@ -1184,7 +1184,8 @@
+   // Apply each new selection once; continuous mode remains armed until Escape.
+   React.useEffect(() => {
+     const snapshot = formatPainterRef.current;
+-    if (!snapshot || !editor || !editable) return;
++    if (!snapshot || !editor || !editable || editor.view.composing) return;
++    if (editor.view.dom.closest('.zuvi-studio-word')?.querySelector('[data-studio-input-error]')) return;
+     if (editor.state.selection.empty) return;
+     const target = `${region}:${editor.state.selection.from}:${editor.state.selection.to}`;
+     if (painterTargetRef.current === target) return;
+@@ -1623,7 +1624,7 @@
+                 disabled={toolsDisabled}
+                 onMouseDown={keepSelection}
+                 onClick={() => {
+-                  if (editor) wordClearFormat(editor);
++                  if (prepareCharacterAction() && editor) wordClearFormat(editor);
+                 }}
+               >
+                 <span aria-hidden="true" className="zuvi-studio-word-clear-format">
+--- a/packages/ui/src/components/OfficeStudio/studio-word-tools.ts
++++ b/packages/ui/src/components/OfficeStudio/studio-word-tools.ts
+@@ -858,7 +858,9 @@
+     return false;
+   editor.view.focus();
+   const { from, to, empty } = editor.state.selection;
+-  const styles = getStudioWordParagraphStyles(editor.getJSON() as StudioRichNode);
++  const styles = editor.extensionManager.extensions.find(
++    (extension) => extension.name === 'studioWordParagraphStyles'
++  )?.options.getStyles?.() || getStudioWordParagraphStyles(editor.getJSON() as StudioRichNode);
+   const defaultSize = (position: number) => {
+     const node = editor.state.doc.resolve(position).parent;
+     const id =
+@@ -1077,7 +1079,7 @@
+ 
+ /** Clear direct character/paragraph formatting without changing links, list/table structure or heading levels. */
+ export function wordClearFormat(editor: Editor): boolean {
+-  if (!editor || editor.isDestroyed || !editor.isEditable) return false;
++  if (!editor || editor.isDestroyed || !editor.isEditable || editor.view.composing) return false;
+   const { from, to } = editor.state.selection;
+   const transaction = closeHistory(editor.state.tr);
+   for (const type of Object.values(editor.schema.marks)) {
+@@ -1134,6 +1136,7 @@
+     !editor ||
+     editor.isDestroyed ||
+     !editor.isEditable ||
++    editor.view.composing ||
+     !snapshot ||
+     editor.state.selection.empty
+   )
+--- a/packages/ui/src/components/OfficeStudio/StudioWordCharacterDialog.tsx
++++ b/packages/ui/src/components/OfficeStudio/StudioWordCharacterDialog.tsx
+@@ -42,6 +42,7 @@
+   );
+   const [dirty, setDirty] = React.useState<Partial<Record<WordMetric, boolean>>>({});
+   const [saveError, setSaveError] = React.useState('');
++  const [composing, setComposing] = React.useState(false);
+   const patch: Partial<Record<WordMetric, number>> = {};
+   const preview: Record<WordMetric, number> = {
+     letterSpacing: values.letterSpacing ?? 0,
+@@ -97,6 +98,8 @@
+                 inputMode="decimal"
+                 value={drafts[key]}
+                 disabled={blocked || modes[key] === 'normal' || modes[key] === 'keep'}
++                onCompositionStart={() => setComposing(true)}
++                onCompositionEnd={() => setComposing(false)}
+                 onChange={(event) => {
+                   setDrafts((current) => ({ ...current, [key]: event.target.value }));
+                   setDirty((current) => ({ ...current, [key]: true }));
+@@ -135,9 +138,9 @@
+             取消
+           </Button>
+           <Button
+-            disabled={blocked || !!issue}
++            disabled={blocked || composing || !!issue}
+             onClick={() => {
+-              if (blocked || issue) return;
++              if (blocked || composing || issue) return;
+               try {
+                 onSave(patch);
+                 onClose();
+--- a/packages/ui/src/components/OfficeStudio/studio-word-character-layout.ts
++++ b/packages/ui/src/components/OfficeStudio/studio-word-character-layout.ts
+@@ -76,7 +76,7 @@
+   editor: Editor,
+   values: Partial<Record<WordMetric, number>>
+ ) {
+-  if (!editor.isEditable || editor.isDestroyed) return false;
++  if (!editor.isEditable || editor.isDestroyed || editor.view.composing) return false;
+   const entries = (Object.entries(values) as [WordMetric, number][]).map(
+     ([key, value]): [WordMetric, number] => {
+       if (!metrics.includes(key) || typeof value !== 'number')

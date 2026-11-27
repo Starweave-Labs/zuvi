@@ -1,0 +1,110 @@
+{
+  "status": "prepared-not-browser-verified",
+  "referencePath": "docs/audits/2026-11-26/word-math-groups/math-source.docx",
+  "referenceSha256": "2246259dc53533802434e0f13054cbecf6fe52bd3989f72bf1b69739a843435c",
+  "fixtures": {
+    "merged": {
+      "path": "docs/audits/2026-11-26/word-cell-properties/mapping/merged-source.docx",
+      "sha256": "8fef02eb3edce30aa1e11e877d00a61d6f0dd90b62b8a6e1be41927bbf837783",
+      "bytes": 39054,
+      "nativeRows": 3,
+      "zipReadable": true,
+      "xmlWellFormed": true
+    },
+    "inheritance": {
+      "path": "docs/audits/2026-11-26/word-cell-properties/mapping/inheritance-source.docx",
+      "sha256": "eddabbbd1cb0040d9a7ddc88bbe314a3e2845c6ab75c262600bd02da0b59c27b",
+      "bytes": 37701,
+      "nativeRows": 2,
+      "zipReadable": true,
+      "xmlWellFormed": true
+    }
+  },
+  "nativeUnits": {
+    "margins": "points * 20",
+    "spacing": "physical gap points * 10"
+  },
+  "merged": {
+    "gridTwips": [
+      2100,
+      2250,
+      2250
+    ],
+    "tablePhysicalGapPt": 6,
+    "rowOverridePhysicalGapPt": [
+      null,
+      12,
+      0
+    ],
+    "logicalCells": [
+      [
+        0,
+        0,
+        1,
+        2
+      ],
+      [
+        0,
+        1,
+        2,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        2,
+        1,
+        1
+      ],
+      [
+        2,
+        0,
+        2,
+        1
+      ],
+      [
+        2,
+        2,
+        1,
+        1
+      ]
+    ],
+    "selection": "Real mouse from Span A rowspan to Wide B colspan forms the four-cell merge closure",
+    "rows": "automatic only, no fixed height"
+  },
+  "inheritance": {
+    "gridTwips": [
+      3300,
+      3300
+    ],
+    "tablePhysicalGapPt": 6,
+    "rowOverridePhysicalGapPt": [
+      null,
+      12
+    ],
+    "directFirst": {
+      "top": 0,
+      "right": 3.5
+    },
+    "otherDirect": {
+      "bottom": 2.25,
+      "left": 1.5
+    },
+    "stages": [
+      "restore first cell margins to null, two reopens",
+      "clear default left and all spacing, direct top zero, two reopens"
+    ]
+  },
+  "page": {
+    "paper": "A4",
+    "uniformMarginMm": 40
+  },
+  "browserRun": false,
+  "codecImportRun": false,
+  "nativeVisualQa": "pending root bundled LibreOffice render and PNG inspection"
+}

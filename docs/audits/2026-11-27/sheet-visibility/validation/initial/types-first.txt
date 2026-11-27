@@ -1,0 +1,60 @@
+
+> zuvi@0.1.0 typecheck /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59
+> pnpm -r typecheck
+
+Scope: 8 of 9 workspace projects
+packages/cli typecheck$ tsc -p tsconfig.json
+packages/i18n typecheck$ tsc -p tsconfig.json --noEmit
+packages/icons typecheck$ tsc -p tsconfig.json --noEmit
+packages/mcp typecheck$ tsc -p tsconfig.json --noEmit
+packages/mcp typecheck: Done
+packages/tokens typecheck$ tsc -p tsconfig.json --noEmit
+packages/cli typecheck: Done
+packages/i18n typecheck: Done
+packages/tokens typecheck: Done
+packages/icons typecheck: Done
+packages/ui typecheck$ tsc --noEmit
+packages/ui typecheck: src/components/OfficeStudio/StudioSheet.visibility.test.tsx(57,8): error TS2322: Type '{ onChange: (next: StudioExcelDocument) => void; readOnly?: boolean | undefined; disabled?: boolean | undefined; document: StudioExcelDocument; }' is not assignable to type 'StudioEditorProps<StudioExcelDocument>'.
+packages/ui typecheck:   Types of property 'disabled' are incompatible.
+packages/ui typecheck:     Type 'boolean | undefined' is not assignable to type 'boolean'.
+packages/ui typecheck:       Type 'undefined' is not assignable to type 'boolean'.
+packages/ui typecheck: src/components/OfficeStudio/StudioSheet.visibility.test.tsx(82,54): error TS2769: No overload matches this call.
+packages/ui typecheck:   Overload 1 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement', gave the following error.
+packages/ui typecheck:     Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+packages/ui typecheck:   Overload 2 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement', gave the following error.
+packages/ui typecheck:     Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+packages/ui typecheck: src/components/OfficeStudio/StudioSheet.visibility.test.tsx(84,81): error TS2769: No overload matches this call.
+packages/ui typecheck:   Overload 1 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement', gave the following error.
+packages/ui typecheck:     Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+packages/ui typecheck:   Overload 2 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement', gave the following error.
+packages/ui typecheck:     Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+packages/ui typecheck: src/components/OfficeStudio/StudioSheet.visibility.test.tsx(157,57): error TS2769: No overload matches this call.
+packages/ui typecheck:   Overload 1 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement | null', gave the following error.
+packages/ui typecheck:     Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+packages/ui typecheck:   Overload 2 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement | null', gave the following error.
+packages/ui typecheck:     Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+packages/ui typecheck: src/components/OfficeStudio/StudioSheet.visibility.test.tsx(185,57): error TS2769: No overload matches this call.
+packages/ui typecheck:   Overload 1 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement | null', gave the following error.
+packages/ui typecheck:     Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+packages/ui typecheck:   Overload 2 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement | null', gave the following error.
+packages/ui typecheck:     Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+packages/ui typecheck: src/components/OfficeStudio/StudioSheet.visibility.test.tsx(195,57): error TS2769: No overload matches this call.
+packages/ui typecheck:   Overload 1 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement | null', gave the following error.
+packages/ui typecheck:     Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+packages/ui typecheck:   Overload 2 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement | null', gave the following error.
+packages/ui typecheck:     Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+packages/ui typecheck: src/components/OfficeStudio/StudioSheet.visibility.test.tsx(275,51): error TS2769: No overload matches this call.
+packages/ui typecheck:   Overload 1 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement', gave the following error.
+packages/ui typecheck:     Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+packages/ui typecheck:   Overload 2 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement', gave the following error.
+packages/ui typecheck:     Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+packages/ui typecheck: src/components/OfficeStudio/StudioSheet.visibility.test.tsx(282,54): error TS2769: No overload matches this call.
+packages/ui typecheck:   Overload 1 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement', gave the following error.
+packages/ui typecheck:     Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+packages/ui typecheck:   Overload 2 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement', gave the following error.
+packages/ui typecheck:     Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+packages/ui typecheck: Failed
+/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @zuvi/react@1.1.0 typecheck: `tsc --noEmit`
+Exit status 2
+ ELIFECYCLE  Command failed with exit code 2.

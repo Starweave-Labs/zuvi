@@ -1,0 +1,35 @@
+[WebServer] (node:99606) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:99624) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium] › e2e/office-studio-word-math-groups.spec.ts:6:1 › edits independent native equation group members and reopens the complete group twice (3.8s)
+
+
+  1) [chromium] › e2e/office-studio-word-math-groups.spec.ts:6:1 › edits independent native equation group members and reopens the complete group twice
+
+    TypeError: Cannot read properties of null (reading 'timeout')
+
+      26 |   await page.getByRole('textbox', { name: '公式 段落内容 分子 基数文字', exact: true }).fill('cancelled');
+      27 |   await page.getByRole('button', { name: '取消', exact: true }).click();
+    > 28 |   await expect(math).toHaveAttribute('data-word-math', before!);
+         |                      ^
+      29 |   await page.getByRole('button', { name: '数学公式', exact: true }).click();
+      30 |   await page.getByRole('textbox', { name: '公式 段落内容 分子 基数文字', exact: true }).fill('a+1');
+      31 |   const composing = page.getByRole('textbox', { name: '公式 段落内容 分子 基数文字', exact: true });
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-math-groups.spec.ts:28:22
+
+    Error Context: test-results/office-studio-word-math-gr-a2f84-ns-the-complete-group-twice-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/office-studio-word-math-gr-a2f84-ns-the-complete-group-twice-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/office-studio-word-math-gr-a2f84-ns-the-complete-group-twice-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/office-studio-word-math-groups.spec.ts:6:1 › edits independent native equation group members and reopens the complete group twice

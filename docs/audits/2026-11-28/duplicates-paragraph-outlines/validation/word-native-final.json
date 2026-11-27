@@ -1,0 +1,1133 @@
+{
+  "status": "passed",
+  "independent": "Python standard-library ZIP/XML; no application codec or browser calls",
+  "createdAt": "2026-11-27T17:41:47.176696+00:00",
+  "items": [
+    "W011",
+    "W012",
+    "W013",
+    "W016"
+  ],
+  "whole159Complete": false,
+  "inputs": [
+    {
+      "file": {
+        "path": ".release/office-continuation/paragraph-acceptance/browser/source.docx",
+        "bytes": 9679,
+        "sha256": "f4e0df5e8aa2751535489fcd770ad7b08a67f4ecba99bdf47c16c1c02ddff633"
+      },
+      "documentXml": {
+        "bytes": 4307,
+        "sha256": "4c3410c47647aa414555669a58076ac536be045bcc65dc97a42a770372ccac69"
+      },
+      "stylesXml": {
+        "bytes": 7719,
+        "sha256": "06dc6a85ebaa55bfe8c147c4ef4ac8895950789d7bf7c581879c960b1186a865"
+      },
+      "paragraphs": [
+        {
+          "label": "Alignment left",
+          "text": "Alignment left",
+          "boldSegments": [
+            {
+              "text": "Alignment left",
+              "bold": true
+            }
+          ],
+          "align": null,
+          "indent": {},
+          "spacing": {},
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Alignment center",
+          "text": "Alignment center",
+          "boldSegments": [
+            {
+              "text": "Alignment center",
+              "bold": true
+            }
+          ],
+          "align": null,
+          "indent": {},
+          "spacing": {},
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Alignment right",
+          "text": "Alignment right",
+          "boldSegments": [
+            {
+              "text": "Alignment right",
+              "bold": true
+            }
+          ],
+          "align": null,
+          "indent": {},
+          "spacing": {},
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Alignment justify",
+          "text": "Alignment justify",
+          "boldSegments": [
+            {
+              "text": "Alignment justify",
+              "bold": true
+            }
+          ],
+          "align": null,
+          "indent": {},
+          "spacing": {},
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "First indent",
+          "text": "First indent",
+          "boldSegments": [
+            {
+              "text": "First indent",
+              "bold": true
+            }
+          ],
+          "align": null,
+          "indent": {},
+          "spacing": {},
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Hanging indent",
+          "text": "Hanging indent",
+          "boldSegments": [
+            {
+              "text": "Hanging indent",
+              "bold": true
+            }
+          ],
+          "align": null,
+          "indent": {},
+          "spacing": {},
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Single spacing",
+          "text": "Single spacing",
+          "boldSegments": [
+            {
+              "text": "Single spacing",
+              "bold": true
+            }
+          ],
+          "align": null,
+          "indent": {},
+          "spacing": {},
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Multiple spacing",
+          "text": "Multiple spacing",
+          "boldSegments": [
+            {
+              "text": "Multiple spacing",
+              "bold": true
+            }
+          ],
+          "align": null,
+          "indent": {},
+          "spacing": {},
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Fixed spacing",
+          "text": "Fixed spacing",
+          "boldSegments": [
+            {
+              "text": "Fixed spacing",
+              "bold": true
+            }
+          ],
+          "align": null,
+          "indent": {},
+          "spacing": {},
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Minimum spacing",
+          "text": "Minimum spacing",
+          "boldSegments": [
+            {
+              "text": "Minimum spacing",
+              "bold": true
+            }
+          ],
+          "align": null,
+          "indent": {},
+          "spacing": {},
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Tabs",
+          "text": "Tabs\tA\tB\tC\t12.34",
+          "boldSegments": [
+            {
+              "text": "Tabs",
+              "bold": true
+            },
+            {
+              "text": "\tA\tB\tC\t12.34",
+              "bold": false
+            }
+          ],
+          "align": null,
+          "indent": {},
+          "spacing": {},
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Surface",
+          "text": "Surface",
+          "boldSegments": [
+            {
+              "text": "Surface",
+              "bold": true
+            }
+          ],
+          "align": null,
+          "indent": {},
+          "spacing": {},
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Cleared surface",
+          "text": "Cleared surface",
+          "boldSegments": [
+            {
+              "text": "Cleared surface",
+              "bold": true
+            }
+          ],
+          "align": null,
+          "indent": {},
+          "spacing": {},
+          "tabs": [],
+          "borders": {
+            "top": {
+              "val": "single",
+              "color": "112233",
+              "sz": "8",
+              "space": "2"
+            },
+            "left": {
+              "val": "dotted",
+              "sz": "8"
+            },
+            "bottom": {
+              "val": "double",
+              "sz": "8"
+            },
+            "right": {
+              "val": "dashed",
+              "sz": "8"
+            }
+          },
+          "shading": {
+            "fill": "FFEECC",
+            "val": "clear"
+          }
+        }
+      ]
+    },
+    {
+      "file": {
+        "path": ".release/office-continuation/paragraph-acceptance/browser/roundtrip-1.docx",
+        "bytes": 10231,
+        "sha256": "e5439b7f4dcbd47fa56209915fb7f611babcb8fba0b8997e7660bf5c3257eb51"
+      },
+      "documentXml": {
+        "bytes": 5627,
+        "sha256": "7b697036b6b85bf20fd86e215bf81eabef3e064ffbf1b76b6d020de25741cf4a"
+      },
+      "stylesXml": {
+        "bytes": 9797,
+        "sha256": "316b3d222d91ae6513c76108a6c73ba7da7f6af8bae940461e297c7daa0d9ee9"
+      },
+      "paragraphs": [
+        {
+          "label": "Alignment left",
+          "text": "Alignment left",
+          "boldSegments": [
+            {
+              "text": "Alignment left",
+              "bold": true
+            }
+          ],
+          "align": "left",
+          "indent": {},
+          "spacing": {},
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Alignment center",
+          "text": "Alignment center",
+          "boldSegments": [
+            {
+              "text": "Alignment center",
+              "bold": true
+            }
+          ],
+          "align": "center",
+          "indent": {},
+          "spacing": {},
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Alignment right",
+          "text": "Alignment right",
+          "boldSegments": [
+            {
+              "text": "Alignment right",
+              "bold": true
+            }
+          ],
+          "align": "right",
+          "indent": {},
+          "spacing": {},
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Alignment justify",
+          "text": "Alignment justify",
+          "boldSegments": [
+            {
+              "text": "Alignment justify",
+              "bold": true
+            }
+          ],
+          "align": "both",
+          "indent": {},
+          "spacing": {},
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "First indent",
+          "text": "First indent",
+          "boldSegments": [
+            {
+              "text": "First indent",
+              "bold": true
+            }
+          ],
+          "align": null,
+          "indent": {
+            "left": "360",
+            "right": "120",
+            "firstLine": "180"
+          },
+          "spacing": {},
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Hanging indent",
+          "text": "Hanging indent",
+          "boldSegments": [
+            {
+              "text": "Hanging indent",
+              "bold": true
+            }
+          ],
+          "align": null,
+          "indent": {
+            "left": "360",
+            "right": "120",
+            "hanging": "220"
+          },
+          "spacing": {},
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Single spacing",
+          "text": "Single spacing",
+          "boldSegments": [
+            {
+              "text": "Single spacing",
+              "bold": true
+            }
+          ],
+          "align": null,
+          "indent": {},
+          "spacing": {
+            "after": "180",
+            "before": "120",
+            "line": "240",
+            "lineRule": "auto"
+          },
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Multiple spacing",
+          "text": "Multiple spacing",
+          "boldSegments": [
+            {
+              "text": "Multiple spacing",
+              "bold": true
+            }
+          ],
+          "align": null,
+          "indent": {},
+          "spacing": {
+            "after": "180",
+            "before": "120",
+            "line": "360",
+            "lineRule": "auto"
+          },
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Fixed spacing",
+          "text": "Fixed spacing",
+          "boldSegments": [
+            {
+              "text": "Fixed spacing",
+              "bold": true
+            }
+          ],
+          "align": null,
+          "indent": {},
+          "spacing": {
+            "after": "180",
+            "before": "120",
+            "line": "360",
+            "lineRule": "exact"
+          },
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Minimum spacing",
+          "text": "Minimum spacing",
+          "boldSegments": [
+            {
+              "text": "Minimum spacing",
+              "bold": true
+            }
+          ],
+          "align": null,
+          "indent": {},
+          "spacing": {
+            "after": "180",
+            "before": "120",
+            "line": "480",
+            "lineRule": "atLeast"
+          },
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Tabs",
+          "text": "Tabs\tA\tB\tC\t12.34",
+          "boldSegments": [
+            {
+              "text": "Tabs",
+              "bold": true
+            },
+            {
+              "text": "\tA\tB\tC\t12.34",
+              "bold": false
+            }
+          ],
+          "align": null,
+          "indent": {},
+          "spacing": {},
+          "tabs": [
+            {
+              "val": "left",
+              "pos": "1440",
+              "leader": "dot"
+            },
+            {
+              "val": "center",
+              "pos": "2880",
+              "leader": "dot"
+            },
+            {
+              "val": "right",
+              "pos": "4320",
+              "leader": "dot"
+            },
+            {
+              "val": "decimal",
+              "pos": "5760",
+              "leader": "dot"
+            }
+          ],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Surface",
+          "text": "Surface",
+          "boldSegments": [
+            {
+              "text": "Surface",
+              "bold": true
+            }
+          ],
+          "align": null,
+          "indent": {},
+          "spacing": {},
+          "tabs": [],
+          "borders": {
+            "top": {
+              "val": "single",
+              "sz": "8",
+              "space": "4",
+              "color": "445566"
+            },
+            "bottom": {
+              "val": "dotted",
+              "sz": "8",
+              "space": "4",
+              "color": "445566"
+            },
+            "left": {
+              "val": "dashed",
+              "sz": "8",
+              "space": "4",
+              "color": "445566"
+            },
+            "right": {
+              "val": "double",
+              "sz": "8",
+              "space": "4",
+              "color": "445566"
+            }
+          },
+          "shading": {
+            "val": "clear",
+            "fill": "ccffee"
+          }
+        },
+        {
+          "label": "Cleared surface",
+          "text": "Cleared surface",
+          "boldSegments": [
+            {
+              "text": "Cleared surface",
+              "bold": true
+            }
+          ],
+          "align": null,
+          "indent": {},
+          "spacing": {},
+          "tabs": [],
+          "borders": {
+            "top": {
+              "val": "nil",
+              "sz": "8",
+              "space": "2",
+              "color": "112233"
+            },
+            "left": {
+              "val": "nil",
+              "sz": "8"
+            },
+            "bottom": {
+              "val": "nil",
+              "sz": "8"
+            },
+            "right": {
+              "val": "nil",
+              "sz": "8"
+            },
+            "between": {
+              "val": "nil"
+            },
+            "bar": {
+              "val": "nil"
+            }
+          },
+          "shading": {
+            "val": "nil",
+            "fill": "FFEECC"
+          }
+        }
+      ],
+      "lineConversions": [
+        {
+          "label": "Single spacing",
+          "rule": "auto",
+          "nativeLine": 240,
+          "divisor": 240,
+          "convertedValue": 1,
+          "unit": "multiple",
+          "beforePt": 6,
+          "afterPt": 9
+        },
+        {
+          "label": "Multiple spacing",
+          "rule": "auto",
+          "nativeLine": 360,
+          "divisor": 240,
+          "convertedValue": 1.5,
+          "unit": "multiple",
+          "beforePt": 6,
+          "afterPt": 9
+        },
+        {
+          "label": "Fixed spacing",
+          "rule": "exact",
+          "nativeLine": 360,
+          "divisor": 20,
+          "convertedValue": 18,
+          "unit": "pt",
+          "beforePt": 6,
+          "afterPt": 9
+        },
+        {
+          "label": "Minimum spacing",
+          "rule": "atLeast",
+          "nativeLine": 480,
+          "divisor": 20,
+          "convertedValue": 24,
+          "unit": "pt",
+          "beforePt": 6,
+          "afterPt": 9
+        }
+      ]
+    },
+    {
+      "file": {
+        "path": ".release/office-continuation/paragraph-acceptance/browser/roundtrip-2.docx",
+        "bytes": 10353,
+        "sha256": "8f03db9acee9573d4700b60e2c152d683c8e08d1868e5992bc816cb23b1fbc9d"
+      },
+      "documentXml": {
+        "bytes": 9939,
+        "sha256": "7672aafd4421d1bf28d01ca207354df41e95cea7a424fe5c926568bef4930a37"
+      },
+      "stylesXml": {
+        "bytes": 9797,
+        "sha256": "316b3d222d91ae6513c76108a6c73ba7da7f6af8bae940461e297c7daa0d9ee9"
+      },
+      "paragraphs": [
+        {
+          "label": "Alignment left",
+          "text": "Alignment left",
+          "boldSegments": [
+            {
+              "text": "Alignment left",
+              "bold": true
+            }
+          ],
+          "align": "left",
+          "indent": {},
+          "spacing": {
+            "after": "156",
+            "line": "420",
+            "lineRule": "auto"
+          },
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Alignment center",
+          "text": "Alignment center",
+          "boldSegments": [
+            {
+              "text": "Alignment center",
+              "bold": true
+            }
+          ],
+          "align": "center",
+          "indent": {},
+          "spacing": {
+            "after": "156",
+            "line": "420",
+            "lineRule": "auto"
+          },
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Alignment right",
+          "text": "Alignment right",
+          "boldSegments": [
+            {
+              "text": "Alignment right",
+              "bold": true
+            }
+          ],
+          "align": "right",
+          "indent": {},
+          "spacing": {
+            "after": "156",
+            "line": "420",
+            "lineRule": "auto"
+          },
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Alignment justify",
+          "text": "Alignment justify",
+          "boldSegments": [
+            {
+              "text": "Alignment justify",
+              "bold": true
+            }
+          ],
+          "align": "both",
+          "indent": {},
+          "spacing": {
+            "after": "156",
+            "line": "420",
+            "lineRule": "auto"
+          },
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "First indent",
+          "text": "First indent",
+          "boldSegments": [
+            {
+              "text": "First indent",
+              "bold": true
+            }
+          ],
+          "align": null,
+          "indent": {
+            "left": "360",
+            "right": "120",
+            "firstLine": "180"
+          },
+          "spacing": {
+            "after": "156",
+            "line": "420",
+            "lineRule": "auto"
+          },
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Hanging indent",
+          "text": "Hanging indent",
+          "boldSegments": [
+            {
+              "text": "Hanging indent",
+              "bold": true
+            }
+          ],
+          "align": null,
+          "indent": {
+            "left": "360",
+            "right": "120",
+            "hanging": "220"
+          },
+          "spacing": {
+            "after": "156",
+            "line": "420",
+            "lineRule": "auto"
+          },
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Single spacing",
+          "text": "Single spacing",
+          "boldSegments": [
+            {
+              "text": "Single spacing",
+              "bold": true
+            }
+          ],
+          "align": null,
+          "indent": {},
+          "spacing": {
+            "after": "180",
+            "before": "120",
+            "line": "240",
+            "lineRule": "auto"
+          },
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Multiple spacing",
+          "text": "Multiple spacing",
+          "boldSegments": [
+            {
+              "text": "Multiple spacing",
+              "bold": true
+            }
+          ],
+          "align": null,
+          "indent": {},
+          "spacing": {
+            "after": "180",
+            "before": "120",
+            "line": "360",
+            "lineRule": "auto"
+          },
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Fixed spacing",
+          "text": "Fixed spacing",
+          "boldSegments": [
+            {
+              "text": "Fixed spacing",
+              "bold": true
+            }
+          ],
+          "align": null,
+          "indent": {},
+          "spacing": {
+            "after": "180",
+            "before": "120",
+            "line": "360",
+            "lineRule": "exact"
+          },
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Minimum spacing",
+          "text": "Minimum spacing",
+          "boldSegments": [
+            {
+              "text": "Minimum spacing",
+              "bold": true
+            }
+          ],
+          "align": null,
+          "indent": {},
+          "spacing": {
+            "after": "180",
+            "before": "120",
+            "line": "480",
+            "lineRule": "atLeast"
+          },
+          "tabs": [],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Tabs",
+          "text": "Tabs\tA\tB\tC\t12.34",
+          "boldSegments": [
+            {
+              "text": "Tabs",
+              "bold": true
+            },
+            {
+              "text": "\tA\tB\tC\t12.34",
+              "bold": false
+            }
+          ],
+          "align": null,
+          "indent": {},
+          "spacing": {
+            "after": "156",
+            "line": "420",
+            "lineRule": "auto"
+          },
+          "tabs": [
+            {
+              "val": "left",
+              "pos": "1440",
+              "leader": "dot"
+            },
+            {
+              "val": "center",
+              "pos": "2880",
+              "leader": "dot"
+            },
+            {
+              "val": "right",
+              "pos": "4320",
+              "leader": "dot"
+            },
+            {
+              "val": "decimal",
+              "pos": "5760",
+              "leader": "dot"
+            }
+          ],
+          "borders": {},
+          "shading": {}
+        },
+        {
+          "label": "Surface",
+          "text": "Surface",
+          "boldSegments": [
+            {
+              "text": "Surface",
+              "bold": true
+            }
+          ],
+          "align": null,
+          "indent": {},
+          "spacing": {
+            "after": "156",
+            "line": "420",
+            "lineRule": "auto"
+          },
+          "tabs": [],
+          "borders": {
+            "top": {
+              "val": "single",
+              "sz": "8",
+              "space": "4",
+              "color": "445566"
+            },
+            "bottom": {
+              "val": "dotted",
+              "sz": "8",
+              "space": "4",
+              "color": "445566"
+            },
+            "left": {
+              "val": "dashed",
+              "sz": "8",
+              "space": "4",
+              "color": "445566"
+            },
+            "right": {
+              "val": "double",
+              "sz": "8",
+              "space": "4",
+              "color": "445566"
+            }
+          },
+          "shading": {
+            "val": "clear",
+            "fill": "ccffee"
+          }
+        },
+        {
+          "label": "Cleared surface",
+          "text": "Cleared surface",
+          "boldSegments": [
+            {
+              "text": "Cleared surface",
+              "bold": true
+            }
+          ],
+          "align": null,
+          "indent": {},
+          "spacing": {
+            "after": "156",
+            "line": "420",
+            "lineRule": "auto"
+          },
+          "tabs": [],
+          "borders": {
+            "top": {
+              "val": "nil",
+              "sz": "8",
+              "space": "2",
+              "color": "112233"
+            },
+            "left": {
+              "val": "nil",
+              "sz": "8"
+            },
+            "bottom": {
+              "val": "nil",
+              "sz": "8"
+            },
+            "right": {
+              "val": "nil",
+              "sz": "8"
+            },
+            "between": {
+              "val": "nil"
+            },
+            "bar": {
+              "val": "nil"
+            }
+          },
+          "shading": {
+            "val": "nil",
+            "fill": "FFEECC"
+          }
+        }
+      ],
+      "lineConversions": [
+        {
+          "label": "Single spacing",
+          "rule": "auto",
+          "nativeLine": 240,
+          "divisor": 240,
+          "convertedValue": 1,
+          "unit": "multiple",
+          "beforePt": 6,
+          "afterPt": 9
+        },
+        {
+          "label": "Multiple spacing",
+          "rule": "auto",
+          "nativeLine": 360,
+          "divisor": 240,
+          "convertedValue": 1.5,
+          "unit": "multiple",
+          "beforePt": 6,
+          "afterPt": 9
+        },
+        {
+          "label": "Fixed spacing",
+          "rule": "exact",
+          "nativeLine": 360,
+          "divisor": 20,
+          "convertedValue": 18,
+          "unit": "pt",
+          "beforePt": 6,
+          "afterPt": 9
+        },
+        {
+          "label": "Minimum spacing",
+          "rule": "atLeast",
+          "nativeLine": 480,
+          "divisor": 20,
+          "convertedValue": 24,
+          "unit": "pt",
+          "beforePt": 6,
+          "afterPt": 9
+        }
+      ]
+    }
+  ],
+  "sourceIdentities": [
+    {
+      "path": ".release/office-continuation/paragraph-acceptance/verify-browser-native.py",
+      "bytes": 13702,
+      "sha256": "b0130294bab118b12035b9e3233118a0ff608df87281d64fb40e06c3119b188f"
+    },
+    {
+      "path": "e2e/office-studio-word-paragraph-acceptance.spec.ts",
+      "bytes": 14900,
+      "sha256": "951bf94427b6e0a497fe548357687bb35c193a649f74a681849108cfa7c2beab"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWordParagraphDialog.tsx",
+      "bytes": 11558,
+      "sha256": "ed752aedfe4bc29c9fd9334b753e7392d7c755e9f7b8e9d28adfdda94e0f10c3"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWordTabsDialog.tsx",
+      "bytes": 9335,
+      "sha256": "70caaa25b366a069eca53aaa634f7ea8ff24178029e692aaa87e9a81976a7656"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWordSurfaceDialog.tsx",
+      "bytes": 12287,
+      "sha256": "4e1de92bbc9d3993b41648523199c413f876b8b87a693b8daca855fc6e3cd5ee"
+    }
+  ],
+  "browser": {
+    "report": {
+      "path": ".release/office-continuation/2026-11-28-integration/validation/full.json",
+      "bytes": 433610,
+      "sha256": "8f44aca827ec6236082ae1d35d1aa05e492fd621f55b40572dc4dfa0051978fb"
+    },
+    "spec": {
+      "title": "original paragraph requirements retain four alignments, indent and line units, tab stops and every border edge over real DOCX reopens",
+      "ok": true,
+      "tags": [],
+      "tests": [
+        {
+          "timeout": 90000,
+          "annotations": [],
+          "expectedStatus": "passed",
+          "projectId": "chromium",
+          "projectName": "chromium",
+          "results": [
+            {
+              "workerIndex": 0,
+              "parallelIndex": 0,
+              "status": "passed",
+              "duration": 18111,
+              "errors": [],
+              "stdout": [],
+              "stderr": [],
+              "retry": 0,
+              "startTime": "2026-11-27T17:37:44.534Z",
+              "annotations": [],
+              "attachments": []
+            }
+          ],
+          "status": "expected"
+        }
+      ],
+      "id": "4abffe5bb50a05a5dfff-b230715ae49f7448631a",
+      "file": "office-studio-word-paragraph-acceptance.spec.ts",
+      "line": 72,
+      "column": 1
+    },
+    "note": "Report linkage records identity and one passed result; matching these files to a run requires the caller to retain that run directory."
+  },
+  "checks": {
+    "files": 3,
+    "paragraphsPerFile": 13,
+    "originalTextAndBoldPerCharacter": true,
+    "fourAlignments": true,
+    "firstAndHangingTwips": true,
+    "fourLineRulesAndUnitConversions": true,
+    "fourNativeTabStopsAndDotLeaders": true,
+    "independentOuterEdgesAndNilClear": true,
+    "shadingAndNilPreservation": true
+  }
+}

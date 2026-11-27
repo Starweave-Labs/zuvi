@@ -1,0 +1,148 @@
+import { expect, test, type Page } from '@playwright/test';
+import { mkdir, writeFile } from 'node:fs/promises';
+import path from 'node:path';
+import { createHash } from 'node:crypto';
+import { PDFDocument, PDFName, PDFString, StandardFonts, degrees } from '../docs/node_modules/pdf-lib/cjs/index.js';
+
+const audit = path.resolve('docs/audits/2026-11-27/pdf-text-layer');
+const repo = path.resolve('.');
+async function fixture() {
+  const pdf = await PDFDocument.create(), font = await pdf.embedFont(StandardFonts.Helvetica);
+  const page = pdf.addPage([500, 600]); page.setCropBox(40, 30, 400, 500);
+  page.node.set(PDFName.of('UserUnit'), pdf.context.obj(1.5));
+  page.drawText('SELECTABLE ORIGINAL', { x: 70, y: 450, size: 20, font });
+  page.drawText('Angled source text', { x: 180, y: 400, size: 16, rotate: degrees(25), font });
+  page.drawText('Second source line', { x: 70, y: 420, size: 16, font });
+  const refs: { id: string; key: string; flags: number }[] = [];
+  const box = (id: string, rect: number[], color: number[], flags: number) => {
+    const width = rect[2] - rect[0], height = rect[3] - rect[1];
+    const appearance = pdf.context.register(pdf.context.flateStream(`q ${color.join(' ')} rg 0 0 ${width} ${height} re f Q`,
+      { Type: 'XObject', Subtype: 'Form', BBox: [0, 0, width, height], Resources: {} }));
+    const reference = pdf.context.register(pdf.context.obj({ Type: 'Annot', Subtype: 'Square', Rect: rect, P: page.ref,
+      F: flags, AP: { N: appearance }, NM: PDFString.of(id), Contents: PDFString.of(id), ZuviAnnotationId: PDFString.of(id) }));
+    page.node.addAnnot(reference); refs.push({ id, key: reference.toString(), flags });
+  };
+  box('red-no-rotate', [220, 180, 280, 220], [1, 0, 0], 4 | 16);
+  box('green-no-zoom', [100, 100, 160, 140], [0, 1, 0], 4 | 8);
+  box('blue-no-zoom-rotate', [320, 280, 380, 320], [0, 0, 1], 4 | 8 | 16);
+  const note = pdf.context.register(pdf.context.obj({ Type: 'Annot', Subtype: 'Text', P: page.ref, F: 4,
+    Rect: [80, 350, 102, 372], Name: 'Note', Contents: PDFString.of('Original note'), ZuviAnnotationId: PDFString.of('no-ap-note') }));
+  page.node.addAnnot(note); refs.push({ id: 'no-ap-note', key: note.toString(), flags: 4 });
+  const gs = pdf.context.register(pdf.context.obj({ Type: 'ExtGState', ca: 0.3, CA: 0.3 }));
+  const appearance = pdf.context.register(pdf.context.flateStream('q /GS gs 1 1 0 rg 0 0 120 20 re f Q',
+    { Type: 'XObject', Subtype: 'Form', BBox: [0, 0, 120, 20], Resources: { ExtGState: { GS: gs } } }));
+  const marker = pdf.context.register(pdf.context.obj({ Type: 'Annot', Subtype: 'Highlight', P: page.ref, F: 4,
+    Rect: [80, 250, 200, 270], QuadPoints: [80, 270, 200, 270, 80, 250, 200, 250], C: [1, 1, 0], CA: 0.3,
+    AP: { N: appearance }, NM: PDFString.of('single-alpha'), ZuviAnnotationId: PDFString.of('single-alpha') }));
+  page.node.addAnnot(marker); refs.push({ id: 'single-alpha', key: marker.toString(), flags: 4 });
+  const field = pdf.getForm().createTextField('source-field'); field.setText('Field value');
+  field.addToPage(page, { x: 250, y: 70, width: 130, height: 25, font });
+  return { bytes: new Uint8Array(await pdf.save({ updateFieldAppearances: false })), refs };
+}
+
+async function harness(page: Page, data: Awaited<ReturnType<typeof fixture>>) {
+  await page.goto('/');
+  await page.evaluate(async ({ bytes, refs, stylesheet }) => {
+    const modulePath = '/src/pages/collaboration/office-studio/studio-pdf-adapter.ts';
+    const cssPath = stylesheet;
+    await import(cssPath);
+    const { studioPdfRenderer } = await import(modulePath);
+    const source = new Blob([new Uint8Array(bytes)], { type: 'application/pdf' });
+    const renderer = await studioPdfRenderer.load(source);
+    document.body.replaceChildren(); document.body.style.margin = '0'; document.body.style.background = '#e5e7eb';
+    const paper = document.createElement('div'); paper.id = 'layer-paper';
+    Object.assign(paper.style, { position: 'relative', overflow: 'hidden', margin: '16px', background: 'white' });
+    const canvas = document.createElement('canvas'); canvas.style.width = '100%'; canvas.style.height = '100%'; paper.append(canvas);
+    const text = document.createElement('div'); text.className = 'textLayer zuvi-studio-pdf-text-layer'; paper.append(text);
+    const annotations = document.createElement('div'); annotations.className = 'annotationLayer zuvi-studio-pdf-annotation-paint-layer'; paper.append(annotations);
+    document.body.append(paper);
+    const selected: string[] = [];
+    let textLayer: { selection(): unknown; destroy(): void } | undefined;
+    let annotationLayer: { destroy(): void } | undefined;
+    let view: { width: number; height: number; toPdfPoint(x: number, y: number): number[]; toViewportPoint(x: number, y: number): number[] };
+    const environment = {
+      async setView(scale: number, rotation: number) {
+        textLayer?.destroy(); annotationLayer?.destroy(); textLayer = undefined; annotationLayer = undefined;
+        view = await renderer.render(0, canvas, { scale, rotation });
+        paper.style.width = `${view.width}px`; paper.style.height = `${view.height}px`;
+        textLayer = await renderer.renderTextLayer(0, text, { scale, rotation });
+        annotationLayer = await renderer.renderAnnotationLayer(0, annotations, { scale, rotation, canvas, annotations: refs, onSelect: (id: string) => selected.push(id) });
+        return { width: view.width, height: view.height };
+      },
+      select(needle: string, start: number, end: number) {
+        const span = [...text.querySelectorAll('span')].find(element => element.textContent === needle);
+        if (!span?.firstChild) throw new Error('Original text span not found');
+        const range = document.createRange(); range.setStart(span.firstChild, start); range.setEnd(span.firstChild, end);
+        const selection = document.getSelection(); selection?.removeAllRanges(); selection?.addRange(range);
+        return textLayer?.selection();
+      },
+      selection: () => textLayer?.selection(),
+      selected,
+      point: (x: number, y: number) => view.toViewportPoint(x, y),
+      pixel(x: number, y: number) {
+        const point = view.toViewportPoint(x, y), ratio = canvas.width / view.width;
+        return [...canvas.getContext('2d')!.getImageData(Math.round(point[0] * ratio), Math.round(point[1] * ratio), 1, 1).data];
+      },
+      async sourceHash() { return [...new Uint8Array(await crypto.subtle.digest('SHA-256', await source.arrayBuffer()))].map(value => value.toString(16).padStart(2, '0')).join(''); },
+      destroy() { textLayer?.destroy(); annotationLayer?.destroy(); return renderer.destroy(); },
+    };
+    (window as unknown as { pdfLayerQA: typeof environment }).pdfLayerQA = environment;
+    await environment.setView(1, 0);
+  }, { bytes: [...data.bytes], refs: data.refs, stylesheet: `/@fs${repo}/packages/ui/src/components/OfficeStudio/StudioPdfTextLayer.css` });
+}
+
+test('uses real PDF.js text selections and one native appearance across crop, UserUnit, rotation and zoom', async ({ page }) => {
+  test.setTimeout(180000); await mkdir(audit, { recursive: true });
+  const data = await fixture(), hash = createHash('sha256').update(data.bytes).digest('hex');
+  await writeFile(path.join(audit, 'renderer-source.pdf'), data.bytes);
+  const errors: string[] = []; page.on('pageerror', error => errors.push(error.message));
+  await harness(page, data);
+  const matrix: unknown[] = [];
+  for (const scale of [0.5, 1, 2]) for (const rotation of [0, 90, 180, 270]) {
+    const result = await page.evaluate(async ({ scale, rotation }) => {
+      const qa = (window as unknown as { pdfLayerQA: {
+        setView(scale: number, rotation: number): Promise<{ width: number; height: number }>;
+        select(text: string, start: number, end: number): { text: string; quadPoints: number[]; rect: { x: number; y: number; width: number; height: number } };
+        pixel(x: number, y: number): number[]; sourceHash(): Promise<string>;
+      } }).pdfLayerQA;
+      const view = await qa.setView(scale, rotation);
+      const selection = qa.select('SELECTABLE ORIGINAL', 3, 10);
+      const boxes = Object.fromEntries(['red-no-rotate', 'green-no-zoom', 'blue-no-zoom-rotate'].map(id => {
+        const element = document.querySelector<HTMLElement>(`[data-studio-annotation-id="${id}"]`)!;
+        const bounds = element.getBoundingClientRect();
+        const canvas = element.querySelector('canvas');
+        return [id, { x: bounds.x, y: bounds.y, width: bounds.width, height: bounds.height,
+          noZoom: element.dataset.noZoom, canvas: canvas && { width: canvas.width, height: canvas.height,
+            pixel: [...canvas.getContext('2d')!.getImageData(canvas.width / 2, canvas.height / 2, 1, 1).data] } }];
+      }));
+      const icons = [...document.querySelectorAll<HTMLImageElement>('.textAnnotation img')].map(image => ({ src: image.src, loaded: image.complete && image.naturalWidth > 0 }));
+      return { scale, rotation, view, selection, boxes, icons, alpha: qa.pixel(140, 260), hash: await qa.sourceHash(),
+        duplicateWidgets: document.querySelectorAll('.zuvi-studio-pdf-annotation-paint-layer input, .zuvi-studio-pdf-annotation-paint-layer select, .zuvi-studio-pdf-annotation-paint-layer textarea').length };
+    }, { scale, rotation });
+    expect(result.selection.text).toBe('ECTABLE'); expect(result.selection.quadPoints).toHaveLength(8);
+    expect(result.selection.rect.x).toBeGreaterThan(70); expect(result.selection.rect.y).toBeLessThan(450);
+    expect(result.selection.rect.height).toBeGreaterThan(10); expect(result.hash).toBe(hash);
+    expect(result.duplicateWidgets).toBe(0);
+    for (const [id, color] of [['red-no-rotate', [255, 0, 0]], ['green-no-zoom', [0, 255, 0]], ['blue-no-zoom-rotate', [0, 0, 255]]] as const) {
+      expect(result.boxes[id].canvas?.pixel.slice(0, 3)).toEqual(color);
+      expect(result.boxes[id].canvas!.width).toBeGreaterThanOrEqual(60 * scale * 1.5);
+    }
+    expect(result.boxes['red-no-rotate'].width).toBeCloseTo(90 * scale, 1);
+    expect(result.boxes['red-no-rotate'].height).toBeCloseTo(60 * scale, 1);
+    expect(result.boxes['blue-no-zoom-rotate'].width).toBeCloseTo(90, 1);
+    expect(result.boxes['blue-no-zoom-rotate'].height).toBeCloseTo(60, 1);
+    expect(result.boxes['green-no-zoom'].width).toBeCloseTo(rotation % 180 ? 60 : 90, 1);
+    expect(result.boxes['green-no-zoom'].height).toBeCloseTo(rotation % 180 ? 90 : 60, 1);
+    expect(result.alpha.slice(0, 3)).toEqual([255, 255, 178]);
+    matrix.push(result);
+  }
+  await page.locator('[data-studio-annotation-id="no-ap-note"]').click();
+  expect(await page.evaluate(() => (window as unknown as { pdfLayerQA: { selected: string[] } }).pdfLayerQA.selected)).toContain('no-ap-note');
+  await page.evaluate(() => (window as unknown as { pdfLayerQA: { select(text: string, start: number, end: number): unknown } }).pdfLayerQA.select('Angled source text', 0, 6));
+  const angled = await page.evaluate(() => (window as unknown as { pdfLayerQA: { selection(): { text: string; quadPoints: number[] } } }).pdfLayerQA.selection());
+  expect(angled.text).toBe('Angled'); expect(angled.quadPoints[1]).not.toBe(angled.quadPoints[3]);
+  await page.screenshot({ path: path.join(audit, 'renderer-text-and-annotations.png'), fullPage: true });
+  expect(errors).toEqual([]);
+  await writeFile(path.join(audit, 'renderer-matrix.json'), JSON.stringify({ hash, matrix, angled, errors }, null, 2) + '\n');
+  await page.evaluate(() => (window as unknown as { pdfLayerQA: { destroy(): Promise<void> } }).pdfLayerQA.destroy());
+});

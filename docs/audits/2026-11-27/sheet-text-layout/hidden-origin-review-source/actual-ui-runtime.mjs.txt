@@ -1,0 +1,33 @@
+import { readFileSync, existsSync } from 'node:fs';
+import path from 'node:path';
+import { createRequire } from 'node:module';
+import { pathToFileURL } from 'node:url';
+
+const repo = '/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59';
+const require = createRequire(`${repo}/packages/ui/package.json`);
+const ts = createRequire(`${repo}/docs/package.json`)('typescript');
+const cache = new Map();
+const icons = await import(pathToFileURL(`${repo}/packages/icons/dist/index.js`).href);
+const i18n = await import(pathToFileURL(`${repo}/packages/i18n/dist/index.js`).href);
+export const react = require('react');
+export const server = require('react-dom/server');
+export function load(file) {
+  const absolute = path.resolve(file);
+  if (cache.has(absolute)) return cache.get(absolute).exports;
+  const module = { exports: {} }; cache.set(absolute, module);
+  const source = readFileSync(absolute, 'utf8').replaceAll('import.meta', '__moduleMeta');
+  const code = ts.transpileModule(source, { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, esModuleInterop: true } }).outputText;
+  const resolve = id => {
+    if (/\.(?:css|scss)$/.test(id)) return {};
+    if (id === '@zuvi/icons') return icons;
+    if (id === '@zuvi/i18n') return i18n;
+    if (!id.startsWith('.')) return require(id);
+    const base = path.resolve(path.dirname(absolute), id);
+    const candidates = [base, ...['.ts', '.tsx', '.js', '/index.ts', '/index.tsx', '/index.js'].map(suffix => base + suffix)];
+    const target = candidates.find(candidate => existsSync(candidate) && /\.(?:tsx?|js)$/.test(candidate));
+    if (!target) throw new Error('Cannot resolve ' + id + ' from ' + absolute);
+    return load(target);
+  };
+  new Function('exports', 'module', 'require', '__filename', '__dirname', '__moduleMeta', code)(module.exports, module, resolve, absolute, path.dirname(absolute), { url: pathToFileURL(absolute).href, env: { DEV: false, PROD: true } });
+  return module.exports;
+}

@@ -1,0 +1,16 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/StudioWord.test.tsx (84 tests) 12956ms
+   ✓ Word paragraph dialog and ruler > edits inherited tab stops through ZUVI controls with precision checks, cancellation and one history step 475ms
+   ✓ Word paragraph dialog and ruler > applies mixed paragraph values in one history step and keeps untouched values separate 301ms
+   ✓ Word paragraph dialog and ruler > keeps mixed pagination flags unchanged until edited, commits once, and blocks an open dialog after permission changes 451ms
+   ✓ StudioWord named paragraph styles > creates, applies, modifies and deletes a named style with real undo and redo 488ms
+   ✓ StudioWord structured editing > restores rejected controlled edits so the canvas and saved model agree 386ms
+   ✓ StudioWord structured editing > changes picture wrapping, position and anchor flags and restores them with undo 530ms
+ ✓ src/components/OfficeStudio/studio-word-table-rows.test.ts (4 tests) 48ms
+
+ Test Files  2 passed (2)
+      Tests  88 passed (88)
+   Start at  04:19:22
+   Duration  14.81s (transform 492ms, setup 189ms, collect 789ms, tests 13.00s, environment 569ms, prepare 64ms)

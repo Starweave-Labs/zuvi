@@ -1,0 +1,412 @@
+import { expect, test, type Page } from '@playwright/test';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import path from 'node:path';
+import { createHash } from 'node:crypto';
+import { PDFDict, PDFDocument, PDFName, PDFRawStream, PDFString, StandardFonts, degrees } from '../docs/node_modules/pdf-lib/cjs/index.js';
+
+const audit = path.resolve('docs/audits/2026-11-27/pdf-text-layer');
+const repo = path.resolve('.');
+async function fixture() {
+  const pdf = await PDFDocument.create(), font = await pdf.embedFont(StandardFonts.Helvetica);
+  const page = pdf.addPage([500, 600]); page.setCropBox(40, 30, 400, 500);
+  page.node.set(PDFName.of('UserUnit'), pdf.context.obj(1.5));
+  page.drawText('SELECTABLE ORIGINAL', { x: 70, y: 450, size: 20, font });
+  page.drawText('Angled source text', { x: 180, y: 330, size: 16, rotate: degrees(25), font });
+  page.drawText('Second source line', { x: 70, y: 420, size: 16, font });
+  const refs: { id: string; key: string; flags: number }[] = [];
+  const box = (id: string, rect: number[], color: number[], flags: number) => {
+    const width = rect[2] - rect[0], height = rect[3] - rect[1];
+    const appearance = pdf.context.register(pdf.context.flateStream(`q ${color.join(' ')} rg 0 0 ${width} ${height} re f Q`,
+      { Type: 'XObject', Subtype: 'Form', BBox: [0, 0, width, height], Resources: {} }));
+    const reference = pdf.context.register(pdf.context.obj({ Type: 'Annot', Subtype: 'Square', Rect: rect, P: page.ref,
+      F: flags, AP: { N: appearance }, NM: PDFString.of(id), Contents: PDFString.of(id), ZuviAnnotationId: PDFString.of(id) }));
+    page.node.addAnnot(reference); refs.push({ id, key: reference.toString(), flags });
+  };
+  box('red-no-rotate', [220, 180, 280, 220], [1, 0, 0], 4 | 16);
+  box('green-no-zoom', [100, 100, 160, 140], [0, 1, 0], 4 | 8);
+  box('blue-no-zoom-rotate', [320, 280, 380, 320], [0, 0, 1], 4 | 8 | 16);
+  const note = pdf.context.register(pdf.context.obj({ Type: 'Annot', Subtype: 'Text', P: page.ref, F: 4,
+    Rect: [80, 350, 102, 372], Name: 'Note', Contents: PDFString.of('Original note'), ZuviAnnotationId: PDFString.of('no-ap-note') }));
+  page.node.addAnnot(note); refs.push({ id: 'no-ap-note', key: note.toString(), flags: 4 });
+  const gs = pdf.context.register(pdf.context.obj({ Type: 'ExtGState', ca: 0.3, CA: 0.3 }));
+  const appearance = pdf.context.register(pdf.context.flateStream('q /GS gs 1 1 0 rg 0 0 120 20 re f Q',
+    { Type: 'XObject', Subtype: 'Form', BBox: [0, 0, 120, 20], Resources: { ExtGState: { GS: gs } } }));
+  const marker = pdf.context.register(pdf.context.obj({ Type: 'Annot', Subtype: 'Highlight', P: page.ref, F: 4,
+    Rect: [80, 250, 200, 270], QuadPoints: [80, 270, 200, 270, 80, 250, 200, 250], C: [1, 1, 0], CA: 0.3,
+    AP: { N: appearance }, NM: PDFString.of('single-alpha'), ZuviAnnotationId: PDFString.of('single-alpha') }));
+  page.node.addAnnot(marker); refs.push({ id: 'single-alpha', key: marker.toString(), flags: 4 });
+  const field = pdf.getForm().createTextField('source-field'); field.setText('Field value');
+  field.addToPage(page, { x: 250, y: 70, width: 130, height: 25, font });
+  return { bytes: new Uint8Array(await pdf.save({ updateFieldAppearances: false })), refs };
+}
+
+async function harness(page: Page, data: Awaited<ReturnType<typeof fixture>>) {
+  await page.goto('/');
+  await page.evaluate(async ({ bytes, refs, stylesheet }) => {
+    const modulePath = '/src/pages/collaboration/office-studio/studio-pdf-adapter.ts';
+    const cssPath = stylesheet;
+    await import(cssPath);
+    const { studioPdfRenderer } = await import(modulePath);
+    const source = new Blob([new Uint8Array(bytes)], { type: 'application/pdf' });
+    const renderer = await studioPdfRenderer.load(source);
+    document.body.replaceChildren(); document.body.style.margin = '0'; document.body.style.background = '#e5e7eb';
+    const paper = document.createElement('div'); paper.id = 'layer-paper';
+    Object.assign(paper.style, { position: 'relative', overflow: 'hidden', margin: '16px', background: 'white' });
+    const canvas = document.createElement('canvas'); canvas.style.width = '100%'; canvas.style.height = '100%'; paper.append(canvas);
+    const text = document.createElement('div'); text.className = 'textLayer zuvi-studio-pdf-text-layer'; paper.append(text);
+    const annotations = document.createElement('div'); annotations.className = 'annotationLayer zuvi-studio-pdf-annotation-paint-layer'; paper.append(annotations);
+    document.body.append(paper);
+    const selected: string[] = [];
+    let textLayer: { selection(): unknown; destroy(): void } | undefined;
+    let annotationLayer: { destroy(): void } | undefined;
+    let view: { width: number; height: number; toPdfPoint(x: number, y: number): number[]; toViewportPoint(x: number, y: number): number[] };
+    const environment = {
+      async setView(scale: number, rotation: number) {
+        textLayer?.destroy(); annotationLayer?.destroy(); textLayer = undefined; annotationLayer = undefined;
+        view = await renderer.render(0, canvas, { scale, rotation });
+        paper.style.width = `${view.width}px`; paper.style.height = `${view.height}px`;
+        textLayer = await renderer.renderTextLayer(0, text, { scale, rotation });
+        annotationLayer = await renderer.renderAnnotationLayer(0, annotations, { scale, rotation, canvas, annotations: refs, onSelect: (id: string) => selected.push(id) });
+        await Promise.all([...annotations.querySelectorAll('img')].map(image => image.decode()));
+        return { width: view.width, height: view.height };
+      },
+      async virtual(blank: boolean) {
+        textLayer?.destroy(); annotationLayer?.destroy();
+        const descriptor = blank ? { id: 'virtual-blank', size: { width: 240, height: 320 } } : { id: 'virtual-copy', sourcePage: 0 };
+        view = await renderer.render(1, canvas, { scale: 1, rotation: 90, page: descriptor });
+        paper.style.width = `${view.width}px`; paper.style.height = `${view.height}px`;
+        textLayer = await renderer.renderTextLayer(1, text, { scale: 1, rotation: 90, page: descriptor });
+        annotationLayer = await renderer.renderAnnotationLayer(1, annotations, { scale: 1, rotation: 90, page: descriptor, canvas, annotations: refs });
+        return { width: view.width, height: view.height, text: text.textContent, annotations: annotations.childElementCount,
+          pixel: [...canvas.getContext('2d')!.getImageData(canvas.width / 2, canvas.height / 2, 1, 1).data] };
+      },
+      select(needle: string, start: number, end: number) {
+        const span = [...text.querySelectorAll('span')].find(element => element.textContent === needle);
+        if (!span?.firstChild) throw new Error('Original text span not found');
+        const range = document.createRange(); range.setStart(span.firstChild, start); range.setEnd(span.firstChild, end);
+        const selection = document.getSelection(); selection?.removeAllRanges(); selection?.addRange(range);
+        return textLayer?.selection();
+      },
+      selection: () => textLayer?.selection(),
+      selected,
+      point: (x: number, y: number) => view.toViewportPoint(x, y),
+      pixel(x: number, y: number) {
+        const point = view.toViewportPoint(x, y), ratio = canvas.width / view.width;
+        return [...canvas.getContext('2d')!.getImageData(Math.round(point[0] * ratio), Math.round(point[1] * ratio), 1, 1).data];
+      },
+      async sourceHash() { return [...new Uint8Array(await crypto.subtle.digest('SHA-256', await source.arrayBuffer()))].map(value => value.toString(16).padStart(2, '0')).join(''); },
+      destroy() { textLayer?.destroy(); annotationLayer?.destroy(); return renderer.destroy(); },
+    };
+    (window as unknown as { pdfLayerQA: typeof environment }).pdfLayerQA = environment;
+    await environment.setView(1, 0);
+  }, { bytes: [...data.bytes], refs: data.refs, stylesheet: `/@fs${repo}/packages/ui/src/components/OfficeStudio/StudioPdfTextLayer.css` });
+}
+
+test('uses real PDF.js text selections and one native appearance across crop, UserUnit, rotation and zoom', async ({ page }) => {
+  test.setTimeout(180000); await mkdir(audit, { recursive: true });
+  const data = await fixture(), hash = createHash('sha256').update(data.bytes).digest('hex');
+  await writeFile(path.join(audit, 'renderer-source.pdf'), data.bytes);
+  const errors: string[] = []; page.on('pageerror', error => errors.push(error.message));
+  await harness(page, data);
+  const matrix: unknown[] = [];
+  for (const scale of [0.5, 1, 2]) for (const rotation of [0, 90, 180, 270]) {
+    const result = await page.evaluate(async ({ scale, rotation }) => {
+      const qa = (window as unknown as { pdfLayerQA: {
+        setView(scale: number, rotation: number): Promise<{ width: number; height: number }>;
+        select(text: string, start: number, end: number): { text: string; quadPoints: number[]; rect: { x: number; y: number; width: number; height: number } };
+        pixel(x: number, y: number): number[]; sourceHash(): Promise<string>;
+      } }).pdfLayerQA;
+      const view = await qa.setView(scale, rotation);
+      const selection = qa.select('SELECTABLE ORIGINAL', 3, 10);
+      const boxes = Object.fromEntries(['red-no-rotate', 'green-no-zoom', 'blue-no-zoom-rotate'].map(id => {
+        const element = document.querySelector<HTMLElement>(`[data-studio-annotation-id="${id}"]`)!;
+        const bounds = element.getBoundingClientRect();
+        const canvas = element.querySelector('canvas');
+        return [id, { x: bounds.x, y: bounds.y, width: bounds.width, height: bounds.height,
+          noZoom: element.dataset.noZoom, canvas: canvas && { width: canvas.width, height: canvas.height,
+            pixel: [...canvas.getContext('2d')!.getImageData(canvas.width / 2, canvas.height / 2, 1, 1).data] } }];
+      }));
+      const icons = [...document.querySelectorAll<HTMLImageElement>('.textAnnotation img')].map(image => ({ src: image.src, loaded: image.complete && image.naturalWidth > 0 }));
+      return { scale, rotation, view, selection, boxes, icons, alpha: qa.pixel(140, 260), hash: await qa.sourceHash(),
+        duplicateWidgets: document.querySelectorAll('.zuvi-studio-pdf-annotation-paint-layer input, .zuvi-studio-pdf-annotation-paint-layer select, .zuvi-studio-pdf-annotation-paint-layer textarea').length };
+    }, { scale, rotation });
+    expect(result.selection.text).toBe('ECTABLE'); expect(result.selection.quadPoints).toHaveLength(8);
+    expect(result.selection.rect.x).toBeGreaterThan(70); expect(result.selection.rect.y).toBeLessThan(450);
+    expect(result.selection.rect.height).toBeGreaterThan(10); expect(result.hash).toBe(hash);
+    expect(result.duplicateWidgets).toBe(0);
+    expect(result.icons).toHaveLength(1); expect(result.icons[0].loaded).toBe(true);
+    for (const [id, color] of [['red-no-rotate', [255, 0, 0]], ['green-no-zoom', [0, 255, 0]], ['blue-no-zoom-rotate', [0, 0, 255]]] as const) {
+      expect(result.boxes[id].canvas?.pixel.slice(0, 3)).toEqual(color);
+      expect(result.boxes[id].canvas!.width).toBeGreaterThanOrEqual(60 * scale * 1.5);
+    }
+    expect(result.boxes['red-no-rotate'].width).toBeCloseTo(90 * scale, 1);
+    expect(result.boxes['red-no-rotate'].height).toBeCloseTo(60 * scale, 1);
+    expect(result.boxes['blue-no-zoom-rotate'].width).toBeCloseTo(90, 1);
+    expect(result.boxes['blue-no-zoom-rotate'].height).toBeCloseTo(60, 1);
+    expect(result.boxes['green-no-zoom'].width).toBeCloseTo(rotation % 180 ? 60 : 90, 1);
+    expect(result.boxes['green-no-zoom'].height).toBeCloseTo(rotation % 180 ? 90 : 60, 1);
+    expect(result.alpha.slice(0, 3)).toEqual([255, 255, 178]);
+    matrix.push(result);
+  }
+  await page.locator('[data-studio-annotation-id="no-ap-note"]').click();
+  expect(await page.evaluate(() => (window as unknown as { pdfLayerQA: { selected: string[] } }).pdfLayerQA.selected)).toContain('no-ap-note');
+  await page.evaluate(() => (window as unknown as { pdfLayerQA: { select(text: string, start: number, end: number): unknown } }).pdfLayerQA.select('Angled source text', 0, 6));
+  const angled = await page.evaluate(() => (window as unknown as { pdfLayerQA: { selection(): { text: string; quadPoints: number[] } } }).pdfLayerQA.selection());
+  expect(angled.text).toBe('Angled'); expect(angled.quadPoints[1]).not.toBe(angled.quadPoints[3]);
+  await page.screenshot({ path: path.join(audit, 'renderer-text-and-annotations.png'), fullPage: true });
+  const virtual = await page.evaluate(async () => {
+    const qa = (window as unknown as { pdfLayerQA: { virtual(blank: boolean): Promise<unknown> } }).pdfLayerQA;
+    return { copy: await qa.virtual(false), blank: await qa.virtual(true) };
+  }) as { copy: { text: string; annotations: number }; blank: { width: number; height: number; text: string; annotations: number; pixel: number[] } };
+  expect(virtual.copy.text).toContain('SELECTABLE ORIGINAL'); expect(virtual.copy.annotations).toBeGreaterThan(0);
+  expect(virtual.blank).toEqual({ width: 320, height: 240, text: '', annotations: 0, pixel: [255, 255, 255, 255] });
+  expect(errors).toEqual([]);
+  await writeFile(path.join(audit, 'renderer-matrix.json'), JSON.stringify({ hash, matrix, angled, virtual, errors }, null, 2) + '\n');
+  await page.evaluate(() => (window as unknown as { pdfLayerQA: { destroy(): Promise<void> } }).pdfLayerQA.destroy());
+});
+
+async function appFixture() {
+  const data = await fixture(), pdf = await PDFDocument.load(data.bytes), font = await pdf.embedFont(StandardFonts.Helvetica);
+  const second = pdf.addPage([320, 420]); second.setRotation(degrees(90));
+  second.drawText('Searchable second source page', { x: 30, y: 360, size: 16, font });
+  return new Uint8Array(await pdf.save({ updateFieldAppearances: false }));
+}
+async function appReady(page: Page) {
+  await expect(page.getByRole('region', { name: 'PDF 页面编辑区', exact: true }).first()).toHaveAttribute('aria-busy', 'false');
+  await expect(page.locator('.zuvi-studio-pdf-paper .zuvi-studio-pdf-text-layer')).toHaveAttribute('data-ready', 'true');
+  await expect(page.locator('.zuvi-studio-pdf-paper .zuvi-studio-pdf-annotation-paint-layer')).toHaveAttribute('data-ready', 'true');
+}
+async function appImport(page: Page, bytes: Uint8Array, name: string) {
+  await page.getByLabel('导入文档文件', { exact: true }).setInputFiles({ name, mimeType: 'application/pdf', buffer: Buffer.from(bytes) });
+  await appReady(page);
+}
+async function appSave(page: Page) {
+  await page.getByRole('button', { name: '保存', exact: true }).click();
+  await expect(page.locator('.zuvi-office-studio [data-save-state]').first()).toHaveAttribute('data-save-state', 'saved');
+}
+async function appSnapshot(page: Page) {
+  return page.evaluate(async () => {
+    const database = await new Promise<IDBDatabase>((resolve, reject) => {
+      const request = indexedDB.open('zuvi-office-studio', 2); request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error);
+    });
+    const id = await new Promise<string>((resolve, reject) => {
+      const request = database.transaction('preferences').objectStore('preferences').get('active'); request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error);
+    });
+    const file = await new Promise<{ revision: number; source: Blob; document: { kind: string; name: string; marks: { id: string; nativeId?: string; type: string }[] } }>((resolve, reject) => {
+      const request = database.transaction('files').objectStore('files').get(id); request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error);
+    });
+    database.close();
+    const hash = [...new Uint8Array(await crypto.subtle.digest('SHA-256', await file.source.arrayBuffer()))].map(value => value.toString(16).padStart(2, '0')).join('');
+    return { revision: file.revision, sourceHash: hash, document: file.document };
+  });
+}
+async function appExport(page: Page, name: string) {
+  const pending = page.waitForEvent('download'); await page.getByRole('button', { name: '导出文件', exact: true }).click();
+  const bytes = await readFile((await (await pending).path())!); await writeFile(path.join(audit, name), bytes); return bytes;
+}
+async function selectSource(page: Page, needle: string, start: number, end: number, pointer = false) {
+  const layer = page.locator('.zuvi-studio-pdf-paper .zuvi-studio-pdf-text-layer');
+  if (pointer) {
+    await layer.getByText(needle, { exact: true }).scrollIntoViewIfNeeded();
+    const positions = await layer.evaluate((element, { needle, start, end }) => {
+      const span = [...element.querySelectorAll('span')].find(value => value.textContent === needle);
+      if (!span?.firstChild) throw new Error('Original PDF text is missing');
+      const first = document.createRange(), last = document.createRange();
+      first.setStart(span.firstChild, start); first.setEnd(span.firstChild, start + 1);
+      last.setStart(span.firstChild, end - 1); last.setEnd(span.firstChild, end);
+      const a = first.getBoundingClientRect(), b = last.getBoundingClientRect();
+      return { from: { x: a.left + a.width * 0.1, y: a.top + a.height / 2 }, to: { x: b.right - b.width * 0.1, y: b.top + b.height / 2 } };
+    }, { needle, start, end });
+    await page.mouse.move(positions.from.x, positions.from.y); await page.mouse.down();
+    await page.mouse.move(positions.to.x, positions.to.y, { steps: 8 }); await page.mouse.up();
+  } else {
+    await layer.evaluate((element, { needle, start, end }) => {
+      const span = [...element.querySelectorAll('span')].find(value => value.textContent === needle);
+      if (!span?.firstChild) throw new Error('Original PDF text is missing');
+      const range = document.createRange(); range.setStart(span.firstChild, start); range.setEnd(span.firstChild, end);
+      const selected = document.getSelection(); selected?.removeAllRanges(); selected?.addRange(range);
+    }, { needle, start, end });
+  }
+  await expect.poll(() => page.evaluate(() => document.getSelection()?.toString())).toBe(needle.slice(start, end));
+}
+function pageStreams(pdf: PDFDocument) {
+  return pdf.getPages().map(page => {
+    const contents = page.node.Contents(), values = contents && 'asArray' in contents ? contents.asArray() : contents ? [contents] : [];
+    return values.map(value => {
+      const stream = pdf.context.lookup(value); if (!(stream instanceof PDFRawStream)) throw new Error('Page content is not a real PDF stream');
+      return createHash('sha256').update(stream.contents).digest('hex');
+    });
+  });
+}
+
+test('selects and copies original PDF text in OfficeStudio, searches real pages and preserves source bytes in readonly mode', async ({ page, context }) => {
+  test.setTimeout(180000); await mkdir(audit, { recursive: true });
+  await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  const bytes = await appFixture(), hash = createHash('sha256').update(bytes).digest('hex');
+  await writeFile(path.join(audit, 'app-source.pdf'), bytes);
+  const errors: string[] = []; page.on('pageerror', error => errors.push(error.message));
+  await page.goto('/#/components/office-studio'); await appImport(page, bytes, 'Selectable-source.pdf'); await appSave(page);
+  const initial = await appSnapshot(page); expect(initial.sourceHash).toBe(hash);
+  await selectSource(page, 'SELECTABLE ORIGINAL', 3, 10, true);
+  await page.keyboard.press(process.platform === 'darwin' ? 'Meta+c' : 'Control+c');
+  await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe('ECTABLE');
+  const textLayer = page.getByRole('document', { name: 'PDF 第 1 页原文选择复制', exact: true });
+  await textLayer.focus(); await page.keyboard.press('Control+a');
+  await page.keyboard.press(process.platform === 'darwin' ? 'Meta+c' : 'Control+c');
+  const copy = await page.evaluate(() => navigator.clipboard.readText());
+  expect(copy).toContain('SELECTABLE ORIGINAL'); expect(copy).toContain('Angled source text'); expect(copy).toContain('Second source line');
+  await page.getByRole('button', { name: 'PDF 文本查找侧栏', exact: true }).click();
+  await page.getByRole('textbox', { name: 'PDF 查找文字', exact: true }).fill('source');
+  await page.getByRole('button', { name: '查找全部', exact: true }).click();
+  const results = page.getByLabel('PDF 查找结果', { exact: true }).getByRole('button');
+  await expect(results).toHaveCount(3); await results.last().click(); await appReady(page);
+  await expect(page.getByRole('spinbutton', { name: 'PDF 跳转页', exact: true })).toHaveValue('2');
+  expect(await page.evaluate(() => document.getSelection()?.isCollapsed)).toBe(true);
+  await page.getByRole('switch', { name: '只读预览', exact: true }).click();
+  await appReady(page);
+  await expect(page.getByRole('spinbutton', { name: 'PDF 跳转页', exact: true })).toHaveValue('2');
+  const secondLayer = page.getByRole('document', { name: 'PDF 第 2 页原文选择复制', exact: true });
+  await secondLayer.focus(); await page.keyboard.press('Control+a');
+  await page.keyboard.press(process.platform === 'darwin' ? 'Meta+c' : 'Control+c');
+  await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe('Searchable second source page');
+  await expect(page.getByRole('button', { name: '新建表单字段', exact: true })).toBeDisabled();
+  expect((await appSnapshot(page)).sourceHash).toBe(hash);
+  await page.screenshot({ path: path.join(audit, 'app-readonly-text-light.png'), fullPage: true, animations: 'disabled' });
+  await page.locator('html').evaluate(element => element.setAttribute('data-theme', 'dark'));
+  await page.screenshot({ path: path.join(audit, 'app-readonly-text-dark.png'), fullPage: true, animations: 'disabled' });
+  await page.setViewportSize({ width: 320, height: 780 });
+  await page.getByRole('button', { name: /^PDF 缩放/ }).click();
+  await page.getByRole('option', { name: '50%', exact: true }).click(); await appReady(page);
+  await secondLayer.getByText('Searchable second source page', { exact: true }).scrollIntoViewIfNeeded();
+  await secondLayer.focus(); await page.keyboard.press('Control+a');
+  await page.keyboard.press(process.platform === 'darwin' ? 'Meta+c' : 'Control+c');
+  await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe('Searchable second source page');
+  await page.screenshot({ path: path.join(audit, 'app-readonly-text-dark-320.png'), fullPage: true, animations: 'disabled' });
+  const final = await appSnapshot(page); expect(final.sourceHash).toBe(hash); expect(final.revision).toBe(initial.revision);
+  expect(errors).toEqual([]); await writeFile(path.join(audit, 'app-selection-results.json'), JSON.stringify({ hash, initial, final, copy, errors }, null, 2) + '\n');
+});
+
+test('uses real selected PDF glyph QuadPoints for four native text markups and survives history and two reopens', async ({ page, context }) => {
+  test.setTimeout(180000); await mkdir(audit, { recursive: true });
+  await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  const bytes = await appFixture(), original = await PDFDocument.load(bytes), originalStreams = pageStreams(original);
+  await writeFile(path.join(audit, 'app-markup-source.pdf'), bytes);
+  const errors: string[] = []; page.on('pageerror', error => errors.push(error.message));
+  await page.goto('/#/components/office-studio'); await appImport(page, bytes, 'Text-markup-source.pdf'); await appSave(page);
+  await page.getByRole('tab', { name: '批注', exact: true }).click();
+  const sourceCount = await page.locator('.zuvi-studio-pdf-native-hit').count(), operations: unknown[] = [];
+  for (const [index, [label, subtype, needle, start, end]] of [
+    ['高亮', 'Highlight', 'SELECTABLE ORIGINAL', 3, 10],
+    ['下划线', 'Underline', 'Second source line', 0, 6],
+    ['删除线', 'StrikeOut', 'Angled source text', 0, 6],
+    ['波浪线', 'Squiggly', 'SELECTABLE ORIGINAL', 11, 19],
+  ].entries()) {
+    await page.getByRole('button', { name: '选择', exact: true }).click(); await appReady(page);
+    await selectSource(page, String(needle), Number(start), Number(end));
+    await page.getByRole('button', { name: /^PDF 新增批注类型/ }).click();
+    await page.getByRole('option', { name: String(label), exact: true }).click();
+    const apply = page.getByRole('button', { name: '应用到所选文字', exact: true });
+    await expect(apply).toBeEnabled();
+    const before = await appSnapshot(page); await apply.click(); await appReady(page); await appSave(page);
+    await expect(page.locator('.zuvi-studio-pdf-native-hit')).toHaveCount(sourceCount + index + 1);
+    const after = await appSnapshot(page); expect(after.sourceHash).not.toBe(before.sourceHash);
+    const output = await appExport(page, `app-created-${String(subtype).toLowerCase()}.pdf`), native = await PDFDocument.load(output);
+    const annotations = native.getPages()[0].node.Annots()!.asArray().map(ref => native.context.lookup(ref)).filter((value): value is PDFDict => value instanceof PDFDict);
+    const marks = annotations.filter(dict => dict.lookup(PDFName.of('Subtype')) === PDFName.of(String(subtype)));
+    const latest = marks.at(-1)!;
+    const quads = latest.lookup(PDFName.of('QuadPoints')); expect(quads && 'asArray' in quads).toBe(true);
+    expect(String(quads)).not.toBe('[]'); expect(latest.lookup(PDFName.of('AP'))).toBeDefined();
+    expect(pageStreams(native)).toEqual(originalStreams);
+    operations.push({ label, subtype, before: before.sourceHash, after: after.sourceHash, quads: String(quads) });
+    if (index === 3) {
+      await page.getByRole('button', { name: '撤销', exact: true }).click(); await appReady(page); await appSave(page);
+      await expect(page.locator('.zuvi-studio-pdf-native-hit')).toHaveCount(sourceCount + 3); expect((await appSnapshot(page)).sourceHash).toBe(before.sourceHash);
+      await page.getByRole('button', { name: '重做', exact: true }).click(); await appReady(page); await appSave(page);
+      await expect(page.locator('.zuvi-studio-pdf-native-hit')).toHaveCount(sourceCount + 4); expect((await appSnapshot(page)).sourceHash).toBe(after.sourceHash);
+    }
+  }
+  const rounds: unknown[] = [];
+  for (let round = 1; round <= 2; round++) {
+    const output = await appExport(page, `app-text-markups-round-${round}.pdf`), native = await PDFDocument.load(output);
+    expect(pageStreams(native)).toEqual(originalStreams); expect(native.getForm().getTextField('source-field').getText()).toBe('Field value');
+    const subtypes = native.getPages()[0].node.Annots()!.asArray().map(ref => native.context.lookup(ref)).filter((value): value is PDFDict => value instanceof PDFDict).map(value => String(value.lookup(PDFName.of('Subtype'))));
+    expect(subtypes.filter(value => value === '/Highlight')).toHaveLength(2); for (const value of ['/Underline', '/StrikeOut', '/Squiggly']) expect(subtypes.filter(subtype => subtype === value)).toHaveLength(1);
+    await appImport(page, output, `Text-markups-reopened-${round}.pdf`); await expect(page.locator('.zuvi-studio-pdf-native-hit')).toHaveCount(sourceCount + 4);
+    await appSave(page);
+    const beforeCopy = await appSnapshot(page);
+    await expect(page.getByRole('button', { name: '撤销', exact: true })).toBeDisabled();
+    await page.getByRole('button', { name: '选择文字', exact: true }).click();
+    await selectSource(page, 'SELECTABLE ORIGINAL', 3, 10, true);
+    await page.keyboard.press(process.platform === 'darwin' ? 'Meta+c' : 'Control+c');
+    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe('ECTABLE');
+    const afterCopy = await appSnapshot(page); expect(afterCopy.sourceHash).toBe(beforeCopy.sourceHash); expect(afterCopy.revision).toBe(beforeCopy.revision); expect(afterCopy.document).toEqual(beforeCopy.document);
+    await expect(page.getByRole('button', { name: '撤销', exact: true })).toBeDisabled();
+    rounds.push({ round, hash: createHash('sha256').update(output).digest('hex'), subtypes, markedTextMouseCopy: 'ECTABLE', sourceUnchanged: true, copyUndoDisabled: true });
+  }
+  await page.screenshot({ path: path.join(audit, 'app-text-markups-reopened.png'), fullPage: true, animations: 'disabled' });
+  expect(errors).toEqual([]); await writeFile(path.join(audit, 'app-markups-results.json'), JSON.stringify({ operations, rounds, originalStreams, errors }, null, 2) + '\n');
+});
+
+test('blocks source copying and annotation selection while disabled and destroys actual browser layer sessions', async ({ page, context }) => {
+  test.setTimeout(60000); await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  const data = await fixture(), errors: string[] = []; page.on('pageerror', error => errors.push(error.message));
+  await page.goto('/');
+  await page.evaluate(async ({ bytes, refs, modulePath }) => {
+    const { mountPdfLayerComponents } = await import(modulePath);
+    (window as unknown as { pdfComponentQA: unknown }).pdfComponentQA = await mountPdfLayerComponents(bytes, refs);
+  }, { bytes: [...data.bytes], refs: data.refs, modulePath: `/@fs${repo}/docs/audits/2026-11-27/pdf-text-layer/components-harness.tsx` });
+  const layer = page.getByRole('document', { name: 'PDF 第 1 页原文选择复制', exact: true });
+  await expect(layer).toHaveAttribute('data-ready', 'true');
+  await expect(page.getByLabel('PDF 原生批注外观')).toHaveAttribute('data-ready', 'true');
+  await layer.focus(); await page.keyboard.press('Control+a');
+  await expect.poll(() => page.evaluate(() => (window as unknown as { pdfComponentQA: { selection(): { text: string } | undefined } }).pdfComponentQA.selection()?.text)).toContain('SELECTABLE ORIGINAL');
+  await page.evaluate(() => (window as unknown as { pdfComponentQA: { disable(value: boolean): void } }).pdfComponentQA.disable(true));
+  await expect(layer).toHaveAttribute('data-disabled', 'true'); await expect(layer).toHaveAttribute('tabindex', '-1');
+  expect(await page.evaluate(() => document.getSelection()?.isCollapsed)).toBe(true);
+  expect(await page.evaluate(() => (window as unknown as { pdfComponentQA: { selection(): unknown } }).pdfComponentQA.selection())).toBeUndefined();
+  await page.evaluate(() => navigator.clipboard.writeText('KEEP_DISABLED'));
+  await layer.focus(); await page.keyboard.press(process.platform === 'darwin' ? 'Meta+c' : 'Control+c');
+  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe('KEEP_DISABLED');
+  const note = page.locator('[data-studio-annotation-id="no-ap-note"]');
+  await expect(note).toHaveCSS('pointer-events', 'none'); await expect(note).toHaveAttribute('tabindex', '-1');
+  await note.focus(); await page.keyboard.press('Enter');
+  expect(await page.evaluate(() => (window as unknown as { pdfComponentQA: { selected: string[] } }).pdfComponentQA.selected)).toEqual([]);
+  const cancelled = await page.evaluate(() => (window as unknown as { pdfComponentQA: { cancel(): Promise<unknown> } }).pdfComponentQA.cancel());
+  expect(cancelled).toEqual({ error: 'AbortError', children: 0 });
+  await page.evaluate(() => (window as unknown as { pdfComponentQA: { disable(value: boolean): void } }).pdfComponentQA.disable(false));
+  await expect(layer).not.toHaveAttribute('data-disabled', 'true'); await layer.focus(); await page.keyboard.press('Control+a');
+  const beforeCleanup = await page.locator('body > canvas').count(); expect(beforeCleanup).toBeGreaterThan(0);
+  await page.evaluate(() => (window as unknown as { pdfComponentQA: { destroy(): Promise<void> } }).pdfComponentQA.destroy());
+  await expect(layer).toHaveCount(0); expect(await page.evaluate(() => document.getSelection()?.isCollapsed)).toBe(true);
+  await expect(page.locator('body > canvas')).toHaveCount(0);
+  expect(errors).toEqual([]); await writeFile(path.join(audit, 'components-browser-results.json'), JSON.stringify({ disabledCopy: 'KEEP_DISABLED', disabledAnnotationSelections: [], cancelled, unmountedLayers: 0, beforeCleanup, afterCleanup: 0, errors }, null, 2) + '\n');
+});
+
+test('preserves another pending real PDF.js TextLayer while a renderer clears its global text caches', async ({ page }) => {
+  test.setTimeout(60000); const data = await fixture(); await page.goto('/');
+  await page.evaluate(async ({ bytes, refs, modulePath }) => {
+    const { mountPdfLayerComponents } = await import(modulePath);
+    (window as unknown as { pdfComponentQA: unknown }).pdfComponentQA = await mountPdfLayerComponents(bytes, refs);
+  }, { bytes: [...data.bytes], refs: data.refs, modulePath: `/@fs${repo}/docs/audits/2026-11-27/pdf-text-layer/components-harness.tsx` });
+  await expect(page.getByRole('document', { name: 'PDF 第 1 页原文选择复制', exact: true })).toHaveAttribute('data-ready', 'true');
+  await page.evaluate(async ({ bytes, modulePath }) => {
+    const { holdPdfTextLayer } = await import(modulePath);
+    (window as unknown as { pdfConcurrentQA: unknown }).pdfConcurrentQA = await holdPdfTextLayer(bytes);
+  }, { bytes: [...data.bytes], modulePath: `/@fs${repo}/docs/audits/2026-11-27/pdf-text-layer/components-harness.tsx` });
+  const pendingLayer = page.locator('[data-pdf-concurrent="true"]');
+  await expect(pendingLayer).toContainText('SELECTABLE ORIGINAL');
+  const before = await page.locator('body > canvas').count(); expect(before).toBeGreaterThan(0);
+  await page.evaluate(() => (window as unknown as { pdfComponentQA: { destroy(): Promise<void> } }).pdfComponentQA.destroy());
+  await expect(pendingLayer).toContainText('SELECTABLE ORIGINAL');
+  expect(await page.locator('body > canvas').count()).toBe(before);
+  await page.evaluate(() => (window as unknown as { pdfConcurrentQA: { release(): Promise<void> } }).pdfConcurrentQA.release());
+  await pendingLayer.evaluate(container => {
+    const span = [...container.querySelectorAll('span')].find(value => value.textContent === 'SELECTABLE ORIGINAL')!;
+    const range = document.createRange(); range.selectNodeContents(span);
+    document.getSelection()?.removeAllRanges(); document.getSelection()?.addRange(range);
+  });
+  expect(await page.evaluate(() => document.getSelection()?.toString())).toBe('SELECTABLE ORIGINAL');
+  await page.evaluate(() => (window as unknown as { pdfConcurrentQA: { destroy(): Promise<void> } }).pdfConcurrentQA.destroy());
+  await expect(pendingLayer).toHaveCount(0); await expect(page.locator('body > canvas')).toHaveCount(0);
+  await writeFile(path.join(audit, 'concurrent-browser-results.json'), JSON.stringify({ before, whileOtherLayerPending: before, afterBothDestroyed: 0, remainingLayerText: 'SELECTABLE ORIGINAL' }, null, 2) + '\n');
+});

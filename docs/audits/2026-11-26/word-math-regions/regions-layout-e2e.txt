@@ -1,0 +1,11 @@
+[WebServer] (node:16683) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:16699) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+  ✓  1 [chromium] › e2e/office-studio-word-math-layout.spec.ts:6:1 › keeps tall equation atoms and following text positions together at an actual page boundary (5.6s)
+  ✓  2 [chromium] › e2e/office-studio-word-math-regions.spec.ts:6:1 › edits independent header and footer equation groups and reopens both regions twice (5.8s)
+
+  2 passed (13.1s)

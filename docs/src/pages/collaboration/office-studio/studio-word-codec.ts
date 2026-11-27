@@ -1,32 +1,99 @@
+import { readWordMath, wordMathOmml } from './studio-word-math-codec';
+import { wordImageCrop } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-image-crop';
 import JSZip from 'jszip';
+import {wordSurface,wordMergeSurface} from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-surface';
+import { wordRowProperties } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-table-rows';
+import {
+  wordTableProperties,
+  wordTableGridToColumns,
+  wordTableColumnsToGrid,
+  wordEffectiveRowSpacing,
+  wordTableGridSpanWidth,
+} from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-table-properties';
+import {readWordSurface,wordSurfaceXml,patchWordSurfaceStyles} from './studio-word-surface-codec';
+import {
+  materializeWordNumbering,
+  wordNumberingCatalog,
+  wordNodeNumbering,
+} from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-numbering';
+import {
+  readNativeWordNumbering,
+  nativeWordNumberingConfig,
+  nativeWordParagraphNumbering,
+  patchNativeWordNumbering,
+  type NativeWordNumbering,
+} from './studio-word-numbering-codec';
+import {
+  wordTabStops,
+  wordMergeTabStops,
+  wordDecimalSymbol,
+  wordDefaultTabStop,
+} from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-tabs';
+import {
+  wordLineUnits,
+  WORD_KEEP_FLAGS,
+  wordParagraphNumber,
+  WORD_PARAGRAPH_KEYS,
+  type WordLineRule,
+} from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-paragraph-format';
+import {
+  wordMetricPoints,
+  type WordMetric,
+} from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-metrics';
 import {
   AlignmentType,
   BorderStyle,
   Document as DocxDocument,
   ExternalHyperlink,
+  InternalHyperlink,
   Footer,
   Header,
   HeadingLevel,
   ImageRun,
-  LevelFormat,
+  ImportedXmlComponent,
+  TextWrappingType,
+  type IFloating,
   Packer,
   PageBreak as DocxPageBreak,
   PageOrientation,
   PageNumber,
+  SimpleField,
   Paragraph,
+  ParagraphProperties,
   ShadingType,
   Table,
   TableCell,
   TableRow,
+  Tab,
   TextRun,
+  RunProperties,
   UnderlineType,
   WidthType,
   type IParagraphOptions,
+  type IParagraphStyleOptions,
   type IRunOptions,
+  type IImageOptions,
   type NumberingDefinition,
   type ParagraphChild,
 } from 'docx';
-import type { StudioRichNode, StudioWordDocument } from '@zuvi/react';
+import type {
+  StudioRichNode,
+  StudioWordDocument,
+  StudioWordCharacterStyle,
+  StudioWordParagraphFormat,
+  StudioWordParagraphStyle,
+  StudioWordImageLayout,
+} from '@zuvi/react';
+import { wordImageLayout } from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-images';
+import {
+  WORD_BODY_RUN,
+  WORD_BUILTIN_STYLES,
+  getStudioWordParagraphStyles,
+  materializeStudioWordStyles,
+  resolveStudioWordParagraphStyle,
+  studioWordNodeRun,
+  validateStudioWordParagraphStyles,
+} from '../../../../../packages/ui/src/components/OfficeStudio/studio-word-styles';
 
 const W = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';
 const R = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships';
@@ -54,8 +121,6 @@ const UNSUPPORTED_CONTENT = new Set([
   'commentReference',
 ]);
 const UNSUPPORTED_RUN = new Set([
-  'position',
-  'spacing',
   'w',
   'caps',
   'smallCaps',
@@ -110,6 +175,8 @@ type Appearance = {
   strike?: boolean;
   fontFamily?: string;
   fontSize?: string;
+  letterSpacing?: string;
+  baselineShift?: string;
   color?: string;
   backgroundColor?: string;
   script?: 'superscript' | 'subscript';
@@ -120,15 +187,23 @@ type Style = {
   heading?: number;
   quote?: boolean;
 };
-type ListInfo = { id: string; level: number; type: 'bulletList' | 'orderedList'; start: number };
+type ListInfo = {
+  id: string;
+  level: number;
+  type: 'bulletList' | 'orderedList';
+  start: number;
+  instanceId: string;
+  format: string;
+};
 type ParsedParagraph = { nodes: StudioRichNode[]; list?: ListInfo; quote?: boolean };
-type NumberLevel = { format: string; start: number; template: string };
 type ImportContext = {
   styles: Map<string, Style>;
   defaults: Style;
   relationships: Map<string, string>;
-  numbering: Map<string, Map<number, NumberLevel>>;
+  numbering: NativeWordNumbering;
   images: Map<string, string>;
+  styleModels: Map<string, StudioWordParagraphStyle>;
+  usedStyles: Set<string>;
 };
 
 function unsupported(feature: string): never {
@@ -191,7 +266,38 @@ function safeFont(input: string): string {
   return input;
 }
 
+function bookmarkName(input: unknown): string {
+  if (typeof input !== 'string' || !/^[\p{L}_][\p{L}\p{N}_]{0,39}$/u.test(input)) unsupported('书签名称');
+  return input as string;
+}
+function validateBookmarks(roots: StudioRichNode[], importing = false) {
+  const names = new Set<string>(), ids = new Set<string>();
+  for (const root of roots) {
+    const open = new Map<string, string>();
+    const visit = (node: StudioRichNode) => {
+      if (node.type === 'wordBookmark') {
+        checkAttrs(node, ['id', 'name', 'end']);
+        const id = node.attrs?.id;
+        if (importing && node.attrs?.end && node.attrs.name === '') node.attrs.name = open.get(String(id));
+        const name = bookmarkName(node.attrs?.name);
+        if (typeof id !== 'string' || !/^\d+$/.test(id) || typeof node.attrs?.end !== 'boolean') unsupported('书签标记');
+        if (node.attrs.end) {
+          if (open.get(id as string) !== name) unsupported('书签起止范围');
+          open.delete(id as string);
+        } else {
+          if (ids.has(id as string) || names.has(name)) unsupported('重复书签名称或编号');
+          ids.add(id as string); names.add(name); open.set(id as string, name);
+        }
+      }
+      node.content?.forEach(visit);
+    };
+    visit(root);
+    if (open.size) unsupported('书签缺少结束标记');
+  }
+}
+
 function safeLink(input: string): string {
+  if (input.startsWith('#')) return '#' + bookmarkName(input.slice(1));
   let protocol = '';
   try {
     protocol = new URL(input).protocol;
@@ -323,6 +429,24 @@ function runProperties(properties?: Element, base: Appearance = {}): Appearance 
   if (family) result.fontFamily = safeFont(family);
   const size = value(properties, 'sz');
   if (size) result.fontSize = `${number(size, '字号', 2, 818) / 2}pt`;
+  for (const [tag, key, units] of [
+    ['spacing', 'letterSpacing', 20],
+    ['position', 'baselineShift', 2],
+  ] as const) {
+    const property = child(properties, tag);
+    if (!property) continue;
+    const raw = attr(property);
+    const measured = /^([+-]?(?:\d+(?:\.\d*)?|\.\d+))(pt|in|cm|mm|pc|pi)$/i.exec(raw);
+    const amount = measured
+      ? Number(measured[1]) *
+        { pt: 1, in: 72, cm: 72 / 2.54, mm: 72 / 25.4, pc: 12, pi: 12 }[measured[2].toLowerCase()]!
+      : /^[+-]?\d+$/.test(raw)
+        ? Number(raw) / units
+        : NaN;
+    const value = wordMetricPoints(amount, key);
+    if (value === null) unsupported('字符间距或位置的范围/精度');
+    result[key] = `${value}pt`;
+  }
   const vertical = value(properties, 'vertAlign');
   if (vertical && !['baseline', 'superscript', 'subscript'].includes(vertical))
     unsupported('文字上下标');
@@ -348,17 +472,41 @@ function runProperties(properties?: Element, base: Appearance = {}): Appearance 
 
 function paragraphProperties(
   properties?: Element,
-  base: Record<string, unknown> = {}
+  base: Record<string, unknown> = {},
+  ownOnly = false
 ): Record<string, unknown> {
-  const result = { ...base };
+  const result = ownOnly ? ({} as Record<string, unknown>) : { ...base };
+  for(const key of WORD_KEEP_FLAGS)if(child(properties,key))result[key]=enabled(child(properties,key));
   if (
     child(properties, 'framePr') ||
     child(properties, 'textDirection') ||
     enabled(child(properties, 'bidi')) ||
-    child(properties, 'pPrChange') ||
-    child(properties, 'tabs')
+    child(properties, 'pPrChange')
   )
-    unsupported('段落定位、方向或制表位');
+    unsupported('段落定位或方向');
+  const tabs = paragraphTabs(properties);
+  if (tabs !== undefined) result.tabStops = ownOnly ? tabs : wordMergeTabStops(base.tabStops, tabs);
+  const surface=readWordSurface(properties);
+  if(surface!==undefined)result.surface=ownOnly?surface:wordMergeSurface(base.surface,surface);
+  const numbering = child(properties, 'numPr');
+  if (numbering)
+    result.numberingNative = {
+      numId: value(
+        numbering,
+        'numId',
+        String((base.numberingNative as { numId?: string } | undefined)?.numId ?? '')
+      ),
+      level: value(numbering, 'ilvl', '0'),
+    };
+  const outline = value(properties, 'outlineLvl');
+  if (
+    outline &&
+    (!Number.isInteger(Number(outline)) ||
+      Number(outline) < 0 ||
+      Number(outline) > 9 ||
+      (Number(outline) >= 6 && Number(outline) < 9))
+  )
+    unsupported('超过当前范围的段落大纲级别');
   const alignment = value(properties, 'jc');
   if (alignment) {
     if (!['left', 'start', 'center', 'right', 'end', 'both', 'distribute'].includes(alignment))
@@ -381,10 +529,22 @@ function paragraphProperties(
       if (amount) result[key] = number(amount, '段落间距', 0, 10000) / 20;
     }
     const line = attr(spacing, 'line');
-    if (line) {
-      if (attr(spacing, 'lineRule') && attr(spacing, 'lineRule') !== 'auto')
-        unsupported('固定值行距');
-      result.lineHeight = number(line, '行距', 120, 2400) / 240;
+    const explicitRule = attr(spacing, 'lineRule');
+    const rule = (explicitRule || base.lineHeightRule || 'auto') as WordLineRule;
+    if (!['auto', 'exact', 'atLeast'].includes(rule)) unsupported('行距类型');
+    if (line || explicitRule) {
+      const raw = line
+        ? Number(line)
+        : Number(base.lineHeight ?? 1) *
+          wordLineUnits((base.lineHeightRule ?? 'auto') as WordLineRule);
+      const effective = wordParagraphNumber(raw / wordLineUnits(rule), 'lineHeight', rule);
+      if (!Number.isInteger(raw) || effective === null) unsupported('行距范围或精度');
+      if (!ownOnly || explicitRule) result.lineHeightRule = rule;
+      if (line || !ownOnly) {
+        result.lineHeight = ownOnly && !explicitRule ? raw / 240 : effective;
+        result.lineHeightBasis =
+          ownOnly && !explicitRule ? 'auto' : rule === 'auto' ? 'auto' : 'points';
+      }
     }
   }
   const indent = child(properties, 'ind');
@@ -394,7 +554,12 @@ function paragraphProperties(
       ['right', 'indentRight'],
       ['firstLine', 'indentFirstLine'],
     ] as const) {
-      const amount = attr(indent, attribute);
+      const amount =
+        attribute === 'left'
+          ? attr(indent, 'start') || attr(indent, 'left')
+          : attribute === 'right'
+            ? attr(indent, 'end') || attr(indent, 'right')
+            : attr(indent, attribute);
       if (amount) result[key] = number(amount, '段落缩进', -10000, 10000) / 20;
     }
     const hanging = attr(indent, 'hanging');
@@ -403,7 +568,36 @@ function paragraphProperties(
   return result;
 }
 
-function parseStyles(xml?: XMLDocument): { defaults: Style; styles: Map<string, Style> } {
+function paragraphTabs(properties?: Element) {
+  const tabs = child(properties, 'tabs');
+  if (!tabs) return undefined;
+  return wordTabStops(
+    elements(tabs).map((tab) => {
+      if (tab.localName !== 'tab') unsupported('制表位子元素');
+      const alignment = attr(tab),
+        leader = attr(tab, 'leader');
+      return {
+        position: number(attr(tab, 'pos'), '制表位位置', 0, 31680) / 20,
+        alignment:
+          ({ start: 'left', end: 'right' } as Record<string, string>)[alignment] || alignment,
+        ...(leader ? { leader } : {}),
+      };
+    })
+  );
+}
+
+const nativeTabs = (input: unknown) =>
+  wordTabStops(input).map((stop) => ({
+    position: Math.round(stop.position * 20),
+    type: stop.alignment,
+    leader: stop.leader,
+  }));
+
+function parseStyles(xml?: XMLDocument): {
+  defaults: Style;
+  styles: Map<string, Style>;
+  styleModels: Map<string, StudioWordParagraphStyle>;
+} {
   const root = xml?.documentElement;
   const defaults: Style = {
     run: runProperties(
@@ -435,10 +629,12 @@ function parseStyles(xml?: XMLDocument): { defaults: Style; styles: Map<string, 
       /^(?:Heading|heading|标题)\s*([1-6])$/i.exec(styleName)?.[1] ||
       /^(?:Heading|标题)([1-6])$/i.exec(id)?.[1];
     const outline = value(child(source, 'pPr'), 'outlineLvl');
-    const level = heading
-      ? Number(heading)
-      : outline && Number(outline) < 6
+    const level = outline
+      ? Number(outline) < 6
         ? Number(outline) + 1
+        : undefined
+      : heading
+        ? Number(heading)
         : base.heading;
     const result: Style = {
       run: runProperties(child(source, 'rPr'), base.run),
@@ -458,10 +654,7 @@ function parseStyles(xml?: XMLDocument): { defaults: Style; styles: Map<string, 
         ? Number(/([1-6])$/.exec(value(source, 'name', id))?.[1])
         : undefined,
     };
-    if (
-      !elements(child(source, 'rPr')).some((element) => UNSUPPORTED_RUN.has(element.localName)) &&
-      !child(child(source, 'pPr'), 'tabs')
-    ) {
+    if (!elements(child(source, 'rPr')).some((element) => UNSUPPORTED_RUN.has(element.localName))) {
       try {
         resolve(id);
       } catch {
@@ -469,42 +662,129 @@ function parseStyles(xml?: XMLDocument): { defaults: Style; styles: Map<string, 
       }
     } else styles.set(id, { ...simple, paragraph: { studioUnsupported: true } });
   }
-  return { defaults, styles };
-}
-
-function parseNumbering(xml?: XMLDocument): Map<string, Map<number, NumberLevel>> {
-  const result = new Map<string, Map<number, NumberLevel>>();
-  const abstracts = new Map<string, Map<number, NumberLevel>>();
-  const root = xml?.documentElement;
-  for (const definition of elements(root).filter(
-    (element) => element.localName === 'abstractNum'
-  )) {
-    const levels = new Map<number, NumberLevel>();
-    for (const level of elements(definition).filter((element) => element.localName === 'lvl')) {
-      levels.set(Number(attr(level, 'ilvl')), {
-        format: value(level, 'numFmt'),
-        start: Number(value(level, 'start', '1')),
-        template: value(level, 'lvlText'),
-      });
+  const candidates = [...definitions]
+    .filter(
+      ([id, source]) =>
+        attr(source, 'type') === 'paragraph' &&
+        !['Normal', 'ZuviQuote', 'ZuviRule', 'ZuviNoSpacing'].includes(id) &&
+        !/^Heading[1-6]$/i.test(id) &&
+        !styles.get(id)?.paragraph.studioUnsupported
+    )
+    .sort(([a], [b]) => Number(b.startsWith('ZuviStyle_')) - Number(a.startsWith('ZuviStyle_')));
+  const modelIds = new Map<string, string>();
+  const reserved = new Set(WORD_BUILTIN_STYLES.map((style) => style.id));
+  for (const [id] of candidates)
+    if (id.startsWith('ZuviStyle_') && /^[a-zA-Z][\w-]{0,95}$/.test(id.slice(10))) {
+      modelIds.set(id, id.slice(10));
+      reserved.add(id.slice(10));
     }
-    abstracts.set(attr(definition, 'abstractNumId'), levels);
-  }
-  for (const definition of elements(root).filter((element) => element.localName === 'num')) {
-    const levels = new Map(abstracts.get(value(definition, 'abstractNumId')) || []);
-    for (const override of elements(definition).filter(
-      (element) => element.localName === 'lvlOverride'
-    )) {
-      const index = Number(attr(override, 'ilvl'));
-      const base = levels.get(index);
-      if (base)
-        levels.set(index, {
-          ...base,
-          start: Number(value(override, 'startOverride', String(base.start))),
-        });
+  let importedIndex = 1;
+  for (const [id] of candidates)
+    if (!modelIds.has(id)) {
+      while (reserved.has(`imported-${importedIndex}`)) importedIndex++;
+      const modelId = `imported-${importedIndex++}`;
+      modelIds.set(id, modelId);
+      reserved.add(modelId);
     }
-    result.set(attr(definition, 'numId'), levels);
+  const builtinId = (id: string) =>
+    id === 'Normal'
+      ? 'paragraph'
+      : id === 'ZuviNoSpacing'
+        ? 'no-spacing'
+        : /^Heading([1-6])$/i.test(id)
+          ? `heading-${/([1-6])$/.exec(id)![1]}`
+          : undefined;
+  const appearance = (run: Appearance): StudioWordCharacterStyle => ({
+    ...Object.fromEntries(
+      ['bold', 'italic', 'underline', 'strike', 'fontFamily', 'color']
+        .filter((key) => run[key as keyof Appearance] !== undefined)
+        .map((key) => [key, run[key as keyof Appearance]])
+    ),
+    ...(Object.prototype.hasOwnProperty.call(run, 'backgroundColor')
+      ? { backgroundColor: run.backgroundColor || null }
+      : {}),
+    ...(run.fontSize ? { fontSize: Number(run.fontSize.replace(/pt$/, '')) } : {}),
+    ...(run.letterSpacing !== undefined ? { letterSpacing: parseFloat(run.letterSpacing) } : {}),
+    ...(run.baselineShift !== undefined ? { baselineShift: parseFloat(run.baselineShift) } : {}),
+  });
+  const paragraphKeys = [
+    'textAlign',
+    'indentLeft',
+    'indentRight',
+    'indentFirstLine',
+    'spaceBefore',
+    'spaceAfter',
+    'lineHeight',
+    'lineHeightRule',
+    'lineHeightBasis',
+    'widowControl',
+    'keepNext',
+    'keepLines',
+  ];
+  const paragraphFormat = (input: Record<string, unknown>): StudioWordParagraphFormat =>
+    Object.fromEntries(
+      paragraphKeys.filter((key) => input[key] !== undefined).map((key) => [key, input[key]])
+    );
+  const names = new Set(WORD_BUILTIN_STYLES.map((style) => style.name.toLocaleLowerCase()));
+  const styleModels = new Map<string, StudioWordParagraphStyle>();
+  for (const [id, source] of candidates) {
+    const resolved = styles.get(id)!;
+    const baseId = value(source, 'basedOn');
+    const baseModel = modelIds.get(baseId);
+    const baseBuiltin = builtinId(baseId) || 'paragraph';
+    const base = resolveStudioWordParagraphStyle([], baseBuiltin);
+    const nativeBase = styles.get(baseId) || defaults;
+    const inheritedLevel = baseModel ? nativeBase.heading || 0 : base.headingLevel;
+    const directRun = appearance(runProperties(child(source, 'rPr')));
+    const directParagraph = paragraphFormat(
+      paragraphProperties(child(source, 'pPr'), nativeBase.paragraph, true)
+    );
+    const inheritedRun = { ...WORD_BODY_RUN, ...appearance(nativeBase.run) };
+    const inheritedParagraph = { ...base.paragraph, ...paragraphFormat(nativeBase.paragraph) };
+    let name = value(source, 'name', id);
+    if (names.has(name.toLocaleLowerCase())) name += '（导入）';
+    let suffix = 2;
+    const originalName = name;
+    while (names.has(name.toLocaleLowerCase())) name = `${originalName}（${suffix++}）`;
+    names.add(name.toLocaleLowerCase());
+    const nextId = value(source, 'next');
+    const next = modelIds.get(nextId) || builtinId(nextId);
+    styleModels.set(id, {
+      id: modelIds.get(id)!,
+      name,
+      basedOn: baseModel || baseBuiltin,
+      ...(next ? { next } : {}),
+      ...((resolved.heading || 0) !== inheritedLevel || value(child(source, 'pPr'), 'outlineLvl')
+        ? { headingLevel: (resolved.heading || 0) as StudioWordParagraphStyle['headingLevel'] }
+        : {}),
+      autoUpdate: enabled(child(source, 'autoRedefine')),
+      surface:baseModel?readWordSurface(child(source,'pPr')):wordMergeSurface(nativeBase.paragraph.surface,readWordSurface(child(source,'pPr'))),
+      tabStops: baseModel
+        ? paragraphTabs(child(source, 'pPr'))
+        : wordMergeTabStops(nativeBase.paragraph.tabStops, paragraphTabs(child(source, 'pPr'))),
+      run: {
+        ...(!baseModel
+          ? Object.fromEntries(
+              Object.entries(inheritedRun).filter(
+                ([key, input]) => input !== base.run[key as keyof StudioWordCharacterStyle]
+              )
+            )
+          : {}),
+        ...directRun,
+      },
+      paragraph: {
+        ...(!baseModel
+          ? Object.fromEntries(
+              Object.entries(inheritedParagraph).filter(
+                ([key, input]) => input !== base.paragraph[key as keyof StudioWordParagraphFormat]
+              )
+            )
+          : {}),
+        ...directParagraph,
+      },
+    });
   }
-  return result;
+  return { defaults, styles, styleModels };
 }
 
 function marks(appearance: Appearance): NonNullable<StudioRichNode['marks']> {
@@ -513,8 +793,15 @@ function marks(appearance: Appearance): NonNullable<StudioRichNode['marks']> {
     if (appearance[key]) result.push({ type: key });
   if (appearance.script) result.push({ type: appearance.script });
   const attrs: Record<string, unknown> = {};
-  for (const key of ['fontFamily', 'fontSize', 'color', 'backgroundColor'] as const)
-    if (appearance[key]) attrs[key] = appearance[key];
+  for (const key of [
+    'fontFamily',
+    'fontSize',
+    'color',
+    'backgroundColor',
+    'letterSpacing',
+    'baselineShift',
+  ] as const)
+    if (appearance[key] !== undefined) attrs[key] = appearance[key];
   if (Object.keys(attrs).length) result.push({ type: 'textStyle', attrs });
   return result;
 }
@@ -523,6 +810,16 @@ function pageFieldKind(instruction: string): 'current' | 'total' {
   const match = /^(PAGE|NUMPAGES)(?:\s+\\\*\s+(?:MERGEFORMAT|Arabic))*$/i.exec(instruction.trim());
   if (!match) unsupported('页码以外的域或非阿拉伯页码');
   return match[1].toUpperCase() === 'NUMPAGES' ? 'total' : 'current';
+}
+
+function importedField(instruction: string, result: string, appearance: Appearance): StudioRichNode {
+  if (instruction.trim().startsWith('=')) {
+    const formula = instruction.trim().replace(/\s+\\\*\s+MERGEFORMAT$/i, '').trim();
+    if (formula.length > 2048 || /[\r\n]/.test(formula)) unsupported('表格公式域');
+    return { type: 'tableFormula', attrs: { formula, result: result.trim() || '0' }, marks: marks(appearance) };
+  }
+  if (result && !/^\s*\d+\s*$/.test(result)) unsupported('非阿拉伯页码缓存');
+  return { type: 'pageNumber', attrs: { kind: pageFieldKind(instruction) }, marks: marks(appearance) };
 }
 
 function parseComplexField(
@@ -544,7 +841,11 @@ function parseComplexField(
     const properties = child(run, 'rPr');
     const characterStyle = context.styles.get(value(properties, 'rStyle'));
     if (characterStyle?.paragraph.studioUnsupported) unsupported('文字样式');
-    if (properties && (separated || index === firstIndex))
+    // Field terminators have no visible text and must not replace a zero run override.
+    if (
+      properties &&
+      (index === firstIndex || (separated && elements(run).some((item) => item.localName === 't')))
+    )
       appearance = runProperties(properties, { ...inherited, ...characterStyle?.run });
     const runItems = elements(run);
     for (let runIndex = 0; runIndex < runItems.length; runIndex++) {
@@ -561,7 +862,7 @@ function parseComplexField(
           if (separated) unsupported('无效的域');
           separated = true;
         } else if (type === 'end') {
-          if (result && !/^\s*\d+\s*$/.test(result)) unsupported('非阿拉伯页码缓存');
+
           const tail = run.cloneNode(false) as Element;
           if (properties) tail.appendChild(properties.cloneNode(true));
           for (const remaining of runItems.slice(runIndex + 1)) {
@@ -570,11 +871,7 @@ function parseComplexField(
           return {
             lastIndex: index,
             nodes: [
-              {
-                type: 'pageNumber',
-                attrs: { kind: pageFieldKind(instruction) },
-                marks: marks(appearance),
-              } as StudioRichNode,
+              importedField(instruction, result, appearance),
               ...parseRun(tail, context, inherited),
             ],
           };
@@ -590,9 +887,98 @@ function parseComplexField(
 
 function parseDrawing(drawing: Element, context: ImportContext): StudioRichNode {
   const inlines = drawing.getElementsByTagNameNS(WP, 'inline');
-  if (drawing.getElementsByTagNameNS(WP, 'anchor').length || inlines.length !== 1)
-    unsupported('浮动、锚定或非图片绘图');
-  const inline = inlines[0];
+  const anchors = drawing.getElementsByTagNameNS(WP, 'anchor');
+  if (inlines.length + anchors.length !== 1) unsupported('浮动、锚定或非图片绘图');
+  const inline = inlines[0] || anchors[0];
+  let layout: StudioWordImageLayout | undefined;
+  if (anchors.length) {
+    const anchor = anchors[0];
+    const wpChild = (parent: Element, name: string) =>
+      Array.from(parent.children).find(
+        (node) => node.namespaceURI === WP && node.localName === name
+      );
+    const boolean = (name: string, fallback: boolean) => {
+      const value = anchor.getAttribute(name);
+      if (value === null) return fallback;
+      if (value === '1' || value === 'true') return true;
+      if (value === '0' || value === 'false') return false;
+      unsupported('浮动图片布尔属性');
+    };
+    if (boolean('simplePos', false) || boolean('hidden', false))
+      unsupported('浮动图片隐藏或简单定位');
+    const position = (name: string) => {
+      const node = wpChild(anchor, name);
+      if (!node) unsupported('浮动图片缺少位置');
+      const offset = wpChild(node, 'posOffset');
+      const align = wpChild(node, 'align');
+      if (Number(!!offset) + Number(!!align) !== 1) unsupported('浮动图片定位');
+      return {
+        relative: node.getAttribute('relativeFrom') || '',
+        ...(offset
+          ? { offset: number(offset.textContent, '图片偏移量', -95250000, 95250000) / 9525 }
+          : { align: align!.textContent || '' }),
+      };
+    };
+    const wraps = Array.from(anchor.children).filter(
+      (node) => node.namespaceURI === WP && /^wrap/.test(node.localName)
+    );
+    if (wraps.length !== 1) unsupported('浮动图片环绕');
+    const wrap = wraps[0];
+    const kind = (
+      {
+        wrapSquare: 'square',
+        wrapTight: 'tight',
+        wrapThrough: 'through',
+        wrapTopAndBottom: 'topBottom',
+        wrapNone: boolean('behindDoc', false) ? 'behind' : 'front',
+      } as Record<string, StudioWordImageLayout['wrap']>
+    )[wrap.localName];
+    if (!kind || (boolean('behindDoc', false) && kind !== 'behind'))
+      unsupported('浮动图片层级或环绕');
+    const distance = Object.fromEntries(
+      (['top', 'right', 'bottom', 'left'] as const).map((side) => {
+        const name = `dist${side[0].toUpperCase()}`;
+        return [
+          side,
+          number(
+            wrap.getAttribute(name) || anchor.getAttribute(name) || '0',
+            '图片文字间距',
+            0,
+            9525000
+          ) / 9525,
+        ];
+      })
+    );
+    const polygon = wpChild(wrap, 'wrapPolygon');
+    const points = polygon
+      ? Array.from(polygon.children).map((point) => {
+          if (point.namespaceURI !== WP || !['start', 'lineTo'].includes(point.localName))
+            unsupported('浮动图片环绕轮廓');
+          return [
+            number(point.getAttribute('x'), '环绕轮廓', -216000, 216000),
+            number(point.getAttribute('y'), '环绕轮廓', -216000, 216000),
+          ] as [number, number];
+        })
+      : undefined;
+    const relativeHeight = number(
+      anchor.getAttribute('relativeHeight') || 0,
+      '图片层级',
+      0,
+      4294967295
+    );
+    layout = wordImageLayout({
+      wrap: kind,
+      horizontal: position('positionH'),
+      vertical: position('positionV'),
+      distance,
+      wrapSide: wrap.getAttribute('wrapText') || 'bothSides',
+      ...(points ? { polygon: points } : {}),
+      allowOverlap: boolean('allowOverlap', true),
+      lockAnchor: boolean('locked', false),
+      layoutInCell: boolean('layoutInCell', true),
+      zIndex: relativeHeight,
+    });
+  }
   const pictures = inline.getElementsByTagNameNS(PIC, 'pic');
   const blips = inline.getElementsByTagNameNS(A, 'blip');
   if (pictures.length !== 1 || blips.length !== 1) unsupported('绘图、组合对象或非图片图形');
@@ -608,9 +994,15 @@ function parseDrawing(drawing: Element, context: ImportContext): StudioRichNode 
     )
       unsupported('图片旋转或翻转');
   }
-  for (const crop of Array.from(inline.getElementsByTagNameNS(A, 'srcRect')))
-    if (['l', 't', 'r', 'b'].some((key) => Number(crop.getAttribute(key) || 0) !== 0))
-      unsupported('图片裁剪');
+  const cropNodes = Array.from(inline.getElementsByTagNameNS(A, 'srcRect'));
+  if (cropNodes.length > 1) unsupported('多个图片裁剪区域');
+  let crop;
+  try {
+    crop = cropNodes.length ? wordImageCrop(Object.fromEntries(
+      [['l', 'left'], ['t', 'top'], ['r', 'right'], ['b', 'bottom']].map(([native, edge]) =>
+        [edge, Number(cropNodes[0].getAttribute(native) || 0) / 1000])
+    )) : null;
+  } catch { unsupported('图片裁剪区域'); }
   if (Array.from(blip.children).some((node) => node.localName !== 'extLst'))
     unsupported('图片效果');
   for (const list of elements(blip))
@@ -657,6 +1049,8 @@ function parseDrawing(drawing: Element, context: ImportContext): StudioRichNode 
         0,
         1000
       ),
+      ...(layout ? { layout } : {}),
+      ...(crop ? { crop } : {}),
     },
     ...(drawingLink ? { marks: [{ type: 'link', attrs: { href: drawingLink } }] } : {}),
   };
@@ -718,20 +1112,65 @@ function parseParagraph(element: Element, context: ImportContext): ParsedParagra
   const style = context.styles.get(styleId) || context.defaults;
   if (style.paragraph.studioUnsupported) unsupported('段落样式');
   const attrs = paragraphProperties(properties, style.paragraph);
+  if(attrs.surface!==undefined){attrs.paragraphSurface=attrs.surface;delete attrs.surface;}
+  const spacing = child(properties, 'spacing'),
+    indent = child(properties, 'ind');
+  attrs.paragraphStyleDirectAttrs = [
+    ...(child(properties, 'jc') ? ['textAlign'] : []),
+    ...(attr(indent, 'left') || attr(indent, 'start') ? ['indentLeft'] : []),
+    ...(attr(indent, 'right') || attr(indent, 'end') ? ['indentRight'] : []),
+    ...(attr(indent, 'firstLine') || attr(indent, 'hanging') ? ['indentFirstLine'] : []),
+    ...(attr(spacing, 'before') ? ['spaceBefore'] : []),
+    ...(attr(spacing, 'after') ? ['spaceAfter'] : []),
+    ...(attr(spacing, 'line') ? ['lineHeight'] : []),
+    ...(attr(spacing, 'lineRule') ? ['lineHeightRule'] : []),
+    ...WORD_KEEP_FLAGS.filter((key)=>child(properties,key)),
+  ];
+  const directOutline = value(properties, 'outlineLvl');
+  const headingLevel = directOutline
+    ? Number(directOutline) < 6
+      ? Number(directOutline) + 1
+      : undefined
+    : style.heading;
+  const namedStyle = context.styleModels.get(styleId);
+  if (namedStyle) {
+    const ownSurface=readWordSurface(properties);
+    if(ownSurface===undefined)delete attrs.paragraphSurface;else attrs.paragraphSurface=ownSurface;
+    const ownTabs = paragraphTabs(properties);
+    if (ownTabs === undefined) delete attrs.tabStops;
+    else attrs.tabStops = ownTabs;
+    attrs.paragraphStyle = namedStyle.id;
+    attrs.paragraphStyleMaterialized = true;
+    context.usedStyles.add(namedStyle.id);
+  } else if (styleId === 'ZuviNoSpacing') attrs.paragraphStyle = 'no-spacing';
+  else if (styleId === 'Normal' && headingLevel) {
+    attrs.paragraphStyle = 'paragraph';
+    attrs.paragraphStyleMaterialized = true;
+  }
   const appearance = runProperties(child(properties, 'rPr'), style.run);
   const inline: StudioRichNode[] = [];
   const paragraphItems = elements(element);
   for (let index = 0; index < paragraphItems.length; index++) {
     const item = paragraphItems[index];
+    if (item.namespaceURI === 'http://schemas.openxmlformats.org/officeDocument/2006/math' && ['oMath', 'oMathPara'].includes(item.localName)) {
+      inline.push({ type: 'mathEquation', attrs: { equation: readWordMath(item) } }); continue;
+    }
     if (item.namespaceURI !== W) unsupported('公式或扩展对象');
-    if (['pPr', 'proofErr', 'bookmarkStart', 'bookmarkEnd'].includes(item.localName)) continue;
+    if (['pPr', 'proofErr'].includes(item.localName)) continue;
+    if (['bookmarkStart', 'bookmarkEnd'].includes(item.localName)) {
+      const id = attr(item, 'id');
+      if (!/^\d+$/.test(id) || attr(item, 'colFirst') || attr(item, 'colLast')) unsupported('书签编号或列范围');
+      const name = item.localName === 'bookmarkStart' ? bookmarkName(attr(item, 'name')) : '';
+      inline.push({ type: 'wordBookmark', attrs: { id, name, end: item.localName === 'bookmarkEnd' } });
+      continue;
+    }
     if (item.localName === 'r' && child(item, 'fldChar')) {
       const parsed = parseComplexField(paragraphItems, index, appearance, context);
       inline.push(...parsed.nodes);
       index = parsed.lastIndex;
     } else if (item.localName === 'fldSimple') {
       if (['1', 'true', 'on'].includes(attr(item, 'fldLock'))) unsupported('锁定域');
-      const kind = pageFieldKind(attr(item, 'instr'));
+      const instruction = attr(item, 'instr');
       const cachedRuns = elements(item);
       let cachedText = '';
       let cachedAppearance: Appearance | undefined;
@@ -753,49 +1192,69 @@ function parseParagraph(element: Element, context: ImportContext): ParsedParagra
           if (child.localName === 't') cachedText += child.textContent || '';
         }
       }
-      if (cachedText && !/^\s*\d+\s*$/.test(cachedText)) unsupported('非阿拉伯页码缓存');
-      inline.push({
-        type: 'pageNumber',
-        attrs: { kind },
-        marks: marks(cachedAppearance || appearance),
-      });
+      inline.push(importedField(instruction, cachedText, cachedAppearance || appearance));
     } else if (item.localName === 'r') inline.push(...parseRun(item, context, appearance));
     else if (item.localName === 'hyperlink') {
       const id = item.getAttributeNS(R, 'id') || item.getAttribute('r:id') || '';
       const target = context.relationships.get(id);
-      if (!target || attr(item, 'anchor')) unsupported('文档内部链接');
+      const anchor = attr(item, 'anchor');
+      if (anchor && id) unsupported('同时具有外部与内部目标的链接');
+      if (!target && !anchor) unsupported('缺失的链接目标');
+      const href = anchor ? '#' + bookmarkName(anchor) : safeLink(target!);
       for (const run of elements(item)) {
         if (run.localName !== 'r') unsupported('链接内容');
-        inline.push(...parseRun(run, context, appearance, safeLink(target)));
+        inline.push(...parseRun(run, context, appearance, href));
       }
     } else unsupported('段落内的对象、控件或修订');
   }
   const listProperties = child(properties, 'numPr');
   let list: ListInfo | undefined;
-  const numId = value(listProperties, 'numId');
+  const inheritedNumbering = attrs.numberingNative as { numId: string; level: string } | undefined;
+  delete attrs.numberingNative;
+  const numId = value(listProperties, 'numId', inheritedNumbering?.numId ?? '');
+  if (numId === '0') attrs.numberingDisabled = true;
   if (numId && numId !== '0') {
-    const level = number(value(listProperties, 'ilvl', '0'), '列表层级', 0, 8);
-    const definition = context.numbering.get(numId)?.get(level);
-    if (!definition || !['bullet', 'decimal'].includes(definition.format))
-      unsupported('列表编号格式');
-    if (definition.format === 'decimal' && definition.template !== `%${level + 1}.`)
-      unsupported('复合列表编号');
-    number(definition.start, '列表起始编号', 1, 100000);
-    list = {
-      id: numId,
-      level,
-      type: definition.format === 'bullet' ? 'bulletList' : 'orderedList',
-      start: definition.start,
-    };
+    const level = number(
+      value(listProperties, 'ilvl', inheritedNumbering?.level ?? '0'),
+      '列表层级',
+      0,
+      8
+    );
+    const reference = context.numbering.references.get(numId);
+    const instance = context.numbering.catalog.instances.find(
+      (entry) => entry.id === reference?.instanceId
+    );
+    const definition = context.numbering.catalog.definitions.find(
+      (entry) => entry.id === reference?.definitionId
+    )?.levels[level];
+    if (!definition || !instance) unsupported('列表编号格式');
+    attrs.numbering = { instanceId: instance.id, level };
+    if (!headingLevel && (definition.format === 'bullet' || definition.text === `%${level + 1}.`))
+      list = {
+        id: numId,
+        level,
+        type: definition.format === 'bullet' ? 'bulletList' : 'orderedList',
+        start: instance.startOverrides?.[level] ?? definition.start,
+        instanceId: instance.id,
+        format: definition.format,
+      };
   }
   const border = child(properties, 'pBdr');
+  const leftBorder = child(border, 'left');
+  const quoteBorder =
+    !!leftBorder &&
+    elements(border).length === 1 &&
+    attr(leftBorder) === 'single' &&
+    attr(leftBorder, 'sz') === '18' &&
+    colour(attr(leftBorder, 'color')) === '#1f2937' &&
+    (!attr(leftBorder, 'space') || attr(leftBorder, 'space') === '0');
   if (styleId === 'ZuviRule' || (border && child(border, 'bottom') && !inline.length))
     return { nodes: [{ type: 'horizontalRule' }] };
-  if (border && styleId !== 'ZuviQuote') unsupported('段落边框');
+  if(style.quote || quoteBorder) delete attrs.paragraphSurface;
   const base: StudioRichNode = {
-    type: style.heading ? 'heading' : 'paragraph',
-    ...(Object.keys(attrs).length || style.heading
-      ? { attrs: { ...attrs, ...(style.heading ? { level: style.heading } : {}) } }
+    type: headingLevel ? 'heading' : 'paragraph',
+    ...(Object.keys(attrs).length || headingLevel
+      ? { attrs: { ...attrs, ...(headingLevel ? { level: headingLevel } : {}) } }
       : {}),
   };
   const nodes: StudioRichNode[] = [];
@@ -812,7 +1271,7 @@ function parseParagraph(element: Element, context: ImportContext): ParsedParagra
     nodes.push({ ...base, ...(segment.length ? { content: segment } : {}) });
   if (list && (nodes.length !== 1 || !['paragraph', 'heading'].includes(nodes[0].type)))
     unsupported('列表内分页符');
-  return { nodes, list, quote: style.quote };
+  return { nodes, list, quote: style.quote || quoteBorder };
 }
 
 function parseBlocks(parent: Element, context: ImportContext): StudioRichNode[] {
@@ -838,7 +1297,11 @@ function parseBlocks(parent: Element, context: ImportContext): StudioRichNode[] 
       continue;
     }
     const info = parsed.list;
-    if (info.level > stack.length) unsupported('缺少上级的嵌套列表');
+    if (info.level > stack.length) {
+      stack.length = 0;
+      output.push(...parsed.nodes);
+      continue;
+    }
     stack.splice(info.level + 1);
     if (
       !stack[info.level] ||
@@ -847,7 +1310,23 @@ function parseBlocks(parent: Element, context: ImportContext): StudioRichNode[] 
     ) {
       const list: StudioRichNode = {
         type: info.type,
-        ...(info.type === 'orderedList' ? { attrs: { start: info.start } } : {}),
+        attrs: {
+          numberingInstanceId: info.instanceId,
+          ...(info.type === 'orderedList'
+            ? {
+                start: info.start,
+                type: (
+                  {
+                    decimal: '1',
+                    upperRoman: 'I',
+                    lowerRoman: 'i',
+                    upperLetter: 'A',
+                    lowerLetter: 'a',
+                  } as Record<string, string>
+                )[info.format],
+              }
+            : {}),
+        },
         content: [],
       };
       if (info.level === 0) output.push(list);
@@ -861,14 +1340,36 @@ function parseBlocks(parent: Element, context: ImportContext): StudioRichNode[] 
   return output;
 }
 
+function nativeCellSpacing(properties: Element | undefined | null): number | null {
+  const spacing = child(properties, 'tblCellSpacing');
+  if (!spacing) return null;
+  if (attr(spacing, 'type') === 'nil') return 0;
+  if (attr(spacing, 'type') !== 'dxa' || !attr(spacing, 'w')) unsupported('单元格间距单位');
+  // Word stores the half-gap in twips. The editor model records the visible gap.
+  return number(Number(attr(spacing, 'w')), '单元格间距', 0, 20000) / 10;
+}
+
 function parseTable(element: Element, context: ImportContext): StudioRichNode {
   const properties = child(element, 'tblPr');
   if (child(properties, 'tblpPr') || enabled(child(properties, 'bidiVisual')))
     unsupported('浮动或反向表格');
-  const grid = elements(child(element, 'tblGrid')).map((column) => Number(attr(column, 'w')) / 15);
+  const defaultMargins: Record<string, number> = {};
+  for (const side of elements(child(properties, 'tblCellMar'))) {
+    if (!['top', 'right', 'bottom', 'left', 'start', 'end'].includes(side.localName) || attr(side, 'type') !== 'dxa') unsupported('表格默认内边距单位');
+    const key = side.localName === 'start' ? 'left' : side.localName === 'end' ? 'right' : side.localName;
+    if (key in defaultMargins) unsupported('重复表格默认内边距');
+    defaultMargins[key] = number(Number(attr(side, 'w')), '表格默认内边距', 0, 40000) / 20;
+  }
+  const tableSpacing = nativeCellSpacing(properties);
+  const sourceRows = elements(element).filter((item) => item.localName === 'tr');
+  const rowSpacings = sourceRows.map(row => nativeCellSpacing(child(row, 'trPr')) ?? nativeCellSpacing(child(row, 'tblPrEx')));
+  const tableProperties = wordTableProperties({ defaultCellMargins: defaultMargins, cellSpacing: tableSpacing });
+  const gridSpacing = tableSpacing ?? 0;
+  const nativeGrid = elements(child(element, 'tblGrid')).map((column) => number(Number(attr(column, 'w')), '表格网格列宽', 1, 400000) / 15);
+  const grid = nativeGrid.length ? wordTableGridToColumns(nativeGrid, gridSpacing) : [];
   const rows: StudioRichNode[] = [];
   let previousMerges = new Map<number, StudioRichNode>();
-  for (const row of elements(element).filter((item) => item.localName === 'tr')) {
+  for (const [rowIndex, row] of sourceRows.entries()) {
     if (child(child(row, 'trPr'), 'gridBefore') || child(child(row, 'trPr'), 'gridAfter'))
       unsupported('不规则表格行');
     const isHeader = enabled(child(child(row, 'trPr'), 'tblHeader'));
@@ -881,6 +1382,8 @@ function parseTable(element: Element, context: ImportContext): StudioRichNode {
         unsupported('表格文字方向或旧式合并');
       const colspan = number(value(cellProperties, 'gridSpan', '1'), '合并列数', 1, 100);
       const merge = child(cellProperties, 'vMerge');
+      if ((!merge || attr(merge) === 'restart') && nativeGrid.length && column + colspan <= nativeGrid.length)
+        wordTableGridSpanWidth(nativeGrid, column, colspan, rowSpacings[rowIndex] ?? tableSpacing);
       const content = parseBlocks(cell, context);
       if (merge && attr(merge) !== 'restart') {
         const origin = previousMerges.get(column);
@@ -890,6 +1393,17 @@ function parseTable(element: Element, context: ImportContext): StudioRichNode {
         origin.attrs!.rowspan = Number(origin.attrs!.rowspan) + 1;
         for (let offset = 0; offset < colspan; offset++) merges.set(column + offset, origin);
       } else {
+        const verticalAlign = value(cellProperties, 'vAlign');
+        if (verticalAlign && !['top', 'center', 'bottom'].includes(verticalAlign)) unsupported('单元格垂直对齐');
+        const cellMargins: Record<string, number> = {};
+        const explicitSides = new Set<string>();
+        for (const side of elements(child(cellProperties, 'tcMar'))) {
+          if (!['top', 'right', 'bottom', 'left', 'start', 'end'].includes(side.localName) || attr(side, 'type') !== 'dxa') unsupported('单元格内边距单位');
+          const key = side.localName === 'start' ? 'left' : side.localName === 'end' ? 'right' : side.localName;
+          if (explicitSides.has(key)) unsupported('重复单元格内边距');
+          explicitSides.add(key);
+          cellMargins[key] = number(Number(attr(side, 'w')), '单元格内边距', 0, 40000) / 20;
+        }
         const backgroundColor = colour(attr(child(cellProperties, 'shd'), 'fill'));
         const colwidth = grid.slice(column, column + colspan);
         const node: StudioRichNode = {
@@ -903,6 +1417,8 @@ function parseTable(element: Element, context: ImportContext): StudioRichNode {
                 ? colwidth
                 : null,
             ...(backgroundColor ? { backgroundColor } : {}),
+            ...(verticalAlign ? { verticalAlign } : {}),
+            ...(Object.keys(cellMargins).length ? { cellMargins } : {}),
           },
           content: content.length ? content : [{ type: 'paragraph' }],
         };
@@ -912,11 +1428,19 @@ function parseTable(element: Element, context: ImportContext): StudioRichNode {
       }
       column += colspan;
     }
-    rows.push({ type: 'tableRow', content: cells });
+    const rowProperties = child(row, 'trPr');
+    const height = child(rowProperties, 'trHeight');
+    const cantSplit = child(rowProperties, 'cantSplit');
+    const properties = wordRowProperties({
+      ...(height ? { rowHeight: number(attr(height), '行高', 0, 40000) / 20, rowHeightRule: attr(height, 'hRule') || 'auto' } : {}),
+      ...(cantSplit ? { allowSplit: !enabled(cantSplit) } : {}),
+    });
+    const spacing = rowSpacings[rowIndex];
+    rows.push({ type: 'tableRow', ...(height || cantSplit || spacing !== null ? { attrs: { ...properties, ...(spacing !== null ? { cellSpacing: spacing } : {}) } } : {}), content: cells });
     previousMerges = merges;
   }
   if (!rows.length || !rows[0].content?.length) unsupported('空表格');
-  return { type: 'table', content: rows };
+  return { type: 'table', attrs: tableProperties as unknown as Record<string, unknown>, content: rows };
 }
 
 function parsePage(body: Element): StudioWordDocument['page'] {
@@ -1081,11 +1605,39 @@ export async function importStudioWord(source: Blob, name: string): Promise<Stud
   const page = parsePage(body);
   const budget: ImageBudget = { bytes: 0, sources: new Map() };
   const mainRelationships = await partRelationships(zip, 'word/document.xml', budget);
+  const parsedStyles = parseStyles(stylesXml);
+  const usedNumbers = new Set(
+    [
+      ...xml!.getElementsByTagNameNS(W, 'numId'),
+      ...(stylesXml?.getElementsByTagNameNS(W, 'numId') ?? []),
+    ]
+      .map((entry) => attr(entry))
+      .filter((id) => id !== '0')
+  );
+  for (const path of Object.keys(zip.files).filter((path) =>
+    /^word\/(header|footer)[^/]*\.xml$/.test(path)
+  )) {
+    const part = await readXml(zip, path);
+    for (const entry of part?.getElementsByTagNameNS(W, 'numId') ?? [])
+      if (attr(entry) !== '0') usedNumbers.add(attr(entry));
+  }
+  const nativeNumbering = readNativeWordNumbering(
+    numberingXml,
+    (id) =>
+      parsedStyles.styleModels.get(id)?.id ||
+      (id === 'Normal'
+        ? 'paragraph'
+        : /^Heading[1-6]$/i.test(id)
+          ? `heading-${id.slice(-1)}`
+          : undefined),
+    usedNumbers
+  );
   const context: ImportContext = {
-    ...parseStyles(stylesXml),
+    ...parsedStyles,
     relationships: mainRelationships.relationships,
     images: mainRelationships.images,
-    numbering: parseNumbering(numberingXml),
+    numbering: nativeNumbering,
+    usedStyles: new Set(),
   };
   const content = parseBlocks(body, context);
   const regionDocuments: Pick<StudioWordDocument, 'header' | 'footer' | 'pageNumbers'> = {};
@@ -1123,12 +1675,58 @@ export async function importStudioWord(source: Blob, name: string): Promise<Stud
     regionDocuments[region] = model;
     if (region === 'footer' && containsCurrentPageNumber(model)) regionDocuments.pageNumbers = true;
   }
+  validateBookmarks([{ type: 'doc', content }, ...Object.values(regionDocuments).filter((value): value is StudioRichNode => typeof value === 'object')], true);
+  const definitions = [...context.styleModels.values()];
+  for (const definition of nativeNumbering.catalog.definitions)
+    for (const level of definition.levels)
+      if (level.paragraphStyle) context.usedStyles.add(level.paragraphStyle);
+  for (const [nativeId, style] of context.styleModels)
+    if (nativeId.startsWith('ZuviStyle_')) context.usedStyles.add(style.id);
+  let previousSize = -1;
+  while (context.usedStyles.size !== previousSize) {
+    previousSize = context.usedStyles.size;
+    for (const style of definitions.filter((item) => context.usedStyles.has(item.id)))
+      for (const id of [style.basedOn, style.next])
+        if (id && definitions.some((item) => item.id === id)) context.usedStyles.add(id);
+  }
+  const paragraphStyles = validateStudioWordParagraphStyles(
+    definitions.filter((item) => context.usedStyles.has(item.id))
+  );
   return {
     version: 1,
     id: `studio-word-${globalThis.crypto.randomUUID()}`,
     name: name || '未命名.docx',
     kind: 'word',
-    content: { type: 'doc', content: content.length ? content : [{ type: 'paragraph' }] },
+    ...(child(settingsXml?.documentElement, 'decimalSymbol')
+      ? {
+          decimalSymbol: wordDecimalSymbol(value(settingsXml?.documentElement, 'decimalSymbol')),
+        }
+      : {}),
+    ...(child(settingsXml?.documentElement, 'defaultTabStop')
+      ? {
+          defaultTabStop: wordDefaultTabStop(
+            number(value(settingsXml?.documentElement, 'defaultTabStop'), '默认制表位', 1, 31680) /
+              20
+          ),
+        }
+      : {}),
+    content: {
+      type: 'doc',
+      ...(paragraphStyles.length || nativeNumbering.catalog.definitions.length
+        ? {
+            attrs: {
+              ...(paragraphStyles.length ? { paragraphStyles } : {}),
+              ...(nativeNumbering.catalog.definitions.length
+                ? {
+                    numberingDefinitions: nativeNumbering.catalog.definitions,
+                    numberingInstances: nativeNumbering.catalog.instances,
+                  }
+                : {}),
+            },
+          }
+        : {}),
+      content: content.length ? content : [{ type: 'paragraph' }],
+    },
     page,
     ...regionDocuments,
   };
@@ -1141,7 +1739,10 @@ function checkAttrs(node: StudioRichNode, allowed: string[]) {
   }
 }
 
-function runOptions(node: StudioRichNode): { options: IRunOptions; href?: string } {
+function runOptions(
+  node: StudioRichNode,
+  inherited?: Required<StudioWordCharacterStyle>
+): { options: IRunOptions; href?: string } {
   let href: string | undefined;
   let options: IRunOptions = { text: node.text || '' };
   for (const mark of node.marks || []) {
@@ -1159,8 +1760,18 @@ function runOptions(node: StudioRichNode): { options: IRunOptions; href?: string
         'fontSize',
         'color',
         'backgroundColor',
+        'letterSpacing',
+        'baselineShift',
       ]);
       const attrs = mark.attrs || {};
+      for (const key of ['letterSpacing', 'baselineShift'] as WordMetric[]) {
+        if (attrs[key] === undefined || attrs[key] === null) continue;
+        const metric = wordMetricPoints(attrs[key], key);
+        if (metric === null) unsupported('字符间距或位置的范围/精度');
+        if (key === 'letterSpacing')
+          options = { ...options, characterSpacing: Math.round(metric * 20) };
+        else options = { ...options, position: `${metric}pt` };
+      }
       if (attrs.fontFamily) options = { ...options, font: safeFont(String(attrs.fontFamily)) };
       if (attrs.fontSize) {
         const match = /^(\d+(?:\.\d+)?)(pt|px)$/.exec(String(attrs.fontSize));
@@ -1178,30 +1789,189 @@ function runOptions(node: StudioRichNode): { options: IRunOptions; href?: string
         };
     } else throw new Error(`DOCX 导出尚未支持 ${mark.type} 文字格式。`);
   }
+  if (inherited) {
+    const actual = studioWordNodeRun(node);
+    options = {
+      ...options,
+      bold: actual.bold === inherited.bold ? undefined : actual.bold,
+      italics: actual.italic === inherited.italic ? undefined : actual.italic,
+      strike: actual.strike === inherited.strike ? undefined : actual.strike,
+      underline:
+        actual.underline === inherited.underline
+          ? undefined
+          : { type: actual.underline ? UnderlineType.SINGLE : UnderlineType.NONE },
+      font: actual.fontFamily === inherited.fontFamily ? undefined : safeFont(actual.fontFamily),
+      size: actual.fontSize === inherited.fontSize ? undefined : actual.fontSize * 2,
+      characterSpacing:
+        actual.letterSpacing === inherited.letterSpacing
+          ? undefined
+          : Math.round(actual.letterSpacing * 20),
+      position:
+        actual.baselineShift === inherited.baselineShift ? undefined : `${actual.baselineShift}pt`,
+      color:
+        actual.color.toLowerCase() === inherited.color.toLowerCase()
+          ? undefined
+          : actual.color.slice(1),
+      shading:
+        actual.backgroundColor === inherited.backgroundColor
+          ? undefined
+          : actual.backgroundColor
+            ? { type: ShadingType.CLEAR, fill: actual.backgroundColor.slice(1) }
+            : { type: ShadingType.NIL },
+    };
+  }
   return { options, href };
 }
 
-function inlineChildren(nodes: StudioRichNode[] = []): ParagraphChild[] {
+function nativeRunPosition(position: NonNullable<IRunOptions['position']>) {
+  const points = wordMetricPoints(position, 'baselineShift');
+  if (points === null) unsupported('字符位置的范围/精度');
+  // docx narrows this option to unit strings but serializes it verbatim, including field runs.
+  return String(Math.round(points * 2)) as NonNullable<IRunOptions['position']>;
+}
+
+class MetricTextRun extends TextRun {
+  constructor(options: IRunOptions) {
+    super({ ...options, position: options.position === undefined ? undefined : nativeRunPosition(options.position) });
+    // docx omits numeric zero; a zero override must cancel inherited spacing.
+    if (options.characterSpacing === 0)
+      this.properties.push(new ImportedXmlComponent('w:spacing', { 'w:val': '0' }));
+  }
+}
+
+class MetricImageRun extends ImageRun {
+  constructor(options: IImageOptions) {
+    super({ ...options, run: options.run && { ...options.run, position: options.run.position === undefined ? undefined : nativeRunPosition(options.run.position) } });
+    if (options.run?.characterSpacing === 0)
+      this.root
+        .find((child): child is RunProperties => child instanceof RunProperties)
+        ?.push(new ImportedXmlComponent('w:spacing', { 'w:val': '0' }));
+  }
+}
+
+class SurfaceParagraph extends Paragraph {
+  constructor(options:IParagraphOptions,surface?:unknown){
+    super(options);
+    if(surface!==undefined){
+      const properties=this.root.find((entry):entry is ParagraphProperties=>entry instanceof ParagraphProperties)!;
+      const xml=wordSurfaceXml(surface);if(xml)properties.push(ImportedXmlComponent.fromXmlString(xml));
+    }
+  }
+}
+class FormulaField extends SimpleField {
+  constructor(instruction: string, run: MetricTextRun) {
+    super(instruction);
+    this.root.push(run);
+  }
+}
+function nativeWordMath(node: StudioRichNode): string {
+      const format: import('../../../../../packages/ui/src/components/OfficeStudio/studio-word-math').WordMathFormat = {};
+      for (const mark of node.marks || []) {
+        if (['bold', 'italic', 'underline', 'strike'].includes(mark.type)) format[mark.type as 'bold' | 'italic' | 'underline' | 'strike'] = true;
+        else if (mark.type === 'superscript' || mark.type === 'subscript') format.script = mark.type;
+        else if (mark.type === 'textStyle') {
+          runOptions({ ...node, marks: [mark] });
+          for (const [key, value] of Object.entries(mark.attrs || {})) {
+            if (value == null || value === '') continue;
+            if (key === 'fontSize') {
+              const match = /^(\d+(?:\.\d+)?)(pt|px)$/.exec(String(value))!;
+              format.fontSize = `${Number(match[1]) * (match[2] === 'px' ? 0.75 : 1)}pt`;
+            } else if (key === 'color' || key === 'backgroundColor') Object.assign(format, { [key]: colour(value) });
+            else if (key === 'letterSpacing' || key === 'baselineShift') Object.assign(format, { [key]: `${wordMetricPoints(value, key)}pt` });
+            else Object.assign(format, { [key]: value });
+          }
+        } else unsupported('此数学公式字符格式');
+      }
+
+  return wordMathOmml(node.attrs?.equation, format);
+}
+
+function inlineChildren(
+  nodes: StudioRichNode[] = [],
+  inherited?: Required<StudioWordCharacterStyle>
+): ParagraphChild[] {
   return nodes.map((node) => {
+    if (node.type === 'wordBookmark') {
+      const name = bookmarkName(node.attrs?.name), id = String(node.attrs?.id);
+      const escape = (text: string) => text.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+      return ImportedXmlComponent.fromXmlString(node.attrs?.end
+        ? `<w:bookmarkEnd xmlns:w="${W}" w:id="${escape(id)}"/>`
+        : `<w:bookmarkStart xmlns:w="${W}" w:id="${escape(id)}" w:name="${escape(name)}"/>`) as unknown as ParagraphChild;
+    }
     if (node.type === 'hardBreak') return new TextRun({ break: 1 });
+    if (node.type === 'tableFormula') {
+      checkAttrs(node, ['formula', 'result']);
+      const formula = String(node.attrs?.formula || '').trim();
+      const result = String(node.attrs?.result ?? '0');
+      if (!formula.startsWith('=') || formula.length > 2048 || /[\r\n]/.test(formula)) unsupported('表格公式域');
+      const { options, href } = runOptions({ ...node, text: result }, inherited);
+      if (href) unsupported('包含超链接的表格公式域');
+      return new FormulaField(formula, new MetricTextRun(options));
+    }
     if (node.type === 'pageNumber') {
       checkAttrs(node, ['kind']);
       if (node.attrs?.kind != null && !['current', 'total'].includes(String(node.attrs.kind)))
         unsupported('页码域');
-      const { options, href } = runOptions({ ...node, text: '' });
+      const { options, href } = runOptions({ ...node, text: '' }, inherited);
       if (href) unsupported('包含超链接的页码域');
-      return new TextRun({
+      return new MetricTextRun({
         ...options,
         children: [node.attrs?.kind === 'total' ? PageNumber.TOTAL_PAGES : PageNumber.CURRENT],
       });
     }
+    if (node.type === 'mathEquation') {
+      checkAttrs(node, ['equation']);
+      return ImportedXmlComponent.fromXmlString(nativeWordMath(node)) as unknown as ParagraphChild;
+    }
     if (node.type === 'image') {
-      checkAttrs(node, ['src', 'width', 'height', 'alt']);
+      checkAttrs(node, ['src', 'width', 'height', 'alt', 'layout', 'crop']);
+      const layout = wordImageLayout(node.attrs?.layout);
       const { data, type } = embeddedImageData(node.attrs?.src);
-      const { options, href } = runOptions({ ...node, text: '' });
-      const run = new ImageRun({
+      const { options, href } = runOptions({ ...node, text: '' }, inherited);
+      const run = new MetricImageRun({
         type,
         data,
+        ...(wordImageCrop(node.attrs?.crop) ? { crop: wordImageCrop(node.attrs?.crop)! } : {}),
+        ...(layout
+          ? {
+              floating: {
+                horizontalPosition: {
+                  relative: layout.horizontal.relative,
+                  ...(layout.horizontal.align
+                    ? { align: layout.horizontal.align }
+                    : { offset: Math.round((layout.horizontal.offset || 0) * 9525) }),
+                },
+                verticalPosition: {
+                  relative: layout.vertical.relative,
+                  ...(layout.vertical.align
+                    ? { align: layout.vertical.align }
+                    : { offset: Math.round((layout.vertical.offset || 0) * 9525) }),
+                },
+                behindDocument: layout.wrap === 'behind',
+                allowOverlap: layout.allowOverlap !== false,
+                lockAnchor: layout.lockAnchor || false,
+                layoutInCell: layout.layoutInCell !== false,
+                zIndex: layout.zIndex || 1,
+                margins: Object.fromEntries(
+                  Object.entries(layout.distance || {}).map(([side, value]) => [
+                    side,
+                    Math.round(value * 9525),
+                  ])
+                ),
+                wrap: {
+                  type: {
+                    square: TextWrappingType.SQUARE,
+                    tight: TextWrappingType.TIGHT,
+                    through: TextWrappingType.THROUGH,
+                    topBottom: TextWrappingType.TOP_AND_BOTTOM,
+                    front: TextWrappingType.NONE,
+                    behind: TextWrappingType.NONE,
+                  }[layout.wrap],
+                  side: layout.wrapSide || 'bothSides',
+                },
+              } as IFloating,
+            }
+          : {}),
         transformation: {
           width: number(node.attrs?.width ?? 320, '图片宽度', 1, 2000),
           height: number(node.attrs?.height ?? 180, '图片高度', 1, 2000),
@@ -1213,12 +1983,20 @@ function inlineChildren(nodes: StudioRichNode[] = []): ParagraphChild[] {
         },
         run: options,
       });
-      return href ? new ExternalHyperlink({ link: href, children: [run] }) : run;
+      return href ? (href.startsWith('#') ? new InternalHyperlink({ anchor: href.slice(1), children: [run] }) : new ExternalHyperlink({ link: href, children: [run] })) : run;
     }
     if (node.type !== 'text') throw new Error(`DOCX 导出尚未支持 ${node.type} 行内元素。`);
-    const { options, href } = runOptions(node);
-    const run = new TextRun(options);
-    return href ? new ExternalHyperlink({ link: href, children: [run] }) : run;
+    const { options, href } = runOptions(node, inherited);
+    const run = node.text?.includes('\t')
+      ? new MetricTextRun({
+          ...options,
+          text: undefined,
+          children: node.text
+            .split('\t')
+            .flatMap((part, index) => (index ? [new Tab(), part] : [part])),
+        })
+      : new MetricTextRun(options);
+    return href ? (href.startsWith('#') ? new InternalHyperlink({ anchor: href.slice(1), children: [run] }) : new ExternalHyperlink({ link: href, children: [run] })) : run;
   });
 }
 
@@ -1249,6 +2027,7 @@ function embeddedImageData(input: unknown) {
 
 /** Export the structured editor model as a real, editable DOCX. */
 export async function exportStudioWord(document: StudioWordDocument): Promise<Blob> {
+  validateBookmarks([document.content, ...(document.header ? [document.header] : []), ...(document.footer ? [document.footer] : [])]);
   if (document.content.type !== 'doc') throw new Error('Word 文档模型无效。');
   if (
     !['A4', 'Letter'].includes(document.page.size) ||
@@ -1256,8 +2035,124 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
   )
     throw new Error('Word 页面配置无效。');
   const margin = Math.round(number(document.page.margin, '页边距', 5, 60) * TWIPS_PER_MM);
-  const numbering: NumberingDefinition[] = [];
-  const paragraph = (node: StudioRichNode, options: IParagraphOptions = {}) => {
+  const paragraphStyles = getStudioWordParagraphStyles(document.content);
+  document = {
+    ...document,
+    content: materializeStudioWordStyles(document.content, paragraphStyles),
+    ...(document.header
+      ? { header: materializeStudioWordStyles(document.header, paragraphStyles) }
+      : {}),
+    ...(document.footer
+      ? { footer: materializeStudioWordStyles(document.footer, paragraphStyles) }
+      : {}),
+  };
+  let numbered = materializeWordNumbering(document.content);
+  let numberCatalog = wordNumberingCatalog(
+    numbered.attrs?.numberingDefinitions,
+    numbered.attrs?.numberingInstances
+  );
+  const numberedRegions: Pick<StudioWordDocument, 'header' | 'footer'> = {};
+  for (const region of ['header', 'footer'] as const)
+    if (document[region]) {
+      numberedRegions[region] = materializeWordNumbering(document[region]!, numberCatalog);
+      numberCatalog = wordNumberingCatalog(
+        numberedRegions[region]!.attrs?.numberingDefinitions,
+        numberedRegions[region]!.attrs?.numberingInstances
+      );
+    }
+  if (numberCatalog.definitions.length)
+    numbered = {
+      ...numbered,
+      attrs: {
+        ...numbered.attrs,
+        numberingDefinitions: numberCatalog.definitions,
+        numberingInstances: numberCatalog.instances,
+      },
+    };
+  document = { ...document, content: numbered, ...numberedRegions };
+  const nativeStyleId = (id: string) =>
+    id === 'paragraph'
+      ? 'Normal'
+      : id === 'no-spacing'
+        ? 'ZuviNoSpacing'
+        : /^heading-[1-6]$/.test(id)
+          ? `Heading${id.slice(-1)}`
+          : `ZuviStyle_${id}`;
+  const customStyles: IParagraphStyleOptions[] = paragraphStyles.map((style) => ({
+    id: nativeStyleId(style.id),
+    name: style.name,
+    basedOn: nativeStyleId(style.basedOn || 'paragraph'),
+    next: nativeStyleId(style.next || style.id),
+    quickFormat: true,
+    run: {
+      ...(style.run?.fontFamily ? { font: safeFont(style.run.fontFamily) } : {}),
+      ...(style.run?.fontSize !== undefined ? { size: style.run.fontSize * 2 } : {}),
+      ...(style.run?.letterSpacing !== undefined
+        ? { characterSpacing: Math.round(style.run.letterSpacing * 20) }
+        : {}),
+      ...(style.run?.baselineShift !== undefined
+        ? { position: nativeRunPosition(`${style.run.baselineShift}pt`) }
+        : {}),
+      ...(style.run?.bold !== undefined ? { bold: style.run.bold } : {}),
+      ...(style.run?.italic !== undefined ? { italics: style.run.italic } : {}),
+      ...(style.run?.strike !== undefined ? { strike: style.run.strike } : {}),
+      ...(style.run?.underline !== undefined
+        ? { underline: { type: style.run.underline ? UnderlineType.SINGLE : UnderlineType.NONE } }
+        : {}),
+      ...(style.run?.color ? { color: style.run.color.slice(1) } : {}),
+      ...(style.run?.backgroundColor !== undefined
+        ? {
+            shading: style.run.backgroundColor
+              ? { type: ShadingType.CLEAR, fill: style.run.backgroundColor.slice(1) }
+              : { type: ShadingType.NIL },
+          }
+        : {}),
+    },
+    paragraph: {
+      ...(style.paragraph?.widowControl!==undefined?{widowControl:style.paragraph.widowControl}:{}),
+      ...(style.paragraph?.keepNext!==undefined?{keepNext:style.paragraph.keepNext}:{}),
+      ...(style.paragraph?.keepLines!==undefined?{keepLines:style.paragraph.keepLines}:{}),
+      ...(style.tabStops !== undefined ? { tabStops: nativeTabs(style.tabStops) } : {}),
+      ...(style.headingLevel !== undefined
+        ? { outlineLevel: style.headingLevel ? style.headingLevel - 1 : 9 }
+        : {}),
+      ...(style.paragraph?.textAlign ? { alignment: ALIGN[style.paragraph.textAlign] } : {}),
+      indent: {
+        ...(style.paragraph?.indentLeft !== undefined
+          ? { left: Math.round(style.paragraph.indentLeft * 20) }
+          : {}),
+        ...(style.paragraph?.indentRight !== undefined
+          ? { right: Math.round(style.paragraph.indentRight * 20) }
+          : {}),
+        ...(style.paragraph?.indentFirstLine !== undefined
+          ? style.paragraph.indentFirstLine < 0
+            ? { hanging: Math.round(-style.paragraph.indentFirstLine * 20) }
+            : { firstLine: Math.round(style.paragraph.indentFirstLine * 20) }
+          : {}),
+      },
+      spacing: {
+        ...(style.paragraph?.spaceBefore !== undefined
+          ? { before: Math.round(style.paragraph.spaceBefore * 20) }
+          : {}),
+        ...(style.paragraph?.spaceAfter !== undefined
+          ? { after: Math.round(style.paragraph.spaceAfter * 20) }
+          : {}),
+        ...(style.paragraph?.lineHeight !== undefined
+          ? {
+              line: Math.round(
+                style.paragraph.lineHeight *
+                  wordLineUnits(
+                    style.paragraph.lineHeightRule ?? style.paragraph.lineHeightBasis ?? 'auto'
+                  )
+              ),
+            }
+          : {}),
+        ...(style.paragraph?.lineHeightRule ? { lineRule: style.paragraph.lineHeightRule } : {}),
+      },
+    },
+  }));
+  const numbering: NumberingDefinition[] = nativeWordNumberingConfig(numberCatalog, nativeStyleId);
+  const paragraph = (node: StudioRichNode, options: IParagraphOptions = {}, inCell = false) => {
     checkAttrs(node, [
       'level',
       'textAlign',
@@ -1267,26 +2162,89 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
       'spaceBefore',
       'spaceAfter',
       'lineHeight',
+      'lineHeightRule',
+      'lineHeightBasis',
+      'widowControl',
+      'keepNext',
+      'keepLines',
+      'paragraphStyleDirectAttrs',
+      'paragraphStyle',
+      'paragraphStyleFallback',
+      'paragraphStyleMaterialized',
+      'paragraphStyleSnapshot',
+      'tabStops',
+      'paragraphSurface',
+      'numbering',
+      'numberingDisabled',
     ]);
     const attrs = node.attrs || {};
+    for(const key of WORD_KEEP_FLAGS)if(attrs[key]!=null&&typeof attrs[key]!=='boolean')unsupported('分页保持属性');
+    if (attrs.numberingDisabled != null && typeof attrs.numberingDisabled !== 'boolean')
+      unsupported('编号禁用标记');
+    const numberRef = wordNodeNumbering(node, numberCatalog);
+    const linkedStyle =
+      typeof attrs.paragraphStyle === 'string'
+        ? resolveStudioWordParagraphStyle(paragraphStyles, attrs.paragraphStyle)
+        : undefined;
+    const nodeLevel = node.type === 'heading' ? number(attrs.level, '标题级别', 1, 6) : 0;
+    const direct = attrs.paragraphStyleDirectAttrs;
+    if (
+      direct != null &&
+      (!Array.isArray(direct) ||
+        direct.some((key) => !(WORD_PARAGRAPH_KEYS as readonly unknown[]).includes(key)))
+    )
+      unsupported('段落直接格式标记');
+    const inherited = (key: string) =>
+      !!linkedStyle && Array.isArray(direct) && !direct.includes(key);
+    if (!Number.isInteger(nodeLevel)) unsupported('非整数标题级别');
     const left =
-      attrs.indentLeft == null
+      attrs.indentLeft == null || inherited('indentLeft')
         ? undefined
         : Math.round(number(attrs.indentLeft, '段落缩进', -500, 500) * 20);
     const right =
-      attrs.indentRight == null
+      attrs.indentRight == null || inherited('indentRight')
         ? undefined
         : Math.round(number(attrs.indentRight, '段落缩进', -500, 500) * 20);
     const firstLine =
-      attrs.indentFirstLine == null
+      attrs.indentFirstLine == null || inherited('indentFirstLine')
         ? undefined
         : Math.round(number(attrs.indentFirstLine, '首行缩进', -500, 500) * 20);
-    const align = attrs.textAlign == null ? undefined : ALIGN[String(attrs.textAlign)];
-    if (attrs.textAlign != null && !align) unsupported('段落对齐');
-    return new Paragraph({
+    const align =
+      attrs.textAlign == null || inherited('textAlign')
+        ? undefined
+        : ALIGN[String(attrs.textAlign)];
+    if (attrs.textAlign != null && !inherited('textAlign') && !align) unsupported('段落对齐');
+    if (
+      attrs.lineHeightRule != null &&
+      !['auto', 'exact', 'atLeast'].includes(String(attrs.lineHeightRule))
+    )
+      unsupported('行距类型');
+    if (
+      attrs.lineHeightBasis != null &&
+      !['auto', 'points'].includes(String(attrs.lineHeightBasis))
+    )
+      unsupported('行距单位');
+    let surface=attrs.paragraphSurface==null?undefined:wordSurface(attrs.paragraphSurface);
+    if(surface && options.border){
+      const legacy={borders:Object.fromEntries(Object.entries(options.border).filter(([,value])=>value).map(([side,border])=>[side,{style:border!.style,size:(border!.size??4)/8,color:typeof border!.color==='string'?`#${border!.color}`:'auto',space:border!.space}]))};
+      surface=wordMergeSurface(legacy,surface);
+    }
+    return new SurfaceParagraph({
       ...options,
+      ...Object.fromEntries(WORD_KEEP_FLAGS.filter((key)=>attrs[key]!=null&&!inherited(key)).map((key)=>[key,attrs[key]])),
+      ...(surface?{border:undefined}:{}),
+      ...(attrs.numberingDisabled
+        ? { numbering: false }
+        : numberRef
+          ? { numbering: nativeWordParagraphNumbering(numberRef, numberCatalog) }
+          : {}),
+      ...(attrs.tabStops != null ? { tabStops: nativeTabs(attrs.tabStops) } : {}),
+      ...(linkedStyle ? { style: nativeStyleId(linkedStyle.id) } : {}),
+      ...(linkedStyle && nodeLevel !== linkedStyle.headingLevel
+        ? { outlineLevel: nodeLevel ? nodeLevel - 1 : 9 }
+        : {}),
       heading:
-        node.type === 'heading'
+        !linkedStyle && node.type === 'heading'
           ? HEADING_LEVELS[number(attrs.level, '标题级别', 1, 6) - 1]
           : options.heading,
       alignment: align || options.alignment,
@@ -1304,26 +2262,37 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
           : options.indent,
       spacing: {
         before:
-          attrs.spaceBefore == null
-            ? undefined
+          attrs.spaceBefore == null || inherited('spaceBefore')
+            ? inCell && !linkedStyle && attrs.spaceBefore == null ? 0 : undefined
             : Math.round(number(attrs.spaceBefore, '段前间距', 0, 500) * 20),
         after:
-          attrs.spaceAfter == null
-            ? undefined
+          attrs.spaceAfter == null || inherited('spaceAfter')
+            ? inCell && !linkedStyle && attrs.spaceAfter == null ? 0 : undefined
             : Math.round(number(attrs.spaceAfter, '段后间距', 0, 500) * 20),
         line:
-          attrs.lineHeight == null
+          attrs.lineHeight == null || inherited('lineHeight')
             ? undefined
-            : Math.round(number(attrs.lineHeight, '行距', 0.5, 10) * 240),
+            : (() => {
+                const rule = (attrs.lineHeightRule ??
+                  linkedStyle?.paragraph.lineHeightRule ??
+                  'auto') as WordLineRule;
+                const height = wordParagraphNumber(attrs.lineHeight, 'lineHeight', rule);
+                if (height === null) unsupported('行距范围或精度');
+                return Math.round(height * wordLineUnits(rule));
+              })(),
+        lineRule:
+          attrs.lineHeightRule == null || inherited('lineHeightRule')
+            ? undefined
+            : (attrs.lineHeightRule as WordLineRule),
       },
-      children: inlineChildren(node.content),
-    });
+      children: inlineChildren(node.content, linkedStyle?.run),
+    },surface);
   };
-  const blocks = (nodes: StudioRichNode[], depth = 0): (Paragraph | Table)[] => {
+  const blocks = (nodes: StudioRichNode[], depth = 0, inCell = false): (Paragraph | Table)[] => {
     if (depth > 20) throw new Error('文档嵌套层级过深。');
     const result: (Paragraph | Table)[] = [];
     for (const node of nodes) {
-      if (node.type === 'paragraph' || node.type === 'heading') result.push(paragraph(node));
+      if (node.type === 'paragraph' || node.type === 'heading') result.push(paragraph(node, {}, inCell));
       else if (node.type === 'pageBreak')
         result.push(new Paragraph({ children: [new DocxPageBreak()] }));
       else if (node.type === 'horizontalRule')
@@ -1338,29 +2307,17 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
         for (const item of node.content || []) {
           if (!['paragraph', 'heading'].includes(item.type))
             throw new Error('DOCX 首版支持由段落组成的引用。');
-          result.push(paragraph(item, { style: 'ZuviQuote' }));
+          result.push(
+            paragraph(item, {
+              style: 'ZuviQuote',
+              border: { left: { style: BorderStyle.SINGLE, size: 18, color: '1F2937' } },
+            }, inCell)
+          );
         }
       } else if (node.type === 'bulletList' || node.type === 'orderedList') {
         const renderList = (list: StudioRichNode, level: number) => {
           if (level > 8) throw new Error('DOCX 列表最多支持 9 级。');
-          checkAttrs(list, ['start', 'type']);
-          if (list.attrs?.type != null && list.attrs.type !== '1')
-            unsupported('字母或特殊列表编号');
-          const reference = `zuvi-list-${numbering.length}`;
-          numbering.push({
-            reference,
-            levels: Array.from({ length: 9 }, (_, index) => ({
-              level: index,
-              format: list.type === 'bulletList' ? LevelFormat.BULLET : LevelFormat.DECIMAL,
-              text: list.type === 'bulletList' ? '•' : `%${index + 1}.`,
-              start:
-                list.type === 'orderedList'
-                  ? number(list.attrs?.start ?? 1, '列表起始编号', 1, 100000)
-                  : 1,
-              alignment: AlignmentType.LEFT,
-              style: { paragraph: { indent: { left: (index + 1) * 720, hanging: 360 } } },
-            })),
-          });
+          checkAttrs(list, ['start', 'type', 'numberingInstanceId']);
           for (const item of list.content || []) {
             if (
               item.type !== 'listItem' ||
@@ -1368,8 +2325,12 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
             )
               throw new Error('列表项需要以段落开头。');
             checkAttrs(item, []);
-            result.push(paragraph(item.content![0], { numbering: { reference, level } }));
+            result.push(paragraph(item.content![0], {}, inCell));
             for (const nested of item.content!.slice(1)) {
+              if (['paragraph', 'heading'].includes(nested.type)) {
+                result.push(paragraph(nested, {}, inCell));
+                continue;
+              }
               if (!['bulletList', 'orderedList'].includes(nested.type))
                 throw new Error(
                   'DOCX 首版支持每个列表项一个段落及嵌套列表，请用 Shift+Enter 在项目内换行。'
@@ -1380,39 +2341,86 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
         };
         renderList(node, 0);
       } else if (node.type === 'table') {
-        checkAttrs(node, []);
+        checkAttrs(node, ['defaultCellMargins', 'cellSpacing']);
         const rows = node.content || [];
         if (!rows.length || !rows[0].content?.length) throw new Error('表格缺少行或单元格。');
-        const columnWidths: number[] = [];
+        const tableProperties = wordTableProperties(node.attrs);
+        const gridSpacing = tableProperties.cellSpacing ?? 0;
+        const tableMargins = tableProperties.defaultCellMargins ? Object.fromEntries(Object.entries(tableProperties.defaultCellMargins).map(([side, value]) => [side, Math.round(value * 20)])) : undefined;
+        const sourceColumnWidths: (number | undefined)[] = [];
         for (const cell of rows[0].content) {
           const widths = cell.attrs?.colwidth;
-          if (Array.isArray(widths))
-            columnWidths.push(
-              ...widths.map((width) => Math.round(number(width, '列宽', 1, 5000) * 15))
+          const span = number(cell.attrs?.colspan ?? 1, '合并列数', 1, 100);
+          if (Array.isArray(widths)) {
+            if (widths.length !== span) throw new Error('单元格列宽与合并列数不一致。');
+            sourceColumnWidths.push(
+              ...widths.map((width) => width === 0 ? undefined : number(width, '列宽', 1, 20000))
             );
-          else {
-            columnWidths.length = 0;
-            break;
+          } else sourceColumnWidths.push(...Array<number | undefined>(span).fill(undefined));
+        }
+        const knownWidths = sourceColumnWidths.filter((width): width is number => width !== undefined);
+        const shouldResolve = knownWidths.length > 0 || gridSpacing > 0;
+        const missingColumns = sourceColumnWidths.length - knownWidths.length;
+        const paperMm = document.page.size === 'Letter' ? [215.9, 279.4] : [210, 297];
+        const available = (paperMm[document.page.orientation === 'landscape' ? 1 : 0] - document.page.margin * 2) * 96 / 25.4;
+        const fallbackWidth = Math.max(25, (available - (sourceColumnWidths.length + 1) * gridSpacing * 4 / 3 - knownWidths.reduce((sum, width) => sum + width, 0)) / Math.max(1, missingColumns));
+        const columnWidths = shouldResolve ? sourceColumnWidths.map(width => width ?? fallbackWidth) : [];
+        const nativeColumnWidths = columnWidths.length ? wordTableColumnsToGrid(columnWidths, gridSpacing).map(width => Math.round(width * 15)) : [];
+        if (columnWidths.length) {
+          const grid = wordTableColumnsToGrid(columnWidths, gridSpacing);
+          const occupied = Array<number>(grid.length).fill(0);
+          for (const [rowIndex, row] of rows.entries()) {
+            let column = 0;
+            for (const cell of row.content ?? []) {
+              while (column < grid.length && occupied[column] > rowIndex) column++;
+              const span = Number(cell.attrs?.colspan) || 1;
+              if (column + span <= grid.length)
+                wordTableGridSpanWidth(grid, column, span, wordEffectiveRowSpacing(tableProperties, row.attrs));
+              const rowSpan = Number(cell.attrs?.rowspan) || 1;
+              if (rowSpan > 1) for (let offset = 0; offset < span; offset++)
+                occupied[column + offset] = rowIndex + rowSpan;
+              column += span;
+            }
           }
         }
         result.push(
           new Table({
-            width: { size: 100, type: WidthType.PERCENTAGE },
-            ...(columnWidths.length ? { columnWidths } : {}),
+            width: nativeColumnWidths.length ? { size: nativeColumnWidths.reduce((sum, width) => sum + width, 0), type: WidthType.DXA } : { size: 100, type: WidthType.PERCENTAGE },
+            ...(nativeColumnWidths.length ? { columnWidths: nativeColumnWidths } : {}),
+            ...(tableMargins ? { margins: tableMargins } : {}),
+            ...(tableProperties.cellSpacing !== null ? { cellSpacing: { value: Math.round(tableProperties.cellSpacing * 10) } } : {}),
             rows: rows.map((row) => {
               if (row.type !== 'tableRow') throw new Error('表格行模型无效。');
-              checkAttrs(row, []);
+              checkAttrs(row, ['rowHeight', 'rowHeightRule', 'allowSplit', 'cellSpacing']);
+              const properties = wordRowProperties(row.attrs);
+              const rowSpacing = wordTableProperties(row.attrs).cellSpacing;
               return new TableRow({
+                ...(rowSpacing !== null ? { cellSpacing: { value: Math.round(rowSpacing * 10) } } : {}),
+                ...(properties.rowHeight !== null ? { height: { value: Math.round(properties.rowHeight * 20), rule: properties.rowHeightRule } } : {}),
+                ...(properties.allowSplit !== null ? { cantSplit: !properties.allowSplit } : {}),
                 tableHeader:
                   !!row.content?.length && row.content.every((cell) => cell.type === 'tableHeader'),
                 children: (row.content || []).map((cell) => {
                   if (!['tableCell', 'tableHeader'].includes(cell.type))
                     throw new Error('表格单元格模型无效。');
-                  checkAttrs(cell, ['colspan', 'rowspan', 'colwidth', 'backgroundColor']);
+                  checkAttrs(cell, ['colspan', 'rowspan', 'colwidth', 'backgroundColor', 'verticalAlign', 'cellMargins']);
+                  const verticalAlign = cell.attrs?.verticalAlign;
+                  if (verticalAlign != null && !['top', 'center', 'bottom'].includes(String(verticalAlign))) unsupported('单元格垂直对齐');
+                  const margins = cell.attrs?.cellMargins;
+                  if (margins != null && (typeof margins !== 'object' || Array.isArray(margins))) unsupported('单元格内边距');
+                  const nativeMargins: Record<string, number> = {};
+                  for (const [side, amount] of Object.entries(margins || {})) {
+                    if (!['top', 'right', 'bottom', 'left'].includes(side)) unsupported('单元格内边距方向');
+                    const points = number(amount, '单元格内边距', 0, 2000);
+                    if (Math.abs(points * 20 - Math.round(points * 20)) > 1e-6) unsupported('单元格内边距精度');
+                    nativeMargins[side] = Math.round(points * 20);
+                  }
                   const background =
                     colour(cell.attrs?.backgroundColor) ||
                     (cell.type === 'tableHeader' ? '#f3f4f6' : undefined);
                   return new TableCell({
+                    ...(verticalAlign ? { verticalAlign: verticalAlign as 'top' | 'center' | 'bottom' } : {}),
+                    ...(Object.keys(nativeMargins).length ? { margins: nativeMargins } : {}),
                     columnSpan: number(cell.attrs?.colspan ?? 1, '合并列数', 1, 100),
                     rowSpan: number(cell.attrs?.rowspan ?? 1, '合并行数', 1, 10000),
                     ...(background
@@ -1420,7 +2428,8 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
                       : {}),
                     children: blocks(
                       cell.content?.length ? cell.content : [{ type: 'paragraph' }],
-                      depth + 1
+                      depth + 1,
+                      true
                     ),
                   });
                 }),
@@ -1450,6 +2459,7 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
       ? [12240, 15840]
       : [Math.round(210 * TWIPS_PER_MM), Math.round(297 * TWIPS_PER_MM)];
   const file = new DocxDocument({
+    defaultTabStop: wordDefaultTabStop(document.defaultTabStop) * 20,
     creator: 'ZUVI Office Studio',
     title: document.name,
     numbering: { config: numbering },
@@ -1461,30 +2471,37 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
         },
         heading1: {
           run: { font: 'Noto Sans SC', size: 48, bold: true, color: '1F2937' },
-          paragraph: { spacing: { line: 324, before: 480, after: 264 } },
+          paragraph: { keepNext:true, spacing: { line: 324, before: 480, after: 264 } },
         },
         heading2: {
           run: { font: 'Noto Sans SC', size: 40, bold: true, color: '1F2937' },
-          paragraph: { spacing: { line: 324, before: 400, after: 220 } },
+          paragraph: { keepNext:true, spacing: { line: 324, before: 400, after: 220 } },
         },
         heading3: {
           run: { font: 'Noto Sans SC', size: 32, bold: true, color: '1F2937' },
-          paragraph: { spacing: { line: 324, before: 320, after: 176 } },
+          paragraph: { keepNext:true, spacing: { line: 324, before: 320, after: 176 } },
         },
         heading4: {
           run: { font: 'Noto Sans SC', size: 28, bold: true, color: '1F2937' },
-          paragraph: { spacing: { line: 324, before: 280, after: 154 } },
+          paragraph: { keepNext:true, spacing: { line: 324, before: 280, after: 154 } },
         },
         heading5: {
           run: { font: 'Noto Sans SC', size: 26, bold: true, color: '1F2937' },
-          paragraph: { spacing: { line: 324, before: 260, after: 143 } },
+          paragraph: { keepNext:true, spacing: { line: 324, before: 260, after: 143 } },
         },
         heading6: {
           run: { font: 'Noto Sans SC', size: 24, bold: true, color: '1F2937' },
-          paragraph: { spacing: { line: 324, before: 240, after: 132 } },
+          paragraph: { keepNext:true, spacing: { line: 324, before: 240, after: 132 } },
         },
       },
       paragraphStyles: [
+        {
+          id: 'ZuviNoSpacing',
+          name: 'ZUVI No Spacing',
+          basedOn: 'Normal',
+          paragraph: { spacing: { line: 240, before: 0, after: 0 } },
+        },
+        ...customStyles,
         {
           id: 'ZuviQuote',
           name: 'ZUVI Quote',
@@ -1547,5 +2564,103 @@ export async function exportStudioWord(document: StudioWordDocument): Promise<Bl
       },
     ],
   });
-  return new Blob([await Packer.toArrayBuffer(file)], { type: MIME });
+  file.Settings.addChildElement(
+    ImportedXmlComponent.fromXmlString(
+      `<w:decimalSymbol w:val="${wordDecimalSymbol(document.decimalSymbol)}"/>`
+    )
+  );
+  numberCatalog.instances.forEach((instance, index) =>
+    file.Numbering.createConcreteNumberingInstance(`zuvi-numbering-${instance.definitionId}`, index)
+  );
+  const bytes = await Packer.toArrayBuffer(file);
+  const imageLayouts = [document.content, document.header, document.footer].flatMap((root) => {
+    const result: StudioWordImageLayout[] = [];
+    const walk = (node?: StudioRichNode) => {
+      if (!node) return;
+      if (node.type === 'image' && node.attrs?.layout)
+        result.push(wordImageLayout(node.attrs.layout)!);
+      for (const child of node.content || []) walk(child);
+    };
+    walk(root);
+    return result;
+  });
+  const hasMath = (node?: StudioRichNode): boolean => !!node &&
+    (node.type === 'mathEquation' || (node.content || []).some(hasMath));
+  const mathNeedsPatch = [document.content, document.header, document.footer].some(hasMath);
+  if (
+    !mathNeedsPatch && !numberCatalog.definitions.length && !paragraphStyles.some((style)=>style.surface) &&
+    !paragraphStyles.some((style) => style.autoUpdate) &&
+    !paragraphStyles.some((style) => style.run?.letterSpacing === 0) &&
+    !imageLayouts.some((layout) => layout.polygon || layout.zIndex === 0)
+  )
+    return new Blob([bytes], { type: MIME });
+  const zip = await JSZip.loadAsync(bytes);
+  if (numberCatalog.definitions.length)
+    zip.file(
+      'word/numbering.xml',
+      patchNativeWordNumbering(
+        await zip.file('word/numbering.xml')!.async('string'),
+        numberCatalog,
+        file.Numbering.ConcreteNumbering
+      )
+    );
+  let stylesXml = await zip.file('word/styles.xml')!.async('string');
+  stylesXml=patchWordSurfaceStyles(stylesXml,paragraphStyles.map((style)=>({id:nativeStyleId(style.id),surface:style.surface})));
+  for (const style of paragraphStyles.filter((item) => item.autoUpdate))
+    stylesXml = stylesXml.replace(
+      new RegExp(`(<w:style\\b[^>]*\\bw:styleId="${nativeStyleId(style.id)}"[^>]*>)`),
+      '$1<w:autoRedefine/>'
+    );
+  zip.file('word/styles.xml', stylesXml);
+  for (const style of paragraphStyles.filter((item) => item.run?.letterSpacing === 0)) {
+    stylesXml = stylesXml.replace(
+      new RegExp(
+        `<w:style\\b[^>]*\\bw:styleId="${nativeStyleId(style.id)}"[^>]*>[\\s\\S]*?<\\/w:style>`
+      ),
+      (native) =>
+        native.includes('<w:rPr>')
+          ? native.replace('</w:rPr>', '<w:spacing w:val="0"/></w:rPr>')
+          : native.replace('</w:style>', '<w:rPr><w:spacing w:val="0"/></w:rPr></w:style>')
+    );
+  }
+  zip.file('word/styles.xml', stylesXml);
+  for (const [path, root] of [
+    ['word/document.xml', document.content],
+    ['word/header1.xml', document.header],
+    ['word/footer1.xml', document.footer],
+  ] as const) {
+    if (!root || !zip.file(path)) continue;
+    const layouts: StudioWordImageLayout[] = [];
+    const equations: string[] = [];
+    const walk = (node: StudioRichNode) => {
+      if (node.type === 'mathEquation') equations.push(nativeWordMath(node));
+      if (node.type === 'image' && node.attrs?.layout)
+        layouts.push(wordImageLayout(node.attrs.layout)!);
+      for (const child of node.content || []) walk(child);
+    };
+    walk(root);
+    let index = 0;
+    let equationIndex = 0;
+    const native = (await zip.file(path)!.async('string')).replace(
+      /<m:oMathPara\b[\s\S]*?<\/m:oMathPara>|<m:oMath\b[\s\S]*?<\/m:oMath>/g,
+      () => equations[equationIndex++] || unsupported('无法对应原生数学公式')
+    );
+    if (equationIndex !== equations.length) unsupported('无法对应原生数学公式');
+    zip.file(
+      path,
+      native.replace(/<wp:anchor\b[\s\S]*?<\/wp:anchor>/g, (anchor) => {
+        const layout = layouts[index++];
+        if (!layout) return anchor;
+        if (layout.zIndex === 0)
+          anchor = anchor.replace(/relativeHeight="\d+"/, 'relativeHeight="0"');
+        if (layout.polygon)
+          anchor = anchor.replace(
+            /<wp:wrapPolygon\b[\s\S]*?<\/wp:wrapPolygon>/g,
+            `<wp:wrapPolygon edited="1">${layout.polygon.map(([x, y], i) => `<wp:${i ? 'lineTo' : 'start'} x="${x}" y="${y}"/>`).join('')}</wp:wrapPolygon>`
+          );
+        return anchor;
+      })
+    );
+  }
+  return new Blob([await zip.generateAsync({ type: 'arraybuffer' })], { type: MIME });
 }

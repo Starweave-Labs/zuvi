@@ -1,0 +1,5348 @@
+[
+  {
+    "path": "docs/audits/2026-11-10/builder-catalog/catalog-dark.png",
+    "historical": {
+      "bytes": 196490,
+      "sha256": "30aa8ab343eab0e456bd9a4047072584b843a1c68f687c6f96f2ba0616425f49"
+    },
+    "generated": {
+      "bytes": 196325,
+      "sha256": "8e8236bbaf619f8c5ab9dc7ae34d4ae1be8730a8f2ee772ae54735a4b00178fb"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-10/builder-catalog/catalog-light.png",
+    "historical": {
+      "bytes": 196775,
+      "sha256": "af57744cdf1353d78469bde95570078e10b7234edeae0da8f2d97f5d508860f7"
+    },
+    "generated": {
+      "bytes": 196618,
+      "sha256": "24c1f2cb714b317b1554001ff635475b5392d3f322112e5da27a54ddfd74cff4"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-10/builder-catalog/catalog-mobile.png",
+    "historical": {
+      "bytes": 72049,
+      "sha256": "90da7c28f960043277a6549035b59946a89682925d81dc6ba812a9b386287c30"
+    },
+    "generated": {
+      "bytes": 71992,
+      "sha256": "b9be61427301fcbe9c7439d361ce15d7c5a3b0de5a7626b3236515e60eb4e6aa"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-10/builder-catalog/catalog-preview-desktop.png",
+    "historical": {
+      "bytes": 83349,
+      "sha256": "ed18d0f85d471a976bb9f51568ecb25009e482615f1fdffe09097d0201832939"
+    },
+    "generated": {
+      "bytes": 83348,
+      "sha256": "40b9791b726a7d3aa6ca23b15e6d88bc70e4f21815967b78e7271ee871049be2"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-10/builder-catalog/catalog-preview-mobile.png",
+    "historical": {
+      "bytes": 77349,
+      "sha256": "d09cfa9f0975e6022b579ae1ea9f41e59d3fb220cb268e144e4d1485579ef6ac"
+    },
+    "generated": {
+      "bytes": 77404,
+      "sha256": "1c387fa1cdb06ba41ae487e2689b005bfa114ea14d8f67bd7914216d5363797e"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-10/builder-enterprise/interaction-designer.png",
+    "historical": {
+      "bytes": 121434,
+      "sha256": "442751af2d6fb46999c14406381628204e9f40b16a133c18aaa6a579abb16285"
+    },
+    "generated": {
+      "bytes": 121036,
+      "sha256": "6bb983b1df25db63764b6f37160ab2c123cc7bdc244a2fa1145abc8c19c4c18f"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-10/builder-enterprise/master-components.png",
+    "historical": {
+      "bytes": 137810,
+      "sha256": "82bd8d2ce029d23d3fb8a9f7978ff0d9d7679001c864eedaab4d1e5e48cd2d85"
+    },
+    "generated": {
+      "bytes": 137709,
+      "sha256": "bfd262b7e7a27268576e8ebbdc26b448a718396c9a11296fdfaa9d5c9c30cfa1"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-10/builder-enterprise/multi-selection-mobile.png",
+    "historical": {
+      "bytes": 137149,
+      "sha256": "ca62611e5a84a440f5efa485a8ac7389326a579a86b856b766ad89ce251efb9f"
+    },
+    "generated": {
+      "bytes": 135887,
+      "sha256": "e50967fc4ad2b3e71add5806ec50ec4034527ca67cecf0c69d7117604a98524c"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-10/builder-scenes/template-gallery.png",
+    "historical": {
+      "bytes": 252251,
+      "sha256": "c4274cc68f39a74008885a6bd47b74b937e3c9d16d040a302148573f862ef6c7"
+    },
+    "generated": {
+      "bytes": 252279,
+      "sha256": "ad8e49b806bec4f058244bc2175ac1146846dd26a8219d0eb1a912bc163c0307"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-10/builder-studio/composed-dark.png",
+    "historical": {
+      "bytes": 216379,
+      "sha256": "e8398b3149549d385f7ace700305532b2c67f4ad4f42a60b22d86c8e8aca2e81"
+    },
+    "generated": {
+      "bytes": 216623,
+      "sha256": "a7bdcb3b814301513e6411ed506609cf908cedabf83c308759727259fb8ce36a"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-10/builder-studio/composed-page.png",
+    "historical": {
+      "bytes": 215742,
+      "sha256": "442b6957a5aab3351d01cc7eb5dbd04ec4c95764f9bea0fd6c09484521265c1e"
+    },
+    "generated": {
+      "bytes": 215906,
+      "sha256": "15865e2ec998f2480d74dcb2ddf99309c32cb85869cfba0e3831e8e9206863a2"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-10/builder-studio/editor-1440.png",
+    "historical": {
+      "bytes": 101591,
+      "sha256": "1d7bfab0412aed58bad9bbbecc698469bdac7e48eeed736a8a18c31a88fe4ae1"
+    },
+    "generated": {
+      "bytes": 100807,
+      "sha256": "8dae641f299bf824f917c713d37ecf5f495228f9abd573d75bea9a0440035085"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-10/builder-studio/editor-320.png",
+    "historical": {
+      "bytes": 40650,
+      "sha256": "d8e4cc48a696f3d5d329d4dd6ee5d3eaab34747189073e00255c1f002b7607db"
+    },
+    "generated": {
+      "bytes": 40234,
+      "sha256": "e47114e6aa71b487769a06cfe41ab1c0809f7793f6cd78113d668a2101481d96"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-10/builder-studio/editor-768.png",
+    "historical": {
+      "bytes": 60242,
+      "sha256": "7bd63f1f83a729423f6c00e1bf2704790bd197c9c899ab0d5347ed0663533437"
+    },
+    "generated": {
+      "bytes": 59602,
+      "sha256": "cb36e621ec173f1ed6e4d225c6d7afc84b63fd6b8df081c61d43b41c2547cf26"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-24/pdf-fields/fields-dark.png",
+    "historical": {
+      "bytes": 159488,
+      "sha256": "1efa228589954f0c71dd80aa4c056143b921d447d035473f9d8f410cba0a5e13"
+    },
+    "generated": {
+      "bytes": 156092,
+      "sha256": "1496f168bb60cf0ab1be8e11316a152f969e9305b94c267e10f82094dcfb290f"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-24/pdf-fields/fields-light.png",
+    "historical": {
+      "bytes": 157356,
+      "sha256": "519ff736c0c45fe4fbbaa11ba94964b622056cd07618598d0641f462386addb5"
+    },
+    "generated": {
+      "bytes": 154317,
+      "sha256": "94a6b18dcdc3c1fbea560241c41d2d3fa201583e54cec80e6e395d98536325eb"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-24/pdf-fields/form-roundtrip-1.pdf",
+    "historical": {
+      "bytes": 13804,
+      "sha256": "134d387eb9cd8d4380dcc518ae48f5ab050bc30a886d267709d2ab5629bc3665"
+    },
+    "generated": {
+      "bytes": 13819,
+      "sha256": "a746e0abbfb9dd5fd616b8f42baa5855eabe457566c5078201cb2a72c71453ba"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-24/pdf-fields/form-roundtrip-2.pdf",
+    "historical": {
+      "bytes": 13804,
+      "sha256": "134d387eb9cd8d4380dcc518ae48f5ab050bc30a886d267709d2ab5629bc3665"
+    },
+    "generated": {
+      "bytes": 13819,
+      "sha256": "a746e0abbfb9dd5fd616b8f42baa5855eabe457566c5078201cb2a72c71453ba"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-24/sheet-arrays/array-dialog-dark-320.png",
+    "historical": {
+      "bytes": 44655,
+      "sha256": "a706d364118410e094cfebc2d63db0110c96b90c4f8f93f37f0b176de685e555"
+    },
+    "generated": {
+      "bytes": 44532,
+      "sha256": "bce0a0f50d2078f034002f22c8e3203a88c97dec77ed0f839605eeb45b15b390"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-24/sheet-arrays/arrays-dark.png",
+    "historical": {
+      "bytes": 148025,
+      "sha256": "21843fd8a8d50085ec175a31aca21a888b4230ab5920e676525bf81ce92e52cd"
+    },
+    "generated": {
+      "bytes": 185078,
+      "sha256": "44217078577abc0e50b1fcfcabad296e81234c5ee47032dc1397e2596fb9be8c"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-24/sheet-arrays/arrays-light.png",
+    "historical": {
+      "bytes": 147009,
+      "sha256": "6a73a9097ccee9882475d9295b0dd6a0e1f413ff7816e55f6c6bc9a40a89790f"
+    },
+    "generated": {
+      "bytes": 120505,
+      "sha256": "092fcfc6f5ec2b633395cd88ab4d870fac5d59c58b774f8ab6b7085838b01faa"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-24/sheet-arrays/arrays-protected.xlsx",
+    "historical": {
+      "bytes": 7563,
+      "sha256": "d4997094c50f0c0623dcf72ec8008b91a83568eec5666876e10ebecaf1814cdf"
+    },
+    "generated": {
+      "bytes": 7592,
+      "sha256": "3064bfef5103a937e1091fa7c28ec475a4a831c4e69b7570623832adf530fac5"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-24/sheet-arrays/arrays-roundtrip-1.xlsx",
+    "historical": {
+      "bytes": 7323,
+      "sha256": "925d979e7c6bf3da88ec8b0d5e95886f371eacb94ad2ae5f0edddf1b2864f8ab"
+    },
+    "generated": {
+      "bytes": 7382,
+      "sha256": "81ed1457176e94e9dcb2d1d6080d2eeb5b91ba64c9c0b6a955d4778d5dd256b7"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-24/sheet-arrays/arrays-roundtrip-2.xlsx",
+    "historical": {
+      "bytes": 7321,
+      "sha256": "1c35319724a0c29b394e087a8cdb2ee413c9dc7fbf13b14e397c31a868944dfe"
+    },
+    "generated": {
+      "bytes": 7383,
+      "sha256": "b17514627aff18dab4118bfbd85c0265ba82ab8e7cc836999c0ebcf197cbab66"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-navigation/navigation-dark-320.png",
+    "historical": {
+      "bytes": 36830,
+      "sha256": "050d0d756f9cd540595bdd92a6623de01aec3d74352635aea506377fae98f92f"
+    },
+    "generated": {
+      "bytes": 20836,
+      "sha256": "7089613fca3efc96fce010b723a940e34b6e8eacc795b0becbdb214afc2b1afc"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-navigation/navigation-dark.png",
+    "historical": {
+      "bytes": 106907,
+      "sha256": "27f0be9a4854fabceb7b8322c840dde34bb5141a02669ce6d0aeeefd9b188e5a"
+    },
+    "generated": {
+      "bytes": 107563,
+      "sha256": "9e5ef835afed140930264024d76d49c649d3a3dfe59547ba8bdd6a8ff2a33f81"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-navigation/navigation-formatted.xlsx",
+    "historical": {
+      "bytes": 7074,
+      "sha256": "9d721280049d93c33d33c4ea17be4a156f62b5592880c17eb8a98d5392c4e565"
+    },
+    "generated": {
+      "bytes": 7124,
+      "sha256": "f9239bf0f7d4a4d73342d616a12ed320569f6cc2fed7acad6eb44e24f5c148f1"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-navigation/navigation-light.png",
+    "historical": {
+      "bytes": 106839,
+      "sha256": "173236552c776278f48e657b11ffe0b0e80ceee1cdaec0fc0882043c4d3f0ded"
+    },
+    "generated": {
+      "bytes": 107327,
+      "sha256": "0e1a5626069a686063ea66473a4d03fd902765984bc454f1f7727dca42157710"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-number-format/format-dialog-dark-320.png",
+    "historical": {
+      "bytes": 51107,
+      "sha256": "ceab55eb3e8ddf8c31e58b2844442c6fb4c5a680eb0477f351a2f4058a263001"
+    },
+    "generated": {
+      "bytes": 51260,
+      "sha256": "0b468f105ba79f6f0bcb8b52b6d7e1348deff0605a9b174e199a6bc465b8f0fc"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-number-format/format-dialog-dark.png",
+    "historical": {
+      "bytes": 145011,
+      "sha256": "c811b8c8d7dc8099a811f51a7922048af3e0ed394693ff288b7c9166435a2a43"
+    },
+    "generated": {
+      "bytes": 145215,
+      "sha256": "1fc0a7d29c9713f0d1f90a4e2afc04ba63262c147c1b15fb960bcf21f07a00ff"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-number-format/format-dialog-light-320.png",
+    "historical": {
+      "bytes": 52131,
+      "sha256": "e55993799a7c43fafb1b653ebc5f44da7ce98b1591eb4249215d9638a5a962de"
+    },
+    "generated": {
+      "bytes": 52264,
+      "sha256": "d62d9af7d01f9a30c9db787e161e699c195360f3016279afcc82c8515aa7afcd"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-number-format/format-dialog-light.png",
+    "historical": {
+      "bytes": 153738,
+      "sha256": "1b606ec62a6c5961d78b2199f62512f81e826692470c50353938e2ae2e592fca"
+    },
+    "generated": {
+      "bytes": 153649,
+      "sha256": "4313ea9151ee4b25c3a7447dac2cc3f0c7972208fcfd7a16a409ba8df8651f2a"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-number-format/format-results-light.png",
+    "historical": {
+      "bytes": 112498,
+      "sha256": "561ade6b9f6ae7b0da5def1dc367230a3a9bd098e735d1597db21b65073f9236"
+    },
+    "generated": {
+      "bytes": 114162,
+      "sha256": "fb550a38238c9da433cd16bd8a0b92be36f08deb3383c83ff825669efc38e28f"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-number-format/format-roundtrip-1.xlsx",
+    "historical": {
+      "bytes": 7169,
+      "sha256": "1e8ed5124f0bc39ab808c42de4a691a5191522aa62bb2ae9bcb75f606a4fe1a8"
+    },
+    "generated": {
+      "bytes": 7223,
+      "sha256": "f0ba89f592ec1c56a5b9c38de1e544663e092026de8a53dc69921a6d0d9ae0a4"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-number-format/format-roundtrip-2.xlsx",
+    "historical": {
+      "bytes": 7169,
+      "sha256": "1e8ed5124f0bc39ab808c42de4a691a5191522aa62bb2ae9bcb75f606a4fe1a8"
+    },
+    "generated": {
+      "bytes": 7216,
+      "sha256": "6eddd26e852544150b4b3885d05516b991a3c2841a27d2ff4f8cef59ef33bf5c"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-number-format/format-source.xlsx",
+    "historical": {
+      "bytes": 6557,
+      "sha256": "de323a329b15e346cfe0eeeb8cf3f3ba984753dfe2c1d67321fbfea3234f2016"
+    },
+    "generated": {
+      "bytes": 6557,
+      "sha256": "0bc8824b2288a695a74393f5326d08008abe4682605686715a671bb01efe08be"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-painter/painter-dark-320.png",
+    "historical": {
+      "bytes": 21981,
+      "sha256": "52136dc0d43d8c2e34a4d72d6118f3099c645d80dece85073db061e4c12d832e"
+    },
+    "generated": {
+      "bytes": 45350,
+      "sha256": "29d7addbbba8015fb525837e181cf2a986274ed32e3a6b452f6782a75fa4d9f2"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-painter/painter-dark.png",
+    "historical": {
+      "bytes": 108485,
+      "sha256": "6df4f34f1ac1a9fbb031747ef84ba9267431344a12d8ac1b93f73b7721a161ff"
+    },
+    "generated": {
+      "bytes": 117555,
+      "sha256": "895ab7a8a38d308291ea28e815819a615f9ce9382bf639dba3aaf02c5e356af6"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-painter/painter-light-320.png",
+    "historical": {
+      "bytes": 22387,
+      "sha256": "fa60350c3863feb5e0dc325edaf333218da830d2e60f729a4da0efdba086d4ae"
+    },
+    "generated": {
+      "bytes": 44847,
+      "sha256": "894e75f929fe15134ca804b29637e01f6c3bc0b84e5cf4cf1bb4478dec497511"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-painter/painter-light.png",
+    "historical": {
+      "bytes": 108391,
+      "sha256": "39d9ca88d92e141c8255e3bede44d5ff0f336f924108eab24be9e47b0a0d1da9"
+    },
+    "generated": {
+      "bytes": 116979,
+      "sha256": "012e3ff10e619fdb47b902d51d7e012b4c025de5477a4224149b7b9c5e09774a"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-painter/painter-roundtrip-1.xlsx",
+    "historical": {
+      "bytes": 7458,
+      "sha256": "731b6ce6ef323929e3cfcd3d3aced675b9905504530dadb507d6aaba342efd78"
+    },
+    "generated": {
+      "bytes": 7558,
+      "sha256": "c0267ce2313d72f468ccb5b48abb384b80efa93b4c01e3fab08fe5eea0ddb190"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-painter/painter-roundtrip-2.xlsx",
+    "historical": {
+      "bytes": 7456,
+      "sha256": "a81b31997694b5091c070e2e7c0c1488854175caa557dd224e10508f45462dbc"
+    },
+    "generated": {
+      "bytes": 7557,
+      "sha256": "27be522a7ab007708d23497ba4cee7444894ce9908c0833196e40a1dc0d23466"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-paste-options/paste-dialog-dark-320.png",
+    "historical": {
+      "bytes": 63209,
+      "sha256": "f1017fa7d4d90d6f5bb7e42fa44a845622f518806699e2a34a3a9f982e874e91"
+    },
+    "generated": {
+      "bytes": 63304,
+      "sha256": "850e05d33fd4dad237853beb32d1af85d16911fb322177f795782698fd821322"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-paste-options/paste-dialog-dark.png",
+    "historical": {
+      "bytes": 162583,
+      "sha256": "1ec8adfe1da1fef7df22475056ea00b191095c00f66115e7876064b2b042c273"
+    },
+    "generated": {
+      "bytes": 163351,
+      "sha256": "692a5f198cbe480b2e9db4f2600aa748fc799cce78f360d8c407476fcfa35487"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-paste-options/paste-dialog-light-320.png",
+    "historical": {
+      "bytes": 62986,
+      "sha256": "9f8df9000673308b8a81a61fb35e7eecc2ea40356a01ee3148b76c21e4995031"
+    },
+    "generated": {
+      "bytes": 65634,
+      "sha256": "9f6fecb360bd6ffe8ff3023f8a3f4b7754ffcf36431a0fb6e14e9f2cc58ee225"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-paste-options/paste-dialog-light.png",
+    "historical": {
+      "bytes": 168750,
+      "sha256": "996b6b0f006404b95f15b02e823cf588dfdf5abc283f9a7ee6a8f081885913ec"
+    },
+    "generated": {
+      "bytes": 169136,
+      "sha256": "3f27c4edce918dab53a2681af3eabf53968fa63454974c57886c90ffe1fb749e"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-paste-options/paste-empty-text-light.png",
+    "historical": {
+      "bytes": 108026,
+      "sha256": "c5eb65fce24337a9ba70876373e6a7a915b4ca913228ec8d29804192a556c462"
+    },
+    "generated": {
+      "bytes": 109444,
+      "sha256": "9002d5bcd9472b6e814829dcfbad25caf50f2a724f43206e85e729a593be318b"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-paste-options/paste-results-light.png",
+    "historical": {
+      "bytes": 109632,
+      "sha256": "65228709b502010cfff205f09f5c6d74452c5790e66c5fe3bc516d894e41b7fe"
+    },
+    "generated": {
+      "bytes": 110886,
+      "sha256": "5d1cd4e7afe271f582bfbdb68c1988107ebcae9179691344b06e6d6fbc701c1e"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-paste-options/paste-roundtrip-1.xlsx",
+    "historical": {
+      "bytes": 7657,
+      "sha256": "6e042aae6aecd7d94080077801369ab2b9e1a907b4a81c601258b961e277b132"
+    },
+    "generated": {
+      "bytes": 7675,
+      "sha256": "362e12ed95dc4a1a13638a67ee6263549e7acb9328ec627e1e3df7320c080922"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-paste-options/paste-roundtrip-2.xlsx",
+    "historical": {
+      "bytes": 7630,
+      "sha256": "396ab090580107d9e267551415c82b93a6fe9fc69e84b5ed98b275576fdd0f61"
+    },
+    "generated": {
+      "bytes": 7644,
+      "sha256": "50e016c2d08a00b5f969636bcaadd5d71113fdb0e4213719071f5adfff66260b"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-paste-options/paste-source.xlsx",
+    "historical": {
+      "bytes": 7224,
+      "sha256": "d6751316884b521d9bcb5415a8fe1eec429e7bb7e103d5801a8b4889d8272682"
+    },
+    "generated": {
+      "bytes": 7224,
+      "sha256": "84afc5952890a6f4fa674f96e2694357ba6995c02ff5e3bb8acd046f202dc38d"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-series/series-dialog-dark-320.png",
+    "historical": {
+      "bytes": 57094,
+      "sha256": "64358a77b6f67ba4a5a50d535f865f14ba4163ba40d5a35903c74a28d3e5e08c"
+    },
+    "generated": {
+      "bytes": 57070,
+      "sha256": "3038f47f1e249e90a11cdfde27748005951fb58ffbd8e89b37bc4213c1cdfd59"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-series/series-dialog-dark.png",
+    "historical": {
+      "bytes": 124663,
+      "sha256": "985b9d79459e8e564b819e6c3b84abc5c5f208dcb605579f320fdb43a7b13a62"
+    },
+    "generated": {
+      "bytes": 124603,
+      "sha256": "0293eb423a888bd3d0ec20789d3b62aa18cc218d23ac5ff0a4986d167ec1ada0"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-series/series-dialog-light-320.png",
+    "historical": {
+      "bytes": 54795,
+      "sha256": "dc84ed13eb561978f5afa9c5b0d2c8c5b0062dd0a58364b4e50e6f89e03439cb"
+    },
+    "generated": {
+      "bytes": 58272,
+      "sha256": "2a78e4117b286caf5673818db801b98c721b5cd561e3e7a3758c2c31c7ce6203"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-series/series-dialog-light.png",
+    "historical": {
+      "bytes": 131049,
+      "sha256": "9f8cd61e5c13d2a10272c75635723723c5483ab4383c2c54ba675989d93ae1b1"
+    },
+    "generated": {
+      "bytes": 131055,
+      "sha256": "c89d66feddc49ce6e4f7a999500f7107c20fbb4ae51793df380064fbaab05255"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-series/series-results-light.png",
+    "historical": {
+      "bytes": 123549,
+      "sha256": "0e99673aa1029420d4d40f85ff4bf031bd590f11ea19b07ffdef9cc00baf7ec4"
+    },
+    "generated": {
+      "bytes": 125409,
+      "sha256": "03bd31a892b0eb4c1c66759f4bd809465b3a088238125665108b2a7ccc4a65ec"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-series/series-roundtrip-1.xlsx",
+    "historical": {
+      "bytes": 7743,
+      "sha256": "a80aec2007da0b9fcf1101a5d67a9a1d0aed83fdb8415a083b387d3e8bdfccc6"
+    },
+    "generated": {
+      "bytes": 7785,
+      "sha256": "8264c78623b672cbe565c1798600c07256e3e08b7468742387b2a453f4e08875"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-series/series-roundtrip-2.xlsx",
+    "historical": {
+      "bytes": 7726,
+      "sha256": "71de587c7fa3e3840003a606e9737dfdbebc6330d117bc77107060d209e99a2f"
+    },
+    "generated": {
+      "bytes": 7742,
+      "sha256": "a96f075fed68a6fbd564fed4c3f00e398447d81d9cf3c121c01f2900423e82bf"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/sheet-series/series-source.xlsx",
+    "historical": {
+      "bytes": 7285,
+      "sha256": "d2e5825f2dfbb773b943a77e235e4a098eed144132f38e7f00f9148d1e4e8a95"
+    },
+    "generated": {
+      "bytes": 7286,
+      "sha256": "a6e343555e5d1016eeed6a76900eccdc42d1f87fc58becad64064d8ce0132330"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-case-size/case-menu-dark-320.png",
+    "historical": {
+      "bytes": 60476,
+      "sha256": "14036155198e027e979b68352871bb64489c5b8797ba76d5b184517868a1a3de"
+    },
+    "generated": {
+      "bytes": 53234,
+      "sha256": "bd2c002d2333a56b0e5509005d5d4d9a6d7cc97a4ed98ac11ab78e6b0d5b4d4a"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-case-size/case-size-dark.png",
+    "historical": {
+      "bytes": 117749,
+      "sha256": "8cfae9446c4bae4ba76cc5673c07d2f8c7034ac5500868026480394ddd74e4d7"
+    },
+    "generated": {
+      "bytes": 111983,
+      "sha256": "f5809f08d1bfbe87e52784c0a9b39091de5034debadd81fa1c82bd69045514a8"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-case-size/case-size-light.png",
+    "historical": {
+      "bytes": 117415,
+      "sha256": "8bada31df2fe9ccccc38ec1a0bea4347b241d9926e97ccc64b45d1592e8a55f6"
+    },
+    "generated": {
+      "bytes": 111680,
+      "sha256": "91164c94a1ff6fef75762e189111897395d758b6769b1f3626cf81439c0dfdc6"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-case-size/case-size-roundtrip-1.docx",
+    "historical": {
+      "bytes": 10085,
+      "sha256": "c78953d58780ff59194c3674043f2ec6ae7c4df28745439868c27cfeb77f21d3"
+    },
+    "generated": {
+      "bytes": 10103,
+      "sha256": "758fcb5e0f03d858c1a25281065b35b9da6600ed13aa2c1025c9e2d56b0d023f"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-case-size/case-size-roundtrip-2.docx",
+    "historical": {
+      "bytes": 10165,
+      "sha256": "fc23a322e6ca1afcea232fac9ea5f5327a253e54ac090a3548e231d6d489a1f6"
+    },
+    "generated": {
+      "bytes": 10196,
+      "sha256": "d97506a106cad05dca98ccbce73b0a81a4cbbb91a04553a9cceec51d78c29e9c"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-format/formats-roundtrip-1.docx",
+    "historical": {
+      "bytes": 10144,
+      "sha256": "a8361a8d974f486c6fbe7b0498f602bf8ebdd3bfdab094706a53c6d888cc2c56"
+    },
+    "generated": {
+      "bytes": 40446,
+      "sha256": "6fcff7f88f6e8caba91b927fb42bd81a5461da3ff98a479d7a5256df428f8542"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-format/formats-roundtrip-2.docx",
+    "historical": {
+      "bytes": 10213,
+      "sha256": "452a9a80bb69bc52d2988bddcee5355e7c0f598ee793fa7cb6de1f695e0e61f9"
+    },
+    "generated": {
+      "bytes": 40743,
+      "sha256": "89342f4d740da9090ff91873cba7f585dda246e15b023637574c3d7b98886a9a"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-format/word-format-320.png",
+    "historical": {
+      "bytes": 75036,
+      "sha256": "4e627204e33b6edfec87f709f1de93564b51ccf7aa1015bb150dcb5a93035d82"
+    },
+    "generated": {
+      "bytes": 50668,
+      "sha256": "e35660b4fe8ee84f98b1d73f2d058cfcdef224bdd8943b60aa2a0e762bbff9aa"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-format/word-format-dark.png",
+    "historical": {
+      "bytes": 166883,
+      "sha256": "54e4f5364e54240524488c50046a2ed8c5c833af258f96628fcf13b5eb00cf1f"
+    },
+    "generated": {
+      "bytes": 114820,
+      "sha256": "2c9df758d65c13bc50c71b3a728c66613a2bf1b8e4ecb08610d89e281c5b7625"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-format/word-format-light.png",
+    "historical": {
+      "bytes": 164452,
+      "sha256": "f47b67070320ee6a845a4e54e73eff139560d0d51632905032ac9631714d274b"
+    },
+    "generated": {
+      "bytes": 114687,
+      "sha256": "ea192fff55918efa6ad4feb94953350509f403a8c24520e6ac40c46156ca4156"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-metrics/metrics-dialog-dark-320.png",
+    "historical": {
+      "bytes": 41170,
+      "sha256": "53b5df37288e3188a15cc7512828340afe2c6ea7127d6ac69f9d537d563fbd26"
+    },
+    "generated": {
+      "bytes": 42136,
+      "sha256": "14751192350a9e073e2ae21fa159dab8fc0392847dab99c35d4193ce3998f1a6"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-metrics/metrics-dialog-dark.png",
+    "historical": {
+      "bytes": 126082,
+      "sha256": "a7ecb8b12563ae45659397a3ea93c6ca942cb895e5dc9241f9adc96e3b47b578"
+    },
+    "generated": {
+      "bytes": 114622,
+      "sha256": "7e422a0a6c470d2a257da3a6db5357f7040ddfe7fbe939e07596c5f1d8986631"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-metrics/metrics-dialog-light-320.png",
+    "historical": {
+      "bytes": 42854,
+      "sha256": "62d345f38e158f0163adadc92a3672ac1db7af161b6bced2b3aa01297915c163"
+    },
+    "generated": {
+      "bytes": 43455,
+      "sha256": "39af218afc34fed525e5d9dc714430da219fbdd6092265b4823f5632f5c3f0de"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-metrics/metrics-dialog-light.png",
+    "historical": {
+      "bytes": 132379,
+      "sha256": "2bcde37ddeb2f16f00d211ea2bbaffdb23a32d1ef69005f61783284c976438bd"
+    },
+    "generated": {
+      "bytes": 121103,
+      "sha256": "6b144841eed79ef288c49bd5b2455d494edc6f3b5b74cee2022d197fdd32de4a"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-metrics/metrics-results-light.png",
+    "historical": {
+      "bytes": 128292,
+      "sha256": "99f36f725996bb1339d2caac59ef410593b69e73b494eadce0142b82fd9ad481"
+    },
+    "generated": {
+      "bytes": 108722,
+      "sha256": "8cbe0f2265912b6530d41a42592f2a2f6112936afa25690cd8fcce3d196bbe6a"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-metrics/metrics-roundtrip-1.docx",
+    "historical": {
+      "bytes": 11679,
+      "sha256": "799aea6a491e48a51dce93307d437fc8d9edee987c92adce4bf9356bc78aecf1"
+    },
+    "generated": {
+      "bytes": 42852,
+      "sha256": "d5bbc38e062b6c4e60a4395ac97b5efcc282ae50b085090b53a42b4f78621184"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-metrics/metrics-roundtrip-2.docx",
+    "historical": {
+      "bytes": 11945,
+      "sha256": "d9eb9ee945a19313c23652e59404c3395c6ade0a81b11c8b1fac9c3658796c32"
+    },
+    "generated": {
+      "bytes": 43970,
+      "sha256": "419d0f0ff826eddff899516015cbb4042c90a8301fbf24fef354d17dd0d2e053"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-metrics/metrics-source.docx",
+    "historical": {
+      "bytes": 40370,
+      "sha256": "9bb81f5fed2f9fbf52ac0ca044152365a96032f108604ec1f963f9ede3a22b8d"
+    },
+    "generated": {
+      "bytes": 40352,
+      "sha256": "8a4cf92c15d7de288b449193f1b60353d929d67b9e083cef04ee3a185acdb15c"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-nonprinting/nonprinting-dark-320.png",
+    "historical": {
+      "bytes": 25337,
+      "sha256": "70cdd4b8cbaaaffe88a7b538c42f0b1f1879cac35235d633f1ed470b081941ec"
+    },
+    "generated": {
+      "bytes": 24612,
+      "sha256": "c577263d116d92d9b17c4bd5a22d00485f11d9aae3a44601f8ee8785998ad759"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-nonprinting/nonprinting-dark.png",
+    "historical": {
+      "bytes": 140928,
+      "sha256": "79bde2db78176b74ce6c6faab12f9e40ead59c4a3e2fe89c031727142f3c727c"
+    },
+    "generated": {
+      "bytes": 110457,
+      "sha256": "9a7af46d2c1c869894afffc1e2351529f4e4f3b6e1a689231683480f785c20d0"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-nonprinting/nonprinting-light-320.png",
+    "historical": {
+      "bytes": 25578,
+      "sha256": "b9d5c053d549a3cd46be2ecd82b765c08003db1b747e3563ad4761463c48cc4b"
+    },
+    "generated": {
+      "bytes": 24911,
+      "sha256": "9d734af2d8b2ef79702ec6e384d8344eca802ded5d04f2e4279f01e01841b7f7"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-nonprinting/nonprinting-light.png",
+    "historical": {
+      "bytes": 139369,
+      "sha256": "9f43761a522f83b0ec2cd8ff7bd0240e4b45de908f6f8b17a4e95d88e4980882"
+    },
+    "generated": {
+      "bytes": 110367,
+      "sha256": "9d63213838cb3010460a23a0943af87d75e34946b3ea2114fbebce4853ea658a"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-nonprinting/nonprinting-roundtrip-1.docx",
+    "historical": {
+      "bytes": 11561,
+      "sha256": "fbc214e7be8727430e7e100e25d616fa23ec6bed1e9e6c15d7c04af6d522ef12"
+    },
+    "generated": {
+      "bytes": 11596,
+      "sha256": "af7722e06ee06ddf832674c32da1edd08c79e75557fe7ee1a3c1e18e5607f52d"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-nonprinting/nonprinting-roundtrip-2.docx",
+    "historical": {
+      "bytes": 11862,
+      "sha256": "1f1d02758026e8ab5e25b2e080fabc8a733f2dd3154725d3bddd12b1070ee175"
+    },
+    "generated": {
+      "bytes": 11917,
+      "sha256": "869b54e15e8f8c8aebed340c4c840059dc3b304736ce24e8a22d4311fc7b6c74"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-nonprinting/nonprinting-source.docx",
+    "historical": {
+      "bytes": 11197,
+      "sha256": "1efff9284025459c7d113cb922dcac87baa991b22b590c5b442fbf40db45cf6c"
+    },
+    "generated": {
+      "bytes": 11198,
+      "sha256": "dcf6864331301309b17e4d8aa6519aadad5147ef1b3730310a3a5823ab6a037b"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-numbering/numbering-definition-dark-320.png",
+    "historical": {
+      "bytes": 39040,
+      "sha256": "e3ab5672148c2e68b82c71bcae8204d787eafd3dc1ef0332750b31cb5784eed7"
+    },
+    "generated": {
+      "bytes": 39023,
+      "sha256": "2bb6ccda4232424e88235ca69b0592bea66601285a9774e35e19e81e36700140"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-numbering/numbering-definition-light-320.png",
+    "historical": {
+      "bytes": 39852,
+      "sha256": "efc152bb7b6a1e98886b0d07783b272cb1f273b0b7d11cc12f0d49ad01a792ca"
+    },
+    "generated": {
+      "bytes": 39892,
+      "sha256": "624646932df0365925762c94c4d7d309f70de4c4fa9679209428fc5b33dfd410"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-numbering/numbering-light-320.png",
+    "historical": {
+      "bytes": 42399,
+      "sha256": "423131b258ff217a4ed9c8eaa01e3ac15f8a28d1119fad7b602e73dddca68168"
+    },
+    "generated": {
+      "bytes": 44377,
+      "sha256": "ef9a9855dbf39ac242d400dedcb740fd87a86690e7152c0c675c27bd7d218292"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-numbering/numbering-roundtrip-1.docx",
+    "historical": {
+      "bytes": 43958,
+      "sha256": "017482bac9462bac6b1da2050705c84582a4f9a9510c4a90bcd07dcdfc7a24bf"
+    },
+    "generated": {
+      "bytes": 44036,
+      "sha256": "9185eed9efa673d875e7a02d45efb6862f706533d2f1f8a2c56b8921047f4747"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-numbering/numbering-roundtrip-2.docx",
+    "historical": {
+      "bytes": 44214,
+      "sha256": "4dfbb27092be7ae53b4ed4e2a7f3c82a9ebeccd34cc1cea441192da9915889f3"
+    },
+    "generated": {
+      "bytes": 44305,
+      "sha256": "89cf723c4aa7f8ae820b11dedefc909040797f138738a1f0fed0d3f276aa8537"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-numbering/numbering-source.docx",
+    "historical": {
+      "bytes": 9689,
+      "sha256": "217f2c16e359c8777a8eacaa5a2ba6c53cca7dc2adcddb61fdbfe17b8f559834"
+    },
+    "generated": {
+      "bytes": 9689,
+      "sha256": "ef957617359fa678e9f4a806f80fa608e3771f1abf7b28c85b6fff44a307de95"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-paragraph/paragraph-dialog-dark-320.png",
+    "historical": {
+      "bytes": 45354,
+      "sha256": "fcf5dade0cc9b574641f7914843a2af7b08da183681f7eb5e5ca7dd45d76133f"
+    },
+    "generated": {
+      "bytes": 48555,
+      "sha256": "3251b3834a7afc7af525d613ae5597f01ee61cdee1f06d3cf52a7d4da60b1bb6"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-paragraph/paragraph-dialog-dark.png",
+    "historical": {
+      "bytes": 124149,
+      "sha256": "9aca0a61d5e01ee0007df54df309ce6be771dd810ad1eeb57196e9632dc10051"
+    },
+    "generated": {
+      "bytes": 133939,
+      "sha256": "561b3f75aa945b33bc7f4bcfab06d34437c8c96e7a1e049c075c08ad88190005"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-paragraph/paragraph-dialog-light-320.png",
+    "historical": {
+      "bytes": 45869,
+      "sha256": "139522bc6165507485bc6dce1aa6e8cdac0fd5ed4dff29efaba31195663a4c55"
+    },
+    "generated": {
+      "bytes": 48872,
+      "sha256": "bc0ba8df357e0860502f9f6b35da88074c82a2b468638b96a313e3dc5e55790f"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-paragraph/paragraph-dialog-light.png",
+    "historical": {
+      "bytes": 130005,
+      "sha256": "744c6e0766417dc8a2f0c435d8644c94f4ff8dc5d1bc50c5ab3cd952d48397b8"
+    },
+    "generated": {
+      "bytes": 139327,
+      "sha256": "5c1c5c06f7d0f6dbb7aa658ee937d779a75313f99351f6df39431986b941000e"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-paragraph/paragraph-results-light.png",
+    "historical": {
+      "bytes": 116618,
+      "sha256": "df0634859fe5245b80820f106144dbd4012c570f56375180471bf7b7a7a365c0"
+    },
+    "generated": {
+      "bytes": 115389,
+      "sha256": "3097a4b912ccddcc1192db475070ef94641e944ffe16800928021833d2b35288"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-paragraph/paragraph-roundtrip-1.docx",
+    "historical": {
+      "bytes": 10826,
+      "sha256": "0527fb9391611825f7e695d638233cd2a64e84d4494a430d3426d438a480ead8"
+    },
+    "generated": {
+      "bytes": 40588,
+      "sha256": "723579de74b7ed2b43cfb93216c13d0cca28eb6f203e48f5b93272024b558099"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-paragraph/paragraph-roundtrip-2.docx",
+    "historical": {
+      "bytes": 10900,
+      "sha256": "87dd06bdc4c04d21990a0752e47ef5b757451a9d9032665e77d65bec9eca7972"
+    },
+    "generated": {
+      "bytes": 41206,
+      "sha256": "002144f275030d8e16b657d2b1ab44c90199d26ad9f54ac5d798d611a93b6c2b"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-paragraph/paragraph-source.docx",
+    "historical": {
+      "bytes": 10486,
+      "sha256": "efea56eb31475db489f480e82df10be5d23c3e901d24bbf00cfd234ab4d4e16c"
+    },
+    "generated": {
+      "bytes": 10486,
+      "sha256": "68c61509ef37e2063391f7eaaf48608e40f4d8a395ed5b21774d1cf4a3f29a90"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-tabs/tabs-comma-roundtrip-1.docx",
+    "historical": {
+      "bytes": 9808,
+      "sha256": "b31b7e84abe2729eba69b9cd85489804749edd002a7c05066eecd5ad4d346d57"
+    },
+    "generated": {
+      "bytes": 9821,
+      "sha256": "5fda0a69a679d9ce3666e2a7d6d311aafe7d4048cbd97eb1295f01c341107ef2"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-tabs/tabs-comma-roundtrip-2.docx",
+    "historical": {
+      "bytes": 9908,
+      "sha256": "961191a78a11309bb5a368da74be0a8b70f08bc8d9f01fc7e3e75ff48e007de7"
+    },
+    "generated": {
+      "bytes": 9919,
+      "sha256": "a62a8f6a6f7274fb02991837a10bcffa820021e9ef1ac3bfd70e36b6a33d89dd"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-tabs/tabs-comma-source.docx",
+    "historical": {
+      "bytes": 34901,
+      "sha256": "29247ca2baec30c6d8aa1a0c3beb6e3e44713f04ecdc0c57e1bc70c2133e6692"
+    },
+    "generated": {
+      "bytes": 34901,
+      "sha256": "565d610d98619b2aec64419733053dd495487746e2fe5e2691baee7e4535e111"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-tabs/tabs-dialog-dark-320.png",
+    "historical": {
+      "bytes": 48606,
+      "sha256": "7b698ae23159055f3800b262d9411f50c73fa96d17fdd91a23e6130ed6dfe9ff"
+    },
+    "generated": {
+      "bytes": 48618,
+      "sha256": "9a7580e0922f365d8881c8e2548e94f1be01984178052459789aa20ed5ac8b60"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-tabs/tabs-dialog-dark.png",
+    "historical": {
+      "bytes": 124197,
+      "sha256": "2ccfdd668329d4add04857d24a2cc907c87706a014c8cc307c27af46a929c8b0"
+    },
+    "generated": {
+      "bytes": 126435,
+      "sha256": "371992e1f4300d7612ecff03c8a886c8197693b0112424c629c6f1ca71c4e06f"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-tabs/tabs-dialog-light-320.png",
+    "historical": {
+      "bytes": 50122,
+      "sha256": "526ea6e1026bbe8a2944ca48a719011dfd3915cd79d5d0054878d3bc1bffe253"
+    },
+    "generated": {
+      "bytes": 50138,
+      "sha256": "de54b92587021b0cd7d3bc70117b62b3d05cedeb2e310afbea353513fc84156f"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-tabs/tabs-dialog-light.png",
+    "historical": {
+      "bytes": 130930,
+      "sha256": "fe296ad93ffecab68269f36cfa582cdcaf1ad94404f088eb906b423caf89b2c0"
+    },
+    "generated": {
+      "bytes": 133327,
+      "sha256": "3b185b4587775e5d71ce0ceca4ef7f1fdaf4c318e9644fd701c05ffa3e5010be"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-tabs/tabs-period-roundtrip-1.docx",
+    "historical": {
+      "bytes": 9808,
+      "sha256": "0c8bb1313d0b62ff411ca429724942555a5bc227f2603e74be2af7a76df1fe82"
+    },
+    "generated": {
+      "bytes": 9820,
+      "sha256": "bd661169930d9bf2630327cb453cc6e9fce165bd5cdec8c1dd95e7e1a3c1815f"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-tabs/tabs-period-roundtrip-2.docx",
+    "historical": {
+      "bytes": 9908,
+      "sha256": "d698f5de2dd35aede93d05a063a4b810b6cbc651e9d9b942e27e77d8dc900183"
+    },
+    "generated": {
+      "bytes": 9919,
+      "sha256": "95a0378dc855d6dfa94a76a9da53c7d59c5c579bd0e673879e791aef374df12b"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-tabs/tabs-period-source.docx",
+    "historical": {
+      "bytes": 34901,
+      "sha256": "f88feb68b194ea360502e824db2aaa34375ae69a3b27c0fb52c6cf08d3d85379"
+    },
+    "generated": {
+      "bytes": 34901,
+      "sha256": "77096e6685d3225068315dbec8467d84d1423bfb19abb91c4ac6000bdd04df2e"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-tabs/tabs-results-light.png",
+    "historical": {
+      "bytes": 116362,
+      "sha256": "233b7a973445e3ea63d5a89b6b2507b300943b9a3b0c3b96f6f1cd29f4b39121"
+    },
+    "generated": {
+      "bytes": 115230,
+      "sha256": "1904e46109e0e535f6e8f7124324accabb6c75a52d9f9f2fcaa04f6c1dbbee69"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-tabs/tabs-roundtrip-1.docx",
+    "historical": {
+      "bytes": 10958,
+      "sha256": "600ecf6ee4bd022be3d07d99d4eedfbb58ac79d6ab9e83fbd2639f572107bcda"
+    },
+    "generated": {
+      "bytes": 10982,
+      "sha256": "89bc312285c2877603e2c24d8bc9d5867ddc27ee5367e19cfc166d51279f6933"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-tabs/tabs-roundtrip-2.docx",
+    "historical": {
+      "bytes": 11211,
+      "sha256": "98aed4dd7379f810a9d8fdc5b582cd93660e3eeaa843d2e2b758bc432c2fb95b"
+    },
+    "generated": {
+      "bytes": 11226,
+      "sha256": "396b6f561a6a6dd599da989ba0004b8842d934da533680634bd8847bd820d501"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-25/word-tabs/tabs-source.docx",
+    "historical": {
+      "bytes": 10598,
+      "sha256": "bc97e273db42ac94677a13a0e8d00d0709fa40267e2f4cc7ac9d5fdaef540154"
+    },
+    "generated": {
+      "bytes": 10596,
+      "sha256": "55c9fd9d96b656ef5f786296a0ef75ddb0aeecfb8d1133854285b3f59e4ba67a"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/pdf-pages/pages-dark.png",
+    "historical": {
+      "bytes": 151590,
+      "sha256": "28b89be83e6e48dd19c54819769df24eefa1f93d7fce81cc8e0c8a61bccd076d"
+    },
+    "generated": {
+      "bytes": 147652,
+      "sha256": "ed347c0af9e493fb30b1e67efe76b6f39c74afc877c14b92adb51540f31930db"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/pdf-pages/pages-dialog-dark-320.png",
+    "historical": {
+      "bytes": 48899,
+      "sha256": "81e0c6710c535e999d6d00220373d65bcd60717e1e0c052450c3dc1abcddb018"
+    },
+    "generated": {
+      "bytes": 46015,
+      "sha256": "e056087edb346587a31352d70507f26227b7e05f4b54330e62741ed40e0405b1"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/pdf-pages/pages-drag-events.json",
+    "historical": {
+      "bytes": 1047,
+      "sha256": "04e4bd91cc7f4b3b332d533679edcdc31f93d7ab1c1853b10170530f12f52407"
+    },
+    "generated": {
+      "bytes": 1047,
+      "sha256": "1a916ec2385597b3c4794fbf3a7b853d96e3d731b2216d6c4d58f8310e31e9a5"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/pdf-pages/pages-dragged.pdf",
+    "historical": {
+      "bytes": 2028,
+      "sha256": "0343fc30ef6f97151c17e7a28a4bafdf453379872be0307a28255d77f9e00a7c"
+    },
+    "generated": {
+      "bytes": 3904,
+      "sha256": "3b2ff064ef33ceebb0d3bf2152fab3621e5dd8ecec694a80627e82eb4d9bd5e1"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/pdf-pages/pages-light.png",
+    "historical": {
+      "bytes": 150129,
+      "sha256": "b6b6c48c42d3e5df80283e20cefdd2a99febfaee027c386784c8f3d5cfc11c60"
+    },
+    "generated": {
+      "bytes": 146116,
+      "sha256": "5908c3e129c2beb271a0cf0b93e19c99627c37212d23c9c64455a809538c2e21"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/pdf-pages/pages-round-1.pdf",
+    "historical": {
+      "bytes": 2046,
+      "sha256": "9b4a0c11775bab9eb027333ee2761d1c35e9158c0ffc12a9f8e05fbb54ff49c4"
+    },
+    "generated": {
+      "bytes": 5457,
+      "sha256": "6ca1665b757162142e001b548d5ebbdb8e550973e68a3b894c0f473c30d753ad"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/pdf-pages/pages-round-2.pdf",
+    "historical": {
+      "bytes": 2046,
+      "sha256": "9b4a0c11775bab9eb027333ee2761d1c35e9158c0ffc12a9f8e05fbb54ff49c4"
+    },
+    "generated": {
+      "bytes": 5457,
+      "sha256": "6ca1665b757162142e001b548d5ebbdb8e550973e68a3b894c0f473c30d753ad"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/pdf-pages/pages-source.pdf",
+    "historical": {
+      "bytes": 2028,
+      "sha256": "23d7a28138bc02f98d4d4308ff10bd534d3e7489535a14791a720a07f9cbaea0"
+    },
+    "generated": {
+      "bytes": 2029,
+      "sha256": "fc40ad562082b5b7d72f64c60e30bdea471ba120fa95eca6c8c86002e7bce817"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-baseline-line-rules/baseline-line-rules-dark-320.png",
+    "historical": {
+      "bytes": 43877,
+      "sha256": "a47e021d918dc8b7f9ece64fce50bcbe941a1efbe8f4356a6ab9e2b4db6373fe"
+    },
+    "generated": {
+      "bytes": 43751,
+      "sha256": "da7e79fdf335b256289328dfbfef1da0b4261fb2035bb2ece0b3744bae161613"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-baseline-line-rules/baseline-line-rules-light.png",
+    "historical": {
+      "bytes": 113888,
+      "sha256": "a2b4c1dd77b00c3f9ca924070808dce91150e625791454cde5408f2e37fee5f9"
+    },
+    "generated": {
+      "bytes": 113807,
+      "sha256": "e152e939da032ffeacb6887cd852b51fbe0ceca4460aebcf274db159fab2a3dc"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-baseline-line-rules/baseline-line-rules-roundtrip-1.docx",
+    "historical": {
+      "bytes": 9969,
+      "sha256": "f44192b5d93cdfd534c3fb96aa00519031fc6b2bda32b72745da859e3d96ecfb"
+    },
+    "generated": {
+      "bytes": 9962,
+      "sha256": "c84199c3dd240baa0f05aa2d0c8356870c7ce0fb18bffe3e4358deb9a122f735"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-baseline-line-rules/baseline-line-rules-roundtrip-2.docx",
+    "historical": {
+      "bytes": 9985,
+      "sha256": "5ad4c414430e61f047aa1967d795e3d818fd45df4b75613a36f1af5e7fc4bd81"
+    },
+    "generated": {
+      "bytes": 9979,
+      "sha256": "fe3cf0057edcb9d26319dab6bf1bfda88f89719932f863ba4d733eadfc82ef97"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-baseline-line-rules/baseline-line-rules-source.docx",
+    "historical": {
+      "bytes": 9657,
+      "sha256": "c6fa266ba1058e57052993124fc2c611d6a02fb7324f8d3010f17eaaa83533b5"
+    },
+    "generated": {
+      "bytes": 37121,
+      "sha256": "f5c674575a57535bc8d3562d4dc3de3a0c0efd918d71bea7cac10b69533d3f04"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-bookmarks/bookmark-dialog-320.png",
+    "historical": {
+      "bytes": 50456,
+      "sha256": "73fbbb914234a50d4bb6b3353fe04de882b9b0badbc839db2e5a702322fec843"
+    },
+    "generated": {
+      "bytes": 50524,
+      "sha256": "deeee4fad05b978df901df23235c3e26ebecb3100bc2d4ef372eac986a2b5d62"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-bookmarks/bookmarks-dark.png",
+    "historical": {
+      "bytes": 163521,
+      "sha256": "e8dc0f91ffcccee52bd68915b461ecfd85ddd6e4814ff30ff26f5b931bf13a2f"
+    },
+    "generated": {
+      "bytes": 163150,
+      "sha256": "6323a3a9765215c41426259e68e96a886dc704ccdff6bfd28b5860b3edcb0ae6"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-bookmarks/bookmarks-light.png",
+    "historical": {
+      "bytes": 165340,
+      "sha256": "17669b4194d3af1122fc74dbaed139581d6ec0278001690631707d65ae43a268"
+    },
+    "generated": {
+      "bytes": 165069,
+      "sha256": "0686477f53529b7fda8af8c8a0502c982cc8fa3e5f22f3ceb6497e627bc09a14"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-bookmarks/bookmarks-round-1.docx",
+    "historical": {
+      "bytes": 9864,
+      "sha256": "15f2e8188e847599d84f9bfca1e000d65dab7117069f5d9162f2bbec2445c43d"
+    },
+    "generated": {
+      "bytes": 9863,
+      "sha256": "429d6858b86117b984e710ba42231d770f8a005551d9645ef1954bfbfbcadb49"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-bookmarks/bookmarks-round-2.docx",
+    "historical": {
+      "bytes": 9972,
+      "sha256": "3d119d0d367c3c7477800fec3cd7c17fa16c97b32f9bc3feb70c64045497d571"
+    },
+    "generated": {
+      "bytes": 9971,
+      "sha256": "b884a2177c4df341b911f18fffdbe46024fa9ae14d7c01fa74371be11904fae1"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-bookmarks/bookmarks-source.docx",
+    "historical": {
+      "bytes": 36445,
+      "sha256": "763eddd49bc660995b878f5c39b94e02d42295139089ba9a11bd57b14f25d281"
+    },
+    "generated": {
+      "bytes": 36445,
+      "sha256": "a6dab43bc02ff891680d411cadeda42f217b9f93da90ded5c41973d864bc4225"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-bookmarks/link-dialog-dark.png",
+    "historical": {
+      "bytes": 175166,
+      "sha256": "24f9b4872ba4a2ceb488ce6590cb83efd8263920e5e4c1dd6261cb5e7f050c1c"
+    },
+    "generated": {
+      "bytes": 171787,
+      "sha256": "f6b3706856b0a601e6558ed8988c7348cdad1692c0b5bff6a8c83c98ccb6278a"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-bookmarks/link-dialog-light.png",
+    "historical": {
+      "bytes": 157624,
+      "sha256": "f6e3c8cc523276a44e431d2825d4e1e04c08b656be039997f4fad21565456aae"
+    },
+    "generated": {
+      "bytes": 154259,
+      "sha256": "9b44ef864f3333ea9766c27b091d51a923b91edc43a6422239128b09564b1cb8"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-fragments/multi-cell-dark-320.png",
+    "historical": {
+      "bytes": 36750,
+      "sha256": "e4d864bc52696d9fa973efeb100c6d567f1e5b5f5899c3bafb4932687e07d17c"
+    },
+    "generated": {
+      "bytes": 36508,
+      "sha256": "dac046b0a7496078a9e0fe5a22a074c783541d01c6498d4ad7df7d5b62bd313f"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-fragments/multi-cell-dark.png",
+    "historical": {
+      "bytes": 161234,
+      "sha256": "d21873edbc90ea001ec6ec7aeff49d1a3deb80ac479530b3bdd51bcb8c819873"
+    },
+    "generated": {
+      "bytes": 161775,
+      "sha256": "6dfc68431c1a4179d0bc272692b2a189040ca3f32fd78d9bd1a58bb48907a156"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-fragments/multi-cell-evidence.json",
+    "historical": {
+      "bytes": 201,
+      "sha256": "08fe35aadc8e37933b429eac1a3cf6ea50d760e2c136e6f99059db8902fdd714"
+    },
+    "generated": {
+      "bytes": 201,
+      "sha256": "2b722de6ce335354ac881a1689947ec31dd6a92838e1b1a58885992f9f49a116"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-fragments/multi-cell-light-320.png",
+    "historical": {
+      "bytes": 29706,
+      "sha256": "ad887e33584563e54843426412e069d19e9e13ed09e682127ec59c53f0cffb5e"
+    },
+    "generated": {
+      "bytes": 30048,
+      "sha256": "2c0299f6c45f052b5d6d81412dcc06bb4c9f753b295f69811ea28492930c110d"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-fragments/multi-cell-light.png",
+    "historical": {
+      "bytes": 151261,
+      "sha256": "8f65547caf8749eb8b4de3ecfbdfe5984ffab569370564a3960780aa0058be14"
+    },
+    "generated": {
+      "bytes": 150019,
+      "sha256": "a29c8636d3ca8696c3c4a0e311d6a8879158fab3e6e8e0b363fe228db91030bb"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-fragments/multi-cell-print.pdf",
+    "historical": {
+      "bytes": 28162,
+      "sha256": "1febee5969f1dc9907beb83d5e4db01e993b980fc84178247c349415ea903339"
+    },
+    "generated": {
+      "bytes": 28154,
+      "sha256": "a1c819f4b16f4b76b734a4b831b75aa90570c0edbff6c02f8ac1f8950b16936c"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-fragments/multi-cell-roundtrip-1.docx",
+    "historical": {
+      "bytes": 10585,
+      "sha256": "9d7694c3d72dd68975cf755f113865cdce21a84cc71fb89a245b2c91cbfb3954"
+    },
+    "generated": {
+      "bytes": 10570,
+      "sha256": "5d890f01df529a7c75891e963ab9c33d43bdbf36279dda3b92e63f04470b548c"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-fragments/multi-cell-roundtrip-2.docx",
+    "historical": {
+      "bytes": 10603,
+      "sha256": "312b39c870183750680177b6ff9414c7fa5574d439e75fe7baa498fe8dff6cb8"
+    },
+    "generated": {
+      "bytes": 10589,
+      "sha256": "aebacba5ad6f4724c7da3db8bc57bcc635babe20aa1202262c7354affe3eb768"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-fragments/multi-cell-source.docx",
+    "historical": {
+      "bytes": 10240,
+      "sha256": "17a6861be115d9d0a7d8334518ab6b5d53a6a88e3c83fa92fa9229a9f0cd581c"
+    },
+    "generated": {
+      "bytes": 10241,
+      "sha256": "ad81c1f799db44b4cbf333cba3d7673d91deab7a9ba26a137f3335f23258d557"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-auto-print.pdf",
+    "historical": {
+      "bytes": 9538,
+      "sha256": "3f66513b7a20a53fba68a2680d5a4d7d4b49551f63f7a2b81816fd70a224d5f5"
+    },
+    "generated": {
+      "bytes": 9538,
+      "sha256": "d4c261e70f1e93f5f6db8c2cd78767be6f6f66f5da3522523ba43c1646b0f52e"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-auto-round-1.docx",
+    "historical": {
+      "bytes": 10032,
+      "sha256": "6f738069f2289b6ea1ae12436423bdf70995f4ca421bee4f3431c91a092a5704"
+    },
+    "generated": {
+      "bytes": 10032,
+      "sha256": "31cab2e16241845c69a1d7620d5683a21a87c8d2f245be94bfca5da24731bccb"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-auto-round-2.docx",
+    "historical": {
+      "bytes": 10131,
+      "sha256": "e836769efddbe38f98ca2dc044be98669afd904f1e3e1160423c9e9def3bb38a"
+    },
+    "generated": {
+      "bytes": 10131,
+      "sha256": "d43ef4ccb2d0a3f6fd7f874c7687a6f9c12702657eb9d5afae95e60ece01a53c"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-auto-source.docx",
+    "historical": {
+      "bytes": 36940,
+      "sha256": "a650d4dc618d7e7a8085aac360244494bd90fabd793f8c3f40d22e8a5e435801"
+    },
+    "generated": {
+      "bytes": 36940,
+      "sha256": "0074092a0643e46c2477ca0553fe7892f8caaa58111fa3122f505adc736b9697"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-column-preview.png",
+    "historical": {
+      "bytes": 105924,
+      "sha256": "3706e8cfb10d50eada071b87aa392407ef5d9f910b145db1d12e5af4714af16b"
+    },
+    "generated": {
+      "bytes": 105925,
+      "sha256": "670f3f9179747bfb2c48290f353147840b1c249d1ba4dbbff71031a7fd31b7ce"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-column-round-1.docx",
+    "historical": {
+      "bytes": 9979,
+      "sha256": "c7b849169438939953fc9ba86ce55de6670d239a43cdcb3bbfaadab49cf55cac"
+    },
+    "generated": {
+      "bytes": 9979,
+      "sha256": "e102d72fd11e5bb812a794156ff7be12bc3e8a29c4e6a39b62eb251457bebfe6"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-column-round-2.docx",
+    "historical": {
+      "bytes": 10071,
+      "sha256": "d80fc450861f3d454b76aa883ad6107887e8097db44a4c5bb48ec341523f9861"
+    },
+    "generated": {
+      "bytes": 10071,
+      "sha256": "95d58150ab61b26add12513fc03abd8b95f60f0f9aec76fd422eee523143eb4e"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-defaults-light.png",
+    "historical": {
+      "bytes": 108958,
+      "sha256": "b4603d35472e3636bad6a965ec020ba1f2efba929785a6d18c22b9e9649e8168"
+    },
+    "generated": {
+      "bytes": 109000,
+      "sha256": "3990fb102edba292e4ede9c5b774675d5a8f57e6ba6e01b57faa5353b30cc5d1"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-defaults-print.pdf",
+    "historical": {
+      "bytes": 7790,
+      "sha256": "543131a7a276b96009b545245a2cbef1087ccfa716aa862d69c832126f31d5df"
+    },
+    "generated": {
+      "bytes": 7790,
+      "sha256": "25df48074755eff9ee5669d7e60b49ed9df271a8800695e42520d90cdd920d9e"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-defaults-round-1.docx",
+    "historical": {
+      "bytes": 10045,
+      "sha256": "c276be1958a12f2aa9804bdc85a8a4145c662a8873e77e6251eaf4785e0d5d53"
+    },
+    "generated": {
+      "bytes": 10045,
+      "sha256": "dfaf7b2affad5ac577b3289bcf0da1e5e86d53413d83af753879595815724459"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-defaults-round-2.docx",
+    "historical": {
+      "bytes": 10139,
+      "sha256": "8676b5d896cefa2ba8f92441b4e216fe31dce85f8d737a8aa1b7b9e7b1166e2e"
+    },
+    "generated": {
+      "bytes": 10141,
+      "sha256": "6f60376ada582caccf1830de72f5a6fa2e4dfd01f86695363b415a5f3f5dd3ab"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-defaults-source.docx",
+    "historical": {
+      "bytes": 36923,
+      "sha256": "3a89e6ef5f2ac607dd12ed279af9bed8e6ef2a4492c58c85b7146b9e1fb5aef2"
+    },
+    "generated": {
+      "bytes": 36923,
+      "sha256": "24a7746034bc476091be2f952efe68eb3546b7a74723203f777901719d32b06d"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-dialog-320.png",
+    "historical": {
+      "bytes": 102469,
+      "sha256": "e21acc8bcccfe206847abf59c31bb58a9ecce4171b4fb8a0fa066dbdb1f43ab9"
+    },
+    "generated": {
+      "bytes": 112359,
+      "sha256": "fa3f28b9f1ecb1e761c2e5a9873c8915bc1e2d4a629a8ccd0fc486b531eb3008"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-dialog-dark.png",
+    "historical": {
+      "bytes": 120714,
+      "sha256": "fbed9de74f89bc8c83d96fa618ddd278c9493cfe719da0b2f7d35c2e098b3fc5"
+    },
+    "generated": {
+      "bytes": 120834,
+      "sha256": "16170c9790d0377518738ff266d7c60a19c26fba77b84f39814f8d71ce21af58"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-dialog-light.png",
+    "historical": {
+      "bytes": 200206,
+      "sha256": "affddbfa23c3168b2f133325bc4b628148997c9ba03d364cebdcae676cc15eb5"
+    },
+    "generated": {
+      "bytes": 198665,
+      "sha256": "c5c7d23fb3021032cc7d740a5dca7017524ae3da103b64a65478a640750a018b"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-fixed-320.png",
+    "historical": {
+      "bytes": 50483,
+      "sha256": "7ecae412a321a35cd7852c44a67d31216dc11c7fd395a62856b7df30111a33f5"
+    },
+    "generated": {
+      "bytes": 50345,
+      "sha256": "0f436015e868a22011b0cd190f06bb034ac4be443743368b34bf493f5f45e24e"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-fixed-dark.png",
+    "historical": {
+      "bytes": 107564,
+      "sha256": "b92e2c72e128ce0e1d6f3b1652d9d563fd587de5a775d9e129922c5bb90eea96"
+    },
+    "generated": {
+      "bytes": 104639,
+      "sha256": "fbe4ef523c2cdb6148898fe99e0a6c73566df9e5a607f8b93946af6ea3ee1854"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-fixed-print.pdf",
+    "historical": {
+      "bytes": 4847,
+      "sha256": "0bdf75336c3bad384e0b4af67b4d8ecd22113db39ae0f77930b2a25c92886cc6"
+    },
+    "generated": {
+      "bytes": 4847,
+      "sha256": "3fbb64d6d75578bb8bdcb90a532e8afdb1e69b57941ce55d8ee5708628d04bad"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-nested-light.png",
+    "historical": {
+      "bytes": 160397,
+      "sha256": "06e556dcf68ce38ae3bcef5c8cf683f58c297e33cf90685b3813c7f301edd3f0"
+    },
+    "generated": {
+      "bytes": 160356,
+      "sha256": "1c9d6e8570c9ec249928e988beb9f508670b33bab39ec3d4bbe72a407884b9ff"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-nested-print.pdf",
+    "historical": {
+      "bytes": 5397,
+      "sha256": "52819e38f9b458c93ee9dc727e49d08ee976395ebabb7b7078b44a23875350ec"
+    },
+    "generated": {
+      "bytes": 5397,
+      "sha256": "3b761c2eafcdf8025e59b39d1f6162e8e393683a961ac76c527ad0a7c6def4e6"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-nested-round-1.docx",
+    "historical": {
+      "bytes": 10019,
+      "sha256": "4f2bb7ebdaf6d75291ff88d5298e67f782a5d83c7ed9c43a353bbe05651ef81b"
+    },
+    "generated": {
+      "bytes": 10019,
+      "sha256": "f68f9b24cfd1640b8c5f2503c4af18bb23d6011416a58b45f965f3dd6eaa03b4"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-nested-round-2.docx",
+    "historical": {
+      "bytes": 10107,
+      "sha256": "0dfa250b25440041d182ce049ef3619243f44b6a82ff24238a7be0e3f01d5de0"
+    },
+    "generated": {
+      "bytes": 10107,
+      "sha256": "532488db62b55d5675d90a3bf4f29df8039bd66359e1556ff1ad6ed2fa9611d7"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-nested-source.docx",
+    "historical": {
+      "bytes": 36692,
+      "sha256": "6014dd40504bbb03c411a7c7812952fd6633be309b2fafd287aaaf772d982c44"
+    },
+    "generated": {
+      "bytes": 36692,
+      "sha256": "5c02b0279a768b0ace1312c535860195a91450fc9b402333cf7bfbf50cab8360"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-nine-alignments-light.png",
+    "historical": {
+      "bytes": 104095,
+      "sha256": "a06d668e68688026be86059ed98e04bed9d9985d610dd16c33220254675dad7d"
+    },
+    "generated": {
+      "bytes": 103976,
+      "sha256": "641dfe348f61f7c4ed308b7cd92cd151e44caab267a0f33b6eb3eaddbfe5c529"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-round-1.docx",
+    "historical": {
+      "bytes": 9978,
+      "sha256": "823a96d8aa5fcd1a614280c9d03ce6175ef9437bea9d388c48a762d7895a988a"
+    },
+    "generated": {
+      "bytes": 9979,
+      "sha256": "7444fdb466799f17b05b8cb54da814ebb3ed306b24348600edcd3c6ec4085426"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-round-2.docx",
+    "historical": {
+      "bytes": 10066,
+      "sha256": "33ef76e986d1a5d35a9e499e0be8751596e656110e0aa8046268a4d7543cd6da"
+    },
+    "generated": {
+      "bytes": 10067,
+      "sha256": "4837f074be11b57c4cf95bf0b85b5ff9458515658bc748e90574079e60207978"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-row-spacing-light.png",
+    "historical": {
+      "bytes": 161209,
+      "sha256": "3827d418963477f013a2df55b3f851d54416fc3919630176355f2443ff170a3a"
+    },
+    "generated": {
+      "bytes": 108309,
+      "sha256": "69d541f28d68a2664dce661469f3778533e0985c9eda1de425a6a02fa6bcd937"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-row-spacing-print.pdf",
+    "historical": {
+      "bytes": 7391,
+      "sha256": "ea421a6769d4aec8777c920b348ea880ca081b570f3b214a9b288dd434de0496"
+    },
+    "generated": {
+      "bytes": 7391,
+      "sha256": "aeb6e463f96c4a2c86132a68554ca6699695cc6528875710a43daee2cc098b1b"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-row-spacing-round-1.docx",
+    "historical": {
+      "bytes": 10061,
+      "sha256": "6ffca8dade92d13fe24f4274c6d821e4cd1d54af0d0b14555c0ff14a17736469"
+    },
+    "generated": {
+      "bytes": 10061,
+      "sha256": "5276fa199d03f0a7aea915bc19a65fa16f40029baf084b5fb96075381f660f4f"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-row-spacing-round-2.docx",
+    "historical": {
+      "bytes": 10152,
+      "sha256": "0e1441d4b85f20dd1ef433f95d8a942bb33c32a5ba2117dbceb048b77fc4fe6c"
+    },
+    "generated": {
+      "bytes": 10152,
+      "sha256": "4c5d2f7b04446e02abffc80b3da7b697dde1efbc59908e8a37470743d7982648"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-row-spacing-source.docx",
+    "historical": {
+      "bytes": 37080,
+      "sha256": "d958f5a21d3c41c961501e9cda8a9e0bc4f2ddf8c0c90f18a757261427e88705"
+    },
+    "generated": {
+      "bytes": 37080,
+      "sha256": "ebea083933ccb08ab7148a3e61b2482c4952ad1c075ce83ec5b9fb0e3e5ff5f9"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/cell-source.docx",
+    "historical": {
+      "bytes": 36549,
+      "sha256": "fc0ad08afe316def2ce52b6eaed93999acf85d5282da3bcc967593768f1169bb"
+    },
+    "generated": {
+      "bytes": 36549,
+      "sha256": "d267a1fc8072f30401b442a2d47a73f81aa1bf7b341e79d23e310befa85380be"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/mapping/cleared-print.html",
+    "historical": {
+      "bytes": 15270,
+      "sha256": "fc629078f5d8cd45f20bc98f76468e232d88bf32d7657ee6bcf8d7546c709724"
+    },
+    "generated": {
+      "bytes": 16011,
+      "sha256": "13962ac3b52691657776b8f472800e26e8f478735f4759b2e37bc73c1e504f99"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/mapping/cleared-print.pdf",
+    "historical": {
+      "bytes": 14103,
+      "sha256": "78871c35747f145d64d31b5218912eda684751f84eac0b05ab721f6b63fac472"
+    },
+    "generated": {
+      "bytes": 14103,
+      "sha256": "af5141cc5eb400e2d2a4d2ddcf82bf4d24e7d9201f161e1a539eba73783f3536"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/mapping/cleared-round-1.docx",
+    "historical": {
+      "bytes": 10207,
+      "sha256": "99bf94bc64cf6d65a21b3f091b2b446b50e7cebcbbed7b2942e4af403f436c64"
+    },
+    "generated": {
+      "bytes": 10208,
+      "sha256": "64942030943adaae4b4bb98228cbedd72ff3114da01cd7ab8c9e369bbcc97b32"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/mapping/cleared-round-2.docx",
+    "historical": {
+      "bytes": 10207,
+      "sha256": "e25b90822473af7f8135251269667b339eb353010b9b76ace50715bab3316925"
+    },
+    "generated": {
+      "bytes": 10207,
+      "sha256": "aafbf6d146c68dd393f35b7afaaa14c088240c4fda7cd9b43941569944e47fa7"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/mapping/merged-dialog-dark-320.png",
+    "historical": {
+      "bytes": 55317,
+      "sha256": "ba0c5cf630429dd93d6e627186cb9b1710da479048d06d5983091bd09e21083b"
+    },
+    "generated": {
+      "bytes": 55229,
+      "sha256": "8c0cd879290bd8ac21e263cb8b352895cb201dfbe11d9221e94fa683bd07957a"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/mapping/merged-dialog-dark.png",
+    "historical": {
+      "bytes": 150433,
+      "sha256": "d5381156a92fafc8a249aa9c88106d532e5266ae41c68fc1cd522a58a371c740"
+    },
+    "generated": {
+      "bytes": 150365,
+      "sha256": "50e0a6ed2bab22a86206ecafc9347a9c49e04f0788716391d441166b4d9829ae"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/mapping/merged-dialog-light.png",
+    "historical": {
+      "bytes": 157076,
+      "sha256": "7e8899bfed60f8c2b2a6a79966ef86867bf106e3657babe0684662d7bbcbb9be"
+    },
+    "generated": {
+      "bytes": 157097,
+      "sha256": "084f14995dd87465aa56305f7d02b6bb82982f20f2ef83eea2d4da797cdff40d"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/mapping/merged-print.html",
+    "historical": {
+      "bytes": 21443,
+      "sha256": "31965dbb6eb5d4eb80b982c464d6f2d6c9fead123d923f9138a8a4403288dca6"
+    },
+    "generated": {
+      "bytes": 22184,
+      "sha256": "a99c9759500b4778eba1290e031f5a12ee44c38416651292af96ac45f5e95060"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/mapping/merged-print.pdf",
+    "historical": {
+      "bytes": 21656,
+      "sha256": "976408540db54cf8649c3ee69305332e68356dafb612d089afc52098eb48fd06"
+    },
+    "generated": {
+      "bytes": 21656,
+      "sha256": "0049df63a276c689f466d15aade27b7b1a7fb4a502a653209cbc747fe383f6d8"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/mapping/merged-round-1.docx",
+    "historical": {
+      "bytes": 10313,
+      "sha256": "2ea3a9a6288d532a031b8fc4ecb3356ccd0bcaf30e05e225c286d338569aba50"
+    },
+    "generated": {
+      "bytes": 10313,
+      "sha256": "9ce0029422b0f00edde7adf58a5ea3c13432db6561bbf93f9794a5c7d15fd72a"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/mapping/merged-round-2.docx",
+    "historical": {
+      "bytes": 10416,
+      "sha256": "506172f0f3adf76389eaf54a9765814e771f1f9cd8b2877f9c3b6d37a32700ed"
+    },
+    "generated": {
+      "bytes": 10416,
+      "sha256": "5ca8aae016ef26c1f6c3659e6663d6738eaf8902e3a6cb272e554889a23e26a0"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/mapping/restored-round-1.docx",
+    "historical": {
+      "bytes": 10135,
+      "sha256": "abf2f3611c85e97823ff306362eda7d2cfa346a9b06fbad1f15efae2e6e10c05"
+    },
+    "generated": {
+      "bytes": 10136,
+      "sha256": "565d6e6f0be1a31cfcdcfbbea58ad2c2c8c41e88fff2c88ae34b956889312095"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-properties/mapping/restored-round-2.docx",
+    "historical": {
+      "bytes": 10227,
+      "sha256": "69e3f3f462cf337c15d3a27341ffa474a47cf7f308f82a940366fe0c0a1aafae"
+    },
+    "generated": {
+      "bytes": 10227,
+      "sha256": "361fb7f9f9abe3fdfde084393316a13884b8651b01dbd0320146118d0797fa0a"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-regions/cell-dialog-light.png",
+    "historical": {
+      "bytes": 178482,
+      "sha256": "714886daec37363087e4b3761673bfaee861ea6fe594418019c6a0f9474ac3f6"
+    },
+    "generated": {
+      "bytes": 178531,
+      "sha256": "fa80fcfbefd67fb8d148994d2a9b6d2c827cc64d4e300be083759ae29636c85b"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-regions/regions-cancel-readonly.docx",
+    "historical": {
+      "bytes": 12328,
+      "sha256": "938672048762f27d87dfd32f723b13c4e71eaac7ae4ad3140adfc200174144fc"
+    },
+    "generated": {
+      "bytes": 12328,
+      "sha256": "761308ccf0361137d4c07d767a6d6b0c9e2e7b256f99061c84b6afe58a219a37"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-regions/regions-round-1.docx",
+    "historical": {
+      "bytes": 12326,
+      "sha256": "359e145a6c13c95385124f378c6c51aac3604d749687f2735ab804ba1e90d800"
+    },
+    "generated": {
+      "bytes": 12326,
+      "sha256": "39ecbf5d06800b6865dd5d2cf4a768da8aba227eaf90f1f347ce2acf8cb1bf5d"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-cell-regions/regions-round-2.docx",
+    "historical": {
+      "bytes": 12539,
+      "sha256": "08ad2b3360c05db79543ac7e0908d105db0b8489c075caa0894ba8f4bb4c1ac5"
+    },
+    "generated": {
+      "bytes": 12539,
+      "sha256": "bfa4ca9ea2c1348d39f44dbd062142969ba582a4ce6b3b1cb57bf0441663158c"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-image-crop/crop-dark.png",
+    "historical": {
+      "bytes": 106507,
+      "sha256": "4e33b6da3a8d832f2e538f8862c1e705cf0b127fdf29933979b22c8df9bfe118"
+    },
+    "generated": {
+      "bytes": 106871,
+      "sha256": "8416984435fdd76d3b6712ec369067b47306f556e34f3b735a450d934402a184"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-image-crop/crop-light.png",
+    "historical": {
+      "bytes": 111277,
+      "sha256": "c3a4c05b01d8ff37189b6b655d92d1a8479179e653f1ccfb95d0bc51efdf775a"
+    },
+    "generated": {
+      "bytes": 111668,
+      "sha256": "dcde895aa99c264a8792a0a7197d7d42d1a8aa7a161bcfdd35d6bad963b39d8e"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-image-crop/crop-print.html",
+    "historical": {
+      "bytes": 7807,
+      "sha256": "fbc5f18db6365c13d103cf8624a41ae59c8d31019210fac7b764c3e77ef90781"
+    },
+    "generated": {
+      "bytes": 11698,
+      "sha256": "8f0e93f93587eaaa2552af3069064d7f1ee45f878deb8da0b2f27b57eb4bb7d4"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-image-crop/crop-round-1.docx",
+    "historical": {
+      "bytes": 10538,
+      "sha256": "50dbaf37a9e7cf9859130065592d7082a165a8c7c8e992124112c79bfc716768"
+    },
+    "generated": {
+      "bytes": 10539,
+      "sha256": "7665914cee77237e5ebf257df11d41b2b6cde25d28c238ea30d8dedce6969c89"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-image-crop/crop-round-2.docx",
+    "historical": {
+      "bytes": 10635,
+      "sha256": "37c181e5b1c927738224fcd07319a1ddd53b668dfa3d893df958ac4a52c5300b"
+    },
+    "generated": {
+      "bytes": 10635,
+      "sha256": "d8035f0fda8dfbe4ab7da3f5bc1046243ba0acbe7377b184959896e0a313bae1"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-image-crop/crop-source.docx",
+    "historical": {
+      "bytes": 10194,
+      "sha256": "0ab0bf3509d69a8937c82dbed0ea08d8c6348740d85e6c896ee42e787806bb89"
+    },
+    "generated": {
+      "bytes": 10195,
+      "sha256": "e289c25c484fdea657b928fc190b9033596fe72a6f2954d875a2d0a228ea4dc0"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-image-replace/replace-320.png",
+    "historical": {
+      "bytes": 70114,
+      "sha256": "557f99b8b8e5fdb16b5884ec6c7ff2300c5ea253f87252d62340f98954acf475"
+    },
+    "generated": {
+      "bytes": 70088,
+      "sha256": "dbaa60ff63057698eac0356aae443d18b462a2ec7449d46845f44bbdb37dbcf3"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-image-replace/replace-dark.png",
+    "historical": {
+      "bytes": 139598,
+      "sha256": "9477b0b452b5b3578449c1f8e955ebd38cef4e6d415c72a4631090bb76dfa151"
+    },
+    "generated": {
+      "bytes": 137236,
+      "sha256": "4e5c9989fb6a64a9f80376c49ab2824ae2d3e824646e1c19336dadbf24770ead"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-image-replace/replace-light.png",
+    "historical": {
+      "bytes": 138262,
+      "sha256": "40a06b49933ed54b00790a28c46bbcbdc12fbeb9c8ccf3a68fcf0c625d733182"
+    },
+    "generated": {
+      "bytes": 138217,
+      "sha256": "e793c9248aaca97a7320bc41f585896e985748a87a866554680cece4926a0fe1"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-image-replace/replacement-round-1.docx",
+    "historical": {
+      "bytes": 10818,
+      "sha256": "58220b8033644bc24788a9f5407863f75ab1815eee0029b39bafa80f08ae1896"
+    },
+    "generated": {
+      "bytes": 10817,
+      "sha256": "5bfecb550ca2a0c091d30a6b761a559465a3427805c95e3cdf4376347821a6b5"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-image-replace/replacement-round-2.docx",
+    "historical": {
+      "bytes": 10923,
+      "sha256": "4b3c3cc05810da2d8b00c7e198e6e399fcf912b158b1e1b4f16f662ad160d4fb"
+    },
+    "generated": {
+      "bytes": 10922,
+      "sha256": "dce9a8788067119948783c808d4c451699948e0cb988aba2dc95d7e8942f1b2a"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-inline-pagination/inline-page-dark.png",
+    "historical": {
+      "bytes": 114203,
+      "sha256": "8df944121860ba698ec691bcf83aeb50a04e734b06c3cb6d65e42839a896950c"
+    },
+    "generated": {
+      "bytes": 116123,
+      "sha256": "400a1cac8ca56b96d88112f864c08f4f762a06e22920b1e88f260274c75a4ee7"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-inline-pagination/inline-page-light.png",
+    "historical": {
+      "bytes": 117313,
+      "sha256": "9d6c28f52c504886cefd73ad4a357873de12d58d07dd1505cc45e7ad8ff4a6e0"
+    },
+    "generated": {
+      "bytes": 117344,
+      "sha256": "b0457e5395b76b6e94a53112b584d9885324e1dd60f511fabdd37b53fc2b5625"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-inline-pagination/inline-roundtrip-1.docx",
+    "historical": {
+      "bytes": 10559,
+      "sha256": "858d6d4aa7a108ab89df301b91d4200e715f435ec7a663f334bf65e471cc4b12"
+    },
+    "generated": {
+      "bytes": 10559,
+      "sha256": "62172ff79ff6ea4606f698fb34f8db5d8b234732ee89a9d4829c274a8cff953e"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-inline-pagination/inline-roundtrip-2.docx",
+    "historical": {
+      "bytes": 10658,
+      "sha256": "6511fe6d662b7760ca38f593ff12c5f08b29062cfe0b90b7fd07b46035052afe"
+    },
+    "generated": {
+      "bytes": 10659,
+      "sha256": "c0e4de78646cc249692d1a571e1bb26988e0d1503df6bcfed7a1632ebf5d72d1"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-inline-pagination/inline-source.docx",
+    "historical": {
+      "bytes": 10243,
+      "sha256": "3b578f9af66873a24221ac28d2fb9a597d0a6c439cff3bcee16fb53b27b26719"
+    },
+    "generated": {
+      "bytes": 10244,
+      "sha256": "b63c20469ea9c1f0155651d80d078a480418fab11b159945a3341312f0c053ab"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-keep/keep-after.pdf",
+    "historical": {
+      "bytes": 16218,
+      "sha256": "01fadff7b98633da08c5f615570ee7464af2cf1c3554c9590d54226e666dce51"
+    },
+    "generated": {
+      "bytes": 16217,
+      "sha256": "99d27df878b6fabafd4c5293b5d600bfa203e930a1debe2e5862ebb1a8fc3c6a"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-keep/keep-before.pdf",
+    "historical": {
+      "bytes": 16231,
+      "sha256": "1504b74c47c757d2b7a997c236ecb934b66688e2ac5afbef0fc54303dd7f0bea"
+    },
+    "generated": {
+      "bytes": 16231,
+      "sha256": "8ecb3f65c0cc98962db8e85a1aefe4445ff47a7de9067b408fb7849cd9e4474a"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-keep/keep-dialog-dark-320.png",
+    "historical": {
+      "bytes": 49785,
+      "sha256": "cc78e1253041c195fdbecdae7374ed590c317d1b0906fca06019e80f6a1bd4e3"
+    },
+    "generated": {
+      "bytes": 49241,
+      "sha256": "a36d87eb3572e18be08b55508ae1afc03b7d006cfd400359df02923dee46118b"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-keep/keep-dialog-dark.png",
+    "historical": {
+      "bytes": 136602,
+      "sha256": "0a16297fa665608855a9e10df6ff76f6fc885d9a0a8dc80fbda71c066a23d3c8"
+    },
+    "generated": {
+      "bytes": 133254,
+      "sha256": "b5820b44e49b9659670d8e23aa775d979e453c06b3671a88a93136374e8869f9"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-keep/keep-dialog-light-320.png",
+    "historical": {
+      "bytes": 50553,
+      "sha256": "ec9f5f0674d2544b63dcf2bb23575dc447945b0c030fa3d75a8c9adb63cc7269"
+    },
+    "generated": {
+      "bytes": 50361,
+      "sha256": "17af4fed8ba24c5d84438ea5db083be2b56eafbba73f3fbca747588aaa6b0a20"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-keep/keep-dialog-light.png",
+    "historical": {
+      "bytes": 167147,
+      "sha256": "9e9326e7c3ab328902b8a8890c09ac9e0b82e27e22f99d8e361b90e1264b90ed"
+    },
+    "generated": {
+      "bytes": 139062,
+      "sha256": "9a5202476b8d3ac5f54a927f57f1f2d323d244f71505dde4d0d1ddb202cdee43"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-keep/keep-lines-layout.png",
+    "historical": {
+      "bytes": 97709,
+      "sha256": "7bd4cb05f6ed4db5d3891e5a62189ca78535352c67af234edb772eec6c7581a6"
+    },
+    "generated": {
+      "bytes": 111793,
+      "sha256": "928d1bcef36b52a4f4ce550a7c083a26acf108b83e97b9d0961b2226e07379f3"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-keep/keep-roundtrip-1.docx",
+    "historical": {
+      "bytes": 10041,
+      "sha256": "c7a5e575bfec4a65468b36b95e4acc40b319512c968828c5f86c43282b4a46c0"
+    },
+    "generated": {
+      "bytes": 10042,
+      "sha256": "2a3d8b8d964469d9f726a0b23122b7654e5d199f92f797a9ade56bc6762d9d74"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-keep/keep-roundtrip-2.docx",
+    "historical": {
+      "bytes": 10131,
+      "sha256": "81ce05013a0962d171e01805a2f821fdfd28fa3b3026f4b453a6999bfa5a325f"
+    },
+    "generated": {
+      "bytes": 10132,
+      "sha256": "c8f83a0dece2355e9f882376d4143cfe6dca11af82fb77ef78f7c588751357da"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-keep/keep-source.docx",
+    "historical": {
+      "bytes": 9732,
+      "sha256": "9ed832a08be9fecb9e99dbfe45233585ad75863d91e007aab478a77cf7243daa"
+    },
+    "generated": {
+      "bytes": 9734,
+      "sha256": "c5d652fa93e0e2c2ac1c6b46f53f334e6279b3be2c48ae2d3dabfd8091c3ebd1"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-keep/keepNext-layout.png",
+    "historical": {
+      "bytes": 100877,
+      "sha256": "30b8b6a44482747589027f1b8bdb0868b3f27c85807fe07ebf3f9a3c66285a7b"
+    },
+    "generated": {
+      "bytes": 114064,
+      "sha256": "aec495de3de2959d56359fe5a55789048670ce5b7d17f6e750646104a2a6d246"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-keep/keepNext-roundtrip-1.docx",
+    "historical": {
+      "bytes": 10031,
+      "sha256": "cbb388d7227e74919b37e49c062c3b217656c7d328264f9f46e4d5efb8c78a8c"
+    },
+    "generated": {
+      "bytes": 10031,
+      "sha256": "d527f7097bdf0572f4401022764a192d0b19902b8df1b71a079f2ba1cb4237e8"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-keep/keepNext-roundtrip-2.docx",
+    "historical": {
+      "bytes": 10105,
+      "sha256": "8fb4fd4cb9ee29fbfdee81b3def2bacd3c6596b48d0545821ee290826aa55e68"
+    },
+    "generated": {
+      "bytes": 10108,
+      "sha256": "59b9a2e61dca2058bdd933c65a611d986ebe1dae7cc37b22cab1f0c4b718cd58"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-keep/keepNext-source.docx",
+    "historical": {
+      "bytes": 9725,
+      "sha256": "c716d3fd426d3004794738d6a62e23edc7d0d762cf34a6ac7f6b5dd9b27d738b"
+    },
+    "generated": {
+      "bytes": 9726,
+      "sha256": "b5233d4af948cb28dc5448c426868e4165bf018c0678f61497352decab5c1c7e"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-keep/print-page-evidence.json",
+    "historical": {
+      "bytes": 1005,
+      "sha256": "ee60493a1a51802def4f01461dce0892f31ae26ec66c334023a830f25f92c273"
+    },
+    "generated": {
+      "bytes": 1005,
+      "sha256": "1ae2053ef036b7c38b05913ffafee3cdc56ea7a164e4a62ea30efcff0f10eb5f"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-keep/widowControl-layout.png",
+    "historical": {
+      "bytes": 135978,
+      "sha256": "36d9717ae393eebe23ce44f415722be28dba5a9bd3a8a9ef90b132544da76239"
+    },
+    "generated": {
+      "bytes": 121051,
+      "sha256": "711c9c6d1675fb6e4ef4e605950f526ad2f7bc8a56076005113ebece1c05416f"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-keep/widowControl-roundtrip-1.docx",
+    "historical": {
+      "bytes": 10050,
+      "sha256": "e273fc98f6da4d15a9f1f7acab3d3f583522313808dc235771ed7684b41dd99d"
+    },
+    "generated": {
+      "bytes": 10051,
+      "sha256": "fc1d9bdb508c53bb4eed46df6dd990e0df8a9d33e8e823f374b46c0d0d42ff12"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-keep/widowControl-roundtrip-2.docx",
+    "historical": {
+      "bytes": 10130,
+      "sha256": "06a0bc57ca12c1cc4f3d47e1b97e086b979995a9ea4e315c9e7336993b452a4a"
+    },
+    "generated": {
+      "bytes": 10131,
+      "sha256": "6971cf34a13ef7f3cf026e3b3dbcefa091940992ad14a2928f06ba93ea1d1377"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-keep/widowControl-source.docx",
+    "historical": {
+      "bytes": 9738,
+      "sha256": "5aabfcb12a1e4eb6baed644f57addebc673f1a6eabcce80c2c2eb3f004525135"
+    },
+    "generated": {
+      "bytes": 9741,
+      "sha256": "26c96e098296dd18bb3338c6b744b2c74040c674b6a24a5b42398e25960192e8"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-math-groups/math-dark.png",
+    "historical": {
+      "bytes": 103833,
+      "sha256": "b78b844eef84e10d184de60af65a56018e46eba1c3ca3c699e4aada0330055c2"
+    },
+    "generated": {
+      "bytes": 102749,
+      "sha256": "6c65965430e82eebdd734b72345520fed522fd6a49c865159db8fe3e9c74941b"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-math-groups/math-dialog-320-overview.png",
+    "historical": {
+      "bytes": 37426,
+      "sha256": "6cd50250eab9e68ab3ba7a2d9188da1a499c9b559378b20d8aaeb6c09775cb6c"
+    },
+    "generated": {
+      "bytes": 51381,
+      "sha256": "a04a64f6b2f2279367499bc00236f26258c6dbcf68ba379b5650dda7e14561c9"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-math-groups/math-dialog-320.png",
+    "historical": {
+      "bytes": 34863,
+      "sha256": "906eb1a35af602594767c69a57c62c21f5d6b5c18952eee0dcac18f05b61a529"
+    },
+    "generated": {
+      "bytes": 34881,
+      "sha256": "74d7f312a75c174c1262a516cb47eddd0153d41f5b4e6394ebc2e239bdcacaa2"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-math-groups/math-dialog-dark.png",
+    "historical": {
+      "bytes": 186888,
+      "sha256": "aa7acde342b118111e24edbd3f8730b4c10b3f1bf47ef137d0604b0e5947b714"
+    },
+    "generated": {
+      "bytes": 179771,
+      "sha256": "3ad8555c2b2fe95a8529ab0c707ab2fc63f7904055cb2cb13854c397b8014ab6"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-math-groups/math-dialog-light.png",
+    "historical": {
+      "bytes": 123280,
+      "sha256": "9baed35411baf050a655498b80a3f298709b3d9e458e7cbf7b00982cb2c6e695"
+    },
+    "generated": {
+      "bytes": 123037,
+      "sha256": "b71d7d7b8b38954a97a5f66ae723bd74dd63a01b9eff60a4db658919c7a0d8e7"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-math-groups/math-light.png",
+    "historical": {
+      "bytes": 106157,
+      "sha256": "9dc1df277b906a5800aed3fae6ed78edf38e12a0cb767a52724bc4c47a8fda45"
+    },
+    "generated": {
+      "bytes": 104439,
+      "sha256": "04f3862a9abd34560565af1f65442e8d776a229ef815b1f3f4da67d99a39c3dc"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-math-groups/math-round-1.docx",
+    "historical": {
+      "bytes": 38092,
+      "sha256": "5847947ce57bdf078a1ea7a495b762d8cbd4fea15af8b621a9794b5796f2b540"
+    },
+    "generated": {
+      "bytes": 38092,
+      "sha256": "180329e5d1431ee9f279fd885527397012e4ad87238fadb1885a186e52794e41"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-math-groups/math-round-2.docx",
+    "historical": {
+      "bytes": 38132,
+      "sha256": "98b63651ec56e1b6a114c10f806323b48aa36515358d2b3491ebdfe3fdb3f102"
+    },
+    "generated": {
+      "bytes": 38132,
+      "sha256": "ac9d3e966ec61cc679868a9b7eb3ddaf1704da395889bf618f56a416c149e516"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-math-groups/math-source.docx",
+    "historical": {
+      "bytes": 36685,
+      "sha256": "2246259dc53533802434e0f13054cbecf6fe52bd3989f72bf1b69739a843435c"
+    },
+    "generated": {
+      "bytes": 36685,
+      "sha256": "f32bfc93ac6547b4f7e88aa35aaea63e1019e5de62a18d2103b013d1d59c59d7"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-math-regions/layout-round-1.docx",
+    "historical": {
+      "bytes": 41374,
+      "sha256": "46dd7ce6ee5d90bb9437607339ccf941e0e8405c0761014ca6eb1f9c9a17f1c2"
+    },
+    "generated": {
+      "bytes": 41374,
+      "sha256": "cf0ca680ca5ae93ac484ed5c21ccec1e2c5a3fb3ccf5b06a83994cd0e06e1f1a"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-math-regions/layout-round-2.docx",
+    "historical": {
+      "bytes": 48726,
+      "sha256": "0c3b1a72cbd49ad9cf38ea68e8d392400faa165d7f6a15921d411713a28e5706"
+    },
+    "generated": {
+      "bytes": 48726,
+      "sha256": "a7113789c2c1cd6c210f157931809f47b31da8f1e09c4417aaef85c2542b81f0"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-math-regions/layout-source.docx",
+    "historical": {
+      "bytes": 38433,
+      "sha256": "7c6985a6f3b6eb06504226fd106241700511b02f991eb8ef2a4de7f67df49fe8"
+    },
+    "generated": {
+      "bytes": 38433,
+      "sha256": "b674a148f154eb80a92d60951b2865d0783629077ea2670faac874a58c8abb17"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-math-regions/math-layout-320.png",
+    "historical": {
+      "bytes": 30562,
+      "sha256": "52809edb79a1c63f83b35ff915bc4fb4d5e5f17c4fb8010b928dbb4b6d653ed3"
+    },
+    "generated": {
+      "bytes": 30524,
+      "sha256": "6a68de17109ae147609983c61771be428aba3c6f9d3fc7066e625a21c2d93250"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-math-regions/math-layout-dark.png",
+    "historical": {
+      "bytes": 122751,
+      "sha256": "e968ff3a2e1d057d186a87bf87ec91948e89ed1e1b59de1dfd32a26a8df5391d"
+    },
+    "generated": {
+      "bytes": 121201,
+      "sha256": "c23cdc14405c980c94a79935ee2b46c5c91f1aae6a45e2619ab17f12b201deea"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-math-regions/math-layout-print.pdf",
+    "historical": {
+      "bytes": 19779,
+      "sha256": "e1667ae0598afd4e3d2054c11855b9860afcbb93be770fbfc88daf6de92c6d9e"
+    },
+    "generated": {
+      "bytes": 19779,
+      "sha256": "4aee6f99ca4cd4f8497e5314c83768698b1f6e2318ab09fe354667a8b811d7f2"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-math-regions/regions-320.png",
+    "historical": {
+      "bytes": 27370,
+      "sha256": "9c25e72f8633e49a0409d58dcbd0c1b24b22c57cd15ac19fd9f8040f61770ebf"
+    },
+    "generated": {
+      "bytes": 27239,
+      "sha256": "42effe0246ac02f95370465aab0e2a56a4ef31f678ddd6c3e964b3ff5b4c010d"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-math-regions/regions-dark.png",
+    "historical": {
+      "bytes": 91246,
+      "sha256": "766f1f6e25bc22f57f7939f6f6d3f7161d5acc8f96c2f6fad26fa9e9ca14eca1"
+    },
+    "generated": {
+      "bytes": 92289,
+      "sha256": "10f8197e8bfc2a4427f44f642d417b6d2a283fd5d251b5bdfa777aae0a261a24"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-math-regions/regions-light.png",
+    "historical": {
+      "bytes": 91511,
+      "sha256": "7d8c176f417f49868977763c1411b3cffe9f6a74158a97507f58e34e0ae78bdb"
+    },
+    "generated": {
+      "bytes": 91514,
+      "sha256": "a49440c45acff46b1b265d2a543a01e85461273609f86a20cdedc5d6ed9c3116"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-math-regions/regions-round-1.docx",
+    "historical": {
+      "bytes": 42729,
+      "sha256": "ee46d033bbf5140bb1f0cca2f366218a2d4a2b51fca77e9d23502c274d49f770"
+    },
+    "generated": {
+      "bytes": 42729,
+      "sha256": "12afd89153f16b0ee15360e4838cfa891660215b4712a7c16e90c1d8a74ded58"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-math-regions/regions-round-2.docx",
+    "historical": {
+      "bytes": 43046,
+      "sha256": "7af68cf677345e0c5d53652a4c7e67a1012b9bc6da180e10dc90bbba7b20ec3d"
+    },
+    "generated": {
+      "bytes": 43046,
+      "sha256": "d60a1de60b679ebc62de58b68fa231caac805165d941ee9db3d7ae98a95f2a95"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-math-regions/regions-source.docx",
+    "historical": {
+      "bytes": 37937,
+      "sha256": "6b469d0173de46d3ec7780ef0f37f1d54036a654c78b077cfe0e58c72b5c63e6"
+    },
+    "generated": {
+      "bytes": 37937,
+      "sha256": "8bad13a52f9662a6c57c8ccc400b705db69e4874cc363f747ef3c710897c7278"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-math/math-dark.png",
+    "historical": {
+      "bytes": 104363,
+      "sha256": "75b6cf78274143f987c374b365dcfbc98ce34c3ec67475ca660d3bd32a5035e7"
+    },
+    "generated": {
+      "bytes": 103607,
+      "sha256": "31e6dd2b54d5c83d9bd0bf01ce2de0dc0e893e88190df3a62b26f2e370863990"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-math/math-dialog-320-overview.png",
+    "historical": {
+      "bytes": 37006,
+      "sha256": "8974b2d967e816a5df3e1623c79fc22b051f8d42921e96f3918590f828383774"
+    },
+    "generated": {
+      "bytes": 50882,
+      "sha256": "79ce302ff476303bd502900608d455be814fa3f20868a1d312a9bdda6e6f6c64"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-math/math-dialog-dark.png",
+    "historical": {
+      "bytes": 180083,
+      "sha256": "be0ed94b4c2fceb231b58c8e7bbd54316549b384205101fe567788ce6b247405"
+    },
+    "generated": {
+      "bytes": 178877,
+      "sha256": "930be839563eb36b084aeead21516dc64ecd3d92bf7d2e3d2c14691d11ad4f75"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-math/math-dialog-light.png",
+    "historical": {
+      "bytes": 132476,
+      "sha256": "fb0fb73b66018376eb0e48370f282a93acc5ff4a77558f48b1da2ed123f1a62a"
+    },
+    "generated": {
+      "bytes": 132393,
+      "sha256": "c3f0bbcd53cc5c162fb13d191bedfe1d9b4b17e336be698e8f58b4c5665f2bb8"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-math/math-light.png",
+    "historical": {
+      "bytes": 105970,
+      "sha256": "bce2826a97ccc65e18f53d9c77586e17e0e72c4031fa9c4785f75e44b79f6312"
+    },
+    "generated": {
+      "bytes": 105802,
+      "sha256": "b8bd68657bd36c77ddfcd7803a78cdc84725e369b1fe04d0876b0efdec181ace"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-math/math-round-1.docx",
+    "historical": {
+      "bytes": 37887,
+      "sha256": "fbdd362bcfebaacb1a6c70945909fcbc8994841b8419b100d8ec0d48a4da043f"
+    },
+    "generated": {
+      "bytes": 37887,
+      "sha256": "98b6fd2504f5fd04691585f496efbdbb59c41ad901af02748164a8a6197a04ec"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-math/math-round-2.docx",
+    "historical": {
+      "bytes": 37927,
+      "sha256": "17bb23d4a9fa3fba9ff2af746ad52df0784a8e662420447d01ac79a9b1eb645d"
+    },
+    "generated": {
+      "bytes": 37927,
+      "sha256": "c9f7af734122dbdfa01b75222314fad5f2ec7d5d408440595f61cb4c6fcf5745"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-math/math-source.docx",
+    "historical": {
+      "bytes": 36643,
+      "sha256": "b973bd6ef1d4a3942c41a4746018ec15bb8e5f7e84a5926b09150c5893d005d6"
+    },
+    "generated": {
+      "bytes": 36643,
+      "sha256": "a63e6c73ed70a844a9d588415f0b810d90aebf2ec719227126e45e5955e15f89"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/boundary-columns-dark-320.png",
+    "historical": {
+      "bytes": 46532,
+      "sha256": "1fb538db55e329343b5d47e9e362d42a81189b4c4ab55bd0c130dbf760f6bc81"
+    },
+    "generated": {
+      "bytes": 33324,
+      "sha256": "dab42f15f04d9f0418d3282c79d3436c81a50bcbde161560cb7dc7054be3044b"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/boundary-columns-dark.png",
+    "historical": {
+      "bytes": 118497,
+      "sha256": "f11e22bfc6f06e76a0558fdf8f44e3d3a21c0c70884e2f999fbd63141dfe4532"
+    },
+    "generated": {
+      "bytes": 179946,
+      "sha256": "22b843d7cd883661435af7ed5732b5681ca1a95b50c2d4a3c259f8c77eb948e8"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/boundary-columns-light-320.png",
+    "historical": {
+      "bytes": 46020,
+      "sha256": "c6743912ece5802ddbba170e51df8a63197a7dfb7a77c5d6eaddd0b66352458a"
+    },
+    "generated": {
+      "bytes": 33224,
+      "sha256": "a15b6caa5a761be0af0d6029dbda675f5dfe9cd94e2120e7d3692e8ba6866fe3"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/boundary-columns-light.png",
+    "historical": {
+      "bytes": 117910,
+      "sha256": "5dc4b140cbf4c7867dfcbeec94410ebda76e880cb7601ed081b074316821cf8c"
+    },
+    "generated": {
+      "bytes": 176987,
+      "sha256": "bbc51067ab061c46c4f2be00409fd3ecb258a0ef86df2e5b2865e367f6ce5f12"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/boundary-columns-roundtrip-1.docx",
+    "historical": {
+      "bytes": 9995,
+      "sha256": "99f55e2a316d2beaf9659fe210ebe768b8a535ee925b00a05d8a50a9edde4e67"
+    },
+    "generated": {
+      "bytes": 9989,
+      "sha256": "c7dd6c9136ab0404432739d85d924fc673e2a357934960c9fd736ec0ec8bba75"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/boundary-columns-roundtrip-2.docx",
+    "historical": {
+      "bytes": 10092,
+      "sha256": "7ee3d41dca3737743bfdc9b1d6267d446f12d4ca0cf16040ba40fb4750344324"
+    },
+    "generated": {
+      "bytes": 10084,
+      "sha256": "ad163fce59115464c63e2b62a3dde7784bc88d2ca3b7a058c2a0b7e7242f62e9"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/boundary-columns-source.docx",
+    "historical": {
+      "bytes": 9646,
+      "sha256": "4e53f646628d5198c9e5acc51b21bdde2cce5c50016458677a3bedb0ae4677c3"
+    },
+    "generated": {
+      "bytes": 9647,
+      "sha256": "564b6cc803651fb2fca794688bbd755b0a54fbd5ed021ef96dc54ac5f84b5e10"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/columns-dark-320.png",
+    "historical": {
+      "bytes": 46156,
+      "sha256": "f362f8ae8f055362ad48ed0e0b6b0364f25e6df8160c63b60e6d6b127756f6b4"
+    },
+    "generated": {
+      "bytes": 61067,
+      "sha256": "2c7bce76d3f204993f18f1dc8dff219814d9b949d200bc59c05dd06483b3aa0e"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/columns-dark.png",
+    "historical": {
+      "bytes": 115373,
+      "sha256": "b6108e5783572f4d7230b64d502790dad8e1c0745e98108e0810a6770cfa4247"
+    },
+    "generated": {
+      "bytes": 115879,
+      "sha256": "1a4f449ef336149f1b28de7bf87f99bc9d9c1d28543fbe0dacc6de745260eef7"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/columns-light-320.png",
+    "historical": {
+      "bytes": 45733,
+      "sha256": "fb6f751b2045ec8080cf0deb69bd8133715427c5d1bfe0d1bfbfbb8a5d31c9bd"
+    },
+    "generated": {
+      "bytes": 59527,
+      "sha256": "f97d1872821c84a89126067627f0e0753008baee47554900c52ad492f3279036"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/columns-light.png",
+    "historical": {
+      "bytes": 115085,
+      "sha256": "eb0791541e4a48112b77d194bb6384a05b19efdf0a907b854429c859cd6f9d45"
+    },
+    "generated": {
+      "bytes": 115584,
+      "sha256": "14486d9546ae0cfa8453e326e45fe6d4631d0ebf8c16902b6745c74b3653c79f"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/columns-roundtrip-1.docx",
+    "historical": {
+      "bytes": 9967,
+      "sha256": "8941b9eeb248da92469a4416cbb005e82916fa0e8ad4999537fe1440a0324fe8"
+    },
+    "generated": {
+      "bytes": 9958,
+      "sha256": "2a8365973b8669257fa0e6eb433581decce4fa7c2d8b7b1339aec59a47b3a20f"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/columns-roundtrip-2.docx",
+    "historical": {
+      "bytes": 10064,
+      "sha256": "31d2842ee629ce169a3ba75d05a2a3f0a9ab35cfb2daf56a40b3ba3d500c8f17"
+    },
+    "generated": {
+      "bytes": 10057,
+      "sha256": "8b6dc2d30b20fee26785730263c81ec233feb8f3176dd8f6a1e8090adf1f1b38"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/columns-source.docx",
+    "historical": {
+      "bytes": 9621,
+      "sha256": "075cda978b9ec7dfae1b1ccb6cd59b567f16b0f8204cea0efa8d57dbe21f4c30"
+    },
+    "generated": {
+      "bytes": 9621,
+      "sha256": "eba9b659e179140eec552523be81e11ae1c6008341d37c30fdcc5ca236a373a0"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/distribute-dark-320.png",
+    "historical": {
+      "bytes": 47590,
+      "sha256": "7a4feb4fea27dd72c8cc265f5f875f1c7a06255eddfac3ca50e333d0958ca978"
+    },
+    "generated": {
+      "bytes": 48152,
+      "sha256": "6d780c0c91fed56e24e6b852367d980eaba5dbe1b851b38a2895bd62fffd94f5"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/distribute-dark.png",
+    "historical": {
+      "bytes": 112790,
+      "sha256": "373e7ff39e394cd15b1cd62dfe80e87875b4ee84297359a3ca58d59a725f6410"
+    },
+    "generated": {
+      "bytes": 114330,
+      "sha256": "3cf27cde5b65dda1690b3b4843f8f5c80734ccf04c2a623428df333712be3584"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/distribute-evidence.json",
+    "historical": {
+      "bytes": 80,
+      "sha256": "e7b26cce694295a66c85fb7069097a8b35b4e31e9108f19cd4431d29e0946948"
+    },
+    "generated": {
+      "bytes": 80,
+      "sha256": "ff69f268d8547efc1268d2424c375c97b5bd45197f07433118eafd24a76a07da"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/distribute-light-320.png",
+    "historical": {
+      "bytes": 46667,
+      "sha256": "151fa6f27f573c82db32fd601e4d344f347c34f370ca9eddf58a83eda3daa0d7"
+    },
+    "generated": {
+      "bytes": 47245,
+      "sha256": "5e832ad01154162226cf201880f4e5391f3b6e62b993ceaf6f3577201ef056b9"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/distribute-light.png",
+    "historical": {
+      "bytes": 112194,
+      "sha256": "59747e436e1567adcb59e254824b4c1629c7a19ac8ff904dfc6b772120f62b99"
+    },
+    "generated": {
+      "bytes": 114039,
+      "sha256": "a193d8132e2824020fc0907d1eb6c01039e6fad0f1d21c8036d8d4dffa52dfdd"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/distribute-roundtrip-1.docx",
+    "historical": {
+      "bytes": 9974,
+      "sha256": "a709ed42eda7075069e0d1d980fc0ce65e0d114a3e8ae5c23a0f93662dd9fd18"
+    },
+    "generated": {
+      "bytes": 9964,
+      "sha256": "195a33f56692e5495af253953edc1fb8a32a3eb9b294e50569c521118bef11b0"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/distribute-roundtrip-2.docx",
+    "historical": {
+      "bytes": 10064,
+      "sha256": "82aa0c7a0aa159cf11dbfe276490a80e1ef173c399aba008de5b8572a09395d3"
+    },
+    "generated": {
+      "bytes": 10056,
+      "sha256": "cce3c965fde317e5c8878ee035f738123dd63091e0b27443f9667e956db09b1a"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/distribute-source.docx",
+    "historical": {
+      "bytes": 9622,
+      "sha256": "896de2260c36e943165dd23edae9a25328822172bd9c68b9ed4fc5cc6e43c2cd"
+    },
+    "generated": {
+      "bytes": 9621,
+      "sha256": "c5721de77d10e125211a83c76401fc0077a76804329b0d8397345fd391583d14"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/drag-preview-dark-320.png",
+    "historical": {
+      "bytes": 48650,
+      "sha256": "99656b5cfb1f0f25d1901cf194bd7aeb4b0f2fb9f26135594d12a5565c90a4dd"
+    },
+    "generated": {
+      "bytes": 48658,
+      "sha256": "1bcce6670022713660abb97931feeaa46ae11e638b9559fdacd7f3d4d16510eb"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/drag-preview-light-320.png",
+    "historical": {
+      "bytes": 47993,
+      "sha256": "d617fe429088e3df2e5d0d15280fdde146879216b42492a0302a334256ff845b"
+    },
+    "generated": {
+      "bytes": 47852,
+      "sha256": "90bad4fd895316d55cf896163c2205e40886ed966047ba163a4ff9f9b713173b"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/drag-roundtrip-2.docx",
+    "historical": {
+      "bytes": 10043,
+      "sha256": "944b4530cb1506ccd3c6f62bed9c107f1e3b033b94f52f0ad7421e1dac54bb4c"
+    },
+    "generated": {
+      "bytes": 10033,
+      "sha256": "119111812df606321ff60180c3995e257841ecd5b8caad9942d5f9ee93832537"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/drag-roundtrip.docx",
+    "historical": {
+      "bytes": 9957,
+      "sha256": "5b9e039b045f2ca0874d989fc44027b60645b34523384f1d3701f988c7452d40"
+    },
+    "generated": {
+      "bytes": 9948,
+      "sha256": "6d35a49b40445d5934d1828c2c7636bccb08d1972bc68b375a6139a17f7fd2e3"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/drag-source.docx",
+    "historical": {
+      "bytes": 9601,
+      "sha256": "06d462b250a2e1090b1af28250c6806a31c953e26704442d194d8a375dafa6db"
+    },
+    "generated": {
+      "bytes": 9600,
+      "sha256": "9027d8e9b33a9a041648beeb2a5dcb2ee68271fefdb7c2500020721aefd1480b"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/fixed-layout-evidence.json",
+    "historical": {
+      "bytes": 474,
+      "sha256": "19c75d4320c08ec36276c6b4ac1f703cfae57b34d3fb1c82395f50050c9aa210"
+    },
+    "generated": {
+      "bytes": 474,
+      "sha256": "a3902b0294fdaaf7c767f2c916a7a2ba974185cd4a12cfcf9697afa81e24565b"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/fixed-layout-page.png",
+    "historical": {
+      "bytes": 161021,
+      "sha256": "e935fcd367f4ead19425d9cc269e13c7f807c7e0042f15dc690ae8848279d186"
+    },
+    "generated": {
+      "bytes": 161111,
+      "sha256": "86eafb54e2842a072d1dfef23f4494ee74ebd105698a659a9941248aaf7d046e"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/fixed-layout-print.pdf",
+    "historical": {
+      "bytes": 16488,
+      "sha256": "971c48bad9f95158ab2c6451b5beea23cce10a4716be3a479384f09612616348"
+    },
+    "generated": {
+      "bytes": 16679,
+      "sha256": "cad1d9bffac57d4faf3a462ff6a7a8e0cba185b1796913d0f13f0e66f4f88fdc"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/fixed-layout-source.docx",
+    "historical": {
+      "bytes": 10675,
+      "sha256": "b07104b53b5c4360b30285a4cfa14c97932590d1270516f8a5b0414a71340e13"
+    },
+    "generated": {
+      "bytes": 10674,
+      "sha256": "e21c8d3993152dce98bfc2a24f0c7ce54a1ae4f41141ad78c241671f592be243"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/merged-drag-roundtrip-1.docx",
+    "historical": {
+      "bytes": 10010,
+      "sha256": "6367aba349e2515c9850f129a9b13d43dd150548992ca737c1764403a17e22c5"
+    },
+    "generated": {
+      "bytes": 10003,
+      "sha256": "a1526db9ee2dc112aaf7580ad9bb702ff921bda6d83d3c4e869c3321dd44eb6e"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/merged-drag-roundtrip-2.docx",
+    "historical": {
+      "bytes": 10107,
+      "sha256": "2c11708281a07f4e3e51b157a1506260f456d13a35b9779cb97dec592e20f9ce"
+    },
+    "generated": {
+      "bytes": 10101,
+      "sha256": "ded3c564343b216b2cd022314e934161e2b773f115f94f46c442c97f390d99ca"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/merged-drag-source.docx",
+    "historical": {
+      "bytes": 9641,
+      "sha256": "5325ec9529d16520b2d7fbb64194008fcf100ff830808b00c8dddb7a2faf4c06"
+    },
+    "generated": {
+      "bytes": 9641,
+      "sha256": "9abdf45a079470fa2dccf3577cf712a8729e9c398efe9118cf7a0c74351e3ab6"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/merged-fixed-evidence.json",
+    "historical": {
+      "bytes": 248,
+      "sha256": "b2499ef019ddd17d808467b62bdd860b2aa5da61ed0de5fae3e2724cf040e741"
+    },
+    "generated": {
+      "bytes": 248,
+      "sha256": "37366879185cf3af9a4fa18828c5c1d4275266fc0f61ae13955bb996f7c56782"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/merged-fixed-light.png",
+    "historical": {
+      "bytes": 169053,
+      "sha256": "0332e40363458281a77cd5ec6c37ddc1976103855a90d53ffeffa5e547953c53"
+    },
+    "generated": {
+      "bytes": 169132,
+      "sha256": "50d516a8ec5e6fbe2a9f328b439db3fdc5a0efa3fdad3ffec8c52db1a0e8bc07"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/merged-fixed-source.docx",
+    "historical": {
+      "bytes": 9705,
+      "sha256": "fb861b94c0ff4380e2f2f07de7a650af0a00cfa09f56394741eeec97f158b488"
+    },
+    "generated": {
+      "bytes": 9706,
+      "sha256": "eb055419c96f42d7ba7480b9ac3a340c874e5dc8349f79e83edf4c4ebcf36252"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/natural-rows-evidence.json",
+    "historical": {
+      "bytes": 98,
+      "sha256": "183b18dbdf40d10bfc3250e481ac0d347755ea4af4062640c69256d1936de2a4"
+    },
+    "generated": {
+      "bytes": 98,
+      "sha256": "baa52de1224b6d4577a768775dec132788042f0706c59e61563d2aafcc73a747"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/natural-rows-roundtrip-1.docx",
+    "historical": {
+      "bytes": 10048,
+      "sha256": "09d9de173ae3b0654e79bb2259482a0d8f483fde4f0c6569ab2e4c9b5411d320"
+    },
+    "generated": {
+      "bytes": 10037,
+      "sha256": "e33aaaf9cb88688049b893476361d6bb41f0344719586fc5f76870a89990b0f1"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/natural-rows-roundtrip-2.docx",
+    "historical": {
+      "bytes": 10071,
+      "sha256": "5af5cdaec90291257a1ec8b79af3bff9792d27fd38dabf2924f9be7e46a40406"
+    },
+    "generated": {
+      "bytes": 10067,
+      "sha256": "8c1154c031dc837bc6202513cf5b269fe80ffdc436d29ff24fd4d9b8fb7c6bd8"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/natural-rows-source.docx",
+    "historical": {
+      "bytes": 9661,
+      "sha256": "511f3143f857c4d758011a8ae49ce84db1fd7fca0e7d84fafee3fb9eda57ed8c"
+    },
+    "generated": {
+      "bytes": 9661,
+      "sha256": "1068089c9913e8503df017ce19183c306fde81b5ac1b865a3748085765c6ff41"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/nested-columns-roundtrip-1.docx",
+    "historical": {
+      "bytes": 10041,
+      "sha256": "4068ecdaad6f1ebabc45fce53ca698e4695536674c1a882f6f59dc1aef6f3b08"
+    },
+    "generated": {
+      "bytes": 10042,
+      "sha256": "9eea63aa79561ee17c776ec533231fde1282911278de56ce1ce11c6bf9ad0ad1"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/nested-columns-roundtrip-2.docx",
+    "historical": {
+      "bytes": 10139,
+      "sha256": "b9ce95b5c5ba37205f75394e375fb1c2e327ec0b481ee61cebd7cbb0dccc3999"
+    },
+    "generated": {
+      "bytes": 10140,
+      "sha256": "03fdd44ac0e8289823b0f654005069d9387ded5a7e35698eb42846cb53442bfb"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/nested-columns-source.docx",
+    "historical": {
+      "bytes": 9683,
+      "sha256": "bdac82b5c3991bcc2e1827d25d8d3fd2d118cf822ff7079088c9dc77bb086166"
+    },
+    "generated": {
+      "bytes": 9683,
+      "sha256": "67bb58b6f6195677fca60631dc053501ad26d00b3b7b90543a7ef9c644ebbd7a"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/row-fragments-allowed-light.png",
+    "historical": {
+      "bytes": 118514,
+      "sha256": "5a75b41dae819c0713e3fb5a192d5092f848d0e73e9844481ae59f869211c8c1"
+    },
+    "generated": {
+      "bytes": 118648,
+      "sha256": "ddb748d10c9f4b56758db6541631310140f9b0f9154f93c3a1e82ac1c41429fa"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/row-fragments-allowed.docx",
+    "historical": {
+      "bytes": 9848,
+      "sha256": "edc716f19962ef2107dafca7225819612183982186a883f7a92e98216df1df26"
+    },
+    "generated": {
+      "bytes": 9848,
+      "sha256": "714c542fffbe74a998d2bd85867d464190280b7f29d090875d5ad28df23af118"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/row-fragments-edited-roundtrip.docx",
+    "historical": {
+      "bytes": 10201,
+      "sha256": "9dfbac2894ff4aab8f041772d688a89f18de96a962772c656926af1fa70d31ea"
+    },
+    "generated": {
+      "bytes": 10207,
+      "sha256": "196f58ed99e30fb3a9d9606c16acd5a529890789f14cd9f607a59e72dcf98704"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/row-fragments-layout-evidence.json",
+    "historical": {
+      "bytes": 111,
+      "sha256": "d62636c3c660f1f7f3f6ed005f70f0713b6c683428792d4ca6c3637d0f1a06cd"
+    },
+    "generated": {
+      "bytes": 111,
+      "sha256": "e72dbef6ab53e117777127065f945edf6b70d3b6cbf80fd49e551ff273452c9d"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/row-fragments-prohibited.docx",
+    "historical": {
+      "bytes": 9842,
+      "sha256": "be4677e4a770aa12d2b9de51c48be9db71d9a6e58f40bc290bd7027aa11f8021"
+    },
+    "generated": {
+      "bytes": 9843,
+      "sha256": "4d6963f6f08612f9923710c7910f236c472fc2e933402b78c7dd6fcd3854125f"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/rows-dark-320.png",
+    "historical": {
+      "bytes": 46009,
+      "sha256": "a0e2f1f6841c385d52cbc66e5794f7974773bfc63c2344fc5c8874062c33883f"
+    },
+    "generated": {
+      "bytes": 48004,
+      "sha256": "19a0bfb930dd0a42ac1eea011761f4aaa1764bf6fde4bee20856b7fcd32e3901"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/rows-dark.png",
+    "historical": {
+      "bytes": 170589,
+      "sha256": "39163dc385ff9f1b46b2f20a48671af1085d4d0c99cc419dcab8a407b362226c"
+    },
+    "generated": {
+      "bytes": 166325,
+      "sha256": "c193c296de77049423238a22532384327649a27cc74ca4152b543d0884cda1e3"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/rows-light-320.png",
+    "historical": {
+      "bytes": 47853,
+      "sha256": "930a9f8c8b047819a9df61ba23741ecbd5c16e8581146576532a79e5cb842ed7"
+    },
+    "generated": {
+      "bytes": 51298,
+      "sha256": "4b789ea69f5101549b59ddc70fbfa85a278b8fcebf5318912529d85bf781b109"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/rows-light.png",
+    "historical": {
+      "bytes": 176843,
+      "sha256": "1ac145a0ff7b10ca38a67faa681540e0a9f44fc44d82afe22b3a9f0edb88ba27"
+    },
+    "generated": {
+      "bytes": 177886,
+      "sha256": "315b79ed3ddadd96337dcc21bf0edcca70c44904bf2bf91f9d5bf9998fd26d6a"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/rows-roundtrip-1.docx",
+    "historical": {
+      "bytes": 10037,
+      "sha256": "2b71d8f8ed07f140fabe41aa8e533a7bd6142ea0365621a57b3c290ac3f4d03d"
+    },
+    "generated": {
+      "bytes": 10042,
+      "sha256": "eae451ce099b90efe7d8a0f64284935a08e794a179256df2e1e0f9eba4f1e2ba"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/rows-roundtrip-2.docx",
+    "historical": {
+      "bytes": 10157,
+      "sha256": "32e440bfe6ed90632a7e14fa6ca39d350f4b7218be1bbd29b16b600f7192eb29"
+    },
+    "generated": {
+      "bytes": 10149,
+      "sha256": "4ed67219f7947510c5bd1b92f5e95fafe6bd9a099ffb1d0e4efc2b3e4d8c8981"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/rows-source.docx",
+    "historical": {
+      "bytes": 9688,
+      "sha256": "2232b5210487f8d2f2a33da8b95a793a9cb4da1eb244d014f1636e86dcb8162f"
+    },
+    "generated": {
+      "bytes": 9688,
+      "sha256": "e97950b2d6826da3ec6c982b794574222d50dfcb6e63fe30296aed1e61d317e5"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/selected-columns-dark-320.png",
+    "historical": {
+      "bytes": 56732,
+      "sha256": "53d8c3f9aae5e080614c759ebc0887f8f68822a7462818230df4a5ad44dfecf7"
+    },
+    "generated": {
+      "bytes": 57785,
+      "sha256": "635f4e5dbf2893e3e77c4ba82fed578e0a296f719d49aa6f811f1b14f4fa33f9"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/selected-columns-dark.png",
+    "historical": {
+      "bytes": 122686,
+      "sha256": "dba8c3ed19b307e25167265406763cefd397254330f344c221ee72e05e84aeda"
+    },
+    "generated": {
+      "bytes": 125954,
+      "sha256": "d4ac19a3e3dbda6dd8a1d6ab9bd10f42bb74098bc70cccf71947f2814217421d"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/selected-columns-light-320.png",
+    "historical": {
+      "bytes": 55574,
+      "sha256": "1e88bba00a69b161d88bab496fc394f433c770049ed8eb4cbbf6b03930036c4d"
+    },
+    "generated": {
+      "bytes": 56475,
+      "sha256": "d496c8f5b71511a49316725a4441cc5bfa8749e8a1e2d969ae4fce85c74b2016"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/selected-columns-light.png",
+    "historical": {
+      "bytes": 122300,
+      "sha256": "5de2242d6c8e07805b3a0437c0d0f19c0b802e95bc3248050646296c3940f3b9"
+    },
+    "generated": {
+      "bytes": 125659,
+      "sha256": "a2859f1a3fb53ab87bb1c50aa94e3be5e89b7e8f1552a6b84218dab49d533fe1"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/selected-columns-roundtrip-1.docx",
+    "historical": {
+      "bytes": 9975,
+      "sha256": "bd49354c97aac7e9056e88df373030196da569ac9af6baf133c754dc7b8e0c1e"
+    },
+    "generated": {
+      "bytes": 9971,
+      "sha256": "6f6b303f2068062b5a3a29e09f709a0e5964bd863d499d9d2b7b0a992f09f509"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/selected-columns-roundtrip-2.docx",
+    "historical": {
+      "bytes": 10078,
+      "sha256": "ef7b2e9dc12f1696ad1583d665553cf9cba07cebf029c8815f27c7da571c38a5"
+    },
+    "generated": {
+      "bytes": 10072,
+      "sha256": "36a0a625f184f4facbbb4a7a3b8936ff08438eb5ff8a9da86d4c3c0d0c71175d"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-row-properties/selected-columns-source.docx",
+    "historical": {
+      "bytes": 9624,
+      "sha256": "658f51e1d63e80f9fc6efe6d6bcba3c7ac699d52e5e1c00a2d4dcaa6aa66d52c"
+    },
+    "generated": {
+      "bytes": 9625,
+      "sha256": "66d6ce951081dfef12ff6457e769104a8f562abae6d72a24399e2ee6da29e0db"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-surface/surface-dialog-dark-320.png",
+    "historical": {
+      "bytes": 35090,
+      "sha256": "6938bd24a2f60d960fb6acfd46c10c256423d060a24cbf14296cad8edabe7ad8"
+    },
+    "generated": {
+      "bytes": 35048,
+      "sha256": "f1ed36d391787aabd2caaa0825935886b8baa24b1d1af5b8550d6dfdc3bfb48f"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-surface/surface-dialog-dark.png",
+    "historical": {
+      "bytes": 130795,
+      "sha256": "200e99a5a63fce939b6ca6896737993f774380c87162c6366da00f48bf98676b"
+    },
+    "generated": {
+      "bytes": 130792,
+      "sha256": "8718aae34ac4fd7a324c3fd6179fdd7b17a9a18310e542aa87945753339b7885"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-surface/surface-results-light.png",
+    "historical": {
+      "bytes": 106695,
+      "sha256": "44c5ff98e7a050bd500098f95f5938b5b120d3314dfff26f3cf24eced1716d25"
+    },
+    "generated": {
+      "bytes": 106695,
+      "sha256": "968d51c9596590f6ad34168e188466e6753ef87a49235fcfdcbca553616c4586"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-surface/surface-roundtrip-1.docx",
+    "historical": {
+      "bytes": 9876,
+      "sha256": "2e7b3250f756f5133eb67ec6edab6e80d3be7e610e741fce5d52511ab72b6c41"
+    },
+    "generated": {
+      "bytes": 9887,
+      "sha256": "a92971a3c9a2fddc8a57f28140a19b6e159daf75497600ae43a0ed3dd53287a3"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-surface/surface-roundtrip-2.docx",
+    "historical": {
+      "bytes": 9970,
+      "sha256": "5f4845ba5643fc5254ea8cb85246ec6c84b6ef1eb5023fec999e05965b29603e"
+    },
+    "generated": {
+      "bytes": 9981,
+      "sha256": "4478ec75200ea026b3219f1ab698470c60e17b6eaf2c02e74be2ee6b6345ee7d"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-surface/surface-source.docx",
+    "historical": {
+      "bytes": 9562,
+      "sha256": "57b7d29011ab3adde530198ae098d6e6eeb86d7ab87d029e2c119de978c733dc"
+    },
+    "generated": {
+      "bytes": 9562,
+      "sha256": "bb05837bff45d1a0dec430a038f963eb6b1056ec28d1517f5a2a3e47078e889c"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-conversion/conversion-dialog-dark-1280.png",
+    "historical": {
+      "bytes": 116934,
+      "sha256": "61d011e8955f294e67b6d5dc0f6925a673aa53266b26a8831f024b413c20d408"
+    },
+    "generated": {
+      "bytes": 116843,
+      "sha256": "7b1bf20a3511fd342f2fd9b052bb164797c7959d0263a3d4e455a3cc4e489c23"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-conversion/conversion-dialog-light-1280.png",
+    "historical": {
+      "bytes": 124276,
+      "sha256": "2d7be5048ee07819fd4e1f3771ac60060dda8e3a9a900dfc48db892bebac405c"
+    },
+    "generated": {
+      "bytes": 124158,
+      "sha256": "fb68751a4dec7794e67f24e5d992fc7251a3d6271cbd5344903f5ee6a167b73f"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-conversion/conversion-source.docx",
+    "historical": {
+      "bytes": 9648,
+      "sha256": "176894c59fc1a15bca3f0d4777b408bf4cb71aef966f3f0509a27b9b0a79373e"
+    },
+    "generated": {
+      "bytes": 9647,
+      "sha256": "f4cb0c626c5cc70f7fcc1e179b5c2e19c7c35547c9fb01672d535c893fddc8b3"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-conversion/conversion-table-roundtrip-1.docx",
+    "historical": {
+      "bytes": 10138,
+      "sha256": "4c7ee32d5113e51299c4f4eda46c1df3f2dc7c950497631d00fc93c39b12ddf9"
+    },
+    "generated": {
+      "bytes": 10136,
+      "sha256": "6071dd532c71a5e44193992f03278056c1706352d249004c2a924cc93b743973"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-conversion/conversion-table-roundtrip-2.docx",
+    "historical": {
+      "bytes": 10235,
+      "sha256": "ab755379a097c35704dae8b02529e804c88cf51058d5928b4a16db65aa144848"
+    },
+    "generated": {
+      "bytes": 10237,
+      "sha256": "1d24ac08d8d61568fd901b7ffb4b83a4e3bdab2abe90b392fc82ba985dcacf49"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-conversion/conversion-text-roundtrip-1.docx",
+    "historical": {
+      "bytes": 10096,
+      "sha256": "6b4e440e17a9682b8ac02ad26c16571add394f3ab781490b26215afd8bc0e08d"
+    },
+    "generated": {
+      "bytes": 10098,
+      "sha256": "b4957d11c9a7200cc4fada729db84129f0ea5a95346599380dbaeedc70ee9f31"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-conversion/conversion-text-roundtrip-2.docx",
+    "historical": {
+      "bytes": 10103,
+      "sha256": "8ba6b04f1524d42239b945115f9e8a9025b0a61d52be9fafa45e1550c6c23284"
+    },
+    "generated": {
+      "bytes": 10100,
+      "sha256": "65270ad1b0f30864c2fe0f500928ca28d495154b41e008fbc68e6abaa6878049"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-conversion/merged-rows-roundtrip-1.docx",
+    "historical": {
+      "bytes": 9989,
+      "sha256": "2895b3390caae388bc6790241edea0b96aaeec34a5cfba0ee38f18ba437f0056"
+    },
+    "generated": {
+      "bytes": 9983,
+      "sha256": "f691effc6e2a0ba7184e4db2379b5af9c2f83a3181f49484fbf496bf9fe26a92"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-conversion/merged-rows-roundtrip-2.docx",
+    "historical": {
+      "bytes": 10105,
+      "sha256": "9e39267246723d0718294704b87d9fdfc4f1e8d2cf4d654765a8790c3fa1d9dd"
+    },
+    "generated": {
+      "bytes": 10099,
+      "sha256": "aaef37ad9775ca89b41bd783342ae3c8979ea6c65a4e03d6bf7c8f361ed90727"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-conversion/merged-rows-source.docx",
+    "historical": {
+      "bytes": 9656,
+      "sha256": "07f3b94a89310236157b7339bab72ea5ea8f732ef144e3f30e58645c18359c24"
+    },
+    "generated": {
+      "bytes": 9657,
+      "sha256": "07cdea2bece06156caae1e6ef31bcc89ca62a5cedd85ddb1733313bbeda2ca1a"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-conversion/nested-roundtrip-1.docx",
+    "historical": {
+      "bytes": 9812,
+      "sha256": "0dd15e2bfb87a1e635823b54ccd067b7f24b7792e8d8faa7132f2a4acdf2c19f"
+    },
+    "generated": {
+      "bytes": 9811,
+      "sha256": "c5341191a083c698a61a2639e24e8bb84410ee1828c6220e245df401c34d94f4"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-conversion/nested-roundtrip-2.docx",
+    "historical": {
+      "bytes": 9939,
+      "sha256": "8f67175344b3669afec931b589d6bdce20b26dfff300bf4995a030020255c637"
+    },
+    "generated": {
+      "bytes": 9940,
+      "sha256": "4726902376bc114d3cd01caff5d9506946454ba5463f2c0721757ef4be57d75c"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-conversion/nested-source.docx",
+    "historical": {
+      "bytes": 9628,
+      "sha256": "c8e9d3edb8829b88c7661803c169b432055202494970c782a67cec7963bef108"
+    },
+    "generated": {
+      "bytes": 9628,
+      "sha256": "1e451b9a5db787f48232cf822de9a36598e75ee2550b480c7a9e8bca29b30eea"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-conversion/partial-roundtrip-1.docx",
+    "historical": {
+      "bytes": 9988,
+      "sha256": "cbb2df88668167e8344ce51e4be5052236b54d8713534f4d093286bf2baa9f45"
+    },
+    "generated": {
+      "bytes": 9988,
+      "sha256": "22cca2b19141b11a9ab315b2046c9023799a8ca900b07ef209ef477a2dc52154"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-conversion/partial-roundtrip-2.docx",
+    "historical": {
+      "bytes": 10077,
+      "sha256": "55032fdce2ac31642ab354c9fa69f02b23a5df98abc5dfc2084e92b2e7623d77"
+    },
+    "generated": {
+      "bytes": 10074,
+      "sha256": "b1591eb266a2c4976ecaad79a01e476b6797c1d9fed3fbf834247ba5c173d11c"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-conversion/partial-source.docx",
+    "historical": {
+      "bytes": 9489,
+      "sha256": "edc747eb3edd7fe37a4fec84bab39ebe43834d83da58a62d3b3d4afb18d9b042"
+    },
+    "generated": {
+      "bytes": 9489,
+      "sha256": "234eabbadc790167354d17e8eb441d8b67de774c0dafa1055e1f2ffda847da17"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-conversion/selected-rows-dialog-dark-320.png",
+    "historical": {
+      "bytes": 49384,
+      "sha256": "5d55b0cb36ef5138970cf8ba8725a87de754cc915cce78fb8f11ad9369f65439"
+    },
+    "generated": {
+      "bytes": 49599,
+      "sha256": "2fdbdc373c9f169305c2a3777a51014f04ce24be8082a46bc6a8aa6572f95bf7"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-conversion/selected-rows-dialog-dark.png",
+    "historical": {
+      "bytes": 123719,
+      "sha256": "9d451734896cb28b1289caa083ce41214dbdc6a2b1ac0fc00b521ca2684d88fa"
+    },
+    "generated": {
+      "bytes": 122020,
+      "sha256": "f66613b978820b24f645882fd71128c32ed55d0d7f59fe5a86ffb7b525fecbf6"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-conversion/selected-rows-dialog-light-320.png",
+    "historical": {
+      "bytes": 51566,
+      "sha256": "d66388ffdf7e4d18749b4097de2cb44065a7a4594bd27f2668d50c2d874eacf6"
+    },
+    "generated": {
+      "bytes": 51884,
+      "sha256": "c6769d604193b8f55eb672380037b84581d9636c685c3f3b8aa87c56f3669b70"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-conversion/selected-rows-dialog-light.png",
+    "historical": {
+      "bytes": 131092,
+      "sha256": "3c9881204eb3d68e0114c3b95d72c1e5e4e31e2c139cd3cf2aeb384c64682c10"
+    },
+    "generated": {
+      "bytes": 128557,
+      "sha256": "732a17211d107528a5a282d9c0f8bf2f56fb08f552a729da46b32f46f71f4782"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-conversion/selected-rows-roundtrip-1.docx",
+    "historical": {
+      "bytes": 9984,
+      "sha256": "203a35bc9e48acfb35a9dc3fbaa8d0784959cb036862039c4c14ffc86498edb5"
+    },
+    "generated": {
+      "bytes": 9980,
+      "sha256": "66b44e061f0173c61278844ffd4818f54bb3f461ebe6184fe34e5f49fc93a813"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-conversion/selected-rows-roundtrip-2.docx",
+    "historical": {
+      "bytes": 10106,
+      "sha256": "e7ff7b4b5b5c14f798c5a25b2b8d4afbac01cd9f18ac353c8de75c4d84127c26"
+    },
+    "generated": {
+      "bytes": 10101,
+      "sha256": "0fc469c874856d87dc12cb329950ed4ca1282c891ec70ec53c8ddcb307b11d3f"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-conversion/selected-rows-source.docx",
+    "historical": {
+      "bytes": 9617,
+      "sha256": "c0ee9d6661f9de17872f2793895c1d8390cb33d7ab54ac8ff0e28ca031293381"
+    },
+    "generated": {
+      "bytes": 9618,
+      "sha256": "631b484e95b6a1fae2277090d8d548d690ba8099e49cd7bde6fd83af90a4985e"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-formula/directions-roundtrip-1.docx",
+    "historical": {
+      "bytes": 10126,
+      "sha256": "69da2a79d5af7259efe28952843b89183ff55120fdd27eb48dd174c9fd87d885"
+    },
+    "generated": {
+      "bytes": 10120,
+      "sha256": "b707c5066adf08a02aac5ed6b8850a9260ad1ce6cf9ba03ee1d55aa215c38ab8"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-formula/directions-roundtrip-2.docx",
+    "historical": {
+      "bytes": 10230,
+      "sha256": "40ffba640df488aaaade33ca456e14c48d3f40f3b7d1059baaf1614358a915aa"
+    },
+    "generated": {
+      "bytes": 10223,
+      "sha256": "f10e329fa669ecfed38dc12bc235b0190856d7764e2e4f27ff83b8334cdca448"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-formula/directions-source.docx",
+    "historical": {
+      "bytes": 9732,
+      "sha256": "84a0f8c996fc056368f44975cc83f740ff5556e8c28bf6726dd7fbd83c63ed31"
+    },
+    "generated": {
+      "bytes": 9732,
+      "sha256": "660e6d55f0eed5d0e6e97ece699fe86629b6438443079bb1164ddb741071e11b"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-formula/formula-dialog-dark-320.png",
+    "historical": {
+      "bytes": 46702,
+      "sha256": "20bafec6390c612825141e4106c7c6ea2eb6923dd58af439c6e0d3e0c78bc839"
+    },
+    "generated": {
+      "bytes": 48546,
+      "sha256": "1da1103493801048d39e8b0c61d58b3299e5dd1902173e30f85fb9f9bb370be3"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-formula/formula-dialog-dark.png",
+    "historical": {
+      "bytes": 119850,
+      "sha256": "765fe9f51469855185d5a15991b4f580f09ee92ccf8f6c03cdfe597f48e32ad4"
+    },
+    "generated": {
+      "bytes": 120254,
+      "sha256": "a422bbc51e597608e4a763e3b08cd025bc3cbbc1fe34555f32247d04a6617473"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-formula/formula-dialog-light-320.png",
+    "historical": {
+      "bytes": 49044,
+      "sha256": "fdab1f75867a26af24f9cd9f5b0ab8a64eb19bbe24950476029d8fcac68e2fd4"
+    },
+    "generated": {
+      "bytes": 51117,
+      "sha256": "c77efc024c3e3c01231c0e9a6a2b69b52c62b42909dfef34bc6a8eda1f255aec"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-formula/formula-dialog-light.png",
+    "historical": {
+      "bytes": 126569,
+      "sha256": "f348d3a420f0ad7c3dbb549da450272739f2c2e073b40495698106b844a916dc"
+    },
+    "generated": {
+      "bytes": 126551,
+      "sha256": "05f13cf8be13446d0cac48bdc400886ca48e5d4d76c3f8ffb69c4c8b4d111b29"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-formula/formula-roundtrip-1.docx",
+    "historical": {
+      "bytes": 10021,
+      "sha256": "7174c14bbdbcfa417b39a39662ac5dfd9ed2c13f5ca6568eb6eed929f03f00ec"
+    },
+    "generated": {
+      "bytes": 10014,
+      "sha256": "ea87b9f51547ae1f4398db392237b89d849d20d7ccf187645170b95a93ecdef9"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-formula/formula-roundtrip-2.docx",
+    "historical": {
+      "bytes": 10119,
+      "sha256": "02a9918eaace2f94e950d17fa45ac504da6f80394b638d65065f8bf6df6e54e0"
+    },
+    "generated": {
+      "bytes": 10112,
+      "sha256": "ff6d37a2b09bb188f40f810cf7fe5613f62d4e6957b53f59a35d2901c82c98bb"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-formula/formula-source.docx",
+    "historical": {
+      "bytes": 9630,
+      "sha256": "1ecfd491c044f7b27f5969ada3009442b1001dbfce698521f144a7ac451fa6bf"
+    },
+    "generated": {
+      "bytes": 9630,
+      "sha256": "e73a9e623009e1f080a4242dcb44d8dad6f77b3dd6061ab461db48df2e2bfe13"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-formula/nested-merge-roundtrip-1.docx",
+    "historical": {
+      "bytes": 10081,
+      "sha256": "da36f5cdb181b56340ade925a85ef0e5495fcca74a72b2a7e2e984ee29b4379c"
+    },
+    "generated": {
+      "bytes": 10079,
+      "sha256": "035d790f6c972272990c583b22d8b0ad709aa2b1b97178b1712be90351d9c382"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-formula/nested-merge-roundtrip-2.docx",
+    "historical": {
+      "bytes": 10177,
+      "sha256": "23ff36eb73ab4092fd53afa83258dea1cd64a19289da42d985a975f2e8c80102"
+    },
+    "generated": {
+      "bytes": 10175,
+      "sha256": "820cf4b885880758a0bb54f0d2b4d0193190733f10a039327e4367d3e436cb60"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-formula/nested-merge-source.docx",
+    "historical": {
+      "bytes": 9721,
+      "sha256": "2961d79eae99e98ce0a18ff3a985661c790523726f30289accfccedb68a745e6"
+    },
+    "generated": {
+      "bytes": 9722,
+      "sha256": "65e2c538479c6aef90f5ec6a52b005b688ef5e1797ae219c444698dceabe685d"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-pagination/print-page-evidence.json",
+    "historical": {
+      "bytes": 1395,
+      "sha256": "6bca5f76fb6234439e1e6826f0bd6c40a56d6db677f377fa18e166262f72114d"
+    },
+    "generated": {
+      "bytes": 1335,
+      "sha256": "16ed7b8ac95b9162b6afebd5cae60173daa4d862bd81d4adc0b4c6fc743f328b"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-pagination/table-dark-320.png",
+    "historical": {
+      "bytes": 46587,
+      "sha256": "457299b4f566c7d458ba43804ea4a25fb0565e1f341b67f46d757cd5c6a815fb"
+    },
+    "generated": {
+      "bytes": 45205,
+      "sha256": "3cf2b558b622a7e8953d4c12871054abf53eb9003c80a8164f0660b2bdacc97e"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-pagination/table-dark.png",
+    "historical": {
+      "bytes": 107994,
+      "sha256": "e5857f26feed78f6e5ecb7960e440f5d4959fab3aa01a1a2e0b71a792371bef5"
+    },
+    "generated": {
+      "bytes": 120179,
+      "sha256": "780e37295540d1192fb1b25ff1159ba57bc51fb03ec57f09295b6cf1e2d6d433"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-pagination/table-light-320.png",
+    "historical": {
+      "bytes": 45898,
+      "sha256": "a207fea48f0f1de275be6a15e62436bfaa0c15eba66eff09d1bb5f71f2c87d0b"
+    },
+    "generated": {
+      "bytes": 44239,
+      "sha256": "991b9b90cc665cb316ae8a56f8d507458f5b9e7b0df6a1d1beabca160cc67f39"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-pagination/table-light.png",
+    "historical": {
+      "bytes": 107163,
+      "sha256": "aec3eedf09c7e0410b8681ab81f89e242d18cfce5e09d88fd73b2f0ece079c42"
+    },
+    "generated": {
+      "bytes": 119064,
+      "sha256": "47979633d9576eb1fb9e81fd79a1283f3fd7e871e9b0ccc30fa0320b4b22bfc6"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-pagination/table-page-layout.png",
+    "historical": {
+      "bytes": 161517,
+      "sha256": "521b7f9d401c34767ca384a349ddba05b0c06f6eeba82899085ffed15905fd69"
+    },
+    "generated": {
+      "bytes": 161353,
+      "sha256": "be7cb0dbed0370d8813092e9a240db98d819f473c57a1d8482b45187478d5002"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-pagination/table-print.pdf",
+    "historical": {
+      "bytes": 18441,
+      "sha256": "18bc6e9a54e7edbfd6c38a9c9433dbbfe8e4a70b3030fac7f79088d083dcdbcb"
+    },
+    "generated": {
+      "bytes": 16799,
+      "sha256": "36f19615e43740858c59429699cb5d49c069ced2558937fee5d7a9ef3cb78e51"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-pagination/table-roundtrip-1.docx",
+    "historical": {
+      "bytes": 10216,
+      "sha256": "d540b6eb89c623cf3bba3099c14f51e33c5b89453888c797156e38a8d42b2af7"
+    },
+    "generated": {
+      "bytes": 10257,
+      "sha256": "662d073206a75fd1097f9676b3313abc463950e71a7196ffd246f827c11e8f72"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-pagination/table-roundtrip-2.docx",
+    "historical": {
+      "bytes": 10402,
+      "sha256": "610f198003962479274f0ee33cb94a491b04a528ea9234fbdf627a4c78b3b039"
+    },
+    "generated": {
+      "bytes": 10399,
+      "sha256": "93003bca08e04551d0b89f0a17196f63aaedb198a6bc8ed73dc9b1aa4ece4639"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-26/word-table-pagination/table-source.docx",
+    "historical": {
+      "bytes": 9931,
+      "sha256": "77ec160f546c9f2bcb997db9458002f7a8b9190fe284193faeb6840071becc3c"
+    },
+    "generated": {
+      "bytes": 9932,
+      "sha256": "386783a9e30afc2a6bdb0de6f9315cfd426afb3e88bd75516affff475df2fb45"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-composition/before-composition-history.pdf",
+    "historical": {
+      "bytes": 1645260,
+      "sha256": "2a158d1b8c48c3bcba366191cb523817497777ab7075172630eca3366f23bb5e"
+    },
+    "generated": {
+      "bytes": 1699812,
+      "sha256": "cd2be3bee6ec449d8dfec91edbdef2ac1b855ff22288eb663d2b5e1a0ddf2aed"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-composition/combined-light.png",
+    "historical": {
+      "bytes": 177358,
+      "sha256": "b4cbfc022e8d377e19b5348a2b59873e4708c00b01efab3de9a33350d83d4414"
+    },
+    "generated": {
+      "bytes": 177387,
+      "sha256": "4645e2f790605795cffbbdae559af13bd4eafd6a9d59a4d9355105cf06c97648"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-composition/combined-round-1.pdf",
+    "historical": {
+      "bytes": 1643408,
+      "sha256": "d9dfa18eec89ad6a078e045e3d02c891964ec2a0ed8390adbb21ab385380cae7"
+    },
+    "generated": {
+      "bytes": 1700053,
+      "sha256": "589b305acb25ae5c6940525d072836631df6acd7f33f6712220fe9f9e528c860"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-composition/combined-round-2.pdf",
+    "historical": {
+      "bytes": 1643408,
+      "sha256": "d9dfa18eec89ad6a078e045e3d02c891964ec2a0ed8390adbb21ab385380cae7"
+    },
+    "generated": {
+      "bytes": 1700053,
+      "sha256": "589b305acb25ae5c6940525d072836631df6acd7f33f6712220fe9f9e528c860"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-composition/conflicts-and-dialog-geometry.json",
+    "historical": {
+      "bytes": 1495,
+      "sha256": "1122aeb15cb0bb2896fa4cab139e91596304aea686f99a39381b39be17b2dbd1"
+    },
+    "generated": {
+      "bytes": 1495,
+      "sha256": "5d12dca7b1691c2c1ea41986b2d4a4d1e2cb9ab60da9fe362b6b174abfbdb830"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-composition/merge-dialog-dark.png",
+    "historical": {
+      "bytes": 167731,
+      "sha256": "e9a5ce54d15e018c817b54837a221f1a6ca1d4fd0465bc2299bb6335235a67b8"
+    },
+    "generated": {
+      "bytes": 170258,
+      "sha256": "ceee9a121cb6acb43457ead7539e6f8bb4287990d74d9e45408dccfedb1367c3"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-composition/merge-dialog-light.png",
+    "historical": {
+      "bytes": 177292,
+      "sha256": "519d28c31ce0202892d9b639c1c8720fc42f211abe0b1a9745610dac91829730"
+    },
+    "generated": {
+      "bytes": 180297,
+      "sha256": "90532bf7debf0e065cf48f2f40075a8b11cd1afdb690bfc007da31811cd2fe85"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-composition/paired-history-and-refresh.json",
+    "historical": {
+      "bytes": 32808,
+      "sha256": "f3eb54e6e7ac3b2a9ef274af8c76a65990fc8328442afdd875e8f0e65e6f9d39"
+    },
+    "generated": {
+      "bytes": 37058,
+      "sha256": "c46429bada9e9880b2357860c8da7d5963272520063ce6168d058c6e7ff7a5e3"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-composition/radio-policy.json",
+    "historical": {
+      "bytes": 2785,
+      "sha256": "47f5023668d3902861124eb54aee54d96df86b94643423299207c7546d1445ba"
+    },
+    "generated": {
+      "bytes": 2785,
+      "sha256": "12f0a49aa247c479192e0780232f88eb60acef8fcfeaa1549df267a67db22b3c"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/explicit-none-round-1.json",
+    "historical": {
+      "bytes": 4828,
+      "sha256": "442ecf3175df9ded84da36a2422d648c98da970bddb0878d55456b4fa36857fa"
+    },
+    "generated": {
+      "bytes": 4828,
+      "sha256": "7171385d10b1becbefbd870920414eff28dc5c96c3f24b5b2fa89b689c20f31b"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/explicit-none-round-1.pdf",
+    "historical": {
+      "bytes": 1683016,
+      "sha256": "699b8cfd6922ea6a97e9b518fe0dbbe1834aa55b6cdc6dbb23515f6b6d7b208b"
+    },
+    "generated": {
+      "bytes": 1683016,
+      "sha256": "61bcefd49d81e5059509dffddf2665530abfe1d43de45d6cfe1346a0074140a6"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/explicit-none-round-2.json",
+    "historical": {
+      "bytes": 4830,
+      "sha256": "d8b849f39f11adefce36bfc122f68d7605a9bdc24b4a07db1f4c7138f1905b2a"
+    },
+    "generated": {
+      "bytes": 4830,
+      "sha256": "2bea0f5a4cfccb5596e4f3013c08f585c2da4def047c98f39ce5a5603f74e079"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/explicit-none-round-2.pdf",
+    "historical": {
+      "bytes": 1683966,
+      "sha256": "7a7d67c2ba2f1d39387bbf13ab90dddca3fce1f3524250bd4d40a8c74e74217d"
+    },
+    "generated": {
+      "bytes": 1683966,
+      "sha256": "8dc871c07d119af3e88f9d905b2a0d4e8fbd6c77f81097f556a3706e6db94d8b"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/fixture-legacy-model.json",
+    "historical": {
+      "bytes": 2675,
+      "sha256": "3978d8ac1bc0a7cc184052ce2596a4280719df8ad7ea24b613a8cc0a9ae8b21a"
+    },
+    "generated": {
+      "bytes": 2675,
+      "sha256": "c2988addc358e4b641219255fe0fbce529adc535b040564ecb11b6d37ab99b0f"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/fixture-native-locked-noap.pdf",
+    "historical": {
+      "bytes": 1695351,
+      "sha256": "c913cc27fed70ae99375d6e6c30535cdeb4cbeaaec22843a675dffecf30b51d8"
+    },
+    "generated": {
+      "bytes": 1695351,
+      "sha256": "2ff40d190025e18e824a78336e17184b25ba787e643e95223affde6c37828c69"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/fixture-recipe-model.json",
+    "historical": {
+      "bytes": 4530,
+      "sha256": "d079b310cae660674559913d07e7e00349e650f65b339399138bd3aafbcb280a"
+    },
+    "generated": {
+      "bytes": 4530,
+      "sha256": "2d6a88dc0f8c17358ba1b4f8faa6386ee5dd270ffeb62b9c3f43643023352763"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/gesture-history-round-1.json",
+    "historical": {
+      "bytes": 14235,
+      "sha256": "45ef8dc6bf322b9611f652643f4c2b492f8b33f39821779c9da3fbf1acf774e5"
+    },
+    "generated": {
+      "bytes": 14235,
+      "sha256": "7dacca4c19ec4dce28337c0e3369131166b4d51839f248d618d475ba2c7dfee9"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/gesture-history-round-1.pdf",
+    "historical": {
+      "bytes": 1694005,
+      "sha256": "c1a525b531597758aaffd4747b45b5b19dd58a1513593d9e7d2168f634084f9e"
+    },
+    "generated": {
+      "bytes": 1694005,
+      "sha256": "5858f9196a7d9d498e2112dc2e41a95bb31fa4817314dc3380dd04460f45ee5c"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/gesture-history-round-2.json",
+    "historical": {
+      "bytes": 14235,
+      "sha256": "45ef8dc6bf322b9611f652643f4c2b492f8b33f39821779c9da3fbf1acf774e5"
+    },
+    "generated": {
+      "bytes": 14235,
+      "sha256": "7dacca4c19ec4dce28337c0e3369131166b4d51839f248d618d475ba2c7dfee9"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/gesture-history-round-2.pdf",
+    "historical": {
+      "bytes": 1694005,
+      "sha256": "c1a525b531597758aaffd4747b45b5b19dd58a1513593d9e7d2168f634084f9e"
+    },
+    "generated": {
+      "bytes": 1694005,
+      "sha256": "5858f9196a7d9d498e2112dc2e41a95bb31fa4817314dc3380dd04460f45ee5c"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/legacy-migration-round-1.json",
+    "historical": {
+      "bytes": 6912,
+      "sha256": "a546f0e425e3653472a70aa823092566dfd0654f18d82591bd7e07fd1698418a"
+    },
+    "generated": {
+      "bytes": 6912,
+      "sha256": "2bf11d0747a512659cbdc5f91cf5e7544d99971d36f895465c9404c56f4ca510"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/legacy-migration-round-1.pdf",
+    "historical": {
+      "bytes": 1684861,
+      "sha256": "42c10668b1e50b1fd8ccbdeb89516c67b750ab8ed2882e8fc0cc7807d85414c2"
+    },
+    "generated": {
+      "bytes": 1684861,
+      "sha256": "061d8e9cc7082f1ac85996b3bf0cb8ce088cc2f972a3da5df22e70a563b4d792"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/legacy-migration-round-2.json",
+    "historical": {
+      "bytes": 6912,
+      "sha256": "a546f0e425e3653472a70aa823092566dfd0654f18d82591bd7e07fd1698418a"
+    },
+    "generated": {
+      "bytes": 6912,
+      "sha256": "2bf11d0747a512659cbdc5f91cf5e7544d99971d36f895465c9404c56f4ca510"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/legacy-migration-round-2.pdf",
+    "historical": {
+      "bytes": 1684861,
+      "sha256": "42c10668b1e50b1fd8ccbdeb89516c67b750ab8ed2882e8fc0cc7807d85414c2"
+    },
+    "generated": {
+      "bytes": 1684861,
+      "sha256": "061d8e9cc7082f1ac85996b3bf0cb8ce088cc2f972a3da5df22e70a563b4d792"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/nonempty-recipe-round-1.json",
+    "historical": {
+      "bytes": 4996,
+      "sha256": "1a9f8b003fa6d0251b17269227e93b1eabe3f9d885ae4e861e71722764e9aa0e"
+    },
+    "generated": {
+      "bytes": 4996,
+      "sha256": "98e7a24a8aa405909e9ba89a9885c9d114cf5a7b5ef0685c5bb74306b16e10fa"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/nonempty-recipe-round-1.pdf",
+    "historical": {
+      "bytes": 1639702,
+      "sha256": "ffb00fcf5194cf38c6e3ce9c5b5c5ec16b94db696d36b378436707cd1fd161ae"
+    },
+    "generated": {
+      "bytes": 1639694,
+      "sha256": "2945d84adc90a7d1336856efad915c71419c4fc1401cbaa647b6103740df3c67"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/nonempty-recipe-round-2.json",
+    "historical": {
+      "bytes": 4996,
+      "sha256": "1a9f8b003fa6d0251b17269227e93b1eabe3f9d885ae4e861e71722764e9aa0e"
+    },
+    "generated": {
+      "bytes": 4996,
+      "sha256": "98e7a24a8aa405909e9ba89a9885c9d114cf5a7b5ef0685c5bb74306b16e10fa"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/nonempty-recipe-round-2.pdf",
+    "historical": {
+      "bytes": 1639702,
+      "sha256": "ffb00fcf5194cf38c6e3ce9c5b5c5ec16b94db696d36b378436707cd1fd161ae"
+    },
+    "generated": {
+      "bytes": 1639694,
+      "sha256": "2945d84adc90a7d1336856efad915c71419c4fc1401cbaa647b6103740df3c67"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p012-freetext-round-1.json",
+    "historical": {
+      "bytes": 3395,
+      "sha256": "525540d00ba3054a743aa91a20cefa6eb4ccab731e58a44f93d08386bb726e1b"
+    },
+    "generated": {
+      "bytes": 3395,
+      "sha256": "f015c1691ef65f26431ef7024cbd46c331bb277730385b75cb5dc8b17f219ae7"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p012-freetext-round-1.pdf",
+    "historical": {
+      "bytes": 1680532,
+      "sha256": "abb186e4536c3fedd5d3a2348b980b2a1f96caacf3129e9436901cf72d3652ed"
+    },
+    "generated": {
+      "bytes": 1680532,
+      "sha256": "decf0af2317741d50e3ffb9cef2211a0b1332837b65de13c2925376a9856bae9"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p012-freetext-round-2.json",
+    "historical": {
+      "bytes": 3395,
+      "sha256": "525540d00ba3054a743aa91a20cefa6eb4ccab731e58a44f93d08386bb726e1b"
+    },
+    "generated": {
+      "bytes": 3395,
+      "sha256": "f015c1691ef65f26431ef7024cbd46c331bb277730385b75cb5dc8b17f219ae7"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p012-freetext-round-2.pdf",
+    "historical": {
+      "bytes": 1680532,
+      "sha256": "abb186e4536c3fedd5d3a2348b980b2a1f96caacf3129e9436901cf72d3652ed"
+    },
+    "generated": {
+      "bytes": 1680532,
+      "sha256": "decf0af2317741d50e3ffb9cef2211a0b1332837b65de13c2925376a9856bae9"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p012-light.png",
+    "historical": {
+      "bytes": 110389,
+      "sha256": "8764effab43b3b81f17c2708c0f6225460cb28b2d1227b15d5aea23e73e149f5"
+    },
+    "generated": {
+      "bytes": 110396,
+      "sha256": "27561c2212983a1018e92fc709c93bfa9565024dcab6b78d8855754a6b39027c"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p014-four-markers.png",
+    "historical": {
+      "bytes": 112148,
+      "sha256": "554b0f48c4020b31113ef66a5f7c9ca183f732e8051067230353722d2f34d7d2"
+    },
+    "generated": {
+      "bytes": 112119,
+      "sha256": "187c0df9dc80aa40b4115b93763c2cc32e52fe2a788e8fd451c57c55d96d8c02"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p014-markers-round-1.json",
+    "historical": {
+      "bytes": 7706,
+      "sha256": "2aeb578bf52804552ab294b4c29c004f6eae949522c8ddcc5600217867c1d2ed"
+    },
+    "generated": {
+      "bytes": 7706,
+      "sha256": "3b13f28fc7d29becfc661ce9323d0367b91945733a06d835e8719bd479f390a9"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p014-markers-round-1.pdf",
+    "historical": {
+      "bytes": 14008,
+      "sha256": "86f835a6aee9307a0b87a4084ff1d8f4b61f6cfafe668ba2a273cce26d40e9a2"
+    },
+    "generated": {
+      "bytes": 14008,
+      "sha256": "0d9b665e3cd8f2107b1a3c9b867c129a84d40b36eb4d033db410c46a97d36c48"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p014-markers-round-2.json",
+    "historical": {
+      "bytes": 7706,
+      "sha256": "2aeb578bf52804552ab294b4c29c004f6eae949522c8ddcc5600217867c1d2ed"
+    },
+    "generated": {
+      "bytes": 7706,
+      "sha256": "3b13f28fc7d29becfc661ce9323d0367b91945733a06d835e8719bd479f390a9"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p014-markers-round-2.pdf",
+    "historical": {
+      "bytes": 14008,
+      "sha256": "86f835a6aee9307a0b87a4084ff1d8f4b61f6cfafe668ba2a273cce26d40e9a2"
+    },
+    "generated": {
+      "bytes": 14008,
+      "sha256": "0d9b665e3cd8f2107b1a3c9b867c129a84d40b36eb4d033db410c46a97d36c48"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p014-source-selections.json",
+    "historical": {
+      "bytes": 363,
+      "sha256": "6360c14fc2b0b9c3ee710322c17984e549d568c14032220db422a238b0650691"
+    },
+    "generated": {
+      "bytes": 363,
+      "sha256": "e43a7e41a9d1205f80e0de6ac47bd8e5700dcdde3ac8a278745fb8b55084a815"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p015-discussion-round-1.json",
+    "historical": {
+      "bytes": 18217,
+      "sha256": "208bca45636674fa557faf833ecadc06c77735939747b4230621ab9c4a5cde4d"
+    },
+    "generated": {
+      "bytes": 18217,
+      "sha256": "c3632f3e59a93e412e57ea01ac699c7618fad1258489c5489cf246938c473e96"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p015-discussion-round-1.pdf",
+    "historical": {
+      "bytes": 1699169,
+      "sha256": "49e22b525ed25d921851b58d1efeada9f7c4a97f3b72badf42d4b64b7a663cd6"
+    },
+    "generated": {
+      "bytes": 1699169,
+      "sha256": "917a5c4c36b1dc8d7875e3f978a9b7eb2cc6f814ad7627f03d18d01d0a396bcf"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p015-discussion-round-2.json",
+    "historical": {
+      "bytes": 18217,
+      "sha256": "208bca45636674fa557faf833ecadc06c77735939747b4230621ab9c4a5cde4d"
+    },
+    "generated": {
+      "bytes": 18217,
+      "sha256": "c3632f3e59a93e412e57ea01ac699c7618fad1258489c5489cf246938c473e96"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p015-discussion-round-2.pdf",
+    "historical": {
+      "bytes": 1699169,
+      "sha256": "49e22b525ed25d921851b58d1efeada9f7c4a97f3b72badf42d4b64b7a663cd6"
+    },
+    "generated": {
+      "bytes": 1699169,
+      "sha256": "917a5c4c36b1dc8d7875e3f978a9b7eb2cc6f814ad7627f03d18d01d0a396bcf"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p015-parent-deleted.json",
+    "historical": {
+      "bytes": 13506,
+      "sha256": "12d21b3a44d2bc8df86498318e128bf7c9c72bed5153a6d9b7164695eb51bb37"
+    },
+    "generated": {
+      "bytes": 13506,
+      "sha256": "bf181ab3bdd73e89db40dafdcffa63221d0393d98646f0eaa5779b82583d68f5"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p015-parent-deleted.pdf",
+    "historical": {
+      "bytes": 1699127,
+      "sha256": "e1c7aab0bf7ee650b7cceb63cc7465f8c868e0d7294892aaf0a790d9dbf86a0f"
+    },
+    "generated": {
+      "bytes": 1699127,
+      "sha256": "8e7ee669a8397a2c593ffb9957070b48d009b41e8cd12c9db501ebcb02a5be6e"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p015-resolved.json",
+    "historical": {
+      "bytes": 17422,
+      "sha256": "bc906bda2ac3039ede764590e627dd9de552a1b60369824a52e879e57d7f4471"
+    },
+    "generated": {
+      "bytes": 17422,
+      "sha256": "a9f85e358d83432d163d8893805d548a9cb98ad39a8ed5c61b04b5a22cfe8996"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p015-resolved.pdf",
+    "historical": {
+      "bytes": 1698140,
+      "sha256": "b0a6e3b5ae3017c5f2af409eb01d010478edefe80bead40c5cacf7e172fad14f"
+    },
+    "generated": {
+      "bytes": 1698140,
+      "sha256": "8f03610effc1ffbb0bb4b72d354b8e19cb1b57a813bbbebab8e835624153fdd2"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p016-created-ids.json",
+    "historical": {
+      "bytes": 363,
+      "sha256": "f49de25ca33e89d35ae632b3a8fa3eaa7501974a1a7915dc71490d9b83b7876b"
+    },
+    "generated": {
+      "bytes": 363,
+      "sha256": "222dccf61bc1aca42f6a0eecaa2cca0955c4bf5fb12a11b54936e5c25f53d8a9"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p016-geometry-round-1.json",
+    "historical": {
+      "bytes": 9281,
+      "sha256": "9c9ba0c3004ba6f5f360a76864be57a6df1cef6f21bbc04c6afa48e9f4c448bb"
+    },
+    "generated": {
+      "bytes": 9281,
+      "sha256": "9c964ffd868f43a2d24de5710512e27dd4958eacdb1e01e282755a86f342024a"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p016-geometry-round-1.pdf",
+    "historical": {
+      "bytes": 16214,
+      "sha256": "f6a342e1ab973ae0f1fba297b334ad16a67489359e3a9840b4a9816703541ce0"
+    },
+    "generated": {
+      "bytes": 16214,
+      "sha256": "ce028efa312ee7a2d411bb64975082349eab0a459619ecf6af41ee167d35875e"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p016-geometry-round-2.json",
+    "historical": {
+      "bytes": 9281,
+      "sha256": "9c9ba0c3004ba6f5f360a76864be57a6df1cef6f21bbc04c6afa48e9f4c448bb"
+    },
+    "generated": {
+      "bytes": 9281,
+      "sha256": "9c964ffd868f43a2d24de5710512e27dd4958eacdb1e01e282755a86f342024a"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p016-geometry-round-2.pdf",
+    "historical": {
+      "bytes": 16214,
+      "sha256": "f6a342e1ab973ae0f1fba297b334ad16a67489359e3a9840b4a9816703541ce0"
+    },
+    "generated": {
+      "bytes": 16214,
+      "sha256": "ce028efa312ee7a2d411bb64975082349eab0a459619ecf6af41ee167d35875e"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p016-geometry.png",
+    "historical": {
+      "bytes": 124285,
+      "sha256": "13fe672fc84e0087b2f272753746649cd485d739126876b972590e46bac1d320"
+    },
+    "generated": {
+      "bytes": 124312,
+      "sha256": "fb8aba9f6db668f7fd81f776a20933e8310e61d7640c9bca76a04c9d8061245e"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/permissions-readonly.json",
+    "historical": {
+      "bytes": 15777,
+      "sha256": "55f3cde3fb7cc1364b673ddc3d969e61aea163d24f4acbe1537982caf2352095"
+    },
+    "generated": {
+      "bytes": 15777,
+      "sha256": "ec4d100f778b7667965ba014d2aca70054e075e78c33e219e0424d140fe826c5"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/permissions-readonly.pdf",
+    "historical": {
+      "bytes": 1695351,
+      "sha256": "c913cc27fed70ae99375d6e6c30535cdeb4cbeaaec22843a675dffecf30b51d8"
+    },
+    "generated": {
+      "bytes": 1695351,
+      "sha256": "2ff40d190025e18e824a78336e17184b25ba787e643e95223affde6c37828c69"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-text-layer/app-created-highlight.pdf",
+    "historical": {
+      "bytes": 6860,
+      "sha256": "b853f1a67e6d635ed9346388dbd28c5c8150a09a5ed2bb12d9b541accfce30c4"
+    },
+    "generated": {
+      "bytes": 6860,
+      "sha256": "0872d52f6f2cc12bb5965ca4abc36343c3f4c2613d163c7a9f9d89b5b27e18b1"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-text-layer/app-created-squiggly.pdf",
+    "historical": {
+      "bytes": 10598,
+      "sha256": "385fcdeda20299933c29deedb8db3aaeb25bc48a65281249e5ec58c2543541e1"
+    },
+    "generated": {
+      "bytes": 10598,
+      "sha256": "366ef3d9822a747ca0ec78150cd7335f1ad1f90f515b44ef82831f5637f0d505"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-text-layer/app-created-strikeout.pdf",
+    "historical": {
+      "bytes": 9195,
+      "sha256": "6473d454111d24f3413d0c3b11a4909c3f87e0ed9e3132ed2940d760f698c1e4"
+    },
+    "generated": {
+      "bytes": 9195,
+      "sha256": "14e63752fa99a8c15f223ae8ec653f9b277d101465b15db000914fdecc30b346"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-text-layer/app-created-underline.pdf",
+    "historical": {
+      "bytes": 7965,
+      "sha256": "cefe6985387ed6b7abbf8296e12a9cdb9ce8c9f5da3abfc7267f9aebb5af6149"
+    },
+    "generated": {
+      "bytes": 7965,
+      "sha256": "8280bbe25625de05845c04c251aca7160646edb5fb9bfb865bc8f5d9a6ad4873"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-text-layer/app-markup-source.pdf",
+    "historical": {
+      "bytes": 2859,
+      "sha256": "f68c6b64c8882d6ef8a92b8704543f49034a920dd0753455fe265bf1c6e69d92"
+    },
+    "generated": {
+      "bytes": 2859,
+      "sha256": "a8d2a09a3f4316d22fbf626239faf8694dc9d31985de107135f0812e27439c38"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-text-layer/app-markups-results.json",
+    "historical": {
+      "bytes": 2613,
+      "sha256": "52283a37e7c1929c53021aa30f64c927cc5a1bd92a3d0f6330006c2e485cf955"
+    },
+    "generated": {
+      "bytes": 2613,
+      "sha256": "007318c6420c7361c845ceca85550405294f0c36cdca4529c20fb83036dd96af"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-text-layer/app-readonly-text-dark.png",
+    "historical": {
+      "bytes": 164498,
+      "sha256": "d57c2b4b0732b1f7b7b351e960a02d68b96e911dfb2a3838249c2eeb9fce3049"
+    },
+    "generated": {
+      "bytes": 165827,
+      "sha256": "8661831a64e6c38a14d4afb3a65b1aba17049d8a1e03bfd5dd99743db8f72d8c"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-text-layer/app-readonly-text-light.png",
+    "historical": {
+      "bytes": 162495,
+      "sha256": "73111f54fc7a6fd23d50e214ce498e02303b4a9c713ae48c00efffdb9a8dd249"
+    },
+    "generated": {
+      "bytes": 176392,
+      "sha256": "8472738ec2a725ff002c59ace685b9e97cb75d2fe01dcaa3b73fb7952d2f15d8"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-text-layer/app-selection-results.json",
+    "historical": {
+      "bytes": 6676,
+      "sha256": "eca2ddbafa76da92d39ed265a90f1234baeeac75ad517d740502467b88758b5e"
+    },
+    "generated": {
+      "bytes": 6676,
+      "sha256": "a02f8797c35ce1659e885ab95f9a0d3a4b1ae3be15ff6be1454a1fa46671aa45"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-text-layer/app-source.pdf",
+    "historical": {
+      "bytes": 2859,
+      "sha256": "e005f77ae5c18777c260a75ea0f048216287a8a5efd6dbba884aaacb4086dad6"
+    },
+    "generated": {
+      "bytes": 2859,
+      "sha256": "60f27617364abc718421633c5f077761b955db227a2980e5d0021eb8cfe9fe01"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-text-layer/app-text-markups-round-1.pdf",
+    "historical": {
+      "bytes": 10598,
+      "sha256": "385fcdeda20299933c29deedb8db3aaeb25bc48a65281249e5ec58c2543541e1"
+    },
+    "generated": {
+      "bytes": 10598,
+      "sha256": "366ef3d9822a747ca0ec78150cd7335f1ad1f90f515b44ef82831f5637f0d505"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-text-layer/app-text-markups-round-2.pdf",
+    "historical": {
+      "bytes": 10598,
+      "sha256": "385fcdeda20299933c29deedb8db3aaeb25bc48a65281249e5ec58c2543541e1"
+    },
+    "generated": {
+      "bytes": 10598,
+      "sha256": "366ef3d9822a747ca0ec78150cd7335f1ad1f90f515b44ef82831f5637f0d505"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-text-layer/cjk-native-display/actual-before.png",
+    "historical": {
+      "bytes": 137056,
+      "sha256": "39cfa8f9452993d309acaf1d0fe9991fd56394c50524871e52afd08697b7832c"
+    },
+    "generated": {
+      "bytes": 133904,
+      "sha256": "84353d7abb14599e1fc0d992e1618a37ea6f9636527f43537b355b9dd5cd8622"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-text-layer/cjk-native-display/actual-final.json",
+    "historical": {
+      "bytes": 18165,
+      "sha256": "a5e2599203ac10977c0fec12c38c069b8269696a003eecf3b4f94a5c74c6c020"
+    },
+    "generated": {
+      "bytes": 18165,
+      "sha256": "b7958801245ec455a414867e5a204969d295eb80e9d3f7c6096b5d31c4921bbe"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-text-layer/cjk-native-display/before-dom-and-paints.json",
+    "historical": {
+      "bytes": 39204,
+      "sha256": "69b4425ec53ff0aa8989689228ac94389410dd222be5a9acd5ee0f262a75d6c6"
+    },
+    "generated": {
+      "bytes": 39207,
+      "sha256": "75a7ada8ee866bc235d020043da3c4baf0c0355d02d6bc5b42df2192e4d7281f"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-text-layer/cjk-native-display/diagnosis.json",
+    "historical": {
+      "bytes": 43509,
+      "sha256": "12e586032a2b4f074ae7743ee217c095a8765f8be3fcde654ef22bb579e43b5d"
+    },
+    "generated": {
+      "bytes": 43512,
+      "sha256": "88c09cb8fb1ef6a5af4dcbf91c4ca8ad2dc459855bdfc1f87a338adbb425f0ed"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-text-layer/renderer-matrix.json",
+    "historical": {
+      "bytes": 37872,
+      "sha256": "199d4ea28f671471f7c31a8b98eb4a6b87e13a326e027a0b6ef33bfa98f8d028"
+    },
+    "generated": {
+      "bytes": 37872,
+      "sha256": "b96d0f3ba98d3b447d72d89cd00f23343564bc53747becbfcca7134d24ce96b8"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/pdf-text-layer/renderer-source.pdf",
+    "historical": {
+      "bytes": 2618,
+      "sha256": "a82363282319b57f869f367f326df7d76b8fedc654c92afdce725a718c3ecfe4"
+    },
+    "generated": {
+      "bytes": 2618,
+      "sha256": "72a340e84dc94b1794dd5a3ecd6282fb8296c2bc2bca92b85d768b09c675258a"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-text-layout/array-view-205.png",
+    "historical": {
+      "bytes": 129113,
+      "sha256": "76b819479ceb2067e9e0ebd26870a3df425138391e4ddc9fcba1010bda8c2e07"
+    },
+    "generated": {
+      "bytes": 126833,
+      "sha256": "486a70426771f564be885a0c340f9f28229775ef611bca00a8c0e83b6d61d66a"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-text-layout/array-view-roundtrip-1.xlsx",
+    "historical": {
+      "bytes": 9899,
+      "sha256": "9a5571d061019ac1ed99317cb84f0957542524e17d8ff8e0332fd46b7a4d6bc4"
+    },
+    "generated": {
+      "bytes": 9974,
+      "sha256": "07488e8a1009b2657a2065f8284adf4d8c3306cade759ca877d746a7e9d3ea5b"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-text-layout/array-view-roundtrip-2.xlsx",
+    "historical": {
+      "bytes": 9912,
+      "sha256": "8fbfa9cd85117b51381b570a4f698caa2d1f238af35f762412fe9550b3ceee90"
+    },
+    "generated": {
+      "bytes": 9987,
+      "sha256": "f3db5aa5eaf11dc5ee41fa6840321fb028d12acc2b2a95b5cdc2e0b60476ed00"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-text-layout/array-view-source.xlsx",
+    "historical": {
+      "bytes": 6668,
+      "sha256": "c1ef4530f1576f664dc0a69cc4c5294ac0423ff5d4255323d2ea9a9da939dde7"
+    },
+    "generated": {
+      "bytes": 6668,
+      "sha256": "0119c8435662c7c663082ec87728a101bf5140be26f95ce7fd94b783457cab51"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-text-layout/browser-guard-evidence.json",
+    "historical": {
+      "bytes": 332,
+      "sha256": "cef34221f3d8de97dc13807ea514a3891a0e7b15fe20daca3eca6be3519c9db4"
+    },
+    "generated": {
+      "bytes": 332,
+      "sha256": "3daa8998c296da8ccfec30dc462c42f53867eb1c492c5669c8fe9af20df6fda4"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-text-layout/browser-roundtrip-evidence.json",
+    "historical": {
+      "bytes": 8341,
+      "sha256": "4a9557ff7a8c2ee4455bc812fd038dc72be2821638433dd179a40f4c56a31e38"
+    },
+    "generated": {
+      "bytes": 8328,
+      "sha256": "0ae3b7ab56ece8dbf021d833f18a7eb5a0d9ff16e4a41b5ecc6d923906dc12c8"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-text-layout/text-dialog-dark-320.png",
+    "historical": {
+      "bytes": 40278,
+      "sha256": "2444a71cb863e4c081f6054e0f95a7487d66355abb40e97762f3ca431349d0d2"
+    },
+    "generated": {
+      "bytes": 40122,
+      "sha256": "fc40ddcb6ebbd33adeec9c0bcc0782489dea436fc61b55cb310a2b8527701e06"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-text-layout/text-dialog-dark.png",
+    "historical": {
+      "bytes": 150570,
+      "sha256": "5de355970397632042fd27ee9f1be893f0951ca8aeaca82dabdc82dc2d9a2f34"
+    },
+    "generated": {
+      "bytes": 129302,
+      "sha256": "cc2b5d6abccfa7296fc36b4039b1d7114f78e6e97b35e77246ed4fc17ce5ddaa"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-text-layout/text-dialog-light-320.png",
+    "historical": {
+      "bytes": 41053,
+      "sha256": "a41cafb3737260c4d22de70f3ad202001f791a2ba2236d4b4bba5bea8c4c580c"
+    },
+    "generated": {
+      "bytes": 40870,
+      "sha256": "812057fbf1402e4eae513f17b78bcd4a414d554dbdb218669ddafbcd72ff2750"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-text-layout/text-dialog-light.png",
+    "historical": {
+      "bytes": 150984,
+      "sha256": "790597a501df0aab4f4fe1d302c9c91187b6af485cea8eeba04e5e24c1165e25"
+    },
+    "generated": {
+      "bytes": 144225,
+      "sha256": "1b2b66fa88668382ef1f794a9afa68b2e656d88a2d45a8b57a847a3c9cd24271"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-text-layout/text-hidden-master-grid.png",
+    "historical": {
+      "bytes": 128568,
+      "sha256": "cf22aab0f6d2f512314074e25d72505b19e9d04a8ad26f2c6e66ede182b1db07"
+    },
+    "generated": {
+      "bytes": 119038,
+      "sha256": "5b648aeac6fd7c2cd10fb318980dc75cd26956e44cf27d0ab95455caa8123130"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-text-layout/text-print.pdf",
+    "historical": {
+      "bytes": 142172,
+      "sha256": "ecdb6fc257c6cb8b4ffc12d544cc5c9c70f53e03430344bcd8e3bbeaca8852eb"
+    },
+    "generated": {
+      "bytes": 142172,
+      "sha256": "d556d2700f48f3cbd9e928bf65e0258f14cbf494e0887fbfa6c23c9769fad510"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-text-layout/text-protected-after-rejection.xlsx",
+    "historical": {
+      "bytes": 12283,
+      "sha256": "06973bfb68600d4e8b49371bee958660b29a3c178e2c48132e2b1312bd9fdb8f"
+    },
+    "generated": {
+      "bytes": 12431,
+      "sha256": "3201504c45e618738e28aa3765c6c75adea99177fb3b9f43e2fcb746c37a47d3"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-text-layout/text-protected-rejection.png",
+    "historical": {
+      "bytes": 149478,
+      "sha256": "5ab1e794386b37e8e3b792846d198cefd1b00671ba2f70175ca3873f962212f8"
+    },
+    "generated": {
+      "bytes": 147014,
+      "sha256": "45d1b45cb87c3cbcb07a31929b6cbdb68f5228673359f4f89852258e950ef17c"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-text-layout/text-results-light.png",
+    "historical": {
+      "bytes": 142527,
+      "sha256": "41414d64ab244423434f3dfc2cce2af0d8d514b4e297f5cced8c6420513fdbbc"
+    },
+    "generated": {
+      "bytes": 158867,
+      "sha256": "00527bf225b5dd0a972122271cff8231732a43e71ab624c5cf49b04d0af1ec03"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-text-layout/text-roundtrip-1.xlsx",
+    "historical": {
+      "bytes": 12257,
+      "sha256": "c34a391de1497508edbcfd1cc3c5d4f2514daf08effefa9b87212120b49b1b93"
+    },
+    "generated": {
+      "bytes": 12427,
+      "sha256": "c88a387f161318dbb725fa4b587290693cbfdfeae8dd762f0ec3a5802a2634f3"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-text-layout/text-roundtrip-2.xlsx",
+    "historical": {
+      "bytes": 12257,
+      "sha256": "f51331061c6a2cdb01730fa905bcb481bbb280c2a8d3a952c1529bdc0ae1bb37"
+    },
+    "generated": {
+      "bytes": 12427,
+      "sha256": "c88a387f161318dbb725fa4b587290693cbfdfeae8dd762f0ec3a5802a2634f3"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-text-layout/text-source.xlsx",
+    "historical": {
+      "bytes": 11006,
+      "sha256": "6870e609d1191fc12db0562c01febaa7bdd2a977b1e426525a21bf6374700e61"
+    },
+    "generated": {
+      "bytes": 11006,
+      "sha256": "fb32b9881154b2ebad93d43ae7d5d619a5855ce2f12d47a995ee7a5f1ecd69c8"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-view/browser-preview-evidence.json",
+    "historical": {
+      "bytes": 401,
+      "sha256": "d18039453d7f445b0e24b8c08a4c790a6aa949d9383c0a7c9ccb31317bdebf76"
+    },
+    "generated": {
+      "bytes": 401,
+      "sha256": "0f697078557829e6bc30ddcd1fb64d6e6a70c6f60ccda5b4e1eff599a4a080a6"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-view/browser-roundtrip-evidence.json",
+    "historical": {
+      "bytes": 2614,
+      "sha256": "f8764886dc8fc0cfdd67cedc14dda56858b9397b57b521f926503101061db3ba"
+    },
+    "generated": {
+      "bytes": 2614,
+      "sha256": "48d758faa9909e3ff3e2b030cc1cc6dcfe7228613d5a625b6842c1470d488911"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-view/browser-visual-print-evidence.json",
+    "historical": {
+      "bytes": 6654,
+      "sha256": "fb41b2f9b234d85f84dcbf2cb2ab4cf84cfa7e8cb32a238d10348fa12501eba4"
+    },
+    "generated": {
+      "bytes": 6651,
+      "sha256": "8c3af542760cdac65f21472c64fe10b78d44f5072cb4b582762e6b2c25c66757"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-view/view-after-cancel.xlsx",
+    "historical": {
+      "bytes": 9872,
+      "sha256": "1d9837038576b7ed4912b426194bdf2debf464cfb02cfac084afed2012825f40"
+    },
+    "generated": {
+      "bytes": 9971,
+      "sha256": "9834203ad73f826f40f1e8dd5bdc3cd966de689c2d1d2ff54697288af109c7d8"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-view/view-fill-400.png",
+    "historical": {
+      "bytes": 163823,
+      "sha256": "b25c8365f95301eab61c988b2bd0661adf2111b8c0a22caa2e08784fe11bdf39"
+    },
+    "generated": {
+      "bytes": 163819,
+      "sha256": "4593b724fca55accd316ad126521f31fc6a95f431576f18efce1770fd3546940"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-view/view-light-1280.png",
+    "historical": {
+      "bytes": 173609,
+      "sha256": "56d1fda5283e7284f15467b96579f5d84e5af00b98087fbb9418978d23eb57a8"
+    },
+    "generated": {
+      "bytes": 173622,
+      "sha256": "5f93a92ef719fc6bc782777bd8ad89dca1db38789e09eee97b52342066200b89"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-view/view-preview-guards.png",
+    "historical": {
+      "bytes": 104641,
+      "sha256": "08febeff2bd497ae668fb3dfda43e7ae11258be9d668036919c96227f7599128"
+    },
+    "generated": {
+      "bytes": 156998,
+      "sha256": "9565163bea7bb8e1f1c853a5407a046e350ce50477e7a7c359466c496851ba95"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-view/view-preview-source.xlsx",
+    "historical": {
+      "bytes": 9121,
+      "sha256": "6cee28a7e9a2d2217aac50a336b85c28fc2efaf3822ec87a82e42f81609237de"
+    },
+    "generated": {
+      "bytes": 9122,
+      "sha256": "b710648a40a39c566215e5e984abd907cdbdc3c434b66451e48ce1fea2907632"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-view/view-print.pdf",
+    "historical": {
+      "bytes": 52103,
+      "sha256": "079ee57fe7a1401cc4c993912035d0db6efb191c5688dd211cde844d73e7e3bc"
+    },
+    "generated": {
+      "bytes": 52103,
+      "sha256": "34e258c7d95105c2d96871dbf2668eb330a7721e45ea89d4cddb430b753efd12"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-view/view-protected.xlsx",
+    "historical": {
+      "bytes": 10036,
+      "sha256": "ce225a8edf5115d7f79dfcb0b1a6dbc2e9ed74f8ae8fbb5fcdab8cbfbce8908a"
+    },
+    "generated": {
+      "bytes": 10117,
+      "sha256": "368278886116c788752e09b76a86a0954e84c1fc228dc65da77a2061ab682110"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-view/view-readonly-preview.xlsx",
+    "historical": {
+      "bytes": 9872,
+      "sha256": "63233144830db62124dab5d02059917249327dafa92c102db1625e89ae69559a"
+    },
+    "generated": {
+      "bytes": 9971,
+      "sha256": "a909477cd098ff38af666a6b1d029e2a9a1c9214a64eda4e40ba89c69ed0dcf1"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-view/view-reopened-400.png",
+    "historical": {
+      "bytes": 170523,
+      "sha256": "55e7caed00f741af3c63c07b20eaf2f3a6f7af296eec35e7ca86926fced2a908"
+    },
+    "generated": {
+      "bytes": 170315,
+      "sha256": "f62cccaee9082db34a3bc5080cea7e5fc464ab7972cdba8205ebc51485e48506"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-view/view-roundtrip-1.xlsx",
+    "historical": {
+      "bytes": 9913,
+      "sha256": "77cd10153597a108100fce3ec5be0a4eccf4a8545d4898ba8bb3d65246e38dad"
+    },
+    "generated": {
+      "bytes": 10014,
+      "sha256": "54f3194e4dc9492bbeba12b5d10e927778634b5148f9cbfb50c1132e8013895e"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-view/view-roundtrip-2.xlsx",
+    "historical": {
+      "bytes": 9905,
+      "sha256": "c4553492973daaa379cfe8a474a8e2755230aca6634d154885676888552ae007"
+    },
+    "generated": {
+      "bytes": 10005,
+      "sha256": "351207c133148f63944e7ff69cf442c6fc3f57f5944372b8d0b6ffdecc0b8263"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-view/view-source.xlsx",
+    "historical": {
+      "bytes": 9121,
+      "sha256": "4505adbdf1fe53220228924be4fe10e80263edcc4e38600d088aeea67d3f02f2"
+    },
+    "generated": {
+      "bytes": 9122,
+      "sha256": "d4ed73e421267555d6e56ac9e9e3795ff72e8997788f1fb31e7a133337716d53"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/sheet-view/view-visual-source.xlsx",
+    "historical": {
+      "bytes": 9121,
+      "sha256": "4d51179dd21705b913484b450fa6d52c4a4f600d69e9ec230b211dc6b6f96882"
+    },
+    "generated": {
+      "bytes": 9122,
+      "sha256": "444c941a1f6bd89235f3636cd9002978861ebd2446f3781376d13f7db0f39413"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/word-basic-format/after-cancel.docx",
+    "historical": {
+      "bytes": 46725,
+      "sha256": "049f660b7f37f68eab115d1008992dceacf3a1a65be610523e8529f1c325f4c3"
+    },
+    "generated": {
+      "bytes": 46725,
+      "sha256": "32903652fb96b9a109ac26e02795fc20c6e170e2edf0a9614207de9c7c797044"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/word-basic-format/controls-light.png",
+    "historical": {
+      "bytes": 166043,
+      "sha256": "bb4cb9c2d6a121e2d0500a8771c4317949f3454c769ac2dbe54b516ae55b5a60"
+    },
+    "generated": {
+      "bytes": 166063,
+      "sha256": "0c086538f7b687af854ab746b2fb3af798f68ba4591a21b94add241a5f1605c2"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/word-basic-format/drafts-permissions-geometry.json",
+    "historical": {
+      "bytes": 46608,
+      "sha256": "5ef2be3dc4be37405df538fa93002fa65b15a351c25085a127ca13d18070bc92"
+    },
+    "generated": {
+      "bytes": 46608,
+      "sha256": "f838044eabf415659dbbfcd6d11b0624079689614b029a945e44b55fd7399399"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/word-basic-format/native-roundtrips.json",
+    "historical": {
+      "bytes": 34028,
+      "sha256": "101f3045394da3bdcb07bace659f647f68bf357f33c0da73b0a21fc66145f0ac"
+    },
+    "generated": {
+      "bytes": 34028,
+      "sha256": "4c3458fb48296e91dbe2e279a1a8f9495909f374ab525e9c6588e97efba3cec6"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/word-basic-format/roundtrip-1.docx",
+    "historical": {
+      "bytes": 47756,
+      "sha256": "f00d0825178ee1eece1cadbe5f82f6226d9b3d930df55e978506ca06989ed89b"
+    },
+    "generated": {
+      "bytes": 47756,
+      "sha256": "e7007dee5b051720bf071e380785e41c516096f30ffde150f922151e10b265ab"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/word-basic-format/roundtrip-2.docx",
+    "historical": {
+      "bytes": 47745,
+      "sha256": "13bdd08e5ea53cbfc9e963d8c5b9fffe459ceac58a4730d342856ce1350e1cb7"
+    },
+    "generated": {
+      "bytes": 47745,
+      "sha256": "07d5c84c99e932522a320b35f8424d31f76cce68ed196b40d035756d301823ac"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/word-character-guards/browser-roundtrips.json",
+    "historical": {
+      "bytes": 26831,
+      "sha256": "73a84ac52eb6392b6e623adbc736bcef451917a5d93481daec1c75437db5d1c2"
+    },
+    "generated": {
+      "bytes": 26831,
+      "sha256": "3fc55ef376401f0a0270c4210d59237941ff1961dd1fb25d5aee08ff1e6ea73b"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/word-character-guards/roundtrip-1.docx",
+    "historical": {
+      "bytes": 51877,
+      "sha256": "736fccdac5ad6f4ec7a122d39781b4b945097eea4382deec503fb6910499a0a4"
+    },
+    "generated": {
+      "bytes": 51877,
+      "sha256": "0c4b241a056d552a6fc8d415ec44616b9ece918fe6274bc1e4c0997d97db94eb"
+    }
+  },
+  {
+    "path": "docs/audits/2026-11-27/word-character-guards/roundtrip-2.docx",
+    "historical": {
+      "bytes": 51871,
+      "sha256": "739f3ddce55f76d9979a0206fac329080d6e694bce4c6ccecd65a4bd9218c0ac"
+    },
+    "generated": {
+      "bytes": 51871,
+      "sha256": "440150104680ab044a6232ec585c9e42c0275651983d1ca24f2e335fcd571599"
+    }
+  }
+]

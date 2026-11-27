@@ -1,0 +1,81 @@
+{
+  "scope": "W010 native position diagnosis, originals unchanged; integer-position is a diagnostic copy only. Raw native-render remains in second-browser-run/roundtrip-1-render.",
+  "schema": {
+    "url": "https://schemas.liquid-technologies.com/officeopenxml/2006/st_signedhpsmeasure.html",
+    "retrieved": "2026-11-27",
+    "type": "ST_SignedHpsMeasure",
+    "definition": "xsd:integer restriction, signed measurement in half-points"
+  },
+  "entries": [
+    {
+      "path": "ST_SignedHpsMeasure-2006.html",
+      "bytes": 6418,
+      "sha256": "8ed05ef95a84c633a27ca32dea601e38b7623ec47bd95e3c11fb4537114b9e7a"
+    },
+    {
+      "path": "before-source/StudioWordCharacterDialog.tsx.txt",
+      "bytes": 5745,
+      "sha256": "005b4d090ead60f3a554d2addfc6bc378bf15db28ac180549a028979e8c681d0"
+    },
+    {
+      "path": "before-source/office-studio-word.test.mjs.txt",
+      "bytes": 109174,
+      "sha256": "41eda6b7f7fc145e4e492cf5b7599243bad3e0e598fd0b122944cefeca8bc698"
+    },
+    {
+      "path": "before-source/studio-word-character-layout.ts.txt",
+      "bytes": 4814,
+      "sha256": "3c2ab9e54989fa343a32af43d5c69ca032a530f089731f477d6e80359f2ab201"
+    },
+    {
+      "path": "before-source/studio-word-codec.ts.txt",
+      "bytes": 114455,
+      "sha256": "0d55adb234ac575ef2af2b4cdbcd5d11df61e4dce70a077d72d4a044620f07ea"
+    },
+    {
+      "path": "before-source/studio-word-metrics.ts.txt",
+      "bytes": 1476,
+      "sha256": "37a858bd80295c290044645a594aa925f69b2b5302ef8aeb19c0f85197accf16"
+    },
+    {
+      "path": "import-current.mjs.txt",
+      "bytes": 6889,
+      "sha256": "9eccf2e681c5a33fb8a69a989f2a5a669a5052f62a42e6dddce120f7923f3654"
+    },
+    {
+      "path": "import-current.txt",
+      "bytes": 2567,
+      "sha256": "f4c2ed36085db87cc6451468bdeb3ce3f3e62a35620e728eb4d6c908927b8304"
+    },
+    {
+      "path": "integer-native-render.txt",
+      "bytes": 78,
+      "sha256": "ad8ae1c4276baa608635b13f9fa63929bfdc2e220d92b160128d56777794fa2e"
+    },
+    {
+      "path": "integer-position-render/integer-position.pdf",
+      "bytes": 38833,
+      "sha256": "1ee28e15860a44deec3340218912b75c5b63f2305e10d7bc62b4097461c451af"
+    },
+    {
+      "path": "integer-position-render/page-1.png",
+      "bytes": 48406,
+      "sha256": "8cf96fcff21fba0a5371da8100c9e4025e34442c16fdc4843741f49cf2193688"
+    },
+    {
+      "path": "integer-position.docx",
+      "bytes": 51877,
+      "sha256": "b80b9cf68ab2ec48fd319060b4ffe61fde1fbb9f597674114d7981dbec9f9c80"
+    },
+    {
+      "path": "native-position-comparison.json",
+      "bytes": 1379,
+      "sha256": "a43cbd0d546eb2db925eef2eacca228c52bcd87c0e14830fdc9de0a6569f81be"
+    },
+    {
+      "path": "raw-native-render.txt",
+      "bytes": 190,
+      "sha256": "a88cf85396fc3dffc1a1ce03075d08a966905bd6a40e8b0d8e690a19fa24d10c"
+    }
+  ]
+}

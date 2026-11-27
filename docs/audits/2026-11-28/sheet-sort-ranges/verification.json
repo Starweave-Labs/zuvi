@@ -1,0 +1,96 @@
+{
+  "date": "2026-11-28",
+  "status": "passed",
+  "sourceCommit": "42c477a851815aa9acb6f049052d6360e428c496",
+  "originalItem": "X043",
+  "X043Complete": false,
+  "whole159Complete": false,
+  "browserScope": "all 16 Excel browser tests",
+  "browser": {
+    "startTime": "2026-11-27T17:54:44.997Z",
+    "duration": 188241.43600000002,
+    "expected": 16,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "uiPassed": 2941,
+  "docsPassed": 682,
+  "nativeFiles": [
+    {
+      "path": "docs/audits/2026-11-28/sheet-sort-ranges/browser/roundtrip-1.xlsx",
+      "bytes": 9121,
+      "sha256": "90290bf16c6d2604271adff0b219b2467144dfd2e653545026c3899507dbb1a9",
+      "verifiedNativeCells": {
+        "C2": {
+          "formula": "SUM(Other!A4:B4)",
+          "cache": 300
+        },
+        "D2": {
+          "formula": "SUM('Other quoted'!$A4:B$4)",
+          "cache": 300
+        },
+        "C3": {
+          "formula": "SUM(Other!A3:B3)",
+          "cache": 30
+        },
+        "D3": {
+          "formula": "SUM('Other quoted'!$A3:B$3)",
+          "cache": 30
+        },
+        "C4": {
+          "formula": "SUM(Other!A2:B2)",
+          "cache": 3
+        },
+        "D4": {
+          "formula": "SUM('Other quoted'!$A2:B$2)",
+          "cache": 3
+        }
+      }
+    },
+    {
+      "path": "docs/audits/2026-11-28/sheet-sort-ranges/browser/roundtrip-2.xlsx",
+      "bytes": 9121,
+      "sha256": "90290bf16c6d2604271adff0b219b2467144dfd2e653545026c3899507dbb1a9",
+      "verifiedNativeCells": {
+        "C2": {
+          "formula": "SUM(Other!A4:B4)",
+          "cache": 300
+        },
+        "D2": {
+          "formula": "SUM('Other quoted'!$A4:B$4)",
+          "cache": 300
+        },
+        "C3": {
+          "formula": "SUM(Other!A3:B3)",
+          "cache": 30
+        },
+        "D3": {
+          "formula": "SUM('Other quoted'!$A3:B$3)",
+          "cache": 30
+        },
+        "C4": {
+          "formula": "SUM(Other!A2:B2)",
+          "cache": 3
+        },
+        "D4": {
+          "formula": "SUM('Other quoted'!$A2:B$2)",
+          "cache": 3
+        }
+      }
+    },
+    {
+      "path": "docs/audits/2026-11-28/sheet-sort-ranges/browser/source.xlsx",
+      "bytes": 7909,
+      "sha256": "d16368e7454599d50c4a61dc7674c2d3c768260a47c09a66873370f596ef37a3",
+      "verifiedNativeCells": {}
+    }
+  ],
+  "previousWholeSite": {
+    "sourceCommit": "db48794f8a0112b8b4527fef2a0dff27f1ea6fad",
+    "passed": 319,
+    "verification": "docs/audits/2026-11-28/duplicates-paragraph-outlines/verification.json"
+  },
+  "wholeSiteRerunAfterPatch": false,
+  "historicalFilesRestored": 5682
+}

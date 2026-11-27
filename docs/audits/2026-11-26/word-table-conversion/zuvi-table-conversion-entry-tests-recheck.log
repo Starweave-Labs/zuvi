@@ -1,0 +1,20 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/studio-word-table-conversion.test.ts (8 tests) 121ms
+ ✓ src/components/OfficeStudio/StudioWordConversionDialog.test.tsx (2 tests) 145ms
+ ✓ src/components/OfficeStudio/StudioWord.test.tsx (86 tests) 14385ms
+   ✓ Word paragraph dialog and ruler > edits inherited tab stops through ZUVI controls with precision checks, cancellation and one history step 524ms
+   ✓ Word paragraph dialog and ruler > keeps mixed pagination flags unchanged until edited, commits once, and blocks an open dialog after permission changes 469ms
+   ✓ Word character metrics dialog > retains invalid drafts, disables an open dialog on permission changes and cancels without writing 358ms
+   ✓ StudioWord Office ribbon actions > applies font family and size to the selected range and restores them with undo and redo 389ms
+   ✓ StudioWord named paragraph styles > creates, applies, modifies and deletes a named style with real undo and redo 581ms
+   ✓ StudioWord structured editing > restores rejected controlled edits so the canvas and saved model agree 463ms
+   ✓ StudioWord structured editing > changes picture wrapping, position and anchor flags and restores them with undo 582ms
+   ✓ StudioWord structured editing > cycles search matches from the first result with Enter and replaces only the selected result 309ms
+   ✓ StudioWord structured editing > disables incomplete bulk results and rejects replacement growth without changing content 307ms
+
+ Test Files  3 passed (3)
+      Tests  96 passed (96)
+   Start at  07:01:39
+   Duration  16.14s (transform 757ms, setup 371ms, collect 1.74s, tests 14.65s, environment 1.15s, prepare 198ms)

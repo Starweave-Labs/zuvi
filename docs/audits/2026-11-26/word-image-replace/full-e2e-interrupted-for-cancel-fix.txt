@@ -1,0 +1,24 @@
+[WebServer] (node:46871) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:46887) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 269 tests using 1 worker
+
+  ✓    1 [chromium] › e2e/blocks.spec.ts:65:1 › 业务区块：分类和搜索可组合，空结果不清空预览 (832ms)
+  ✓    2 [chromium] › e2e/blocks.spec.ts:84:1 › 业务区块：切页和代码切换保留编辑，重置只影响当前区块 (1.0s)
+  ✓    3 [chromium] › e2e/blocks.spec.ts:108:1 › 业务区块：手机目录键盘关闭并归还焦点，窄画布与资料入口可用 (963ms)
+  ✓    4 [chromium] › e2e/blocks.spec.ts:129:5 › 业务区块：全部16个区块 1440px light 显示和无障碍 (3.3s)
+  ✓    5 [chromium] › e2e/blocks.spec.ts:129:5 › 业务区块：全部16个区块 1440px dark 显示和无障碍 (3.3s)
+  ✓    6 [chromium] › e2e/blocks.spec.ts:129:5 › 业务区块：全部16个区块 1280px light 显示和无障碍 (3.3s)
+  ✓    7 [chromium] › e2e/blocks.spec.ts:129:5 › 业务区块：全部16个区块 1280px dark 显示和无障碍 (3.4s)
+  ✓    8 [chromium] › e2e/blocks.spec.ts:129:5 › 业务区块：全部16个区块 768px light 显示和无障碍 (4.8s)
+  ✓    9 [chromium] › e2e/blocks.spec.ts:129:5 › 业务区块：全部16个区块 768px dark 显示和无障碍 (4.7s)
+  ✓   10 [chromium] › e2e/blocks.spec.ts:129:5 › 业务区块：全部16个区块 320px light 显示和无障碍 (4.7s)
+  ✓   11 [chromium] › e2e/blocks.spec.ts:129:5 › 业务区块：全部16个区块 320px dark 显示和无障碍 (4.6s)
+  ✓   12 [chromium] › e2e/builder-catalog.spec.ts:51:1 › 完整 ZUVI 组件目录：公开组件全部能配置、保存、画布渲染和离线渲染 (4.6s)
+  ✓   13 [chromium] › e2e/builder-catalog.spec.ts:90:1 › 复杂组件：表单值、可视数据、标签页和浮层在导出后仍可交互 (3.7s)
+  ✓   14 [chromium] › e2e/builder-catalog.spec.ts:205:1 › 自定义布局：自由定位、栅格跨度、CSS、主题和响应式设置持久一致 (4.2s)
+  ✓   15 [chromium] › e2e/builder-catalog.spec.ts:335:1 › 可视数据编辑：唯一值可重写、错误数据不覆盖、选择器清空与交互浮层留在画布 (4.8s)
+  ✓   16 [chromium] › e2e/builder-catalog.spec.ts:370:1 › 自定义动作与组合：卡片内嵌、区域显隐、消息和真实文本下载 (3.0s)
+  ✓   17 [chromium] › e2e/builder-catalog.spec.ts:460:1 › 复合表单绑定：响应式分栏切换后开关、复选、分段、日历和树选择保留并提交真实值 (2.7s)

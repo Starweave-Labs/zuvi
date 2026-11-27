@@ -1,0 +1,20 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/StudioWord.test.tsx (90 tests) 16707ms
+   ✓ Word paragraph dialog and ruler > edits inherited tab stops through ZUVI controls with precision checks, cancellation and one history step 539ms
+   ✓ Word paragraph dialog and ruler > applies mixed paragraph values in one history step and keeps untouched values separate 338ms
+   ✓ Word paragraph dialog and ruler > keeps mixed pagination flags unchanged until edited, commits once, and blocks an open dialog after permission changes 530ms
+   ✓ Word character metrics dialog > preserves mixed fonts and links, previews point measurements and applies one undoable operation 351ms
+   ✓ StudioWord Office ribbon actions > shows nonprinting characters in the body, table, header and footer without changing data, selection or document history 406ms
+   ✓ StudioWord Office ribbon actions > toggles rulers, navigates headings and changes zoom in read-only mode without document edits 324ms
+   ✓ StudioWord named paragraph styles > creates, applies, modifies and deletes a named style with real undo and redo 670ms
+   ✓ StudioWord structured editing > restores rejected controlled edits so the canvas and saved model agree 521ms
+   ✓ StudioWord structured editing > changes picture wrapping, position and anchor flags and restores them with undo 617ms
+   ✓ Word text and table conversion entry > converts through the actual ribbon with a preview and independent undo/redo transactions 341ms
+   ✓ inserts a table formula through ZUVI dialog, keeps cancelled drafts and refreshes in a separate undo transaction 399ms
+
+ Test Files  1 passed (1)
+      Tests  90 passed (90)
+   Start at  08:14:19
+   Duration  18.75s (transform 720ms, setup 104ms, collect 1.12s, tests 16.71s, environment 422ms, prepare 97ms)

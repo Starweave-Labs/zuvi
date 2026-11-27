@@ -1,0 +1,69 @@
+import assert from 'node:assert/strict';
+import { Blob } from 'node:buffer';
+import { createRequire } from 'node:module';
+import { writeFile } from 'node:fs/promises';
+import { pdfTestRuntime } from '/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/tests/studio-pdf-test-runtime.mjs';
+const repo = '/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59';
+const require = createRequire(`${repo}/docs/package.json`), uiRequire = createRequire(`${repo}/packages/ui/package.json`);
+const { JSDOM } = uiRequire('jsdom'); const dom = new JSDOM();
+globalThis.DOMParser = dom.window.DOMParser; globalThis.XMLSerializer = dom.window.XMLSerializer;
+const JSZip = require('jszip'), ExcelJS = require('exceljs');
+const r = pdfTestRuntime();
+const core = r.load('../../packages/ui/src/components/OfficeStudio/studio-sheet-model.ts');
+const editing = r.load('../../packages/ui/src/components/OfficeStudio/studio-sheet-editing.ts');
+const display = r.load('../../packages/ui/src/components/OfficeStudio/studio-sheet-text-display.ts');
+const codec = r.load('../src/pages/collaboration/office-studio/studio-excel-codec.ts');
+const { createStudioPrintHtml } = r.load('../src/pages/collaboration/office-studio/studio-print.ts');
+const measure = display.studioSheetTextMeasure(undefined), offsets = [0, 100];
+const long = 'Long wrapped content that needs several lines';
+function derived(document) {
+  const sheet = document.sheets[0];
+  return display.studioSheetDerivedRowHeights(document, sheet, core.studioCalculate(document), [1], offsets, measure)['1'];
+}
+const results = [];
+for (const [label, initialText, initialSize, finalText, finalSize, mode] of [
+  ['grow-auto', 'Short', 11, long, 24, 'auto'],
+  ['shrink-auto', long, 24, 'Short', 11, 'auto'],
+  ['fixed-control', 'Short', 11, long, 24, 'fixed'],
+]) {
+  let document = { version: 1, id: label, kind: 'excel', name: `${label}.xlsx`, activeSheetId: 's',
+    defaultFont: { family: 'Arial', sizePt: 11, bold: false, italic: false },
+    sheets: [{ id: 's', name: 'Cache', rowCount: 1, columnCount: 1, defaultRowHeight: 18,
+      rowHeightModes: { '1': mode }, columnWidths: { A: 100 }, cells: { A1: { input: initialText, fontSize: initialSize, wrap: true } } }] };
+  document.sheets[0].rowHeights = { '1': mode === 'fixed' ? 18 : derived(document) };
+  const initialCache = document.sheets[0].rowHeights['1'];
+  let source = await codec.exportStudioExcel(document);
+  await writeFile(`/tmp/zuvi-sheet-text-review-2026-11-27/${label}-original.xlsx`, new Uint8Array(await source.arrayBuffer()));
+  document = await codec.importStudioExcel(source, `${label}.xlsx`);
+  const sheetId = document.sheets[0].id;
+  document = core.studioPatchCells(document, sheetId, { A1: { input: finalText } });
+  document = editing.studioSetCellTextFormat(document, sheetId, { anchor: { row: 1, col: 1 }, focus: { row: 1, col: 1 } }, { fontSize: finalSize });
+  const rows = [];
+  for (let round = 1; round <= 2; round++) {
+    const expectedUiHeight = derived(document), before = JSON.stringify(document);
+    const html = new JSDOM(createStudioPrintHtml(document)).window.document;
+    const printHeight = parseFloat(html.querySelector('.studio-print-sheet tr').style.height);
+    const output = await codec.exportStudioExcel(document, source);
+    assert.equal(JSON.stringify(document), before);
+    const zip = await JSZip.loadAsync(await output.arrayBuffer());
+    const xml = new dom.window.DOMParser().parseFromString(await zip.file('xl/worksheets/sheet1.xml').async('string'), 'application/xml');
+    const row = [...xml.getElementsByTagName('row')].find(row => row.getAttribute('r') === '1');
+    const native = new ExcelJS.Workbook(); await native.xlsx.load(await output.arrayBuffer());
+    const reopened = await codec.importStudioExcel(output, 'Reopened.xlsx');
+    rows.push({ round, uiHeightPt: expectedUiHeight, printHeightPt: printHeight, exportedHt: row.getAttribute('ht'), customHeight: row.getAttribute('customHeight'),
+      independentExcelJSHeight: native.getWorksheet('Cache').getRow(1).height,
+      reopenedCache: reopened.sheets[0].rowHeights['1'], reopenedMode: reopened.sheets[0].rowHeightModes['1'], reopenedUiHeight: derived(reopened),
+      font: native.getWorksheet('Cache').getCell('A1').font.size, value: native.getWorksheet('Cache').getCell('A1').value });
+    await writeFile(`/tmp/zuvi-sheet-text-review-2026-11-27/${label}-round-${round}.xlsx`, new Uint8Array(await output.arrayBuffer()));
+    document = reopened; source = output;
+  }
+  results.push({ label, initialCache, rows });
+}
+assert.equal(results[0].rows[0].customHeight, '0');
+assert.equal(results[1].rows[0].customHeight, '0');
+assert.ok(Number(results[0].rows[0].exportedHt) < results[0].rows[0].uiHeightPt);
+assert.ok(Number(results[1].rows[0].exportedHt) > results[1].rows[0].uiHeightPt);
+assert.equal(results[2].rows[0].customHeight, '1');
+assert.equal(Number(results[2].rows[0].exportedHt), results[2].rows[0].uiHeightPt);
+await writeFile('/tmp/zuvi-sheet-text-review-2026-11-27/auto-height-cache-results.json', JSON.stringify(results, null, 2));
+console.log(JSON.stringify(results, null, 2));

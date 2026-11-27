@@ -435,7 +435,7 @@ describe('Chart', () => {
     );
     await ready(container);
     expect(container.querySelectorAll('svg')).toHaveLength(1);
-    expect(onReady).toHaveBeenCalled();
+    await waitFor(() => expect(onReady).toHaveBeenCalled());
     unmount();
     expect(frames.size).toBe(0);
   });

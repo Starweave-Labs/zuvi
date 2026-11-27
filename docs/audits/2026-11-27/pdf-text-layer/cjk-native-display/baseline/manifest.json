@@ -1,0 +1,53 @@
+{
+  "status": "actual App before CSS and same App with diagnostic SDK accessibility CSS, production fontFace unchanged",
+  "files": [
+    {
+      "path": "actual-canvas-1.png",
+      "sha256": "536180906cd96061d1ffedbb404173899f69beb49573906f8f985c5c285ca6ea"
+    },
+    {
+      "path": "actual-canvas-0.png",
+      "sha256": "52e05035bd0f7c768de244a1f4171546af57eead627e5326ad76d179bc873492"
+    },
+    {
+      "path": "actual-source.pdf",
+      "sha256": "7a4e322ddf8384e9631f64f8add9e940458270b07f203aae438bfb46a5032965"
+    },
+    {
+      "path": "actual-with-sdk-accessibility-css-cjk-crop.png",
+      "sha256": "319880caedf2f1d3421e987c0bffd42124105086700d1229d5d68db2d49b0293"
+    },
+    {
+      "path": "trace.zip",
+      "sha256": "e2a317204c76c7c9279d3ff13345d99f2ed2bbf2a14089a293c7052af482d5b0"
+    },
+    {
+      "path": "e2e.spec.ts.txt",
+      "sha256": "017ca274cd429a5f56c05a07be058d8baa184a17ed812d7ba1d65162922b2a8c"
+    },
+    {
+      "path": "before-dom-and-paints.json",
+      "sha256": "69b4425ec53ff0aa8989689228ac94389410dd222be5a9acd5ee0f262a75d6c6"
+    },
+    {
+      "path": "actual-before-cjk-crop.png",
+      "sha256": "8c2ab1b1fb670eccf82a899c714867b3959671303fbf8a2e87a3796c5463fe8c"
+    },
+    {
+      "path": "playwright.txt",
+      "sha256": "9c1e3ff097d43d4d9b80c1cd7ac10640a571f5442b0b1d5a7cb1cc658f76c830"
+    },
+    {
+      "path": "actual-with-sdk-accessibility-css.png",
+      "sha256": "84353d7abb14599e1fc0d992e1618a37ea6f9636527f43537b355b9dd5cd8622"
+    },
+    {
+      "path": "diagnosis.json",
+      "sha256": "12e586032a2b4f074ae7743ee217c095a8765f8be3fcde654ef22bb579e43b5d"
+    },
+    {
+      "path": "actual-before.png",
+      "sha256": "39cfa8f9452993d309acaf1d0fe9991fd56394c50524871e52afd08697b7832c"
+    }
+  ]
+}

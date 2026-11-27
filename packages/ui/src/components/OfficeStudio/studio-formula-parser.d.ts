@@ -17,6 +17,6 @@ declare module 'fast-formula-parser' {
       onCell: (position: Position) => unknown;
       onRange: (range: Range) => unknown[][];
     });
-    parse(formula: string, position: Position): unknown;
+    parse(formula: string, position: Position, allowReturnArray?: boolean): unknown;
   }
 }

@@ -1,0 +1,128 @@
+import assert from 'node:assert/strict';
+import { Blob, Buffer } from 'node:buffer';
+import { webcrypto } from 'node:crypto';
+import { readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
+import test from 'node:test';
+import { URL } from 'node:url';
+import { runInNewContext } from 'node:vm';
+
+const require = createRequire(new URL('../package.json', 'file:///Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/tests/office-studio-word.test.mjs'));
+const uiRequire = createRequire(new URL('../../packages/ui/package.json', 'file:///Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/tests/office-studio-word.test.mjs'));
+const { JSDOM } = uiRequire('jsdom');
+const JSZip = require('jszip');
+const ts = require('typescript');
+const xml = new JSDOM().window;
+const exports = {};
+const styleExports = {};
+const fontExports = {};
+const metricExports = {};
+const paragraphExports = {};
+const tabExports = {};
+const numberExports = {};
+const numberCodecExports = {};
+const surfaceExports = {};
+const surfaceCodecExports = {};
+const imageExports = {};
+const imageContractExports = {};
+const rowExports = {};
+const tableExports = {};
+const mathExports = {};
+const mathCodecExports = {};
+for (const [file, target] of [
+  ['studio-word-math.ts', mathExports],
+  ['studio-font-input.ts', fontExports],
+  ['studio-word-metrics.ts', metricExports],
+  ['studio-word-table-rows.ts', rowExports],
+  ['studio-word-table-properties.ts', tableExports],
+  ['studio-word-paragraph-format.ts', paragraphExports],
+  ['studio-word-tabs.ts', tabExports],
+  ['studio-word-surface.ts', surfaceExports],
+  ['studio-word-numbering.ts', numberExports],
+  ['studio-word-styles.ts', styleExports],
+  ['studio-word-image-contract.ts', imageContractExports],
+  ['studio-word-images.ts', imageExports],
+  ['studio-word-image-crop.ts', imageExports],
+  ['studio-word-image-preview.ts', imageExports],
+]) {
+  runInNewContext(
+    ts.transpileModule(
+      readFileSync(
+        new URL(`../../packages/ui/src/components/OfficeStudio/${file}`, 'file:///Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/tests/office-studio-word.test.mjs'),
+        'utf8'
+      ),
+      {
+        compilerOptions: {
+          module: ts.ModuleKind.CommonJS,
+          target: ts.ScriptTarget.ES2022,
+          esModuleInterop: true,
+        },
+      }
+    ).outputText,
+    {
+      exports: target,
+      require: (id) =>
+        id === './studio-word-image-contract' ? imageContractExports : id === './studio-word-surface'?surfaceExports:id === './studio-word-tabs' ? tabExports : id === './studio-word-paragraph-format'
+          ? paragraphExports
+          : id === './studio-word-metrics'
+            ? metricExports
+            : id === './studio-font-input'
+              ? fontExports
+              : uiRequire(id),
+    }
+  );
+}
+runInNewContext(ts.transpileModule(readFileSync(new URL('../src/pages/collaboration/office-studio/studio-word-math-codec.ts','file:///Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/tests/office-studio-word.test.mjs'),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,esModuleInterop:true}}).outputText,{exports:mathCodecExports,require:(id)=>id.endsWith('/studio-word-math')?mathExports:require(id)});
+runInNewContext(ts.transpileModule(readFileSync(new URL('../src/pages/collaboration/office-studio/studio-word-numbering-codec.ts','file:///Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/tests/office-studio-word.test.mjs'),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,esModuleInterop:true}}).outputText,{
+  exports:numberCodecExports, require:(id)=>id.endsWith('/studio-word-numbering')?numberExports:id.endsWith('/studio-word-tabs')?tabExports:require(id), DOMParser:xml.DOMParser, XMLSerializer:xml.XMLSerializer,
+});
+runInNewContext(ts.transpileModule(readFileSync(new URL('../src/pages/collaboration/office-studio/studio-word-surface-codec.ts','file:///Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/tests/office-studio-word.test.mjs'),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,esModuleInterop:true}}).outputText,{exports:surfaceCodecExports,require:(id)=>id.endsWith('/studio-word-surface')?surfaceExports:require(id)});
+runInNewContext(
+  ts.transpileModule(
+    readFileSync(
+      new URL('../src/pages/collaboration/office-studio/studio-word-codec.ts', 'file:///Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/tests/office-studio-word.test.mjs'),
+      'utf8'
+    ),
+    {
+      compilerOptions: {
+        module: ts.ModuleKind.CommonJS,
+        target: ts.ScriptTarget.ES2022,
+        esModuleInterop: true,
+      },
+    }
+  ).outputText,
+  {
+    exports,
+    require: (id) =>
+      id.endsWith('/studio-word-table-properties') ? tableExports : id === './studio-word-math-codec' ? mathCodecExports : id.endsWith('/studio-word-image-crop')?imageExports:id.endsWith('/studio-word-table-rows')?rowExports:id.endsWith('/studio-word-surface')?surfaceExports:id==='./studio-word-surface-codec'?surfaceCodecExports:id.endsWith('/studio-word-numbering') ? numberExports : id === './studio-word-numbering-codec' ? numberCodecExports : id.endsWith('/studio-word-tabs') ? tabExports : id.endsWith('/studio-word-paragraph-format')
+        ? paragraphExports
+        : id.endsWith('/studio-word-metrics')
+          ? metricExports
+          : id.endsWith('/studio-word-styles')
+            ? styleExports
+            : id.endsWith('/studio-word-images')
+              ? imageExports
+              : require(id),
+    Blob,
+    crypto: webcrypto,
+    DOMParser: xml.DOMParser,
+    URL,
+    Uint8Array,
+    ArrayBuffer,
+  }
+);
+const { importStudioWord, exportStudioWord } = exports;
+const W = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';
+
+const walk = (node) => [node, ...(node.content || []).flatMap(walk)];
+const result = [];
+for (const [label, location] of [
+  ['unit-form', '/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/word-character-guards/second-browser-run/roundtrip-1.docx'],
+  ['integer-half-points', '/tmp/zuvi-word-position-equivalence/integer-position.docx'],
+]) {
+  const doc = await importStudioWord(new Blob([readFileSync(location)]), 'Actual.docx');
+  const target = walk(doc.content).find(node => node.type === 'text' && node.text === 'target');
+  assert.equal(target.marks.find(mark => mark.type === 'textStyle').attrs.baselineShift, '-1.5pt');
+  result.push({ form: label, target, header: doc.header });
+}
+console.log(JSON.stringify(result, null, 2));

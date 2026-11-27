@@ -1,0 +1,679 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > forwards the native editor through OfficeStudio and accepts one immutable source/model pair with transactional history 717ms
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > keeps unchanged native device colors out of a contents-only property patch, and cancels or applies an unchanged draft without history
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > rejects invalid numeric drafts and IME submission while preserving the property draft for correction
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > keeps creation and reply inputs enabled throughout IME while refusing acceptance until composition ends
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > does not submit stale native snapshots when a property draft was opened before an external model replacement
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > discards an eventual prepared native result when readOnly becomes active
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > discards an eventual prepared native result when disabled becomes active
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > discards an eventual prepared native result after the current document is replaced
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > discards an eventual prepared native result after the current source is replaced
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > discards an eventual prepared native result after the current editor is replaced
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > aborts a pending property apply on cancel and ignores its eventual source without adding history
+ × src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > retains both the current pair and undo/redo entries when the controlled host rejects application or restoration 1359ms
+   → Unable to find role="status"
+
+Ignored nodes: comments, script, style
+[36m<body[39m
+  [33mstyle[39m=[32m"overflow: hidden; padding-right: 1024px;"[39m
+[36m>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"zuvi-studio-pdf"[39m
+      [33mdata-inspector[39m=[32m"open"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"zuvi-tabs zuvi-studio-ribbon zuvi-studio-pdf-ribbon"[39m
+        [33mdata-orientation[39m=[32m"horizontal"[39m
+        [33mdata-part[39m=[32m"root"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"zuvi-studio-ribbon-tabbar"[39m
+          [33mdata-part[39m=[32m"ribbon-tabs"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33maria-label[39m=[32m"PDF 功能区选项卡"[39m
+            [33maria-orientation[39m=[32m"horizontal"[39m
+            [33mclass[39m=[32m"zuvi-tabs-list"[39m
+            [33mdata-part[39m=[32m"list"[39m
+            [33mrole[39m=[32m"tablist"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33maria-controls[39m=[32m"_r_6s_-panel-home"[39m
+              [33maria-selected[39m=[32m"true"[39m
+              [33mclass[39m=[32m"zuvi-tab"[39m
+              [33mdata-part[39m=[32m"trigger"[39m
+              [33mid[39m=[32m"_r_6s_-tab-home"[39m
+              [33mrole[39m=[32m"tab"[39m
+              [33mtabindex[39m=[32m"0"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m开始[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-controls[39m=[32m"_r_6s_-panel-comment"[39m
+              [33maria-selected[39m=[32m"false"[39m
+              [33mclass[39m=[32m"zuvi-tab"[39m
+              [33mdata-part[39m=[32m"trigger"[39m
+              [33mid[39m=[32m"_r_6s_-tab-comment"[39m
+              [33mrole[39m=[32m"tab"[39m
+              [33mtabindex[39m=[32m"-1"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m批注[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33maria-label[39m=[32m"PDF 编辑工具栏"[39m
+          [33mclass[39m=[32m"zuvi-studio-pdf-ribbon-controls"[39m
+          [33mrole[39m=[32m"group"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33maria-label[39m=[32m"编辑"[39m
+            [33mclass[39m=[32m"zuvi-studio-pdf-ribbon-group"[39m
+            [33mrole[39m=[32m"group"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"zuvi-studio-pdf-ribbon-group-body"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"zuvi-studio-pdf-ribbon-stack"[39m
+              [36m>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"zuvi-button"[39m
+                  [33mdata-part[39m=[32m"root"[39m
+                  [33mdata-size[39m=[32m"sm"[39m
+                  [33mdata-variant[39m=[32m"ghost"[39m
+                  [33mdisabled[39m=[32m""[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"zuvi-button-label"[39m
+                    [33mdata-part[39m=[32m"label"[39m
+                  [36m>[39m
+                    [0m撤销[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"zuvi-button"[39m
+                  [33mdata-part[39m=[32m"root"[39m
+                  [33mdata-size[39m=[32m"sm"[39m
+                  [33mdata-variant[39m=[32m"ghost"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"zuvi-button-label"[39m
+                    [33mdata-part[39m=[32m"label"[39m
+                  [36m>[39m
+                    [0m重做[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</div>[39m
+              [36m<button[39m
+                [33maria-pressed[39m=[32m"true"[39m
+                [33mclass[39m=[32m"zuvi-button zuvi-studio-pdf-ribbon-tool"[39m
+                [33mdata-part[39m=[32m"root"[39m
+                [33mdata-size[39m=[32m"sm"[39m
+                [33mdata-variant[39m=[32m"ghost"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"zuvi-button-icon"[39m
+                  [33mdata-part[39m=[32m"icon"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"1em"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"1em"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"m3 11 19-9-9 19-2-8-8-2z"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"zuvi-button-label"[39m
+                  [33mdata-part[39m=[32m"label"[39m
+                [36m>[39m
+                  [0m选择[0m
+                [36m</span>[39m
+              [36m</button>[39m
+            [36m</div>[39m
+            [36m<span[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"zuvi-studio-pdf-ribbon-caption"[39m
+            [36m>[39m
+              [0m编辑[0m
+            [36m</span>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33maria-labelledby[39m=[32m"_r_6s_-tab-home"[39m
+            [33mclass[39m=[32m"zuvi-tabs-panel zuvi-studio-pdf-ribbon-panel"[39m
+            [33mdata-part[39m=[32m"panel"[39m
+            [33mid[39m=[32m"_r_6s_-panel-home"[39m
+            [33mrole[39m=[32m"tabpanel"[39m
+            [33mtabindex[39m=[32m"0"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"插入"[39m
+              [33mclass[39m=[32m"zuvi-studio-pdf-ribbon-group"[39m
+              [33mrole[39m=[32m"group"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"zuvi-studio-pdf-ribbon-group-body"[39m
+              [36m>[39m
+                [36m<button[39m
+                  [33maria-pressed[39m=[32m"false"[39m
+                  [33mclass[39m=[32m"zuvi-button zuvi-studio-pdf-ribbon-tool"[39m
+                  [33mdata-part[39m=[32m"root"...
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body[39m
+    [33mstyle[39m=[32m"overflow: hidden; padding-right: 1024px;"[39m
+  [36m>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"zuvi-studio-pdf"[39m
+        [33mdata-inspector[39m=[32m"open"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"zuvi-tabs zuvi-studio-ribbon zuvi-studio-pdf-ribbon"[39m
+          [33mdata-orientation[39m=[32m"horizontal"[39m
+          [33mdata-part[39m=[32m"root"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"zuvi-studio-ribbon-tabbar"[39m
+            [33mdata-part[39m=[32m"ribbon-tabs"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"PDF 功能区选项卡"[39m
+              [33maria-orientation[39m=[32m"horizontal"[39m
+              [33mclass[39m=[32m"zuvi-tabs-list"[39m
+              [33mdata-part[39m=[32m"list"[39m
+              [33mrole[39m=[32m"tablist"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_6s_-panel-home"[39m
+                [33maria-selected[39m=[32m"true"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_6s_-tab-home"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"0"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m开始[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_6s_-panel-comment"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_6s_-tab-comment"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m批注[0m
+              [36m</button>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33maria-label[39m=[32m"PDF 编辑工具栏"[39m
+            [33mclass[39m=[32m"zuvi-studio-pdf-ribbon-controls"[39m
+            [33mrole[39m=[32m"group"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"编辑"[39m
+              [33mclass[39m=[32m"zuvi-studio-pdf-ribbon-group"[39m
+              [33mrole[39m=[32m"group"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"zuvi-studio-pdf-ribbon-group-body"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"zuvi-studio-pdf-ribbon-stack"[39m
+                [36m>[39m
+                  [36m<button[39m
+                    [33mclass[39m=[32m"zuvi-button"[39m
+                    [33mdata-part[39m=[32m"root"[39m
+                    [33mdata-size[39m=[32m"sm"[39m
+                    [33mdata-variant[39m=[32m"ghost"[39m
+                    [33mdisabled[39m=[32m""[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"zuvi-button-label"[39m
+                      [33mdata-part[39m=[32m"label"[39m
+                    [36m>[39m
+                      [0m撤销[0m
+                    [36m</span>[39m
+                  [36m</button>[39m
+                  [36m<button[39m
+                    [33mclass[39m=[32m"zuvi-button"[39m
+                    [33mdata-part[39m=[32m"root"[39m
+                    [33mdata-size[39m=[32m"sm"[39m
+                    [33mdata-variant[39m=[32m"ghost"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"zuvi-button-label"[39m
+                      [33mdata-part[39m=[32m"label"[39m
+                    [36m>[39m
+                      [0m重做[0m
+                    [36m</span>[39m
+                  [36m</button>[39m
+                [36m</div>[39m
+                [36m<button[39m
+                  [33maria-pressed[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"zuvi-button zuvi-studio-pdf-ribbon-tool"[39m
+                  [33mdata-part[39m=[32m"root"[39m
+                  [33mdata-size[39m=[32m"sm"[39m
+                  [33mdata-variant[39m=[32m"ghost"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"zuvi-button-icon"[39m
+                    [33mdata-part[39m=[32m"icon"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"1em"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"1em"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"m3 11 19-9-9 19-2-8-8-2z"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"zuvi-button-label"[39m
+                    [33mdata-part[39m=[32m"label"[39m
+                  [36m>[39m
+                    [0m选择[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</div>[39m
+              [36m<span[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"zuvi-studio-pdf-ribbon-caption"[39m
+              [36m>[39m
+                [0m编辑[0m
+              [36m</span>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33maria-labelledby[39m=[32m"_r_6s_-tab-home"[39m
+              [33mclass[39m=[32m"zuvi-tabs-panel zuvi-studio-pdf-ribbon-panel"[39m
+              [33mdata-part[39m=[32m"panel"[39m
+              [33mid[39m=[32m"_r_6s_-panel-home"[39m
+              [33mrole[39m=[32m"tabpanel"[39m
+              [33mtabindex[39m=[32m"0"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33maria-label[39m=[32m"插入"[39m
+                [33mclass[39m=[32m"zuvi-studio-pdf-ribbon-group"[39m
+                [33mrole[39m=[32m"group"[39m
+              [36m>[39m
+                [36m...
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > does not offer native source mutation without a complete host contract: {"provider":false}
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > does not offer native source mutation without a complete host contract: {"callback":false}
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > permits read-only selection and properties while disabling move, deletion, contents, replies and history
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > keeps signed-source commands disabled and refuses editing while signature inspection is pending
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > submits keyboard movement and deletion once, ignores IME shortcuts, and restores each accepted pair independently
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > refuses model-only mutations of native projections when no annotation provider is installed
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > uses native capability flags for properties even when the overall source is editable
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > retains both the current pair and undo/redo entries when the controlled host rejects application or restoration
+TestingLibraryElementError: Unable to find role="status"
+
+Ignored nodes: comments, script, style
+[36m<body[39m
+  [33mstyle[39m=[32m"overflow: hidden; padding-right: 1024px;"[39m
+[36m>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"zuvi-studio-pdf"[39m
+      [33mdata-inspector[39m=[32m"open"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"zuvi-tabs zuvi-studio-ribbon zuvi-studio-pdf-ribbon"[39m
+        [33mdata-orientation[39m=[32m"horizontal"[39m
+        [33mdata-part[39m=[32m"root"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"zuvi-studio-ribbon-tabbar"[39m
+          [33mdata-part[39m=[32m"ribbon-tabs"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33maria-label[39m=[32m"PDF 功能区选项卡"[39m
+            [33maria-orientation[39m=[32m"horizontal"[39m
+            [33mclass[39m=[32m"zuvi-tabs-list"[39m
+            [33mdata-part[39m=[32m"list"[39m
+            [33mrole[39m=[32m"tablist"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33maria-controls[39m=[32m"_r_6s_-panel-home"[39m
+              [33maria-selected[39m=[32m"true"[39m
+              [33mclass[39m=[32m"zuvi-tab"[39m
+              [33mdata-part[39m=[32m"trigger"[39m
+              [33mid[39m=[32m"_r_6s_-tab-home"[39m
+              [33mrole[39m=[32m"tab"[39m
+              [33mtabindex[39m=[32m"0"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m开始[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-controls[39m=[32m"_r_6s_-panel-comment"[39m
+              [33maria-selected[39m=[32m"false"[39m
+              [33mclass[39m=[32m"zuvi-tab"[39m
+              [33mdata-part[39m=[32m"trigger"[39m
+              [33mid[39m=[32m"_r_6s_-tab-comment"[39m
+              [33mrole[39m=[32m"tab"[39m
+              [33mtabindex[39m=[32m"-1"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m批注[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33maria-label[39m=[32m"PDF 编辑工具栏"[39m
+          [33mclass[39m=[32m"zuvi-studio-pdf-ribbon-controls"[39m
+          [33mrole[39m=[32m"group"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33maria-label[39m=[32m"编辑"[39m
+            [33mclass[39m=[32m"zuvi-studio-pdf-ribbon-group"[39m
+            [33mrole[39m=[32m"group"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"zuvi-studio-pdf-ribbon-group-body"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"zuvi-studio-pdf-ribbon-stack"[39m
+              [36m>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"zuvi-button"[39m
+                  [33mdata-part[39m=[32m"root"[39m
+                  [33mdata-size[39m=[32m"sm"[39m
+                  [33mdata-variant[39m=[32m"ghost"[39m
+                  [33mdisabled[39m=[32m""[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"zuvi-button-label"[39m
+                    [33mdata-part[39m=[32m"label"[39m
+                  [36m>[39m
+                    [0m撤销[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"zuvi-button"[39m
+                  [33mdata-part[39m=[32m"root"[39m
+                  [33mdata-size[39m=[32m"sm"[39m
+                  [33mdata-variant[39m=[32m"ghost"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"zuvi-button-label"[39m
+                    [33mdata-part[39m=[32m"label"[39m
+                  [36m>[39m
+                    [0m重做[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</div>[39m
+              [36m<button[39m
+                [33maria-pressed[39m=[32m"true"[39m
+                [33mclass[39m=[32m"zuvi-button zuvi-studio-pdf-ribbon-tool"[39m
+                [33mdata-part[39m=[32m"root"[39m
+                [33mdata-size[39m=[32m"sm"[39m
+                [33mdata-variant[39m=[32m"ghost"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"zuvi-button-icon"[39m
+                  [33mdata-part[39m=[32m"icon"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"1em"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"1em"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"m3 11 19-9-9 19-2-8-8-2z"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"zuvi-button-label"[39m
+                  [33mdata-part[39m=[32m"label"[39m
+                [36m>[39m
+                  [0m选择[0m
+                [36m</span>[39m
+              [36m</button>[39m
+            [36m</div>[39m
+            [36m<span[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"zuvi-studio-pdf-ribbon-caption"[39m
+            [36m>[39m
+              [0m编辑[0m
+            [36m</span>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33maria-labelledby[39m=[32m"_r_6s_-tab-home"[39m
+            [33mclass[39m=[32m"zuvi-tabs-panel zuvi-studio-pdf-ribbon-panel"[39m
+            [33mdata-part[39m=[32m"panel"[39m
+            [33mid[39m=[32m"_r_6s_-panel-home"[39m
+            [33mrole[39m=[32m"tabpanel"[39m
+            [33mtabindex[39m=[32m"0"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"插入"[39m
+              [33mclass[39m=[32m"zuvi-studio-pdf-ribbon-group"[39m
+              [33mrole[39m=[32m"group"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"zuvi-studio-pdf-ribbon-group-body"[39m
+              [36m>[39m
+                [36m<button[39m
+                  [33maria-pressed[39m=[32m"false"[39m
+                  [33mclass[39m=[32m"zuvi-button zuvi-studio-pdf-ribbon-tool"[39m
+                  [33mdata-part[39m=[32m"root"...
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body[39m
+    [33mstyle[39m=[32m"overflow: hidden; padding-right: 1024px;"[39m
+  [36m>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"zuvi-studio-pdf"[39m
+        [33mdata-inspector[39m=[32m"open"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"zuvi-tabs zuvi-studio-ribbon zuvi-studio-pdf-ribbon"[39m
+          [33mdata-orientation[39m=[32m"horizontal"[39m
+          [33mdata-part[39m=[32m"root"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"zuvi-studio-ribbon-tabbar"[39m
+            [33mdata-part[39m=[32m"ribbon-tabs"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"PDF 功能区选项卡"[39m
+              [33maria-orientation[39m=[32m"horizontal"[39m
+              [33mclass[39m=[32m"zuvi-tabs-list"[39m
+              [33mdata-part[39m=[32m"list"[39m
+              [33mrole[39m=[32m"tablist"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_6s_-panel-home"[39m
+                [33maria-selected[39m=[32m"true"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_6s_-tab-home"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"0"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m开始[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_6s_-panel-comment"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_6s_-tab-comment"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m批注[0m
+              [36m</button>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33maria-label[39m=[32m"PDF 编辑工具栏"[39m
+            [33mclass[39m=[32m"zuvi-studio-pdf-ribbon-controls"[39m
+            [33mrole[39m=[32m"group"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"编辑"[39m
+              [33mclass[39m=[32m"zuvi-studio-pdf-ribbon-group"[39m
+              [33mrole[39m=[32m"group"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"zuvi-studio-pdf-ribbon-group-body"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"zuvi-studio-pdf-ribbon-stack"[39m
+                [36m>[39m
+                  [36m<button[39m
+                    [33mclass[39m=[32m"zuvi-button"[39m
+                    [33mdata-part[39m=[32m"root"[39m
+                    [33mdata-size[39m=[32m"sm"[39m
+                    [33mdata-variant[39m=[32m"ghost"[39m
+                    [33mdisabled[39m=[32m""[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"zuvi-button-label"[39m
+                      [33mdata-part[39m=[32m"label"[39m
+                    [36m>[39m
+                      [0m撤销[0m
+                    [36m</span>[39m
+                  [36m</button>[39m
+                  [36m<button[39m
+                    [33mclass[39m=[32m"zuvi-button"[39m
+                    [33mdata-part[39m=[32m"root"[39m
+                    [33mdata-size[39m=[32m"sm"[39m
+                    [33mdata-variant[39m=[32m"ghost"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"zuvi-button-label"[39m
+                      [33mdata-part[39m=[32m"label"[39m
+                    [36m>[39m
+                      [0m重做[0m
+                    [36m</span>[39m
+                  [36m</button>[39m
+                [36m</div>[39m
+                [36m<button[39m
+                  [33maria-pressed[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"zuvi-button zuvi-studio-pdf-ribbon-tool"[39m
+                  [33mdata-part[39m=[32m"root"[39m
+                  [33mdata-size[39m=[32m"sm"[39m
+                  [33mdata-variant[39m=[32m"ghost"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"zuvi-button-icon"[39m
+                    [33mdata-part[39m=[32m"icon"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"1em"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"1em"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"m3 11 19-9-9 19-2-8-8-2z"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"zuvi-button-label"[39m
+                    [33mdata-part[39m=[32m"label"[39m
+                  [36m>[39m
+                    [0m选择[0m
+                  [36m</span>[39m
+                [36m</button>[39m
+              [36m</div>[39m
+              [36m<span[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"zuvi-studio-pdf-ribbon-caption"[39m
+              [36m>[39m
+                [0m编辑[0m
+              [36m</span>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33maria-labelledby[39m=[32m"_r_6s_-tab-home"[39m
+              [33mclass[39m=[32m"zuvi-tabs-panel zuvi-studio-pdf-ribbon-panel"[39m
+              [33mdata-part[39m=[32m"panel"[39m
+              [33mid[39m=[32m"_r_6s_-panel-home"[39m
+              [33mrole[39m=[32m"tabpanel"[39m
+              [33mtabindex[39m=[32m"0"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33maria-label[39m=[32m"插入"[39m
+                [33mclass[39m=[32m"zuvi-studio-pdf-ribbon-group"[39m
+                [33mrole[39m=[32m"group"[39m
+              [36m>[39m
+                [36m...
+ ❯ Proxy.waitForWrapper ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx:218:82
+    216|   f.reject(false); fireEvent.click(screen.getByRole('button', { name: …
+    217|   f.reject(true); const dialog = await properties(); fireEvent.change(…
+    218|   fireEvent.click(within(dialog).getByRole('button', { name: '应用批注…
+       |                                                                                  ^
+    219|   expectPair(f.snapshot(), f.first); fireEvent.click(within(dialog).ge…
+    220|   expect(screen.getByRole('button', { name: '重做' })).toBeEnabled(); …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 18 passed (19)
+   Start at  06:02:13
+   Duration  5.94s (transform 524ms, setup 144ms, collect 752ms, tests 4.38s, environment 396ms, prepare 58ms)
+
+undefined
+/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx --reporter=verbose

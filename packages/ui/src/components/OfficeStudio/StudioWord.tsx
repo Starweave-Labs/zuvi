@@ -1,6 +1,18 @@
 'use client';
+import { WordBookmark, wordBookmarkName, wordBookmarks, wordGoToBookmark } from './studio-word-bookmarks';
+import { StudioWordBookmarkDialog } from './StudioWordBookmarkDialog';
+import { StudioWordCellDialog } from './StudioWordCellDialog';
+import { wordSelectedCellPositions } from './studio-word-cell-command';
+import { StudioWordMathDialog } from './StudioWordMathDialog';
+import { WordMath, wordSetMath } from './studio-word-math-extension';
+import { StudioWordImageCropDialog } from './StudioWordImageCropDialog';
+import { wordImageReplacementTarget, wordReplaceImage, type WordImageReplacementTarget } from './studio-word-image-replace';
+import { wordSetImageCrop } from './studio-word-image-crop-command';
+import { StudioWordFormulaDialog } from './StudioWordFormulaDialog';
+import { WordFormulaField, wordSetTableFormula, wordRefreshTableFormulas } from './studio-word-formula-field';
 
 import * as React from 'react';
+import { flushSync } from 'react-dom';
 import {
   AlignCenter,
   AlignJustify,
@@ -19,15 +31,10 @@ import {
   Scissors,
   Search,
 } from '@zuvi/icons';
-import {
-  EditorContent,
-  Extension,
-  Node,
-  useEditor,
-  useEditorState,
-  type Editor,
-} from '@tiptap/react';
+import { EditorContent, Node, useEditor, useEditorState, type Editor } from '@tiptap/react';
 import { StarterKit } from '@tiptap/starter-kit';
+import { ListItem } from '@tiptap/extension-list';
+import { closeHistory } from '@tiptap/pm/history';
 import { TextAlign } from '@tiptap/extension-text-align';
 import { TextStyleKit, FontFamily } from '@tiptap/extension-text-style';
 import { DropdownMenu } from '../DropdownMenu';
@@ -42,9 +49,50 @@ import { Modal } from '../Modal';
 import { Select } from '../Select';
 import { Tabs } from '../Tabs';
 import { StudioRibbonTabs } from './StudioRibbon';
-import type { StudioEditorProps, StudioRichNode, StudioWordDocument } from './studio-types';
+import type {
+  StudioEditorProps,
+  StudioRichNode,
+  StudioWordDocument,
+  StudioWordParagraphStyle,
+} from './studio-types';
+import { StudioWordStyleDialog } from './StudioWordStyleDialog';
+import { StudioWordCharacterDialog } from './StudioWordCharacterDialog';
+import { StudioWordParagraphDialog } from './StudioWordParagraphDialog';
+import { StudioWordTabsDialog } from './StudioWordTabsDialog';
+import { WordTabs, wordSelectionTabStops, wordSetTabStops, wordInsertTab, wordRefreshTabLayout } from './studio-word-tab-extension';
+import { StudioWordRuler as WordRuler } from './StudioWordRuler';
+import { WordNumbering, wordSetNumberedContent, wordNumberingContext, wordContinueNumbering, wordRestartNumbering, wordChangeNumberingLevel, wordSetNumberingCatalog, wordToggleNumberingPreset, wordEditorNumbering, wordApplyNumbering } from './studio-word-numbering-extension';
+import { StudioWordNumberingDialog } from './StudioWordNumberingDialog';
+import {StudioWordSurfaceDialog} from './StudioWordSurfaceDialog';
+import { WordTableRowProperties, wordDistributeColumns, wordDistributeRows, wordSelectedRows, wordSetRowProperties } from './studio-word-table-row-extension';
+import { StudioWordRowDialog } from './StudioWordRowDialog';
+import { StudioWordConversionDialog } from './StudioWordConversionDialog';
+import { wordConversionTarget, wordApplyTableConversion, type WordConversionTarget } from './studio-word-table-conversion';
+import { WordTableCell, WordTableHeader } from './studio-word-table-cell';
+import { WordTable, WordTableSpacing } from './studio-word-table-extension';
+import {WordPaginationLayout,wordSetPagination} from './studio-word-pagination-extension';
+import {WordParagraphSurface,wordSelectionSurfaces,wordSetParagraphSurface} from './studio-word-surface-extension';
+import { materializeWordNumbering, wordNumberingCatalog, type WordNumberingCatalog } from './studio-word-numbering';
+import {
+  WordCharacterLayout,
+  wordSelectionMetrics,
+  wordSetCharacterLayout,
+} from './studio-word-character-layout';
+import { StudioWordImageLayoutTools } from './StudioWordImageLayoutTools';
+import {
+  WordParagraphStyles,
+  wordApplyParagraphStyle,
+  wordSetParagraphStyles,
+} from './studio-word-style-extension';
+import {
+  getStudioWordParagraphStyles,
+  materializeStudioWordStyles,
+  reconcileStudioWordStyles,
+  validateStudioWordParagraphStyles,
+} from './studio-word-styles';
 import {
   WORD_HIGHLIGHT_COLORS,
+  WORD_FONT_SIZE_STEPS,
   WORD_SEARCH_LIMIT,
   WordImage,
   WordPageNumber,
@@ -54,16 +102,25 @@ import {
   type WordFormatSnapshot,
   wordApplyFormat,
   wordCaptureFormat,
+  wordClearFormat,
   wordFindMatches,
   type WordFormatCriteria,
   wordHeadings,
   wordReadImage,
   wordReplaceMatches,
   wordSetHighlight,
+  wordSelectionCharacterFormat,
   wordStepFontSize,
   wordTransformSelectionCase,
 } from './studio-word-tools';
 import { StudioFontControl, type StudioFontCommitReason } from './StudioFontControl';
+import { WordNonprinting, wordSetNonprinting } from './studio-word-nonprinting';
+
+import {
+  wordSetParagraphFormat,
+  wordSelectionParagraphFormat,
+  WordParagraphLayout as ParagraphLayout,
+} from './studio-word-paragraph-layout';
 import './StudioWord.css';
 
 const PageBreak = Node.create({
@@ -77,69 +134,21 @@ const PageBreak = Node.create({
     { 'data-word-page-break': '', class: 'zuvi-studio-word-page-break', 'aria-label': '分页符' },
   ],
 });
-
-const PARAGRAPH_LAYOUT = {
-  indentLeft: 'margin-left',
-  indentRight: 'margin-right',
-  indentFirstLine: 'text-indent',
-  spaceBefore: 'margin-top',
-  spaceAfter: 'margin-bottom',
-} as const;
-
-const ParagraphLayout = Extension.create({
-  name: 'studioParagraphLayout',
-  addGlobalAttributes() {
-    return [
-      {
-        types: ['paragraph', 'heading'],
-        attributes: {
-          ...Object.fromEntries(
-            Object.entries(PARAGRAPH_LAYOUT).map(([key, css]) => [
-              key,
-              {
-                default: null,
-                renderHTML: (attributes: Record<string, unknown>) =>
-                  typeof attributes[key] === 'number' && Number.isFinite(attributes[key])
-                    ? { style: `${css}: ${attributes[key]}pt` }
-                    : {},
-              },
-            ])
-          ),
-          lineHeight: {
-            default: null,
-            renderHTML: (attributes: Record<string, unknown>) =>
-              typeof attributes.lineHeight === 'number' && Number.isFinite(attributes.lineHeight)
-                ? { style: `line-height: ${attributes.lineHeight}` }
-                : {},
-          },
-        },
-      },
-      {
-        types: ['tableCell', 'tableHeader'],
-        attributes: {
-          backgroundColor: {
-            default: null,
-            renderHTML: (attributes: Record<string, unknown>) =>
-              typeof attributes.backgroundColor === 'string' &&
-              /^#[\da-f]{6}$/i.test(attributes.backgroundColor)
-                ? { style: `background-color: ${attributes.backgroundColor}` }
-                : {},
-          },
-        },
-      },
-    ];
-  },
-});
+const numberedContent=(root:StudioRichNode,styles:StudioWordParagraphStyle[],catalog?:WordNumberingCatalog)=>materializeWordNumbering(materializeStudioWordStyles(root,styles),catalog);
 
 const EXTENSIONS = [
+  WordBookmark,
   StarterKit.configure({
     heading: { levels: [1, 2, 3, 4, 5, 6] },
     link: { openOnClick: false, autolink: false, defaultProtocol: 'https' },
     codeBlock: false,
     code: false,
     trailingNode: false,
+    listItem: false,
   }),
+  ListItem.extend({ content: '(paragraph | heading) block*' }),
   TextStyleKit.configure({ fontFamily: false }),
+  WordCharacterLayout,
   FontFamily.extend({
     addGlobalAttributes() {
       return (this.parent?.() ?? []).map((group) => ({
@@ -157,14 +166,40 @@ const EXTENSIONS = [
       }));
     },
   }),
-  TextAlign.configure({ types: ['heading', 'paragraph'] }),
-  TableKit.configure({ table: { resizable: true } }),
+  TextAlign.extend({
+    addKeyboardShortcuts() {
+      return Object.fromEntries(
+        [
+          ['l', 'left'],
+          ['e', 'center'],
+          ['r', 'right'],
+          ['j', 'justify'],
+        ].map(([key, value]) => [
+          `Mod-Shift-${key}`,
+          () =>
+            wordSetParagraphFormat(this.editor, {
+              textAlign: value as 'left' | 'center' | 'right' | 'justify',
+            }),
+        ])
+      );
+    },
+  }).configure({ types: ['heading', 'paragraph'] }),
+  TableKit.configure({ table: false, tableCell: false, tableHeader: false }),
+  WordTable,
+  WordTableSpacing,
+  WordTableCell,
+  WordTableHeader,
+  WordTableRowProperties,
   ParagraphLayout,
+  WordParagraphSurface,
   PageBreak,
   WordImage,
   WordPageNumber,
+  WordFormulaField,
+  WordMath,
   WordSubscript,
   WordSuperscript,
+  WordNonprinting,
 ];
 
 const MM_TO_PX = 96 / 25.4;
@@ -175,7 +210,7 @@ const FONT_OPTIONS = [
   { value: 'Arial', label: 'Arial' },
   { value: 'Times New Roman', label: 'Times New Roman' },
 ];
-const SIZE_OPTIONS = [10, 11, 12, 14, 16, 18, 20, 24, 28, 36, 48].map((size) => ({
+const SIZE_OPTIONS = WORD_FONT_SIZE_STEPS.map((size) => ({
   value: `${size}pt`,
   label: `${size}`,
 }));
@@ -222,46 +257,6 @@ function RibbonRow({ children }: { children: React.ReactNode }) {
   return <div className="zuvi-studio-word-control-row">{children}</div>;
 }
 
-function WordRuler({
-  length,
-  margin,
-  scale,
-  vertical = false,
-}: {
-  length: number;
-  margin: number;
-  scale: number;
-  vertical?: boolean;
-}) {
-  const unit = MM_TO_PX * 10;
-  const count = Math.floor((length - margin * 2) / unit);
-  const rulerStyle = {
-    '--zuvi-studio-word-ruler-unit': `${unit * scale}px`,
-    '--zuvi-studio-word-ruler-margin': `${margin * scale}px`,
-    [vertical ? 'height' : 'width']: length * scale,
-  } as React.CSSProperties;
-  return (
-    <div
-      className={`zuvi-studio-word-ruler zuvi-studio-word-ruler-${vertical ? 'vertical' : 'horizontal'}`}
-      data-part="word-ruler"
-      data-orientation={vertical ? 'vertical' : 'horizontal'}
-      aria-hidden="true"
-      style={rulerStyle}
-    >
-      <span className="zuvi-studio-word-ruler-text-area" />
-      {Array.from({ length: Math.max(0, count) + 1 }, (_, index) => (
-        <span
-          key={index}
-          className="zuvi-studio-word-ruler-number"
-          style={{ [vertical ? 'top' : 'left']: (margin + index * unit) * scale }}
-        >
-          {index}
-        </span>
-      ))}
-    </div>
-  );
-}
-
 type WordRegion = 'header' | 'footer';
 const EMPTY_REGION: StudioRichNode = { type: 'doc', content: [{ type: 'paragraph' }] };
 const DEFAULT_REGION_DISTANCE = 12.5;
@@ -275,6 +270,10 @@ function RegionEditor({
   onReady,
   onActive,
   onImagePaste,
+  paragraphStyles,
+  defaultTabStop,
+  decimalSymbol,
+  numberingCatalog,
 }: {
   region: WordRegion;
   documentId: string;
@@ -284,14 +283,36 @@ function RegionEditor({
   onReady(region: WordRegion, editor: Editor | null): void;
   onActive(region: WordRegion): void;
   onImagePaste(file: File, editor: Editor | null): void;
+  paragraphStyles: StudioWordParagraphStyle[];
+  defaultTabStop?: number;
+  decimalSymbol?: '.' | ',';
+  numberingCatalog:WordNumberingCatalog;
 }) {
-  const latest = React.useRef({ editable, onChange, onReady, onActive, onImagePaste });
-  latest.current = { editable, onChange, onReady, onActive, onImagePaste };
+  const latest = React.useRef({
+    editable,
+    onChange,
+    onReady,
+    onActive,
+    onImagePaste,
+    paragraphStyles,
+    defaultTabStop,
+    decimalSymbol,
+    numberingCatalog,
+  });
+  latest.current = { editable, onChange, onReady, onActive, onImagePaste, paragraphStyles, defaultTabStop, decimalSymbol, numberingCatalog };
   const [request, setRequest] = React.useState(0);
   const editor: Editor | null = useEditor(
     {
-      extensions: EXTENSIONS,
-      content,
+      extensions: [
+        ...EXTENSIONS,
+        WordNumbering.configure({getCatalog:()=>latest.current.numberingCatalog}),
+        WordTabs.configure({ getDefaultTabStop: () => latest.current.defaultTabStop ?? 36, getDecimalSymbol: () => latest.current.decimalSymbol }),
+        WordParagraphStyles.configure({
+          autoUpdate: false,
+          getStyles: () => latest.current.paragraphStyles,
+        }),
+      ],
+      content: numberedContent(content, paragraphStyles, numberingCatalog),
       editable,
       immediatelyRender: false,
       shouldRerenderOnTransaction: false,
@@ -354,12 +375,16 @@ function RegionEditor({
     if (
       editor &&
       !editor.isDestroyed &&
-      JSON.stringify(editor.getJSON()) !== JSON.stringify(content)
+      JSON.stringify(editor.getJSON()) !==
+        JSON.stringify(numberedContent(content, paragraphStyles, numberingCatalog))
     )
-      editor.commands.setContent(content, { emitUpdate: false });
-  }, [editor, content, request]);
+      wordSetNumberedContent(editor,numberedContent(content, paragraphStyles, numberingCatalog));
+  }, [editor, content, request, paragraphStyles, numberingCatalog]);
   return (
-    <EditorContent editor={editor} className="zuvi-studio-word-content zuvi-studio-word-region-content" />
+    <EditorContent
+      editor={editor}
+      className="zuvi-studio-word-content zuvi-studio-word-region-content"
+    />
   );
 }
 
@@ -399,12 +424,33 @@ export function StudioWord({
   const [stageWidth, setStageWidth] = React.useState(900);
   const [paperHeight, setPaperHeight] = React.useState(0);
   const [showRuler, setShowRuler] = React.useState(true);
+  const [showNonprinting, setShowNonprinting] = React.useState(false);
   const [statisticsOpen, setStatisticsOpen] = React.useState(false);
   const [clipboardBusy, setClipboardBusy] = React.useState(false);
   const [tableRows, setTableRows] = React.useState('3');
+  const [numberStart,setNumberStart]=React.useState('1');
+  const [numberDialog,setNumberDialog]=React.useState<{editor:Editor;doc:Editor['state']['doc'];selection:Editor['state']['selection'];catalog:WordNumberingCatalog;currentId?:string;level:number}|null>(null);
+  const [surfaceDialog,setSurfaceDialog]=React.useState<{editor:Editor;doc:Editor['state']['doc'];selection:Editor['state']['selection'];surfaces:ReturnType<typeof wordSelectionSurfaces>}|null>(null);
+  const [cropDialog, setCropDialog] = React.useState<{
+    editor: Editor;
+    doc: Editor['state']['doc'];
+    selection: Editor['state']['selection'];
+    src: string;
+    initial: unknown;
+  } | null>(null);
+  const [mathDialog, setMathDialog] = React.useState<{ editor: Editor; doc: Editor['state']['doc']; selection: Editor['state']['selection']; initial: unknown } | null>(null);
+  const [formulaDialog, setFormulaDialog] = React.useState<{ editor: Editor; doc: Editor['state']['doc']; selection: Editor['state']['selection']; initial: string } | null>(null);
+  const [conversionDialog, setConversionDialog] = React.useState<{ editor: Editor; target: WordConversionTarget } | null>(null);
+  const [cellDialog, setCellDialog] = React.useState<Editor | null>(null);
+  const [rowDialog, setRowDialog] = React.useState<{ editor: Editor; doc: Editor['state']['doc']; selection: Editor['state']['selection']; rows: ReturnType<typeof wordSelectedRows> } | null>(null);
   const [tableColumns, setTableColumns] = React.useState('3');
   const [tableHeader, setTableHeader] = React.useState(true);
+  const [bookmarkEditor, setBookmarkEditor] = React.useState<Editor | null>(null);
   const [linkOpen, setLinkOpen] = React.useState(false);
+  const linkSnapshot = React.useRef<{ editor: Editor; doc: Editor['state']['doc']; selection: Editor['state']['selection']; regions: { editor: Editor; doc: Editor['state']['doc'] }[] } | null>(null);
+  const [linkComposing, setLinkComposing] = React.useState(false);
+  const [linkText, setLinkText] = React.useState('');
+  const linkInitialText = React.useRef('');
   const [linkHref, setLinkHref] = React.useState('');
   const [linkError, setLinkError] = React.useState('');
   const [contentRequest, setContentRequest] = React.useState(0);
@@ -415,6 +461,37 @@ export function StudioWord({
   const [replacement, setReplacement] = React.useState('');
   const [matchCase, setMatchCase] = React.useState(false);
   const [formatCriteria, setFormatCriteria] = React.useState<WordFormatCriteria>({});
+  const [styleDialog, setStyleDialog] = React.useState<StudioWordParagraphStyle | null>(null);
+  const [characterDialog, setCharacterDialog] = React.useState<{
+    editor: Editor;
+    doc: Editor['state']['doc'];
+    selection: Editor['state']['selection'];
+    values: ReturnType<typeof wordSelectionMetrics>;
+    text: string;
+  } | null>(null);
+  const [paragraphDialog, setParagraphDialog] = React.useState<{
+    editor: Editor;
+    doc: Editor['state']['doc'];
+    selection: Editor['state']['selection'];
+    values: ReturnType<typeof wordSelectionParagraphFormat>;
+  } | null>(null);
+  const [tabsDialog, setTabsDialog] = React.useState<{
+    editor: Editor; doc: Editor['state']['doc']; selection: Editor['state']['selection'];
+    values: ReturnType<typeof wordSelectionTabStops>;
+  } | null>(null);
+  const styleDefinitions = document.content.attrs?.paragraphStyles;
+  const paragraphStyles = React.useMemo(
+    () => validateStudioWordParagraphStyles(styleDefinitions),
+    [styleDefinitions]
+  );
+  const numberCatalog=React.useMemo(()=>{
+    const value=numberedContent(document.content,paragraphStyles);
+    return wordNumberingCatalog(value.attrs?.numberingDefinitions,value.attrs?.numberingInstances);
+  },[document.content,paragraphStyles]);
+  const styleOptions = [
+    ...STYLE_OPTIONS,
+    ...paragraphStyles.map((style) => ({ value: style.id, label: style.name })),
+  ];
   const [matchIndex, setMatchIndex] = React.useState(-1);
   const [imageBusy, setImageBusy] = React.useState(false);
   const [notice, setNotice] = React.useState('');
@@ -427,6 +504,14 @@ export function StudioWord({
   } | null>(null);
   const stageRef = React.useRef<HTMLDivElement>(null);
   const paperRef = React.useRef<HTMLElement>(null);
+  const replacementInputRef = React.useRef<HTMLInputElement>(null);
+  const replacementTargetRef = React.useRef<WordImageReplacementTarget | null>(null);
+  React.useEffect(() => {
+    const input = replacementInputRef.current;
+    const cancel = () => { replacementTargetRef.current = null; };
+    input?.addEventListener('cancel', cancel);
+    return () => { input?.removeEventListener('cancel', cancel); };
+  }, [tab]);
   const imageInputRef = React.useRef<HTMLInputElement>(null);
   const searchInputRef = React.useRef<HTMLInputElement>(null);
   const imageOperationRef = React.useRef(false);
@@ -438,8 +523,9 @@ export function StudioWord({
   const focusRegionRef = React.useRef<WordRegion | null>(null);
   const bodyEditor: Editor | null = useEditor(
     {
-      extensions: EXTENSIONS,
-      content: document.content,
+      extensions: [...EXTENSIONS, WordParagraphStyles, WordNumbering, WordPaginationLayout,
+        WordTabs.configure({ getDefaultTabStop: () => latest.current.document.defaultTabStop ?? 36, getDecimalSymbol: () => latest.current.document.decimalSymbol })],
+      content: numberedContent(document.content, paragraphStyles),
       editable: editable && region === 'content',
       immediatelyRender: false,
       shouldRerenderOnTransaction: false,
@@ -468,7 +554,34 @@ export function StudioWord({
       onUpdate: ({ editor: current }) => {
         const state = latest.current;
         if (!state.editable) return;
-        state.onChange({ ...state.document, content: current.getJSON() as StudioRichNode });
+        const content = current.getJSON() as StudioRichNode;
+        const previousStyles = getStudioWordParagraphStyles(state.document.content);
+        const nextStyles = getStudioWordParagraphStyles(content);
+        const changedStyles = JSON.stringify(previousStyles) !== JSON.stringify(nextStyles);
+        const nextDocument: StudioWordDocument = {
+          ...state.document,
+          content,
+          ...(changedStyles && state.document.header
+            ? {
+                header: reconcileStudioWordStyles(
+                  state.document.header,
+                  previousStyles,
+                  nextStyles
+                ),
+              }
+            : {}),
+          ...(changedStyles && state.document.footer
+            ? {
+                footer: reconcileStudioWordStyles(
+                  state.document.footer,
+                  previousStyles,
+                  nextStyles
+                ),
+              }
+            : {}),
+        };
+        latest.current.document = nextDocument;
+        state.onChange(nextDocument);
         setContentRequest((request) => request + 1);
       },
     },
@@ -479,6 +592,8 @@ export function StudioWord({
     region !== 'content' && regions[region] && !regions[region]!.isDestroyed
       ? regions[region]!
       : bodyEditor;
+  const activeEditorRef = React.useRef(editor);
+  activeEditorRef.current = editor;
   const registerRegion = React.useCallback((name: WordRegion, current: Editor | null) => {
     setRegions((previous) => {
       if (previous[name] === current || (!current && !previous[name])) return previous;
@@ -488,14 +603,30 @@ export function StudioWord({
       return next;
     });
   }, []);
+  React.useLayoutEffect(() => {
+    for (const current of [bodyEditor, regions.header, regions.footer])
+      if (current) wordSetNonprinting(current, showNonprinting);
+  }, [bodyEditor, regions, showNonprinting]);
   React.useEffect(() => {
     setRegion('content');
     setTab((current) => (current === 'header-footer' ? 'home' : current));
     setSidePanel(null);
     setStatisticsOpen(false);
     setLinkOpen(false);
+    setStyleDialog(null);
+    setCharacterDialog(null);
+    setParagraphDialog(null);
+    setTabsDialog(null);
+    setNumberDialog(null);
+    setSurfaceDialog(null);
+    setRowDialog(null);
+    setCropDialog(null);
     setNotice('');
   }, [document.id]);
+  React.useLayoutEffect(() => {
+    for (const target of [bodyEditor, regions.header, regions.footer])
+      if (target) wordRefreshTabLayout(target);
+  }, [bodyEditor, regions.header, regions.footer, document.defaultTabStop, document.decimalSymbol]);
   React.useEffect(() => {
     const requested = focusRegionRef.current;
     if (
@@ -523,10 +654,7 @@ export function StudioWord({
   React.useEffect(() => {
     if (sidePanel === 'search') searchInputRef.current?.focus();
   }, [sidePanel]);
-  React.useEffect(
-    () => setMatchIndex(-1),
-    [editor, searchQuery, matchCase, formatCriteria]
-  );
+  React.useEffect(() => setMatchIndex(-1), [editor, searchQuery, matchCase, formatCriteria]);
 
   const selection = useEditorState({
     editor,
@@ -534,33 +662,32 @@ export function StudioWord({
       if (!current || current.isDestroyed || !current.schema) return null;
       const style = current.getAttributes('textStyle');
       const paragraph = current.getAttributes('paragraph');
+      const numbered=wordNumberingContext(current);
       return {
-        bold: current.isActive('bold'),
-        italic: current.isActive('italic'),
-        underline: current.isActive('underline'),
-        strike: current.isActive('strike'),
-        superscript: current.isActive('superscript'),
-        subscript: current.isActive('subscript'),
+        ...wordSelectionCharacterFormat(current, paragraphStyles),
         image: current.isActive('image') ? current.getAttributes('image') : null,
         matches: wordFindMatches(current, searchQuery, matchCase, formatCriteria),
-        bullet: current.isActive('bulletList'),
-        ordered: current.isActive('orderedList'),
-        canSinkList: current.can().sinkListItem('listItem'),
-        canLiftList: current.can().liftListItem('listItem'),
+        bullet: current.isActive('bulletList') || numbered?.level.format === 'bullet',
+        ordered: current.isActive('orderedList') || (!!numbered && numbered.level.format !== 'bullet'),
+        numbering: numbered,
+        canSinkList: current.isActive('listItem') ? current.can().sinkListItem('listItem') : !!numbered && numbered.ref.level+1<numbered.definition.levels.length,
+        canLiftList: current.isActive('listItem') ? current.can().liftListItem('listItem') : !!numbered && numbered.ref.level>0,
         align: (current.getAttributes('heading').textAlign ||
           current.getAttributes('paragraph').textAlign ||
           'left') as string,
         from: current.state.selection.from,
         to: current.state.selection.to,
-        font: (style.fontFamily || 'Noto Sans SC') as string,
-        fontSize: (style.fontSize || '12pt') as string,
         color: (style.color || '#000000') as string,
-        highlight: (style.backgroundColor || '') as string,
-        style: current.isActive('heading')
-          ? `heading-${current.getAttributes('heading').level}`
-          : paragraph.lineHeight === 1 && paragraph.spaceBefore === 0 && paragraph.spaceAfter === 0
-            ? 'no-spacing'
-            : 'paragraph',
+        style:
+          ((current.getAttributes('heading').paragraphStyle ||
+            paragraph.paragraphStyle) as string) ||
+          (current.isActive('heading')
+            ? `heading-${current.getAttributes('heading').level}`
+            : paragraph.lineHeight === 1 &&
+                paragraph.spaceBefore === 0 &&
+                paragraph.spaceAfter === 0
+              ? 'no-spacing'
+              : 'paragraph'),
         selectedText: current.state.doc.textBetween(
           current.state.selection.from,
           current.state.selection.to,
@@ -575,6 +702,7 @@ export function StudioWord({
             (current.isActive('heading') ? 1.35 : 1.75)
         ),
         canMerge: current.can().mergeCells(),
+        lineHeightRule: String(current.state.selection.$from.parent.attrs.lineHeightRule ?? 'auto'),
         canSplit: current.can().splitCell(),
       };
     },
@@ -631,10 +759,11 @@ export function StudioWord({
     if (!bodyEditor || bodyEditor.isDestroyed) return;
     // A host can reject an update without changing the content reference. Accepted
     // content already matches the editor, so leave its selection and history alone.
-    if (JSON.stringify(bodyEditor.getJSON()) !== JSON.stringify(document.content)) {
-      bodyEditor.commands.setContent(document.content, { emitUpdate: false });
+    const content = numberedContent(document.content, paragraphStyles);
+    if (JSON.stringify(bodyEditor.getJSON()) !== JSON.stringify(content)) {
+      wordSetNumberedContent(bodyEditor,content);
     }
-  }, [bodyEditor, document.content, contentRequest]);
+  }, [bodyEditor, document.content, contentRequest, paragraphStyles]);
 
   const [portraitWidth, portraitHeight] =
     document.page.size === 'Letter' ? [215.9, 279.4] : [210, 297];
@@ -646,6 +775,10 @@ export function StudioWord({
     zoom === 'fit' ? Math.min(1, Math.max(0.25, (stageWidth - 48) / pageWidth)) : Number(zoom);
   const headerDistance = document.page.headerDistance ?? DEFAULT_REGION_DISTANCE;
   const footerDistance = document.page.footerDistance ?? DEFAULT_REGION_DISTANCE;
+  const [paginatedView,setPaginatedView]=React.useState(false);
+  React.useLayoutEffect(()=>{
+    if(bodyEditor)wordSetPagination(bodyEditor,{enabled:paginatedView,height:pageHeight-margin*2,margin,gap:24});
+  },[bodyEditor,paginatedView,pageHeight,margin]);
 
   React.useEffect(() => {
     const stage = stageRef.current;
@@ -692,6 +825,23 @@ export function StudioWord({
       setImageBusy(false);
     }
   }
+  async function replaceImage(file: File) {
+    const target = replacementTargetRef.current;
+    replacementTargetRef.current = null;
+    if (!target || imageOperationRef.current || !latest.current.editable) return;
+    const id = latest.current.document.id;
+    imageOperationRef.current = true; setImageBusy(true);
+    try {
+      const attrs = await wordReadImage(file, pageWidth - margin * 2);
+      if (latest.current.document.id !== id || !latest.current.editable || target.editor !== activeEditorRef.current || target.editor.isDestroyed) return;
+      if (wordReplaceImage(target, attrs.src)) {
+        target.editor.commands.focus();
+        setNotice('图片已替换，保留显示尺寸、位置和说明，裁剪已重置，可撤销恢复。');
+      }
+    } catch (reason) {
+      if (latest.current.document.id === id) setNotice(reason instanceof Error ? reason.message : '图片替换失败。');
+    } finally { imageOperationRef.current = false; setImageBusy(false); }
+  }
   insertImageRef.current = insertImage;
 
   const openRegion = (name: WordRegion) => {
@@ -722,6 +872,7 @@ export function StudioWord({
     if (state.editable)
       state.onChange({
         ...state.document,
+        ...(content.attrs?.numberingDefinitions ? {content:{...state.document.content,attrs:{...state.document.content.attrs,numberingDefinitions:content.attrs.numberingDefinitions,numberingInstances:content.attrs.numberingInstances}}}:{}),
         [name]: content,
         ...(name === 'footer' ? { pageNumbers: hasPageNumber(content) } : {}),
       });
@@ -758,7 +909,15 @@ export function StudioWord({
   const updateImage = (patch: Record<string, unknown>) => {
     if (!editor || !editable || !selection?.image) return;
     const position = editor.state.selection.from;
-    editor.chain().updateAttributes('image', patch).setNodeSelection(position).run();
+    editor
+      .chain()
+      .command(({ tr }) => {
+        closeHistory(tr);
+        return true;
+      })
+      .updateAttributes('image', patch)
+      .setNodeSelection(position)
+      .run();
   };
 
   const resizeImage = (dimension: 'width' | 'height', value: string) => {
@@ -796,26 +955,57 @@ export function StudioWord({
     updateImage(patch);
   };
 
-  const applyLink = () => {
+  const openLink = () => {
     if (!editor || !editable) return;
+    editor.commands.extendMarkRange('link');
+    const text = editor.state.doc.textBetween(editor.state.selection.from, editor.state.selection.to, '\n', '\ufffc');
+    linkInitialText.current = text; setLinkText(text);
+    setLinkHref(editor.getAttributes('link').href || ''); setLinkError('');
+    linkSnapshot.current = { editor, doc: editor.state.doc, selection: editor.state.selection, regions: [bodyEditor, ...Object.values(regions)].filter((item): item is Editor => !!item && !item.isDestroyed).map(item => ({ editor: item, doc: item.state.doc })) };
+    setLinkOpen(true);
+  };
+  const applyLink = () => {
+    if (!editor || !editable || editor.view.composing || linkComposing) return;
+    const snapshot = linkSnapshot.current;
+    if (!snapshot || snapshot.editor !== editor || snapshot.doc !== editor.state.doc || snapshot.regions.some(item => item.editor.isDestroyed || item.editor.state.doc !== item.doc)) { setLinkError('文档已变化，请重新打开链接编辑。'); return; }
     const href = linkHref.trim();
-    if (!href) {
-      editor.chain().focus().extendMarkRange('link').unsetLink().run();
-    } else {
-      let protocol = '';
-      try {
-        protocol = new URL(href).protocol;
-      } catch {
-        setLinkError('请输入完整的 https://、http:// 或 mailto: 地址。');
-        return;
+    try {
+      if (href.startsWith('#')) {
+        const name = wordBookmarkName(href.slice(1));
+        if (![bodyEditor, ...Object.values(regions)].some(item => item && wordBookmarks(item.state.doc).some(range => range.name === name))) throw new Error('目标书签不存在。');
+      } else if (href && !['https:', 'http:', 'mailto:'].includes(new URL(href).protocol)) throw new Error('链接仅支持 https://、http:// 和 mailto: 地址。');
+      const changedText = href && linkText !== linkInitialText.current;
+      if (changedText && (!linkText || /[\r\n\ufffc]/.test(linkText))) throw new Error('链接显示文字不能为空，也不能包含换行或对象。');
+      if (changedText) {
+        if (snapshot.selection.$from.parent !== snapshot.selection.$to.parent) throw new Error('显示文字替换须位于同一段落。');
+        snapshot.doc.nodesBetween(snapshot.selection.from, snapshot.selection.to, node => {
+          if (node.isInline && !node.isText) throw new Error('选区含书签或对象，请仅选择链接文字。');
+        });
       }
-      if (!['https:', 'http:', 'mailto:'].includes(protocol)) {
-        setLinkError('链接仅支持 https://、http:// 和 mailto: 地址。');
-        return;
+      const transaction = closeHistory(editor.state.tr).setSelection(snapshot.selection);
+      const from = snapshot.selection.from;
+      let to = snapshot.selection.to;
+      if (changedText) {
+        const runs: { text: string; marks: ReturnType<typeof snapshot.doc.resolve>['marks'] extends () => infer M ? M : never }[] = [];
+        snapshot.doc.nodesBetween(from, to, (node, pos) => {
+          if (node.isText) runs.push({ text: node.text!.slice(Math.max(0, from - pos), Math.min(node.nodeSize, to - pos)), marks: node.marks.filter(mark => mark.type.name !== 'link') });
+        });
+        const originalMarks = runs.flatMap(run => Array.from({ length: run.text.length }, () => run.marks));
+        const fallback = snapshot.doc.resolve(from).marks().filter(mark => mark.type.name !== 'link');
+        let offset = 0;
+        const replacement = Array.from(linkText, character => {
+          const marks = originalMarks[Math.min(offset, originalMarks.length - 1)] || fallback;
+          offset += character.length;
+          return editor.schema.text(character, marks);
+        });
+        transaction.replaceWith(from, to, replacement);
+        to = from + linkText.length;
       }
-      editor.chain().focus().extendMarkRange('link').setLink({ href }).run();
-    }
-    setLinkOpen(false);
+      if (href && from === to) throw new Error('请选择链接显示文字，或输入显示文字。');
+      transaction.removeMark(from, to, editor.schema.marks.link);
+      if (href) transaction.addMark(from, to, editor.schema.marks.link.create({ href }));
+      editor.view.dispatch(transaction.scrollIntoView()); editor.view.focus(); setLinkOpen(false);
+    } catch (cause) { setLinkError((cause as Error).message || '请输入完整链接地址。'); }
   };
 
   const fontOptions = FONT_OPTIONS;
@@ -824,6 +1014,7 @@ export function StudioWord({
     editor: Editor;
     selection: Editor['state']['selection'];
     doc: Editor['state']['doc'];
+    storedMarks: Editor['state']['storedMarks'];
   } | null>(null);
   const rememberFontSelection = () => {
     if (editor && !editor.isDestroyed)
@@ -831,6 +1022,7 @@ export function StudioWord({
         editor,
         selection: editor.state.selection,
         doc: editor.state.doc,
+        storedMarks: editor.state.storedMarks,
       };
   };
   const commitFont = (kind: 'family' | 'size', value: string, reason: StudioFontCommitReason) => {
@@ -841,11 +1033,14 @@ export function StudioWord({
       !saved ||
       saved.editor !== editor ||
       editor.isDestroyed ||
+      editor.view.composing ||
       saved.doc !== editor.state.doc
     )
       return false;
     const chain = editor.chain().command(({ tr }) => {
+      closeHistory(tr);
       tr.setSelection(saved.selection);
+      if (saved.selection.empty) tr.setStoredMarks(saved.storedMarks);
       return true;
     });
     if (reason !== 'blur') chain.focus();
@@ -857,6 +1052,17 @@ export function StudioWord({
   const toolsDisabled = !editor || !editable;
   const applyParagraphStyle = (value: string) => {
     if (!editor || !editable) return;
+    if (
+      paragraphStyles.some((style) => style.id === value) ||
+      editor.state.selection.$from.parent.attrs.paragraphStyle
+    ) {
+      try {
+        wordApplyParagraphStyle(editor, value, paragraphStyles);
+      } catch (cause) {
+        setNotice(cause instanceof Error ? cause.message : '样式无法应用。');
+      }
+      return;
+    }
     const chain = editor.chain().focus();
     if (value === 'no-spacing')
       chain
@@ -872,57 +1078,140 @@ export function StudioWord({
   };
   const adjustIndent = (amount: number) => {
     if (!editor || !editable) return;
-    editor
-      .chain()
-      .focus()
-      .updateAttributes(editor.isActive('heading') ? 'heading' : 'paragraph', {
-        indentLeft: Math.max(0, Math.min(144, (selection?.indent || 0) + amount)),
-      })
-      .run();
+    wordSetParagraphFormat(editor, (current) => ({
+      indentLeft: Math.max(0, Math.min(500, current.indentLeft + amount)),
+    }));
+  };
+  const lineOptions = [
+    1,
+    1.15,
+    1.5,
+    1.75,
+    2,
+    ...(selection?.lineHeightRule === 'auto' &&
+    selection.lineHeight &&
+    ![1, 1.15, 1.5, 1.75, 2].includes(Number(selection.lineHeight))
+      ? [Number(selection.lineHeight)]
+      : []),
+  ].map((value) => ({ value: String(value), label: `${value} 倍行距` }));
+  if (selection?.lineHeightRule !== 'auto' && selection)
+    lineOptions.push({
+      value: 'current',
+      label: `${selection.lineHeight}pt ${selection.lineHeightRule === 'exact' ? '固定' : '最小'}`,
+    });
+  const openParagraphSettings = () => {
+    if (!editor || !editable || editor.view.composing) return;
+    const root = editor.view.dom.closest('.zuvi-studio-word'),
+      focused = window.document.activeElement;
+    if (
+      focused instanceof HTMLElement &&
+      root?.contains(focused) &&
+      focused.matches('input,textarea')
+    )
+      flushSync(() => focused.blur());
+    if (root?.querySelector('[data-studio-input-error]')) {
+      setNotice('请先修正当前输入，或按 Esc 取消。');
+      return;
+    }
+    setParagraphDialog({
+      editor,
+      doc: editor.state.doc,
+      selection: editor.state.selection,
+      values: wordSelectionParagraphFormat(editor),
+    });
+  };
+  const prepareTabAction = () => {
+    if (!editor || !editable || editor.view.composing) return false;
+    const root = editor.view.dom.closest('.zuvi-studio-word'), focused = window.document.activeElement;
+    if (focused instanceof HTMLElement && root?.contains(focused) && focused.matches('input,textarea'))
+      flushSync(() => focused.blur());
+    if (root?.querySelector('[data-studio-input-error]')) {
+      setNotice('请先修正当前输入，或按 Esc 取消。'); return false;
+    }
+    return true;
+  };
+  const openTabsSettings = () => {
+    if (!prepareTabAction() || !editor) return;
+    setTabsDialog({ editor, doc: editor.state.doc, selection: editor.state.selection, values: wordSelectionTabStops(editor) });
   };
   // ---- 本轮新增：字号步进 / 高亮 / 大小写 / 格式刷 ----
   const [highlightOpen, setHighlightOpen] = React.useState(false);
   const [caseMenuOpen, setCaseMenuOpen] = React.useState(false);
   const [formatPainter, setFormatPainter] = React.useState<WordFormatSnapshot | null>(null);
+  const [continuousPainter, setContinuousPainter] = React.useState(false);
+  const painterTargetRef = React.useRef('');
+  React.useEffect(() => {
+    setFormatPainter(null);
+    setContinuousPainter(false);
+    painterTargetRef.current = '';
+  }, [document.id, editable]);
   const formatPainterRef = React.useRef<WordFormatSnapshot | null>(null);
   formatPainterRef.current = formatPainter;
+  const prepareCharacterAction = () =>
+    prepareTabAction() && !!editor && !editor.isDestroyed && editor.isEditable &&
+    editor === activeEditorRef.current && latest.current.editable;
+  const toggleCharacterFormat = (mark: string) => {
+    if (!prepareCharacterAction() || !editor) return;
+    editor.chain().focus().command(({ tr }) => { closeHistory(tr); return true; }).toggleMark(mark).run();
+  };
   const stepFontSize = (delta: number) => {
-    if (!editor || !editable) return;
-    wordStepFontSize(editor, delta, 0.5, 300);
+    if (!prepareCharacterAction() || !editor) return;
+    wordStepFontSize(editor, delta);
   };
   const setHighlight = (color: string | null) => {
-    if (!editor || !editable) return;
+    if (!prepareCharacterAction() || !editor) return;
     wordSetHighlight(editor, color);
     setHighlightOpen(false);
   };
   const transformCase = (mode: WordCaseMode) => {
     if (!editor || !editable) return;
-    if (wordTransformSelectionCase(editor, mode)) setCaseMenuOpen(false);
+    try {
+      if (wordTransformSelectionCase(editor, mode)) setCaseMenuOpen(false);
+    } catch (error) {
+      setNotice(error instanceof Error ? error.message : '大小写转换失败，请缩小选区后重试。');
+    }
   };
-  const armFormatPainter = () => {
-    if (!editor || !editable || !selection?.selectedText) return;
+  const armFormatPainter = (continuous = false) => {
+    if (!prepareCharacterAction() || !editor || !selection?.selectedText) return;
     setFormatPainter(wordCaptureFormat(editor));
+    setContinuousPainter(continuous);
+    painterTargetRef.current = `${region}:${editor.state.selection.from}:${editor.state.selection.to}`;
   };
-  const disarmFormatPainter = () => setFormatPainter(null);
-  // armed 状态下选区变化：非空选区应用格式并解除
+  const disarmFormatPainter = () => {
+    setFormatPainter(null);
+    setContinuousPainter(false);
+  };
+  // Apply each new selection once; continuous mode remains armed until Escape.
   React.useEffect(() => {
     const snapshot = formatPainterRef.current;
-    if (!snapshot || !editor || !editable) return;
+    if (!snapshot || !editor || !editable || editor.view.composing) return;
+    if (editor.view.dom.closest('.zuvi-studio-word')?.querySelector('[data-studio-input-error]')) return;
     if (editor.state.selection.empty) return;
+    const target = `${region}:${editor.state.selection.from}:${editor.state.selection.to}`;
+    if (painterTargetRef.current === target) return;
+    painterTargetRef.current = target;
     if (wordApplyFormat(editor, snapshot)) {
-      setFormatPainter(null);
-      setNotice('已应用格式刷。');
+      if (!continuousPainter) setFormatPainter(null);
+      setNotice(continuousPainter ? '已应用格式刷；继续选择目标，Esc 结束。' : '已应用格式刷。');
     }
-  }, [editor?.state.selection.from, editor?.state.selection.to, editor, editable]);
+  }, [
+    editor?.state.selection.from,
+    editor?.state.selection.to,
+    editor,
+    editable,
+    region,
+    continuousPainter,
+  ]);
   React.useEffect(() => {
     if (!formatPainter) return;
     const onKey = (event: KeyboardEvent) => {
-      if (event.key !== 'Escape' || event.defaultPrevented) return;
+      if (event.key !== 'Escape' || event.isComposing || event.keyCode === 229) return;
+      event.preventDefault();
       disarmFormatPainter();
       setNotice('已取消格式刷。');
     };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    window.addEventListener('keydown', onKey, true);
+    return () => window.removeEventListener('keydown', onKey, true);
   }, [formatPainter]);
 
   const handleClipboard = async (action: 'copy' | 'cut' | 'paste') => {
@@ -1000,7 +1289,20 @@ export function StudioWord({
       className="zuvi-studio-word"
       data-part="word"
       data-readonly={!editable || undefined}
+      data-nonprinting={showNonprinting || undefined}
       onClick={(event) => {
+        const anchor = event.target instanceof Element ? event.target.closest('a[href^="#"]') : null;
+        if (anchor && !disabled && (!editable || event.ctrlKey || event.metaKey)) {
+          event.preventDefault();
+          const name = anchor.getAttribute('href')!.slice(1);
+          for (const [targetRegion, current] of [['content', bodyEditor], ['header', regions.header], ['footer', regions.footer]] as const) {
+            if (!current || current.isDestroyed) continue;
+            try {
+              if (wordGoToBookmark(current, name, true)) { setRegion(targetRegion); break; }
+            } catch { /* An invalid region does not prevent checking other regions. */ }
+          }
+          return;
+        }
         const image =
           event.target instanceof HTMLElement ? event.target.closest('img[data-word-image]') : null;
         if (!image) return;
@@ -1021,6 +1323,24 @@ export function StudioWord({
       }}
       onKeyDownCapture={(event) => {
         if (
+          !disabled &&
+          (event.ctrlKey || event.metaKey) &&
+          !event.altKey &&
+          !event.nativeEvent.isComposing &&
+          event.keyCode !== 229 &&
+          ((event.shiftKey && ['8', '*'].includes(event.key)) ||
+            (event.metaKey && event.key === '8')) &&
+          !(
+            event.target instanceof Element &&
+            event.target.closest('input, textarea, select, [role="combobox"], [role="dialog"]')
+          )
+        ) {
+          event.preventDefault();
+          event.stopPropagation();
+          setShowNonprinting((value) => !value);
+          return;
+        }
+        if (
           (event.ctrlKey || event.metaKey) &&
           !event.altKey &&
           ['f', 'h'].includes(event.key.toLowerCase())
@@ -1038,7 +1358,11 @@ export function StudioWord({
         }
       }}
     >
-      <Tabs value={tab} onValueChange={changeTab} className="zuvi-studio-word-ribbon zuvi-studio-ribbon">
+      <Tabs
+        value={tab}
+        onValueChange={changeTab}
+        className="zuvi-studio-word-ribbon zuvi-studio-ribbon"
+      >
         <StudioRibbonTabs>
           <Tabs.List aria-label="Word 工具">
             <Tabs.Trigger value="home">开始</Tabs.Trigger>
@@ -1098,11 +1422,12 @@ export function StudioWord({
             size="sm"
             className="zuvi-studio-word-large-tool"
             aria-label="格式刷"
-            title="格式刷：先选中带格式的文本单击取用，再选中目标文本应用；Esc 取消"
+            title="格式刷：单击应用一次，双击连续应用；复制文字和段落格式，Esc 结束"
             aria-pressed={formatPainter ? true : undefined}
             disabled={toolsDisabled || !selection?.selectedText}
             onMouseDown={keepSelection}
-            onClick={armFormatPainter}
+            onClick={() => armFormatPainter()}
+            onDoubleClick={() => armFormatPainter(true)}
           >
             <Droplet size={24} />
             <span>格式刷</span>
@@ -1135,7 +1460,7 @@ export function StudioWord({
                 label="字体"
                 kind="family"
                 options={fontOptions}
-                value={selection?.font || 'Noto Sans SC'}
+                value={selection?.font ?? 'Noto Sans SC'}
                 disabled={toolsDisabled}
                 contextKey={fontContextKey}
                 className="zuvi-studio-word-font"
@@ -1146,10 +1471,10 @@ export function StudioWord({
               <StudioFontControl
                 label="字号"
                 kind="size"
-                maxSize={300}
+                maxSize={409}
                 sizeStep={0.5}
                 options={sizeOptions}
-                value={(selection?.fontSize || '12pt').replace(/pt$/i, '')}
+                value={(selection?.fontSize ?? '12pt').replace(/pt$/i, '')}
                 disabled={toolsDisabled}
                 contextKey={fontContextKey}
                 className="zuvi-studio-word-size"
@@ -1180,6 +1505,40 @@ export function StudioWord({
                 <Minus size={14} />
               </Button>
             </RibbonRow>
+            <Button
+              size="sm"
+              variant="ghost"
+              disabled={toolsDisabled}
+              onMouseDown={keepSelection}
+              onClick={() => {
+                if (!editor || !editable || editor.view.composing) return;
+                const root = editor.view.dom.closest('.zuvi-studio-word');
+                const focused = window.document.activeElement;
+                if (
+                  focused instanceof HTMLElement &&
+                  root?.contains(focused) &&
+                  focused.matches('input,textarea')
+                )
+                  flushSync(() => focused.blur());
+                if (root?.querySelector('[data-studio-input-error]')) {
+                  setNotice('请先修正当前输入，或按 Esc 取消。');
+                  return;
+                }
+                setCharacterDialog({
+                  editor,
+                  doc: editor.state.doc,
+                  selection: editor.state.selection,
+                  values: wordSelectionMetrics(editor),
+                  text: editor.state.doc.textBetween(
+                    editor.state.selection.from,
+                    editor.state.selection.to,
+                    ' '
+                  ),
+                });
+              }}
+            >
+              字符间距与位置
+            </Button>
             <RibbonRow>
               <Button
                 aria-label="粗体"
@@ -1189,7 +1548,7 @@ export function StudioWord({
                 size="sm"
                 disabled={toolsDisabled}
                 onMouseDown={keepSelection}
-                onClick={() => editor?.chain().focus().toggleBold().run()}
+                onClick={() => toggleCharacterFormat('bold')}
               >
                 <Bold size={16} />
               </Button>
@@ -1201,7 +1560,7 @@ export function StudioWord({
                 size="sm"
                 disabled={toolsDisabled}
                 onMouseDown={keepSelection}
-                onClick={() => editor?.chain().focus().toggleItalic().run()}
+                onClick={() => toggleCharacterFormat('italic')}
               >
                 <Italic size={16} />
               </Button>
@@ -1212,7 +1571,7 @@ export function StudioWord({
                 size="sm"
                 disabled={toolsDisabled}
                 onMouseDown={keepSelection}
-                onClick={() => editor?.chain().focus().toggleUnderline().run()}
+                onClick={() => toggleCharacterFormat('underline')}
               >
                 <span className="zuvi-studio-word-underline">U</span>
               </Button>
@@ -1223,7 +1582,7 @@ export function StudioWord({
                 size="sm"
                 disabled={toolsDisabled}
                 onMouseDown={keepSelection}
-                onClick={() => editor?.chain().focus().toggleStrike().run()}
+                onClick={() => toggleCharacterFormat('strike')}
               >
                 <s>S</s>
               </Button>
@@ -1234,7 +1593,7 @@ export function StudioWord({
                 size="sm"
                 disabled={toolsDisabled}
                 onMouseDown={keepSelection}
-                onClick={() => editor?.chain().focus().toggleMark('superscript').run()}
+                onClick={() => toggleCharacterFormat('superscript')}
               >
                 x<sup>2</sup>
               </Button>
@@ -1245,7 +1604,7 @@ export function StudioWord({
                 size="sm"
                 disabled={toolsDisabled}
                 onMouseDown={keepSelection}
-                onClick={() => editor?.chain().focus().toggleMark('subscript').run()}
+                onClick={() => toggleCharacterFormat('subscript')}
               >
                 x<sub>2</sub>
               </Button>
@@ -1264,7 +1623,9 @@ export function StudioWord({
                 size="sm"
                 disabled={toolsDisabled}
                 onMouseDown={keepSelection}
-                onClick={() => editor?.chain().focus().unsetAllMarks().clearNodes().run()}
+                onClick={() => {
+                  if (prepareCharacterAction() && editor) wordClearFormat(editor);
+                }}
               >
                 <span aria-hidden="true" className="zuvi-studio-word-clear-format">
                   A
@@ -1282,7 +1643,7 @@ export function StudioWord({
                   onMouseDown={keepSelection}
                   aria-label="文字高亮"
                   title="文字高亮"
-                  aria-pressed={selection?.highlight ? true : undefined}
+                  aria-pressed={selection?.highlightMixed ? 'mixed' : selection?.hasHighlight ? true : undefined}
                   disabled={toolsDisabled}
                 >
                   <Droplet size={16} />
@@ -1296,11 +1657,11 @@ export function StudioWord({
                   <DropdownMenu.Label>高亮颜色</DropdownMenu.Label>
                   <DropdownMenu.Item
                     onSelect={() => setHighlight(null)}
-                    disabled={!selection?.highlight}
+                    disabled={!selection?.hasHighlight}
                   >
                     <span className="zuvi-studio-word-highlight-row">
                       无颜色
-                      {!selection?.highlight ? <Check size={14} aria-hidden="true" /> : null}
+                      {!selection?.hasHighlight ? <Check size={14} aria-hidden="true" /> : null}
                     </span>
                   </DropdownMenu.Item>
                   <DropdownMenu.Separator />
@@ -1339,6 +1700,12 @@ export function StudioWord({
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Content className="zuvi-studio-word-case-menu">
                   <DropdownMenu.Label>变更大小写</DropdownMenu.Label>
+                  <DropdownMenu.Item onSelect={() => transformCase('sentence')}>
+                    句首字母大写
+                  </DropdownMenu.Item>
+                  <DropdownMenu.Item onSelect={() => transformCase('title')}>
+                    每个单词首字母大写
+                  </DropdownMenu.Item>
                   <DropdownMenu.Item onSelect={() => transformCase('upper')}>
                     全部大写
                   </DropdownMenu.Item>
@@ -1362,7 +1729,7 @@ export function StudioWord({
                 size="sm"
                 disabled={toolsDisabled}
                 onMouseDown={keepSelection}
-                onClick={() => editor?.chain().focus().toggleBulletList().run()}
+                onClick={() => {if(prepareTabAction()&&editor)try{wordToggleNumberingPreset(editor,'bullet');}catch(error){setNotice(error instanceof Error?error.message:'编号未修改。');}}}
               >
                 <span aria-hidden="true">• ≡</span>
               </Button>
@@ -1374,7 +1741,7 @@ export function StudioWord({
                 size="sm"
                 disabled={toolsDisabled}
                 onMouseDown={keepSelection}
-                onClick={() => editor?.chain().focus().toggleOrderedList().run()}
+                onClick={() => {if(prepareTabAction()&&editor)try{wordToggleNumberingPreset(editor,'decimal');}catch(error){setNotice(error instanceof Error?error.message:'编号未修改。');}}}
               >
                 <span aria-hidden="true">1. ≡</span>
               </Button>
@@ -1385,7 +1752,7 @@ export function StudioWord({
                 size="sm"
                 disabled={toolsDisabled || !selection?.canSinkList}
                 onMouseDown={keepSelection}
-                onClick={() => editor?.chain().focus().sinkListItem('listItem').run()}
+                onClick={() => {if(editor)try{if(editor.isActive('listItem'))editor.chain().focus().sinkListItem('listItem').run();else wordChangeNumberingLevel(editor,1);}catch(error){setNotice(error instanceof Error?error.message:'层级未修改。');}}}
               >
                 <span aria-hidden="true">1.1 →</span>
               </Button>
@@ -1396,7 +1763,7 @@ export function StudioWord({
                 size="sm"
                 disabled={toolsDisabled || !selection?.canLiftList}
                 onMouseDown={keepSelection}
-                onClick={() => editor?.chain().focus().liftListItem('listItem').run()}
+                onClick={() => {if(editor)try{if(editor.isActive('listItem'))editor.chain().focus().liftListItem('listItem').run();else wordChangeNumberingLevel(editor,-1);}catch(error){setNotice(error instanceof Error?error.message:'层级未修改。');}}}
               >
                 <span aria-hidden="true">← 1.1</span>
               </Button>
@@ -1422,32 +1789,64 @@ export function StudioWord({
               >
                 ≡ →
               </Button>
+              <Button size="sm" variant="ghost" disabled={toolsDisabled||!selection?.numbering} onMouseDown={keepSelection} onClick={()=>{
+                if(!prepareTabAction()||!editor)return;
+                try{setNotice(wordContinueNumbering(editor)?'已继续此前编号，可撤销恢复。':'没有可继续的此前编号。');}catch(error){setNotice(error instanceof Error?error.message:'编号未修改。');}
+              }}>继续编号</Button>
+              <Input aria-label="编号起始值" size="sm" value={numberStart} inputMode="numeric" disabled={toolsDisabled||!selection?.numbering} aria-invalid={!/^\d+$/.test(numberStart)||Number(numberStart)<1||Number(numberStart)>100000} onChange={(event)=>setNumberStart(event.target.value)} onKeyDown={(event)=>{
+                if(event.nativeEvent.isComposing||event.keyCode===229)return;
+                if(event.key==='Escape'){event.preventDefault();event.stopPropagation();setNumberStart('1');}
+                else if(event.key==='Enter'&&/^\d+$/.test(numberStart)&&Number(numberStart)>=1&&Number(numberStart)<=100000&&prepareTabAction()&&editor){event.preventDefault();try{wordRestartNumbering(editor,Number(numberStart));}catch(error){setNotice(error instanceof Error?error.message:'编号未修改。');}}
+              }} />
+              <Button size="sm" variant="ghost" disabled={toolsDisabled||!selection?.numbering||!/^\d+$/.test(numberStart)||Number(numberStart)<1||Number(numberStart)>100000} onMouseDown={keepSelection} onClick={()=>{
+                if(!prepareTabAction()||!editor)return;
+                try{wordRestartNumbering(editor,Number(numberStart));setNotice('已重新开始编号，可撤销恢复。');}catch(error){setNotice(error instanceof Error?error.message:'编号未修改。');}
+              }}>重新开始编号</Button>
+              <Select aria-label="编号格式" size="sm" disabled={toolsDisabled||!selection?.numbering} value={selection?.numbering?.level.format ?? 'decimal'}
+                options={[{value:'decimal',label:'1, 2, 3'},{value:'upperRoman',label:'I, II, III'},{value:'lowerRoman',label:'i, ii, iii'},{value:'upperLetter',label:'A, B, C'},{value:'lowerLetter',label:'a, b, c'},{value:'bullet',label:'• 项目符号'}]} onChange={(format)=>{
+                  if(!prepareTabAction()||!editor)return;
+                  const current=wordNumberingContext(editor);if(!current)return;
+                  const next=structuredClone(current.catalog),level=next.definitions.find((entry)=>entry.id===current.definition.id)!.levels[current.ref.level];
+                  level.format=format as typeof level.format;if(format==='bullet')level.text='•';else if(current.level.format==='bullet')level.text=`%${current.ref.level+1}.`;
+                  try{wordSetNumberingCatalog(editor,next);setNotice('已修改编号格式，可撤销恢复。');}catch(error){setNotice(error instanceof Error?error.message:'编号格式未修改。');}
+                }} />
+              <Button size="sm" variant="ghost" disabled={toolsDisabled} onMouseDown={keepSelection} onClick={()=>{
+                if(!prepareTabAction()||!editor)return;
+                const current=wordNumberingContext(editor);
+                setNumberDialog({editor,doc:editor.state.doc,selection:editor.state.selection,catalog:wordEditorNumbering(editor),currentId:current?.definition.id,level:current?.ref.level??0});
+              }}>多级编号定义</Button>
+              <Button size="sm" variant="ghost" disabled={toolsDisabled} onMouseDown={keepSelection} onClick={()=>{
+                if(!prepareTabAction()||!editor)return;
+                setSurfaceDialog({editor,doc:editor.state.doc,selection:editor.state.selection,surfaces:wordSelectionSurfaces(editor)});
+              }}>段落边框与底纹</Button>
               <Select
                 aria-label="段落行距"
                 size="sm"
                 disabled={toolsDisabled}
-                value={selection?.lineHeight || '1.75'}
-                options={[
-                  1,
-                  1.15,
-                  1.5,
-                  1.75,
-                  2,
-                  ...(selection?.lineHeight &&
-                  ![1, 1.15, 1.5, 1.75, 2].includes(Number(selection.lineHeight))
-                    ? [Number(selection.lineHeight)]
-                    : []),
-                ].map((value) => ({ value: String(value), label: `${value} 倍` }))}
-                onChange={(value) =>
-                  editor
-                    ?.chain()
-                    .focus()
-                    .updateAttributes(editor.isActive('heading') ? 'heading' : 'paragraph', {
-                      lineHeight: Number(value),
-                    })
-                    .run()
+                value={
+                  selection?.lineHeightRule === 'auto' ? selection?.lineHeight || '1.75' : 'current'
                 }
+                options={lineOptions}
+                onChange={(value) => {
+                  if (editor && value !== 'current')
+                    wordSetParagraphFormat(editor, {
+                      lineHeight: Number(value),
+                      lineHeightRule: 'auto',
+                    });
+                }}
               />
+              <Button
+                size="sm"
+                variant="ghost"
+                disabled={toolsDisabled}
+                onMouseDown={keepSelection}
+                onClick={openParagraphSettings}
+              >
+                段落设置
+              </Button>
+              <Button size="sm" variant="ghost" disabled={toolsDisabled} onMouseDown={keepSelection} onClick={openTabsSettings}>制表位</Button>
+              <Button size="sm" variant="ghost" disabled={toolsDisabled} onMouseDown={keepSelection}
+                onClick={() => { if (prepareTabAction() && editor) wordInsertTab(editor); }}>插入制表符</Button>
             </RibbonRow>
             <RibbonRow>
               {ALIGNMENTS.map(({ value, label, Icon }) => (
@@ -1460,11 +1859,23 @@ export function StudioWord({
                   size="sm"
                   disabled={toolsDisabled}
                   onMouseDown={keepSelection}
-                  onClick={() => editor?.chain().focus().setTextAlign(value).run()}
+                  onClick={() => editor && wordSetParagraphFormat(editor, { textAlign: value })}
                 >
                   <Icon size={16} />
                 </Button>
               ))}
+              <Button
+                aria-label="显示非打印字符"
+                title="显示非打印字符（Ctrl+Shift+8 / ⌘+8）"
+                aria-pressed={showNonprinting}
+                variant="ghost"
+                size="sm"
+                disabled={disabled || !bodyEditor}
+                onMouseDown={keepSelection}
+                onClick={() => setShowNonprinting((value) => !value)}
+              >
+                <span aria-hidden="true">¶</span>
+              </Button>
             </RibbonRow>
           </RibbonGroup>
           <RibbonGroup label="样式" className="zuvi-studio-word-styles-group">
@@ -1493,12 +1904,46 @@ export function StudioWord({
             <Select
               aria-label="段落样式"
               className="zuvi-studio-word-style-list"
-              options={STYLE_OPTIONS}
+              options={styleOptions}
               value={selection?.style || 'paragraph'}
               disabled={toolsDisabled}
               size="sm"
               onChange={applyParagraphStyle}
             />
+            <RibbonRow>
+              <Button
+                variant="ghost"
+                size="sm"
+                aria-label="新建段落样式"
+                disabled={toolsDisabled}
+                onMouseDown={keepSelection}
+                onClick={() =>
+                  setStyleDialog({
+                    id: `style-${globalThis.crypto.randomUUID()}`,
+                    name: '',
+                    basedOn: selection?.style || 'paragraph',
+                  })
+                }
+              >
+                新建样式
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                aria-label="修改段落样式"
+                disabled={
+                  toolsDisabled || !paragraphStyles.some((style) => style.id === selection?.style)
+                }
+                onMouseDown={keepSelection}
+                onClick={() =>
+                  setStyleDialog(
+                    paragraphStyles.find((style) => style.id === selection?.style) || null
+                  )
+                }
+              >
+                修改样式
+              </Button>
+            </RibbonRow>
           </RibbonGroup>
           <RibbonGroup label="编辑" className="zuvi-studio-word-navigation-group">
             <Button
@@ -1583,6 +2028,7 @@ export function StudioWord({
                     cols: Number(tableColumns),
                     withHeaderRow: tableHeader,
                   })
+                  .updateAttributes('table', { defaultCellMargins: { top: 6, right: 7.5, bottom: 6, left: 7.5 } })
                   .run()
               }
             >
@@ -1615,8 +2061,17 @@ export function StudioWord({
               <ImageIcon size={24} />
               {imageBusy ? '正在读取…' : '插入图片'}
             </Button>
+            <input type="file" accept="image/png,image/jpeg" aria-label="选择替换 Word 图片" ref={replacementInputRef} className="zuvi-studio-word-file-input" tabIndex={-1} disabled={toolsDisabled || imageBusy} onChange={(event) => {
+              const file = event.target.files?.[0]; event.target.value = '';
+              if (file) void replaceImage(file); else replacementTargetRef.current = null;
+            }} />
             {selection?.image && (
               <>
+                <Button size="sm" variant="ghost" disabled={toolsDisabled || imageBusy} onMouseDown={keepSelection} onClick={() => {
+                  if (!editor) return;
+                  replacementTargetRef.current = wordImageReplacementTarget(editor);
+                  if (replacementTargetRef.current) replacementInputRef.current?.click();
+                }}>替换图片</Button>
                 <Input
                   type="number"
                   min={1}
@@ -1666,6 +2121,30 @@ export function StudioWord({
                 >
                   删除图片
                 </Button>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  disabled={toolsDisabled}
+                  onMouseDown={keepSelection}
+                  onClick={() => {
+                    if (!editor || !latest.current.editable || editor.view.composing) return;
+                    setCropDialog({
+                      editor,
+                      doc: editor.state.doc,
+                      selection: editor.state.selection,
+                      src: String(selection.image?.src || ''),
+                      initial: selection.image?.crop,
+                    });
+                  }}
+                >
+                  裁剪图片
+                </Button>
+                <StudioWordImageLayoutTools
+                  key={`${document.id}:${region}:${selection.from}`}
+                  layout={selection.image.layout}
+                  disabled={toolsDisabled}
+                  onChange={(layout) => updateImage({ layout })}
+                />
               </>
             )}
           </RibbonGroup>
@@ -1677,9 +2156,7 @@ export function StudioWord({
               disabled={toolsDisabled}
               onMouseDown={keepSelection}
               onClick={() => {
-                setLinkHref(editor?.getAttributes('link').href || '');
-                setLinkError('');
-                setLinkOpen(true);
+                openLink();
               }}
             >
               链接
@@ -1764,6 +2241,45 @@ export function StudioWord({
             </Button>
           </RibbonGroup>
           <RibbonGroup label="表格工具" className="zuvi-studio-word-table-tools-group">
+            <Button variant="ghost" size="sm" disabled={toolsDisabled || !selection?.inTable} onMouseDown={keepSelection} onClick={() => {
+              if (!editor || toolsDisabled || editor.view.composing) return;
+              const node = editor.state.doc.nodeAt(editor.state.selection.from);
+              setFormulaDialog({ editor, doc: editor.state.doc, selection: editor.state.selection, initial: node?.type.name === 'tableFormula' ? node.attrs.formula : '=SUM(ABOVE)' });
+            }}>表格公式</Button>
+            <Button size="sm" variant="ghost" disabled={toolsDisabled} onMouseDown={keepSelection} onClick={() => {
+              if (!editor || !latest.current.editable || editor.view.composing) return;
+              const node = editor.state.doc.nodeAt(editor.state.selection.from);
+              setMathDialog({ editor, doc: editor.state.doc, selection: editor.state.selection, initial: node?.type.name === 'mathEquation' ? node.attrs.equation : { kind: 'text', text: 'x' } });
+            }}>数学公式</Button>
+            <Button variant="ghost" size="sm" disabled={toolsDisabled || !editor} onMouseDown={keepSelection} onClick={() => {
+              if (!editor || toolsDisabled) return;
+              try { wordRefreshTableFormulas(editor); } catch (reason) { setNotice(reason instanceof Error ? reason.message : '公式刷新失败。'); }
+            }}>刷新公式</Button>
+            <Button variant="ghost" size="sm" disabled={toolsDisabled || !editor || !wordConversionTarget(editor)} onMouseDown={keepSelection} onClick={() => {
+              if (!editor || toolsDisabled || editor.view.composing) return;
+              const target = wordConversionTarget(editor);
+              if (target) setConversionDialog({ editor, target });
+            }}>{editor?.isActive('table') ? '表格转文本' : '文本转表格'}</Button>
+            <Button variant="ghost" size="sm" disabled={toolsDisabled || !selection?.inTable} onMouseDown={keepSelection} onClick={() => {
+              if (!editor || toolsDisabled) return;
+              const rows = wordSelectedRows(editor);
+              if (rows.length) setRowDialog({ editor, doc: editor.state.doc, selection: editor.state.selection, rows });
+            }}>表格行属性</Button>
+            <Button variant="ghost" size="sm" disabled={toolsDisabled || !editor || !wordSelectedCellPositions(editor).length} onMouseDown={keepSelection} onClick={() => { if (editor && wordSelectedCellPositions(editor).length) setCellDialog(editor); }}>单元格对齐与边距</Button>
+            <Button variant="ghost" size="sm" disabled={toolsDisabled || !selection?.inTable}
+              onMouseDown={keepSelection} onClick={() => {
+                if (!editor || toolsDisabled) return;
+                const changed = wordDistributeColumns(editor);
+                setNotice(changed ? '已平均分布表格列，可撤销恢复。' : '列宽保持原样或无法测量。');
+              }}>平均分布表格列</Button>
+            <Button variant="ghost" size="sm"
+              disabled={toolsDisabled || !editor || wordSelectedRows(editor).length < 2}
+              onMouseDown={keepSelection}
+              onClick={() => {
+                if (!editor || toolsDisabled) return;
+                const changed = wordDistributeRows(editor);
+                setNotice(changed ? '已平均分布所选行，可撤销恢复。' : '行高度保持原样或无法测量。');
+              }}>平均分布行</Button>
             <Button
               variant="ghost"
               size="sm"
@@ -1905,27 +2421,27 @@ export function StudioWord({
               aria-label="段落行距"
               size="sm"
               disabled={toolsDisabled}
-              value={selection?.lineHeight || '1.75'}
-              options={[
-                1,
-                1.15,
-                1.5,
-                1.75,
-                2,
-                ...(selection?.lineHeight &&
-                ![1, 1.15, 1.5, 1.75, 2].includes(Number(selection.lineHeight))
-                  ? [Number(selection.lineHeight)]
-                  : []),
-              ].map((value) => ({ value: String(value), label: `${value} 倍行距` }))}
+              value={
+                selection?.lineHeightRule === 'auto' ? selection?.lineHeight || '1.75' : 'current'
+              }
+              options={lineOptions}
               onChange={(value) => {
-                const node = editor?.isActive('heading') ? 'heading' : 'paragraph';
-                editor
-                  ?.chain()
-                  .focus()
-                  .updateAttributes(node, { lineHeight: Number(value) })
-                  .run();
+                if (editor && value !== 'current')
+                  wordSetParagraphFormat(editor, {
+                    lineHeight: Number(value),
+                    lineHeightRule: 'auto',
+                  });
               }}
             />
+            <Button
+              size="sm"
+              variant="ghost"
+              disabled={toolsDisabled}
+              onMouseDown={keepSelection}
+              onClick={openParagraphSettings}
+            >
+              段落设置
+            </Button>
           </RibbonGroup>
           <RibbonGroup label="页眉页脚" className="zuvi-studio-word-distance-group">
             <label className="zuvi-studio-word-distance-label">
@@ -1967,6 +2483,9 @@ export function StudioWord({
           </RibbonGroup>
         </Tabs.Panel>
         <Tabs.Panel value="references" className="zuvi-studio-word-tool-row">
+          <RibbonGroup label="书签">
+            <Button variant="ghost" size="sm" disabled={!editor || disabled} onMouseDown={keepSelection} onClick={() => { if (editor && !disabled) setBookmarkEditor(editor); }}>书签</Button>
+          </RibbonGroup>
           <RibbonGroup label="目录">
             <Button
               variant="ghost"
@@ -1999,9 +2518,7 @@ export function StudioWord({
               disabled={toolsDisabled}
               onMouseDown={keepSelection}
               onClick={() => {
-                setLinkHref(editor?.getAttributes('link').href || '');
-                setLinkError('');
-                setLinkOpen(true);
+                openLink();
               }}
             >
               链接
@@ -2037,6 +2554,13 @@ export function StudioWord({
         <Tabs.Panel value="view" className="zuvi-studio-word-tool-row">
           <RibbonGroup label="显示" className="zuvi-studio-word-view-group">
             <Checkbox label="标尺" checked={showRuler} onChange={setShowRuler} />
+            <Checkbox label="分页布局" checked={paginatedView} disabled={disabled} onChange={setPaginatedView}/>
+            <Checkbox
+              label="非打印字符"
+              checked={showNonprinting}
+              onChange={setShowNonprinting}
+              disabled={disabled}
+            />
             <Checkbox
               label="导航窗格"
               checked={!!sidePanel}
@@ -2244,7 +2768,11 @@ export function StudioWord({
                   }}
                 />
                 <Checkbox label="区分大小写" checked={matchCase} onChange={setMatchCase} />
-                <div className="zuvi-studio-word-format-filter" role="group" aria-label="按格式查找">
+                <div
+                  className="zuvi-studio-word-format-filter"
+                  role="group"
+                  aria-label="按格式查找"
+                >
                   <span className="zuvi-studio-word-sidebar-note">按格式筛选：</span>
                   {(
                     [
@@ -2368,7 +2896,9 @@ export function StudioWord({
             ) : (
               <div className="zuvi-studio-word-navigation-list">
                 {!outline.length && (
-                  <p className="zuvi-studio-word-sidebar-note">应用标题样式后，可在这里快速跳转。</p>
+                  <p className="zuvi-studio-word-sidebar-note">
+                    应用标题样式后，可在这里快速跳转。
+                  </p>
                 )}
                 {outline.map((heading, index) => (
                   <Button
@@ -2394,7 +2924,16 @@ export function StudioWord({
           </aside>
         )}
         <div className="zuvi-studio-word-stage" data-part="word-stage" ref={stageRef}>
-          {showRuler && <WordRuler length={pageWidth} margin={margin} scale={scale} />}
+          {showRuler && (
+            <WordRuler
+              length={pageWidth}
+              margin={margin}
+              scale={scale}
+              editor={editor}
+              blocked={toolsDisabled}
+              onNotice={setNotice}
+            />
+          )}
           <div
             className="zuvi-studio-word-paper-space"
             style={{
@@ -2415,6 +2954,7 @@ export function StudioWord({
                   paddingInline: margin,
                   transform: `scale(${scale})`,
                   '--zuvi-studio-word-page-margin': `${margin}px`,
+                  '--zuvi-studio-word-page-height': `${pageHeight}px`,
                   '--zuvi-studio-word-header-distance': `${headerDistance * MM_TO_PX}px`,
                   '--zuvi-studio-word-footer-distance': `${footerDistance * MM_TO_PX}px`,
                 } as React.CSSProperties
@@ -2451,6 +2991,10 @@ export function StudioWord({
                     region="header"
                     documentId={document.id}
                     content={document.header}
+                    paragraphStyles={paragraphStyles}
+                    numberingCatalog={numberCatalog}
+                    defaultTabStop={document.defaultTabStop}
+                    decimalSymbol={document.decimalSymbol}
                     editable={editable && region === 'header'}
                     onReady={registerRegion}
                     onActive={setRegion}
@@ -2478,6 +3022,10 @@ export function StudioWord({
                     region="footer"
                     documentId={document.id}
                     content={document.footer}
+                    paragraphStyles={paragraphStyles}
+                    numberingCatalog={numberCatalog}
+                    defaultTabStop={document.defaultTabStop}
+                    decimalSymbol={document.decimalSymbol}
                     editable={editable && region === 'footer'}
                     onReady={registerRegion}
                     onActive={setRegion}
@@ -2521,6 +3069,174 @@ export function StudioWord({
           />
         </div>
       </div>
+      {surfaceDialog&&<StudioWordSurfaceDialog surfaces={surfaceDialog.surfaces} blocked={!editable}
+        onClose={()=>{setSurfaceDialog(null);if(!surfaceDialog.editor.isDestroyed)surfaceDialog.editor.commands.focus();}}
+        onSave={(patch)=>{
+          const target=surfaceDialog.editor;
+          if(!latest.current.editable||target.isDestroyed||target!==editor||target.state.doc!==surfaceDialog.doc)throw new Error('文档或编辑区域已变化，请重新打开段落边框。');
+          target.view.dispatch(target.state.tr.setSelection(surfaceDialog.selection).setMeta('addToHistory',false));
+          const changed=wordSetParagraphSurface(target,patch);setNotice(changed?'已应用段落边框和底纹，可撤销恢复。':'段落边框/底纹保持原样。');
+        }} />}
+      {cropDialog && (
+        <StudioWordImageCropDialog
+          src={cropDialog.src}
+          initial={cropDialog.initial}
+          blocked={!editable}
+          onClose={() => {
+            setCropDialog(null);
+            if (!cropDialog.editor.isDestroyed) cropDialog.editor.commands.focus();
+          }}
+          onSave={(crop) => {
+            const target = cropDialog.editor;
+            if (
+              !latest.current.editable ||
+              target.isDestroyed ||
+              target !== editor ||
+              !target.isEditable
+            )
+              throw new Error('当前文档只读或编辑区域已变化。');
+            if (target.state.doc !== cropDialog.doc)
+              throw new Error('文档已变化，请重新打开裁剪。');
+            if (target.view.composing) throw new Error('请结束输入法组合后重试。');
+            target.view.dispatch(
+              target.state.tr.setSelection(cropDialog.selection).setMeta('addToHistory', false)
+            );
+            const changed = wordSetImageCrop(target, crop);
+            setCropDialog(null);
+            target.commands.focus();
+            setNotice(changed ? '已应用图片裁剪，可撤销恢复。' : '图片裁剪保持原样。');
+          }}
+        />
+      )}
+      {mathDialog && <StudioWordMathDialog initial={mathDialog.initial} blocked={!editable}
+        onClose={() => { setMathDialog(null); if (!mathDialog.editor.isDestroyed) mathDialog.editor.commands.focus(); }}
+        onSave={(tree) => {
+          const target = mathDialog.editor;
+          if (!latest.current.editable || target.isDestroyed || target !== editor || !target.isEditable) throw new Error('当前文档只读或编辑区域已变化。');
+          if (target.state.doc !== mathDialog.doc) throw new Error('文档已变化，请重新打开数学公式。');
+          if (target.view.composing) throw new Error('请结束输入法组合后重试。');
+          target.view.dispatch(target.state.tr.setSelection(mathDialog.selection).setMeta('addToHistory', false));
+          const changed = wordSetMath(target, tree);
+          setMathDialog(null); target.commands.focus(); setNotice(changed ? '数学公式已保存，可撤销恢复。' : '数学公式保持原样。');
+        }} />}
+      {formulaDialog && <StudioWordFormulaDialog initial={formulaDialog.initial} blocked={!editable} onClose={() => { setFormulaDialog(null); if (!formulaDialog.editor.isDestroyed) formulaDialog.editor.commands.focus(); }} onSave={(formula) => {
+        const target = formulaDialog.editor;
+        if (!latest.current.editable || target.isDestroyed || target !== editor || !target.isEditable) throw new Error('当前文档只读或编辑区域已变化。');
+        if (target.state.doc !== formulaDialog.doc) throw new Error('文档已变化，请重新打开公式。');
+        target.view.dispatch(target.state.tr.setSelection(formulaDialog.selection).setMeta('addToHistory', false));
+        if (!wordSetTableFormula(target, formula)) throw new Error('请结束输入法组合后重试。');
+        setFormulaDialog(null); target.commands.focus();
+      }} />}
+      {conversionDialog && <StudioWordConversionDialog target={conversionDialog.target} blocked={!editable}
+        onClose={() => { setConversionDialog(null); if (!conversionDialog.editor.isDestroyed) conversionDialog.editor.commands.focus(); }}
+        onSave={(separator, columns, convertNested) => {
+          const target = conversionDialog.editor;
+          if (!latest.current.editable || target !== editor || target.isDestroyed) throw new Error('编辑区域或权限已变化，请重新打开转换。');
+          if (target.view.composing) throw new Error('请结束输入法组合后重试转换。');
+          if (target.state.doc !== conversionDialog.target.doc) throw new Error('文档已变化，请重新打开转换。');
+          target.view.dispatch(target.state.tr.setSelection(conversionDialog.target.selection).setMeta('addToHistory', false));
+          if (!wordApplyTableConversion(target, conversionDialog.target, separator, columns, convertNested)) throw new Error('请结束输入法组合后重试转换。');
+          setConversionDialog(null);
+          target.commands.focus();
+          setNotice('已转换内容，可撤销恢复。');
+        }} />}
+      {cellDialog && <StudioWordCellDialog editor={cellDialog} blocked={!editable || editor !== cellDialog} onClose={() => { setCellDialog(null); if (editor && !editor.isDestroyed) editor.view.focus(); }} />}
+      {rowDialog && <StudioWordRowDialog rows={rowDialog.rows.map((row) => row.properties)} blocked={!editable}
+        onClose={() => { setRowDialog(null); if (!rowDialog.editor.isDestroyed) rowDialog.editor.commands.focus(); }}
+        onSave={(patch) => {
+          const target = rowDialog.editor;
+          if (!latest.current.editable || target.isDestroyed || target !== editor || target.state.doc !== rowDialog.doc || target.view.composing) throw new Error('文档或编辑区域已变化，请重新打开表格行属性。');
+          target.view.dispatch(target.state.tr.setSelection(rowDialog.selection).setMeta('addToHistory', false));
+          const changed = wordSetRowProperties(target, patch);
+          setNotice(changed ? '已应用表格行属性，可撤销恢复。' : '表格行属性保持原样。');
+        }} />}
+      {numberDialog&&<StudioWordNumberingDialog catalog={numberDialog.catalog} currentId={numberDialog.currentId} currentLevel={numberDialog.level} styles={paragraphStyles} blocked={!editable}
+        onClose={()=>{setNumberDialog(null);if(!numberDialog.editor.isDestroyed)numberDialog.editor.commands.focus();}}
+        onSave={(value)=>{
+          const target=numberDialog.editor;
+          if(!latest.current.editable||target.isDestroyed||target!==editor||target.state.doc!==numberDialog.doc)throw new Error('文档或编辑区域已变化，请重新打开编号定义。');
+          target.view.dispatch(target.state.tr.setSelection(numberDialog.selection).setMeta('addToHistory',false));
+          const changed=value.apply?wordApplyNumbering(target,value.definitionId,value.level,value.catalog):wordSetNumberingCatalog(target,value.catalog);
+          setNotice(changed?'已保存编号定义，可撤销恢复。':'编号定义保持原样。');
+        }} />}
+      {tabsDialog && (
+        <StudioWordTabsDialog values={tabsDialog.values} defaultTabStop={document.defaultTabStop} blocked={!editable}
+          onClose={() => { setTabsDialog(null); if (!tabsDialog.editor.isDestroyed) tabsDialog.editor.commands.focus(); }}
+          onSave={(patch) => {
+            const target = tabsDialog.editor;
+            if (!latest.current.editable || target.isDestroyed || target !== editor || target.state.doc !== tabsDialog.doc)
+              throw new Error('文档或编辑区域已变化，请重新选择段落。');
+            target.view.dispatch(target.state.tr.setSelection(tabsDialog.selection).setMeta('addToHistory', false));
+            const changed = wordSetTabStops(target, patch);
+            setNotice(changed ? '已应用制表位，可撤销恢复。' : '制表位保持原样。');
+          }} />
+      )}
+      {paragraphDialog && (
+        <StudioWordParagraphDialog
+          values={paragraphDialog.values}
+          blocked={!editable}
+          onClose={() => {
+            setParagraphDialog(null);
+            if (!paragraphDialog.editor.isDestroyed) paragraphDialog.editor.commands.focus();
+          }}
+          onSave={(patch) => {
+            const target = paragraphDialog.editor;
+            if (
+              !latest.current.editable ||
+              target.isDestroyed ||
+              target !== editor ||
+              target.state.doc !== paragraphDialog.doc
+            )
+              throw new Error('文档或编辑区域已变化，请重新选择段落。');
+            target.view.dispatch(
+              target.state.tr.setSelection(paragraphDialog.selection).setMeta('addToHistory', false)
+            );
+            const changed = wordSetParagraphFormat(target, patch);
+            setNotice(changed ? '已应用段落设置，可撤销恢复。' : '段落格式保持原样。');
+          }}
+        />
+      )}
+      {characterDialog && (
+        <StudioWordCharacterDialog
+          values={characterDialog.values}
+          text={characterDialog.text}
+          blocked={!editable}
+          onClose={() => {
+            setCharacterDialog(null);
+            if (!characterDialog.editor.isDestroyed) characterDialog.editor.commands.focus();
+          }}
+          onSave={(values) => {
+            const target = characterDialog.editor;
+            if (
+              !latest.current.editable ||
+              target.isDestroyed ||
+              target !== editor ||
+              target.state.doc !== characterDialog.doc
+            )
+              throw new Error('文档或编辑区域已变化，请重新选择文字。');
+            target.view.dispatch(
+              target.state.tr.setSelection(characterDialog.selection).setMeta('addToHistory', false)
+            );
+            const changed = wordSetCharacterLayout(target, values);
+            setNotice(changed ? '已应用字符间距与位置，可撤销恢复。' : '字符格式保持原样。');
+          }}
+        />
+      )}
+      {styleDialog && editable && (
+        <StudioWordStyleDialog
+          key={styleDialog.id}
+          value={styleDialog}
+          styles={paragraphStyles}
+          onClose={() => setStyleDialog(null)}
+          onChange={(styles, message) => {
+            if (!bodyEditor || !editable || !wordSetParagraphStyles(bodyEditor, styles))
+              throw new Error('当前编辑器无法修改样式。');
+            setStyleDialog(null);
+            setRegion('content');
+            setNotice(message);
+          }}
+        />
+      )}
       <Modal open={statisticsOpen} onOpenChange={setStatisticsOpen}>
         <Modal.Content size="sm">
           <Modal.Header>
@@ -2550,6 +3266,7 @@ export function StudioWord({
           </Modal.Footer>
         </Modal.Content>
       </Modal>
+      {bookmarkEditor && <StudioWordBookmarkDialog editor={bookmarkEditor} disabled={disabled} otherEditors={[bodyEditor, ...Object.values(regions)].filter((item): item is Editor => !!item && item !== bookmarkEditor)} onClose={() => setBookmarkEditor(null)} />}
       <Modal open={linkOpen && editable} onOpenChange={setLinkOpen}>
         <Modal.Content size="sm">
           <Modal.Header>
@@ -2561,6 +3278,8 @@ export function StudioWord({
               链接地址
               <Input
                 aria-label="链接地址"
+                onCompositionStart={() => setLinkComposing(true)}
+                onCompositionEnd={() => setLinkComposing(false)}
                 value={linkHref}
                 onChange={(event) => {
                   setLinkHref(event.target.value);
@@ -2572,7 +3291,12 @@ export function StudioWord({
                 }}
               />
             </label>
-            <p className="zuvi-studio-word-link-note">选择正文后添加链接；留空会移除当前链接。</p>
+            <label>显示文字<Input aria-label="链接显示文字" value={linkText} onChange={event => setLinkText(event.target.value)} onCompositionStart={() => setLinkComposing(true)} onCompositionEnd={() => setLinkComposing(false)} /></label>
+            <Select aria-label="内部书签目标" value={linkHref.startsWith('#') ? linkHref : ''} options={[{ value: '', label: '选择内部书签' }, ...[bodyEditor, ...Object.values(regions)].filter((item): item is Editor => !!item && !item.isDestroyed).flatMap(item => { try { return wordBookmarks(item.state.doc).map(range => ({ value: '#' + range.name, label: range.name })); } catch { return []; } })]} onChange={value => { if (value) setLinkHref(value); }} />
+            <Button disabled={!linkHref.startsWith('#')} onClick={() => {
+              for (const item of [bodyEditor, ...Object.values(regions)]) if (item && wordGoToBookmark(item, linkHref.slice(1), true)) { setLinkOpen(false); break; }
+            }}>跳转内部链接</Button>
+            <p className="zuvi-studio-word-link-note">选择正文后添加链接；内部目标使用 #书签名称，留空会移除当前链接。</p>
             {linkError ? (
               <p role="alert" className="zuvi-studio-word-link-error">
                 {linkError}
@@ -2583,7 +3307,7 @@ export function StudioWord({
             <Button variant="ghost" onClick={() => setLinkOpen(false)}>
               取消
             </Button>
-            <Button onClick={applyLink}>应用链接</Button>
+            <Button disabled={linkComposing} onClick={applyLink}>应用链接</Button>
           </Modal.Footer>
         </Modal.Content>
       </Modal>

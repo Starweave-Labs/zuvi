@@ -1,0 +1,25 @@
+React ESM entry: 2 static modules, 430355 bytes, 124930 gzip bytes (budget < 124928)
+Async ChartView-CO3WWsAp.js: 1 additional modules, 56878 bytes, 17763 gzip bytes
+Async GlobeScene-BSjrqr0L.js: 2 additional modules, 105477 bytes, 39677 gzip bytes
+Async DataGridView-a__mf_cG.js: 1 additional modules, 16927 bytes, 5777 gzip bytes
+Async StudioWord-BcrUcl9m.js: 3 additional modules, 210114 bytes, 59621 gzip bytes
+Async StudioSheet-BzxCd4Or.js: 2 additional modules, 216424 bytes, 66667 gzip bytes
+Async StudioPdf-DezOCxe-.js: 3 additional modules, 59040 bytes, 17756 gzip bytes
+Async globe-renderer-CVM9sEzO.js: 3 additional modules, 662679 bytes, 174752 gzip bytes
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: React ESM entry exceeds the 124928-byte gzip budget: 124930
+    at file:///Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/scripts/check-bundle-size.mjs:112:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:325:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:606:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '=='
+}
+
+Node.js v20.20.0

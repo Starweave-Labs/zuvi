@@ -1,0 +1,9 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/StudioWordConversionDialog.test.tsx (2 tests) 163ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  06:50:36
+   Duration  1.67s (transform 285ms, setup 171ms, collect 540ms, tests 163ms, environment 501ms, prepare 64ms)

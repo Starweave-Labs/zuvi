@@ -1,0 +1,266 @@
+{
+  "status": "passed",
+  "results": [
+    {
+      "pdf": "p012-freetext-round-1.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-p012-freetext-round-1-page-1.png",
+      "version": "6.5.438",
+      "freeTextBodies": [
+        {
+          "id": "22R",
+          "contents": "中文原生批注\n第二行可编辑",
+          "glyphText": "中文原生批注第二行可编辑",
+          "paintCount": 1
+        }
+      ],
+      "pdfSha256": "abb186e4536c3fedd5d3a2348b980b2a1f96caacf3129e9436901cf72d3652ed",
+      "pngSha256": "99f55746f354edb0e139a70e6790716514e23ef5dc94fbe58007ace0ab0cd484"
+    },
+    {
+      "pdf": "p012-freetext-round-2.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-p012-freetext-round-2-page-1.png",
+      "version": "6.5.438",
+      "freeTextBodies": [
+        {
+          "id": "22R",
+          "contents": "中文原生批注\n第二行可编辑",
+          "glyphText": "中文原生批注第二行可编辑",
+          "paintCount": 1
+        }
+      ],
+      "pdfSha256": "abb186e4536c3fedd5d3a2348b980b2a1f96caacf3129e9436901cf72d3652ed",
+      "pngSha256": "99f55746f354edb0e139a70e6790716514e23ef5dc94fbe58007ace0ab0cd484"
+    },
+    {
+      "pdf": "p014-markers-round-1.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-p014-markers-round-1-page-1.png",
+      "version": "6.5.438",
+      "freeTextBodies": [],
+      "pdfSha256": "86f835a6aee9307a0b87a4084ff1d8f4b61f6cfafe668ba2a273cce26d40e9a2",
+      "pngSha256": "d15689120b335bbf11e0ce5a0e1bc218d574823790676a252b286f4c16c1b788"
+    },
+    {
+      "pdf": "p014-markers-round-2.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-p014-markers-round-2-page-1.png",
+      "version": "6.5.438",
+      "freeTextBodies": [],
+      "pdfSha256": "86f835a6aee9307a0b87a4084ff1d8f4b61f6cfafe668ba2a273cce26d40e9a2",
+      "pngSha256": "d15689120b335bbf11e0ce5a0e1bc218d574823790676a252b286f4c16c1b788"
+    },
+    {
+      "pdf": "p016-geometry-round-1.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-p016-geometry-round-1-page-1.png",
+      "version": "6.5.438",
+      "freeTextBodies": [],
+      "pdfSha256": "f6a342e1ab973ae0f1fba297b334ad16a67489359e3a9840b4a9816703541ce0",
+      "pngSha256": "7540c7dde5927857917d42ffb365a2a9cccfcbb7aaeb6b5bc5558099639bf93e"
+    },
+    {
+      "pdf": "p016-geometry-round-2.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-p016-geometry-round-2-page-1.png",
+      "version": "6.5.438",
+      "freeTextBodies": [],
+      "pdfSha256": "f6a342e1ab973ae0f1fba297b334ad16a67489359e3a9840b4a9816703541ce0",
+      "pngSha256": "7540c7dde5927857917d42ffb365a2a9cccfcbb7aaeb6b5bc5558099639bf93e"
+    },
+    {
+      "pdf": "gesture-history-round-1.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-gesture-history-round-1-page-1.png",
+      "version": "6.5.438",
+      "freeTextBodies": [
+        {
+          "id": "22R",
+          "contents": "中文自由文本：原生迁入后保留",
+          "glyphText": "中文自由文本：原生迁入后保留",
+          "paintCount": 1
+        }
+      ],
+      "pdfSha256": "c1a525b531597758aaffd4747b45b5b19dd58a1513593d9e7d2168f634084f9e",
+      "pngSha256": "fd092c15eb4f81a425f93d59472320af520d4f6eed3b04cc085e02dc48e87135"
+    },
+    {
+      "pdf": "gesture-history-round-2.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-gesture-history-round-2-page-1.png",
+      "version": "6.5.438",
+      "freeTextBodies": [
+        {
+          "id": "22R",
+          "contents": "中文自由文本：原生迁入后保留",
+          "glyphText": "中文自由文本：原生迁入后保留",
+          "paintCount": 1
+        }
+      ],
+      "pdfSha256": "c1a525b531597758aaffd4747b45b5b19dd58a1513593d9e7d2168f634084f9e",
+      "pngSha256": "fd092c15eb4f81a425f93d59472320af520d4f6eed3b04cc085e02dc48e87135"
+    },
+    {
+      "pdf": "p015-discussion-round-1.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-p015-discussion-round-1-page-1.png",
+      "version": "6.5.438",
+      "freeTextBodies": [
+        {
+          "id": "22R",
+          "contents": "中文自由文本：原生迁入后保留",
+          "glyphText": "中文自由文本：原生迁入后保留",
+          "paintCount": 1
+        }
+      ],
+      "pdfSha256": "49e22b525ed25d921851b58d1efeada9f7c4a97f3b72badf42d4b64b7a663cd6",
+      "pngSha256": "07441048a9379a773657ecb3219bb4b8322ebf5c01bcbfc4cf785ce68ac78a6a"
+    },
+    {
+      "pdf": "p015-discussion-round-2.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-p015-discussion-round-2-page-1.png",
+      "version": "6.5.438",
+      "freeTextBodies": [
+        {
+          "id": "22R",
+          "contents": "中文自由文本：原生迁入后保留",
+          "glyphText": "中文自由文本：原生迁入后保留",
+          "paintCount": 1
+        }
+      ],
+      "pdfSha256": "49e22b525ed25d921851b58d1efeada9f7c4a97f3b72badf42d4b64b7a663cd6",
+      "pngSha256": "07441048a9379a773657ecb3219bb4b8322ebf5c01bcbfc4cf785ce68ac78a6a"
+    },
+    {
+      "pdf": "legacy-migration-round-1.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-legacy-migration-round-1-page-1.png",
+      "version": "6.5.438",
+      "freeTextBodies": [
+        {
+          "id": "22R",
+          "contents": "旧中文批注继续编辑",
+          "glyphText": "旧中文批注继续编辑",
+          "paintCount": 1
+        }
+      ],
+      "pdfSha256": "42c10668b1e50b1fd8ccbdeb89516c67b750ab8ed2882e8fc0cc7807d85414c2",
+      "pngSha256": "5bf6c70dc33bf898a5ba8d41ad3e986debd559f1841b43a02125124fd4a61990"
+    },
+    {
+      "pdf": "legacy-migration-round-2.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-legacy-migration-round-2-page-1.png",
+      "version": "6.5.438",
+      "freeTextBodies": [
+        {
+          "id": "22R",
+          "contents": "旧中文批注继续编辑",
+          "glyphText": "旧中文批注继续编辑",
+          "paintCount": 1
+        }
+      ],
+      "pdfSha256": "42c10668b1e50b1fd8ccbdeb89516c67b750ab8ed2882e8fc0cc7807d85414c2",
+      "pngSha256": "5bf6c70dc33bf898a5ba8d41ad3e986debd559f1841b43a02125124fd4a61990"
+    },
+    {
+      "pdf": "nonempty-recipe-round-1.pdf",
+      "page": 2,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-nonempty-recipe-round-1-page-2.png",
+      "version": "6.5.438",
+      "freeTextBodies": [
+        {
+          "id": "31R",
+          "contents": "复制记录有独立中文",
+          "glyphText": "复制记录有独立中文",
+          "paintCount": 1
+        }
+      ],
+      "pdfSha256": "ffb00fcf5194cf38c6e3ce9c5b5c5ec16b94db696d36b378436707cd1fd161ae",
+      "pngSha256": "4b38cc462e95354db31c99128db24d5e760cb8257b788ec1448b62d2673b60e2"
+    },
+    {
+      "pdf": "nonempty-recipe-round-1.pdf",
+      "page": 3,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-nonempty-recipe-round-1-page-3.png",
+      "version": "6.5.438",
+      "freeTextBodies": [
+        {
+          "id": "22R",
+          "contents": "未保存记录原生中文",
+          "glyphText": "未保存记录原生中文",
+          "paintCount": 1
+        }
+      ],
+      "pdfSha256": "ffb00fcf5194cf38c6e3ce9c5b5c5ec16b94db696d36b378436707cd1fd161ae",
+      "pngSha256": "97a4da74bf709b1228fa40d312b026aa8d67b8fa6ee7afb8d90a17b9b5344156"
+    },
+    {
+      "pdf": "nonempty-recipe-round-2.pdf",
+      "page": 2,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-nonempty-recipe-round-2-page-2.png",
+      "version": "6.5.438",
+      "freeTextBodies": [
+        {
+          "id": "31R",
+          "contents": "复制记录有独立中文",
+          "glyphText": "复制记录有独立中文",
+          "paintCount": 1
+        }
+      ],
+      "pdfSha256": "ffb00fcf5194cf38c6e3ce9c5b5c5ec16b94db696d36b378436707cd1fd161ae",
+      "pngSha256": "4b38cc462e95354db31c99128db24d5e760cb8257b788ec1448b62d2673b60e2"
+    },
+    {
+      "pdf": "nonempty-recipe-round-2.pdf",
+      "page": 3,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-nonempty-recipe-round-2-page-3.png",
+      "version": "6.5.438",
+      "freeTextBodies": [
+        {
+          "id": "22R",
+          "contents": "未保存记录原生中文",
+          "glyphText": "未保存记录原生中文",
+          "paintCount": 1
+        }
+      ],
+      "pdfSha256": "ffb00fcf5194cf38c6e3ce9c5b5c5ec16b94db696d36b378436707cd1fd161ae",
+      "pngSha256": "97a4da74bf709b1228fa40d312b026aa8d67b8fa6ee7afb8d90a17b9b5344156"
+    },
+    {
+      "pdf": "explicit-none-round-1.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-explicit-none-round-1-page-1.png",
+      "version": "6.5.438",
+      "freeTextBodies": [
+        {
+          "id": "26R",
+          "contents": "Visible text with no border",
+          "glyphText": "Visible text with no border",
+          "paintCount": 1
+        }
+      ],
+      "pdfSha256": "699b8cfd6922ea6a97e9b518fe0dbbe1834aa55b6cdc6dbb23515f6b6d7b208b",
+      "pngSha256": "540a991bfe54a38f4e9aa9aa494642a51e57b65177970dce697c374ef6496441"
+    },
+    {
+      "pdf": "explicit-none-round-2.pdf",
+      "page": 1,
+      "png": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/pdfjs-explicit-none-round-2-page-1.png",
+      "version": "6.5.438",
+      "freeTextBodies": [
+        {
+          "id": "26R",
+          "contents": "Visible text with no border",
+          "glyphText": "Visible text with no border",
+          "paintCount": 1
+        }
+      ],
+      "pdfSha256": "7a7d67c2ba2f1d39387bbf13ab90dddca3fce1f3524250bd4d40a8c74e74217d",
+      "pngSha256": "241c8090efb3f3ee05be320484c463837d5312bbc175b46330af18c612fd06a0"
+    }
+  ],
+  "visualReview": "visual-review.json"
+}

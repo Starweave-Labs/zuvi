@@ -1,0 +1,188 @@
+{
+  "status": "reviewed",
+  "scope": "Current continuation browser-produced PDFs rendered by bundled Poppler",
+  "reviewedAt": "2026-11-27T04:00:36.968778+00:00",
+  "pages": [
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/p012-freetext-round-1-page-1.png",
+      "sha256": "1b3bf6531451e41609f3b2ba56e563aed594679b1117460cf2ab154ef1ecf995",
+      "size": [
+        1000,
+        1400
+      ],
+      "matchesAcceptedBaselinePixels": true
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/p012-freetext-round-2-page-1.png",
+      "sha256": "1b3bf6531451e41609f3b2ba56e563aed594679b1117460cf2ab154ef1ecf995",
+      "size": [
+        1000,
+        1400
+      ],
+      "matchesAcceptedBaselinePixels": true
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/p014-markers-round-1-page-1.png",
+      "sha256": "0a0c6f6261d8f57ae920414c55e3528d2b1d0143cfe6bad630350a55630f3287",
+      "size": [
+        1000,
+        1400
+      ],
+      "matchesAcceptedBaselinePixels": true
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/p014-markers-round-2-page-1.png",
+      "sha256": "0a0c6f6261d8f57ae920414c55e3528d2b1d0143cfe6bad630350a55630f3287",
+      "size": [
+        1000,
+        1400
+      ],
+      "matchesAcceptedBaselinePixels": true
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/p016-geometry-round-1-page-1.png",
+      "sha256": "7e68b5f3928c56cd22c1d0be05363fbaf56be0a5f9e788fecdc5750ade5e6663",
+      "size": [
+        1000,
+        1400
+      ],
+      "matchesAcceptedBaselinePixels": true
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/p016-geometry-round-2-page-1.png",
+      "sha256": "7e68b5f3928c56cd22c1d0be05363fbaf56be0a5f9e788fecdc5750ade5e6663",
+      "size": [
+        1000,
+        1400
+      ],
+      "matchesAcceptedBaselinePixels": true
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/gesture-history-round-1-page-1.png",
+      "sha256": "99ff59572a6775254fb47df7a8b9131822be513ec4e95af5243d0057ae930e15",
+      "size": [
+        1000,
+        1400
+      ],
+      "matchesAcceptedBaselinePixels": true
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/gesture-history-round-2-page-1.png",
+      "sha256": "99ff59572a6775254fb47df7a8b9131822be513ec4e95af5243d0057ae930e15",
+      "size": [
+        1000,
+        1400
+      ],
+      "matchesAcceptedBaselinePixels": true
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/p015-discussion-round-1-page-1.png",
+      "sha256": "3feecd1ba4417bcd7a1a5e28e9c979656145936ec5869e745254ed5e472d42bb",
+      "size": [
+        1000,
+        1400
+      ],
+      "matchesAcceptedBaselinePixels": true
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/p015-discussion-round-2-page-1.png",
+      "sha256": "3feecd1ba4417bcd7a1a5e28e9c979656145936ec5869e745254ed5e472d42bb",
+      "size": [
+        1000,
+        1400
+      ],
+      "matchesAcceptedBaselinePixels": true
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/legacy-migration-round-1-page-1.png",
+      "sha256": "044f64c0476d4c56a24e48cacdb7842f6acfb94b9a70ac6c868bb02dddb8e131",
+      "size": [
+        1000,
+        1400
+      ],
+      "matchesAcceptedBaselinePixels": true
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/legacy-migration-round-2-page-1.png",
+      "sha256": "044f64c0476d4c56a24e48cacdb7842f6acfb94b9a70ac6c868bb02dddb8e131",
+      "size": [
+        1000,
+        1400
+      ],
+      "matchesAcceptedBaselinePixels": true
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/nonempty-recipe-round-1-page-1.png",
+      "sha256": "18775c8029ef382cadd23de1566328c59c42795869cce3601a5479d24dafd7b3",
+      "size": [
+        1000,
+        1400
+      ],
+      "matchesAcceptedBaselinePixels": true
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/nonempty-recipe-round-1-page-2.png",
+      "sha256": "d1efc2fcadc619a5a6789185d1b56cdd00461dc20a4c9639d8c9dfa19c5c43a8",
+      "size": [
+        1400,
+        1000
+      ],
+      "matchesAcceptedBaselinePixels": true
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/nonempty-recipe-round-1-page-3.png",
+      "sha256": "9403b6f02ced9ffcc5bbd36cac37d66f7cb2e6a8be98432c527408cec9fee09c",
+      "size": [
+        1000,
+        1400
+      ],
+      "matchesAcceptedBaselinePixels": true
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/nonempty-recipe-round-2-page-1.png",
+      "sha256": "18775c8029ef382cadd23de1566328c59c42795869cce3601a5479d24dafd7b3",
+      "size": [
+        1000,
+        1400
+      ],
+      "matchesAcceptedBaselinePixels": true
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/nonempty-recipe-round-2-page-2.png",
+      "sha256": "d1efc2fcadc619a5a6789185d1b56cdd00461dc20a4c9639d8c9dfa19c5c43a8",
+      "size": [
+        1400,
+        1000
+      ],
+      "matchesAcceptedBaselinePixels": true
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/nonempty-recipe-round-2-page-3.png",
+      "sha256": "9403b6f02ced9ffcc5bbd36cac37d66f7cb2e6a8be98432c527408cec9fee09c",
+      "size": [
+        1000,
+        1400
+      ],
+      "matchesAcceptedBaselinePixels": true
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/explicit-none-round-1-page-1.png",
+      "sha256": "65ae2e790850176641fbc9f8a15d484eb115f72caa27105ae293a6dfe580323d",
+      "size": [
+        1000,
+        1400
+      ],
+      "matchesAcceptedBaselinePixels": true
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-ui/browser-native/render/explicit-none-round-2-page-1.png",
+      "sha256": "7c13c47e895ad34f15a7ca0b2b37d6e3f563506bbf88c6df823966aa034ae30b",
+      "size": [
+        1000,
+        1400
+      ],
+      "matchesAcceptedBaselinePixels": true
+    }
+  ],
+  "review": "Contact sheet inspected across all 20 pages; full CJK FreeText and explicit no-border pages inspected. Chinese glyphs, alpha, geometry, fields, rotated/copied pages and cleared colors remain readable without duplicate painting or clipping."
+}

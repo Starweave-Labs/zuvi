@@ -1,0 +1,898 @@
+{
+  "tool": "pypdf",
+  "checks": "canonical field tree, unique page widgets, V/DV, AP state/data, unchanged appearances, page order/resources, links, byte-stable reopens and paired history",
+  "files": [
+    {
+      "file": "primary-source.pdf",
+      "bytes": 16756,
+      "sha256": "ad05fb8acced772b57e7ddf0a7f4278987ffb003af30b5bdb19f898b614458d9",
+      "pages": [
+        {
+          "label": "SEVEN_PAGE_1",
+          "mediaBox": [
+            0.0,
+            0.0,
+            300.0,
+            400.0
+          ]
+        },
+        {
+          "label": "SEVEN_PAGE_2",
+          "mediaBox": [
+            0.0,
+            0.0,
+            310.0,
+            410.0
+          ]
+        }
+      ],
+      "fields": {
+        "Text": {
+          "type": "/Tx",
+          "value": "Native text",
+          "defaultValue": null,
+          "widgets": [
+            {
+              "page": 1,
+              "appearance": {
+                "stream": "3df25213d1815a9ea50695fffcf1172e7b6f778d69c3761cfc7fb9cd38571928"
+              }
+            }
+          ]
+        },
+        "Date": {
+          "type": "/Tx",
+          "value": "2026-11-26",
+          "defaultValue": null,
+          "widgets": [
+            {
+              "page": 1,
+              "appearance": {
+                "stream": "ffdedbfd6af0d525a59b17d29077395b98873bd691464cb8d7ebcb464a090112"
+              }
+            }
+          ]
+        },
+        "Image": {
+          "type": "/Btn",
+          "value": null,
+          "defaultValue": null,
+          "widgets": [
+            {
+              "page": 1,
+              "appearance": {
+                "stream": "18904ba07c52a61eddd0bc1bf50def5aa369746ebe6784f6d8e5a2ff393b2560"
+              }
+            }
+          ]
+        },
+        "Checked": {
+          "type": "/Btn",
+          "value": "/Yes",
+          "defaultValue": "/Yes",
+          "widgets": [
+            {
+              "page": 1,
+              "appearance": {
+                "/Yes": "8e68152ba95d036085769d3d092f6d072df6ecf4b590bc2924f5df7c30a26b15",
+                "/Off": "1edc0247628a0a57cbed21e20c644e513304546e87f0a4e1fd776d70fd03cf87"
+              }
+            }
+          ]
+        },
+        "Choice": {
+          "type": "/Btn",
+          "value": "/0",
+          "defaultValue": "/0",
+          "widgets": [
+            {
+              "page": 1,
+              "appearance": {
+                "/0": "bca5478a74e733f9f07da1e57084bfa9b58898f62a1cde708ec8fcb9b8ea551a",
+                "/Off": "cd45d90c2c4f9a641bad39500601701e07f9467261e506182bbf98b67654447d"
+              }
+            },
+            {
+              "page": 1,
+              "appearance": {
+                "/1": "bca5478a74e733f9f07da1e57084bfa9b58898f62a1cde708ec8fcb9b8ea551a",
+                "/Off": "cd45d90c2c4f9a641bad39500601701e07f9467261e506182bbf98b67654447d"
+              }
+            }
+          ]
+        },
+        "Drop": {
+          "type": "/Ch",
+          "value": "Two",
+          "defaultValue": null,
+          "widgets": [
+            {
+              "page": 2,
+              "appearance": {
+                "stream": "911c83e9356da95f2aec0741c4935960f084ce40ff49ed0f68d7208ddff0d067"
+              }
+            }
+          ]
+        },
+        "List": {
+          "type": "/Ch",
+          "value": [
+            "Alpha",
+            "Gamma"
+          ],
+          "defaultValue": null,
+          "widgets": [
+            {
+              "page": 2,
+              "appearance": {
+                "stream": "9860899f9fb8f40743c4e90a70e63534ed45b3abb4e2f7b5dc3610e354813f4b"
+              }
+            }
+          ]
+        },
+        "Vendor": {
+          "type": "/VendorPassive",
+          "value": "PASSIVE",
+          "defaultValue": null,
+          "widgets": [
+            {
+              "page": 1,
+              "appearance": {
+                "stream": "57e9d6aa32033ce0ef4d6ecbc748be5427cb963ec8196fb641ec979e370c9fe1"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "file": "before-composition-history.pdf",
+      "bytes": 1645260,
+      "sha256": "2a158d1b8c48c3bcba366191cb523817497777ab7075172630eca3366f23bb5e",
+      "pages": [
+        {
+          "label": "SEVEN_PAGE_1",
+          "mediaBox": [
+            0.0,
+            0.0,
+            300.0,
+            400.0
+          ]
+        },
+        {
+          "label": "SEVEN_PAGE_2",
+          "mediaBox": [
+            0.0,
+            0.0,
+            310.0,
+            410.0
+          ]
+        },
+        {
+          "label": "SEVEN_PAGE_1",
+          "mediaBox": [
+            0.0,
+            0.0,
+            300.0,
+            400.0
+          ]
+        }
+      ],
+      "fields": {
+        "Text": {
+          "type": "/Tx",
+          "value": "合并前的中文",
+          "defaultValue": null,
+          "widgets": [
+            {
+              "page": 1,
+              "appearance": {
+                "stream": "35f12d6cb8a64d53749eb070b8a9f4e34c009fc0533378e1cdb69abdd57c97a1"
+              }
+            },
+            {
+              "page": 3,
+              "appearance": {
+                "stream": "35f12d6cb8a64d53749eb070b8a9f4e34c009fc0533378e1cdb69abdd57c97a1"
+              }
+            }
+          ]
+        },
+        "Date": {
+          "type": "/Tx",
+          "value": "2026-11-26",
+          "defaultValue": null,
+          "widgets": [
+            {
+              "page": 1,
+              "appearance": {
+                "stream": "ffdedbfd6af0d525a59b17d29077395b98873bd691464cb8d7ebcb464a090112"
+              }
+            },
+            {
+              "page": 3,
+              "appearance": {
+                "stream": "ffdedbfd6af0d525a59b17d29077395b98873bd691464cb8d7ebcb464a090112"
+              }
+            }
+          ]
+        },
+        "Image": {
+          "type": "/Btn",
+          "value": null,
+          "defaultValue": null,
+          "widgets": [
+            {
+              "page": 1,
+              "appearance": {
+                "stream": "18904ba07c52a61eddd0bc1bf50def5aa369746ebe6784f6d8e5a2ff393b2560"
+              }
+            },
+            {
+              "page": 3,
+              "appearance": {
+                "stream": "18904ba07c52a61eddd0bc1bf50def5aa369746ebe6784f6d8e5a2ff393b2560"
+              }
+            }
+          ]
+        },
+        "Checked": {
+          "type": "/Btn",
+          "value": "/Yes",
+          "defaultValue": "/Yes",
+          "widgets": [
+            {
+              "page": 1,
+              "appearance": {
+                "/Yes": "8e68152ba95d036085769d3d092f6d072df6ecf4b590bc2924f5df7c30a26b15",
+                "/Off": "1edc0247628a0a57cbed21e20c644e513304546e87f0a4e1fd776d70fd03cf87"
+              }
+            },
+            {
+              "page": 3,
+              "appearance": {
+                "/Yes": "8e68152ba95d036085769d3d092f6d072df6ecf4b590bc2924f5df7c30a26b15",
+                "/Off": "1edc0247628a0a57cbed21e20c644e513304546e87f0a4e1fd776d70fd03cf87"
+              }
+            }
+          ]
+        },
+        "Choice": {
+          "type": "/Btn",
+          "value": "/0",
+          "defaultValue": "/0",
+          "widgets": [
+            {
+              "page": 1,
+              "appearance": {
+                "/0": "bca5478a74e733f9f07da1e57084bfa9b58898f62a1cde708ec8fcb9b8ea551a",
+                "/Off": "cd45d90c2c4f9a641bad39500601701e07f9467261e506182bbf98b67654447d"
+              }
+            },
+            {
+              "page": 1,
+              "appearance": {
+                "/1": "bca5478a74e733f9f07da1e57084bfa9b58898f62a1cde708ec8fcb9b8ea551a",
+                "/Off": "cd45d90c2c4f9a641bad39500601701e07f9467261e506182bbf98b67654447d"
+              }
+            },
+            {
+              "page": 3,
+              "appearance": {
+                "/0": "bca5478a74e733f9f07da1e57084bfa9b58898f62a1cde708ec8fcb9b8ea551a",
+                "/Off": "cd45d90c2c4f9a641bad39500601701e07f9467261e506182bbf98b67654447d"
+              }
+            },
+            {
+              "page": 3,
+              "appearance": {
+                "/1": "bca5478a74e733f9f07da1e57084bfa9b58898f62a1cde708ec8fcb9b8ea551a",
+                "/Off": "cd45d90c2c4f9a641bad39500601701e07f9467261e506182bbf98b67654447d"
+              }
+            }
+          ]
+        },
+        "Drop": {
+          "type": "/Ch",
+          "value": "Two",
+          "defaultValue": null,
+          "widgets": [
+            {
+              "page": 2,
+              "appearance": {
+                "stream": "911c83e9356da95f2aec0741c4935960f084ce40ff49ed0f68d7208ddff0d067"
+              }
+            }
+          ]
+        },
+        "List": {
+          "type": "/Ch",
+          "value": [
+            "Alpha",
+            "Gamma"
+          ],
+          "defaultValue": null,
+          "widgets": [
+            {
+              "page": 2,
+              "appearance": {
+                "stream": "9860899f9fb8f40743c4e90a70e63534ed45b3abb4e2f7b5dc3610e354813f4b"
+              }
+            }
+          ]
+        },
+        "Vendor": {
+          "type": "/VendorPassive",
+          "value": "PASSIVE",
+          "defaultValue": null,
+          "widgets": [
+            {
+              "page": 1,
+              "appearance": {
+                "stream": "57e9d6aa32033ce0ef4d6ecbc748be5427cb963ec8196fb641ec979e370c9fe1"
+              }
+            },
+            {
+              "page": 3,
+              "appearance": {
+                "stream": "57e9d6aa32033ce0ef4d6ecbc748be5427cb963ec8196fb641ec979e370c9fe1"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "file": "combined-round-1.pdf",
+      "bytes": 1643408,
+      "sha256": "d9dfa18eec89ad6a078e045e3d02c891964ec2a0ed8390adbb21ab385380cae7",
+      "pages": [
+        {
+          "label": "SEVEN_PAGE_1",
+          "mediaBox": [
+            0.0,
+            0.0,
+            300.0,
+            400.0
+          ]
+        },
+        {
+          "label": "INCOMING_PAGE_2",
+          "mediaBox": [
+            0.0,
+            0.0,
+            310.0,
+            410.0
+          ]
+        },
+        {
+          "label": "INCOMING_PAGE_1",
+          "mediaBox": [
+            0.0,
+            0.0,
+            300.0,
+            400.0
+          ]
+        },
+        {
+          "label": "SEVEN_PAGE_2",
+          "mediaBox": [
+            0.0,
+            0.0,
+            310.0,
+            410.0
+          ]
+        },
+        {
+          "label": "SEVEN_PAGE_1",
+          "mediaBox": [
+            0.0,
+            0.0,
+            300.0,
+            400.0
+          ]
+        }
+      ],
+      "fields": {
+        "Text": {
+          "type": "/Tx",
+          "value": "合并前的中文",
+          "defaultValue": null,
+          "widgets": [
+            {
+              "page": 1,
+              "appearance": {
+                "stream": "35f12d6cb8a64d53749eb070b8a9f4e34c009fc0533378e1cdb69abdd57c97a1"
+              }
+            },
+            {
+              "page": 5,
+              "appearance": {
+                "stream": "35f12d6cb8a64d53749eb070b8a9f4e34c009fc0533378e1cdb69abdd57c97a1"
+              }
+            }
+          ]
+        },
+        "Date": {
+          "type": "/Tx",
+          "value": "2026-11-26",
+          "defaultValue": null,
+          "widgets": [
+            {
+              "page": 1,
+              "appearance": {
+                "stream": "ffdedbfd6af0d525a59b17d29077395b98873bd691464cb8d7ebcb464a090112"
+              }
+            },
+            {
+              "page": 5,
+              "appearance": {
+                "stream": "ffdedbfd6af0d525a59b17d29077395b98873bd691464cb8d7ebcb464a090112"
+              }
+            }
+          ]
+        },
+        "Image": {
+          "type": "/Btn",
+          "value": null,
+          "defaultValue": null,
+          "widgets": [
+            {
+              "page": 1,
+              "appearance": {
+                "stream": "18904ba07c52a61eddd0bc1bf50def5aa369746ebe6784f6d8e5a2ff393b2560"
+              }
+            },
+            {
+              "page": 5,
+              "appearance": {
+                "stream": "18904ba07c52a61eddd0bc1bf50def5aa369746ebe6784f6d8e5a2ff393b2560"
+              }
+            }
+          ]
+        },
+        "Checked": {
+          "type": "/Btn",
+          "value": "/Yes",
+          "defaultValue": "/Yes",
+          "widgets": [
+            {
+              "page": 1,
+              "appearance": {
+                "/Yes": "8e68152ba95d036085769d3d092f6d072df6ecf4b590bc2924f5df7c30a26b15",
+                "/Off": "1edc0247628a0a57cbed21e20c644e513304546e87f0a4e1fd776d70fd03cf87"
+              }
+            },
+            {
+              "page": 5,
+              "appearance": {
+                "/Yes": "8e68152ba95d036085769d3d092f6d072df6ecf4b590bc2924f5df7c30a26b15",
+                "/Off": "1edc0247628a0a57cbed21e20c644e513304546e87f0a4e1fd776d70fd03cf87"
+              }
+            }
+          ]
+        },
+        "Choice": {
+          "type": "/Btn",
+          "value": "/0",
+          "defaultValue": "/0",
+          "widgets": [
+            {
+              "page": 1,
+              "appearance": {
+                "/0": "bca5478a74e733f9f07da1e57084bfa9b58898f62a1cde708ec8fcb9b8ea551a",
+                "/Off": "cd45d90c2c4f9a641bad39500601701e07f9467261e506182bbf98b67654447d"
+              }
+            },
+            {
+              "page": 1,
+              "appearance": {
+                "/1": "bca5478a74e733f9f07da1e57084bfa9b58898f62a1cde708ec8fcb9b8ea551a",
+                "/Off": "cd45d90c2c4f9a641bad39500601701e07f9467261e506182bbf98b67654447d"
+              }
+            },
+            {
+              "page": 5,
+              "appearance": {
+                "/0": "bca5478a74e733f9f07da1e57084bfa9b58898f62a1cde708ec8fcb9b8ea551a",
+                "/Off": "cd45d90c2c4f9a641bad39500601701e07f9467261e506182bbf98b67654447d"
+              }
+            },
+            {
+              "page": 5,
+              "appearance": {
+                "/1": "bca5478a74e733f9f07da1e57084bfa9b58898f62a1cde708ec8fcb9b8ea551a",
+                "/Off": "cd45d90c2c4f9a641bad39500601701e07f9467261e506182bbf98b67654447d"
+              }
+            }
+          ]
+        },
+        "Drop": {
+          "type": "/Ch",
+          "value": "Two",
+          "defaultValue": null,
+          "widgets": [
+            {
+              "page": 4,
+              "appearance": {
+                "stream": "911c83e9356da95f2aec0741c4935960f084ce40ff49ed0f68d7208ddff0d067"
+              }
+            }
+          ]
+        },
+        "List": {
+          "type": "/Ch",
+          "value": [
+            "Alpha",
+            "Gamma"
+          ],
+          "defaultValue": null,
+          "widgets": [
+            {
+              "page": 4,
+              "appearance": {
+                "stream": "9860899f9fb8f40743c4e90a70e63534ed45b3abb4e2f7b5dc3610e354813f4b"
+              }
+            }
+          ]
+        },
+        "Vendor": {
+          "type": "/VendorPassive",
+          "value": "PASSIVE",
+          "defaultValue": null,
+          "widgets": [
+            {
+              "page": 1,
+              "appearance": {
+                "stream": "57e9d6aa32033ce0ef4d6ecbc748be5427cb963ec8196fb641ec979e370c9fe1"
+              }
+            },
+            {
+              "page": 5,
+              "appearance": {
+                "stream": "57e9d6aa32033ce0ef4d6ecbc748be5427cb963ec8196fb641ec979e370c9fe1"
+              }
+            }
+          ]
+        },
+        "Text__2": {
+          "type": "/Tx",
+          "value": "Incoming",
+          "defaultValue": null,
+          "widgets": [
+            {
+              "page": 3,
+              "appearance": {
+                "stream": "4c1511a7c2c9031791b06f265b9099eb708cedd897583a8e04bd6d65e3a9ed49"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "file": "combined-round-2.pdf",
+      "bytes": 1643408,
+      "sha256": "d9dfa18eec89ad6a078e045e3d02c891964ec2a0ed8390adbb21ab385380cae7",
+      "pages": [
+        {
+          "label": "SEVEN_PAGE_1",
+          "mediaBox": [
+            0.0,
+            0.0,
+            300.0,
+            400.0
+          ]
+        },
+        {
+          "label": "INCOMING_PAGE_2",
+          "mediaBox": [
+            0.0,
+            0.0,
+            310.0,
+            410.0
+          ]
+        },
+        {
+          "label": "INCOMING_PAGE_1",
+          "mediaBox": [
+            0.0,
+            0.0,
+            300.0,
+            400.0
+          ]
+        },
+        {
+          "label": "SEVEN_PAGE_2",
+          "mediaBox": [
+            0.0,
+            0.0,
+            310.0,
+            410.0
+          ]
+        },
+        {
+          "label": "SEVEN_PAGE_1",
+          "mediaBox": [
+            0.0,
+            0.0,
+            300.0,
+            400.0
+          ]
+        }
+      ],
+      "fields": {
+        "Text": {
+          "type": "/Tx",
+          "value": "合并前的中文",
+          "defaultValue": null,
+          "widgets": [
+            {
+              "page": 1,
+              "appearance": {
+                "stream": "35f12d6cb8a64d53749eb070b8a9f4e34c009fc0533378e1cdb69abdd57c97a1"
+              }
+            },
+            {
+              "page": 5,
+              "appearance": {
+                "stream": "35f12d6cb8a64d53749eb070b8a9f4e34c009fc0533378e1cdb69abdd57c97a1"
+              }
+            }
+          ]
+        },
+        "Date": {
+          "type": "/Tx",
+          "value": "2026-11-26",
+          "defaultValue": null,
+          "widgets": [
+            {
+              "page": 1,
+              "appearance": {
+                "stream": "ffdedbfd6af0d525a59b17d29077395b98873bd691464cb8d7ebcb464a090112"
+              }
+            },
+            {
+              "page": 5,
+              "appearance": {
+                "stream": "ffdedbfd6af0d525a59b17d29077395b98873bd691464cb8d7ebcb464a090112"
+              }
+            }
+          ]
+        },
+        "Image": {
+          "type": "/Btn",
+          "value": null,
+          "defaultValue": null,
+          "widgets": [
+            {
+              "page": 1,
+              "appearance": {
+                "stream": "18904ba07c52a61eddd0bc1bf50def5aa369746ebe6784f6d8e5a2ff393b2560"
+              }
+            },
+            {
+              "page": 5,
+              "appearance": {
+                "stream": "18904ba07c52a61eddd0bc1bf50def5aa369746ebe6784f6d8e5a2ff393b2560"
+              }
+            }
+          ]
+        },
+        "Checked": {
+          "type": "/Btn",
+          "value": "/Yes",
+          "defaultValue": "/Yes",
+          "widgets": [
+            {
+              "page": 1,
+              "appearance": {
+                "/Yes": "8e68152ba95d036085769d3d092f6d072df6ecf4b590bc2924f5df7c30a26b15",
+                "/Off": "1edc0247628a0a57cbed21e20c644e513304546e87f0a4e1fd776d70fd03cf87"
+              }
+            },
+            {
+              "page": 5,
+              "appearance": {
+                "/Yes": "8e68152ba95d036085769d3d092f6d072df6ecf4b590bc2924f5df7c30a26b15",
+                "/Off": "1edc0247628a0a57cbed21e20c644e513304546e87f0a4e1fd776d70fd03cf87"
+              }
+            }
+          ]
+        },
+        "Choice": {
+          "type": "/Btn",
+          "value": "/0",
+          "defaultValue": "/0",
+          "widgets": [
+            {
+              "page": 1,
+              "appearance": {
+                "/0": "bca5478a74e733f9f07da1e57084bfa9b58898f62a1cde708ec8fcb9b8ea551a",
+                "/Off": "cd45d90c2c4f9a641bad39500601701e07f9467261e506182bbf98b67654447d"
+              }
+            },
+            {
+              "page": 1,
+              "appearance": {
+                "/1": "bca5478a74e733f9f07da1e57084bfa9b58898f62a1cde708ec8fcb9b8ea551a",
+                "/Off": "cd45d90c2c4f9a641bad39500601701e07f9467261e506182bbf98b67654447d"
+              }
+            },
+            {
+              "page": 5,
+              "appearance": {
+                "/0": "bca5478a74e733f9f07da1e57084bfa9b58898f62a1cde708ec8fcb9b8ea551a",
+                "/Off": "cd45d90c2c4f9a641bad39500601701e07f9467261e506182bbf98b67654447d"
+              }
+            },
+            {
+              "page": 5,
+              "appearance": {
+                "/1": "bca5478a74e733f9f07da1e57084bfa9b58898f62a1cde708ec8fcb9b8ea551a",
+                "/Off": "cd45d90c2c4f9a641bad39500601701e07f9467261e506182bbf98b67654447d"
+              }
+            }
+          ]
+        },
+        "Drop": {
+          "type": "/Ch",
+          "value": "Two",
+          "defaultValue": null,
+          "widgets": [
+            {
+              "page": 4,
+              "appearance": {
+                "stream": "911c83e9356da95f2aec0741c4935960f084ce40ff49ed0f68d7208ddff0d067"
+              }
+            }
+          ]
+        },
+        "List": {
+          "type": "/Ch",
+          "value": [
+            "Alpha",
+            "Gamma"
+          ],
+          "defaultValue": null,
+          "widgets": [
+            {
+              "page": 4,
+              "appearance": {
+                "stream": "9860899f9fb8f40743c4e90a70e63534ed45b3abb4e2f7b5dc3610e354813f4b"
+              }
+            }
+          ]
+        },
+        "Vendor": {
+          "type": "/VendorPassive",
+          "value": "PASSIVE",
+          "defaultValue": null,
+          "widgets": [
+            {
+              "page": 1,
+              "appearance": {
+                "stream": "57e9d6aa32033ce0ef4d6ecbc748be5427cb963ec8196fb641ec979e370c9fe1"
+              }
+            },
+            {
+              "page": 5,
+              "appearance": {
+                "stream": "57e9d6aa32033ce0ef4d6ecbc748be5427cb963ec8196fb641ec979e370c9fe1"
+              }
+            }
+          ]
+        },
+        "Text__2": {
+          "type": "/Tx",
+          "value": "Incoming",
+          "defaultValue": null,
+          "widgets": [
+            {
+              "page": 3,
+              "appearance": {
+                "stream": "4c1511a7c2c9031791b06f265b9099eb708cedd897583a8e04bd6d65e3a9ed49"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "file": "radio-cleared.pdf",
+      "bytes": 2648,
+      "sha256": "c22ac2cbc6383fec947a723aa46ac7b26af35dc2dc82242965edbf3d308a8340",
+      "pages": [
+        {
+          "label": "RADIO_PAGE_1",
+          "mediaBox": [
+            0.0,
+            0.0,
+            300.0,
+            400.0
+          ]
+        }
+      ],
+      "fields": {
+        "Choice": {
+          "type": "/Btn",
+          "value": "/Off",
+          "defaultValue": "/0",
+          "widgets": [
+            {
+              "page": 1,
+              "appearance": {
+                "/0": "bca5478a74e733f9f07da1e57084bfa9b58898f62a1cde708ec8fcb9b8ea551a",
+                "/Off": "cd45d90c2c4f9a641bad39500601701e07f9467261e506182bbf98b67654447d"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "file": "radio-round-1.pdf",
+      "bytes": 2212,
+      "sha256": "857135bdc871e49e5d0b47d1e0440ff4e459537d3cdbf5e6261953dca961bd82",
+      "pages": [
+        {
+          "label": "RADIO_PAGE_1",
+          "mediaBox": [
+            0.0,
+            0.0,
+            300.0,
+            400.0
+          ]
+        }
+      ],
+      "fields": {
+        "Choice": {
+          "type": "/Btn",
+          "value": "/0",
+          "defaultValue": "/0",
+          "widgets": [
+            {
+              "page": 1,
+              "appearance": {
+                "/0": "bca5478a74e733f9f07da1e57084bfa9b58898f62a1cde708ec8fcb9b8ea551a",
+                "/Off": "cd45d90c2c4f9a641bad39500601701e07f9467261e506182bbf98b67654447d"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "file": "radio-round-2.pdf",
+      "bytes": 2212,
+      "sha256": "857135bdc871e49e5d0b47d1e0440ff4e459537d3cdbf5e6261953dca961bd82",
+      "pages": [
+        {
+          "label": "RADIO_PAGE_1",
+          "mediaBox": [
+            0.0,
+            0.0,
+            300.0,
+            400.0
+          ]
+        }
+      ],
+      "fields": {
+        "Choice": {
+          "type": "/Btn",
+          "value": "/0",
+          "defaultValue": "/0",
+          "widgets": [
+            {
+              "page": 1,
+              "appearance": {
+                "/0": "bca5478a74e733f9f07da1e57084bfa9b58898f62a1cde708ec8fcb9b8ea551a",
+                "/Off": "cd45d90c2c4f9a641bad39500601701e07f9467261e506182bbf98b67654447d"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

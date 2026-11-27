@@ -1,0 +1,21 @@
+
+> zuvi@0.1.0 typecheck /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59
+> pnpm -r typecheck
+
+Scope: 8 of 9 workspace projects
+packages/cli typecheck$ tsc -p tsconfig.json
+packages/i18n typecheck$ tsc -p tsconfig.json --noEmit
+packages/icons typecheck$ tsc -p tsconfig.json --noEmit
+packages/mcp typecheck$ tsc -p tsconfig.json --noEmit
+packages/mcp typecheck: Done
+packages/tokens typecheck$ tsc -p tsconfig.json --noEmit
+packages/cli typecheck: Done
+packages/i18n typecheck: Done
+packages/tokens typecheck: Done
+packages/icons typecheck: Done
+packages/ui typecheck$ tsc --noEmit
+packages/ui typecheck: Done
+packages/blocks typecheck$ tsc -p tsconfig.json --noEmit
+packages/blocks typecheck: Done
+docs typecheck$ tsc --noEmit
+docs typecheck: Done

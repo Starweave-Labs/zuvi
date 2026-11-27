@@ -1,0 +1,10 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/StudioPdfTextLayer.test.tsx (6 tests) 64ms
+
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Start at  07:44:24
+   Duration  616ms (transform 35ms, setup 69ms, collect 52ms, tests 64ms, environment 251ms, prepare 40ms)
+

@@ -1,0 +1,45 @@
+TAP version 13
+# Subtest: native duplicate removal compacts selected records, resets overwritten source formatting and retains formulas over two reopens
+ok 1 - native duplicate removal compacts selected records, resets overwritten source formatting and retains formulas over two reopens
+  ---
+  duration_ms: 249.835458
+  ...
+# Subtest: native hyperlinks follow retained records and clear deleted tails without changing adjacent links
+ok 2 - native hyperlinks follow retained records and clear deleted tails without changing adjacent links
+  ---
+  duration_ms: 112.948291
+  ...
+# Subtest: native typed comparison distinguishes numeric, text, boolean, true blank and explicit empty text through two reopens
+ok 3 - native typed comparison distinguishes numeric, text, boolean, true blank and explicit empty text through two reopens
+  ---
+  duration_ms: 63.84575
+  ...
+# Subtest: explicit empty input with text valueType stays native text when moved and reopens as an empty text key
+ok 4 - explicit empty input with text valueType stays native text when moved and reopens as an empty text key
+  ---
+  duration_ms: 95.532291
+  ...
+# Subtest: native sources and original model remain unchanged when duplicate removal refuses unsafe regions
+ok 5 - native sources and original model remain unchanged when duplicate removal refuses unsafe regions
+  ---
+  duration_ms: 13.838542
+  ...
+# Subtest: native sorting retains external and quoted A1 range qualifiers with original values and XML caches through two reopens
+ok 6 - native sorting retains external and quoted A1 range qualifiers with original values and XML caches through two reopens
+  ---
+  duration_ms: 254.279375
+  ...
+# Subtest: unsafe current-sheet sort ranges reject without changing the imported model or original XLSX
+ok 7 - unsafe current-sheet sort ranges reject without changing the imported model or original XLSX
+  ---
+  duration_ms: 23.933791
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1513.782083

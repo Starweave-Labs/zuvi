@@ -1,0 +1,65 @@
+{
+  "reason": "Port 5174 belonged to the primary ZCode workspace; this run did not serve the finish-office-studio worktree.",
+  "entries": [
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-browser-primary-service/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/trace.zip",
+      "bytes": 2264379,
+      "sha256": "f32ec7d9fecdd2b2ae70855d33c93a13150e0ab93cffff09457e64ace87c5a06"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-browser-primary-service/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/error-context.md.raw.gz",
+      "bytes": 10262,
+      "sha256": "31902986594aebeb54c70b5cc2eefa3c472f1eba7156ab7602dc99a32a604fc8",
+      "uncompressedOriginal": {
+        "bytes": 38520,
+        "sha256": "0cf958b423b4728173cbeff32537b8b3230fd46ce215a1a844e2e242d775cea9"
+      },
+      "normalizedView": {
+        "path": "docs/audits/2026-11-27/pdf-composition/first-browser-primary-service/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/error-context.md",
+        "bytes": 38516,
+        "sha256": "8dd90cefec470caa21ea336aba6b8238925d6005c0d9c113e9d62c4dacc33586",
+        "change": "Trailing spaces/tabs only; original bytes are preserved in the raw gzip archive."
+      }
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-browser-primary-service/office-studio-pdf-composit-7c290-ogs-in-light-dark-and-320px-chromium/trace.zip",
+      "bytes": 2264587,
+      "sha256": "55ea161bd96fc426cd849302c7de6c290f2d8df3a0db54fd796ff53e45b93b2d"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-browser-primary-service/office-studio-pdf-composit-7c290-ogs-in-light-dark-and-320px-chromium/error-context.md.raw.gz",
+      "bytes": 11916,
+      "sha256": "c54ca5d561a4ab5a81857c7cdc2f977809a15e2f0d6081bda51b7645093a5847",
+      "uncompressedOriginal": {
+        "bytes": 50290,
+        "sha256": "d2c3516a1622437704a1152d5dcf4e84978808ea1c451e83e531958f82549ab0"
+      },
+      "normalizedView": {
+        "path": "docs/audits/2026-11-27/pdf-composition/first-browser-primary-service/office-studio-pdf-composit-7c290-ogs-in-light-dark-and-320px-chromium/error-context.md",
+        "bytes": 50285,
+        "sha256": "6a6f120b4fcf1d041886cfb79285436516501928cce4663f89632ecc6f6332ad",
+        "change": "Trailing spaces/tabs only; original bytes are preserved in the raw gzip archive."
+      }
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-browser-primary-service/office-studio-pdf-composit-0d74b-s-undo-and-repeated-reopens-chromium/trace.zip",
+      "bytes": 2206771,
+      "sha256": "5d8063e6851e2a043bd74935b135f30ffc3bd41ce5a57eeb9fdcc14340a804ea"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-composition/first-browser-primary-service/office-studio-pdf-composit-0d74b-s-undo-and-repeated-reopens-chromium/error-context.md.raw.gz",
+      "bytes": 11942,
+      "sha256": "e2050970a0116cbacb44b3d7a5b1ce85465a13949653eb738230d3304cd8ddac",
+      "uncompressedOriginal": {
+        "bytes": 50374,
+        "sha256": "04613fac59a55443afc39588d8122b83451962774ce569bed6293287c3f4b4fe"
+      },
+      "normalizedView": {
+        "path": "docs/audits/2026-11-27/pdf-composition/first-browser-primary-service/office-studio-pdf-composit-0d74b-s-undo-and-repeated-reopens-chromium/error-context.md",
+        "bytes": 50369,
+        "sha256": "d52aff3f2d87eed85773de858c50674081828991c1b74db68e42ce69ddb9f03e",
+        "change": "Trailing spaces/tabs only; original bytes are preserved in the raw gzip archive."
+      }
+    }
+  ]
+}

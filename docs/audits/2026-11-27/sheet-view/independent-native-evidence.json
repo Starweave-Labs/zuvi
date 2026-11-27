@@ -1,0 +1,69 @@
+{
+  "passed": true,
+  "rounds": [
+    {
+      "file": "view-roundtrip-1.xlsx",
+      "sha256": "77cd10153597a108100fce3ec5be0a4eccf4a8545d4898ba8bb3d65246e38dad",
+      "bookViews": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 1200,
+          "height": 800,
+          "visibility": "visible",
+          "activeTab": 0,
+          "firstSheet": 0
+        },
+        {
+          "x": 50,
+          "y": 50,
+          "width": 800,
+          "height": 600,
+          "visibility": "visible",
+          "activeTab": 1,
+          "firstSheet": 0
+        }
+      ],
+      "primary": "<sheetView workbookViewId=\"0\" zoomScale=\"400\" zoomScaleNormal=\"175\" showGridLines=\"0\" showRowColHeaders=\"0\" showZeros=\"false\" showOutlineSymbols=\"0\" topLeftCell=\"D9\"><pane state=\"frozen\" xSplit=\"1\" ySplit=\"1\" topLeftCell=\"F8\" activePane=\"bottomRight\"/><selection pane=\"topLeft\" activeCell=\"A1\" sqref=\"A1\"/><selection pane=\"bottomRight\" activeCell=\"G9\" sqref=\"G9:H10\"/></sheetView>",
+      "C7": 13,
+      "formula": {
+        "formula": "C4*2",
+        "result": 20
+      },
+      "printScale": 83,
+      "hiddenControlWidth": 18
+    },
+    {
+      "file": "view-roundtrip-2.xlsx",
+      "sha256": "c4553492973daaa379cfe8a474a8e2755230aca6634d154885676888552ae007",
+      "bookViews": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 1200,
+          "height": 800,
+          "visibility": "visible",
+          "activeTab": 0,
+          "firstSheet": 0
+        },
+        {
+          "x": 50,
+          "y": 50,
+          "width": 800,
+          "height": 600,
+          "visibility": "visible",
+          "activeTab": 1,
+          "firstSheet": 0
+        }
+      ],
+      "primary": "<sheetView workbookViewId=\"0\" zoomScale=\"400\" zoomScaleNormal=\"175\" showGridLines=\"0\" showRowColHeaders=\"0\" showZeros=\"false\" showOutlineSymbols=\"0\" topLeftCell=\"D9\"><pane state=\"frozen\" xSplit=\"1\" ySplit=\"1\" topLeftCell=\"F8\" activePane=\"bottomRight\"/><selection pane=\"topLeft\" activeCell=\"A1\" sqref=\"A1\"/><selection pane=\"bottomRight\" activeCell=\"G9\" sqref=\"G9:H10\"/></sheetView>",
+      "C7": 13,
+      "formula": {
+        "formula": "C4*2",
+        "result": 20
+      },
+      "printScale": 83,
+      "hiddenControlWidth": 18
+    }
+  ]
+}

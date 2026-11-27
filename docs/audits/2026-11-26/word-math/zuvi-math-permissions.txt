@@ -1,0 +1,11 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/StudioWord.test.tsx (100 tests | 98 skipped) 1261ms
+   ✓ inserts a structured fraction through the actual math dialog and undoes it atomically 779ms
+   ✓ blocks an open math draft after permissions or external content change 481ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed | 98 skipped (100)
+   Start at  12:16:44
+   Duration  3.73s (transform 964ms, setup 172ms, collect 1.49s, tests 1.26s, environment 473ms, prepare 86ms)

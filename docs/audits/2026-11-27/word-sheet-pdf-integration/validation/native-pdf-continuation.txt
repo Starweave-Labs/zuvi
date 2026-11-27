@@ -1,0 +1,9 @@
+verified independent pypdf p012-freetext
+verified independent pypdf p014-markers
+verified independent pypdf p016-geometry
+verified independent pypdf gesture-history
+verified independent pypdf p015-discussion
+verified independent pypdf legacy-migration
+verified independent pypdf nonempty-recipe
+verified independent pypdf explicit-none
+passed 19 actual browser-produced PDFs

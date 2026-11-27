@@ -1,0 +1,47 @@
+[WebServer] (node:60113) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:60126) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+[WebServer] [BABEL] Note: The code generator has deoptimised the styling of /var/folders/9n/_523pt1s3gqg0f165zsdbldc0000gn/T/zuvi-office-e2e-vite-5275-60107/deps/react-dom_client.js?v=2e03dcbc as it exceeds the max of 500KB.
+  ✘  1 [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:336:1 › P014 saves four text markers from actual original-text selections with exact native quads, alpha, removal and undo (10.4s)
+
+
+  1) [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:336:1 › P014 saves four text markers from actual original-text selections with exact native quads, alpha, removal and undo 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('dialog', { name: 'PDF 批注属性', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('dialog', { name: 'PDF 批注属性', exact: true }) with timeout 5000ms
+      - waiting for getByRole('dialog', { name: 'PDF 批注属性', exact: true })
+
+
+      171 |   await page.getByRole('button', { name: '编辑批注属性', exact: true }).click();
+      172 |   const dialog = page.getByRole('dialog', { name: 'PDF 批注属性', exact: true });
+    > 173 |   await expect(dialog).toBeVisible();
+          |                        ^
+      174 |   return dialog;
+      175 | }
+      176 | async function selectValue(page: Page, scope: Locator, label: string, option: string) {
+        at properties (/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-native-annotations.spec.ts:173:24)
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-native-annotations.spec.ts:355:20
+
+    Error Context: ../../../../../../tmp/zuvi-pdf-native-ui-third-results/office-studio-pdf-native-a-de44e-uads-alpha-removal-and-undo-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../tmp/zuvi-pdf-native-ui-third-results/office-studio-pdf-native-a-de44e-uads-alpha-removal-and-undo-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../../../tmp/zuvi-pdf-native-ui-third-results/office-studio-pdf-native-a-de44e-uads-alpha-removal-and-undo-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:336:1 › P014 saves four text markers from actual original-text selections with exact native quads, alpha, removal and undo 

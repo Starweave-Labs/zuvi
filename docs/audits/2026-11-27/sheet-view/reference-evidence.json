@@ -1,0 +1,54 @@
+{
+  "item": "X064",
+  "frozenPinsFrom": "docs/onlyoffice-feature-ledger-2026-11-13.json",
+  "snapshots": [
+    {
+      "file": "reference/api.js.txt",
+      "sha256": "501f0b8f3e334bd443920c5f12ac52aefa74c1a9eb066a69c31be39aa27de5bd",
+      "bytes": 387172,
+      "sourcePath": "/tmp/zuvi-sheet-view-reference/api.js",
+      "repository": "ONLYOFFICE/sdkjs",
+      "pin": "9d2138866d929be32f1d107e8b5bfae36156e097",
+      "repositoryPath": "cell/api.js",
+      "url": "https://github.com/ONLYOFFICE/sdkjs/blob/9d2138866d929be32f1d107e8b5bfae36156e097/cell/api.js",
+      "lines": [
+        [4366, 4372],
+        [4711, 4717]
+      ]
+    },
+    {
+      "file": "reference/WorkbookView.js.txt",
+      "sha256": "5f2d308f99ff578659de0bfb0c8074bec37a2fa7e6c0d02b43921ef3bac016f8",
+      "bytes": 283580,
+      "sourcePath": "/tmp/zuvi-sheet-view-reference/WorkbookView.js",
+      "repository": "ONLYOFFICE/sdkjs",
+      "pin": "9d2138866d929be32f1d107e8b5bfae36156e097",
+      "repositoryPath": "cell/view/WorkbookView.js",
+      "url": "https://github.com/ONLYOFFICE/sdkjs/blob/9d2138866d929be32f1d107e8b5bfae36156e097/cell/view/WorkbookView.js",
+      "lines": [
+        [2966, 3019],
+        [4130, 4157]
+      ]
+    },
+    {
+      "file": "reference/DocumentHolder.js.txt",
+      "sha256": "656d0bcfcfa20f3f2c11c7b5a97362190dc8d130e97a9eb786e44ac076684382",
+      "bytes": 26238,
+      "sourcePath": "/tmp/zuvi-sheet-view-reference/DocumentHolder.js",
+      "repository": "ONLYOFFICE/web-apps",
+      "pin": "f79972a400c3a696490094961772d1f86fac1b82",
+      "repositoryPath": "apps/spreadsheeteditor/main/app/controller/DocumentHolder.js",
+      "url": "https://github.com/ONLYOFFICE/web-apps/blob/f79972a400c3a696490094961772d1f86fac1b82/apps/spreadsheeteditor/main/app/controller/DocumentHolder.js",
+      "lines": [[348, 413]]
+    },
+    {
+      "file": "reference/exceljs-sheet-view-xform.js.txt",
+      "sha256": "782fb944503577ca2cd70ebef6c539ab88434b223f1c4d45924f6ef282b14a6f",
+      "bytes": 6262,
+      "sourcePath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/node_modules/.pnpm/exceljs@4.4.0/node_modules/exceljs/lib/xlsx/xform/sheet/sheet-view-xform.js",
+      "package": "exceljs",
+      "version": "4.4.0"
+    }
+  ],
+  "scope": "25-400 is the application authoring requirement; the referenced ONLYOFFICE controller permits 10-500. Native source 10-24 is retained. Screen geometry and text layout use distinct coordinate spaces; print operates at document scale."
+}

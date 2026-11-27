@@ -1,5 +1,7 @@
 export { OfficeStudio } from './OfficeStudio';
 export { createOfficeStudioDocument, isOfficeStudioDocument } from './studio-model';
+export type { StudioWordParagraphSurface,StudioWordParagraphBorder,StudioWordParagraphShading,WordSurfaceSide,WordSurfaceLine } from './studio-word-surface';
+export type { StudioWordNumberingLevel,StudioWordNumberingDefinition,StudioWordNumberingInstance,StudioWordNumberingRef,WordNumberingCatalog,WordNumberFormat,StudioWordNumberingTabStop } from './studio-word-numbering';
 export type {
   OfficeStudioDocument,
   OfficeStudioHandle,
@@ -8,15 +10,27 @@ export type {
   StudioCell,
   StudioEditorProps,
   StudioExcelDocument,
+  StudioExcelDefaultFont,
   StudioPdfDocument,
   StudioPdfField,
+  StudioPdfFieldDesign,
   StudioPdfMark,
+  StudioPdfPage,
   StudioPdfRenderer,
   StudioPdfRenderResult,
+  StudioPdfTextSelection,
+  StudioPdfTextLayerSession,
+  StudioPdfAnnotationLayerSession,
   StudioPdfSession,
   StudioPdfSearchResult,
+  StudioPdfSnapshot,
+  StudioPdfSourceChange,
+  StudioPdfComposer,
+  StudioPdfComposeRequest,
+  StudioPdfComposeResult,
   StudioRichNode,
   StudioSheet,
+  StudioSheetView,
   StudioSheetChart,
   StudioSheetComparisonOperator,
   StudioSheetConditionalFormat,
@@ -26,4 +40,45 @@ export type {
   StudioSheetHyperlink,
   StudioSheetStructureEdit,
   StudioWordDocument,
+  StudioWordImageLayout,
+  StudioWordImagePosition,
+  StudioWordCharacterStyle,
+  StudioWordParagraphFormat,
+  StudioWordParagraphStyle,
+  StudioWordTabStop,
 } from './studio-types';
+export type {
+  SheetTextFormat,
+  SheetTextFormatPatch,
+  SheetTextInteractionField,
+  SheetTextHorizontal,
+  SheetTextVertical,
+  SheetTextRotation,
+  SheetTextScalar,
+  SheetTextDirection,
+} from './studio-sheet-text-properties';
+export type {
+  SheetTextFont,
+  SheetTextMetrics,
+  SheetTextMeasure,
+  SheetTextBox,
+  SheetNumberFormatServices,
+  SheetTextLayoutInput,
+  SheetTextRun,
+  SheetTextLine,
+  SheetTextLayout,
+  SheetCenterSlot,
+  SheetCenterSegment,
+  SheetAutoRowCell,
+  SheetAutoRow,
+  SheetAutoRowResult,
+} from './studio-sheet-text-layout';
+export type * from './studio-pdf-annotation-types';
+export type * from './studio-pdf-annotation-workspace-types';
+export type {
+  StudioPdfNativeAnnotations,
+  StudioPdfAnnotationRequest,
+  StudioPdfAnnotationPreview,
+  StudioPdfAnnotationEditor,
+  StudioPdfAnnotationInspection,
+} from './studio-pdf-annotations';

@@ -1,6 +1,18 @@
 import FormulaParser from 'fast-formula-parser';
-import { studioCellFontIssue } from './studio-model';
+import { studioFormatNumber, studioNumberFormatColor } from './studio-number-format';
+import {
+  studioArrayRange,
+  studioArrayContains,
+  studioArrayIntersects,
+  studioCellArrayIssue,
+  studioSheetArraysIssue,
+  studioEnableArrayOperators,
+  studioRewriteSpillReferences,
+} from './studio-sheet-arrays';
+import type { StudioArrayRange } from './studio-sheet-arrays';
+import { studioCellFontIssue } from './studio-cell-font';
 import { studioCellStyleIssue } from './studio-cell-style';
+import { sheetDefaultTextFormat } from './studio-sheet-text-properties';
 import {
   studioCopySheetHyperlinks,
   studioDeleteSheetHyperlinks,
@@ -12,6 +24,7 @@ import {
 } from './studio-sheet-hyperlinks';
 import {
   studioCellValidation,
+  studioConditionalCellStyle,
   studioMapSheetRuleFormulae,
   studioNormalizeValidationInput,
   studioSheetRuleFormulae,
@@ -20,6 +33,7 @@ import type { StudioSheetRuleCalculation, StudioSheetRuleResult } from './studio
 import type {
   StudioCell,
   StudioExcelDocument,
+  StudioExcelDefaultFont,
   StudioSheet,
   StudioSheetHyperlink,
 } from './studio-types';
@@ -53,6 +67,12 @@ export type StudioSheetPasteMode =
   | 'column-widths'
   | 'transpose';
 
+export type StudioSheetPasteOperation = 'none' | 'add' | 'subtract' | 'multiply' | 'divide';
+export interface StudioSheetPasteOptions {
+  skipBlanks?: boolean;
+  operation?: StudioSheetPasteOperation;
+}
+
 export type StudioSheetClipboardValue =
   | { type: 'blank' }
   | { type: 'number'; value: number }
@@ -60,6 +80,8 @@ export type StudioSheetClipboardValue =
   | { type: 'string' | 'error'; value: string };
 
 export interface StudioSheetClipboardOrigin extends SheetPosition {
+  /** Captured once; absent on old payloads retains the application's legacy defaults. */
+  defaultFont?: StudioExcelDefaultFont;
   rows?: number;
   columns?: number;
   cells?: StudioCell[];
@@ -71,20 +93,24 @@ export interface StudioSheetClipboardOrigin extends SheetPosition {
 
 const clipboardCellKeys = new Set([
   'input',
+  'valueType',
   'bold',
   'italic',
   'underline',
   'fontFamily',
   'fontSize',
   'wrap',
+  'shrinkToFit',
   'color',
   'background',
   'numberFormat',
   'align',
   'verticalAlign',
+  'indent',
+  'textRotation',
   'borders',
 ]);
-const clipboardBooleanCellKeys = ['bold', 'italic', 'underline', 'wrap'] as const;
+const clipboardBooleanCellKeys = ['bold', 'italic', 'underline', 'wrap', 'shrinkToFit'] as const;
 const clipboardFormatDefaults: Omit<StudioCell, 'input'> = {
   bold: false,
   italic: false,
@@ -92,11 +118,14 @@ const clipboardFormatDefaults: Omit<StudioCell, 'input'> = {
   fontFamily: 'Calibri',
   fontSize: 11,
   wrap: false,
+  shrinkToFit: false,
   color: '#000000',
   background: 'none',
   numberFormat: 'General',
   align: 'general',
   verticalAlign: 'bottom',
+  indent: 0,
+  textRotation: 0,
   borders: {},
 };
 
@@ -121,6 +150,11 @@ function clipboardCell(value: unknown): StudioCell | undefined {
   const cell = value as Record<string, unknown>;
   if (Object.keys(cell).some((key) => !clipboardCellKeys.has(key))) return;
   if (typeof cell.input !== 'string' || cell.input.length > 32767) return;
+  if (
+    cell.valueType !== undefined &&
+    !['number', 'boolean', 'text'].includes(String(cell.valueType))
+  )
+    return;
   if (clipboardBooleanCellKeys.some((key) => key in cell && typeof cell[key] !== 'boolean')) return;
   if (
     ('color' in cell && (typeof cell.color !== 'string' || !/^#[\da-f]{6}$/i.test(cell.color))) ||
@@ -131,8 +165,7 @@ function clipboardCell(value: unknown): StudioCell | undefined {
         cell.numberFormat.length > 1024 ||
         // 这里就是要匹配控制字符本身（XML 不可表示字符校验），关闭该规则。
         // eslint-disable-next-line no-control-regex
-        /[\u0000-\u0008\u000b\u000c\u000e-\u001f]/.test(cell.numberFormat))) ||
-    ('align' in cell && !['left', 'center', 'right', 'general'].includes(String(cell.align)))
+        /[\u0000-\u0008\u000b\u000c\u000e-\u001f]/.test(cell.numberFormat)))
   )
     return;
   const candidate = cloneClipboardCell(cell as unknown as StudioCell);
@@ -213,6 +246,16 @@ export function studioClipboardOrigin(
     const position = { row: value.row, col: value.col };
     if (!validSheetPosition(position)) return undefined;
     if (value.version === 1) return position;
+    let defaultFont: StudioExcelDefaultFont | undefined;
+    if (value.defaultFont !== undefined) {
+      const defaults = sheetDefaultTextFormat(value.defaultFont);
+      defaultFont = {
+        family: defaults.fontFamily,
+        sizePt: defaults.fontSize,
+        bold: defaults.bold,
+        italic: defaults.italic,
+      };
+    }
     if (
       !Array.isArray(value.hyperlinks) ||
       value.hyperlinks.length > STUDIO_SHEET_LIMITS.clipboardCells ||
@@ -244,6 +287,7 @@ export function studioClipboardOrigin(
     if (value.version === 2)
       return {
         ...position,
+        ...(defaultFont ? { defaultFont } : {}),
         hyperlinks: (value.hyperlinks as StudioSheetHyperlink[]).map((link) => ({ ...link })),
       };
     if (
@@ -302,6 +346,7 @@ export function studioClipboardOrigin(
             return undefined;
     return {
       ...position,
+      ...(defaultFont ? { defaultFont } : {}),
       rows: value.rows,
       columns: value.columns,
       cells: cells as StudioCell[],
@@ -327,10 +372,16 @@ export interface SheetCalculation extends StudioSheetRuleCalculation {
   errors: Map<string, string>;
   /** Native links remain on the sheet; only reliable root HYPERLINK calls live here. */
   hyperlinks: Map<string, StudioSheetHyperlink>;
+  arrays: Map<
+    string,
+    { range: StudioArrayRange; matrix: (SheetValue | null | Error)[][]; type: 'fixed' | 'dynamic' }
+  >;
+  arrayOwners: Map<string, string>;
 }
 
 const numericInput = /^[+-]?(?:(?:0|[1-9]\d*)(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i;
-const errorPattern = /#(?:CYCLE!|LIMIT!|REF!|DIV\/0!|VALUE!|NAME\?|N\/A|NUM!|NULL!|ERROR!)/;
+const errorPattern =
+  /#(?:CYCLE!|LIMIT!|SPILL!|CALC!|REF!|DIV\/0!|VALUE!|NAME\?|N\/A|NUM!|NULL!|ERROR!)/;
 
 export function studioColumnLabel(column: number): string {
   if (!Number.isInteger(column) || column < 1 || column > 16384) return '';
@@ -396,6 +447,20 @@ export function studioPatchCells(
 ): StudioExcelDocument {
   const sheet = document.sheets.find((item) => item.id === sheetId);
   if (!sheet) throw new Error('工作表不存在。');
+  const sheetArrayIssue = studioSheetArraysIssue(sheet);
+  if (sheetArrayIssue) throw new Error(sheetArrayIssue);
+  const fixedRemoval = (anchor: string) => {
+    const definition = sheet.cells[anchor]?.array;
+    if (definition?.type !== 'fixed' || updates[anchor]?.input !== '') return false;
+    const range = studioArrayRange(definition.range)!;
+    return studioSelectionAddresses({
+      anchor: { row: range.firstRow, col: range.firstCol },
+      focus: { row: range.lastRow, col: range.lastCol },
+    }).every((address) => updates[address]?.input === '');
+  };
+  const arrayCalculation = Object.values(sheet.cells).some((cell) => cell.array)
+    ? studioCalculate(document)
+    : undefined;
   if (Object.keys(updates).length > STUDIO_SHEET_LIMITS.clipboardCells)
     throw new Error('一次最多编辑 10,000 个单元格，请缩小选区。');
   const cells = { ...sheet.cells };
@@ -426,6 +491,24 @@ export function studioPatchCells(
     )
       throw new Error('首版支持每张工作表最多 10,000 行、256 列。');
     const key = studioCellAddress(position.row, position.col);
+    if (
+      !options.preserveInput &&
+      (update.input !== undefined || update.array !== undefined || options.replace)
+    ) {
+      if (
+        sheet.protectedRanges?.some((range) =>
+          studioArrayContains(studioArrayRange(range)!, position.row, position.col)
+        )
+      )
+        throw new Error(`${key} 位于受保护区域，不能编辑。`);
+      const owner = arrayCalculation?.arrayOwners.get(`${sheetId}:${key}`);
+      if (owner && owner !== `${sheetId}:${key}`) {
+        const anchor = owner.slice(sheetId.length + 1);
+        const deletingWhole = fixedRemoval(anchor);
+        if (!deletingWhole)
+          throw new Error(`不能修改数组结果单元格 ${key}，请编辑起始单元格 ${anchor}。`);
+      }
+    }
     if ((update.input === '' || options.replace) && !(key in hyperlinkUpdates))
       hyperlinkUpdates[key] = null;
     const merge = studioMergedRange(sheet, position);
@@ -440,6 +523,15 @@ export function studioPatchCells(
     const previous = cells[key];
     let next: StudioCell =
       !options.replace && previous ? { ...previous, ...update } : { input: '', ...update };
+    if (update.input !== undefined && !options.preserveInput && !('valueType' in update))
+      delete next.valueType;
+    if (previous?.array && update.input !== undefined && !update.input.startsWith('=')) {
+      if (previous.array.type === 'fixed' && update.input !== '')
+        throw new Error('固定数组必须保持公式或整体删除。');
+      delete next.array;
+    }
+    if (previous?.array?.type === 'fixed' && update.input === '' && !fixedRemoval(key))
+      throw new Error('固定数组只能整体删除，请选择完整结果区域。');
     for (const key of Object.keys(next) as (keyof StudioCell)[])
       if (next[key] === undefined) delete next[key];
     const fontIssue = studioCellFontIssue(next);
@@ -448,6 +540,33 @@ export function studioPatchCells(
     if (styleIssue) throw new Error(styleIssue);
     if (typeof next.input !== 'string' || next.input.length > 32767)
       throw new Error('单元格内容最多支持 32,767 个字符，请缩短内容。');
+    if (previous?.array && options.replace && options.preserveInput) {
+      next.input = previous.input;
+      next.array = previous.array;
+    }
+    if (
+      previous &&
+      !previous.input.startsWith('=') &&
+      (options.preserveInput || update.input === undefined) &&
+      'numberFormat' in update
+    ) {
+      const originalValue = studioInputValue(
+        previous.input,
+        previous.numberFormat,
+        previous.valueType
+      );
+      const inferredValue = studioInputValue(next.input, next.numberFormat);
+      if (typeof originalValue !== typeof inferredValue)
+        next.valueType =
+          typeof originalValue === 'string'
+            ? 'text'
+            : typeof originalValue === 'boolean'
+              ? 'boolean'
+              : 'number';
+      else delete next.valueType;
+    }
+    const arrayIssue = studioCellArrayIssue(next, key);
+    if (arrayIssue) throw new Error(arrayIssue);
     if (update.input !== undefined || options.replace || 'numberFormat' in update) {
       if (!options.preserveInput) next = studioNormalizeValidationInput(sheet, key, next);
       valueUpdates.add(key);
@@ -481,7 +600,7 @@ export function studioPatchCells(
     ) > STUDIO_SHEET_LIMITS.storedCells
   )
     throw new Error('每个工作簿最多支持 100,000 条超链接记录。');
-  const next: StudioExcelDocument = changed
+  let next: StudioExcelDocument = changed
     ? {
         ...document,
         activeSheetId: sheetId,
@@ -490,11 +609,87 @@ export function studioPatchCells(
         ),
       }
     : document;
+  if (changed && Object.values(cells).some((cell) => cell.array)) {
+    const calculated = studioCalculate(next);
+    for (const [owner, array] of calculated.arrays) {
+      if (!owner.startsWith(`${sheetId}:`)) continue;
+      rows = Math.max(rows, array.range.lastRow);
+      columns = Math.max(columns, array.range.lastCol);
+    }
+    next = {
+      ...next,
+      sheets: next.sheets.map((entry) =>
+        entry.id === sheetId ? { ...entry, rowCount: rows, columnCount: columns } : entry
+      ),
+    };
+  }
   if (!options.deferValidation && sheet.dataValidations?.length && valueUpdates.size) {
     const calculation = studioCalculate(next);
     const updatedSheet = next.sheets.find((item) => item.id === sheetId)!;
     for (const address of valueUpdates) {
       const validation = studioCellValidation(updatedSheet, address, calculation);
+      if (validation?.blocking) throw new Error(`${address}：${validation.message}`);
+    }
+  }
+  return next;
+}
+
+export function studioSetArrayFormula(
+  document: StudioExcelDocument,
+  sheetId: string,
+  selection: SheetSelection,
+  formula: string,
+  type: 'fixed' | 'dynamic'
+): StudioExcelDocument {
+  const range = studioSelectionBounds(selection);
+  studioSelectionAddresses(selection);
+  const sheet = document.sheets.find((entry) => entry.id === sheetId);
+  if (!sheet) throw new Error('工作表不存在。');
+  if (type !== 'fixed' && type !== 'dynamic') throw new Error('数组模式无效。');
+  const input = formula.trim();
+  if (!input.startsWith('=') || input.length < 2) throw new Error('数组公式必须以 = 开始。');
+  const anchor = studioCellAddress(range.firstRow, range.firstCol);
+  if (
+    sheet.cells[anchor]?.array?.type === 'fixed' &&
+    (type !== 'fixed' || sheet.cells[anchor].array.range !== studioRangeAddress(range))
+  )
+    throw new Error('固定数组范围不能单独调整，请先整体删除。');
+  const calculation = studioCalculate(document);
+  const existing = calculation.arrayOwners.get(`${sheetId}:${anchor}`);
+  if (existing && existing !== `${sheetId}:${anchor}`) throw new Error('请编辑数组起始单元格。');
+  const area =
+    type === 'fixed' ? range : { ...range, lastRow: range.firstRow, lastCol: range.firstCol };
+  for (let row = area.firstRow; row <= area.lastRow; row++)
+    for (let col = area.firstCol; col <= area.lastCol; col++) {
+      const address = studioCellAddress(row, col);
+      if (address !== anchor && sheet.cells[address]?.input)
+        throw new Error('数组结果范围包含非空单元格，请先清空。');
+    }
+  const expanded = {
+    ...document,
+    sheets: document.sheets.map((entry) =>
+      entry.id === sheetId
+        ? {
+            ...entry,
+            rowCount: Math.max(entry.rowCount, range.lastRow),
+            columnCount: Math.max(entry.columnCount, range.lastCol),
+          }
+        : entry
+    ),
+  };
+  const next = studioPatchCells(expanded, sheetId, {
+    [anchor]: {
+      input,
+      array: type === 'fixed' ? { type, range: studioRangeAddress(range) } : { type },
+    },
+  });
+  const issue = studioSheetArraysIssue(next.sheets.find((entry) => entry.id === sheetId)!);
+  if (issue) throw new Error(issue);
+  if (type === 'fixed') {
+    const calculated = studioCalculate(next);
+    const updatedSheet = next.sheets.find((entry) => entry.id === sheetId)!;
+    for (const address of studioSelectionAddresses(selection)) {
+      const validation = studioCellValidation(updatedSheet, address, calculated);
       if (validation?.blocking) throw new Error(`${address}：${validation.message}`);
     }
   }
@@ -544,10 +739,14 @@ export function studioParseTsv(text: string): string[][] {
   return rows;
 }
 
-function clipboardCellFormat(cell: StudioCell): Omit<StudioCell, 'input'> {
-  const { input: _input, ...format } = cloneClipboardCell(cell);
+function clipboardCellFormat(
+  cell: StudioCell,
+  defaultFont?: StudioExcelDefaultFont
+): Omit<StudioCell, 'input'> {
+  const { input: _input, valueType: _valueType, ...format } = cloneClipboardCell(cell);
   return {
     ...clipboardFormatDefaults,
+    ...sheetDefaultTextFormat(defaultFont),
     ...format,
     borders: format.borders ?? {},
   };
@@ -581,17 +780,39 @@ function rangeContains(container: StudioRange, candidate: StudioRange): boolean 
 function clearPasteMerges(
   document: StudioExcelDocument,
   sheetId: string,
-  target: StudioRange
+  target: StudioRange,
+  active?: ReadonlySet<string>
 ): StudioExcelDocument {
   const sheet = document.sheets.find((item) => item.id === sheetId);
   if (!sheet) throw new Error('工作表不存在。');
   const retained: string[] = [];
   let changed = false;
+  const positions = active && [...active].map((address) => studioParseAddress(address)!);
   for (const entry of sheet.merges ?? []) {
     const range = studioParseRange(entry)!;
     if (!intersects(range, target)) retained.push(entry);
-    else if (rangeContains(target, range)) changed = true;
-    else throw new Error('粘贴区域与目标合并单元格部分重叠，请先拆分该区域。');
+    else if (
+      positions &&
+      !positions.some(
+        (position) =>
+          position.row >= range.firstRow &&
+          position.row <= range.lastRow &&
+          position.col >= range.firstCol &&
+          position.col <= range.lastCol
+      )
+    )
+      retained.push(entry);
+    else if (rangeContains(target, range)) {
+      if (active) {
+        const count = (range.lastRow - range.firstRow + 1) * (range.lastCol - range.firstCol + 1);
+        if (count > active.size) throw new Error('跳过空白后只能替换完整合并区域，请先拆分。');
+        for (let row = range.firstRow; row <= range.lastRow; row++)
+          for (let col = range.firstCol; col <= range.lastCol; col++)
+            if (!active.has(studioCellAddress(row, col)))
+              throw new Error('跳过空白后只能替换完整合并区域，请先拆分。');
+      }
+      changed = true;
+    } else throw new Error('粘贴区域与目标合并单元格部分重叠，请先拆分该区域。');
   }
   if (!changed) return document;
   return {
@@ -600,6 +821,63 @@ function clearPasteMerges(
       item.id === sheetId ? { ...item, merges: retained } : item
     ),
   };
+}
+
+function pasteOperand(value: StudioSheetClipboardValue | SheetValue, address: string): number {
+  if (value && typeof value === 'object') {
+    if (value.type === 'blank') return 0;
+    if (value.type === 'number' || value.type === 'boolean') return Number(value.value);
+  } else if (typeof value === 'number' && Number.isFinite(value)) return value;
+  else if (typeof value === 'boolean') return Number(value);
+  throw new Error(`${address}：运算粘贴需要数字、布尔值或真正空白，不能使用文本或错误值。`);
+}
+
+function pasteArithmeticInput(
+  operation: Exclude<StudioSheetPasteOperation, 'none'>,
+  target: StudioCell | undefined,
+  source: StudioCell,
+  translated: string,
+  copiedValue: StudioSheetClipboardValue | undefined,
+  valuesOnly: boolean,
+  calculation: SheetCalculation,
+  key: string,
+  address: string
+) {
+  if (calculation.arrayOwners.has(key))
+    throw new Error(`${address} 位于数组区域，不能进行运算粘贴。`);
+  if (calculation.errors.has(key)) throw new Error(`${address} 存在公式错误，整次运算粘贴已取消。`);
+  const left = !target?.input
+    ? 0
+    : pasteOperand(
+        calculation.values.get(key) ??
+          studioInputValue(target.input, target.numberFormat, target.valueType),
+        address
+      );
+  const sourceFormula = !valuesOnly && translated.startsWith('=');
+  const right = sourceFormula
+    ? undefined
+    : !source.input
+      ? 0
+      : pasteOperand(
+          copiedValue ?? studioInputValue(source.input, source.numberFormat, source.valueType),
+          address
+        );
+  if (operation === 'divide' && right === 0)
+    throw new Error(`${address}：不能除以零，整次运算粘贴已取消。`);
+  const symbol = { add: '+', subtract: '-', multiply: '*', divide: '/' }[operation];
+  if (target?.input.startsWith('=') || sourceFormula)
+    return `=(${target?.input.startsWith('=') ? target.input.slice(1) : left})${symbol}(${sourceFormula ? translated.slice(1) : right})`;
+  const result =
+    operation === 'add'
+      ? left + right!
+      : operation === 'subtract'
+        ? left - right!
+        : operation === 'multiply'
+          ? left * right!
+          : left / right!;
+  if (!Number.isFinite(result))
+    throw new Error(`${address}：运算结果超出有效数字范围，整次粘贴已取消。`);
+  return String(result);
 }
 
 function pastedMerge(merge: StudioRange, start: SheetPosition, transpose: boolean): StudioRange {
@@ -652,9 +930,20 @@ export function studioPasteCells(
   start: SheetPosition,
   text: string,
   source?: StudioSheetClipboardOrigin,
-  mode: StudioSheetPasteMode = 'all'
+  mode: StudioSheetPasteMode = 'all',
+  options: StudioSheetPasteOptions = {}
 ): { document: StudioExcelDocument; selection: SheetSelection; addresses: string[] } {
   const parsedRows = studioParseTsv(text);
+  const operation = options.operation ?? 'none';
+  if (
+    !['none', 'add', 'subtract', 'multiply', 'divide'].includes(operation) ||
+    (options.skipBlanks !== undefined && typeof options.skipBlanks !== 'boolean')
+  )
+    throw new Error('选择性粘贴选项无效。');
+  if (operation !== 'none' && ['formats', 'column-widths'].includes(mode))
+    throw new Error('仅格式和列宽粘贴不能组合数值运算。');
+  if (options.skipBlanks && mode === 'column-widths')
+    throw new Error('列宽粘贴不能按单元格跳过空白。');
   const parsedWidth = Math.max(...parsedRows.map((row) => row.length));
   const rich = !!(
     source?.cells &&
@@ -693,14 +982,48 @@ export function studioPasteCells(
     };
   }
   const copiesMergeState =
-    rich && ['all', 'source-formatting', 'without-borders', 'transpose'].includes(mode);
+    operation === 'none' &&
+    rich &&
+    ['all', 'source-formatting', 'without-borders', 'transpose'].includes(mode);
   const targetRange = {
     firstRow: start.row,
     lastRow: last.row,
     firstCol: start.col,
     lastCol: last.col,
   };
-  let next = copiesMergeState ? clearPasteMerges(document, sheetId, targetRange) : document;
+  const sourceMergeAt = (row: number, col: number) =>
+    rich
+      ? source!.merges!.find(
+          (merge) =>
+            row >= merge.firstRow &&
+            row <= merge.lastRow &&
+            col >= merge.firstCol &&
+            col <= merge.lastCol
+        )
+      : undefined;
+  const skipped = (row: number, col: number) => {
+    if (!options.skipBlanks) return false;
+    const merge = copiesMergeState && sourceMergeAt(row, col);
+    const index = merge
+      ? merge.firstRow * sourceColumns + merge.firstCol
+      : row * sourceColumns + col;
+    return rich ? source!.cells![index].input === '' : parsedRows[row][col] === '';
+  };
+  const destinationAt = (row: number, col: number) =>
+    transpose
+      ? { row: start.row + col, col: start.col + row }
+      : { row: start.row + row, col: start.col + col };
+  const active = new Set<string>();
+  if (options.skipBlanks && copiesMergeState)
+    for (let row = 0; row < sourceRows; row++)
+      for (let col = 0; col < sourceColumns; col++) {
+        const destination = destinationAt(row, col);
+        if (!skipped(row, col)) active.add(studioCellAddress(destination.row, destination.col));
+      }
+  let next = copiesMergeState
+    ? clearPasteMerges(document, sheetId, targetRange, options.skipBlanks ? active : undefined)
+    : document;
+  const calculation = operation !== 'none' ? studioCalculate(document) : undefined;
   const updates: Record<string, Partial<StudioCell>> = {};
   const addresses: string[] = [];
   const hyperlinks: Record<string, StudioSheetHyperlink[] | null> = {};
@@ -711,18 +1034,27 @@ export function studioPasteCells(
     mode
   );
   let hyperlinkCoverage = 0;
+  const capturedFont =
+    rich && source?.defaultFont ? sheetDefaultTextFormat(source.defaultFont) : undefined;
+  const sourceFontDefaults = capturedFont
+    ? {
+        fontFamily: capturedFont.fontFamily,
+        fontSize: capturedFont.fontSize,
+        bold: capturedFont.bold,
+        italic: capturedFont.italic,
+      }
+    : {};
   for (let row = 0; row < sourceRows; row++) {
     const columns = rich ? sourceColumns : parsedRows[row].length;
     for (let col = 0; col < columns; col++) {
-      const destination = transpose
-        ? { row: start.row + col, col: start.col + row }
-        : { row: start.row + row, col: start.col + col };
+      if (skipped(row, col)) continue;
+      const destination = destinationAt(row, col);
       const address = studioCellAddress(destination.row, destination.col);
       addresses.push(address);
       const sourcePosition = source ? { row: source.row + row, col: source.col + col } : undefined;
       const index = row * sourceColumns + col;
       const sourceCell = rich
-        ? source!.cells![index]
+        ? { ...sourceFontDefaults, ...source!.cells![index] }
         : ({ input: parsedRows[row][col] } satisfies StudioCell);
       const translated = sourcePosition
         ? studioTranslateFormula(
@@ -739,10 +1071,12 @@ export function studioPasteCells(
             ? { numberFormat: sourceCell.numberFormat ?? 'General' }
             : {}),
         };
-      } else if (mode === 'formats') updates[address] = clipboardCellFormat(sourceCell);
+      } else if (mode === 'formats')
+        updates[address] = clipboardCellFormat(sourceCell, source?.defaultFont);
       else if (mode === 'formulas' || mode === 'formulas-number-format') {
         updates[address] = {
           input: translated,
+          ...(sourceCell.valueType ? { valueType: sourceCell.valueType } : {}),
           ...(mode === 'formulas-number-format'
             ? { numberFormat: sourceCell.numberFormat ?? 'General' }
             : {}),
@@ -756,6 +1090,29 @@ export function studioPasteCells(
             : undefined,
         };
       } else updates[address] = { ...cloneClipboardCell(sourceCell), input: translated };
+      if (operation !== 'none') {
+        if (sourceMergeAt(row, col) || studioMergedRange(sheet, destination))
+          throw new Error(`${address}：运算粘贴不支持合并单元格，请先拆分。`);
+        const input = pasteArithmeticInput(
+          operation,
+          targetCell,
+          sourceCell,
+          translated,
+          rich ? source!.values![index] : undefined,
+          mode === 'values' || mode === 'values-number-format',
+          calculation!,
+          `${sheetId}:${address}`,
+          address
+        );
+        const numberFormat =
+          updates[address].numberFormat ??
+          (['all', 'source-formatting', 'without-borders', 'transpose'].includes(mode)
+            ? sourceCell.numberFormat
+            : targetCell?.numberFormat);
+        updates[address].input =
+          numberFormat === '@' && !input.startsWith('=') ? `=${input}` : input;
+        delete updates[address].valueType;
+      }
       if (copiesHyperlinks) {
         hyperlinks[address] =
           clipboardSheet && sourcePosition
@@ -772,28 +1129,59 @@ export function studioPasteCells(
   const replace = ['all', 'source-formatting', 'without-borders', 'transpose'].includes(mode);
   next = studioPatchCells(next, sheetId, updates, {
     replace,
+    deferValidation: operation !== 'none',
     preserveInput: mode === 'formats',
     ...(copiesHyperlinks ? { hyperlinks } : {}),
   });
   if (copiesMergeState)
     for (const merge of source!.merges!) {
+      if (skipped(merge.firstRow, merge.firstCol)) continue;
       const range = pastedMerge(merge, start, transpose);
       next = studioMergeCells(next, sheetId, {
         anchor: { row: range.firstRow, col: range.firstCol },
         focus: { row: range.lastRow, col: range.lastCol },
       });
     }
+  if (operation !== 'none') {
+    const final = studioCalculate(next);
+    const nextSheet = next.sheets.find((item) => item.id === sheetId)!;
+    for (const address of addresses) {
+      const key = `${sheetId}:${address}`;
+      const value =
+        final.values.get(key) ??
+        studioInputValue(
+          nextSheet.cells[address]?.input ?? '',
+          nextSheet.cells[address]?.numberFormat,
+          nextSheet.cells[address]?.valueType
+        );
+      if (final.errors.has(key) || typeof value !== 'number' || !Number.isFinite(value))
+        throw new Error(
+          `${address}：运算结果无效${final.errors.get(key) ? `（${final.errors.get(key)}）` : ''}，整次粘贴已取消。`
+        );
+      const validation = studioCellValidation(nextSheet, address, final);
+      if (validation?.blocking)
+        throw new Error(`${address}：${validation.message}；整次粘贴已取消。`);
+    }
+  }
   return { document: next, selection: { anchor: start, focus: last }, addresses };
 }
 
-export function studioCopyTsv(sheet: StudioSheet, selection: SheetSelection): string {
+export function studioCopyTsv(
+  sheet: StudioSheet,
+  selection: SheetSelection,
+  calculation?: SheetCalculation
+): string {
   studioSelectionAddresses(selection);
   const { firstRow, lastRow, firstCol, lastCol } = studioSelectionBounds(selection);
   const rows: string[] = [];
   for (let row = firstRow; row <= lastRow; row++) {
     const values: string[] = [];
     for (let col = firstCol; col <= lastCol; col++) {
-      const input = sheet.cells[studioCellAddress(row, col)]?.input ?? '';
+      const address = studioCellAddress(row, col);
+      const key = `${sheet.id}:${address}`;
+      const input = calculation?.arrayOwners.has(key)
+        ? String(calculation.errors.get(key) ?? calculation.values.get(key) ?? '')
+        : (sheet.cells[address]?.input ?? '');
       values.push(/[\t\r\n"]/.test(input) ? `"${input.replace(/"/g, '""')}"` : input);
     }
     rows.push(values.join('\t'));
@@ -810,19 +1198,42 @@ export function studioCopySheetClipboard(
 ): string {
   const sheet = document.sheets.find((item) => item.id === sheetId);
   if (!sheet) throw new Error('工作表不存在。');
-  const text = studioCopyTsv(sheet, selection);
+  const calculation = studioCalculate(document);
+  const text = studioCopyTsv(sheet, selection, calculation);
   const bounds = studioSelectionBounds(selection);
   const rows = bounds.lastRow - bounds.firstRow + 1;
   const columns = bounds.lastCol - bounds.firstCol + 1;
-  const calculation = studioCalculate(document);
   const cells: StudioCell[] = [];
   const values: StudioSheetClipboardValue[] = [];
   for (let row = bounds.firstRow; row <= bounds.lastRow; row++) {
     for (let col = bounds.firstCol; col <= bounds.lastCol; col++) {
       const address = studioCellAddress(row, col);
-      const cell = sheet.cells[address] ?? { input: '' };
+      const owner = calculation.arrayOwners.get(`${sheet.id}:${address}`);
+      const source = sheet.cells[address] ?? { input: '' };
+      const computed = calculation.values.get(`${sheet.id}:${address}`) ?? '';
+      const computedError = calculation.errors.get(`${sheet.id}:${address}`);
+      const cell: StudioCell = owner
+        ? {
+            ...source,
+            input: clipboardValueInput(
+              computedError
+                ? { type: 'error', value: computedError }
+                : ({ type: typeof computed, value: computed } as StudioSheetClipboardValue)
+            ),
+          }
+        : source;
+      if (owner) delete cell.array;
       cells.push(cloneClipboardCell(cell));
-      if (!cell.input) values.push({ type: 'blank' });
+      if (owner) {
+        const key = `${sheet.id}:${address}`;
+        const error = calculation.errors.get(key);
+        const value = calculation.values.get(key) ?? '';
+        values.push(
+          error
+            ? { type: 'error', value: error }
+            : ({ type: typeof value, value } as StudioSheetClipboardValue)
+        );
+      } else if (!cell.input) values.push({ type: 'blank' });
       else if (cell.input.startsWith('=')) {
         const error = calculation.errors.get(`${sheet.id}:${address}`);
         if (error) values.push({ type: 'error', value: error });
@@ -831,7 +1242,7 @@ export function studioCopySheetClipboard(
           values.push({ type: typeof value, value } as StudioSheetClipboardValue);
         }
       } else {
-        const value = studioInputValue(cell.input, cell.numberFormat);
+        const value = studioInputValue(cell.input, cell.numberFormat, cell.valueType);
         values.push({ type: typeof value, value } as StudioSheetClipboardValue);
       }
     }
@@ -850,6 +1261,15 @@ export function studioCopySheetClipboard(
     }));
   const payload = JSON.stringify({
     version: 3,
+    defaultFont: (() => {
+      const defaults = sheetDefaultTextFormat(document.defaultFont);
+      return {
+        family: defaults.fontFamily,
+        sizePt: defaults.fontSize,
+        bold: defaults.bold,
+        italic: defaults.italic,
+      };
+    })(),
     row: bounds.firstRow,
     col: bounds.firstCol,
     rows,
@@ -868,9 +1288,13 @@ export function studioCopySheetClipboard(
   return payload;
 }
 
-export function studioInputValue(input: string, numberFormat?: string): SheetValue {
+export function studioInputValue(
+  input: string,
+  numberFormat?: string,
+  valueType?: StudioCell['valueType']
+): SheetValue {
   if (input.startsWith("'")) return input.slice(1);
-  if (numberFormat === '@') return input;
+  if (valueType === 'text' || (numberFormat === '@' && !valueType)) return input;
   if (/^(true|false)$/i.test(input)) return input.toLowerCase() === 'true';
   if (numericInput.test(input) && Number.isFinite(Number(input))) return Number(input);
   return input;
@@ -943,6 +1367,29 @@ export function studioCalculate(document: StudioExcelDocument): SheetCalculation
   const values = new Map<string, SheetValue>();
   const errors = new Map<string, string>();
   const hyperlinks = new Map<string, StudioSheetHyperlink>();
+  const arrays: SheetCalculation['arrays'] = new Map();
+  const arrayReads = new Map<string, Set<string>>();
+  let spilledCells = 0;
+  const arrayOwners = new Map<string, string>();
+  const arrayAnchors = document.sheets.flatMap((sheet) =>
+    Object.entries(sheet.cells)
+      .filter(([, cell]) => cell.array)
+      .map(([address]) => ({ sheet, address, position: studioParseAddress(address)! }))
+  );
+  let registered = 0;
+  for (const { sheet, address } of arrayAnchors) {
+    const cell = sheet.cells[address];
+    if (cell.array?.type !== 'fixed' || studioCellArrayIssue(cell, address)) continue;
+    const range = studioArrayRange(cell.array.range)!;
+    registered += (range.lastRow - range.firstRow + 1) * (range.lastCol - range.firstCol + 1);
+    if (registered > 100000) {
+      errors.set(`${sheet.id}:${address}`, '#LIMIT!');
+      continue;
+    }
+    for (let row = range.firstRow; row <= range.lastRow; row++)
+      for (let col = range.firstCol; col <= range.lastCol; col++)
+        arrayOwners.set(`${sheet.id}:${studioCellAddress(row, col)}`, `${sheet.id}:${address}`);
+  }
   const hyperlinkFrames: ({ target?: string } | undefined)[] = [];
   const rangeOrigins = new WeakMap<object, { from: SheetPosition; to: SheetPosition }>();
   const visiting = new Set<string>();
@@ -1002,6 +1449,41 @@ export function studioCalculate(document: StudioExcelDocument): SheetCalculation
       throw FormulaParser.FormulaError.REF;
     const address = studioCellAddress(row, col);
     const key = `${sheet.id}:${address}`;
+    for (const owner of visiting) {
+      if (!arrayReads.has(owner)) continue;
+      arrayReads.get(owner)!.add(key);
+    }
+    if (visiting.has(key)) throw new Error('#CYCLE!');
+    if (!arrayOwners.has(key) && !sheet.cells[address]?.input) {
+      if (visiting.size >= 80) throw new Error('#LIMIT!');
+      for (const anchor of arrayAnchors) {
+        const owner = `${anchor.sheet.id}:${anchor.address}`;
+        if (
+          anchor.sheet.id !== sheet.id ||
+          anchor.sheet.cells[anchor.address].array?.type !== 'dynamic' ||
+          visiting.has(owner) ||
+          values.has(owner) ||
+          errors.has(owner) ||
+          row < anchor.position.row ||
+          col < anchor.position.col
+        )
+          continue;
+        try {
+          read(sheet.name, anchor.position.row, anchor.position.col);
+        } catch {
+          /* retained on anchor */
+        }
+      }
+    }
+    const fixedOwner = arrayOwners.get(key);
+    if (fixedOwner && fixedOwner !== key && !values.has(key) && !errors.has(key)) {
+      const anchor = studioParseAddress(fixedOwner.slice(sheet.id.length + 1))!;
+      try {
+        read(sheet.name, anchor.row, anchor.col);
+      } catch (cause) {
+        if (!values.has(key) && !errors.has(key)) errors.set(key, formulaErrorLabel(cause));
+      }
+    }
     if (values.has(key)) return values.get(key)!;
     if (errors.has(key)) throw new Error(errors.get(key));
     if (visiting.has(key)) throw new Error('#CYCLE!');
@@ -1009,7 +1491,11 @@ export function studioCalculate(document: StudioExcelDocument): SheetCalculation
     const input = sheet.cells[address]?.input ?? '';
     if (!input.startsWith('=')) {
       if (errorPattern.test(input) && input.startsWith('#')) throw new Error(input);
-      const value = studioInputValue(input, sheet.cells[address]?.numberFormat);
+      const value = studioInputValue(
+        input,
+        sheet.cells[address]?.numberFormat,
+        sheet.cells[address]?.valueType
+      );
       values.set(key, value);
       return value;
     }
@@ -1022,7 +1508,95 @@ export function studioCalculate(document: StudioExcelDocument): SheetCalculation
       hyperlinkFrames[poolIndex] = hyperlinkFrame;
       // A parser has mutable grammar state; each dependency depth needs its own
       // instance so nested formula references cannot overwrite the caller.
-      const result = parserAt(poolIndex).parse(input.slice(1), { sheet: sheet.name, row, col });
+      const parser = parserAt(poolIndex) as FormulaParser & {
+        arrayMode?: boolean;
+        parse(
+          formula: string,
+          position: { sheet: string; row: number; col: number },
+          allowArray?: boolean
+        ): unknown;
+      };
+      const definition = sheet.cells[address]?.array;
+      if (definition) arrayReads.set(key, new Set());
+      const issue = studioCellArrayIssue(sheet.cells[address], address);
+      if (issue) throw new Error('#VALUE!');
+      parser.arrayMode = !!definition;
+      const result = parser.parse(
+        studioRewriteSpillReferences(input.slice(1)),
+        { sheet: sheet.name, row, col },
+        !!definition
+      );
+      if (definition) {
+        const matrix = (Array.isArray(result) ? result : [[result]]) as unknown[][];
+        if (
+          !matrix.length ||
+          !matrix[0]?.length ||
+          matrix.some((line) => !Array.isArray(line) || line.length !== matrix[0].length)
+        )
+          throw new Error('#CALC!');
+        if (matrix.length * matrix[0].length > 10000) throw new Error('#LIMIT!');
+        const range =
+          definition.type === 'fixed'
+            ? studioArrayRange(definition.range)!
+            : {
+                firstRow: row,
+                firstCol: col,
+                lastRow: row + matrix.length - 1,
+                lastCol: col + matrix[0].length - 1,
+              };
+        if (range.lastRow > STUDIO_SHEET_LIMITS.rows || range.lastCol > STUDIO_SHEET_LIMITS.columns)
+          throw new Error('#SPILL!');
+        if (
+          sheet.merges?.some((entry) => studioArrayIntersects(studioParseRange(entry)!, range)) ||
+          sheet.protectedRanges?.some((entry) =>
+            studioArrayIntersects(studioArrayRange(entry)!, range)
+          )
+        )
+          throw new Error('#SPILL!');
+        for (let r = range.firstRow; r <= range.lastRow; r++)
+          for (let c = range.firstCol; c <= range.lastCol; c++) {
+            const targetAddress = studioCellAddress(r, c);
+            const targetKey = `${sheet.id}:${targetAddress}`;
+            if (arrayReads.get(key)?.has(targetKey)) throw new Error('#CYCLE!');
+            if (
+              targetAddress !== address &&
+              (sheet.cells[targetAddress]?.input ||
+                sheet.cells[targetAddress]?.array ||
+                (arrayOwners.has(targetKey) && arrayOwners.get(targetKey) !== key))
+            )
+              throw new Error('#SPILL!');
+          }
+        const checked: (SheetValue | null | Error)[][] = matrix.map((line) =>
+          line.map((value) => {
+            if (value instanceof Error || (value && typeof value === 'object'))
+              return new Error(formulaErrorLabel(value));
+            if (typeof value === 'number' && !Number.isFinite(value)) return new Error('#NUM!');
+            if (typeof value === 'string' && value.length > 100000) throw new Error('#LIMIT!');
+            return value === null
+              ? null
+              : ['number', 'string', 'boolean'].includes(typeof value)
+                ? (value as SheetValue)
+                : '';
+          })
+        );
+        spilledCells += (range.lastRow - range.firstRow + 1) * (range.lastCol - range.firstCol + 1);
+        if (spilledCells > 100000) throw new Error('#LIMIT!');
+        arrays.set(key, { range, matrix: checked, type: definition.type });
+        for (let r = range.firstRow; r <= range.lastRow; r++)
+          for (let c = range.firstCol; c <= range.lastCol; c++) {
+            const targetKey = `${sheet.id}:${studioCellAddress(r, c)}`;
+            const entry =
+              checked[checked.length === 1 ? 0 : r - row]?.[checked[0].length === 1 ? 0 : c - col];
+            const value = entry === undefined ? new Error('#N/A') : entry;
+            arrayOwners.set(targetKey, key);
+            values.delete(targetKey);
+            errors.delete(targetKey);
+            if (value instanceof Error) errors.set(targetKey, formulaErrorLabel(value));
+            else values.set(targetKey, value ?? 0);
+          }
+        if (errors.has(key)) throw new Error(errors.get(key));
+        return values.get(key)!;
+      }
       if (result instanceof Error || (typeof result === 'object' && result !== null)) throw result;
       if (typeof result === 'number' && !Number.isFinite(result)) throw new Error('#NUM!');
       if (typeof result === 'string' && result.length > 100000) throw new Error('#LIMIT!');
@@ -1043,6 +1617,16 @@ export function studioCalculate(document: StudioExcelDocument): SheetCalculation
     } catch (error) {
       const label = formulaErrorLabel(error);
       errors.set(key, label);
+      const definition = sheet.cells[address]?.array;
+      if (definition?.type === 'fixed') {
+        const range = studioArrayRange(definition.range);
+        if (range)
+          for (let r = range.firstRow; r <= range.lastRow; r++)
+            for (let c = range.firstCol; c <= range.lastCol; c++) {
+              const target = `${sheet.id}:${studioCellAddress(r, c)}`;
+              if (!values.has(target) && !errors.has(target)) errors.set(target, label);
+            }
+      }
       throw new Error(label);
     } finally {
       hyperlinkFrames[poolIndex] = undefined;
@@ -1059,7 +1643,10 @@ export function studioCalculate(document: StudioExcelDocument): SheetCalculation
     try {
       const value = read(sheetName, row, col);
       const target = sheets.get(sheetName.toLocaleLowerCase());
-      return (target?.cells[studioCellAddress(row, col)]?.input ?? '') === '' ? null : value;
+      return !arrayOwners.has(`${target?.id}:${studioCellAddress(row, col)}`) &&
+        (target?.cells[studioCellAddress(row, col)]?.input ?? '') === ''
+        ? null
+        : value;
     } catch (error) {
       const label = formulaErrorLabel(error);
       const names: Record<string, string> = {
@@ -1079,6 +1666,41 @@ export function studioCalculate(document: StudioExcelDocument): SheetCalculation
   const parserAt = (poolIndex: number): FormulaParser => {
     parserPool[poolIndex] ??= new FormulaParser({
       functions: {
+        SEQUENCE: (...args) => {
+          const number = (i: number, fallback: number) =>
+            args[i] == null
+              ? fallback
+              : Number(
+                  formulaCalendar.FormulaHelpers.accept(args[i], formulaCalendar.Types.NUMBER)
+                );
+          const rows = number(0, 1);
+          const cols = number(1, 1);
+          const start = number(2, 1);
+          const step = number(3, 1);
+          if (!Number.isInteger(rows) || !Number.isInteger(cols) || rows < 1 || cols < 1)
+            throw FormulaParser.FormulaError.VALUE;
+          if (rows * cols > 10000) throw new Error('#LIMIT!');
+          return Array.from({ length: rows }, (_, r) =>
+            Array.from({ length: cols }, (_, c) => start + (r * cols + c) * step)
+          );
+        },
+        ANCHORARRAY: (context, argument) => {
+          const ref = (argument as { ref?: { sheet?: string; row?: number; col?: number } })?.ref;
+          const position = (context as { position: { sheet: string } }).position;
+          if (!ref?.row || !ref.col) throw FormulaParser.FormulaError.REF;
+          const sheet = sheets.get((ref.sheet || position.sheet).toLocaleLowerCase());
+          if (!sheet) throw FormulaParser.FormulaError.REF;
+          const address = studioCellAddress(ref.row, ref.col);
+          const key = `${sheet.id}:${address}`;
+          try {
+            read(sheet.name, ref.row, ref.col);
+          } catch (error) {
+            if (!arrays.has(key)) throw error;
+          }
+          const array = arrays.get(key);
+          if (!array) throw FormulaParser.FormulaError.REF;
+          return array.matrix;
+        },
         IF: (context, ...argumentsList) => {
           if (argumentsList.length < 1 || argumentsList.length > 3)
             throw FormulaParser.FormulaError.VALUE;
@@ -1092,6 +1714,26 @@ export function studioCalculate(document: StudioExcelDocument): SheetCalculation
             (typeof argument === 'object' && 'omitted' in argument && argument.omitted)
               ? 0
               : parser.retrieveRef(argument);
+          if (Array.isArray(test) && (parser as { arrayMode?: boolean }).arrayMode) {
+            const matrix = (value: unknown) => (Array.isArray(value) ? value : [[value]]);
+            const yes = matrix(parser.retrieveRef(argumentsList[1]));
+            const no = matrix(parser.retrieveRef(argumentsList[2] ?? false));
+            return test.map((line, row) =>
+              line.map((condition: unknown, col: number) => {
+                if (condition instanceof Error || (condition && typeof condition === 'object'))
+                  return condition;
+                const logical = formulaCalendar.FormulaHelpers.accept(
+                  { value: condition ?? 0 },
+                  formulaCalendar.Types.BOOLEAN
+                );
+                const branch = logical ? yes : no;
+                return (
+                  branch[branch.length === 1 ? 0 : row]?.[branch[0]?.length === 1 ? 0 : col] ??
+                  new Error('#N/A')
+                );
+              })
+            );
+          }
           if (Array.isArray(test)) test = test[0]?.[0];
           if (typeof test === 'string' && /^(true|false)$/i.test(test.trim()))
             test = test.trim().toLowerCase() === 'true';
@@ -1255,7 +1897,18 @@ export function studioCalculate(document: StudioExcelDocument): SheetCalculation
         return [[null]];
       },
     });
-    return parserPool[poolIndex];
+    const parser = parserPool[poolIndex] as FormulaParser & {
+      studioArraysReady?: boolean;
+      funsNeedContextAndNoDataRetrieve: string[];
+      funsNeedContext: string[];
+    };
+    if (!parser.studioArraysReady) {
+      studioEnableArrayOperators(parser);
+      parser.funsNeedContextAndNoDataRetrieve.push('ANCHORARRAY');
+      parser.funsNeedContext.push('ANCHORARRAY');
+      parser.studioArraysReady = true;
+    }
+    return parser;
   };
 
   const publicRead = (sheetId: string, address: string): StudioSheetRuleResult => {
@@ -1300,7 +1953,8 @@ export function studioCalculate(document: StudioExcelDocument): SheetCalculation
       // Rule evaluation also owns a parser depth while its cell dependencies run.
       visiting.add(key);
       hyperlinkFrames[visiting.size - 1] = undefined;
-      const parser = parserAt(visiting.size - 1);
+      const parser = parserAt(visiting.size - 1) as FormulaParser & { arrayMode?: boolean };
+      parser.arrayMode = allowArray;
       const parse = parser.parse as (
         formula: string,
         position: { sheet: string; row: number; col: number },
@@ -1335,6 +1989,13 @@ export function studioCalculate(document: StudioExcelDocument): SheetCalculation
       visiting.delete(key);
     }
   };
+  for (const anchor of arrayAnchors) {
+    try {
+      read(anchor.sheet.name, anchor.position.row, anchor.position.col);
+    } catch {
+      /* errors remain on anchors */
+    }
+  }
   for (const sheet of document.sheets) {
     for (const [address, cell] of Object.entries(sheet.cells)) {
       const position = studioParseAddress(address);
@@ -1346,7 +2007,7 @@ export function studioCalculate(document: StudioExcelDocument): SheetCalculation
       }
     }
   }
-  return { values, errors, hyperlinks, read: publicRead, evaluate };
+  return { values, errors, hyperlinks, arrays, arrayOwners, read: publicRead, evaluate };
 }
 
 export function studioDisplayCell(
@@ -1355,15 +2016,19 @@ export function studioDisplayCell(
   error?: string
 ): string {
   if (error) return error;
-  if (!cell) return '';
-  const result = value ?? studioInputValue(cell.input, cell.numberFormat);
+  if (!cell)
+    return value === undefined
+      ? ''
+      : typeof value === 'boolean'
+        ? value
+          ? 'TRUE'
+          : 'FALSE'
+        : String(value);
+  const result = value ?? studioInputValue(cell.input, cell.numberFormat, cell.valueType);
   if (typeof result === 'boolean') return result ? 'TRUE' : 'FALSE';
-  if (typeof result === 'number' && cell.numberFormat && cell.numberFormat !== 'General') {
+  if (cell.numberFormat && cell.numberFormat !== 'General') {
     try {
-      const formatter = FormulaParser as typeof FormulaParser & {
-        SSF: { format(format: string, value: number): string };
-      };
-      return formatter.SSF.format(cell.numberFormat, result);
+      return studioFormatNumber(cell.numberFormat, result);
     } catch {
       /* Preserve the raw value if a custom format is unsupported. */
     }
@@ -1507,6 +2172,10 @@ export function studioSetRowHeight(
   )
     throw new Error('行高需要在 0–409.5 磅之间，0 表示隐藏。');
   const rowHeights = { ...sheet.rowHeights };
+  const rowHeightModes: NonNullable<StudioSheet['rowHeightModes']> =
+    sheet.rowHeightModes === undefined
+      ? Object.fromEntries(Object.keys(sheet.rowHeights ?? {}).map((row) => [row, 'fixed']))
+      : { ...sheet.rowHeightModes };
   const hidden = new Set(sheet.hiddenRows ?? []);
   let changed = false;
   for (let row = range.firstRow; row <= range.lastRow; row++) {
@@ -1518,6 +2187,11 @@ export function studioSetRowHeight(
       }
     } else {
       if (hidden.delete(row)) changed = true;
+      const mode = height === undefined ? 'auto' : 'fixed';
+      if ((rowHeightModes[key] ?? 'auto') !== mode) {
+        rowHeightModes[key] = mode;
+        changed = true;
+      }
       if (height === undefined) {
         if (key in rowHeights) {
           delete rowHeights[key];
@@ -1530,7 +2204,12 @@ export function studioSetRowHeight(
     }
   }
   if (!changed) return document;
-  const next = { ...sheet, rowHeights, hiddenRows: [...hidden].sort((a, b) => a - b) };
+  const next = {
+    ...sheet,
+    rowHeights,
+    ...(height !== 0 ? { rowHeightModes } : {}),
+    hiddenRows: [...hidden].sort((a, b) => a - b),
+  };
   return {
     ...document,
     activeSheetId: sheetId,
@@ -1589,6 +2268,15 @@ export function studioMergeCells(
   const sheet = document.sheets.find((item) => item.id === sheetId);
   if (!sheet) throw new Error('工作表不存在。');
   const range = studioSelectionBounds(selection);
+  if (!split && Object.values(sheet.cells).some((cell) => cell.array)) {
+    const calculation = studioCalculate(document);
+    if (
+      studioSelectionAddresses(selection).some((address) =>
+        calculation.arrayOwners.has(`${sheetId}:${address}`)
+      )
+    )
+      throw new Error('合并区域包含数组结果，请先删除数组公式。');
+  }
   if (!rangeWithin(sheet, range)) throw new Error('合并区域超出工作表范围。');
   const overlap = (sheet.merges ?? []).filter((entry) =>
     intersects(studioParseRange(entry)!, range)
@@ -1730,7 +2418,8 @@ export function studioSetFilter(
       throw new Error('筛选区域不能包含合并单元格，请先拆分。');
     for (const [label, condition] of Object.entries(filter.columns)) {
       const col = studioParseAddress(`${label}1`)?.col;
-      const colorOperator = condition.operator === 'fontColor' || condition.operator === 'fillColor';
+      const colorOperator =
+        condition.operator === 'fontColor' || condition.operator === 'fillColor';
       if (
         !col ||
         col < range.firstCol ||
@@ -1772,14 +2461,32 @@ export function studioFilteredRows(sheet: StudioSheet, calculation: SheetCalcula
       const cell = sheet.cells[address];
       const result =
         calculation.values.get(`${sheet.id}:${address}`) ??
-        studioInputValue(cell?.input ?? '', cell?.numberFormat);
+        studioInputValue(cell?.input ?? '', cell?.numberFormat, cell?.valueType);
       const text = String(result).toLocaleLowerCase();
       const expected = condition.value.toLocaleLowerCase();
+      const isColor = condition.operator === 'fontColor' || condition.operator === 'fillColor';
+      const conditionalStyle = isColor
+        ? studioConditionalCellStyle(sheet, address, calculation)
+        : {};
+      const displayStyle = isColor
+        ? {
+            ...cell,
+            ...conditionalStyle,
+            color:
+              conditionalStyle.color ??
+              studioNumberFormatColor(
+                conditionalStyle.numberFormat ?? cell?.numberFormat,
+                result,
+                calculation.errors.get(`${sheet.id}:${address}`)
+              ) ??
+              cell?.color,
+          }
+        : cell;
       const colorOperator =
         condition.operator === 'fontColor'
-          ? studioHexColor(cell?.color)
+          ? studioHexColor(displayStyle?.color)
           : condition.operator === 'fillColor'
-            ? studioHexColor(cell?.background)
+            ? studioHexColor(displayStyle?.background)
             : null;
       const matches =
         colorOperator !== null
@@ -1792,7 +2499,7 @@ export function studioFilteredRows(sheet: StudioSheet, calculation: SheetCalcula
                 (condition.operator === 'greater'
                   ? result > Number(condition.value)
                   : result < Number(condition.value));
-      if (!matches || calculation.errors.has(`${sheet.id}:${address}`)) {
+      if (!matches || (!isColor && calculation.errors.has(`${sheet.id}:${address}`))) {
         hidden.add(row);
         break;
       }
@@ -1833,12 +2540,80 @@ export function studioSetColumnsHidden(
     for (const char of label) index = index * 26 + (char.charCodeAt(0) - 64);
     if (index < 1 || index > total) throw new Error(`列超出支持范围：${label}`);
   }
+  if (
+    next.length === (sheet.hiddenColumns ?? []).length &&
+    next.every((label, index) => label === sheet.hiddenColumns?.[index])
+  )
+    return document;
   return {
     ...document,
     sheets: document.sheets.map((item) =>
       item.id === sheetId ? { ...item, hiddenColumns: next } : item
     ),
   };
+}
+
+/** Change manual visibility without resetting cached heights or auto/fixed sizing. */
+export function studioSetRowsHidden(
+  document: StudioExcelDocument,
+  sheetId: string,
+  hidden: number[]
+): StudioExcelDocument {
+  const sheet = document.sheets.find((item) => item.id === sheetId);
+  if (!sheet) throw new Error('工作表不存在。');
+  const next = [...new Set(hidden)].sort((a, b) => a - b);
+  if (next.some((row) => !Number.isInteger(row) || row < 1 || row > sheet.rowCount))
+    throw new Error('隐藏行超出工作表范围。');
+  if (next.length >= sheet.rowCount) throw new Error('至少保留一个未手动隐藏的行。');
+  if (
+    next.length === (sheet.hiddenRows ?? []).length &&
+    next.every((row, index) => row === sheet.hiddenRows?.[index])
+  )
+    return document;
+  return {
+    ...document,
+    sheets: document.sheets.map((item) =>
+      item.id === sheetId ? { ...item, hiddenRows: next } : item
+    ),
+  };
+}
+
+/** Selected rows/columns are independent of filtering and never change cell data. */
+export function studioSetRangeHidden(
+  document: StudioExcelDocument,
+  sheetId: string,
+  range: StudioRange,
+  axis: 'rows' | 'columns',
+  hidden: boolean
+): StudioExcelDocument {
+  const sheet = document.sheets.find((item) => item.id === sheetId);
+  if (!sheet) throw new Error('工作表不存在。');
+  const first = axis === 'rows' ? range.firstRow : range.firstCol;
+  const last = axis === 'rows' ? range.lastRow : range.lastCol;
+  const limit = axis === 'rows' ? sheet.rowCount : sheet.columnCount;
+  if (
+    !Number.isInteger(first) ||
+    !Number.isInteger(last) ||
+    first < 1 ||
+    last < first ||
+    last > limit
+  )
+    throw new Error('隐藏或显示的选区范围无效。');
+  if (axis === 'rows') {
+    const next = new Set(sheet.hiddenRows ?? []);
+    for (let row = first; row <= last; row++) {
+      if (hidden) next.add(row);
+      else next.delete(row);
+    }
+    return studioSetRowsHidden(document, sheetId, [...next]);
+  }
+  const next = new Set(sheet.hiddenColumns ?? []);
+  for (let col = first; col <= last; col++) {
+    const label = studioColumnLabel(col);
+    if (hidden) next.add(label);
+    else next.delete(label);
+  }
+  return studioSetColumnsHidden(document, sheetId, [...next]);
 }
 
 /** Only A1 references are translated; formula strings and absolute components are preserved. */
@@ -1908,13 +2683,21 @@ function sortFormula(
   sheetName: string,
   range: StudioRange
 ): string {
-  if (!input.startsWith('=')) return input;
-  if (sourceRow === targetRow) return input;
-  // Sorting moves records. References to other sheets stay attached to their
-  // original cells; complex local dependencies are refused rather than redirected.
+  if (!input.startsWith('=') || sourceRow === targetRow) return input;
   studioTranslateFormula(input, 0, 0);
+  const moveEndpoint = (fixedCol: string, column: string, fixedRow: string, row: string) => {
+    const unchanged = `${fixedCol}${column}${fixedRow}${row}`;
+    if (fixedRow) return unchanged;
+    const position = studioParseAddress(`${column}${row}`);
+    if (!position) return unchanged;
+    if (position.row !== sourceRow || position.col < range.firstCol || position.col > range.lastCol)
+      throw new Error('排序公式包含跨行或选区外的相对引用，请扩大选区或使用固定行引用后重试。');
+    return `${fixedCol}${column}${targetRow}`;
+  };
+  // Treat A1:B1 as one reference: the end inherits the start's sheet.
+  // Parsing endpoints independently would wrongly move the B1 in Other!A1:B1.
   const token =
-    /"(?:[^"]|"")*"|((?:'(?:[^']|'')+'|[\p{L}_][\p{L}\p{N}_.]*)!)?(\$?)([A-Z]{1,3})(\$?)([1-9]\d*)(?![\p{L}\p{N}_.(])/giu;
+    /"(?:[^"]|"")*"|((?:'(?:[^']|'')+'|[\p{L}_][\p{L}\p{N}_.]*)!)?(\$?)([A-Z]{1,3})(\$?)([1-9]\d*)(?:(\s*:\s*)(\$?)([A-Z]{1,3})(\$?)([1-9]\d*))?(?![\p{L}\p{N}_.(])/giu;
   return input.replace(
     token,
     (
@@ -1924,6 +2707,11 @@ function sortFormula(
       column: string,
       fixedRow: string,
       row: string,
+      separator: string | undefined,
+      endFixedCol: string,
+      endColumn: string,
+      endFixedRow: string,
+      endRow: string,
       offset: number
     ) => {
       if (
@@ -1937,16 +2725,11 @@ function sortFormula(
         const target = raw.startsWith("'") ? raw.slice(1, -1).replace(/''/g, "'") : raw;
         if (target.toLocaleLowerCase() !== sheetName.toLocaleLowerCase()) return match;
       }
-      if (fixedRow) return match;
-      const position = studioParseAddress(`${column}${row}`);
-      if (!position) return match;
-      if (
-        position.row !== sourceRow ||
-        position.col < range.firstCol ||
-        position.col > range.lastCol
-      )
-        throw new Error('排序公式包含跨行或选区外的相对引用，请扩大选区或使用固定行引用后重试。');
-      return `${sheet ?? ''}${fixedCol}${column}${targetRow}`;
+      const start = moveEndpoint(fixedCol, column, fixedRow, row);
+      const end = separator
+        ? separator + moveEndpoint(endFixedCol, endColumn, endFixedRow, endRow)
+        : '';
+      return `${sheet ?? ''}${start}${end}`;
     }
   );
 }
@@ -1988,22 +2771,23 @@ export function studioSortRangeByKeys(
   const keysInSelection = keys.every(
     (key) => key.column >= range.firstCol && key.column <= range.lastCol
   );
-  if (
-    !rangeWithin(sheet, range) ||
-    !keysInSelection ||
-    range.lastRow <= range.firstRow
-  )
+  if (!rangeWithin(sheet, range) || !keysInSelection || range.lastRow <= range.firstRow)
     throw new Error('请选择至少两行数据，排序键应位于选区内。');
   const seenColumns = new Set<number>();
   for (const key of keys) {
-    if (seenColumns.has(key.column))
-      throw new Error('排序键的列重复，请合并或删除重复的层级。');
+    if (seenColumns.has(key.column)) throw new Error('排序键的列重复，请合并或删除重复的层级。');
     seenColumns.add(key.column);
   }
   studioSelectionAddresses(selection);
   if (sheet.merges?.some((entry) => intersects(studioParseRange(entry)!, range)))
     throw new Error('排序区域包含合并单元格，请先拆分。');
   const calculation = studioCalculate(document);
+  if (
+    studioSelectionAddresses(selection).some((address) =>
+      calculation.arrayOwners.has(`${sheetId}:${address}`)
+    )
+  )
+    throw new Error('排序区域包含数组结果，请先删除数组公式。');
   const first = range.firstRow + (header ? 1 : 0);
   const rows = Array.from({ length: range.lastRow - first + 1 }, (_, index) => first + index);
   const valueAt = (row: number, column: number) => {
@@ -2013,7 +2797,7 @@ export function studioSortRangeByKeys(
       throw new Error('排序列含公式错误，请先修正。');
     return (
       calculation.values.get(`${sheetId}:${address}`) ??
-      studioInputValue(cell?.input ?? '', cell?.numberFormat)
+      studioInputValue(cell?.input ?? '', cell?.numberFormat, cell?.valueType)
     );
   };
   rows.sort((a, b) => {
@@ -2076,7 +2860,7 @@ export function studioAddChart(
       const cell = sheet.cells[address];
       const value =
         calculation.values.get(`${sheetId}:${address}`) ??
-        studioInputValue(cell?.input ?? '', cell?.numberFormat);
+        studioInputValue(cell?.input ?? '', cell?.numberFormat, cell?.valueType);
       if (
         value !== '' &&
         (typeof value !== 'number' || calculation.errors.has(`${sheetId}:${address}`))
@@ -2124,7 +2908,7 @@ export function studioChartData(
     const cell = sheet.cells[address];
     return (
       calculation.values.get(`${sheet.id}:${address}`) ??
-      studioInputValue(cell?.input ?? '', cell?.numberFormat)
+      studioInputValue(cell?.input ?? '', cell?.numberFormat, cell?.valueType)
     );
   };
   return {

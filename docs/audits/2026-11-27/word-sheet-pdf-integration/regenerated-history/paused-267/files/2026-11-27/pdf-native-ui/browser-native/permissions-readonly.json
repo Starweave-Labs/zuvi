@@ -1,0 +1,765 @@
+{
+  "sha256": "df5891febf7d6ddc353f6ffad9499101737639ab9dfbb9eb2943f1b0303e281e",
+  "pages": 2,
+  "contents": [
+    {
+      "page": 0,
+      "sha256": "796b53100b17b0201e23593cdc606dc0dbbc885b75e24d1f2df9700abb3b9d8c",
+      "decodedSha256": "4adc33bd9fe74303c344be46e5916d65182fb218e248fe80452ab3f025b06c64"
+    },
+    {
+      "page": 0,
+      "sha256": "39499225e0a03b412a3b72654467bc454e3d59212da89ea3ed0803f5de91b538",
+      "decodedSha256": "a27ea56756d4ce7307ad9d878027785ec9d27b634dd3080418897479bf5dc6fe"
+    },
+    {
+      "page": 0,
+      "sha256": "21678bc8ebd87259f49a53782a961ce477412af6717603fbb535be4b3c323d50",
+      "decodedSha256": "282f82a2d55dbfe663906eecf403ead5ecad4a750d37f8a09d16d99c2283cd61"
+    },
+    {
+      "page": 1,
+      "sha256": "61712ea49d4cb5647ae6897ca030212abccd06b173a0cbd6ec660948f291f3b0",
+      "decodedSha256": "c00ffa3e1e77f6555d54c9b1fe3fbe0be25657fa86a4d7cb2f9377282702ce08"
+    }
+  ],
+  "annotations": [
+    {
+      "id": "annotation:ad6da678a4977f0b2f957f536ca5fd67",
+      "subtype": "Widget",
+      "contents": "",
+      "rect": [
+        29.5,
+        29.5,
+        290.5,
+        60.5
+      ],
+      "page": 0,
+      "author": "",
+      "created": "",
+      "modified": "",
+      "color": [],
+      "fill": [],
+      "quads": [],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 1,
+      "border": {
+        "width": 1,
+        "style": ""
+      },
+      "appearanceSha256": "2a602b151a3b01943d84f4b5306005998d9321c0de53a15cc7f2d40123681860",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "native-legacy-mark:2003f7f35ef0821e72bf2fc3e62bb6ac",
+      "subtype": "FreeText",
+      "contents": "中文自由文本：原生迁入后保留",
+      "rect": [
+        30,
+        585.63,
+        240.05,
+        607.4
+      ],
+      "page": 0,
+      "author": "",
+      "created": "D:20261127140000Z",
+      "modified": "D:20261127140000Z",
+      "color": [],
+      "fill": [],
+      "quads": [],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 1,
+      "border": {
+        "width": 0,
+        "style": "S"
+      },
+      "appearanceSha256": "3381409723a5071289c5b3acdb5fb656a96f0802c0dcb646e636ed37042f0a3d",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "native-legacy-reply:625f41cd8ff277b2f904ce2d91afff65",
+      "subtype": "Text",
+      "contents": "旧回复只迁移一次。",
+      "rect": [
+        30,
+        585.63,
+        48,
+        603.63
+      ],
+      "page": 0,
+      "author": "",
+      "created": "D:20261127140000Z",
+      "modified": "D:20261127140000Z",
+      "color": [
+        1,
+        0.88,
+        0.3
+      ],
+      "fill": [],
+      "quads": [],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 1,
+      "border": {
+        "width": 0,
+        "style": "S"
+      },
+      "appearanceSha256": "8274d924d14cba473ab6fa739ec4c6e411e6f302ae670707f158082d0e2ca3a1",
+      "replyTo": "native-legacy-mark:2003f7f35ef0821e72bf2fc3e62bb6ac",
+      "replyType": "R",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "native-legacy-mark:d7d81503ffcaa7b2441ace1fd8501217",
+      "subtype": "Highlight",
+      "contents": "Native single-layer highlight",
+      "rect": [
+        30,
+        530,
+        330,
+        550
+      ],
+      "page": 0,
+      "author": "",
+      "created": "D:20261127140000Z",
+      "modified": "D:20261127140000Z",
+      "color": [
+        0.9607843137254902,
+        0.7725490196078432,
+        0.25882352941176473
+      ],
+      "fill": [],
+      "quads": [
+        30,
+        550,
+        330,
+        550,
+        30,
+        530,
+        330,
+        530
+      ],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 0.3,
+      "border": {
+        "width": 1,
+        "style": "S"
+      },
+      "appearanceSha256": "6cfca5fdaa95c295a74aa6bf51969bd75d2057034ebc6a22170450af8f1c6d8a",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "native-legacy-mark:a39314ccf0d00b213594c9c023c997d1",
+      "subtype": "Square",
+      "contents": "Native Square",
+      "rect": [
+        30,
+        390,
+        210,
+        430
+      ],
+      "page": 0,
+      "author": "",
+      "created": "D:20261127140000Z",
+      "modified": "D:20261127140000Z",
+      "color": [
+        0.1450980392156863,
+        0.18823529411764706,
+        0.26666666666666666
+      ],
+      "fill": [],
+      "quads": [],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 1,
+      "border": {
+        "width": 2,
+        "style": "S"
+      },
+      "appearanceSha256": "2d1444c017b996059713934acfaf0f4729b338b8df942e363913b99f25bc5246",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "native-legacy-mark:e1411048d6a0a1073862c1d044907f4d",
+      "subtype": "Ink",
+      "contents": "Native Ink",
+      "rect": [
+        249,
+        399,
+        391,
+        421
+      ],
+      "page": 0,
+      "author": "",
+      "created": "D:20261127140000Z",
+      "modified": "D:20261127140000Z",
+      "color": [
+        0.1450980392156863,
+        0.18823529411764706,
+        0.26666666666666666
+      ],
+      "fill": [],
+      "quads": [],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [
+        [
+          250,
+          400,
+          290,
+          420,
+          330,
+          400,
+          390,
+          420
+        ]
+      ],
+      "opacity": 1,
+      "border": {
+        "width": 2,
+        "style": "S"
+      },
+      "appearanceSha256": "ab01609c55b7b9031d1b35f1b694a476c46309d0933739cfee7f8c2e8ae818a6",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "native-note",
+      "subtype": "Text",
+      "contents": "Native note with IRT discussion",
+      "rect": [
+        360,
+        575,
+        385,
+        600
+      ],
+      "page": 0,
+      "author": "",
+      "created": "D:20261127140000Z",
+      "modified": "D:20261127140000Z",
+      "color": [
+        1,
+        0.88,
+        0.3
+      ],
+      "fill": [],
+      "quads": [],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 1,
+      "border": {
+        "width": 0,
+        "style": "S"
+      },
+      "appearanceSha256": "3b01863a8486db62d6712fcffd1fa3bdf09b5b5caafba82d8df3c3df9e829c6e",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "native-underline",
+      "subtype": "Underline",
+      "contents": "",
+      "rect": [
+        30,
+        495,
+        320,
+        513
+      ],
+      "page": 0,
+      "author": "",
+      "created": "D:20261127140000Z",
+      "modified": "D:20261127140000Z",
+      "color": [
+        0.1,
+        0.35,
+        0.6
+      ],
+      "fill": [],
+      "quads": [
+        30,
+        513,
+        320,
+        513,
+        30,
+        495,
+        320,
+        495
+      ],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 1,
+      "border": {
+        "width": 1,
+        "style": "S"
+      },
+      "appearanceSha256": "da106d57d9a6d9ac86ef84a6829ec3504fddfa18e5126c7d3409a80bbffbbb0f",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "native-strikeout",
+      "subtype": "StrikeOut",
+      "contents": "",
+      "rect": [
+        30,
+        475,
+        320,
+        493
+      ],
+      "page": 0,
+      "author": "",
+      "created": "D:20261127140000Z",
+      "modified": "D:20261127140000Z",
+      "color": [
+        0.1,
+        0.35,
+        0.6
+      ],
+      "fill": [],
+      "quads": [
+        30,
+        493,
+        320,
+        493,
+        30,
+        475,
+        320,
+        475
+      ],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 1,
+      "border": {
+        "width": 1,
+        "style": "S"
+      },
+      "appearanceSha256": "ca2ea8e3986cd22ac42134b5094e98d777a208d36a6185b2c3ea591d9c3d16a9",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "native-squiggly",
+      "subtype": "Squiggly",
+      "contents": "",
+      "rect": [
+        30,
+        455,
+        320,
+        473
+      ],
+      "page": 0,
+      "author": "",
+      "created": "D:20261127140000Z",
+      "modified": "D:20261127140000Z",
+      "color": [
+        0.1,
+        0.35,
+        0.6
+      ],
+      "fill": [],
+      "quads": [
+        30,
+        473,
+        320,
+        473,
+        30,
+        455,
+        320,
+        455
+      ],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 1,
+      "border": {
+        "width": 1,
+        "style": "S"
+      },
+      "appearanceSha256": "11bd6cbc23a6104d956f9d1532725e71cba9e991fe0f76efc3cff37f8234d84f",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "native-circle",
+      "subtype": "Circle",
+      "contents": "",
+      "rect": [
+        250,
+        290,
+        450,
+        380
+      ],
+      "page": 0,
+      "author": "",
+      "created": "D:20261127140000Z",
+      "modified": "D:20261127140000Z",
+      "color": [
+        0.15,
+        0.4,
+        0.6
+      ],
+      "fill": [
+        0.86,
+        0.95,
+        1
+      ],
+      "quads": [],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 0.75,
+      "border": {
+        "width": 2,
+        "style": "D"
+      },
+      "appearanceSha256": "cf406c150ced97777ac0cbe941fb69565c493ab0e4ce6a152d7bc52d851b02de",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "native-line",
+      "subtype": "Line",
+      "contents": "",
+      "rect": [
+        30,
+        275,
+        230,
+        365
+      ],
+      "page": 0,
+      "author": "",
+      "created": "D:20261127140000Z",
+      "modified": "D:20261127140000Z",
+      "color": [
+        0.3,
+        0.25,
+        0.6
+      ],
+      "fill": [
+        0.3,
+        0.25,
+        0.6
+      ],
+      "quads": [],
+      "line": [
+        45,
+        290,
+        210,
+        350
+      ],
+      "vertices": [],
+      "lineEnds": [
+        "/OpenArrow",
+        "/ClosedArrow"
+      ],
+      "ink": [],
+      "opacity": 1,
+      "border": {
+        "width": 2,
+        "style": "D"
+      },
+      "appearanceSha256": "86e62ca39b69a96c06484cd133519efa2c098ed7b87b2175a1421a278d6b1c6b",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "native-polygon",
+      "subtype": "Polygon",
+      "contents": "",
+      "rect": [
+        30,
+        140,
+        230,
+        245
+      ],
+      "page": 0,
+      "author": "",
+      "created": "D:20261127140000Z",
+      "modified": "D:20261127140000Z",
+      "color": [
+        0.1,
+        0.4,
+        0.25
+      ],
+      "fill": [
+        0.86,
+        0.98,
+        0.88
+      ],
+      "quads": [],
+      "line": [],
+      "vertices": [
+        45,
+        155,
+        110,
+        235,
+        210,
+        165,
+        130,
+        145
+      ],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 0.8,
+      "border": {
+        "width": 1,
+        "style": "S"
+      },
+      "appearanceSha256": "adc66f7a421e191c8495530d18a1d03f5a6fe7969f8e321b6210ff14c4d3b48a",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "native-polyline",
+      "subtype": "PolyLine",
+      "contents": "",
+      "rect": [
+        250,
+        140,
+        450,
+        245
+      ],
+      "page": 0,
+      "author": "",
+      "created": "D:20261127140000Z",
+      "modified": "D:20261127140000Z",
+      "color": [
+        0.7,
+        0.3,
+        0.1
+      ],
+      "fill": [],
+      "quads": [],
+      "line": [],
+      "vertices": [
+        265,
+        155,
+        310,
+        235,
+        355,
+        165,
+        430,
+        220
+      ],
+      "lineEnds": [
+        "/Circle",
+        "/ROpenArrow"
+      ],
+      "ink": [],
+      "opacity": 1,
+      "border": {
+        "width": 2,
+        "style": "S"
+      },
+      "appearanceSha256": "d0727682180a275c4fb333e2bb29597ee79ac4fb8be4ebdc0fd47a84eab292f6",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "native-ui-locked-square",
+      "subtype": "Square",
+      "contents": "Source locked square",
+      "rect": [
+        315,
+        425,
+        445,
+        465
+      ],
+      "page": 0,
+      "author": "",
+      "created": "",
+      "modified": "",
+      "color": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "fill": [],
+      "quads": [],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 1,
+      "appearanceSha256": "2d1444c017b996059713934acfaf0f4729b338b8df942e363913b99f25bc5246",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "native-ui-noap-note",
+      "subtype": "Text",
+      "contents": "Source zero-rect no-AP note",
+      "rect": [
+        430,
+        520,
+        430,
+        520
+      ],
+      "page": 0,
+      "author": "",
+      "created": "",
+      "modified": "",
+      "color": [],
+      "fill": [],
+      "quads": [],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 1,
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "annotation:2cc250fcf5fea6e0aab56fe4725e2a56",
+      "subtype": "Widget",
+      "contents": "",
+      "rect": [
+        29.5,
+        29.5,
+        290.5,
+        60.5
+      ],
+      "page": 1,
+      "author": "",
+      "created": "",
+      "modified": "",
+      "color": [],
+      "fill": [],
+      "quads": [],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 1,
+      "border": {
+        "width": 1,
+        "style": ""
+      },
+      "appearanceSha256": "2a602b151a3b01943d84f4b5306005998d9321c0de53a15cc7f2d40123681860",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "annotation:73948d967ff4ebb85cab2c066eb855cc",
+      "subtype": "Widget",
+      "contents": "",
+      "rect": [
+        319.5,
+        29.5,
+        340.5,
+        50.5
+      ],
+      "page": 1,
+      "author": "",
+      "created": "",
+      "modified": "",
+      "color": [],
+      "fill": [],
+      "quads": [],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 1,
+      "border": {
+        "width": 1,
+        "style": ""
+      },
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "native-cross-reply",
+      "subtype": "Text",
+      "contents": "原生跨页回复",
+      "rect": [
+        360,
+        575,
+        378,
+        593
+      ],
+      "page": 1,
+      "author": "审阅者",
+      "created": "D:20261127140000Z",
+      "modified": "D:20261127140000Z",
+      "color": [
+        1,
+        0.88,
+        0.3
+      ],
+      "fill": [],
+      "quads": [],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 1,
+      "border": {
+        "width": 0,
+        "style": "S"
+      },
+      "appearanceSha256": "8274d924d14cba473ab6fa739ec4c6e411e6f302ae670707f158082d0e2ca3a1",
+      "replyTo": "native-note",
+      "replyType": "R",
+      "state": "",
+      "stateModel": ""
+    }
+  ],
+  "fields": [
+    {
+      "name": "reviewer",
+      "readOnly": false,
+      "widgets": 2
+    },
+    {
+      "name": "confirmed",
+      "readOnly": false,
+      "widgets": 1
+    }
+  ]
+}

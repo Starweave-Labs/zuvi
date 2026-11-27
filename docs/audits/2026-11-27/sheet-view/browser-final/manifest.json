@@ -1,0 +1,137 @@
+{
+  "status": "3/3 passed",
+  "port": 5272,
+  "retries": 0,
+  "files": [
+    {
+      "file": "runner/source-manifest.json",
+      "sha256": "a0ef8ce6ed1c270637245e7013240a94c34dc7c1cadc50e942fdab7c98ba0e98",
+      "bytes": 271
+    },
+    {
+      "file": "runner/office-studio-sheet-view.spec.ts.txt",
+      "sha256": "836da2b35da6e4bc2fcf4b49c088d6cf83dfb224981686248bec6087d5df4c41",
+      "bytes": 24941
+    },
+    {
+      "file": "runner/run.log",
+      "sha256": "82c4dedeee7040262632caa090398d1d79e2e291782ae2a185b4d1a1d925068e",
+      "bytes": 958
+    },
+    {
+      "file": "runner/results.json",
+      "sha256": "0f893557253e21292323a8c9c4418284b4634c894025e1debbb45b2465713301",
+      "bytes": 7110
+    },
+    {
+      "file": "runner/StudioSheet-DtZGxBC4.js.txt",
+      "sha256": "4dab9e6c80ed90daf81c187df2d688ce6c2a364f485c1c9d5d369e6276d29f6c",
+      "bytes": 250247
+    },
+    {
+      "file": "runner/artifacts/.last-run.json",
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903",
+      "bytes": 45
+    },
+    {
+      "file": "outputs/view-print.png",
+      "sha256": "ec1d9334f02b7efa9688290bed4eb500979759aa6a6351f3d7815c0dc635a7a4",
+      "bytes": 54666
+    },
+    {
+      "file": "outputs/view-print.pdf",
+      "sha256": "079ee57fe7a1401cc4c993912035d0db6efb191c5688dd211cde844d73e7e3bc",
+      "bytes": 52103
+    },
+    {
+      "file": "outputs/view-roundtrip-2.xlsx",
+      "sha256": "c4553492973daaa379cfe8a474a8e2755230aca6634d154885676888552ae007",
+      "bytes": 9905
+    },
+    {
+      "file": "outputs/view-readonly-preview.xlsx",
+      "sha256": "63233144830db62124dab5d02059917249327dafa92c102db1625e89ae69559a",
+      "bytes": 9872
+    },
+    {
+      "file": "outputs/view-light-1280.png",
+      "sha256": "56d1fda5283e7284f15467b96579f5d84e5af00b98087fbb9418978d23eb57a8",
+      "bytes": 173609
+    },
+    {
+      "file": "outputs/view-print-400.html",
+      "sha256": "ac92fe96790f1aa163d37004abf5178d7d118710a3c2bf49f7d15e6ef698b14c",
+      "bytes": 47156
+    },
+    {
+      "file": "outputs/view-preview-source.xlsx",
+      "sha256": "6cee28a7e9a2d2217aac50a336b85c28fc2efaf3822ec87a82e42f81609237de",
+      "bytes": 9121
+    },
+    {
+      "file": "outputs/view-visual-source.xlsx",
+      "sha256": "4d51179dd21705b913484b450fa6d52c4a4f600d69e9ec230b211dc6b6f96882",
+      "bytes": 9121
+    },
+    {
+      "file": "outputs/view-source.xlsx",
+      "sha256": "4505adbdf1fe53220228924be4fe10e80263edcc4e38600d088aeea67d3f02f2",
+      "bytes": 9121
+    },
+    {
+      "file": "outputs/view-editor-320.png",
+      "sha256": "58ae5a6bbce9e8326c2bd25f3ea9a3a3f06a91c905305940c2bd59170c16cad3",
+      "bytes": 16741
+    },
+    {
+      "file": "outputs/view-fill-400.png",
+      "sha256": "b25c8365f95301eab61c988b2bd0661adf2111b8c0a22caa2e08784fe11bdf39",
+      "bytes": 163823
+    },
+    {
+      "file": "outputs/view-protected.xlsx",
+      "sha256": "ce225a8edf5115d7f79dfcb0b1a6dbc2e9ed74f8ae8fbb5fcdab8cbfbce8908a",
+      "bytes": 10036
+    },
+    {
+      "file": "outputs/view-dark-1280.png",
+      "sha256": "dd2576b853d20e8fc06bc32acf23a0edadd3f7a5c2e373ffd44ba9f36d79f68b",
+      "bytes": 176591
+    },
+    {
+      "file": "outputs/view-print-100.html",
+      "sha256": "ac92fe96790f1aa163d37004abf5178d7d118710a3c2bf49f7d15e6ef698b14c",
+      "bytes": 47156
+    },
+    {
+      "file": "outputs/view-preview-guards.png",
+      "sha256": "08febeff2bd497ae668fb3dfda43e7ae11258be9d668036919c96227f7599128",
+      "bytes": 104641
+    },
+    {
+      "file": "outputs/view-dark-320.png",
+      "sha256": "6ae0a92ae60aac3189c03e60f35caa2f87f60cdccde50a7f1c1c8a719c8cc8e4",
+      "bytes": 43149
+    },
+    {
+      "file": "outputs/view-roundtrip-1.xlsx",
+      "sha256": "77cd10153597a108100fce3ec5be0a4eccf4a8545d4898ba8bb3d65246e38dad",
+      "bytes": 9913
+    },
+    {
+      "file": "outputs/view-light-320.png",
+      "sha256": "fa590a2c344b469af393c1f27f8413d6a1d354fc60d708143b45b7e369691e54",
+      "bytes": 42138
+    },
+    {
+      "file": "outputs/view-reopened-400.png",
+      "sha256": "55e7caed00f741af3c63c07b20eaf2f3a6f7af296eec35e7ca86926fced2a908",
+      "bytes": 170523
+    },
+    {
+      "file": "outputs/view-after-cancel.xlsx",
+      "sha256": "1d9837038576b7ed4912b426194bdf2debf464cfb02cfac084afed2012825f40",
+      "bytes": 9872
+    }
+  ]
+}

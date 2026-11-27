@@ -1,0 +1,4 @@
+
+> @zuvi/react@1.1.0 typecheck /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+> tsc --noEmit
+

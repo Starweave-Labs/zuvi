@@ -1,0 +1,221 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-11-27T17:34:43.879Z",
+  "status": "confirmed-known-defect",
+  "item": "X043",
+  "currentLedgerStatus": "audited-basic-acceptance-pending",
+  "wholeGoalComplete": false,
+  "source": {
+    "path": "packages/ui/src/components/OfficeStudio/studio-sheet-model.ts",
+    "sha256": "52aebcd0d0ba5b8e2583e41c60fd110e3c4f2ed433707ea60fa50a7759ffb07c",
+    "bytes": 114097,
+    "head": "d0ffefd93313dc30a95381db619cf77932dfdb91",
+    "sortFormulaLine": 2679,
+    "sortPublicFunctionLine": 2752
+  },
+  "reproduction": {
+    "api": "studioSortRangeByKeys",
+    "range": "A1:C4",
+    "keys": [
+      {
+        "column": 1,
+        "direction": "asc"
+      }
+    ],
+    "header": true,
+    "input": {
+      "version": 1,
+      "kind": "excel",
+      "id": "sorting-cross-sheet-range",
+      "name": "Sorting.xlsx",
+      "activeSheetId": "main",
+      "sheets": [
+        {
+          "id": "main",
+          "name": "Data",
+          "rowCount": 6,
+          "columnCount": 4,
+          "cells": {
+            "A1": {
+              "input": "Sort key"
+            },
+            "B1": {
+              "input": "External range"
+            },
+            "C1": {
+              "input": "Quoted external range"
+            },
+            "A2": {
+              "input": "Z"
+            },
+            "B2": {
+              "input": "=SUM(Other!A2:B2)"
+            },
+            "C2": {
+              "input": "=SUM('Other quoted'!$A2:B2)"
+            },
+            "A3": {
+              "input": "Y"
+            },
+            "B3": {
+              "input": "=SUM(Other!A3:B3)"
+            },
+            "C3": {
+              "input": "=SUM('Other quoted'!$A3:B3)"
+            },
+            "A4": {
+              "input": "A"
+            },
+            "B4": {
+              "input": "=SUM(Other!A4:B4)"
+            },
+            "C4": {
+              "input": "=SUM('Other quoted'!$A4:B4)"
+            }
+          }
+        },
+        {
+          "id": "other",
+          "name": "Other",
+          "rowCount": 6,
+          "columnCount": 4,
+          "cells": {
+            "A2": {
+              "input": "1"
+            },
+            "B2": {
+              "input": "2"
+            },
+            "A3": {
+              "input": "10"
+            },
+            "B3": {
+              "input": "20"
+            },
+            "A4": {
+              "input": "100"
+            },
+            "B4": {
+              "input": "200"
+            }
+          }
+        },
+        {
+          "id": "quoted",
+          "name": "Other quoted",
+          "rowCount": 6,
+          "columnCount": 4,
+          "cells": {
+            "A2": {
+              "input": "1"
+            },
+            "B2": {
+              "input": "2"
+            },
+            "A3": {
+              "input": "10"
+            },
+            "B3": {
+              "input": "20"
+            },
+            "A4": {
+              "input": "100"
+            },
+            "B4": {
+              "input": "200"
+            }
+          }
+        }
+      ]
+    },
+    "observations": [
+      {
+        "sourceRow": 4,
+        "targetRow": 2,
+        "sortKey": "A",
+        "sourceAddress": "B4",
+        "targetAddress": "B2",
+        "beforeFormula": "=SUM(Other!A4:B4)",
+        "expectedFormula": "=SUM(Other!A4:B4)",
+        "actualFormula": "=SUM(Other!A4:B2)",
+        "beforeValue": 300,
+        "afterValue": 333,
+        "beforeError": null,
+        "afterError": null
+      },
+      {
+        "sourceRow": 4,
+        "targetRow": 2,
+        "sortKey": "A",
+        "sourceAddress": "C4",
+        "targetAddress": "C2",
+        "beforeFormula": "=SUM('Other quoted'!$A4:B4)",
+        "expectedFormula": "=SUM('Other quoted'!$A4:B4)",
+        "actualFormula": "=SUM('Other quoted'!$A4:B2)",
+        "beforeValue": 300,
+        "afterValue": 333,
+        "beforeError": null,
+        "afterError": null
+      },
+      {
+        "sourceRow": 3,
+        "targetRow": 3,
+        "sortKey": "Y",
+        "sourceAddress": "B3",
+        "targetAddress": "B3",
+        "beforeFormula": "=SUM(Other!A3:B3)",
+        "expectedFormula": "=SUM(Other!A3:B3)",
+        "actualFormula": "=SUM(Other!A3:B3)",
+        "beforeValue": 30,
+        "afterValue": 30,
+        "beforeError": null,
+        "afterError": null
+      },
+      {
+        "sourceRow": 3,
+        "targetRow": 3,
+        "sortKey": "Y",
+        "sourceAddress": "C3",
+        "targetAddress": "C3",
+        "beforeFormula": "=SUM('Other quoted'!$A3:B3)",
+        "expectedFormula": "=SUM('Other quoted'!$A3:B3)",
+        "actualFormula": "=SUM('Other quoted'!$A3:B3)",
+        "beforeValue": 30,
+        "afterValue": 30,
+        "beforeError": null,
+        "afterError": null
+      },
+      {
+        "sourceRow": 2,
+        "targetRow": 4,
+        "sortKey": "Z",
+        "sourceAddress": "B2",
+        "targetAddress": "B4",
+        "beforeFormula": "=SUM(Other!A2:B2)",
+        "expectedFormula": "=SUM(Other!A2:B2)",
+        "actualFormula": "=SUM(Other!A2:B4)",
+        "beforeValue": 3,
+        "afterValue": 333,
+        "beforeError": null,
+        "afterError": null
+      },
+      {
+        "sourceRow": 2,
+        "targetRow": 4,
+        "sortKey": "Z",
+        "sourceAddress": "C2",
+        "targetAddress": "C4",
+        "beforeFormula": "=SUM('Other quoted'!$A2:B2)",
+        "expectedFormula": "=SUM('Other quoted'!$A2:B2)",
+        "actualFormula": "=SUM('Other quoted'!$A2:B4)",
+        "beforeValue": 3,
+        "afterValue": 333,
+        "beforeError": null,
+        "afterError": null
+      }
+    ],
+    "originalUnchanged": true,
+    "foreignSheetsRetained": true
+  },
+  "scope": "Read-only runtime reproduction. No source/test/build/browser/ledger modifications; the X046 duplicate-removal fix does not cover the independent sorting helper."
+}

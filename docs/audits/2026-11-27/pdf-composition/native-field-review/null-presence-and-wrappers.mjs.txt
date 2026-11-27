@@ -1,0 +1,105 @@
+import { createRequire } from 'node:module';
+import { writeFile } from 'node:fs/promises';
+import { Blob } from 'node:buffer';
+import { pdfTestRuntime } from '/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/tests/studio-pdf-test-runtime.mjs';
+
+const repo = '/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59';
+const require = createRequire(`${repo}/docs/package.json`);
+const { PDFDocument, PDFName, PDFString, PDFNull, PDFDict, StandardFonts } = require('pdf-lib');
+const r = pdfTestRuntime();
+const c = { ...r.load('../src/pages/collaboration/office-studio/studio-pdf-codec.ts'),
+  ...r.load('../src/pages/collaboration/office-studio/studio-pdf-compose.ts'),
+  ...r.load('../src/pages/collaboration/office-studio/studio-pdf-field-reader.ts'),
+  ...r.load('../../packages/ui/src/components/OfficeStudio/studio-pdf-pages.ts') };
+const n = PDFName.of;
+const save = async (pdf) => new Blob([new Uint8Array(await pdf.save({ updateFieldAppearances: false, useObjectStreams: false }))], { type: 'application/pdf' });
+async function fixture(type = 'text') {
+  const pdf = await PDFDocument.create(), font = await pdf.embedFont(StandardFonts.Helvetica), page = pdf.addPage([400, 500]);
+  let field;
+  if (type === 'radio') {
+    field = pdf.getForm().createRadioGroup('Shared'); field.addOptionToPage('A', page, { x: 20, y: 310, width: 20, height: 20 });
+    field.addOptionToPage('B', page, { x: 60, y: 310, width: 20, height: 20 }); field.select('B');
+    field.acroField.dict.set(n('DV'), field.acroField.getWidgets()[0].getOnValue());
+  } else {
+    field = pdf.getForm().createTextField('Shared'); field.setText('Parent-current');
+    field.addToPage(page, { x: 20, y: 300, width: 180, height: 24, font });
+    field.acroField.dict.set(n('DV'), PDFString.of('Parent-default'));
+    if (type === 'password') field.enablePassword();
+  }
+  if (type === 'radio') field.updateAppearances(); else field.updateAppearances(font);
+  field.acroField.dict.set(n('DA'), PDFString.of('/F1 12 Tf 0 g'));
+  const other = pdf.getForm().createTextField('Other'); other.setText('Before'); other.addToPage(page, { x: 20, y: 220, width: 180, height: 24, font }); other.updateAppearances(font);
+  pdf.getForm().acroForm.dict.set(n('DR'), pdf.context.obj({ Font: { F1: font.ref, Helvetica: font.ref, [font.name]: font.ref } }));
+  return { pdf, page, font, field, other };
+}
+function hierarchy({ pdf, field }) {
+  const parent = pdf.context.obj({ T: PDFString.of('Root'), Kids: [field.ref] });
+  for (const key of ['FT', 'Ff', 'V', 'DV', 'DA', 'Q', 'MaxLen', 'Opt']) {
+    const value = field.acroField.dict.get(n(key));
+    if (value !== undefined) parent.set(n(key), value);
+    field.acroField.dict.delete(n(key));
+  }
+  const parentRef = pdf.context.register(parent); field.acroField.dict.set(n('Parent'), parentRef);
+  const roots = pdf.getForm().acroForm.Fields(), index = roots.indexOf(field.ref); roots.set(index, parentRef);
+  return { parent, parentRef };
+}
+function combine({ pdf, field, page }) {
+  const widget = field.acroField.getWidgets()[0], widgetRef = field.acroField.Kids().get(0);
+  for (const [key, value] of widget.dict.entries()) if (key !== n('Parent')) field.acroField.dict.set(key, value);
+  field.acroField.dict.delete(n('Kids'));
+  page.node.Annots().set(page.node.Annots().indexOf(widgetRef), field.ref); pdf.context.delete(widgetRef);
+  return field.acroField.dict;
+}
+const cases = [
+  ['root Parent', f => f.field.acroField.dict, 'Parent'],
+  ['widget P', f => f.field.acroField.getWidgets()[0].dict, 'P'],
+  ['widget T', f => f.field.acroField.getWidgets()[0].dict, 'T'],
+  ['widget FT', f => f.field.acroField.getWidgets()[0].dict, 'FT'],
+  ['combined Kids', combine, 'Kids'],
+  ['combined root Parent', combine, 'Parent'],
+  ['inherited text FT', f => { hierarchy(f); return f.field.acroField.dict; }, 'FT'],
+  ['inherited text V', f => { hierarchy(f); return f.field.acroField.dict; }, 'V'],
+  ['inherited password Ff', f => { hierarchy(f); return f.field.acroField.dict; }, 'Ff', 'password'],
+  ['inherited radio Ff', f => { hierarchy(f); return f.field.acroField.dict; }, 'Ff', 'radio'],
+];
+const results = [];
+for (const [label, getDict, key, type] of cases) for (const indirect of [false, true]) {
+  const record = { label, indirect };
+  try {
+    const f = await fixture(type), dict = getDict(f);
+    dict.set(n(key), indirect ? f.pdf.context.register(PDFNull) : PDFNull);
+    let source = await save(f.pdf);
+    const stem = label.replaceAll(' ', '-').toLowerCase();
+    await writeFile(`/tmp/zuvi-p008-review-2026-11-27/${stem}-${indirect ? 'indirect' : 'direct'}.pdf`, new Uint8Array(await source.arrayBuffer()));
+    let model = await c.importStudioPdf(source, 'Presence.pdf');
+    record.importFields = model.fields.map(({ name, type, value, readOnly, passiveReason }) => ({ name, type, value, readOnly, passiveReason }));
+    model.fields.find(field => field.name === 'Other').value = 'After';
+    const saved = await c.exportStudioPdf(model, source);
+    const reopened = await c.importStudioPdf(saved, 'Saved.pdf');
+    record.reopenedFields = reopened.fields.map(({ name, type, value, readOnly, passiveReason }) => ({ name, type, value, readOnly, passiveReason }));
+    const native = await PDFDocument.load(await saved.arrayBuffer());
+    const nativeField = c.enumeratePdfFields(native).find(field => field.getName().includes('Shared'));
+    record.native = { V: nativeField.acroField.dict.lookup(n('V'))?.toString(), DV: nativeField.acroField.dict.lookup(n('DV'))?.toString(),
+      flags: nativeField.acroField.getFlags(), widgetCount: nativeField.acroField.getWidgets().length,
+      AP: nativeField.acroField.getWidgets().map(widget => widget.dict.lookup(n('AP')) instanceof PDFDict) };
+    try {
+      const composed = await c.composePdf({ sources: [{ id: 'source', bytes: source }], pages: [{ sourceId: 'source', sourcePage: 0 }] });
+      record.compose = { pages: composed.stats.pages, fields: composed.stats.fields };
+    } catch (error) { record.composeError = error.code ?? error.message; }
+  } catch (error) { record.error = error.message; }
+  results.push(record);
+}
+for (const key of ['Fields', 'AcroForm']) for (const indirect of [false, true]) {
+  const record = { label: `empty ${key}`, indirect };
+  try {
+    const pdf = await PDFDocument.create(); pdf.addPage([400, 500]);
+    const dict = key === 'Fields' ? pdf.getForm().acroForm.dict : pdf.catalog;
+    dict.set(n(key), indirect ? pdf.context.register(PDFNull) : PDFNull);
+    const source = await save(pdf); const model = await c.importStudioPdf(source, 'Empty.pdf');
+    const result = await c.composePdf({ sources: [{ id: 'source', bytes: source }], pages: [{ sourceId: 'source', sourcePage: 0 }] });
+    record.result = { modelFields: model.fields.length, fields: result.stats.fields };
+  } catch (error) { record.error = error.code ?? error.message; }
+  results.push(record);
+}
+await writeFile('/tmp/zuvi-p008-review-2026-11-27/null-presence-and-wrappers-results.json', JSON.stringify(results, null, 2));
+console.log(JSON.stringify(results, null, 2));

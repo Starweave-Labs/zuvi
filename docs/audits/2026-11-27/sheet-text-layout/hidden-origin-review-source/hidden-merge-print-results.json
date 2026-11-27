@@ -1,0 +1,29 @@
+{
+  "visibleColumns": [
+    "A",
+    "C",
+    "D"
+  ],
+  "declaredWidths": [
+    "100px",
+    "100px",
+    "100px"
+  ],
+  "spans": [
+    3,
+    1
+  ],
+  "cellTexts": [
+    "Mergedheading",
+    "Visible D"
+  ],
+  "textBoxWidths": [
+    "200px",
+    "100px"
+  ],
+  "sumCellSpans": 4,
+  "expectedSpans": [
+    2,
+    1
+  ]
+}

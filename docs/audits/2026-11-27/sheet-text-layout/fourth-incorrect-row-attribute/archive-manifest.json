@@ -1,0 +1,96 @@
+{
+  "observedResult": {
+    "passed": 1,
+    "failed": 1
+  },
+  "reason": "The source fixture and test used h instead of standard OOXML row ht. Actual exported row2 has ht=44.5 and customHeight=0. This attempt does not prove refreshing an existing native ht cache. Correct the fixture and checks, without changing product code.",
+  "freshArtifactScope": "The primary test stopped after first export. Print files, second round and theme screenshots at the top level are still the separately archived third-run evidence.",
+  "entries": [
+    {
+      "path": "playwright/.last-run.json",
+      "originalPath": "/tmp/zuvi-excel-text-playwright-results/.last-run.json",
+      "bytes": 96,
+      "sha256": "b71018926d0229e1a18724cbb183ced77dcaf200b4aac2b7326df977326eb46e"
+    },
+    {
+      "path": "playwright/office-studio-sheet-text-a-df2ac-opens-use-the-actual-editor-chromium/error-context.md.raw.gz",
+      "originalPath": "/tmp/zuvi-excel-text-playwright-results/office-studio-sheet-text-a-df2ac-opens-use-the-actual-editor-chromium/error-context.md",
+      "bytes": 12338,
+      "sha256": "b8ea3babf75f2d1ba050e2fa73f7547104e42cb3430a822c6d6ab6c8d28db9a7",
+      "uncompressedOriginal": {
+        "bytes": 59169,
+        "sha256": "7ad442ecba58d7893188c8587cae02e6553dfc98b5e3a466375e0dad25d31f0e"
+      },
+      "normalizedView": {
+        "path": "playwright/office-studio-sheet-text-a-df2ac-opens-use-the-actual-editor-chromium/error-context.md",
+        "bytes": 59165,
+        "sha256": "babe57c64cc2ddd9629b3e4b4ed41e3c8a7ef91afb061f8aa5a15be69b318a06",
+        "change": "Trailing spaces/tabs only; original bytes are preserved in the raw gzip archive."
+      }
+    },
+    {
+      "path": "playwright/office-studio-sheet-text-a-df2ac-opens-use-the-actual-editor-chromium/trace.zip",
+      "originalPath": "/tmp/zuvi-excel-text-playwright-results/office-studio-sheet-text-a-df2ac-opens-use-the-actual-editor-chromium/trace.zip",
+      "bytes": 22256492,
+      "sha256": "32ee5c4a6c86821f96da31dac5535ac890d9b216a6ba017e8fcbb67df96b996a"
+    },
+    {
+      "path": "text-source.xlsx",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/text-source.xlsx",
+      "bytes": 11009,
+      "sha256": "5882ca93c87c69fbeaa9810a6c9862fa58a92779866b99981fd7ebe707ff243e"
+    },
+    {
+      "path": "text-roundtrip-1.xlsx",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/text-roundtrip-1.xlsx",
+      "bytes": 12257,
+      "sha256": "9032019e3a605de27cc18399fc772a2d5332bf92b5678df8998c5cae44c0ce60"
+    },
+    {
+      "path": "text-protected-rejection.png",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/text-protected-rejection.png",
+      "bytes": 149475,
+      "sha256": "b27515c8e047a59682a049e4916716197ee990e12f74e1c9b5a2f8436ac5133e"
+    },
+    {
+      "path": "text-protected-after-rejection.xlsx",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/text-protected-after-rejection.xlsx",
+      "bytes": 12280,
+      "sha256": "9e457ae82948cbc1b2af3d9ac61320ba35669ef072da44253ddf0651df76907b"
+    },
+    {
+      "path": "browser-guard-evidence.json",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/browser-guard-evidence.json",
+      "bytes": 332,
+      "sha256": "99767c269a068c4374d360566a6f838770baea14285db8e5cd24a5a4d425ce6c"
+    },
+    {
+      "path": "run.txt.raw.gz",
+      "originalPath": "/tmp/zuvi-excel-text-browser-fourth.txt",
+      "bytes": 942,
+      "sha256": "507ac0fafcc58932cbc6c98b9766581f8cc31913711af7a3f01081fe8a7d5dd6",
+      "uncompressedOriginal": {
+        "bytes": 2946,
+        "sha256": "da3ebc67f992266d7d1768e37058dec2cecc838a5141ed80bf9c014408ce5e3d"
+      },
+      "normalizedView": {
+        "path": "run.txt",
+        "bytes": 2944,
+        "sha256": "f14f5645bc0fa29fcfa1552d562282c973fbed1f535839fddc6612bcbbfca1ca",
+        "change": "Trailing spaces/tabs only; original bytes are preserved in the raw gzip archive."
+      }
+    },
+    {
+      "path": "office-studio-sheet-text.spec.ts",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-sheet-text.spec.ts",
+      "bytes": 28181,
+      "sha256": "10183aa8da49245e13a8418b55f4e3729c2e5ae86a66cf892576a44c22f8c95a"
+    },
+    {
+      "path": "inspect-native-evidence.py",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/sheet-text-layout/inspect-native-evidence.py",
+      "bytes": 3605,
+      "sha256": "234b7b91a13bfde742ad4f76aa18c3536296584e80eda984249b2c37320b8929"
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "status": "passed",
+  "reviewer": "Codex visual inspection",
+  "reviewedAt": "2026-11-26T22:06:52.050Z",
+  "checks": [
+    "CJK glyphs",
+    "field values and bounds",
+    "FreeText transparent background",
+    "single-layer 0.3 highlight",
+    "geometric fill/border/dash/ends",
+    "copied and reopened content"
+  ],
+  "images": [
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/original-page-1.png",
+      "bytes": 21551,
+      "sha256": "71e9d2fd757a5e2bd6d408bd659f4b33f8fb76a1da3d6419f9719dc707cea738"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/legacy-migrated-page-1.png",
+      "bytes": 34940,
+      "sha256": "87793f65ed4bba96c63950f40b8272d14e095d09e850fbaae74b7cb4a59c7b4b"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/native-twelve-types-page-1.png",
+      "bytes": 63301,
+      "sha256": "dee0c6c48edc72fa4b056adb4407b0893ec7f36d4b3cf73f6d231c389e57d6ef"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/native-twelve-types-page-2.png",
+      "bytes": 27153,
+      "sha256": "54582ed15e1a9a2ff5ea7e632b4dd7e9cd140b043aaeee182af0e2f121e127e8"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/copy-edited-page-1.png",
+      "bytes": 62393,
+      "sha256": "b2cf01632ef3c8e2466eecd5c185b5a8aa1570615ee7e1ec9079666fb7ca5d06"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/copy-edited-page-3.png",
+      "bytes": 63301,
+      "sha256": "dee0c6c48edc72fa4b056adb4407b0893ec7f36d4b3cf73f6d231c389e57d6ef"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/merged-round-1-page-1.png",
+      "bytes": 62393,
+      "sha256": "b2cf01632ef3c8e2466eecd5c185b5a8aa1570615ee7e1ec9079666fb7ca5d06"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/merged-round-1-page-5.png",
+      "bytes": 63301,
+      "sha256": "dee0c6c48edc72fa4b056adb4407b0893ec7f36d4b3cf73f6d231c389e57d6ef"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/merged-round-2-page-1.png",
+      "bytes": 61610,
+      "sha256": "b9d6f14aacf0dac5a47465297c578bd454f3e64fbe6f60335cc4ee48e7b813ea"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/merged-round-2-page-5.png",
+      "bytes": 63301,
+      "sha256": "dee0c6c48edc72fa4b056adb4407b0893ec7f36d4b3cf73f6d231c389e57d6ef"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/pdfjs-native-twelve-types-page-1.png",
+      "bytes": 82895,
+      "sha256": "847df2305445a86aca77f19f65bc02d328a2f5fe1cafa65e7e96494fd44c6418"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/pdfjs-copy-edited-page-1.png",
+      "bytes": 82152,
+      "sha256": "6bc478b66c71f96fb712331d0799f3f2bb145b35197e314bda0200e33534c559"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-native-annotations/host-migration/render/pdfjs-merged-round-2-page-1.png",
+      "bytes": 81046,
+      "sha256": "e1f1b2e4903b549c48d3235d2960bbc6ecdea47c8ef74bb96f21150e6ec589a5"
+    }
+  ]
+}

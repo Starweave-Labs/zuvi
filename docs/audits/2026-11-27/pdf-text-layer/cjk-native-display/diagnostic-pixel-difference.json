@@ -1,0 +1,26 @@
+[
+  {
+    "fixture": "baseline",
+    "differenceBounds": [
+      390,
+      274,
+      597,
+      314
+    ],
+    "outsideCjkDifferenceBounds": null,
+    "canvasHashesIdentical": true,
+    "changedFontOptions": false
+  },
+  {
+    "fixture": "minimal-baseline",
+    "differenceBounds": [
+      390,
+      274,
+      597,
+      314
+    ],
+    "outsideCjkDifferenceBounds": null,
+    "canvasHashesIdentical": true,
+    "changedFontOptions": false
+  }
+]

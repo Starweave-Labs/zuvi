@@ -1,0 +1,500 @@
+[
+  {
+    "round": 1,
+    "rows": [
+      {
+        "text": "Alignment left",
+        "align": "left",
+        "indent": {},
+        "spacing": {},
+        "shading": {},
+        "borders": {},
+        "tabs": [],
+        "bold": true
+      },
+      {
+        "text": "Alignment center",
+        "align": "center",
+        "indent": {},
+        "spacing": {},
+        "shading": {},
+        "borders": {},
+        "tabs": [],
+        "bold": true
+      },
+      {
+        "text": "Alignment right",
+        "align": "right",
+        "indent": {},
+        "spacing": {},
+        "shading": {},
+        "borders": {},
+        "tabs": [],
+        "bold": true
+      },
+      {
+        "text": "Alignment justify",
+        "align": "both",
+        "indent": {},
+        "spacing": {},
+        "shading": {},
+        "borders": {},
+        "tabs": [],
+        "bold": true
+      },
+      {
+        "text": "First indent",
+        "indent": {
+          "left": "360",
+          "right": "120",
+          "firstLine": "180"
+        },
+        "spacing": {},
+        "shading": {},
+        "borders": {},
+        "tabs": [],
+        "bold": true
+      },
+      {
+        "text": "Hanging indent",
+        "indent": {
+          "left": "360",
+          "right": "120",
+          "hanging": "220"
+        },
+        "spacing": {},
+        "shading": {},
+        "borders": {},
+        "tabs": [],
+        "bold": true
+      },
+      {
+        "text": "Single spacing",
+        "indent": {},
+        "spacing": {
+          "after": "180",
+          "before": "120",
+          "line": "240",
+          "lineRule": "auto"
+        },
+        "shading": {},
+        "borders": {},
+        "tabs": [],
+        "bold": true
+      },
+      {
+        "text": "Multiple spacing",
+        "indent": {},
+        "spacing": {
+          "after": "180",
+          "before": "120",
+          "line": "360",
+          "lineRule": "auto"
+        },
+        "shading": {},
+        "borders": {},
+        "tabs": [],
+        "bold": true
+      },
+      {
+        "text": "Fixed spacing",
+        "indent": {},
+        "spacing": {
+          "after": "180",
+          "before": "120",
+          "line": "360",
+          "lineRule": "exact"
+        },
+        "shading": {},
+        "borders": {},
+        "tabs": [],
+        "bold": true
+      },
+      {
+        "text": "Minimum spacing",
+        "indent": {},
+        "spacing": {
+          "after": "180",
+          "before": "120",
+          "line": "480",
+          "lineRule": "atLeast"
+        },
+        "shading": {},
+        "borders": {},
+        "tabs": [],
+        "bold": true
+      },
+      {
+        "text": "TabsABC12.34",
+        "indent": {},
+        "spacing": {},
+        "shading": {},
+        "borders": {},
+        "tabs": [
+          {
+            "val": "left",
+            "pos": "1440",
+            "leader": "dot"
+          },
+          {
+            "val": "center",
+            "pos": "2880",
+            "leader": "dot"
+          },
+          {
+            "val": "right",
+            "pos": "4320",
+            "leader": "dot"
+          },
+          {
+            "val": "decimal",
+            "pos": "5760",
+            "leader": "dot"
+          }
+        ],
+        "bold": true
+      },
+      {
+        "text": "Surface",
+        "indent": {},
+        "spacing": {},
+        "shading": {
+          "val": "clear",
+          "fill": "ccffee"
+        },
+        "borders": {
+          "top": {
+            "val": "single",
+            "sz": "8",
+            "space": "4",
+            "color": "445566"
+          },
+          "bottom": {
+            "val": "dotted",
+            "sz": "8",
+            "space": "4",
+            "color": "445566"
+          },
+          "left": {
+            "val": "dashed",
+            "sz": "8",
+            "space": "4",
+            "color": "445566"
+          },
+          "right": {
+            "val": "double",
+            "sz": "8",
+            "space": "4",
+            "color": "445566"
+          }
+        },
+        "tabs": [],
+        "bold": true
+      },
+      {
+        "text": "Cleared surface",
+        "indent": {},
+        "spacing": {},
+        "shading": {
+          "val": "nil",
+          "fill": "FFEECC"
+        },
+        "borders": {
+          "top": {
+            "val": "nil",
+            "sz": "8",
+            "space": "2",
+            "color": "112233"
+          },
+          "left": {
+            "val": "nil",
+            "sz": "8"
+          },
+          "bottom": {
+            "val": "nil",
+            "sz": "8"
+          },
+          "right": {
+            "val": "nil",
+            "sz": "8"
+          },
+          "between": {
+            "val": "nil"
+          },
+          "bar": {
+            "val": "nil"
+          }
+        },
+        "tabs": [],
+        "bold": true
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "rows": [
+      {
+        "text": "Alignment left",
+        "align": "left",
+        "indent": {},
+        "spacing": {
+          "after": "156",
+          "line": "420",
+          "lineRule": "auto"
+        },
+        "shading": {},
+        "borders": {},
+        "tabs": [],
+        "bold": true
+      },
+      {
+        "text": "Alignment center",
+        "align": "center",
+        "indent": {},
+        "spacing": {
+          "after": "156",
+          "line": "420",
+          "lineRule": "auto"
+        },
+        "shading": {},
+        "borders": {},
+        "tabs": [],
+        "bold": true
+      },
+      {
+        "text": "Alignment right",
+        "align": "right",
+        "indent": {},
+        "spacing": {
+          "after": "156",
+          "line": "420",
+          "lineRule": "auto"
+        },
+        "shading": {},
+        "borders": {},
+        "tabs": [],
+        "bold": true
+      },
+      {
+        "text": "Alignment justify",
+        "align": "both",
+        "indent": {},
+        "spacing": {
+          "after": "156",
+          "line": "420",
+          "lineRule": "auto"
+        },
+        "shading": {},
+        "borders": {},
+        "tabs": [],
+        "bold": true
+      },
+      {
+        "text": "First indent",
+        "indent": {
+          "left": "360",
+          "right": "120",
+          "firstLine": "180"
+        },
+        "spacing": {
+          "after": "156",
+          "line": "420",
+          "lineRule": "auto"
+        },
+        "shading": {},
+        "borders": {},
+        "tabs": [],
+        "bold": true
+      },
+      {
+        "text": "Hanging indent",
+        "indent": {
+          "left": "360",
+          "right": "120",
+          "hanging": "220"
+        },
+        "spacing": {
+          "after": "156",
+          "line": "420",
+          "lineRule": "auto"
+        },
+        "shading": {},
+        "borders": {},
+        "tabs": [],
+        "bold": true
+      },
+      {
+        "text": "Single spacing",
+        "indent": {},
+        "spacing": {
+          "after": "180",
+          "before": "120",
+          "line": "240",
+          "lineRule": "auto"
+        },
+        "shading": {},
+        "borders": {},
+        "tabs": [],
+        "bold": true
+      },
+      {
+        "text": "Multiple spacing",
+        "indent": {},
+        "spacing": {
+          "after": "180",
+          "before": "120",
+          "line": "360",
+          "lineRule": "auto"
+        },
+        "shading": {},
+        "borders": {},
+        "tabs": [],
+        "bold": true
+      },
+      {
+        "text": "Fixed spacing",
+        "indent": {},
+        "spacing": {
+          "after": "180",
+          "before": "120",
+          "line": "360",
+          "lineRule": "exact"
+        },
+        "shading": {},
+        "borders": {},
+        "tabs": [],
+        "bold": true
+      },
+      {
+        "text": "Minimum spacing",
+        "indent": {},
+        "spacing": {
+          "after": "180",
+          "before": "120",
+          "line": "480",
+          "lineRule": "atLeast"
+        },
+        "shading": {},
+        "borders": {},
+        "tabs": [],
+        "bold": true
+      },
+      {
+        "text": "TabsABC12.34",
+        "indent": {},
+        "spacing": {
+          "after": "156",
+          "line": "420",
+          "lineRule": "auto"
+        },
+        "shading": {},
+        "borders": {},
+        "tabs": [
+          {
+            "val": "left",
+            "pos": "1440",
+            "leader": "dot"
+          },
+          {
+            "val": "center",
+            "pos": "2880",
+            "leader": "dot"
+          },
+          {
+            "val": "right",
+            "pos": "4320",
+            "leader": "dot"
+          },
+          {
+            "val": "decimal",
+            "pos": "5760",
+            "leader": "dot"
+          }
+        ],
+        "bold": true
+      },
+      {
+        "text": "Surface",
+        "indent": {},
+        "spacing": {
+          "after": "156",
+          "line": "420",
+          "lineRule": "auto"
+        },
+        "shading": {
+          "val": "clear",
+          "fill": "ccffee"
+        },
+        "borders": {
+          "top": {
+            "val": "single",
+            "sz": "8",
+            "space": "4",
+            "color": "445566"
+          },
+          "bottom": {
+            "val": "dotted",
+            "sz": "8",
+            "space": "4",
+            "color": "445566"
+          },
+          "left": {
+            "val": "dashed",
+            "sz": "8",
+            "space": "4",
+            "color": "445566"
+          },
+          "right": {
+            "val": "double",
+            "sz": "8",
+            "space": "4",
+            "color": "445566"
+          }
+        },
+        "tabs": [],
+        "bold": true
+      },
+      {
+        "text": "Cleared surface",
+        "indent": {},
+        "spacing": {
+          "after": "156",
+          "line": "420",
+          "lineRule": "auto"
+        },
+        "shading": {
+          "val": "nil",
+          "fill": "FFEECC"
+        },
+        "borders": {
+          "top": {
+            "val": "nil",
+            "sz": "8",
+            "space": "2",
+            "color": "112233"
+          },
+          "left": {
+            "val": "nil",
+            "sz": "8"
+          },
+          "bottom": {
+            "val": "nil",
+            "sz": "8"
+          },
+          "right": {
+            "val": "nil",
+            "sz": "8"
+          },
+          "between": {
+            "val": "nil"
+          },
+          "bar": {
+            "val": "nil"
+          }
+        },
+        "tabs": [],
+        "bold": true
+      }
+    ]
+  }
+]

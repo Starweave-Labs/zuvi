@@ -13,6 +13,8 @@ const countDirectories = (path: string) =>
   ).length;
 
 export default defineConfig({
+  // Parallel browser suites own their optimizer cache; the normal Vite default remains available.
+  cacheDir: process.env.ZUVI_E2E_VITE_CACHE_DIR,
   // Export is lazy-loaded; prebundle its React entry so the first preview does
   // not trigger a development-server reload and interrupt the editing session.
   optimizeDeps: { include: ['react-dom/server'] },

@@ -1,0 +1,16 @@
+{
+  "noto": {
+    "source": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/node_modules/.pnpm/@fontsource+noto-sans-sc@5.3.1/node_modules/@fontsource/noto-sans-sc/files/noto-sans-sc-chinese-simplified-400-normal.woff",
+    "helper": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/scripts/office-fonts.mjs",
+    "helperSha256": "e53aa13b57d0a298d3e2322ab70fe226f929b4fe1cb4df0187ffa8faa5323b52",
+    "woffSha256": "dc20a86875ff056a6332c353bc9a82d199bb2e5aae1d444f912c1fbff783bfa5",
+    "ttfSha256": "5dfdc76232d051caffa7633c064dc1824694c771e6b4b929442e2b9d6550f770",
+    "ttfBytes": 2522504,
+    "subset": false
+  },
+  "dejaVu": {
+    "source": "/Users/meaili/.cache/codex-runtimes/codex-primary-runtime/dependencies/native/poppler/poppler/fonts/DejaVuSans.ttf",
+    "sha256": "7da195a74c55bef988d0d48f9508bd5d849425c1770dba5d7bfc6ce9ed848954",
+    "subset": false
+  }
+}

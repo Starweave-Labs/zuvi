@@ -1,0 +1,16 @@
+[WebServer] (node:14770) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:14783) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+[WebServer] [BABEL] Note: The code generator has deoptimised the styling of /var/folders/9n/_523pt1s3gqg0f165zsdbldc0000gn/T/zuvi-office-e2e-vite-5278-14764/deps/react-dom_client.js?v=64bbb7d3 as it exceeds the max of 500KB.
+  ✓  1 [chromium] › e2e/charts-section.spec.ts:147:1 › single-instance laboratory validates JSON transactionally and can apply all seventeen forms (3.0s)
+  ✓  2 [chromium] › e2e/charts-section.spec.ts:294:1 › workbench transitions default on, preserve same-type updates and respect opt-out and reduced motion (1.7s)
+  ✓  3 [chromium] › e2e/collaboration.spec.ts:70:1 › 草稿取消、文件隔离、真实图片失败重试和只读权限 (2.4s)
+  ✓  4 [chromium] › e2e/collaboration.spec.ts:103:5 › 协作工作台布局与无障碍 1440px dark (1.8s)
+  ✓  5 [chromium] › e2e/collaboration.spec.ts:103:5 › 协作工作台布局与无障碍 768px light (1.6s)
+  ✓  6 [chromium] › e2e/collaboration.spec.ts:189:1 › 窄屏暗色：评论长文本、键盘焦点和无障碍语义 (983ms)
+
+  6 passed (13.5s)

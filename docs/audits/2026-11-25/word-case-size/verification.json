@@ -1,0 +1,39 @@
+{
+  "date": "2026-11-25",
+  "scope": [
+    "W002",
+    "W007"
+  ],
+  "wordUI": 70,
+  "fullUI": 2277,
+  "allE2E": 229,
+  "docSiteTests": {
+    "passed": 277,
+    "skipped": 1,
+    "note": "original Chart integration skip"
+  },
+  "typecheck": "passed",
+  "lint": "passed",
+  "registry": "passed",
+  "consumerSourceFiles": 329,
+  "distribution": "passed",
+  "build": "passed",
+  "esmEntryGzipBytes": 124908,
+  "esmEntryBudgetBytes": 124928,
+  "nativeAudit": "native-docx-audit.json validates mixed 28/36 half-point sizes, links, case text and subsequent caret input over 2 saves",
+  "browser": [
+    "mixed sizes and history",
+    "five-mode menu",
+    "sentence/title across marks",
+    "Unicode length and mapped selection",
+    "caret word and subsequent font input",
+    "native DOCX reopen twice",
+    "light/dark/320px",
+    "readonly actions"
+  ],
+  "remaining": [
+    "full common acceptance audit",
+    "locale-specific casing/sentence boundaries",
+    "external layout-application verification"
+  ]
+}

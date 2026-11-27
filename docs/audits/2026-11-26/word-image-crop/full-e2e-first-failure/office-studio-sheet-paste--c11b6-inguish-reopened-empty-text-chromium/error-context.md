@@ -1,0 +1,645 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: office-studio-sheet-paste-options.spec.ts >> skip blanks and arithmetic Paste Special preserve native data and formulas, cancel errors atomically and distinguish reopened empty text
+- Location: e2e/office-studio-sheet-paste-options.spec.ts:7:1
+
+# Error details
+
+```
+Test timeout of 30000ms exceeded.
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - button "打开文档菜单" [ref=e6] [cursor=pointer]: 菜单
+        - link "Z ZUVI" [ref=e7] [cursor=pointer]:
+          - /url: "#/"
+          - generic [ref=e8]: Z
+          - generic [ref=e9]: ZUVI
+      - generic [ref=e10]:
+        - button "打开文档命令面板" [ref=e11] [cursor=pointer]
+        - button "切换暗色" [ref=e15] [cursor=pointer]
+      - status
+    - main [ref=e16]:
+      - generic [ref=e17]:
+        - heading "OfficeStudio 独立文档工作台" [level=1] [ref=e18]
+        - paragraph [ref=e19]: 使用 ZUVI 的工具栏、菜单和表单，在页面内直接编辑文档。Word、Excel、PDF 共用文件操作与保存状态，编辑内容保存在当前浏览器，也可以导出为实际文件。
+        - generic [ref=e20]:
+          - generic [ref=e21]: ZUVI 界面
+          - generic [ref=e23]: 页面内编辑
+          - generic [ref=e25]: 本地恢复
+          - generic [ref=e27]: DOCX / XLSX / PDF
+        - region "从预览，到完成一份文档" [ref=e29]:
+          - generic [ref=e30]:
+            - heading "从预览，到完成一份文档" [level=3] [ref=e31]
+            - paragraph [ref=e32]: 选择一种文档开始。修改会自动保存到当前浏览器；导出后可在 Word、Excel 或 PDF 阅读器中继续使用。
+          - generic [ref=e34]:
+            - group "选择示例文档" [ref=e35]:
+              - button "Word 文档排版 · 图片与页眉页脚" [ref=e36] [cursor=pointer]:
+                - generic [ref=e37]:
+                  - generic [aria-hidden] [ref=e38]: W
+                  - generic [ref=e39]:
+                    - strong [ref=e40]: Word
+                    - generic [ref=e41]: 文档排版 · 图片与页眉页脚
+              - button "Excel 行列编辑 · 公式与图表" [pressed] [ref=e42] [cursor=pointer]:
+                - generic [ref=e43]:
+                  - generic [aria-hidden] [ref=e44]: E
+                  - generic [ref=e45]:
+                    - strong [ref=e46]: Excel
+                    - generic [ref=e47]: 行列编辑 · 公式与图表
+              - button "PDF 全文查找 · 批注与手写" [ref=e48] [cursor=pointer]:
+                - generic [ref=e49]:
+                  - generic [aria-hidden] [ref=e50]: P
+                  - generic [ref=e51]:
+                    - strong [ref=e52]: PDF
+                    - generic [ref=e53]: 全文查找 · 批注与手写
+            - generic [ref=e54]:
+              - generic [ref=e55]:
+                - generic [ref=e56]: 打开本地文档
+                - button "打开本地文档 Reopened-2.xlsx" [ref=e57] [cursor=pointer]:
+                  - generic [ref=e58]: Reopened-2.xlsx
+              - button "历史版本" [ref=e59] [cursor=pointer]
+              - switch "只读预览" [checked] [active] [ref=e61] [cursor=pointer]
+            - region "Excel 文档编辑器" [ref=e65]:
+              - generic [ref=e66]:
+                - generic "只读预览" [ref=e72]:
+                  - status "已保存" [ref=e73]
+                  - generic [ref=e76]: 只读
+                - textbox "文档名称" [ref=e78]: Reopened-2.xlsx
+                - generic [ref=e79]:
+                  - button "新建" [disabled] [ref=e81] [cursor=pointer]
+                  - button "导入" [disabled] [ref=e84]
+                  - button "导出文件" [ref=e89] [cursor=pointer]
+                  - button "打印" [ref=e95] [cursor=pointer]
+                  - button "保存" [disabled] [ref=e102]
+                  - button "全屏编辑" [ref=e109] [cursor=pointer]
+              - generic [ref=e117]:
+                - generic [ref=e118]:
+                  - generic [ref=e119]:
+                    - button "文件" [ref=e122] [cursor=pointer]
+                    - tablist "表格工具栏" [ref=e123]:
+                      - tab "开始" [selected] [ref=e124] [cursor=pointer]
+                      - tab "插入" [ref=e125] [cursor=pointer]
+                      - tab "布局" [ref=e126] [cursor=pointer]
+                      - tab "公式" [ref=e127] [cursor=pointer]
+                      - tab "数据" [ref=e128] [cursor=pointer]
+                      - tab "视图" [ref=e129] [cursor=pointer]
+                  - tabpanel "开始" [ref=e130]:
+                    - generic [ref=e131]:
+                      - generic [ref=e132]:
+                        - generic [ref=e133]:
+                          - button "撤销表格修改" [disabled] [ref=e134]:
+                            - generic [ref=e135]: ↶
+                          - button "重做表格修改" [disabled] [ref=e136]:
+                            - generic [ref=e137]: ↷
+                          - button "清空" [disabled] [ref=e138]
+                          - button "选择性粘贴" [disabled] [ref=e140]
+                          - button "清除格式" [disabled] [ref=e142]
+                          - button "格式刷" [disabled] [ref=e144]
+                        - generic [ref=e146]:
+                          - button "查找" [ref=e147] [cursor=pointer]
+                          - button "替换" [disabled] [ref=e149]
+                        - generic [ref=e151]: 编辑
+                      - generic [ref=e152]:
+                        - generic [ref=e153]:
+                          - generic [ref=e156]:
+                            - combobox "表格字体" [disabled] [ref=e157]: Calibri
+                            - button "展开选项" [disabled] [ref=e158]
+                          - generic [ref=e163]:
+                            - combobox "表格字号" [disabled] [ref=e164]: "11"
+                            - button "展开选项" [disabled] [ref=e165]
+                        - generic [ref=e168]:
+                          - button "表格加粗" [disabled] [ref=e169]:
+                            - strong [ref=e171]: B
+                          - button "表格斜体" [disabled] [pressed] [ref=e172]:
+                            - generic [ref=e173]: I
+                          - button "表格下划线" [disabled] [ref=e175]:
+                            - generic [ref=e176]: U
+                          - generic "表格文字颜色" [ref=e178]:
+                            - button "表格文字颜色" [disabled] [ref=e179]
+                          - generic "表格填充颜色" [ref=e181]:
+                            - button "表格填充颜色" [disabled] [ref=e182]
+                          - button "底色" [disabled] [ref=e184]
+                        - generic [ref=e186]: 字体
+                      - generic [ref=e187]:
+                        - generic [ref=e188]:
+                          - button "左对齐" [disabled] [ref=e189]
+                          - button "居中对齐" [disabled] [ref=e192]
+                          - button "右对齐" [disabled] [ref=e195]
+                        - generic [ref=e198]: 对齐
+                        - generic [ref=e199]:
+                          - generic [ref=e200]: 单元格垂直对齐
+                          - button "单元格垂直对齐 底端对齐" [disabled] [ref=e201]:
+                            - generic [ref=e202]: 底端对齐
+                      - generic [ref=e203]:
+                        - generic [ref=e204]:
+                          - generic [ref=e205]:
+                            - generic [ref=e206]: 边框线型
+                            - button "边框线型 细实线" [disabled] [ref=e207]:
+                              - generic [ref=e208]: 细实线
+                          - generic "边框颜色" [ref=e209]:
+                            - button "边框颜色" [disabled] [ref=e210]:
+                              - generic [ref=e212]: "#000000"
+                        - generic [ref=e213]:
+                          - button "所有边框" [disabled] [ref=e214]
+                          - button "外侧边框" [disabled] [ref=e216]
+                          - button "无边框" [disabled] [ref=e218]
+                        - generic [ref=e220]: 边框
+                      - generic [ref=e221]:
+                        - generic [ref=e222]:
+                          - generic [ref=e223]: 单元格数字格式
+                          - button "单元格数字格式 数字 · 2 位小数" [disabled] [ref=e224]:
+                            - generic [ref=e225]: 数字 · 2 位小数
+                        - button "自定义数字格式" [disabled] [ref=e226]
+                        - generic [ref=e228]: 数字格式
+                      - generic [ref=e229]:
+                        - generic [ref=e230]:
+                          - button "自动换行" [disabled] [ref=e231]
+                          - button "合并单元格" [disabled] [ref=e233]
+                          - button "拆分单元格" [disabled] [ref=e235]
+                        - generic [ref=e237]: 单元格布局
+                      - generic [ref=e238]:
+                        - generic [ref=e239]:
+                          - button "行高" [disabled] [ref=e240]
+                          - button "自动调整行高" [disabled] [ref=e242]
+                        - button "恢复默认行高" [disabled] [ref=e245]
+                        - generic [ref=e247]: 行大小 · 磅
+                      - generic [ref=e248]:
+                        - generic [ref=e249]:
+                          - button "列宽" [disabled] [ref=e250]
+                          - button "自动调整列宽" [disabled] [ref=e252]
+                        - button "隐藏列" [disabled] [ref=e254]
+                        - button "显示全部列" [disabled] [ref=e256]
+                        - button "恢复默认列宽" [disabled] [ref=e258]
+                        - generic [ref=e260]: 列大小 · 字符
+                      - generic [ref=e261]:
+                        - button "Σ 自动求和" [disabled] [ref=e262]
+                        - button "数组公式" [disabled] [ref=e264]
+                        - generic [ref=e266]: 公式
+                        - button "保护所选区域" [disabled] [ref=e267]
+                        - button "取消区域保护" [disabled] [ref=e269]
+                      - generic [ref=e271]:
+                        - generic [ref=e272]:
+                          - button "条件格式" [ref=e273] [cursor=pointer]
+                          - button "向下填充" [disabled] [ref=e275]
+                          - button "向右填充" [disabled] [ref=e277]
+                          - button "序列填充" [disabled] [ref=e279]
+                        - generic [ref=e281]: 规则与填充
+                - generic [ref=e282]:
+                  - textbox "单元格地址" [ref=e284]: D4
+                  - generic [aria-hidden] [ref=e285]: ƒx
+                  - textbox "表格公式栏" [ref=e287]:
+                    - /placeholder: 输入内容或公式
+                    - text: "22"
+                - grid "Paste 单元格网格" [ref=e289]:
+                  - generic [ref=e290]:
+                    - row [ref=e291]:
+                      - columnheader "行号" [ref=e292]
+                      - columnheader "A A 列宽" [ref=e293]:
+                        - text: A
+                        - separator "A 列宽" [disabled] [ref=e294]
+                      - columnheader "B B 列宽" [ref=e295]:
+                        - text: B
+                        - separator "B 列宽" [disabled] [ref=e296]
+                      - columnheader "C C 列宽" [ref=e297]:
+                        - text: C
+                        - separator "C 列宽" [disabled] [ref=e298]
+                      - columnheader "D D 列宽" [ref=e299]:
+                        - text: D
+                        - separator "D 列宽" [disabled] [ref=e300]
+                      - columnheader "E E 列宽" [ref=e301]:
+                        - text: E
+                        - separator "E 列宽" [disabled] [ref=e302]
+                      - columnheader "F F 列宽" [ref=e303]:
+                        - text: F
+                        - separator "F 列宽" [disabled] [ref=e304]
+                    - row [ref=e305]:
+                      - rowheader "1 1 行高" [ref=e306]:
+                        - text: "1"
+                        - separator "1 行高" [disabled] [ref=e307]
+                      - gridcell "A1" [ref=e308]:
+                        - generic [ref=e309]: "2"
+                      - gridcell "B1" [ref=e310]
+                      - gridcell "C1" [ref=e311]
+                      - gridcell "D1" [ref=e312]
+                      - gridcell "E1" [ref=e313]
+                      - gridcell "F1" [ref=e314]
+                    - row [ref=e315]:
+                      - rowheader "2 2 行高" [ref=e316]:
+                        - text: "2"
+                        - separator "2 行高" [disabled] [ref=e317]
+                      - gridcell "A2" [ref=e318]:
+                        - generic [ref=e319]: "0"
+                      - gridcell "B2" [ref=e320]:
+                        - generic [ref=e321]: "FALSE"
+                      - gridcell "C2" [ref=e322]
+                      - gridcell "D2" [ref=e323]
+                      - gridcell "E2" [ref=e324]
+                      - gridcell "F2" [ref=e325]
+                    - row [ref=e326]:
+                      - rowheader "3 3 行高" [ref=e327]:
+                        - text: "3"
+                        - separator "3 行高" [disabled] [ref=e328]
+                      - gridcell "A3" [ref=e329]:
+                        - generic [ref=e330]: "6"
+                      - gridcell "B3" [ref=e331]
+                      - gridcell "C3" [ref=e332]
+                      - gridcell "D3" [ref=e333]
+                      - gridcell "E3" [ref=e334]
+                      - gridcell "F3" [ref=e335]
+                    - row [ref=e336]:
+                      - rowheader "4 4 行高" [ref=e337]:
+                        - text: "4"
+                        - separator "4 行高" [disabled] [ref=e338]
+                      - gridcell "A4" [ref=e339]:
+                        - generic [ref=e340]: "3"
+                      - gridcell "B4" [ref=e341]
+                      - gridcell "C4" [ref=e342]
+                      - gridcell "D4" [selected] [ref=e343]:
+                        - generic [ref=e344]: "22.00"
+                      - gridcell "E4" [ref=e345]:
+                        - generic [ref=e346]: keep link
+                      - gridcell "F4" [ref=e347]
+                    - row [ref=e348]:
+                      - rowheader "5 5 行高" [ref=e349]:
+                        - text: "5"
+                        - separator "5 行高" [disabled] [ref=e350]
+                      - gridcell "A5" [ref=e351]
+                      - gridcell "B5" [ref=e352]
+                      - gridcell "C5" [ref=e353]
+                      - gridcell "D5" [ref=e354]:
+                        - generic [ref=e355]: "0"
+                      - gridcell "E5" [ref=e356]:
+                        - generic [ref=e357]: "0"
+                      - gridcell "F5" [ref=e358]
+                    - row [ref=e359]:
+                      - rowheader "6 6 行高" [ref=e360]:
+                        - text: "6"
+                        - separator "6 行高" [disabled] [ref=e361]
+                      - gridcell "A6" [ref=e362]
+                      - gridcell "B6" [ref=e363]
+                      - gridcell "C6" [ref=e364]
+                      - gridcell "D6" [ref=e365]
+                      - gridcell "E6" [ref=e366]
+                      - gridcell "F6" [ref=e367]
+                    - row [ref=e368]:
+                      - rowheader "7 7 行高" [ref=e369]:
+                        - text: "7"
+                        - separator "7 行高" [disabled] [ref=e370]
+                      - gridcell "A7" [ref=e371]
+                      - gridcell "B7" [ref=e372]
+                      - gridcell "C7" [ref=e373]
+                      - gridcell "D7" [ref=e374]
+                      - gridcell "E7" [ref=e375]
+                      - gridcell "F7" [ref=e376]
+                    - row [ref=e377]:
+                      - rowheader "8 8 行高" [ref=e378]:
+                        - text: "8"
+                        - separator "8 行高" [disabled] [ref=e379]
+                      - gridcell "A8" [ref=e380]
+                      - gridcell "B8" [ref=e381]
+                      - gridcell "C8" [ref=e382]
+                      - gridcell "D8" [ref=e383]
+                      - gridcell "E8" [ref=e384]
+                      - gridcell "F8" [ref=e385]
+                    - row [ref=e386]:
+                      - rowheader "9 9 行高" [ref=e387]:
+                        - text: "9"
+                        - separator "9 行高" [disabled] [ref=e388]
+                      - gridcell "A9" [ref=e389]
+                      - gridcell "B9" [ref=e390]
+                      - gridcell "C9" [ref=e391]
+                      - gridcell "D9" [ref=e392]
+                      - gridcell "E9" [ref=e393]
+                      - gridcell "F9" [ref=e394]
+                    - row [ref=e395]:
+                      - rowheader "10 10 行高" [ref=e396]:
+                        - text: "10"
+                        - separator "10 行高" [disabled] [ref=e397]
+                      - gridcell "A10" [ref=e398]
+                      - gridcell "B10" [ref=e399]
+                      - gridcell "C10" [ref=e400]
+                      - gridcell "D10" [ref=e401]
+                      - gridcell "E10" [ref=e402]
+                      - gridcell "F10" [ref=e403]
+                    - row [ref=e404]:
+                      - rowheader "11 11 行高" [ref=e405]:
+                        - text: "11"
+                        - separator "11 行高" [disabled] [ref=e406]
+                      - gridcell "A11" [ref=e407]
+                      - gridcell "B11" [ref=e408]
+                      - gridcell "C11" [ref=e409]
+                      - gridcell "D11" [ref=e410]
+                      - gridcell "E11" [ref=e411]
+                      - gridcell "F11" [ref=e412]
+                    - row [ref=e413]:
+                      - rowheader "12 12 行高" [ref=e414]:
+                        - text: "12"
+                        - separator "12 行高" [disabled] [ref=e415]
+                      - gridcell "A12" [ref=e416]
+                      - gridcell "B12" [ref=e417]
+                      - gridcell "C12" [ref=e418]
+                      - gridcell "D12" [ref=e419]
+                      - gridcell "E12" [ref=e420]
+                      - gridcell "F12" [ref=e421]
+                    - row [ref=e422]:
+                      - rowheader "13 13 行高" [ref=e423]:
+                        - text: "13"
+                        - separator "13 行高" [disabled] [ref=e424]
+                      - gridcell "A13" [ref=e425]
+                      - gridcell "B13" [ref=e426]
+                      - gridcell "C13" [ref=e427]
+                      - gridcell "D13" [ref=e428]
+                      - gridcell "E13" [ref=e429]
+                      - gridcell "F13" [ref=e430]
+                    - row [ref=e431]:
+                      - rowheader "14 14 行高" [ref=e432]:
+                        - text: "14"
+                        - separator "14 行高" [disabled] [ref=e433]
+                      - gridcell "A14" [ref=e434]
+                      - gridcell "B14" [ref=e435]
+                      - gridcell "C14" [ref=e436]
+                      - gridcell "D14" [ref=e437]
+                      - gridcell "E14" [ref=e438]
+                      - gridcell "F14" [ref=e439]
+                    - row [ref=e440]:
+                      - rowheader "15 15 行高" [ref=e441]:
+                        - text: "15"
+                        - separator "15 行高" [disabled] [ref=e442]
+                      - gridcell "A15" [ref=e443]
+                      - gridcell "B15" [ref=e444]
+                      - gridcell "C15" [ref=e445]
+                      - gridcell "D15" [ref=e446]
+                      - gridcell "E15" [ref=e447]
+                      - gridcell "F15" [ref=e448]
+                    - row [ref=e449]:
+                      - rowheader "16 16 行高" [ref=e450]:
+                        - text: "16"
+                        - separator "16 行高" [disabled] [ref=e451]
+                      - gridcell "A16" [ref=e452]
+                      - gridcell "B16" [ref=e453]
+                      - gridcell "C16" [ref=e454]
+                      - gridcell "D16" [ref=e455]
+                      - gridcell "E16" [ref=e456]
+                      - gridcell "F16" [ref=e457]
+                    - row [ref=e458]:
+                      - rowheader "17 17 行高" [ref=e459]:
+                        - text: "17"
+                        - separator "17 行高" [disabled] [ref=e460]
+                      - gridcell "A17" [ref=e461]
+                      - gridcell "B17" [ref=e462]
+                      - gridcell "C17" [ref=e463]
+                      - gridcell "D17" [ref=e464]
+                      - gridcell "E17" [ref=e465]
+                      - gridcell "F17" [ref=e466]
+                    - row [ref=e467]:
+                      - rowheader "18 18 行高" [ref=e468]:
+                        - text: "18"
+                        - separator "18 行高" [disabled] [ref=e469]
+                      - gridcell "A18" [ref=e470]
+                      - gridcell "B18" [ref=e471]
+                      - gridcell "C18" [ref=e472]
+                      - gridcell "D18" [ref=e473]
+                      - gridcell "E18" [ref=e474]
+                      - gridcell "F18" [ref=e475]
+                    - row [ref=e476]:
+                      - rowheader "19 19 行高" [ref=e477]:
+                        - text: "19"
+                        - separator "19 行高" [disabled] [ref=e478]
+                      - gridcell "A19" [ref=e479]
+                      - gridcell "B19" [ref=e480]
+                      - gridcell "C19" [ref=e481]
+                      - gridcell "D19" [ref=e482]
+                      - gridcell "E19" [ref=e483]
+                      - gridcell "F19" [ref=e484]
+                    - row [ref=e485]:
+                      - rowheader "20 20 行高" [ref=e486]:
+                        - text: "20"
+                        - separator "20 行高" [disabled] [ref=e487]
+                      - gridcell "A20" [ref=e488]
+                      - gridcell "B20" [ref=e489]
+                      - gridcell "C20" [ref=e490]
+                      - gridcell "D20" [ref=e491]
+                      - gridcell "E20" [ref=e492]
+                      - gridcell "F20" [ref=e493]
+                    - row [ref=e494]:
+                      - rowheader "21 21 行高" [ref=e495]:
+                        - text: "21"
+                        - separator "21 行高" [disabled] [ref=e496]
+                      - gridcell "A21" [ref=e497]
+                      - gridcell "B21" [ref=e498]
+                      - gridcell "C21" [ref=e499]
+                      - gridcell "D21" [ref=e500]
+                      - gridcell "E21" [ref=e501]
+                      - gridcell "F21" [ref=e502]
+                    - row [ref=e503]:
+                      - rowheader "22 22 行高" [ref=e504]:
+                        - text: "22"
+                        - separator "22 行高" [disabled] [ref=e505]
+                      - gridcell "A22" [ref=e506]
+                      - gridcell "B22" [ref=e507]
+                      - gridcell "C22" [ref=e508]
+                      - gridcell "D22" [ref=e509]
+                      - gridcell "E22" [ref=e510]
+                      - gridcell "F22" [ref=e511]
+                    - row [ref=e512]:
+                      - rowheader "23 23 行高" [ref=e513]:
+                        - text: "23"
+                        - separator "23 行高" [disabled] [ref=e514]
+                      - gridcell "A23" [ref=e515]
+                      - gridcell "B23" [ref=e516]
+                      - gridcell "C23" [ref=e517]
+                      - gridcell "D23" [ref=e518]
+                      - gridcell "E23" [ref=e519]
+                      - gridcell "F23" [ref=e520]
+                    - row [ref=e521]:
+                      - rowheader "24 24 行高" [ref=e522]:
+                        - text: "24"
+                        - separator "24 行高" [disabled] [ref=e523]
+                      - gridcell "A24" [ref=e524]
+                      - gridcell "B24" [ref=e525]
+                      - gridcell "C24" [ref=e526]
+                      - gridcell "D24" [ref=e527]
+                      - gridcell "E24" [ref=e528]
+                      - gridcell "F24" [ref=e529]
+                    - row [ref=e530]:
+                      - rowheader "25 25 行高" [ref=e531]:
+                        - text: "25"
+                        - separator "25 行高" [disabled] [ref=e532]
+                      - gridcell "A25" [ref=e533]
+                      - gridcell "B25" [ref=e534]
+                      - gridcell "C25" [ref=e535]
+                      - gridcell "D25" [ref=e536]
+                      - gridcell "E25" [ref=e537]
+                      - gridcell "F25" [ref=e538]
+                    - row [ref=e539]:
+                      - rowheader "26 26 行高" [ref=e540]:
+                        - text: "26"
+                        - separator "26 行高" [disabled] [ref=e541]
+                      - gridcell "A26" [ref=e542]
+                      - gridcell "B26" [ref=e543]
+                      - gridcell "C26" [ref=e544]
+                      - gridcell "D26" [ref=e545]
+                      - gridcell "E26" [ref=e546]
+                      - gridcell "F26" [ref=e547]
+                    - row [ref=e548]:
+                      - rowheader "27 27 行高" [ref=e549]:
+                        - text: "27"
+                        - separator "27 行高" [disabled] [ref=e550]
+                      - gridcell "A27" [ref=e551]
+                      - gridcell "B27" [ref=e552]
+                      - gridcell "C27" [ref=e553]
+                      - gridcell "D27" [ref=e554]
+                      - gridcell "E27" [ref=e555]
+                      - gridcell "F27" [ref=e556]
+                    - row [ref=e557]:
+                      - rowheader "28 28 行高" [ref=e558]:
+                        - text: "28"
+                        - separator "28 行高" [disabled] [ref=e559]
+                      - gridcell "A28" [ref=e560]
+                      - gridcell "B28" [ref=e561]
+                      - gridcell "C28" [ref=e562]
+                      - gridcell "D28" [ref=e563]
+                      - gridcell "E28" [ref=e564]
+                      - gridcell "F28" [ref=e565]
+                - generic [ref=e566]:
+                  - tablist "工作表" [ref=e568]:
+                    - tab "Paste" [selected] [ref=e569] [cursor=pointer]
+                  - button "新增工作表" [disabled] [ref=e570]
+                  - button "删除工作表" [disabled] [ref=e573]
+                  - status "已复制 4 个单元格，可使用选择性粘贴。" [ref=e578]
+            - paragraph [ref=e579]: 文件保存在当前浏览器的本地文档空间。需要长期留存时，请导出文件。
+          - group [ref=e580]:
+            - generic "示例代码" [ref=e581] [cursor=pointer]:
+              - generic [aria-hidden] [ref=e582]: </>
+              - text: 示例代码
+              - generic [aria-hidden] [ref=e583]: 展开 / 收起
+        - heading "编辑能力" [level=2] [ref=e584]
+        - table [ref=e586]:
+          - rowgroup [ref=e587]:
+            - row [ref=e588]:
+              - columnheader "文档" [ref=e589]
+              - columnheader "支持的操作" [ref=e590]
+              - columnheader "当前范围" [ref=e591]
+          - rowgroup [ref=e592]:
+            - row [ref=e593]:
+              - cell "Word" [ref=e594]
+              - cell "字体与小数字号输入、正文排版、列表、表格、图片、页眉页脚、页码、查找替换、页面设置、撤销重做；导入与导出 DOCX" [ref=e595]
+              - cell "支持内嵌图片与单节文档。修订、目录、浮动对象等复杂结构会提示暂不支持。" [ref=e596]
+            - row [ref=e597]:
+              - cell "Excel" [ref=e598]
+              - cell "单元格与矩形选区、字体与小数字号输入、手动与自动行高/列宽、查找替换、边框与垂直对齐、清除格式、公式和跨表引用、格式、复制粘贴、工作表增删、行列插入删除、合并、冻结、排序、筛选、柱状图与折线图；导入与导出 XLSX" [ref=e599]
+              - cell "10,000 行、256 列、32 张表、100,000 个已使用单元格。透视、宏、数组公式及复杂图表暂不支持。" [ref=e600]
+            - row [ref=e601]:
+              - cell "PDF" [ref=e602]
+              - cell "分页与缩略图、缩放、旋转、全文查找、文字与高亮、矩形和手写批注、已有表单、撤销重做；导出 PDF" [ref=e603]
+              - cell "批注和表单编辑。任意原始文字修改、原文重排及扫描件 OCR 暂不支持。" [ref=e604]
+        - heading "组件接入" [level=2] [ref=e605]
+        - paragraph [ref=e606]: UI 组件使用 Tiptap / ProseMirror 和公式计算库；文件适配使用 docx、ExcelJS、pdf-lib 与 PDF.js。本页无需文档服务器。宿主可以替换保存与导入导出回调，接入自己的文件系统。
+        - paragraph [ref=e607]:
+          - text: PDF 的 worker、字体与渲染由
+          - code [ref=e608]: pdfRenderer
+          - text: 提供。本页的适配代码位于
+          - code [ref=e609]: docs/src/pages/collaboration/office-studio/
+          - text: 。组件自 v0.4.0 起随
+          - code [ref=e610]: "@zuvi/react"
+          - text: 和 Registry 发布。
+        - region "组件属性表，可横向滚动" [ref=e611]:
+          - table [ref=e612]:
+            - rowgroup [ref=e613]:
+              - row [ref=e614]:
+                - columnheader "属性名" [ref=e615]
+                - columnheader "类型" [ref=e616]
+                - columnheader "默认值" [ref=e617]
+                - columnheader "说明" [ref=e618]
+            - rowgroup [ref=e619]:
+              - row [ref=e620]:
+                - cell "value / defaultValue" [ref=e621]
+                - cell [ref=e622]:
+                  - code [ref=e623]: OfficeStudioDocument
+                - cell [ref=e624]:
+                  - code [ref=e625]: —
+                - cell "受控文档或非受控初始文档；支持 Word、Excel、PDF 三种模型。" [ref=e626]
+              - row [ref=e627]:
+                - cell "onChange" [ref=e628]
+                - cell [ref=e629]:
+                  - code [ref=e630]: (document) => void
+                - cell [ref=e631]:
+                  - code [ref=e632]: —
+                - cell "内容或文件名称变化。" [ref=e633]
+              - row [ref=e634]:
+                - cell "source / pdfRenderer" [ref=e635]
+                - cell [ref=e636]:
+                  - code [ref=e637]: Blob / StudioPdfRenderer
+                - cell [ref=e638]:
+                  - code [ref=e639]: —
+                - cell "原始文件及 PDF 渲染适配；worker 资源由宿主管理。" [ref=e640]
+              - row [ref=e641]:
+                - cell "onSave / onExport / onPrint" [ref=e642]
+                - cell [ref=e643]:
+                  - code [ref=e644]: (document) => void | Promise<void>
+                - cell [ref=e645]:
+                  - code [ref=e646]: —
+                - cell "宿主处理保存、导出或打印；返回后更新状态，失败可重试。" [ref=e647]
+              - row [ref=e648]:
+                - cell "onImport / onCreate" [ref=e649]
+                - cell [ref=e650]:
+                  - code [ref=e651]: (file | kind) => void | Promise<void>
+                - cell [ref=e652]:
+                  - code [ref=e653]: —
+                - cell "宿主解析文件或创建模型，并更新受控值。" [ref=e654]
+              - row [ref=e655]:
+                - cell "readOnly / disabled" [ref=e656]
+                - cell [ref=e657]:
+                  - code [ref=e658]: boolean
+                - cell [ref=e659]:
+                  - code [ref=e660]: "false"
+                - cell "只读预览或禁用编辑与文件操作。" [ref=e661]
+              - row [ref=e662]:
+                - cell "saveState" [ref=e663]
+                - cell [ref=e664]:
+                  - code [ref=e665]: "'saved' | 'saving' | 'unsaved' | 'error'"
+                - cell [ref=e666]:
+                  - code [ref=e667]: —
+                - cell "宿主自动保存状态。" [ref=e668]
+              - row [ref=e669]:
+                - cell "height" [ref=e670]
+                - cell [ref=e671]:
+                  - code [ref=e672]: number | string
+                - cell [ref=e673]:
+                  - code [ref=e674]: "760"
+                - cell "编辑器高度；100% 需要父容器设置确定高度。" [ref=e675]
+              - row [ref=e676]:
+                - cell "fullscreen / onFullscreenChange" [ref=e677]
+                - cell [ref=e678]:
+                  - code [ref=e679]: boolean / (value) => void
+                - cell [ref=e680]:
+                  - code [ref=e681]: —
+                - cell "全屏布局，切换时编辑内容保持挂载。" [ref=e682]
+              - row [ref=e683]:
+                - cell "ref" [ref=e684]
+                - cell [ref=e685]:
+                  - code [ref=e686]: OfficeStudioHandle
+                - cell [ref=e687]:
+                  - code [ref=e688]: —
+                - cell "getDocument()、save()、export()、print()、setFullscreen()。" [ref=e689]
+              - row [ref=e690]:
+                - cell "classNames" [ref=e691]
+                - cell [ref=e692]:
+                  - code [ref=e693]: "{ root?; header?; title?; actions?; stage?; status?; error? }"
+                - cell [ref=e694]:
+                  - code [ref=e695]: —
+                - cell "追加语义结构类名，配合 data-part 与 CSS 变量定制。" [ref=e696]
+  - text: ✓ ✓ ✓ ✓
+```

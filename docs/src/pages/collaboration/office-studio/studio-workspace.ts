@@ -1,4 +1,4 @@
-import type { OfficeStudioDocument } from '@zuvi/react';
+import { isOfficeStudioDocument, type OfficeStudioDocument, type StudioPdfSourceChange } from '@zuvi/react';
 import type {
   StudioFileSummary,
   StudioStorage,
@@ -119,8 +119,28 @@ export class StudioWorkspace {
     const active = this.snapshot.active;
     if (!active || document.id !== active.id || document.kind !== active.document.kind)
       throw new Error('当前文档已切换，修改未应用。');
-    this.inputVersion++;
     const next = { ...active, document };
+    this.editFile(next);
+  }
+  /** A source-changing edit is one revision and one observable model/source snapshot. */
+  editPdfSnapshot(change: StudioPdfSourceChange): boolean {
+    const active = this.snapshot.active;
+    if (
+      this.changingFile ||
+      !active ||
+      active.document !== change.previous.document ||
+      active.source !== change.previous.source ||
+      active.document.kind !== 'pdf' ||
+      change.next.document.kind !== 'pdf' ||
+      change.next.document.id !== active.id
+    ) throw new Error('当前 PDF 或原文件已变化，页面组合未应用，请重新操作。');
+    if (!isOfficeStudioDocument(change.next.document) || !(change.next.source instanceof Blob) || !change.next.source.size || change.next.source.size > 50 * 1024 * 1024)
+      throw new Error('组合后的 PDF 原文件无效，当前内容仍保留。');
+    this.editFile({ ...active, document: change.next.document, source: change.next.source });
+    return true;
+  }
+  private editFile(next: StudioStoredFile) {
+    this.inputVersion++;
     this.update({
       active: next,
       saveState: this.pending ? 'saving' : 'unsaved',

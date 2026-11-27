@@ -1,0 +1,1713 @@
+{
+  "before": {
+    "type": "doc",
+    "attrs": {
+      "paragraphStyles": [
+        {
+          "id": "imported-4",
+          "name": "Title",
+          "basedOn": "paragraph",
+          "next": "paragraph",
+          "autoUpdate": false,
+          "surface": {},
+          "tabStops": [],
+          "run": {
+            "fontFamily": "宋体",
+            "color": "#000000",
+            "fontSize": 18,
+            "letterSpacing": 0.25
+          },
+          "paragraph": {
+            "spaceAfter": 12,
+            "lineHeight": 1,
+            "lineHeightRule": "auto",
+            "lineHeightBasis": "auto"
+          }
+        },
+        {
+          "id": "imported-13",
+          "name": "List Bullet",
+          "basedOn": "paragraph",
+          "autoUpdate": false,
+          "surface": {},
+          "tabStops": [],
+          "run": {
+            "fontFamily": "Arial",
+            "color": "#000000"
+          },
+          "paragraph": {
+            "spaceAfter": 8,
+            "lineHeight": 1.15
+          }
+        },
+        {
+          "id": "imported-14",
+          "name": "List Bullet 2",
+          "basedOn": "paragraph",
+          "autoUpdate": false,
+          "surface": {},
+          "tabStops": [],
+          "run": {
+            "fontFamily": "Arial",
+            "color": "#000000"
+          },
+          "paragraph": {
+            "spaceAfter": 8,
+            "lineHeight": 1.15
+          }
+        },
+        {
+          "id": "imported-15",
+          "name": "List Bullet 3",
+          "basedOn": "paragraph",
+          "autoUpdate": false,
+          "surface": {},
+          "tabStops": [],
+          "run": {
+            "fontFamily": "Arial",
+            "color": "#000000"
+          },
+          "paragraph": {
+            "spaceAfter": 8,
+            "lineHeight": 1.15
+          }
+        },
+        {
+          "id": "imported-16",
+          "name": "List Number",
+          "basedOn": "paragraph",
+          "autoUpdate": false,
+          "surface": {},
+          "tabStops": [],
+          "run": {
+            "fontFamily": "Arial",
+            "color": "#000000"
+          },
+          "paragraph": {
+            "spaceAfter": 8,
+            "lineHeight": 1.15
+          }
+        },
+        {
+          "id": "imported-17",
+          "name": "List Number 2",
+          "basedOn": "paragraph",
+          "autoUpdate": false,
+          "surface": {},
+          "tabStops": [],
+          "run": {
+            "fontFamily": "Arial",
+            "color": "#000000"
+          },
+          "paragraph": {
+            "spaceAfter": 8,
+            "lineHeight": 1.15
+          }
+        },
+        {
+          "id": "imported-18",
+          "name": "List Number 3",
+          "basedOn": "paragraph",
+          "autoUpdate": false,
+          "surface": {},
+          "tabStops": [],
+          "run": {
+            "fontFamily": "Arial",
+            "color": "#000000"
+          },
+          "paragraph": {
+            "spaceAfter": 8,
+            "lineHeight": 1.15
+          }
+        }
+      ],
+      "numberingDefinitions": [
+        {
+          "id": "native-numbering-2",
+          "name": "编号 2",
+          "levels": [
+            {
+              "format": "decimal",
+              "text": "%1.",
+              "start": 1,
+              "paragraphStyle": "imported-18",
+              "alignment": "left",
+              "tabStops": [
+                {
+                  "position": 54,
+                  "alignment": "num"
+                }
+              ],
+              "indentLeft": 54,
+              "indentFirstLine": -18
+            }
+          ]
+        },
+        {
+          "id": "native-numbering-3",
+          "name": "编号 3",
+          "levels": [
+            {
+              "format": "decimal",
+              "text": "%1.",
+              "start": 1,
+              "paragraphStyle": "imported-17",
+              "alignment": "left",
+              "tabStops": [
+                {
+                  "position": 36,
+                  "alignment": "num"
+                }
+              ],
+              "indentLeft": 36,
+              "indentFirstLine": -18
+            }
+          ]
+        },
+        {
+          "id": "native-numbering-5",
+          "name": "编号 5",
+          "levels": [
+            {
+              "format": "bullet",
+              "text": "",
+              "start": 1,
+              "paragraphStyle": "imported-15",
+              "alignment": "left",
+              "tabStops": [
+                {
+                  "position": 54,
+                  "alignment": "num"
+                }
+              ],
+              "indentLeft": 54,
+              "indentFirstLine": -18,
+              "fontFamily": "Symbol"
+            }
+          ]
+        },
+        {
+          "id": "native-numbering-6",
+          "name": "编号 6",
+          "levels": [
+            {
+              "format": "bullet",
+              "text": "",
+              "start": 1,
+              "paragraphStyle": "imported-14",
+              "alignment": "left",
+              "tabStops": [
+                {
+                  "position": 36,
+                  "alignment": "num"
+                }
+              ],
+              "indentLeft": 36,
+              "indentFirstLine": -18,
+              "fontFamily": "Symbol"
+            }
+          ]
+        },
+        {
+          "id": "native-numbering-7",
+          "name": "编号 7",
+          "levels": [
+            {
+              "format": "decimal",
+              "text": "%1.",
+              "start": 1,
+              "paragraphStyle": "imported-16",
+              "alignment": "left",
+              "tabStops": [
+                {
+                  "position": 18,
+                  "alignment": "num"
+                }
+              ],
+              "indentLeft": 18,
+              "indentFirstLine": -18
+            }
+          ]
+        },
+        {
+          "id": "native-numbering-8",
+          "name": "编号 8",
+          "levels": [
+            {
+              "format": "bullet",
+              "text": "",
+              "start": 1,
+              "paragraphStyle": "imported-13",
+              "alignment": "left",
+              "tabStops": [
+                {
+                  "position": 18,
+                  "alignment": "num"
+                }
+              ],
+              "indentLeft": 18,
+              "indentFirstLine": -18,
+              "fontFamily": "Symbol"
+            }
+          ]
+        }
+      ],
+      "numberingInstances": [
+        {
+          "id": "native-instance-1",
+          "definitionId": "native-numbering-8"
+        },
+        {
+          "id": "native-instance-2",
+          "definitionId": "native-numbering-6"
+        },
+        {
+          "id": "native-instance-3",
+          "definitionId": "native-numbering-5"
+        },
+        {
+          "id": "native-instance-5",
+          "definitionId": "native-numbering-7"
+        },
+        {
+          "id": "native-instance-6",
+          "definitionId": "native-numbering-3"
+        },
+        {
+          "id": "native-instance-7",
+          "definitionId": "native-numbering-2"
+        }
+      ]
+    },
+    "content": [
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphStyleSnapshot": {
+            "tabStops": [],
+            "surface": {},
+            "run": {
+              "fontFamily": "宋体",
+              "fontSize": 18,
+              "letterSpacing": 0.25,
+              "baselineShift": 0,
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "color": "#000000",
+              "backgroundColor": null
+            },
+            "paragraph": {
+              "textAlign": "left",
+              "indentLeft": 0,
+              "indentRight": 0,
+              "indentFirstLine": 0,
+              "spaceBefore": 0,
+              "spaceAfter": 12,
+              "lineHeight": 1,
+              "lineHeightRule": "auto",
+              "lineHeightBasis": "auto",
+              "widowControl": true,
+              "keepNext": false,
+              "keepLines": false
+            },
+            "headingLevel": 0
+          },
+          "paragraphStyleMaterialized": true,
+          "paragraphStyleFallback": null,
+          "paragraphStyle": "imported-4",
+          "textAlign": null,
+          "widowControl": null,
+          "keepNext": null,
+          "keepLines": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "indentFirstLine": null,
+          "spaceBefore": null,
+          "spaceAfter": 12,
+          "lineHeight": 1,
+          "lineHeightRule": "auto",
+          "lineHeightBasis": "auto",
+          "paragraphStyleDirectAttrs": [],
+          "paragraphSurface": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "tabStops": null
+        },
+        "content": [
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#000000",
+                  "fontSize": "18pt",
+                  "lineHeight": null,
+                  "letterSpacing": "0.25pt",
+                  "baselineShift": null,
+                  "fontFamily": "Arial"
+                }
+              }
+            ],
+            "text": "Word basic formatting sample"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphStyleSnapshot": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleFallback": null,
+          "paragraphStyle": null,
+          "textAlign": null,
+          "widowControl": null,
+          "keepNext": null,
+          "keepLines": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "indentFirstLine": null,
+          "spaceBefore": null,
+          "spaceAfter": 10,
+          "lineHeight": 1.15,
+          "lineHeightRule": "auto",
+          "lineHeightBasis": "auto",
+          "paragraphStyleDirectAttrs": [],
+          "paragraphSurface": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "tabStops": null
+        },
+        "content": [
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#000000",
+                  "fontSize": "12pt",
+                  "lineHeight": null,
+                  "letterSpacing": null,
+                  "baselineShift": null,
+                  "fontFamily": "Arial"
+                }
+              }
+            ],
+            "text": "Mixed plain "
+          },
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": "#ffff00",
+                  "color": "#000000",
+                  "fontSize": "14.5pt",
+                  "lineHeight": null,
+                  "letterSpacing": null,
+                  "baselineShift": null,
+                  "fontFamily": "Times New Roman"
+                }
+              },
+              {
+                "type": "bold"
+              },
+              {
+                "type": "italic"
+              },
+              {
+                "type": "strike"
+              },
+              {
+                "type": "underline"
+              }
+            ],
+            "text": "Mixed rich"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphStyleSnapshot": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleFallback": null,
+          "paragraphStyle": null,
+          "textAlign": null,
+          "widowControl": null,
+          "keepNext": null,
+          "keepLines": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "indentFirstLine": null,
+          "spaceBefore": null,
+          "spaceAfter": 10,
+          "lineHeight": 1.15,
+          "lineHeightRule": "auto",
+          "lineHeightBasis": "auto",
+          "paragraphStyleDirectAttrs": [],
+          "paragraphSurface": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "tabStops": null
+        },
+        "content": [
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#000000",
+                  "fontSize": "12pt",
+                  "lineHeight": null,
+                  "letterSpacing": null,
+                  "baselineShift": null,
+                  "fontFamily": "Arial"
+                }
+              },
+              {
+                "type": "bold"
+              },
+              {
+                "type": "italic"
+              },
+              {
+                "type": "strike"
+              },
+              {
+                "type": "underline"
+              }
+            ],
+            "text": "Clear styles"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphStyleSnapshot": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleFallback": null,
+          "paragraphStyle": null,
+          "textAlign": null,
+          "widowControl": null,
+          "keepNext": null,
+          "keepLines": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "indentFirstLine": null,
+          "spaceBefore": null,
+          "spaceAfter": 10,
+          "lineHeight": 1.15,
+          "lineHeightRule": "auto",
+          "lineHeightBasis": "auto",
+          "paragraphStyleDirectAttrs": [],
+          "paragraphSurface": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "tabStops": null
+        },
+        "content": [
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#000000",
+                  "fontSize": "12pt",
+                  "lineHeight": null,
+                  "letterSpacing": null,
+                  "baselineShift": null,
+                  "fontFamily": "Arial"
+                }
+              }
+            ],
+            "text": "Caret base"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphStyleSnapshot": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleFallback": null,
+          "paragraphStyle": null,
+          "textAlign": null,
+          "widowControl": null,
+          "keepNext": null,
+          "keepLines": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "indentFirstLine": null,
+          "spaceBefore": null,
+          "spaceAfter": 10,
+          "lineHeight": 1.15,
+          "lineHeightRule": "auto",
+          "lineHeightBasis": "auto",
+          "paragraphStyleDirectAttrs": [],
+          "paragraphSurface": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "tabStops": null
+        },
+        "content": [
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#000000",
+                  "fontSize": "12pt",
+                  "lineHeight": null,
+                  "letterSpacing": null,
+                  "baselineShift": null,
+                  "fontFamily": "Arial"
+                }
+              }
+            ],
+            "text": "Script 23"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphStyleSnapshot": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleFallback": null,
+          "paragraphStyle": null,
+          "textAlign": null,
+          "widowControl": null,
+          "keepNext": null,
+          "keepLines": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "indentFirstLine": null,
+          "spaceBefore": null,
+          "spaceAfter": 10,
+          "lineHeight": 1.15,
+          "lineHeightRule": "auto",
+          "lineHeightBasis": "auto",
+          "paragraphStyleDirectAttrs": [],
+          "paragraphSurface": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "tabStops": null
+        },
+        "content": [
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#000000",
+                  "fontSize": "12pt",
+                  "lineHeight": null,
+                  "letterSpacing": null,
+                  "baselineShift": null,
+                  "fontFamily": "Arial"
+                }
+              }
+            ],
+            "text": "Highlight target"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphStyleSnapshot": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleFallback": null,
+          "paragraphStyle": null,
+          "textAlign": null,
+          "widowControl": null,
+          "keepNext": null,
+          "keepLines": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "indentFirstLine": null,
+          "spaceBefore": null,
+          "spaceAfter": 10,
+          "lineHeight": 1.15,
+          "lineHeightRule": "auto",
+          "lineHeightBasis": "auto",
+          "paragraphStyleDirectAttrs": [],
+          "paragraphSurface": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "tabStops": null
+        },
+        "content": [
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#000000",
+                  "fontSize": "12pt",
+                  "lineHeight": null,
+                  "letterSpacing": null,
+                  "baselineShift": null,
+                  "fontFamily": "Arial"
+                }
+              }
+            ],
+            "text": "Highlight caret"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphStyleSnapshot": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleFallback": null,
+          "paragraphStyle": null,
+          "textAlign": null,
+          "widowControl": null,
+          "keepNext": null,
+          "keepLines": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "indentFirstLine": null,
+          "spaceBefore": null,
+          "spaceAfter": 10,
+          "lineHeight": 1.15,
+          "lineHeightRule": "auto",
+          "lineHeightBasis": "auto",
+          "paragraphStyleDirectAttrs": [],
+          "paragraphSurface": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "tabStops": null
+        },
+        "content": [
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://example.com/kept-link",
+                  "target": "_blank",
+                  "rel": "noopener noreferrer nofollow",
+                  "class": null,
+                  "title": null
+                }
+              },
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#000000",
+                  "fontSize": "12pt",
+                  "lineHeight": null,
+                  "letterSpacing": null,
+                  "baselineShift": null,
+                  "fontFamily": "Arial"
+                }
+              }
+            ],
+            "text": "Untouched link"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphStyleSnapshot": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleFallback": null,
+          "paragraphStyle": null,
+          "textAlign": null,
+          "widowControl": null,
+          "keepNext": null,
+          "keepLines": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "indentFirstLine": null,
+          "spaceBefore": null,
+          "spaceAfter": 10,
+          "lineHeight": 1.15,
+          "lineHeightRule": "auto",
+          "lineHeightBasis": "auto",
+          "paragraphStyleDirectAttrs": [],
+          "paragraphSurface": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "tabStops": null
+        },
+        "content": [
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#000000",
+                  "fontSize": "12.5pt",
+                  "lineHeight": null,
+                  "letterSpacing": null,
+                  "baselineShift": null,
+                  "fontFamily": "Noto Sans SC"
+                }
+              }
+            ],
+            "text": "中文小数字号样本"
+          }
+        ]
+      }
+    ]
+  },
+  "readonlyBefore": {
+    "type": "doc",
+    "attrs": {
+      "paragraphStyles": [
+        {
+          "id": "imported-4",
+          "name": "Title",
+          "basedOn": "paragraph",
+          "next": "paragraph",
+          "autoUpdate": false,
+          "surface": {},
+          "tabStops": [],
+          "run": {
+            "fontFamily": "宋体",
+            "color": "#000000",
+            "fontSize": 18,
+            "letterSpacing": 0.25
+          },
+          "paragraph": {
+            "spaceAfter": 12,
+            "lineHeight": 1,
+            "lineHeightRule": "auto",
+            "lineHeightBasis": "auto"
+          }
+        },
+        {
+          "id": "imported-13",
+          "name": "List Bullet",
+          "basedOn": "paragraph",
+          "autoUpdate": false,
+          "surface": {},
+          "tabStops": [],
+          "run": {
+            "fontFamily": "Arial",
+            "color": "#000000"
+          },
+          "paragraph": {
+            "spaceAfter": 8,
+            "lineHeight": 1.15
+          }
+        },
+        {
+          "id": "imported-14",
+          "name": "List Bullet 2",
+          "basedOn": "paragraph",
+          "autoUpdate": false,
+          "surface": {},
+          "tabStops": [],
+          "run": {
+            "fontFamily": "Arial",
+            "color": "#000000"
+          },
+          "paragraph": {
+            "spaceAfter": 8,
+            "lineHeight": 1.15
+          }
+        },
+        {
+          "id": "imported-15",
+          "name": "List Bullet 3",
+          "basedOn": "paragraph",
+          "autoUpdate": false,
+          "surface": {},
+          "tabStops": [],
+          "run": {
+            "fontFamily": "Arial",
+            "color": "#000000"
+          },
+          "paragraph": {
+            "spaceAfter": 8,
+            "lineHeight": 1.15
+          }
+        },
+        {
+          "id": "imported-16",
+          "name": "List Number",
+          "basedOn": "paragraph",
+          "autoUpdate": false,
+          "surface": {},
+          "tabStops": [],
+          "run": {
+            "fontFamily": "Arial",
+            "color": "#000000"
+          },
+          "paragraph": {
+            "spaceAfter": 8,
+            "lineHeight": 1.15
+          }
+        },
+        {
+          "id": "imported-17",
+          "name": "List Number 2",
+          "basedOn": "paragraph",
+          "autoUpdate": false,
+          "surface": {},
+          "tabStops": [],
+          "run": {
+            "fontFamily": "Arial",
+            "color": "#000000"
+          },
+          "paragraph": {
+            "spaceAfter": 8,
+            "lineHeight": 1.15
+          }
+        },
+        {
+          "id": "imported-18",
+          "name": "List Number 3",
+          "basedOn": "paragraph",
+          "autoUpdate": false,
+          "surface": {},
+          "tabStops": [],
+          "run": {
+            "fontFamily": "Arial",
+            "color": "#000000"
+          },
+          "paragraph": {
+            "spaceAfter": 8,
+            "lineHeight": 1.15
+          }
+        }
+      ],
+      "numberingDefinitions": [
+        {
+          "id": "native-numbering-2",
+          "name": "编号 2",
+          "levels": [
+            {
+              "format": "decimal",
+              "text": "%1.",
+              "start": 1,
+              "paragraphStyle": "imported-18",
+              "alignment": "left",
+              "tabStops": [
+                {
+                  "position": 54,
+                  "alignment": "num"
+                }
+              ],
+              "indentLeft": 54,
+              "indentFirstLine": -18
+            }
+          ]
+        },
+        {
+          "id": "native-numbering-3",
+          "name": "编号 3",
+          "levels": [
+            {
+              "format": "decimal",
+              "text": "%1.",
+              "start": 1,
+              "paragraphStyle": "imported-17",
+              "alignment": "left",
+              "tabStops": [
+                {
+                  "position": 36,
+                  "alignment": "num"
+                }
+              ],
+              "indentLeft": 36,
+              "indentFirstLine": -18
+            }
+          ]
+        },
+        {
+          "id": "native-numbering-5",
+          "name": "编号 5",
+          "levels": [
+            {
+              "format": "bullet",
+              "text": "",
+              "start": 1,
+              "paragraphStyle": "imported-15",
+              "alignment": "left",
+              "tabStops": [
+                {
+                  "position": 54,
+                  "alignment": "num"
+                }
+              ],
+              "indentLeft": 54,
+              "indentFirstLine": -18,
+              "fontFamily": "Symbol"
+            }
+          ]
+        },
+        {
+          "id": "native-numbering-6",
+          "name": "编号 6",
+          "levels": [
+            {
+              "format": "bullet",
+              "text": "",
+              "start": 1,
+              "paragraphStyle": "imported-14",
+              "alignment": "left",
+              "tabStops": [
+                {
+                  "position": 36,
+                  "alignment": "num"
+                }
+              ],
+              "indentLeft": 36,
+              "indentFirstLine": -18,
+              "fontFamily": "Symbol"
+            }
+          ]
+        },
+        {
+          "id": "native-numbering-7",
+          "name": "编号 7",
+          "levels": [
+            {
+              "format": "decimal",
+              "text": "%1.",
+              "start": 1,
+              "paragraphStyle": "imported-16",
+              "alignment": "left",
+              "tabStops": [
+                {
+                  "position": 18,
+                  "alignment": "num"
+                }
+              ],
+              "indentLeft": 18,
+              "indentFirstLine": -18
+            }
+          ]
+        },
+        {
+          "id": "native-numbering-8",
+          "name": "编号 8",
+          "levels": [
+            {
+              "format": "bullet",
+              "text": "",
+              "start": 1,
+              "paragraphStyle": "imported-13",
+              "alignment": "left",
+              "tabStops": [
+                {
+                  "position": 18,
+                  "alignment": "num"
+                }
+              ],
+              "indentLeft": 18,
+              "indentFirstLine": -18,
+              "fontFamily": "Symbol"
+            }
+          ]
+        }
+      ],
+      "numberingInstances": [
+        {
+          "id": "native-instance-1",
+          "definitionId": "native-numbering-8"
+        },
+        {
+          "id": "native-instance-2",
+          "definitionId": "native-numbering-6"
+        },
+        {
+          "id": "native-instance-3",
+          "definitionId": "native-numbering-5"
+        },
+        {
+          "id": "native-instance-5",
+          "definitionId": "native-numbering-7"
+        },
+        {
+          "id": "native-instance-6",
+          "definitionId": "native-numbering-3"
+        },
+        {
+          "id": "native-instance-7",
+          "definitionId": "native-numbering-2"
+        }
+      ]
+    },
+    "content": [
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphStyleSnapshot": {
+            "tabStops": [],
+            "surface": {},
+            "run": {
+              "fontFamily": "宋体",
+              "fontSize": 18,
+              "letterSpacing": 0.25,
+              "baselineShift": 0,
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "color": "#000000",
+              "backgroundColor": null
+            },
+            "paragraph": {
+              "textAlign": "left",
+              "indentLeft": 0,
+              "indentRight": 0,
+              "indentFirstLine": 0,
+              "spaceBefore": 0,
+              "spaceAfter": 12,
+              "lineHeight": 1,
+              "lineHeightRule": "auto",
+              "lineHeightBasis": "auto",
+              "widowControl": true,
+              "keepNext": false,
+              "keepLines": false
+            },
+            "headingLevel": 0
+          },
+          "paragraphStyleMaterialized": true,
+          "paragraphStyleFallback": null,
+          "paragraphStyle": "imported-4",
+          "textAlign": null,
+          "widowControl": null,
+          "keepNext": null,
+          "keepLines": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "indentFirstLine": null,
+          "spaceBefore": null,
+          "spaceAfter": 12,
+          "lineHeight": 1,
+          "lineHeightRule": "auto",
+          "lineHeightBasis": "auto",
+          "paragraphStyleDirectAttrs": [],
+          "paragraphSurface": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "tabStops": null
+        },
+        "content": [
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#000000",
+                  "fontSize": "18pt",
+                  "lineHeight": null,
+                  "letterSpacing": "0.25pt",
+                  "baselineShift": null,
+                  "fontFamily": "Arial"
+                }
+              }
+            ],
+            "text": "Word basic formatting sample"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphStyleSnapshot": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleFallback": null,
+          "paragraphStyle": null,
+          "textAlign": null,
+          "widowControl": null,
+          "keepNext": null,
+          "keepLines": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "indentFirstLine": null,
+          "spaceBefore": null,
+          "spaceAfter": 10,
+          "lineHeight": 1.15,
+          "lineHeightRule": "auto",
+          "lineHeightBasis": "auto",
+          "paragraphStyleDirectAttrs": [],
+          "paragraphSurface": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "tabStops": null
+        },
+        "content": [
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#000000",
+                  "fontSize": "12pt",
+                  "lineHeight": null,
+                  "letterSpacing": null,
+                  "baselineShift": null,
+                  "fontFamily": "Arial"
+                }
+              }
+            ],
+            "text": "Mixed plain "
+          },
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": "#ffff00",
+                  "color": "#000000",
+                  "fontSize": "12pt",
+                  "lineHeight": null,
+                  "letterSpacing": null,
+                  "baselineShift": null,
+                  "fontFamily": "Times New Roman"
+                }
+              },
+              {
+                "type": "bold"
+              },
+              {
+                "type": "italic"
+              },
+              {
+                "type": "strike"
+              },
+              {
+                "type": "underline"
+              }
+            ],
+            "text": "Mixed rich"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphStyleSnapshot": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleFallback": null,
+          "paragraphStyle": null,
+          "textAlign": null,
+          "widowControl": null,
+          "keepNext": null,
+          "keepLines": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "indentFirstLine": null,
+          "spaceBefore": null,
+          "spaceAfter": 10,
+          "lineHeight": 1.15,
+          "lineHeightRule": "auto",
+          "lineHeightBasis": "auto",
+          "paragraphStyleDirectAttrs": [],
+          "paragraphSurface": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "tabStops": null
+        },
+        "content": [
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#000000",
+                  "fontSize": "12pt",
+                  "lineHeight": null,
+                  "letterSpacing": null,
+                  "baselineShift": null,
+                  "fontFamily": "Arial"
+                }
+              },
+              {
+                "type": "bold"
+              },
+              {
+                "type": "italic"
+              },
+              {
+                "type": "strike"
+              },
+              {
+                "type": "underline"
+              }
+            ],
+            "text": "Clear styles"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphStyleSnapshot": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleFallback": null,
+          "paragraphStyle": null,
+          "textAlign": null,
+          "widowControl": null,
+          "keepNext": null,
+          "keepLines": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "indentFirstLine": null,
+          "spaceBefore": null,
+          "spaceAfter": 10,
+          "lineHeight": 1.15,
+          "lineHeightRule": "auto",
+          "lineHeightBasis": "auto",
+          "paragraphStyleDirectAttrs": [],
+          "paragraphSurface": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "tabStops": null
+        },
+        "content": [
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#000000",
+                  "fontSize": "12pt",
+                  "lineHeight": null,
+                  "letterSpacing": null,
+                  "baselineShift": null,
+                  "fontFamily": "Arial"
+                }
+              }
+            ],
+            "text": "Caret base"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphStyleSnapshot": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleFallback": null,
+          "paragraphStyle": null,
+          "textAlign": null,
+          "widowControl": null,
+          "keepNext": null,
+          "keepLines": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "indentFirstLine": null,
+          "spaceBefore": null,
+          "spaceAfter": 10,
+          "lineHeight": 1.15,
+          "lineHeightRule": "auto",
+          "lineHeightBasis": "auto",
+          "paragraphStyleDirectAttrs": [],
+          "paragraphSurface": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "tabStops": null
+        },
+        "content": [
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#000000",
+                  "fontSize": "12pt",
+                  "lineHeight": null,
+                  "letterSpacing": null,
+                  "baselineShift": null,
+                  "fontFamily": "Arial"
+                }
+              }
+            ],
+            "text": "Script 23"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphStyleSnapshot": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleFallback": null,
+          "paragraphStyle": null,
+          "textAlign": null,
+          "widowControl": null,
+          "keepNext": null,
+          "keepLines": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "indentFirstLine": null,
+          "spaceBefore": null,
+          "spaceAfter": 10,
+          "lineHeight": 1.15,
+          "lineHeightRule": "auto",
+          "lineHeightBasis": "auto",
+          "paragraphStyleDirectAttrs": [],
+          "paragraphSurface": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "tabStops": null
+        },
+        "content": [
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#000000",
+                  "fontSize": "12pt",
+                  "lineHeight": null,
+                  "letterSpacing": null,
+                  "baselineShift": null,
+                  "fontFamily": "Arial"
+                }
+              }
+            ],
+            "text": "Highlight target"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphStyleSnapshot": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleFallback": null,
+          "paragraphStyle": null,
+          "textAlign": null,
+          "widowControl": null,
+          "keepNext": null,
+          "keepLines": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "indentFirstLine": null,
+          "spaceBefore": null,
+          "spaceAfter": 10,
+          "lineHeight": 1.15,
+          "lineHeightRule": "auto",
+          "lineHeightBasis": "auto",
+          "paragraphStyleDirectAttrs": [],
+          "paragraphSurface": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "tabStops": null
+        },
+        "content": [
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#000000",
+                  "fontSize": "12pt",
+                  "lineHeight": null,
+                  "letterSpacing": null,
+                  "baselineShift": null,
+                  "fontFamily": "Arial"
+                }
+              }
+            ],
+            "text": "Highlight caret"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphStyleSnapshot": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleFallback": null,
+          "paragraphStyle": null,
+          "textAlign": null,
+          "widowControl": null,
+          "keepNext": null,
+          "keepLines": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "indentFirstLine": null,
+          "spaceBefore": null,
+          "spaceAfter": 10,
+          "lineHeight": 1.15,
+          "lineHeightRule": "auto",
+          "lineHeightBasis": "auto",
+          "paragraphStyleDirectAttrs": [],
+          "paragraphSurface": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "tabStops": null
+        },
+        "content": [
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://example.com/kept-link",
+                  "target": "_blank",
+                  "rel": "noopener noreferrer nofollow",
+                  "class": null,
+                  "title": null
+                }
+              },
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#000000",
+                  "fontSize": "12pt",
+                  "lineHeight": null,
+                  "letterSpacing": null,
+                  "baselineShift": null,
+                  "fontFamily": "Arial"
+                }
+              }
+            ],
+            "text": "Untouched link"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphStyleSnapshot": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleFallback": null,
+          "paragraphStyle": null,
+          "textAlign": null,
+          "widowControl": null,
+          "keepNext": null,
+          "keepLines": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "indentFirstLine": null,
+          "spaceBefore": null,
+          "spaceAfter": 10,
+          "lineHeight": 1.15,
+          "lineHeightRule": "auto",
+          "lineHeightBasis": "auto",
+          "paragraphStyleDirectAttrs": [],
+          "paragraphSurface": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "tabStops": null
+        },
+        "content": [
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "textStyle",
+                "attrs": {
+                  "backgroundColor": null,
+                  "color": "#000000",
+                  "fontSize": "12.5pt",
+                  "lineHeight": null,
+                  "letterSpacing": null,
+                  "baselineShift": null,
+                  "fontFamily": "Noto Sans SC"
+                }
+              }
+            ],
+            "text": "中文小数字号样本"
+          }
+        ]
+      }
+    ]
+  },
+  "dimensions": {
+    "width": 168,
+    "scroll": 168
+  },
+  "bounds": {
+    "x": 144,
+    "y": 8,
+    "width": 168,
+    "height": 587
+  },
+  "downloads": [
+    "Word basic formatting.docx"
+  ],
+  "recovered": {
+    "sha256": "049f660b7f37f68eab115d1008992dceacf3a1a65be610523e8529f1c325f4c3",
+    "native": [
+      {
+        "text": "Word basic formatting sample",
+        "runs": [
+          {
+            "text": "Word basic formatting sample",
+            "family": "Arial",
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strike": false
+          }
+        ]
+      },
+      {
+        "text": "Mixed plain Mixed rich",
+        "runs": [
+          {
+            "text": "Mixed plain ",
+            "family": "Arial",
+            "halfPoints": "24",
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strike": false
+          },
+          {
+            "text": "Mixed rich",
+            "family": "Times New Roman",
+            "halfPoints": "29",
+            "bold": true,
+            "italic": true,
+            "underline": true,
+            "strike": true,
+            "background": "ffff00"
+          }
+        ]
+      },
+      {
+        "text": "Clear styles",
+        "runs": [
+          {
+            "text": "Clear styles",
+            "family": "Arial",
+            "halfPoints": "24",
+            "bold": true,
+            "italic": true,
+            "underline": true,
+            "strike": true
+          }
+        ]
+      },
+      {
+        "text": "Caret base",
+        "runs": [
+          {
+            "text": "Caret base",
+            "family": "Arial",
+            "halfPoints": "24",
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strike": false
+          }
+        ]
+      },
+      {
+        "text": "Script 23",
+        "runs": [
+          {
+            "text": "Script 23",
+            "family": "Arial",
+            "halfPoints": "24",
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strike": false
+          }
+        ]
+      },
+      {
+        "text": "Highlight target",
+        "runs": [
+          {
+            "text": "Highlight target",
+            "family": "Arial",
+            "halfPoints": "24",
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strike": false
+          }
+        ]
+      },
+      {
+        "text": "Highlight caret",
+        "runs": [
+          {
+            "text": "Highlight caret",
+            "family": "Arial",
+            "halfPoints": "24",
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strike": false
+          }
+        ]
+      },
+      {
+        "text": "Untouched link",
+        "runs": [
+          {
+            "text": "Untouched link",
+            "family": "Arial",
+            "halfPoints": "24",
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strike": false
+          }
+        ]
+      },
+      {
+        "text": "中文小数字号样本",
+        "runs": [
+          {
+            "text": "中文小数字号样本",
+            "family": "Noto Sans SC",
+            "halfPoints": "25",
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strike": false
+          }
+        ]
+      }
+    ]
+  }
+}

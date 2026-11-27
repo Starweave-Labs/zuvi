@@ -1,0 +1,25 @@
+{
+  "status": "reviewed",
+  "documents": [
+    {
+      "path": "docs/audits/2026-11-27/word-character-guards/source-render/page-1.png",
+      "sha256": "c584808d76fec3917d301c0a4271f543b2e37398969a68d469a994971ae3b31d",
+      "matchesAcceptedFinalBrowserBaselinePixels": true,
+      "pages": 1
+    },
+    {
+      "path": "docs/audits/2026-11-27/word-character-guards/roundtrip-1-render/page-1.png",
+      "sha256": "600138e3847066f6f1c29ea6b130a76358eb85fb1111a5ac0a8ffb8ce42bfd50",
+      "matchesAcceptedFinalBrowserBaselinePixels": true,
+      "pages": 1
+    },
+    {
+      "path": "docs/audits/2026-11-27/word-character-guards/roundtrip-2-render/page-1.png",
+      "sha256": "600138e3847066f6f1c29ea6b130a76358eb85fb1111a5ac0a8ffb8ce42bfd50",
+      "matchesAcceptedFinalBrowserBaselinePixels": true,
+      "pages": 1
+    }
+  ],
+  "nativeGlyphCoordinates": "Canonical signed half-point reference verified by inspect-native.py",
+  "visualReview": "Current roundtrip-2 page inspected at full image size; all three pages are pixel-identical to the accepted final-browser-run images."
+}

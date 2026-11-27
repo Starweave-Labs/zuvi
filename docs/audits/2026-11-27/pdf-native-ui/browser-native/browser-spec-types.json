@@ -1,0 +1,18 @@
+{
+  "extends": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "strict": true,
+    "typeRoots": [
+      "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/node_modules/.pnpm/@types+node@22.20.5/node_modules/@types"
+    ],
+    "types": [
+      "node"
+    ]
+  },
+  "include": [
+    "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-native-annotations.spec.ts",
+    "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/vite-env.d.ts",
+    "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/node_modules/vite/client.d.ts"
+  ]
+}

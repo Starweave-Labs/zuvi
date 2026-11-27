@@ -1,0 +1,32 @@
+import assert from 'node:assert/strict';
+import { createRequire } from 'node:module';
+import { writeFile } from 'node:fs/promises';
+import { pdfTestRuntime } from '/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/tests/studio-pdf-test-runtime.mjs';
+const require = createRequire('/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui/package.json');
+const { JSDOM } = require('jsdom');
+const r = pdfTestRuntime();
+const { createStudioPrintHtml } = r.load('../src/pages/collaboration/office-studio/studio-print.ts');
+const document = {
+  version: 1, id: 'hidden-merge', kind: 'excel', name: 'Hidden-merge.xlsx', activeSheetId: 's',
+  defaultFont: { family: 'Arial', sizePt: 11, bold: false, italic: false },
+  sheets: [{ id: 's', name: 'Sheet', rowCount: 1, columnCount: 4, rowHeightModes: { '1': 'fixed' },
+    rowHeights: { '1': 60 }, hiddenColumns: ['B'], merges: ['A1:C1'],
+    columnWidths: { A: 100, B: 100, C: 100, D: 100 },
+    cells: { A1: { input: 'Merged heading', fontSize: 24, wrap: true, align: 'center' }, D1: { input: 'Visible D' } } }],
+};
+const html = createStudioPrintHtml(document), dom = new JSDOM(html).window.document;
+const table = dom.querySelector('.studio-print-sheet table'), columns = [...table.querySelectorAll('col')], cells = [...table.querySelectorAll('td')];
+const result = {
+  visibleColumns: ['A', 'C', 'D'],
+  declaredWidths: columns.map(column => column.style.width),
+  spans: cells.map(cell => cell.colSpan),
+  cellTexts: cells.map(cell => cell.textContent),
+  textBoxWidths: cells.map(cell => cell.querySelector('.studio-print-text-clip').style.width),
+  sumCellSpans: cells.reduce((total, cell) => total + cell.colSpan, 0),
+  expectedSpans: [2, 1],
+};
+assert.equal(columns.length, 3); assert.equal(result.sumCellSpans, 4);
+assert.deepEqual(result.textBoxWidths, ['200px', '100px']);
+await writeFile('/tmp/zuvi-sheet-text-review-2026-11-27/hidden-merge-print.html', html);
+await writeFile('/tmp/zuvi-sheet-text-review-2026-11-27/hidden-merge-print-results.json', JSON.stringify(result, null, 2));
+console.log(JSON.stringify(result, null, 2));

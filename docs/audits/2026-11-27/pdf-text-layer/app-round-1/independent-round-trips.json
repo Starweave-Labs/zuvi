@@ -1,0 +1,672 @@
+{
+  "reports": [
+    {
+      "file": "app-source.pdf",
+      "sha256": "1b04446506254849c7d574ef33a254c1bfc9bfb93a008303150a9768fa945276",
+      "pages": [
+        {
+          "mediaBox": [
+            0,
+            0,
+            500,
+            600
+          ],
+          "cropBox": [
+            40,
+            30,
+            440,
+            530
+          ],
+          "userUnit": 1.5,
+          "rotation": 0,
+          "text": "SELECTABLE ORIGINAL\nAngled source text\nSecond source line\n",
+          "contentHashes": [
+            "801a08758c40a0eea17198bb1724cd40659f3ab8e4196125c96fdc0a58636903"
+          ],
+          "annotations": [
+            {
+              "key": "8 0 R",
+              "subtype": "/Square",
+              "flags": 20,
+              "name": "red-no-rotate",
+              "rect": [
+                220,
+                180,
+                280,
+                220
+              ],
+              "quadPoints": [],
+              "appearanceHash": "7219a4abced5afcc2b2959d1945ce794ac99de8fa595b90ce74c99ea7b82b26c",
+              "appearanceSize": 27
+            },
+            {
+              "key": "10 0 R",
+              "subtype": "/Square",
+              "flags": 12,
+              "name": "green-no-zoom",
+              "rect": [
+                100,
+                100,
+                160,
+                140
+              ],
+              "quadPoints": [],
+              "appearanceHash": "f5ff48a7a0dfad3380829204c433c7fc16b3068f6362ae4aa7395c6df0c6597a",
+              "appearanceSize": 27
+            },
+            {
+              "key": "12 0 R",
+              "subtype": "/Square",
+              "flags": 28,
+              "name": "blue-no-zoom-rotate",
+              "rect": [
+                320,
+                280,
+                380,
+                320
+              ],
+              "quadPoints": [],
+              "appearanceHash": "6c513cc291640f6afdea84f95b8441ae89598488baa6979abc2c8a5719735b9a",
+              "appearanceSize": 27
+            },
+            {
+              "key": "13 0 R",
+              "subtype": "/Text",
+              "flags": 4,
+              "name": "no-ap-note",
+              "rect": [
+                80,
+                350,
+                102,
+                372
+              ],
+              "quadPoints": [],
+              "appearanceHash": null,
+              "appearanceSize": 0
+            },
+            {
+              "key": "16 0 R",
+              "subtype": "/Highlight",
+              "flags": 4,
+              "name": "single-alpha",
+              "rect": [
+                80,
+                250,
+                200,
+                270
+              ],
+              "quadPoints": [
+                80,
+                270,
+                200,
+                270,
+                80,
+                250,
+                200,
+                250
+              ],
+              "appearanceHash": "20ef019c6abc8ffdaa28bfe0c07deb1f6484192abdbe1f3368444d0615821993",
+              "appearanceSize": 35
+            },
+            {
+              "key": "19 0 R",
+              "subtype": "/Widget",
+              "flags": 4,
+              "name": "",
+              "rect": [
+                249.5,
+                69.5,
+                380.5,
+                95.5
+              ],
+              "quadPoints": [],
+              "appearanceHash": "afb159493dec0fe6072e88e374de9c9b3f347455da3846021345fd9a85787b81",
+              "appearanceSize": 281
+            }
+          ]
+        },
+        {
+          "mediaBox": [
+            0,
+            0,
+            320,
+            420
+          ],
+          "cropBox": [
+            0,
+            0,
+            320,
+            420
+          ],
+          "userUnit": 1,
+          "rotation": 90,
+          "text": "Searchable second source page\n",
+          "contentHashes": [
+            "d2ce01456b038b34b2bfb4beb87b062d46d736b966ad314d35cd845ffa059e2f"
+          ],
+          "annotations": []
+        }
+      ],
+      "fields": {
+        "source-field": {
+          "type": "/Tx",
+          "value": "Field value"
+        }
+      }
+    },
+    {
+      "file": "app-text-markups-round-1.pdf",
+      "sha256": "c97cda31f5df068a3e9c840b29509c9dce635e6bc0cb184352947cb7ab9cb98f",
+      "pages": [
+        {
+          "mediaBox": [
+            0,
+            0,
+            500,
+            600
+          ],
+          "cropBox": [
+            40,
+            30,
+            440,
+            530
+          ],
+          "userUnit": 1.5,
+          "rotation": 0,
+          "text": "SELECTABLE ORIGINAL\nAngled source text\nSecond source line\n",
+          "contentHashes": [
+            "801a08758c40a0eea17198bb1724cd40659f3ab8e4196125c96fdc0a58636903"
+          ],
+          "annotations": [
+            {
+              "key": "8 0 R",
+              "subtype": "/Square",
+              "flags": 20,
+              "name": "red-no-rotate",
+              "rect": [
+                220,
+                180,
+                280,
+                220
+              ],
+              "quadPoints": [],
+              "appearanceHash": "7219a4abced5afcc2b2959d1945ce794ac99de8fa595b90ce74c99ea7b82b26c",
+              "appearanceSize": 27
+            },
+            {
+              "key": "10 0 R",
+              "subtype": "/Square",
+              "flags": 12,
+              "name": "green-no-zoom",
+              "rect": [
+                100,
+                100,
+                160,
+                140
+              ],
+              "quadPoints": [],
+              "appearanceHash": "f5ff48a7a0dfad3380829204c433c7fc16b3068f6362ae4aa7395c6df0c6597a",
+              "appearanceSize": 27
+            },
+            {
+              "key": "12 0 R",
+              "subtype": "/Square",
+              "flags": 28,
+              "name": "blue-no-zoom-rotate",
+              "rect": [
+                320,
+                280,
+                380,
+                320
+              ],
+              "quadPoints": [],
+              "appearanceHash": "6c513cc291640f6afdea84f95b8441ae89598488baa6979abc2c8a5719735b9a",
+              "appearanceSize": 27
+            },
+            {
+              "key": "13 0 R",
+              "subtype": "/Text",
+              "flags": 4,
+              "name": "no-ap-note",
+              "rect": [
+                80,
+                350,
+                102,
+                372
+              ],
+              "quadPoints": [],
+              "appearanceHash": null,
+              "appearanceSize": 0
+            },
+            {
+              "key": "16 0 R",
+              "subtype": "/Highlight",
+              "flags": 4,
+              "name": "single-alpha",
+              "rect": [
+                80,
+                250,
+                200,
+                270
+              ],
+              "quadPoints": [
+                80,
+                270,
+                200,
+                270,
+                80,
+                250,
+                200,
+                250
+              ],
+              "appearanceHash": "20ef019c6abc8ffdaa28bfe0c07deb1f6484192abdbe1f3368444d0615821993",
+              "appearanceSize": 35
+            },
+            {
+              "key": "19 0 R",
+              "subtype": "/Widget",
+              "flags": 4,
+              "name": "annotation:07e2aa26a48b03b7ba23490c1b72046c",
+              "rect": [
+                249.5,
+                69.5,
+                380.5,
+                95.5
+              ],
+              "quadPoints": [],
+              "appearanceHash": "afb159493dec0fe6072e88e374de9c9b3f347455da3846021345fd9a85787b81",
+              "appearanceSize": 281
+            },
+            {
+              "key": "24 0 R",
+              "subtype": "/Highlight",
+              "flags": 4,
+              "name": "6af4cc3b-f636-4f93-afea-76cae52f8712",
+              "rect": [
+                108.04689136656842,
+                445.86,
+                198.29399974368832,
+                464.36
+              ],
+              "quadPoints": [
+                108.04689136656842,
+                464.36,
+                198.29399974368832,
+                464.36,
+                108.04689136656842,
+                445.86,
+                198.29399974368832,
+                445.86
+              ],
+              "appearanceHash": "815b683865d65c1dc386c79715546555d32d05890717886ffe2951357539e64f",
+              "appearanceSize": 128
+            },
+            {
+              "key": "26 0 R",
+              "subtype": "/Underline",
+              "flags": 4,
+              "name": "04d99a19-6bd6-4852-a12a-8591cf18aa0a",
+              "rect": [
+                70,
+                416.688,
+                124.25687720305415,
+                431.488
+              ],
+              "quadPoints": [
+                70,
+                431.488,
+                124.25687720305415,
+                431.488,
+                70,
+                416.688,
+                124.25687720305415,
+                416.688
+              ],
+              "appearanceHash": "90f091d0b082d17bd876617e5c2999c10125fcc4ebdb49e8b80386c7f9153787",
+              "appearanceSize": 101
+            },
+            {
+              "key": "28 0 R",
+              "subtype": "/StrikeOut",
+              "flags": 4,
+              "name": "81b30b69-f4e0-475e-9b6b-576d252e430e",
+              "rect": [
+                175.14496140912286,
+                396.99830860933463,
+                226.54835194246078,
+                431.4648205658022
+              ],
+              "quadPoints": [
+                175.14496140912286,
+                410.41166385747704,
+                220.29360166869844,
+                431.4648205658022,
+                181.3997116828852,
+                396.99830860933463,
+                226.54835194246078,
+                418.0514653176598
+              ],
+              "appearanceHash": "5df1ab2a99f87f76ef11463a780b4f7bfe7fdc6d6b5808a091b6e73e1cd68669",
+              "appearanceSize": 120
+            },
+            {
+              "key": "30 0 R",
+              "subtype": "/Squiggly",
+              "flags": 4,
+              "name": "a9403b27-4d80-4e4d-b4f3-6a3702027550",
+              "rect": [
+                203.88652911273442,
+                445.86,
+                300.08000000000004,
+                464.36
+              ],
+              "quadPoints": [
+                203.88652911273442,
+                464.36,
+                300.08000000000004,
+                464.36,
+                203.88652911273442,
+                445.86,
+                300.08000000000004,
+                445.86
+              ],
+              "appearanceHash": "2c46fb720b98a555e3b8cfff727e74edf0d5e5292dad64bc0e6169cabd189516",
+              "appearanceSize": 837
+            }
+          ]
+        },
+        {
+          "mediaBox": [
+            0,
+            0,
+            320,
+            420
+          ],
+          "cropBox": [
+            0,
+            0,
+            320,
+            420
+          ],
+          "userUnit": 1,
+          "rotation": 90,
+          "text": "Searchable second source page\n",
+          "contentHashes": [
+            "d2ce01456b038b34b2bfb4beb87b062d46d736b966ad314d35cd845ffa059e2f"
+          ],
+          "annotations": []
+        }
+      ],
+      "fields": {
+        "source-field": {
+          "type": "/Tx",
+          "value": "Field value"
+        }
+      }
+    },
+    {
+      "file": "app-text-markups-round-2.pdf",
+      "sha256": "c97cda31f5df068a3e9c840b29509c9dce635e6bc0cb184352947cb7ab9cb98f",
+      "pages": [
+        {
+          "mediaBox": [
+            0,
+            0,
+            500,
+            600
+          ],
+          "cropBox": [
+            40,
+            30,
+            440,
+            530
+          ],
+          "userUnit": 1.5,
+          "rotation": 0,
+          "text": "SELECTABLE ORIGINAL\nAngled source text\nSecond source line\n",
+          "contentHashes": [
+            "801a08758c40a0eea17198bb1724cd40659f3ab8e4196125c96fdc0a58636903"
+          ],
+          "annotations": [
+            {
+              "key": "8 0 R",
+              "subtype": "/Square",
+              "flags": 20,
+              "name": "red-no-rotate",
+              "rect": [
+                220,
+                180,
+                280,
+                220
+              ],
+              "quadPoints": [],
+              "appearanceHash": "7219a4abced5afcc2b2959d1945ce794ac99de8fa595b90ce74c99ea7b82b26c",
+              "appearanceSize": 27
+            },
+            {
+              "key": "10 0 R",
+              "subtype": "/Square",
+              "flags": 12,
+              "name": "green-no-zoom",
+              "rect": [
+                100,
+                100,
+                160,
+                140
+              ],
+              "quadPoints": [],
+              "appearanceHash": "f5ff48a7a0dfad3380829204c433c7fc16b3068f6362ae4aa7395c6df0c6597a",
+              "appearanceSize": 27
+            },
+            {
+              "key": "12 0 R",
+              "subtype": "/Square",
+              "flags": 28,
+              "name": "blue-no-zoom-rotate",
+              "rect": [
+                320,
+                280,
+                380,
+                320
+              ],
+              "quadPoints": [],
+              "appearanceHash": "6c513cc291640f6afdea84f95b8441ae89598488baa6979abc2c8a5719735b9a",
+              "appearanceSize": 27
+            },
+            {
+              "key": "13 0 R",
+              "subtype": "/Text",
+              "flags": 4,
+              "name": "no-ap-note",
+              "rect": [
+                80,
+                350,
+                102,
+                372
+              ],
+              "quadPoints": [],
+              "appearanceHash": null,
+              "appearanceSize": 0
+            },
+            {
+              "key": "16 0 R",
+              "subtype": "/Highlight",
+              "flags": 4,
+              "name": "single-alpha",
+              "rect": [
+                80,
+                250,
+                200,
+                270
+              ],
+              "quadPoints": [
+                80,
+                270,
+                200,
+                270,
+                80,
+                250,
+                200,
+                250
+              ],
+              "appearanceHash": "20ef019c6abc8ffdaa28bfe0c07deb1f6484192abdbe1f3368444d0615821993",
+              "appearanceSize": 35
+            },
+            {
+              "key": "19 0 R",
+              "subtype": "/Widget",
+              "flags": 4,
+              "name": "annotation:07e2aa26a48b03b7ba23490c1b72046c",
+              "rect": [
+                249.5,
+                69.5,
+                380.5,
+                95.5
+              ],
+              "quadPoints": [],
+              "appearanceHash": "afb159493dec0fe6072e88e374de9c9b3f347455da3846021345fd9a85787b81",
+              "appearanceSize": 281
+            },
+            {
+              "key": "24 0 R",
+              "subtype": "/Highlight",
+              "flags": 4,
+              "name": "6af4cc3b-f636-4f93-afea-76cae52f8712",
+              "rect": [
+                108.04689136656842,
+                445.86,
+                198.29399974368832,
+                464.36
+              ],
+              "quadPoints": [
+                108.04689136656842,
+                464.36,
+                198.29399974368832,
+                464.36,
+                108.04689136656842,
+                445.86,
+                198.29399974368832,
+                445.86
+              ],
+              "appearanceHash": "815b683865d65c1dc386c79715546555d32d05890717886ffe2951357539e64f",
+              "appearanceSize": 128
+            },
+            {
+              "key": "26 0 R",
+              "subtype": "/Underline",
+              "flags": 4,
+              "name": "04d99a19-6bd6-4852-a12a-8591cf18aa0a",
+              "rect": [
+                70,
+                416.688,
+                124.25687720305415,
+                431.488
+              ],
+              "quadPoints": [
+                70,
+                431.488,
+                124.25687720305415,
+                431.488,
+                70,
+                416.688,
+                124.25687720305415,
+                416.688
+              ],
+              "appearanceHash": "90f091d0b082d17bd876617e5c2999c10125fcc4ebdb49e8b80386c7f9153787",
+              "appearanceSize": 101
+            },
+            {
+              "key": "28 0 R",
+              "subtype": "/StrikeOut",
+              "flags": 4,
+              "name": "81b30b69-f4e0-475e-9b6b-576d252e430e",
+              "rect": [
+                175.14496140912286,
+                396.99830860933463,
+                226.54835194246078,
+                431.4648205658022
+              ],
+              "quadPoints": [
+                175.14496140912286,
+                410.41166385747704,
+                220.29360166869844,
+                431.4648205658022,
+                181.3997116828852,
+                396.99830860933463,
+                226.54835194246078,
+                418.0514653176598
+              ],
+              "appearanceHash": "5df1ab2a99f87f76ef11463a780b4f7bfe7fdc6d6b5808a091b6e73e1cd68669",
+              "appearanceSize": 120
+            },
+            {
+              "key": "30 0 R",
+              "subtype": "/Squiggly",
+              "flags": 4,
+              "name": "a9403b27-4d80-4e4d-b4f3-6a3702027550",
+              "rect": [
+                203.88652911273442,
+                445.86,
+                300.08000000000004,
+                464.36
+              ],
+              "quadPoints": [
+                203.88652911273442,
+                464.36,
+                300.08000000000004,
+                464.36,
+                203.88652911273442,
+                445.86,
+                300.08000000000004,
+                445.86
+              ],
+              "appearanceHash": "2c46fb720b98a555e3b8cfff727e74edf0d5e5292dad64bc0e6169cabd189516",
+              "appearanceSize": 837
+            }
+          ]
+        },
+        {
+          "mediaBox": [
+            0,
+            0,
+            320,
+            420
+          ],
+          "cropBox": [
+            0,
+            0,
+            320,
+            420
+          ],
+          "userUnit": 1,
+          "rotation": 90,
+          "text": "Searchable second source page\n",
+          "contentHashes": [
+            "d2ce01456b038b34b2bfb4beb87b062d46d736b966ad314d35cd845ffa059e2f"
+          ],
+          "annotations": []
+        }
+      ],
+      "fields": {
+        "source-field": {
+          "type": "/Tx",
+          "value": "Field value"
+        }
+      }
+    }
+  ],
+  "poppler": {
+    "firstPagePixels": [
+      800,
+      1000
+    ],
+    "outsideMarkupChanges": 0,
+    "secondPageChanges": 0,
+    "reopenPixelChanges": 0,
+    "singleAlphaPixel": [
+      255,
+      255,
+      178
+    ]
+  }
+}

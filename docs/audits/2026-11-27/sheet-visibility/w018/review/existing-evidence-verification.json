@@ -1,0 +1,213 @@
+{
+  "item": "W018",
+  "status": "verified-existing-evidence",
+  "sourceCommit": "3c751e02a8d4be6e19797ad5c0a55c1077d29107",
+  "browserRunWasRepeated": false,
+  "browser": {
+    "title": "Word nonprinting markers preserve text, selection, document history, native DOCX whitespace and printing",
+    "ok": true,
+    "tags": [],
+    "tests": [
+      {
+        "timeout": 30000,
+        "annotations": [],
+        "expectedStatus": "passed",
+        "projectId": "chromium",
+        "projectName": "chromium",
+        "results": [
+          {
+            "workerIndex": 0,
+            "parallelIndex": 0,
+            "status": "passed",
+            "duration": 5303,
+            "errors": [],
+            "stdout": [],
+            "stderr": [],
+            "retry": 0,
+            "startTime": "2026-11-27T04:29:21.600Z",
+            "annotations": [],
+            "attachments": []
+          }
+        ],
+        "status": "expected"
+      }
+    ],
+    "id": "daead13d0fe2d1e468d7-3df0eac57aa8b018cd7b",
+    "file": "office-studio-word-nonprinting.spec.ts",
+    "line": 19,
+    "column": 1
+  },
+  "browserReport": {
+    "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/e2e-final-316.json",
+    "bytes": 429625,
+    "sha256": "15559b5fdeb0d683dedc4eda6aec6b68fc4c7a59161e218f540014323ff81417"
+  },
+  "restorationReceipt": {
+    "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/evidence-preservation/final-316-verified-restoration.json",
+    "bytes": 363010,
+    "sha256": "6b804794e16f5489ebd333a189ee3b9bd1e53418e0a3078a57bbfd6320ae0c2c"
+  },
+  "nativeDocuments": [
+    {
+      "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/final-316-verified/files/2026-11-25/word-nonprinting/nonprinting-roundtrip-1.docx",
+      "bytes": 11597,
+      "sha256": "5834d69858e19ac4efe85b414785aad13b8a3d978357dfe5e2602d1a5c0c7def",
+      "parts": {
+        "word/document.xml": {
+          "text": "  😀 A  B Z  Next line editedCell content",
+          "tabs": 2,
+          "breaks": 1
+        },
+        "word/header1.xml": {
+          "text": "Header  text",
+          "tabs": 0,
+          "breaks": 0
+        },
+        "word/footer1.xml": {
+          "text": "Footertext",
+          "tabs": 1,
+          "breaks": 0
+        }
+      }
+    },
+    {
+      "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/final-316-verified/files/2026-11-25/word-nonprinting/nonprinting-roundtrip-2.docx",
+      "bytes": 11918,
+      "sha256": "e2fb481e4b55b5873bfd1e30b8c9828faf39d802411bed9594bbc000c515cb5f",
+      "parts": {
+        "word/document.xml": {
+          "text": "  😀 A  B Z  Next line editedCell content",
+          "tabs": 2,
+          "breaks": 1
+        },
+        "word/header1.xml": {
+          "text": "Header  text",
+          "tabs": 0,
+          "breaks": 0
+        },
+        "word/footer1.xml": {
+          "text": "Footertext",
+          "tabs": 1,
+          "breaks": 0
+        }
+      }
+    },
+    {
+      "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/final-316-verified/files/2026-11-25/word-nonprinting/nonprinting-source.docx",
+      "bytes": 11198,
+      "sha256": "538897dab16eb2d51cbf275adbe2004f3dce2d890f04c0812fc0210a7dec7829",
+      "parts": {
+        "word/document.xml": {
+          "text": "  😀 A  B Z  Next lineCell content",
+          "tabs": 2,
+          "breaks": 1
+        },
+        "word/header1.xml": {
+          "text": "Header  text",
+          "tabs": 0,
+          "breaks": 0
+        },
+        "word/footer1.xml": {
+          "text": "Footertext",
+          "tabs": 1,
+          "breaks": 0
+        }
+      }
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/final-316-verified/files/2026-11-25/word-nonprinting/nonprinting-dark-320.png",
+      "bytes": 24573,
+      "sha256": "d4b8204fd20e854cba96d6d133c53d847d736b7b1d9bfe39df21b4e55fd3b3c3"
+    },
+    {
+      "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/final-316-verified/files/2026-11-25/word-nonprinting/nonprinting-dark.png",
+      "bytes": 110457,
+      "sha256": "9a7af46d2c1c869894afffc1e2351529f4e4f3b6e1a689231683480f785c20d0"
+    },
+    {
+      "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/final-316-verified/files/2026-11-25/word-nonprinting/nonprinting-light-320.png",
+      "bytes": 24907,
+      "sha256": "0aff0fa28a33d9fca553d57d078bf021ea6cbf9c16176a9b169205ef23b47c66"
+    },
+    {
+      "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/regenerated-history/final-316-verified/files/2026-11-25/word-nonprinting/nonprinting-light.png",
+      "bytes": 110369,
+      "sha256": "304ad49f8163c295262793ee6a4d634e626da52f63fe67d00c084ab9bd21060c"
+    }
+  ],
+  "sourceChecks": [
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-nonprinting.ts",
+      "bytes": 3062,
+      "sha256": "89b571aea5bac5dfd0a9ffcaef4bd15db6774e5d03fb490507778de9f9965f28",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-nonprinting.test.ts",
+      "bytes": 4149,
+      "sha256": "f91550627d42512c792954076a818ec5d108304373130a3c6d0f3529d8a8c26e",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+      "bytes": 141725,
+      "sha256": "ef3515d49ca280402ebd4c1de7fc30df00e430c77e00f7aee5aadda821f239ba",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWord.test.tsx",
+      "bytes": 184792,
+      "sha256": "888b0ca967123b0a8e0b74884a44ecd260600e35ddd53c231e0a5dc21f668a37",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWord.css",
+      "bytes": 39375,
+      "sha256": "a0f58291578e173283b134f84364668cd1b4d67302f9a2adb1c52a2e0f28bb1d",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
+      "bytes": 115098,
+      "sha256": "5021af586ff212f145258ff4403cba23f44c4733e9b765583551d9ecefcd811a",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-print.ts",
+      "bytes": 49686,
+      "sha256": "d6d2d767b32bc1c1271e0ec8fe795ef0b862c4e62ce550542a4007729b39eceb",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "docs/tests/office-studio-word.test.mjs",
+      "bytes": 113774,
+      "sha256": "9819dc01697aa00321181b761b168618c6dede41fd2a7ecb0c4aa892f5f98ec4",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "docs/tests/studio-print.test.mjs",
+      "bytes": 61551,
+      "sha256": "547d59a36b9f30de8de0d9979694c1bebc3bf21b8be9e7b5676f7ee669cb5e47",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "e2e/office-studio-word-nonprinting.spec.ts",
+      "bytes": 8549,
+      "sha256": "d0fd7c55a9a870b86da7d135220fa290445f56a37428b7589125090cdd0caf11",
+      "matchesSourceCommit": true
+    }
+  ],
+  "freshFocusedRuns": {
+    "ui": {
+      "passed": 5,
+      "skippedByNameFilter": 138
+    },
+    "nativeAndPrint": {
+      "passed": 2,
+      "skippedByNameFilter": 117
+    }
+  },
+  "productionChangesRequired": false
+}

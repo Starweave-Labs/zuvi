@@ -1,0 +1,74 @@
+{
+  "status": "candidate-in-memory-runtime-passed",
+  "patchSha256": "afa78df990e873c9a492635a78983d2fd4d189a932779a68d9bb107fab62fd82",
+  "sourceUntouched": true,
+  "values": [
+    {
+      "sourceRow": 4,
+      "targetRow": 2,
+      "column": "C",
+      "value": 300
+    },
+    {
+      "sourceRow": 4,
+      "targetRow": 2,
+      "column": "D",
+      "value": 300
+    },
+    {
+      "sourceRow": 3,
+      "targetRow": 3,
+      "column": "C",
+      "value": 30
+    },
+    {
+      "sourceRow": 3,
+      "targetRow": 3,
+      "column": "D",
+      "value": 30
+    },
+    {
+      "sourceRow": 2,
+      "targetRow": 4,
+      "column": "C",
+      "value": 3
+    },
+    {
+      "sourceRow": 2,
+      "targetRow": 4,
+      "column": "D",
+      "value": 3
+    }
+  ],
+  "accepted": [
+    {
+      "formula": "=SUM(Other!$A4:B$4)",
+      "expected": "=SUM(Other!$A4:B$4)"
+    },
+    {
+      "formula": "=SUM('Other quoted'!$A$2:B4)",
+      "expected": "=SUM('Other quoted'!$A$2:B4)"
+    },
+    {
+      "formula": "=SUM(Data!B4:B4)",
+      "expected": "=SUM(Data!B2:B2)"
+    },
+    {
+      "formula": "=SUM(Data!$B$2 : B4)",
+      "expected": "=SUM(Data!$B$2 : B2)"
+    },
+    {
+      "formula": "=SUM(Other!A4:B4)+B4",
+      "expected": "=SUM(Other!A4:B4)+B2"
+    }
+  ],
+  "refused": [
+    "=SUM(Data!B2:B4)",
+    "=SUM(Data!B4:B5)",
+    "=SUM(B4:E4)",
+    "=SUM(Other!A4:Other!B4)",
+    "=SUM(Data!B4:'Other'!B4)"
+  ],
+  "notExecuted": "Patch test files have not run in the workspace. Parent must apply after frozen run and execute all new unit/native tests and gates.",
+  "patchNotes": "Standalone native test additionally retains originalDocument and checks its JSON identity after sorting; this assertion was corrected after the in-memory runtime run, without changing the candidate production hunk."
+}

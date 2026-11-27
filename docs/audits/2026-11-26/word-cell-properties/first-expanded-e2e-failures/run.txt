@@ -1,0 +1,189 @@
+[WebServer] (node:49998) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:50011) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 11 tests using 1 worker
+
+  ✘   1 [chromium] › e2e/office-studio-pdf-pages.spec.ts:20:1 › edits native PDF page dimensions, copies and removes pages, and preserves fields through history and two reopens (1.5m)
+  ✘   2 [chromium] › e2e/office-studio-pdf-pages.spec.ts:52:1 › moves native page references by dragging a thumbnail after the final page (2.5s)
+  ✓   3 [chromium] › e2e/office-studio-word-cell-properties.spec.ts:5:1 › keeps native exact row height with explicit cell padding while editing and reopening twice (2.9s)
+  ✓   4 [chromium] › e2e/office-studio-word-cell-properties.spec.ts:83:1 › moves actual text through all nine fixed-cell alignments and restores the transaction (6.0s)
+  ✓   5 [chromium] › e2e/office-studio-word-cell-properties.spec.ts:139:1 › edits table defaults and spacing without materializing direct margins, restores inheritance and reopens twice (6.1s)
+  ✘   6 [chromium] › e2e/office-studio-word-cell-properties.spec.ts:219:1 › keeps nested fixed-cell alignment and margins local while preserving native layout on reopening and printing (1.5s)
+  ✘   7 [chromium] › e2e/office-studio-word-cell-properties.spec.ts:266:1 › uses each native row gap with one shared column grid and preserves fixed-cell budgets through printing and reopening (1.4s)
+  ✘   8 [chromium] › e2e/office-studio-word-cell-properties.spec.ts:322:1 › previews column resizing without jumping between native and model grids, cancels cleanly and saves one history action (1.7s)
+  ✘   9 [chromium] › e2e/office-studio-word-cell-properties.spec.ts:370:1 › aligns actual short content within a taller automatic row with mixed gaps and reproduces it in the native print document (7.1s)
+  ✓  10 [chromium] › e2e/office-studio-word-cell-regions.spec.ts:152:1 › edits independent native header and footer table cells, cancels drafts, undoes once and reopens both regions twice (5.3s)
+  ✓  11 [chromium] › e2e/office-studio-word-cell-regions.spec.ts:216:1 › blocks a real Word cell draft on readonly changes and keeps light, dark and 320px dialogs interactive without writes (5.0s)
+
+
+  1) [chromium] › e2e/office-studio-pdf-pages.spec.ts:20:1 › edits native PDF page dimensions, copies and removes pages, and preserves fields through history and two reopens
+
+    Test timeout of 90000ms exceeded.
+
+    Error Context: test-results/office-studio-pdf-pages-ed-994b2-ugh-history-and-two-reopens-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/office-studio-pdf-pages-ed-994b2-ugh-history-and-two-reopens-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/office-studio-pdf-pages-ed-994b2-ugh-history-and-two-reopens-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › e2e/office-studio-pdf-pages.spec.ts:52:1 › moves native page references by dragging a thumbnail after the final page
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Array [
+    -   "6 0 R",
+        "5 0 R",
+    +   "6 0 R",
+      ]
+
+      54 |   const rows = page.locator('.zuvi-studio-pdf-page-item'); await expect(rows.last().locator('canvas')).toBeVisible(); const target = await rows.last().boundingBox(); await rows.first().dragTo(rows.last(), { targetPosition: { x: 20, y: target!.height - 8 } });
+      55 |   const bytes = await exported(page, 'pages-dragged.pdf'), pdf = await PDFDocument.load(bytes);
+    > 56 |   expect(pdf.getPages().map(entry => entry.ref.toString())).toEqual([source.getPages()[1].ref.toString(), source.getPages()[0].ref.toString()]); expect(pdf.getForm().getTextField('shared').acroField.getWidgets()).toHaveLength(2);
+         |                                                             ^
+      57 | });
+      58 |
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-pages.spec.ts:56:61
+
+    Error Context: test-results/office-studio-pdf-pages-mo-1296e-mbnail-after-the-final-page-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/office-studio-pdf-pages-mo-1296e-mbnail-after-the-final-page-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/office-studio-pdf-pages-mo-1296e-mbnail-after-the-final-page-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › e2e/office-studio-word-cell-properties.spec.ts:219:1 › keeps nested fixed-cell alignment and margins local while preserving native layout on reopening and printing
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "flex-start"
+    Received: "flow-start"
+
+      236 |       return { height: cell.getBoundingClientRect().height / scale, justify: getComputedStyle(wrapper).justifyContent, top: getComputedStyle(wrapper).paddingTop, bottom: getComputedStyle(wrapper).paddingBottom, textTop: (range.getBoundingClientRect().top - rect.top) / scale };
+      237 |     });
+    > 238 |     expect(actual.height).toBeCloseTo(97, 1); expect(actual.justify).toBe('flex-start'); expect(actual.top).toBe('0px'); expect(actual.bottom).toBe('0px'); expect(actual.textTop).toBeLessThan(8);
+          |                                                                      ^
+      239 |     return actual;
+      240 |   };
+      241 |   await upload(source, 'Nested.docx'); const initial = await check();
+        at check (/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-cell-properties.spec.ts:238:70)
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-cell-properties.spec.ts:241:56
+
+    Error Context: test-results/office-studio-word-cell-pr-8c816-t-on-reopening-and-printing-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/office-studio-word-cell-pr-8c816-t-on-reopening-and-printing-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/office-studio-word-cell-pr-8c816-t-on-reopening-and-printing-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › e2e/office-studio-word-cell-properties.spec.ts:266:1 › uses each native row gap with one shared column grid and preserves fixed-cell budgets through printing and reopening
+
+    Error: expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 95.66666666666667
+    Received: 93.65625
+
+    Expected precision:    1
+    Expected difference: < 0.05
+    Received difference:   2.0104166666666714
+
+      292 |       expect(row[1].left - row[0].right).toBeCloseTo(gaps[index], 1);
+      293 |       expect(row[0].left).toBeCloseTo(gaps[index], 1);
+    > 294 |       expect(row[0].height).toBeCloseTo(heights[index], 1); expect(row[1].height).toBeCloseTo(heights[index], 1);
+          |                             ^
+      295 |     });
+      296 |     expect(actual.boxes[1][0].top - actual.boxes[0][0].bottom).toBeCloseTo(12, 1);
+      297 |     expect(actual.boxes[2][0].top - actual.boxes[1][0].bottom).toBeCloseTo(8, 1);
+        at forEach (/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-cell-properties.spec.ts:294:29)
+        at assertGeometry (/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-cell-properties.spec.ts:291:18)
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-cell-properties.spec.ts:300:50
+
+    Error Context: test-results/office-studio-word-cell-pr-4e55a-ough-printing-and-reopening-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/office-studio-word-cell-pr-4e55a-ough-printing-and-reopening-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/office-studio-word-cell-pr-4e55a-ough-printing-and-reopening-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [chromium] › e2e/office-studio-word-cell-properties.spec.ts:322:1 › previews column resizing without jumping between native and model grids, cancels cleanly and saves one history action
+
+    Error: locator.scrollIntoViewIfNeeded: Element is not attached to the DOM
+    Call log:
+      - attempting scroll into view action
+        - waiting for element to be stable
+
+
+      332 |   expect(await width()).toBe(600);
+      333 |   const handle = async () => {
+    > 334 |     await target.scrollIntoViewIfNeeded(); const box = await target.boundingBox();
+          |                  ^
+      335 |     const scale = await table.evaluate(element => element.getBoundingClientRect().width / (element as HTMLElement).offsetWidth);
+      336 |     return { x: box!.x + box!.width - 2 * scale, y: box!.y + box!.height / 2, scale };
+      337 |   };
+        at handle (/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-cell-properties.spec.ts:334:18)
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-cell-properties.spec.ts:346:17
+
+    Error Context: test-results/office-studio-word-cell-pr-e83f8-nd-saves-one-history-action-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/office-studio-word-cell-pr-e83f8-nd-saves-one-history-action-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/office-studio-word-cell-pr-e83f8-nd-saves-one-history-action-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [chromium] › e2e/office-studio-word-cell-properties.spec.ts:370:1 › aligns actual short content within a taller automatic row with mixed gaps and reproduces it in the native print document
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 0.1
+    Received:   196
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      388 |     await target.locator('p').click(); await page.getByRole('tab', { name: '插入', exact: true }).click(); await page.getByRole('button', { name: '单元格对齐与边距', exact: true }).click();
+      389 |     await page.getByRole('button', { name: label, exact: true }).click(); await page.getByRole('button', { name: '应用单元格属性', exact: true }).click();
+    > 390 |     await expect.poll(async () => Math.abs((await table.evaluate(measure)).longHeight - (await table.evaluate(measure)).shortHeight)).toBeLessThan(0.1);
+          |                                                                                                                                       ^
+      391 |     positions[key] = await table.evaluate(measure);
+      392 |   }
+      393 |   expect(positions.center.top - positions.top.top).toBeGreaterThan(50); expect(positions.bottom.top - positions.center.top).toBeGreaterThan(50);
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-cell-properties.spec.ts:390:135
+
+    Error Context: test-results/office-studio-word-cell-pr-ac84a-n-the-native-print-document-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/office-studio-word-cell-pr-ac84a-n-the-native-print-document-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/office-studio-word-cell-pr-ac84a-n-the-native-print-document-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6 failed
+    [chromium] › e2e/office-studio-pdf-pages.spec.ts:20:1 › edits native PDF page dimensions, copies and removes pages, and preserves fields through history and two reopens
+    [chromium] › e2e/office-studio-pdf-pages.spec.ts:52:1 › moves native page references by dragging a thumbnail after the final page
+    [chromium] › e2e/office-studio-word-cell-properties.spec.ts:219:1 › keeps nested fixed-cell alignment and margins local while preserving native layout on reopening and printing
+    [chromium] › e2e/office-studio-word-cell-properties.spec.ts:266:1 › uses each native row gap with one shared column grid and preserves fixed-cell budgets through printing and reopening
+    [chromium] › e2e/office-studio-word-cell-properties.spec.ts:322:1 › previews column resizing without jumping between native and model grids, cancels cleanly and saves one history action
+    [chromium] › e2e/office-studio-word-cell-properties.spec.ts:370:1 › aligns actual short content within a taller automatic row with mixed gaps and reproduces it in the native print document
+  5 passed (2.2m)

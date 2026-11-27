@@ -1,0 +1,47 @@
+{
+  "scope": "Original legacy metrics fixture and assertions before correcting native half-point serialization; do not count these units-based files as latest native rendering proof.",
+  "entries": [
+    {
+      "originalPath": "e2e/office-studio-word-metrics.spec.ts",
+      "archivedPath": "office-studio-word-metrics.spec.ts.txt",
+      "bytes": 16889,
+      "sha256": "4aec4f53579ff7b075c4e0953d5e8127f806d2587dd3184e0fb38c1a24ece4a8"
+    },
+    {
+      "originalPath": "docs/audits/2026-11-25/word-metrics/metrics-source.docx",
+      "archivedPath": "metrics-source.docx",
+      "bytes": 40370,
+      "sha256": "9bb81f5fed2f9fbf52ac0ca044152365a96032f108604ec1f963f9ede3a22b8d"
+    },
+    {
+      "originalPath": "docs/audits/2026-11-25/word-metrics/metrics-roundtrip-1.docx",
+      "archivedPath": "metrics-roundtrip-1.docx",
+      "bytes": 11679,
+      "sha256": "799aea6a491e48a51dce93307d437fc8d9edee987c92adce4bf9356bc78aecf1"
+    },
+    {
+      "originalPath": "docs/audits/2026-11-25/word-metrics/metrics-roundtrip-2.docx",
+      "archivedPath": "metrics-roundtrip-2.docx",
+      "bytes": 11945,
+      "sha256": "d9eb9ee945a19313c23652e59404c3395c6ade0a81b11c8b1fac9c3658796c32"
+    },
+    {
+      "originalPath": "docs/audits/2026-11-26/word-baseline-line-rules/baseline-line-rules-source.docx",
+      "archivedPath": "baseline-line-rules-source.docx",
+      "bytes": 9657,
+      "sha256": "c6fa266ba1058e57052993124fc2c611d6a02fb7324f8d3010f17eaaa83533b5"
+    },
+    {
+      "originalPath": "docs/audits/2026-11-26/word-baseline-line-rules/baseline-line-rules-roundtrip-1.docx",
+      "archivedPath": "baseline-line-rules-roundtrip-1.docx",
+      "bytes": 9969,
+      "sha256": "f44192b5d93cdfd534c3fb96aa00519031fc6b2bda32b72745da859e3d96ecfb"
+    },
+    {
+      "originalPath": "docs/audits/2026-11-26/word-baseline-line-rules/baseline-line-rules-roundtrip-2.docx",
+      "archivedPath": "baseline-line-rules-roundtrip-2.docx",
+      "bytes": 9985,
+      "sha256": "5ad4c414430e61f047aa1967d795e3d818fd45df4b75613a36f1af5e7fc4bd81"
+    }
+  ]
+}

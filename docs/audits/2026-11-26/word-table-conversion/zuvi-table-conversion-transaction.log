@@ -1,0 +1,60 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ❯ src/components/OfficeStudio/studio-word-table-conversion.test.ts (6 tests | 1 failed) 70ms
+   × commits each conversion as one undo transaction and rejects stale or read-only drafts 22ms
+     → expected { type: 'doc', …(1) } to deeply equal { type: 'doc', …(1) }
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/OfficeStudio/studio-word-table-conversion.test.ts > commits each conversion as one undo transaction and rejects stale or read-only drafts
+AssertionError: expected { type: 'doc', …(1) } to deeply equal { type: 'doc', …(1) }
+
+- Expected
++ Received
+
+  Object {
+    "content": Array [
+      Object {
+        "content": Array [
+          Object {
+            "text": "A,B",
+            "type": "text",
+          },
+        ],
+        "type": "paragraph",
+      },
+      Object {
+        "content": Array [
+          Object {
+            "text": "C,D",
+            "type": "text",
+          },
+        ],
+        "type": "paragraph",
+      },
++     Object {
++       "type": "paragraph",
++     },
+    ],
+    "type": "doc",
+  }
+
+ ❯ src/components/OfficeStudio/studio-word-table-conversion.test.ts:122:37
+    120|   expect(wordApplyTableConversion(editor, tableTarget, ',')).toBe(true…
+    121|   expect(undoDepth(editor.state)).toBe(2);
+    122|   expect(editor.state.doc.toJSON()).toEqual(original);
+       |                                     ^
+    123|   editor.commands.undo();
+    124|   expect(editor.state.doc.firstChild!.type.name).toBe('table');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 passed (6)
+   Start at  06:48:46
+   Duration  1.06s (transform 48ms, setup 113ms, collect 96ms, tests 70ms, environment 432ms, prepare 94ms)
+
+undefined
+/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run src/components/OfficeStudio/studio-word-table-conversion.test.ts --reporter=dot

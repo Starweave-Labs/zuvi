@@ -1,0 +1,1890 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: office-studio-sheet-view.spec.ts >> view geometry, hidden merge masters and print stay consistent in light, dark and 320px layouts
+- Location: e2e/office-studio-sheet-view.spec.ts:406:1
+
+# Error details
+
+```
+Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+Expected: >= 100
+Received:    96
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - button "打开文档菜单" [ref=e6] [cursor=pointer]: 菜单
+        - link "Z ZUVI" [ref=e7] [cursor=pointer]:
+          - /url: "#/"
+          - generic [ref=e8]: Z
+          - generic [ref=e9]: ZUVI
+      - generic [ref=e10]:
+        - button "打开文档命令面板" [ref=e11] [cursor=pointer]
+        - button "切换暗色" [ref=e15] [cursor=pointer]
+      - status
+    - main [ref=e16]:
+      - generic [ref=e17]:
+        - heading "OfficeStudio 独立文档工作台" [level=1] [ref=e18]
+        - paragraph [ref=e19]: 使用 ZUVI 的工具栏、菜单和表单，在页面内直接编辑文档。Word、Excel、PDF 共用文件操作与保存状态，编辑内容保存在当前浏览器，也可以导出为实际文件。
+        - generic [ref=e20]:
+          - generic [ref=e21]: ZUVI 界面
+          - generic [ref=e23]: 页面内编辑
+          - generic [ref=e25]: 本地恢复
+          - generic [ref=e27]: DOCX / XLSX / PDF
+        - region "从预览，到完成一份文档" [ref=e29]:
+          - generic [ref=e30]:
+            - heading "从预览，到完成一份文档" [level=3] [ref=e31]
+            - paragraph [ref=e32]: 选择一种文档开始。修改会自动保存到当前浏览器；导出后可在 Word、Excel 或 PDF 阅读器中继续使用。
+          - generic [ref=e34]:
+            - group "选择示例文档" [ref=e35]:
+              - button "Word 文档排版 · 图片与页眉页脚" [ref=e36] [cursor=pointer]:
+                - generic [ref=e37]:
+                  - generic [aria-hidden] [ref=e38]: W
+                  - generic [ref=e39]:
+                    - strong [ref=e40]: Word
+                    - generic [ref=e41]: 文档排版 · 图片与页眉页脚
+              - button "Excel 行列编辑 · 公式与图表" [pressed] [ref=e42] [cursor=pointer]:
+                - generic [ref=e43]:
+                  - generic [aria-hidden] [ref=e44]: E
+                  - generic [ref=e45]:
+                    - strong [ref=e46]: Excel
+                    - generic [ref=e47]: 行列编辑 · 公式与图表
+              - button "PDF 全文查找 · 批注与手写" [ref=e48] [cursor=pointer]:
+                - generic [ref=e49]:
+                  - generic [aria-hidden] [ref=e50]: P
+                  - generic [ref=e51]:
+                    - strong [ref=e52]: PDF
+                    - generic [ref=e53]: 全文查找 · 批注与手写
+            - generic [ref=e54]:
+              - generic [ref=e55]:
+                - generic [ref=e56]: 打开本地文档
+                - button "打开本地文档 Visual.xlsx" [ref=e57] [cursor=pointer]:
+                  - generic [ref=e58]: Visual.xlsx
+              - button "历史版本" [ref=e59] [cursor=pointer]
+              - switch "只读预览" [ref=e61] [cursor=pointer]
+            - region "Excel 文档编辑器" [ref=e65]:
+              - generic [ref=e66]:
+                - generic "可编辑 · ⌘ / Ctrl S 保存" [ref=e72]:
+                  - status "已保存" [ref=e73]
+                - textbox "文档名称" [ref=e77]: Visual.xlsx
+                - generic [ref=e78]:
+                  - button "新建" [ref=e80] [cursor=pointer]
+                  - button "导入" [ref=e83] [cursor=pointer]
+                  - button "导出文件" [ref=e88] [cursor=pointer]
+                  - button "打印" [ref=e94] [cursor=pointer]
+                  - button "保存" [ref=e101] [cursor=pointer]
+                  - button "全屏编辑" [ref=e108] [cursor=pointer]
+              - generic [ref=e116]:
+                - generic [ref=e117]:
+                  - generic [ref=e118]:
+                    - button "文件" [ref=e121] [cursor=pointer]
+                    - tablist "表格工具栏" [ref=e122]:
+                      - tab "开始" [ref=e123] [cursor=pointer]
+                      - tab "插入" [ref=e124] [cursor=pointer]
+                      - tab "布局" [ref=e125] [cursor=pointer]
+                      - tab "公式" [ref=e126] [cursor=pointer]
+                      - tab "数据" [ref=e127] [cursor=pointer]
+                      - tab "视图" [selected] [ref=e128] [cursor=pointer]
+                  - tabpanel "视图" [ref=e129]:
+                    - generic [ref=e130]:
+                      - generic [ref=e131]:
+                        - generic [ref=e132]:
+                          - button "缩小工作表" [disabled] [ref=e133]:
+                            - generic [ref=e134]: −
+                          - textbox "工作表缩放百分比" [ref=e136]: "25"
+                          - generic [aria-hidden] [ref=e137]: "%"
+                          - button "放大工作表" [ref=e138] [cursor=pointer]:
+                            - generic [ref=e139]: ＋
+                        - generic [ref=e140]:
+                          - generic [ref=e141]: 工作表缩放预设
+                          - button "工作表缩放预设 25%" [ref=e142] [cursor=pointer]:
+                            - generic [ref=e143]: 25%
+                        - generic [ref=e144]: 缩放
+                      - generic [ref=e145]:
+                        - generic [ref=e146] [cursor=pointer]:
+                          - checkbox "显示网格线" [ref=e147]
+                          - generic [ref=e149]: 显示网格线
+                        - generic [ref=e150] [cursor=pointer]:
+                          - checkbox "显示行列标题" [ref=e151]
+                          - generic [ref=e153]: 显示行列标题
+                        - generic [ref=e154]: 显示
+                      - generic [ref=e155]:
+                        - generic [ref=e156]:
+                          - button "冻结首行" [ref=e157] [cursor=pointer]
+                          - button "冻结首列" [ref=e159] [cursor=pointer]
+                          - button "取消冻结" [ref=e161] [cursor=pointer]
+                        - generic [ref=e163]: 冻结窗格
+                - generic [ref=e164]:
+                  - textbox "单元格地址" [ref=e166]: C4
+                  - generic [aria-hidden] [ref=e167]: ƒx
+                  - textbox "表格公式栏" [ref=e169]:
+                    - /placeholder: 输入内容或公式
+                    - text: "10"
+                  - button "确认单元格编辑" [ref=e170] [cursor=pointer]:
+                    - generic [ref=e171]: ✓
+                  - button "取消单元格编辑" [ref=e172] [cursor=pointer]:
+                    - generic [ref=e173]: ×
+                - grid "Main 单元格网格" [ref=e175]:
+                  - generic [ref=e176]:
+                    - row [ref=e177]:
+                      - gridcell "A1" [ref=e178]:
+                        - generic: "1"
+                      - gridcell "C1" [ref=e179]
+                      - gridcell "D1" [ref=e180]
+                      - gridcell "E1" [ref=e181]
+                      - gridcell "F1" [ref=e182]
+                      - gridcell "G1" [ref=e183]
+                      - gridcell "H1" [ref=e184]
+                      - gridcell "I1" [ref=e185]
+                      - gridcell "J1" [ref=e186]
+                      - gridcell "K1" [ref=e187]
+                      - gridcell "L1" [ref=e188]
+                      - gridcell "M1" [ref=e189]
+                      - gridcell "N1" [ref=e190]
+                      - gridcell "O1" [ref=e191]
+                    - row [ref=e192]:
+                      - gridcell "A3" [ref=e193]
+                      - gridcell "C3" [ref=e194]
+                      - gridcell "D3" [ref=e195]
+                      - gridcell "E3" [ref=e196]
+                      - gridcell "F3" [ref=e197]
+                      - gridcell "G3" [ref=e198]
+                      - gridcell "H3" [ref=e199]
+                      - gridcell "I3" [ref=e200]
+                      - gridcell "J3" [ref=e201]
+                      - gridcell "K3" [ref=e202]
+                      - gridcell "L3" [ref=e203]
+                      - gridcell "M3" [ref=e204]
+                      - gridcell "N3" [ref=e205]
+                      - gridcell "O3" [ref=e206]
+                    - row [ref=e207]:
+                      - gridcell "A4" [ref=e208]
+                      - gridcell "C4" [selected] [ref=e209]:
+                        - textbox "编辑 C4" [active] [ref=e211]: "10"
+                      - gridcell "D4" [ref=e212]
+                      - gridcell "E4" [ref=e213]
+                      - gridcell "F4" [ref=e214]
+                      - gridcell "G4" [ref=e215]
+                      - gridcell "H4" [ref=e216]
+                      - gridcell "I4" [ref=e217]
+                      - gridcell "J4" [ref=e218]
+                      - gridcell "K4" [ref=e219]
+                      - gridcell "L4" [ref=e220]
+                      - gridcell "M4" [ref=e221]
+                      - gridcell "N4" [ref=e222]
+                      - gridcell "O4" [ref=e223]
+                    - row [ref=e224]:
+                      - gridcell "A5" [ref=e225]
+                      - gridcell "C5" [ref=e226]
+                      - gridcell "D5" [ref=e227]
+                      - gridcell "E5" [ref=e228]
+                      - gridcell "F5" [ref=e229]
+                      - gridcell "G5" [ref=e230]
+                      - gridcell "H5" [ref=e231]
+                      - gridcell "I5" [ref=e232]
+                      - gridcell "J5" [ref=e233]
+                      - gridcell "K5" [ref=e234]
+                      - gridcell "L5" [ref=e235]
+                      - gridcell "M5" [ref=e236]
+                      - gridcell "N5" [ref=e237]
+                      - gridcell "O5" [ref=e238]
+                    - row [ref=e239]:
+                      - gridcell "A6" [ref=e240]
+                      - gridcell "C6" [ref=e241]
+                      - gridcell "D6" [ref=e242]
+                      - gridcell "E6" [ref=e243]
+                      - gridcell "F6" [ref=e244]
+                      - gridcell "G6" [ref=e245]
+                      - gridcell "H6" [ref=e246]
+                      - gridcell "I6" [ref=e247]
+                      - gridcell "J6" [ref=e248]
+                      - gridcell "K6" [ref=e249]
+                      - gridcell "L6" [ref=e250]
+                      - gridcell "M6" [ref=e251]
+                      - gridcell "N6" [ref=e252]
+                      - gridcell "O6" [ref=e253]
+                    - row [ref=e254]:
+                      - gridcell "A7" [ref=e255]
+                      - gridcell "C7" [ref=e256]
+                      - gridcell "D7" [ref=e257]
+                      - gridcell "E7" [ref=e258]
+                      - gridcell "F7" [ref=e259]
+                      - gridcell "G7" [ref=e260]
+                      - gridcell "H7" [ref=e261]
+                      - gridcell "I7" [ref=e262]
+                      - gridcell "J7" [ref=e263]
+                      - gridcell "K7" [ref=e264]
+                      - gridcell "L7" [ref=e265]
+                      - gridcell "M7" [ref=e266]
+                      - gridcell "N7" [ref=e267]
+                      - gridcell "O7" [ref=e268]
+                    - row [ref=e269]:
+                      - gridcell "A8" [ref=e270]
+                      - gridcell "C8" [ref=e271]
+                      - gridcell "D8" [ref=e272]
+                      - gridcell "E8" [ref=e273]
+                      - gridcell "F8" [ref=e274]
+                      - gridcell "G8" [ref=e275]
+                      - gridcell "H8" [ref=e276]
+                      - gridcell "I8" [ref=e277]
+                      - gridcell "J8" [ref=e278]
+                      - gridcell "K8" [ref=e279]
+                      - gridcell "L8" [ref=e280]
+                      - gridcell "M8" [ref=e281]
+                      - gridcell "N8" [ref=e282]
+                      - gridcell "O8" [ref=e283]
+                    - row [ref=e284]:
+                      - gridcell "A9" [ref=e285]
+                      - gridcell "C9" [ref=e286]:
+                        - generic: VISIBLE_MERGE
+                      - gridcell "F9" [ref=e287]
+                      - gridcell "G9" [ref=e288]
+                      - gridcell "H9" [ref=e289]
+                      - gridcell "I9" [ref=e290]
+                      - gridcell "J9" [ref=e291]
+                      - gridcell "K9" [ref=e292]
+                      - gridcell "L9" [ref=e293]
+                      - gridcell "M9" [ref=e294]
+                      - gridcell "N9" [ref=e295]
+                      - gridcell "O9" [ref=e296]
+                    - row [ref=e297]:
+                      - gridcell "A10" [ref=e298]
+                      - gridcell "C10" [ref=e299]
+                      - gridcell "D10" [ref=e300]
+                      - gridcell "E10" [ref=e301]
+                      - gridcell "F10" [ref=e302]
+                      - gridcell "G10" [ref=e303]
+                      - gridcell "H10" [ref=e304]
+                      - gridcell "I10" [ref=e305]
+                      - gridcell "J10" [ref=e306]
+                      - gridcell "K10" [ref=e307]
+                      - gridcell "L10" [ref=e308]
+                      - gridcell "M10" [ref=e309]
+                      - gridcell "N10" [ref=e310]
+                      - gridcell "O10" [ref=e311]
+                    - row [ref=e312]:
+                      - gridcell "A11" [ref=e313]
+                      - gridcell "C11" [ref=e314]
+                      - gridcell "D11" [ref=e315]
+                      - gridcell "E11" [ref=e316]
+                      - gridcell "F11" [ref=e317]
+                      - gridcell "G11" [ref=e318]
+                      - gridcell "H11" [ref=e319]
+                      - gridcell "I11" [ref=e320]
+                      - gridcell "J11" [ref=e321]
+                      - gridcell "K11" [ref=e322]
+                      - gridcell "L11" [ref=e323]
+                      - gridcell "M11" [ref=e324]
+                      - gridcell "N11" [ref=e325]
+                      - gridcell "O11" [ref=e326]
+                    - row [ref=e327]:
+                      - gridcell "A12" [ref=e328]:
+                        - generic:
+                          - generic:
+                            - generic: Zoom
+                            - generic: keeps
+                            - generic: wrappe
+                            - generic: d text
+                            - generic: and
+                            - generic: the
+                            - generic: docum
+                            - generic: ent
+                            - generic: row
+                            - generic: height.
+                      - gridcell "C12" [ref=e329]
+                      - gridcell "D12" [ref=e330]
+                      - gridcell "E12" [ref=e331]
+                      - gridcell "F12" [ref=e332]
+                      - gridcell "G12" [ref=e333]
+                      - gridcell "H12" [ref=e334]
+                      - gridcell "I12" [ref=e335]
+                      - gridcell "J12" [ref=e336]
+                      - gridcell "K12" [ref=e337]
+                      - gridcell "L12" [ref=e338]
+                      - gridcell "M12" [ref=e339]
+                      - gridcell "N12" [ref=e340]
+                      - gridcell "O12" [ref=e341]
+                    - row [ref=e342]:
+                      - gridcell "A13" [ref=e343]
+                      - gridcell "C13" [ref=e344]:
+                        - generic: CENTER_HEADING
+                      - gridcell "D13" [ref=e345]
+                      - gridcell "E13" [ref=e346]
+                      - gridcell "F13" [ref=e347]
+                      - gridcell "G13" [ref=e348]
+                      - gridcell "H13" [ref=e349]
+                      - gridcell "I13" [ref=e350]
+                      - gridcell "J13" [ref=e351]
+                      - gridcell "K13" [ref=e352]
+                      - gridcell "L13" [ref=e353]
+                      - gridcell "M13" [ref=e354]
+                      - gridcell "N13" [ref=e355]
+                      - gridcell "O13" [ref=e356]
+                    - row [ref=e357]:
+                      - gridcell "A14" [ref=e358]
+                      - gridcell "C14" [ref=e359]
+                      - gridcell "D14" [ref=e360]
+                      - gridcell "E14" [ref=e361]
+                      - gridcell "F14" [ref=e362]:
+                        - generic: "20"
+                      - gridcell "G14" [ref=e363]
+                      - gridcell "H14" [ref=e364]
+                      - gridcell "I14" [ref=e365]
+                      - gridcell "J14" [ref=e366]
+                      - gridcell "K14" [ref=e367]
+                      - gridcell "L14" [ref=e368]
+                      - gridcell "M14" [ref=e369]
+                      - gridcell "N14" [ref=e370]
+                      - gridcell "O14" [ref=e371]
+                    - row [ref=e372]:
+                      - gridcell "A15" [ref=e373]
+                      - gridcell "C15" [ref=e374]
+                      - gridcell "D15" [ref=e375]
+                      - gridcell "E15" [ref=e376]
+                      - gridcell "F15" [ref=e377]
+                      - gridcell "G15" [ref=e378]
+                      - gridcell "H15" [ref=e379]
+                      - gridcell "I15" [ref=e380]
+                      - gridcell "J15" [ref=e381]
+                      - gridcell "K15" [ref=e382]
+                      - gridcell "L15" [ref=e383]
+                      - gridcell "M15" [ref=e384]
+                      - gridcell "N15" [ref=e385]
+                      - gridcell "O15" [ref=e386]
+                    - row [ref=e387]:
+                      - gridcell "A16" [ref=e388]
+                      - gridcell "C16" [ref=e389]
+                      - gridcell "D16" [ref=e390]
+                      - gridcell "E16" [ref=e391]
+                      - gridcell "F16" [ref=e392]
+                      - gridcell "G16" [ref=e393]
+                      - gridcell "H16" [ref=e394]
+                      - gridcell "I16" [ref=e395]
+                      - gridcell "J16" [ref=e396]
+                      - gridcell "K16" [ref=e397]
+                      - gridcell "L16" [ref=e398]
+                      - gridcell "M16" [ref=e399]
+                      - gridcell "N16" [ref=e400]
+                      - gridcell "O16" [ref=e401]
+                    - row [ref=e402]:
+                      - gridcell "A17" [ref=e403]
+                      - gridcell "C17" [ref=e404]
+                      - gridcell "D17" [ref=e405]
+                      - gridcell "E17" [ref=e406]
+                      - gridcell "F17" [ref=e407]
+                      - gridcell "G17" [ref=e408]
+                      - gridcell "H17" [ref=e409]
+                      - gridcell "I17" [ref=e410]
+                      - gridcell "J17" [ref=e411]
+                      - gridcell "K17" [ref=e412]
+                      - gridcell "L17" [ref=e413]
+                      - gridcell "M17" [ref=e414]
+                      - gridcell "N17" [ref=e415]
+                      - gridcell "O17" [ref=e416]
+                    - row [ref=e417]:
+                      - gridcell "A18" [ref=e418]
+                      - gridcell "C18" [ref=e419]
+                      - gridcell "D18" [ref=e420]
+                      - gridcell "E18" [ref=e421]
+                      - gridcell "F18" [ref=e422]
+                      - gridcell "G18" [ref=e423]
+                      - gridcell "H18" [ref=e424]
+                      - gridcell "I18" [ref=e425]
+                      - gridcell "J18" [ref=e426]
+                      - gridcell "K18" [ref=e427]
+                      - gridcell "L18" [ref=e428]
+                      - gridcell "M18" [ref=e429]
+                      - gridcell "N18" [ref=e430]
+                      - gridcell "O18" [ref=e431]
+                    - row [ref=e432]:
+                      - gridcell "A19" [ref=e433]
+                      - gridcell "C19" [ref=e434]
+                      - gridcell "D19" [ref=e435]
+                      - gridcell "E19" [ref=e436]
+                      - gridcell "F19" [ref=e437]
+                      - gridcell "G19" [ref=e438]
+                      - gridcell "H19" [ref=e439]
+                      - gridcell "I19" [ref=e440]
+                      - gridcell "J19" [ref=e441]
+                      - gridcell "K19" [ref=e442]
+                      - gridcell "L19" [ref=e443]
+                      - gridcell "M19" [ref=e444]
+                      - gridcell "N19" [ref=e445]
+                      - gridcell "O19" [ref=e446]
+                    - row [ref=e447]:
+                      - gridcell "A20" [ref=e448]
+                      - gridcell "C20" [ref=e449]
+                      - gridcell "D20" [ref=e450]
+                      - gridcell "E20" [ref=e451]
+                      - gridcell "F20" [ref=e452]
+                      - gridcell "G20" [ref=e453]
+                      - gridcell "H20" [ref=e454]
+                      - gridcell "I20" [ref=e455]
+                      - gridcell "J20" [ref=e456]
+                      - gridcell "K20" [ref=e457]
+                      - gridcell "L20" [ref=e458]
+                      - gridcell "M20" [ref=e459]
+                      - gridcell "N20" [ref=e460]
+                      - gridcell "O20" [ref=e461]
+                    - row [ref=e462]:
+                      - gridcell "A21" [ref=e463]
+                      - gridcell "C21" [ref=e464]
+                      - gridcell "D21" [ref=e465]
+                      - gridcell "E21" [ref=e466]
+                      - gridcell "F21" [ref=e467]
+                      - gridcell "G21" [ref=e468]
+                      - gridcell "H21" [ref=e469]
+                      - gridcell "I21" [ref=e470]
+                      - gridcell "J21" [ref=e471]
+                      - gridcell "K21" [ref=e472]
+                      - gridcell "L21" [ref=e473]
+                      - gridcell "M21" [ref=e474]
+                      - gridcell "N21" [ref=e475]
+                      - gridcell "O21" [ref=e476]
+                    - row [ref=e477]:
+                      - gridcell "A22" [ref=e478]
+                      - gridcell "C22" [ref=e479]
+                      - gridcell "D22" [ref=e480]
+                      - gridcell "E22" [ref=e481]
+                      - gridcell "F22" [ref=e482]
+                      - gridcell "G22" [ref=e483]
+                      - gridcell "H22" [ref=e484]
+                      - gridcell "I22" [ref=e485]
+                      - gridcell "J22" [ref=e486]
+                      - gridcell "K22" [ref=e487]
+                      - gridcell "L22" [ref=e488]
+                      - gridcell "M22" [ref=e489]
+                      - gridcell "N22" [ref=e490]
+                      - gridcell "O22" [ref=e491]
+                    - row [ref=e492]:
+                      - gridcell "A23" [ref=e493]
+                      - gridcell "C23" [ref=e494]
+                      - gridcell "D23" [ref=e495]
+                      - gridcell "E23" [ref=e496]
+                      - gridcell "F23" [ref=e497]
+                      - gridcell "G23" [ref=e498]
+                      - gridcell "H23" [ref=e499]
+                      - gridcell "I23" [ref=e500]
+                      - gridcell "J23" [ref=e501]
+                      - gridcell "K23" [ref=e502]
+                      - gridcell "L23" [ref=e503]
+                      - gridcell "M23" [ref=e504]
+                      - gridcell "N23" [ref=e505]
+                      - gridcell "O23" [ref=e506]
+                    - row [ref=e507]:
+                      - gridcell "A24" [ref=e508]
+                      - gridcell "C24" [ref=e509]
+                      - gridcell "D24" [ref=e510]
+                      - gridcell "E24" [ref=e511]
+                      - gridcell "F24" [ref=e512]
+                      - gridcell "G24" [ref=e513]
+                      - gridcell "H24" [ref=e514]
+                      - gridcell "I24" [ref=e515]
+                      - gridcell "J24" [ref=e516]
+                      - gridcell "K24" [ref=e517]
+                      - gridcell "L24" [ref=e518]
+                      - gridcell "M24" [ref=e519]
+                      - gridcell "N24" [ref=e520]
+                      - gridcell "O24" [ref=e521]
+                    - row [ref=e522]:
+                      - gridcell "A25" [ref=e523]
+                      - gridcell "C25" [ref=e524]
+                      - gridcell "D25" [ref=e525]
+                      - gridcell "E25" [ref=e526]
+                      - gridcell "F25" [ref=e527]
+                      - gridcell "G25" [ref=e528]
+                      - gridcell "H25" [ref=e529]
+                      - gridcell "I25" [ref=e530]
+                      - gridcell "J25" [ref=e531]
+                      - gridcell "K25" [ref=e532]
+                      - gridcell "L25" [ref=e533]
+                      - gridcell "M25" [ref=e534]
+                      - gridcell "N25" [ref=e535]
+                      - gridcell "O25" [ref=e536]
+                    - row [ref=e537]:
+                      - gridcell "A26" [ref=e538]
+                      - gridcell "C26" [ref=e539]
+                      - gridcell "D26" [ref=e540]
+                      - gridcell "E26" [ref=e541]
+                      - gridcell "F26" [ref=e542]
+                      - gridcell "G26" [ref=e543]
+                      - gridcell "H26" [ref=e544]
+                      - gridcell "I26" [ref=e545]
+                      - gridcell "J26" [ref=e546]
+                      - gridcell "K26" [ref=e547]
+                      - gridcell "L26" [ref=e548]
+                      - gridcell "M26" [ref=e549]
+                      - gridcell "N26" [ref=e550]
+                      - gridcell "O26" [ref=e551]
+                    - row [ref=e552]:
+                      - gridcell "A27" [ref=e553]
+                      - gridcell "C27" [ref=e554]
+                      - gridcell "D27" [ref=e555]
+                      - gridcell "E27" [ref=e556]
+                      - gridcell "F27" [ref=e557]
+                      - gridcell "G27" [ref=e558]
+                      - gridcell "H27" [ref=e559]
+                      - gridcell "I27" [ref=e560]
+                      - gridcell "J27" [ref=e561]
+                      - gridcell "K27" [ref=e562]
+                      - gridcell "L27" [ref=e563]
+                      - gridcell "M27" [ref=e564]
+                      - gridcell "N27" [ref=e565]
+                      - gridcell "O27" [ref=e566]
+                    - row [ref=e567]:
+                      - gridcell "A28" [ref=e568]
+                      - gridcell "C28" [ref=e569]
+                      - gridcell "D28" [ref=e570]
+                      - gridcell "E28" [ref=e571]
+                      - gridcell "F28" [ref=e572]
+                      - gridcell "G28" [ref=e573]
+                      - gridcell "H28" [ref=e574]
+                      - gridcell "I28" [ref=e575]
+                      - gridcell "J28" [ref=e576]
+                      - gridcell "K28" [ref=e577]
+                      - gridcell "L28" [ref=e578]
+                      - gridcell "M28" [ref=e579]
+                      - gridcell "N28" [ref=e580]
+                      - gridcell "O28" [ref=e581]
+                    - row [ref=e582]:
+                      - gridcell "A29" [ref=e583]
+                      - gridcell "C29" [ref=e584]
+                      - gridcell "D29" [ref=e585]
+                      - gridcell "E29" [ref=e586]
+                      - gridcell "F29" [ref=e587]
+                      - gridcell "G29" [ref=e588]
+                      - gridcell "H29" [ref=e589]
+                      - gridcell "I29" [ref=e590]
+                      - gridcell "J29" [ref=e591]
+                      - gridcell "K29" [ref=e592]
+                      - gridcell "L29" [ref=e593]
+                      - gridcell "M29" [ref=e594]
+                      - gridcell "N29" [ref=e595]
+                      - gridcell "O29" [ref=e596]
+                    - row [ref=e597]:
+                      - gridcell "A30" [ref=e598]
+                      - gridcell "C30" [ref=e599]
+                      - gridcell "D30" [ref=e600]
+                      - gridcell "E30" [ref=e601]
+                      - gridcell "F30" [ref=e602]
+                      - gridcell "G30" [ref=e603]
+                      - gridcell "H30" [ref=e604]
+                      - gridcell "I30" [ref=e605]
+                      - gridcell "J30" [ref=e606]
+                      - gridcell "K30" [ref=e607]
+                      - gridcell "L30" [ref=e608]
+                      - gridcell "M30" [ref=e609]
+                      - gridcell "N30" [ref=e610]
+                      - gridcell "O30" [ref=e611]
+                    - row [ref=e612]:
+                      - gridcell "A31" [ref=e613]
+                      - gridcell "C31" [ref=e614]
+                      - gridcell "D31" [ref=e615]
+                      - gridcell "E31" [ref=e616]
+                      - gridcell "F31" [ref=e617]
+                      - gridcell "G31" [ref=e618]
+                      - gridcell "H31" [ref=e619]
+                      - gridcell "I31" [ref=e620]
+                      - gridcell "J31" [ref=e621]
+                      - gridcell "K31" [ref=e622]
+                      - gridcell "L31" [ref=e623]
+                      - gridcell "M31" [ref=e624]
+                      - gridcell "N31" [ref=e625]
+                      - gridcell "O31" [ref=e626]
+                    - row [ref=e627]:
+                      - gridcell "A32" [ref=e628]
+                      - gridcell "C32" [ref=e629]
+                      - gridcell "D32" [ref=e630]
+                      - gridcell "E32" [ref=e631]
+                      - gridcell "F32" [ref=e632]
+                      - gridcell "G32" [ref=e633]
+                      - gridcell "H32" [ref=e634]
+                      - gridcell "I32" [ref=e635]
+                      - gridcell "J32" [ref=e636]
+                      - gridcell "K32" [ref=e637]
+                      - gridcell "L32" [ref=e638]
+                      - gridcell "M32" [ref=e639]
+                      - gridcell "N32" [ref=e640]
+                      - gridcell "O32" [ref=e641]
+                    - row [ref=e642]:
+                      - gridcell "A33" [ref=e643]
+                      - gridcell "C33" [ref=e644]
+                      - gridcell "D33" [ref=e645]
+                      - gridcell "E33" [ref=e646]
+                      - gridcell "F33" [ref=e647]
+                      - gridcell "G33" [ref=e648]
+                      - gridcell "H33" [ref=e649]
+                      - gridcell "I33" [ref=e650]
+                      - gridcell "J33" [ref=e651]
+                      - gridcell "K33" [ref=e652]
+                      - gridcell "L33" [ref=e653]
+                      - gridcell "M33" [ref=e654]
+                      - gridcell "N33" [ref=e655]
+                      - gridcell "O33" [ref=e656]
+                    - row [ref=e657]:
+                      - gridcell "A34" [ref=e658]
+                      - gridcell "C34" [ref=e659]
+                      - gridcell "D34" [ref=e660]
+                      - gridcell "E34" [ref=e661]
+                      - gridcell "F34" [ref=e662]
+                      - gridcell "G34" [ref=e663]
+                      - gridcell "H34" [ref=e664]
+                      - gridcell "I34" [ref=e665]
+                      - gridcell "J34" [ref=e666]
+                      - gridcell "K34" [ref=e667]
+                      - gridcell "L34" [ref=e668]
+                      - gridcell "M34" [ref=e669]
+                      - gridcell "N34" [ref=e670]
+                      - gridcell "O34" [ref=e671]
+                    - row [ref=e672]:
+                      - gridcell "A35" [ref=e673]
+                      - gridcell "C35" [ref=e674]
+                      - gridcell "D35" [ref=e675]
+                      - gridcell "E35" [ref=e676]
+                      - gridcell "F35" [ref=e677]
+                      - gridcell "G35" [ref=e678]
+                      - gridcell "H35" [ref=e679]
+                      - gridcell "I35" [ref=e680]
+                      - gridcell "J35" [ref=e681]
+                      - gridcell "K35" [ref=e682]
+                      - gridcell "L35" [ref=e683]
+                      - gridcell "M35" [ref=e684]
+                      - gridcell "N35" [ref=e685]
+                      - gridcell "O35" [ref=e686]
+                    - row [ref=e687]:
+                      - gridcell "A36" [ref=e688]
+                      - gridcell "C36" [ref=e689]
+                      - gridcell "D36" [ref=e690]
+                      - gridcell "E36" [ref=e691]
+                      - gridcell "F36" [ref=e692]
+                      - gridcell "G36" [ref=e693]
+                      - gridcell "H36" [ref=e694]
+                      - gridcell "I36" [ref=e695]
+                      - gridcell "J36" [ref=e696]
+                      - gridcell "K36" [ref=e697]
+                      - gridcell "L36" [ref=e698]
+                      - gridcell "M36" [ref=e699]
+                      - gridcell "N36" [ref=e700]
+                      - gridcell "O36" [ref=e701]
+                    - row [ref=e702]:
+                      - gridcell "A37" [ref=e703]
+                      - gridcell "C37" [ref=e704]
+                      - gridcell "D37" [ref=e705]
+                      - gridcell "E37" [ref=e706]
+                      - gridcell "F37" [ref=e707]
+                      - gridcell "G37" [ref=e708]
+                      - gridcell "H37" [ref=e709]
+                      - gridcell "I37" [ref=e710]
+                      - gridcell "J37" [ref=e711]
+                      - gridcell "K37" [ref=e712]
+                      - gridcell "L37" [ref=e713]
+                      - gridcell "M37" [ref=e714]
+                      - gridcell "N37" [ref=e715]
+                      - gridcell "O37" [ref=e716]
+                    - row [ref=e717]:
+                      - gridcell "A38" [ref=e718]
+                      - gridcell "C38" [ref=e719]
+                      - gridcell "D38" [ref=e720]
+                      - gridcell "E38" [ref=e721]
+                      - gridcell "F38" [ref=e722]
+                      - gridcell "G38" [ref=e723]
+                      - gridcell "H38" [ref=e724]
+                      - gridcell "I38" [ref=e725]
+                      - gridcell "J38" [ref=e726]
+                      - gridcell "K38" [ref=e727]
+                      - gridcell "L38" [ref=e728]
+                      - gridcell "M38" [ref=e729]
+                      - gridcell "N38" [ref=e730]
+                      - gridcell "O38" [ref=e731]
+                    - row [ref=e732]:
+                      - gridcell "A39" [ref=e733]
+                      - gridcell "C39" [ref=e734]
+                      - gridcell "D39" [ref=e735]
+                      - gridcell "E39" [ref=e736]
+                      - gridcell "F39" [ref=e737]
+                      - gridcell "G39" [ref=e738]
+                      - gridcell "H39" [ref=e739]
+                      - gridcell "I39" [ref=e740]
+                      - gridcell "J39" [ref=e741]
+                      - gridcell "K39" [ref=e742]
+                      - gridcell "L39" [ref=e743]
+                      - gridcell "M39" [ref=e744]
+                      - gridcell "N39" [ref=e745]
+                      - gridcell "O39" [ref=e746]
+                    - row [ref=e747]:
+                      - gridcell "A40" [ref=e748]
+                      - gridcell "C40" [ref=e749]
+                      - gridcell "D40" [ref=e750]
+                      - gridcell "E40" [ref=e751]
+                      - gridcell "F40" [ref=e752]
+                      - gridcell "G40" [ref=e753]
+                      - gridcell "H40" [ref=e754]
+                      - gridcell "I40" [ref=e755]
+                      - gridcell "J40" [ref=e756]
+                      - gridcell "K40" [ref=e757]
+                      - gridcell "L40" [ref=e758]
+                      - gridcell "M40" [ref=e759]
+                      - gridcell "N40" [ref=e760]
+                      - gridcell "O40" [ref=e761]
+                    - row [ref=e762]:
+                      - gridcell "A41" [ref=e763]
+                      - gridcell "C41" [ref=e764]
+                      - gridcell "D41" [ref=e765]
+                      - gridcell "E41" [ref=e766]
+                      - gridcell "F41" [ref=e767]
+                      - gridcell "G41" [ref=e768]
+                      - gridcell "H41" [ref=e769]
+                      - gridcell "I41" [ref=e770]
+                      - gridcell "J41" [ref=e771]
+                      - gridcell "K41" [ref=e772]
+                      - gridcell "L41" [ref=e773]
+                      - gridcell "M41" [ref=e774]
+                      - gridcell "N41" [ref=e775]
+                      - gridcell "O41" [ref=e776]
+                    - row [ref=e777]:
+                      - gridcell "A42" [ref=e778]
+                      - gridcell "C42" [ref=e779]
+                      - gridcell "D42" [ref=e780]
+                      - gridcell "E42" [ref=e781]
+                      - gridcell "F42" [ref=e782]
+                      - gridcell "G42" [ref=e783]
+                      - gridcell "H42" [ref=e784]
+                      - gridcell "I42" [ref=e785]
+                      - gridcell "J42" [ref=e786]
+                      - gridcell "K42" [ref=e787]
+                      - gridcell "L42" [ref=e788]
+                      - gridcell "M42" [ref=e789]
+                      - gridcell "N42" [ref=e790]
+                      - gridcell "O42" [ref=e791]
+                    - row [ref=e792]:
+                      - gridcell "A43" [ref=e793]
+                      - gridcell "C43" [ref=e794]
+                      - gridcell "D43" [ref=e795]
+                      - gridcell "E43" [ref=e796]
+                      - gridcell "F43" [ref=e797]
+                      - gridcell "G43" [ref=e798]
+                      - gridcell "H43" [ref=e799]
+                      - gridcell "I43" [ref=e800]
+                      - gridcell "J43" [ref=e801]
+                      - gridcell "K43" [ref=e802]
+                      - gridcell "L43" [ref=e803]
+                      - gridcell "M43" [ref=e804]
+                      - gridcell "N43" [ref=e805]
+                      - gridcell "O43" [ref=e806]
+                    - row [ref=e807]:
+                      - gridcell "A44" [ref=e808]
+                      - gridcell "C44" [ref=e809]
+                      - gridcell "D44" [ref=e810]
+                      - gridcell "E44" [ref=e811]
+                      - gridcell "F44" [ref=e812]
+                      - gridcell "G44" [ref=e813]
+                      - gridcell "H44" [ref=e814]
+                      - gridcell "I44" [ref=e815]
+                      - gridcell "J44" [ref=e816]
+                      - gridcell "K44" [ref=e817]
+                      - gridcell "L44" [ref=e818]
+                      - gridcell "M44" [ref=e819]
+                      - gridcell "N44" [ref=e820]
+                      - gridcell "O44" [ref=e821]
+                    - row [ref=e822]:
+                      - gridcell "A45" [ref=e823]
+                      - gridcell "C45" [ref=e824]
+                      - gridcell "D45" [ref=e825]
+                      - gridcell "E45" [ref=e826]
+                      - gridcell "F45" [ref=e827]
+                      - gridcell "G45" [ref=e828]
+                      - gridcell "H45" [ref=e829]
+                      - gridcell "I45" [ref=e830]
+                      - gridcell "J45" [ref=e831]
+                      - gridcell "K45" [ref=e832]
+                      - gridcell "L45" [ref=e833]
+                      - gridcell "M45" [ref=e834]
+                      - gridcell "N45" [ref=e835]
+                      - gridcell "O45" [ref=e836]
+                    - row [ref=e837]:
+                      - gridcell "A46" [ref=e838]
+                      - gridcell "C46" [ref=e839]
+                      - gridcell "D46" [ref=e840]
+                      - gridcell "E46" [ref=e841]
+                      - gridcell "F46" [ref=e842]
+                      - gridcell "G46" [ref=e843]
+                      - gridcell "H46" [ref=e844]
+                      - gridcell "I46" [ref=e845]
+                      - gridcell "J46" [ref=e846]
+                      - gridcell "K46" [ref=e847]
+                      - gridcell "L46" [ref=e848]
+                      - gridcell "M46" [ref=e849]
+                      - gridcell "N46" [ref=e850]
+                      - gridcell "O46" [ref=e851]
+                    - row [ref=e852]:
+                      - gridcell "A47" [ref=e853]
+                      - gridcell "C47" [ref=e854]
+                      - gridcell "D47" [ref=e855]
+                      - gridcell "E47" [ref=e856]
+                      - gridcell "F47" [ref=e857]
+                      - gridcell "G47" [ref=e858]
+                      - gridcell "H47" [ref=e859]
+                      - gridcell "I47" [ref=e860]
+                      - gridcell "J47" [ref=e861]
+                      - gridcell "K47" [ref=e862]
+                      - gridcell "L47" [ref=e863]
+                      - gridcell "M47" [ref=e864]
+                      - gridcell "N47" [ref=e865]
+                      - gridcell "O47" [ref=e866]
+                    - row [ref=e867]:
+                      - gridcell "A48" [ref=e868]
+                      - gridcell "C48" [ref=e869]
+                      - gridcell "D48" [ref=e870]
+                      - gridcell "E48" [ref=e871]
+                      - gridcell "F48" [ref=e872]
+                      - gridcell "G48" [ref=e873]
+                      - gridcell "H48" [ref=e874]
+                      - gridcell "I48" [ref=e875]
+                      - gridcell "J48" [ref=e876]
+                      - gridcell "K48" [ref=e877]
+                      - gridcell "L48" [ref=e878]
+                      - gridcell "M48" [ref=e879]
+                      - gridcell "N48" [ref=e880]
+                      - gridcell "O48" [ref=e881]
+                    - row [ref=e882]:
+                      - gridcell "A49" [ref=e883]
+                      - gridcell "C49" [ref=e884]
+                      - gridcell "D49" [ref=e885]
+                      - gridcell "E49" [ref=e886]
+                      - gridcell "F49" [ref=e887]
+                      - gridcell "G49" [ref=e888]
+                      - gridcell "H49" [ref=e889]
+                      - gridcell "I49" [ref=e890]
+                      - gridcell "J49" [ref=e891]
+                      - gridcell "K49" [ref=e892]
+                      - gridcell "L49" [ref=e893]
+                      - gridcell "M49" [ref=e894]
+                      - gridcell "N49" [ref=e895]
+                      - gridcell "O49" [ref=e896]
+                    - row [ref=e897]:
+                      - gridcell "A50" [ref=e898]
+                      - gridcell "C50" [ref=e899]
+                      - gridcell "D50" [ref=e900]
+                      - gridcell "E50" [ref=e901]
+                      - gridcell "F50" [ref=e902]
+                      - gridcell "G50" [ref=e903]
+                      - gridcell "H50" [ref=e904]
+                      - gridcell "I50" [ref=e905]
+                      - gridcell "J50" [ref=e906]
+                      - gridcell "K50" [ref=e907]
+                      - gridcell "L50" [ref=e908]
+                      - gridcell "M50" [ref=e909]
+                      - gridcell "N50" [ref=e910]
+                      - gridcell "O50" [ref=e911]
+                    - row [ref=e912]:
+                      - gridcell "A51" [ref=e913]
+                      - gridcell "C51" [ref=e914]
+                      - gridcell "D51" [ref=e915]
+                      - gridcell "E51" [ref=e916]
+                      - gridcell "F51" [ref=e917]
+                      - gridcell "G51" [ref=e918]
+                      - gridcell "H51" [ref=e919]
+                      - gridcell "I51" [ref=e920]
+                      - gridcell "J51" [ref=e921]
+                      - gridcell "K51" [ref=e922]
+                      - gridcell "L51" [ref=e923]
+                      - gridcell "M51" [ref=e924]
+                      - gridcell "N51" [ref=e925]
+                      - gridcell "O51" [ref=e926]
+                    - row [ref=e927]:
+                      - gridcell "A52" [ref=e928]
+                      - gridcell "C52" [ref=e929]
+                      - gridcell "D52" [ref=e930]
+                      - gridcell "E52" [ref=e931]
+                      - gridcell "F52" [ref=e932]
+                      - gridcell "G52" [ref=e933]
+                      - gridcell "H52" [ref=e934]
+                      - gridcell "I52" [ref=e935]
+                      - gridcell "J52" [ref=e936]
+                      - gridcell "K52" [ref=e937]
+                      - gridcell "L52" [ref=e938]
+                      - gridcell "M52" [ref=e939]
+                      - gridcell "N52" [ref=e940]
+                      - gridcell "O52" [ref=e941]
+                    - row [ref=e942]:
+                      - gridcell "A53" [ref=e943]
+                      - gridcell "C53" [ref=e944]
+                      - gridcell "D53" [ref=e945]
+                      - gridcell "E53" [ref=e946]
+                      - gridcell "F53" [ref=e947]
+                      - gridcell "G53" [ref=e948]
+                      - gridcell "H53" [ref=e949]
+                      - gridcell "I53" [ref=e950]
+                      - gridcell "J53" [ref=e951]
+                      - gridcell "K53" [ref=e952]
+                      - gridcell "L53" [ref=e953]
+                      - gridcell "M53" [ref=e954]
+                      - gridcell "N53" [ref=e955]
+                      - gridcell "O53" [ref=e956]
+                    - row [ref=e957]:
+                      - gridcell "A54" [ref=e958]
+                      - gridcell "C54" [ref=e959]
+                      - gridcell "D54" [ref=e960]
+                      - gridcell "E54" [ref=e961]
+                      - gridcell "F54" [ref=e962]
+                      - gridcell "G54" [ref=e963]
+                      - gridcell "H54" [ref=e964]
+                      - gridcell "I54" [ref=e965]
+                      - gridcell "J54" [ref=e966]
+                      - gridcell "K54" [ref=e967]
+                      - gridcell "L54" [ref=e968]
+                      - gridcell "M54" [ref=e969]
+                      - gridcell "N54" [ref=e970]
+                      - gridcell "O54" [ref=e971]
+                    - row [ref=e972]:
+                      - gridcell "A55" [ref=e973]
+                      - gridcell "C55" [ref=e974]
+                      - gridcell "D55" [ref=e975]
+                      - gridcell "E55" [ref=e976]
+                      - gridcell "F55" [ref=e977]
+                      - gridcell "G55" [ref=e978]
+                      - gridcell "H55" [ref=e979]
+                      - gridcell "I55" [ref=e980]
+                      - gridcell "J55" [ref=e981]
+                      - gridcell "K55" [ref=e982]
+                      - gridcell "L55" [ref=e983]
+                      - gridcell "M55" [ref=e984]
+                      - gridcell "N55" [ref=e985]
+                      - gridcell "O55" [ref=e986]
+                    - row [ref=e987]:
+                      - gridcell "A56" [ref=e988]
+                      - gridcell "C56" [ref=e989]
+                      - gridcell "D56" [ref=e990]
+                      - gridcell "E56" [ref=e991]
+                      - gridcell "F56" [ref=e992]
+                      - gridcell "G56" [ref=e993]
+                      - gridcell "H56" [ref=e994]
+                      - gridcell "I56" [ref=e995]
+                      - gridcell "J56" [ref=e996]
+                      - gridcell "K56" [ref=e997]
+                      - gridcell "L56" [ref=e998]
+                      - gridcell "M56" [ref=e999]
+                      - gridcell "N56" [ref=e1000]
+                      - gridcell "O56" [ref=e1001]
+                    - row [ref=e1002]:
+                      - gridcell "A57" [ref=e1003]
+                      - gridcell "C57" [ref=e1004]
+                      - gridcell "D57" [ref=e1005]
+                      - gridcell "E57" [ref=e1006]
+                      - gridcell "F57" [ref=e1007]
+                      - gridcell "G57" [ref=e1008]
+                      - gridcell "H57" [ref=e1009]
+                      - gridcell "I57" [ref=e1010]
+                      - gridcell "J57" [ref=e1011]
+                      - gridcell "K57" [ref=e1012]
+                      - gridcell "L57" [ref=e1013]
+                      - gridcell "M57" [ref=e1014]
+                      - gridcell "N57" [ref=e1015]
+                      - gridcell "O57" [ref=e1016]
+                    - row [ref=e1017]:
+                      - gridcell "A58" [ref=e1018]
+                      - gridcell "C58" [ref=e1019]
+                      - gridcell "D58" [ref=e1020]
+                      - gridcell "E58" [ref=e1021]
+                      - gridcell "F58" [ref=e1022]
+                      - gridcell "G58" [ref=e1023]
+                      - gridcell "H58" [ref=e1024]
+                      - gridcell "I58" [ref=e1025]
+                      - gridcell "J58" [ref=e1026]
+                      - gridcell "K58" [ref=e1027]
+                      - gridcell "L58" [ref=e1028]
+                      - gridcell "M58" [ref=e1029]
+                      - gridcell "N58" [ref=e1030]
+                      - gridcell "O58" [ref=e1031]
+                    - row [ref=e1032]:
+                      - gridcell "A59" [ref=e1033]
+                      - gridcell "C59" [ref=e1034]
+                      - gridcell "D59" [ref=e1035]
+                      - gridcell "E59" [ref=e1036]
+                      - gridcell "F59" [ref=e1037]
+                      - gridcell "G59" [ref=e1038]
+                      - gridcell "H59" [ref=e1039]
+                      - gridcell "I59" [ref=e1040]
+                      - gridcell "J59" [ref=e1041]
+                      - gridcell "K59" [ref=e1042]
+                      - gridcell "L59" [ref=e1043]
+                      - gridcell "M59" [ref=e1044]
+                      - gridcell "N59" [ref=e1045]
+                      - gridcell "O59" [ref=e1046]
+                    - row [ref=e1047]:
+                      - gridcell "A60" [ref=e1048]
+                      - gridcell "C60" [ref=e1049]
+                      - gridcell "D60" [ref=e1050]
+                      - gridcell "E60" [ref=e1051]
+                      - gridcell "F60" [ref=e1052]
+                      - gridcell "G60" [ref=e1053]
+                      - gridcell "H60" [ref=e1054]
+                      - gridcell "I60" [ref=e1055]
+                      - gridcell "J60" [ref=e1056]
+                      - gridcell "K60" [ref=e1057]
+                      - gridcell "L60" [ref=e1058]
+                      - gridcell "M60" [ref=e1059]
+                      - gridcell "N60" [ref=e1060]
+                      - gridcell "O60" [ref=e1061]
+                    - row [ref=e1062]:
+                      - gridcell "A61" [ref=e1063]
+                      - gridcell "C61" [ref=e1064]
+                      - gridcell "D61" [ref=e1065]
+                      - gridcell "E61" [ref=e1066]
+                      - gridcell "F61" [ref=e1067]
+                      - gridcell "G61" [ref=e1068]
+                      - gridcell "H61" [ref=e1069]
+                      - gridcell "I61" [ref=e1070]
+                      - gridcell "J61" [ref=e1071]
+                      - gridcell "K61" [ref=e1072]
+                      - gridcell "L61" [ref=e1073]
+                      - gridcell "M61" [ref=e1074]
+                      - gridcell "N61" [ref=e1075]
+                      - gridcell "O61" [ref=e1076]
+                    - row [ref=e1077]:
+                      - gridcell "A62" [ref=e1078]
+                      - gridcell "C62" [ref=e1079]
+                      - gridcell "D62" [ref=e1080]
+                      - gridcell "E62" [ref=e1081]
+                      - gridcell "F62" [ref=e1082]
+                      - gridcell "G62" [ref=e1083]
+                      - gridcell "H62" [ref=e1084]
+                      - gridcell "I62" [ref=e1085]
+                      - gridcell "J62" [ref=e1086]
+                      - gridcell "K62" [ref=e1087]
+                      - gridcell "L62" [ref=e1088]
+                      - gridcell "M62" [ref=e1089]
+                      - gridcell "N62" [ref=e1090]
+                      - gridcell "O62" [ref=e1091]
+                    - row [ref=e1092]:
+                      - gridcell "A63" [ref=e1093]
+                      - gridcell "C63" [ref=e1094]
+                      - gridcell "D63" [ref=e1095]
+                      - gridcell "E63" [ref=e1096]
+                      - gridcell "F63" [ref=e1097]
+                      - gridcell "G63" [ref=e1098]
+                      - gridcell "H63" [ref=e1099]
+                      - gridcell "I63" [ref=e1100]
+                      - gridcell "J63" [ref=e1101]
+                      - gridcell "K63" [ref=e1102]
+                      - gridcell "L63" [ref=e1103]
+                      - gridcell "M63" [ref=e1104]
+                      - gridcell "N63" [ref=e1105]
+                      - gridcell "O63" [ref=e1106]
+                    - row [ref=e1107]:
+                      - gridcell "A64" [ref=e1108]
+                      - gridcell "C64" [ref=e1109]
+                      - gridcell "D64" [ref=e1110]
+                      - gridcell "E64" [ref=e1111]
+                      - gridcell "F64" [ref=e1112]
+                      - gridcell "G64" [ref=e1113]
+                      - gridcell "H64" [ref=e1114]
+                      - gridcell "I64" [ref=e1115]
+                      - gridcell "J64" [ref=e1116]
+                      - gridcell "K64" [ref=e1117]
+                      - gridcell "L64" [ref=e1118]
+                      - gridcell "M64" [ref=e1119]
+                      - gridcell "N64" [ref=e1120]
+                      - gridcell "O64" [ref=e1121]
+                    - row [ref=e1122]:
+                      - gridcell "A65" [ref=e1123]
+                      - gridcell "C65" [ref=e1124]
+                      - gridcell "D65" [ref=e1125]
+                      - gridcell "E65" [ref=e1126]
+                      - gridcell "F65" [ref=e1127]
+                      - gridcell "G65" [ref=e1128]
+                      - gridcell "H65" [ref=e1129]
+                      - gridcell "I65" [ref=e1130]
+                      - gridcell "J65" [ref=e1131]
+                      - gridcell "K65" [ref=e1132]
+                      - gridcell "L65" [ref=e1133]
+                      - gridcell "M65" [ref=e1134]
+                      - gridcell "N65" [ref=e1135]
+                      - gridcell "O65" [ref=e1136]
+                    - row [ref=e1137]:
+                      - gridcell "A66" [ref=e1138]
+                      - gridcell "C66" [ref=e1139]
+                      - gridcell "D66" [ref=e1140]
+                      - gridcell "E66" [ref=e1141]
+                      - gridcell "F66" [ref=e1142]
+                      - gridcell "G66" [ref=e1143]
+                      - gridcell "H66" [ref=e1144]
+                      - gridcell "I66" [ref=e1145]
+                      - gridcell "J66" [ref=e1146]
+                      - gridcell "K66" [ref=e1147]
+                      - gridcell "L66" [ref=e1148]
+                      - gridcell "M66" [ref=e1149]
+                      - gridcell "N66" [ref=e1150]
+                      - gridcell "O66" [ref=e1151]
+                    - row [ref=e1152]:
+                      - gridcell "A67" [ref=e1153]
+                      - gridcell "C67" [ref=e1154]
+                      - gridcell "D67" [ref=e1155]
+                      - gridcell "E67" [ref=e1156]
+                      - gridcell "F67" [ref=e1157]
+                      - gridcell "G67" [ref=e1158]
+                      - gridcell "H67" [ref=e1159]
+                      - gridcell "I67" [ref=e1160]
+                      - gridcell "J67" [ref=e1161]
+                      - gridcell "K67" [ref=e1162]
+                      - gridcell "L67" [ref=e1163]
+                      - gridcell "M67" [ref=e1164]
+                      - gridcell "N67" [ref=e1165]
+                      - gridcell "O67" [ref=e1166]
+                    - row [ref=e1167]:
+                      - gridcell "A68" [ref=e1168]
+                      - gridcell "C68" [ref=e1169]
+                      - gridcell "D68" [ref=e1170]
+                      - gridcell "E68" [ref=e1171]
+                      - gridcell "F68" [ref=e1172]
+                      - gridcell "G68" [ref=e1173]
+                      - gridcell "H68" [ref=e1174]
+                      - gridcell "I68" [ref=e1175]
+                      - gridcell "J68" [ref=e1176]
+                      - gridcell "K68" [ref=e1177]
+                      - gridcell "L68" [ref=e1178]
+                      - gridcell "M68" [ref=e1179]
+                      - gridcell "N68" [ref=e1180]
+                      - gridcell "O68" [ref=e1181]
+                    - row [ref=e1182]:
+                      - gridcell "A69" [ref=e1183]
+                      - gridcell "C69" [ref=e1184]
+                      - gridcell "D69" [ref=e1185]
+                      - gridcell "E69" [ref=e1186]
+                      - gridcell "F69" [ref=e1187]
+                      - gridcell "G69" [ref=e1188]
+                      - gridcell "H69" [ref=e1189]
+                      - gridcell "I69" [ref=e1190]
+                      - gridcell "J69" [ref=e1191]
+                      - gridcell "K69" [ref=e1192]
+                      - gridcell "L69" [ref=e1193]
+                      - gridcell "M69" [ref=e1194]
+                      - gridcell "N69" [ref=e1195]
+                      - gridcell "O69" [ref=e1196]
+                    - row [ref=e1197]:
+                      - gridcell "A70" [ref=e1198]
+                      - gridcell "C70" [ref=e1199]
+                      - gridcell "D70" [ref=e1200]
+                      - gridcell "E70" [ref=e1201]
+                      - gridcell "F70" [ref=e1202]
+                      - gridcell "G70" [ref=e1203]
+                      - gridcell "H70" [ref=e1204]
+                      - gridcell "I70" [ref=e1205]
+                      - gridcell "J70" [ref=e1206]
+                      - gridcell "K70" [ref=e1207]
+                      - gridcell "L70" [ref=e1208]
+                      - gridcell "M70" [ref=e1209]
+                      - gridcell "N70" [ref=e1210]
+                      - gridcell "O70" [ref=e1211]
+                    - row [ref=e1212]:
+                      - gridcell "A71" [ref=e1213]
+                      - gridcell "C71" [ref=e1214]
+                      - gridcell "D71" [ref=e1215]
+                      - gridcell "E71" [ref=e1216]
+                      - gridcell "F71" [ref=e1217]
+                      - gridcell "G71" [ref=e1218]
+                      - gridcell "H71" [ref=e1219]
+                      - gridcell "I71" [ref=e1220]
+                      - gridcell "J71" [ref=e1221]
+                      - gridcell "K71" [ref=e1222]
+                      - gridcell "L71" [ref=e1223]
+                      - gridcell "M71" [ref=e1224]
+                      - gridcell "N71" [ref=e1225]
+                      - gridcell "O71" [ref=e1226]
+                    - row [ref=e1227]:
+                      - gridcell "A72" [ref=e1228]
+                      - gridcell "C72" [ref=e1229]
+                      - gridcell "D72" [ref=e1230]
+                      - gridcell "E72" [ref=e1231]
+                      - gridcell "F72" [ref=e1232]
+                      - gridcell "G72" [ref=e1233]
+                      - gridcell "H72" [ref=e1234]
+                      - gridcell "I72" [ref=e1235]
+                      - gridcell "J72" [ref=e1236]
+                      - gridcell "K72" [ref=e1237]
+                      - gridcell "L72" [ref=e1238]
+                      - gridcell "M72" [ref=e1239]
+                      - gridcell "N72" [ref=e1240]
+                      - gridcell "O72" [ref=e1241]
+                    - row [ref=e1242]:
+                      - gridcell "A73" [ref=e1243]
+                      - gridcell "C73" [ref=e1244]
+                      - gridcell "D73" [ref=e1245]
+                      - gridcell "E73" [ref=e1246]
+                      - gridcell "F73" [ref=e1247]
+                      - gridcell "G73" [ref=e1248]
+                      - gridcell "H73" [ref=e1249]
+                      - gridcell "I73" [ref=e1250]
+                      - gridcell "J73" [ref=e1251]
+                      - gridcell "K73" [ref=e1252]
+                      - gridcell "L73" [ref=e1253]
+                      - gridcell "M73" [ref=e1254]
+                      - gridcell "N73" [ref=e1255]
+                      - gridcell "O73" [ref=e1256]
+                    - row [ref=e1257]:
+                      - gridcell "A74" [ref=e1258]
+                      - gridcell "C74" [ref=e1259]
+                      - gridcell "D74" [ref=e1260]
+                      - gridcell "E74" [ref=e1261]
+                      - gridcell "F74" [ref=e1262]
+                      - gridcell "G74" [ref=e1263]
+                      - gridcell "H74" [ref=e1264]
+                      - gridcell "I74" [ref=e1265]
+                      - gridcell "J74" [ref=e1266]
+                      - gridcell "K74" [ref=e1267]
+                      - gridcell "L74" [ref=e1268]
+                      - gridcell "M74" [ref=e1269]
+                      - gridcell "N74" [ref=e1270]
+                      - gridcell "O74" [ref=e1271]
+                    - row [ref=e1272]:
+                      - gridcell "A75" [ref=e1273]
+                      - gridcell "C75" [ref=e1274]
+                      - gridcell "D75" [ref=e1275]
+                      - gridcell "E75" [ref=e1276]
+                      - gridcell "F75" [ref=e1277]
+                      - gridcell "G75" [ref=e1278]
+                      - gridcell "H75" [ref=e1279]
+                      - gridcell "I75" [ref=e1280]
+                      - gridcell "J75" [ref=e1281]
+                      - gridcell "K75" [ref=e1282]
+                      - gridcell "L75" [ref=e1283]
+                      - gridcell "M75" [ref=e1284]
+                      - gridcell "N75" [ref=e1285]
+                      - gridcell "O75" [ref=e1286]
+                    - row [ref=e1287]:
+                      - gridcell "A76" [ref=e1288]
+                      - gridcell "C76" [ref=e1289]
+                      - gridcell "D76" [ref=e1290]
+                      - gridcell "E76" [ref=e1291]
+                      - gridcell "F76" [ref=e1292]
+                      - gridcell "G76" [ref=e1293]
+                      - gridcell "H76" [ref=e1294]
+                      - gridcell "I76" [ref=e1295]
+                      - gridcell "J76" [ref=e1296]
+                      - gridcell "K76" [ref=e1297]
+                      - gridcell "L76" [ref=e1298]
+                      - gridcell "M76" [ref=e1299]
+                      - gridcell "N76" [ref=e1300]
+                      - gridcell "O76" [ref=e1301]
+                    - row [ref=e1302]:
+                      - gridcell "A77" [ref=e1303]
+                      - gridcell "C77" [ref=e1304]
+                      - gridcell "D77" [ref=e1305]
+                      - gridcell "E77" [ref=e1306]
+                      - gridcell "F77" [ref=e1307]
+                      - gridcell "G77" [ref=e1308]
+                      - gridcell "H77" [ref=e1309]
+                      - gridcell "I77" [ref=e1310]
+                      - gridcell "J77" [ref=e1311]
+                      - gridcell "K77" [ref=e1312]
+                      - gridcell "L77" [ref=e1313]
+                      - gridcell "M77" [ref=e1314]
+                      - gridcell "N77" [ref=e1315]
+                      - gridcell "O77" [ref=e1316]
+                    - row [ref=e1317]:
+                      - gridcell "A78" [ref=e1318]
+                      - gridcell "C78" [ref=e1319]
+                      - gridcell "D78" [ref=e1320]
+                      - gridcell "E78" [ref=e1321]
+                      - gridcell "F78" [ref=e1322]
+                      - gridcell "G78" [ref=e1323]
+                      - gridcell "H78" [ref=e1324]
+                      - gridcell "I78" [ref=e1325]
+                      - gridcell "J78" [ref=e1326]
+                      - gridcell "K78" [ref=e1327]
+                      - gridcell "L78" [ref=e1328]
+                      - gridcell "M78" [ref=e1329]
+                      - gridcell "N78" [ref=e1330]
+                      - gridcell "O78" [ref=e1331]
+                    - row [ref=e1332]:
+                      - gridcell "A79" [ref=e1333]
+                      - gridcell "C79" [ref=e1334]
+                      - gridcell "D79" [ref=e1335]
+                      - gridcell "E79" [ref=e1336]
+                      - gridcell "F79" [ref=e1337]
+                      - gridcell "G79" [ref=e1338]
+                      - gridcell "H79" [ref=e1339]
+                      - gridcell "I79" [ref=e1340]
+                      - gridcell "J79" [ref=e1341]
+                      - gridcell "K79" [ref=e1342]
+                      - gridcell "L79" [ref=e1343]
+                      - gridcell "M79" [ref=e1344]
+                      - gridcell "N79" [ref=e1345]
+                      - gridcell "O79" [ref=e1346]
+                    - row [ref=e1347]:
+                      - gridcell "A80" [ref=e1348]
+                      - gridcell "C80" [ref=e1349]
+                      - gridcell "D80" [ref=e1350]
+                      - gridcell "E80" [ref=e1351]
+                      - gridcell "F80" [ref=e1352]
+                      - gridcell "G80" [ref=e1353]
+                      - gridcell "H80" [ref=e1354]
+                      - gridcell "I80" [ref=e1355]
+                      - gridcell "J80" [ref=e1356]
+                      - gridcell "K80" [ref=e1357]
+                      - gridcell "L80" [ref=e1358]
+                      - gridcell "M80" [ref=e1359]
+                      - gridcell "N80" [ref=e1360]
+                      - gridcell "O80" [ref=e1361]
+                    - row [ref=e1362]:
+                      - gridcell "A81" [ref=e1363]
+                      - gridcell "C81" [ref=e1364]
+                      - gridcell "D81" [ref=e1365]
+                      - gridcell "E81" [ref=e1366]
+                      - gridcell "F81" [ref=e1367]
+                      - gridcell "G81" [ref=e1368]
+                      - gridcell "H81" [ref=e1369]
+                      - gridcell "I81" [ref=e1370]
+                      - gridcell "J81" [ref=e1371]
+                      - gridcell "K81" [ref=e1372]
+                      - gridcell "L81" [ref=e1373]
+                      - gridcell "M81" [ref=e1374]
+                      - gridcell "N81" [ref=e1375]
+                      - gridcell "O81" [ref=e1376]
+                    - row [ref=e1377]:
+                      - gridcell "A82" [ref=e1378]
+                      - gridcell "C82" [ref=e1379]
+                      - gridcell "D82" [ref=e1380]
+                      - gridcell "E82" [ref=e1381]
+                      - gridcell "F82" [ref=e1382]
+                      - gridcell "G82" [ref=e1383]
+                      - gridcell "H82" [ref=e1384]
+                      - gridcell "I82" [ref=e1385]
+                      - gridcell "J82" [ref=e1386]
+                      - gridcell "K82" [ref=e1387]
+                      - gridcell "L82" [ref=e1388]
+                      - gridcell "M82" [ref=e1389]
+                      - gridcell "N82" [ref=e1390]
+                      - gridcell "O82" [ref=e1391]
+                    - row [ref=e1392]:
+                      - gridcell "A83" [ref=e1393]
+                      - gridcell "C83" [ref=e1394]
+                      - gridcell "D83" [ref=e1395]
+                      - gridcell "E83" [ref=e1396]
+                      - gridcell "F83" [ref=e1397]
+                      - gridcell "G83" [ref=e1398]
+                      - gridcell "H83" [ref=e1399]
+                      - gridcell "I83" [ref=e1400]
+                      - gridcell "J83" [ref=e1401]
+                      - gridcell "K83" [ref=e1402]
+                      - gridcell "L83" [ref=e1403]
+                      - gridcell "M83" [ref=e1404]
+                      - gridcell "N83" [ref=e1405]
+                      - gridcell "O83" [ref=e1406]
+                    - row [ref=e1407]:
+                      - gridcell "A84" [ref=e1408]
+                      - gridcell "C84" [ref=e1409]
+                      - gridcell "D84" [ref=e1410]
+                      - gridcell "E84" [ref=e1411]
+                      - gridcell "F84" [ref=e1412]
+                      - gridcell "G84" [ref=e1413]
+                      - gridcell "H84" [ref=e1414]
+                      - gridcell "I84" [ref=e1415]
+                      - gridcell "J84" [ref=e1416]
+                      - gridcell "K84" [ref=e1417]
+                      - gridcell "L84" [ref=e1418]
+                      - gridcell "M84" [ref=e1419]
+                      - gridcell "N84" [ref=e1420]
+                      - gridcell "O84" [ref=e1421]
+                    - row [ref=e1422]:
+                      - gridcell "A85" [ref=e1423]
+                      - gridcell "C85" [ref=e1424]
+                      - gridcell "D85" [ref=e1425]
+                      - gridcell "E85" [ref=e1426]
+                      - gridcell "F85" [ref=e1427]
+                      - gridcell "G85" [ref=e1428]
+                      - gridcell "H85" [ref=e1429]
+                      - gridcell "I85" [ref=e1430]
+                      - gridcell "J85" [ref=e1431]
+                      - gridcell "K85" [ref=e1432]
+                      - gridcell "L85" [ref=e1433]
+                      - gridcell "M85" [ref=e1434]
+                      - gridcell "N85" [ref=e1435]
+                      - gridcell "O85" [ref=e1436]
+                    - row [ref=e1437]:
+                      - gridcell "A86" [ref=e1438]
+                      - gridcell "C86" [ref=e1439]
+                      - gridcell "D86" [ref=e1440]
+                      - gridcell "E86" [ref=e1441]
+                      - gridcell "F86" [ref=e1442]
+                      - gridcell "G86" [ref=e1443]
+                      - gridcell "H86" [ref=e1444]
+                      - gridcell "I86" [ref=e1445]
+                      - gridcell "J86" [ref=e1446]
+                      - gridcell "K86" [ref=e1447]
+                      - gridcell "L86" [ref=e1448]
+                      - gridcell "M86" [ref=e1449]
+                      - gridcell "N86" [ref=e1450]
+                      - gridcell "O86" [ref=e1451]
+                    - row [ref=e1452]:
+                      - gridcell "A87" [ref=e1453]
+                      - gridcell "C87" [ref=e1454]
+                      - gridcell "D87" [ref=e1455]
+                      - gridcell "E87" [ref=e1456]
+                      - gridcell "F87" [ref=e1457]
+                      - gridcell "G87" [ref=e1458]
+                      - gridcell "H87" [ref=e1459]
+                      - gridcell "I87" [ref=e1460]
+                      - gridcell "J87" [ref=e1461]
+                      - gridcell "K87" [ref=e1462]
+                      - gridcell "L87" [ref=e1463]
+                      - gridcell "M87" [ref=e1464]
+                      - gridcell "N87" [ref=e1465]
+                      - gridcell "O87" [ref=e1466]
+                    - row [ref=e1467]:
+                      - gridcell "A88" [ref=e1468]
+                      - gridcell "C88" [ref=e1469]
+                      - gridcell "D88" [ref=e1470]
+                      - gridcell "E88" [ref=e1471]
+                      - gridcell "F88" [ref=e1472]
+                      - gridcell "G88" [ref=e1473]
+                      - gridcell "H88" [ref=e1474]
+                      - gridcell "I88" [ref=e1475]
+                      - gridcell "J88" [ref=e1476]
+                      - gridcell "K88" [ref=e1477]
+                      - gridcell "L88" [ref=e1478]
+                      - gridcell "M88" [ref=e1479]
+                      - gridcell "N88" [ref=e1480]
+                      - gridcell "O88" [ref=e1481]
+                    - row [ref=e1482]:
+                      - gridcell "A89" [ref=e1483]
+                      - gridcell "C89" [ref=e1484]
+                      - gridcell "D89" [ref=e1485]
+                      - gridcell "E89" [ref=e1486]
+                      - gridcell "F89" [ref=e1487]
+                      - gridcell "G89" [ref=e1488]
+                      - gridcell "H89" [ref=e1489]
+                      - gridcell "I89" [ref=e1490]
+                      - gridcell "J89" [ref=e1491]
+                      - gridcell "K89" [ref=e1492]
+                      - gridcell "L89" [ref=e1493]
+                      - gridcell "M89" [ref=e1494]
+                      - gridcell "N89" [ref=e1495]
+                      - gridcell "O89" [ref=e1496]
+                    - row [ref=e1497]:
+                      - gridcell "A90" [ref=e1498]
+                      - gridcell "C90" [ref=e1499]
+                      - gridcell "D90" [ref=e1500]
+                      - gridcell "E90" [ref=e1501]
+                      - gridcell "F90" [ref=e1502]
+                      - gridcell "G90" [ref=e1503]
+                      - gridcell "H90" [ref=e1504]
+                      - gridcell "I90" [ref=e1505]
+                      - gridcell "J90" [ref=e1506]
+                      - gridcell "K90" [ref=e1507]
+                      - gridcell "L90" [ref=e1508]
+                      - gridcell "M90" [ref=e1509]
+                      - gridcell "N90" [ref=e1510]
+                      - gridcell "O90" [ref=e1511]
+                    - row [ref=e1512]:
+                      - gridcell "A91" [ref=e1513]
+                      - gridcell "C91" [ref=e1514]
+                      - gridcell "D91" [ref=e1515]
+                      - gridcell "E91" [ref=e1516]
+                      - gridcell "F91" [ref=e1517]
+                      - gridcell "G91" [ref=e1518]
+                      - gridcell "H91" [ref=e1519]
+                      - gridcell "I91" [ref=e1520]
+                      - gridcell "J91" [ref=e1521]
+                      - gridcell "K91" [ref=e1522]
+                      - gridcell "L91" [ref=e1523]
+                      - gridcell "M91" [ref=e1524]
+                      - gridcell "N91" [ref=e1525]
+                      - gridcell "O91" [ref=e1526]
+                    - row [ref=e1527]:
+                      - gridcell "A92" [ref=e1528]
+                      - gridcell "C92" [ref=e1529]
+                      - gridcell "D92" [ref=e1530]
+                      - gridcell "E92" [ref=e1531]
+                      - gridcell "F92" [ref=e1532]
+                      - gridcell "G92" [ref=e1533]
+                      - gridcell "H92" [ref=e1534]
+                      - gridcell "I92" [ref=e1535]
+                      - gridcell "J92" [ref=e1536]
+                      - gridcell "K92" [ref=e1537]
+                      - gridcell "L92" [ref=e1538]
+                      - gridcell "M92" [ref=e1539]
+                      - gridcell "N92" [ref=e1540]
+                      - gridcell "O92" [ref=e1541]
+                    - row [ref=e1542]:
+                      - gridcell "A93" [ref=e1543]
+                      - gridcell "C93" [ref=e1544]
+                      - gridcell "D93" [ref=e1545]
+                      - gridcell "E93" [ref=e1546]
+                      - gridcell "F93" [ref=e1547]
+                      - gridcell "G93" [ref=e1548]
+                      - gridcell "H93" [ref=e1549]
+                      - gridcell "I93" [ref=e1550]
+                      - gridcell "J93" [ref=e1551]
+                      - gridcell "K93" [ref=e1552]
+                      - gridcell "L93" [ref=e1553]
+                      - gridcell "M93" [ref=e1554]
+                      - gridcell "N93" [ref=e1555]
+                      - gridcell "O93" [ref=e1556]
+                    - row [ref=e1557]:
+                      - gridcell "A94" [ref=e1558]
+                      - gridcell "C94" [ref=e1559]
+                      - gridcell "D94" [ref=e1560]
+                      - gridcell "E94" [ref=e1561]
+                      - gridcell "F94" [ref=e1562]
+                      - gridcell "G94" [ref=e1563]
+                      - gridcell "H94" [ref=e1564]
+                      - gridcell "I94" [ref=e1565]
+                      - gridcell "J94" [ref=e1566]
+                      - gridcell "K94" [ref=e1567]
+                      - gridcell "L94" [ref=e1568]
+                      - gridcell "M94" [ref=e1569]
+                      - gridcell "N94" [ref=e1570]
+                      - gridcell "O94" [ref=e1571]
+                    - row [ref=e1572]:
+                      - gridcell "A95" [ref=e1573]
+                      - gridcell "C95" [ref=e1574]
+                      - gridcell "D95" [ref=e1575]
+                      - gridcell "E95" [ref=e1576]
+                      - gridcell "F95" [ref=e1577]
+                      - gridcell "G95" [ref=e1578]
+                      - gridcell "H95" [ref=e1579]
+                      - gridcell "I95" [ref=e1580]
+                      - gridcell "J95" [ref=e1581]
+                      - gridcell "K95" [ref=e1582]
+                      - gridcell "L95" [ref=e1583]
+                      - gridcell "M95" [ref=e1584]
+                      - gridcell "N95" [ref=e1585]
+                      - gridcell "O95" [ref=e1586]
+                    - row [ref=e1587]:
+                      - gridcell "A96" [ref=e1588]
+                      - gridcell "C96" [ref=e1589]
+                      - gridcell "D96" [ref=e1590]
+                      - gridcell "E96" [ref=e1591]
+                      - gridcell "F96" [ref=e1592]
+                      - gridcell "G96" [ref=e1593]
+                      - gridcell "H96" [ref=e1594]
+                      - gridcell "I96" [ref=e1595]
+                      - gridcell "J96" [ref=e1596]
+                      - gridcell "K96" [ref=e1597]
+                      - gridcell "L96" [ref=e1598]
+                      - gridcell "M96" [ref=e1599]
+                      - gridcell "N96" [ref=e1600]
+                      - gridcell "O96" [ref=e1601]
+                    - row [ref=e1602]:
+                      - gridcell "A97" [ref=e1603]
+                      - gridcell "C97" [ref=e1604]
+                      - gridcell "D97" [ref=e1605]
+                      - gridcell "E97" [ref=e1606]
+                      - gridcell "F97" [ref=e1607]
+                      - gridcell "G97" [ref=e1608]
+                      - gridcell "H97" [ref=e1609]
+                      - gridcell "I97" [ref=e1610]
+                      - gridcell "J97" [ref=e1611]
+                      - gridcell "K97" [ref=e1612]
+                      - gridcell "L97" [ref=e1613]
+                      - gridcell "M97" [ref=e1614]
+                      - gridcell "N97" [ref=e1615]
+                      - gridcell "O97" [ref=e1616]
+                    - row [ref=e1617]:
+                      - gridcell "A98" [ref=e1618]
+                      - gridcell "C98" [ref=e1619]
+                      - gridcell "D98" [ref=e1620]
+                      - gridcell "E98" [ref=e1621]
+                      - gridcell "F98" [ref=e1622]
+                      - gridcell "G98" [ref=e1623]
+                      - gridcell "H98" [ref=e1624]
+                      - gridcell "I98" [ref=e1625]
+                      - gridcell "J98" [ref=e1626]
+                      - gridcell "K98" [ref=e1627]
+                      - gridcell "L98" [ref=e1628]
+                      - gridcell "M98" [ref=e1629]
+                      - gridcell "N98" [ref=e1630]
+                      - gridcell "O98" [ref=e1631]
+                    - row [ref=e1632]:
+                      - gridcell "A99" [ref=e1633]
+                      - gridcell "C99" [ref=e1634]
+                      - gridcell "D99" [ref=e1635]
+                      - gridcell "E99" [ref=e1636]
+                      - gridcell "F99" [ref=e1637]
+                      - gridcell "G99" [ref=e1638]
+                      - gridcell "H99" [ref=e1639]
+                      - gridcell "I99" [ref=e1640]
+                      - gridcell "J99" [ref=e1641]
+                      - gridcell "K99" [ref=e1642]
+                      - gridcell "L99" [ref=e1643]
+                      - gridcell "M99" [ref=e1644]
+                      - gridcell "N99" [ref=e1645]
+                      - gridcell "O99" [ref=e1646]
+                - generic [ref=e1647]:
+                  - tablist "工作表" [ref=e1649]:
+                    - tab "Main" [selected] [ref=e1650] [cursor=pointer]
+                    - tab "HiddenMaster" [ref=e1651] [cursor=pointer]
+                    - tab "SmallNative" [ref=e1652] [cursor=pointer]
+                  - button "新增工作表" [ref=e1653] [cursor=pointer]
+                  - button "删除工作表" [ref=e1656] [cursor=pointer]
+                  - status "工作表视图已更新；可撤销。" [ref=e1661]
+            - paragraph [ref=e1662]: 文件保存在当前浏览器的本地文档空间。需要长期留存时，请导出文件。
+          - group [ref=e1663]:
+            - generic "示例代码" [ref=e1664] [cursor=pointer]:
+              - generic [aria-hidden] [ref=e1665]: </>
+              - text: 示例代码
+              - generic [aria-hidden] [ref=e1666]: 展开 / 收起
+        - heading "编辑能力" [level=2] [ref=e1667]
+        - table [ref=e1669]:
+          - rowgroup [ref=e1670]:
+            - row [ref=e1671]:
+              - columnheader "文档" [ref=e1672]
+              - columnheader "支持的操作" [ref=e1673]
+              - columnheader "当前范围" [ref=e1674]
+          - rowgroup [ref=e1675]:
+            - row [ref=e1676]:
+              - cell "Word" [ref=e1677]
+              - cell "字体与小数字号输入、正文排版、列表、表格、图片、页眉页脚、页码、查找替换、页面设置、撤销重做；导入与导出 DOCX" [ref=e1678]
+              - cell "支持内嵌图片与单节文档。修订、目录、浮动对象等复杂结构会提示暂不支持。" [ref=e1679]
+            - row [ref=e1680]:
+              - cell "Excel" [ref=e1681]
+              - cell "单元格与矩形选区、字体与小数字号输入、手动与自动行高/列宽、查找替换、边框与垂直对齐、清除格式、公式和跨表引用、格式、复制粘贴、工作表增删、行列插入删除、合并、冻结、排序、筛选、柱状图与折线图；导入与导出 XLSX" [ref=e1682]
+              - cell "10,000 行、256 列、32 张表、100,000 个已使用单元格。透视、宏、数组公式及复杂图表暂不支持。" [ref=e1683]
+            - row [ref=e1684]:
+              - cell "PDF" [ref=e1685]
+              - cell "分页与缩略图、缩放、旋转、全文查找、文字与高亮、矩形和手写批注、已有表单、撤销重做；导出 PDF" [ref=e1686]
+              - cell "批注和表单编辑。任意原始文字修改、原文重排及扫描件 OCR 暂不支持。" [ref=e1687]
+        - heading "组件接入" [level=2] [ref=e1688]
+        - paragraph [ref=e1689]: UI 组件使用 Tiptap / ProseMirror 和公式计算库；文件适配使用 docx、ExcelJS、pdf-lib 与 PDF.js。本页无需文档服务器。宿主可以替换保存与导入导出回调，接入自己的文件系统。
+        - paragraph [ref=e1690]:
+          - text: PDF 的 worker、字体与渲染由
+          - code [ref=e1691]: pdfRenderer
+          - text: 提供。本页的适配代码位于
+          - code [ref=e1692]: docs/src/pages/collaboration/office-studio/
+          - text: 。组件自 v0.4.0 起随
+          - code [ref=e1693]: "@zuvi/react"
+          - text: 和 Registry 发布。
+        - region "组件属性表，可横向滚动" [ref=e1694]:
+          - table [ref=e1695]:
+            - rowgroup [ref=e1696]:
+              - row [ref=e1697]:
+                - columnheader "属性名" [ref=e1698]
+                - columnheader "类型" [ref=e1699]
+                - columnheader "默认值" [ref=e1700]
+                - columnheader "说明" [ref=e1701]
+            - rowgroup [ref=e1702]:
+              - row [ref=e1703]:
+                - cell "value / defaultValue" [ref=e1704]
+                - cell [ref=e1705]:
+                  - code [ref=e1706]: OfficeStudioDocument
+                - cell [ref=e1707]:
+                  - code [ref=e1708]: —
+                - cell "受控文档或非受控初始文档；支持 Word、Excel、PDF 三种模型。" [ref=e1709]
+              - row [ref=e1710]:
+                - cell "onChange" [ref=e1711]
+                - cell [ref=e1712]:
+                  - code [ref=e1713]: (document) => void
+                - cell [ref=e1714]:
+                  - code [ref=e1715]: —
+                - cell "内容或文件名称变化。" [ref=e1716]
+              - row [ref=e1717]:
+                - cell "source / pdfRenderer" [ref=e1718]
+                - cell [ref=e1719]:
+                  - code [ref=e1720]: Blob / StudioPdfRenderer
+                - cell [ref=e1721]:
+                  - code [ref=e1722]: —
+                - cell "原始文件及 PDF 渲染适配；worker 资源由宿主管理。" [ref=e1723]
+              - row [ref=e1724]:
+                - cell "onSave / onExport / onPrint" [ref=e1725]
+                - cell [ref=e1726]:
+                  - code [ref=e1727]: (document) => void | Promise<void>
+                - cell [ref=e1728]:
+                  - code [ref=e1729]: —
+                - cell "宿主处理保存、导出或打印；返回后更新状态，失败可重试。" [ref=e1730]
+              - row [ref=e1731]:
+                - cell "onImport / onCreate" [ref=e1732]
+                - cell [ref=e1733]:
+                  - code [ref=e1734]: (file | kind) => void | Promise<void>
+                - cell [ref=e1735]:
+                  - code [ref=e1736]: —
+                - cell "宿主解析文件或创建模型，并更新受控值。" [ref=e1737]
+              - row [ref=e1738]:
+                - cell "readOnly / disabled" [ref=e1739]
+                - cell [ref=e1740]:
+                  - code [ref=e1741]: boolean
+                - cell [ref=e1742]:
+                  - code [ref=e1743]: "false"
+                - cell "只读预览或禁用编辑与文件操作。" [ref=e1744]
+              - row [ref=e1745]:
+                - cell "saveState" [ref=e1746]
+                - cell [ref=e1747]:
+                  - code [ref=e1748]: "'saved' | 'saving' | 'unsaved' | 'error'"
+                - cell [ref=e1749]:
+                  - code [ref=e1750]: —
+                - cell "宿主自动保存状态。" [ref=e1751]
+              - row [ref=e1752]:
+                - cell "height" [ref=e1753]
+                - cell [ref=e1754]:
+                  - code [ref=e1755]: number | string
+                - cell [ref=e1756]:
+                  - code [ref=e1757]: "760"
+                - cell "编辑器高度；100% 需要父容器设置确定高度。" [ref=e1758]
+              - row [ref=e1759]:
+                - cell "fullscreen / onFullscreenChange" [ref=e1760]
+                - cell [ref=e1761]:
+                  - code [ref=e1762]: boolean / (value) => void
+                - cell [ref=e1763]:
+                  - code [ref=e1764]: —
+                - cell "全屏布局，切换时编辑内容保持挂载。" [ref=e1765]
+              - row [ref=e1766]:
+                - cell "ref" [ref=e1767]
+                - cell [ref=e1768]:
+                  - code [ref=e1769]: OfficeStudioHandle
+                - cell [ref=e1770]:
+                  - code [ref=e1771]: —
+                - cell "getDocument()、save()、export()、print()、setFullscreen()。" [ref=e1772]
+              - row [ref=e1773]:
+                - cell "classNames" [ref=e1774]
+                - cell [ref=e1775]:
+                  - code [ref=e1776]: "{ root?; header?; title?; actions?; stage?; status?; error? }"
+                - cell [ref=e1777]:
+                  - code [ref=e1778]: —
+                - cell "追加语义结构类名，配合 data-part 与 CSS 变量定制。" [ref=e1779]
+  - text: ✓ ✓
+```
+
+# Test source
+
+```ts
+  432 |     expect(enlarged.lines[index].y).toBeCloseTo(base.lines[index].y * 4, 1);
+  433 |   }
+  434 |   await page.getByRole('checkbox', { name: '显示网格线', exact: true }).uncheck();
+  435 |   await page.getByRole('checkbox', { name: '显示行列标题', exact: true }).uncheck();
+  436 |   const print400 = await capturePrint(page);
+  437 |   await writeFile(path.join(audit, 'view-print-400.html'), print400);
+  438 |   expect(print400).toBe(print100);
+  439 |   const preview = await context.newPage();
+  440 |   await preview.setContent(print400);
+  441 |   await preview.evaluate(() => document.fonts.ready);
+  442 |   // Logical row 12 is physical row 11 because source row 2 is hidden.
+  443 |   // Visual word gaps need no separate text-node spaces between wrapped spans.
+  444 |   const printedCell = preview
+  445 |     .locator('.studio-print-sheet')
+  446 |     .first()
+  447 |     .locator('tr')
+  448 |     .nth(10)
+  449 |     .locator('td')
+  450 |     .first();
+  451 |   expect(await printedCell.evaluate((element) => element.textContent!.replace(/\s/g, ''))).toBe(
+  452 |     wrapped.replace(/\s/g, '')
+  453 |   );
+  454 |   const printed = await geometry(printedCell);
+  455 |   expect(printed.width).toBeCloseTo(base.width, 1);
+  456 |   expect(printed.height).toBeCloseTo(base.height, 1);
+  457 |   expect(printed.lines).toHaveLength(base.lines.length);
+  458 |   await preview.screenshot({
+  459 |     path: path.join(audit, 'view-print.png'),
+  460 |     fullPage: true,
+  461 |     animations: 'disabled',
+  462 |   });
+  463 |   await preview.pdf({
+  464 |     path: path.join(audit, 'view-print.pdf'),
+  465 |     preferCSSPageSize: true,
+  466 |     printBackground: true,
+  467 |   });
+  468 |   await preview.close();
+  469 |   await page.getByRole('tab', { name: 'HiddenMaster', exact: true }).click();
+  470 |   await zoom(page, 25);
+  471 |   await range(page, 'A1');
+  472 |   const hidden25 = await geometry(cell('A1'));
+  473 |   const declared25 = await cell('A1').evaluate((element) =>
+  474 |     parseFloat((element as HTMLElement).style.height)
+  475 |   );
+  476 |   expect(hidden25.width).toBeCloseTo(base.width / 2, 1);
+  477 |   expect(hidden25.height).toBeGreaterThan(9.2);
+  478 |   await expect(cell('A1')).toHaveText('HIDDEN_MASTER');
+  479 |   await expect(cell('D3')).toHaveText('CONTROL_ROW');
+  480 |   await expect(cell('A3')).toHaveCount(0);
+  481 |   await expect(cell('D1')).toHaveCount(0);
+  482 |   await zoom(page, 400);
+  483 |   await range(page, 'A1');
+  484 |   const hidden400 = await geometry(cell('A1'));
+  485 |   const declared400 = await cell('A1').evaluate((element) =>
+  486 |     parseFloat((element as HTMLElement).style.height)
+  487 |   );
+  488 |   expect(hidden400.width).toBeCloseTo(hidden25.width * 16, 1);
+  489 |   expect(declared400 / 4).toBeCloseTo(declared25 / 0.25, 3);
+  490 |   // Chromium quantizes layout to 1/64 CSS px; scaling the 25% bbox amplifies its rounding.
+  491 |   expect(Math.abs(hidden400.height - hidden25.height * 16)).toBeLessThanOrEqual(17 / 64);
+  492 |   await page.getByRole('tab', { name: 'Main', exact: true }).click();
+  493 |   await zoom(page, 25);
+  494 |   await range(page, 'A1');
+  495 |   await page.getByRole('grid').evaluate((element) => {
+  496 |     element.scrollLeft = 0;
+  497 |     element.scrollTop = 0;
+  498 |   });
+  499 |   const screenshots = [];
+  500 |   for (const width of [1280, 320]) {
+  501 |     await page.setViewportSize({ width, height: width === 320 ? 720 : 1000 });
+  502 |     for (const theme of ['light', 'dark']) {
+  503 |       if (theme === 'dark')
+  504 |         await page.getByRole('button', { name: '切换暗色', exact: true }).click();
+  505 |       const file = `view-${theme}-${width}.png`;
+  506 |       await page
+  507 |         .getByRole('textbox', { name: '工作表缩放百分比', exact: true })
+  508 |         .scrollIntoViewIfNeeded();
+  509 |       await page.screenshot({
+  510 |         path: path.join(audit, file),
+  511 |         fullPage: true,
+  512 |         animations: 'disabled',
+  513 |       });
+  514 |       const dimensions = await page.locator('.zuvi-studio-sheet').evaluate((element) => ({
+  515 |         width: element.getBoundingClientRect().width,
+  516 |         documentWidth: document.documentElement.scrollWidth,
+  517 |         viewport: innerWidth,
+  518 |       }));
+  519 |       expect(dimensions.documentWidth).toBeLessThanOrEqual(width);
+  520 |       expect(dimensions.width).toBeLessThanOrEqual(width);
+  521 |       screenshots.push({ file, width, theme, dimensions });
+  522 |       if (theme === 'dark')
+  523 |         await page.getByRole('button', { name: '切换浅色', exact: true }).click();
+  524 |     }
+  525 |   }
+  526 |   await range(page, 'C4');
+  527 |   await cell('C4').dblclick();
+  528 |   const editor = page.getByRole('textbox', { name: '编辑 C4', exact: true });
+  529 |   await expect(editor).toBeFocused();
+  530 |   const editorBox = await editor.boundingBox();
+  531 |   expect(editorBox!.height).toBeGreaterThanOrEqual(23);
+> 532 |   expect(editorBox!.width).toBeGreaterThanOrEqual(100);
+      |                            ^ Error: expect(received).toBeGreaterThanOrEqual(expected)
+  533 |   await editor.fill('25');
+  534 |   await editor.press('Escape');
+  535 |   await expect(cell('C4')).toHaveText('10');
+  536 |   await writeFile(
+  537 |     path.join(audit, 'browser-visual-print-evidence.json'),
+  538 |     JSON.stringify(
+  539 |       {
+  540 |         source: hash(source),
+  541 |         base,
+  542 |         enlarged,
+  543 |         printed,
+  544 |         print100: hash(print100),
+  545 |         print400: hash(print400),
+  546 |         hidden25,
+  547 |         hidden400,
+  548 |         declared25,
+  549 |         declared400,
+  550 |         screenshots,
+  551 |         editor: editorBox,
+  552 |       },
+  553 |       null,
+  554 |       2
+  555 |     ) + '\n'
+  556 |   );
+  557 | });
+  558 | 
+```

@@ -1,0 +1,605 @@
+TAP version 13
+# Subtest: native table row heights and explicit cantSplit flags survive edits and two DOCX cycles
+ok 1 - native table row heights and explicit cantSplit flags survive edits and two DOCX cycles # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.705291
+  ...
+# Subtest: native widow control, keep-next and keep-lines retain inherited values and explicit false over repeated DOCX saves
+ok 2 - native widow control, keep-next and keep-lines retain inherited values and explicit false over repeated DOCX saves # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.063958
+  ...
+# Subtest: native paragraph borders, distance, shadow/frame and patterned shading survive direct edits and two DOCX cycles
+ok 3 - native paragraph borders, distance, shadow/frame and patterned shading survive direct edits and two DOCX cycles # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.053708
+  ...
+# Subtest: surface styles preserve independent inherited edges and explicit nil overrides across repeated native saves
+ok 4 - surface styles preserve independent inherited edges and explicit nil overrides across repeated native saves # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.049458
+  ...
+# Subtest: full native numbering templates, interrupted sequences and independent starts survive edits and repeated DOCX reopenings
+ok 5 - full native numbering templates, interrupted sequences and independent starts survive edits and repeated DOCX reopenings # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.052166
+  ...
+# Subtest: native period and comma decimal symbols persist independently of text grouping separators
+ok 6 - native period and comma decimal symbols persist independently of text grouping separators # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.044125
+  ...
+# Subtest: native tab stops, leaders, inherited clear directives and the default interval survive edits and repeated DOCX saves
+ok 7 - native tab stops, leaders, inherited clear directives and the default interval survive edits and repeated DOCX saves # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.123583
+  ...
+# Subtest: unsupported, duplicate and malformed native tab definitions reject the whole document
+ok 8 - unsupported, duplicate and malformed native tab definitions reject the whole document # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.049084
+  ...
+# Subtest: paragraph indentation and three native line-spacing rules preserve point values and text over repeated DOCX saves
+ok 9 - paragraph indentation and three native line-spacing rules preserve point values and text over repeated DOCX saves # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.195959
+  ...
+# Subtest: partial native line properties preserve style raw-unit inheritance and direct paragraph zero overrides
+ok 10 - partial native line properties preserve style raw-unit inheritance and direct paragraph zero overrides # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.128583
+  ...
+# Subtest: signed native run spacing and position preserve fonts, scripts, header/footer and repeated DOCX edits
+ok 11 - signed native run spacing and position preserve fonts, scripts, header/footer and repeated DOCX edits # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.072917
+  ...
+# Subtest: style inheritance and explicit zero spacing/position overrides survive native DOCX serialization
+ok 12 - style inheritance and explicit zero spacing/position overrides survive native DOCX serialization # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.046959
+  ...
+# Subtest: explicit zero run metrics also cancel inherited values on images and page fields
+ok 13 - explicit zero run metrics also cancel inherited values on images and page fields # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.041042
+  ...
+# Subtest: signed half-point positions on native text, images and fields survive two saves in body, header and footer
+ok 14 - signed half-point positions on native text, images and fields survive two saves in body, header and footer # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.107292
+  ...
+# Subtest: signed half-point paragraph style positions and explicit zero overrides retain native identity through two saves
+ok 15 - signed half-point paragraph style positions and explicit zero overrides retain native identity through two saves # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.045458
+  ...
+# Subtest: invalid character metrics are refused without changing the original model
+ok 16 - invalid character metrics are refused without changing the original model # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.129708
+  ...
+# Subtest: native tabs, repeated spaces, nonbreaking spaces and line breaks retain their original characters and formatting across DOCX edits and repeated saves
+ok 17 - native tabs, repeated spaces, nonbreaking spaces and line breaks retain their original characters and formatting across DOCX edits and repeated saves
+  ---
+  duration_ms: 126.001875
+  ...
+# Subtest: named paragraph styles preserve inheritance, native links, automatic update and direct overrides over repeated saves
+ok 18 - named paragraph styles preserve inheritance, native links, automatic update and direct overrides over repeated saves # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.279584
+  ...
+# Subtest: native custom styles remain editable definitions with parent and next-style links
+ok 19 - native custom styles remain editable definitions with parent and next-style links # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.061709
+  ...
+# Subtest: a named body style can explicitly remove an inherited heading outline level
+ok 20 - a named body style can explicitly remove an inherited heading outline level # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.116083
+  ...
+# Subtest: invalid style graphs cannot be exported or partially change the source document
+ok 21 - invalid style graphs cannot be exported or partially change the source document # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.040792
+  ...
+# Subtest: derived styles retain inherited heading levels instead of freezing the parent level on import
+ok 22 - derived styles retain inherited heading levels instead of freezing the parent level on import # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.035125
+  ...
+# Subtest: paragraph-level outline overrides survive saving without changing the linked style definition
+ok 23 - paragraph-level outline overrides survive saving without changing the linked style definition # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.028666
+  ...
+# Subtest: named styles inside a quote retain the existing quote border and structure after saving
+ok 24 - named styles inside a quote retain the existing quote border and structure after saving # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.033458
+  ...
+# Subtest: DOCX roundtrip keeps headings, rich text, link, hard/page breaks and page configuration
+ok 25 - DOCX roundtrip keeps headings, rich text, link, hard/page breaks and page configuration # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.026459
+  ...
+# Subtest: DOCX list import preserves nested mixed lists, sequence and non-default starts
+ok 26 - DOCX list import preserves nested mixed lists, sequence and non-default starts # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.043083
+  ...
+# Subtest: DOCX table roundtrip retains row/column merges, headings and cell background
+ok 27 - DOCX table roundtrip retains row/column merges, headings and cell background # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.027292
+  ...
+# Subtest: DOCX import resolves inherited paragraph and character styles
+ok 28 - DOCX import resolves inherited paragraph and character styles # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.02575
+  ...
+# Subtest: DOCX import resolves theme fonts and colors instead of dropping them
+ok 29 - DOCX import resolves theme fonts and colors instead of dropping them # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.050875
+  ...
+# Subtest: the published studio Word sample can export, reopen and export again
+ok 30 - the published studio Word sample can export, reopen and export again # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.026709
+  ...
+# Subtest: DOCX import refuses unsupported drawings, tracked changes, broken header references and embedded objects
+ok 31 - DOCX import refuses unsupported drawings, tracked changes, broken header references and embedded objects # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.027166
+  ...
+# Subtest: DOCX import refuses unsafe hyperlinks and merged cells containing hidden text
+ok 32 - DOCX import refuses unsafe hyperlinks and merged cells containing hidden text # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.09275
+  ...
+# Subtest: DOCX export fails explicitly for unsupported nodes, marks and inline layout
+ok 33 - DOCX export fails explicitly for unsupported nodes, marks and inline layout # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.122792
+  ...
+# Subtest: DOCX embeds raster images and retains body, default header/footer, fields and distances over repeated exports
+ok 34 - DOCX embeds raster images and retains body, default header/footer, fields and distances over repeated exports # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.027958
+  ...
+# Subtest: DOCX imports simple PAGE and NUMPAGES fields without their cached values becoming editable text
+ok 35 - DOCX imports simple PAGE and NUMPAGES fields without their cached values becoming editable text # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.024875
+  ...
+# Subtest: DOCX adds a native page field to a populated footer without duplicating it on reopening
+ok 36 - DOCX adds a native page field to a populated footer without duplicating it on reopening # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.076791
+  ...
+# Subtest: DOCX retains text after a complex field in the same run and refuses nested fields
+ok 37 - DOCX retains text after a complex field in the same run and refuses nested fields # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.02575
+  ...
+# Subtest: DOCX embeds JPEG bytes unchanged and retains configured header/footer distances before regions are created
+ok 38 - DOCX embeds JPEG bytes unchanged and retains configured header/footer distances before regions are created # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.023959
+  ...
+# Subtest: floating images preserve wrapping, position, anchor flags, distances and custom contours across native DOCX saves
+ok 39 - floating images preserve wrapping, position, anchor flags, distances and custom contours across native DOCX saves # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.02275
+  ...
+# Subtest: invalid floating images are rejected before changing the source model
+ok 40 - invalid floating images are rejected before changing the source model # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0255
+  ...
+# Subtest: DOCX refuses image layout that cannot be preserved and external image links
+ok 41 - DOCX refuses image layout that cannot be preserved and external image links # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0235
+  ...
+# Subtest: DOCX roundtrip retains superscript and subscript independently
+ok 42 - DOCX roundtrip retains superscript and subscript independently # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.026083
+  ...
+# Subtest: DOCX import rejects old DOC, corrupt XML and unequal margins instead of flattening
+ok 43 - DOCX import rejects old DOC, corrupt XML and unequal margins instead of flattening # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.022917
+  ...
+# Subtest: typed Word font names and 1pt to 300pt half-point sizes survive repeated DOCX saves
+ok 44 - typed Word font names and 1pt to 300pt half-point sizes survive repeated DOCX saves # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0245
+  ...
+# Subtest: a cleared heading keeps its level and hyperlink without reintroducing default heading bold on reopen
+ok 45 - a cleared heading keeps its level and hyperlink without reintroducing default heading bold on reopen # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.023959
+  ...
+# Subtest: table paragraph absent spacing exports zero while explicit spacing survives repeated saves
+ok 46 - table paragraph absent spacing exports zero while explicit spacing survives repeated saves # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.022459
+  ...
+# Subtest: native simple and complex table formula fields preserve instructions, cached edits and run formatting twice
+ok 47 - native simple and complex table formula fields preserve instructions, cached edits and run formatting twice # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.022958
+  ...
+# Subtest: native vertical merges and nested formula instructions remain scoped and intact across two DOCX cycles
+ok 48 - native vertical merges and nested formula instructions remain scoped and intact across two DOCX cycles # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.023333
+  ...
+# Subtest: native numeric-picture formula switches and formatted caches survive repeated DOCX saving
+ok 49 - native numeric-picture formula switches and formatted caches survive repeated DOCX saving # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.022333
+  ...
+# Subtest: native image crop preserves embedded source bytes, frame dimensions and edited edges across repeated DOCX saves
+ok 50 - native image crop preserves embedded source bytes, frame dimensions and edited edges across repeated DOCX saves # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.037625
+  ...
+# Subtest: replacing cropped PNG with JPEG preserves display frame, description and native drawing position through two saves
+ok 51 - replacing cropped PNG with JPEG preserves display frame, description and native drawing position through two saves # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.024625
+  ...
+# Subtest: replacing a floating picture retains page anchor, offsets, layering and visible crop frame across native saves
+ok 52 - replacing a floating picture retains page anchor, offsets, layering and visible crop frame across native saves # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.02425
+  ...
+# Subtest: native OMML fractions, scripts, roots and matrices retain editable structures through repeated DOCX saves
+ok 53 - native OMML fractions, scripts, roots and matrices retain editable structures through repeated DOCX saves # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0235
+  ...
+# Subtest: unsupported OMML attributes and hidden degree content fail instead of silently losing data
+ok 54 - unsupported OMML attributes and hidden degree content fail instead of silently losing data # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.024208
+  ...
+# Subtest: local equation run formatting and surrounding bold marks survive two native DOCX saves
+ok 55 - local equation run formatting and surrounding bold marks survive two native DOCX saves # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.024166
+  ...
+# Subtest: separate mathematical and Word run property namespaces retain legitimate local formatting
+ok 56 - separate mathematical and Word run property namespaces retain legitimate local formatting # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.023125
+  ...
+# Subtest: equation typography retains local overrides and surrounding textStyle through repeated DOCX saves
+ok 57 - equation typography retains local overrides and surrounding textStyle through repeated DOCX saves # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.022291
+  ...
+# Subtest: native display OMML and mathematical styles import, edit and reopen twice with alignment intact
+ok 58 - native display OMML and mathematical styles import, edit and reopen twice with alignment intact # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.02275
+  ...
+# Subtest: equation Unicode and carriage returns survive native XML whitespace normalization
+ok 59 - equation Unicode and carriage returns survive native XML whitespace normalization # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.022209
+  ...
+# Subtest: native multi-equation paragraph groups retain independent editable trees across two saves
+ok 60 - native multi-equation paragraph groups retain independent editable trees across two saves # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.023708
+  ...
+# Subtest: native equations retain independent region and table trees with Unicode through repeated saves
+ok 61 - native equations retain independent region and table trees with Unicode through repeated saves # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.022958
+  ...
+# Subtest: native cross-paragraph bookmarks retain identity and edited text through two DOCX saves
+ok 62 - native cross-paragraph bookmarks retain identity and edited text through two DOCX saves # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.023375
+  ...
+# Subtest: native malformed or duplicate bookmarks fail rather than silently losing ranges
+ok 63 - native malformed or duplicate bookmarks fail rather than silently losing ranges # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.022625
+  ...
+# Subtest: native internal bookmark hyperlinks retain display formatting and anchor across two saves
+ok 64 - native internal bookmark hyperlinks retain display formatting and anchor across two saves # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.027
+  ...
+# Subtest: native cell vertical alignment and independent margins survive editing and two DOCX cycles
+ok 65 - native cell vertical alignment and independent margins survive editing and two DOCX cycles # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.023
+  ...
+# Subtest: cell margins with unrepresentable native precision fail without mutating the source model
+ok 66 - cell margins with unrepresentable native precision fail without mutating the source model # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.022833
+  ...
+# Subtest: table default margins and explicit zero cell overrides retain independent identities on reopening
+ok 67 - table default margins and explicit zero cell overrides retain independent identities on reopening # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.022458
+  ...
+# Subtest: native table defaults, direct zero overrides and spacing keep their identity and grid after two saves
+ok 68 - native table defaults, direct zero overrides and spacing keep their identity and grid after two saves # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.033833
+  ...
+# Subtest: row spacing overrides including nil and exceptions remain independent of table defaults
+ok 69 - row spacing overrides including nil and exceptions remain independent of table defaults # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.031084
+  ...
+# Subtest: nested table defaults and direct cell margins remain local through repeated native reopening
+ok 70 - nested table defaults and direct cell margins remain local through repeated native reopening # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034
+  ...
+# Subtest: invalid table spacing or default precision rejects the whole save without changing the model
+ok 71 - invalid table spacing or default precision rejects the whole save without changing the model # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.025125
+  ...
+# Subtest: rejects row spacing wider than its native grid before creating a broken editable table
+ok 72 - rejects row spacing wider than its native grid before creating a broken editable table # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.022833
+  ...
+# Subtest: keeps an edited column when its sibling columns remain automatic and resolves the native grid once
+ok 73 - keeps an edited column when its sibling columns remain automatic and resolves the native grid once # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.037125
+  ...
+# Subtest: resolves the unknown zero slot of a merged resized cell without losing its edited column
+ok 74 - resolves the unknown zero slot of a merged resized cell without losing its edited column # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.031459
+  ...
+# Subtest: Word print repeats only consecutive leading complete header rows
+ok 75 - Word print repeats only consecutive leading complete header rows # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.714958
+  ...
+# Subtest: Word print applies row minimum height and explicit split policy while automatic height ignores its value
+ok 76 - Word print applies row minimum height and explicit split policy while automatic height ignores its value # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.06325
+  ...
+# Subtest: Word print uses explicit keep and widow values while title defaults retain the next paragraph
+ok 77 - Word print uses explicit keep and widow values while title defaults retain the next paragraph # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.050083
+  ...
+# Subtest: Word print retains native tab characters and resolved leaders for the measurement pass without inserting document text
+ok 78 - Word print retains native tab characters and resolved leaders for the measurement pass without inserting document text # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.059375
+  ...
+# Subtest: Word print preserves point paragraph geometry and exact/minimum line-rule metadata
+ok 79 - Word print preserves point paragraph geometry and exact/minimum line-rule metadata # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.054042
+  ...
+# Subtest: Word prints character spacing and baseline movement without changing point size or source text
+ok 80 - Word prints character spacing and baseline movement without changing point size or source text # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.044459
+  ...
+# Subtest: custom number format text, Chinese dates and selected color sections print with conditional color taking priority
+ok 81 - custom number format text, Chinese dates and selected color sections print with conditional color taking priority # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.1285
+  ...
+# Subtest: Word printing retains whitespace and line breaks without any nonprinting view glyphs or decorations
+ok 82 - Word printing retains whitespace and line breaks without any nonprinting view glyphs or decorations
+  ---
+  duration_ms: 24.068709
+  ...
+# Subtest: Word print keeps floating images, wrap contours and page-coordinate placement in the printed document
+ok 83 - Word print keeps floating images, wrap contours and page-coordinate placement in the printed document # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.147708
+  ...
+# Subtest: sheet print respects widths, vertical alignment, blank border-only cells and merged outer edges
+ok 84 - sheet print respects widths, vertical alignment, blank border-only cells and merged outer edges # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.15025
+  ...
+# Subtest: Word print content repeats headers for explicit pages, preserves page fields and safely embeds images
+ok 85 - Word print content repeats headers for explicit pages, preserves page fields and safely embeds images # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.061459
+  ...
+# Subtest: document text, hyperlinks, labels and style attributes cannot inject script into printable HTML
+ok 86 - document text, hyperlinks, labels and style attributes cannot inject script into printable HTML # SKIP test name does not match pattern
+  ---
+  duration_ms: 2.184834
+  ...
+# Subtest: Excel print uses computed values, filters and merged cells, and includes the actual chart series
+ok 87 - Excel print uses computed values, filters and merged cells, and includes the actual chart series # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.156875
+  ...
+# Subtest: Excel cell fonts retain point sizes, formulas and conditional styling while legacy cells inherit defaults
+ok 88 - Excel cell fonts retain point sizes, formulas and conditional styling while legacy cells inherit defaults # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.196708
+  ...
+# Subtest: unknown Excel font names cannot create CSS declarations or HTML even with quotes and XML whitespace
+ok 89 - unknown Excel font names cannot create CSS declarations or HTML even with quotes and XML whitespace # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.061541
+  ...
+# Subtest: invalid Excel font controls and out-of-range point sizes fail the print model gate
+ok 90 - invalid Excel font controls and out-of-range point sizes fail the print model gate # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.161834
+  ...
+# Subtest: Excel print escapes native hyperlink text, tooltip and validated external destinations
+ok 91 - Excel print escapes native hyperlink text, tooltip and validated external destinations # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.057209
+  ...
+# Subtest: Excel print preserves unsupported protocols, paths and workbook locations as plain text
+ok 92 - Excel print preserves unsupported protocols, paths and workbook locations as plain text # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.192417
+  ...
+# Subtest: Excel hyperlinks retain typed values, formatted formula results and empty or failing formulas
+ok 93 - Excel hyperlinks retain typed values, formatted formula results and empty or failing formulas # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.059625
+  ...
+# Subtest: blank hyperlinks stay printable from a frozen read-only snapshot without adding editing controls
+ok 94 - blank hyperlinks stay printable from a frozen read-only snapshot without adding editing controls # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.11125
+  ...
+# Subtest: Excel print resolves top-level HYPERLINK formulas while preserving calculated labels
+ok 95 - Excel print resolves top-level HYPERLINK formulas while preserving calculated labels # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.043875
+  ...
+# Subtest: a hyperlink outside populated cells cannot bypass the print area limit
+ok 96 - a hyperlink outside populated cells cannot bypass the print area limit # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.037125
+  ...
+# Subtest: oversized print regions and invalid models fail before constructing a printable frame
+ok 97 - oversized print regions and invalid models fail before constructing a printable frame # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.033042
+  ...
+# Subtest: printing calls the document frame and releases it after the print dialog ends
+ok 98 - printing calls the document frame and releases it after the print dialog ends # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030541
+  ...
+# Subtest: Excel print renders recalculated conditional styles and number formats, including styled empty cells
+ok 99 - Excel print renders recalculated conditional styles and number formats, including styled empty cells # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030667
+  ...
+# Subtest: conditional formatting cannot silently extend printing beyond its cell budget
+ok 100 - conditional formatting cannot silently extend printing beyond its cell budget # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.03
+  ...
+# Subtest: PDF printing uses the exported file and releases its object URL after printing
+ok 101 - PDF printing uses the exported file and releases its object URL after printing # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030209
+  ...
+# Subtest: a failed PDF print preview cleans up its file and ignores a late load event
+ok 102 - a failed PDF print preview cleans up its file and ignores a late load event # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030833
+  ...
+# Subtest: a timed-out print preview never starts printing when a late font load completes
+ok 103 - a timed-out print preview never starts printing when a late font load completes # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.031334
+  ...
+# Subtest: Sheet print uses actual row sizes and keeps merged content whose original row is hidden
+ok 104 - Sheet print uses actual row sizes and keeps merged content whose original row is hidden # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034333
+  ...
+# Subtest: array print includes the entire computed region without persisting synthetic result cells
+ok 105 - array print includes the entire computed region without persisting synthetic result cells # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030875
+  ...
+# Subtest: sheet advanced print shares default font, shrink geometry and center across without merging cells
+ok 106 - sheet advanced print shares default font, shrink geometry and center across without merging cells # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.100333
+  ...
+# Subtest: sheet advanced print derives automatic rows from wrap and array spill while retaining explicit fixed heights
+ok 107 - sheet advanced print derives automatic rows from wrap and array spill while retaining explicit fixed heights # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.108166
+  ...
+# Subtest: center-across automatic print height shares the rendered span and preserves frozen boundaries
+ok 108 - center-across automatic print height shares the rendered span and preserves frozen boundaries # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.032708
+  ...
+# Subtest: sheet print maps hidden merge columns and rows to visible spans while retaining the native master and following data
+ok 109 - sheet print maps hidden merge columns and rows to visible spans while retaining the native master and following data # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030458
+  ...
+# Subtest: hidden logical merge masters auto-fit the complete text when exactly one physical row remains
+ok 110 - hidden logical merge masters auto-fit the complete text when exactly one physical row remains # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030916
+  ...
+# Subtest: sheet print anchors have a visible rectangle when text is positioned absolutely
+ok 111 - sheet print anchors have a visible rectangle when text is positioned absolutely # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030334
+  ...
+# Subtest: Word print combines native fixed row budgets and a shared border without persisting print attributes
+ok 112 - Word print combines native fixed row budgets and a shared border without persisting print attributes # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030458
+  ...
+# Subtest: Word formula print uses the current escaped cached result and preserves character marks
+ok 113 - Word formula print uses the current escaped cached result and preserves character marks # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.031125
+  ...
+# Subtest: Word image crop prints a clipped original raster frame and resets without modifying source
+ok 114 - Word image crop prints a clipped original raster frame and resets without modifying source # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029584
+  ...
+# Subtest: Word equations print semantic MathML fractions and matrices with escaped text
+ok 115 - Word equations print semantic MathML fractions and matrices with escaped text # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030708
+  ...
+# Subtest: Word display formulas retain their alignment and semantic MathML when printed
+ok 116 - Word display formulas retain their alignment and semantic MathML when printed # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.063792
+  ...
+# Subtest: Word multi-equation groups print independent members and their local styles with spacing
+ok 117 - Word multi-equation groups print independent members and their local styles with spacing # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034042
+  ...
+# Subtest: prints cell vertical alignment and margin variables on the cell rather than text marks
+ok 118 - prints cell vertical alignment and margin variables on the cell rather than text marks # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.032167
+  ...
+# Subtest: Word print scopes table defaults and cell overrides and uses the same column footprint with spacing
+ok 119 - Word print scopes table defaults and cell overrides and uses the same column footprint with spacing # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030792
+  ...
+1..119
+# tests 119
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 117
+# todo 0
+# duration_ms 1010.477584

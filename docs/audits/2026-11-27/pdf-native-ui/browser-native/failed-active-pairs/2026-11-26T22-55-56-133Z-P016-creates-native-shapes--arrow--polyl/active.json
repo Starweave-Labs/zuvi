@@ -1,0 +1,179 @@
+{
+  "document": {
+    "version": 1,
+    "id": "ec21fb6f-8155-417f-a770-db9ecec3e3ca",
+    "name": "Native-original.pdf",
+    "kind": "pdf",
+    "pageCount": 2,
+    "sourcePageCount": 2,
+    "pages": [
+      {
+        "id": "53da1703-2f89-4c68-8bfd-bd17cd351993",
+        "sourcePage": 0,
+        "bounds": {
+          "left": 0,
+          "bottom": 0,
+          "right": 500,
+          "top": 700
+        }
+      },
+      {
+        "id": "860c60b8-0dd6-45ff-b10c-40286b0397aa",
+        "sourcePage": 1,
+        "bounds": {
+          "left": 0,
+          "bottom": 0,
+          "right": 500,
+          "top": 700
+        }
+      }
+    ],
+    "marks": [
+      {
+        "id": "06115d70-54b6-47ad-afa7-0be288d5042f",
+        "nativeId": "06115d70-54b6-47ad-afa7-0be288d5042f",
+        "page": 0,
+        "type": "rectangle",
+        "x": 40,
+        "y": 520,
+        "width": 140,
+        "height": 50,
+        "text": "",
+        "size": 12,
+        "color": "#334455",
+        "lineWidth": 3
+      },
+      {
+        "id": "e6b43b7e-66bc-470a-938f-a38464679ed2",
+        "nativeId": "e6b43b7e-66bc-470a-938f-a38464679ed2",
+        "page": 0,
+        "type": "ink",
+        "x": 49,
+        "y": 244,
+        "width": 142,
+        "height": 47,
+        "text": "",
+        "size": 12,
+        "color": "#253044",
+        "lineWidth": 2,
+        "points": [
+          [
+            50,
+            250
+          ],
+          [
+            60,
+            260
+          ],
+          [
+            70,
+            270
+          ],
+          [
+            80,
+            280
+          ],
+          [
+            90,
+            290
+          ],
+          [
+            102.5,
+            278.75
+          ],
+          [
+            115,
+            267.5
+          ],
+          [
+            127.5,
+            256.25
+          ],
+          [
+            140,
+            245
+          ],
+          [
+            152.5,
+            255
+          ],
+          [
+            165,
+            265
+          ],
+          [
+            177.5,
+            275
+          ],
+          [
+            190,
+            285
+          ]
+        ]
+      }
+    ],
+    "rotations": {},
+    "fields": [
+      {
+        "name": "reviewer",
+        "readOnly": false,
+        "type": "text",
+        "value": "Initial",
+        "multiline": false,
+        "widgets": [
+          {
+            "page": 0,
+            "x": 29.5,
+            "y": 29.5,
+            "width": 261,
+            "height": 31,
+            "rotation": 0
+          },
+          {
+            "page": 1,
+            "x": 29.5,
+            "y": 29.5,
+            "width": 261,
+            "height": 31,
+            "rotation": 0
+          }
+        ]
+      },
+      {
+        "name": "confirmed",
+        "readOnly": false,
+        "type": "checkbox",
+        "value": false,
+        "widgets": [
+          {
+            "page": 1,
+            "x": 319.5,
+            "y": 29.5,
+            "width": 21,
+            "height": 21,
+            "rotation": 0
+          }
+        ]
+      }
+    ],
+    "nativeAnnotations": {
+      "version": 1,
+      "sourceHash": "f3508c58bd1400596ae4579f2dc64aec74864c2e6254a98277b0be08f0528cc3",
+      "bindings": [
+        {
+          "sourcePage": 0,
+          "nativePageId": "53da1703-2f89-4c68-8bfd-bd17cd351993",
+          "uiPageId": "53da1703-2f89-4c68-8bfd-bd17cd351993"
+        },
+        {
+          "sourcePage": 1,
+          "nativePageId": "860c60b8-0dd6-45ff-b10c-40286b0397aa",
+          "uiPageId": "860c60b8-0dd6-45ff-b10c-40286b0397aa"
+        }
+      ],
+      "commands": []
+    }
+  },
+  "revision": 10,
+  "sourceHash": "f3508c58bd1400596ae4579f2dc64aec74864c2e6254a98277b0be08f0528cc3"
+}

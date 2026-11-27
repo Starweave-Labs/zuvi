@@ -1,0 +1,68 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/studio-word-math.test.ts (7 tests) 21ms
+ ✓ src/components/OfficeStudio/studio-word-math-extension.test.ts (6 tests) 227ms
+ ✓ src/components/OfficeStudio/StudioWordMathDialog.test.tsx (6 tests) 1272ms
+   ✓ edits nested fractions and matrices with a live structural preview and cancels without saving 481ms
+ ✓ src/components/OfficeStudio/StudioWord.test.tsx (106 tests) 37132ms
+   ✓ Word paragraph dialog and ruler > edits inherited tab stops through ZUVI controls with precision checks, cancellation and one history step 1038ms
+   ✓ Word paragraph dialog and ruler > applies mixed paragraph values in one history step and keeps untouched values separate 680ms
+   ✓ Word paragraph dialog and ruler > retains invalid dialog drafts and disables an open dialog after permission changes 416ms
+   ✓ Word paragraph dialog and ruler > keeps mixed pagination flags unchanged until edited, commits once, and blocks an open dialog after permission changes 889ms
+   ✓ Word paragraph dialog and ruler > edits a named header style using shared definitions and restores its direct indent in one undo 580ms
+   ✓ Word character metrics dialog > preserves mixed fonts and links, previews point measurements and applies one undoable operation 518ms
+   ✓ Word character metrics dialog > retains invalid drafts, disables an open dialog on permission changes and cancels without writing 457ms
+   ✓ Word character metrics dialog > blocks an invalid font draft before opening and preserves an unchanged metrics dialog without history 315ms
+   ✓ Word character metrics dialog > applies metrics in the header editor while preserving the body 489ms
+   ✓ StudioWord Office ribbon actions > shows nonprinting characters in the body, table, header and footer without changing data, selection or document history 447ms
+   ✓ StudioWord Office ribbon actions > applies font family and size to the selected range and restores them with undo and redo 591ms
+   ✓ StudioWord Office ribbon actions > applies genuine no-spacing and heading styles through the gallery without replacing text 426ms
+   ✓ StudioWord Office ribbon actions > toggles rulers, navigates headings and changes zoom in read-only mode without document edits 371ms
+   ✓ StudioWord Office ribbon actions > copies plain text, cuts only after a successful write and restores the selected text with undo 361ms
+   ✓ StudioWord Office ribbon actions > pastes multiline clipboard text as paragraphs without interpreting HTML and supports undo 431ms
+   ✓ StudioWord Office ribbon actions > ignores late clipboard paste after a same-id document replacement 312ms
+   ✓ StudioWord Office ribbon actions > ignores late clipboard cut after a same-id document replacement 377ms
+   ✓ StudioWord Office ribbon actions > ignores late clipboard cut after a new-id document replacement 313ms
+   ✓ StudioWord named paragraph styles > creates, applies, modifies and deletes a named style with real undo and redo 905ms
+   ✓ StudioWord named paragraph styles > updates body and header bindings while preserving direct formatting in another paragraph 531ms
+   ✓ StudioWord structured editing > nests ordered list items via Tab and the list indent tools 332ms
+   ✓ StudioWord structured editing > inserts a real table and changes its row count through the ribbon 322ms
+   ✓ StudioWord structured editing > restores rejected controlled edits so the canvas and saved model agree 559ms
+   ✓ StudioWord structured editing > resizes a selected image with its aspect ratio and restores a deletion with undo 365ms
+   ✓ StudioWord structured editing > previews a direct image resize and commits it as one undoable change 305ms
+   ✓ StudioWord structured editing > changes picture wrapping, position and anchor flags and restores them with undo 852ms
+   ✓ StudioWord structured editing > moves a floating picture with a preview, cancels it without a write and commits a complete gesture once 350ms
+   ✓ StudioWord structured editing > edits and formats a header independently and adds or removes a footer page field 590ms
+   ✓ StudioWord structured editing > finds across styled runs and replaces plain text in one undoable transaction 454ms
+   ✓ StudioWord structured editing > filters matches by character format criteria 339ms
+   ✓ StudioWord structured editing > cycles search matches from the first result with Enter and replaces only the selected result 438ms
+   ✓ StudioWord structured editing > disables incomplete bulk results and rejects replacement growth without changing content 572ms
+   ✓ StudioWord structured editing > allows readonly navigation while disabling replacement and embedded image input 311ms
+   ✓ StudioWord 第一轮编辑能力 > clears direct formatting while preserving headings, list structure, links and one-step undo/redo 306ms
+   ✓ StudioWord 第一轮编辑能力 > copies exact character and paragraph formats with continuous painting and does not toggle existing marks off 451ms
+   ✓ StudioWord 第一轮编辑能力 > converts 句首字母大写 across marks while preserving a link and undo 370ms
+   ✓ StudioWord 第一轮编辑能力 > converts 每个单词首字母大写 across marks while preserving a link and undo 308ms
+   ✓ StudioWord 第一轮编辑能力 > 文字高亮：选色写入 backgroundColor，无颜色清除 325ms
+   ✓ StudioWord 第一轮编辑能力 > 格式刷：取用粗体格式应用到目标段落后自动解除 308ms
+   ✓ StudioWord 第一轮编辑能力 > 格式刷：armed 后 Esc 解除，不改动文档 350ms
+   ✓ Word text and table conversion entry > converts through the actual ribbon with a preview and independent undo/redo transactions 583ms
+   ✓ Word text and table conversion entry > cancels without writes and rejects a stale conversion after an external document replacement 531ms
+   ✓ converts complete selected rows through the ribbon and preserves surrounding tables 483ms
+   ✓ inserts a table formula through ZUVI dialog, keeps cancelled drafts and refreshes in a separate undo transaction 887ms
+   ✓ keeps invalid formula drafts and blocks open dialogs after permissions or external content change 552ms
+   ✓ applies image crop through the toolbar, cancels drafts and restores crop with undo and redo 989ms
+   ✓ blocks an open crop draft when permissions or external content change 426ms
+   ✓ keeps the selected original image and history when a replacement file is invalid or cancelled 383ms
+   ✓ discards a delayed replacement after readonly or document changes 459ms
+   ✓ inserts a structured fraction through the actual math dialog and undoes it atomically 803ms
+   ✓ blocks an open math draft after permissions or external content change 468ms
+   ✓ edits an existing math structure through the dialog with separate undo and redo 522ms
+   ✓ disables actual math insertion and stale drafts with {"readOnly":true} 366ms
+   ✓ disables actual math insertion and stale drafts with {"disabled":true} 316ms
+   ✓ edits a second equation group member through the actual dialog and undoes the group atomically 494ms
+
+ Test Files  4 passed (4)
+      Tests  125 passed (125)
+   Start at  13:15:23
+   Duration  40.38s (transform 1.55s, setup 833ms, collect 4.02s, tests 38.65s, environment 2.15s, prepare 287ms)

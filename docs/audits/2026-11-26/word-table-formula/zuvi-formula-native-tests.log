@@ -1,0 +1,235 @@
+TAP version 13
+# Subtest: native table row heights and explicit cantSplit flags survive edits and two DOCX cycles
+ok 1 - native table row heights and explicit cantSplit flags survive edits and two DOCX cycles
+  ---
+  duration_ms: 97.348833
+  ...
+# Subtest: native widow control, keep-next and keep-lines retain inherited values and explicit false over repeated DOCX saves
+ok 2 - native widow control, keep-next and keep-lines retain inherited values and explicit false over repeated DOCX saves
+  ---
+  duration_ms: 53.435125
+  ...
+# Subtest: native paragraph borders, distance, shadow/frame and patterned shading survive direct edits and two DOCX cycles
+ok 3 - native paragraph borders, distance, shadow/frame and patterned shading survive direct edits and two DOCX cycles
+  ---
+  duration_ms: 40.85375
+  ...
+# Subtest: surface styles preserve independent inherited edges and explicit nil overrides across repeated native saves
+ok 4 - surface styles preserve independent inherited edges and explicit nil overrides across repeated native saves
+  ---
+  duration_ms: 44.829833
+  ...
+# Subtest: full native numbering templates, interrupted sequences and independent starts survive edits and repeated DOCX reopenings
+ok 5 - full native numbering templates, interrupted sequences and independent starts survive edits and repeated DOCX reopenings
+  ---
+  duration_ms: 60.168375
+  ...
+# Subtest: native period and comma decimal symbols persist independently of text grouping separators
+ok 6 - native period and comma decimal symbols persist independently of text grouping separators
+  ---
+  duration_ms: 73.951959
+  ...
+# Subtest: native tab stops, leaders, inherited clear directives and the default interval survive edits and repeated DOCX saves
+ok 7 - native tab stops, leaders, inherited clear directives and the default interval survive edits and repeated DOCX saves
+  ---
+  duration_ms: 42.42525
+  ...
+# Subtest: unsupported, duplicate and malformed native tab definitions reject the whole document
+ok 8 - unsupported, duplicate and malformed native tab definitions reject the whole document
+  ---
+  duration_ms: 3.863958
+  ...
+# Subtest: paragraph indentation and three native line-spacing rules preserve point values and text over repeated DOCX saves
+ok 9 - paragraph indentation and three native line-spacing rules preserve point values and text over repeated DOCX saves
+  ---
+  duration_ms: 32.351291
+  ...
+# Subtest: partial native line properties preserve style raw-unit inheritance and direct paragraph zero overrides
+ok 10 - partial native line properties preserve style raw-unit inheritance and direct paragraph zero overrides
+  ---
+  duration_ms: 46.36
+  ...
+# Subtest: signed native run spacing and position preserve fonts, scripts, header/footer and repeated DOCX edits
+ok 11 - signed native run spacing and position preserve fonts, scripts, header/footer and repeated DOCX edits
+  ---
+  duration_ms: 40.243166
+  ...
+# Subtest: style inheritance and explicit zero spacing/position overrides survive native DOCX serialization
+ok 12 - style inheritance and explicit zero spacing/position overrides survive native DOCX serialization
+  ---
+  duration_ms: 44.56125
+  ...
+# Subtest: explicit zero run metrics also cancel inherited values on images and page fields
+ok 13 - explicit zero run metrics also cancel inherited values on images and page fields
+  ---
+  duration_ms: 21.97275
+  ...
+# Subtest: invalid character metrics are refused without changing the original model
+ok 14 - invalid character metrics are refused without changing the original model
+  ---
+  duration_ms: 1.250666
+  ...
+# Subtest: native tabs, repeated spaces, nonbreaking spaces and line breaks retain their original characters and formatting across DOCX edits and repeated saves
+ok 15 - native tabs, repeated spaces, nonbreaking spaces and line breaks retain their original characters and formatting across DOCX edits and repeated saves
+  ---
+  duration_ms: 39.310917
+  ...
+# Subtest: named paragraph styles preserve inheritance, native links, automatic update and direct overrides over repeated saves
+ok 16 - named paragraph styles preserve inheritance, native links, automatic update and direct overrides over repeated saves
+  ---
+  duration_ms: 69.574208
+  ...
+# Subtest: native custom styles remain editable definitions with parent and next-style links
+ok 17 - native custom styles remain editable definitions with parent and next-style links
+  ---
+  duration_ms: 19.065125
+  ...
+# Subtest: a named body style can explicitly remove an inherited heading outline level
+ok 18 - a named body style can explicitly remove an inherited heading outline level
+  ---
+  duration_ms: 14.303333
+  ...
+# Subtest: invalid style graphs cannot be exported or partially change the source document
+ok 19 - invalid style graphs cannot be exported or partially change the source document
+  ---
+  duration_ms: 0.234292
+  ...
+# Subtest: derived styles retain inherited heading levels instead of freezing the parent level on import
+ok 20 - derived styles retain inherited heading levels instead of freezing the parent level on import
+  ---
+  duration_ms: 15.412042
+  ...
+# Subtest: paragraph-level outline overrides survive saving without changing the linked style definition
+ok 21 - paragraph-level outline overrides survive saving without changing the linked style definition
+  ---
+  duration_ms: 17.649916
+  ...
+# Subtest: named styles inside a quote retain the existing quote border and structure after saving
+ok 22 - named styles inside a quote retain the existing quote border and structure after saving
+  ---
+  duration_ms: 17.803
+  ...
+# Subtest: DOCX roundtrip keeps headings, rich text, link, hard/page breaks and page configuration
+ok 23 - DOCX roundtrip keeps headings, rich text, link, hard/page breaks and page configuration
+  ---
+  duration_ms: 20.564708
+  ...
+# Subtest: DOCX list import preserves nested mixed lists, sequence and non-default starts
+ok 24 - DOCX list import preserves nested mixed lists, sequence and non-default starts
+  ---
+  duration_ms: 28.700375
+  ...
+# Subtest: DOCX table roundtrip retains row/column merges, headings and cell background
+ok 25 - DOCX table roundtrip retains row/column merges, headings and cell background
+  ---
+  duration_ms: 31.569917
+  ...
+# Subtest: DOCX import resolves inherited paragraph and character styles
+ok 26 - DOCX import resolves inherited paragraph and character styles
+  ---
+  duration_ms: 1.343333
+  ...
+# Subtest: DOCX import resolves theme fonts and colors instead of dropping them
+ok 27 - DOCX import resolves theme fonts and colors instead of dropping them
+  ---
+  duration_ms: 1.381083
+  ...
+# Subtest: the published studio Word sample can export, reopen and export again
+ok 28 - the published studio Word sample can export, reopen and export again
+  ---
+  duration_ms: 100.243709
+  ...
+# Subtest: DOCX import refuses unsupported drawings, tracked changes, broken header references and embedded objects
+ok 29 - DOCX import refuses unsupported drawings, tracked changes, broken header references and embedded objects
+  ---
+  duration_ms: 2.246833
+  ...
+# Subtest: DOCX import refuses unsafe hyperlinks and merged cells containing hidden text
+ok 30 - DOCX import refuses unsafe hyperlinks and merged cells containing hidden text
+  ---
+  duration_ms: 1.29025
+  ...
+# Subtest: DOCX export fails explicitly for unsupported nodes, marks and inline layout
+ok 31 - DOCX export fails explicitly for unsupported nodes, marks and inline layout
+  ---
+  duration_ms: 9.649417
+  ...
+# Subtest: DOCX embeds raster images and retains body, default header/footer, fields and distances over repeated exports
+ok 32 - DOCX embeds raster images and retains body, default header/footer, fields and distances over repeated exports
+  ---
+  duration_ms: 39.463333
+  ...
+# Subtest: DOCX imports simple PAGE and NUMPAGES fields without their cached values becoming editable text
+ok 33 - DOCX imports simple PAGE and NUMPAGES fields without their cached values becoming editable text
+  ---
+  duration_ms: 17.189292
+  ...
+# Subtest: DOCX adds a native page field to a populated footer without duplicating it on reopening
+ok 34 - DOCX adds a native page field to a populated footer without duplicating it on reopening
+  ---
+  duration_ms: 32.242209
+  ...
+# Subtest: DOCX retains text after a complex field in the same run and refuses nested fields
+ok 35 - DOCX retains text after a complex field in the same run and refuses nested fields
+  ---
+  duration_ms: 15.775458
+  ...
+# Subtest: DOCX embeds JPEG bytes unchanged and retains configured header/footer distances before regions are created
+ok 36 - DOCX embeds JPEG bytes unchanged and retains configured header/footer distances before regions are created
+  ---
+  duration_ms: 16.194583
+  ...
+# Subtest: floating images preserve wrapping, position, anchor flags, distances and custom contours across native DOCX saves
+ok 37 - floating images preserve wrapping, position, anchor flags, distances and custom contours across native DOCX saves
+  ---
+  duration_ms: 92.318416
+  ...
+# Subtest: invalid floating images are rejected before changing the source model
+ok 38 - invalid floating images are rejected before changing the source model
+  ---
+  duration_ms: 0.612166
+  ...
+# Subtest: DOCX refuses image layout that cannot be preserved and external image links
+ok 39 - DOCX refuses image layout that cannot be preserved and external image links
+  ---
+  duration_ms: 114.095666
+  ...
+# Subtest: DOCX roundtrip retains superscript and subscript independently
+ok 40 - DOCX roundtrip retains superscript and subscript independently
+  ---
+  duration_ms: 14.786708
+  ...
+# Subtest: DOCX import rejects old DOC, corrupt XML and unequal margins instead of flattening
+ok 41 - DOCX import rejects old DOC, corrupt XML and unequal margins instead of flattening
+  ---
+  duration_ms: 1.798459
+  ...
+# Subtest: typed Word font names and 1pt to 300pt half-point sizes survive repeated DOCX saves
+ok 42 - typed Word font names and 1pt to 300pt half-point sizes survive repeated DOCX saves
+  ---
+  duration_ms: 27.338875
+  ...
+# Subtest: a cleared heading keeps its level and hyperlink without reintroducing default heading bold on reopen
+ok 43 - a cleared heading keeps its level and hyperlink without reintroducing default heading bold on reopen
+  ---
+  duration_ms: 28.737709
+  ...
+# Subtest: table paragraph absent spacing exports zero while explicit spacing survives repeated saves
+ok 44 - table paragraph absent spacing exports zero while explicit spacing survives repeated saves
+  ---
+  duration_ms: 30.505625
+  ...
+# Subtest: native simple and complex table formula fields preserve instructions, cached edits and run formatting twice
+ok 45 - native simple and complex table formula fields preserve instructions, cached edits and run formatting twice
+  ---
+  duration_ms: 29.819
+  ...
+1..45
+# tests 45
+# suites 0
+# pass 45
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2076.351917

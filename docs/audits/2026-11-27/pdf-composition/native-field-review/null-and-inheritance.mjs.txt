@@ -1,0 +1,113 @@
+import assert from 'node:assert/strict';
+import { createRequire } from 'node:module';
+import { writeFile } from 'node:fs/promises';
+import { Blob } from 'node:buffer';
+import { pdfTestRuntime } from '/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/tests/studio-pdf-test-runtime.mjs';
+
+const repo = '/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59';
+const require = createRequire(`${repo}/docs/package.json`);
+const { PDFDocument, PDFName, PDFString, PDFNull, StandardFonts } = require('pdf-lib');
+const r = pdfTestRuntime();
+const c = { ...r.load('../src/pages/collaboration/office-studio/studio-pdf-codec.ts'),
+  ...r.load('../src/pages/collaboration/office-studio/studio-pdf-compose.ts'),
+  ...r.load('../src/pages/collaboration/office-studio/studio-pdf-composition.ts'),
+  ...r.load('../src/pages/collaboration/office-studio/studio-pdf-field-reader.ts'),
+  ...r.load('../../packages/ui/src/components/OfficeStudio/studio-pdf-pages.ts') };
+const n = PDFName.of;
+const save = async (pdf) => new Blob([new Uint8Array(await pdf.save({ updateFieldAppearances: false, useObjectStreams: false }))], { type: 'application/pdf' });
+const rawValue = (pdf, dict, key) => {
+  const raw = dict.get(n(key), true);
+  if (raw === undefined) return 'absent';
+  const value = pdf.context.lookup(raw);
+  return { raw: raw.toString(), resolved: value?.toString() };
+};
+async function fixture(type = 'text', options = {}) {
+  const pdf = await PDFDocument.create();
+  const font = await pdf.embedFont(StandardFonts.Helvetica);
+  const page = pdf.addPage([400, 500]);
+  const field = type === 'dropdown' ? pdf.getForm().createDropdown('Shared') : pdf.getForm().createTextField('Shared');
+  if (type === 'dropdown') { field.setOptions(['A', 'B']); field.addToPage(page, { x: 20, y: 300, width: 140, height: 24, font }); }
+  else { field.setText('B'); field.addToPage(page, { x: 20, y: 300, width: 140, height: 24, font }); }
+  field.updateAppearances(font);
+  if (options.key) field.acroField.dict.set(n(options.key), options.indirect ? pdf.context.register(PDFNull) : PDFNull);
+  return { pdf, field };
+}
+const logs = [];
+async function record(label, action) {
+  try { logs.push({ label, result: await action() }); }
+  catch (error) { logs.push({ label, error: error.message, code: error.code, path: error.path }); }
+}
+
+for (const indirect of [false, true]) {
+  for (const key of ['V', 'DV', 'Ff', 'Q', 'MaxLen']) {
+    await record(`${indirect ? 'indirect' : 'direct'} null ${key}: text extract`, async () => {
+      const { pdf, field } = await fixture('text', { key, indirect });
+      const source = await save(pdf);
+      await writeFile(`/tmp/zuvi-p008-review-2026-11-27/${indirect ? 'indirect' : 'direct'}-null-${key}.pdf`, new Uint8Array(await source.arrayBuffer()));
+      const model = await c.importStudioPdf(source, 'Null.pdf');
+      const output = await c.composeStudioPdf({ snapshot: { document: model, source }, mode: 'extract', pages: [0], conflicts: { strategy: 'rename', valuePolicy: 'reject' } });
+      const reopened = await PDFDocument.load(await output.source.arrayBuffer());
+      const target = reopened.getForm().getTextField('Shared');
+      return { modelValue: model.fields[0].value, native: rawValue(reopened, target.acroField.dict, key), fieldCount: reopened.getForm().getFields().length };
+    });
+  }
+}
+
+for (const indirect of [false, true]) {
+  await record(`${indirect ? 'indirect' : 'direct'} null V: dropdown same-value link`, async () => {
+    const first = await fixture('dropdown', { key: 'V', indirect });
+    const second = await fixture('dropdown');
+    second.field.acroField.dict.delete(n('V'));
+    const current = await save(first.pdf), incoming = await save(second.pdf);
+    const model = await c.importStudioPdf(current, 'NullChoice.pdf');
+    const output = await c.composeStudioPdf({ snapshot: { document: model, source: current }, mode: 'merge', pages: [0], insertAt: 1, incoming: { source: incoming, name: 'AbsentChoice.pdf', pages: [0] }, conflicts: { strategy: 'link', valuePolicy: 'reject' } });
+    const pdf = await PDFDocument.load(await output.source.arrayBuffer());
+    return { modelValue: model.fields[0].value, count: pdf.getForm().getFields().length, widgets: pdf.getForm().getDropdown('Shared').acroField.getWidgets().length };
+  });
+}
+
+for (const indirect of [false, true]) {
+  await record(`${indirect ? 'indirect' : 'direct'} null V: inherited password hash`, async () => {
+    const { pdf, field } = await fixture();
+    field.enablePassword();
+    const parent = pdf.context.obj({ T: PDFString.of('Root'), Kids: [field.ref], FT: n('Tx'), Ff: field.acroField.dict.get(n('Ff')), V: PDFString.of('Parent-current'), DV: PDFString.of('Parent-default') });
+    const parentRef = pdf.context.register(parent);
+    field.acroField.dict.set(n('Parent'), parentRef);
+    field.acroField.dict.delete(n('FT')); field.acroField.dict.delete(n('Ff')); field.acroField.dict.delete(n('DV'));
+    field.acroField.dict.set(n('V'), indirect ? pdf.context.register(PDFNull) : PDFNull);
+    pdf.getForm().acroForm.dict.set(n('Fields'), pdf.context.obj([parentRef]));
+    const source = await save(pdf);
+    await writeFile(`/tmp/zuvi-p008-review-2026-11-27/${indirect ? 'indirect' : 'direct'}-null-inherited-password.pdf`, new Uint8Array(await source.arrayBuffer()));
+    const model = await c.importStudioPdf(source, 'Inherited.pdf');
+    const before = model.fields[0].nativeValueHash;
+    const changedParent = await PDFDocument.load(await source.arrayBuffer());
+    const parentDict = changedParent.catalog.AcroForm().lookup(n('Fields')).lookup(0);
+    parentDict.set(n('V'), PDFString.of('Changed-parent-current'));
+    const changedSource = await save(changedParent);
+    const changedModel = await c.importStudioPdf(changedSource, 'Changed.pdf');
+    let acceptsChangedSource;
+    try { await c.exportStudioPdf(model, changedSource); acceptsChangedSource = true; }
+    catch (error) { acceptsChangedSource = error.message; }
+    return { before, after: changedModel.fields[0].nativeValueHash, equal: before === changedModel.fields[0].nativeValueHash, acceptsChangedSource };
+  });
+}
+
+await record('indirect V/DV strings: two real compose + save rounds preserve identity', async () => {
+  const { pdf, field } = await fixture();
+  field.acroField.dict.set(n('V'), pdf.context.register(PDFString.of('B')));
+  field.acroField.dict.set(n('DV'), pdf.context.register(PDFString.of('A')));
+  let source = await save(pdf), model = await c.importStudioPdf(source, 'Indirect.pdf');
+  const rounds = [];
+  for (let round = 1; round <= 2; round++) {
+    const output = await c.composeStudioPdf({ snapshot: { document: model, source }, mode: 'extract', pages: [0], conflicts: { strategy: 'rename', valuePolicy: 'reject' } });
+    const native = await PDFDocument.load(await output.source.arrayBuffer()), target = native.getForm().getTextField('Shared');
+    assert.equal(target.getText(), 'B'); assert.equal(target.acroField.dict.lookup(n('DV')).decodeText(), 'A');
+    rounds.push({ V: rawValue(native, target.acroField.dict, 'V'), DV: rawValue(native, target.acroField.dict, 'DV') });
+    source = await c.exportStudioPdf({ ...output.document, marks: [{ id: `mark-${round}`, page: 0, type: 'rectangle', x: 200, y: 30, width: 20, height: 20, text: '', size: 12 }] }, output.source);
+    model = await c.importStudioPdf(source, `Round-${round}.pdf`);
+  }
+  return rounds;
+});
+
+await writeFile('/tmp/zuvi-p008-review-2026-11-27/null-and-inheritance-results.json', JSON.stringify(logs, null, 2));
+console.log(JSON.stringify(logs, null, 2));

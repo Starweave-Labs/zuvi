@@ -1,0 +1,22 @@
+{
+  "pages": 4,
+  "file": "view-print.pdf",
+  "sha256": "079ee57fe7a1401cc4c993912035d0db6efb191c5688dd211cde844d73e7e3bc",
+  "expectedText": [
+    "Zoom keeps wrapped text and the document row height.",
+    "HIDDEN_MASTER",
+    "CONTROL_ROW",
+    "NATIVE_SMALL",
+    "VISIBLE_MERGE"
+  ],
+  "allTextFound": true,
+  "links": [
+    {
+      "page": 3,
+      "uri": "https://example.com/sheet-view-master"
+    }
+  ],
+  "formFields": {},
+  "renderer": "bundled Poppler pdftoppm, 1200px",
+  "parser": "pypdf 6.21.4"
+}

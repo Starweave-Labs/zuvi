@@ -1,0 +1,10 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/studio-word-table-formula.test.ts (9 tests) 7ms
+ ✓ src/components/OfficeStudio/studio-word-formula-field.test.ts (9 tests) 133ms
+
+ Test Files  2 passed (2)
+      Tests  18 passed (18)
+   Start at  08:25:32
+   Duration  1.06s (transform 75ms, setup 247ms, collect 133ms, tests 140ms, environment 873ms, prepare 122ms)

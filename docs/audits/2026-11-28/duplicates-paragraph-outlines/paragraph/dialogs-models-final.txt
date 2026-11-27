@@ -1,0 +1,14 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/studio-word-paragraph-layout.test.ts (10 tests) 83ms
+ ✓ src/components/OfficeStudio/studio-word-tabs.test.ts (9 tests) 65ms
+ ✓ src/components/OfficeStudio/studio-word-surface.test.ts (7 tests) 67ms
+ ✓ src/components/OfficeStudio/StudioWordParagraphDialogs.test.tsx (12 tests) 481ms
+ ✓ src/components/OfficeStudio/StudioWordSurfaceDialog.test.tsx (4 tests) 215ms
+
+ Test Files  5 passed (5)
+      Tests  42 passed (42)
+   Start at  18:51:39
+   Duration  3.61s (transform 304ms, setup 376ms, collect 661ms, tests 911ms, environment 1.10s, prepare 143ms)
+

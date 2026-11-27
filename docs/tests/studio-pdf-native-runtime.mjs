@@ -1,0 +1,27 @@
+import { createRequire } from 'node:module';
+import { URL } from 'node:url';
+import { pdfTestRuntime } from './studio-pdf-test-runtime.mjs';
+
+const require = createRequire(new URL('../package.json', import.meta.url));
+export const lib = require('pdf-lib');
+const runtime = pdfTestRuntime();
+const base = '../src/pages/collaboration/office-studio/studio-pdf-native/';
+export const nativeModule = (name) => runtime.load(base + name + '.ts');
+const read = nativeModule('read'), edit = nativeModule('model-edit'), write = nativeModule('export');
+const mapping = nativeModule('mapping'), geometry = nativeModule('geometry'), objects = nativeModule('objects');
+const settings = (options) => ({ now: '2026-11-27T00:00:00.000Z', ...options });
+export const sha256 = nativeModule('runtime').sha256;
+export const importNativeMarks = read.importNativeMarks, inspectNativePdf = read.inspectNativePdf;
+export const updateMark = (model, id, patch, options) => edit.updateMark(model, id, patch, settings(options));
+export const addMark = (model, mark, options) => edit.addMark(model, mark, settings(options));
+export const addReply = (model, id, reply, options) => edit.addReply(model, id, reply, settings(options));
+export const setReviewState = (model, id, state, options) => edit.setReviewState(model, id, state, settings(options));
+export const discussionState = edit.discussionState, removeMark = edit.removeMark;
+export const exportNativeMarks = write.exportNativeMarks, previewNativeMarks = write.previewNativeMarks;
+export const mapNativePages = mapping.mapNativePages, exportMappedNativeMarks = mapping.exportMappedNativeMarks;
+export const updateMappedMark = (operation, id, patch, options) => mapping.updateMappedMark(operation, id, patch, settings(options));
+export const addMappedReply = (operation, id, reply, options) => mapping.addMappedReply(operation, id, reply, settings(options));
+export const setMappedReviewState = (operation, id, state, options) => mapping.setMappedReviewState(operation, id, state, settings(options));
+export const removeMappedMark = mapping.removeMappedMark, lineEndingGeometry = geometry.lineEndingGeometry;
+export const geometryPaintBounds = geometry.geometryPaintBounds;
+export const nativeMarksInternals = objects;

@@ -1,0 +1,42 @@
+[WebServer] (node:19945) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:19964) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium] › e2e/office-studio-word-metrics.spec.ts:239:1 › baseline shifts expand automatic line boxes while exact line rules retain fixed height through DOCX reopening (1.8s)
+
+
+  1) [chromium] › e2e/office-studio-word-metrics.spec.ts:239:1 › baseline shifts expand automatic line boxes while exact line rules retain fixed height through DOCX reopening
+
+    Error: expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 0
+    Received: -1.000521104742053
+
+    Expected precision:    1
+    Expected difference: < 0.05
+    Received difference:   1.000521104742053
+
+      306 |     });
+      307 |     expect(geometry[0].height).toBeGreaterThan(geometry[1].height);
+    > 308 |     expect(geometry[0].glyphTop).toBeCloseTo(geometry[2].glyphTop, 1);
+          |                                  ^
+      309 |     expect(geometry[0].height - geometry[2].height).toBeCloseTo(16, 0);
+      310 |     expect(geometry[1].glyphTop - geometry[2].glyphTop).toBeCloseTo(-16, 0);
+      311 |     expect(geometry[1].height).toBeCloseTo(16, 0);
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-metrics.spec.ts:308:34
+
+    Error Context: test-results/office-studio-word-metrics-c95af-ight-through-DOCX-reopening-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/office-studio-word-metrics-c95af-ight-through-DOCX-reopening-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/office-studio-word-metrics-c95af-ight-through-DOCX-reopening-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/office-studio-word-metrics.spec.ts:239:1 › baseline shifts expand automatic line boxes while exact line rules retain fixed height through DOCX reopening

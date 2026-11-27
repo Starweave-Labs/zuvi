@@ -1,0 +1,403 @@
+{
+  "source": {
+    "file": "text-source.xlsx",
+    "sha256": "571b087104f098094659de1f0d89381b46f959092e1dcff47675417b1728220a"
+  },
+  "rounds": [
+    {
+      "file": "text-roundtrip-1.xlsx",
+      "sha256": "d3015e7845970886292d2da8ebce688c66907b2ef4c47ddf43aeb77c98c0fec5"
+    },
+    {
+      "file": "text-roundtrip-2.xlsx",
+      "sha256": "d3015e7845970886292d2da8ebce688c66907b2ef4c47ddf43aeb77c98c0fec5"
+    }
+  ],
+  "grid": {
+    "A1": {
+      "width": 117,
+      "height": 25,
+      "textWidth": 351,
+      "lines": [
+        {
+          "text": "CENTER_TITLE",
+          "x": 127.859375,
+          "y": 9.433334350585938,
+          "width": 94.265625,
+          "height": 14.5625
+        }
+      ]
+    },
+    "A2": {
+      "width": 117,
+      "height": 59.328125,
+      "textWidth": 117,
+      "lines": [
+        {
+          "text": "自动换行随列宽变",
+          "x": 5,
+          "y": 0.0666656494140625,
+          "width": 101.28125,
+          "height": 14.5625
+        },
+        {
+          "text": "化并保留原始文字",
+          "x": 5,
+          "y": 14.629165649414062,
+          "width": 101.28125,
+          "height": 14.562501907348633
+        },
+        {
+          "text": "与工作簿默认字体",
+          "x": 5,
+          "y": 29.191667556762695,
+          "width": 101.28125,
+          "height": 14.562498092651367
+        },
+        {
+          "text": "。",
+          "x": 5,
+          "y": 43.75416564941406,
+          "width": 12.671875,
+          "height": 14.5625
+        }
+      ]
+    },
+    "A3": {
+      "width": 117,
+      "height": 25,
+      "textWidth": 117,
+      "lines": [
+        {
+          "text": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz",
+          "x": 5,
+          "y": 20.166664123535156,
+          "width": 119.5625,
+          "height": 3.828125
+        }
+      ]
+    },
+    "A4": {
+      "width": 117,
+      "height": 77,
+      "textWidth": 117,
+      "lines": [
+        {
+          "text": "ANGLED_TEXT",
+          "x": 35.0491943359375,
+          "y": 0,
+          "width": 75.958740234375,
+          "height": 75.958740234375
+        }
+      ]
+    },
+    "C4": {
+      "width": 117,
+      "height": 77,
+      "textWidth": 117,
+      "lines": [
+        {
+          "text": "Indented",
+          "x": 37.140625,
+          "y": 61.43333435058594,
+          "width": 52.75,
+          "height": 14.562515258789062
+        }
+      ]
+    },
+    "A5": {
+      "width": 117,
+      "height": 120,
+      "textWidth": 117,
+      "lines": [
+        {
+          "text": "竖",
+          "x": 5,
+          "y": 0,
+          "width": 12.671875,
+          "height": 14.5625
+        },
+        {
+          "text": "排",
+          "x": 5,
+          "y": 14.5625,
+          "width": 12.671875,
+          "height": 14.5625
+        },
+        {
+          "text": "A",
+          "x": 6.75,
+          "y": 29.125,
+          "width": 9.15625,
+          "height": 14.5625
+        },
+        {
+          "text": "B",
+          "x": 6.75,
+          "y": 43.6875,
+          "width": 9.15625,
+          "height": 14.5625
+        },
+        {
+          "text": "C",
+          "x": 6.75,
+          "y": 58.265625,
+          "width": 9.15625,
+          "height": 14.5625
+        }
+      ]
+    },
+    "A8": {
+      "width": 117,
+      "height": 96,
+      "textWidth": 117,
+      "lines": [
+        {
+          "text": "Line one",
+          "x": 5,
+          "y": 0,
+          "width": 52.0625,
+          "height": 14.5625
+        },
+        {
+          "text": "Line two",
+          "x": 5,
+          "y": 40.203125,
+          "width": 51.34375,
+          "height": 14.5625
+        },
+        {
+          "text": "Line three",
+          "x": 5,
+          "y": 80.421875,
+          "width": 60.5,
+          "height": 14.5625
+        }
+      ]
+    },
+    "B8": {
+      "width": 117,
+      "height": 96,
+      "textWidth": 117,
+      "lines": [
+        {
+          "text": "分散对齐",
+          "x": 5,
+          "y": 80.433349609375,
+          "width": 124.46875,
+          "height": 14.5625
+        }
+      ]
+    },
+    "A12": {
+      "width": 117,
+      "height": 38,
+      "textWidth": 351,
+      "lines": [
+        {
+          "text": "LongHeading",
+          "x": 79.796875,
+          "y": 0.20001220703125,
+          "width": 190.390625,
+          "height": 36.796875
+        }
+      ]
+    }
+  },
+  "print": {
+    "A1": {
+      "width": 117,
+      "height": 25,
+      "textWidth": 351,
+      "lines": [
+        {
+          "text": "CENTER_TITLE",
+          "x": 127.859375,
+          "y": 9.433334350585938,
+          "width": 94.265625,
+          "height": 14.5625
+        }
+      ]
+    },
+    "A2": {
+      "width": 117,
+      "height": 59.328125,
+      "textWidth": 117,
+      "lines": [
+        {
+          "text": "自动换行随列宽变",
+          "x": 5,
+          "y": 0.0666656494140625,
+          "width": 101.28125,
+          "height": 14.5625
+        },
+        {
+          "text": "化并保留原始文字",
+          "x": 5,
+          "y": 14.629165649414062,
+          "width": 101.28125,
+          "height": 14.5625
+        },
+        {
+          "text": "与工作簿默认字体",
+          "x": 5,
+          "y": 29.191665649414062,
+          "width": 101.28125,
+          "height": 14.5625
+        },
+        {
+          "text": "。",
+          "x": 5,
+          "y": 43.75416564941406,
+          "width": 12.671875,
+          "height": 14.5625
+        }
+      ]
+    },
+    "A3": {
+      "width": 117,
+      "height": 25,
+      "textWidth": 117,
+      "lines": [
+        {
+          "text": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz",
+          "x": 5,
+          "y": 20.166671752929688,
+          "width": 119.5625,
+          "height": 3.828125
+        }
+      ]
+    },
+    "A4": {
+      "width": 117,
+      "height": 77,
+      "textWidth": 117,
+      "lines": [
+        {
+          "text": "ANGLED_TEXT",
+          "x": 35.0491943359375,
+          "y": 0,
+          "width": 75.95873260498047,
+          "height": 75.958740234375
+        }
+      ]
+    },
+    "C4": {
+      "width": 117,
+      "height": 77,
+      "textWidth": 117,
+      "lines": [
+        {
+          "text": "Indented",
+          "x": 37.140625,
+          "y": 61.43333435058594,
+          "width": 52.75,
+          "height": 14.5625
+        }
+      ]
+    },
+    "A5": {
+      "width": 117,
+      "height": 120,
+      "textWidth": 117,
+      "lines": [
+        {
+          "text": "竖",
+          "x": 5,
+          "y": 0,
+          "width": 12.671875,
+          "height": 14.5625
+        },
+        {
+          "text": "排",
+          "x": 5,
+          "y": 14.5625,
+          "width": 12.671875,
+          "height": 14.5625
+        },
+        {
+          "text": "A",
+          "x": 6.75,
+          "y": 29.125,
+          "width": 9.15625,
+          "height": 14.5625
+        },
+        {
+          "text": "B",
+          "x": 6.75,
+          "y": 43.6875,
+          "width": 9.15625,
+          "height": 14.5625
+        },
+        {
+          "text": "C",
+          "x": 6.75,
+          "y": 58.265625,
+          "width": 9.15625,
+          "height": 14.5625
+        }
+      ]
+    },
+    "A8": {
+      "width": 117,
+      "height": 96,
+      "textWidth": 117,
+      "lines": [
+        {
+          "text": "Line one",
+          "x": 5,
+          "y": 0,
+          "width": 52.0625,
+          "height": 14.5625
+        },
+        {
+          "text": "Line two",
+          "x": 5,
+          "y": 40.203125,
+          "width": 51.34375,
+          "height": 14.5625
+        },
+        {
+          "text": "Line three",
+          "x": 5,
+          "y": 80.421875,
+          "width": 60.5,
+          "height": 14.5625
+        }
+      ]
+    },
+    "B8": {
+      "width": 117,
+      "height": 96,
+      "textWidth": 117,
+      "lines": [
+        {
+          "text": "分散对齐",
+          "x": 5,
+          "y": 80.433349609375,
+          "width": 124.46875,
+          "height": 14.5625
+        }
+      ]
+    },
+    "A12": {
+      "width": 117,
+      "height": 38,
+      "textWidth": 351,
+      "lines": [
+        {
+          "text": "LongHeading",
+          "x": 79.796875,
+          "y": 0.20001220703125,
+          "width": 190.390625,
+          "height": 36.796875
+        }
+      ]
+    }
+  },
+  "viewport": {
+    "width": 320,
+    "height": 720
+  },
+  "readOnly": true
+}

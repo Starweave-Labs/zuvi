@@ -1,0 +1,47 @@
+[WebServer] (node:41675) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:41688) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 5 tests using 1 worker
+
+  ✓  1 [chromium] › e2e/office-studio-pdf-text-layer.spec.ts:105:1 › uses real PDF.js text selections and one native appearance across crop, UserUnit, rotation and zoom (2.1s)
+  ✓  2 [chromium] › e2e/office-studio-pdf-text-layer.spec.ts:242:1 › selects and copies original PDF text in OfficeStudio, searches real pages and preserves source bytes in readonly mode (3.9s)
+  ✘  3 [chromium] › e2e/office-studio-pdf-text-layer.spec.ts:286:1 › uses real selected PDF glyph QuadPoints for four native text markups and survives history and two reopens (16.1s)
+  ✓  4 [chromium] › e2e/office-studio-pdf-text-layer.spec.ts:341:1 › blocks source copying and annotation selection while disabled and destroys actual browser layer sessions (1.2s)
+  ✓  5 [chromium] › e2e/office-studio-pdf-text-layer.spec.ts:376:1 › preserves another pending real PDF.js TextLayer while a renderer clears its global text caches (1.3s)
+
+
+  1) [chromium] › e2e/office-studio-pdf-text-layer.spec.ts:286:1 › uses real selected PDF glyph QuadPoints for four native text markups and survives history and two reopens 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "ECTABLE"
+    Received: ""
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      228 |     }, { needle, start, end });
+      229 |   }
+    > 230 |   await expect.poll(() => page.evaluate(() => document.getSelection()?.toString())).toBe(needle.slice(start, end));
+          |                                                                                     ^
+      231 | }
+      232 | function pageStreams(pdf: PDFDocument) {
+      233 |   return pdf.getPages().map(page => {
+        at selectSource (/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-text-layer.spec.ts:230:85)
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-text-layer.spec.ts:332:5
+
+    Error Context: ../../../../../../tmp/zuvi-pdf-text-layer-final-app-e2e/office-studio-pdf-text-lay-db353-ves-history-and-two-reopens-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../tmp/zuvi-pdf-text-layer-final-app-e2e/office-studio-pdf-text-lay-db353-ves-history-and-two-reopens-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../../../tmp/zuvi-pdf-text-layer-final-app-e2e/office-studio-pdf-text-lay-db353-ves-history-and-two-reopens-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/office-studio-pdf-text-layer.spec.ts:286:1 › uses real selected PDF glyph QuadPoints for four native text markups and survives history and two reopens 
+  4 passed (27.4s)

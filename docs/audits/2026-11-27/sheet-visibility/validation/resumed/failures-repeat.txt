@@ -1,0 +1,25 @@
+[WebServer] (node:35211) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:35223) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+[WebServer] [BABEL] Note: The code generator has deoptimised the styling of /var/folders/9n/_523pt1s3gqg0f165zsdbldc0000gn/T/zuvi-office-e2e-vite-5291-35205/deps/react-dom_client.js?v=bd276d48 as it exceeds the max of 500KB.
+  ✓  1 [chromium] › e2e/builder-studio.spec.ts:337:1 › 完整编辑器：缩小画布后仍可真实拖入嵌套组件，操作栏保持可点击大小 (5.7s)
+[datagrid-perf] resize input-to-frame latency: 0.2ms
+(node:35439) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 [chromium] › e2e/datagrid-prototype.spec.ts:90:1 › DataGrid 原型：列宽更新延迟在预算内，按住不动不计入渲染耗时 (1.9s)
+  ✓  3 [chromium] › e2e/builder-studio.spec.ts:337:1 › 完整编辑器：缩小画布后仍可真实拖入嵌套组件，操作栏保持可点击大小 (4.6s)
+[datagrid-perf] resize input-to-frame latency: 0.2ms
+(node:35698) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  4 [chromium] › e2e/datagrid-prototype.spec.ts:90:1 › DataGrid 原型：列宽更新延迟在预算内，按住不动不计入渲染耗时 (1.9s)
+  ✓  5 [chromium] › e2e/builder-studio.spec.ts:337:1 › 完整编辑器：缩小画布后仍可真实拖入嵌套组件，操作栏保持可点击大小 (4.6s)
+[datagrid-perf] resize input-to-frame latency: 0.2ms
+(node:35729) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  6 [chromium] › e2e/datagrid-prototype.spec.ts:90:1 › DataGrid 原型：列宽更新延迟在预算内，按住不动不计入渲染耗时 (1.9s)
+
+  6 passed (23.0s)

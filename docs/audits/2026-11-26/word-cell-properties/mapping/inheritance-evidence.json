@@ -1,0 +1,1139 @@
+{
+  "before": {
+    "defaults": {
+      "top": 6,
+      "right": 7,
+      "bottom": 8,
+      "left": 9
+    },
+    "spacing": 6,
+    "rowSpacings": [
+      null,
+      12
+    ],
+    "cells": [
+      {
+        "row": 0,
+        "column": 0,
+        "colspan": 1,
+        "rowspan": 1,
+        "paragraphs": [
+          "Direct zero"
+        ],
+        "horizontal": [
+          "left"
+        ],
+        "bold": [
+          true
+        ],
+        "italic": [
+          false
+        ],
+        "vertical": "top",
+        "margins": {
+          "top": 0,
+          "right": 3.5
+        },
+        "background": null
+      },
+      {
+        "row": 0,
+        "column": 1,
+        "colspan": 1,
+        "rowspan": 1,
+        "paragraphs": [
+          "Inherited",
+          "Second paragraph"
+        ],
+        "horizontal": [
+          "left",
+          "left"
+        ],
+        "bold": [
+          false,
+          false
+        ],
+        "italic": [
+          false,
+          false
+        ],
+        "vertical": "top",
+        "margins": null,
+        "background": null
+      },
+      {
+        "row": 1,
+        "column": 0,
+        "colspan": 1,
+        "rowspan": 1,
+        "paragraphs": [
+          "Other direct"
+        ],
+        "horizontal": [
+          "left"
+        ],
+        "bold": [
+          false
+        ],
+        "italic": [
+          true
+        ],
+        "vertical": "top",
+        "margins": {
+          "bottom": 2.25,
+          "left": 1.5
+        },
+        "background": null
+      },
+      {
+        "row": 1,
+        "column": 1,
+        "colspan": 1,
+        "rowspan": 1,
+        "paragraphs": [
+          "Last inherited"
+        ],
+        "horizontal": [
+          "left"
+        ],
+        "bold": [
+          false
+        ],
+        "italic": [
+          false
+        ],
+        "vertical": "top",
+        "margins": null,
+        "background": null
+      }
+    ]
+  },
+  "restored": {
+    "defaults": {
+      "top": 6,
+      "right": 7,
+      "bottom": 8,
+      "left": 9
+    },
+    "spacing": 6,
+    "rowSpacings": [
+      null,
+      12
+    ],
+    "cells": [
+      {
+        "row": 0,
+        "column": 0,
+        "colspan": 1,
+        "rowspan": 1,
+        "paragraphs": [
+          "Direct zero"
+        ],
+        "horizontal": [
+          "left"
+        ],
+        "bold": [
+          true
+        ],
+        "italic": [
+          false
+        ],
+        "vertical": "top",
+        "margins": null,
+        "background": null
+      },
+      {
+        "row": 0,
+        "column": 1,
+        "colspan": 1,
+        "rowspan": 1,
+        "paragraphs": [
+          "Inherited",
+          "Second paragraph"
+        ],
+        "horizontal": [
+          "left",
+          "left"
+        ],
+        "bold": [
+          false,
+          false
+        ],
+        "italic": [
+          false,
+          false
+        ],
+        "vertical": "top",
+        "margins": null,
+        "background": null
+      },
+      {
+        "row": 1,
+        "column": 0,
+        "colspan": 1,
+        "rowspan": 1,
+        "paragraphs": [
+          "Other direct"
+        ],
+        "horizontal": [
+          "left"
+        ],
+        "bold": [
+          false
+        ],
+        "italic": [
+          true
+        ],
+        "vertical": "top",
+        "margins": {
+          "bottom": 2.25,
+          "left": 1.5
+        },
+        "background": null
+      },
+      {
+        "row": 1,
+        "column": 1,
+        "colspan": 1,
+        "rowspan": 1,
+        "paragraphs": [
+          "Last inherited"
+        ],
+        "horizontal": [
+          "left"
+        ],
+        "bold": [
+          false
+        ],
+        "italic": [
+          false
+        ],
+        "vertical": "top",
+        "margins": null,
+        "background": null
+      }
+    ]
+  },
+  "restoredRounds": [
+    {
+      "width": 440,
+      "columns": [
+        220,
+        220
+      ],
+      "cells": [
+        {
+          "name": "Direct zero",
+          "box": {
+            "left": 8,
+            "right": 216,
+            "top": 8,
+            "bottom": 84.65625,
+            "width": 208,
+            "height": 76.65625
+          },
+          "outerBox": {
+            "left": 0,
+            "right": 220,
+            "top": 4,
+            "bottom": 88.65625,
+            "width": 220,
+            "height": 84.65625
+          },
+          "fillError": 0,
+          "topGap": 9,
+          "bottomGap": 39.65625,
+          "expectedTop": 9,
+          "expectedBottom": 11.6667,
+          "rangeRightGap": 100.84375,
+          "padding": {
+            "top": 8,
+            "right": 9.33333,
+            "bottom": 10.6667,
+            "left": 12
+          },
+          "outerPadding": {
+            "top": 4,
+            "right": 4,
+            "bottom": 4,
+            "left": 8
+          },
+          "inlineMinHeight": "76.6562px"
+        },
+        {
+          "name": "Inherited",
+          "box": {
+            "left": 224,
+            "right": 432,
+            "top": 8,
+            "bottom": 84.65625,
+            "width": 208,
+            "height": 76.65625
+          },
+          "outerBox": {
+            "left": 220,
+            "right": 440,
+            "top": 4,
+            "bottom": 88.65625,
+            "width": 220,
+            "height": 84.65625
+          },
+          "fillError": 0,
+          "topGap": 9,
+          "bottomGap": 11.65625,
+          "expectedTop": 9,
+          "expectedBottom": 11.6667,
+          "rangeRightGap": 48.28125,
+          "padding": {
+            "top": 8,
+            "right": 9.33333,
+            "bottom": 10.6667,
+            "left": 12
+          },
+          "outerPadding": {
+            "top": 4,
+            "right": 8,
+            "bottom": 4,
+            "left": 4
+          },
+          "inlineMinHeight": "76.6562px"
+        },
+        {
+          "name": "Other direct",
+          "box": {
+            "left": 16,
+            "right": 212,
+            "top": 96.65625,
+            "bottom": 145.3125,
+            "width": 196,
+            "height": 48.65625
+          },
+          "outerBox": {
+            "left": 0,
+            "right": 220,
+            "top": 88.65625,
+            "bottom": 153.3125,
+            "width": 220,
+            "height": 64.65625
+          },
+          "fillError": 0,
+          "topGap": 9,
+          "bottomGap": 11.65625,
+          "expectedTop": 9,
+          "expectedBottom": 4,
+          "rangeRightGap": 93.140625,
+          "padding": {
+            "top": 8,
+            "right": 9.33333,
+            "bottom": 3,
+            "left": 2
+          },
+          "outerPadding": {
+            "top": 8,
+            "right": 8,
+            "bottom": 8,
+            "left": 16
+          },
+          "inlineMinHeight": "48.6562px"
+        },
+        {
+          "name": "Last inherited",
+          "box": {
+            "left": 228,
+            "right": 424,
+            "top": 96.65625,
+            "bottom": 145.3125,
+            "width": 196,
+            "height": 48.65625
+          },
+          "outerBox": {
+            "left": 220,
+            "right": 440,
+            "top": 88.65625,
+            "bottom": 153.3125,
+            "width": 220,
+            "height": 64.65625
+          },
+          "fillError": 0,
+          "topGap": 9,
+          "bottomGap": 11.65625,
+          "expectedTop": 9,
+          "expectedBottom": 11.6667,
+          "rangeRightGap": 70.53125,
+          "padding": {
+            "top": 8,
+            "right": 9.33333,
+            "bottom": 10.6667,
+            "left": 12
+          },
+          "outerPadding": {
+            "top": 8,
+            "right": 16,
+            "bottom": 8,
+            "left": 8
+          },
+          "inlineMinHeight": "48.6562px"
+        }
+      ]
+    },
+    {
+      "width": 440,
+      "columns": [
+        220,
+        220
+      ],
+      "cells": [
+        {
+          "name": "Direct zero",
+          "box": {
+            "left": 8,
+            "right": 216,
+            "top": 8,
+            "bottom": 84.65625,
+            "width": 208,
+            "height": 76.65625
+          },
+          "outerBox": {
+            "left": 0,
+            "right": 220,
+            "top": 4,
+            "bottom": 88.65625,
+            "width": 220,
+            "height": 84.65625
+          },
+          "fillError": 0,
+          "topGap": 9,
+          "bottomGap": 39.65625,
+          "expectedTop": 9,
+          "expectedBottom": 11.6667,
+          "rangeRightGap": 100.84375,
+          "padding": {
+            "top": 8,
+            "right": 9.33333,
+            "bottom": 10.6667,
+            "left": 12
+          },
+          "outerPadding": {
+            "top": 4,
+            "right": 4,
+            "bottom": 4,
+            "left": 8
+          },
+          "inlineMinHeight": "76.6562px"
+        },
+        {
+          "name": "Inherited",
+          "box": {
+            "left": 224,
+            "right": 432,
+            "top": 8,
+            "bottom": 84.65625,
+            "width": 208,
+            "height": 76.65625
+          },
+          "outerBox": {
+            "left": 220,
+            "right": 440,
+            "top": 4,
+            "bottom": 88.65625,
+            "width": 220,
+            "height": 84.65625
+          },
+          "fillError": 0,
+          "topGap": 9,
+          "bottomGap": 11.65625,
+          "expectedTop": 9,
+          "expectedBottom": 11.6667,
+          "rangeRightGap": 48.28125,
+          "padding": {
+            "top": 8,
+            "right": 9.33333,
+            "bottom": 10.6667,
+            "left": 12
+          },
+          "outerPadding": {
+            "top": 4,
+            "right": 8,
+            "bottom": 4,
+            "left": 4
+          },
+          "inlineMinHeight": "76.6562px"
+        },
+        {
+          "name": "Other direct",
+          "box": {
+            "left": 16,
+            "right": 212,
+            "top": 96.65625,
+            "bottom": 145.3125,
+            "width": 196,
+            "height": 48.65625
+          },
+          "outerBox": {
+            "left": 0,
+            "right": 220,
+            "top": 88.65625,
+            "bottom": 153.3125,
+            "width": 220,
+            "height": 64.65625
+          },
+          "fillError": 0,
+          "topGap": 9,
+          "bottomGap": 11.65625,
+          "expectedTop": 9,
+          "expectedBottom": 4,
+          "rangeRightGap": 93.140625,
+          "padding": {
+            "top": 8,
+            "right": 9.33333,
+            "bottom": 3,
+            "left": 2
+          },
+          "outerPadding": {
+            "top": 8,
+            "right": 8,
+            "bottom": 8,
+            "left": 16
+          },
+          "inlineMinHeight": "48.6562px"
+        },
+        {
+          "name": "Last inherited",
+          "box": {
+            "left": 228,
+            "right": 424,
+            "top": 96.65625,
+            "bottom": 145.3125,
+            "width": 196,
+            "height": 48.65625
+          },
+          "outerBox": {
+            "left": 220,
+            "right": 440,
+            "top": 88.65625,
+            "bottom": 153.3125,
+            "width": 220,
+            "height": 64.65625
+          },
+          "fillError": 0,
+          "topGap": 9,
+          "bottomGap": 11.65625,
+          "expectedTop": 9,
+          "expectedBottom": 11.6667,
+          "rangeRightGap": 70.53125,
+          "padding": {
+            "top": 8,
+            "right": 9.33333,
+            "bottom": 10.6667,
+            "left": 12
+          },
+          "outerPadding": {
+            "top": 8,
+            "right": 16,
+            "bottom": 8,
+            "left": 8
+          },
+          "inlineMinHeight": "48.6562px"
+        }
+      ]
+    }
+  ],
+  "cleared": {
+    "defaults": {
+      "top": 6,
+      "right": 7,
+      "bottom": 8
+    },
+    "spacing": null,
+    "rowSpacings": [
+      null,
+      null
+    ],
+    "cells": [
+      {
+        "row": 0,
+        "column": 0,
+        "colspan": 1,
+        "rowspan": 1,
+        "paragraphs": [
+          "Direct zero"
+        ],
+        "horizontal": [
+          "left"
+        ],
+        "bold": [
+          true
+        ],
+        "italic": [
+          false
+        ],
+        "vertical": "top",
+        "margins": {
+          "top": 0
+        },
+        "background": null
+      },
+      {
+        "row": 0,
+        "column": 1,
+        "colspan": 1,
+        "rowspan": 1,
+        "paragraphs": [
+          "Inherited",
+          "Second paragraph"
+        ],
+        "horizontal": [
+          "left",
+          "left"
+        ],
+        "bold": [
+          false,
+          false
+        ],
+        "italic": [
+          false,
+          false
+        ],
+        "vertical": "top",
+        "margins": null,
+        "background": null
+      },
+      {
+        "row": 1,
+        "column": 0,
+        "colspan": 1,
+        "rowspan": 1,
+        "paragraphs": [
+          "Other direct"
+        ],
+        "horizontal": [
+          "left"
+        ],
+        "bold": [
+          false
+        ],
+        "italic": [
+          true
+        ],
+        "vertical": "top",
+        "margins": {
+          "bottom": 2.25,
+          "left": 1.5
+        },
+        "background": null
+      },
+      {
+        "row": 1,
+        "column": 1,
+        "colspan": 1,
+        "rowspan": 1,
+        "paragraphs": [
+          "Last inherited"
+        ],
+        "horizontal": [
+          "left"
+        ],
+        "bold": [
+          false
+        ],
+        "italic": [
+          false
+        ],
+        "vertical": "top",
+        "margins": null,
+        "background": null
+      }
+    ]
+  },
+  "clearedRounds": [
+    {
+      "width": 417,
+      "columns": [
+        208,
+        208
+      ],
+      "cells": [
+        {
+          "name": "Direct zero",
+          "box": {
+            "left": 8.1875,
+            "right": 198.671875,
+            "top": 1,
+            "bottom": 29,
+            "width": 190.484375,
+            "height": 28
+          },
+          "outerBox": {
+            "left": 0.5,
+            "right": 208.5,
+            "top": 0.5,
+            "bottom": 76.15625,
+            "width": 208,
+            "height": 75.65625
+          },
+          "fillError": 36.98955,
+          "topGap": 0,
+          "bottomGap": 0,
+          "expectedTop": 0,
+          "expectedBottom": 0,
+          "rangeRightGap": 106.65625,
+          "padding": {
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "outerPadding": {
+            "top": 0,
+            "right": 9.33333,
+            "bottom": 10.6667,
+            "left": 7.2
+          },
+          "inlineMinHeight": ""
+        },
+        {
+          "name": "Inherited",
+          "box": {
+            "left": 216.1875,
+            "right": 406.671875,
+            "top": 9,
+            "bottom": 65,
+            "width": 190.484375,
+            "height": 56
+          },
+          "outerBox": {
+            "left": 208.5,
+            "right": 416.5,
+            "top": 0.5,
+            "bottom": 76.15625,
+            "width": 208,
+            "height": 75.65625
+          },
+          "fillError": 0.9895499999999995,
+          "topGap": 0,
+          "bottomGap": 0,
+          "expectedTop": 0,
+          "expectedBottom": 0,
+          "rangeRightGap": 54.09375,
+          "padding": {
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "outerPadding": {
+            "top": 8,
+            "right": 9.33333,
+            "bottom": 10.6667,
+            "left": 7.2
+          },
+          "inlineMinHeight": ""
+        },
+        {
+          "name": "Other direct",
+          "box": {
+            "left": 3,
+            "right": 198.671875,
+            "top": 84.65625,
+            "bottom": 112.65625,
+            "width": 195.671875,
+            "height": 28
+          },
+          "outerBox": {
+            "left": 0.5,
+            "right": 208.5,
+            "top": 76.15625,
+            "bottom": 123.8125,
+            "width": 208,
+            "height": 47.65625
+          },
+          "fillError": 8.65625,
+          "topGap": 0,
+          "bottomGap": 0,
+          "expectedTop": 0,
+          "expectedBottom": 0,
+          "rangeRightGap": 106.140625,
+          "padding": {
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "outerPadding": {
+            "top": 8,
+            "right": 9.33333,
+            "bottom": 3,
+            "left": 2
+          },
+          "inlineMinHeight": ""
+        },
+        {
+          "name": "Last inherited",
+          "box": {
+            "left": 216.1875,
+            "right": 406.671875,
+            "top": 84.65625,
+            "bottom": 112.65625,
+            "width": 190.484375,
+            "height": 28
+          },
+          "outerBox": {
+            "left": 208.5,
+            "right": 416.5,
+            "top": 76.15625,
+            "bottom": 123.8125,
+            "width": 208,
+            "height": 47.65625
+          },
+          "fillError": 0.9895499999999995,
+          "topGap": 0,
+          "bottomGap": 0,
+          "expectedTop": 0,
+          "expectedBottom": 0,
+          "rangeRightGap": 88.34375,
+          "padding": {
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "outerPadding": {
+            "top": 8,
+            "right": 9.33333,
+            "bottom": 10.6667,
+            "left": 7.2
+          },
+          "inlineMinHeight": ""
+        }
+      ]
+    },
+    {
+      "width": 417,
+      "columns": [
+        208,
+        208
+      ],
+      "cells": [
+        {
+          "name": "Direct zero",
+          "box": {
+            "left": 8.1875,
+            "right": 198.671875,
+            "top": 1,
+            "bottom": 29,
+            "width": 190.484375,
+            "height": 28
+          },
+          "outerBox": {
+            "left": 0.5,
+            "right": 208.5,
+            "top": 0.5,
+            "bottom": 76.15625,
+            "width": 208,
+            "height": 75.65625
+          },
+          "fillError": 36.98955,
+          "topGap": 0,
+          "bottomGap": 0,
+          "expectedTop": 0,
+          "expectedBottom": 0,
+          "rangeRightGap": 106.65625,
+          "padding": {
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "outerPadding": {
+            "top": 0,
+            "right": 9.33333,
+            "bottom": 10.6667,
+            "left": 7.2
+          },
+          "inlineMinHeight": ""
+        },
+        {
+          "name": "Inherited",
+          "box": {
+            "left": 216.1875,
+            "right": 406.671875,
+            "top": 9,
+            "bottom": 65,
+            "width": 190.484375,
+            "height": 56
+          },
+          "outerBox": {
+            "left": 208.5,
+            "right": 416.5,
+            "top": 0.5,
+            "bottom": 76.15625,
+            "width": 208,
+            "height": 75.65625
+          },
+          "fillError": 0.9895499999999995,
+          "topGap": 0,
+          "bottomGap": 0,
+          "expectedTop": 0,
+          "expectedBottom": 0,
+          "rangeRightGap": 54.09375,
+          "padding": {
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "outerPadding": {
+            "top": 8,
+            "right": 9.33333,
+            "bottom": 10.6667,
+            "left": 7.2
+          },
+          "inlineMinHeight": ""
+        },
+        {
+          "name": "Other direct",
+          "box": {
+            "left": 3,
+            "right": 198.671875,
+            "top": 84.65625,
+            "bottom": 112.65625,
+            "width": 195.671875,
+            "height": 28
+          },
+          "outerBox": {
+            "left": 0.5,
+            "right": 208.5,
+            "top": 76.15625,
+            "bottom": 123.8125,
+            "width": 208,
+            "height": 47.65625
+          },
+          "fillError": 8.65625,
+          "topGap": 0,
+          "bottomGap": 0,
+          "expectedTop": 0,
+          "expectedBottom": 0,
+          "rangeRightGap": 106.140625,
+          "padding": {
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "outerPadding": {
+            "top": 8,
+            "right": 9.33333,
+            "bottom": 3,
+            "left": 2
+          },
+          "inlineMinHeight": ""
+        },
+        {
+          "name": "Last inherited",
+          "box": {
+            "left": 216.1875,
+            "right": 406.671875,
+            "top": 84.65625,
+            "bottom": 112.65625,
+            "width": 190.484375,
+            "height": 28
+          },
+          "outerBox": {
+            "left": 208.5,
+            "right": 416.5,
+            "top": 76.15625,
+            "bottom": 123.8125,
+            "width": 208,
+            "height": 47.65625
+          },
+          "fillError": 0.9895499999999995,
+          "topGap": 0,
+          "bottomGap": 0,
+          "expectedTop": 0,
+          "expectedBottom": 0,
+          "rangeRightGap": 88.34375,
+          "padding": {
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "outerPadding": {
+            "top": 8,
+            "right": 9.33333,
+            "bottom": 10.6667,
+            "left": 7.2
+          },
+          "inlineMinHeight": ""
+        }
+      ]
+    }
+  ],
+  "printed": {
+    "width": 417,
+    "columns": [
+      208,
+      208
+    ],
+    "cells": [
+      {
+        "name": "Direct zero",
+        "box": {
+          "left": 8.1875,
+          "right": 198.671875,
+          "top": 1,
+          "bottom": 29,
+          "width": 190.484375,
+          "height": 28
+        },
+        "outerBox": {
+          "left": 0.5,
+          "right": 208.5,
+          "top": 0.5,
+          "bottom": 76.15625,
+          "width": 208,
+          "height": 75.65625
+        },
+        "fillError": 36.98955,
+        "topGap": 0,
+        "bottomGap": 0,
+        "expectedTop": 0,
+        "expectedBottom": 0,
+        "rangeRightGap": 106.65625,
+        "padding": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        },
+        "outerPadding": {
+          "top": 0,
+          "right": 9.33333,
+          "bottom": 10.6667,
+          "left": 7.2
+        },
+        "inlineMinHeight": ""
+      },
+      {
+        "name": "Inherited",
+        "box": {
+          "left": 216.1875,
+          "right": 406.671875,
+          "top": 9,
+          "bottom": 65,
+          "width": 190.484375,
+          "height": 56
+        },
+        "outerBox": {
+          "left": 208.5,
+          "right": 416.5,
+          "top": 0.5,
+          "bottom": 76.15625,
+          "width": 208,
+          "height": 75.65625
+        },
+        "fillError": 0.9895499999999995,
+        "topGap": 0,
+        "bottomGap": 0,
+        "expectedTop": 0,
+        "expectedBottom": 0,
+        "rangeRightGap": 54.09375,
+        "padding": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        },
+        "outerPadding": {
+          "top": 8,
+          "right": 9.33333,
+          "bottom": 10.6667,
+          "left": 7.2
+        },
+        "inlineMinHeight": ""
+      },
+      {
+        "name": "Other direct",
+        "box": {
+          "left": 3,
+          "right": 198.671875,
+          "top": 84.65625,
+          "bottom": 112.65625,
+          "width": 195.671875,
+          "height": 28
+        },
+        "outerBox": {
+          "left": 0.5,
+          "right": 208.5,
+          "top": 76.15625,
+          "bottom": 123.8125,
+          "width": 208,
+          "height": 47.65625
+        },
+        "fillError": 8.65625,
+        "topGap": 0,
+        "bottomGap": 0,
+        "expectedTop": 0,
+        "expectedBottom": 0,
+        "rangeRightGap": 106.140625,
+        "padding": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        },
+        "outerPadding": {
+          "top": 8,
+          "right": 9.33333,
+          "bottom": 3,
+          "left": 2
+        },
+        "inlineMinHeight": ""
+      },
+      {
+        "name": "Last inherited",
+        "box": {
+          "left": 216.1875,
+          "right": 406.671875,
+          "top": 84.65625,
+          "bottom": 112.65625,
+          "width": 190.484375,
+          "height": 28
+        },
+        "outerBox": {
+          "left": 208.5,
+          "right": 416.5,
+          "top": 76.15625,
+          "bottom": 123.8125,
+          "width": 208,
+          "height": 47.65625
+        },
+        "fillError": 0.9895499999999995,
+        "topGap": 0,
+        "bottomGap": 0,
+        "expectedTop": 0,
+        "expectedBottom": 0,
+        "rangeRightGap": 88.34375,
+        "padding": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        },
+        "outerPadding": {
+          "top": 8,
+          "right": 9.33333,
+          "bottom": 10.6667,
+          "left": 7.2
+        },
+        "inlineMinHeight": ""
+      }
+    ]
+  },
+  "reopenCyclesPerStage": 2,
+  "historyActionsPerStage": 1,
+  "cancelledDrafts": [
+    "restore null",
+    "clear side and spacing plus explicit zero"
+  ]
+}

@@ -1,0 +1,20 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/studio-word-formula-field.test.ts (8 tests) 100ms
+ ✓ src/components/OfficeStudio/StudioWord.test.tsx (91 tests) 14691ms
+   ✓ Word paragraph dialog and ruler > edits inherited tab stops through ZUVI controls with precision checks, cancellation and one history step 503ms
+   ✓ Word paragraph dialog and ruler > applies mixed paragraph values in one history step and keeps untouched values separate 305ms
+   ✓ Word paragraph dialog and ruler > keeps mixed pagination flags unchanged until edited, commits once, and blocks an open dialog after permission changes 471ms
+   ✓ StudioWord Office ribbon actions > applies font family and size to the selected range and restores them with undo and redo 333ms
+   ✓ StudioWord named paragraph styles > creates, applies, modifies and deletes a named style with real undo and redo 549ms
+   ✓ StudioWord structured editing > restores rejected controlled edits so the canvas and saved model agree 462ms
+   ✓ StudioWord structured editing > changes picture wrapping, position and anchor flags and restores them with undo 542ms
+   ✓ StudioWord 第一轮编辑能力 > changes the caret word while preserving its mapped caret and applies a font step only to new input 306ms
+   ✓ Word text and table conversion entry > converts through the actual ribbon with a preview and independent undo/redo transactions 436ms
+   ✓ inserts a table formula through ZUVI dialog, keeps cancelled drafts and refreshes in a separate undo transaction 312ms
+
+ Test Files  2 passed (2)
+      Tests  99 passed (99)
+   Start at  08:18:23
+   Duration  16.24s (transform 568ms, setup 246ms, collect 937ms, tests 14.79s, environment 679ms, prepare 104ms)

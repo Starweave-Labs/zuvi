@@ -1,0 +1,11 @@
+export default {
+  root: '/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui',
+  esbuild: { jsx: 'automatic' },
+  server: { fs: { allow: ['/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59', '/private/tmp'] } },
+  test: {
+    environment: 'jsdom',
+    setupFiles: ['/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui/src/test/setup.ts'],
+    include: ['/private/tmp/zuvi-word-neighbor-audit/neighbor.test.ts'],
+    css: false,
+  },
+};

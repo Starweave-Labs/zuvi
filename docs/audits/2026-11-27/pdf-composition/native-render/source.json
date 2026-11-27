@@ -1,0 +1,175 @@
+{
+  "renderer": "pdftoppm version 26.10.0\nCopyright 2005-2026 The Poppler Developers - http://poppler.freedesktop.org\nCopyright 1996-2011, 2022 Glyph & Cog, LLC",
+  "dpi": 144,
+  "files": [
+    {
+      "pdf": "primary-source.pdf",
+      "pdfSha256": "ad05fb8acced772b57e7ddf0a7f4278987ffb003af30b5bdb19f898b614458d9",
+      "command": [
+        "/opt/homebrew/bin/pdftoppm",
+        "-r",
+        "144",
+        "-png",
+        "docs/audits/2026-11-27/pdf-composition/primary-source.pdf",
+        "docs/audits/2026-11-27/pdf-composition/native-render/primary-source"
+      ],
+      "stderr": "Syntax Warning: SubType on non-terminal field, invalid document?\nSyntax Warning: SubType on non-terminal field, invalid document?\n",
+      "images": [
+        {
+          "path": "native-render/primary-source-1.png",
+          "sha256": "bc881cae087025136acb401e502c8bd0caca4878d52c1bff8b9cb7149dffbddb"
+        },
+        {
+          "path": "native-render/primary-source-2.png",
+          "sha256": "18249ee787c0fcf8123135cdefcb7f98f06e833914eb3aa8f904fe6a22c60a19"
+        }
+      ]
+    },
+    {
+      "pdf": "incoming-source.pdf",
+      "pdfSha256": "d03ef7838e6c0e98cde68c2fb34d63632bc7ffa30abed1c5383850ce6dde95c7",
+      "command": [
+        "/opt/homebrew/bin/pdftoppm",
+        "-r",
+        "144",
+        "-png",
+        "docs/audits/2026-11-27/pdf-composition/incoming-source.pdf",
+        "docs/audits/2026-11-27/pdf-composition/native-render/incoming-source"
+      ],
+      "stderr": "",
+      "images": [
+        {
+          "path": "native-render/incoming-source-1.png",
+          "sha256": "ca589faa3e1359251991c9ba2f3b42ab6a174c56ca252860c02a9be3d36bf920"
+        },
+        {
+          "path": "native-render/incoming-source-2.png",
+          "sha256": "c60784b303d95f8c8d71da68e88538cdca4703eed63c081a22aec266c7f79ee4"
+        }
+      ]
+    },
+    {
+      "pdf": "before-composition-history.pdf",
+      "pdfSha256": "2a158d1b8c48c3bcba366191cb523817497777ab7075172630eca3366f23bb5e",
+      "command": [
+        "/opt/homebrew/bin/pdftoppm",
+        "-r",
+        "144",
+        "-png",
+        "docs/audits/2026-11-27/pdf-composition/before-composition-history.pdf",
+        "docs/audits/2026-11-27/pdf-composition/native-render/before-composition-history"
+      ],
+      "stderr": "Syntax Warning: SubType on non-terminal field, invalid document?\nSyntax Warning: SubType on non-terminal field, invalid document?\nSyntax Warning: SubType on non-terminal field, invalid document?\nSyntax Warning: SubType on non-terminal field, invalid document?\n",
+      "images": [
+        {
+          "path": "native-render/before-composition-history-1.png",
+          "sha256": "67aa28f27e99f5f22091c2f454b3e5f4d465140c920ae08c43e5c3d4cf682ca5"
+        },
+        {
+          "path": "native-render/before-composition-history-2.png",
+          "sha256": "18249ee787c0fcf8123135cdefcb7f98f06e833914eb3aa8f904fe6a22c60a19"
+        },
+        {
+          "path": "native-render/before-composition-history-3.png",
+          "sha256": "67aa28f27e99f5f22091c2f454b3e5f4d465140c920ae08c43e5c3d4cf682ca5"
+        }
+      ]
+    },
+    {
+      "pdf": "combined-round-2.pdf",
+      "pdfSha256": "d9dfa18eec89ad6a078e045e3d02c891964ec2a0ed8390adbb21ab385380cae7",
+      "command": [
+        "/opt/homebrew/bin/pdftoppm",
+        "-r",
+        "144",
+        "-png",
+        "docs/audits/2026-11-27/pdf-composition/combined-round-2.pdf",
+        "docs/audits/2026-11-27/pdf-composition/native-render/combined-round-2"
+      ],
+      "stderr": "Syntax Warning: SubType on non-terminal field, invalid document?\nSyntax Warning: SubType on non-terminal field, invalid document?\nSyntax Warning: SubType on non-terminal field, invalid document?\nSyntax Warning: SubType on non-terminal field, invalid document?\n",
+      "images": [
+        {
+          "path": "native-render/combined-round-2-1.png",
+          "sha256": "67aa28f27e99f5f22091c2f454b3e5f4d465140c920ae08c43e5c3d4cf682ca5"
+        },
+        {
+          "path": "native-render/combined-round-2-2.png",
+          "sha256": "c60784b303d95f8c8d71da68e88538cdca4703eed63c081a22aec266c7f79ee4"
+        },
+        {
+          "path": "native-render/combined-round-2-3.png",
+          "sha256": "ca589faa3e1359251991c9ba2f3b42ab6a174c56ca252860c02a9be3d36bf920"
+        },
+        {
+          "path": "native-render/combined-round-2-4.png",
+          "sha256": "18249ee787c0fcf8123135cdefcb7f98f06e833914eb3aa8f904fe6a22c60a19"
+        },
+        {
+          "path": "native-render/combined-round-2-5.png",
+          "sha256": "67aa28f27e99f5f22091c2f454b3e5f4d465140c920ae08c43e5c3d4cf682ca5"
+        }
+      ]
+    },
+    {
+      "pdf": "radio-source.pdf",
+      "pdfSha256": "152cbca0689c165dd24d6b4782ffbecefd8eda402a1eb72a2efe382566007ce1",
+      "command": [
+        "/opt/homebrew/bin/pdftoppm",
+        "-r",
+        "144",
+        "-png",
+        "docs/audits/2026-11-27/pdf-composition/radio-source.pdf",
+        "docs/audits/2026-11-27/pdf-composition/native-render/radio-source"
+      ],
+      "stderr": "",
+      "images": [
+        {
+          "path": "native-render/radio-source-1.png",
+          "sha256": "5853cc9acbe4d6316957cd0ed31040a2e2cb1e562ddd3a83a6cb1a2f1d883ddb"
+        },
+        {
+          "path": "native-render/radio-source-2.png",
+          "sha256": "518a9906ecf524b1b5bd45b34ef23d9fd422e6e949ff2a0fa56e3cf8b6a46fff"
+        }
+      ]
+    },
+    {
+      "pdf": "radio-cleared.pdf",
+      "pdfSha256": "c22ac2cbc6383fec947a723aa46ac7b26af35dc2dc82242965edbf3d308a8340",
+      "command": [
+        "/opt/homebrew/bin/pdftoppm",
+        "-r",
+        "144",
+        "-png",
+        "docs/audits/2026-11-27/pdf-composition/radio-cleared.pdf",
+        "docs/audits/2026-11-27/pdf-composition/native-render/radio-cleared"
+      ],
+      "stderr": "",
+      "images": [
+        {
+          "path": "native-render/radio-cleared-1.png",
+          "sha256": "5853cc9acbe4d6316957cd0ed31040a2e2cb1e562ddd3a83a6cb1a2f1d883ddb"
+        }
+      ]
+    },
+    {
+      "pdf": "radio-round-2.pdf",
+      "pdfSha256": "857135bdc871e49e5d0b47d1e0440ff4e459537d3cdbf5e6261953dca961bd82",
+      "command": [
+        "/opt/homebrew/bin/pdftoppm",
+        "-r",
+        "144",
+        "-png",
+        "docs/audits/2026-11-27/pdf-composition/radio-round-2.pdf",
+        "docs/audits/2026-11-27/pdf-composition/native-render/radio-round-2"
+      ],
+      "stderr": "",
+      "images": [
+        {
+          "path": "native-render/radio-round-2-1.png",
+          "sha256": "c7e409371af11e4eee6a3f8dffb9a432b5d5beced57738c2a1d09ec542fd70df"
+        }
+      ]
+    }
+  ]
+}

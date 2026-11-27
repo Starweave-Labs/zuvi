@@ -1,0 +1,9 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/studio-word-table-conversion.test.ts (14 tests) 138ms
+
+ Test Files  1 passed (1)
+      Tests  14 passed (14)
+   Start at  07:54:50
+   Duration  1.17s (transform 123ms, setup 138ms, collect 213ms, tests 138ms, environment 379ms, prepare 41ms)

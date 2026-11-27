@@ -1,0 +1,11 @@
+[WebServer] (node:1689) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:1701) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+[WebServer] [BABEL] Note: The code generator has deoptimised the styling of /var/folders/9n/_523pt1s3gqg0f165zsdbldc0000gn/T/zuvi-office-e2e-vite-5301-1670/deps/react-dom_client.js?v=24cae9a5 as it exceeds the max of 500KB.
+  ✓  1 [chromium] › e2e/office-studio-sheet-sort-ranges.spec.ts:9:1 › sorting preserves complete external ranges, calculated values and history through two native reopens (6.3s)
+
+  1 passed (8.9s)

@@ -1,0 +1,14 @@
+[WebServer] (node:62946) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:62962) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 5 tests using 1 worker
+
+  ✓  1 [chromium] › e2e/office-studio-word-conversion.spec.ts:16:1 › text and table conversion preserves native rich content with cancellation, history and repeated DOCX reopening (5.5s)
+  ✓  2 [chromium] › e2e/office-studio-word-conversion.spec.ts:163:1 › partial native paragraph conversion keeps unselected text and formatting through DOCX reopening (3.4s)
+  ✓  3 [chromium] › e2e/office-studio-word-conversion.spec.ts:238:1 › nested native table conversion preserves nested structures by default and converts them recursively on request (3.0s)
+  ✓  4 [chromium] › e2e/office-studio-word-conversion.spec.ts:319:1 › native mouse row selection converts only selected rows and preserves two surrounding tables on reopening (3.8s)
+  ✓  5 [chromium] › e2e/office-studio-word-conversion.spec.ts:435:1 › native merged row selection expands vertical merges and keeps untouched rows through DOCX reopening (3.0s)
+
+  5 passed (20.4s)

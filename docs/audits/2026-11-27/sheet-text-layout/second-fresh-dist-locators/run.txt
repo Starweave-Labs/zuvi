@@ -1,0 +1,77 @@
+[WebServer] (node:44524) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:44545) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+  ✘  1 [chromium] › e2e/office-studio-sheet-text.spec.ts:127:1 › advanced text editing, native default font, automatic rows, print and two XLSX reopens use the actual editor (13.3s)
+  ✘  2 [chromium] › e2e/office-studio-sheet-text.spec.ts:412:1 › text formatting holds invalid drafts, cancels cleanly and rejects protected batches before adding history (1.5m)
+
+
+  1) [chromium] › e2e/office-studio-sheet-text.spec.ts:127:1 › advanced text editing, native default font, automatic rows, print and two XLSX reopens use the actual editor
+
+    Error: expect(locator).toHaveCSS(expected) failed
+
+    Locator:  getByRole('gridcell', { name: 'A2', exact: true })
+    Expected: "59.328125px"
+    Received: "59.3281px"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCSS" getByRole('gridcell', { name: 'A2', exact: true }) with timeout 5000ms
+      - waiting for getByRole('gridcell', { name: 'A2', exact: true })
+        14 × locator resolved to <div id="_r_o_-A2" role="gridcell" aria-label="A2" data-wrap="true" aria-colindex="2" data-active="true" aria-selected="true" data-selected="true" class="zuvi-studio-sheet-cell" title="自动换行随列宽变化并保留原始文字与工作簿默认字体。">…</div>
+           - unexpected value "59.3281px"
+
+
+      180 |   await expect(cell('A2')).toHaveCSS('height', `${beforeWrap}px`);
+      181 |   await page.getByRole('button', { name: '重做表格修改', exact: true }).click();
+    > 182 |   await expect(cell('A2')).toHaveCSS('height', `${wrappedHeight}px`);
+          |                            ^
+      183 |
+      184 |   dialog = await open(page, 'A3');
+      185 |   await dialog.getByRole('checkbox', { name: '缩小字体填充', exact: true }).check();
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-sheet-text.spec.ts:182:28
+
+    Error Context: ../../../../../../tmp/zuvi-excel-text-playwright-results/office-studio-sheet-text-a-df2ac-opens-use-the-actual-editor-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../tmp/zuvi-excel-text-playwright-results/office-studio-sheet-text-a-df2ac-opens-use-the-actual-editor-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../../../tmp/zuvi-excel-text-playwright-results/office-studio-sheet-text-a-df2ac-opens-use-the-actual-editor-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › e2e/office-studio-sheet-text.spec.ts:412:1 › text formatting holds invalid drafts, cancels cleanly and rejects protected batches before adding history
+
+    Test timeout of 90000ms exceeded.
+
+    Error: locator.click: Test timeout of 90000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: '保护所选区域', exact: true })
+
+
+      435 |   await range(page, 'B1');
+      436 |   await page.getByRole('tab', { name: '数据', exact: true }).click();
+    > 437 |   await page.getByRole('button', { name: '保护所选区域', exact: true }).click();
+          |                                                                   ^
+      438 |   await page.getByRole('tab', { name: '开始', exact: true }).click();
+      439 |   dialog = await open(page, 'A1:C1');
+      440 |   await choose(page, dialog, '文字水平对齐', '跨选区居中');
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-sheet-text.spec.ts:437:67
+
+    Error Context: ../../../../../../tmp/zuvi-excel-text-playwright-results/office-studio-sheet-text-t-0c2e6-tches-before-adding-history-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../tmp/zuvi-excel-text-playwright-results/office-studio-sheet-text-t-0c2e6-tches-before-adding-history-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../../../tmp/zuvi-excel-text-playwright-results/office-studio-sheet-text-t-0c2e6-tches-before-adding-history-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › e2e/office-studio-sheet-text.spec.ts:127:1 › advanced text editing, native default font, automatic rows, print and two XLSX reopens use the actual editor
+    [chromium] › e2e/office-studio-sheet-text.spec.ts:412:1 › text formatting holds invalid drafts, cancels cleanly and rejects protected batches before adding history

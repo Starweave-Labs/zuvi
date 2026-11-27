@@ -1,0 +1,1167 @@
+{
+  "hash": "2a509ab6845b573f62fb3892e4660e66cc6abc02949afa1c5a069aed96a73746",
+  "matrix": [
+    {
+      "scale": 0.5,
+      "rotation": 0,
+      "view": {
+        "width": 300,
+        "height": 375
+      },
+      "selection": {
+        "text": "ECTABLE",
+        "quadPoints": [
+          108.04689136656842,
+          464.36,
+          198.29399974368832,
+          464.36,
+          108.04689136656842,
+          445.86,
+          198.29399974368832,
+          445.86
+        ],
+        "rect": {
+          "x": 108.04689136656842,
+          "y": 445.86,
+          "width": 90.2471083771199,
+          "height": 18.5
+        }
+      },
+      "boxes": {
+        "red-no-rotate": {
+          "x": 150.984375,
+          "y": 248.484375,
+          "width": 44.984375,
+          "height": 29.984375,
+          "canvas": {
+            "width": 45,
+            "height": 30,
+            "pixel": [
+              255,
+              0,
+              0,
+              255
+            ]
+          }
+        },
+        "green-no-zoom": {
+          "x": 60.984375,
+          "y": 308.484375,
+          "width": 90,
+          "height": 60,
+          "noZoom": "true",
+          "canvas": {
+            "width": 45,
+            "height": 30,
+            "pixel": [
+              0,
+              255,
+              0,
+              255
+            ]
+          }
+        },
+        "blue-no-zoom-rotate": {
+          "x": 225.984375,
+          "y": 173.484375,
+          "width": 90,
+          "height": 60,
+          "noZoom": "true",
+          "canvas": {
+            "width": 45,
+            "height": 30,
+            "pixel": [
+              0,
+              0,
+              255,
+              255
+            ]
+          }
+        }
+      },
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3c?xml%20version=%271.0%27%20encoding=%27UTF-8%27%20standalone=%27no%27?%3e%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%2740%27%20height=%2740%27%20viewBox=%270%200%2040%2040%27%3e%3crect%20width=%2736.075428%27%20height=%2731.096582%27%20x=%271.962286%27%20y=%274.4517088%27%20id=%27rect4%27%20style=%27fill:%23ffff00;fill-opacity:1;fill-rule:evenodd;stroke:%23000000;stroke-width:1.23004246;stroke-opacity:1%27%20/%3e%3crect%20width=%2727.96859%27%20height=%271.5012145%27%20x=%276.0157046%27%20y=%2710.285%27%20id=%27rect6%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%276.0157056%27%20y=%2723.21689%27%20id=%27rect8%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%275.8130345%27%20y=%2728.964394%27%20id=%27rect10%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%276.0157046%27%20y=%2717.426493%27%20id=%27rect12%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3c/svg%3e",
+          "loaded": true
+        }
+      ],
+      "alpha": [
+        255,
+        255,
+        178,
+        255
+      ],
+      "hash": "2a509ab6845b573f62fb3892e4660e66cc6abc02949afa1c5a069aed96a73746",
+      "duplicateWidgets": 0
+    },
+    {
+      "scale": 0.5,
+      "rotation": 90,
+      "view": {
+        "width": 375,
+        "height": 300
+      },
+      "selection": {
+        "text": "ECTABLE",
+        "quadPoints": [
+          108.04689136656842,
+          464.36,
+          198.29399974368832,
+          464.36,
+          108.04689136656842,
+          445.86,
+          198.29399974368832,
+          445.86
+        ],
+        "rect": {
+          "x": 108.04689136656842,
+          "y": 445.86,
+          "width": 90.2471083771199,
+          "height": 18.5
+        }
+      },
+      "boxes": {
+        "red-no-rotate": {
+          "x": 158.5,
+          "y": 150.984375,
+          "width": 44.984375,
+          "height": 29.984375,
+          "canvas": {
+            "width": 45,
+            "height": 30,
+            "pixel": [
+              255,
+              0,
+              0,
+              255
+            ]
+          }
+        },
+        "green-no-zoom": {
+          "x": 38.5,
+          "y": 60.984375,
+          "width": 60,
+          "height": 90,
+          "noZoom": "true",
+          "canvas": {
+            "width": 45,
+            "height": 30,
+            "pixel": [
+              0,
+              255,
+              0,
+              255
+            ]
+          }
+        },
+        "blue-no-zoom-rotate": {
+          "x": 233.5,
+          "y": 225.984375,
+          "width": 90,
+          "height": 60,
+          "noZoom": "true",
+          "canvas": {
+            "width": 45,
+            "height": 30,
+            "pixel": [
+              0,
+              0,
+              255,
+              255
+            ]
+          }
+        }
+      },
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3c?xml%20version=%271.0%27%20encoding=%27UTF-8%27%20standalone=%27no%27?%3e%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%2740%27%20height=%2740%27%20viewBox=%270%200%2040%2040%27%3e%3crect%20width=%2736.075428%27%20height=%2731.096582%27%20x=%271.962286%27%20y=%274.4517088%27%20id=%27rect4%27%20style=%27fill:%23ffff00;fill-opacity:1;fill-rule:evenodd;stroke:%23000000;stroke-width:1.23004246;stroke-opacity:1%27%20/%3e%3crect%20width=%2727.96859%27%20height=%271.5012145%27%20x=%276.0157046%27%20y=%2710.285%27%20id=%27rect6%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%276.0157056%27%20y=%2723.21689%27%20id=%27rect8%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%275.8130345%27%20y=%2728.964394%27%20id=%27rect10%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%276.0157046%27%20y=%2717.426493%27%20id=%27rect12%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3c/svg%3e",
+          "loaded": true
+        }
+      ],
+      "alpha": [
+        255,
+        255,
+        178,
+        255
+      ],
+      "hash": "2a509ab6845b573f62fb3892e4660e66cc6abc02949afa1c5a069aed96a73746",
+      "duplicateWidgets": 0
+    },
+    {
+      "scale": 0.5,
+      "rotation": 180,
+      "view": {
+        "width": 300,
+        "height": 375
+      },
+      "selection": {
+        "text": "ECTABLE",
+        "quadPoints": [
+          108.04689136656842,
+          464.36,
+          198.29399974368832,
+          464.36,
+          108.04689136656842,
+          445.86,
+          198.29399974368832,
+          445.86
+        ],
+        "rect": {
+          "x": 108.04689136656842,
+          "y": 445.86,
+          "width": 90.2471083771199,
+          "height": 18.5
+        }
+      },
+      "boxes": {
+        "red-no-rotate": {
+          "x": 181,
+          "y": 158.5,
+          "width": 44.984375,
+          "height": 29.984375,
+          "canvas": {
+            "width": 45,
+            "height": 30,
+            "pixel": [
+              255,
+              0,
+              0,
+              255
+            ]
+          }
+        },
+        "green-no-zoom": {
+          "x": 181,
+          "y": 38.5,
+          "width": 90,
+          "height": 60,
+          "noZoom": "true",
+          "canvas": {
+            "width": 45,
+            "height": 30,
+            "pixel": [
+              0,
+              255,
+              0,
+              255
+            ]
+          }
+        },
+        "blue-no-zoom-rotate": {
+          "x": 106,
+          "y": 233.5,
+          "width": 90,
+          "height": 60,
+          "noZoom": "true",
+          "canvas": {
+            "width": 45,
+            "height": 30,
+            "pixel": [
+              0,
+              0,
+              255,
+              255
+            ]
+          }
+        }
+      },
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3c?xml%20version=%271.0%27%20encoding=%27UTF-8%27%20standalone=%27no%27?%3e%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%2740%27%20height=%2740%27%20viewBox=%270%200%2040%2040%27%3e%3crect%20width=%2736.075428%27%20height=%2731.096582%27%20x=%271.962286%27%20y=%274.4517088%27%20id=%27rect4%27%20style=%27fill:%23ffff00;fill-opacity:1;fill-rule:evenodd;stroke:%23000000;stroke-width:1.23004246;stroke-opacity:1%27%20/%3e%3crect%20width=%2727.96859%27%20height=%271.5012145%27%20x=%276.0157046%27%20y=%2710.285%27%20id=%27rect6%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%276.0157056%27%20y=%2723.21689%27%20id=%27rect8%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%275.8130345%27%20y=%2728.964394%27%20id=%27rect10%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%276.0157046%27%20y=%2717.426493%27%20id=%27rect12%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3c/svg%3e",
+          "loaded": true
+        }
+      ],
+      "alpha": [
+        255,
+        255,
+        178,
+        255
+      ],
+      "hash": "2a509ab6845b573f62fb3892e4660e66cc6abc02949afa1c5a069aed96a73746",
+      "duplicateWidgets": 0
+    },
+    {
+      "scale": 0.5,
+      "rotation": 270,
+      "view": {
+        "width": 375,
+        "height": 300
+      },
+      "selection": {
+        "text": "ECTABLE",
+        "quadPoints": [
+          108.04689136656842,
+          464.36,
+          198.29399974368832,
+          464.36,
+          108.04689136656842,
+          445.86,
+          198.29399974368832,
+          445.86
+        ],
+        "rect": {
+          "x": 108.04689136656842,
+          "y": 445.86,
+          "width": 90.2471083771199,
+          "height": 18.5
+        }
+      },
+      "boxes": {
+        "red-no-rotate": {
+          "x": 248.484375,
+          "y": 181,
+          "width": 44.984375,
+          "height": 29.984375,
+          "canvas": {
+            "width": 45,
+            "height": 30,
+            "pixel": [
+              255,
+              0,
+              0,
+              255
+            ]
+          }
+        },
+        "green-no-zoom": {
+          "x": 308.484375,
+          "y": 181,
+          "width": 60,
+          "height": 90,
+          "noZoom": "true",
+          "canvas": {
+            "width": 45,
+            "height": 30,
+            "pixel": [
+              0,
+              255,
+              0,
+              255
+            ]
+          }
+        },
+        "blue-no-zoom-rotate": {
+          "x": 173.484375,
+          "y": 106,
+          "width": 90,
+          "height": 60,
+          "noZoom": "true",
+          "canvas": {
+            "width": 45,
+            "height": 30,
+            "pixel": [
+              0,
+              0,
+              255,
+              255
+            ]
+          }
+        }
+      },
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3c?xml%20version=%271.0%27%20encoding=%27UTF-8%27%20standalone=%27no%27?%3e%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%2740%27%20height=%2740%27%20viewBox=%270%200%2040%2040%27%3e%3crect%20width=%2736.075428%27%20height=%2731.096582%27%20x=%271.962286%27%20y=%274.4517088%27%20id=%27rect4%27%20style=%27fill:%23ffff00;fill-opacity:1;fill-rule:evenodd;stroke:%23000000;stroke-width:1.23004246;stroke-opacity:1%27%20/%3e%3crect%20width=%2727.96859%27%20height=%271.5012145%27%20x=%276.0157046%27%20y=%2710.285%27%20id=%27rect6%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%276.0157056%27%20y=%2723.21689%27%20id=%27rect8%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%275.8130345%27%20y=%2728.964394%27%20id=%27rect10%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%276.0157046%27%20y=%2717.426493%27%20id=%27rect12%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3c/svg%3e",
+          "loaded": true
+        }
+      ],
+      "alpha": [
+        255,
+        255,
+        178,
+        255
+      ],
+      "hash": "2a509ab6845b573f62fb3892e4660e66cc6abc02949afa1c5a069aed96a73746",
+      "duplicateWidgets": 0
+    },
+    {
+      "scale": 1,
+      "rotation": 0,
+      "view": {
+        "width": 600,
+        "height": 750
+      },
+      "selection": {
+        "text": "ECTABLE",
+        "quadPoints": [
+          108.04689136656842,
+          464.36,
+          198.29399974368832,
+          464.36,
+          108.04689136656842,
+          445.86,
+          198.29399974368832,
+          445.86
+        ],
+        "rect": {
+          "x": 108.04689136656842,
+          "y": 445.86,
+          "width": 90.2471083771199,
+          "height": 18.5
+        }
+      },
+      "boxes": {
+        "red-no-rotate": {
+          "x": 285.984375,
+          "y": 480.984375,
+          "width": 89.984375,
+          "height": 59.984375,
+          "canvas": {
+            "width": 90,
+            "height": 60,
+            "pixel": [
+              255,
+              0,
+              0,
+              255
+            ]
+          }
+        },
+        "green-no-zoom": {
+          "x": 105.984375,
+          "y": 600.984375,
+          "width": 90,
+          "height": 60,
+          "noZoom": "true",
+          "canvas": {
+            "width": 90,
+            "height": 60,
+            "pixel": [
+              0,
+              255,
+              0,
+              255
+            ]
+          }
+        },
+        "blue-no-zoom-rotate": {
+          "x": 435.984375,
+          "y": 330.984375,
+          "width": 90,
+          "height": 60,
+          "noZoom": "true",
+          "canvas": {
+            "width": 90,
+            "height": 60,
+            "pixel": [
+              0,
+              0,
+              255,
+              255
+            ]
+          }
+        }
+      },
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3c?xml%20version=%271.0%27%20encoding=%27UTF-8%27%20standalone=%27no%27?%3e%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%2740%27%20height=%2740%27%20viewBox=%270%200%2040%2040%27%3e%3crect%20width=%2736.075428%27%20height=%2731.096582%27%20x=%271.962286%27%20y=%274.4517088%27%20id=%27rect4%27%20style=%27fill:%23ffff00;fill-opacity:1;fill-rule:evenodd;stroke:%23000000;stroke-width:1.23004246;stroke-opacity:1%27%20/%3e%3crect%20width=%2727.96859%27%20height=%271.5012145%27%20x=%276.0157046%27%20y=%2710.285%27%20id=%27rect6%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%276.0157056%27%20y=%2723.21689%27%20id=%27rect8%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%275.8130345%27%20y=%2728.964394%27%20id=%27rect10%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%276.0157046%27%20y=%2717.426493%27%20id=%27rect12%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3c/svg%3e",
+          "loaded": true
+        }
+      ],
+      "alpha": [
+        255,
+        255,
+        178,
+        255
+      ],
+      "hash": "2a509ab6845b573f62fb3892e4660e66cc6abc02949afa1c5a069aed96a73746",
+      "duplicateWidgets": 0
+    },
+    {
+      "scale": 1,
+      "rotation": 90,
+      "view": {
+        "width": 750,
+        "height": 600
+      },
+      "selection": {
+        "text": "ECTABLE",
+        "quadPoints": [
+          108.04689136656842,
+          464.36,
+          198.29399974368832,
+          464.36,
+          108.04689136656842,
+          445.86,
+          198.29399974368832,
+          445.86
+        ],
+        "rect": {
+          "x": 108.04689136656842,
+          "y": 445.86,
+          "width": 90.2471083771199,
+          "height": 18.5
+        }
+      },
+      "boxes": {
+        "red-no-rotate": {
+          "x": 301,
+          "y": 285.984375,
+          "width": 89.984375,
+          "height": 59.984375,
+          "canvas": {
+            "width": 90,
+            "height": 60,
+            "pixel": [
+              255,
+              0,
+              0,
+              255
+            ]
+          }
+        },
+        "green-no-zoom": {
+          "x": 121,
+          "y": 105.984375,
+          "width": 60,
+          "height": 90,
+          "noZoom": "true",
+          "canvas": {
+            "width": 90,
+            "height": 60,
+            "pixel": [
+              0,
+              255,
+              0,
+              255
+            ]
+          }
+        },
+        "blue-no-zoom-rotate": {
+          "x": 451,
+          "y": 435.984375,
+          "width": 90,
+          "height": 60,
+          "noZoom": "true",
+          "canvas": {
+            "width": 90,
+            "height": 60,
+            "pixel": [
+              0,
+              0,
+              255,
+              255
+            ]
+          }
+        }
+      },
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3c?xml%20version=%271.0%27%20encoding=%27UTF-8%27%20standalone=%27no%27?%3e%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%2740%27%20height=%2740%27%20viewBox=%270%200%2040%2040%27%3e%3crect%20width=%2736.075428%27%20height=%2731.096582%27%20x=%271.962286%27%20y=%274.4517088%27%20id=%27rect4%27%20style=%27fill:%23ffff00;fill-opacity:1;fill-rule:evenodd;stroke:%23000000;stroke-width:1.23004246;stroke-opacity:1%27%20/%3e%3crect%20width=%2727.96859%27%20height=%271.5012145%27%20x=%276.0157046%27%20y=%2710.285%27%20id=%27rect6%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%276.0157056%27%20y=%2723.21689%27%20id=%27rect8%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%275.8130345%27%20y=%2728.964394%27%20id=%27rect10%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%276.0157046%27%20y=%2717.426493%27%20id=%27rect12%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3c/svg%3e",
+          "loaded": true
+        }
+      ],
+      "alpha": [
+        255,
+        255,
+        178,
+        255
+      ],
+      "hash": "2a509ab6845b573f62fb3892e4660e66cc6abc02949afa1c5a069aed96a73746",
+      "duplicateWidgets": 0
+    },
+    {
+      "scale": 1,
+      "rotation": 180,
+      "view": {
+        "width": 600,
+        "height": 750
+      },
+      "selection": {
+        "text": "ECTABLE",
+        "quadPoints": [
+          108.04689136656842,
+          464.36,
+          198.29399974368832,
+          464.36,
+          108.04689136656842,
+          445.86,
+          198.29399974368832,
+          445.86
+        ],
+        "rect": {
+          "x": 108.04689136656842,
+          "y": 445.86,
+          "width": 90.2471083771199,
+          "height": 18.5
+        }
+      },
+      "boxes": {
+        "red-no-rotate": {
+          "x": 346,
+          "y": 301,
+          "width": 89.984375,
+          "height": 59.984375,
+          "canvas": {
+            "width": 90,
+            "height": 60,
+            "pixel": [
+              255,
+              0,
+              0,
+              255
+            ]
+          }
+        },
+        "green-no-zoom": {
+          "x": 436,
+          "y": 121,
+          "width": 90,
+          "height": 60,
+          "noZoom": "true",
+          "canvas": {
+            "width": 90,
+            "height": 60,
+            "pixel": [
+              0,
+              255,
+              0,
+              255
+            ]
+          }
+        },
+        "blue-no-zoom-rotate": {
+          "x": 196,
+          "y": 451,
+          "width": 90,
+          "height": 60,
+          "noZoom": "true",
+          "canvas": {
+            "width": 90,
+            "height": 60,
+            "pixel": [
+              0,
+              0,
+              255,
+              255
+            ]
+          }
+        }
+      },
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3c?xml%20version=%271.0%27%20encoding=%27UTF-8%27%20standalone=%27no%27?%3e%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%2740%27%20height=%2740%27%20viewBox=%270%200%2040%2040%27%3e%3crect%20width=%2736.075428%27%20height=%2731.096582%27%20x=%271.962286%27%20y=%274.4517088%27%20id=%27rect4%27%20style=%27fill:%23ffff00;fill-opacity:1;fill-rule:evenodd;stroke:%23000000;stroke-width:1.23004246;stroke-opacity:1%27%20/%3e%3crect%20width=%2727.96859%27%20height=%271.5012145%27%20x=%276.0157046%27%20y=%2710.285%27%20id=%27rect6%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%276.0157056%27%20y=%2723.21689%27%20id=%27rect8%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%275.8130345%27%20y=%2728.964394%27%20id=%27rect10%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%276.0157046%27%20y=%2717.426493%27%20id=%27rect12%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3c/svg%3e",
+          "loaded": true
+        }
+      ],
+      "alpha": [
+        255,
+        255,
+        178,
+        255
+      ],
+      "hash": "2a509ab6845b573f62fb3892e4660e66cc6abc02949afa1c5a069aed96a73746",
+      "duplicateWidgets": 0
+    },
+    {
+      "scale": 1,
+      "rotation": 270,
+      "view": {
+        "width": 750,
+        "height": 600
+      },
+      "selection": {
+        "text": "ECTABLE",
+        "quadPoints": [
+          108.04689136656842,
+          464.36,
+          198.29399974368832,
+          464.36,
+          108.04689136656842,
+          445.86,
+          198.29399974368832,
+          445.86
+        ],
+        "rect": {
+          "x": 108.04689136656842,
+          "y": 445.86,
+          "width": 90.2471083771199,
+          "height": 18.5
+        }
+      },
+      "boxes": {
+        "red-no-rotate": {
+          "x": 480.984375,
+          "y": 346,
+          "width": 89.984375,
+          "height": 59.984375,
+          "canvas": {
+            "width": 90,
+            "height": 60,
+            "pixel": [
+              255,
+              0,
+              0,
+              255
+            ]
+          }
+        },
+        "green-no-zoom": {
+          "x": 600.984375,
+          "y": 436,
+          "width": 60,
+          "height": 90,
+          "noZoom": "true",
+          "canvas": {
+            "width": 90,
+            "height": 60,
+            "pixel": [
+              0,
+              255,
+              0,
+              255
+            ]
+          }
+        },
+        "blue-no-zoom-rotate": {
+          "x": 330.984375,
+          "y": 196,
+          "width": 90,
+          "height": 60,
+          "noZoom": "true",
+          "canvas": {
+            "width": 90,
+            "height": 60,
+            "pixel": [
+              0,
+              0,
+              255,
+              255
+            ]
+          }
+        }
+      },
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3c?xml%20version=%271.0%27%20encoding=%27UTF-8%27%20standalone=%27no%27?%3e%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%2740%27%20height=%2740%27%20viewBox=%270%200%2040%2040%27%3e%3crect%20width=%2736.075428%27%20height=%2731.096582%27%20x=%271.962286%27%20y=%274.4517088%27%20id=%27rect4%27%20style=%27fill:%23ffff00;fill-opacity:1;fill-rule:evenodd;stroke:%23000000;stroke-width:1.23004246;stroke-opacity:1%27%20/%3e%3crect%20width=%2727.96859%27%20height=%271.5012145%27%20x=%276.0157046%27%20y=%2710.285%27%20id=%27rect6%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%276.0157056%27%20y=%2723.21689%27%20id=%27rect8%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%275.8130345%27%20y=%2728.964394%27%20id=%27rect10%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%276.0157046%27%20y=%2717.426493%27%20id=%27rect12%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3c/svg%3e",
+          "loaded": true
+        }
+      ],
+      "alpha": [
+        255,
+        255,
+        178,
+        255
+      ],
+      "hash": "2a509ab6845b573f62fb3892e4660e66cc6abc02949afa1c5a069aed96a73746",
+      "duplicateWidgets": 0
+    },
+    {
+      "scale": 2,
+      "rotation": 0,
+      "view": {
+        "width": 1200,
+        "height": 1500
+      },
+      "selection": {
+        "text": "ECTABLE",
+        "quadPoints": [
+          108.04689136656842,
+          464.36,
+          198.29399974368832,
+          464.36,
+          108.04689136656842,
+          445.86,
+          198.29399974368832,
+          445.86
+        ],
+        "rect": {
+          "x": 108.04689136656842,
+          "y": 445.86,
+          "width": 90.2471083771199,
+          "height": 18.5
+        }
+      },
+      "boxes": {
+        "red-no-rotate": {
+          "x": 555.984375,
+          "y": 945.984375,
+          "width": 179.984375,
+          "height": 119.984375,
+          "canvas": {
+            "width": 180,
+            "height": 120,
+            "pixel": [
+              255,
+              0,
+              0,
+              255
+            ]
+          }
+        },
+        "green-no-zoom": {
+          "x": 195.984375,
+          "y": 1185.984375,
+          "width": 90,
+          "height": 60,
+          "noZoom": "true",
+          "canvas": {
+            "width": 180,
+            "height": 120,
+            "pixel": [
+              0,
+              255,
+              0,
+              255
+            ]
+          }
+        },
+        "blue-no-zoom-rotate": {
+          "x": 855.984375,
+          "y": 645.984375,
+          "width": 90,
+          "height": 60,
+          "noZoom": "true",
+          "canvas": {
+            "width": 180,
+            "height": 120,
+            "pixel": [
+              0,
+              0,
+              255,
+              255
+            ]
+          }
+        }
+      },
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3c?xml%20version=%271.0%27%20encoding=%27UTF-8%27%20standalone=%27no%27?%3e%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%2740%27%20height=%2740%27%20viewBox=%270%200%2040%2040%27%3e%3crect%20width=%2736.075428%27%20height=%2731.096582%27%20x=%271.962286%27%20y=%274.4517088%27%20id=%27rect4%27%20style=%27fill:%23ffff00;fill-opacity:1;fill-rule:evenodd;stroke:%23000000;stroke-width:1.23004246;stroke-opacity:1%27%20/%3e%3crect%20width=%2727.96859%27%20height=%271.5012145%27%20x=%276.0157046%27%20y=%2710.285%27%20id=%27rect6%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%276.0157056%27%20y=%2723.21689%27%20id=%27rect8%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%275.8130345%27%20y=%2728.964394%27%20id=%27rect10%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%276.0157046%27%20y=%2717.426493%27%20id=%27rect12%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3c/svg%3e",
+          "loaded": true
+        }
+      ],
+      "alpha": [
+        255,
+        255,
+        178,
+        255
+      ],
+      "hash": "2a509ab6845b573f62fb3892e4660e66cc6abc02949afa1c5a069aed96a73746",
+      "duplicateWidgets": 0
+    },
+    {
+      "scale": 2,
+      "rotation": 90,
+      "view": {
+        "width": 1500,
+        "height": 1200
+      },
+      "selection": {
+        "text": "ECTABLE",
+        "quadPoints": [
+          108.04689136656842,
+          464.36,
+          198.29399974368832,
+          464.36,
+          108.04689136656842,
+          445.86,
+          198.29399974368832,
+          445.86
+        ],
+        "rect": {
+          "x": 108.04689136656842,
+          "y": 445.86,
+          "width": 90.2471083771199,
+          "height": 18.5
+        }
+      },
+      "boxes": {
+        "red-no-rotate": {
+          "x": 586,
+          "y": 555.984375,
+          "width": 179.984375,
+          "height": 119.984375,
+          "canvas": {
+            "width": 180,
+            "height": 120,
+            "pixel": [
+              255,
+              0,
+              0,
+              255
+            ]
+          }
+        },
+        "green-no-zoom": {
+          "x": 286,
+          "y": 195.984375,
+          "width": 60,
+          "height": 90,
+          "noZoom": "true",
+          "canvas": {
+            "width": 180,
+            "height": 120,
+            "pixel": [
+              0,
+              255,
+              0,
+              255
+            ]
+          }
+        },
+        "blue-no-zoom-rotate": {
+          "x": 886,
+          "y": 855.984375,
+          "width": 90,
+          "height": 60,
+          "noZoom": "true",
+          "canvas": {
+            "width": 180,
+            "height": 120,
+            "pixel": [
+              0,
+              0,
+              255,
+              255
+            ]
+          }
+        }
+      },
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3c?xml%20version=%271.0%27%20encoding=%27UTF-8%27%20standalone=%27no%27?%3e%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%2740%27%20height=%2740%27%20viewBox=%270%200%2040%2040%27%3e%3crect%20width=%2736.075428%27%20height=%2731.096582%27%20x=%271.962286%27%20y=%274.4517088%27%20id=%27rect4%27%20style=%27fill:%23ffff00;fill-opacity:1;fill-rule:evenodd;stroke:%23000000;stroke-width:1.23004246;stroke-opacity:1%27%20/%3e%3crect%20width=%2727.96859%27%20height=%271.5012145%27%20x=%276.0157046%27%20y=%2710.285%27%20id=%27rect6%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%276.0157056%27%20y=%2723.21689%27%20id=%27rect8%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%275.8130345%27%20y=%2728.964394%27%20id=%27rect10%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%276.0157046%27%20y=%2717.426493%27%20id=%27rect12%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3c/svg%3e",
+          "loaded": true
+        }
+      ],
+      "alpha": [
+        255,
+        255,
+        178,
+        255
+      ],
+      "hash": "2a509ab6845b573f62fb3892e4660e66cc6abc02949afa1c5a069aed96a73746",
+      "duplicateWidgets": 0
+    },
+    {
+      "scale": 2,
+      "rotation": 180,
+      "view": {
+        "width": 1200,
+        "height": 1500
+      },
+      "selection": {
+        "text": "ECTABLE",
+        "quadPoints": [
+          108.04689136656842,
+          464.36,
+          198.29399974368832,
+          464.36,
+          108.04689136656842,
+          445.86,
+          198.29399974368832,
+          445.86
+        ],
+        "rect": {
+          "x": 108.04689136656842,
+          "y": 445.86,
+          "width": 90.2471083771199,
+          "height": 18.5
+        }
+      },
+      "boxes": {
+        "red-no-rotate": {
+          "x": 676,
+          "y": 586,
+          "width": 179.984375,
+          "height": 119.984375,
+          "canvas": {
+            "width": 180,
+            "height": 120,
+            "pixel": [
+              255,
+              0,
+              0,
+              255
+            ]
+          }
+        },
+        "green-no-zoom": {
+          "x": 946,
+          "y": 286,
+          "width": 90,
+          "height": 60,
+          "noZoom": "true",
+          "canvas": {
+            "width": 180,
+            "height": 120,
+            "pixel": [
+              0,
+              255,
+              0,
+              255
+            ]
+          }
+        },
+        "blue-no-zoom-rotate": {
+          "x": 376,
+          "y": 886,
+          "width": 90,
+          "height": 60,
+          "noZoom": "true",
+          "canvas": {
+            "width": 180,
+            "height": 120,
+            "pixel": [
+              0,
+              0,
+              255,
+              255
+            ]
+          }
+        }
+      },
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3c?xml%20version=%271.0%27%20encoding=%27UTF-8%27%20standalone=%27no%27?%3e%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%2740%27%20height=%2740%27%20viewBox=%270%200%2040%2040%27%3e%3crect%20width=%2736.075428%27%20height=%2731.096582%27%20x=%271.962286%27%20y=%274.4517088%27%20id=%27rect4%27%20style=%27fill:%23ffff00;fill-opacity:1;fill-rule:evenodd;stroke:%23000000;stroke-width:1.23004246;stroke-opacity:1%27%20/%3e%3crect%20width=%2727.96859%27%20height=%271.5012145%27%20x=%276.0157046%27%20y=%2710.285%27%20id=%27rect6%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%276.0157056%27%20y=%2723.21689%27%20id=%27rect8%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%275.8130345%27%20y=%2728.964394%27%20id=%27rect10%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%276.0157046%27%20y=%2717.426493%27%20id=%27rect12%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3c/svg%3e",
+          "loaded": true
+        }
+      ],
+      "alpha": [
+        255,
+        255,
+        178,
+        255
+      ],
+      "hash": "2a509ab6845b573f62fb3892e4660e66cc6abc02949afa1c5a069aed96a73746",
+      "duplicateWidgets": 0
+    },
+    {
+      "scale": 2,
+      "rotation": 270,
+      "view": {
+        "width": 1500,
+        "height": 1200
+      },
+      "selection": {
+        "text": "ECTABLE",
+        "quadPoints": [
+          108.04689136656842,
+          464.36,
+          198.29399974368832,
+          464.36,
+          108.04689136656842,
+          445.86,
+          198.29399974368832,
+          445.86
+        ],
+        "rect": {
+          "x": 108.04689136656842,
+          "y": 445.86,
+          "width": 90.2471083771199,
+          "height": 18.5
+        }
+      },
+      "boxes": {
+        "red-no-rotate": {
+          "x": 945.984375,
+          "y": 676,
+          "width": 179.984375,
+          "height": 119.984375,
+          "canvas": {
+            "width": 180,
+            "height": 120,
+            "pixel": [
+              255,
+              0,
+              0,
+              255
+            ]
+          }
+        },
+        "green-no-zoom": {
+          "x": 1185.984375,
+          "y": 946,
+          "width": 60,
+          "height": 90,
+          "noZoom": "true",
+          "canvas": {
+            "width": 180,
+            "height": 120,
+            "pixel": [
+              0,
+              255,
+              0,
+              255
+            ]
+          }
+        },
+        "blue-no-zoom-rotate": {
+          "x": 645.984375,
+          "y": 376,
+          "width": 90,
+          "height": 60,
+          "noZoom": "true",
+          "canvas": {
+            "width": 180,
+            "height": 120,
+            "pixel": [
+              0,
+              0,
+              255,
+              255
+            ]
+          }
+        }
+      },
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3c?xml%20version=%271.0%27%20encoding=%27UTF-8%27%20standalone=%27no%27?%3e%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%2740%27%20height=%2740%27%20viewBox=%270%200%2040%2040%27%3e%3crect%20width=%2736.075428%27%20height=%2731.096582%27%20x=%271.962286%27%20y=%274.4517088%27%20id=%27rect4%27%20style=%27fill:%23ffff00;fill-opacity:1;fill-rule:evenodd;stroke:%23000000;stroke-width:1.23004246;stroke-opacity:1%27%20/%3e%3crect%20width=%2727.96859%27%20height=%271.5012145%27%20x=%276.0157046%27%20y=%2710.285%27%20id=%27rect6%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%276.0157056%27%20y=%2723.21689%27%20id=%27rect8%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%275.8130345%27%20y=%2728.964394%27%20id=%27rect10%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3crect%20width=%2727.96859%27%20height=%270.85783684%27%20x=%276.0157046%27%20y=%2717.426493%27%20id=%27rect12%27%20style=%27fill:%23000000;fill-opacity:1;stroke:none%27%20/%3e%3c/svg%3e",
+          "loaded": true
+        }
+      ],
+      "alpha": [
+        255,
+        255,
+        178,
+        255
+      ],
+      "hash": "2a509ab6845b573f62fb3892e4660e66cc6abc02949afa1c5a069aed96a73746",
+      "duplicateWidgets": 0
+    }
+  ],
+  "angled": {
+    "text": "Angled",
+    "quadPoints": [
+      175.14496140912286,
+      340.41166385747704,
+      220.29360166869841,
+      361.4648205658022,
+      181.3997116828852,
+      326.99830860933463,
+      226.54835194246076,
+      348.0514653176598
+    ],
+    "rect": {
+      "x": 175.14496140912286,
+      "y": 326.99830860933463,
+      "width": 51.4033905333379,
+      "height": 34.46651195646757
+    }
+  },
+  "virtual": {
+    "copy": {
+      "width": 750,
+      "height": 600,
+      "text": "SELECTABLE ORIGINALAngled source textSecond source line",
+      "annotations": 9,
+      "pixel": [
+        255,
+        255,
+        255,
+        255
+      ]
+    },
+    "blank": {
+      "width": 320,
+      "height": 240,
+      "text": "",
+      "annotations": 0,
+      "pixel": [
+        255,
+        255,
+        255,
+        255
+      ]
+    }
+  },
+  "errors": []
+}

@@ -1,3 +1,53 @@
+.zuvi-studio-word-paragraph-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-block: 12px;
+}
+.zuvi-studio-word-keep-fields { display:grid; gap:8px; margin-block:12px; }
+.zuvi-studio-word-keep-fields label { display:flex; justify-content:space-between; gap:8px; align-items:center; }
+.zuvi-studio-word-page-gap { position:relative; width:calc(100% + var(--word-gap-margin) * 2); margin-inline-start:calc(-1 * var(--word-gap-margin)); background:linear-gradient(to bottom,transparent 0 var(--word-gap-start),var(--zuvi-studio-word-stage-bg) var(--word-gap-start) var(--word-gap-end),transparent var(--word-gap-end)); }
+.zuvi-studio-word-page-gap::after { content: '第 ' attr(data-word-auto-page-gap) ' 页结束'; position:absolute; top:var(--word-gap-start); left:0; right:0; height:24px; font:11px/24px sans-serif; color:var(--zuvi-color-fg-muted); text-align:center; }
+.zuvi-studio-word-paragraph-dialog .zuvi-input {
+  width: 100%;
+}
+.zuvi-studio-word-paragraph-preview {
+  border: 1px solid var(--zuvi-color-border);
+  padding: 12px;
+  overflow: auto;
+  min-height: 80px;
+}
+.zuvi-studio-word-content [data-word-line-rule='atLeast'] :is(span, strong, em, u, s, a),
+.zuvi-studio-word-paragraph-preview [data-word-line-rule='atLeast'] :is(span, strong, em, u, s, a) {
+  line-height: max(var(--zuvi-word-min-line), 1.2em);
+}
+.zuvi-studio-word-content [data-word-line-rule='exact'] :is(span, strong, em, u, s, a) {
+  line-height: inherit;
+  vertical-align: top;
+}
+
+.zuvi-studio-word-character-field {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 90px;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.zuvi-studio-word-character-field > span {
+  grid-column: 1 / -1;
+}
+.zuvi-studio-word-character-field .zuvi-input {
+  width: 100%;
+}
+.zuvi-studio-word-character-preview {
+  border: 1px solid var(--zuvi-color-border);
+  padding: 20px 12px;
+  min-height: 72px;
+  overflow: auto;
+}
+.zuvi-studio-word-character-error {
+  color: var(--zuvi-color-danger);
+}
+
 .zuvi-studio-word {
   --zuvi-studio-word-stage-bg: var(--zuvi-office-studio-canvas-bg, var(--zuvi-color-bg-muted));
   --zuvi-studio-word-border: var(--zuvi-color-border);
@@ -354,9 +404,54 @@
   position: sticky;
   top: 0;
   z-index: 1;
-  height: 18px;
+  height: 26px;
+  pointer-events: auto;
   margin-inline: auto;
   margin-block-end: 18px;
+}
+.zuvi-studio-word-ruler-handle.zuvi-button {
+  position: absolute;
+  transform: translateX(-50%);
+  width: 12px;
+  min-width: 12px;
+  height: 8px;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--zuvi-color-fg);
+  pointer-events: auto;
+  touch-action: none;
+  z-index: 2;
+}
+.zuvi-studio-word-ruler-handle > span {
+  width: 10px;
+  height: 7px;
+  background: currentColor;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+.zuvi-studio-word-ruler-handle-first {
+  top: 0;
+}
+.zuvi-studio-word-ruler-handle-hanging {
+  top: 9px;
+}
+.zuvi-studio-word-ruler-handle-hanging > span {
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+.zuvi-studio-word-ruler-handle-left {
+  top: 18px;
+}
+.zuvi-studio-word-ruler-handle-left > span {
+  height: 5px;
+  clip-path: none;
+}
+.zuvi-studio-word-ruler-handle-right {
+  top: 14px;
+}
+.zuvi-studio-word-ruler-handle-right > span {
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
 }
 
 .zuvi-studio-word-ruler-vertical {
@@ -425,6 +520,8 @@
 
 .zuvi-studio-word-body {
   flex: 1 0 auto;
+  position: relative;
+  z-index: 2;
 }
 
 .zuvi-studio-word-region {
@@ -453,6 +550,7 @@
 
 .zuvi-studio-word-region[data-active='true'] {
   border-color: var(--zuvi-color-primary);
+  z-index: 3;
 }
 
 .zuvi-studio-word-region-label {
@@ -491,8 +589,10 @@
 }
 
 .zuvi-studio-word-paper[data-editing-region] .zuvi-studio-word-body,
-.zuvi-studio-word-paper[data-editing-region='header'] .zuvi-studio-word-region[data-region='footer'],
-.zuvi-studio-word-paper[data-editing-region='footer'] .zuvi-studio-word-region[data-region='header'] {
+.zuvi-studio-word-paper[data-editing-region='header']
+  .zuvi-studio-word-region[data-region='footer'],
+.zuvi-studio-word-paper[data-editing-region='footer']
+  .zuvi-studio-word-region[data-region='header'] {
   opacity: 0.48;
 }
 
@@ -525,7 +625,10 @@
   .tiptap
   .zuvi-studio-word-image-node.ProseMirror-selectednode
   .zuvi-studio-word-image,
-.zuvi-studio-word-content .tiptap .zuvi-studio-word-image-node[data-selected] .zuvi-studio-word-image {
+.zuvi-studio-word-content
+  .tiptap
+  .zuvi-studio-word-image-node[data-selected]
+  .zuvi-studio-word-image {
   outline: 3px solid var(--zuvi-color-primary);
   outline-offset: 3px;
 }
@@ -549,6 +652,81 @@
 
 .zuvi-studio-word-image-node[data-selected] .zuvi-studio-word-image-resize {
   display: block;
+}
+
+.zuvi-studio-word-content .tiptap {
+  isolation: isolate;
+}
+.zuvi-studio-word-content .tiptap :is(p, h1, h2, h3, h4, h5, h6) {
+  position: relative;
+}
+.zuvi-studio-word-content .tiptap .zuvi-studio-word-image-node[data-wrap='front'],
+.zuvi-studio-word-content .tiptap .zuvi-studio-word-image-node[data-wrap='behind'] {
+  position: absolute;
+}
+.zuvi-studio-word-content .tiptap .zuvi-studio-word-image-node[data-selected][data-wrap='behind'] {
+  z-index: 100 !important;
+}
+.zuvi-studio-word-image-move {
+  position: absolute;
+  left: -8px;
+  top: -8px;
+  display: none;
+  width: 20px;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background: var(--zuvi-color-primary);
+  color: white;
+  cursor: move;
+  touch-action: none;
+  font: 16px/1 sans-serif;
+}
+.zuvi-studio-word-image-node[data-selected][data-wrap] .zuvi-studio-word-image-move {
+  display: flex;
+}
+.zuvi-studio-word-image-move:focus-visible {
+  outline: 2px solid var(--zuvi-color-focus-ring);
+  outline-offset: 3px;
+}
+.zuvi-studio-word-image-layout {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-width: 920px;
+}
+.zuvi-studio-word-image-position-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.zuvi-studio-word-image-position-axis {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--zuvi-color-border);
+  padding: 12px;
+  border-radius: var(--zuvi-radius-md);
+  min-width: 0;
+  width: 100%;
+}
+.zuvi-studio-word-image-position-axis > legend {
+  color: var(--zuvi-color-fg-muted);
+  font-size: 12px;
+  padding-inline: 4px;
+}
+.zuvi-studio-word-image-number-label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+}
+.zuvi-studio-word-image-number-label > .zuvi-input {
+  width: 100px;
 }
 
 .zuvi-studio-word-page-number {
@@ -601,6 +779,73 @@
 
 .zuvi-studio-word-content .tiptap p {
   margin: 0 0 0.65em;
+}
+
+.zuvi-studio-word-tab {
+  display: inline-block;
+  position: relative;
+  white-space: pre;
+  tab-size: 0;
+  text-indent: 0;
+  width: 36pt;
+  vertical-align: baseline;
+  overflow: hidden;
+}
+.zuvi-studio-word-tab::after {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.zuvi-studio-word-tab[data-word-leader='dot']::after { content: '................................................................................................................................................................................................'; }
+.zuvi-studio-word-tab[data-word-leader='middleDot']::after { content: '··········································································································································································'; }
+.zuvi-studio-word-tab[data-word-leader='hyphen']::after { content: '------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------'; }
+.zuvi-studio-word-tab[data-word-leader='underscore']::after,
+.zuvi-studio-word-tab[data-word-leader='heavy']::after { content: ''; bottom: 0.2em; border-bottom: 1px solid currentColor; }
+.zuvi-studio-word-tab[data-word-leader='heavy']::after { border-bottom-width: 2px; }
+.zuvi-studio-word-tabs-list { display: flex; flex-direction: column; max-height: 160px; overflow: auto; margin-block: 8px; }
+.zuvi-studio-word-tabs-list button { justify-content: flex-start; text-align: start; white-space: normal; height: auto; min-height: 32px; }
+.zuvi-studio-word-tabs-actions { display: flex; flex-wrap: wrap; gap: 4px; margin-block: 12px; }
+.zuvi-studio-word-tabs-dialog label { display: block; }
+
+.zuvi-studio-word-nonprinting-space,
+.zuvi-studio-word-nonprinting-end {
+  position: relative;
+}
+
+.zuvi-studio-word-nonprinting-space::before,
+.zuvi-studio-word-nonprinting-end::before {
+  position: absolute;
+  inset-inline-start: 0;
+  color: var(--zuvi-color-primary);
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: none;
+  pointer-events: none;
+  user-select: none;
+}
+
+.zuvi-studio-word-nonprinting-space::before {
+  width: 100%;
+  text-align: center;
+}
+
+[data-word-nonprinting='space']::before {
+  content: '·';
+}
+[data-word-nonprinting='tab']::before {
+  content: '→';
+}
+[data-word-nonprinting='nbsp']::before {
+  content: '°';
+}
+[data-word-nonprinting='paragraph']::before {
+  content: '¶';
+}
+[data-word-nonprinting='line-break']::before {
+  content: '↵';
 }
 
 .zuvi-studio-word-content .tiptap h1,
@@ -658,6 +903,21 @@
 .zuvi-studio-word-content .tiptap ol > li::before {
   content: counters(zuvi-ol, '.', decimal) '. ';
 }
+.zuvi-studio-word-content .tiptap :is(ol,ul)[data-word-list-instance] { padding-inline-start:0; list-style:none; }
+.zuvi-studio-word-content .tiptap :is(ol,ul)[data-word-list-instance] > li::before { content:none; }
+.zuvi-studio-word-content [data-word-numbering-label] { position:relative; }
+.zuvi-studio-word-content [data-word-numbering-label]::before { content:attr(data-word-numbering-label); position:absolute; left:var(--zuvi-numbering-hang,-18pt); transform:translateX(var(--zuvi-numbering-shift,0%)); text-indent:0; top:0; pointer-events:none; white-space:pre; font-family:var(--zuvi-numbering-family,inherit); font-size:var(--zuvi-numbering-size,inherit); color:var(--zuvi-numbering-color,inherit); font-weight:var(--zuvi-numbering-weight,inherit); font-style:var(--zuvi-numbering-style,inherit); }
+.zuvi-studio-word-paragraph-group input[aria-label='编号起始值'] { width:64px; }
+.zuvi-studio-word-numbering-fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-block:12px; }
+.zuvi-studio-word-numbering-fields label { display:flex; flex-direction:column; gap:4px; min-width:0; }
+.zuvi-studio-word-numbering-choice,.zuvi-studio-word-numbering-checks { display:flex; flex-wrap:wrap; gap:8px; margin-block:12px; }
+.zuvi-studio-word-numbering-preview { border:1px solid var(--zuvi-color-border); padding:16px; margin-block:12px; }
+.zuvi-studio-word-surface-fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-block:12px; }
+.zuvi-studio-word-surface-fields label { display:flex; flex-direction:column; min-width:0; gap:4px; }
+.zuvi-studio-word-surface-presets { display:flex; flex-wrap:wrap; gap:8px; margin-block:12px; }
+.zuvi-studio-word-surface-preview { margin-block:16px; min-height:72px; }
+@media(max-width:480px) { .zuvi-studio-word-surface-fields { grid-template-columns:1fr; } }
+@media(max-width:480px) { .zuvi-studio-word-numbering-fields { grid-template-columns:1fr; } }
 
 .zuvi-studio-word-content .tiptap li > ol {
   padding-inline-start: 1.6em;
@@ -714,6 +974,29 @@
 .zuvi-studio-word-content .tiptap td p:last-child,
 .zuvi-studio-word-content .tiptap th p:last-child {
   margin-bottom: 0;
+}
+
+.zuvi-studio-word-content .tiptap tr[data-word-row-height-rule='exact'][data-word-row-height] {
+  height: var(--zuvi-word-row-render-height, var(--zuvi-word-row-height)) !important;
+}
+.zuvi-studio-word-content .tiptap tr[data-word-row-height-rule='exact'][data-word-row-height] > :is(td, th):not([rowspan]:not([rowspan='1'])),
+.zuvi-studio-word-content .tiptap :is(td, th)[data-word-fixed-cell-height] {
+  padding-block: 0 !important;
+}
+.zuvi-studio-word-content .tiptap tr[data-word-row-height-rule='exact'][data-word-row-height] > :is(td, th):not([rowspan]:not([rowspan='1'])) > [data-word-cell-content],
+.zuvi-studio-word-content .tiptap :is(td, th)[data-word-fixed-cell-height] > [data-word-cell-content] {
+  display: flex;
+  flex-direction: column;
+  justify-content: var(--zuvi-word-cell-justify, flex-start);
+  box-sizing: border-box;
+  height: max(0px, calc(var(--zuvi-word-cell-height, var(--zuvi-word-row-height)) - var(--zuvi-word-cell-border-y, 1px)));
+  padding-top: max(0px, min(var(--zuvi-word-cell-margin-top, 0pt), calc(var(--zuvi-word-cell-height, var(--zuvi-word-row-height)) - var(--zuvi-word-cell-border-y, 1px))));
+  padding-bottom: max(0px, min(var(--zuvi-word-cell-margin-bottom, 0pt), calc(var(--zuvi-word-cell-height, var(--zuvi-word-row-height)) - var(--zuvi-word-cell-border-y, 1px) - var(--zuvi-word-cell-margin-top, 0pt))));
+  overflow: hidden;
+}
+
+.zuvi-studio-word-content .tiptap [data-word-cell-content] > * {
+  flex-shrink: 0;
 }
 
 .zuvi-studio-word-content .tiptap .selectedCell::after {
@@ -854,6 +1137,9 @@
 }
 
 @media print {
+  [data-word-nonprinting]::before {
+    display: none;
+  }
   .zuvi-studio-word-ribbon,
   .zuvi-studio-word-status {
     display: none;
@@ -998,4 +1284,143 @@
   align-items: center;
   padding: var(--zuvi-space-1) 0;
   border-block: 1px dashed var(--zuvi-studio-word-border);
+}
+/* Named styles materialize run formatting, so removing a run mark also works in headings. */
+.zuvi-studio-word-content :is(p, h1, h2, h3, h4, h5, h6)[data-word-style] {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: normal;
+  font-style: normal;
+  color: inherit;
+}
+
+.zuvi-studio-word-style-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 16px;
+}
+
+.zuvi-studio-word-style-form > label,
+.zuvi-studio-word-style-background > label:not(.zuvi-checkbox) {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 12px;
+}
+
+.zuvi-studio-word-style-background {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.zuvi-studio-word-style-hint {
+  font-size: 12px;
+  color: var(--zuvi-color-fg-muted);
+}
+
+.zuvi-studio-word-style-live-preview {
+  margin-top: 16px;
+  padding: 16px;
+  min-height: 72px;
+  border: 1px solid var(--zuvi-color-border);
+  border-radius: var(--zuvi-radius-md);
+  background: white;
+  overflow-wrap: anywhere;
+}
+
+.zuvi-studio-word-style-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+@media (max-width: 480px) {
+  .zuvi-studio-word-style-form {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.zuvi-studio-word-page-gap[data-word-cell-page-gap]:not([data-word-cell-page-label])::after { content: none; }
+
+.zuvi-studio-word-page-gap[data-word-cell-page-label]::before {
+  content: '';
+  position: absolute;
+  left: var(--word-table-gap-left);
+  width: var(--word-table-gap-width);
+  top: var(--word-gap-start);
+  height: calc(var(--word-gap-end) - var(--word-gap-start));
+  background: var(--zuvi-studio-word-stage-bg);
+  z-index: 1;
+  pointer-events: none;
+}
+.zuvi-studio-word-page-gap[data-word-cell-page-label]::after {
+  left: var(--word-table-gap-left);
+  right: auto;
+  width: var(--word-table-gap-width);
+  z-index: 2;
+}
+.zuvi-studio-word-content .tiptap .tableWrapper:has([data-word-cell-page-gap]),
+.zuvi-studio-word-content .tiptap table:has([data-word-cell-page-gap]) {
+  overflow: visible;
+}
+
+.zuvi-studio-word-content .tiptap [data-word-line-rule='exact'] [data-word-baselineshift] {
+  vertical-align: top !important;
+  position: relative;
+  top: calc(-1 * var(--zuvi-word-baseline-shift, 0pt));
+}
+
+.zuvi-studio-word-cell-align-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+}
+.zuvi-studio-word-cell-margins-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-block: 8px;
+}
+.zuvi-studio-word-cell-margins-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+/* Row-specific native gaps occupy space outside the visible cell box. */
+.zuvi-studio-word-content .tiptap table[data-word-spacing-layout='mixed'] > tbody > tr:not([data-word-auto-page-row]) > :is(td, th) {
+  padding-top: calc(var(--zuvi-word-row-spacing, 0pt) / 2) !important;
+  padding-bottom: calc(var(--zuvi-word-cell-end-spacing, var(--zuvi-word-row-spacing, 0pt)) / 2) !important;
+  padding-left: var(--zuvi-word-cell-gap-left, calc(var(--zuvi-word-row-spacing, 0pt) / 2)) !important;
+  padding-right: var(--zuvi-word-cell-gap-right, calc(var(--zuvi-word-row-spacing, 0pt) / 2)) !important;
+  border: 0 !important;
+  background: transparent !important;
+  vertical-align: top !important;
+}
+.zuvi-studio-word-content .tiptap table[data-word-spacing-layout='mixed'] > tbody > tr:not([data-word-auto-page-row]) > :is(td, th):first-child {
+  padding-left: var(--zuvi-word-cell-gap-left, var(--zuvi-word-row-spacing, 0pt)) !important;
+}
+.zuvi-studio-word-content .tiptap table[data-word-spacing-layout='mixed'] > tbody > tr:not([data-word-auto-page-row]) > :is(td, th):last-child {
+  padding-right: var(--zuvi-word-cell-gap-right, var(--zuvi-word-row-spacing, 0pt)) !important;
+}
+.zuvi-studio-word-content .tiptap table[data-word-spacing-layout='mixed'] > tbody > tr:not([data-word-auto-page-row]) > :is(td, th) > [data-word-cell-content] {
+  display: flex;
+  flex-direction: column;
+  justify-content: var(--zuvi-word-cell-justify, flex-start);
+  border: 1px solid currentColor;
+  background: var(--zuvi-word-cell-background, transparent);
+  padding: var(--zuvi-word-cell-margin-top, 0pt) var(--zuvi-word-cell-margin-right, 5.4pt) var(--zuvi-word-cell-margin-bottom, 0pt) var(--zuvi-word-cell-margin-left, 5.4pt);
+  box-sizing: border-box;
+}
+.zuvi-studio-word-content .tiptap table[data-word-spacing-layout='mixed'] > tbody > tr[data-word-row-height-rule='exact'][data-word-row-height] > :is(td, th):not([rowspan]:not([rowspan='1'])),
+.zuvi-studio-word-content .tiptap table[data-word-spacing-layout='mixed'] > tbody > tr > :is(td, th)[data-word-fixed-cell-height] {
+  padding-top: calc(var(--zuvi-word-row-spacing, 0pt) / 2) !important;
+  padding-bottom: calc(var(--zuvi-word-cell-end-spacing, var(--zuvi-word-row-spacing, 0pt)) / 2) !important;
+}
+.zuvi-studio-word-content .tiptap table[data-word-spacing-layout='mixed'] > tbody > tr[data-word-row-height-rule='exact'][data-word-row-height] > :is(td, th):not([rowspan]:not([rowspan='1'])) > [data-word-cell-content],
+.zuvi-studio-word-content .tiptap table[data-word-spacing-layout='mixed'] > tbody > tr > :is(td, th)[data-word-fixed-cell-height] > [data-word-cell-content] {
+  height: var(--zuvi-word-cell-height);
+  overflow: hidden;
 }

@@ -1,0 +1,60 @@
+{
+  "status": "first-browser-run-failed",
+  "suite": {
+    "passed": 11,
+    "failed": 2
+  },
+  "failure": "Initial exact state comparison: computed logical start versus physical native left, before geometry or editing",
+  "measurementCorrection": "Resolve start/end using each paragraph computed direction; preserve all other textAlign values and full state/coordinate assertions",
+  "files": [
+    {
+      "source": "test-results/office-studio-word-cell-ma-098e3-wo-native-reopens-and-print-chromium/trace.zip",
+      "archived": "docs/audits/2026-11-26/word-cell-properties/mapping/first-browser-default-alignment/merged/trace.zip",
+      "bytes": 2414169,
+      "sha256": "0f667e583330c8ff081f1bce9fc88ead3d07ef4f995f995f13f66756ff659e30"
+    },
+    {
+      "source": "test-results/office-studio-word-cell-ma-098e3-wo-native-reopens-and-print-chromium/error-context.md",
+      "archived": "docs/audits/2026-11-26/word-cell-properties/mapping/first-browser-default-alignment/merged/error-context.md",
+      "bytes": 54905,
+      "sha256": "d7431aeac1038392d2463c9545a9e5a97d0cd2efb21a6d6a2ab8f5eb9966f389",
+      "originalBytes": 54907,
+      "originalSha256": "4530fae5a7841bf142ff9add1279affa3b162fd8aabbe2e0fb31b9da2ed3b3a6",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f"
+    },
+    {
+      "source": "test-results/office-studio-word-cell-ma-3c3fa-ile-retaining-explicit-zero-chromium/trace.zip",
+      "archived": "docs/audits/2026-11-26/word-cell-properties/mapping/first-browser-default-alignment/inheritance/trace.zip",
+      "bytes": 2243515,
+      "sha256": "784730db50ebf4c0a5b819c398232e020768a490ed1292d37d3bd6ecafc68bbc"
+    },
+    {
+      "source": "test-results/office-studio-word-cell-ma-3c3fa-ile-retaining-explicit-zero-chromium/error-context.md",
+      "archived": "docs/audits/2026-11-26/word-cell-properties/mapping/first-browser-default-alignment/inheritance/error-context.md",
+      "bytes": 53095,
+      "sha256": "95458b3c96839849ac2a9ecf8c2484f6f09c8830e12469fa70abb81cc5865708",
+      "originalBytes": 53097,
+      "originalSha256": "2b260ca3aa881407fd20656903a300b00b3ad2254c42a731aa42c89ce273c54d",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f"
+    },
+    {
+      "source": "/tmp/zuvi-office-new-native-e2e-final.txt",
+      "archived": "docs/audits/2026-11-26/word-cell-properties/mapping/first-browser-default-alignment/run.txt",
+      "bytes": 10870,
+      "sha256": "c37fc1b6bc39006a1aa44c670980e2cf898bc3a5a2ca7d9d7f8278a9384f4ab1",
+      "originalBytes": 10874,
+      "originalSha256": "17f9bfc41f0e810c03bdc6f5072d1cde3adc80bd1066771ac6a19e8705395456",
+      "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f"
+    }
+  ],
+  "sourceTestResultsModified": false,
+  "textNormalization": {
+    "manifest": "docs/audits/2026-11-26/word-cell-properties/text-normalization-manifest.json",
+    "originalCommit": "c192b339cfec8844bc06dc25040c8c07b9d1aa2f",
+    "sourceTestResultsModified": false,
+    "operations": [
+      "remove line-final ASCII spaces and tabs",
+      "remove blank lines at EOF, retaining one terminal LF"
+    ]
+  }
+}

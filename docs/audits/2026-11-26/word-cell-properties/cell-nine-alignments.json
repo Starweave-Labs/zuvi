@@ -1,0 +1,56 @@
+{
+  "上左": {
+    "top": 3,
+    "left": 0,
+    "height": 103.65625,
+    "align": "left"
+  },
+  "上中": {
+    "top": 3,
+    "left": 147.484375,
+    "height": 103.65625,
+    "align": "center"
+  },
+  "上右": {
+    "top": 3,
+    "left": 294.984375,
+    "height": 103.65625,
+    "align": "right"
+  },
+  "中左": {
+    "top": 37,
+    "left": 0,
+    "height": 103.65625,
+    "align": "left"
+  },
+  "中中": {
+    "top": 37,
+    "left": 147.484375,
+    "height": 103.65625,
+    "align": "center"
+  },
+  "中右": {
+    "top": 37,
+    "left": 294.984375,
+    "height": 103.65625,
+    "align": "right"
+  },
+  "下左": {
+    "top": 71,
+    "left": 0,
+    "height": 103.65625,
+    "align": "left"
+  },
+  "下中": {
+    "top": 71,
+    "left": 147.484375,
+    "height": 103.65625,
+    "align": "center"
+  },
+  "下右": {
+    "top": 71,
+    "left": 294.984375,
+    "height": 103.65625,
+    "align": "right"
+  }
+}

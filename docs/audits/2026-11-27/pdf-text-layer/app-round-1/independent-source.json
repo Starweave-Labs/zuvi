@@ -1,0 +1,238 @@
+[
+  {
+    "file": "renderer-source.pdf",
+    "sha256": "dfd10fa0ce4c13b9335e99afcd07276128c6a40732b4bc3ce41ad0a581203474",
+    "pages": [
+      {
+        "mediaBox": [
+          0,
+          0,
+          500,
+          600
+        ],
+        "cropBox": [
+          40,
+          30,
+          440,
+          530
+        ],
+        "userUnit": 1.5,
+        "rotation": 0,
+        "text": "SELECTABLE ORIGINAL\nAngled source text\nSecond source line\n",
+        "annotations": [
+          {
+            "key": "{'/Type': '/Annot', '/Subtype': '/Square', '/Rect': [220, 180, 280, 220], '/P': IndirectObject(5, 0, 4381648192), '/F': 20, '/AP': {'/N': IndirectObject(7, 0, 4381648192)}, '/NM': 'red-no-rotate', '/Contents': 'red-no-rotate', '/ZuviAnnotationId': 'red-no-rotate'}",
+            "subtype": "/Square",
+            "flags": 20,
+            "rect": [
+              220,
+              180,
+              280,
+              220
+            ],
+            "hasAP": true,
+            "name": "red-no-rotate"
+          },
+          {
+            "key": "{'/Type': '/Annot', '/Subtype': '/Square', '/Rect': [100, 100, 160, 140], '/P': IndirectObject(5, 0, 4381648192), '/F': 12, '/AP': {'/N': IndirectObject(9, 0, 4381648192)}, '/NM': 'green-no-zoom', '/Contents': 'green-no-zoom', '/ZuviAnnotationId': 'green-no-zoom'}",
+            "subtype": "/Square",
+            "flags": 12,
+            "rect": [
+              100,
+              100,
+              160,
+              140
+            ],
+            "hasAP": true,
+            "name": "green-no-zoom"
+          },
+          {
+            "key": "{'/Type': '/Annot', '/Subtype': '/Square', '/Rect': [320, 280, 380, 320], '/P': IndirectObject(5, 0, 4381648192), '/F': 28, '/AP': {'/N': IndirectObject(11, 0, 4381648192)}, '/NM': 'blue-no-zoom-rotate', '/Contents': 'blue-no-zoom-rotate', '/ZuviAnnotationId': 'blue-no-zoom-rotate'}",
+            "subtype": "/Square",
+            "flags": 28,
+            "rect": [
+              320,
+              280,
+              380,
+              320
+            ],
+            "hasAP": true,
+            "name": "blue-no-zoom-rotate"
+          },
+          {
+            "key": "{'/Type': '/Annot', '/Subtype': '/Text', '/P': IndirectObject(5, 0, 4381648192), '/F': 4, '/Rect': [80, 350, 102, 372], '/Name': '/Note', '/Contents': 'Original note', '/ZuviAnnotationId': 'no-ap-note'}",
+            "subtype": "/Text",
+            "flags": 4,
+            "rect": [
+              80,
+              350,
+              102,
+              372
+            ],
+            "hasAP": false,
+            "name": "Original note"
+          },
+          {
+            "key": "{'/Type': '/Annot', '/Subtype': '/Highlight', '/P': IndirectObject(5, 0, 4381648192), '/F': 4, '/Rect': [80, 250, 200, 270], '/QuadPoints': [80, 270, 200, 270, 80, 250, 200, 250], '/C': [1, 1, 0], '/CA': 0.3, '/AP': {'/N': IndirectObject(15, 0, 4381648192)}, '/NM': 'single-alpha', '/ZuviAnnotationId': 'single-alpha'}",
+            "subtype": "/Highlight",
+            "flags": 4,
+            "rect": [
+              80,
+              250,
+              200,
+              270
+            ],
+            "hasAP": true,
+            "name": "single-alpha"
+          },
+          {
+            "key": "{'/Type': '/Annot', '/Subtype': '/Widget', '/Rect': [249.5, 69.5, 380.5, 95.5], '/Parent': IndirectObject(18, 0, 4381648192), '/P': IndirectObject(5, 0, 4381648192), '/MK': {'/BG': [1, 1, 1], '/R': 0, '/BC': [0, 0, 0]}, '/BS': {'/W': 1}, '/F': 4, '/AP': {'/N': IndirectObject(20, 0, 4381648192)}}",
+            "subtype": "/Widget",
+            "flags": 4,
+            "rect": [
+              249.5,
+              69.5,
+              380.5,
+              95.5
+            ],
+            "hasAP": true,
+            "name": ""
+          }
+        ]
+      }
+    ],
+    "fields": {
+      "source-field": {
+        "type": "/Tx",
+        "value": "Field value"
+      }
+    }
+  },
+  {
+    "file": "app-source.pdf",
+    "sha256": "1b04446506254849c7d574ef33a254c1bfc9bfb93a008303150a9768fa945276",
+    "pages": [
+      {
+        "mediaBox": [
+          0,
+          0,
+          500,
+          600
+        ],
+        "cropBox": [
+          40,
+          30,
+          440,
+          530
+        ],
+        "userUnit": 1.5,
+        "rotation": 0,
+        "text": "SELECTABLE ORIGINAL\nAngled source text\nSecond source line\n",
+        "annotations": [
+          {
+            "key": "{'/Type': '/Annot', '/Subtype': '/Square', '/Rect': [220, 180, 280, 220], '/P': IndirectObject(5, 0, 4483906160), '/F': 20, '/AP': {'/N': IndirectObject(7, 0, 4483906160)}, '/NM': 'red-no-rotate', '/Contents': 'red-no-rotate', '/ZuviAnnotationId': 'red-no-rotate'}",
+            "subtype": "/Square",
+            "flags": 20,
+            "rect": [
+              220,
+              180,
+              280,
+              220
+            ],
+            "hasAP": true,
+            "name": "red-no-rotate"
+          },
+          {
+            "key": "{'/Type': '/Annot', '/Subtype': '/Square', '/Rect': [100, 100, 160, 140], '/P': IndirectObject(5, 0, 4483906160), '/F': 12, '/AP': {'/N': IndirectObject(9, 0, 4483906160)}, '/NM': 'green-no-zoom', '/Contents': 'green-no-zoom', '/ZuviAnnotationId': 'green-no-zoom'}",
+            "subtype": "/Square",
+            "flags": 12,
+            "rect": [
+              100,
+              100,
+              160,
+              140
+            ],
+            "hasAP": true,
+            "name": "green-no-zoom"
+          },
+          {
+            "key": "{'/Type': '/Annot', '/Subtype': '/Square', '/Rect': [320, 280, 380, 320], '/P': IndirectObject(5, 0, 4483906160), '/F': 28, '/AP': {'/N': IndirectObject(11, 0, 4483906160)}, '/NM': 'blue-no-zoom-rotate', '/Contents': 'blue-no-zoom-rotate', '/ZuviAnnotationId': 'blue-no-zoom-rotate'}",
+            "subtype": "/Square",
+            "flags": 28,
+            "rect": [
+              320,
+              280,
+              380,
+              320
+            ],
+            "hasAP": true,
+            "name": "blue-no-zoom-rotate"
+          },
+          {
+            "key": "{'/Type': '/Annot', '/Subtype': '/Text', '/P': IndirectObject(5, 0, 4483906160), '/F': 4, '/Rect': [80, 350, 102, 372], '/Name': '/Note', '/Contents': 'Original note', '/ZuviAnnotationId': 'no-ap-note'}",
+            "subtype": "/Text",
+            "flags": 4,
+            "rect": [
+              80,
+              350,
+              102,
+              372
+            ],
+            "hasAP": false,
+            "name": "Original note"
+          },
+          {
+            "key": "{'/Type': '/Annot', '/Subtype': '/Highlight', '/P': IndirectObject(5, 0, 4483906160), '/F': 4, '/Rect': [80, 250, 200, 270], '/QuadPoints': [80, 270, 200, 270, 80, 250, 200, 250], '/C': [1, 1, 0], '/CA': 0.3, '/AP': {'/N': IndirectObject(15, 0, 4483906160)}, '/NM': 'single-alpha', '/ZuviAnnotationId': 'single-alpha'}",
+            "subtype": "/Highlight",
+            "flags": 4,
+            "rect": [
+              80,
+              250,
+              200,
+              270
+            ],
+            "hasAP": true,
+            "name": "single-alpha"
+          },
+          {
+            "key": "{'/Type': '/Annot', '/Subtype': '/Widget', '/Rect': [249.5, 69.5, 380.5, 95.5], '/Parent': IndirectObject(18, 0, 4483906160), '/P': IndirectObject(5, 0, 4483906160), '/MK': {'/BG': [1, 1, 1], '/R': 0, '/BC': [0, 0, 0]}, '/BS': {'/W': 1}, '/F': 4, '/AP': {'/N': IndirectObject(20, 0, 4483906160)}}",
+            "subtype": "/Widget",
+            "flags": 4,
+            "rect": [
+              249.5,
+              69.5,
+              380.5,
+              95.5
+            ],
+            "hasAP": true,
+            "name": ""
+          }
+        ]
+      },
+      {
+        "mediaBox": [
+          0,
+          0,
+          320,
+          420
+        ],
+        "cropBox": [
+          0,
+          0,
+          320,
+          420
+        ],
+        "userUnit": 1,
+        "rotation": 90,
+        "text": "Searchable second source page\n",
+        "annotations": []
+      }
+    ],
+    "fields": {
+      "source-field": {
+        "type": "/Tx",
+        "value": "Field value"
+      }
+    }
+  }
+]

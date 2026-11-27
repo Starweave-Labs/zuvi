@@ -1,0 +1,2 @@
+"use client";import{jsxs as s,jsx as t}from"react/jsx-runtime";import{S as r}from"./index-Dfwfv4f2.js";function a({spin:a,...e}){return s(r,{...e,children:[t("path",{d:"M4 7V4h16v3"}),t("path",{d:"M9 20h6"}),t("path",{d:"M12 4v16"})]})}export{a as T};
+//# sourceMappingURL=Type-BeBmUqvf.js.map

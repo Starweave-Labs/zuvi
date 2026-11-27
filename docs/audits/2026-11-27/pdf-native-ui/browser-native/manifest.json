@@ -1,0 +1,1574 @@
+{
+  "version": 1,
+  "status": "verified-current-slice",
+  "finalizedAt": "2026-11-27T00:23:18.596Z",
+  "ledgerScope": [
+    "P012",
+    "P014",
+    "P015",
+    "P016"
+  ],
+  "nativeTypes": [
+    "FreeText",
+    "Text",
+    "Highlight",
+    "Underline",
+    "StrikeOut",
+    "Squiggly",
+    "Square",
+    "Ink",
+    "Circle",
+    "Line",
+    "Polygon",
+    "PolyLine"
+  ],
+  "actualBrowser": {
+    "pass": 10,
+    "fail": 0,
+    "duration": "2.7m",
+    "port": 5275,
+    "command": "ZUVI_E2E_PORT=5275 pnpm exec playwright test --config=e2e/playwright.config.ts e2e/office-studio-pdf-native-annotations.spec.ts --workers=1 --output=/tmp/zuvi-pdf-native-ui-final-results",
+    "spec": {
+      "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+      "bytes": 54707,
+      "sha256": "38b2ffeeccb77a48658ead2197dacd4219b4d5b4d1e45944451b65c74f8ab11e"
+    },
+    "logs": {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt",
+      "bytes": 2719,
+      "sha256": "878cbabb8efb16cc9bc502b6a24aa608a7d2488de37046781e150eb9ba60e28e"
+    },
+    "results": {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/final-results/.last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    }
+  },
+  "nativeCodecComposition": {
+    "pass": 150,
+    "fail": 0,
+    "command": "node --test --test-reporter=spec docs/tests/studio-pdf-native*.test.mjs docs/tests/studio-pdf-codec.test.mjs docs/tests/studio-pdf-composition.test.mjs",
+    "log": {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/native-codec-composition-150.txt",
+      "bytes": 17526,
+      "sha256": "407c52f74e1a90bba03a61676eec65fc992a9b9e41a1bc32dcd755fc56794243"
+    }
+  },
+  "typesAndLint": {
+    "nativeSourceNoEmit": 0,
+    "browserSpecNoEmit": 0,
+    "ownedEslint": 0,
+    "browserTypesConfig": {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/browser-spec-types.json",
+      "bytes": 824,
+      "sha256": "3d42801fb8b361742069bd663ae71352004f8c84b225bbd70ce4fc77a410ea4b"
+    },
+    "auditAndSpecLint": {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/audit-and-spec-eslint.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "globalEslintAfterProbeRepair": {
+      "exitCode": 0,
+      "log": {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/global-eslint-after-probe-repair.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  "independentPypdf": {
+    "files": 19,
+    "status": "passed",
+    "proof": {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/independent-pypdf.json",
+      "bytes": 278291,
+      "sha256": "95c803c5a0dd97a71c4410e77be31898ee62e75546ff91f8f20404e9a646a828"
+    }
+  },
+  "renderers": {
+    "poppler": {
+      "pages": 20,
+      "status": "passed"
+    },
+    "pdfjs": {
+      "pages": 18,
+      "status": "passed",
+      "version": "6.5.438",
+      "freeTextPaintCount": 1,
+      "cjkGlyphTextMatchesContents": true
+    },
+    "actualApp": {
+      "images": 13,
+      "status": "passed",
+      "sourceOfTruth": "Actual latest OfficeStudio App screenshots",
+      "cjkDiagnosis": "docs/audits/2026-11-27/pdf-text-layer/cjk-native-display/README.md"
+    },
+    "visual": {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/visual-review.json",
+      "bytes": 12846,
+      "sha256": "544499a91cf36288ee99769057ab2218fd5cedf565c8f288068fb89574b77ead"
+    }
+  },
+  "productionSource": [
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/api.ts",
+      "bytes": 9698,
+      "sha256": "25eb9723988b44e4ac29ed97253aa465385193c57309b68742b0c62fd38ff205"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/appearance-parser.ts",
+      "bytes": 11447,
+      "sha256": "bddce063ae3bc5cd76eeeaab0afbea63729470840d6956aa2266dbd52739ac2c"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/appearance.ts",
+      "bytes": 12631,
+      "sha256": "eeaf0761cf1f7b51f73ed2afe71172a859021d7bfe5f4cdf69f3b76cef205334"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/colors.ts",
+      "bytes": 3565,
+      "sha256": "61fdf7c1a6e0064249de488ed55aadd3c560cf2e4bbd39ec055c07090aae11f0"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/constants.ts",
+      "bytes": 1153,
+      "sha256": "cbcdec0f4494e86959fc7e7e8a63ad437bfa20e305338a2c44678f8aa468d2fb"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/export.ts",
+      "bytes": 9981,
+      "sha256": "690a2775d0b6ad164e487b8f90b09b730870c0fe27026b9efe2d8c0c4749c70e"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/font-reader.ts",
+      "bytes": 5326,
+      "sha256": "78925a224189d63182f66ca1feccfbaa8e53546202ce1ca87628a2664d5756b7"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/fonts.ts",
+      "bytes": 5648,
+      "sha256": "1657c54574227f2e51c5e44d9023a1619292fed0bbec24ff2dd74190587faeb1"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/geometry.ts",
+      "bytes": 4075,
+      "sha256": "6404a8d473b0f8dfe7e33d55b7947dcc0d463e223a29d014b8ffdbdfda3668fd"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/host-fonts.ts",
+      "bytes": 2112,
+      "sha256": "458a229094bdfc3297c215495155a387aff38004c185189cb4548d853416a732"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/index.ts",
+      "bytes": 236,
+      "sha256": "3f00b56997d63bf5add1c03ee52c6bc05897a540fde4f0400c998ae0f7253a23"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/mapping.ts",
+      "bytes": 15438,
+      "sha256": "0281e1d06ab42bbb06e8c8a8916c9587549e98ed6cdae2727f175fbfa5a39233"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/model-edit.ts",
+      "bytes": 15241,
+      "sha256": "f465f3ac1f5d5ee779e4cca9a96843687f53eeb166e11847ffae0fc58fb66a72"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/objects.ts",
+      "bytes": 9787,
+      "sha256": "837230f3b4aecd71b3c8ee4ea87825ce050f8e8a390a908853cd7af1f9c3c2ed"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/parser-types.ts",
+      "bytes": 561,
+      "sha256": "cdd4768ea124a71fd477da0ef748321bb8cb4f4c285dea6cbc73a8195f21f26f"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/public-model.ts",
+      "bytes": 16486,
+      "sha256": "89eb01e11b6228461d8638d3fb280b581cca7639162f7da438629ee55828c414"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/public-types.ts",
+      "bytes": 108,
+      "sha256": "3251160ae2c78b16e88d874b8c358b823233fff83408224bd6c2aeabedede5c1"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/read.ts",
+      "bytes": 17805,
+      "sha256": "bb27bbee0ce68b7fac7305c572e77359ef7f4cb8b621440ba5a74b9f24ce7733"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/runtime.ts",
+      "bytes": 853,
+      "sha256": "df9ddee50100c18eb8b44f4e8b032c324d3814fe417f6edd0a5a1e952dd5b580"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/types.ts",
+      "bytes": 5802,
+      "sha256": "4d87fadf76ad780561e8f8f3a1ceb145525ea74b96181f450547cc467f4e341b"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/workspace-composition.ts",
+      "bytes": 2593,
+      "sha256": "643490ea1c17b9ad244d7e76966a94f73bcf6e29557f98ca9f3f53a7dcaf205b"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/workspace-identities.ts",
+      "bytes": 3590,
+      "sha256": "a41a4b8c6bb8e7fdc5df3939ba894a5ce0b7a4f6af3c9f36ecdf07e70919cee5"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/workspace-model.ts",
+      "bytes": 9916,
+      "sha256": "74bee0b9726d6095d8d686e6a696e50e9180c488cf3174c307b7881aa359308b"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/workspace-types.ts",
+      "bytes": 118,
+      "sha256": "e2e3216cc1b7cf237aefb4594406afbd82c9fe32dfc49dbda29c75cadf4aca8c"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/workspace.ts",
+      "bytes": 8509,
+      "sha256": "3997e649a57bc2bd2cdeb65893c5e46954c5bcdfcc713c252093a8e574395c12"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/write.ts",
+      "bytes": 5783,
+      "sha256": "eda49c509f2b201df0add8bfb2e836f19a9b3956ed44873842751079c6d00f17"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native-document.ts",
+      "bytes": 13725,
+      "sha256": "35f296cf420d91d3427eafd6114a829927be9531d5a7605378cd77ec1dd2d91d"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native-fonts.ts",
+      "bytes": 2937,
+      "sha256": "b3d43f177b9d930df0749c521e5f09f8f204a30d837fc9f05bb6af54d1b97caa"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-annotation-editor.ts",
+      "bytes": 8819,
+      "sha256": "aeb76192cdca765f0e6aa95d0a351b74d17c9a19315228b4ebf75bb1c9fc8d0a"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
+      "bytes": 40023,
+      "sha256": "9137fb6a7bc2871c00cded59cd0f1db1eeb0a48eccd938a1ae0f42652c781c2c"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-composition.ts",
+      "bytes": 9863,
+      "sha256": "cf4f4fe166ed1cab38516882532bb0c4649c9afb7329ee821fc5cb39b868573c"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+      "bytes": 136879,
+      "sha256": "cb1d0e618b026f275cfcba2c5277c8f881aa6d3b66302798f4856f639e7ac930"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioPdf.css",
+      "bytes": 21084,
+      "sha256": "87b0631d624dc34aa2a3360d237347afc6fe9e68dd594ea6cea0c6d165cb73c9"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioPdfNativeLayer.tsx",
+      "bytes": 14599,
+      "sha256": "1ca8e24b7696fcf5a0d67e583f51e55c7e0e0ca8b4597be81539f4c3cc76c4c1"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioPdfTextLayer.tsx",
+      "bytes": 3400,
+      "sha256": "a88594cfd6a58a4c98adcb04b79216f56167924a9baef7c6d5fdc72ad2d51c91"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioPdfTextLayer.css",
+      "bytes": 4258,
+      "sha256": "bfaeed7a0677685d1add59f72d40707dd2b4fdb0e379a7d6b4bfb935ff0fa192"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioPdfAnnotationDialog.tsx",
+      "bytes": 16944,
+      "sha256": "32253ff7622be5cfaca2af6d935aeef6e676f3941b841a04538142471274cbf2"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-pdf-annotations.ts",
+      "bytes": 1756,
+      "sha256": "c04515b67eb9fc4517f1dd20048a06946fd09256943cd10e1f85b9ec4b97e445"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
+      "bytes": 20457,
+      "sha256": "87239bce035971b2aba94ef7485f54b956da88b0643956972f1287d53a09e038"
+    },
+    {
+      "path": "docs/src/pages/components/OfficeStudioPage.tsx",
+      "bytes": 21388,
+      "sha256": "73f65510bf9430d0e1d4208d59886fadf2234eb9fc7dec811fc1e5c0a144f29a"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-adapter.ts",
+      "bytes": 32169,
+      "sha256": "bc563267722b06474af8ae717d6b7767031403a0f6507cf4d4a4d9d56232b5b1"
+    }
+  ],
+  "actualBuiltUi": [
+    {
+      "path": "packages/ui/dist/StudioPdf-CVMBFjdu.cjs",
+      "bytes": 120968,
+      "sha256": "3b05fce1f5d7365b63fcdba8df8702602dc177cf73a715e0b452212bb290d683"
+    },
+    {
+      "path": "packages/ui/dist/StudioPdf-tInwhU6n.js",
+      "bytes": 122491,
+      "sha256": "e3e7996577ae78db03056196b5ac3e0001fbbc623b33e68900c2c7003b1a713e"
+    },
+    {
+      "path": "packages/ui/dist/index.d.ts",
+      "bytes": 170906,
+      "sha256": "ec2447c707d7aa14b9969ba7c485afa3e620e957e0e54cdba0b0e78355df2026"
+    },
+    {
+      "path": "packages/ui/dist/index.js",
+      "bytes": 3914,
+      "sha256": "f4b3e4846254798076cdb040ee879e3b700aeb1cd1cf4177faa1004658ab7bc0"
+    },
+    {
+      "path": "packages/ui/dist/style.css",
+      "bytes": 433875,
+      "sha256": "fe241c726e93c452dc9e57c86e22e8ece16a1b46196f6c4b0e13385dda1023f6"
+    }
+  ],
+  "fixtureAndOutputPdfs": [
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p012-freetext-round-1.pdf",
+      "bytes": 1680532,
+      "sha256": "abb186e4536c3fedd5d3a2348b980b2a1f96caacf3129e9436901cf72d3652ed"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p012-freetext-round-2.pdf",
+      "bytes": 1680532,
+      "sha256": "abb186e4536c3fedd5d3a2348b980b2a1f96caacf3129e9436901cf72d3652ed"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p014-markers-round-1.pdf",
+      "bytes": 14008,
+      "sha256": "86f835a6aee9307a0b87a4084ff1d8f4b61f6cfafe668ba2a273cce26d40e9a2"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p014-markers-round-2.pdf",
+      "bytes": 14008,
+      "sha256": "86f835a6aee9307a0b87a4084ff1d8f4b61f6cfafe668ba2a273cce26d40e9a2"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p016-geometry-round-1.pdf",
+      "bytes": 16214,
+      "sha256": "f6a342e1ab973ae0f1fba297b334ad16a67489359e3a9840b4a9816703541ce0"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p016-geometry-round-2.pdf",
+      "bytes": 16214,
+      "sha256": "f6a342e1ab973ae0f1fba297b334ad16a67489359e3a9840b4a9816703541ce0"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/gesture-history-round-1.pdf",
+      "bytes": 1694005,
+      "sha256": "c1a525b531597758aaffd4747b45b5b19dd58a1513593d9e7d2168f634084f9e"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/gesture-history-round-2.pdf",
+      "bytes": 1694005,
+      "sha256": "c1a525b531597758aaffd4747b45b5b19dd58a1513593d9e7d2168f634084f9e"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p015-discussion-round-1.pdf",
+      "bytes": 1699169,
+      "sha256": "49e22b525ed25d921851b58d1efeada9f7c4a97f3b72badf42d4b64b7a663cd6"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p015-discussion-round-2.pdf",
+      "bytes": 1699169,
+      "sha256": "49e22b525ed25d921851b58d1efeada9f7c4a97f3b72badf42d4b64b7a663cd6"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/legacy-migration-round-1.pdf",
+      "bytes": 1684861,
+      "sha256": "42c10668b1e50b1fd8ccbdeb89516c67b750ab8ed2882e8fc0cc7807d85414c2"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/legacy-migration-round-2.pdf",
+      "bytes": 1684861,
+      "sha256": "42c10668b1e50b1fd8ccbdeb89516c67b750ab8ed2882e8fc0cc7807d85414c2"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/nonempty-recipe-round-1.pdf",
+      "bytes": 1639702,
+      "sha256": "ffb00fcf5194cf38c6e3ce9c5b5c5ec16b94db696d36b378436707cd1fd161ae"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/nonempty-recipe-round-2.pdf",
+      "bytes": 1639702,
+      "sha256": "ffb00fcf5194cf38c6e3ce9c5b5c5ec16b94db696d36b378436707cd1fd161ae"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/explicit-none-round-1.pdf",
+      "bytes": 1683016,
+      "sha256": "699b8cfd6922ea6a97e9b518fe0dbbe1834aa55b6cdc6dbb23515f6b6d7b208b"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/explicit-none-round-2.pdf",
+      "bytes": 1683966,
+      "sha256": "7a7d67c2ba2f1d39387bbf13ab90dddca3fce1f3524250bd4d40a8c74e74217d"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/permissions-readonly.pdf",
+      "bytes": 1695351,
+      "sha256": "c913cc27fed70ae99375d6e6c30535cdeb4cbeaaec22843a675dffecf30b51d8"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p015-resolved.pdf",
+      "bytes": 1698140,
+      "sha256": "b0a6e3b5ae3017c5f2af409eb01d010478edefe80bead40c5cacf7e172fad14f"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/p015-parent-deleted.pdf",
+      "bytes": 1699127,
+      "sha256": "e1c7aab0bf7ee650b7cceb63cc7465f8c868e0d7294892aaf0a790d9dbf86a0f"
+    }
+  ],
+  "fixtures": [
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/fixture-legacy-model.json",
+      "bytes": 2675,
+      "sha256": "3978d8ac1bc0a7cc184052ce2596a4280719df8ad7ea24b613a8cc0a9ae8b21a"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/fixture-legacy-source.pdf",
+      "bytes": 3929,
+      "sha256": "78eb0a7b35b23c633d9e1f07b6beb58a572448254c408fe671ff12ac794bee4e"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/fixture-native-locked-noap.pdf",
+      "bytes": 1695351,
+      "sha256": "c913cc27fed70ae99375d6e6c30535cdeb4cbeaaec22843a675dffecf30b51d8"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/fixture-native-twelve-types.pdf",
+      "bytes": 1693707,
+      "sha256": "7a4e322ddf8384e9631f64f8add9e940458270b07f203aae438bfb46a5032965"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/fixture-original.pdf",
+      "bytes": 3929,
+      "sha256": "78eb0a7b35b23c633d9e1f07b6beb58a572448254c408fe671ff12ac794bee4e"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/fixture-recipe-model.json",
+      "bytes": 4530,
+      "sha256": "d079b310cae660674559913d07e7e00349e650f65b339399138bd3aafbcb280a"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/fixture-recipe-source.pdf",
+      "bytes": 3929,
+      "sha256": "78eb0a7b35b23c633d9e1f07b6beb58a572448254c408fe671ff12ac794bee4e"
+    }
+  ],
+  "explicitNone": {
+    "beforeKind": "reconstructed-before-from-byte-identical-frozen-core",
+    "firstPdfCopiesOverwritten": true,
+    "explanation": "The first probe log is retained. Its first PDF copies were overwritten by an early after-fix invocation; these newly generated before files are explicitly a reproduction with the pinned pre-fix sources, not claimed to be those first run bytes.",
+    "files": [
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/after-fixed/freeText-cleared.pdf",
+        "bytes": 7453,
+        "sha256": "62fd395f3d4e47384f8735cf1b6f4031d7c98073142da8c568defc2345c5e273"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/after-fixed/freeText-initial.pdf",
+        "bytes": 7101,
+        "sha256": "30e4f4faf3d9d3671ceacb64398bff25f574f4ad9820ab65048d3b2bb579f8c1"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/after-fixed/freeText-repainted.pdf",
+        "bytes": 7815,
+        "sha256": "e4ac6f0762a59dec2c707e40701699400b46ac6c2b03d7ce13bc9523facc9f45"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/after-fixed/highlight-cleared.pdf",
+        "bytes": 7175,
+        "sha256": "6d7da243a27e10982472d84e13f0b50155548043ba754b925344f9f51c8693de"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/after-fixed/highlight-initial.pdf",
+        "bytes": 6902,
+        "sha256": "3d4e45f8fbd721a7fbfe0910eefbaee3cf89d5908f10341d3bd42412141b7c7a"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/after-fixed/highlight-repainted.pdf",
+        "bytes": 7454,
+        "sha256": "dff0cf4f4e683d2927424a02b57f38299eabdad58ff378e95d7d895381d4187a"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/after-fixed/original.pdf",
+        "bytes": 3929,
+        "sha256": "78eb0a7b35b23c633d9e1f07b6beb58a572448254c408fe671ff12ac794bee4e"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/after-fixed/probe.mjs",
+        "bytes": 4261,
+        "sha256": "f3736485ae1593fa114295a8a12e069d8a5764e5a1eb1f3bd09a66927a2a6282"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/after-fixed/probe.mjs.txt",
+        "bytes": 3871,
+        "sha256": "3133ba589b9f786f1efba3fa27f75cd402ceb00704379e9e61a6d71d8fc4cd2e"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/after-fixed/probe.txt",
+        "bytes": 817,
+        "sha256": "048ae607152f0aade85e004abf3ad321a96cb031f72e4423bba3070171b3b6a8"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/after-fixed/results.json",
+        "bytes": 5042,
+        "sha256": "0a5e12ed5641d777860e97c34e4e1132a1126d03747a58f3156acd2bde2bda8a"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/after-fixed/square-cleared.pdf",
+        "bytes": 7079,
+        "sha256": "a62c5db4a4f034f5df02f44640ebc01ae4c3d5638f5e2f76c23f0d1c1bb80f01"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/after-fixed/square-initial.pdf",
+        "bytes": 6812,
+        "sha256": "083f2f21fba85d8a293c44d0bfb40cb8519ca6c05f6d081465a59724a89e6c23"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/after-fixed/square-repainted.pdf",
+        "bytes": 7358,
+        "sha256": "844c71cdfafce2cea37f0d3957d37a597908eb1e63727aed4e219dab0ccd2cb7"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/before-pinned/before-runtime.mjs",
+        "bytes": 45430,
+        "sha256": "870b23bda758e4fc28898df2526e3e2a769c9724192be3784e385700bd81baba"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/before-pinned/freeText-cleared.pdf",
+        "bytes": 7438,
+        "sha256": "2ef29a2d5b45ec3017272faace903e6e56e5e21f6cc8d70579fd2f36d0d3cd21"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/before-pinned/freeText-initial.pdf",
+        "bytes": 7094,
+        "sha256": "5e37bb96c26dc04f05008a6dafb2c20d25b4367f5604b6916afd8d65e9e72313"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/before-pinned/freeText-repainted.pdf",
+        "bytes": 7814,
+        "sha256": "222c03d7eb2fef24593f44987089eb026e8b8130ec35d1c9ed668e69e3ee769e"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/before-pinned/highlight-cleared.pdf",
+        "bytes": 7160,
+        "sha256": "1fcb549d1a16e91492230f7378877281c79b7ad5067560d84759caecbd015753"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/before-pinned/highlight-initial.pdf",
+        "bytes": 6894,
+        "sha256": "8f09fd8facf2d4bb1894026284671ada52ba8ddae5a995722cda8f11755524da"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/before-pinned/highlight-repainted.pdf",
+        "bytes": 7471,
+        "sha256": "304d12325e8d0f3cf5f86216b595fb39a577ef55a8c159d0eb41e91fe3b26321"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/before-pinned/original.pdf",
+        "bytes": 3929,
+        "sha256": "78eb0a7b35b23c633d9e1f07b6beb58a572448254c408fe671ff12ac794bee4e"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/before-pinned/probe.mjs",
+        "bytes": 4154,
+        "sha256": "6d909c64a6c7bb84b0fe345a8a1bf1e7b0028933c8bf36741ad1a5f30f24d444"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/before-pinned/probe.mjs.txt",
+        "bytes": 3764,
+        "sha256": "d734f060357d84e788ac3c6b795dc625d18554911ebfb7759a60d84e443e3a77"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/before-pinned/probe.txt",
+        "bytes": 987,
+        "sha256": "334d7e267c6dc791f9f6c8ecd4fa5c676dd4b01a5b237c41d2fcb0d7a730f198"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/before-pinned/proof.json",
+        "bytes": 1437,
+        "sha256": "a6550bd368489b76c1eb68e7bf411083ddad5757fec832e431cf1e9ed2204950"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/before-pinned/results.json",
+        "bytes": 5230,
+        "sha256": "4cfdc6b39d99c374933af961645d9afd76f3c91fdaf71e06c34cfbb4a4bd88b2"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/before-pinned/source/colors.ts",
+        "bytes": 3410,
+        "sha256": "808d65e8a688d730f9dd71c4b6be77d2e9e96a87f34d238c6f1cd6cd8fc66292"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/before-pinned/source/model-edit.ts",
+        "bytes": 15198,
+        "sha256": "02399f9ce71453b688ca40b6b1075231659e5ba0a31e862287a2bd4c135e2dfc"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/before-pinned/source/read.ts",
+        "bytes": 17669,
+        "sha256": "b406c14bf31645e6d22228d07111f41cbbd0ef9dcdc46b3a60f5c2853e0076aa"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/before-pinned/source/write.ts",
+        "bytes": 5891,
+        "sha256": "79b2c204d58f5781bf4311b78417712806185d6d1995d2f33767cba5eb734a21"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/before-pinned/square-cleared.pdf",
+        "bytes": 7064,
+        "sha256": "36ab7b7a1bcb9015bc6daf591900477473d7842d92c14fed9b3ad12442348934"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/before-pinned/square-initial.pdf",
+        "bytes": 6804,
+        "sha256": "e27000ec4b3b60838e3b4c65ed7d97c8b2058501327606fa1b7cf97b1393acaf"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/before-pinned/square-repainted.pdf",
+        "bytes": 7348,
+        "sha256": "877212a08beeb5a82eac10c13ebb504567a7065a2ecf83fa8145a4cf40901d9c"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/first-original-cli.txt",
+        "bytes": 987,
+        "sha256": "334d7e267c6dc791f9f6c8ecd4fa5c676dd4b01a5b237c41d2fcb0d7a730f198"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/probe-source-map.json",
+        "bytes": 2166,
+        "sha256": "997b7a924fc87fe3f2a04cd04669f1517cdb91819eb0953ad16272b486965943"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replay-validation.json",
+        "bytes": 11296,
+        "sha256": "018f1e01d36a659d02b9007633a918b29d5532d6aa4af4f227d68fea1b7104a5"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/after-fixed/freeText-cleared.pdf",
+        "bytes": 7453,
+        "sha256": "0d16fc7ef9aa9e49b98524ca36952ffafb3b2b2a5aeaab40a3cc2b56425d8b81"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/after-fixed/freeText-initial.pdf",
+        "bytes": 7101,
+        "sha256": "0310a50a05806b535a4c36c05047dcce2f008be101d2550dba6343a190c76578"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/after-fixed/freeText-repainted.pdf",
+        "bytes": 7815,
+        "sha256": "7f346feca29abaf207b4d0f1da6867c154597ffb83c6b74b57733cb70ad28aca"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/after-fixed/highlight-cleared.pdf",
+        "bytes": 7175,
+        "sha256": "6e89bb82a1fd4bba7e858fb8c628195fe5096d204c3a8bab7bc1da3727dd5b05"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/after-fixed/highlight-initial.pdf",
+        "bytes": 6902,
+        "sha256": "11cf5cc116d45bf4af4f147ca9d285a9b6400e2198c355eb628dddbd27ce6591"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/after-fixed/highlight-repainted.pdf",
+        "bytes": 7454,
+        "sha256": "5906d9679af1940d32e20403da6b5f16a78110bed7c9a0b1b7ff097743454e72"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/after-fixed/original.pdf",
+        "bytes": 3929,
+        "sha256": "78eb0a7b35b23c633d9e1f07b6beb58a572448254c408fe671ff12ac794bee4e"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/after-fixed/replay.txt",
+        "bytes": 817,
+        "sha256": "048ae607152f0aade85e004abf3ad321a96cb031f72e4423bba3070171b3b6a8"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/after-fixed/results.json",
+        "bytes": 5042,
+        "sha256": "52c8b07c840c5b4ba07b152c67da9121f5c6d7b7932ae143f9833c5d611231e4"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/after-fixed/square-cleared.pdf",
+        "bytes": 7079,
+        "sha256": "1b41e813cc048a86f66e3fa2739cfde239667888436982e35d2be270b716011e"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/after-fixed/square-initial.pdf",
+        "bytes": 6812,
+        "sha256": "01538de883510a76957ecedf2b042894163059781b004cabd7d97e57feddb83b"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/after-fixed/square-repainted.pdf",
+        "bytes": 7358,
+        "sha256": "a6155e1d965e0a41d94deab3c1c825fe3d3e08e0681afd6aa2eb9f5782a1ab2e"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/before-pinned/freeText-cleared.pdf",
+        "bytes": 7438,
+        "sha256": "c5324dfcc7b4728b6cdea41596ac787e2c87078ff2303817b6f583c2301acedb"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/before-pinned/freeText-initial.pdf",
+        "bytes": 7094,
+        "sha256": "98b5c406a7d56479239b55f61b69753110f0ec0318233920e832de82b8890249"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/before-pinned/freeText-repainted.pdf",
+        "bytes": 7814,
+        "sha256": "e5ad6b930c947aa698b2acdbbe87df8039a5d93640917121d01c8f6a668abbbd"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/before-pinned/highlight-cleared.pdf",
+        "bytes": 7160,
+        "sha256": "a19481821e0f39bbeb8b6bcc00fc5383dedb913fc1f7201e86f716b47c95c62c"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/before-pinned/highlight-initial.pdf",
+        "bytes": 6894,
+        "sha256": "c386f0b818b096c49cb50cb55c888cb9c68c0dfa3fce3f4fe59b906de4ebe34f"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/before-pinned/highlight-repainted.pdf",
+        "bytes": 7471,
+        "sha256": "1882eaf15accb0d352ae9acd458a6a35ecc5ca702b82e469895727fa0b85a02b"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/before-pinned/original.pdf",
+        "bytes": 3929,
+        "sha256": "78eb0a7b35b23c633d9e1f07b6beb58a572448254c408fe671ff12ac794bee4e"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/before-pinned/replay.txt",
+        "bytes": 987,
+        "sha256": "334d7e267c6dc791f9f6c8ecd4fa5c676dd4b01a5b237c41d2fcb0d7a730f198"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/before-pinned/results.json",
+        "bytes": 5230,
+        "sha256": "e9e8d9e702744ffdd2a929b3de4f6870e158788eda66013f920dfff6ce06f897"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/before-pinned/square-cleared.pdf",
+        "bytes": 7064,
+        "sha256": "23aada48bd13bab07681692d3a4bf82dfa7b3d5c433b283992957a79709fc0c9"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/before-pinned/square-initial.pdf",
+        "bytes": 6804,
+        "sha256": "31cb2980dbb92ce19258cc98c14135753af8aa4087c3331cbc0d96c352721734"
+      },
+      {
+        "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replayed-probes/before-pinned/square-repainted.pdf",
+        "bytes": 7348,
+        "sha256": "d1132a9c10db44cbcaf10edf4728fd0c579310f9ca8223c585a7a647721b0f24"
+      }
+    ],
+    "probeSourceMap": {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/probe-source-map.json",
+      "bytes": 2166,
+      "sha256": "997b7a924fc87fe3f2a04cd04669f1517cdb91819eb0953ad16272b486965943"
+    },
+    "runnableProbeValidation": {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/color-none/replay-validation.json",
+      "bytes": 11296,
+      "sha256": "018f1e01d36a659d02b9007633a918b29d5532d6aa4af4f227d68fea1b7104a5"
+    },
+    "productionFix": "C[]/IC[] explicitly store none; source effective defaults and untouched native Gray/CMYK identity remain separate."
+  },
+  "preservedHistoricalFailures": [
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/first-attempt/actual-dist-hashes.json",
+      "bytes": 2645,
+      "sha256": "31ca5321078d06f34d791961e4b118bb231ba6f5f1719788c8eabaed640d6d67"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/first-attempt/actual-dist/ChartView-C61LQUXS.js.txt",
+      "bytes": 56904,
+      "sha256": "2f78f9c54414bc1904338183b1cba04af6d93c27f811b876836f731c6a62ab16"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/first-attempt/actual-dist/DataGridView-BQP2AbTR.js.txt",
+      "bytes": 16927,
+      "sha256": "c196ec2de66c9a2908061fee8b2d89618afc9ec4773fca590ef814f6b107f7b2"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/first-attempt/actual-dist/GlobeScene-CFi325zq.js.txt",
+      "bytes": 104978,
+      "sha256": "8b72d619e1701e3e095270c7d0c2c4e2c05044d8f3e217186a12e3619c747873"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/first-attempt/actual-dist/StudioFontControl-DRQ1CEuC.js.txt",
+      "bytes": 3946,
+      "sha256": "1068ac294dff7dd1e976c7daaeeb1bc2a806b2fd6917b987307eae62b93a366e"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/first-attempt/actual-dist/StudioPdf-DQwi1Ic5.js.txt",
+      "bytes": 121794,
+      "sha256": "c864a29db8fe11e4cdf4f4c28212f278d5166e2b968d37e32d7817c778d8ded0"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/first-attempt/actual-dist/StudioSheet-DpPg3hCp.js.txt",
+      "bytes": 250247,
+      "sha256": "29a5cf04c5c375ec07e55918a8802f99dd08a90d21b232f1bb8749aa072d71e0"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/first-attempt/actual-dist/StudioWord-DR6KlwkD.js.txt",
+      "bytes": 319857,
+      "sha256": "c54e76764a62806b4c42c41b09c0cc5ccd253f4220a20967f41174489996a979"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/first-attempt/actual-dist/Type-BeBmUqvf.js.txt",
+      "bytes": 294,
+      "sha256": "2d2699e16a107091f36faf7bd153c1bfc3d206138fad2fbba64223a5e4567ed7"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/first-attempt/actual-dist/ZoomOut-CratYfQt.js.txt",
+      "bytes": 493,
+      "sha256": "60de2637d0f871326abed2690c673cddda28a7c7e997facc14ee62a00147199e"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/first-attempt/actual-dist/globe-renderer-Dqw1c-Ps.js.txt",
+      "bytes": 557190,
+      "sha256": "0b5f1f064be259f0ea5cf5d2870afb3b563413c9125480e69eb1d5e16b205a4c"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/first-attempt/actual-dist/index-Dfwfv4f2.js.txt",
+      "bytes": 420254,
+      "sha256": "7e8a48cde00b592cfa8ae5c5cdf48d8e16feef5979ec2ec8ad569e94839fce15"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/first-attempt/actual-dist/index.js.txt",
+      "bytes": 3914,
+      "sha256": "4bd39e0f62b3345a462c58bbecee22d7497e152f80d6814725e8a2544c9e6aca"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/first-attempt/actual-dist/style.css",
+      "bytes": 433422,
+      "sha256": "02a6897094e09902a74a6d2126c65c539a0a081355ea8e8f362ab9102fb321ca"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/first-attempt/playwright.txt",
+      "bytes": 3081,
+      "sha256": "bb013a56095c545ab71b2c38cc3cdb3992d9eb0d4a87084fd2978abe74b9d900"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/first-attempt/results/.last-run.json",
+      "bytes": 96,
+      "sha256": "6bc481ee61ee2286cb69e5deecb16275417eebddf51ad006019193e6176afaca"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/first-attempt/results/office-studio-pdf-native-a-de44e-uads-alpha-removal-and-undo-chromium/error-context.md",
+      "bytes": 51047,
+      "sha256": "bfda4386c9effdeb950cefaeceb082f263bc474027188635f98fbc0719db3f68"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/first-attempt/results/office-studio-pdf-native-a-de44e-uads-alpha-removal-and-undo-chromium/trace.zip",
+      "bytes": 1713605,
+      "sha256": "2827dbfe09b84c44a88fe90f4d7f6359175120eb8503dcdc17f0bc2041e49269"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/second-attempt/actual-dist-hashes.json",
+      "bytes": 2649,
+      "sha256": "6ffecf9ae6ed1ec1130abeff2d00cc5c474166f21df2afd6bc2c0f50740d28e1"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/second-attempt/actual-dist/ChartView-BpAhf8BB.js.txt",
+      "bytes": 56904,
+      "sha256": "5e674b374d69dc16e9474f6047ea695d5324d14f6af7dd50cf203ace3f9556ad"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/second-attempt/actual-dist/DataGridView-B2yi-7Y4.js.txt",
+      "bytes": 16927,
+      "sha256": "375375eabe8a1aaf55a5ada38a9f743230c01934db4601ae0c30b48466901c0e"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/second-attempt/actual-dist/GlobeScene-Bub3koJI.js.txt",
+      "bytes": 104978,
+      "sha256": "6c8efb2677c970056c066524884701ce98808fedb866478c9001242006399cd2"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/second-attempt/actual-dist/StudioFontControl-MM0WIZqW.js.txt",
+      "bytes": 3946,
+      "sha256": "c59fb75efced09d9fbaa5187a5c04a1b0d843050d327496537e9589ad6d4c666"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/second-attempt/actual-dist/StudioPdf-BcID4U53.js.txt",
+      "bytes": 122373,
+      "sha256": "2da90d32b87969e2c64721f5a65eba566be1c881989e8ddb33e90a59ad3be979"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/second-attempt/actual-dist/StudioSheet-DtZGxBC4.js.txt",
+      "bytes": 250247,
+      "sha256": "4dab9e6c80ed90daf81c187df2d688ce6c2a364f485c1c9d5d369e6276d29f6c"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/second-attempt/actual-dist/StudioWord-Buvj5W_m.js.txt",
+      "bytes": 319857,
+      "sha256": "6c2518b8d80515641ebbaa440ee8cdf51d4c10260de7d00ac4bd83f17e750198"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/second-attempt/actual-dist/Type-Bd2OypNU.js.txt",
+      "bytes": 294,
+      "sha256": "e93bf575313062a10c910c8d8a09ea06e12a96a35e632b35510251edc21cb971"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/second-attempt/actual-dist/ZoomOut-BYIhLMhx.js.txt",
+      "bytes": 493,
+      "sha256": "45eb97752c33d1329d05ea02640c93281c6c9af639862069ae0ebe464cd420fd"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/second-attempt/actual-dist/globe-renderer-C47OlC6f.js.txt",
+      "bytes": 557190,
+      "sha256": "f30318eb915d97a12200b4376efc2f7015ff0734f2cc560e1caa7aba779acf1c"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/second-attempt/actual-dist/index-B9w_GZc4.js.txt",
+      "bytes": 420254,
+      "sha256": "08479dcf27e435840dd8a776305e3b5514ea07a44bf5767506753d45f1b17912"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/second-attempt/actual-dist/index.js.txt",
+      "bytes": 3914,
+      "sha256": "a7c9d299986f87f5f176afd27a17d74579f0226b0f570b25b1749b866e5acc11"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/second-attempt/actual-dist/style.css.txt",
+      "bytes": 433681,
+      "sha256": "fa1cc268ef035fcafcc89cccfb148790f35b3bf20210c1d4aa81997b79360057"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/second-attempt/playwright.txt",
+      "bytes": 3404,
+      "sha256": "a2df4247af5c494a06215b352b3105caaead2f82643749efe940682f4436bb05"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/second-attempt/results/.last-run.json",
+      "bytes": 96,
+      "sha256": "6bc481ee61ee2286cb69e5deecb16275417eebddf51ad006019193e6176afaca"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/second-attempt/results/office-studio-pdf-native-a-de44e-uads-alpha-removal-and-undo-chromium/error-context.md",
+      "bytes": 35158,
+      "sha256": "ecf5b6b7da901b3eb07f7e431169417582506facf81c76cc0ec2cd0781a4a3f2"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/second-attempt/results/office-studio-pdf-native-a-de44e-uads-alpha-removal-and-undo-chromium/trace.zip",
+      "bytes": 1249044,
+      "sha256": "5bccc2b4990c61ddd16fcabf7eafcb877f0b65b4543f592ce9a2a696cf84ebf4"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/third-attempt/actual-dist-hashes.json",
+      "bytes": 1898,
+      "sha256": "e4d2ffea54ce7a051d4a032c1473f1f7ed4c0d17ef6cd9fc6fb0102fa31a8b5f"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/third-attempt/actual-dist/ChartView-BpAhf8BB.js.txt",
+      "bytes": 56904,
+      "sha256": "5e674b374d69dc16e9474f6047ea695d5324d14f6af7dd50cf203ace3f9556ad"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/third-attempt/actual-dist/DataGridView-B2yi-7Y4.js.txt",
+      "bytes": 16927,
+      "sha256": "375375eabe8a1aaf55a5ada38a9f743230c01934db4601ae0c30b48466901c0e"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/third-attempt/actual-dist/GlobeScene-Bub3koJI.js.txt",
+      "bytes": 104978,
+      "sha256": "6c8efb2677c970056c066524884701ce98808fedb866478c9001242006399cd2"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/third-attempt/actual-dist/StudioFontControl-MM0WIZqW.js.txt",
+      "bytes": 3946,
+      "sha256": "c59fb75efced09d9fbaa5187a5c04a1b0d843050d327496537e9589ad6d4c666"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/third-attempt/actual-dist/StudioPdf-BcID4U53.js.txt",
+      "bytes": 122373,
+      "sha256": "2da90d32b87969e2c64721f5a65eba566be1c881989e8ddb33e90a59ad3be979"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/third-attempt/actual-dist/StudioSheet-DtZGxBC4.js.txt",
+      "bytes": 250247,
+      "sha256": "4dab9e6c80ed90daf81c187df2d688ce6c2a364f485c1c9d5d369e6276d29f6c"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/third-attempt/actual-dist/StudioWord-Buvj5W_m.js.txt",
+      "bytes": 319857,
+      "sha256": "6c2518b8d80515641ebbaa440ee8cdf51d4c10260de7d00ac4bd83f17e750198"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/third-attempt/actual-dist/Type-Bd2OypNU.js.txt",
+      "bytes": 294,
+      "sha256": "e93bf575313062a10c910c8d8a09ea06e12a96a35e632b35510251edc21cb971"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/third-attempt/actual-dist/ZoomOut-BYIhLMhx.js.txt",
+      "bytes": 493,
+      "sha256": "45eb97752c33d1329d05ea02640c93281c6c9af639862069ae0ebe464cd420fd"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/third-attempt/actual-dist/globe-renderer-C47OlC6f.js.txt",
+      "bytes": 557190,
+      "sha256": "f30318eb915d97a12200b4376efc2f7015ff0734f2cc560e1caa7aba779acf1c"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/third-attempt/actual-dist/index-B9w_GZc4.js.txt",
+      "bytes": 420254,
+      "sha256": "08479dcf27e435840dd8a776305e3b5514ea07a44bf5767506753d45f1b17912"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/third-attempt/actual-dist/index.js.txt",
+      "bytes": 3914,
+      "sha256": "a7c9d299986f87f5f176afd27a17d74579f0226b0f570b25b1749b866e5acc11"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/third-attempt/actual-dist/style.css.txt",
+      "bytes": 433681,
+      "sha256": "fa1cc268ef035fcafcc89cccfb148790f35b3bf20210c1d4aa81997b79360057"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/third-attempt/playwright.txt",
+      "bytes": 3404,
+      "sha256": "bff1e29aa5a1a97ecf0f68548ebfdaa91fe41faa01d8dde35f3f56d9fadb0d19"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/third-attempt/results/.last-run.json",
+      "bytes": 96,
+      "sha256": "6bc481ee61ee2286cb69e5deecb16275417eebddf51ad006019193e6176afaca"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/third-attempt/results/office-studio-pdf-native-a-de44e-uads-alpha-removal-and-undo-chromium/error-context.md",
+      "bytes": 37691,
+      "sha256": "f7ebb272438db0b938b46efbb570befd27a0b3da3466faa576aba8d95b8bdc11"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/third-attempt/results/office-studio-pdf-native-a-de44e-uads-alpha-removal-and-undo-chromium/trace.zip",
+      "bytes": 2979503,
+      "sha256": "4806cc2e21a3ad951e6f7deedd7415d918aeae5d2bb37dac64468d3a6d095d4c"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/fifth-attempt/playwright.txt",
+      "bytes": 12269,
+      "sha256": "0910a6ffe22b0bc8a038028af3feb6bc6ce694739ddea89973e3188ed132b7fe"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/fifth-attempt/results/.last-run.json",
+      "bytes": 243,
+      "sha256": "9ce4d4eab64b8ab2afbbd4a0df8760bc4dfb9fb62e3f761a6fb2c113c6390021"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/fifth-attempt/results/office-studio-pdf-native-a-51c6a-s-native-AP-and-two-reopens-chromium/error-context.md",
+      "bytes": 49769,
+      "sha256": "bc0d6d2823e61b4db1a59a0978bb556e495b0c3f72847ffd4c009712588acd9a"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/fifth-attempt/results/office-studio-pdf-native-a-51c6a-s-native-AP-and-two-reopens-chromium/trace.zip",
+      "bytes": 1995247,
+      "sha256": "3dce9daa9098926a23030b544a08443aeaf25e58859b0534e52b1ac0c8dcaef3"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/fifth-attempt/results/office-studio-pdf-native-a-62820-fill-dash-ends-and-vertices-chromium/error-context.md",
+      "bytes": 54272,
+      "sha256": "67e3ce5c7b783103fb4f51c681871b6f7dea80b792f88ee2bfbada91d52cf672"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/fifth-attempt/results/office-studio-pdf-native-a-62820-fill-dash-ends-and-vertices-chromium/trace.zip",
+      "bytes": 14622833,
+      "sha256": "0915072f06a220e11f39264b7e6b89db27045d51b44125a0a86136a48cfd6de8"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/fifth-attempt/results/office-studio-pdf-native-a-88b14-preserve-source-and-history-chromium/error-context.md",
+      "bytes": 44138,
+      "sha256": "bb57c7fde507a2c01a9f1de1c0bc95c453a39d769da0d717643a68b042059786"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/fifth-attempt/results/office-studio-pdf-native-a-88b14-preserve-source-and-history-chromium/trace.zip",
+      "bytes": 8201915,
+      "sha256": "6411fb718bff246f989f339e6a35a1ddb51ca2a02f930f97276b085d828ef483"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/fifth-attempt/results/office-studio-pdf-native-a-92e5d-ies-parents-transactionally-chromium/error-context.md",
+      "bytes": 44172,
+      "sha256": "318f46bd71923634bf4da099362fc5924a1d1e92a48b52289d1ec5d0d1595521"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/fifth-attempt/results/office-studio-pdf-native-a-92e5d-ies-parents-transactionally-chromium/trace.zip",
+      "bytes": 9830781,
+      "sha256": "01c75a3a7fc732268c2a2c27d41591f1c7faa9bc036e2d501bb55691df7fe96d"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/sixth-attempt/playwright.txt",
+      "bytes": 4168,
+      "sha256": "ea48c9f62c73a4016e063d9d84060ac3a056ccf06bdd69467d9fd6996b4e5f17"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/sixth-attempt/results/.last-run.json",
+      "bytes": 96,
+      "sha256": "177e02057267e8c09d806dd6ebcf2bb497df48db6266801d81a7f0f66440ca37"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/sixth-attempt/results/office-studio-pdf-native-a-92e5d-ies-parents-transactionally-chromium/error-context.md",
+      "bytes": 44479,
+      "sha256": "a82422b01a59428d8d94b3ac05a76acabba06e3472237dada6bebee3ddb3f511"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/sixth-attempt/results/office-studio-pdf-native-a-92e5d-ies-parents-transactionally-chromium/trace.zip",
+      "bytes": 11627591,
+      "sha256": "7221ac44ea9b10af4e7569d4ec2a1b6609b4495d041b5534bef237809367b7f9"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/failed-active-pairs/2026-11-26T22-55-08-058Z-P012-creates-and-formats-CJK-FreeText-wi/active.json",
+      "bytes": 1655,
+      "sha256": "20c30bcd5f0808781c844c78bea1885efc409290066618b7cf5434df25023cc9"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/failed-active-pairs/2026-11-26T22-55-08-058Z-P012-creates-and-formats-CJK-FreeText-wi/active.pdf",
+      "bytes": 3929,
+      "sha256": "78eb0a7b35b23c633d9e1f07b6beb58a572448254c408fe671ff12ac794bee4e"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/failed-active-pairs/2026-11-26T22-55-08-058Z-P012-creates-and-formats-CJK-FreeText-wi/page.png",
+      "bytes": 105287,
+      "sha256": "4113e60cfbeb8122d3bae6218eb0f9ad613efecbb9fea41829369200b3e451be"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/failed-active-pairs/2026-11-26T22-55-56-133Z-P016-creates-native-shapes--arrow--polyl/active.json",
+      "bytes": 3688,
+      "sha256": "ecd200e7b32b01458f557642035e4aaff4bd74e1fe8e4ce40186b728a2cfc1c4"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/failed-active-pairs/2026-11-26T22-55-56-133Z-P016-creates-native-shapes--arrow--polyl/active.pdf",
+      "bytes": 14751,
+      "sha256": "f3508c58bd1400596ae4579f2dc64aec74864c2e6254a98277b0be08f0528cc3"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/failed-active-pairs/2026-11-26T22-55-56-133Z-P016-creates-native-shapes--arrow--polyl/page.png",
+      "bytes": 144235,
+      "sha256": "ce7d7c2896b46dee0878828cddb6fe390849e581e9aade7900fae1fbb0447b17"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/failed-active-pairs/2026-11-26T22-56-32-480Z-P015-reads-native-notes--writes-authored/active.json",
+      "bytes": 4298,
+      "sha256": "8d69a1d7211d7884e87482ba763393b1f02ecba214513591df5f8ff652ce89c2"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/failed-active-pairs/2026-11-26T22-56-32-480Z-P015-reads-native-notes--writes-authored/active.pdf",
+      "bytes": 1698108,
+      "sha256": "f039235e38ec012d16387915c5b9d563eb93167a33338f136961dea12d85d110"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/failed-active-pairs/2026-11-26T22-56-32-480Z-P015-reads-native-notes--writes-authored/page.png",
+      "bytes": 153809,
+      "sha256": "54777c8307b3644b430c9c7d53e9c8021cfd5f5001fed2b49bd3f2926e982f0c"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/failed-active-pairs/2026-11-26T22-57-15-287Z-native-read-only-locked-commands-and-can/active.json",
+      "bytes": 1657,
+      "sha256": "c9b5af93a40f984715bfc56334ca0c15f2703616f1369c47ae6e0a3ee8b8a332"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/failed-active-pairs/2026-11-26T22-57-15-287Z-native-read-only-locked-commands-and-can/active.pdf",
+      "bytes": 3929,
+      "sha256": "78eb0a7b35b23c633d9e1f07b6beb58a572448254c408fe671ff12ac794bee4e"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/failed-active-pairs/2026-11-26T22-57-15-287Z-native-read-only-locked-commands-and-can/page.png",
+      "bytes": 213823,
+      "sha256": "ce52b61a8e3c75900dd374e3cb4db714ae8e515036499e8516b69a85295e840c"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/failed-active-pairs/2026-11-26T23-02-35-435Z-P015-reads-native-notes--writes-authored/active.json",
+      "bytes": 4298,
+      "sha256": "f0158ced7402040db6ae5648aaf26a9e69d1bc077a0706276863e70fcf3ae7ad"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/failed-active-pairs/2026-11-26T23-02-35-435Z-P015-reads-native-notes--writes-authored/active.pdf",
+      "bytes": 1699129,
+      "sha256": "e8425b47e535622dc62f5cec930015e35af3456bc5a751ecf3327f6e43861402"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/failed-active-pairs/2026-11-26T23-02-35-435Z-P015-reads-native-notes--writes-authored/page.png",
+      "bytes": 142897,
+      "sha256": "027d4db84a6725b9099b9c4130135e2074402e38f9897afbb1b5f58c62c261a6"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/gesture-history-round-1.json",
+      "bytes": 14235,
+      "sha256": "02c71b4cb56bb8ef3245a9bfa2d7cd08601df5c6f2603bcdd9ea18e9de5f116a"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/gesture-history-round-1.pdf",
+      "bytes": 1694005,
+      "sha256": "05a787cd783586700351caa3cb95c4efe75b415e8b44b75bd497f88a79054c79"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/gesture-history-round-2.json",
+      "bytes": 14235,
+      "sha256": "02c71b4cb56bb8ef3245a9bfa2d7cd08601df5c6f2603bcdd9ea18e9de5f116a"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/gesture-history-round-2.pdf",
+      "bytes": 1694005,
+      "sha256": "05a787cd783586700351caa3cb95c4efe75b415e8b44b75bd497f88a79054c79"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/independent-pypdf.json",
+      "bytes": 196379,
+      "sha256": "34b12625c25f3a37012297a14834b46d7469556f27da5674ae41a8602e487f1a"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/legacy-migration-round-1.json",
+      "bytes": 6861,
+      "sha256": "109b55b9d37c23e4aaad649385115f1e38d8de5cd4621ed86a722fd1a556bd9d"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/legacy-migration-round-1.pdf",
+      "bytes": 1684796,
+      "sha256": "1e731a63833897f2e56b04272753200e0da645975cb089d745d44f371e8b8f4f"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/legacy-migration-round-2.json",
+      "bytes": 6861,
+      "sha256": "109b55b9d37c23e4aaad649385115f1e38d8de5cd4621ed86a722fd1a556bd9d"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/legacy-migration-round-2.pdf",
+      "bytes": 1684796,
+      "sha256": "1e731a63833897f2e56b04272753200e0da645975cb089d745d44f371e8b8f4f"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/pdfjs.json",
+      "bytes": 7737,
+      "sha256": "14054f2e78c0d4d1826e87b78e0f520b19597a02d448637126b963603bcaea42"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/poppler.json",
+      "bytes": 4931,
+      "sha256": "906db1c3bc600cef73b9c6b48d7a747c64c89b8b9221c954bb9b794b4c3bd165"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/reason.json",
+      "bytes": 1626,
+      "sha256": "1816281286adbf31b017c9459868c829dce0516fafcab512f06c9c4c313effee"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/contact-sheet.png",
+      "bytes": 263719,
+      "sha256": "b6926cedc7c5a11ec643d031dbfc1be40155ccb873cfa7f0858f82bcdb2c0e83"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/gesture-history-round-1-page-1.png",
+      "bytes": 63366,
+      "sha256": "6fe44cbbe742e332a6bccb0a204d9805e86014a2d2e2f09c14649be781477141"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/gesture-history-round-2-page-1.png",
+      "bytes": 63366,
+      "sha256": "6fe44cbbe742e332a6bccb0a204d9805e86014a2d2e2f09c14649be781477141"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/legacy-migration-round-1-page-1.png",
+      "bytes": 30735,
+      "sha256": "f174aaae42aba86d387f1e962deb2471b20de872cac771326eb4c5f9bb350812"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/legacy-migration-round-2-page-1.png",
+      "bytes": 30735,
+      "sha256": "f174aaae42aba86d387f1e962deb2471b20de872cac771326eb4c5f9bb350812"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/nonempty-recipe-round-1-page-1.png",
+      "bytes": 24461,
+      "sha256": "18775c8029ef382cadd23de1566328c59c42795869cce3601a5479d24dafd7b3"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/nonempty-recipe-round-1-page-2.png",
+      "bytes": 43929,
+      "sha256": "d1efc2fcadc619a5a6789185d1b56cdd00461dc20a4c9639d8c9dfa19c5c43a8"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/nonempty-recipe-round-1-page-3.png",
+      "bytes": 30969,
+      "sha256": "9403b6f02ced9ffcc5bbd36cac37d66f7cb2e6a8be98432c527408cec9fee09c"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/nonempty-recipe-round-2-page-1.png",
+      "bytes": 24461,
+      "sha256": "18775c8029ef382cadd23de1566328c59c42795869cce3601a5479d24dafd7b3"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/nonempty-recipe-round-2-page-2.png",
+      "bytes": 43929,
+      "sha256": "d1efc2fcadc619a5a6789185d1b56cdd00461dc20a4c9639d8c9dfa19c5c43a8"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/nonempty-recipe-round-2-page-3.png",
+      "bytes": 30969,
+      "sha256": "9403b6f02ced9ffcc5bbd36cac37d66f7cb2e6a8be98432c527408cec9fee09c"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/p012-freetext-round-1-page-1.png",
+      "bytes": 30897,
+      "sha256": "1b3bf6531451e41609f3b2ba56e563aed594679b1117460cf2ab154ef1ecf995"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/p012-freetext-round-2-page-1.png",
+      "bytes": 30897,
+      "sha256": "1b3bf6531451e41609f3b2ba56e563aed594679b1117460cf2ab154ef1ecf995"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/p014-markers-round-1-page-1.png",
+      "bytes": 23820,
+      "sha256": "0a0c6f6261d8f57ae920414c55e3528d2b1d0143cfe6bad630350a55630f3287"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/p014-markers-round-2-page-1.png",
+      "bytes": 23820,
+      "sha256": "0a0c6f6261d8f57ae920414c55e3528d2b1d0143cfe6bad630350a55630f3287"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/p015-discussion-round-1-page-1.png",
+      "bytes": 63413,
+      "sha256": "3feecd1ba4417bcd7a1a5e28e9c979656145936ec5869e745254ed5e472d42bb"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/p015-discussion-round-2-page-1.png",
+      "bytes": 63413,
+      "sha256": "3feecd1ba4417bcd7a1a5e28e9c979656145936ec5869e745254ed5e472d42bb"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/p016-geometry-round-1-page-1.png",
+      "bytes": 34756,
+      "sha256": "7e68b5f3928c56cd22c1d0be05363fbaf56be0a5f9e788fecdc5750ade5e6663"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/p016-geometry-round-2-page-1.png",
+      "bytes": 34756,
+      "sha256": "7e68b5f3928c56cd22c1d0be05363fbaf56be0a5f9e788fecdc5750ade5e6663"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/pdfjs-gesture-history-round-1-page-1.png",
+      "bytes": 82959,
+      "sha256": "c8b6f3fd26cf7f41ed1a6716f8a42243a5a01edef6196451fa8efe03afee496a"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/pdfjs-gesture-history-round-2-page-1.png",
+      "bytes": 82959,
+      "sha256": "c8b6f3fd26cf7f41ed1a6716f8a42243a5a01edef6196451fa8efe03afee496a"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/pdfjs-legacy-migration-round-1-page-1.png",
+      "bytes": 40905,
+      "sha256": "2c144df3f1bc04977bd2aff06b88c8c81958dc002d8264262b4cec7b9be270d7"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/pdfjs-legacy-migration-round-2-page-1.png",
+      "bytes": 40905,
+      "sha256": "2c144df3f1bc04977bd2aff06b88c8c81958dc002d8264262b4cec7b9be270d7"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/pdfjs-nonempty-recipe-round-1-page-2.png",
+      "bytes": 48507,
+      "sha256": "4b38cc462e95354db31c99128db24d5e760cb8257b788ec1448b62d2673b60e2"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/pdfjs-nonempty-recipe-round-1-page-3.png",
+      "bytes": 42193,
+      "sha256": "97a4da74bf709b1228fa40d312b026aa8d67b8fa6ee7afb8d90a17b9b5344156"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/pdfjs-nonempty-recipe-round-2-page-2.png",
+      "bytes": 48507,
+      "sha256": "4b38cc462e95354db31c99128db24d5e760cb8257b788ec1448b62d2673b60e2"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/pdfjs-nonempty-recipe-round-2-page-3.png",
+      "bytes": 42193,
+      "sha256": "97a4da74bf709b1228fa40d312b026aa8d67b8fa6ee7afb8d90a17b9b5344156"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/pdfjs-p012-freetext-round-1-page-1.png",
+      "bytes": 41078,
+      "sha256": "99f55746f354edb0e139a70e6790716514e23ef5dc94fbe58007ace0ab0cd484"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/pdfjs-p012-freetext-round-2-page-1.png",
+      "bytes": 41078,
+      "sha256": "99f55746f354edb0e139a70e6790716514e23ef5dc94fbe58007ace0ab0cd484"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/pdfjs-p014-markers-round-1-page-1.png",
+      "bytes": 33548,
+      "sha256": "d15689120b335bbf11e0ce5a0e1bc218d574823790676a252b286f4c16c1b788"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/pdfjs-p014-markers-round-2-page-1.png",
+      "bytes": 33548,
+      "sha256": "d15689120b335bbf11e0ce5a0e1bc218d574823790676a252b286f4c16c1b788"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/pdfjs-p015-discussion-round-1-page-1.png",
+      "bytes": 83175,
+      "sha256": "07441048a9379a773657ecb3219bb4b8322ebf5c01bcbfc4cf785ce68ac78a6a"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/pdfjs-p015-discussion-round-2-page-1.png",
+      "bytes": 83175,
+      "sha256": "07441048a9379a773657ecb3219bb4b8322ebf5c01bcbfc4cf785ce68ac78a6a"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/pdfjs-p016-geometry-round-1-page-1.png",
+      "bytes": 58680,
+      "sha256": "7540c7dde5927857917d42ffb365a2a9cccfcbb7aaeb6b5bc5558099639bf93e"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/before-fixture-geometry-fix/render/pdfjs-p016-geometry-round-2-page-1.png",
+      "bytes": 58680,
+      "sha256": "7540c7dde5927857917d42ffb365a2a9cccfcbb7aaeb6b5bc5558099639bf93e"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/README.md",
+      "bytes": 6511,
+      "sha256": "515f373fa4cbdd4497ec1dab8d43539d6c78f35cee9a42e1162f86bc91eda1b3"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/acceptance-matrix.json",
+      "bytes": 42352,
+      "sha256": "8c7add0ad9adca4141bc19613d2bba8613cf35db4322799bf671726d9ba27cc7"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/poppler.json",
+      "bytes": 8970,
+      "sha256": "d10422765bdbf257988bc53e37e3086ca7113dee0efedc2163411718f2fbd5b6"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/pdfjs.json",
+      "bytes": 11918,
+      "sha256": "e4d1914570ad8d0a4fef5d9abc4503535b37af8fbc639e0117b5f3308b1957dc"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/visual-review.json",
+      "bytes": 12846,
+      "sha256": "544499a91cf36288ee99769057ab2218fd5cedf565c8f288068fb89574b77ead"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/verify-native-ui.py",
+      "bytes": 9610,
+      "sha256": "28132f71d053631daaa32a29705bb4b0ba627bf7120145f4f30bf3e11a01dc0e"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/render-native-ui.py",
+      "bytes": 2032,
+      "sha256": "93a13c69d44170e4f2d5c2b56d7d4413c0f6b101bb8d083d70b04356a4a56d35"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/render-native-ui-pdfjs.mjs",
+      "bytes": 4109,
+      "sha256": "3645679662e5e98b43e18e43c7fbe9cb26fadd54046a89838ac4825ce45306a7"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/finalize-evidence.mjs",
+      "bytes": 12133,
+      "sha256": "8c6be6a930628f58221f2749f59c87dd7f5c1cf7a829f81a242e0ee7336f4cde"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/browser-spec-types.json",
+      "bytes": 824,
+      "sha256": "3d42801fb8b361742069bd663ae71352004f8c84b225bbd70ce4fc77a410ea4b"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/playwright-10.txt",
+      "bytes": 2719,
+      "sha256": "878cbabb8efb16cc9bc502b6a24aa608a7d2488de37046781e150eb9ba60e28e"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/independent-pypdf.txt",
+      "bytes": 375,
+      "sha256": "a4241dc78d619757248fe2c7dd58150fdf529dd2d0a8d9b7f279a09ee58d57c0"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/poppler.txt",
+      "bytes": 1104,
+      "sha256": "9891418451b56045904cf274cfb399ce5e509dd662f76aed6fb4e0a23bf82eed"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/pdfjs.txt",
+      "bytes": 1028,
+      "sha256": "9b5b5b4b1405baa91c8ce8e6c72065f487e51055e64d049100f85d82f904994f"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/native-codec-composition-150.txt",
+      "bytes": 17526,
+      "sha256": "407c52f74e1a90bba03a61676eec65fc992a9b9e41a1bc32dcd755fc56794243"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/none-and-colors-45.txt",
+      "bytes": 5155,
+      "sha256": "bb9c2c6539b5ad05ac772493d81957478f7f323a2a6fde1fff0f903461b91f45"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/native-source-noemit.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/native-source-eslint.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/browser-spec-noemit.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/browser-spec-eslint.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/audit-and-spec-eslint.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/audits/2026-11-27/pdf-native-ui/browser-native/logs/global-eslint-after-probe-repair.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "remainingRootOwned": [
+    "Original 159-item current audit",
+    "P009-P011/P013 individual acceptance",
+    "Whole repository final gates and full-site E2E",
+    "Audit archival and commit"
+  ]
+}

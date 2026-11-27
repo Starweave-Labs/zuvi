@@ -1,0 +1,38 @@
+[
+  {
+    "file": "e2e/office-studio-word-formula.spec.ts",
+    "sha256": "f1fdbaf4360506477526ae7fcf3059431b01f7d7c9cde8ef82e506918b846ce6"
+  },
+  {
+    "file": "packages/ui/src/components/OfficeStudio/studio-word-formula-field.test.ts",
+    "sha256": "64ed19d295fd84281f0260109338af9221c357ecf92b6c8fa6710da874906df9"
+  },
+  {
+    "file": "packages/ui/src/components/OfficeStudio/studio-word-formula-field.ts",
+    "sha256": "45f19356f339f91277d0a31df183e2b9e26e3ce13e0f641abdbd59b8e0f3d447"
+  },
+  {
+    "file": "packages/ui/src/components/OfficeStudio/studio-word-table-formula.test.ts",
+    "sha256": "755e9635f8db64c20230e51312d43676e4df3b19919d108bde521295254baf8c"
+  },
+  {
+    "file": "packages/ui/src/components/OfficeStudio/studio-word-table-formula.ts",
+    "sha256": "d8a1adcb2e8a80431615027c4c52d40b0f56349ce5ebf2a6b39de840bff8af77"
+  },
+  {
+    "file": "packages/ui/src/components/OfficeStudio/studio-formula-parser.d.ts",
+    "sha256": "572ade08d487bfbb86bf6c1c0411ae42072387fb381f96e16fedd57fefa16e6c"
+  },
+  {
+    "file": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+    "sha256": "b99f685c6457bb623c9efbe0df61c0b49787ab15eccf176a8e568e9b3d434fea"
+  },
+  {
+    "file": "packages/ui/src/components/OfficeStudio/StudioWordFormulaDialog.tsx",
+    "sha256": "4828a5540882731e956be711cbdb82e3e9fd24adbcbadb7431d1aa4da69bd57e"
+  },
+  {
+    "file": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
+    "sha256": "109852d4867638e1cfbb156f7eebc06f01dc9f93d6d77e6e8bca7bc0ba1c7ff8"
+  }
+]

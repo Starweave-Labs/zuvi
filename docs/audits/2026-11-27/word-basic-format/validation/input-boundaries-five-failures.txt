@@ -1,0 +1,375 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ❯ src/components/OfficeStudio/StudioWord.basic-format.test.tsx (16 tests | 5 failed) 2759ms
+   ✓ Word basic character acceptance > presents a mixed 粗体 selection and changes the whole range in one undo event 350ms
+   ✓ Word basic character acceptance > switches superscript and subscript exclusively, cancels to baseline and restores each transaction 326ms
+   × Word basic character acceptance > applies typed fonts and half-point sizes only to subsequent caret input, then undoes and redoes that inserted run 89ms
+     → expected { backgroundColor: null, …(6) } to match object { fontFamily: 'Times New Roman', …(1) }
+(5 matching properties omitted from actual)
+   × Word basic character acceptance > highlights subsequent caret input, clears the stored highlight and keeps the following typing in a separate history event 131ms
+     → expected 1 to be 2 // Object.is equality
+   × Word basic character acceptance > refuses 粗体 during editor composition without changing content or history 144ms
+     → expected { type: 'doc', attrs: { …(3) }, …(1) } to deeply equal { type: 'doc', attrs: { …(3) }, …(1) }
+   × Word basic character acceptance > refuses 上标 during editor composition without changing content or history 95ms
+     → expected { type: 'doc', attrs: { …(3) }, …(1) } to deeply equal { type: 'doc', attrs: { …(3) }, …(1) }
+   × Word basic character acceptance > refuses a formatting action while the active size draft is invalid and applies it after Escape cancels that draft 74ms
+     → expected { type: 'doc', attrs: { …(3) }, …(1) } to deeply equal { type: 'doc', attrs: { …(3) }, …(1) }
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/OfficeStudio/StudioWord.basic-format.test.tsx > Word basic character acceptance > applies typed fonts and half-point sizes only to subsequent caret input, then undoes and redoes that inserted run
+AssertionError: expected { backgroundColor: null, …(6) } to match object { fontFamily: 'Times New Roman', …(1) }
+(5 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  Object {
+-   "fontFamily": "Times New Roman",
++   "fontFamily": "Arial",
+    "fontSize": "17.5pt",
+  }
+
+ ❯ src/components/OfficeStudio/StudioWord.basic-format.test.tsx:162:19
+    160|     act(() => editor.commands.insertContent('Typed'));
+    161|     const after = editor.getJSON(), attrs = editor.state.doc.nodeAt(po…
+    162|     expect(attrs).toMatchObject({ fontFamily: 'Times New Roman', fontS…
+       |                   ^
+    163|     expect(undoDepth(editor.state)).toBe(depth + 1);
+    164|     expect(onChange).toHaveBeenCalledTimes(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  src/components/OfficeStudio/StudioWord.basic-format.test.tsx > Word basic character acceptance > highlights subsequent caret input, clears the stored highlight and keeps the following typing in a separate history event
+AssertionError: expected 1 to be 2 // Object.is equality
+
+- Expected
++ Received
+
+- 2
++ 1
+
+ ❯ src/components/OfficeStudio/StudioWord.basic-format.test.tsx:182:37
+    180|     const highlighted = editor.getJSON();
+    181|     expect(editor.state.doc.nodeAt(position)!.marks.find(mark => mark.…
+    182|     expect(undoDepth(editor.state)).toBe(depth + 1);
+       |                                     ^
+    183|     fireEvent.click(screen.getByRole('button', { name: '文字高亮' }));
+    184|     fireEvent.click(await screen.findByRole('menuitem', { name: '无颜…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  src/components/OfficeStudio/StudioWord.basic-format.test.tsx > Word basic character acceptance > refuses 粗体 during editor composition without changing content or history
+ FAIL  src/components/OfficeStudio/StudioWord.basic-format.test.tsx > Word basic character acceptance > refuses 上标 during editor composition without changing content or history
+AssertionError: expected { type: 'doc', attrs: { …(3) }, …(1) } to deeply equal { type: 'doc', attrs: { …(3) }, …(1) }
+
+- Expected
++ Received
+
+  Object {
+    "attrs": Object {
+      "numberingDefinitions": null,
+      "numberingInstances": null,
+      "paragraphStyles": null,
+    },
+    "content": Array [
+      Object {
+        "attrs": Object {
+          "indentFirstLine": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "keepLines": null,
+          "keepNext": null,
+          "lineHeight": null,
+          "lineHeightBasis": null,
+          "lineHeightRule": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "paragraphStyle": null,
+          "paragraphStyleDirectAttrs": null,
+          "paragraphStyleFallback": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleSnapshot": null,
+          "paragraphSurface": null,
+          "spaceAfter": null,
+          "spaceBefore": null,
+          "tabStops": null,
+          "textAlign": null,
+          "widowControl": null,
+        },
+        "content": Array [
+          Object {
+            "marks": Array [
+              Object {
+                "attrs": Object {
+                  "backgroundColor": null,
+                  "baselineShift": null,
+                  "color": null,
+                  "fontFamily": "Arial",
+                  "fontSize": "12pt",
+                  "letterSpacing": null,
+                  "lineHeight": null,
+                },
+                "type": "textStyle",
+              },
++             Object {
++               "type": "bold",
++             },
+            ],
+            "text": "Plain ",
+            "type": "text",
+          },
+          Object {
+            "marks": Array [
+              Object {
+                "attrs": Object {
+                  "backgroundColor": "#ffff00",
+                  "baselineShift": null,
+                  "color": null,
+                  "fontFamily": "Times New Roman",
+                  "fontSize": "14.5pt",
+                  "letterSpacing": null,
+                  "lineHeight": null,
+                },
+                "type": "textStyle",
+              },
+              Object {
+                "type": "bold",
+              },
+              Object {
+                "type": "italic",
+              },
+              Object {
+                "type": "strike",
+              },
+              Object {
+                "type": "underline",
+              },
+            ],
+            "text": "Formatted",
+            "type": "text",
+          },
+        ],
+        "type": "paragraph",
+      },
+      Object {
+        "attrs": Object {
+          "indentFirstLine": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "keepLines": null,
+          "keepNext": null,
+          "lineHeight": null,
+          "lineHeightBasis": null,
+          "lineHeightRule": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "paragraphStyle": null,
+          "paragraphStyleDirectAttrs": null,
+          "paragraphStyleFallback": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleSnapshot": null,
+          "paragraphSurface": null,
+          "spaceAfter": null,
+          "spaceBefore": null,
+          "tabStops": null,
+          "textAlign": null,
+          "widowControl": null,
+        },
+        "content": Array [
+          Object {
+            "marks": Array [
+              Object {
+                "attrs": Object {
+                  "backgroundColor": null,
+                  "baselineShift": null,
+                  "color": null,
+                  "fontFamily": "Arial",
+                  "fontSize": "12pt",
+                  "letterSpacing": null,
+                  "lineHeight": null,
+                },
+                "type": "textStyle",
+              },
+            ],
+            "text": "Caret base",
+            "type": "text",
+          },
+        ],
+        "type": "paragraph",
+      },
+    ],
+    "type": "doc",
+  }
+
+ ❯ src/components/OfficeStudio/StudioWord.basic-format.test.tsx:235:30
+    233|     fireEvent.mouseDown(button);
+    234|     fireEvent.click(button);
+    235|     expect(editor.getJSON()).toEqual(before);
+       |                              ^
+    236|     expect(onChange).not.toHaveBeenCalled();
+    237|     expect(undoDepth(editor.state)).toBe(depth);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  src/components/OfficeStudio/StudioWord.basic-format.test.tsx > Word basic character acceptance > refuses a formatting action while the active size draft is invalid and applies it after Escape cancels that draft
+AssertionError: expected { type: 'doc', attrs: { …(3) }, …(1) } to deeply equal { type: 'doc', attrs: { …(3) }, …(1) }
+
+- Expected
++ Received
+
+  Object {
+    "attrs": Object {
+      "numberingDefinitions": null,
+      "numberingInstances": null,
+      "paragraphStyles": null,
+    },
+    "content": Array [
+      Object {
+        "attrs": Object {
+          "indentFirstLine": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "keepLines": null,
+          "keepNext": null,
+          "lineHeight": null,
+          "lineHeightBasis": null,
+          "lineHeightRule": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "paragraphStyle": null,
+          "paragraphStyleDirectAttrs": null,
+          "paragraphStyleFallback": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleSnapshot": null,
+          "paragraphSurface": null,
+          "spaceAfter": null,
+          "spaceBefore": null,
+          "tabStops": null,
+          "textAlign": null,
+          "widowControl": null,
+        },
+        "content": Array [
+          Object {
+            "marks": Array [
+              Object {
+                "attrs": Object {
+                  "backgroundColor": null,
+                  "baselineShift": null,
+                  "color": null,
+                  "fontFamily": "Arial",
+                  "fontSize": "12pt",
+                  "letterSpacing": null,
+                  "lineHeight": null,
+                },
+                "type": "textStyle",
+              },
++             Object {
++               "type": "bold",
++             },
+            ],
+            "text": "Plain ",
+            "type": "text",
+          },
+          Object {
+            "marks": Array [
+              Object {
+                "attrs": Object {
+                  "backgroundColor": "#ffff00",
+                  "baselineShift": null,
+                  "color": null,
+                  "fontFamily": "Times New Roman",
+                  "fontSize": "14.5pt",
+                  "letterSpacing": null,
+                  "lineHeight": null,
+                },
+                "type": "textStyle",
+              },
+              Object {
+                "type": "bold",
+              },
+              Object {
+                "type": "italic",
+              },
+              Object {
+                "type": "strike",
+              },
+              Object {
+                "type": "underline",
+              },
+            ],
+            "text": "Formatted",
+            "type": "text",
+          },
+        ],
+        "type": "paragraph",
+      },
+      Object {
+        "attrs": Object {
+          "indentFirstLine": null,
+          "indentLeft": null,
+          "indentRight": null,
+          "keepLines": null,
+          "keepNext": null,
+          "lineHeight": null,
+          "lineHeightBasis": null,
+          "lineHeightRule": null,
+          "numbering": null,
+          "numberingDisabled": false,
+          "paragraphStyle": null,
+          "paragraphStyleDirectAttrs": null,
+          "paragraphStyleFallback": null,
+          "paragraphStyleMaterialized": false,
+          "paragraphStyleSnapshot": null,
+          "paragraphSurface": null,
+          "spaceAfter": null,
+          "spaceBefore": null,
+          "tabStops": null,
+          "textAlign": null,
+          "widowControl": null,
+        },
+        "content": Array [
+          Object {
+            "marks": Array [
+              Object {
+                "attrs": Object {
+                  "backgroundColor": null,
+                  "baselineShift": null,
+                  "color": null,
+                  "fontFamily": "Arial",
+                  "fontSize": "12pt",
+                  "letterSpacing": null,
+                  "lineHeight": null,
+                },
+                "type": "textStyle",
+              },
+            ],
+            "text": "Caret base",
+            "type": "text",
+          },
+        ],
+        "type": "paragraph",
+      },
+    ],
+    "type": "doc",
+  }
+
+ ❯ src/components/OfficeStudio/StudioWord.basic-format.test.tsx:253:30
+    251|     fireEvent.mouseDown(bold);
+    252|     fireEvent.click(bold);
+    253|     expect(editor.getJSON()).toEqual(before);
+       |                              ^
+    254|     expect(onChange).not.toHaveBeenCalled();
+    255|     expect(undoDepth(editor.state)).toBe(depth);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ Test Files  1 failed (1)
+      Tests  5 failed | 11 passed (16)
+   Start at  04:06:19
+   Duration  4.55s (transform 698ms, setup 123ms, collect 1.11s, tests 2.76s, environment 318ms, prepare 62ms)
+
+undefined
+/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run src/components/OfficeStudio/StudioWord.basic-format.test.tsx --reporter=dot

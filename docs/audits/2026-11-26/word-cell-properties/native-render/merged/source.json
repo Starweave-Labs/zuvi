@@ -1,0 +1,6 @@
+{
+  "path": "docs/audits/2026-11-26/word-cell-properties/mapping/merged-round-2.docx",
+  "sha256": "506172f0f3adf76389eaf54a9765814e771f1f9cd8b2877f9c3b6d37a32700ed",
+  "review": "all rendered pages visually inspected",
+  "compiler": "bundled LibreOffice; source spacing behavior remains limited"
+}

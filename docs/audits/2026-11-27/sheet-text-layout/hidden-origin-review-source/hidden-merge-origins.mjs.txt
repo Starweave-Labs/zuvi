@@ -1,0 +1,46 @@
+import { writeFile } from 'node:fs/promises';
+import { createRequire } from 'node:module';
+import assert from 'node:assert/strict';
+import { react as React, server, load } from './actual-ui-runtime.mjs';
+import { pdfTestRuntime } from '/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/tests/studio-pdf-test-runtime.mjs';
+const repo = '/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59';
+const require = createRequire(`${repo}/packages/ui/package.json`), { JSDOM } = require('jsdom');
+const StudioSheet = load(`${repo}/packages/ui/src/components/OfficeStudio/StudioSheet.tsx`).default;
+const r = pdfTestRuntime(), { createStudioPrintHtml } = r.load('../src/pages/collaboration/office-studio/studio-print.ts');
+const cases = [
+  ['first-column', 'A1:C1', [], ['A']],
+  ['first-row', 'A1:C2', [1], []],
+  ['both-origins', 'A1:C2', [1], ['A']],
+  ['control', 'A1:C2', [], []],
+];
+const results = [];
+for (const [label, merge, hiddenRows, hiddenColumns] of cases) {
+  const document = { version: 1, id: label, kind: 'excel', name: `${label}.xlsx`, activeSheetId: 's',
+    defaultFont: { family: 'Arial', sizePt: 11, bold: false, italic: false },
+    sheets: [{ id: 's', name: 'Origins', rowCount: 3, columnCount: 4,
+      rowHeights: { '1': 40, '2': 40, '3': 40 }, rowHeightModes: { '1': 'fixed', '2': 'fixed', '3': 'fixed' },
+      columnWidths: { A: 100, B: 100, C: 100, D: 100 }, merges: [merge], hiddenRows, hiddenColumns,
+      cells: { A1: { input: 'MERGED-ORIGIN', fontSize: 24, wrap: true, align: 'center' }, D3: { input: 'Visible control' } } }] };
+  let markup = '', gridError;
+  try { markup = server.renderToStaticMarkup(React.createElement(StudioSheet, { document, readOnly: true, onChange: () => {} })); }
+  catch (error) { gridError = error.message; }
+  const ui = new JSDOM(markup).window.document;
+  const printMarkup = createStudioPrintHtml(document), print = new JSDOM(printMarkup).window.document;
+  const grid = ui.querySelector('[role="grid"]');
+  const mergedUi = [...(grid?.querySelectorAll('[role="gridcell"]') ?? [])].filter(cell => cell.querySelector('.zuvi-studio-sheet-text')?.textContent.includes('MERGED'));
+  const mergedPrint = [...print.querySelectorAll('.studio-print-sheet td')].filter(cell => cell.textContent.includes('MERGED'));
+  results.push({ label, hiddenRows, hiddenColumns, merge, gridError,
+    mergedGridCount: mergedUi.length, mergedPrintCount: mergedPrint.length,
+    uiMergedStyle: mergedUi.map(cell => cell.getAttribute('style')),
+    printMergedSpans: mergedPrint.map(cell => ({ colSpan: cell.colSpan, rowSpan: cell.rowSpan, clip: cell.querySelector('.studio-print-text-clip').getAttribute('style') })),
+    uiControl: grid?.textContent.includes('Visible control') ?? false, printControl: print.body.textContent.includes('Visible control'),
+  });
+  await writeFile(`/tmp/zuvi-sheet-text-review-2026-11-27/hidden-${label}-grid.html`, markup);
+  await writeFile(`/tmp/zuvi-sheet-text-review-2026-11-27/hidden-${label}-print.html`, printMarkup);
+}
+await writeFile('/tmp/zuvi-sheet-text-review-2026-11-27/hidden-merge-origins-results.json', JSON.stringify(results, null, 2));
+console.log(JSON.stringify(results, null, 2));
+assert.match(results[0].gridError, /Invalid cell width/); assert.equal(results[0].mergedPrintCount, 1);
+assert.equal(results[1].mergedGridCount, 0); assert.equal(results[1].mergedPrintCount, 1);
+assert.equal(results[2].mergedGridCount, 0); assert.equal(results[2].mergedPrintCount, 1);
+assert.equal(results[3].mergedGridCount, 1); assert.equal(results[3].mergedPrintCount, 1);

@@ -1,0 +1,76 @@
+{
+  "reason": "Historical executable diagnostics are inert text snapshots; contents and original source hashes are unchanged.",
+  "renames": [
+    {
+      "previousPath": "pdf-composition/native-field-review/catalog-preparation-and-optional-null.mjs",
+      "path": "pdf-composition/native-field-review/catalog-preparation-and-optional-null.mjs.txt",
+      "sha256": "ea04c4308e65ca53770d652a8062a22f22b106be1e41af968b20369da4473471"
+    },
+    {
+      "previousPath": "pdf-composition/native-field-review/null-and-inheritance.mjs",
+      "path": "pdf-composition/native-field-review/null-and-inheritance.mjs.txt",
+      "sha256": "49ea7d67eb84fcc9f5aee42f6bc956f4fc39b9d748d329dd8db2ed9abff7108e"
+    },
+    {
+      "previousPath": "pdf-composition/native-field-review/null-presence-and-wrappers.mjs",
+      "path": "pdf-composition/native-field-review/null-presence-and-wrappers.mjs.txt",
+      "sha256": "1c63398573c1a59051c131570bbabdfaccad4c297f9e36e1d21ee29de98a5006"
+    },
+    {
+      "previousPath": "pdf-composition/native-field-review/verify-fixed-inheritance.mjs",
+      "path": "pdf-composition/native-field-review/verify-fixed-inheritance.mjs.txt",
+      "sha256": "5ca2ba77262a54100623051e4fb0830b24922ddc93b324b0df3bbe62e2441d1b"
+    },
+    {
+      "previousPath": "sheet-text-layout/center-height-review-source/auto-height-cache.mjs",
+      "path": "sheet-text-layout/center-height-review-source/auto-height-cache.mjs.txt",
+      "sha256": "f4db042f76e210057f6970aa013f6a47b2e64eb330cfcadcee8508df7da8ea13"
+    },
+    {
+      "previousPath": "sheet-text-layout/center-height-review-source/center-auto-height.mjs",
+      "path": "sheet-text-layout/center-height-review-source/center-auto-height.mjs.txt",
+      "sha256": "cbd5a5994e2bc58bd944db9e6de80b5b74be801f826b35a754f48b7e01ee3f20"
+    },
+    {
+      "previousPath": "sheet-text-layout/center-height-review-source/hidden-merge-print.mjs",
+      "path": "sheet-text-layout/center-height-review-source/hidden-merge-print.mjs.txt",
+      "sha256": "1666957a6d7ef2251654d8c305dead52ff3b3fe20666c28a0390611fbef00777"
+    },
+    {
+      "previousPath": "sheet-text-layout/hidden-origin-review-source/actual-ui-runtime.mjs",
+      "path": "sheet-text-layout/hidden-origin-review-source/actual-ui-runtime.mjs.txt.raw.gz",
+      "sha256": "4d4f84b948e6ea1da2af3f06a09ddc3f813248c114777f9bb2cdf31956c0afcd",
+      "bytes": 932,
+      "uncompressedOriginal": {
+        "bytes": 2053,
+        "sha256": "09e83d15a833fce9420122cafca493a72eada995e5b995e28429451a7e126605"
+      },
+      "normalizedView": {
+        "path": "sheet-text-layout/hidden-origin-review-source/actual-ui-runtime.mjs.txt",
+        "bytes": 2052,
+        "sha256": "405fc3d4dc06fe25182e760c6a02994b26e424f5d88dd733fc66528037d0f9cb",
+        "change": "Trailing whitespace and excess blank EOF only; raw gzip retains the complete original."
+      }
+    },
+    {
+      "previousPath": "sheet-text-layout/hidden-origin-review-source/hidden-master-auto-height.mjs",
+      "path": "sheet-text-layout/hidden-origin-review-source/hidden-master-auto-height.mjs.txt",
+      "sha256": "f62d97aa4c02306fa44c8015d1d93762256c0530ec049e9c4131e88bc39cf11b"
+    },
+    {
+      "previousPath": "sheet-text-layout/hidden-origin-review-source/hidden-merge-origins.mjs",
+      "path": "sheet-text-layout/hidden-origin-review-source/hidden-merge-origins.mjs.txt",
+      "sha256": "edf30df313c0fa7915a4c712bdc5947ea66b61869bac2b7f310ffce218b7a27f"
+    },
+    {
+      "previousPath": "sheet-text-layout/hidden-origin-review-source/hidden-merge-print.mjs",
+      "path": "sheet-text-layout/hidden-origin-review-source/hidden-merge-print.mjs.txt",
+      "sha256": "1666957a6d7ef2251654d8c305dead52ff3b3fe20666c28a0390611fbef00777"
+    }
+  ],
+  "updatedManifests": [
+    "pdf-composition/native-review-archive.json",
+    "sheet-text-layout/center-height-review-source/archive-manifest.json",
+    "sheet-text-layout/hidden-origin-review-source/archive-manifest.json"
+  ]
+}

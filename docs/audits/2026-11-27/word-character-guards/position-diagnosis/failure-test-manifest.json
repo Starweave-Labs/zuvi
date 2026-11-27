@@ -1,0 +1,20 @@
+{
+  "status": "2 native tests fail against frozen original codec; 72 originals filtered rather than executed in this reproduction",
+  "entries": [
+    {
+      "path": "before-signed-two-failures.txt",
+      "bytes": 2104,
+      "sha256": "0343ce8f47c34c67c529dcfc8ddca39ba8b0d16b3ebb6e2156a14f1d995ad46f"
+    },
+    {
+      "path": "before-signed-two-failures.txt.raw.gz",
+      "bytes": 744,
+      "sha256": "3f51526162e38fb345b6e797fc9ba18642c116110291dd8a7d1c36d4d78bd352"
+    },
+    {
+      "path": "native-tests-before-codec-fix.mjs.txt",
+      "bytes": 113575,
+      "sha256": "60faaa6b744bb22289809fdeac971ef0b1347ec03d61d96e647377aeec58e09d"
+    }
+  ]
+}

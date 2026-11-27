@@ -71,6 +71,277 @@ const print = compiled('../src/pages/collaboration/office-studio/studio-print.ts
   },
 });
 
+test('Word print repeats only consecutive leading complete header rows', () => {
+  const model = models.createOfficeStudioDocument('word');
+  const row = (type, text) => ({ type: 'tableRow', content: [{ type, content: [{ type: 'paragraph', content: [{ type: 'text', text }] }] }] });
+  model.content = { type: 'doc', content: [{ type: 'table', content: [row('tableHeader', 'Header one'), row('tableHeader', 'Header two'), row('tableCell', 'Body'), row('tableHeader', 'Later heading')] }] };
+  const rendered = new JSDOM(print.createStudioPrintHtml(model)).window.document;
+  assert.equal(rendered.querySelectorAll('thead > tr').length, 2);
+  assert.equal(rendered.querySelector('thead').textContent, 'Header oneHeader two');
+  assert.equal(rendered.querySelectorAll('tbody > tr').length, 2);
+  assert.equal(rendered.querySelector('tbody').textContent, 'BodyLater heading');
+  model.content.content[0].content = [row('tableCell', 'Body first'), row('tableHeader', 'Non-leading')];
+  const noHeader = new JSDOM(print.createStudioPrintHtml(model)).window.document;
+  assert.equal(noHeader.querySelectorAll('thead').length, 0);
+  assert.equal(noHeader.querySelectorAll('tbody > tr').length, 2);
+});
+test('Word print applies row minimum height and explicit split policy while automatic height ignores its value', () => {
+  const model = models.createOfficeStudioDocument('word');
+  const row = (attrs, text) => ({ type: 'tableRow', attrs, content: [{ type: 'tableCell', content: [{ type: 'paragraph', content: [{ type: 'text', text }] }] }] });
+  model.content = { type: 'doc', content: [{ type: 'table', content: [row({ rowHeight: 36, rowHeightRule: 'atLeast', allowSplit: false }, 'Minimum'), row({ rowHeight: 100, rowHeightRule: 'auto', allowSplit: true }, 'Automatic')] }] };
+  const rows = new JSDOM(print.createStudioPrintHtml(model)).window.document.querySelectorAll('tr');
+  assert.equal(rows[0].style.height, '36pt');
+  assert.equal(rows[0].style.breakInside, 'avoid');
+  assert.equal(rows[1].style.height, '');
+  assert.equal(rows[1].style.breakInside, 'auto');
+});
+
+test('Word print uses explicit keep and widow values while title defaults retain the next paragraph',()=>{
+  const model=models.createOfficeStudioDocument('word');
+  model.content={type:'doc',content:[{type:'paragraph',attrs:{keepNext:true,keepLines:true,widowControl:false},content:[{type:'text',text:'Kept'}]},{type:'paragraph',attrs:{keepNext:false,keepLines:false,widowControl:true},content:[{type:'text',text:'Split'}]}]};
+  const html=new JSDOM(print.createStudioPrintHtml(model)).window.document,p=html.querySelectorAll('article p');
+  assert.equal(p[0].style.breakAfter,'avoid');assert.equal(p[0].style.breakInside,'avoid');assert.equal(p[0].style.widows,'1');
+  assert.equal(p[1].style.breakAfter,'auto');assert.equal(p[1].style.breakInside,'auto');assert.equal(p[1].style.orphans,'2');
+});
+
+test('Word print retains native tab characters and resolved leaders for the measurement pass without inserting document text', () => {
+  const model = models.createOfficeStudioDocument('word');
+  model.defaultTabStop = 30;
+  model.content = { type: 'doc', attrs: { paragraphStyles: [{ id: 'tabs', name: 'Tabs', tabStops: [{ position: 120, alignment: 'decimal', leader: 'dot' }] }] }, content: [{ type: 'paragraph', attrs: { paragraphStyle: 'tabs' }, content: [{ type: 'text', text: 'Label\t12.34', marks: [{type:'bold'}] }] }] };
+  const html = new JSDOM(print.createStudioPrintHtml(model)).window.document;
+  const paragraph = html.querySelector('article p');
+  assert.equal(paragraph.textContent,'Label\t12.34');
+  assert.equal(paragraph.dataset.wordDefaultTab,'30');
+  assert.deepEqual(JSON.parse(paragraph.dataset.wordTabs),[{position:120,alignment:'decimal',leader:'dot'}]);
+  assert.equal(paragraph.querySelector('[data-word-tab]').textContent,'\t');
+  assert.equal(html.querySelectorAll('script').length,0);
+});
+
+test('Word print preserves point paragraph geometry and exact/minimum line-rule metadata', () => {
+  const document = models.createOfficeStudioDocument('word');
+  document.content = {
+    type: 'doc',
+    content: [
+      {
+        type: 'paragraph',
+        attrs: {
+          indentLeft: 30,
+          indentRight: 10,
+          indentFirstLine: -12,
+          spaceBefore: 6,
+          spaceAfter: 9,
+          lineHeight: 24,
+          lineHeightRule: 'exact',
+        },
+        content: [{ type: 'text', text: 'Exact' }],
+      },
+      {
+        type: 'paragraph',
+        attrs: { lineHeight: 30, lineHeightRule: 'atLeast' },
+        content: [{ type: 'text', text: 'Minimum' }],
+      },
+    ],
+  };
+  const html = new JSDOM(print.createStudioPrintHtml(document)).window.document;
+  const paragraphs = html.querySelectorAll('article p');
+  assert.equal(paragraphs[0].style.marginLeft, '30pt');
+  assert.equal(paragraphs[0].style.textIndent, '-12pt');
+  assert.equal(paragraphs[0].style.lineHeight, '24pt');
+  assert.equal(paragraphs[0].getAttribute('data-word-line-rule'), 'exact');
+  assert.equal(paragraphs[1].style.getPropertyValue('--zuvi-word-min-line'), '30pt');
+  assert.equal(paragraphs[1].getAttribute('data-word-line-rule'), 'atLeast');
+  assert.equal(paragraphs[1].textContent, 'Minimum');
+});
+
+test('Word prints character spacing and baseline movement without changing point size or source text', () => {
+  const document = models.createOfficeStudioDocument('word');
+  document.content = {
+    type: 'doc',
+    content: [
+      {
+        type: 'paragraph',
+        content: [
+          {
+            type: 'text',
+            text: 'Raised',
+            marks: [
+              {
+                type: 'textStyle',
+                attrs: { fontSize: '14pt', letterSpacing: '1.2pt', baselineShift: '2pt' },
+              },
+            ],
+          },
+          {
+            type: 'text',
+            text: 'Lowered',
+            marks: [
+              {
+                type: 'textStyle',
+                attrs: { fontSize: '30pt', letterSpacing: '-0.2pt', baselineShift: '-2.5pt' },
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  };
+  const html = new JSDOM(print.createStudioPrintHtml(document)).window.document;
+  const spans = html.querySelectorAll('p > span');
+  assert.equal(spans[0].style.letterSpacing, '1.2pt');
+  assert.equal(spans[0].style.verticalAlign, '2pt');
+  assert.equal(spans[0].getAttribute('data-word-baselineshift'), '2pt');
+  assert.equal(spans[0].style.fontSize, '14pt');
+  assert.equal(spans[1].style.letterSpacing, '-0.2pt');
+  assert.equal(spans[1].style.verticalAlign, '-2.5pt');
+  assert.equal(spans[1].style.fontSize, '30pt');
+  assert.equal(html.querySelector('p').textContent, 'RaisedLowered');
+  document.content.content.push({
+    type: 'paragraph',
+    content: [
+      {
+        type: 'pageNumber',
+        attrs: { kind: 'current' },
+        marks: [
+          {
+            type: 'textStyle',
+            attrs: { fontSize: '20pt', letterSpacing: '0.3pt', baselineShift: '1.5pt' },
+          },
+        ],
+      },
+    ],
+  });
+  const field = new JSDOM(print.createStudioPrintHtml(document)).window.document
+    .querySelectorAll('article p')[1]
+    .querySelector('span');
+  assert.equal(field.textContent, '1');
+  assert.equal(field.style.verticalAlign, '1.5pt');
+  assert.equal(field.style.fontSize, '20pt');
+});
+
+test('custom number format text, Chinese dates and selected color sections print with conditional color taking priority', () => {
+  const document = models.createOfficeStudioDocument('excel');
+  const sheet = document.sheets[0];
+  sheet.cells = {
+    A1: { input: '-12.5', numberFormat: '0.00;[Red](0.00)' },
+    B1: { input: "'abc", numberFormat: '"文本："@' },
+    C1: { input: '45351.75', numberFormat: '[$-0804]dddd, mmmm d, yyyy hh:mm AM/PM' },
+  };
+  sheet.rowCount = 1;
+  sheet.columnCount = 3;
+  sheet.columnWidths = {};
+  let html = new JSDOM(print.createStudioPrintHtml(document)).window.document;
+  let cells = html.querySelectorAll('td');
+  assert.equal(cells[0].textContent, '(12.50)');
+  assert.equal(cells[0].style.color, 'rgb(255, 0, 0)');
+  assert.equal(cells[1].textContent, '文本：abc');
+  assert.equal(cells[2].textContent, '星期四, 2月 29, 2024 06:00 下午');
+  sheet.conditionalFormats = [
+    {
+      id: 'cf',
+      type: 'cellIs',
+      range: 'A1:A1',
+      priority: 1,
+      operator: 'lessThan',
+      formulae: ['0'],
+      style: { color: '#00ff00' },
+    },
+  ];
+  html = new JSDOM(print.createStudioPrintHtml(document)).window.document;
+  assert.equal(html.querySelector('td').style.color, 'rgb(0, 255, 0)');
+  sheet.conditionalFormats[0].style = { numberFormat: '[Blue]0.0' };
+  html = new JSDOM(print.createStudioPrintHtml(document)).window.document;
+  assert.equal(html.querySelector('td').style.color, 'rgb(0, 0, 255)');
+});
+
+test('Word printing retains whitespace and line breaks without any nonprinting view glyphs or decorations', () => {
+  const document = models.createOfficeStudioDocument('word');
+  document.content = {
+    type: 'doc',
+    content: [
+      {
+        type: 'paragraph',
+        content: [
+          { type: 'text', text: '  😀 A\tB\u00a0Z  ' },
+          { type: 'hardBreak' },
+          { type: 'text', text: 'Next line' },
+        ],
+      },
+    ],
+  };
+  const html = print.createStudioPrintHtml(document);
+  const printed = new JSDOM(html).window.document;
+  assert.equal(printed.querySelector('p').textContent, '  😀 A\tB\u00a0Z  Next line');
+  assert.equal(printed.querySelectorAll('br').length, 1);
+  assert.ok(html.includes('white-space:pre-wrap'));
+  assert.ok(!html.includes('data-word-nonprinting') && !html.includes('¶'));
+});
+
+test('Word print keeps floating images, wrap contours and page-coordinate placement in the printed document', () => {
+  const document = models.createOfficeStudioDocument('word');
+  const picture = (layout, alt) => ({
+    type: 'image',
+    attrs: { src: 'data:image/png;base64,aGVsbG8=', width: 100, height: 80, alt, layout },
+  });
+  const square = {
+    wrap: 'square',
+    horizontal: { relative: 'column', align: 'right' },
+    vertical: { relative: 'paragraph', offset: 0 },
+    distance: { left: 10, right: 5, top: 2, bottom: 3 },
+  };
+  const page = {
+    wrap: 'front',
+    horizontal: { relative: 'page', offset: 100 },
+    vertical: { relative: 'page', offset: 120 },
+  };
+  const contour = {
+    ...square,
+    wrap: 'tight',
+    polygon: [
+      [0, 0],
+      [0, 21600],
+      [21600, 21600],
+      [0, 0],
+    ],
+  };
+  document.content = {
+    type: 'doc',
+    content: [
+      {
+        type: 'paragraph',
+        content: [
+          picture(square, '环绕图片'),
+          { type: 'text', text: '保持正文' },
+          picture(page, '页面图片'),
+          picture(contour, '轮廓图片'),
+        ],
+      },
+    ],
+  };
+  const before = JSON.stringify(document);
+  const html = new JSDOM(print.createStudioPrintHtml(document)).window.document;
+  {
+    assert.equal(html.querySelectorAll('img').length, 3);
+    const images = [...html.querySelectorAll('img')];
+    assert.equal(images.find((image) => image.alt === '环绕图片').style.cssFloat, 'right');
+    assert.ok(
+      images
+        .find((image) => image.alt === '轮廓图片')
+        .getAttribute('style')
+        .includes('shape-outside:polygon')
+    );
+    const pinned = images.find((image) => image.alt === '页面图片');
+    assert.ok(pinned.closest('.studio-print-page-picture'));
+    assert.ok(
+      Math.abs(parseFloat(pinned.style.left) - (100 - (document.page.margin * 96) / 25.4)) < 0.001
+    );
+    assert.ok(
+      Math.abs(parseFloat(pinned.style.top) - (120 - (document.page.margin * 96) / 25.4)) < 0.001
+    );
+    assert.ok(html.querySelector('article').textContent.includes('保持正文'));
+  }
+  assert.equal(JSON.stringify(document), before);
+});
+
 test('sheet print respects widths, vertical alignment, blank border-only cells and merged outer edges', () => {
   const document = {
     version: 1,
@@ -824,6 +1095,273 @@ test('Sheet print uses actual row sizes and keeps merged content whose original 
   assert.match(merged.textContent, /合并内容/);
   assert.equal(
     merged.querySelector('.studio-print-cell').style.maxHeight,
-    `${((44.5 + 27) * 4) / 3 - 4}px`
+    `${((44.5 + 27) * 4) / 3 - 1}px`
   );
+  assert.equal(merged.querySelector('.studio-print-text-clip').style.height, `${((44.5 + 27) * 4) / 3}px`);
+});
+
+test('array print includes the entire computed region without persisting synthetic result cells', () => {
+  const document = models.createOfficeStudioDocument('excel');
+  document.sheets = [
+    {
+      id: 'array',
+      name: 'Array',
+      rowCount: 10,
+      columnCount: 10,
+      cells: { A1: { input: '=SEQUENCE(2,3,10,2)', array: { type: 'dynamic' } } },
+    },
+  ];
+  document.activeSheetId = 'array';
+  const markup = print.createStudioPrintHtml(document);
+  const view = new JSDOM(markup).window.document;
+  assert.deepEqual(
+    [...view.querySelectorAll('td')].map((cell) => cell.textContent),
+    ['10', '12', '14', '16', '18', '20']
+  );
+  assert.deepEqual(Object.keys(document.sheets[0].cells), ['A1']);
+});
+
+test('sheet advanced print shares default font, shrink geometry and center across without merging cells', () => {
+  const document = models.createOfficeStudioDocument('excel');
+  document.defaultFont = { family: 'Arial', sizePt: 9.5, bold: true, italic: true };
+  const sheet = document.sheets[0];
+  document.sheets = [sheet];
+  sheet.merges = [];
+  sheet.conditionalFormats = [];
+  sheet.hyperlinks = [];
+  sheet.charts = [];
+  sheet.cells = {
+    A1: { input: 'Long line to shrink in a narrow cell', fontSize: 22, shrinkToFit: true },
+    B1: { input: 'Title', align: 'centerContinuous' },
+    C1: { input: '', align: 'centerContinuous' },
+  };
+  sheet.columnWidths = { A: 112, B: 112, C: 112 };
+  const original = JSON.stringify(document);
+  const html = new JSDOM(print.createStudioPrintHtml(document)).window.document;
+  const cells = [...html.querySelectorAll('td')];
+  assert.equal(cells.length, 3);
+  assert.ok(Number(cells[0].querySelector('[data-effective-font-size]').dataset.effectiveFontSize) < 22);
+  assert.equal(cells[1].colSpan, 1);
+  assert.equal(cells[1].querySelector('.studio-print-text-clip').style.width, '224px');
+  assert.equal(cells[1].querySelector('.studio-print-text').style.fontSize, '9.5pt');
+  assert.equal(cells[1].querySelector('.studio-print-text').style.fontWeight, '700');
+  assert.equal(cells[1].querySelector('.studio-print-text').style.fontStyle, 'italic');
+  assert.equal(JSON.stringify(document), original);
+});
+
+test('sheet advanced print derives automatic rows from wrap and array spill while retaining explicit fixed heights', () => {
+  const document = models.createOfficeStudioDocument('excel');
+  const sheet = document.sheets[0];
+  sheet.cells = {
+    A1: { input: '=SEQUENCE(2,2)', array: { type: 'dynamic' } },
+    B2: { input: '', fontSize: 40 },
+    A3: { input: 'Long wrapped content that needs several lines in the printed cell', wrap: true, fontSize: 22 },
+    A4: { input: 'Fixed height wrapped content', wrap: true, fontSize: 40 },
+  };
+  sheet.rowHeights = { 4: 18 };
+  sheet.rowHeightModes = { 4: 'fixed' };
+  const before = JSON.stringify(document);
+  const html = new JSDOM(print.createStudioPrintHtml(document)).window.document;
+  const rows = [...html.querySelectorAll('tr')];
+  assert.ok(parseFloat(rows[1].style.height) > 18);
+  assert.ok(parseFloat(rows[2].style.height) > 18);
+  assert.equal(rows[3].style.height, '18pt');
+  assert.equal(rows[1].querySelectorAll('td')[1].textContent, '4');
+  assert.equal(JSON.stringify(document), before);
+});
+
+test('center-across automatic print height shares the rendered span and preserves frozen boundaries', () => {
+  const document = models.createOfficeStudioDocument('excel');
+  const sheet = document.sheets[0];
+  document.sheets = [sheet];
+  sheet.merges = []; sheet.conditionalFormats = []; sheet.hyperlinks = []; sheet.charts = [];
+  sheet.columnWidths = { A: 100, B: 100, C: 100 };
+  sheet.cells = {
+    A1: { input: 'LongHeading', fontSize: 24, align: 'centerContinuous', shrinkToFit: true },
+    B1: { input: '', align: 'centerContinuous' }, C1: { input: '', align: 'centerContinuous' },
+  };
+  for (const wrap of [false, true]) {
+    sheet.cells.A1.wrap = wrap;
+    const rendered = new JSDOM(print.createStudioPrintHtml(document)).window.document;
+    const owner = rendered.querySelector('td');
+    assert.ok(parseFloat(rendered.querySelector('tr').style.height) > 27);
+    assert.ok(parseFloat(rendered.querySelector('tr').style.height) < 40);
+    assert.equal(owner.querySelector('.studio-print-text-clip').style.width, '300px');
+    assert.equal(owner.querySelector('.studio-print-text').dataset.effectiveFontSize, '24');
+    assert.equal(owner.querySelectorAll('.studio-print-text-transform>span').length, 1);
+    const matrix = owner.querySelector('.studio-print-text-transform').style.transform.match(/matrix\(([^)]+)\)/)[1].split(',').map(Number);
+    assert.ok(matrix[5] >= 0, 'the actual full-size heading must not start above its clipping box');
+  }
+  sheet.cells.A1.wrap = false;
+  sheet.freeze = { columns: 1, rows: 0 };
+  const frozen = new JSDOM(print.createStudioPrintHtml(document)).window.document;
+  assert.equal(frozen.querySelector('td .studio-print-text-clip').style.width, '100px');
+  assert.ok(Number(frozen.querySelector('td .studio-print-text').dataset.effectiveFontSize) < 24);
+});
+
+test('sheet print maps hidden merge columns and rows to visible spans while retaining the native master and following data', () => {
+  const document = models.createOfficeStudioDocument('excel');
+  document.sheets = [{ id: 'visible', name: 'Visible', rowCount: 4, columnCount: 4, columnWidths: { A: 100, B: 100, C: 100, D: 100 }, hiddenColumns: ['B'], hiddenRows: [3], merges: ['A1:C1', 'A3:C4'], cells: { A1: { input: 'Visible master' }, D1: { input: 'Following data' }, A3: { input: 'Hidden row master' }, D4: { input: 'Fourth row tail' } } }];
+  document.activeSheetId = 'visible';
+  let rendered = new JSDOM(print.createStudioPrintHtml(document)).window.document;
+  const table = rendered.querySelector('table'), rows = [...table.querySelectorAll('tr')];
+  assert.equal(table.querySelectorAll('col').length, 3);
+  assert.equal(rows.length, 3);
+  assert.equal(rows[0].querySelector('td').colSpan, 2);
+  assert.equal(rows[0].querySelectorAll('td').length, 2);
+  assert.equal(rows[0].querySelectorAll('td')[1].textContent, 'Following data');
+  assert.equal(rows[0].querySelector('.studio-print-text-clip').style.width, '200px');
+  assert.equal(rows[2].querySelector('td').colSpan, 2);
+  assert.equal(rows[2].querySelector('td').rowSpan, 1);
+  assert.equal(rows[2].querySelector('td').textContent, 'Hidden row master');
+  assert.equal(rows[2].querySelectorAll('td')[1].textContent, 'Fourth row tail');
+  document.sheets[0].hiddenColumns = ['A'];
+  document.sheets[0].hiddenRows = [1];
+  document.sheets[0].merges = ['A1:C2'];
+  document.sheets[0].cells = { A1: { input: 'Hidden master' }, D2: { input: 'Visible tail' } };
+  rendered = new JSDOM(print.createStudioPrintHtml(document)).window.document;
+  const visible = rendered.querySelector('tr');
+  assert.equal(visible.querySelector('td').colSpan, 2);
+  assert.equal(visible.querySelector('td').rowSpan, 1);
+  assert.equal(visible.querySelector('td').textContent, 'Hidden master');
+  assert.equal(visible.querySelectorAll('td')[1].textContent, 'Visible tail');
+  assert.equal(visible.querySelector('.studio-print-text-clip').style.width, '200px');
+});
+
+test('hidden logical merge masters auto-fit the complete text when exactly one physical row remains', () => {
+  for (const scenario of [
+    { hiddenColumns: ['A'], hiddenRows: [], merge: 'A1:C1' },
+    { hiddenColumns: [], hiddenRows: [1], merge: 'A1:C2' },
+    { hiddenColumns: ['A'], hiddenRows: [1], merge: 'A1:C2' },
+  ]) {
+    const document = models.createOfficeStudioDocument('excel');
+    document.sheets = [{ id: 'hidden-auto', name: 'Hidden auto', rowCount: 2, columnCount: 3, columnWidths: { A: 100, B: 100, C: 100 }, hiddenColumns: scenario.hiddenColumns, hiddenRows: scenario.hiddenRows, merges: [scenario.merge], cells: { A1: { input: 'Merged', fontSize: 24, wrap: true } } }];
+    document.activeSheetId = 'hidden-auto';
+    const rendered = new JSDOM(print.createStudioPrintHtml(document)).window.document;
+    const first = rendered.querySelector('td');
+    assert.ok(parseFloat(rendered.querySelector('tr').style.height) > 27);
+    assert.equal(first.querySelector('.studio-print-text').dataset.effectiveFontSize, '24');
+    assert.equal(first.textContent, 'Merged');
+    const matrix = first.querySelector('.studio-print-text-transform').style.transform.match(/matrix\(([^)]+)\)/)[1].split(',').map(Number);
+    assert.ok(matrix[5] >= 0, 'a hidden logical master must not be clipped above its unique visible row');
+  }
+});
+
+test('sheet print anchors have a visible rectangle when text is positioned absolutely', () => {
+  const document = models.createOfficeStudioDocument('excel');
+  document.sheets = [{ id: 'linked', name: 'Linked', rowCount: 1, columnCount: 1, cells: { A1: { input: 'Printable link' } }, hyperlinks: [{ id: 'native', ref: 'A1', target: 'https://example.com/printable' }] }];
+  document.activeSheetId = 'linked';
+  const rendered = new JSDOM(print.createStudioPrintHtml(document)).window;
+  const anchor = rendered.document.querySelector('.studio-print-text-clip > a');
+  assert.ok(anchor);
+  assert.equal(anchor.href, 'https://example.com/printable');
+  assert.equal(rendered.getComputedStyle(anchor).position, 'absolute');
+  assert.equal(rendered.getComputedStyle(anchor).display, 'block');
+});
+
+
+test('Word print combines native fixed row budgets and a shared border without persisting print attributes', () => {
+  const model = models.createOfficeStudioDocument('word');
+  const paragraph = { type: 'paragraph', content: [{ type: 'text', text: 'Full merged content' }] };
+  model.content = { type: 'doc', content: [{ type: 'table', content: [
+    { type: 'tableRow', attrs: { rowHeight: 24, rowHeightRule: 'exact' }, content: [
+      { type: 'tableCell', attrs: { rowspan: 2 }, content: [paragraph] },
+      { type: 'tableCell', content: [paragraph] },
+    ] },
+    { type: 'tableRow', attrs: { rowHeight: 36, rowHeightRule: 'exact' }, content: [{ type: 'tableCell', content: [paragraph] }] },
+  ] }] };
+  const original = JSON.stringify(model);
+  const cell = new JSDOM(print.createStudioPrintHtml(model)).window.document.querySelector('td[rowspan="2"]');
+  assert.equal(cell.style.getPropertyValue('--zuvi-word-cell-height'), '60.75pt');
+  assert.ok(cell.hasAttribute('data-word-fixed-cell-height'));
+  assert.equal(cell.textContent, 'Full merged content');
+  assert.equal(JSON.stringify(model), original);
+  model.content.content[0].content[1].attrs.rowHeightRule = 'auto';
+  const mixed = new JSDOM(print.createStudioPrintHtml(model)).window.document.querySelector('td[rowspan="2"]');
+  assert.equal(mixed.hasAttribute('data-word-fixed-cell-height'), false);
+});
+
+test('Word formula print uses the current escaped cached result and preserves character marks', () => {
+  const model = models.createOfficeStudioDocument('word');
+  model.content = { type: 'doc', content: [{ type: 'table', content: [{ type: 'tableRow', content: [{ type: 'tableCell', content: [{ type: 'paragraph', content: [{ type: 'tableFormula', attrs: { formula: '=SUM(LEFT)', result: '12' }, marks: [{ type: 'bold' }] }] }] }] }] }] };
+  const rendered = new JSDOM(print.createStudioPrintHtml(model)).window.document;
+  assert.equal(rendered.querySelector('td').textContent, '12');
+  assert.equal(rendered.querySelector('td strong').textContent, '12');
+});
+
+test('Word image crop prints a clipped original raster frame and resets without modifying source', () => {
+  const model = models.createOfficeStudioDocument('word');
+  const source = 'data:image/png;base64,iVBORw0KGgo=';
+  const image = { type: 'image', attrs: { src: source, width: 200, height: 100, alt: 'Original crop', crop: { left: 25, right: 25, top: 10, bottom: 40 } } };
+  model.content = { type: 'doc', content: [{ type: 'paragraph', content: [image] }] };
+  let printed = new JSDOM(print.createStudioPrintHtml(model)).window.document;
+  const frame = printed.querySelector('[data-word-image-crop-frame]');
+  assert.equal(frame.style.width, '200px');
+  assert.equal(frame.style.height, '100px');
+  assert.equal(frame.style.overflow, 'hidden');
+  assert.equal(frame.querySelector('img').style.width, '400px');
+  assert.equal(frame.querySelector('img').style.left, '-100px');
+  assert.equal(frame.querySelector('img').getAttribute('src'), source);
+  image.attrs.crop = null;
+  printed = new JSDOM(print.createStudioPrintHtml(model)).window.document;
+  assert.equal(printed.querySelector('[data-word-image-crop-frame]'), null);
+  assert.equal(printed.querySelector('img').getAttribute('src'), source);
+});
+
+test('Word equations print semantic MathML fractions and matrices with escaped text', () => {
+  const model = models.createOfficeStudioDocument('word');
+  const t = text => ({ kind: 'text', text });
+  model.content = { type: 'doc', content: [{ type: 'paragraph', content: [{ type: 'mathEquation', marks: [{ type: 'bold' }], attrs: { equation: { kind: 'fraction', numerator: { ...t('<&'), format: { fontFamily: 'Cambria Math', fontSize: '14.5pt', color: '#aa2244', backgroundColor: '#eeeeff', letterSpacing: '-0.05pt', baselineShift: '1.5pt', script: 'superscript' } }, denominator: { kind: 'matrix', rows: [[t('1'), t('2')], [t('3'), t('4')]] } } } }] }] };
+  const rendered = new JSDOM(print.createStudioPrintHtml(model)).window.document;
+  assert.equal(rendered.querySelectorAll('strong math mfrac').length, 1);
+  assert.equal(rendered.querySelectorAll('math mtd').length, 4);
+  assert.equal(rendered.querySelector('math mtext').textContent, '<&');
+  const style = rendered.querySelector('math mtext').getAttribute('style');
+  for (const value of ['font-family:"Cambria Math"', 'font-size:14.5pt', 'color:#aa2244', 'background-color:#eeeeff', 'letter-spacing:-0.05pt', 'top:-1.5pt', 'vertical-align:super']) assert.ok(style.includes(value), value);
+  assert.equal(rendered.querySelector('script'), null);
+});
+
+test('Word display formulas retain their alignment and semantic MathML when printed', () => {
+  const model = models.createOfficeStudioDocument('word');
+  model.content = { type: 'doc', content: [{ type: 'paragraph', content: [{ type: 'mathEquation', attrs: { equation: { kind: 'display', align: 'right', body: { kind: 'fraction', numerator: { kind: 'text', text: 'x' }, denominator: { kind: 'text', text: '2' } } } } }] }] };
+  const rendered = new JSDOM(print.createStudioPrintHtml(model)).window.document;
+  assert.equal(rendered.querySelector('math').getAttribute('display'), 'block');
+  assert.ok(rendered.querySelector('math').getAttribute('style').includes('justify-content:flex-end'));
+  assert.equal(rendered.querySelectorAll('math mfrac').length, 1);
+});
+
+test('Word multi-equation groups print independent members and their local styles with spacing', () => {
+  const model = models.createOfficeStudioDocument('word');
+  const t = text => ({ kind: 'text', text });
+  model.content = { type: 'doc', content: [{ type: 'paragraph', content: [{ type: 'mathEquation', attrs: { equation: { kind: 'display', align: 'centerGroup', body: t('x'), following: [{ kind: 'fraction', numerator: { ...t('a'), format: { color: '#aa2244' } }, denominator: t('b') }] } } }] }] };
+  const rendered = new JSDOM(print.createStudioPrintHtml(model)).window.document;
+  assert.equal(rendered.querySelectorAll('math mfrac').length, 1);
+  assert.equal(rendered.querySelectorAll('math mspace').length, 1);
+  assert.equal(rendered.querySelector('math mspace').getAttribute('width'), '1em');
+  assert.equal(rendered.querySelector('math mtext').textContent, 'x');
+  assert.ok(rendered.querySelector('math mfrac mtext').getAttribute('style').includes('color:#aa2244'));
+});
+
+test('prints cell vertical alignment and margin variables on the cell rather than text marks', () => {
+  const document = { version: 1, id: 'cell-print', name: 'Cell.docx', kind: 'word', page: { size: 'A4', orientation: 'portrait', margin: 20 }, content: { type: 'doc', content: [{ type: 'table', content: [{ type: 'tableRow', attrs: { rowHeight: 24, rowHeightRule: 'exact' }, content: [{ type: 'tableCell', attrs: { verticalAlign: 'bottom', cellMargins: { top: 0, bottom: 5, left: 3 } }, content: [{ type: 'paragraph', content: [{ type: 'text', text: 'Cell' }] }] }] }] }] } };
+  const rendered = new JSDOM(print.createStudioPrintHtml(document)).window.document;
+  const cell = rendered.querySelector('td');
+  assert.equal(cell.style.verticalAlign, 'bottom');
+  assert.equal(cell.style.paddingTop, '0pt');
+  assert.equal(cell.style.getPropertyValue('--zuvi-word-cell-margin-bottom'), '5pt');
+  assert.ok(rendered.querySelector('[data-word-cell-content]'));
+});
+
+test('Word print scopes table defaults and cell overrides and uses the same column footprint with spacing', () => {
+  const model = models.createOfficeStudioDocument('word');
+  const cell = (attrs, text) => ({ type: 'tableCell', attrs: { colspan: 1, rowspan: 1, colwidth: [294], ...attrs }, content: [{ type: 'paragraph', content: [{ type: 'text', text }] }] });
+  model.content = { type: 'doc', content: [{ type: 'table', attrs: { defaultCellMargins: { top: 12, left: 10 }, cellSpacing: 6 }, content: [{ type: 'tableRow', content: [cell({ cellMargins: { top: 0, right: 8.25 } }, 'A'), cell({}, 'B')] }] }] };
+  const page = new JSDOM(print.createStudioPrintHtml(model)).window.document, table = page.querySelector('table'), cells = page.querySelectorAll('td');
+  assert.equal(table.style.width, '612px'); assert.equal(table.style.borderCollapse, 'separate'); assert.equal(table.style.borderSpacing, '6pt');
+  assert.equal(table.style.getPropertyValue('--zuvi-word-cell-border-y'), '2px');
+  assert.equal(table.style.getPropertyValue('--zuvi-word-table-margin-top'), '12pt');
+  assert.deepEqual(Array.from(table.querySelectorAll('col'), col => col.style.width), ['294px', '294px']);
+  assert.equal(cells[0].style.paddingTop, '0pt'); assert.equal(cells[0].style.getPropertyValue('--zuvi-word-cell-margin-right'), '8.25pt');
+  assert.equal(cells[1].style.getPropertyValue('--zuvi-word-cell-margin-top'), 'var(--zuvi-word-table-margin-top,0pt)');
+  assert.equal(cells[1].style.getPropertyValue('--zuvi-word-cell-justify'), 'flex-start');
 });

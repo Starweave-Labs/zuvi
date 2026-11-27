@@ -1,0 +1,220 @@
+{
+  "initial": {
+    "body": {
+      "defaults": {
+        "top": 4,
+        "right": 5,
+        "bottom": 4,
+        "left": 5
+      },
+      "spacing": 0,
+      "cells": [
+        {
+          "paragraphs": [
+            "Body A"
+          ],
+          "vertical": "top",
+          "horizontal": "left",
+          "directMargins": {
+            "top": 0,
+            "left": 3
+          },
+          "bold": true
+        },
+        {
+          "paragraphs": [
+            "Body B line 1",
+            "Body B line 2",
+            "Body B line 3"
+          ],
+          "vertical": "top",
+          "horizontal": "left",
+          "directMargins": null,
+          "bold": false
+        }
+      ]
+    },
+    "header": {
+      "defaults": {
+        "top": 6,
+        "right": 7,
+        "bottom": 8,
+        "left": 9
+      },
+      "spacing": 4,
+      "cells": [
+        {
+          "paragraphs": [
+            "Header A"
+          ],
+          "vertical": "center",
+          "horizontal": "center",
+          "directMargins": {
+            "top": 0,
+            "left": 4
+          },
+          "bold": true
+        },
+        {
+          "paragraphs": [
+            "Header B line 1",
+            "Header B line 2",
+            "Header B line 3"
+          ],
+          "vertical": "top",
+          "horizontal": "left",
+          "directMargins": null,
+          "bold": false
+        }
+      ]
+    },
+    "footer": {
+      "defaults": {
+        "top": 2,
+        "right": 3,
+        "bottom": 4,
+        "left": 5
+      },
+      "spacing": 2,
+      "cells": [
+        {
+          "paragraphs": [
+            "Footer A"
+          ],
+          "vertical": "bottom",
+          "horizontal": "right",
+          "directMargins": {
+            "top": 1,
+            "left": 2
+          },
+          "bold": true
+        },
+        {
+          "paragraphs": [
+            "Footer B line 1",
+            "Footer B line 2",
+            "Footer B line 3"
+          ],
+          "vertical": "top",
+          "horizontal": "left",
+          "directMargins": null,
+          "bold": false
+        }
+      ]
+    }
+  },
+  "edited": {
+    "body": {
+      "defaults": {
+        "top": 4,
+        "right": 5,
+        "bottom": 4,
+        "left": 5
+      },
+      "spacing": 0,
+      "cells": [
+        {
+          "paragraphs": [
+            "Body A"
+          ],
+          "vertical": "top",
+          "horizontal": "left",
+          "directMargins": {
+            "top": 0,
+            "left": 3
+          },
+          "bold": true
+        },
+        {
+          "paragraphs": [
+            "Body B line 1",
+            "Body B line 2",
+            "Body B line 3"
+          ],
+          "vertical": "top",
+          "horizontal": "left",
+          "directMargins": null,
+          "bold": false
+        }
+      ]
+    },
+    "header": {
+      "defaults": {
+        "top": 10,
+        "right": 7,
+        "bottom": 8,
+        "left": 12
+      },
+      "spacing": 6,
+      "cells": [
+        {
+          "paragraphs": [
+            "Header A"
+          ],
+          "vertical": "bottom",
+          "horizontal": "right",
+          "directMargins": {
+            "top": 0,
+            "left": 5.5
+          },
+          "bold": true
+        },
+        {
+          "paragraphs": [
+            "Header B line 1",
+            "Header B line 2",
+            "Header B line 3"
+          ],
+          "vertical": "top",
+          "horizontal": "left",
+          "directMargins": null,
+          "bold": false
+        }
+      ]
+    },
+    "footer": {
+      "defaults": {
+        "top": 2,
+        "right": 9,
+        "bottom": 6,
+        "left": 5
+      },
+      "spacing": 5,
+      "cells": [
+        {
+          "paragraphs": [
+            "Footer A"
+          ],
+          "vertical": "center",
+          "horizontal": "center",
+          "directMargins": {
+            "top": 1,
+            "left": 2,
+            "bottom": 7
+          },
+          "bold": true
+        },
+        {
+          "paragraphs": [
+            "Footer B line 1",
+            "Footer B line 2",
+            "Footer B line 3"
+          ],
+          "vertical": "top",
+          "horizontal": "left",
+          "directMargins": null,
+          "bold": false
+        }
+      ]
+    }
+  },
+  "rounds": 2,
+  "history": [
+    "header",
+    "footer"
+  ],
+  "cancelled": [
+    "header",
+    "footer"
+  ]
+}

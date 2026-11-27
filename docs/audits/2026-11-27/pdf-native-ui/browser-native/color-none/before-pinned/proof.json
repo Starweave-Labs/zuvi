@@ -1,0 +1,22 @@
+{
+  "kind": "reconstructed-before-from-byte-identical-frozen-core",
+  "sources": [
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native/colors.ts",
+      "sha256": "808d65e8a688d730f9dd71c4b6be77d2e9e96a87f34d238c6f1cd6cd8fc66292"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native/read.ts",
+      "sha256": "b406c14bf31645e6d22228d07111f41cbbd0ef9dcdc46b3a60f5c2853e0076aa"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native/model-edit.ts",
+      "sha256": "02399f9ce71453b688ca40b6b1075231659e5ba0a31e862287a2bd4c135e2dfc"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native/write.ts",
+      "sha256": "79b2c204d58f5781bf4311b78417712806185d6d1995d2f33767cba5eb734a21"
+    }
+  ],
+  "note": "The first probe log is retained. Its first PDF copies were overwritten by an early after-fix invocation; these newly generated before files are explicitly a reproduction with the pinned pre-fix sources, not claimed to be those first run bytes."
+}

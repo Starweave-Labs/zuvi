@@ -1,0 +1,100 @@
+{
+  "scope": "original source and actual UI failures W002/W008/W009/W010, plus same-locale Unicode W007 failure; only tmp prototype existed before root apply cue",
+  "files": [
+    {
+      "path": "source/StudioWord.tsx.txt",
+      "bytes": 141550,
+      "sha256": "975c53bf6073584b441e833c279e4390843ea930228d9b528e33c6940ec9a5fb"
+    },
+    {
+      "path": "source/studio-word-tools.ts.txt",
+      "bytes": 46372,
+      "sha256": "4e5bde67f48207d365ac0db709aceddff6a27199bb983affc7f0a179ffabdc3b"
+    },
+    {
+      "path": "source/StudioWordCharacterDialog.tsx.txt",
+      "bytes": 5537,
+      "sha256": "16fe79eb7f951e48db762575eaee00895b75ddb0aef805906693070e1c872f81"
+    },
+    {
+      "path": "source/studio-word-character-layout.ts.txt",
+      "bytes": 4789,
+      "sha256": "5112be361ad09b5861b5b5d3a753285445939742dd097812958270cdc2c8454e"
+    },
+    {
+      "path": "neighbor.test.ts.txt",
+      "bytes": 7180,
+      "sha256": "511e4653b6976bf47c4a471475b361c65f953305bdb180046f8c63afb6c509a1"
+    },
+    {
+      "path": "neighbor-four.test.ts.txt",
+      "bytes": 6560,
+      "sha256": "580a450df841972ef5238a190eef71317436f6bd0e1aaff9adcd562f976a4583"
+    },
+    {
+      "path": "vitest.config.mjs.txt",
+      "bytes": 574,
+      "sha256": "05bdae45cb15a6d8a80904e596a172d7cf85b72a163ba6ed7149b881f3e80fdc"
+    },
+    {
+      "path": "vitest.prototype.config.mjs.txt",
+      "bytes": 1684,
+      "sha256": "fdfedb9dcbeee930a509acb99e6ef4aa4df43a8cf959d390d676eee7357023cf"
+    },
+    {
+      "path": "neighbor-four.patch",
+      "bytes": 4980,
+      "sha256": "44bde4228eed01b130512394ec23c7367be6eb0434fd03071c344ab381f9f902"
+    },
+    {
+      "path": "patch-source-manifest.json",
+      "bytes": 1202,
+      "sha256": "d168ed60b3065ccada4422e78aa706cf614b97cd82720cef100a9b86ac08c651"
+    },
+    {
+      "path": "probes-second.txt.raw.gz",
+      "bytes": 2340,
+      "sha256": "fce49b130ee6d010879e1f1f555b9bce228cdb550abef378ff3046c1e01bd626",
+      "uncompressed": {
+        "bytes": 15568,
+        "sha256": "3cf18001a3a4acd167a47ae4ed0d7dd7ffb023bfe44c7fffd70c8774ace1f2ce"
+      }
+    },
+    {
+      "path": "probes-second.txt",
+      "bytes": 15566,
+      "sha256": "9bef22c959f792bd4df55d01eba01a4435b57a5ea146ba3b8a846accb4b62c3c",
+      "normalizedView": "Trailing whitespace/excess blank EOF only; paired raw gzip preserves original."
+    },
+    {
+      "path": "case-context-probe.txt.raw.gz",
+      "bytes": 825,
+      "sha256": "d9e198038dea4c37c30b519dccb43c2b8f3a293f5fb9dec31a10a7ea2fe2f0cb",
+      "uncompressed": {
+        "bytes": 1719,
+        "sha256": "2844ad4489fc8f19af6df9f88134589afb58790c999eb7fe71895d0b20ab777a"
+      }
+    },
+    {
+      "path": "case-context-probe.txt",
+      "bytes": 1718,
+      "sha256": "93681835a9e2b8485b1103e45256ba8c506394d8810c0ac46c3b144b9b3ab48f",
+      "normalizedView": "Trailing whitespace/excess blank EOF only; paired raw gzip preserves original."
+    },
+    {
+      "path": "prototype-four.txt.raw.gz",
+      "bytes": 478,
+      "sha256": "497a11971b4c5e40e3ad216794c65977ede284e0fe7d1c20cfbb7f4ce43730e1",
+      "uncompressed": {
+        "bytes": 974,
+        "sha256": "eb1bd600bac2287fc732daf7c4e90ae9a2098cea2cf942a83814b4f597fe5b33"
+      }
+    },
+    {
+      "path": "prototype-four.txt",
+      "bytes": 973,
+      "sha256": "a949606bb2ad5b6595aa1fbd85babf1645bea64cee70b0b4269ec5272ab0ba20",
+      "normalizedView": "Trailing whitespace/excess blank EOF only; paired raw gzip preserves original."
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+import { writeFile } from 'node:fs/promises';
+import { createRequire } from 'node:module';
+import assert from 'node:assert/strict';
+import { react as React, server, load } from './actual-ui-runtime.mjs';
+import { pdfTestRuntime } from '/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/tests/studio-pdf-test-runtime.mjs';
+const repo = '/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59';
+const require = createRequire(`${repo}/packages/ui/package.json`), { JSDOM } = require('jsdom');
+const StudioSheet = load(`${repo}/packages/ui/src/components/OfficeStudio/StudioSheet.tsx`).default;
+const r = pdfTestRuntime(), { createStudioPrintHtml } = r.load('../src/pages/collaboration/office-studio/studio-print.ts');
+const core = r.load('../../packages/ui/src/components/OfficeStudio/studio-sheet-model.ts');
+const display = r.load('../../packages/ui/src/components/OfficeStudio/studio-sheet-text-display.ts');
+const layout = r.load('../../packages/ui/src/components/OfficeStudio/studio-sheet-text-layout.ts');
+const cases = [
+  ['horizontal-hidden-master', 'A1:C1', [], ['A'], 24],
+  ['one-visible-row', 'A1:C2', [1], [], 24],
+  ['one-visible-row-and-column', 'A1:C2', [1], ['A'], 24],
+  ['horizontal-control', 'A1:C1', [], [], 24],
+  ['multi-visible-vertical-boundary', 'A1:C3', [1], [], 48],
+];
+const results = [];
+for (const [label, merge, hiddenRows, hiddenColumns, fontSize] of cases) {
+  const document = { version: 1, id: label, kind: 'excel', name: `${label}.xlsx`, activeSheetId: 's',
+    defaultFont: { family: 'Arial', sizePt: 11, bold: false, italic: false },
+    sheets: [{ id: 's', name: 'Auto', rowCount: 3, columnCount: 4, defaultRowHeight: 18,
+      rowHeightModes: { '1': 'auto', '2': 'auto', '3': 'auto' },
+      columnWidths: { A: 100, B: 100, C: 100, D: 100 }, merges: [merge], hiddenRows, hiddenColumns,
+      cells: { A1: { input: 'Merged', fontSize, wrap: true, align: 'center' } } }] };
+  const markup = server.renderToStaticMarkup(React.createElement(StudioSheet, { document, readOnly: true, onChange: () => {} }));
+  const ui = new JSDOM(markup).window.document, printMarkup = createStudioPrintHtml(document), print = new JSDOM(printMarkup).window.document;
+  const mergedUi = [...ui.querySelectorAll('[role="gridcell"]')].find(cell => cell.querySelector('.zuvi-studio-sheet-text')?.textContent.includes('Merged'));
+  const mergedPrint = [...print.querySelectorAll('.studio-print-sheet td')].find(cell => cell.textContent.includes('Merged'));
+  assert.ok(mergedUi); assert.ok(mergedPrint);
+  const width = parseFloat(mergedUi.style.width), height = parseFloat(mergedUi.style.height);
+  const calculation = core.studioCalculate(document), input = display.studioSheetCellTextInput(document, document.sheets[0], calculation, 'A1', { width, height }, display.studioSheetTextMeasure(undefined));
+  const text = layout.sheetLayoutText(input);
+  results.push({ label, merge, hiddenRows, hiddenColumns, fontSize,
+    uiBox: { width, height }, uiFont: mergedUi.querySelector('[data-effective-font-size]').dataset.effectiveFontSize,
+    uiTransform: mergedUi.querySelector('.zuvi-studio-sheet-text-transform').style.transform,
+    printClip: mergedPrint.querySelector('.studio-print-text-clip').getAttribute('style'),
+    printTransform: mergedPrint.querySelector('.studio-print-text-transform').style.transform,
+    visibleRows: [...print.querySelectorAll('.studio-print-sheet tr')].map(row => row.style.height),
+    requiredHeightPt: (text.naturalTextBox.height + text.padding.top + text.padding.bottom) * 3 / 4,
+    visibleSpanPt: height * 3 / 4, overconstrained: text.overconstrained,
+  });
+  await writeFile(`/tmp/zuvi-sheet-text-review-2026-11-27/auto-${label}-grid.html`, markup);
+  await writeFile(`/tmp/zuvi-sheet-text-review-2026-11-27/auto-${label}-print.html`, printMarkup);
+}
+await writeFile('/tmp/zuvi-sheet-text-review-2026-11-27/hidden-master-auto-height-results.json', JSON.stringify(results, null, 2));
+for (const item of results.slice(0, 3)) assert.ok(item.overconstrained);
+assert.equal(results[3].overconstrained, false);
+console.log(JSON.stringify(results, null, 2));

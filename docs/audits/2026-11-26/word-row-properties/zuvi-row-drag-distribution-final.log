@@ -1,0 +1,13 @@
+Button: consumer tree-shaking passed (1 chunks)
+Chart: consumer tree-shaking passed (3 chunks)
+icons: ESM import and client boundary passed
+i18n: ESM import and client boundary passed
+blocks: ESM import and client boundary passed
+ui: ESM import and client boundary passed
+tokens: npm pack passed (11 files)
+icons: npm pack passed (293 files)
+i18n: npm pack passed (17 files)
+ui: npm pack passed (56 files)
+blocks: npm pack passed (70 files)
+cli: npm pack passed (468 files)
+mcp: npm pack passed (464 files)

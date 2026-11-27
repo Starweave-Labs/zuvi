@@ -1,0 +1,18 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/studio-word-image-replace.test.ts (2 tests) 43ms
+ ✓ src/components/OfficeStudio/StudioWord.test.tsx (96 tests) 14214ms
+   ✓ Word paragraph dialog and ruler > edits inherited tab stops through ZUVI controls with precision checks, cancellation and one history step 444ms
+   ✓ Word paragraph dialog and ruler > keeps mixed pagination flags unchanged until edited, commits once, and blocks an open dialog after permission changes 427ms
+   ✓ StudioWord named paragraph styles > creates, applies, modifies and deletes a named style with real undo and redo 362ms
+   ✓ StudioWord structured editing > restores rejected controlled edits so the canvas and saved model agree 473ms
+   ✓ StudioWord structured editing > changes picture wrapping, position and anchor flags and restores them with undo 594ms
+   ✓ StudioWord structured editing > disables incomplete bulk results and rejects replacement growth without changing content 329ms
+   ✓ converts complete selected rows through the ribbon and preserves surrounding tables 345ms
+   ✓ applies image crop through the toolbar, cancels drafts and restores crop with undo and redo 465ms
+
+ Test Files  2 passed (2)
+      Tests  98 passed (98)
+   Start at  11:30:52
+   Duration  15.49s (transform 597ms, setup 190ms, collect 961ms, tests 14.26s, environment 529ms, prepare 67ms)

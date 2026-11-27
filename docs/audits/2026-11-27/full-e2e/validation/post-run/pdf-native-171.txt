@@ -1,0 +1,868 @@
+TAP version 13
+# Subtest: creates every designed field kind as native AcroForm data with original page streams unchanged
+ok 1 - creates every designed field kind as native AcroForm data with original page streams unchanged
+  ---
+  duration_ms: 1539.252625
+  ...
+# Subtest: explicit design edits rename, reposition and delete fields while retaining untouched readonly data
+ok 2 - explicit design edits rename, reposition and delete fields while retaining untouched readonly data
+  ---
+  duration_ms: 282.233583
+  ...
+# Subtest: imports original AcroForm values, real widget rectangles, pages, radio options and read-only metadata
+ok 3 - imports original AcroForm values, real widget rectangles, pages, radio options and read-only metadata
+  ---
+  duration_ms: 209.515333
+  ...
+# Subtest: unchanged PDF exports return the exact source without reserialization or a font request
+ok 4 - unchanged PDF exports return the exact source without reserialization or a font request
+  ---
+  duration_ms: 165.659
+  ...
+# Subtest: exports real text, transparent highlight, additional rotation and editable native forms while preserving every original page stream
+ok 5 - exports real text, transparent highlight, additional rotation and editable native forms while preserving every original page stream
+  ---
+  duration_ms: 349.282333
+  ...
+# Subtest: uses the bundled full Chinese font and retries a failed font load without changing the source
+ok 6 - uses the bundled full Chinese font and retries a failed font load without changing the source
+  ---
+  duration_ms: 616.658459
+  ...
+# Subtest: validates crop-box offsets, native field structure, readonly values, choices and finite annotation/rotation data
+ok 7 - validates crop-box offsets, native field structure, readonly values, choices and finite annotation/rotation data
+  ---
+  duration_ms: 152.959292
+  ...
+# Subtest: retains passive native fields without exposing editable values and still rejects encrypted PDFs and XFA
+ok 8 - retains passive native fields without exposing editable values and still rejects encrypted PDFs and XFA
+  ---
+  duration_ms: 294.619375
+  ...
+# Subtest: exports rectangles and handwritten signatures as native vector instructions without replacing original page streams
+ok 9 - exports rectangles and handwritten signatures as native vector instructions without replacing original page streams
+  ---
+  duration_ms: 93.591459
+  ...
+# Subtest: rejects invalid signature points, drawing widths and strokes extending outside the visible crop box
+ok 10 - rejects invalid signature points, drawing widths and strokes extending outside the visible crop box
+  ---
+  duration_ms: 99.136834
+  ...
+# Subtest: deletes a source field and creates a replacement with the same name without duplicate native widgets
+ok 11 - deletes a source field and creates a replacement with the same name without duplicate native widgets
+  ---
+  duration_ms: 70.507792
+  ...
+# Subtest: repeated radio export options stay synchronized across pages and survive repeated reopens
+ok 12 - repeated radio export options stay synchronized across pages and survive repeated reopens
+  ---
+  duration_ms: 84.508333
+  ...
+# Subtest: inserts real blank pages, remaps native widgets and keeps source streams and repeated rotation idempotent
+ok 13 - inserts real blank pages, remaps native widgets and keeps source streams and repeated rotation idempotent
+  ---
+  duration_ms: 86.694792
+  ...
+# Subtest: removes source widgets on deleted pages while retaining shared fields, appearances and remaining source content
+ok 14 - removes source widgets on deleted pages while retaining shared fields, appearances and remaining source content
+  ---
+  duration_ms: 80.05
+  ...
+# Subtest: copies native pages and widgets into shared field trees, preserves independent annotation owners and moves page references
+ok 15 - copies native pages and widgets into shared field trees, preserves independent annotation owners and moves page references
+  ---
+  duration_ms: 87.4585
+  ...
+# Subtest: resizes the visible native canvas at an offset crop origin without scaling original contents
+ok 16 - resizes the visible native canvas at an offset crop origin without scaling original contents
+  ---
+  duration_ms: 76.370292
+  ...
+# Subtest: repairs named destinations and catalog navigation after deletion and maps copied-group links to copied page references
+ok 17 - repairs named destinations and catalog navigation after deletion and maps copied-group links to copied page references
+  ---
+  duration_ms: 85.636167
+  ...
+# Subtest: page transformations keep readonly and source field-structure protections and reject invalid drafts without modifying source bytes
+ok 18 - page transformations keep readonly and source field-structure protections and reject invalid drafts without modifying source bytes
+  ---
+  duration_ms: 73.39725
+  ...
+# Subtest: preserves the original instance reference when its copy is inserted before it and keeps ordinary links on the original
+ok 19 - preserves the original instance reference when its copy is inserted before it and keeps ordinary links on the original
+  ---
+  duration_ms: 61.619375
+  ...
+# Subtest: splits a valid combined field/widget before page duplication without creating a self-referencing field tree
+ok 20 - splits a valid combined field/widget before page duplication without creating a self-referencing field tree
+  ---
+  duration_ms: 61.322833
+  ...
+# Subtest: materializes inherited page boxes resources and rotation before reparenting original leaves
+ok 21 - materializes inherited page boxes resources and rotation before reparenting original leaves
+  ---
+  duration_ms: 60.571916
+  ...
+# Subtest: maps AA and chained actions within copied groups, prunes deleted targets and bounds cyclic Next actions
+ok 22 - maps AA and chained actions within copied groups, prunes deleted targets and bounds cyclic Next actions
+  ---
+  duration_ms: 89.403084
+  ...
+# Subtest: keeps hidden radio widgets and their selected export value across insertions, copies and removal of the original page
+ok 23 - keeps hidden radio widgets and their selected export value across insertions, copies and removal of the original page
+  ---
+  duration_ms: 62.924875
+  ...
+# Subtest: radio options preserve meaning after copy and original-page deletion while choice ordering guards remain strict
+ok 24 - radio options preserve meaning after copy and original-page deletion while choice ordering guards remain strict
+  ---
+  duration_ms: 81.155125
+  ...
+# Subtest: drawing only on a copied page isolates Contents and mutable resource maps while retaining original streams and widget appearances
+ok 25 - drawing only on a copied page isolates Contents and mutable resource maps while retaining original streams and widget appearances
+  ---
+  duration_ms: 58.50625
+  ...
+# Subtest: keeps each repeated-source copy self actions on its own page while field-global actions retain their original context
+ok 26 - keeps each repeated-source copy self actions on its own page while field-global actions retain their original context
+  ---
+  duration_ms: 63.322583
+  ...
+# Subtest: clears designed text, date, choice, list and image values without recreating field refs or leaving stale appearances
+ok 27 - clears designed text, date, choice, list and image values without recreating field refs or leaving stale appearances
+  ---
+  duration_ms: 69.534541
+  ...
+# Subtest: namespaced legacy and name-tree destinations retain selected pages and prune unselected targets through two native saves
+ok 28 - namespaced legacy and name-tree destinations retain selected pages and prune unselected targets through two native saves
+  ---
+  duration_ms: 112.002833
+  ...
+# Subtest: retained outlines rebuild canonical parents, sibling refs and open/closed counts without unselected page objects
+ok 29 - retained outlines rebuild canonical parents, sibling refs and open/closed counts without unselected page objects
+  ---
+  duration_ms: 24.476958
+  ...
+# Subtest: named destinations in outlines become real retained-page references and URI Next survives a pruned GoTo
+ok 30 - named destinations in outlines become real retained-page references and URI Next survives a pruned GoTo
+  ---
+  duration_ms: 13.5595
+  ...
+# Subtest: nested PageLabels ranges preserve original numbering after reorder, copies and merge through two saves
+ok 31 - nested PageLabels ranges preserve original numbering after reorder, copies and merge through two saves
+  ---
+  duration_ms: 12.136209
+  ...
+# Subtest: prefix-only page labels retain constant text and do not gain a numbering style
+ok 32 - prefix-only page labels retain constant text and do not gain a numbering style
+  ---
+  duration_ms: 6.207792
+  ...
+# Subtest: catalog can be re-composed twice with canonical outlines and labels remaining native
+ok 33 - catalog can be re-composed twice with canonical outlines and labels remaining native
+  ---
+  duration_ms: 83.576916
+  ...
+# Subtest: primary Info, XML metadata, language, extension and viewer settings are retained with explicit secondary decisions
+ok 34 - primary Info, XML metadata, language, extension and viewer settings are retained with explicit secondary decisions
+  ---
+  duration_ms: 21.976125
+  ...
+# Subtest: missing primary metadata remains absent and secondary metadata omission is explicit
+ok 35 - missing primary metadata remains absent and secondary metadata omission is explicit
+  ---
+  duration_ms: 7.067542
+  ...
+# Subtest: compatible OpenAction and AA sequences preserve all sources and do not mutate shared cached actions
+ok 36 - compatible OpenAction and AA sequences preserve all sources and do not mutate shared cached actions
+  ---
+  duration_ms: 3.475125
+  ...
+# Subtest: two incompatible local OpenAction views reject the whole operation with a locatable conflict and unchanged sources
+ok 37 - two incompatible local OpenAction views reject the whole operation with a locatable conflict and unchanged sources
+  ---
+  duration_ms: 12.392875
+  ...
+# Subtest: incompatible local additional actions reject instead of silently keeping the primary event
+ok 38 - incompatible local additional actions reject instead of silently keeping the primary event
+  ---
+  duration_ms: 2.633667
+  ...
+# Subtest: unselected OpenAction destination is pruned while the other source action survives
+ok 39 - unselected OpenAction destination is pruned while the other source action survives
+  ---
+  duration_ms: 10.417667
+  ...
+# Subtest: primary print preference with no retained target is explicitly pruned
+ok 40 - primary print preference with no retained target is explicitly pruned
+  ---
+  duration_ms: 1.448291
+  ...
+# Subtest: invalid outline cycle fails without copying source page trees
+ok 41 - invalid outline cycle fails without copying source page trees
+  ---
+  duration_ms: 3.13475
+  ...
+# Subtest: invalid outline bad parent fails without copying source page trees
+ok 42 - invalid outline bad parent fails without copying source page trees
+  ---
+  duration_ms: 2.726875
+  ...
+# Subtest: invalid outline bad last fails without copying source page trees
+ok 43 - invalid outline bad last fails without copying source page trees
+  ---
+  duration_ms: 3.312459
+  ...
+# Subtest: invalid outline bad prev fails without copying source page trees
+ok 44 - invalid outline bad prev fails without copying source page trees
+  ---
+  duration_ms: 1.284708
+  ...
+# Subtest: invalid outline opaque structure element fails without copying source page trees
+ok 45 - invalid outline opaque structure element fails without copying source page trees
+  ---
+  duration_ms: 1.018375
+  ...
+# Subtest: invalid outline dangling first fails without copying source page trees
+ok 46 - invalid outline dangling first fails without copying source page trees
+  ---
+  duration_ms: 0.804708
+  ...
+# Subtest: invalid page label unknown style rejects
+ok 47 - invalid page label unknown style rejects
+  ---
+  duration_ms: 4.631334
+  ...
+# Subtest: invalid page label duplicate indexes rejects
+ok 48 - invalid page label duplicate indexes rejects
+  ---
+  duration_ms: 0.840667
+  ...
+# Subtest: invalid page label missing first page rejects
+ok 49 - invalid page label missing first page rejects
+  ---
+  duration_ms: 0.737334
+  ...
+# Subtest: invalid page label zero first number rejects
+ok 50 - invalid page label zero first number rejects
+  ---
+  duration_ms: 0.769833
+  ...
+# Subtest: invalid page label opaque label key rejects
+ok 51 - invalid page label opaque label key rejects
+  ---
+  duration_ms: 0.607167
+  ...
+# Subtest: cyclic PageLabels Kids and mismatching Limits reject instead of generic copying the number tree
+ok 52 - cyclic PageLabels Kids and mismatching Limits reject instead of generic copying the number tree
+  ---
+  duration_ms: 1.487625
+  ...
+# Subtest: named destination cycles and namespace collisions reject with source locations
+ok 53 - named destination cycles and namespace collisions reject with source locations
+  ---
+  duration_ms: 1.48525
+  ...
+# Subtest: opaque catalog events, JavaScript and malformed action values reject without dropping source semantics
+ok 54 - opaque catalog events, JavaScript and malformed action values reject without dropping source semantics
+  ---
+  duration_ms: 37.578958
+  ...
+# Subtest: Info object references, opaque metadata streams and unknown viewer settings fail locatably
+ok 55 - Info object references, opaque metadata streams and unknown viewer settings fail locatably
+  ---
+  duration_ms: 4.343625
+  ...
+# Subtest: target page instance coverage and metadata policy are validated before catalog mutation
+ok 56 - target page instance coverage and metadata policy are validated before catalog mutation
+  ---
+  duration_ms: 2.818958
+  ...
+# Subtest: multiple relative Named initial page actions reject even when their action names match
+ok 57 - multiple relative Named initial page actions reject even when their action names match
+  ---
+  duration_ms: 10.307334
+  ...
+# Subtest: page label arithmetic outside safe integer range rejects instead of rounding a native St
+ok 58 - page label arithmetic outside safe integer range rejects instead of rounding a native St
+  ---
+  duration_ms: 4.046917
+  ...
+# Subtest: Metadata filters and DecodeParms cannot retain disguised page references
+ok 59 - Metadata filters and DecodeParms cannot retain disguised page references
+  ---
+  duration_ms: 7.107625
+  ...
+# Subtest: DA tokenizer rewrites resource operands and ignores comments with escaped PDF names
+ok 60 - DA tokenizer rewrites resource operands and ignores comments with escaped PDF names
+  ---
+  duration_ms: 85.216375
+  ...
+# Subtest: DA resource compiler supports font, graphics state, color space and pattern namespaces
+ok 61 - DA resource compiler supports font, graphics state, color space and pattern namespaces
+  ---
+  duration_ms: 16.179375
+  ...
+# Subtest: DA semantic comparison resolves actual font resources rather than matching /F1 text
+ok 62 - DA semantic comparison resolves actual font resources rather than matching /F1 text
+  ---
+  duration_ms: 51.444667
+  ...
+# Subtest: missing AcroForm DR font is recovered only from unambiguous existing appearance resources
+ok 63 - missing AcroForm DR font is recovered only from unambiguous existing appearance resources
+  ---
+  duration_ms: 3.683125
+  ...
+# Subtest: unresolved DA resource and opaque content operators fail at their exact field path
+ok 64 - unresolved DA resource and opaque content operators fail at their exact field path
+  ---
+  duration_ms: 9.92875
+  ...
+# Subtest: closed copier registers stream placeholders before traversing a cyclic stream dictionary
+ok 65 - closed copier registers stream placeholders before traversing a cyclic stream dictionary
+  ---
+  duration_ms: 1.291209
+  ...
+# Subtest: portable SHA-256 matches native crypto and published empty/abc vectors
+ok 66 - portable SHA-256 matches native crypto and published empty/abc vectors
+  ---
+  duration_ms: 97.455625
+  ...
+# Subtest: treats direct and indirect null dictionary values as absent while retaining null destination coordinates
+ok 67 - treats direct and indirect null dictionary values as absent while retaining null destination coordinates
+  ---
+  duration_ms: 498.848625
+  ...
+# Subtest: ignores optional null policies, actions and widget dictionary entries while preserving real navigation and appearances
+ok 68 - ignores optional null policies, actions and widget dictionary entries while preserving real navigation and appearances
+  ---
+  duration_ms: 471.796459
+  ...
+# Subtest: extracts only selected native pages, order and stream closure through two recompositions
+ok 69 - extracts only selected native pages, order and stream closure through two recompositions
+  ---
+  duration_ms: 34.633833
+  ...
+# Subtest: multi-source merge keeps page resource and AcroForm font namespaces distinct
+ok 70 - multi-source merge keeps page resource and AcroForm font namespaces distinct
+  ---
+  duration_ms: 18.666416
+  ...
+# Subtest: materializes nested page inheritance without losing resources, dimensions or rotation
+ok 71 - materializes nested page inheritance without losing resources, dimensions or rotation
+  ---
+  duration_ms: 3.526958
+  ...
+# Subtest: splits merged field/widget into canonical parent plus child and retains every appearance
+ok 72 - splits merged field/widget into canonical parent plus child and retains every appearance
+  ---
+  duration_ms: 10.705458
+  ...
+# Subtest: preserves seven common native form kinds and values without flattening
+ok 73 - preserves seven common native form kinds and values without flattening
+  ---
+  duration_ms: 61.273709
+  ...
+# Subtest: retains Zero widget original Rect/F/V/AP through two native recompositions
+ok 74 - retains Zero widget original Rect/F/V/AP through two native recompositions
+  ---
+  duration_ms: 15.953542
+  ...
+# Subtest: retains Invisible widget original Rect/F/V/AP through two native recompositions
+ok 75 - retains Invisible widget original Rect/F/V/AP through two native recompositions
+  ---
+  duration_ms: 11.571166
+  ...
+# Subtest: retains NoView widget original Rect/F/V/AP through two native recompositions
+ok 76 - retains NoView widget original Rect/F/V/AP through two native recompositions
+  ---
+  duration_ms: 13.061
+  ...
+# Subtest: passively retains opaque canonical field type, value, flags, extension and zero-area appearance
+ok 77 - passively retains opaque canonical field type, value, flags, extension and zero-area appearance
+  ---
+  duration_ms: 9.727584
+  ...
+# Subtest: rename keeps hierarchical roots and changes only colliding source subtree names
+ok 78 - rename keeps hierarchical roots and changes only colliding source subtree names
+  ---
+  duration_ms: 17.600209
+  ...
+# Subtest: link merges compatible fields into one canonical field and keeps both original AP streams
+ok 79 - link merges compatible fields into one canonical field and keeps both original AP streams
+  ---
+  duration_ms: 13.028917
+  ...
+# Subtest: same /F1 DA name with different underlying fonts is incompatible for link
+ok 80 - same /F1 DA name with different underlying fonts is incompatible for link
+  ---
+  duration_ms: 6.873125
+  ...
+# Subtest: link refuses different field types without mutating either input
+ok 81 - link refuses different field types without mutating either input
+  ---
+  duration_ms: 7.889125
+  ...
+# Subtest: link conflicting text values refuses first-value policy rather than leaving stale AP
+ok 82 - link conflicting text values refuses first-value policy rather than leaving stale AP
+  ---
+  duration_ms: 8.515542
+  ...
+# Subtest: link default policy rejects conflicting V and DV
+ok 83 - link default policy rejects conflicting V and DV
+  ---
+  duration_ms: 5.440875
+  ...
+# Subtest: explicit checkbox link policy synchronizes canonical V/DV and every AP/AS without stream regeneration
+ok 84 - explicit checkbox link policy synchronizes canonical V/DV and every AP/AS without stream regeneration
+  ---
+  duration_ms: 16.61175
+  ...
+# Subtest: explicit radio link policy remaps on-state names and Opt in exact Kids order
+ok 85 - explicit radio link policy remaps on-state names and Opt in exact Kids order
+  ---
+  duration_ms: 37.199916
+  ...
+# Subtest: radio link preserves independent original default A and current B through two native recompositions
+ok 86 - radio link preserves independent original default A and current B through two native recompositions
+  ---
+  duration_ms: 47.006541
+  ...
+# Subtest: checkbox link preserves independent false default and true current value
+ok 87 - checkbox link preserves independent false default and true current value
+  ---
+  duration_ms: 8.395167
+  ...
+# Subtest: equal current V with differing DV still rejects default link policy
+ok 88 - equal current V with differing DV still rejects default link policy
+  ---
+  duration_ms: 10.363417
+  ...
+# Subtest: choice option order remains significant for link
+ok 89 - choice option order remains significant for link
+  ---
+  duration_ms: 7.227834
+  ...
+# Subtest: radio selected option omitted by extraction requires explicit clear policy
+ok 90 - radio selected option omitted by extraction requires explicit clear policy
+  ---
+  duration_ms: 11.024959
+  ...
+# Subtest: hidden selected radio widget remains a canonical option with value and AP through extraction
+ok 91 - hidden selected radio widget remains a canonical option with value and AP through extraction
+  ---
+  duration_ms: 12.955458
+  ...
+# Subtest: self A/AA/Next destinations use each selected instance and cross-page jumps use its group
+ok 92 - self A/AA/Next destinations use each selected instance and cross-page jumps use its group
+  ---
+  duration_ms: 10.416959
+  ...
+# Subtest: unselected GoTo is pruned while safe Next URI survives
+ok 93 - unselected GoTo is pruned while safe Next URI survives
+  ---
+  duration_ms: 2.142333
+  ...
+# Subtest: ResetForm static field lists are renamed and do not reset other merged sources
+ok 94 - ResetForm static field lists are renamed and do not reset other merged sources
+  ---
+  duration_ms: 6.294125
+  ...
+# Subtest: JavaScript referring to old field names fails with a path and immutable source bytes
+ok 95 - JavaScript referring to old field names fails with a path and immutable source bytes
+  ---
+  duration_ms: 1.520417
+  ...
+# Subtest: cyclic action Next fails instead of truncating executable semantics
+ok 96 - cyclic action Next fails instead of truncating executable semantics
+  ---
+  duration_ms: 4.016917
+  ...
+# Subtest: opaque action embedded under an unrecognized field key is a located failure
+ok 97 - opaque action embedded under an unrecognized field key is a located failure
+  ---
+  duration_ms: 1.612208
+  ...
+# Subtest: viewer-generated form appearances are rejected until source AP is materialized
+ok 98 - viewer-generated form appearances are rejected until source AP is materialized
+  ---
+  duration_ms: 12.589167
+  ...
+# Subtest: unmapped canonical field reference cannot drag an unselected widget/page into output
+ok 99 - unmapped canonical field reference cannot drag an unselected widget/page into output
+  ---
+  duration_ms: 2.381792
+  ...
+# Subtest: unselected annotation references are rejected before any extra page is copied
+ok 100 - unselected annotation references are rejected before any extra page is copied
+  ---
+  duration_ms: 0.93025
+  ...
+# Subtest: wrong widget P versus unique Annots owner is rejected
+ok 101 - wrong widget P versus unique Annots owner is rejected
+  ---
+  duration_ms: 3.836959
+  ...
+# Subtest: canonical field tree cycles are rejected without recursing indefinitely
+ok 102 - canonical field tree cycles are rejected without recursing indefinitely
+  ---
+  duration_ms: 3.819416
+  ...
+# Subtest: opaque document-wide name trees are a located all-or-nothing failure
+ok 103 - opaque document-wide name trees are a located all-or-nothing failure
+  ---
+  duration_ms: 1.767167
+  ...
+# Subtest: source/selection validation rejects duplicate ids, invalid indexes and empty output
+ok 104 - source/selection validation rejects duplicate ids, invalid indexes and empty output
+  ---
+  duration_ms: 2.056208
+  ...
+# Subtest: isolates Contents and mutable Resources for copied instances before future drawing
+ok 105 - isolates Contents and mutable Resources for copied instances before future drawing
+  ---
+  duration_ms: 4.084208
+  ...
+# Subtest: copied instances share immutable native stream/font references while owning mutable arrays
+ok 106 - copied instances share immutable native stream/font references while owning mutable arrays
+  ---
+  duration_ms: 1.025625
+  ...
+# Subtest: non-widget popup Parent and Popup links retain their native annotation relationship
+ok 107 - non-widget popup Parent and Popup links retain their native annotation relationship
+  ---
+  duration_ms: 7.443292
+  ...
+# Subtest: AcroForm default DA and Q become explicit independent leaf attributes
+ok 108 - AcroForm default DA and Q become explicit independent leaf attributes
+  ---
+  duration_ms: 17.914708
+  ...
+# Subtest: nonvisual canonical field value and calculation-order identity are retained
+ok 109 - nonvisual canonical field value and calculation-order identity are retained
+  ---
+  duration_ms: 15.056209
+  ...
+# Subtest: image link compares independent native DV instead of substituting current image data
+ok 110 - image link compares independent native DV instead of substituting current image data
+  ---
+  duration_ms: 71.397292
+  ...
+# Subtest: radio last-value policy retains selected source V, DV and independent design default
+ok 111 - radio last-value policy retains selected source V, DV and independent design default
+  ---
+  duration_ms: 41.8805
+  ...
+# Subtest: radio native on-state aliases are linked by logical export option without losing V or DV
+ok 112 - radio native on-state aliases are linked by logical export option without losing V or DV
+  ---
+  duration_ms: 49.166875
+  ...
+# Subtest: different checkbox native export state is an incompatible link definition
+ok 113 - different checkbox native export state is an incompatible link definition
+  ---
+  duration_ms: 3.264209
+  ...
+# Subtest: signed field is rejected before native composition and source bytes remain immutable
+ok 114 - signed field is rejected before native composition and source bytes remain immutable
+  ---
+  duration_ms: 4.810917
+  ...
+# Subtest: native bytes API accepts Blob source input and returns reopenable immutable bytes
+ok 115 - native bytes API accepts Blob source input and returns reopenable immutable bytes
+  ---
+  duration_ms: 12.256959
+  ...
+# Subtest: combined opaque widget preserves raw FT, value, Rect, F and AP without pdf-lib field classification
+ok 116 - combined opaque widget preserves raw FT, value, Rect, F and AP without pdf-lib field classification
+  ---
+  duration_ms: 40.895916
+  ...
+# Subtest: duplicate opaque field names cannot be renamed or linked without private semantic support
+ok 117 - duplicate opaque field names cannot be renamed or linked without private semantic support
+  ---
+  duration_ms: 22.101167
+  ...
+# Subtest: malformed standard field values cannot masquerade as empty values during link
+ok 118 - malformed standard field values cannot masquerade as empty values during link
+  ---
+  duration_ms: 1.545416
+  ...
+# Subtest: anonymous field groups have an explicit unsupported-name error rather than a partial output
+ok 119 - anonymous field groups have an explicit unsupported-name error rather than a partial output
+  ---
+  duration_ms: 2.024167
+  ...
+# Subtest: final link resolution report identifies the actual chosen source after three input records
+ok 120 - final link resolution report identifies the actual chosen source after three input records
+  ---
+  duration_ms: 28.6515
+  ...
+# Subtest: combined widget Hide reference targets its own child annotation and field-global context retains the original instance
+ok 121 - combined widget Hide reference targets its own child annotation and field-global context retains the original instance
+  ---
+  duration_ms: 13.370041
+  ...
+# Subtest: Hide field names are rewritten, native annotation NM identity remains unchanged
+ok 122 - Hide field names are rewritten, native annotation NM identity remains unchanged
+  ---
+  duration_ms: 21.659375
+  ...
+# Subtest: field-global GoTo and cross-group fallback retain the original page behind a front-inserted copy
+ok 123 - field-global GoTo and cross-group fallback retain the original page behind a front-inserted copy
+  ---
+  duration_ms: 19.181834
+  ...
+# Subtest: relative and executable URI links reject instead of changing their origin or dynamic name semantics
+ok 124 - relative and executable URI links reject instead of changing their origin or dynamic name semantics
+  ---
+  duration_ms: 2.569125
+  ...
+# Subtest: GoToR keeps absolute remote names and page numbers but refuses relative file targets
+ok 125 - GoToR keeps absolute remote names and page numbers but refuses relative file targets
+  ---
+  duration_ms: 8.835625
+  ...
+# Subtest: external stream data and reference XObjects cannot silently disappear from a Blob-only composition
+ok 126 - external stream data and reference XObjects cannot silently disappear from a Blob-only composition
+  ---
+  duration_ms: 1.835667
+  ...
+# Subtest: unsigned signature seed and field-lock policies reject before name or page changes
+ok 127 - unsigned signature seed and field-lock policies reject before name or page changes
+  ---
+  duration_ms: 3.489583
+  ...
+# Subtest: private field-name binding metadata rejects unsafe conflict renaming
+ok 128 - private field-name binding metadata rejects unsafe conflict renaming
+  ---
+  duration_ms: 14.246291
+  ...
+# Subtest: link rejects different canonical mapping names or alternative labels rather than discarding one
+ok 129 - link rejects different canonical mapping names or alternative labels rather than discarding one
+  ---
+  duration_ms: 18.277792
+  ...
+# Subtest: absolute SubmitForm preserves its source export mapping and relative submission targets reject
+ok 130 - absolute SubmitForm preserves its source export mapping and relative submission targets reject
+  ---
+  duration_ms: 20.358583
+  ...
+# Subtest: rebases virtual pages, native edits, links and resource conflicts while keeping editable marks out of the new base
+ok 131 - rebases virtual pages, native edits, links and resource conflicts while keeping editable marks out of the new base
+  ---
+  duration_ms: 1055.422334
+  ...
+# Subtest: keeps a prior page-copy transaction with combined Hide and ResetForm semantics through composition and extraction
+ok 132 - keeps a prior page-copy transaction with combined Hide and ResetForm semantics through composition and extraction
+  ---
+  duration_ms: 348.8725
+  ...
+# Subtest: links compatible equal fields and retains independent fields by default, while value conflicts leave both inputs unchanged
+ok 133 - links compatible equal fields and retains independent fields by default, while value conflicts leave both inputs unchanged
+  ---
+  duration_ms: 443.757334
+  ...
+# Subtest: preserves zero-area, Invisible, NoView and unknown passive fields in an extracted base and later native edits
+ok 134 - preserves zero-area, Invisible, NoView and unknown passive fields in an extracted base and later native edits
+  ---
+  duration_ms: 264.540875
+  ...
+# Subtest: requires an explicit policy when extracting only the current or only the default radio widget, preserving V and DV independently
+ok 135 - requires an explicit policy when extracting only the current or only the default radio widget, preserving V and DV independently
+  ---
+  duration_ms: 204.910167
+  ...
+# Subtest: rejects incompatible names, unsupported native actions, invalid snapshots and cancellation without mutating the active model
+ok 136 - rejects incompatible names, unsupported native actions, invalid snapshots and cancellation without mutating the active model
+  ---
+  duration_ms: 245.667916
+  ...
+# Subtest: replaces a designed field on copied pages without leaving dangling old widget annotations
+ok 137 - replaces a designed field on copied pages without leaving dangling old widget annotations
+  ---
+  duration_ms: 170.831833
+  ...
+# Subtest: enumerates unknown terminal fields, protects private values and retains Invisible and zero-area controls
+ok 138 - enumerates unknown terminal fields, protects private values and retains Invisible and zero-area controls
+  ---
+  duration_ms: 1267.485417
+  ...
+# Subtest: edits a supported field, preserves passive canonical values and appearances, and reopens twice
+ok 139 - edits a supported field, preserves passive canonical values and appearances, and reopens twice
+  ---
+  duration_ms: 398.480084
+  ...
+# Subtest: copies, moves and deletes native pages while keeping unknown and nonvisual field ownership
+ok 140 - copies, moves and deletes native pages while keeping unknown and nonvisual field ownership
+  ---
+  duration_ms: 246.6565
+  ...
+# Subtest: refuses passive value, type, flags, geometry, deletion and design replacement without modifying the source
+ok 141 - refuses passive value, type, flags, geometry, deletion and design replacement without modifying the source
+  ---
+  duration_ms: 147.900167
+  ...
+# Subtest: validates canonical cycles, duplicate roots, orphan widgets and unknown FT before public field traversal
+ok 142 - validates canonical cycles, duplicate roots, orphan widgets and unknown FT before public field traversal
+  ---
+  duration_ms: 165.461542
+  ...
+# Subtest: reads unsigned signature fields passively but prevents editing an existing signature payload
+ok 143 - reads unsigned signature fields passively but prevents editing an existing signature payload
+  ---
+  duration_ms: 141.133916
+  ...
+# Subtest: splits combined widgets while Hide keeps annotation identity and ResetForm keeps field identity through page copies
+ok 144 - splits combined widgets while Hide keeps annotation identity and ResetForm keeps field identity through page copies
+  ---
+  duration_ms: 162.214084
+  ...
+# Subtest: bounds cyclic indirect passive values and retains the original source bytes
+ok 145 - bounds cyclic indirect passive values and retains the original source bytes
+  ---
+  duration_ms: 173.165875
+  ...
+# Subtest: inherits through direct and indirect null entries when protecting passive current and default values
+ok 146 - inherits through direct and indirect null entries when protecting passive current and default values
+  ---
+  duration_ms: 213.547125
+  ...
+# Subtest: materializes effective terminal values and flags before constructing native wrappers or exposing editable values
+ok 147 - materializes effective terminal values and flags before constructing native wrappers or exposing editable values
+  ---
+  duration_ms: 206.652042
+  ...
+# Removing XFA form data as pdf-lib does not support reading or writing XFA
+# Removing XFA form data as pdf-lib does not support reading or writing XFA
+# Removing XFA form data as pdf-lib does not support reading or writing XFA
+# Subtest: accepts direct null XFA entries through two native edit and save rounds
+ok 148 - accepts direct null XFA entries through two native edit and save rounds
+  ---
+  duration_ms: 117.38425
+  ...
+# Subtest: accepts indirect null XFA entries through two native edit and save rounds
+ok 149 - accepts indirect null XFA entries through two native edit and save rounds
+  ---
+  duration_ms: 147.922166
+  ...
+# Subtest: continues to reject actual XFA streams and packet arrays on import and export without changing source bytes
+ok 150 - continues to reject actual XFA streams and packet arrays on import and export without changing source bytes
+  ---
+  duration_ms: 93.459875
+  ...
+# Subtest: ignores null structural dictionary entries without weakening required field and widget ownership
+ok 151 - ignores null structural dictionary entries without weakening required field and widget ownership
+  ---
+  duration_ms: 103.1445
+  ...
+# Subtest: virtual move preserves original page labels and print preference through the actual composition adapter and two native saves
+ok 152 - virtual move preserves original page labels and print preference through the actual composition adapter and two native saves
+  ---
+  duration_ms: 775.166625
+  ...
+# Subtest: nested ranges survive copy, blank insertion, multi-page move and deletion with original refs, resources, field AP and defaults intact
+ok 153 - nested ranges survive copy, blank insertion, multi-page move and deletion with original refs, resources, field AP and defaults intact
+  ---
+  duration_ms: 455.4585
+  ...
+# Subtest: all five numbering styles and prefix-only labels retain their own starts after native reorder and merge
+ok 154 - all five numbering styles and prefix-only labels retain their own starts after native reorder and merge
+  ---
+  duration_ms: 370.606375
+  ...
+# Subtest: unlabelled sources stay unlabelled and removing the entire print selection removes only that preference
+ok 155 - unlabelled sources stay unlabelled and removing the entire print selection removes only that preference
+  ---
+  duration_ms: 219.270791
+  ...
+# Subtest: rejects unknown style labels before exporting any changed page tree
+ok 156 - rejects unknown style labels before exporting any changed page tree
+  ---
+  duration_ms: 196.872541
+  ...
+# Subtest: rejects non-text prefix labels before exporting any changed page tree
+ok 157 - rejects non-text prefix labels before exporting any changed page tree
+  ---
+  duration_ms: 186.97375
+  ...
+# Subtest: rejects zero start labels before exporting any changed page tree
+ok 158 - rejects zero start labels before exporting any changed page tree
+  ---
+  duration_ms: 154.433208
+  ...
+# Subtest: rejects overflow start labels before exporting any changed page tree
+ok 159 - rejects overflow start labels before exporting any changed page tree
+  ---
+  duration_ms: 135.999084
+  ...
+# Subtest: rejects missing first page labels before exporting any changed page tree
+ok 160 - rejects missing first page labels before exporting any changed page tree
+  ---
+  duration_ms: 140.741667
+  ...
+# Subtest: rejects unsorted branches labels before exporting any changed page tree
+ok 161 - rejects unsorted branches labels before exporting any changed page tree
+  ---
+  duration_ms: 118.613375
+  ...
+# Subtest: rejects cyclic children labels before exporting any changed page tree
+ok 162 - rejects cyclic children labels before exporting any changed page tree
+  ---
+  duration_ms: 128.875292
+  ...
+# Subtest: rejects incorrect limits labels before exporting any changed page tree
+ok 163 - rejects incorrect limits labels before exporting any changed page tree
+  ---
+  duration_ms: 124.936583
+  ...
+# Subtest: rejects opaque label property labels before exporting any changed page tree
+ok 164 - rejects opaque label property labels before exporting any changed page tree
+  ---
+  duration_ms: 130.022167
+  ...
+# Subtest: rejects malformed native print range [0]
+ok 165 - rejects malformed native print range [0]
+  ---
+  duration_ms: 122.544584
+  ...
+# Subtest: rejects malformed native print range [1,0]
+ok 166 - rejects malformed native print range [1,0]
+  ---
+  duration_ms: 126.797
+  ...
+# Subtest: rejects malformed native print range [0,1,1,1]
+ok 167 - rejects malformed native print range [0,1,1,1]
+  ---
+  duration_ms: 129.01775
+  ...
+# Subtest: rejects malformed native print range [0,2]
+ok 168 - rejects malformed native print range [0,2]
+  ---
+  duration_ms: 113.421667
+  ...
+# Subtest: rejects malformed native print range [0.5,1]
+ok 169 - rejects malformed native print range [0.5,1]
+  ---
+  duration_ms: 123.123292
+  ...
+# Subtest: catalog remapping preserves an unrelated native catalog feature and composition continues to reject unsupported semantics
+ok 170 - catalog remapping preserves an unrelated native catalog feature and composition continues to reject unsupported semantics
+  ---
+  duration_ms: 111.89775
+  ...
+# Subtest: catalog remapping does not bypass native signature protection
+ok 171 - catalog remapping does not bypass native signature protection
+  ---
+  duration_ms: 116.546708
+  ...
+1..171
+# tests 171
+# suites 0
+# pass 171
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5854.81975

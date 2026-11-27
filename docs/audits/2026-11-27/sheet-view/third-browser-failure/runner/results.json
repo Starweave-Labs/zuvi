@@ -1,0 +1,267 @@
+{
+  "config": {
+    "argv": [
+      "/Users/meaili/.nvm/versions/node/v20.20.0/bin/node",
+      "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/node_modules/.pnpm/@playwright+test@1.65.0/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config=e2e/playwright.config.ts",
+      "e2e/office-studio-sheet-view.spec.ts",
+      "--workers=1",
+      "--retries=0",
+      "--reporter=list,json",
+      "--output=/tmp/zuvi-sheet-view-browser-third/artifacts"
+    ],
+    "configFile": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/playwright.config.ts",
+    "rootDir": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/tmp/zuvi-sheet-view-browser-third/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/tmp/zuvi-sheet-view-browser-third/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "chromium",
+        "testDir": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e",
+        "snapshotDir": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e",
+        "testIgnore": [],
+        "testMatch": "**/*.spec.ts",
+        "timeout": 30000,
+        "use": {
+          "baseURL": "http://localhost:5272",
+          "viewport": {
+            "width": 1280,
+            "height": 800
+          },
+          "trace": "retain-on-failure",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.8127.18 Safari/537.36",
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "chromium"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "chromium"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.65.0",
+    "workers": 1,
+    "webServer": {
+      "command": "pnpm --filter @zuvi/docs dev --port 5272 --strictPort --force",
+      "url": "http://localhost:5272",
+      "reuseExistingServer": true,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "office-studio-sheet-view.spec.ts",
+      "file": "office-studio-sheet-view.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "view zoom and visibility use correct grid, fill, resize and native coordinates over two XLSX reopens",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9393,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-26T22:13:53.728Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0c04f8f9ee8380c6bec1-6976361d02071966a330",
+          "file": "office-studio-sheet-view.spec.ts",
+          "line": 178,
+          "column": 1
+        },
+        {
+          "title": "native small zoom, invalid draft cancellation and read-only preview preserve the saved XLSX view",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 31379,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-26T22:14:03.418Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0c04f8f9ee8380c6bec1-e29bea91cf6d3de540a8",
+          "file": "office-studio-sheet-view.spec.ts",
+          "line": 321,
+          "column": 1
+        },
+        {
+          "title": "view geometry, hidden merge masters and print stay consistent in light, dark and 320px layouts",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 13960,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m100\u001b[39m\nReceived:    \u001b[31m96\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m100\u001b[39m\nReceived:    \u001b[31m96\u001b[39m\n    at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-sheet-view.spec.ts:532:28",
+                    "location": {
+                      "file": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-sheet-view.spec.ts",
+                      "column": 28,
+                      "line": 532
+                    },
+                    "snippet": " \u001b[90m 530 |\u001b[39m   \u001b[36mconst\u001b[39m editorBox \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m editor\u001b[33m.\u001b[39mboundingBox()\u001b[33m;\u001b[39m\n \u001b[90m 531 |\u001b[39m   expect(editorBox\u001b[33m!\u001b[39m\u001b[33m.\u001b[39mheight)\u001b[33m.\u001b[39mtoBeGreaterThanOrEqual(\u001b[35m23\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 532 |\u001b[39m   expect(editorBox\u001b[33m!\u001b[39m\u001b[33m.\u001b[39mwidth)\u001b[33m.\u001b[39mtoBeGreaterThanOrEqual(\u001b[35m100\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 533 |\u001b[39m   \u001b[36mawait\u001b[39m editor\u001b[33m.\u001b[39mfill(\u001b[32m'25'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 534 |\u001b[39m   \u001b[36mawait\u001b[39m editor\u001b[33m.\u001b[39mpress(\u001b[32m'Escape'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 535 |\u001b[39m   \u001b[36mawait\u001b[39m expect(cell(\u001b[32m'C4'\u001b[39m))\u001b[33m.\u001b[39mtoHaveText(\u001b[32m'10'\u001b[39m)\u001b[33m;\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-sheet-view.spec.ts",
+                        "column": 28,
+                        "line": 532
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m100\u001b[39m\nReceived:    \u001b[31m96\u001b[39m\n\n  530 |   const editorBox = await editor.boundingBox();\n  531 |   expect(editorBox!.height).toBeGreaterThanOrEqual(23);\n> 532 |   expect(editorBox!.width).toBeGreaterThanOrEqual(100);\n      |                            ^\n  533 |   await editor.fill('25');\n  534 |   await editor.press('Escape');\n  535 |   await expect(cell('C4')).toHaveText('10');\n    at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-sheet-view.spec.ts:532:28"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-26T22:14:34.805Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/tmp/zuvi-sheet-view-browser-third/artifacts/office-studio-sheet-view-v-47471-ight-dark-and-320px-layouts-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/zuvi-sheet-view-browser-third/artifacts/office-studio-sheet-view-v-47471-ight-dark-and-320px-layouts-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-sheet-view.spec.ts",
+                    "column": 28,
+                    "line": 532
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "0c04f8f9ee8380c6bec1-de7cf74a98dcd4cb9239",
+          "file": "office-studio-sheet-view.spec.ts",
+          "line": 406,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-26T22:13:51.935Z",
+    "duration": 57218.488000000005,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

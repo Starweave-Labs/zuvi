@@ -1,0 +1,12 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/studio-word-nonprinting.test.ts (3 tests) 74ms
+ ✓ src/components/OfficeStudio/StudioWord.test.tsx (140 tests | 138 skipped) 750ms
+   ✓ StudioWord Office ribbon actions > shows nonprinting characters in the body, table, header and footer without changing data, selection or document history 568ms
+
+ Test Files  2 passed (2)
+      Tests  5 passed | 138 skipped (143)
+   Start at  14:09:17
+   Duration  2.79s (transform 825ms, setup 338ms, collect 1.32s, tests 824ms, environment 925ms, prepare 116ms)
+

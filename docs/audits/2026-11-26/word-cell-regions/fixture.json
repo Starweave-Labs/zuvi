@@ -1,0 +1,81 @@
+{
+  "status": "prepared-not-browser-verified",
+  "referencePath": "docs/audits/2026-11-26/word-math-regions/regions-source.docx",
+  "referenceSha256": "6b469d0173de46d3ec7780ef0f37f1d54036a654c78b077cfe0e58c72b5c63e6",
+  "sourceSha256": "95e275da6c405dc610166316ca663edf3758a847567533e240caaadb4fd70c44",
+  "configuration": {
+    "body": {
+      "label": "Body",
+      "defaults": {
+        "top": 4,
+        "right": 5,
+        "bottom": 4,
+        "left": 5
+      },
+      "spacing": 0,
+      "direct": {
+        "top": 0,
+        "left": 3
+      },
+      "vertical": "top",
+      "horizontal": "left"
+    },
+    "header": {
+      "label": "Header",
+      "defaults": {
+        "top": 6,
+        "right": 7,
+        "bottom": 8,
+        "left": 9
+      },
+      "spacing": 4,
+      "direct": {
+        "top": 0,
+        "left": 4
+      },
+      "vertical": "center",
+      "horizontal": "center"
+    },
+    "footer": {
+      "label": "Footer",
+      "defaults": {
+        "top": 2,
+        "right": 3,
+        "bottom": 4,
+        "left": 5
+      },
+      "spacing": 2,
+      "direct": {
+        "top": 1,
+        "left": 2
+      },
+      "vertical": "bottom",
+      "horizontal": "right"
+    }
+  },
+  "nativeUnits": {
+    "cellMargins": "points * 20",
+    "cellSpacing": "physical gap points * 10"
+  },
+  "rows": "one nonfixed row per region, a short bold first cell and three paragraphs in the second cell",
+  "page": {
+    "paper": "A4",
+    "uniformMarginMm": 40,
+    "headerFooterDistanceMm": 10,
+    "sourceGridTwips": [
+      3300,
+      3300
+    ]
+  },
+  "preflight": {
+    "zipReadable": true,
+    "xmlWellFormed": true,
+    "regionTables": 3,
+    "relationshipTargets": [
+      "word/header1.xml",
+      "word/footer1.xml"
+    ],
+    "browserRun": false,
+    "codecImportRun": false
+  }
+}

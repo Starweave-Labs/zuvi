@@ -1,0 +1,294 @@
+import { expect, test, type Locator, type Page } from '@playwright/test';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import path from 'node:path';
+import JSZip from '../docs/node_modules/jszip/lib/index.js';
+import type { StudioRichNode } from '../packages/ui/src/components/OfficeStudio/studio-types';
+
+const audit = path.resolve('docs/audits/2026-11-27/word-basic-format');
+const sourcePath = path.join(audit, 'source.docx');
+const hash = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');
+
+async function selectRange(node: Locator, from = 0, to?: number) {
+  await node.evaluate((element, range) => {
+    const root = element.closest('[contenteditable="true"]') as HTMLElement;
+    root.focus();
+    const nodes: Text[] = [];
+    const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+    while (walker.nextNode()) nodes.push(walker.currentNode as Text);
+    const end = range.to ?? nodes.reduce((length, text) => length + text.length, 0);
+    const point = (offset: number): [Text, number] => {
+      for (const node of nodes) {
+        if (offset <= node.length) return [node, offset];
+        offset -= node.length;
+      }
+      throw new Error('The requested selection exceeds the source text');
+    };
+    const selection = document.createRange();
+    selection.setStart(...point(range.from));
+    selection.setEnd(...point(end));
+    const current = window.getSelection()!;
+    current.removeAllRanges();
+    current.addRange(selection);
+    document.dispatchEvent(new Event('selectionchange'));
+  }, { from, to });
+}
+
+async function model(body: Locator) {
+  return body.evaluate(element => (element as HTMLElement & {
+    editor: { getJSON(): StudioRichNode };
+  }).editor.getJSON());
+}
+
+async function importSource(page: Page, bytes: Uint8Array, name = 'Word basic formatting.docx') {
+  await page.getByLabel('导入文档文件', { exact: true }).setInputFiles({
+    name,
+    mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    buffer: Buffer.from(bytes),
+  });
+  await expect(page.getByRole('textbox', { name: 'Word 文档正文', exact: true })).toContainText('Mixed plain Mixed rich');
+}
+
+async function font(page: Page, label: string, value: string) {
+  const input = page.getByRole('combobox', { name: label, exact: true });
+  await input.fill(value);
+  await input.press('Enter');
+}
+
+async function highlight(page: Page, label: string) {
+  await page.getByRole('button', { name: '文字高亮', exact: true }).click();
+  await page.getByRole('menuitem', { name: label, exact: true }).click();
+}
+
+async function nativeRows(page: Page, bytes: Uint8Array) {
+  const zip = await JSZip.loadAsync(bytes);
+  const content = await zip.file('word/document.xml')!.async('string');
+  const relationships = await zip.file('word/_rels/document.xml.rels')!.async('string');
+  const rows = await page.evaluate(xml => {
+    const ns = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';
+    const document = new DOMParser().parseFromString(xml, 'application/xml');
+    const child = (element: Element | undefined, name: string) =>
+      element ? Array.from(element.children).find(value => value.namespaceURI === ns && value.localName === name) : undefined;
+    const flag = (properties: Element | undefined, name: string) => {
+      const value = child(properties, name);
+      return !!value && !['0', 'false', 'off', 'none'].includes(value.getAttributeNS(ns, 'val') ?? 'true');
+    };
+    return Array.from(document.getElementsByTagNameNS(ns, 'p')).map(paragraph => {
+      const runs = Array.from(paragraph.getElementsByTagNameNS(ns, 'r')).map(run => {
+        const properties = child(run, 'rPr');
+        return {
+          text: Array.from(run.getElementsByTagNameNS(ns, 't')).map(text => text.textContent).join(''),
+          family: child(properties, 'rFonts')?.getAttributeNS(ns, 'ascii'),
+          halfPoints: child(properties, 'sz')?.getAttributeNS(ns, 'val'),
+          bold: flag(properties, 'b'), italic: flag(properties, 'i'),
+          underline: flag(properties, 'u'), strike: flag(properties, 'strike'),
+          script: child(properties, 'vertAlign')?.getAttributeNS(ns, 'val'),
+          background: child(properties, 'shd')?.getAttributeNS(ns, 'fill'),
+        };
+      }).filter(run => run.text);
+      return { text: runs.map(run => run.text).join(''), runs };
+    });
+  }, content);
+  return { content, relationships, rows };
+}
+
+async function exportFile(page: Page, filename: string) {
+  const pending = page.waitForEvent('download');
+  await page.getByRole('button', { name: '导出文件', exact: true }).click();
+  const bytes = await readFile((await (await pending).path())!);
+  await writeFile(path.join(audit, filename), bytes);
+  return bytes;
+}
+
+test('applies mixed and caret character formats, restores transactions and reopens two actual native DOCX exports', async ({ page }) => {
+  test.setTimeout(180000);
+  await mkdir(audit, { recursive: true });
+  const source = await readFile(sourcePath), originalHash = hash(source), errors: string[] = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.goto('/#/components/office-studio');
+  await importSource(page, source);
+  const body = page.getByRole('textbox', { name: 'Word 文档正文', exact: true });
+  const mixed = body.locator('p').filter({ hasText: 'Mixed plain Mixed rich' });
+  await selectRange(mixed);
+  await expect(page.getByRole('combobox', { name: '字体', exact: true })).toHaveValue('');
+  await expect(page.getByRole('combobox', { name: '字号', exact: true })).toHaveValue('');
+  for (const label of ['粗体', '斜体', '下划线', '删除线'])
+    await expect(page.getByRole('button', { name: label, exact: true })).toHaveAttribute('aria-pressed', 'mixed');
+  const beforeFonts = await model(body);
+  await font(page, '字体', 'Arial');
+  await expect(mixed.locator('span').last()).toHaveCSS('font-family', 'Arial');
+  await page.getByRole('button', { name: '撤销', exact: true }).click();
+  expect(await model(body)).toEqual(beforeFonts);
+  await page.getByRole('button', { name: '重做', exact: true }).click();
+  await font(page, '字号', '12');
+  await expect(mixed.locator('span').last()).toHaveCSS('font-size', '16px');
+  await expect.poll(() => page.evaluate(() => window.getSelection()?.toString())).toBe('Mixed plain Mixed rich');
+  for (const label of ['粗体', '斜体', '下划线', '删除线']) {
+    const button = page.getByRole('button', { name: label, exact: true });
+    await expect(button).toHaveAttribute('aria-pressed', 'mixed');
+    await button.click();
+    await expect(button).toHaveAttribute('aria-pressed', 'true');
+  }
+  await highlight(page, '无颜色');
+  await expect(mixed.locator('[style*="background-color"]')).toHaveCount(0);
+  const clear = body.locator('p').filter({ hasText: 'Clear styles' });
+  await selectRange(clear);
+  for (const label of ['粗体', '斜体', '下划线', '删除线']) {
+    const button = page.getByRole('button', { name: label, exact: true });
+    await expect(button).toHaveAttribute('aria-pressed', 'true');
+    await button.click();
+    await expect(button).toHaveAttribute('aria-pressed', 'false');
+    await page.getByRole('button', { name: '撤销', exact: true }).click();
+    await expect(button).toHaveAttribute('aria-pressed', 'true');
+    await page.getByRole('button', { name: '重做', exact: true }).click();
+    await expect(button).toHaveAttribute('aria-pressed', 'false');
+  }
+  const caret = body.locator('p').filter({ hasText: /^Caret / });
+  await selectRange(caret, 6, 6);
+  await font(page, '字体', 'Times New Roman');
+  await font(page, '字号', '17.3pt');
+  await body.pressSequentially('_Typed_');
+  await expect(caret).toHaveText('Caret _Typed_base');
+  await expect(caret.getByText('_Typed_', { exact: true })).toHaveCSS('font-size', '23.3333px');
+  const typed = await model(body);
+  await page.getByRole('button', { name: '撤销', exact: true }).click();
+  await expect(caret).toHaveText('Caret base');
+  await page.getByRole('button', { name: '重做', exact: true }).click();
+  expect(await model(body)).toEqual(typed);
+  const script = body.locator('p').filter({ hasText: 'Script 23' });
+  await selectRange(script, 7, 8);
+  await page.getByRole('button', { name: '上标', exact: true }).click();
+  await expect(script.locator('sup')).toHaveText('2');
+  await page.getByRole('button', { name: '下标', exact: true }).click();
+  await expect(script.locator('sup')).toHaveCount(0);
+  await expect(script.locator('sub')).toHaveText('2');
+  await page.getByRole('button', { name: '下标', exact: true }).click();
+  await expect(script.locator('sub')).toHaveCount(0);
+  await page.getByRole('button', { name: '撤销', exact: true }).click();
+  await expect(script.locator('sub')).toHaveText('2');
+  await page.getByRole('button', { name: '重做', exact: true }).click();
+  await expect(script.locator('sub')).toHaveCount(0);
+  await page.getByRole('button', { name: '上标', exact: true }).click();
+  await selectRange(script, 8, 9);
+  await page.getByRole('button', { name: '下标', exact: true }).click();
+  await expect(script.locator('sup')).toHaveText('2');
+  await expect(script.locator('sub')).toHaveText('3');
+  const target = body.locator('p').filter({ hasText: 'Highlight target' });
+  await selectRange(target);
+  await highlight(page, '青色');
+  await expect(target.locator('span')).toHaveCSS('background-color', 'rgb(0, 255, 255)');
+  await highlight(page, '无颜色');
+  await expect(target.locator('span')).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+  await page.getByRole('button', { name: '撤销', exact: true }).click();
+  await expect(target.locator('span')).toHaveCSS('background-color', 'rgb(0, 255, 255)');
+  await page.getByRole('button', { name: '重做', exact: true }).click();
+  await expect(target.locator('span')).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+  await highlight(page, '黄色');
+  const highlightCaret = body.locator('p').filter({ hasText: /^Highlight .*caret$/ });
+  await selectRange(highlightCaret, 10, 10);
+  await highlight(page, '黄色');
+  await body.pressSequentially('H');
+  await highlight(page, '无颜色');
+  await body.pressSequentially('C');
+  await expect(highlightCaret).toHaveText('Highlight HCcaret');
+  await expect(highlightCaret.getByText('H', { exact: true })).toHaveCSS('background-color', 'rgb(255, 255, 0)');
+  await page.getByRole('button', { name: '撤销', exact: true }).click();
+  await expect(highlightCaret).toHaveText('Highlight Hcaret');
+  await page.getByRole('button', { name: '撤销', exact: true }).click();
+  await expect(highlightCaret).toHaveText('Highlight caret');
+  for (let round = 0; round < 2; round++) await page.getByRole('button', { name: '重做', exact: true }).click();
+  await expect(highlightCaret).toHaveText('Highlight HCcaret');
+  const expected = await model(body), rounds = [];
+  for (let round = 1; round <= 2; round++) {
+    const bytes = await exportFile(page, `roundtrip-${round}.docx`);
+    const native = await nativeRows(page, bytes);
+    const mixedRuns = native.rows.find(row => row.text === 'Mixed plain Mixed rich')!.runs;
+    for (const run of mixedRuns) expect(run).toMatchObject({ family: 'Arial', bold: true, italic: true, underline: true, strike: true });
+    for (const run of native.rows.find(row => row.text === 'Clear styles')!.runs)
+      expect(run).toMatchObject({ bold: false, italic: false, underline: false, strike: false });
+    expect(native.rows.find(row => row.text === 'Caret _Typed_base')!.runs.find(run => run.text === '_Typed_')).toMatchObject({ family: 'Times New Roman', halfPoints: '35' });
+    expect(native.rows.find(row => row.text === 'Script 23')!.runs.find(run => run.text === '2')?.script).toBe('superscript');
+    expect(native.rows.find(row => row.text === 'Script 23')!.runs.find(run => run.text === '3')?.script).toBe('subscript');
+    expect(native.rows.find(row => row.text === 'Highlight target')!.runs[0].background).toBe('FFFF00');
+    expect(native.relationships).toContain('https://example.com/kept-link');
+    await importSource(page, bytes, `Reopened-${round}.docx`);
+    await expect(mixed.locator('strong')).toHaveText('Mixed plain Mixed rich');
+    await expect(mixed.locator('span')).toHaveCSS('font-size', '16px');
+    await expect(caret.getByText('_Typed_', { exact: true })).toHaveCSS('font-size', '23.3333px');
+    await expect(script.locator('sup')).toHaveText('2');
+    await expect(script.locator('sub')).toHaveText('3');
+    await expect(target.locator('span')).toHaveCSS('background-color', 'rgb(255, 255, 0)');
+    await expect(highlightCaret.getByText('H', { exact: true })).toHaveCSS('background-color', 'rgb(255, 255, 0)');
+    await expect(body.locator('a')).toHaveAttribute('href', 'https://example.com/kept-link');
+    rounds.push({ round, bytes: bytes.length, sha256: hash(bytes), native: native.rows });
+  }
+  await page.screenshot({ path: path.join(audit, 'formats-light.png'), fullPage: true, animations: 'disabled' });
+  expect(hash(await readFile(sourcePath))).toBe(originalHash);
+  expect(errors).toEqual([]);
+  await writeFile(path.join(audit, 'native-roundtrips.json'), JSON.stringify({ originalHash, expected, rounds, errors }, null, 2) + '\n');
+});
+
+test('keeps invalid and composing drafts unchanged, cancels them and verifies light dark 320px and readonly controls', async ({ page }) => {
+  test.setTimeout(120000);
+  const source = await readFile(sourcePath), downloads: string[] = [];
+  page.on('download', value => downloads.push(value.suggestedFilename()));
+  await page.goto('/#/components/office-studio');
+  await importSource(page, source);
+  const body = page.getByRole('textbox', { name: 'Word 文档正文', exact: true });
+  const mixed = body.locator('p').filter({ hasText: 'Mixed plain Mixed rich' });
+  await selectRange(mixed);
+  const before = await model(body), size = page.getByRole('combobox', { name: '字号', exact: true });
+  await size.fill('410');
+  await size.press('Enter');
+  await expect(size).toHaveAttribute('aria-invalid', 'true');
+  await page.getByRole('button', { name: '粗体', exact: true }).click();
+  expect(await model(body)).toEqual(before);
+  await page.getByRole('button', { name: '导出文件', exact: true }).click();
+  await expect(size).toHaveAttribute('aria-invalid', 'true');
+  expect(downloads).toEqual([]);
+  await size.press('Escape');
+  await expect(size).not.toHaveAttribute('aria-invalid', 'true');
+  expect(await model(body)).toEqual(before);
+  const family = page.getByRole('combobox', { name: '字体', exact: true });
+  await family.focus();
+  await family.evaluate(element => element.dispatchEvent(new CompositionEvent('compositionstart', { bubbles: true })));
+  await family.fill('宋体');
+  await family.press('Enter');
+  expect(await model(body)).toEqual(before);
+  await family.evaluate(element => element.dispatchEvent(new CompositionEvent('compositionend', { bubbles: true, data: '宋体' })));
+  await family.press('Escape');
+  expect(await model(body)).toEqual(before);
+  await selectRange(mixed);
+  await body.evaluate(element => element.dispatchEvent(new CompositionEvent('compositionstart', { bubbles: true })));
+  await page.getByRole('button', { name: '上标', exact: true }).click();
+  expect(await model(body)).toEqual(before);
+  await body.evaluate(element => element.dispatchEvent(new CompositionEvent('compositionend', { bubbles: true })));
+  await page.screenshot({ path: path.join(audit, 'controls-light.png'), fullPage: true, animations: 'disabled' });
+  await page.getByRole('button', { name: '切换暗色', exact: true }).click();
+  await page.screenshot({ path: path.join(audit, 'controls-dark.png'), fullPage: true, animations: 'disabled' });
+  await page.setViewportSize({ width: 320, height: 720 });
+  await selectRange(mixed);
+  await page.getByRole('button', { name: '文字高亮', exact: true }).click();
+  const menu = page.getByRole('menu');
+  const bounds = await menu.boundingBox();
+  expect(bounds!.width).toBeLessThanOrEqual(320);
+  const dimensions = await menu.evaluate(element => ({ width: element.clientWidth, scroll: element.scrollWidth }));
+  expect(dimensions.scroll).toBeLessThanOrEqual(dimensions.width + 1);
+  await expect(page.getByRole('menuitem', { name: '无颜色', exact: true })).toBeInViewport();
+  await page.screenshot({ path: path.join(audit, 'highlight-dark-320.png'), fullPage: true, animations: 'disabled' });
+  await page.keyboard.press('Escape');
+  await page.getByRole('button', { name: '切换浅色', exact: true }).click();
+  await font(page, '字号', '12');
+  await expect(mixed.locator('span').last()).toHaveCSS('font-size', '16px');
+  await page.screenshot({ path: path.join(audit, 'font-light-320.png'), fullPage: true, animations: 'disabled' });
+  const readonlyBefore = await model(body);
+  await page.getByRole('switch', { name: '只读预览', exact: true }).click();
+  for (const label of ['粗体', '斜体', '下划线', '删除线', '上标', '下标', '文字高亮'])
+    await expect(page.getByRole('button', { name: label, exact: true })).toBeDisabled();
+  for (const label of ['字体', '字号'])
+    await expect(page.getByRole('combobox', { name: label, exact: true })).toBeDisabled();
+  await body.focus();
+  await body.press('Control+b');
+  expect(await model(body)).toEqual(readonlyBefore);
+  await writeFile(path.join(audit, 'drafts-permissions-geometry.json'), JSON.stringify({ before, readonlyBefore, dimensions, bounds, downloads }, null, 2) + '\n');
+});

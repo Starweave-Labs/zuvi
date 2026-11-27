@@ -1,0 +1,204 @@
+{
+  "reason": "Readable error text omits trailing whitespace. Raw gzip payloads retain every original byte and SHA256; binary PDF/PNG/trace evidence is unchanged.",
+  "files": [
+    {
+      "path": "pdf-composition/first-browser-primary-service/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/error-context.md",
+      "rawPath": "pdf-composition/first-browser-primary-service/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/error-context.md.raw.gz",
+      "originalBytes": 38520,
+      "originalSha256": "0cf958b423b4728173cbeff32537b8b3230fd46ce215a1a844e2e242d775cea9",
+      "rawBytes": 10262,
+      "rawSha256": "31902986594aebeb54c70b5cc2eefa3c472f1eba7156ab7602dc99a32a604fc8",
+      "viewBytes": 38516,
+      "viewSha256": "8dd90cefec470caa21ea336aba6b8238925d6005c0d9c113e9d62c4dacc33586"
+    },
+    {
+      "path": "pdf-composition/first-browser-primary-service/office-studio-pdf-composit-0d74b-s-undo-and-repeated-reopens-chromium/error-context.md",
+      "rawPath": "pdf-composition/first-browser-primary-service/office-studio-pdf-composit-0d74b-s-undo-and-repeated-reopens-chromium/error-context.md.raw.gz",
+      "originalBytes": 50374,
+      "originalSha256": "04613fac59a55443afc39588d8122b83451962774ce569bed6293287c3f4b4fe",
+      "rawBytes": 11942,
+      "rawSha256": "e2050970a0116cbacb44b3d7a5b1ce85465a13949653eb738230d3304cd8ddac",
+      "viewBytes": 50369,
+      "viewSha256": "d52aff3f2d87eed85773de858c50674081828991c1b74db68e42ce69ddb9f03e"
+    },
+    {
+      "path": "pdf-composition/first-browser-primary-service/office-studio-pdf-composit-7c290-ogs-in-light-dark-and-320px-chromium/error-context.md",
+      "rawPath": "pdf-composition/first-browser-primary-service/office-studio-pdf-composit-7c290-ogs-in-light-dark-and-320px-chromium/error-context.md.raw.gz",
+      "originalBytes": 50290,
+      "originalSha256": "d2c3516a1622437704a1152d5dcf4e84978808ea1c451e83e531958f82549ab0",
+      "rawBytes": 11916,
+      "rawSha256": "c54ca5d561a4ab5a81857c7cdc2f977809a15e2f0d6081bda51b7645093a5847",
+      "viewBytes": 50285,
+      "viewSha256": "6a6f120b4fcf1d041886cfb79285436516501928cce4663f89632ecc6f6332ad"
+    },
+    {
+      "path": "pdf-composition/first-browser-primary-service/run.txt",
+      "rawPath": "pdf-composition/first-browser-primary-service/run.txt.raw.gz",
+      "originalBytes": 9252,
+      "originalSha256": "ac0e005b7dcc081ea7bcc84402313058d3a3de7fed0d099f9dc4a88ca26ce4b7",
+      "rawBytes": 2022,
+      "rawSha256": "5c6cf337020de652fa0c1f5f630f7a898abbbd498e8f69af116a40c91c6e7e48",
+      "viewBytes": 9246,
+      "viewSha256": "9cf8f5025efcf31b1078bcc4f64e267064748f07e6339d988a2dca381a1a2953"
+    },
+    {
+      "path": "pdf-composition/first-worktree-browser-locators/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/error-context.md",
+      "rawPath": "pdf-composition/first-worktree-browser-locators/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/error-context.md.raw.gz",
+      "originalBytes": 63151,
+      "originalSha256": "bb48ecfac2df0de0bedceece13e6984d2b04c785ad9d2870ba5bf4d868f82e5f",
+      "rawBytes": 13754,
+      "rawSha256": "990518e91a59e05004762719eec08ade4df9d8ac249060b7bac718287de201dc",
+      "viewBytes": 63146,
+      "viewSha256": "d0085a856f78c7b6eb47247fbd4a0a383b5fb6fd3fe8594a95929a82d0077922"
+    },
+    {
+      "path": "pdf-composition/first-worktree-browser-locators/office-studio-pdf-composit-0d74b-s-undo-and-repeated-reopens-chromium/error-context.md",
+      "rawPath": "pdf-composition/first-worktree-browser-locators/office-studio-pdf-composit-0d74b-s-undo-and-repeated-reopens-chromium/error-context.md.raw.gz",
+      "originalBytes": 52631,
+      "originalSha256": "bfbaf7079e4f9947b3e5194b7d3e34f87b85d2d73578883c912154c11c55f957",
+      "rawBytes": 12516,
+      "rawSha256": "e5d1e082341a6838521dd5b3324e6af4657422c554fe34ff708cd25891be02ab",
+      "viewBytes": 52626,
+      "viewSha256": "05d84f0cab8c964d912379c1822efe5b3125008f6e28a467e1d9d88bc3a178bf"
+    },
+    {
+      "path": "pdf-composition/first-worktree-browser-locators/run.txt",
+      "rawPath": "pdf-composition/first-worktree-browser-locators/run.txt.raw.gz",
+      "originalBytes": 7991,
+      "originalSha256": "b2236e093c1e970d05e602099ad312514dfa80fba5d57c646eff7b07d7e19eb6",
+      "rawBytes": 2120,
+      "rawSha256": "767c505f4dca82aee4ea21af3a8aa97e2681380d9c809081094989933eec16fe",
+      "viewBytes": 7987,
+      "viewSha256": "869a6025b0b61c08111958ebdf40ebc7f803464176e296f273d0d0b48963479f"
+    },
+    {
+      "path": "pdf-composition/second-worktree-browser-history-close/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/error-context.md",
+      "rawPath": "pdf-composition/second-worktree-browser-history-close/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/error-context.md.raw.gz",
+      "originalBytes": 53857,
+      "originalSha256": "61143c6ba9cd8c8bf4f93449e75ee0bf1704e173baf6ec8c9f554083c2489f83",
+      "rawBytes": 12432,
+      "rawSha256": "d95b84784e2d018f9b84d59332443248b8e0b62544903a793e73f60dcca3451f",
+      "viewBytes": 53852,
+      "viewSha256": "9ef1b99db8ef671e80f666a74f170971de90fac24b2f258ac1a569db5a2497f0"
+    },
+    {
+      "path": "pdf-composition/second-worktree-browser-history-close/run.txt",
+      "rawPath": "pdf-composition/second-worktree-browser-history-close/run.txt.raw.gz",
+      "originalBytes": 4404,
+      "originalSha256": "cc41c5fd29d1fbe581302f8952bab16d07cea662bb39da06d22bca94a800fa73",
+      "rawBytes": 1437,
+      "rawSha256": "cf983ca693de61418309384279c381780ef23e997fb1727ada3ca3ad38b0f810",
+      "viewBytes": 4402,
+      "viewSha256": "2698c636d5f7d987330694b4451308a558d54178c6bc07690be0aa9c20f23729"
+    },
+    {
+      "path": "sheet-text-layout/first-old-dist-setup/office-studio-sheet-text-a-df2ac-opens-use-the-actual-editor-chromium/error-context.md",
+      "rawPath": "sheet-text-layout/first-old-dist-setup/office-studio-sheet-text-a-df2ac-opens-use-the-actual-editor-chromium/error-context.md.raw.gz",
+      "originalBytes": 57968,
+      "originalSha256": "18fba8b8db25e60625371f43d7cef469575bb0d399a844151ffa43ff29ba5eed",
+      "rawBytes": 12663,
+      "rawSha256": "b617612b355ad58d92b5ec524720f34121bdc2b28b4ea3136b4056ab400aa3ec",
+      "viewBytes": 57963,
+      "viewSha256": "6eef1e786f15347bece56d15b6ef167d43db23e6d289f049f7a66e743a2dc50f"
+    },
+    {
+      "path": "sheet-text-layout/first-old-dist-setup/office-studio-sheet-text-t-0c2e6-tches-before-adding-history-chromium/error-context.md",
+      "rawPath": "sheet-text-layout/first-old-dist-setup/office-studio-sheet-text-t-0c2e6-tches-before-adding-history-chromium/error-context.md.raw.gz",
+      "originalBytes": 9252,
+      "originalSha256": "d046354aab3b9adfddcd4adc068cc5033027f6bd07c59721ffaabcce5adf4fbd",
+      "rawBytes": 2883,
+      "rawSha256": "87734298889e1b5003a781c1bcf72fcfd74d52d8dd31f479ab6ebc924ba4f449",
+      "viewBytes": 9250,
+      "viewSha256": "bbf394b013f62df645c53bafba307de1e60d4b0f836166587ff6a50e8e31039e"
+    },
+    {
+      "path": "sheet-text-layout/first-old-dist-setup/run.txt",
+      "rawPath": "sheet-text-layout/first-old-dist-setup/run.txt.raw.gz",
+      "originalBytes": 5365,
+      "originalSha256": "73035292a8ca008e26049dda8c57e2f33f9bfe43ce6a710c969f98947f75db54",
+      "rawBytes": 1193,
+      "rawSha256": "c9e1421b14be95533240bceef50113f49864798068ec6b6d38628159d7faccb0",
+      "viewBytes": 5361,
+      "viewSha256": "c8c0505ff426ff2e6bdba3e5fbd662cdcc262ca00280208b5e5d06daa3316447"
+    },
+    {
+      "path": "sheet-text-layout/fourth-incorrect-row-attribute/playwright/office-studio-sheet-text-a-df2ac-opens-use-the-actual-editor-chromium/error-context.md",
+      "rawPath": "sheet-text-layout/fourth-incorrect-row-attribute/playwright/office-studio-sheet-text-a-df2ac-opens-use-the-actual-editor-chromium/error-context.md.raw.gz",
+      "originalBytes": 59169,
+      "originalSha256": "7ad442ecba58d7893188c8587cae02e6553dfc98b5e3a466375e0dad25d31f0e",
+      "rawBytes": 12338,
+      "rawSha256": "b8ea3babf75f2d1ba050e2fa73f7547104e42cb3430a822c6d6ab6c8d28db9a7",
+      "viewBytes": 59165,
+      "viewSha256": "babe57c64cc2ddd9629b3e4b4ed41e3c8a7ef91afb061f8aa5a15be69b318a06"
+    },
+    {
+      "path": "sheet-text-layout/fourth-incorrect-row-attribute/run.txt",
+      "rawPath": "sheet-text-layout/fourth-incorrect-row-attribute/run.txt.raw.gz",
+      "originalBytes": 2946,
+      "originalSha256": "da3ebc67f992266d7d1768e37058dec2cecc838a5141ed80bf9c014408ce5e3d",
+      "rawBytes": 942,
+      "rawSha256": "507ac0fafcc58932cbc6c98b9766581f8cc31913711af7a3f01081fe8a7d5dd6",
+      "viewBytes": 2944,
+      "viewSha256": "f14f5645bc0fa29fcfa1552d562282c973fbed1f535839fddc6612bcbbfca1ca"
+    },
+    {
+      "path": "sheet-text-layout/second-fresh-dist-locators/office-studio-sheet-text-a-df2ac-opens-use-the-actual-editor-chromium/error-context.md",
+      "rawPath": "sheet-text-layout/second-fresh-dist-locators/office-studio-sheet-text-a-df2ac-opens-use-the-actual-editor-chromium/error-context.md.raw.gz",
+      "originalBytes": 12055,
+      "originalSha256": "5d3f1b6b58b19e5587611bf829cb678e1d72d2b6262a7042ab7ef212594b0739",
+      "rawBytes": 3809,
+      "rawSha256": "e4f926a437b2c2337096682689ea4554692439de0aaafdec30bfe41bb2905cd0",
+      "viewBytes": 12051,
+      "viewSha256": "4e8a1509c97c2e263ae01691320a52e600c5dbb503233f1bddd740dc07db353f"
+    },
+    {
+      "path": "sheet-text-layout/second-fresh-dist-locators/office-studio-sheet-text-t-0c2e6-tches-before-adding-history-chromium/error-context.md",
+      "rawPath": "sheet-text-layout/second-fresh-dist-locators/office-studio-sheet-text-t-0c2e6-tches-before-adding-history-chromium/error-context.md.raw.gz",
+      "originalBytes": 50265,
+      "originalSha256": "7d10a4faad87eec7ee9051c95b49426226c5c7078f250cb5159a4188e6074cad",
+      "rawBytes": 10997,
+      "rawSha256": "5e6bed8e77bb8e1f99158b7f5e499504abb7b3b0f164c5ffa7c619ea00d67941",
+      "viewBytes": 50263,
+      "viewSha256": "06a3ee94cbc2f671ff6b5e22354d6aed99598adab98ac9e5fb65c337c438092f"
+    },
+    {
+      "path": "sheet-text-layout/second-fresh-dist-locators/run.txt",
+      "rawPath": "sheet-text-layout/second-fresh-dist-locators/run.txt.raw.gz",
+      "originalBytes": 5705,
+      "originalSha256": "c063b25f5605b3d88458af93b990f3c910c43c0ad0ce231257019ba6fc068ddf",
+      "rawBytes": 1481,
+      "rawSha256": "0e0a82e0173b62e312747736745aa5695e3fc2301ac21675b89acd63119a508e",
+      "viewBytes": 5701,
+      "viewSha256": "11b4f9f47f091145add838461e81ebe95949e3982d1fc64e88dfb479cdee0267"
+    },
+    {
+      "path": "sheet-text-layout/third-pre-center-review/playwright/office-studio-sheet-text-t-0c2e6-tches-before-adding-history-chromium/error-context.md",
+      "rawPath": "sheet-text-layout/third-pre-center-review/playwright/office-studio-sheet-text-t-0c2e6-tches-before-adding-history-chromium/error-context.md.raw.gz",
+      "originalBytes": 53047,
+      "originalSha256": "7b8c8ce1b2fe4dcd751150f0d0a07eb664e366073ff6171f1e7533db3c9d21d8",
+      "rawBytes": 11161,
+      "rawSha256": "de2fee5201a69193e87ce1f9a2f02aa684408209186f8b95674124072cebdc9b",
+      "viewBytes": 53045,
+      "viewSha256": "b7469f180e87c24b3262aa23908f7305df6043e8656792c6c3c53057ca2e9518"
+    },
+    {
+      "path": "sheet-text-layout/third-pre-center-review/run.txt",
+      "rawPath": "sheet-text-layout/third-pre-center-review/run.txt.raw.gz",
+      "originalBytes": 2810,
+      "originalSha256": "e72eef00ee5dd62f43264e549abcdb5e9c74706d0476b8f4ae621bba4b583ee4",
+      "rawBytes": 944,
+      "rawSha256": "794c0bd0cf36276ed1a09e3d5e67f2687494d7cfbb65c456d7cf967eb8d45235",
+      "viewBytes": 2808,
+      "viewSha256": "ee85a18e020c5af31409908bfe4b350b7afba0e9c28c171e7f1a5570a6fc84bd"
+    }
+  ],
+  "updatedManifests": [
+    "pdf-composition/first-browser-primary-service/archive.json",
+    "pdf-composition/first-worktree-browser-locators/archive.json",
+    "pdf-composition/second-worktree-browser-history-close/archive.json",
+    "sheet-text-layout/first-old-dist-setup/archive-manifest.json",
+    "sheet-text-layout/fourth-incorrect-row-attribute/archive-manifest.json",
+    "sheet-text-layout/second-fresh-dist-locators/archive-manifest.json",
+    "sheet-text-layout/third-pre-center-review/archive-manifest.json"
+  ]
+}

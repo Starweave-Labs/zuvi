@@ -1,0 +1,49 @@
+{
+  "kind": "fixture-coordinate-and-overlap-correction",
+  "reasons": [
+    "Legacy Ink points are native absolute coordinates, not relative to mark.x/y.",
+    "Rightward movement plus size growth deliberately overlapped source ink; move left with the same exact delta/history checks."
+  ],
+  "files": [
+    {
+      "name": "gesture-history-round-1.json",
+      "bytes": 14235,
+      "sha256": "02c71b4cb56bb8ef3245a9bfa2d7cd08601df5c6f2603bcdd9ea18e9de5f116a"
+    },
+    {
+      "name": "gesture-history-round-1.pdf",
+      "bytes": 1694005,
+      "sha256": "05a787cd783586700351caa3cb95c4efe75b415e8b44b75bd497f88a79054c79"
+    },
+    {
+      "name": "gesture-history-round-2.json",
+      "bytes": 14235,
+      "sha256": "02c71b4cb56bb8ef3245a9bfa2d7cd08601df5c6f2603bcdd9ea18e9de5f116a"
+    },
+    {
+      "name": "gesture-history-round-2.pdf",
+      "bytes": 1694005,
+      "sha256": "05a787cd783586700351caa3cb95c4efe75b415e8b44b75bd497f88a79054c79"
+    },
+    {
+      "name": "legacy-migration-round-1.json",
+      "bytes": 6861,
+      "sha256": "109b55b9d37c23e4aaad649385115f1e38d8de5cd4621ed86a722fd1a556bd9d"
+    },
+    {
+      "name": "legacy-migration-round-1.pdf",
+      "bytes": 1684796,
+      "sha256": "1e731a63833897f2e56b04272753200e0da645975cb089d745d44f371e8b8f4f"
+    },
+    {
+      "name": "legacy-migration-round-2.json",
+      "bytes": 6861,
+      "sha256": "109b55b9d37c23e4aaad649385115f1e38d8de5cd4621ed86a722fd1a556bd9d"
+    },
+    {
+      "name": "legacy-migration-round-2.pdf",
+      "bytes": 1684796,
+      "sha256": "1e731a63833897f2e56b04272753200e0da645975cb089d745d44f371e8b8f4f"
+    }
+  ]
+}

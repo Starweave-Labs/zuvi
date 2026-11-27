@@ -1,0 +1,12 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/studio-pdf-pages.test.ts (5 tests) 5ms
+ ✓ src/components/OfficeStudio/studio-pdf-native-model.test.ts (11 tests) 7ms
+ ✓ src/components/OfficeStudio/studio-model.test.ts (25 tests) 21ms
+
+ Test Files  3 passed (3)
+      Tests  41 passed (41)
+   Start at  06:15:02
+   Duration  747ms (transform 166ms, setup 337ms, collect 295ms, tests 33ms, environment 916ms, prepare 150ms)
+

@@ -1,0 +1,49 @@
+[WebServer] (node:49857) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:49870) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+  ✘  1 [chromium] › e2e/office-studio-word-basic-format.spec.ts:103:1 › applies mixed and caret character formats, restores transactions and reopens two actual native DOCX exports (9.0s)
+  ✓  2 [chromium] › e2e/office-studio-word-basic-format.spec.ts:231:1 › keeps invalid and composing drafts unchanged, cancels them and verifies light dark 320px and readonly controls (2.9s)
+
+
+  1) [chromium] › e2e/office-studio-word-basic-format.spec.ts:103:1 › applies mixed and caret character formats, restores transactions and reopens two actual native DOCX exports
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByRole('textbox', { name: 'Word 文档正文', exact: true }).locator('p').filter({ hasText: /^Caret / })
+    Expected: "Caret _Typed_base"
+    Received: "Caret Typedbase"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" getByRole('textbox', { name: 'Word 文档正文', exact: true }).locator('p').filter({ hasText: /^Caret / }) with timeout 5000ms
+      - waiting for getByRole('textbox', { name: 'Word 文档正文', exact: true }).locator('p').filter({ hasText: /^Caret / })
+        14 × locator resolved to <p data-word-tabs="[]" data-word-surface="{}" data-word-line-rule="auto" data-word-default-tab="36" data-word-decimal-symbol="." data-word-paragraph-direct="[]">…</p>
+           - unexpected value "Caret Typedbase"
+
+
+      149 |   await font(page, '字号', '17.3pt');
+      150 |   await body.pressSequentially('_Typed_');
+    > 151 |   await expect(caret).toHaveText('Caret _Typed_base');
+          |                       ^
+      152 |   await expect(caret.getByText('_Typed_', { exact: true })).toHaveCSS('font-size', '23.3333px');
+      153 |   const typed = await model(body);
+      154 |   await page.getByRole('button', { name: '撤销', exact: true }).click();
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-basic-format.spec.ts:151:23
+
+    Error Context: ../../../../../../tmp/zuvi-word-basic-format-browser-first-output/office-studio-word-basic-f-d2d38--actual-native-DOCX-exports-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../tmp/zuvi-word-basic-format-browser-first-output/office-studio-word-basic-f-d2d38--actual-native-DOCX-exports-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../../../tmp/zuvi-word-basic-format-browser-first-output/office-studio-word-basic-f-d2d38--actual-native-DOCX-exports-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/office-studio-word-basic-format.spec.ts:103:1 › applies mixed and caret character formats, restores transactions and reopens two actual native DOCX exports
+  1 passed (14.4s)

@@ -1,0 +1,11 @@
+[WebServer] (node:38303) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:38319) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+  ✓  1 [chromium] › e2e/office-studio-word-conversion.spec.ts:13:1 › text and table conversion preserves native rich content with cancellation, history and repeated DOCX reopening (5.4s)
+  ✓  2 [chromium] › e2e/office-studio-word-conversion.spec.ts:160:1 › partial native paragraph conversion keeps unselected text and formatting through DOCX reopening (3.0s)
+
+  2 passed (10.1s)

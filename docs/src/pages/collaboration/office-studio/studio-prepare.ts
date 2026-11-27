@@ -5,6 +5,11 @@ import type { StudioStoredFile } from './studio-storage';
 export async function prepareStudioFile(file: StudioStoredFile): Promise<OfficeStudioDocument> {
   const document = file.document;
   if (document.kind !== 'excel') return document;
+  const importedXlsx = document.sheets.some((sheet) => /^xlsx-sheet-\d+$/.test(sheet.id));
+  const missingFont = !!file.source && importedXlsx && document.defaultFont === undefined;
+  const missingView =
+    !!file.source &&
+    document.sheets.some((sheet) => /^xlsx-sheet-\d+$/.test(sheet.id) && sheet.view === undefined);
   const missingLayout =
     !!file.source &&
     document.sheets.some(
@@ -12,11 +17,16 @@ export async function prepareStudioFile(file: StudioStoredFile): Promise<OfficeS
         /^xlsx-sheet-\d+$/.test(sheet.id) &&
         (sheet.defaultRowHeight === undefined ||
           sheet.rowHeights === undefined ||
+          sheet.rowHeightModes === undefined ||
           sheet.hiddenRows === undefined)
     );
-  if (!missingLayout && document.sheets.every((sheet) => sheet.hyperlinks !== undefined))
+  if (
+    !missingFont &&
+    !missingView &&
+    !missingLayout &&
+    document.sheets.every((sheet) => sheet.hyperlinks !== undefined)
+  )
     return document;
-  const importedXlsx = document.sheets.some((sheet) => /^xlsx-sheet-\d+$/.test(sheet.id));
   if (!file.source || !importedXlsx) {
     return {
       ...document,

@@ -1,0 +1,10 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/StudioWord.test.tsx (117 tests | 116 skipped) 493ms
+   ✓ applies cell alignment and independent margins through the actual ZUVI dialog and undoes atomically 492ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 116 skipped (117)
+   Start at  15:25:50
+   Duration  2.72s (transform 847ms, setup 140ms, collect 1.24s, tests 493ms, environment 551ms, prepare 85ms)

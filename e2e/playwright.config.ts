@@ -1,4 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 
 /**
  * ZUVI 文档站冒烟 E2E 配置。
@@ -22,7 +24,8 @@ export default defineConfig({
     trace: 'retain-on-failure',
   },
   webServer: {
-    command: `pnpm --filter @zuvi/docs dev --port ${port} --strictPort`,
+    command: `pnpm --filter @zuvi/docs dev --port ${port} --strictPort --force`,
+    env: { ZUVI_E2E_VITE_CACHE_DIR: join(tmpdir(), `zuvi-office-e2e-vite-${port}-${process.pid}`) },
     url: `http://localhost:${port}`,
     reuseExistingServer: !process.env.CI,
     timeout: 120000,

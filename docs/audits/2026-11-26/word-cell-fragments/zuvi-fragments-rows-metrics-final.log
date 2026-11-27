@@ -1,0 +1,24 @@
+[WebServer] (node:22691) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:22707) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 15 tests using 1 worker
+
+  ✓   1 [chromium] › e2e/office-studio-word-metrics.spec.ts:28:1 › character metrics preserve native typography, zero overrides, caret input, undo and two DOCX reopen cycles in both themes and at 320px (8.0s)
+  ✓   2 [chromium] › e2e/office-studio-word-metrics.spec.ts:239:1 › baseline shifts expand automatic line boxes while exact line rules retain fixed height through DOCX reopening (2.1s)
+  ✓   3 [chromium] › e2e/office-studio-word-rows.spec.ts:17:1 › fixed rows use their clipped height during actual automatic pagination (1.9s)
+  ✓   4 [chromium] › e2e/office-studio-word-rows.spec.ts:118:1 › Word row properties edit atomically and retain height and split flags through two DOCX reopenings (7.2s)
+  ✓   5 [chromium] › e2e/office-studio-word-rows.spec.ts:269:1 › native vertically merged fixed rows use their combined content height (1.5s)
+  ✓   6 [chromium] › e2e/office-studio-word-rows.spec.ts:332:1 › allowed single-cell row fragments across pages while prohibited row remains intact (3.5s)
+  ✓   7 [chromium] › e2e/office-studio-word-rows.spec.ts:457:1 › distributes selected fixed rows with atomic history and native DOCX reopening (3.9s)
+  ✓   8 [chromium] › e2e/office-studio-word-rows.spec.ts:565:1 › equal table columns preserve merged geometry through native DOCX export (3.8s)
+  ✓   9 [chromium] › e2e/office-studio-word-rows.spec.ts:680:1 › nested vertically merged table distributes its own columns without changing outer widths (2.1s)
+  ✓  10 [chromium] › e2e/office-studio-word-rows.spec.ts:772:1 › mouse cell selection distributes only selected columns and reopens native widths (4.7s)
+  ✓  11 [chromium] › e2e/office-studio-word-rows.spec.ts:881:1 › merged boundary retains unselected column widths through native mouse editing (5.0s)
+  ✓  12 [chromium] › e2e/office-studio-word-rows.spec.ts:998:1 › natural row distribution retains full multiline content through native reopening (2.6s)
+  ✓  13 [chromium] › e2e/office-studio-word-rows.spec.ts:1098:1 › row boundary drag previews without document edits and commits one native height transaction (3.3s)
+  ✓  14 [chromium] › e2e/office-studio-word-rows.spec.ts:1250:1 › merged row resizing updates combined cell height and retains native vertical merge (2.1s)
+  ✓  15 [chromium] › e2e/office-studio-word-rows.spec.ts:1330:1 › multi-cell row fragments keep independent text and aligned page gaps through native reopen (4.8s)
+
+  15 passed (58.5s)

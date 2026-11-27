@@ -1,0 +1,85 @@
+import { createRequire } from 'node:module';
+import { writeFile } from 'node:fs/promises';
+import { Blob } from 'node:buffer';
+import { pdfTestRuntime } from '/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/tests/studio-pdf-test-runtime.mjs';
+import { readLabelEntries, setLabels } from '/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/tests/studio-pdf-compose-catalog-fixtures.mjs';
+
+const repo = '/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59';
+const require = createRequire(`${repo}/docs/package.json`);
+const { PDFDocument, PDFName, PDFNull, PDFHexString, StandardFonts } = require('pdf-lib');
+const r = pdfTestRuntime();
+const c = { ...r.load('../src/pages/collaboration/office-studio/studio-pdf-codec.ts'),
+  ...r.load('../src/pages/collaboration/office-studio/studio-pdf-compose.ts'),
+  ...r.load('../src/pages/collaboration/office-studio/studio-pdf-composition.ts'),
+  ...r.load('../../packages/ui/src/components/OfficeStudio/studio-pdf-pages.ts') };
+const n = PDFName.of;
+const save = async (pdf) => new Blob([new Uint8Array(await pdf.save({ updateFieldAppearances: false, useObjectStreams: false }))], { type: 'application/pdf' });
+async function fixture() {
+  const pdf = await PDFDocument.create(), font = await pdf.embedFont(StandardFonts.Helvetica);
+  const pages = [pdf.addPage([400, 500]), pdf.addPage([400, 500])];
+  for (const [index, page] of pages.entries()) page.drawText(index === 0 ? 'ORIGINAL-A' : 'ORIGINAL-B', { font, x: 20, y: 400, size: 16 });
+  const field = pdf.getForm().createTextField('Shared'); field.setText('B'); field.addToPage(pages[0], { x: 20, y: 300, width: 140, height: 24, font }); field.updateAppearances(font);
+  return { pdf, pages, field };
+}
+const results = [];
+async function record(label, action) { try { results.push({ label, result: await action() }); } catch (error) { results.push({ label, error: error.message, code: error.code, path: error.path }); } }
+
+await record('virtual move then extraction preserves PageLabels and PrintPageRange from the same original page', async () => {
+  const f = await fixture();
+  setLabels(f.pdf, [[0, { P: 'A' }], [1, { P: 'B' }]]);
+  f.pdf.catalog.set(n('ViewerPreferences'), f.pdf.context.obj({ PrintPageRange: [0, 0] }));
+  const source = await save(f.pdf), model = c.pdfMovePages(await c.importStudioPdf(source, 'Labels.pdf'), [1], 0);
+  await writeFile('/tmp/zuvi-p008-review-2026-11-27/catalog-original.pdf', new Uint8Array(await source.arrayBuffer()));
+  const prepared = await c.exportStudioPdf(model, source);
+  await writeFile('/tmp/zuvi-p008-review-2026-11-27/catalog-virtual-move-prepared.pdf', new Uint8Array(await prepared.arrayBuffer()));
+  const direct = await c.composePdf({ sources: [{ id: 'source', bytes: source }], pages: [{ sourceId: 'source', sourcePage: 1 }, { sourceId: 'source', sourcePage: 0 }] });
+  const output = await c.composeStudioPdf({ snapshot: { document: model, source }, mode: 'extract', pages: [0, 1], conflicts: { strategy: 'rename', valuePolicy: 'reject' } });
+  await writeFile('/tmp/zuvi-p008-review-2026-11-27/catalog-virtual-move-adapter.pdf', new Uint8Array(await output.source.arrayBuffer()));
+  const read = async bytes => {
+    const pdf = await PDFDocument.load(bytes);
+    return { labels: readLabelEntries(pdf), print: pdf.catalog.lookup(n('ViewerPreferences')).lookup(n('PrintPageRange')).asArray().map(value => value.asNumber()) };
+  };
+  return { expected: await read(direct.bytes), prepared: await read(await prepared.arrayBuffer()), adapter: await read(await output.source.arrayBuffer()) };
+});
+
+for (const indirect of [false, true]) {
+  for (const [label, locate, key] of [
+    ['XFA', f => f.pdf.getForm().acroForm.dict, 'XFA'],
+    ['SigFlags', f => f.pdf.getForm().acroForm.dict, 'SigFlags'],
+    ['field Lock', f => f.field.acroField.dict, 'Lock'],
+    ['field SV', f => f.field.acroField.dict, 'SV'],
+    ['field A', f => f.field.acroField.dict, 'A'],
+    ['field AA', f => f.field.acroField.dict, 'AA'],
+    ['widget A', f => f.field.acroField.getWidgets()[0].dict, 'A'],
+    ['widget AA', f => f.field.acroField.getWidgets()[0].dict, 'AA'],
+    ['OpenAction', f => f.pdf.catalog, 'OpenAction'],
+    ['action Next', f => { const action = f.pdf.context.obj({ S: 'Named', N: 'NextPage' }); f.pdf.catalog.set(n('OpenAction'), action); return action; }, 'Next'],
+    ['ResetForm Fields', f => { const action = f.pdf.context.obj({ S: 'ResetForm' }); f.pdf.catalog.set(n('OpenAction'), action); return action; }, 'Fields'],
+  ]) {
+    await record(`${indirect ? 'indirect' : 'direct'} null ${label}`, async () => {
+      const f = await fixture();
+      locate(f).set(n(key), indirect ? f.pdf.context.register(PDFNull) : PDFNull);
+      const source = await save(f.pdf);
+      let imported;
+      try { imported = (await c.importStudioPdf(source, 'Null.pdf')).fields.length; } catch (error) { imported = error.message; }
+      try {
+        const result = await c.composePdf({ sources: [{ id: 'source', bytes: source }], pages: [{ sourceId: 'source', sourcePage: 0 }, { sourceId: 'source', sourcePage: 1 }] });
+        return { imported, composed: result.stats.fields };
+      } catch (error) { return { imported, error: error.message, code: error.code, path: error.path }; }
+    });
+  }
+}
+await record('XYZ destination null array entries remain actual null coordinates after two compose saves', async () => {
+  const f = await fixture();
+  f.pdf.catalog.set(n('OpenAction'), f.pdf.context.obj([f.pages[1].ref, 'XYZ', null, null, null]));
+  let source = await save(f.pdf); const rounds = [];
+  for (let round = 1; round <= 2; round++) {
+    const result = await c.composePdf({ sources: [{ id: 'source', bytes: source }], pages: [{ sourceId: 'source', sourcePage: 1 }, { sourceId: 'source', sourcePage: 0 }] });
+    const pdf = await PDFDocument.load(result.bytes), dest = pdf.catalog.lookup(n('OpenAction'));
+    rounds.push(dest.asArray().map(value => value.toString()));
+    source = new Blob([result.bytes], { type: 'application/pdf' });
+  }
+  return rounds;
+});
+await writeFile('/tmp/zuvi-p008-review-2026-11-27/catalog-preparation-and-optional-null-results.json', JSON.stringify(results, null, 2));
+console.log(JSON.stringify(results, null, 2));

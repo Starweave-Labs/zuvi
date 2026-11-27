@@ -1,0 +1,1 @@
+registry.json 与组件目录不一致，请运行 node registry/scripts/generate.mjs

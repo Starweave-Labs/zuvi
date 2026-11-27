@@ -11,9 +11,9 @@ import { ColorPicker } from '../ColorPicker';
 import { Collapse } from '../Collapse';
 import { Table } from '../Table';
 import { Modal } from '../Modal';
+import { Checkbox } from '../Checkbox';
 import { StudioFontControl } from './StudioFontControl';
 import { StudioSheetSearch } from './StudioSheetSearch';
-import { studioCellBordersCss } from './studio-cell-style';
 import {
   studioApplyBorders,
   studioColumnCharacterWidth,
@@ -22,6 +22,8 @@ import {
   studioFormattingSelection,
   studioReplaceSheetCells,
   studioSetColumnWidths,
+  studioSetNumberFormat,
+  studioSetCellTextFormat,
   type StudioSheetSearchOptions,
   type StudioSheetMatch,
 } from './studio-sheet-editing';
@@ -32,13 +34,36 @@ import {
   studioViewportRows,
   studioRowTop,
   studioRowSpanHeight,
-  studioFitRowHeight,
-  type StudioRowFitCell,
 } from './studio-sheet-layout';
+import { sheetLayoutText } from './studio-sheet-text-layout';
+import { sheetDefaultTextFormat } from './studio-sheet-text-properties';
+import {
+  studioSheetCellTextInput,
+  studioSheetCenteredTextSegments,
+  studioSheetDerivedRowHeights,
+  studioSheetTextMeasure,
+} from './studio-sheet-text-display';
+import { StudioSheetText } from './StudioSheetText';
+import { StudioSheetViewControls } from './StudioSheetViewControls';
+import {
+  studioSheetView,
+  studioSheetViewGeometry,
+  studioPatchSheetView,
+  studioSetSheetView,
+  studioViewColumnOffsets,
+  studioViewCellBorders,
+  studioViewRowLayout,
+  studioViewPointerCell,
+  studioViewRebasedScroll,
+  studioViewRangeRects,
+  type SheetViewState,
+} from './studio-sheet-view';
+import { StudioSheetTextDialog, type SheetTextDialogState } from './StudioSheetTextDialog';
 import {
   STUDIO_SHEET_LIMITS,
   STUDIO_SHEET_CLIPBOARD_TYPE,
   studioCalculate,
+  studioSetArrayFormula,
   studioAddChart,
   studioChartData,
   studioCellAddress,
@@ -64,11 +89,19 @@ import {
   studioSetFilter,
   studioSetFreeze,
   studioSetRowHeight,
+  studioSetRowsHidden,
+  studioSetRangeHidden,
   studioSortRange,
   studioSortRangeByKeys,
   type StudioSortKey,
 } from './studio-sheet-model';
 import { studioChangeSheetStructure } from './studio-sheet-structure';
+import { studioDataBlockTarget } from './studio-sheet-navigation';
+import {
+  studioCopySheetFormat,
+  studioPaintSheetFormat,
+  type StudioSheetFormatSnapshot,
+} from './studio-sheet-painter';
 import {
   studioCellValidation,
   studioConditionalCellStyle,
@@ -77,12 +110,27 @@ import {
   studioSetConditionalFormat,
   studioSetDataValidation,
 } from './studio-sheet-rules';
-import { studioFillCells, studioFillSeries, studioInferFillType } from './studio-sheet-fill';
+import {
+  studioFillCells,
+  studioFillSeries,
+  studioFillSeriesResult,
+  studioInferFillType,
+} from './studio-sheet-fill';
 import { studioHiddenColumns, studioSetColumnsHidden } from './studio-sheet-model';
 import { StudioSheetRuleDialog } from './StudioSheetRuleDialog';
 import { StudioSheetSortDialog, type StudioSortDialogState } from './StudioSheetSortDialog';
+import {
+  StudioSheetDuplicatesDialog,
+  type SheetDuplicatesDialogState,
+} from './StudioSheetDuplicatesDialog';
+import { studioRemoveSheetDuplicates } from './studio-sheet-duplicates';
 import { StudioRibbonTabs } from './StudioRibbon';
 import { StudioSheetHyperlinkDialog } from './StudioSheetHyperlinkDialog';
+import {
+  StudioSheetNumberFormatDialog,
+  type SheetNumberFormatDialogState,
+} from './StudioSheetNumberFormatDialog';
+import { studioNumberFormatColor } from './studio-number-format';
 import type { SheetHyperlinkDialogState } from './StudioSheetHyperlinkDialog';
 import {
   studioCellHyperlink,
@@ -96,6 +144,8 @@ import type {
   SheetSelection,
   StudioSheetClipboardOrigin,
   StudioSheetPasteMode,
+  StudioSheetPasteOperation,
+  StudioSheetPasteOptions,
 } from './studio-sheet-model';
 import type {
   StudioCell,
@@ -107,11 +157,7 @@ import type {
 } from './studio-types';
 import './StudioSheet.css';
 
-const HEADER_HEIGHT = 24;
-const ROW_HEADER_WIDTH = 40;
 const INITIAL_SELECTION: SheetSelection = { anchor: { row: 1, col: 1 }, focus: { row: 1, col: 1 } };
-const DEFAULT_FONT = 'Calibri';
-const DEFAULT_FONT_SIZE = 11;
 const fontOptions = [
   'Calibri',
   'Arial',
@@ -155,7 +201,7 @@ const pasteModes: Array<{
   { value: 'all', label: '全部', description: '粘贴内容、公式、格式、链接和合并单元格。' },
   { value: 'formulas', label: '仅公式', description: '粘贴公式和常量，不改变目标格式。' },
   { value: 'values', label: '仅值', description: '使用复制时已经计算好的值。' },
-  { value: 'formats', label: '仅格式', description: '保留目标内容，替换格式和合并状态。' },
+  { value: 'formats', label: '仅格式', description: '保留目标内容和合并结构，替换直接格式。' },
   {
     value: 'formulas-number-format',
     label: '公式与数字格式',
@@ -199,6 +245,15 @@ export function StudioSheet({
 }: StudioEditorProps<StudioExcelDocument>) {
   const [activeId, setActiveId] = React.useState(document.activeSheetId);
   const [selection, setSelection] = React.useState<SheetSelection>(INITIAL_SELECTION);
+  const [painterMode, setPainterMode] = React.useState<'single' | 'continuous' | null>(null);
+  const painterRef = React.useRef<{
+    documentId: string;
+    sheetId: string;
+    snapshot: StudioSheetFormatSnapshot;
+    continuous: boolean;
+  } | null>(null);
+  const painterTargetRef = React.useRef<SheetSelection | null>(null);
+  const finishSelectionRef = React.useRef<(cancel: boolean) => void>(() => {});
   const [editing, setEditing] = React.useState<CellEditing | null>(null);
   const [ribbon, setRibbon] = React.useState('home');
   const [notice, setNotice] = React.useState('双击或直接输入编辑，Shift + 方向键选择区域。');
@@ -208,19 +263,34 @@ export function StudioSheet({
   const [viewport, setViewport] = React.useState({ top: 0, left: 0, width: 900, height: 420 });
   const [filterRange, setFilterRange] = React.useState('');
   const [filterColumn, setFilterColumn] = React.useState('A');
-  const [filterOperator, setFilterOperator] = React.useState<
-    StudioSheetFilter['columns'][string]['operator']
-  >('contains');
+  const [filterOperator, setFilterOperator] =
+    React.useState<StudioSheetFilter['columns'][string]['operator']>('contains');
   const [filterValue, setFilterValue] = React.useState('');
   const [chartRange, setChartRange] = React.useState('');
   const [chartPanel, setChartPanel] = React.useState(false);
   const [selectedChart, setSelectedChart] = React.useState('');
   const [pasteDialog, setPasteDialog] = React.useState(false);
+  const [arrayDialog, setArrayDialog] = React.useState(false);
+  const [arrayFormula, setArrayFormula] = React.useState('');
+  const [arrayType, setArrayType] = React.useState<'fixed' | 'dynamic'>('dynamic');
+  const [arrayError, setArrayError] = React.useState('');
   const [pasteMode, setPasteMode] = React.useState<StudioSheetPasteMode>('all');
+  const [pasteSkipBlanks, setPasteSkipBlanks] = React.useState(false);
+  const [pasteOperation, setPasteOperation] = React.useState<StudioSheetPasteOperation>('none');
+  const [pasteError, setPasteError] = React.useState('');
   const [pasteAvailable, setPasteAvailable] = React.useState(false);
   const [ruleDialog, setRuleDialog] = React.useState<SheetRuleDialogMode | null>(null);
   const [sortDialog, setSortDialog] = React.useState<StudioSortDialogState | null>(null);
+  const [duplicatesDialog, setDuplicatesDialog] = React.useState<SheetDuplicatesDialogState | null>(
+    null
+  );
   const [linkDialog, setLinkDialog] = React.useState<SheetHyperlinkDialogState | null>(null);
+  const [numberDialog, setNumberDialog] = React.useState<SheetNumberFormatDialogState | null>(null);
+  const [textDialog, setTextDialog] = React.useState<SheetTextDialogState | null>(null);
+  const [textDraftError, setTextDraftError] = React.useState('');
+  const [viewDraftError, setViewDraftError] = React.useState('');
+  const [previewViews, setPreviewViews] = React.useState(() => new Map<string, SheetViewState>());
+  const [fontVersion, setFontVersion] = React.useState(0);
   const [heightDialog, setHeightDialog] = React.useState<{
     firstRow: number;
     lastRow: number;
@@ -264,6 +334,7 @@ export function StudioSheet({
   const cellInputRef = React.useRef<HTMLInputElement>(null);
   const formulaRef = React.useRef<HTMLInputElement>(null);
   const editingRef = React.useRef<CellEditing | null>(null);
+  const composingRef = React.useRef(false);
   const latestRef = React.useRef(document);
   const expectedRef = React.useRef(document);
   const lastIdRef = React.useRef(document.id);
@@ -280,18 +351,56 @@ export function StudioSheet({
   permissionRef.current = !!blocked;
   latestRef.current = document;
   const sheet = document.sheets.find((item) => item.id === activeId) ?? document.sheets[0];
+  const savedView = React.useMemo(() => studioSheetView(sheet?.view), [sheet?.view]);
+  const view = readOnly ? (previewViews.get(sheet?.id ?? '') ?? savedView) : savedView;
+  const viewGeometry = React.useMemo(() => studioSheetViewGeometry(view), [view]);
+  const { scale, headerHeight, rowHeaderWidth } = viewGeometry;
+  const previousViewGeometry = React.useRef(viewGeometry);
   const extent = sheet ? viewExtents[sheet.id] : undefined;
+  const calculated = React.useMemo(() => studioCalculate(document), [document]);
+  const arrayExtent = React.useMemo(() => {
+    let row = 1,
+      col = 1;
+    for (const [owner, array] of calculated.arrays) {
+      if (!owner.startsWith(`${sheet?.id}:`)) continue;
+      row = Math.max(row, array.range.lastRow);
+      col = Math.max(col, array.range.lastCol);
+    }
+    return { row, col };
+  }, [calculated, sheet?.id]);
   const rowCount = Math.min(
     STUDIO_SHEET_LIMITS.rows,
-    Math.max(1, sheet?.rowCount ?? 1, extent?.row ?? 1)
+    Math.max(1, sheet?.rowCount ?? 1, extent?.row ?? 1, arrayExtent.row)
   );
   const columnCount = Math.min(
     STUDIO_SHEET_LIMITS.columns,
-    Math.max(1, sheet?.columnCount ?? 1, extent?.col ?? 1)
+    Math.max(1, sheet?.columnCount ?? 1, extent?.col ?? 1, arrayExtent.col)
   );
-  const address = studioCellAddress(selection.focus.row, selection.focus.col);
+  const activeMerge = sheet && studioMergedRange(sheet, selection.focus);
+  const address = studioCellAddress(
+    activeMerge?.firstRow ?? selection.focus.row,
+    activeMerge?.firstCol ?? selection.focus.col
+  );
   const cell = sheet?.cells[address];
-  const calculated = React.useMemo(() => studioCalculate(document), [document]);
+  const textDefaults = sheetDefaultTextFormat(document.defaultFont);
+  const textMeasure = React.useMemo(() => {
+    void fontVersion;
+    return studioSheetTextMeasure();
+  }, [fontVersion]);
+  React.useEffect(() => {
+    const fonts = globalThis.document?.fonts;
+    if (!fonts) return;
+    let active = true;
+    const refresh = () => {
+      if (active) setFontVersion((value) => value + 1);
+    };
+    void fonts.ready.then(refresh);
+    fonts.addEventListener('loadingdone', refresh);
+    return () => {
+      active = false;
+      fonts.removeEventListener('loadingdone', refresh);
+    };
+  }, []);
   const activeLink = sheet
     ? studioCellHyperlink(document, sheet.id, address, calculated)
     : undefined;
@@ -309,18 +418,6 @@ export function StudioSheet({
       ),
     [hiddenRows, rowCount]
   );
-  const rowLayout = React.useMemo(
-    () =>
-      studioBuildRowLayout(
-        shownRows,
-        heightPreview?.sheetId === sheet?.id
-          ? { ...sheet?.rowHeights, [String(heightPreview.row)]: heightPreview.height }
-          : sheet?.rowHeights,
-        sheet?.defaultRowHeight
-      ),
-    [heightPreview, shownRows, sheet?.id, sheet?.rowHeights, sheet?.defaultRowHeight]
-  );
-  const rowIndexes = rowLayout.indexes;
   const freezeRows = shownRows.filter((row) => row <= (sheet?.freeze?.rows ?? 0)).length;
   const freezeColumns = sheet?.freeze?.columns ?? 0;
   const bounds = studioSelectionBounds(selection);
@@ -329,8 +426,27 @@ export function StudioSheet({
     () => (sheet ? studioHiddenColumns(sheet) : new Set<string>()),
     [sheet]
   );
-  const offsets = React.useMemo(() => {
-    const values = [ROW_HEADER_WIDTH];
+  const shownColumns = React.useMemo(
+    () =>
+      Array.from({ length: columnCount }, (_, index) => index + 1).filter(
+        (col) => !hiddenColumns.has(studioColumnLabel(col))
+      ),
+    [columnCount, hiddenColumns]
+  );
+  const selectedRows = Array.from(
+    { length: bounds.lastRow - bounds.firstRow + 1 },
+    (_, index) => bounds.firstRow + index
+  );
+  const selectedColumns = Array.from({ length: bounds.lastCol - bounds.firstCol + 1 }, (_, index) =>
+    studioColumnLabel(bounds.firstCol + index)
+  );
+  const selectedManualRows = selectedRows.some((row) => sheet?.hiddenRows?.includes(row));
+  const selectedManualColumns = selectedColumns.some((col) => hiddenColumns.has(col));
+  const hidingAllRows =
+    new Set([...(sheet?.hiddenRows ?? []), ...selectedRows]).size >= (sheet?.rowCount ?? rowCount);
+  const hidingAllColumns = new Set([...hiddenColumns, ...selectedColumns]).size >= columnCount;
+  const logicalOffsets = React.useMemo(() => {
+    const values = [0];
     for (let col = 1; col <= columnCount; col++)
       values.push(
         values[col - 1] +
@@ -348,12 +464,47 @@ export function StudioSheet({
       );
     return values;
   }, [columnCount, hiddenColumns, sheet?.columnWidths, sheet?.id, widthPreview]);
+  const offsets = React.useMemo(
+    () => studioViewColumnOffsets(logicalOffsets, scale, rowHeaderWidth),
+    [logicalOffsets, scale, rowHeaderWidth]
+  );
+  const derivedHeights = React.useMemo(
+    () =>
+      sheet
+        ? studioSheetDerivedRowHeights(
+            document,
+            sheet,
+            calculated,
+            shownRows,
+            logicalOffsets,
+            textMeasure,
+            hiddenRows
+          )
+        : {},
+    [document, sheet, calculated, shownRows, logicalOffsets, textMeasure, hiddenRows]
+  );
+  const logicalRowLayout = React.useMemo(
+    () =>
+      studioBuildRowLayout(
+        shownRows,
+        heightPreview?.sheetId === sheet?.id
+          ? { ...derivedHeights, [String(heightPreview.row)]: heightPreview.height }
+          : derivedHeights,
+        sheet?.defaultRowHeight
+      ),
+    [heightPreview, shownRows, sheet?.id, sheet?.defaultRowHeight, derivedHeights]
+  );
+  const rowLayout = React.useMemo(
+    () => studioViewRowLayout(logicalRowLayout, scale),
+    [logicalRowLayout, scale]
+  );
+  const rowIndexes = rowLayout.indexes;
   const visibleRows = studioViewportRows(
     rowLayout,
     viewport.top,
     viewport.height,
     freezeRows,
-    HEADER_HEIGHT
+    headerHeight
   );
   // A merged origin can be above the viewport while the merged box is still visible.
   for (const input of sheet?.merges ?? []) {
@@ -384,53 +535,140 @@ export function StudioSheet({
     )
       visibleColumns.push(range.firstCol);
   }
+  const centeredText = new Map(
+    visibleRows.map((row) => [
+      row,
+      sheet
+        ? studioSheetCenteredTextSegments(
+            document,
+            sheet,
+            calculated,
+            row,
+            logicalOffsets,
+            freezeColumns
+          )
+        : [],
+    ])
+  );
+  for (const segments of centeredText.values())
+    for (const segment of segments) {
+      if (
+        segment.memberCols.some((col) => visibleColumns.includes(col)) &&
+        !visibleColumns.includes(segment.ownerCol)
+      )
+        visibleColumns.push(segment.ownerCol);
+    }
   const activeVisible =
     visibleRows.includes(selection.focus.row) && visibleColumns.includes(selection.focus.col);
   const ensureVisible = React.useCallback(
     (position: SheetPosition) => {
       const grid = gridRef.current;
       if (!grid) return;
-      const rowIndex = rowIndexes.get(position.row);
+      const merge = sheet && studioMergedRange(sheet, position);
+      const visibleRow = merge
+        ? shownRows.find((row) => row >= merge.firstRow && row <= merge.lastRow)
+        : position.row;
+      const rowIndex = visibleRow === undefined ? undefined : rowIndexes.get(visibleRow);
       if (rowIndex === undefined) return;
-      const top = rowLayout.offsets[rowIndex] + HEADER_HEIGHT;
-      const bottom = rowLayout.offsets[rowIndex + 1] + HEADER_HEIGHT;
-      const left = offsets[position.col - 1];
-      const right = offsets[position.col];
+      const top = rowLayout.offsets[rowIndex] + headerHeight;
+      const bottom = top + studioRowSpanHeight(rowLayout, visibleRow!, merge?.lastRow);
+      const left = offsets[(merge?.firstCol ?? position.col) - 1];
+      const right = offsets[merge?.lastCol ?? position.col];
       const height = grid.clientHeight || viewport.height;
       const width = grid.clientWidth || viewport.width;
       if (rowIndex >= freezeRows) {
         const frozenHeight = rowLayout.offsets[freezeRows];
-        const usableHeight = height - HEADER_HEIGHT - frozenHeight;
-        if (top < grid.scrollTop + HEADER_HEIGHT + frozenHeight || bottom - top > usableHeight)
-          grid.scrollTop = Math.max(0, top - HEADER_HEIGHT - frozenHeight);
+        const usableHeight = height - headerHeight - frozenHeight;
+        if (top < grid.scrollTop + headerHeight + frozenHeight || bottom - top > usableHeight)
+          grid.scrollTop = Math.max(0, top - headerHeight - frozenHeight);
         else if (bottom > grid.scrollTop + height) grid.scrollTop = bottom - height;
       }
-      if (position.col > freezeColumns && left < grid.scrollLeft + offsets[freezeColumns])
-        grid.scrollLeft = Math.max(0, left - offsets[freezeColumns]);
-      if (right > grid.scrollLeft + width) grid.scrollLeft = right - width;
+      if (left >= offsets[freezeColumns]) {
+        if (left < grid.scrollLeft + offsets[freezeColumns])
+          grid.scrollLeft = Math.max(0, left - offsets[freezeColumns]);
+        if (right > grid.scrollLeft + width) grid.scrollLeft = right - width;
+      }
       setViewport({ top: grid.scrollTop, left: grid.scrollLeft, width, height });
     },
-    [freezeColumns, freezeRows, offsets, rowLayout, rowIndexes, viewport.height, viewport.width]
+    [
+      freezeColumns,
+      freezeRows,
+      headerHeight,
+      offsets,
+      rowLayout,
+      rowIndexes,
+      sheet,
+      shownRows,
+      viewport.height,
+      viewport.width,
+    ]
   );
+
+  React.useLayoutEffect(() => {
+    const previous = previousViewGeometry.current;
+    previousViewGeometry.current = viewGeometry;
+    if (
+      previous.scale === scale &&
+      previous.headerHeight === headerHeight &&
+      previous.rowHeaderWidth === rowHeaderWidth
+    )
+      return;
+    const grid = gridRef.current;
+    if (!grid) return;
+    const rebased = studioViewRebasedScroll(previous, viewGeometry, {
+      left: viewport.left,
+      top: viewport.top,
+    });
+    grid.scrollLeft = rebased.left;
+    grid.scrollTop = rebased.top;
+    setViewport({
+      left: grid.scrollLeft,
+      top: grid.scrollTop,
+      width: grid.clientWidth || viewport.width,
+      height: grid.clientHeight || viewport.height,
+    });
+  }, [
+    scale,
+    headerHeight,
+    rowHeaderWidth,
+    viewGeometry,
+    viewport.left,
+    viewport.top,
+    viewport.width,
+    viewport.height,
+  ]);
+  React.useEffect(() => {
+    if (!readOnly) setPreviewViews(new Map());
+  }, [readOnly]);
 
   React.useEffect(() => {
     if (document !== expectedRef.current) {
+      setDuplicatesDialog(null);
+      setNumberDialog(null);
+      setTextDialog(null);
+      setTextDraftError('');
+      setPreviewViews(new Map());
+      setViewDraftError('');
+      cancelPainter();
       pastRef.current = [];
       futureRef.current = [];
       setHistoryVersion((version) => version + 1);
     }
     if (document.id !== lastIdRef.current) {
+      cancelPainter();
       lastIdRef.current = document.id;
       setActiveId(document.activeSheetId);
       setSelection(INITIAL_SELECTION);
       setAddressDraft('A1');
       setEditing(null);
       editingRef.current = null;
+      composingRef.current = false;
       setRename(null);
       setChartPanel(false);
       setSelectedChart('');
       setRuleDialog(null);
       setLinkDialog(null);
+      setArrayDialog(false);
       setSearch(null);
       setSearchReveal(null);
       resizeCleanup.current?.();
@@ -451,12 +689,18 @@ export function StudioSheet({
 
   React.useEffect(() => {
     setChartRange('');
+    cancelPainter();
     setFilterColumn('A');
     setFilterValue('');
     setSelectedChart('');
     setRuleDialog(null);
     setLinkDialog(null);
     setHeightDialog(null);
+    setNumberDialog(null);
+    setDuplicatesDialog(null);
+    setTextDialog(null);
+    setTextDraftError('');
+    setViewDraftError('');
     setWidthDialog(null);
   }, [sheet?.id]);
 
@@ -479,19 +723,42 @@ export function StudioSheet({
   }, [sheet?.id, rowCount, columnCount, selection, ensureVisible]);
 
   React.useEffect(() => {
-    if (hiddenRows.has(selection.focus.row)) {
-      const nextRow = shownRows.find((row) => row >= selection.focus.row) ?? shownRows[0];
-      if (nextRow === undefined) return;
-      const position = {
-        row: nextRow,
+    const merge =
+      sheet &&
+      studioMergedRange(sheet, {
+        row: selection.focus.row,
         col: selection.focus.col,
-      };
+      });
+    const visibleMerge =
+      merge &&
+      shownRows.some((row) => row >= merge.firstRow && row <= merge.lastRow) &&
+      shownColumns.some((col) => col >= merge.firstCol && col <= merge.lastCol);
+    if (visibleMerge) return;
+    const nextRow = hiddenRows.has(selection.focus.row)
+      ? (shownRows.find((row) => row >= selection.focus.row) ?? shownRows[shownRows.length - 1])
+      : selection.focus.row;
+    const nextCol = hiddenColumns.has(studioColumnLabel(selection.focus.col))
+      ? (shownColumns.find((col) => col >= selection.focus.col) ??
+        shownColumns[shownColumns.length - 1])
+      : selection.focus.col;
+    if (nextRow === undefined || nextCol === undefined) return;
+    if (nextRow !== selection.focus.row || nextCol !== selection.focus.col) {
+      const position = { row: nextRow, col: nextCol };
       setSelection({ anchor: position, focus: position });
     }
-  }, [hiddenRows, shownRows, selection.focus.row, selection.focus.col]);
+  }, [
+    hiddenRows,
+    hiddenColumns,
+    shownRows,
+    shownColumns,
+    sheet,
+    selection.focus.row,
+    selection.focus.col,
+  ]);
 
   React.useEffect(() => {
     if (blocked) {
+      cancelPainter();
       setRename(null);
       return;
     }
@@ -543,12 +810,17 @@ export function StudioSheet({
   React.useEffect(() => {
     const finishDrag = () => {
       draggingRef.current = false;
+      finishSelectionRef.current(false);
+    };
+    const cancelDrag = () => {
+      draggingRef.current = false;
+      finishSelectionRef.current(true);
     };
     window.addEventListener('pointerup', finishDrag);
-    window.addEventListener('pointercancel', finishDrag);
+    window.addEventListener('pointercancel', cancelDrag);
     return () => {
       window.removeEventListener('pointerup', finishDrag);
-      window.removeEventListener('pointercancel', finishDrag);
+      window.removeEventListener('pointercancel', cancelDrag);
     };
   }, []);
 
@@ -562,6 +834,7 @@ export function StudioSheet({
       return;
     const position = studioParseAddress(editing.address);
     if (position) ensureVisible(position);
+    if (editing.origin === 'formula') return;
     const input = editing.origin === 'cell' ? cellInputRef.current : formulaRef.current;
     input?.focus();
     input?.setSelectionRange(input.value.length, input.value.length);
@@ -639,78 +912,26 @@ export function StudioSheet({
     }
   }
 
-  function dataBlockTarget(direction: 'up' | 'down' | 'left' | 'right'): SheetPosition | null {
-    if (!sheet) return null;
-    const start = { ...selection.focus };
-    // 数据块 = 输入非空的单元格（公式错误也算数据）
-    const has = (row: number, col: number) =>
-      (sheet.cells[studioCellAddress(row, col)]?.input ?? '') !== '';
-    const lastRow = sheet.rowCount;
-    const lastCol = sheet.columnCount;
-    const stepRow = direction === 'down' ? 1 : direction === 'up' ? -1 : 0;
-    const stepCol = direction === 'right' ? 1 : direction === 'left' ? -1 : 0;
-
-    // 沿方向逐格推进；遇到合并格按其范围越过
-    const advance = (row: number, col: number): { row: number; col: number } | null => {
-      let nextRow = row + stepRow;
-      let nextCol = col + stepCol;
-      if (nextRow < 1 || nextRow > lastRow || nextCol < 1 || nextCol > lastCol) return null;
-      const merge = studioMergedRange(sheet, { row: nextRow, col: nextCol });
-      if (merge) {
-        // 跳过整个合并格
-        nextRow = stepRow > 0 ? merge.lastRow : stepRow < 0 ? merge.firstRow : row;
-        nextCol = stepCol > 0 ? merge.lastCol : stepCol < 0 ? merge.firstCol : col;
-        if (nextRow === row && nextCol === col) return null;
-        if (nextRow < 1 || nextRow > lastRow || nextCol < 1 || nextCol > lastCol) return null;
-      }
-      return { row: nextRow, col: nextCol };
-    };
-
-    const startHasValue = has(start.row, start.col);
-    let current = start;
-    let lastWithValue: SheetPosition | null = startHasValue ? start : null;
-    // 连续推进：有值块走到底；空白段找第一个有值格；均无则落到边界
-    for (let guard = 0; guard < lastRow * lastCol + 1; guard += 1) {
-      const next = advance(current.row, current.col);
-      if (!next) break;
-      const nextHas = has(next.row, next.col);
-      if (startHasValue) {
-        if (!nextHas) break;
-        lastWithValue = next;
-      } else if (nextHas) {
-        return next;
-      }
-      current = next;
-    }
-    if (startHasValue && lastWithValue && lastWithValue !== start) return lastWithValue;
-    // 已在块边缘或空白起始：落到声明维度的边界（Office 行为）
-    return {
-      row: stepRow > 0 ? lastRow : stepRow < 0 ? 1 : start.row,
-      col: stepCol > 0 ? lastCol : stepCol < 0 ? 1 : start.col,
-    };
-  }
-
   function moveSelection(rowDelta: number, colDelta: number, extend = false) {
     const merge = sheet && studioMergedRange(sheet, selection.focus);
-    const rowIndex =
-      rowIndexes.get(rowDelta > 0 && merge && !extend ? merge.lastRow : selection.focus.row) ?? 0;
+    const startRow =
+      merge && !extend ? (rowDelta > 0 ? merge.lastRow : merge.firstRow) : selection.focus.row;
+    const startCol =
+      merge && !extend ? (colDelta > 0 ? merge.lastCol : merge.firstCol) : selection.focus.col;
     const position = {
-      row: rowDelta
-        ? shownRows[Math.max(0, Math.min(shownRows.length - 1, rowIndex + rowDelta))]
-        : selection.focus.row,
-      col: Math.max(1, Math.min(columnCount, selection.focus.col + colDelta)),
+      row:
+        (rowDelta > 0
+          ? shownRows.find((row) => row > startRow)
+          : rowDelta < 0
+            ? shownRows.filter((row) => row < startRow).pop()
+            : undefined) ?? selection.focus.row,
+      col:
+        (colDelta > 0
+          ? shownColumns.find((col) => col > startCol)
+          : colDelta < 0
+            ? shownColumns.filter((col) => col < startCol).pop()
+            : undefined) ?? selection.focus.col,
     };
-    // 列步进跳过隐藏列（对齐行隐藏语义）
-    if (colDelta !== 0) {
-      const step = colDelta > 0 ? 1 : -1;
-      let cursor = position.col;
-      while (cursor >= 1 && cursor <= columnCount && hiddenColumns.has(studioColumnLabel(cursor)))
-        cursor += step;
-      if (cursor < 1 || cursor > columnCount) cursor = position.col;
-      position.col = cursor;
-    }
-    if (colDelta > 0 && merge && !extend)
-      position.col = Math.min(columnCount, merge.lastCol + colDelta);
     const destination = sheet && studioMergedRange(sheet, position);
     if (destination && !extend) {
       position.row = destination.firstRow;
@@ -727,6 +948,7 @@ export function StudioSheet({
   }
 
   function commitEditing(focusGrid = false) {
+    if (composingRef.current) return false;
     const current = editingRef.current;
     if (blocked || !current) return true;
     try {
@@ -749,6 +971,11 @@ export function StudioSheet({
 
   function beginEditing(origin: CellEditing['origin'], value?: string, targetAddress = address) {
     if (blocked || !sheet) return;
+    const owner = calculated.arrayOwners.get(`${sheet.id}:${targetAddress}`);
+    if (owner && owner !== `${sheet.id}:${targetAddress}`) {
+      setNotice(`数组结果不能单独修改，请编辑 ${owner.slice(sheet.id.length + 1)}。`);
+      return;
+    }
     setEdit({
       sheetId: sheet.id,
       address: targetAddress,
@@ -767,9 +994,70 @@ export function StudioSheet({
     const merge = sheet && studioMergedRange(sheet, position);
     if (merge && !extend) position = { row: merge.firstRow, col: merge.firstCol };
     setSelection({ anchor: extend ? selection.anchor : position, focus: position });
+    if (painterRef.current)
+      painterTargetRef.current = { anchor: extend ? selection.anchor : position, focus: position };
     gridRef.current?.focus();
     return true;
   }
+
+  function cancelPainter() {
+    painterRef.current = null;
+    painterTargetRef.current = null;
+    setPainterMode(null);
+  }
+
+  function startPainter(continuous = false) {
+    if (blocked || !sheet || !commitEditing()) return;
+    try {
+      if (!painterRef.current) {
+        const source = latestRef.current.sheets.find((item) => item.id === sheet.id)!;
+        painterRef.current = {
+          documentId: latestRef.current.id,
+          sheetId: sheet.id,
+          snapshot: studioCopySheetFormat(source, selection, latestRef.current.defaultFont),
+          continuous,
+        };
+      } else painterRef.current.continuous = continuous;
+      painterTargetRef.current = null;
+      setPainterMode(continuous ? 'continuous' : 'single');
+      setNotice(
+        continuous
+          ? '连续格式刷：选择目标后应用，按 Escape 退出。'
+          : '格式刷：点击或拖选目标应用；方向键选择后按 Enter，Escape 取消。'
+      );
+      gridRef.current?.focus();
+    } catch (error) {
+      setNotice(error instanceof Error ? error.message : '格式复制失败。');
+    }
+  }
+
+  function applyPainter(target: SheetSelection) {
+    const painter = painterRef.current;
+    if (!painter || blocked || !sheet) return;
+    if (painter.documentId !== latestRef.current.id || painter.sheetId !== sheet.id) {
+      cancelPainter();
+      return;
+    }
+    if (!commitEditing()) return;
+    try {
+      const result = studioPaintSheetFormat(latestRef.current, sheet.id, target, painter.snapshot);
+      replaceDocument(result.document);
+      // Keep the clicked cell active even when the expanded rectangle ends in a hidden row.
+      setSelection({ anchor: result.selection.focus, focus: result.selection.anchor });
+      setNotice(
+        `格式刷已应用到 ${result.count} 个单元格，可撤销整个操作。${painter.continuous ? '继续选择目标，Escape 退出。' : ''}`
+      );
+      if (!painter.continuous) cancelPainter();
+    } catch (error) {
+      setNotice(error instanceof Error ? error.message : '格式刷应用失败。');
+    }
+  }
+
+  finishSelectionRef.current = (cancel) => {
+    const target = painterTargetRef.current;
+    painterTargetRef.current = null;
+    if (!cancel && target) applyPainter(target);
+  };
 
   function formatSelection(update: Partial<StudioCell>) {
     if (blocked || !commitEditing()) return false;
@@ -786,6 +1074,93 @@ export function StudioSheet({
     }
   }
 
+  function formatText(
+    update: Parameters<typeof studioSetCellTextFormat>[3],
+    lastChanged?: Parameters<typeof studioSetCellTextFormat>[4]
+  ) {
+    if (blocked || !sheet || !commitEditing()) return false;
+    try {
+      replaceDocument(
+        studioSetCellTextFormat(latestRef.current, sheet.id, selection, update, lastChanged)
+      );
+      setNotice('已应用文字格式，可撤销恢复。');
+      return true;
+    } catch (error) {
+      setNotice(error instanceof Error ? error.message : '文字格式未应用。');
+      return false;
+    }
+  }
+
+  function changeView(patch: Partial<SheetViewState>) {
+    if (disabled || !sheet || !commitEditing()) return false;
+    try {
+      resizeCleanup.current?.();
+      if (readOnly) {
+        setPreviewViews((current) =>
+          new Map(current).set(
+            sheet.id,
+            studioPatchSheetView(current.get(sheet.id) ?? sheet.view, patch)
+          )
+        );
+        setNotice('已调整当前预览视图。');
+      } else {
+        replaceDocument(studioSetSheetView(latestRef.current, sheet.id, patch));
+        setNotice('工作表视图已更新；可撤销。');
+      }
+      return true;
+    } catch (error) {
+      setNotice(error instanceof Error ? error.message : '工作表视图修改失败。');
+      return false;
+    }
+  }
+
+  function openTextDialog() {
+    if (blocked || !sheet || !commitEditing()) return;
+    const current = latestRef.current;
+    const source = current.sheets.find((item) => item.id === sheet.id)!;
+    const calculation = studioCalculate(current);
+    const input = studioSheetCellTextInput(
+      current,
+      source,
+      calculation,
+      address,
+      {
+        width:
+          logicalOffsets[activeMerge?.lastCol ?? selection.focus.col] -
+          logicalOffsets[(activeMerge?.firstCol ?? selection.focus.col) - 1],
+        height: studioRowSpanHeight(
+          logicalRowLayout,
+          activeMerge?.firstRow ?? selection.focus.row,
+          activeMerge?.lastRow
+        ),
+      },
+      textMeasure
+    );
+    const keys = [
+      'align',
+      'verticalAlign',
+      'indent',
+      'textRotation',
+      'wrap',
+      'shrinkToFit',
+    ] as const;
+    const defaults = sheetDefaultTextFormat(current.defaultFont);
+    setTextDraftError('');
+    setTextDialog({
+      document: current,
+      sheetId: source.id,
+      selection,
+      input,
+      mixed: studioSelectionAddresses(studioFormattingSelection(source, selection)).some((target) =>
+        keys.some(
+          (key) =>
+            (source.cells[target]?.[key] ?? defaults[key]) !==
+            (source.cells[address]?.[key] ?? defaults[key])
+        )
+      ),
+    });
+  }
+
   function rowHeightDocument(lastRow: number) {
     const current = latestRef.current;
     return {
@@ -798,9 +1173,7 @@ export function StudioSheet({
 
   function openRowHeight() {
     if (blocked || !sheet || !commitEditing()) return;
-    setHeightDraft(
-      String(sheet.rowHeights?.[String(bounds.firstRow)] ?? sheet.defaultRowHeight ?? 18)
-    );
+    setHeightDraft(String(derivedHeights[String(bounds.firstRow)] ?? sheet.defaultRowHeight ?? 18));
     setHeightError('');
     setHeightDialog({ firstRow: bounds.firstRow, lastRow: bounds.lastRow });
   }
@@ -919,10 +1292,10 @@ export function StudioSheet({
         if (!text) continue;
         Object.assign(probe.style, {
           width: 'max-content',
-          fontFamily: `${quotedFontFamily(cell.fontFamily ?? DEFAULT_FONT)}, var(--zuvi-font-sans)`,
-          fontSize: `${cell.fontSize ?? DEFAULT_FONT_SIZE}pt`,
-          fontWeight: cell.bold ? '700' : '400',
-          fontStyle: cell.italic ? 'italic' : 'normal',
+          fontFamily: `${quotedFontFamily(cell.fontFamily ?? textDefaults.fontFamily)}, var(--zuvi-font-sans)`,
+          fontSize: `${cell.fontSize ?? textDefaults.fontSize}pt`,
+          fontWeight: (cell.bold ?? textDefaults.bold) ? '700' : '400',
+          fontStyle: (cell.italic ?? textDefaults.italic) ? 'italic' : 'normal',
           whiteSpace: 'pre',
           overflowWrap: 'normal',
         });
@@ -965,35 +1338,19 @@ export function StudioSheet({
   function pointerToCell(clientX: number, clientY: number): SheetPosition | null {
     const grid = gridRef.current;
     if (!grid) return null;
-    const rect = grid.getBoundingClientRect();
-    const localX = clientX - rect.left;
-    const localY = clientY - rect.top;
-    if (
-      localX < ROW_HEADER_WIDTH ||
-      localY < HEADER_HEIGHT ||
-      localX > offsets[offsets.length - 1] + ROW_HEADER_WIDTH ||
-      localY > rowLayout.offsets[rowLayout.offsets.length - 1] + HEADER_HEIGHT
-    )
-      return null;
-    let col = shownRows.length ? 1 : 1;
-    for (let candidate = 1; candidate <= columnCount; candidate += 1) {
-      const start = ROW_HEADER_WIDTH + offsets[candidate - 1];
-      const end = ROW_HEADER_WIDTH + offsets[candidate];
-      if (localX >= start && localX <= end) {
-        col = candidate;
-        break;
-      }
-    }
-    let row = shownRows[0] ?? 1;
-    for (let index = 0; index < shownRows.length; index += 1) {
-      const start = HEADER_HEIGHT + rowLayout.offsets[index];
-      const end = HEADER_HEIGHT + rowLayout.offsets[index + 1];
-      if (localY >= start && localY <= end) {
-        row = shownRows[index];
-        break;
-      }
-    }
-    return { row, col };
+    return studioViewPointerCell({
+      clientX,
+      clientY,
+      rect: grid.getBoundingClientRect(),
+      scrollLeft: grid.scrollLeft,
+      scrollTop: grid.scrollTop,
+      columnOffsets: offsets,
+      rowLayout,
+      freezeColumns,
+      freezeRows,
+      headerHeight,
+      rowHeaderWidth,
+    });
   }
 
   function startFillDrag(event: React.PointerEvent<HTMLElement>) {
@@ -1110,7 +1467,7 @@ export function StudioSheet({
     const pointerId = event.pointerId;
     const move = (moveEvent: PointerEvent) => {
       if (moveEvent.pointerId !== pointerId) return;
-      nextWidth = Math.max(12, Math.min(1790, width + moveEvent.clientX - initialX));
+      nextWidth = Math.max(12, Math.min(1790, width + (moveEvent.clientX - initialX) / scale));
       setWidthPreview({ sheetId: sheet.id, col, width: nextWidth });
     };
     const cleanup = () => {
@@ -1162,7 +1519,18 @@ export function StudioSheet({
     const initial = latestRef.current;
     const currentSheet = initial.sheets.find((item) => item.id === sheet.id)!;
     const initialY = event.clientY;
-    const height = currentSheet.rowHeights?.[String(row)] ?? currentSheet.defaultRowHeight ?? 18;
+    const height =
+      studioSheetDerivedRowHeights(
+        initial,
+        currentSheet,
+        studioCalculate(initial),
+        [row],
+        logicalOffsets,
+        textMeasure,
+        hiddenRows
+      )[String(row)] ??
+      currentSheet.defaultRowHeight ??
+      18;
     let nextHeight = height;
     const pointerId = event.pointerId;
     const move = (moveEvent: PointerEvent) => {
@@ -1173,7 +1541,7 @@ export function StudioSheet({
             0.75,
             Math.min(
               STUDIO_MAX_ROW_HEIGHT,
-              height + (moveEvent.clientY - initialY) / STUDIO_POINTS_TO_PIXELS
+              height + (moveEvent.clientY - initialY) / (STUDIO_POINTS_TO_PIXELS * scale)
             )
           ) * 4
         ) / 4;
@@ -1247,70 +1615,47 @@ export function StudioSheet({
 
   function fitRowHeights(range = { firstRow: bounds.firstRow, lastRow: bounds.lastRow }) {
     if (blocked || !sheet || !commitEditing()) return;
-    const current = latestRef.current;
-    const currentSheet = current.sheets.find((item) => item.id === sheet.id)!;
-    const calculation = studioCalculate(current);
-    const grouped = new Map<number, StudioRowFitCell[]>();
-    for (const [address, cell] of Object.entries(currentSheet.cells)) {
-      const position = studioParseAddress(address)!;
-      if (position.row < range.firstRow || position.row > range.lastRow) continue;
-      const merge = studioMergedRange(currentSheet, position);
-      // Multi-row merges cannot determine the height of one individual row.
-      if (merge && (merge.firstRow !== merge.lastRow || merge.firstCol !== position.col)) continue;
-      const key = `${sheet.id}:${address}`;
-      const link = studioCellHyperlink(current, sheet.id, address, calculation);
-      const text = cell.input
-        ? studioDisplayCell(cell, calculation.values.get(key), calculation.errors.get(key))
-        : link?.display || link?.target || link?.location || '';
-      const cells = grouped.get(position.row) ?? [];
-      cells.push({
-        ...cell,
-        text,
-        width: offsets[merge?.lastCol ?? position.col] - offsets[position.col - 1],
-      });
-      grouped.set(position.row, cells);
-    }
-    const probe = globalThis.document.createElement('span');
-    probe.className = 'zuvi-studio-sheet-fit-probe';
-    gridRef.current?.append(probe);
-    try {
-      const heights = { ...currentSheet.rowHeights };
-      const hidden = new Set(currentSheet.hiddenRows ?? []);
-      for (let row = range.firstRow; row <= range.lastRow; row++) {
-        const height = studioFitRowHeight(
-          grouped.get(row) ?? [],
-          currentSheet.defaultRowHeight ?? 18,
-          (cell) => {
-            Object.assign(probe.style, {
-              width: `${Math.max(1, cell.width - 10)}px`,
-              fontFamily: `${quotedFontFamily(cell.fontFamily ?? DEFAULT_FONT)}, var(--zuvi-font-sans)`,
-              fontSize: `${cell.fontSize ?? DEFAULT_FONT_SIZE}pt`,
-              fontWeight: cell.bold ? '700' : '400',
-              fontStyle: cell.italic ? 'italic' : 'normal',
-              whiteSpace: cell.wrap ? 'pre-wrap' : 'pre',
-              overflowWrap: cell.wrap ? 'anywhere' : 'normal',
-            });
-            probe.textContent = cell.text;
-            return probe.getBoundingClientRect().height;
-          }
-        );
-        heights[String(row)] = height;
-        hidden.delete(row);
-      }
-      const current = rowHeightDocument(range.lastRow);
-      const next = {
-        ...current,
-        sheets: current.sheets.map((item) =>
-          item.id === sheet.id
-            ? { ...item, rowHeights: heights, hiddenRows: [...hidden].sort((a, b) => a - b) }
-            : item
-        ),
-      };
-      replaceDocument(next);
-      setNotice('已根据文字、字号和换行调整行高；跨多行合并的内容不参与计算。');
-    } finally {
-      probe.remove();
-    }
+    const current = studioSetRowHeight(
+      rowHeightDocument(range.lastRow),
+      sheet.id,
+      range,
+      undefined
+    );
+    const source = current.sheets.find((item) => item.id === sheet.id)!;
+    const rows = Array.from(
+      { length: range.lastRow - range.firstRow + 1 },
+      (_, index) => range.firstRow + index
+    );
+    const modes =
+      source.rowHeightModes ??
+      Object.fromEntries(
+        Object.keys(source.rowHeights ?? {}).map((row) => [row, 'fixed' as const])
+      );
+    const automatic = {
+      ...source,
+      rowHeightModes: {
+        ...modes,
+        ...Object.fromEntries(rows.map((row) => [String(row), 'auto' as const])),
+      },
+    };
+    const cache = studioSheetDerivedRowHeights(
+      current,
+      automatic,
+      studioCalculate(current),
+      rows,
+      logicalOffsets,
+      textMeasure
+    );
+    const next = {
+      ...current,
+      sheets: current.sheets.map((item) =>
+        item.id === sheet.id
+          ? { ...automatic, rowHeights: { ...automatic.rowHeights, ...cache } }
+          : item
+      ),
+    };
+    replaceDocument(next);
+    setNotice('已启用自动行高，随文字、字号和列宽调整；跨多行合并不参与计算。');
   }
 
   function resetRowHeights() {
@@ -1319,6 +1664,26 @@ export function StudioSheet({
       studioSetRowHeight(rowHeightDocument(bounds.lastRow), sheet.id, bounds, undefined)
     );
     setNotice('已恢复所选行的默认行高并取消手动隐藏。');
+  }
+
+  function setVisibility(axis: 'rows' | 'columns', hidden: boolean, all = false) {
+    if (blocked || !sheet || composingRef.current) return;
+    transform(
+      (current) =>
+        all
+          ? axis === 'rows'
+            ? studioSetRowsHidden(current, sheet.id, [])
+            : studioSetColumnsHidden(current, sheet.id, [])
+          : studioSetRangeHidden(current, sheet.id, bounds, axis, hidden),
+      all
+        ? axis === 'rows'
+          ? '已显示全部手动隐藏行；筛选保持不变。'
+          : '已显示全部隐藏列。'
+        : hidden
+          ? '已隐藏所选行列；可撤销。'
+          : '已显示选区内手动隐藏的行列；筛选保持不变。'
+    );
+    gridRef.current?.focus();
   }
 
   function undo() {
@@ -1698,6 +2063,28 @@ export function StudioSheet({
     )
       return;
     const command = event.ctrlKey || event.metaKey;
+    if (command && !event.altKey && ['+', '=', '-', '0'].includes(event.key)) {
+      event.preventDefault();
+      if (viewDraftError || (event.key === '-' && view.zoom <= 25)) return;
+      changeView({
+        zoom:
+          event.key === '0'
+            ? 100
+            : Math.max(25, Math.min(400, view.zoom + (event.key === '-' ? -10 : 10))),
+      });
+      return;
+    }
+    if (command && !event.altKey && !event.shiftKey && event.key.toLowerCase() === 'c') {
+      event.preventDefault();
+      copyFromGrid();
+      return;
+    }
+    if (painterRef.current && event.key === 'Enter' && !command) {
+      event.preventDefault();
+      painterTargetRef.current = null;
+      applyPainter(selection);
+      return;
+    }
     if (command && event.key === 'Enter' && activeLink) {
       event.preventDefault();
       openHyperlink();
@@ -1712,6 +2099,9 @@ export function StudioSheet({
       event.preventDefault();
       if (!blocked && pasteAvailable) {
         setPasteMode('all');
+        setPasteSkipBlanks(false);
+        setPasteOperation('none');
+        setPasteError('');
         setPasteDialog(true);
       }
       return;
@@ -1741,9 +2131,9 @@ export function StudioSheet({
       event.preventDefault();
       formatSelection(
         event.key.toLowerCase() === 'b'
-          ? { bold: !cell?.bold }
+          ? { bold: !(cell?.bold ?? textDefaults.bold) }
           : event.key.toLowerCase() === 'i'
-            ? { italic: !cell?.italic }
+            ? { italic: !(cell?.italic ?? textDefaults.italic) }
             : { underline: !cell?.underline }
       );
       return;
@@ -1754,7 +2144,7 @@ export function StudioSheet({
       ArrowLeft: [0, -1],
       ArrowRight: [0, 1],
     };
-    if (command && movement0[event.key] && !event.shiftKey) {
+    if (command && movement0[event.key]) {
       event.preventDefault();
       const direction =
         event.key === 'ArrowUp'
@@ -1764,13 +2154,14 @@ export function StudioSheet({
             : event.key === 'ArrowLeft'
               ? 'left'
               : 'right';
-      const target = dataBlockTarget(direction);
-      if (!target) return;
+      if (!sheet) return;
+      const target = studioDataBlockTarget(sheet, selection.focus, direction, calculated);
       const destination = sheet && studioMergedRange(sheet, target);
-      const position = destination
-        ? { row: destination.firstRow, col: destination.firstCol }
-        : target;
-      setSelection({ anchor: position, focus: position });
+      const position =
+        destination && !event.shiftKey
+          ? { row: destination.firstRow, col: destination.firstCol }
+          : target;
+      setSelection({ anchor: event.shiftKey ? selection.anchor : position, focus: position });
       ensureVisible(position);
       return;
     }
@@ -1789,8 +2180,13 @@ export function StudioSheet({
     if (event.key === 'Home' || event.key === 'End') {
       event.preventDefault();
       const position = {
-        row: command ? (event.key === 'Home' ? 1 : rowCount) : selection.focus.row,
-        col: event.key === 'Home' ? 1 : columnCount,
+        row: command
+          ? ((event.key === 'Home' ? shownRows[0] : shownRows[shownRows.length - 1]) ??
+            selection.focus.row)
+          : selection.focus.row,
+        col:
+          (event.key === 'Home' ? shownColumns[0] : shownColumns[shownColumns.length - 1]) ??
+          selection.focus.col,
       };
       setSelection({ anchor: event.shiftKey ? selection.anchor : position, focus: position });
       ensureVisible(position);
@@ -1814,6 +2210,28 @@ export function StudioSheet({
 
   function onEditorKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     if (blocked || event.nativeEvent.isComposing || event.keyCode === 229) return;
+    if ((event.ctrlKey || event.metaKey) && event.shiftKey && event.key === 'Enter') {
+      event.preventDefault();
+      const current = editingRef.current;
+      if (!blocked && current && sheet) {
+        try {
+          const next = studioSetArrayFormula(
+            latestRef.current,
+            sheet.id,
+            selection,
+            current.value,
+            'fixed'
+          );
+          replaceDocument(next);
+          setEdit(null);
+          gridRef.current?.focus();
+          setNotice('固定数组已设置，可撤销。');
+        } catch (error) {
+          setInputError(error instanceof Error ? error.message : '数组公式无效。');
+        }
+      }
+      return;
+    }
     if (event.key === 'Escape') {
       event.preventDefault();
       setEdit(null);
@@ -1832,7 +2250,8 @@ export function StudioSheet({
   function pasteClipboard(
     text: string,
     source: StudioSheetClipboardOrigin | undefined,
-    mode: StudioSheetPasteMode
+    mode: StudioSheetPasteMode,
+    options: StudioSheetPasteOptions = {}
   ) {
     if (blocked || !sheet) return false;
     try {
@@ -1846,7 +2265,8 @@ export function StudioSheet({
         selection.focus,
         text,
         source,
-        mode
+        mode,
+        options
       );
       const rows = Math.abs(result.selection.focus.row - result.selection.anchor.row) + 1;
       const cols = Math.abs(result.selection.focus.col - result.selection.anchor.col) + 1;
@@ -1855,32 +2275,41 @@ export function StudioSheet({
         mode === 'all'
           ? `已粘贴 ${rows}×${cols}，可撤销整个粘贴操作。`
           : `${label}已应用到 ${rows}×${cols}。`;
-      const message = validationNotice(result.document, sheet.id, result.addresses, success);
+      const operationLabel = { none: '', add: '加', subtract: '减', multiply: '乘', divide: '除' }[
+        options.operation ?? 'none'
+      ];
+      const summary = `${success}${operationLabel ? ` 已对 ${result.addresses.length} 个单元格执行${operationLabel}法。` : ''}${options.skipBlanks ? ' 空白来源已跳过。' : ''}`;
+      const message = validationNotice(result.document, sheet.id, result.addresses, summary);
       replaceDocument(result.document);
+      setPasteError('');
       setSelection(result.selection);
       gridRef.current?.focus();
       setNotice(message);
       return true;
     } catch (error) {
-      setNotice(error instanceof Error ? error.message : '粘贴失败。');
+      const message = error instanceof Error ? error.message : '粘贴失败。';
+      setNotice(message);
+      if (pasteDialog) setPasteError(message);
       return false;
     }
   }
 
-  function onCopy(event: React.ClipboardEvent<HTMLDivElement>) {
-    if (disabled || !sheet || event.target !== event.currentTarget) return;
+  function copySelection(write: (type: string, value: string) => void) {
+    if (disabled || !sheet) return false;
     try {
-      const text = studioCopyTsv(sheet, selection);
-      event.clipboardData.setData('text/plain', text);
-      event.preventDefault();
+      const current = latestRef.current;
+      const currentSheet = current.sheets.find((item) => item.id === sheet.id)!;
+      const calculation = current === document ? calculated : studioCalculate(current);
+      const text = studioCopyTsv(currentSheet, selection, calculation);
+      write('text/plain', text);
       try {
-        const payload = studioCopySheetClipboard(latestRef.current, sheet.id, selection);
+        const payload = studioCopySheetClipboard(current, sheet.id, selection);
         const source = studioClipboardOrigin(payload, text);
         if (!source) throw new Error('复制元数据无效。');
         clipboardRef.current = { text, payload, source };
         setPasteAvailable(true);
         try {
-          event.clipboardData.setData(STUDIO_SHEET_CLIPBOARD_TYPE, payload);
+          write(STUDIO_SHEET_CLIPBOARD_TYPE, payload);
         } catch {
           /* The in-editor clipboard cache still enables Paste Special. */
         }
@@ -1894,10 +2323,52 @@ export function StudioSheet({
           }`
         );
       }
+      return true;
     } catch (error) {
-      event.preventDefault();
       setNotice(error instanceof Error ? error.message : '复制失败。');
+      return false;
     }
+  }
+
+  function copyFromGrid() {
+    if (!commitEditing()) return;
+    const data = new Map<string, string>();
+    if (!copySelection((type, value) => data.set(type, value))) return;
+    const owner = gridRef.current?.ownerDocument;
+    let copied = false;
+    const handleCopy = (event: ClipboardEvent) => {
+      if (!event.clipboardData) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      for (const [type, value] of data) {
+        try {
+          event.clipboardData.setData(type, value);
+        } catch {
+          /* Internal snapshot remains usable. */
+        }
+      }
+      copied = true;
+    };
+    if (owner && typeof owner.execCommand === 'function') {
+      owner.addEventListener('copy', handleCopy, true);
+      try {
+        owner.execCommand('copy');
+      } catch {
+        /* Modern clipboard fallback below. */
+      } finally {
+        owner.removeEventListener('copy', handleCopy, true);
+      }
+    }
+    if (!copied && typeof globalThis.navigator?.clipboard?.writeText === 'function')
+      void navigator.clipboard.writeText(data.get('text/plain') ?? '').catch(() => {
+        /* A denied system clipboard does not prevent internal Paste Special. */
+      });
+  }
+
+  function onCopy(event: React.ClipboardEvent<HTMLDivElement>) {
+    if (disabled || !sheet || event.target !== event.currentTarget) return;
+    event.preventDefault();
+    copySelection((type, value) => event.clipboardData.setData(type, value));
   }
 
   function onPaste(event: React.ClipboardEvent<HTMLDivElement>) {
@@ -1930,7 +2401,7 @@ export function StudioSheet({
       if (!selectedCell) continue;
       const value =
         calculated.values.get(`${sheet.id}:${selected}`) ??
-        studioInputValue(selectedCell.input, selectedCell.numberFormat);
+        studioInputValue(selectedCell.input, selectedCell.numberFormat, selectedCell.valueType);
       if (typeof value === 'number' && !calculated.errors.has(`${sheet.id}:${selected}`)) {
         sum += value;
         numbers++;
@@ -1970,8 +2441,39 @@ export function StudioSheet({
       className="zuvi-studio-sheet"
       data-disabled={disabled || undefined}
       data-readonly={readOnly || undefined}
-      data-studio-input-error={inputError ?? undefined}
+      data-format-painter={painterMode ?? undefined}
+      data-sheet-zoom={view.zoom}
+      data-gridlines={view.showGridLines}
+      data-headers={view.showRowColHeaders}
+      style={
+        {
+          '--zuvi-studio-sheet-scale': scale,
+          '--zuvi-studio-sheet-header-height': `${headerHeight}px`,
+          '--zuvi-studio-sheet-row-header-width': `${rowHeaderWidth}px`,
+        } as React.CSSProperties
+      }
+      data-studio-input-error={
+        inputError || textDraftError || (!readOnly && viewDraftError) || undefined
+      }
+      onCompositionStartCapture={() => {
+        composingRef.current = true;
+      }}
+      onCompositionEndCapture={() => {
+        composingRef.current = false;
+      }}
       onKeyDownCapture={(event) => {
+        if (
+          painterRef.current &&
+          event.key === 'Escape' &&
+          !event.nativeEvent.isComposing &&
+          event.keyCode !== 229
+        ) {
+          event.preventDefault();
+          event.stopPropagation();
+          cancelPainter();
+          setNotice('已退出格式刷。');
+          return;
+        }
         if (
           !disabled &&
           !event.nativeEvent.isComposing &&
@@ -1979,6 +2481,8 @@ export function StudioSheet({
           (event.ctrlKey || event.metaKey) &&
           ['f', 'h'].includes(event.key.toLowerCase()) &&
           !heightDialog &&
+          !textDialog &&
+          !duplicatesDialog &&
           !widthDialog &&
           !pasteDialog &&
           !ruleDialog &&
@@ -2066,6 +2570,9 @@ export function StudioSheet({
                     if (!commitEditing()) return;
                     setEdit(null);
                     setPasteMode('all');
+                    setPasteSkipBlanks(false);
+                    setPasteOperation('none');
+                    setPasteError('');
                     setPasteDialog(true);
                   }}
                 >
@@ -2075,9 +2582,28 @@ export function StudioSheet({
                   size="sm"
                   variant="ghost"
                   disabled={blocked}
-                  onClick={() => formatSelection(studioDefaultCellFormat())}
+                  onClick={() =>
+                    formatSelection(studioDefaultCellFormat(latestRef.current.defaultFont))
+                  }
                 >
                   清除格式
+                </Button>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  disabled={blocked}
+                  aria-pressed={!!painterMode}
+                  title="单击使用一次，双击连续应用；Escape 退出"
+                  onClick={(event) => {
+                    if (event.detail >= 2) startPainter(true);
+                    else if (painterRef.current) {
+                      cancelPainter();
+                      setNotice('已退出格式刷。');
+                    } else startPainter();
+                  }}
+                  onDoubleClick={() => startPainter(true)}
+                >
+                  格式刷
                 </Button>
               </div>
               <div className="zuvi-studio-sheet-toolrow">
@@ -2108,7 +2634,7 @@ export function StudioSheet({
                   label="表格字体"
                   kind="family"
                   className="zuvi-studio-sheet-font"
-                  value={cell?.fontFamily ?? DEFAULT_FONT}
+                  value={cell?.fontFamily ?? textDefaults.fontFamily}
                   options={fontOptions}
                   contextKey={`${document.id}:${sheet.id}:${studioRangeAddress(bounds)}:${address}`}
                   disabled={blocked}
@@ -2124,7 +2650,7 @@ export function StudioSheet({
                   label="表格字号"
                   kind="size"
                   className="zuvi-studio-sheet-fontsize"
-                  value={String(cell?.fontSize ?? DEFAULT_FONT_SIZE)}
+                  value={String(cell?.fontSize ?? textDefaults.fontSize)}
                   options={fontSizeOptions}
                   contextKey={`${document.id}:${sheet.id}:${studioRangeAddress(bounds)}:${address}`}
                   disabled={blocked}
@@ -2140,21 +2666,23 @@ export function StudioSheet({
               <div className="zuvi-studio-sheet-toolrow">
                 <Button
                   size="sm"
-                  variant={cell?.bold ? 'outline' : 'ghost'}
+                  variant={(cell?.bold ?? textDefaults.bold) ? 'outline' : 'ghost'}
                   aria-label="表格加粗"
-                  aria-pressed={!!cell?.bold}
+                  aria-pressed={cell?.bold ?? textDefaults.bold}
                   disabled={blocked}
-                  onClick={() => formatSelection({ bold: !cell?.bold })}
+                  onClick={() => formatSelection({ bold: !(cell?.bold ?? textDefaults.bold) })}
                 >
                   <strong>B</strong>
                 </Button>
                 <Button
                   size="sm"
-                  variant={cell?.italic ? 'outline' : 'ghost'}
+                  variant={(cell?.italic ?? textDefaults.italic) ? 'outline' : 'ghost'}
                   aria-label="表格斜体"
-                  aria-pressed={!!cell?.italic}
+                  aria-pressed={cell?.italic ?? textDefaults.italic}
                   disabled={blocked}
-                  onClick={() => formatSelection({ italic: !cell?.italic })}
+                  onClick={() =>
+                    formatSelection({ italic: !(cell?.italic ?? textDefaults.italic) })
+                  }
                 >
                   <i>I</i>
                 </Button>
@@ -2209,7 +2737,7 @@ export function StudioSheet({
                     aria-label={label}
                     aria-pressed={cell?.align === align}
                     disabled={blocked}
-                    onClick={() => formatSelection({ align })}
+                    onClick={() => formatText({ align }, 'align')}
                   >
                     <Icon size={16} />
                   </Button>
@@ -2222,14 +2750,19 @@ export function StudioSheet({
                 value={cell?.verticalAlign ?? 'bottom'}
                 disabled={blocked}
                 onChange={(verticalAlign) =>
-                  formatSelection({ verticalAlign: verticalAlign as StudioCell['verticalAlign'] })
+                  formatText({ verticalAlign: verticalAlign as StudioCell['verticalAlign'] })
                 }
                 options={[
                   { value: 'top', label: '顶端对齐' },
                   { value: 'middle', label: '垂直居中' },
                   { value: 'bottom', label: '底端对齐' },
+                  { value: 'justify', label: '垂直两端对齐' },
+                  { value: 'distributed', label: '垂直分散对齐' },
                 ]}
               />
+              <Button size="sm" variant="ghost" disabled={blocked} onClick={openTextDialog}>
+                文字排版
+              </Button>
             </div>
             <div className="zuvi-studio-sheet-toolgroup zuvi-studio-sheet-bordergroup">
               <div className="zuvi-studio-sheet-toolrow">
@@ -2299,6 +2832,41 @@ export function StudioSheet({
                 onChange={(numberFormat) => formatSelection({ numberFormat })}
                 disabled={blocked}
               />
+              <Button
+                size="sm"
+                variant="ghost"
+                disabled={blocked}
+                onClick={() => {
+                  if (blocked || !sheet || !commitEditing()) return;
+                  const currentSheet = latestRef.current.sheets.find(
+                    (item) => item.id === sheet.id
+                  )!;
+                  const currentCell = currentSheet.cells[address];
+                  const calculation = studioCalculate(latestRef.current);
+                  setNumberDialog({
+                    sheetId: sheet.id,
+                    selection,
+                    code: currentCell?.numberFormat ?? 'General',
+                    mixed: studioSelectionAddresses(
+                      studioFormattingSelection(currentSheet, selection)
+                    ).some(
+                      (item) =>
+                        (currentSheet.cells[item]?.numberFormat ?? 'General') !==
+                        (currentCell?.numberFormat ?? 'General')
+                    ),
+                    value:
+                      calculation.values.get(`${sheet.id}:${address}`) ??
+                      studioInputValue(
+                        currentCell?.input ?? '',
+                        currentCell?.numberFormat,
+                        currentCell?.valueType
+                      ),
+                    error: calculation.errors.get(`${sheet.id}:${address}`),
+                  });
+                }}
+              >
+                自定义数字格式
+              </Button>
               <span>数字格式</span>
             </div>
             <div className="zuvi-studio-sheet-toolgroup">
@@ -2308,7 +2876,7 @@ export function StudioSheet({
                   variant="ghost"
                   disabled={blocked}
                   aria-pressed={!!cell?.wrap}
-                  onClick={() => formatSelection({ wrap: !cell?.wrap })}
+                  onClick={() => formatText({ wrap: !cell?.wrap })}
                 >
                   自动换行
                 </Button>
@@ -2350,6 +2918,32 @@ export function StudioSheet({
                   恢复默认行高
                 </Button>
               </div>
+              <div className="zuvi-studio-sheet-toolrow">
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  disabled={blocked || hidingAllRows}
+                  onClick={() => setVisibility('rows', true)}
+                >
+                  隐藏行
+                </Button>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  disabled={blocked || !selectedManualRows}
+                  onClick={() => setVisibility('rows', false)}
+                >
+                  显示选区行
+                </Button>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  disabled={blocked || !sheet?.hiddenRows?.length}
+                  onClick={() => setVisibility('rows', false, true)}
+                >
+                  显示全部行
+                </Button>
+              </div>
               <span>行大小 · 磅</span>
             </div>
             <div className="zuvi-studio-sheet-toolgroup">
@@ -2374,40 +2968,24 @@ export function StudioSheet({
               <Button
                 size="sm"
                 variant="ghost"
-                disabled={
-                  blocked ||
-                  (bounds.firstCol === bounds.lastCol &&
-                    new Set([...(sheet?.hiddenColumns ?? []), studioColumnLabel(bounds.firstCol)])
-                      .size === columnCount)
-                }
-                onClick={() => {
-                  if (!sheet || !commitEditing()) return;
-                  transform(
-                    (current) =>
-                      studioSetColumnsHidden(
-                        current,
-                        sheet.id,
-                        (
-                          current.sheets.find((item) => item.id === sheet.id)?.hiddenColumns ?? []
-                        ).concat(studioColumnLabel(bounds.firstCol))
-                      ),
-                    `已隐藏列 ${studioColumnLabel(bounds.firstCol)}；可撤销。`
-                  );
-                }}
+                disabled={blocked || hidingAllColumns}
+                onClick={() => setVisibility('columns', true)}
               >
                 隐藏列
               </Button>
               <Button
                 size="sm"
                 variant="ghost"
+                disabled={blocked || !selectedManualColumns}
+                onClick={() => setVisibility('columns', false)}
+              >
+                显示选区列
+              </Button>
+              <Button
+                size="sm"
+                variant="ghost"
                 disabled={blocked || (sheet?.hiddenColumns ?? []).length === 0}
-                onClick={() => {
-                  if (!sheet || !commitEditing()) return;
-                  transform(
-                    (current) => studioSetColumnsHidden(current, sheet.id, []),
-                    '已显示全部隐藏列；可撤销。'
-                  );
-                }}
+                onClick={() => setVisibility('columns', false, true)}
               >
                 显示全部列
               </Button>
@@ -2445,7 +3023,77 @@ export function StudioSheet({
               >
                 Σ 自动求和
               </Button>
+              <Button
+                size="sm"
+                variant="ghost"
+                disabled={blocked}
+                onClick={() => {
+                  if (!commitEditing()) return;
+                  setArrayFormula(sheet?.cells[address]?.input || '=SEQUENCE(2,2)');
+                  setArrayType(sheet?.cells[address]?.array?.type || 'dynamic');
+                  const definition = sheet?.cells[address]?.array;
+                  if (definition?.type === 'fixed') {
+                    const range = studioParseRange(definition.range)!;
+                    setSelection({
+                      anchor: { row: range.firstRow, col: range.firstCol },
+                      focus: { row: range.lastRow, col: range.lastCol },
+                    });
+                  }
+                  setArrayError('');
+                  setArrayDialog(true);
+                }}
+              >
+                数组公式
+              </Button>
               <span>公式</span>
+              <Button
+                size="sm"
+                variant="ghost"
+                disabled={blocked}
+                onClick={() => {
+                  if (!sheet || !commitEditing()) return;
+                  transform(
+                    (current) => ({
+                      ...current,
+                      sheets: current.sheets.map((entry) =>
+                        entry.id === sheet.id
+                          ? {
+                              ...entry,
+                              protectedRanges: [
+                                ...new Set([
+                                  ...(entry.protectedRanges || []),
+                                  studioRangeAddress(bounds),
+                                ]),
+                              ],
+                            }
+                          : entry
+                      ),
+                    }),
+                    '所选区域已保护，可撤销。'
+                  );
+                }}
+              >
+                保护所选区域
+              </Button>
+              <Button
+                size="sm"
+                variant="ghost"
+                disabled={blocked || !sheet?.protectedRanges?.length}
+                onClick={() => {
+                  if (!sheet || !commitEditing()) return;
+                  transform(
+                    (current) => ({
+                      ...current,
+                      sheets: current.sheets.map((entry) =>
+                        entry.id === sheet.id ? { ...entry, protectedRanges: [] } : entry
+                      ),
+                    }),
+                    '已取消区域保护，可撤销。'
+                  );
+                }}
+              >
+                取消区域保护
+              </Button>
             </div>
             <div className="zuvi-studio-sheet-toolgroup">
               <div className="zuvi-studio-sheet-toolrow">
@@ -2577,6 +3225,41 @@ export function StudioSheet({
               >
                 数据验证
               </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                disabled={blocked || bounds.firstRow === bounds.lastRow}
+                onClick={() => {
+                  if (blocked || composingRef.current || !commitEditing()) return;
+                  const current = latestRef.current;
+                  const currentSheet = current.sheets.find((item) => item.id === sheet.id);
+                  if (!currentSheet) return;
+                  const values = studioCalculate(current);
+                  setDuplicatesDialog({
+                    document: current,
+                    sheetId: sheet.id,
+                    sheetName: currentSheet.name,
+                    selection: { anchor: { ...selection.anchor }, focus: { ...selection.focus } },
+                    labels: Array.from(
+                      { length: bounds.lastCol - bounds.firstCol + 1 },
+                      (_, index) => {
+                        const firstAddress = studioCellAddress(
+                          bounds.firstRow,
+                          bounds.firstCol + index
+                        );
+                        const key = sheet.id + ':' + firstAddress;
+                        return studioDisplayCell(
+                          currentSheet.cells[firstAddress],
+                          values.values.get(key),
+                          values.errors.get(key)
+                        );
+                      }
+                    ),
+                  });
+                }}
+              >
+                删除重复项
+              </Button>
               <span title={`${sheet.dataValidations?.length ?? 0} 条规则`}>数据工具</span>
             </div>
             <div className="zuvi-studio-sheet-toolgroup">
@@ -2673,9 +3356,13 @@ export function StudioSheet({
                     // 切到颜色算子时给出默认色，切回文本算子时清空颜色值。
                     setFilterValue((previous) =>
                       value === 'fontColor'
-                        ? previous || '#253044'
+                        ? /^#(?:[\da-f]{3}|[\da-f]{6})$/i.test(previous)
+                          ? previous
+                          : '#253044'
                         : value === 'fillColor'
-                          ? previous || '#eef4ff'
+                          ? /^#(?:[\da-f]{3}|[\da-f]{6})$/i.test(previous)
+                            ? previous
+                            : '#eef4ff'
                           : ''
                     );
                   }}
@@ -2833,6 +3520,15 @@ export function StudioSheet({
         </Tabs.Panel>
         <Tabs.Panel value="view">
           <div className="zuvi-studio-sheet-tools">
+            <StudioSheetViewControls
+              view={view}
+              contextKey={`${document.id}:${sheet.id}:${readOnly ? 'preview' : 'document'}`}
+              disabled={disabled}
+              readOnly={readOnly}
+              onChange={changeView}
+              onIssueChange={setViewDraftError}
+              onFocusGrid={() => gridRef.current?.focus()}
+            />
             <div className="zuvi-studio-sheet-toolgroup">
               <div className="zuvi-studio-sheet-toolrow">
                 <Button
@@ -2926,7 +3622,11 @@ export function StudioSheet({
           value={formulaValue}
           placeholder="输入内容或公式"
           disabled={disabled}
-          readOnly={readOnly}
+          readOnly={
+            readOnly ||
+            (!!calculated.arrayOwners.get(`${sheet.id}:${address}`) &&
+              calculated.arrayOwners.get(`${sheet.id}:${address}`) !== `${sheet.id}:${address}`)
+          }
           status={inputError ? 'error' : 'default'}
           aria-invalid={!!inputError || undefined}
           aria-describedby={
@@ -2934,7 +3634,7 @@ export function StudioSheet({
           }
           onFocus={() => {
             if (editingRef.current?.origin !== 'formula' || editingRef.current.sheetId !== sheet.id)
-              beginEditing('formula');
+              flushSync(() => beginEditing('formula'));
           }}
           onChange={(event) => {
             if (blocked) return;
@@ -3027,8 +3727,8 @@ export function StudioSheet({
           className="zuvi-studio-sheet-grid"
           role="grid"
           aria-label={`${sheet.name} 单元格网格`}
-          aria-rowcount={rowCount + 1}
-          aria-colcount={columnCount + 1}
+          aria-rowcount={rowCount + (view.showRowColHeaders ? 1 : 0)}
+          aria-colcount={columnCount + (view.showRowColHeaders ? 1 : 0)}
           aria-readonly={readOnly}
           aria-disabled={disabled}
           tabIndex={disabled ? -1 : 0}
@@ -3050,370 +3750,457 @@ export function StudioSheet({
             className="zuvi-studio-sheet-canvas"
             style={{
               width: offsets[columnCount],
-              height: HEADER_HEIGHT + rowLayout.offsets[shownRows.length],
+              height: headerHeight + rowLayout.offsets[shownRows.length],
             }}
           >
-            <div
-              role="row"
-              aria-rowindex={1}
-              className="zuvi-studio-sheet-columnheaders"
-              style={{ width: offsets[columnCount] }}
-            >
-              <div role="columnheader" aria-label="行号" className="zuvi-studio-sheet-corner" />
-              {visibleColumns.map((col) => (
-                <div
-                  key={col}
-                  role="columnheader"
-                  aria-colindex={col + 1}
-                  className="zuvi-studio-sheet-columnheader"
-                  data-selected={(col >= bounds.firstCol && col <= bounds.lastCol) || undefined}
-                  data-frozen={col <= freezeColumns || undefined}
-                  style={{
-                    left: offsets[col - 1] + (col <= freezeColumns ? viewport.left : 0),
-                    width: offsets[col] - offsets[col - 1],
-                    zIndex: col <= freezeColumns ? 7 : undefined,
-                  }}
-                  onPointerDown={(event) => {
-                    if (disabled) return;
-                    event.preventDefault();
-                    if (!commitEditing()) return;
-                    setSelection({ anchor: { row: 1, col }, focus: { row: rowCount, col } });
-                    gridRef.current?.focus();
-                  }}
-                  onDoubleClick={() => fitColumnWidths({ firstCol: col, lastCol: col })}
-                >
-                  {studioColumnLabel(col)}
-                  <span
-                    role="separator"
-                    aria-label={`${studioColumnLabel(col)} 列宽`}
-                    aria-disabled={!!blocked}
-                    aria-orientation="vertical"
-                    aria-valuemin={1}
-                    aria-valuemax={255}
-                    aria-valuenow={Number(
-                      studioColumnCharacterWidth(offsets[col] - offsets[col - 1]).toFixed(2)
-                    )}
-                    tabIndex={blocked ? -1 : 0}
-                    className="zuvi-studio-sheet-column-resize"
-                    onPointerDown={(event) => startColumnResize(event, col)}
-                    onDoubleClick={(event) => {
-                      event.stopPropagation();
-                      fitColumnWidths({ firstCol: col, lastCol: col });
-                    }}
-                    onKeyDown={(event) => {
-                      if (blocked || !commitEditing()) return;
-                      const width = offsets[col] - offsets[col - 1];
-                      if (event.key === 'Enter') {
-                        event.preventDefault();
-                        openColumnWidth({ firstCol: col, lastCol: col });
-                      }
-                      if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) {
-                        event.preventDefault();
-                        const next =
-                          event.key === 'Home'
-                            ? 12
-                            : event.key === 'End'
-                              ? 1790
-                              : Math.max(
-                                  12,
-                                  Math.min(
-                                    1790,
-                                    width +
-                                      (event.key === 'ArrowRight' ? 7 : -7) *
-                                        (event.shiftKey ? 4 : 1)
-                                  )
-                                );
-                        transform(
-                          (current) =>
-                            studioSetColumnWidths(current, sheet.id, {
-                              [studioColumnLabel(col)]: next,
-                            }),
-                          '已通过键盘调整列宽；可撤销。'
-                        );
-                      }
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
-            {visibleRows.map((row) => (
+            {view.showRowColHeaders && (
               <div
-                key={`${sheet.id}-${row}`}
                 role="row"
-                aria-rowindex={row + 1}
-                className="zuvi-studio-sheet-row"
-                data-frozen={row <= (sheet.freeze?.rows ?? 0) || undefined}
-                style={{
-                  top:
-                    HEADER_HEIGHT +
-                    studioRowTop(rowLayout, row) +
-                    (row <= (sheet.freeze?.rows ?? 0) ? viewport.top : 0),
-                  width: offsets[columnCount],
-                  height: studioRowSpanHeight(rowLayout, row),
-                  zIndex: row <= (sheet.freeze?.rows ?? 0) ? 4 : undefined,
-                }}
+                aria-rowindex={1}
+                className="zuvi-studio-sheet-columnheaders"
+                style={{ width: offsets[columnCount] }}
               >
-                <div
-                  role="rowheader"
-                  aria-colindex={1}
-                  className="zuvi-studio-sheet-rowheader"
-                  style={{ height: studioRowSpanHeight(rowLayout, row) }}
-                  onDoubleClick={() => fitRowHeights({ firstRow: row, lastRow: row })}
-                  data-selected={(row >= bounds.firstRow && row <= bounds.lastRow) || undefined}
-                  onPointerDown={(event) => {
-                    if (disabled) return;
-                    event.preventDefault();
-                    if (!commitEditing()) return;
-                    setSelection({ anchor: { row, col: 1 }, focus: { row, col: columnCount } });
-                    gridRef.current?.focus();
-                  }}
-                >
-                  {row}
-                  <span
-                    role="separator"
-                    aria-label={`${row} 行高`}
-                    aria-disabled={!!blocked}
-                    aria-orientation="horizontal"
-                    aria-valuemin={0.75}
-                    aria-valuemax={STUDIO_MAX_ROW_HEIGHT}
-                    aria-valuenow={Number(
-                      (sheet.rowHeights?.[String(row)] ?? sheet.defaultRowHeight ?? 18).toFixed(2)
-                    )}
-                    tabIndex={blocked ? -1 : 0}
-                    className="zuvi-studio-sheet-row-resize"
-                    onPointerDown={(event) => startRowResize(event, row)}
-                    onDoubleClick={(event) => {
-                      event.stopPropagation();
-                      fitRowHeights({ firstRow: row, lastRow: row });
-                    }}
-                    onKeyDown={(event) => {
-                      if (blocked || !commitEditing()) return;
-                      const height =
-                        sheet.rowHeights?.[String(row)] ?? sheet.defaultRowHeight ?? 18;
-                      if (event.key === 'Enter') {
-                        event.preventDefault();
-                        setSelection({
-                          anchor: { row, col: 1 },
-                          focus: { row, col: columnCount },
-                        });
-                        setHeightDraft(String(height));
-                        setHeightError('');
-                        setHeightDialog({ firstRow: row, lastRow: row });
-                      }
-                      if (['ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) {
-                        event.preventDefault();
-                        const next =
-                          event.key === 'Home'
-                            ? 0.75
-                            : event.key === 'End'
-                              ? STUDIO_MAX_ROW_HEIGHT
-                              : Math.max(
-                                  0.75,
-                                  Math.min(
-                                    STUDIO_MAX_ROW_HEIGHT,
-                                    height +
-                                      (event.key === 'ArrowDown' ? 0.75 : -0.75) *
-                                        (event.shiftKey ? 4 : 1)
-                                  )
-                                );
-                        transform(
-                          (current) =>
-                            studioSetRowHeight(
-                              current,
-                              sheet.id,
-                              { firstRow: row, lastRow: row },
-                              next
-                            ),
-                          '已通过键盘调整行高；可撤销。'
-                        );
-                      }
-                    }}
-                  />
-                </div>
-                {visibleColumns.map((col) => {
-                  const merge = studioMergedRange(sheet, { row, col });
-                  if (merge && (merge.firstRow !== row || merge.firstCol !== col)) return null;
-                  const currentAddress = studioCellAddress(row, col);
-                  const currentCell = sheet.cells[currentAddress];
-                  const conditionalStyle = studioConditionalCellStyle(
-                    sheet,
-                    currentAddress,
-                    calculated
-                  );
-                  const displayCell = { ...(currentCell ?? { input: '' }), ...conditionalStyle };
-                  const validation = studioCellValidation(sheet, currentAddress, calculated);
-                  const key = `${sheet.id}:${currentAddress}`;
-                  const currentError = calculated.errors.get(key);
-                  const currentLink = studioCellHyperlink(
-                    document,
-                    sheet.id,
-                    currentAddress,
-                    calculated
-                  );
-                  const value =
-                    calculated.values.get(key) ??
-                    studioInputValue(currentCell?.input ?? '', currentCell?.numberFormat);
-                  const selected =
-                    row >= bounds.firstRow &&
-                    row <= bounds.lastRow &&
-                    col >= bounds.firstCol &&
-                    col <= bounds.lastCol;
-                  const active = currentAddress === address;
-                  const currentEditing =
-                    editing?.origin === 'cell' &&
-                    editing.sheetId === sheet.id &&
-                    editing.address === currentAddress;
-                  return (
+                <div role="columnheader" aria-label="行号" className="zuvi-studio-sheet-corner" />
+                {visibleColumns
+                  .filter((col) => offsets[col] > offsets[col - 1])
+                  .map((col) => (
                     <div
                       key={col}
-                      id={`${gridId}-${currentAddress}`}
-                      role="gridcell"
+                      role="columnheader"
                       aria-colindex={col + 1}
-                      aria-colspan={merge ? merge.lastCol - merge.firstCol + 1 : undefined}
-                      aria-rowspan={merge ? merge.lastRow - merge.firstRow + 1 : undefined}
-                      aria-selected={selected}
-                      aria-invalid={(validation && !validation.valid) || undefined}
-                      aria-describedby={
-                        active && validationPrompt ? `${gridId}-validation` : undefined
-                      }
-                      aria-label={`${currentAddress}${currentError ? ` ${currentError}` : ''}`}
-                      className="zuvi-studio-sheet-cell"
-                      data-active={active || undefined}
-                      data-selected={selected || undefined}
-                      data-error={!!currentError || undefined}
-                      data-invalid={(validation && !validation.valid) || undefined}
-                      data-conditional={Object.keys(conditionalStyle).length > 0 || undefined}
-                      data-merged={!!merge || undefined}
+                      className="zuvi-studio-sheet-columnheader"
+                      data-selected={(col >= bounds.firstCol && col <= bounds.lastCol) || undefined}
                       data-frozen={col <= freezeColumns || undefined}
-                      data-wrap={currentCell?.wrap || undefined}
                       style={{
                         left: offsets[col - 1] + (col <= freezeColumns ? viewport.left : 0),
-                        width: offsets[merge?.lastCol ?? col] - offsets[col - 1],
-                        height: studioRowSpanHeight(rowLayout, row, merge?.lastRow ?? row),
-                        zIndex: col <= freezeColumns ? 3 : merge ? 2 : undefined,
-                        fontWeight: displayCell.bold ? 700 : undefined,
-                        fontStyle: displayCell.italic ? 'italic' : undefined,
-                        fontFamily: displayCell.fontFamily
-                          ? `${quotedFontFamily(displayCell.fontFamily)}, var(--zuvi-font-sans)`
-                          : undefined,
-                        fontSize:
-                          displayCell.fontSize === undefined
-                            ? undefined
-                            : `${displayCell.fontSize}pt`,
-                        textDecoration:
-                          displayCell.underline || currentLink ? 'underline' : undefined,
-                        color:
-                          displayCell.color ?? (currentLink ? 'var(--zuvi-color-link)' : undefined),
-                        backgroundColor: displayCell.background,
-                        alignItems:
-                          (currentCell?.verticalAlign ?? 'bottom') === 'top'
-                            ? 'flex-start'
-                            : currentCell?.verticalAlign === 'middle'
-                              ? 'center'
-                              : 'flex-end',
-                        ...studioCellBordersCss({
-                          ...currentCell,
-                          input: currentCell?.input ?? '',
-                          borders: merge
-                            ? {
-                                ...currentCell?.borders,
-                                right:
-                                  sheet.cells[studioCellAddress(merge.firstRow, merge.lastCol)]
-                                    ?.borders?.right ?? currentCell?.borders?.right,
-                                bottom:
-                                  sheet.cells[studioCellAddress(merge.lastRow, merge.firstCol)]
-                                    ?.borders?.bottom ?? currentCell?.borders?.bottom,
-                              }
-                            : currentCell?.borders,
-                        }),
-                        textAlign:
-                          currentCell?.align && currentCell.align !== 'general'
-                            ? currentCell.align
-                            : typeof value === 'number'
-                              ? 'right'
-                              : 'left',
+                        width: offsets[col] - offsets[col - 1],
+                        zIndex: col <= freezeColumns ? 7 : undefined,
                       }}
-                      data-hyperlink={!!currentLink || undefined}
-                      title={
-                        currentError ??
-                        currentLink?.tooltip ??
-                        currentLink?.target ??
-                        currentLink?.location ??
-                        currentCell?.input
-                      }
                       onPointerDown={(event) => {
-                        if (disabled || currentEditing || event.button !== 0) return;
+                        if (disabled) return;
                         event.preventDefault();
-                        if (!selectCell({ row, col }, event.shiftKey)) return;
-                        draggingRef.current = true;
+                        if (!commitEditing()) return;
+                        setSelection({ anchor: { row: 1, col }, focus: { row: rowCount, col } });
+                        gridRef.current?.focus();
                       }}
-                      onPointerEnter={() => {
-                        if (!disabled && draggingRef.current)
-                          setSelection((current) => ({ ...current, focus: { row, col } }));
-                      }}
-                      onDoubleClick={() => {
-                        if (blocked) return;
-                        if (editingRef.current?.address !== currentAddress && !commitEditing())
-                          return;
-                        const position = { row, col };
-                        setSelection({ anchor: position, focus: position });
-                        beginEditing('cell', undefined, currentAddress);
+                      onDoubleClick={() => fitColumnWidths({ firstCol: col, lastCol: col })}
+                    >
+                      <span className="zuvi-studio-sheet-header-label">
+                        {studioColumnLabel(col)}
+                      </span>
+                      <span
+                        role="separator"
+                        aria-label={`${studioColumnLabel(col)} 列宽`}
+                        aria-disabled={!!blocked}
+                        aria-orientation="vertical"
+                        aria-valuemin={1}
+                        aria-valuemax={255}
+                        aria-valuenow={Number(
+                          studioColumnCharacterWidth(
+                            logicalOffsets[col] - logicalOffsets[col - 1]
+                          ).toFixed(2)
+                        )}
+                        tabIndex={blocked ? -1 : 0}
+                        className="zuvi-studio-sheet-column-resize"
+                        onPointerDown={(event) => startColumnResize(event, col)}
+                        onDoubleClick={(event) => {
+                          event.stopPropagation();
+                          fitColumnWidths({ firstCol: col, lastCol: col });
+                        }}
+                        onKeyDown={(event) => {
+                          if (blocked || !commitEditing()) return;
+                          const width = logicalOffsets[col] - logicalOffsets[col - 1];
+                          if (event.key === 'Enter') {
+                            event.preventDefault();
+                            openColumnWidth({ firstCol: col, lastCol: col });
+                          }
+                          if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) {
+                            event.preventDefault();
+                            const next =
+                              event.key === 'Home'
+                                ? 12
+                                : event.key === 'End'
+                                  ? 1790
+                                  : Math.max(
+                                      12,
+                                      Math.min(
+                                        1790,
+                                        width +
+                                          (event.key === 'ArrowRight' ? 7 : -7) *
+                                            (event.shiftKey ? 4 : 1)
+                                      )
+                                    );
+                            transform(
+                              (current) =>
+                                studioSetColumnWidths(current, sheet.id, {
+                                  [studioColumnLabel(col)]: next,
+                                }),
+                              '已通过键盘调整列宽；可撤销。'
+                            );
+                          }
+                        }}
+                      />
+                    </div>
+                  ))}
+              </div>
+            )}
+            {visibleRows.map((row) => {
+              const frozenRow = studioRowTop(rowLayout, row) < rowLayout.offsets[freezeRows];
+              return (
+                <div
+                  key={`${sheet.id}-${row}`}
+                  role="row"
+                  aria-rowindex={row + (view.showRowColHeaders ? 1 : 0)}
+                  className="zuvi-studio-sheet-row"
+                  data-frozen={frozenRow || undefined}
+                  style={{
+                    top:
+                      headerHeight + studioRowTop(rowLayout, row) + (frozenRow ? viewport.top : 0),
+                    width: offsets[columnCount],
+                    height: studioRowSpanHeight(rowLayout, row),
+                    zIndex: frozenRow ? 4 : undefined,
+                  }}
+                >
+                  {view.showRowColHeaders && rowIndexes.has(row) && (
+                    <div
+                      role="rowheader"
+                      aria-colindex={1}
+                      className="zuvi-studio-sheet-rowheader"
+                      style={{ height: studioRowSpanHeight(rowLayout, row) }}
+                      onDoubleClick={() => fitRowHeights({ firstRow: row, lastRow: row })}
+                      data-selected={(row >= bounds.firstRow && row <= bounds.lastRow) || undefined}
+                      onPointerDown={(event) => {
+                        if (disabled) return;
+                        event.preventDefault();
+                        if (!commitEditing()) return;
+                        setSelection({ anchor: { row, col: 1 }, focus: { row, col: columnCount } });
+                        gridRef.current?.focus();
                       }}
                     >
-                      {currentEditing ? (
-                        <Input
-                          ref={cellInputRef}
-                          size="sm"
-                          aria-label={`编辑 ${currentAddress}`}
-                          value={editing.value}
-                          disabled={blocked}
-                          status={inputError ? 'error' : 'default'}
-                          aria-invalid={!!inputError || undefined}
-                          aria-describedby={
-                            inputError
-                              ? `${gridId}-notice`
-                              : active && validationPrompt
-                                ? `${gridId}-validation`
-                                : undefined
+                      <span className="zuvi-studio-sheet-header-label">{row}</span>
+                      <span
+                        role="separator"
+                        aria-label={`${row} 行高`}
+                        aria-disabled={!!blocked}
+                        aria-orientation="horizontal"
+                        aria-valuemin={0.75}
+                        aria-valuemax={STUDIO_MAX_ROW_HEIGHT}
+                        aria-valuenow={Number(
+                          (derivedHeights[String(row)] ?? sheet.defaultRowHeight ?? 18).toFixed(2)
+                        )}
+                        tabIndex={blocked ? -1 : 0}
+                        className="zuvi-studio-sheet-row-resize"
+                        onPointerDown={(event) => startRowResize(event, row)}
+                        onDoubleClick={(event) => {
+                          event.stopPropagation();
+                          fitRowHeights({ firstRow: row, lastRow: row });
+                        }}
+                        onKeyDown={(event) => {
+                          if (blocked || !commitEditing()) return;
+                          const height =
+                            derivedHeights[String(row)] ?? sheet.defaultRowHeight ?? 18;
+                          if (event.key === 'Enter') {
+                            event.preventDefault();
+                            setSelection({
+                              anchor: { row, col: 1 },
+                              focus: { row, col: columnCount },
+                            });
+                            setHeightDraft(String(height));
+                            setHeightError('');
+                            setHeightDialog({ firstRow: row, lastRow: row });
                           }
-                          onChange={(event) => {
-                            if (!blocked) setEdit({ ...editing, value: event.target.value });
-                          }}
-                          onBlur={() => commitEditing()}
-                          onKeyDown={onEditorKeyDown}
-                        />
-                      ) : (
-                        <span>
-                          {currentCell?.input
-                            ? studioDisplayCell(
-                                displayCell,
-                                calculated.values.get(key),
-                                currentError
-                              )
-                            : currentLink?.display ||
-                              currentLink?.target ||
-                              currentLink?.location ||
-                              ''}
-                        </span>
-                      )}
+                          if (['ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) {
+                            event.preventDefault();
+                            const next =
+                              event.key === 'Home'
+                                ? 0.75
+                                : event.key === 'End'
+                                  ? STUDIO_MAX_ROW_HEIGHT
+                                  : Math.max(
+                                      0.75,
+                                      Math.min(
+                                        STUDIO_MAX_ROW_HEIGHT,
+                                        height +
+                                          (event.key === 'ArrowDown' ? 0.75 : -0.75) *
+                                            (event.shiftKey ? 4 : 1)
+                                      )
+                                    );
+                            transform(
+                              (current) =>
+                                studioSetRowHeight(
+                                  current,
+                                  sheet.id,
+                                  { firstRow: row, lastRow: row },
+                                  next
+                                ),
+                              '已通过键盘调整行高；可撤销。'
+                            );
+                          }
+                        }}
+                      />
                     </div>
-                  );
-                })}
-              </div>
-            ))}
+                  )}
+                  {visibleColumns.map((col) => {
+                    const merge = studioMergedRange(sheet, { row, col });
+                    if (merge && (merge.firstRow !== row || merge.firstCol !== col)) return null;
+                    const cellWidth = offsets[merge?.lastCol ?? col] - offsets[col - 1];
+                    const cellHeight = studioRowSpanHeight(rowLayout, row, merge?.lastRow ?? row);
+                    // A hidden merge origin is added to the viewport for its visible span.
+                    // It must not add ordinary zero-sized cells in other rows or columns.
+                    if (cellWidth <= 0 || cellHeight <= 0) return null;
+                    const frozenColumn = offsets[col - 1] < offsets[freezeColumns];
+                    const currentAddress = studioCellAddress(row, col);
+                    const currentCell = sheet.cells[currentAddress];
+                    const conditionalStyle = studioConditionalCellStyle(
+                      sheet,
+                      currentAddress,
+                      calculated
+                    );
+                    const displayCell = { ...(currentCell ?? { input: '' }), ...conditionalStyle };
+                    const validation = studioCellValidation(sheet, currentAddress, calculated);
+                    const key = `${sheet.id}:${currentAddress}`;
+                    const currentError = calculated.errors.get(key);
+                    const currentLink = studioCellHyperlink(
+                      document,
+                      sheet.id,
+                      currentAddress,
+                      calculated
+                    );
+                    const value =
+                      calculated.values.get(key) ??
+                      studioInputValue(
+                        currentCell?.input ?? '',
+                        currentCell?.numberFormat,
+                        currentCell?.valueType
+                      );
+                    displayCell.color =
+                      conditionalStyle.color ??
+                      studioNumberFormatColor(displayCell.numberFormat, value, currentError) ??
+                      currentCell?.color;
+                    const selected =
+                      row >= bounds.firstRow &&
+                      row <= bounds.lastRow &&
+                      col >= bounds.firstCol &&
+                      col <= bounds.lastCol;
+                    const active = currentAddress === address;
+                    const currentEditing =
+                      editing?.origin === 'cell' &&
+                      editing.sheetId === sheet.id &&
+                      editing.address === currentAddress;
+                    const center = centeredText
+                      .get(row)
+                      ?.find((segment) => segment.ownerCol === col);
+                    const logicalWidth =
+                      logicalOffsets[merge?.lastCol ?? col] - logicalOffsets[col - 1];
+                    const logicalHeight = studioRowSpanHeight(
+                      logicalRowLayout,
+                      row,
+                      merge?.lastRow ?? row
+                    );
+                    const logicalTextWidth = center?.width ?? logicalWidth;
+                    const textWidth = logicalTextWidth * scale;
+                    const textHeight = logicalHeight * scale;
+                    const textInput = studioSheetCellTextInput(
+                      document,
+                      sheet,
+                      calculated,
+                      currentAddress,
+                      { width: logicalTextWidth, height: logicalHeight },
+                      textMeasure,
+                      center?.lastCol
+                    );
+                    const textLayout = sheetLayoutText(textInput);
+                    return (
+                      <div
+                        key={col}
+                        id={`${gridId}-${currentAddress}`}
+                        role="gridcell"
+                        aria-colindex={col + (view.showRowColHeaders ? 1 : 0)}
+                        aria-colspan={merge ? merge.lastCol - merge.firstCol + 1 : undefined}
+                        aria-rowspan={merge ? merge.lastRow - merge.firstRow + 1 : undefined}
+                        aria-selected={selected}
+                        aria-invalid={(validation && !validation.valid) || undefined}
+                        aria-describedby={
+                          active && validationPrompt ? `${gridId}-validation` : undefined
+                        }
+                        aria-label={`${currentAddress}${currentError ? ` ${currentError}` : ''}`}
+                        className="zuvi-studio-sheet-cell"
+                        data-active={active || undefined}
+                        data-selected={selected || undefined}
+                        data-error={!!currentError || undefined}
+                        data-array-owner={calculated.arrayOwners
+                          .get(key)
+                          ?.slice(sheet.id.length + 1)}
+                        data-invalid={(validation && !validation.valid) || undefined}
+                        data-conditional={Object.keys(conditionalStyle).length > 0 || undefined}
+                        data-merged={!!merge || undefined}
+                        data-frozen={frozenColumn || undefined}
+                        data-wrap={currentCell?.wrap || undefined}
+                        data-editing={currentEditing || undefined}
+                        data-center-continuous-span={
+                          center ? `${center.firstCol}:${center.lastCol}` : undefined
+                        }
+                        style={{
+                          left: offsets[col - 1] + (frozenColumn ? viewport.left : 0),
+                          width: cellWidth,
+                          height: cellHeight,
+                          zIndex: currentEditing
+                            ? 8
+                            : frozenColumn
+                              ? 3
+                              : merge || center
+                                ? 2
+                                : undefined,
+                          overflow: center || currentEditing ? 'visible' : undefined,
+                          fontWeight: displayCell.bold ? 700 : undefined,
+                          fontStyle: displayCell.italic ? 'italic' : undefined,
+                          fontFamily: displayCell.fontFamily
+                            ? `${quotedFontFamily(displayCell.fontFamily)}, var(--zuvi-font-sans)`
+                            : undefined,
+                          fontSize:
+                            displayCell.fontSize === undefined
+                              ? undefined
+                              : `${displayCell.fontSize}pt`,
+                          textDecoration:
+                            displayCell.underline || currentLink ? 'underline' : undefined,
+                          color:
+                            displayCell.color ??
+                            (currentLink ? 'var(--zuvi-color-link)' : undefined),
+                          backgroundColor:
+                            displayCell.background === 'none' ? undefined : displayCell.background,
+                          alignItems:
+                            (currentCell?.verticalAlign ?? 'bottom') === 'top'
+                              ? 'flex-start'
+                              : currentCell?.verticalAlign === 'middle'
+                                ? 'center'
+                                : 'flex-end',
+                          ...studioViewCellBorders(
+                            {
+                              ...currentCell,
+                              input: currentCell?.input ?? '',
+                              borders: merge
+                                ? {
+                                    ...currentCell?.borders,
+                                    right:
+                                      sheet.cells[studioCellAddress(merge.firstRow, merge.lastCol)]
+                                        ?.borders?.right ?? currentCell?.borders?.right,
+                                    bottom:
+                                      sheet.cells[studioCellAddress(merge.lastRow, merge.firstCol)]
+                                        ?.borders?.bottom ?? currentCell?.borders?.bottom,
+                                  }
+                                : currentCell?.borders,
+                            },
+                            scale
+                          ),
+                          textAlign:
+                            currentCell?.align === 'left' ||
+                            currentCell?.align === 'right' ||
+                            currentCell?.align === 'center' ||
+                            currentCell?.align === 'justify'
+                              ? currentCell.align
+                              : typeof value === 'number'
+                                ? 'right'
+                                : 'left',
+                        }}
+                        data-hyperlink={!!currentLink || undefined}
+                        title={
+                          currentError ??
+                          currentLink?.tooltip ??
+                          currentLink?.target ??
+                          currentLink?.location ??
+                          currentCell?.input
+                        }
+                        onPointerDown={(event) => {
+                          if (disabled || currentEditing || event.button !== 0) return;
+                          event.preventDefault();
+                          if (!selectCell({ row, col }, event.shiftKey)) return;
+                          draggingRef.current = true;
+                        }}
+                        onPointerEnter={() => {
+                          if (!disabled && draggingRef.current) {
+                            if (painterTargetRef.current)
+                              painterTargetRef.current = {
+                                ...painterTargetRef.current,
+                                focus: { row, col },
+                              };
+                            setSelection((current) => ({ ...current, focus: { row, col } }));
+                          }
+                        }}
+                        onDoubleClick={() => {
+                          if (blocked || painterRef.current) return;
+                          if (editingRef.current?.address !== currentAddress && !commitEditing())
+                            return;
+                          const position = { row, col };
+                          setSelection({ anchor: position, focus: position });
+                          beginEditing('cell', undefined, currentAddress);
+                        }}
+                      >
+                        {currentEditing ? (
+                          <Input
+                            ref={cellInputRef}
+                            size="sm"
+                            aria-label={`编辑 ${currentAddress}`}
+                            style={{
+                              minHeight: Math.max(
+                                24,
+                                (displayCell.fontSize ?? textDefaults.fontSize) *
+                                  STUDIO_POINTS_TO_PIXELS *
+                                  1.3
+                              ),
+                            }}
+                            value={editing.value}
+                            disabled={blocked}
+                            status={inputError ? 'error' : 'default'}
+                            aria-invalid={!!inputError || undefined}
+                            aria-describedby={
+                              inputError
+                                ? `${gridId}-notice`
+                                : active && validationPrompt
+                                  ? `${gridId}-validation`
+                                  : undefined
+                            }
+                            onChange={(event) => {
+                              if (!blocked) setEdit({ ...editing, value: event.target.value });
+                            }}
+                            onBlur={() => commitEditing()}
+                            onKeyDown={onEditorKeyDown}
+                          />
+                        ) : (
+                          <StudioSheetText
+                            layout={textLayout}
+                            width={textWidth}
+                            height={textHeight}
+                            scale={scale}
+                            origin={{
+                              left: (5 - (textInput.box.padding?.left ?? 5)) * scale,
+                              top: -(textInput.box.padding?.top ?? 0) * scale,
+                            }}
+                          />
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })}
           </div>
-          {fillPreview && (
-            <div
-              aria-hidden="true"
-              className="zuvi-studio-sheet-fill-preview"
-              style={{
-                left: ROW_HEADER_WIDTH + offsets[fillPreview.firstCol - 1],
-                top: HEADER_HEIGHT + studioRowTop(rowLayout, fillPreview.firstRow),
-                width: offsets[fillPreview.lastCol] - offsets[fillPreview.firstCol - 1],
-                height: studioRowSpanHeight(rowLayout, fillPreview.firstRow, fillPreview.lastRow),
-              }}
-            />
-          )}
+          {fillPreview &&
+            studioViewRangeRects({
+              range: fillPreview,
+              columnOffsets: offsets,
+              rowLayout,
+              freezeColumns,
+              freezeRows,
+              headerHeight,
+              viewport,
+            }).map((rect, index) => (
+              <div
+                key={index}
+                aria-hidden="true"
+                className="zuvi-studio-sheet-fill-preview"
+                style={rect}
+              />
+            ))}
           {!disabled && !blocked && !fillPreview && !editingRef.current && (
             <button
               type="button"
@@ -3422,15 +4209,15 @@ export function StudioSheet({
               className="zuvi-studio-sheet-fill-handle"
               style={{
                 left:
-                  ROW_HEADER_WIDTH +
                   offsets[bounds.lastCol] -
                   4 +
                   (bounds.lastCol <= freezeColumns ? viewport.left : 0),
                 top:
-                  HEADER_HEIGHT +
+                  headerHeight +
                   studioRowTop(rowLayout, bounds.lastRow) +
                   studioRowSpanHeight(rowLayout, bounds.lastRow) -
-                  4,
+                  4 +
+                  (bounds.lastRow <= (sheet.freeze?.rows ?? 0) ? viewport.top : 0),
               }}
               onPointerDown={startFillDrag}
             />
@@ -3571,6 +4358,63 @@ export function StudioSheet({
           </Button>
         </div>
       )}
+      {arrayDialog && !blocked && (
+        <Modal open onOpenChange={setArrayDialog}>
+          <Modal.Content size="sm">
+            <Modal.Header>
+              <Modal.Title>数组公式</Modal.Title>
+              <Modal.Close />
+            </Modal.Header>
+            <Modal.Body>
+              <label>
+                公式
+                <Input.Textarea
+                  aria-label="数组公式表达式"
+                  value={arrayFormula}
+                  rows={3}
+                  onChange={(event) => setArrayFormula(event.target.value)}
+                />
+              </label>
+              <Select
+                aria-label="数组公式模式"
+                value={arrayType}
+                onChange={(value) => setArrayType(value as 'fixed' | 'dynamic')}
+                options={[
+                  { value: 'dynamic', label: '动态溢出' },
+                  { value: 'fixed', label: '固定数组' },
+                ]}
+              />
+              <p>固定数组使用完整选区；动态溢出从选区左上角开始。结果单元格不能单独修改。</p>
+              {arrayError && <p role="alert">{arrayError}</p>}
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="ghost" onClick={() => setArrayDialog(false)}>
+                取消
+              </Button>
+              <Button
+                onClick={() => {
+                  try {
+                    const next = studioSetArrayFormula(
+                      latestRef.current,
+                      sheet!.id,
+                      selection,
+                      arrayFormula,
+                      arrayType
+                    );
+                    replaceDocument(next);
+                    setArrayDialog(false);
+                    setNotice('数组公式已设置，可撤销。');
+                  } catch (error) {
+                    setArrayError(error instanceof Error ? error.message : '数组公式无效。');
+                  }
+                }}
+              >
+                应用数组公式
+              </Button>
+            </Modal.Footer>
+          </Modal.Content>
+        </Modal>
+      )}
       {pasteDialog && (
         <Modal
           open
@@ -3602,7 +4446,14 @@ export function StudioSheet({
                       name={`${gridId}-paste-mode`}
                       value={option.value}
                       checked={pasteMode === option.value}
-                      onChange={() => setPasteMode(option.value)}
+                      disabled={blocked}
+                      onChange={() => {
+                        setPasteMode(option.value);
+                        setPasteError('');
+                        if (option.value === 'formats' || option.value === 'column-widths')
+                          setPasteOperation('none');
+                        if (option.value === 'column-widths') setPasteSkipBlanks(false);
+                      }}
                     />
                     <span>
                       <strong>{option.label}</strong>
@@ -3610,6 +4461,44 @@ export function StudioSheet({
                     </span>
                   </label>
                 ))}
+              </div>
+              <div className="zuvi-studio-sheet-paste-extra">
+                <Checkbox
+                  label="跳过空白单元格"
+                  checked={pasteSkipBlanks}
+                  disabled={blocked || pasteMode === 'column-widths'}
+                  onChange={(value) => {
+                    setPasteSkipBlanks(value);
+                    setPasteError('');
+                  }}
+                />
+                <label className="zuvi-studio-sheet-rule-field">
+                  <span>运算</span>
+                  <Select
+                    aria-label="粘贴运算"
+                    value={pasteOperation}
+                    disabled={blocked || pasteMode === 'formats' || pasteMode === 'column-widths'}
+                    options={[
+                      { value: 'none', label: '无运算' },
+                      { value: 'add', label: '加' },
+                      { value: 'subtract', label: '减' },
+                      { value: 'multiply', label: '乘' },
+                      { value: 'divide', label: '除' },
+                    ]}
+                    onChange={(value) => {
+                      setPasteOperation(value as StudioSheetPasteOperation);
+                      setPasteError('');
+                    }}
+                  />
+                </label>
+                <p className="zuvi-studio-sheet-paste-help">
+                  跳过真正为空的来源；零、空白文本和返回空字符串的公式仍会粘贴。运算保留目标公式，仅值模式使用复制时的值；除零或无效结果将取消整次粘贴。
+                </p>
+                {pasteError && (
+                  <p role="alert" className="zuvi-studio-sheet-rule-error">
+                    {pasteError}
+                  </p>
+                )}
               </div>
             </Modal.Body>
             <Modal.Footer>
@@ -3624,7 +4513,13 @@ export function StudioSheet({
                     setNotice('请先在 OfficeStudio 中复制单元格区域。');
                     return;
                   }
-                  if (pasteClipboard(clipboard.text, clipboard.source, pasteMode))
+                  if (!commitEditing()) return;
+                  if (
+                    pasteClipboard(clipboard.text, clipboard.source, pasteMode, {
+                      skipBlanks: pasteSkipBlanks,
+                      operation: pasteOperation,
+                    })
+                  )
                     setPasteDialog(false);
                 }}
               >
@@ -3784,14 +4679,14 @@ export function StudioSheet({
           }}
           onSeries={(options) => {
             if (blocked || !commitEditing()) throw new Error('请先确认单元格输入。');
-            const next = studioFillSeries(latestRef.current, sheet.id, selection, options);
+            const result = studioFillSeriesResult(latestRef.current, sheet.id, selection, options);
             const message = validationNotice(
-              next,
+              result.document,
               sheet.id,
-              fillAddresses(options.direction, options.seedCount),
-              '已完成序列填充，可撤销恢复。'
+              result.addresses,
+              `已填充 ${result.addresses.length} 个序列单元格，可撤销恢复。${options.stopValue !== undefined ? '停止位置之后保持原样。' : ''}`
             );
-            replaceDocument(next);
+            replaceDocument(result.document);
             setNotice(message);
           }}
         />
@@ -3809,6 +4704,92 @@ export function StudioSheet({
               `已按 ${keys.length} 个关键字排序${header ? '，首行保留为标题' : ''}。`,
               () => fillAddresses('down')
             );
+          }}
+        />
+      )}
+      {duplicatesDialog && (
+        <StudioSheetDuplicatesDialog
+          state={duplicatesDialog}
+          blocked={!!blocked}
+          onClose={() => {
+            setDuplicatesDialog(null);
+            gridRef.current?.focus();
+          }}
+          onSave={(options) => {
+            if (blocked || composingRef.current || !commitEditing())
+              throw new Error('请先确认单元格输入。');
+            if (
+              latestRef.current !== duplicatesDialog.document ||
+              sheet.id !== duplicatesDialog.sheetId
+            )
+              throw new Error('工作簿已更新，请重新打开删除重复项。');
+            const result = studioRemoveSheetDuplicates(
+              latestRef.current,
+              duplicatesDialog.sheetId,
+              duplicatesDialog.selection,
+              options
+            );
+            replaceDocument(result.document);
+            setNotice(
+              '已删除 ' +
+                result.removedCount +
+                ' 条重复记录，保留 ' +
+                result.remainingCount +
+                ' 条记录' +
+                (options.header ? '（不含标题）' : '') +
+                '。' +
+                (result.removedCount ? '可一次撤销恢复。' : '')
+            );
+          }}
+        />
+      )}
+      {numberDialog && (
+        <StudioSheetNumberFormatDialog
+          state={numberDialog}
+          blocked={!!blocked}
+          onClose={() => setNumberDialog(null)}
+          onSave={(code) => {
+            if (blocked || !commitEditing())
+              throw new Error('当前无法应用格式，请先确认单元格输入。');
+            replaceDocument(
+              studioSetNumberFormat(
+                latestRef.current,
+                numberDialog.sheetId,
+                numberDialog.selection,
+                code
+              )
+            );
+            setNotice('已应用自定义数字格式，可撤销恢复。');
+          }}
+        />
+      )}
+      {textDialog && (
+        <StudioSheetTextDialog
+          state={textDialog}
+          blocked={!!blocked}
+          onIssueChange={setTextDraftError}
+          onClose={() => {
+            setTextDialog(null);
+            setTextDraftError('');
+            gridRef.current?.focus();
+          }}
+          onSave={(operations) => {
+            if (blocked || !commitEditing()) throw new Error('请先确认单元格输入。');
+            if (latestRef.current !== textDialog.document)
+              throw new Error('工作簿已更新，请重新打开文字排版。');
+            const next = operations.reduce(
+              (current, operation) =>
+                studioSetCellTextFormat(
+                  current,
+                  textDialog.sheetId,
+                  textDialog.selection,
+                  operation.patch,
+                  operation.lastChanged
+                ),
+              latestRef.current
+            );
+            replaceDocument(next);
+            setNotice('已应用单元格文字排版，可一次撤销恢复。');
           }}
         />
       )}

@@ -1,0 +1,177 @@
+{
+  "document": {
+    "version": 1,
+    "id": "d202a502-2db7-4e45-95c3-68bb9e052df5",
+    "name": "Native-native-twelve-types.pdf",
+    "kind": "pdf",
+    "pageCount": 2,
+    "sourcePageCount": 2,
+    "pages": [
+      {
+        "id": "c5fadce1-ddf3-4ced-86d4-4661f6c5c9d6",
+        "sourcePage": 0,
+        "bounds": {
+          "left": 0,
+          "bottom": 0,
+          "right": 500,
+          "top": 700
+        }
+      },
+      {
+        "id": "76bf91f9-5550-4fa0-91d0-951b9c24eb92",
+        "sourcePage": 1,
+        "bounds": {
+          "left": 0,
+          "bottom": 0,
+          "right": 500,
+          "top": 700
+        }
+      }
+    ],
+    "marks": [
+      {
+        "id": "native-legacy-mark:2003f7f35ef0821e72bf2fc3e62bb6ac",
+        "nativeId": "native-legacy-mark:2003f7f35ef0821e72bf2fc3e62bb6ac",
+        "page": 0,
+        "type": "text",
+        "x": 30,
+        "y": 592.4,
+        "width": 210.05,
+        "height": 21.769999999999982,
+        "text": "中文自由文本：原生迁入后保留",
+        "size": 15,
+        "color": "#253044",
+        "lineWidth": 0,
+        "replies": [
+          {
+            "id": "native-legacy-reply:625f41cd8ff277b2f904ce2d91afff65",
+            "text": "旧回复只迁移一次。"
+          }
+        ]
+      },
+      {
+        "id": "native-legacy-mark:d7d81503ffcaa7b2441ace1fd8501217",
+        "nativeId": "native-legacy-mark:d7d81503ffcaa7b2441ace1fd8501217",
+        "page": 0,
+        "type": "highlight",
+        "x": 30,
+        "y": 530,
+        "width": 300,
+        "height": 20,
+        "text": "Native single-layer highlight",
+        "size": 12,
+        "color": "#f5c542",
+        "lineWidth": 1
+      },
+      {
+        "id": "native-legacy-mark:a39314ccf0d00b213594c9c023c997d1",
+        "nativeId": "native-legacy-mark:a39314ccf0d00b213594c9c023c997d1",
+        "page": 0,
+        "type": "rectangle",
+        "x": 30,
+        "y": 390,
+        "width": 180,
+        "height": 40,
+        "text": "Native Square",
+        "size": 12,
+        "color": "#253044",
+        "lineWidth": 2
+      },
+      {
+        "id": "native-legacy-mark:e1411048d6a0a1073862c1d044907f4d",
+        "nativeId": "native-legacy-mark:e1411048d6a0a1073862c1d044907f4d",
+        "page": 0,
+        "type": "ink",
+        "x": 249,
+        "y": 399,
+        "width": 142,
+        "height": 22,
+        "text": "Native Ink",
+        "size": 12,
+        "color": "#253044",
+        "lineWidth": 2,
+        "points": [
+          [
+            250,
+            400
+          ],
+          [
+            290,
+            420
+          ],
+          [
+            330,
+            400
+          ],
+          [
+            390,
+            420
+          ]
+        ]
+      }
+    ],
+    "rotations": {},
+    "fields": [
+      {
+        "name": "reviewer",
+        "readOnly": false,
+        "type": "text",
+        "value": "Accepted fields and annotations",
+        "multiline": false,
+        "widgets": [
+          {
+            "page": 0,
+            "x": 29.5,
+            "y": 29.5,
+            "width": 261,
+            "height": 31,
+            "rotation": 0
+          },
+          {
+            "page": 1,
+            "x": 29.5,
+            "y": 29.5,
+            "width": 261,
+            "height": 31,
+            "rotation": 0
+          }
+        ]
+      },
+      {
+        "name": "confirmed",
+        "readOnly": false,
+        "type": "checkbox",
+        "value": false,
+        "widgets": [
+          {
+            "page": 1,
+            "x": 319.5,
+            "y": 29.5,
+            "width": 21,
+            "height": 21,
+            "rotation": 0
+          }
+        ]
+      }
+    ],
+    "nativeAnnotations": {
+      "version": 1,
+      "sourceHash": "e8425b47e535622dc62f5cec930015e35af3456bc5a751ecf3327f6e43861402",
+      "bindings": [
+        {
+          "sourcePage": 0,
+          "nativePageId": "c5fadce1-ddf3-4ced-86d4-4661f6c5c9d6",
+          "uiPageId": "c5fadce1-ddf3-4ced-86d4-4661f6c5c9d6"
+        },
+        {
+          "sourcePage": 1,
+          "nativePageId": "76bf91f9-5550-4fa0-91d0-951b9c24eb92",
+          "uiPageId": "76bf91f9-5550-4fa0-91d0-951b9c24eb92"
+        }
+      ],
+      "commands": []
+    }
+  },
+  "revision": 8,
+  "sourceHash": "e8425b47e535622dc62f5cec930015e35af3456bc5a751ecf3327f6e43861402"
+}

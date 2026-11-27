@@ -1,0 +1,138 @@
+{
+  "xlsx": [
+    {
+      "file": "text-source.xlsx",
+      "sha256": "6870e609d1191fc12db0562c01febaa7bdd2a977b1e426525a21bf6374700e61",
+      "row2": {
+        "r": "2",
+        "spans": "1:1",
+        "{http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac}dyDescent": "0.25",
+        "ht": "18.75",
+        "customHeight": "0"
+      },
+      "font0": "<ns0:font xmlns:ns0=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\"><ns0:b /><ns0:i /><ns0:sz val=\"9.5\" /><ns0:name val=\"Arial\" /></ns0:font>"
+    },
+    {
+      "file": "text-roundtrip-1.xlsx",
+      "sha256": "c34a391de1497508edbcfd1cc3c5d4f2514daf08effefa9b87212120b49b1b93",
+      "row2": {
+        "r": "2",
+        "ht": "44.5",
+        "customHeight": "0",
+        "spans": "1:1",
+        "{http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac}dyDescent": "0.25"
+      },
+      "font0": "<ns0:font xmlns:ns0=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\"><ns0:b /><ns0:i /><ns0:sz val=\"9.5\" /><ns0:name val=\"Arial\" /></ns0:font>"
+    },
+    {
+      "file": "text-roundtrip-2.xlsx",
+      "sha256": "f51331061c6a2cdb01730fa905bcb481bbb280c2a8d3a952c1529bdc0ae1bb37",
+      "row2": {
+        "r": "2",
+        "ht": "44.5",
+        "customHeight": "0",
+        "spans": "1:1",
+        "{http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac}dyDescent": "0.25"
+      },
+      "font0": "<ns0:font xmlns:ns0=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\"><ns0:b /><ns0:i /><ns0:sz val=\"9.5\" /><ns0:name val=\"Arial\" /></ns0:font>"
+    }
+  ],
+  "arrays": [
+    {
+      "file": "array-view-roundtrip-1.xlsx",
+      "sha256": "9a5571d061019ac1ed99317cb84f0957542524e17d8ff8e0332fd46b7a4d6bc4",
+      "row201": {
+        "r": "201",
+        "ht": "28.5",
+        "customHeight": "0",
+        "spans": "1:1",
+        "{http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac}dyDescent": "0.25"
+      },
+      "A205": "205"
+    },
+    {
+      "file": "array-view-roundtrip-2.xlsx",
+      "sha256": "8fbfa9cd85117b51381b570a4f698caa2d1f238af35f762412fe9550b3ceee90",
+      "row201": {
+        "r": "201",
+        "ht": "28.5",
+        "customHeight": "0",
+        "spans": "1:1",
+        "{http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac}dyDescent": "0.25"
+      },
+      "A205": "205"
+    }
+  ],
+  "pdf": {
+    "file": "text-print.pdf",
+    "sha256": "ecdb6fc257c6cb8b4ffc12d544cc5c9c70f53e03430344bcd8e3bbeaca8852eb",
+    "pages": [
+      {
+        "page": 1,
+        "sizePt": [
+          841.91998,
+          594.95996
+        ],
+        "characters": 295
+      },
+      {
+        "page": 2,
+        "sizePt": [
+          841.91998,
+          594.95996
+        ],
+        "characters": 23
+      },
+      {
+        "page": 3,
+        "sizePt": [
+          841.91998,
+          594.95996
+        ],
+        "characters": 70
+      },
+      {
+        "page": 4,
+        "sizePt": [
+          841.91998,
+          594.95996
+        ],
+        "characters": 51
+      },
+      {
+        "page": 5,
+        "sizePt": [
+          841.91998,
+          594.95996
+        ],
+        "characters": 36
+      }
+    ],
+    "links": [
+      {
+        "page": 1,
+        "uri": "https://example.com/native-text",
+        "rect": [
+          297,
+          493.70996,
+          384,
+          511.70996
+        ]
+      },
+      {
+        "page": 4,
+        "uri": "https://example.com/hidden-master",
+        "rect": [
+          33.75,
+          465.95996,
+          208.5,
+          495.20996
+        ]
+      }
+    ],
+    "text": "Text\nNative label\n⾃动换⾏随列宽变\n化并保留原始⽂字\n与⼯作簿默认字体\n。\nABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz\nANGLED_TEXT Indented\n竖\n排\nA\nB\nC\n42 #N/A FALSE #N/A\n********************\nLine one\nLine two\nLine three 分 散 对 ⻬\n3\nCross sheet\nformula with a\nlong text value\n1 2\n3 4\nCENTER_TITLE\nLongHeading\nOther\nCross sheet formu\nMerges\nVisible master Following data\nHidden row master Fourth row tail\nMasterHidden\nHidden master Visible tail\nControl row\nAutoHiddenMaster\nMerged\nAuto control",
+    "normalizedText": "Text\nNative label\n自动换行随列宽变\n化并保留原始文字\n与工作簿默认字体\n。\nABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz\nANGLED_TEXT Indented\n竖\n排\nA\nB\nC\n42 #N/A FALSE #N/A\n********************\nLine one\nLine two\nLine three 分 散 对 ⻬\n3\nCross sheet\nformula with a\nlong text value\n1 2\n3 4\nCENTER_TITLE\nLongHeading\nOther\nCross sheet formu\nMerges\nVisible master Following data\nHidden row master Fourth row tail\nMasterHidden\nHidden master Visible tail\nControl row\nAutoHiddenMaster\nMerged\nAuto control",
+    "cjkNormalization": "System CJK fallback ToUnicode uses compatibility radicals. NFKC is used for semantic matching; raw codepoint identity is not claimed."
+  },
+  "layoutCheckedSeparately": "Browser geometry JSON and rendered PNG visual review"
+}

@@ -1,0 +1,233 @@
+{
+  "config": {
+    "argv": [
+      "/Users/meaili/.nvm/versions/node/v20.20.0/bin/node",
+      "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/node_modules/.pnpm/@playwright+test@1.65.0/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "e2e/playwright.config.ts",
+      "e2e/office-studio-word-basic-format.spec.ts",
+      "--workers=1",
+      "--output=/tmp/zuvi-word-basic-format-browser-first-output",
+      "--reporter=list,json"
+    ],
+    "configFile": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/playwright.config.ts",
+    "rootDir": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/tmp/zuvi-word-basic-format-browser-first-output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/tmp/zuvi-word-basic-format-browser-first-output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "chromium",
+        "testDir": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e",
+        "snapshotDir": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e",
+        "testIgnore": [],
+        "testMatch": "**/*.spec.ts",
+        "timeout": 30000,
+        "use": {
+          "baseURL": "http://localhost:5270",
+          "viewport": {
+            "width": 1280,
+            "height": 800
+          },
+          "trace": "retain-on-failure",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.8127.18 Safari/537.36",
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "chromium"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "chromium"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.65.0",
+    "workers": 1,
+    "webServer": {
+      "command": "pnpm --filter @zuvi/docs dev --port 5270 --strictPort --force",
+      "url": "http://localhost:5270",
+      "reuseExistingServer": true,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "office-studio-word-basic-format.spec.ts",
+      "file": "office-studio-word-basic-format.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "applies mixed and caret character formats, restores transactions and reopens two actual native DOCX exports",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 9010,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('textbox', { name: 'Word 文档正文', exact: true }).locator('p').filter({ hasText: /^Caret / })\nExpected: \u001b[32m\"Caret \u001b[7m_\u001b[27mTyped\u001b[7m_\u001b[27mbase\"\u001b[39m\nReceived: \u001b[31m\"Caret Typedbase\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" getByRole('textbox', { name: 'Word 文档正文', exact: true }).locator('p').filter({ hasText: /^Caret / }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('textbox', { name: 'Word 文档正文', exact: true }).locator('p').filter({ hasText: /^Caret / })\u001b[22m\n\u001b[2m    14 × locator resolved to <p data-word-tabs=\"[]\" data-word-surface=\"{}\" data-word-line-rule=\"auto\" data-word-default-tab=\"36\" data-word-decimal-symbol=\".\" data-word-paragraph-direct=\"[]\">…</p>\u001b[22m\n\u001b[2m       - unexpected value \"Caret Typedbase\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('textbox', { name: 'Word 文档正文', exact: true }).locator('p').filter({ hasText: /^Caret / })\nExpected: \u001b[32m\"Caret \u001b[7m_\u001b[27mTyped\u001b[7m_\u001b[27mbase\"\u001b[39m\nReceived: \u001b[31m\"Caret Typedbase\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" getByRole('textbox', { name: 'Word 文档正文', exact: true }).locator('p').filter({ hasText: /^Caret / }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('textbox', { name: 'Word 文档正文', exact: true }).locator('p').filter({ hasText: /^Caret / })\u001b[22m\n\u001b[2m    14 × locator resolved to <p data-word-tabs=\"[]\" data-word-surface=\"{}\" data-word-line-rule=\"auto\" data-word-default-tab=\"36\" data-word-decimal-symbol=\".\" data-word-paragraph-direct=\"[]\">…</p>\u001b[22m\n\u001b[2m       - unexpected value \"Caret Typedbase\"\u001b[22m\n\n    at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-basic-format.spec.ts:151:23",
+                    "location": {
+                      "file": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-basic-format.spec.ts",
+                      "column": 23,
+                      "line": 151
+                    },
+                    "snippet": " \u001b[90m 149 |\u001b[39m   \u001b[36mawait\u001b[39m font(page\u001b[33m,\u001b[39m \u001b[32m'字号'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'17.3pt'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 150 |\u001b[39m   \u001b[36mawait\u001b[39m body\u001b[33m.\u001b[39mpressSequentially(\u001b[32m'_Typed_'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 151 |\u001b[39m   \u001b[36mawait\u001b[39m expect(caret)\u001b[33m.\u001b[39mtoHaveText(\u001b[32m'Caret _Typed_base'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 152 |\u001b[39m   \u001b[36mawait\u001b[39m expect(caret\u001b[33m.\u001b[39mgetByText(\u001b[32m'_Typed_'\u001b[39m\u001b[33m,\u001b[39m { exact\u001b[33m:\u001b[39m \u001b[36mtrue\u001b[39m }))\u001b[33m.\u001b[39mtoHaveCSS(\u001b[32m'font-size'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'23.3333px'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 153 |\u001b[39m   \u001b[36mconst\u001b[39m typed \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m model(body)\u001b[33m;\u001b[39m\n \u001b[90m 154 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[32m'撤销'\u001b[39m\u001b[33m,\u001b[39m exact\u001b[33m:\u001b[39m \u001b[36mtrue\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-basic-format.spec.ts",
+                        "column": 23,
+                        "line": 151
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('textbox', { name: 'Word 文档正文', exact: true }).locator('p').filter({ hasText: /^Caret / })\nExpected: \u001b[32m\"Caret \u001b[7m_\u001b[27mTyped\u001b[7m_\u001b[27mbase\"\u001b[39m\nReceived: \u001b[31m\"Caret Typedbase\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" getByRole('textbox', { name: 'Word 文档正文', exact: true }).locator('p').filter({ hasText: /^Caret / }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('textbox', { name: 'Word 文档正文', exact: true }).locator('p').filter({ hasText: /^Caret / })\u001b[22m\n\u001b[2m    14 × locator resolved to <p data-word-tabs=\"[]\" data-word-surface=\"{}\" data-word-line-rule=\"auto\" data-word-default-tab=\"36\" data-word-decimal-symbol=\".\" data-word-paragraph-direct=\"[]\">…</p>\u001b[22m\n\u001b[2m       - unexpected value \"Caret Typedbase\"\u001b[22m\n\n\n  149 |   await font(page, '字号', '17.3pt');\n  150 |   await body.pressSequentially('_Typed_');\n> 151 |   await expect(caret).toHaveText('Caret _Typed_base');\n      |                       ^\n  152 |   await expect(caret.getByText('_Typed_', { exact: true })).toHaveCSS('font-size', '23.3333px');\n  153 |   const typed = await model(body);\n  154 |   await page.getByRole('button', { name: '撤销', exact: true }).click();\n    at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-basic-format.spec.ts:151:23"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-26T20:19:08.871Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/tmp/zuvi-word-basic-format-browser-first-output/office-studio-word-basic-f-d2d38--actual-native-DOCX-exports-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/tmp/zuvi-word-basic-format-browser-first-output/office-studio-word-basic-f-d2d38--actual-native-DOCX-exports-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-basic-format.spec.ts",
+                    "column": 23,
+                    "line": 151
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "e57a521e576fd2a29ec3-e6969a2e08f1fc1a880f",
+          "file": "office-studio-word-basic-format.spec.ts",
+          "line": 103,
+          "column": 1
+        },
+        {
+          "title": "keeps invalid and composing drafts unchanged, cancels them and verifies light dark 320px and readonly controls",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2879,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-26T20:19:18.784Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e57a521e576fd2a29ec3-c12dca9ce279d2b1c250",
+          "file": "office-studio-word-basic-format.spec.ts",
+          "line": 231,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-26T20:19:07.409Z",
+    "duration": 14405.837000000001,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

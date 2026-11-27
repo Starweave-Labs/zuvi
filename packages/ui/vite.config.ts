@@ -21,7 +21,7 @@ export default defineConfig({
             module: true,
             // Standard, side-effect-safe reductions; keep getters and function
             // boundaries intact, and preserve PURE annotations for consumers.
-            compress: { passes: 2, inline: false, pure_getters: false, directives: false },
+            compress: { passes: 3, inline: false, pure_getters: false, directives: false },
             format: {
               comments: false,
               preserve_annotations: true,

@@ -1,0 +1,138 @@
+[
+  {
+    "name": "registry-generate",
+    "command": [
+      "node",
+      "registry/scripts/generate.mjs"
+    ],
+    "startedAt": "2026-11-27T17:15:03.536966+00:00",
+    "finishedAt": "2026-11-27T17:15:03.676467+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "build",
+    "command": [
+      "pnpm",
+      "build"
+    ],
+    "startedAt": "2026-11-27T17:15:03.676744+00:00",
+    "finishedAt": "2026-11-27T17:15:36.690583+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "browser-build",
+    "command": [
+      "pnpm",
+      "--filter",
+      "@zuvi/react",
+      "build:browser"
+    ],
+    "startedAt": "2026-11-27T17:15:36.691061+00:00",
+    "finishedAt": "2026-11-27T17:15:39.992160+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "ui",
+    "command": [
+      "pnpm",
+      "--filter",
+      "@zuvi/react",
+      "exec",
+      "vitest",
+      "run",
+      "--minWorkers=1",
+      "--maxWorkers=4"
+    ],
+    "startedAt": "2026-11-27T17:15:39.992461+00:00",
+    "finishedAt": "2026-11-27T17:16:37.367973+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "docs",
+    "command": [
+      "pnpm",
+      "--filter",
+      "@zuvi/docs",
+      "test"
+    ],
+    "startedAt": "2026-11-27T17:16:37.368354+00:00",
+    "finishedAt": "2026-11-27T17:17:09.202275+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "other-tests",
+    "command": [
+      "pnpm",
+      "-r",
+      "--filter",
+      "!@zuvi/react",
+      "--filter",
+      "!@zuvi/docs",
+      "test"
+    ],
+    "startedAt": "2026-11-27T17:17:09.202656+00:00",
+    "finishedAt": "2026-11-27T17:18:48.209625+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "types",
+    "command": [
+      "pnpm",
+      "typecheck"
+    ],
+    "startedAt": "2026-11-27T17:18:48.210239+00:00",
+    "finishedAt": "2026-11-27T17:19:05.439603+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "lint",
+    "command": [
+      "pnpm",
+      "lint"
+    ],
+    "startedAt": "2026-11-27T17:19:05.440268+00:00",
+    "finishedAt": "2026-11-27T17:19:14.820413+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "registry",
+    "command": [
+      "node",
+      "registry/scripts/generate.mjs",
+      "--check"
+    ],
+    "startedAt": "2026-11-27T17:19:14.820852+00:00",
+    "finishedAt": "2026-11-27T17:19:14.913896+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "consumer",
+    "command": [
+      "node",
+      "scripts/check-consumer.mjs"
+    ],
+    "startedAt": "2026-11-27T17:19:14.914197+00:00",
+    "finishedAt": "2026-11-27T17:19:19.887944+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "distribution",
+    "command": [
+      "node",
+      "scripts/check-distribution.mjs"
+    ],
+    "startedAt": "2026-11-27T17:19:19.888297+00:00",
+    "finishedAt": "2026-11-27T17:19:28.400494+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "bundle-size",
+    "command": [
+      "node",
+      "scripts/check-bundle-size.mjs"
+    ],
+    "startedAt": "2026-11-27T17:19:28.400846+00:00",
+    "finishedAt": "2026-11-27T17:19:29.003052+00:00",
+    "exitCode": 0
+  }
+]

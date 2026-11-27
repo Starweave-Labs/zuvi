@@ -1,0 +1,47 @@
+{
+  "reason": "Actual SDK setLayerDimensions requires scale-round variables; before fix, native layer extent was zero.",
+  "files": [
+    {
+      "path": "run.txt",
+      "bytes": 2808,
+      "sha256": "6687d5104b065ad833d5c1c5ed7ddf3977a84ab791bf148e954b9cccdfdcb3e9",
+      "originalPath": "/tmp/zuvi-pdf-text-layer-renderer-e2e.txt"
+    },
+    {
+      "path": "studio-pdf-adapter.ts.txt",
+      "bytes": 31735,
+      "sha256": "f28bb057bfc047523fe75dc1ee136de63c378ee2ceb6b4200149961d75b6d412",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-adapter.ts"
+    },
+    {
+      "path": "office-studio-pdf-text-layer.spec.ts.txt",
+      "bytes": 11596,
+      "sha256": "43c0087718b57fe851ed90936832088a0997f94d899be093162dd8a4ed7ee735",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-text-layer.spec.ts"
+    },
+    {
+      "path": "renderer-source.pdf",
+      "bytes": 2617,
+      "sha256": "903722331524a4c2d27fa4133ced24a469c93bc00aebd44a099995456654fb39",
+      "originalPath": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-27/pdf-text-layer/renderer-source.pdf"
+    },
+    {
+      "path": "playwright/.last-run.json",
+      "bytes": 96,
+      "sha256": "b821b220e4f15bf54abbcbbc0ade6dac4a9b88640ab00dd145d0a59aa44042fe",
+      "originalPath": "/tmp/zuvi-pdf-text-layer-renderer-e2e/.last-run.json"
+    },
+    {
+      "path": "playwright/office-studio-pdf-text-lay-e6eaa--UserUnit-rotation-and-zoom-chromium/trace.zip",
+      "bytes": 769047,
+      "sha256": "97a2943b0aefe8235733de2ddad7bb7ad6802e6f7b8b1e9b1e05e12f5db72905",
+      "originalPath": "/tmp/zuvi-pdf-text-layer-renderer-e2e/office-studio-pdf-text-lay-e6eaa--UserUnit-rotation-and-zoom-chromium/trace.zip"
+    },
+    {
+      "path": "playwright/office-studio-pdf-text-lay-e6eaa--UserUnit-rotation-and-zoom-chromium/error-context.md",
+      "bytes": 11537,
+      "sha256": "9cbd609eb4bb882e781a3d472dd5454e364c5b140c539cb530088d290ee43200",
+      "originalPath": "/tmp/zuvi-pdf-text-layer-renderer-e2e/office-studio-pdf-text-lay-e6eaa--UserUnit-rotation-and-zoom-chromium/error-context.md"
+    }
+  ]
+}

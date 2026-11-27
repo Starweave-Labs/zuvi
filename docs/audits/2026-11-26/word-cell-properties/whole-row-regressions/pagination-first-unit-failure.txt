@@ -1,0 +1,154 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ❯ src/components/OfficeStudio/studio-word-table-mixed-layout.test.ts (11 tests | 2 failed | 9 skipped) 46ms
+   × preserves unowned uniform minima and restores the pre-fill minimum and priority after switching out of mixed layout 18ms
+     → expected '' to be '77px' // Object.is equality
+   × keeps a foreign minimum installed after an owned fill instead of restoring an obsolete value 27ms
+     → expected '' to be '93px' // Object.is equality
+ ❯ src/components/OfficeStudio/studio-word-cell-measure.test.ts (13 tests | 2 failed | 11 skipped) 43ms
+   × converts first and last glyph overhangs to the natural row flow boundary before strict cell pagination 37ms
+     → expected [ { from: 4, to: 6, …(2) }, …(2) ] to deeply equal [ …(3) ]
+   × removes a raised-run paint offset before applying the row flow boundary 6ms
+     → expected [ { from: 4, to: 6, …(2) }, …(1) ] to deeply equal [ …(2) ]
+ ❯ src/components/OfficeStudio/studio-word-pagination-extension.test.ts (2 tests | 1 failed) 108ms
+   × publishes strict multi-cell pagination after glyph overhang conversion and ignores view minima without changing the document or history 92ms
+     → expected [Function] to not throw an error but 'Error: Invalid cell line geometry.' was thrown
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/OfficeStudio/studio-word-cell-measure.test.ts > converts first and last glyph overhangs to the natural row flow boundary before strict cell pagination
+AssertionError: expected [ { from: 4, to: 6, …(2) }, …(2) ] to deeply equal [ …(3) ]
+
+- Expected
++ Received
+
+  Array [
+    Object {
+      "bottom": 17.5,
+      "from": 4,
+      "to": 6,
+-     "top": 0,
++     "top": -0.5,
+    },
+    Object {
+      "bottom": 33.5,
+      "from": 7,
+      "to": 9,
+      "top": 15.5,
+    },
+    Object {
+-     "bottom": 49,
++     "bottom": 49.5,
+      "from": 10,
+      "to": 12,
+      "top": 31.5,
+    },
+  ]
+
+ ❯ src/components/OfficeStudio/studio-word-cell-measure.test.ts:128:17
+    126|   });
+    127|   const lines = wordMeasureCellLines(p, 4, 0, 49);
+    128|   expect(lines).toEqual([
+       |                 ^
+    129|     { from: 4, to: 6, top: 0, bottom: 17.5 },
+    130|     { from: 7, to: 9, top: 15.5, bottom: 33.5 },
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  src/components/OfficeStudio/studio-word-cell-measure.test.ts > removes a raised-run paint offset before applying the row flow boundary
+AssertionError: expected [ { from: 4, to: 6, …(2) }, …(1) ] to deeply equal [ …(2) ]
+
+- Expected
++ Received
+
+  Array [
+    Object {
+      "bottom": 17.5,
+      "from": 4,
+      "to": 6,
+-     "top": 0,
++     "top": -0.5,
+    },
+    Object {
+-     "bottom": 33,
++     "bottom": 33.5,
+      "from": 7,
+      "to": 9,
+      "top": 15.5,
+    },
+  ]
+
+ ❯ src/components/OfficeStudio/studio-word-cell-measure.test.ts:146:45
+    144|     return { top, bottom: top + 18, left: range.startOffset * 5, right…
+    145|   });
+    146|   expect(wordMeasureCellLines(p, 4, 0, 33)).toEqual([
+       |                                             ^
+    147|     { from: 4, to: 6, top: 0, bottom: 17.5 },
+    148|     { from: 7, to: 9, top: 15.5, bottom: 33 },
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  src/components/OfficeStudio/studio-word-pagination-extension.test.ts > publishes strict multi-cell pagination after glyph overhang conversion and ignores view minima without changing the document or history
+AssertionError: expected [Function] to not throw an error but 'Error: Invalid cell line geometry.' was thrown
+
+- Expected:
+undefined
+
++ Received:
+"Error: Invalid cell line geometry."
+
+ ❯ src/components/OfficeStudio/studio-word-pagination-extension.test.ts:82:33
+     80|     contents.forEach(content => { content.style.minHeight = '900px'; }…
+     81|     wordSetPagination(f.editor, { height: 24, margin: 8, gap: 4, enabl…
+     82|     expect(() => f.flush()).not.toThrow();
+       |                                 ^
+     83|     expect(f.editor.view.dom.dataset.wordPaginationOverflow).toBe('fal…
+     84|     expect(Number(f.editor.view.dom.dataset.wordPageCount)).toBeGreate…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  src/components/OfficeStudio/studio-word-table-mixed-layout.test.ts > preserves unowned uniform minima and restores the pre-fill minimum and priority after switching out of mixed layout
+AssertionError: expected '' to be '77px' // Object.is equality
+
+- Expected
++ Received
+
+- 77px
+
+ ❯ src/components/OfficeStudio/studio-word-table-mixed-layout.test.ts:228:41
+    226|   f.wrappers[0].style.setProperty('min-height', '77px', 'important');
+    227|   wordFillMixedTableRows(f.table);
+    228|   expect(f.wrappers[0].style.minHeight).toBe('77px');
+       |                                         ^
+    229|   expect(f.wrappers[0].style.getPropertyPriority('min-height')).toBe('…
+    230|   f.table.setAttribute('data-word-spacing-layout', 'mixed');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  src/components/OfficeStudio/studio-word-table-mixed-layout.test.ts > keeps a foreign minimum installed after an owned fill instead of restoring an obsolete value
+AssertionError: expected '' to be '93px' // Object.is equality
+
+- Expected
++ Received
+
+- 93px
+
+ ❯ src/components/OfficeStudio/studio-word-table-mixed-layout.test.ts:248:41
+    246|   f.table.setAttribute('data-word-spacing-layout', 'uniform');
+    247|   wordFillMixedTableRows(f.table);
+    248|   expect(f.wrappers[0].style.minHeight).toBe('93px');
+       |                                         ^
+    249|   expect(f.wrappers[0].style.getPropertyPriority('min-height')).toBe('…
+    250|   expect(f.wrappers[1].style.minHeight).toBe('');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+ Test Files  3 failed (3)
+      Tests  5 failed | 1 passed | 20 skipped (26)
+   Start at  22:08:42
+   Duration  1.07s (transform 213ms, setup 444ms, collect 455ms, tests 197ms, environment 1.10s, prepare 130ms)
+
+undefined
+/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run src/components/OfficeStudio/studio-word-cell-measure.test.ts src/components/OfficeStudio/studio-word-pagination-extension.test.ts src/components/OfficeStudio/studio-word-table-mixed-layout.test.ts -t converts first|removes a raised-run|publishes strict|queued layout|unowned uniform|foreign minimum

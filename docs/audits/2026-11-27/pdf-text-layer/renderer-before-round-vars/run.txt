@@ -1,0 +1,42 @@
+[WebServer] (node:13148) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:13169) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium] › e2e/office-studio-pdf-text-layer.spec.ts:94:1 › uses real PDF.js text selections and one native appearance across crop, UserUnit, rotation and zoom (1.8s)
+
+
+  1) [chromium] › e2e/office-studio-pdf-text-layer.spec.ts:94:1 › uses real PDF.js text selections and one native appearance across crop, UserUnit, rotation and zoom 
+
+    Error: expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 45
+    Received: 0
+
+    Expected precision:    1
+    Expected difference: < 0.05
+    Received difference:   45
+
+      128 |       expect(result.boxes[id].canvas!.width).toBeGreaterThanOrEqual(60 * scale * 1.5);
+      129 |     }
+    > 130 |     expect(result.boxes['red-no-rotate'].width).toBeCloseTo(90 * scale, 1);
+          |                                                 ^
+      131 |     expect(result.boxes['red-no-rotate'].height).toBeCloseTo(60 * scale, 1);
+      132 |     expect(result.boxes['blue-no-zoom-rotate'].width).toBeCloseTo(90, 1);
+      133 |     expect(result.boxes['blue-no-zoom-rotate'].height).toBeCloseTo(60, 1);
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-text-layer.spec.ts:130:49
+
+    Error Context: ../../../../../../tmp/zuvi-pdf-text-layer-renderer-e2e/office-studio-pdf-text-lay-e6eaa--UserUnit-rotation-and-zoom-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../tmp/zuvi-pdf-text-layer-renderer-e2e/office-studio-pdf-text-lay-e6eaa--UserUnit-rotation-and-zoom-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../../../tmp/zuvi-pdf-text-layer-renderer-e2e/office-studio-pdf-text-lay-e6eaa--UserUnit-rotation-and-zoom-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/office-studio-pdf-text-layer.spec.ts:94:1 › uses real PDF.js text selections and one native appearance across crop, UserUnit, rotation and zoom 

@@ -1,0 +1,122 @@
+{
+  "before": {
+    "id": "f77aafe1-7aca-4794-be91-f9207fc5c3b0",
+    "revision": 1,
+    "document": {
+      "version": 1,
+      "id": "f77aafe1-7aca-4794-be91-f9207fc5c3b0",
+      "name": "Radio.pdf",
+      "kind": "pdf",
+      "pageCount": 2,
+      "sourcePageCount": 2,
+      "pages": [
+        {
+          "id": "04e13dea-ffee-4982-8385-be217281e775",
+          "sourcePage": 0,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 300,
+            "top": 400
+          }
+        },
+        {
+          "id": "d9b4f3fa-24bb-47cb-be56-278e50f3695e",
+          "sourcePage": 1,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 310,
+            "top": 410
+          }
+        }
+      ],
+      "marks": [],
+      "rotations": {},
+      "fields": [
+        {
+          "name": "Choice",
+          "readOnly": false,
+          "type": "choice",
+          "value": "B",
+          "options": [
+            "A",
+            "B"
+          ],
+          "widgets": [
+            {
+              "page": 0,
+              "x": 39.5,
+              "y": 119.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "A"
+            },
+            {
+              "page": 1,
+              "x": 39.5,
+              "y": 119.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "B"
+            }
+          ]
+        }
+      ]
+    },
+    "sourceHash": "152cbca0689c165dd24d6b4782ffbecefd8eda402a1eb72a2efe382566007ce1",
+    "sourceSize": 4652
+  },
+  "extracted": {
+    "id": "f77aafe1-7aca-4794-be91-f9207fc5c3b0",
+    "revision": 2,
+    "document": {
+      "version": 1,
+      "id": "f77aafe1-7aca-4794-be91-f9207fc5c3b0",
+      "name": "Radio-提取.pdf",
+      "kind": "pdf",
+      "pageCount": 1,
+      "sourcePageCount": 1,
+      "pages": [
+        {
+          "id": "04e13dea-ffee-4982-8385-be217281e775",
+          "sourcePage": 0,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 300,
+            "top": 400
+          }
+        }
+      ],
+      "marks": [],
+      "rotations": {},
+      "fields": [
+        {
+          "name": "Choice",
+          "readOnly": false,
+          "type": "choice",
+          "value": "",
+          "options": [
+            "A"
+          ],
+          "widgets": [
+            {
+              "page": 0,
+              "x": 39.5,
+              "y": 119.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "A"
+            }
+          ]
+        }
+      ]
+    },
+    "sourceHash": "c22ac2cbc6383fec947a723aa46ac7b26af35dc2dc82242965edbf3d308a8340",
+    "sourceSize": 2648
+  }
+}

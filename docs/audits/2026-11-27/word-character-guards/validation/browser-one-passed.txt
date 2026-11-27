@@ -1,0 +1,11 @@
+[WebServer] (node:20934) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:20966) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+[WebServer] [BABEL] Note: The code generator has deoptimised the styling of /var/folders/9n/_523pt1s3gqg0f165zsdbldc0000gn/T/zuvi-office-e2e-vite-5270-20889/deps/react-dom_client.js?v=8bd7341c as it exceeds the max of 500KB.
+  ✓  1 [chromium] › e2e/office-studio-word-character-guards.spec.ts:32:1 › guards character operations during IME, steps a shared empty header and saves all five Unicode case modes through two real DOCX reopens (21.3s)
+
+  1 passed (26.8s)

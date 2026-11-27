@@ -1,0 +1,25 @@
+{
+  "scope": "W002/W008/W009/W010 four minimal fixes prepared only in tmp",
+  "records": [
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+      "originalSha256": "975c53bf6073584b441e833c279e4390843ea930228d9b528e33c6940ec9a5fb",
+      "patchedSha256": "ef3515d49ca280402ebd4c1de7fc30df00e430c77e00f7aee5aadda821f239ba"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
+      "originalSha256": "4e5bde67f48207d365ac0db709aceddff6a27199bb983affc7f0a179ffabdc3b",
+      "patchedSha256": "5d81b0f7dec00913d2384db9d8dcd75f96be3a2e0c0d29ea6a93dabac60602a0"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWordCharacterDialog.tsx",
+      "originalSha256": "16fe79eb7f951e48db762575eaee00895b75ddb0aef805906693070e1c872f81",
+      "patchedSha256": "005b4d090ead60f3a554d2addfc6bc378bf15db28ac180549a028979e8c681d0"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-character-layout.ts",
+      "originalSha256": "5112be361ad09b5861b5b5d3a753285445939742dd097812958270cdc2c8454e",
+      "patchedSha256": "3c2ab9e54989fa343a32af43d5c69ca032a530f089731f477d6e80359f2ab201"
+    }
+  ]
+}

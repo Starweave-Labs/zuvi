@@ -1,0 +1,17 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/StudioPdf.composition.test.tsx (14 tests) 2204ms
+   ✓ atomically changes the native source, isolates the following field edit and undoes or redoes the complete pair 737ms
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx (19 tests) 3670ms
+   ✓ forwards the native editor through OfficeStudio and accepts one immutable source/model pair with transactional history 851ms
+   ✓ keeps unchanged native device colors out of a contents-only property patch, and cancels or applies an unchanged draft without history 309ms
+   ✓ retains both the current pair and undo/redo entries when the controlled host rejects application or restoration 378ms
+ ✓ src/components/OfficeStudio/StudioPdf.test.tsx (37 tests) 5345ms
+   ✓ StudioPdf document editing > creates repeated text widgets, validates duplicate names and edits or deletes fields with undo 451ms
+
+ Test Files  3 passed (3)
+      Tests  70 passed (70)
+   Start at  06:05:39
+   Duration  6.91s (transform 616ms, setup 419ms, collect 2.35s, tests 11.22s, environment 1.12s, prepare 188ms)
+

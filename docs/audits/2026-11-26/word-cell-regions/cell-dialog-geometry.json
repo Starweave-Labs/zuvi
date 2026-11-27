@@ -1,0 +1,58 @@
+[
+  {
+    "name": "cell-dialog-light.png",
+    "width": 1280,
+    "height": 800,
+    "dark": false,
+    "box": {
+      "x": 448,
+      "y": 26,
+      "width": 384,
+      "height": 748
+    },
+    "clientWidth": 384,
+    "scrollWidth": 384
+  },
+  {
+    "name": "cell-dialog-dark.png",
+    "width": 1280,
+    "height": 800,
+    "dark": true,
+    "box": {
+      "x": 448,
+      "y": 26,
+      "width": 384,
+      "height": 748
+    },
+    "clientWidth": 384,
+    "scrollWidth": 384
+  },
+  {
+    "name": "cell-dialog-dark-320.png",
+    "width": 320,
+    "height": 720,
+    "dark": true,
+    "box": {
+      "x": 16,
+      "y": 16,
+      "width": 288,
+      "height": 688
+    },
+    "clientWidth": 288,
+    "scrollWidth": 288
+  },
+  {
+    "name": "cell-dialog-light-320.png",
+    "width": 320,
+    "height": 720,
+    "dark": false,
+    "box": {
+      "x": 16,
+      "y": 16,
+      "width": 288,
+      "height": 688
+    },
+    "clientWidth": 288,
+    "scrollWidth": 288
+  }
+]

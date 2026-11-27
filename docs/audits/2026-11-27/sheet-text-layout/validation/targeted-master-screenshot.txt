@@ -1,0 +1,10 @@
+[WebServer] (node:4910) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:4923) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › e2e/office-studio-sheet-text.spec.ts:170:1 › advanced text editing, native default font, automatic rows, print and two XLSX reopens use the actual editor (22.0s)
+
+  1 passed (24.3s)

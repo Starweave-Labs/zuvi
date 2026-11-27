@@ -1,0 +1,2008 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ❯ src/components/OfficeStudio/StudioWord.basic-format.test.tsx (10 tests | 7 failed) 7660ms
+   × Word basic character acceptance > presents a mixed 粗体 selection and changes the whole range in one undo event 1217ms
+     → expect(element).toHaveAttribute("aria-pressed", "mixed") // element.getAttribute("aria-pressed") === "mixed"
+
+Expected the element to have attribute:
+  aria-pressed="mixed"
+Received:
+  aria-pressed="false"
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"zuvi-studio-word"[39m
+        [33mdata-part[39m=[32m"word"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"zuvi-tabs zuvi-studio-word-ribbon zuvi-studio-ribbon"[39m
+          [33mdata-orientation[39m=[32m"horizontal"[39m
+          [33mdata-part[39m=[32m"root"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"zuvi-studio-ribbon-tabbar"[39m
+            [33mdata-part[39m=[32m"ribbon-tabs"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"Word 工具"[39m
+              [33maria-orientation[39m=[32m"horizontal"[39m
+              [33mclass[39m=[32m"zuvi-tabs-list"[39m
+              [33mdata-part[39m=[32m"list"[39m
+              [33mrole[39m=[32m"tablist"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_0_-panel-home"[39m
+                [33maria-selected[39m=[32m"true"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_0_-tab-home"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"0"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m开始[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_0_-panel-insert"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_0_-tab-insert"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m插入[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_0_-panel-layout"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_0_-tab-layout"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m布局[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_0_-panel-references"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_0_-tab-references"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m引用[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_0_-panel-review"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_0_-tab-review"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m审阅[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_0_-panel-view"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_0_-tab-view"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m视图[0m
+              [36m</button>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33maria-labelledby[39m=[32m"_r_0_-tab-home"[39m
+            [33mclass[39m=[32m"zuvi-tabs-panel zuvi-studio-word-tool-row"[39m
+            [33mdata-part[39m=[32m"panel"[39m
+            [33mid[39m=[32m"_r_0_-panel-home"[39m
+            [33mrole[39m=[32m"tabpanel"[39m
+            [33mtabindex[39m=[32m"0"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"剪贴板"[39m
+              [33mclass[39m=[32m"zuvi-studio-word-group zuvi-studio-word-clipboard-group"[39m
+              [33mdata-part[39m=[32m"word-tool-group"[39m
+              [33mrole[39m=[32m"group"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"zuvi-studio-word-controls"[39m
+              [36m>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"zuvi-button zuvi-studio-word-large-tool"[39m
+                  [33mdata-part[39m=[32m"root"[39m
+                  [33mdata-size[39m=[32m"sm"[39m
+                  [33mdata-variant[39m=[32m"ghost"[39m
+                  [33mtitle[39m=[32m"粘贴剪贴板文本 (Ctrl/⌘+V)"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"zuvi-button-label"[39m
+                    [33mdata-part[39m=[32m"label"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"24"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"24"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<rect[39m
+                        [33mheight[39m=[32m"4"[39m
+                        [33mrx[39m=[32m"1"[39m
+                        [33mwidth[39m=[32m"8"[39m
+                        [33mx[39m=[32m"8"[39m
+                        [33my[39m=[32m"2"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"[39m
+                      [36m/>[39m
+                    ...
+   × Word basic character acceptance > presents a mixed 斜体 selection and changes the whole range in one undo event 1127ms
+     → expect(element).toHaveAttribute("aria-pressed", "mixed") // element.getAttribute("aria-pressed") === "mixed"
+
+Expected the element to have attribute:
+  aria-pressed="mixed"
+Received:
+  aria-pressed="false"
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"zuvi-studio-word"[39m
+        [33mdata-part[39m=[32m"word"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"zuvi-tabs zuvi-studio-word-ribbon zuvi-studio-ribbon"[39m
+          [33mdata-orientation[39m=[32m"horizontal"[39m
+          [33mdata-part[39m=[32m"root"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"zuvi-studio-ribbon-tabbar"[39m
+            [33mdata-part[39m=[32m"ribbon-tabs"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"Word 工具"[39m
+              [33maria-orientation[39m=[32m"horizontal"[39m
+              [33mclass[39m=[32m"zuvi-tabs-list"[39m
+              [33mdata-part[39m=[32m"list"[39m
+              [33mrole[39m=[32m"tablist"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_e_-panel-home"[39m
+                [33maria-selected[39m=[32m"true"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_e_-tab-home"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"0"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m开始[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_e_-panel-insert"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_e_-tab-insert"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m插入[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_e_-panel-layout"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_e_-tab-layout"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m布局[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_e_-panel-references"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_e_-tab-references"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m引用[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_e_-panel-review"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_e_-tab-review"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m审阅[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_e_-panel-view"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_e_-tab-view"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m视图[0m
+              [36m</button>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33maria-labelledby[39m=[32m"_r_e_-tab-home"[39m
+            [33mclass[39m=[32m"zuvi-tabs-panel zuvi-studio-word-tool-row"[39m
+            [33mdata-part[39m=[32m"panel"[39m
+            [33mid[39m=[32m"_r_e_-panel-home"[39m
+            [33mrole[39m=[32m"tabpanel"[39m
+            [33mtabindex[39m=[32m"0"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"剪贴板"[39m
+              [33mclass[39m=[32m"zuvi-studio-word-group zuvi-studio-word-clipboard-group"[39m
+              [33mdata-part[39m=[32m"word-tool-group"[39m
+              [33mrole[39m=[32m"group"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"zuvi-studio-word-controls"[39m
+              [36m>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"zuvi-button zuvi-studio-word-large-tool"[39m
+                  [33mdata-part[39m=[32m"root"[39m
+                  [33mdata-size[39m=[32m"sm"[39m
+                  [33mdata-variant[39m=[32m"ghost"[39m
+                  [33mtitle[39m=[32m"粘贴剪贴板文本 (Ctrl/⌘+V)"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"zuvi-button-label"[39m
+                    [33mdata-part[39m=[32m"label"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"24"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"24"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<rect[39m
+                        [33mheight[39m=[32m"4"[39m
+                        [33mrx[39m=[32m"1"[39m
+                        [33mwidth[39m=[32m"8"[39m
+                        [33mx[39m=[32m"8"[39m
+                        [33my[39m=[32m"2"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"[39m
+                      [36m/>[39m
+                    ...
+   × Word basic character acceptance > presents a mixed 下划线 selection and changes the whole range in one undo event 1126ms
+     → expect(element).toHaveAttribute("aria-pressed", "mixed") // element.getAttribute("aria-pressed") === "mixed"
+
+Expected the element to have attribute:
+  aria-pressed="mixed"
+Received:
+  aria-pressed="false"
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"zuvi-studio-word"[39m
+        [33mdata-part[39m=[32m"word"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"zuvi-tabs zuvi-studio-word-ribbon zuvi-studio-ribbon"[39m
+          [33mdata-orientation[39m=[32m"horizontal"[39m
+          [33mdata-part[39m=[32m"root"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"zuvi-studio-ribbon-tabbar"[39m
+            [33mdata-part[39m=[32m"ribbon-tabs"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"Word 工具"[39m
+              [33maria-orientation[39m=[32m"horizontal"[39m
+              [33mclass[39m=[32m"zuvi-tabs-list"[39m
+              [33mdata-part[39m=[32m"list"[39m
+              [33mrole[39m=[32m"tablist"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_s_-panel-home"[39m
+                [33maria-selected[39m=[32m"true"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_s_-tab-home"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"0"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m开始[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_s_-panel-insert"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_s_-tab-insert"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m插入[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_s_-panel-layout"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_s_-tab-layout"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m布局[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_s_-panel-references"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_s_-tab-references"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m引用[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_s_-panel-review"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_s_-tab-review"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m审阅[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_s_-panel-view"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_s_-tab-view"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m视图[0m
+              [36m</button>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33maria-labelledby[39m=[32m"_r_s_-tab-home"[39m
+            [33mclass[39m=[32m"zuvi-tabs-panel zuvi-studio-word-tool-row"[39m
+            [33mdata-part[39m=[32m"panel"[39m
+            [33mid[39m=[32m"_r_s_-panel-home"[39m
+            [33mrole[39m=[32m"tabpanel"[39m
+            [33mtabindex[39m=[32m"0"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"剪贴板"[39m
+              [33mclass[39m=[32m"zuvi-studio-word-group zuvi-studio-word-clipboard-group"[39m
+              [33mdata-part[39m=[32m"word-tool-group"[39m
+              [33mrole[39m=[32m"group"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"zuvi-studio-word-controls"[39m
+              [36m>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"zuvi-button zuvi-studio-word-large-tool"[39m
+                  [33mdata-part[39m=[32m"root"[39m
+                  [33mdata-size[39m=[32m"sm"[39m
+                  [33mdata-variant[39m=[32m"ghost"[39m
+                  [33mtitle[39m=[32m"粘贴剪贴板文本 (Ctrl/⌘+V)"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"zuvi-button-label"[39m
+                    [33mdata-part[39m=[32m"label"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"24"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"24"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<rect[39m
+                        [33mheight[39m=[32m"4"[39m
+                        [33mrx[39m=[32m"1"[39m
+                        [33mwidth[39m=[32m"8"[39m
+                        [33mx[39m=[32m"8"[39m
+                        [33my[39m=[32m"2"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"[39m
+                      [36m/>[39m
+                    ...
+   × Word basic character acceptance > presents a mixed 删除线 selection and changes the whole range in one undo event 1152ms
+     → expect(element).toHaveAttribute("aria-pressed", "mixed") // element.getAttribute("aria-pressed") === "mixed"
+
+Expected the element to have attribute:
+  aria-pressed="mixed"
+Received:
+  aria-pressed="false"
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"zuvi-studio-word"[39m
+        [33mdata-part[39m=[32m"word"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"zuvi-tabs zuvi-studio-word-ribbon zuvi-studio-ribbon"[39m
+          [33mdata-orientation[39m=[32m"horizontal"[39m
+          [33mdata-part[39m=[32m"root"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"zuvi-studio-ribbon-tabbar"[39m
+            [33mdata-part[39m=[32m"ribbon-tabs"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"Word 工具"[39m
+              [33maria-orientation[39m=[32m"horizontal"[39m
+              [33mclass[39m=[32m"zuvi-tabs-list"[39m
+              [33mdata-part[39m=[32m"list"[39m
+              [33mrole[39m=[32m"tablist"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_1a_-panel-home"[39m
+                [33maria-selected[39m=[32m"true"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_1a_-tab-home"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"0"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m开始[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_1a_-panel-insert"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_1a_-tab-insert"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m插入[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_1a_-panel-layout"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_1a_-tab-layout"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m布局[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_1a_-panel-references"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_1a_-tab-references"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m引用[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_1a_-panel-review"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_1a_-tab-review"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m审阅[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_1a_-panel-view"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_1a_-tab-view"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m视图[0m
+              [36m</button>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33maria-labelledby[39m=[32m"_r_1a_-tab-home"[39m
+            [33mclass[39m=[32m"zuvi-tabs-panel zuvi-studio-word-tool-row"[39m
+            [33mdata-part[39m=[32m"panel"[39m
+            [33mid[39m=[32m"_r_1a_-panel-home"[39m
+            [33mrole[39m=[32m"tabpanel"[39m
+            [33mtabindex[39m=[32m"0"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"剪贴板"[39m
+              [33mclass[39m=[32m"zuvi-studio-word-group zuvi-studio-word-clipboard-group"[39m
+              [33mdata-part[39m=[32m"word-tool-group"[39m
+              [33mrole[39m=[32m"group"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"zuvi-studio-word-controls"[39m
+              [36m>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"zuvi-button zuvi-studio-word-large-tool"[39m
+                  [33mdata-part[39m=[32m"root"[39m
+                  [33mdata-size[39m=[32m"sm"[39m
+                  [33mdata-variant[39m=[32m"ghost"[39m
+                  [33mtitle[39m=[32m"粘贴剪贴板文本 (Ctrl/⌘+V)"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"zuvi-button-label"[39m
+                    [33mdata-part[39m=[32m"label"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"24"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"24"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<rect[39m
+                        [33mheight[39m=[32m"4"[39m
+                        [33mrx[39m=[32m"1"[39m
+                        [33mwidth[39m=[32m"8"[39m
+                        [33mx[39m=[32m"8"[39m
+                        [33my[39m=[32m"2"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"[39m
+                      [36m/>[39m
+       ...
+   × Word basic character acceptance > applies the first run value to a mixed 字体 range rather than skipping the commit 1135ms
+     → expected 'Times New Roman' to be 'Arial' // Object.is equality
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"zuvi-studio-word"[39m
+        [33mdata-part[39m=[32m"word"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"zuvi-tabs zuvi-studio-word-ribbon zuvi-studio-ribbon"[39m
+          [33mdata-orientation[39m=[32m"horizontal"[39m
+          [33mdata-part[39m=[32m"root"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"zuvi-studio-ribbon-tabbar"[39m
+            [33mdata-part[39m=[32m"ribbon-tabs"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"Word 工具"[39m
+              [33maria-orientation[39m=[32m"horizontal"[39m
+              [33mclass[39m=[32m"zuvi-tabs-list"[39m
+              [33mdata-part[39m=[32m"list"[39m
+              [33mrole[39m=[32m"tablist"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_1o_-panel-home"[39m
+                [33maria-selected[39m=[32m"true"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_1o_-tab-home"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"0"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m开始[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_1o_-panel-insert"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_1o_-tab-insert"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m插入[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_1o_-panel-layout"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_1o_-tab-layout"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m布局[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_1o_-panel-references"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_1o_-tab-references"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m引用[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_1o_-panel-review"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_1o_-tab-review"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m审阅[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_1o_-panel-view"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_1o_-tab-view"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m视图[0m
+              [36m</button>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33maria-labelledby[39m=[32m"_r_1o_-tab-home"[39m
+            [33mclass[39m=[32m"zuvi-tabs-panel zuvi-studio-word-tool-row"[39m
+            [33mdata-part[39m=[32m"panel"[39m
+            [33mid[39m=[32m"_r_1o_-panel-home"[39m
+            [33mrole[39m=[32m"tabpanel"[39m
+            [33mtabindex[39m=[32m"0"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"剪贴板"[39m
+              [33mclass[39m=[32m"zuvi-studio-word-group zuvi-studio-word-clipboard-group"[39m
+              [33mdata-part[39m=[32m"word-tool-group"[39m
+              [33mrole[39m=[32m"group"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"zuvi-studio-word-controls"[39m
+              [36m>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"zuvi-button zuvi-studio-word-large-tool"[39m
+                  [33mdata-part[39m=[32m"root"[39m
+                  [33mdata-size[39m=[32m"sm"[39m
+                  [33mdata-variant[39m=[32m"ghost"[39m
+                  [33mtitle[39m=[32m"粘贴剪贴板文本 (Ctrl/⌘+V)"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"zuvi-button-label"[39m
+                    [33mdata-part[39m=[32m"label"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"24"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"24"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<rect[39m
+                        [33mheight[39m=[32m"4"[39m
+                        [33mrx[39m=[32m"1"[39m
+                        [33mwidth[39m=[32m"8"[39m
+                        [33mx[39m=[32m"8"[39m
+                        [33my[39m=[32m"2"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"[39m
+                      [36m/>[39m
+       ...
+   × Word basic character acceptance > applies the first run value to a mixed 字号 range rather than skipping the commit 1127ms
+     → expected '14.5pt' to be '12pt' // Object.is equality
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"zuvi-studio-word"[39m
+        [33mdata-part[39m=[32m"word"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"zuvi-tabs zuvi-studio-word-ribbon zuvi-studio-ribbon"[39m
+          [33mdata-orientation[39m=[32m"horizontal"[39m
+          [33mdata-part[39m=[32m"root"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"zuvi-studio-ribbon-tabbar"[39m
+            [33mdata-part[39m=[32m"ribbon-tabs"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"Word 工具"[39m
+              [33maria-orientation[39m=[32m"horizontal"[39m
+              [33mclass[39m=[32m"zuvi-tabs-list"[39m
+              [33mdata-part[39m=[32m"list"[39m
+              [33mrole[39m=[32m"tablist"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_26_-panel-home"[39m
+                [33maria-selected[39m=[32m"true"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_26_-tab-home"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"0"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m开始[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_26_-panel-insert"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_26_-tab-insert"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m插入[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_26_-panel-layout"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_26_-tab-layout"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m布局[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_26_-panel-references"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_26_-tab-references"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m引用[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_26_-panel-review"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_26_-tab-review"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m审阅[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_26_-panel-view"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_26_-tab-view"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m视图[0m
+              [36m</button>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33maria-labelledby[39m=[32m"_r_26_-tab-home"[39m
+            [33mclass[39m=[32m"zuvi-tabs-panel zuvi-studio-word-tool-row"[39m
+            [33mdata-part[39m=[32m"panel"[39m
+            [33mid[39m=[32m"_r_26_-panel-home"[39m
+            [33mrole[39m=[32m"tabpanel"[39m
+            [33mtabindex[39m=[32m"0"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"剪贴板"[39m
+              [33mclass[39m=[32m"zuvi-studio-word-group zuvi-studio-word-clipboard-group"[39m
+              [33mdata-part[39m=[32m"word-tool-group"[39m
+              [33mrole[39m=[32m"group"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"zuvi-studio-word-controls"[39m
+              [36m>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"zuvi-button zuvi-studio-word-large-tool"[39m
+                  [33mdata-part[39m=[32m"root"[39m
+                  [33mdata-size[39m=[32m"sm"[39m
+                  [33mdata-variant[39m=[32m"ghost"[39m
+                  [33mtitle[39m=[32m"粘贴剪贴板文本 (Ctrl/⌘+V)"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"zuvi-button-label"[39m
+                    [33mdata-part[39m=[32m"label"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"24"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"24"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<rect[39m
+                        [33mheight[39m=[32m"4"[39m
+                        [33mrx[39m=[32m"1"[39m
+                        [33mwidth[39m=[32m"8"[39m
+                        [33mx[39m=[32m"8"[39m
+                        [33my[39m=[32m"2"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"[39m
+                      [36m/>[39m
+       ...
+   × Word basic character acceptance > clears a later run highlight when the first run has font attributes but no highlight 174ms
+     → expect(element).not.toHaveAttribute("aria-disabled", "true") // element.getAttribute("aria-disabled") === "true"
+
+Expected the element not to have attribute:
+  aria-disabled="true"
+Received:
+  aria-disabled="true"
+   ✓ Word basic character acceptance > switches superscript and subscript exclusively, cancels to baseline and restores each transaction 403ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/OfficeStudio/StudioWord.basic-format.test.tsx > Word basic character acceptance > presents a mixed 粗体 selection and changes the whole range in one undo event
+Error: expect(element).toHaveAttribute("aria-pressed", "mixed") // element.getAttribute("aria-pressed") === "mixed"
+
+Expected the element to have attribute:
+  aria-pressed="mixed"
+Received:
+  aria-pressed="false"
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"zuvi-studio-word"[39m
+        [33mdata-part[39m=[32m"word"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"zuvi-tabs zuvi-studio-word-ribbon zuvi-studio-ribbon"[39m
+          [33mdata-orientation[39m=[32m"horizontal"[39m
+          [33mdata-part[39m=[32m"root"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"zuvi-studio-ribbon-tabbar"[39m
+            [33mdata-part[39m=[32m"ribbon-tabs"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"Word 工具"[39m
+              [33maria-orientation[39m=[32m"horizontal"[39m
+              [33mclass[39m=[32m"zuvi-tabs-list"[39m
+              [33mdata-part[39m=[32m"list"[39m
+              [33mrole[39m=[32m"tablist"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_0_-panel-home"[39m
+                [33maria-selected[39m=[32m"true"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_0_-tab-home"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"0"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m开始[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_0_-panel-insert"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_0_-tab-insert"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m插入[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_0_-panel-layout"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_0_-tab-layout"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m布局[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_0_-panel-references"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_0_-tab-references"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m引用[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_0_-panel-review"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_0_-tab-review"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m审阅[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_0_-panel-view"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_0_-tab-view"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m视图[0m
+              [36m</button>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33maria-labelledby[39m=[32m"_r_0_-tab-home"[39m
+            [33mclass[39m=[32m"zuvi-tabs-panel zuvi-studio-word-tool-row"[39m
+            [33mdata-part[39m=[32m"panel"[39m
+            [33mid[39m=[32m"_r_0_-panel-home"[39m
+            [33mrole[39m=[32m"tabpanel"[39m
+            [33mtabindex[39m=[32m"0"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"剪贴板"[39m
+              [33mclass[39m=[32m"zuvi-studio-word-group zuvi-studio-word-clipboard-group"[39m
+              [33mdata-part[39m=[32m"word-tool-group"[39m
+              [33mrole[39m=[32m"group"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"zuvi-studio-word-controls"[39m
+              [36m>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"zuvi-button zuvi-studio-word-large-tool"[39m
+                  [33mdata-part[39m=[32m"root"[39m
+                  [33mdata-size[39m=[32m"sm"[39m
+                  [33mdata-variant[39m=[32m"ghost"[39m
+                  [33mtitle[39m=[32m"粘贴剪贴板文本 (Ctrl/⌘+V)"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"zuvi-button-label"[39m
+                    [33mdata-part[39m=[32m"label"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"24"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"24"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<rect[39m
+                        [33mheight[39m=[32m"4"[39m
+                        [33mrx[39m=[32m"1"[39m
+                        [33mwidth[39m=[32m"8"[39m
+                        [33mx[39m=[32m"8"[39m
+                        [33my[39m=[32m"2"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"[39m
+                      [36m/>[39m
+                    ...
+ ❯ src/components/OfficeStudio/StudioWord.basic-format.test.tsx:63:40
+     61|     const before = editor.getJSON(), depth = undoDepth(editor.state);
+     62|     const button = screen.getByRole('button', { name: label, exact: tr…
+     63|     await waitFor(() => expect(button).toHaveAttribute('aria-pressed',…
+       |                                        ^
+     64|     fireEvent.click(button);
+     65|     await waitFor(() => expect(button).toHaveAttribute('aria-pressed',…
+ ❯ runWithExpensiveErrorDiagnosticsDisabled ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/7]⎯
+
+ FAIL  src/components/OfficeStudio/StudioWord.basic-format.test.tsx > Word basic character acceptance > presents a mixed 斜体 selection and changes the whole range in one undo event
+Error: expect(element).toHaveAttribute("aria-pressed", "mixed") // element.getAttribute("aria-pressed") === "mixed"
+
+Expected the element to have attribute:
+  aria-pressed="mixed"
+Received:
+  aria-pressed="false"
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"zuvi-studio-word"[39m
+        [33mdata-part[39m=[32m"word"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"zuvi-tabs zuvi-studio-word-ribbon zuvi-studio-ribbon"[39m
+          [33mdata-orientation[39m=[32m"horizontal"[39m
+          [33mdata-part[39m=[32m"root"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"zuvi-studio-ribbon-tabbar"[39m
+            [33mdata-part[39m=[32m"ribbon-tabs"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"Word 工具"[39m
+              [33maria-orientation[39m=[32m"horizontal"[39m
+              [33mclass[39m=[32m"zuvi-tabs-list"[39m
+              [33mdata-part[39m=[32m"list"[39m
+              [33mrole[39m=[32m"tablist"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_e_-panel-home"[39m
+                [33maria-selected[39m=[32m"true"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_e_-tab-home"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"0"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m开始[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_e_-panel-insert"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_e_-tab-insert"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m插入[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_e_-panel-layout"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_e_-tab-layout"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m布局[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_e_-panel-references"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_e_-tab-references"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m引用[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_e_-panel-review"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_e_-tab-review"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m审阅[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_e_-panel-view"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_e_-tab-view"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m视图[0m
+              [36m</button>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33maria-labelledby[39m=[32m"_r_e_-tab-home"[39m
+            [33mclass[39m=[32m"zuvi-tabs-panel zuvi-studio-word-tool-row"[39m
+            [33mdata-part[39m=[32m"panel"[39m
+            [33mid[39m=[32m"_r_e_-panel-home"[39m
+            [33mrole[39m=[32m"tabpanel"[39m
+            [33mtabindex[39m=[32m"0"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"剪贴板"[39m
+              [33mclass[39m=[32m"zuvi-studio-word-group zuvi-studio-word-clipboard-group"[39m
+              [33mdata-part[39m=[32m"word-tool-group"[39m
+              [33mrole[39m=[32m"group"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"zuvi-studio-word-controls"[39m
+              [36m>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"zuvi-button zuvi-studio-word-large-tool"[39m
+                  [33mdata-part[39m=[32m"root"[39m
+                  [33mdata-size[39m=[32m"sm"[39m
+                  [33mdata-variant[39m=[32m"ghost"[39m
+                  [33mtitle[39m=[32m"粘贴剪贴板文本 (Ctrl/⌘+V)"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"zuvi-button-label"[39m
+                    [33mdata-part[39m=[32m"label"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"24"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"24"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<rect[39m
+                        [33mheight[39m=[32m"4"[39m
+                        [33mrx[39m=[32m"1"[39m
+                        [33mwidth[39m=[32m"8"[39m
+                        [33mx[39m=[32m"8"[39m
+                        [33my[39m=[32m"2"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"[39m
+                      [36m/>[39m
+                    ...
+ ❯ src/components/OfficeStudio/StudioWord.basic-format.test.tsx:63:40
+     61|     const before = editor.getJSON(), depth = undoDepth(editor.state);
+     62|     const button = screen.getByRole('button', { name: label, exact: tr…
+     63|     await waitFor(() => expect(button).toHaveAttribute('aria-pressed',…
+       |                                        ^
+     64|     fireEvent.click(button);
+     65|     await waitFor(() => expect(button).toHaveAttribute('aria-pressed',…
+ ❯ runWithExpensiveErrorDiagnosticsDisabled ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/7]⎯
+
+ FAIL  src/components/OfficeStudio/StudioWord.basic-format.test.tsx > Word basic character acceptance > presents a mixed 下划线 selection and changes the whole range in one undo event
+Error: expect(element).toHaveAttribute("aria-pressed", "mixed") // element.getAttribute("aria-pressed") === "mixed"
+
+Expected the element to have attribute:
+  aria-pressed="mixed"
+Received:
+  aria-pressed="false"
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"zuvi-studio-word"[39m
+        [33mdata-part[39m=[32m"word"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"zuvi-tabs zuvi-studio-word-ribbon zuvi-studio-ribbon"[39m
+          [33mdata-orientation[39m=[32m"horizontal"[39m
+          [33mdata-part[39m=[32m"root"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"zuvi-studio-ribbon-tabbar"[39m
+            [33mdata-part[39m=[32m"ribbon-tabs"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"Word 工具"[39m
+              [33maria-orientation[39m=[32m"horizontal"[39m
+              [33mclass[39m=[32m"zuvi-tabs-list"[39m
+              [33mdata-part[39m=[32m"list"[39m
+              [33mrole[39m=[32m"tablist"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_s_-panel-home"[39m
+                [33maria-selected[39m=[32m"true"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_s_-tab-home"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"0"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m开始[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_s_-panel-insert"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_s_-tab-insert"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m插入[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_s_-panel-layout"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_s_-tab-layout"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m布局[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_s_-panel-references"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_s_-tab-references"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m引用[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_s_-panel-review"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_s_-tab-review"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m审阅[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_s_-panel-view"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_s_-tab-view"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m视图[0m
+              [36m</button>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33maria-labelledby[39m=[32m"_r_s_-tab-home"[39m
+            [33mclass[39m=[32m"zuvi-tabs-panel zuvi-studio-word-tool-row"[39m
+            [33mdata-part[39m=[32m"panel"[39m
+            [33mid[39m=[32m"_r_s_-panel-home"[39m
+            [33mrole[39m=[32m"tabpanel"[39m
+            [33mtabindex[39m=[32m"0"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"剪贴板"[39m
+              [33mclass[39m=[32m"zuvi-studio-word-group zuvi-studio-word-clipboard-group"[39m
+              [33mdata-part[39m=[32m"word-tool-group"[39m
+              [33mrole[39m=[32m"group"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"zuvi-studio-word-controls"[39m
+              [36m>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"zuvi-button zuvi-studio-word-large-tool"[39m
+                  [33mdata-part[39m=[32m"root"[39m
+                  [33mdata-size[39m=[32m"sm"[39m
+                  [33mdata-variant[39m=[32m"ghost"[39m
+                  [33mtitle[39m=[32m"粘贴剪贴板文本 (Ctrl/⌘+V)"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"zuvi-button-label"[39m
+                    [33mdata-part[39m=[32m"label"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"24"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"24"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<rect[39m
+                        [33mheight[39m=[32m"4"[39m
+                        [33mrx[39m=[32m"1"[39m
+                        [33mwidth[39m=[32m"8"[39m
+                        [33mx[39m=[32m"8"[39m
+                        [33my[39m=[32m"2"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"[39m
+                      [36m/>[39m
+                    ...
+ ❯ src/components/OfficeStudio/StudioWord.basic-format.test.tsx:63:40
+     61|     const before = editor.getJSON(), depth = undoDepth(editor.state);
+     62|     const button = screen.getByRole('button', { name: label, exact: tr…
+     63|     await waitFor(() => expect(button).toHaveAttribute('aria-pressed',…
+       |                                        ^
+     64|     fireEvent.click(button);
+     65|     await waitFor(() => expect(button).toHaveAttribute('aria-pressed',…
+ ❯ runWithExpensiveErrorDiagnosticsDisabled ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/7]⎯
+
+ FAIL  src/components/OfficeStudio/StudioWord.basic-format.test.tsx > Word basic character acceptance > presents a mixed 删除线 selection and changes the whole range in one undo event
+Error: expect(element).toHaveAttribute("aria-pressed", "mixed") // element.getAttribute("aria-pressed") === "mixed"
+
+Expected the element to have attribute:
+  aria-pressed="mixed"
+Received:
+  aria-pressed="false"
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"zuvi-studio-word"[39m
+        [33mdata-part[39m=[32m"word"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"zuvi-tabs zuvi-studio-word-ribbon zuvi-studio-ribbon"[39m
+          [33mdata-orientation[39m=[32m"horizontal"[39m
+          [33mdata-part[39m=[32m"root"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"zuvi-studio-ribbon-tabbar"[39m
+            [33mdata-part[39m=[32m"ribbon-tabs"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"Word 工具"[39m
+              [33maria-orientation[39m=[32m"horizontal"[39m
+              [33mclass[39m=[32m"zuvi-tabs-list"[39m
+              [33mdata-part[39m=[32m"list"[39m
+              [33mrole[39m=[32m"tablist"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_1a_-panel-home"[39m
+                [33maria-selected[39m=[32m"true"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_1a_-tab-home"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"0"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m开始[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_1a_-panel-insert"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_1a_-tab-insert"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m插入[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_1a_-panel-layout"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_1a_-tab-layout"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m布局[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_1a_-panel-references"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_1a_-tab-references"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m引用[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_1a_-panel-review"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_1a_-tab-review"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m审阅[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_1a_-panel-view"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_1a_-tab-view"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m视图[0m
+              [36m</button>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33maria-labelledby[39m=[32m"_r_1a_-tab-home"[39m
+            [33mclass[39m=[32m"zuvi-tabs-panel zuvi-studio-word-tool-row"[39m
+            [33mdata-part[39m=[32m"panel"[39m
+            [33mid[39m=[32m"_r_1a_-panel-home"[39m
+            [33mrole[39m=[32m"tabpanel"[39m
+            [33mtabindex[39m=[32m"0"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"剪贴板"[39m
+              [33mclass[39m=[32m"zuvi-studio-word-group zuvi-studio-word-clipboard-group"[39m
+              [33mdata-part[39m=[32m"word-tool-group"[39m
+              [33mrole[39m=[32m"group"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"zuvi-studio-word-controls"[39m
+              [36m>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"zuvi-button zuvi-studio-word-large-tool"[39m
+                  [33mdata-part[39m=[32m"root"[39m
+                  [33mdata-size[39m=[32m"sm"[39m
+                  [33mdata-variant[39m=[32m"ghost"[39m
+                  [33mtitle[39m=[32m"粘贴剪贴板文本 (Ctrl/⌘+V)"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"zuvi-button-label"[39m
+                    [33mdata-part[39m=[32m"label"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"24"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"24"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<rect[39m
+                        [33mheight[39m=[32m"4"[39m
+                        [33mrx[39m=[32m"1"[39m
+                        [33mwidth[39m=[32m"8"[39m
+                        [33mx[39m=[32m"8"[39m
+                        [33my[39m=[32m"2"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"[39m
+                      [36m/>[39m
+       ...
+ ❯ src/components/OfficeStudio/StudioWord.basic-format.test.tsx:63:40
+     61|     const before = editor.getJSON(), depth = undoDepth(editor.state);
+     62|     const button = screen.getByRole('button', { name: label, exact: tr…
+     63|     await waitFor(() => expect(button).toHaveAttribute('aria-pressed',…
+       |                                        ^
+     64|     fireEvent.click(button);
+     65|     await waitFor(() => expect(button).toHaveAttribute('aria-pressed',…
+ ❯ runWithExpensiveErrorDiagnosticsDisabled ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/7]⎯
+
+ FAIL  src/components/OfficeStudio/StudioWord.basic-format.test.tsx > Word basic character acceptance > applies the first run value to a mixed 字体 range rather than skipping the commit
+AssertionError: expected 'Times New Roman' to be 'Arial' // Object.is equality
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"zuvi-studio-word"[39m
+        [33mdata-part[39m=[32m"word"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"zuvi-tabs zuvi-studio-word-ribbon zuvi-studio-ribbon"[39m
+          [33mdata-orientation[39m=[32m"horizontal"[39m
+          [33mdata-part[39m=[32m"root"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"zuvi-studio-ribbon-tabbar"[39m
+            [33mdata-part[39m=[32m"ribbon-tabs"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"Word 工具"[39m
+              [33maria-orientation[39m=[32m"horizontal"[39m
+              [33mclass[39m=[32m"zuvi-tabs-list"[39m
+              [33mdata-part[39m=[32m"list"[39m
+              [33mrole[39m=[32m"tablist"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_1o_-panel-home"[39m
+                [33maria-selected[39m=[32m"true"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_1o_-tab-home"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"0"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m开始[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_1o_-panel-insert"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_1o_-tab-insert"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m插入[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_1o_-panel-layout"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_1o_-tab-layout"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m布局[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_1o_-panel-references"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_1o_-tab-references"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m引用[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_1o_-panel-review"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_1o_-tab-review"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m审阅[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_1o_-panel-view"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_1o_-tab-view"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m视图[0m
+              [36m</button>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33maria-labelledby[39m=[32m"_r_1o_-tab-home"[39m
+            [33mclass[39m=[32m"zuvi-tabs-panel zuvi-studio-word-tool-row"[39m
+            [33mdata-part[39m=[32m"panel"[39m
+            [33mid[39m=[32m"_r_1o_-panel-home"[39m
+            [33mrole[39m=[32m"tabpanel"[39m
+            [33mtabindex[39m=[32m"0"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"剪贴板"[39m
+              [33mclass[39m=[32m"zuvi-studio-word-group zuvi-studio-word-clipboard-group"[39m
+              [33mdata-part[39m=[32m"word-tool-group"[39m
+              [33mrole[39m=[32m"group"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"zuvi-studio-word-controls"[39m
+              [36m>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"zuvi-button zuvi-studio-word-large-tool"[39m
+                  [33mdata-part[39m=[32m"root"[39m
+                  [33mdata-size[39m=[32m"sm"[39m
+                  [33mdata-variant[39m=[32m"ghost"[39m
+                  [33mtitle[39m=[32m"粘贴剪贴板文本 (Ctrl/⌘+V)"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"zuvi-button-label"[39m
+                    [33mdata-part[39m=[32m"label"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"24"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"24"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<rect[39m
+                        [33mheight[39m=[32m"4"[39m
+                        [33mrx[39m=[32m"1"[39m
+                        [33mwidth[39m=[32m"8"[39m
+                        [33mx[39m=[32m"8"[39m
+                        [33my[39m=[32m"2"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"[39m
+                      [36m/>[39m
+       ...
+
+Expected: "Arial"
+Received: "Times New Roman"
+
+ ❯ src/components/OfficeStudio/StudioWord.basic-format.test.tsx:92:128
+     90|     fireEvent.keyDown(control, { key: 'Enter' });
+     91|     await waitFor(() => {
+     92|       editor.state.doc.firstChild!.forEach(node => expect(node.marks.f…
+       |                                                                                                                                ^
+     93|     });
+     94|     expect(onChange).toHaveBeenCalledTimes(1);
+ ❯ Fragment.forEach ../../node_modules/.pnpm/prosemirror-model@1.25.12/node_modules/prosemirror-model/dist/index.js:260:13
+ ❯ Node.forEach ../../node_modules/.pnpm/prosemirror-model@1.25.12/node_modules/prosemirror-model/dist/index.js:1212:31
+ ❯ src/components/OfficeStudio/StudioWord.basic-format.test.tsx:92:36
+ ❯ runWithExpensiveErrorDiagnosticsDisabled ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/7]⎯
+
+ FAIL  src/components/OfficeStudio/StudioWord.basic-format.test.tsx > Word basic character acceptance > applies the first run value to a mixed 字号 range rather than skipping the commit
+AssertionError: expected '14.5pt' to be '12pt' // Object.is equality
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"zuvi-studio-word"[39m
+        [33mdata-part[39m=[32m"word"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"zuvi-tabs zuvi-studio-word-ribbon zuvi-studio-ribbon"[39m
+          [33mdata-orientation[39m=[32m"horizontal"[39m
+          [33mdata-part[39m=[32m"root"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"zuvi-studio-ribbon-tabbar"[39m
+            [33mdata-part[39m=[32m"ribbon-tabs"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"Word 工具"[39m
+              [33maria-orientation[39m=[32m"horizontal"[39m
+              [33mclass[39m=[32m"zuvi-tabs-list"[39m
+              [33mdata-part[39m=[32m"list"[39m
+              [33mrole[39m=[32m"tablist"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_26_-panel-home"[39m
+                [33maria-selected[39m=[32m"true"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_26_-tab-home"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"0"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m开始[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_26_-panel-insert"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_26_-tab-insert"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m插入[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_26_-panel-layout"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_26_-tab-layout"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m布局[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_26_-panel-references"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_26_-tab-references"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m引用[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_26_-panel-review"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_26_-tab-review"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m审阅[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"_r_26_-panel-view"[39m
+                [33maria-selected[39m=[32m"false"[39m
+                [33mclass[39m=[32m"zuvi-tab"[39m
+                [33mdata-part[39m=[32m"trigger"[39m
+                [33mid[39m=[32m"_r_26_-tab-view"[39m
+                [33mrole[39m=[32m"tab"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0m视图[0m
+              [36m</button>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33maria-labelledby[39m=[32m"_r_26_-tab-home"[39m
+            [33mclass[39m=[32m"zuvi-tabs-panel zuvi-studio-word-tool-row"[39m
+            [33mdata-part[39m=[32m"panel"[39m
+            [33mid[39m=[32m"_r_26_-panel-home"[39m
+            [33mrole[39m=[32m"tabpanel"[39m
+            [33mtabindex[39m=[32m"0"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-label[39m=[32m"剪贴板"[39m
+              [33mclass[39m=[32m"zuvi-studio-word-group zuvi-studio-word-clipboard-group"[39m
+              [33mdata-part[39m=[32m"word-tool-group"[39m
+              [33mrole[39m=[32m"group"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"zuvi-studio-word-controls"[39m
+              [36m>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"zuvi-button zuvi-studio-word-large-tool"[39m
+                  [33mdata-part[39m=[32m"root"[39m
+                  [33mdata-size[39m=[32m"sm"[39m
+                  [33mdata-variant[39m=[32m"ghost"[39m
+                  [33mtitle[39m=[32m"粘贴剪贴板文本 (Ctrl/⌘+V)"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"zuvi-button-label"[39m
+                    [33mdata-part[39m=[32m"label"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"24"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"24"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<rect[39m
+                        [33mheight[39m=[32m"4"[39m
+                        [33mrx[39m=[32m"1"[39m
+                        [33mwidth[39m=[32m"8"[39m
+                        [33mx[39m=[32m"8"[39m
+                        [33my[39m=[32m"2"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"[39m
+                      [36m/>[39m
+       ...
+
+Expected: "12pt"
+Received: "14.5pt"
+
+ ❯ src/components/OfficeStudio/StudioWord.basic-format.test.tsx:92:128
+     90|     fireEvent.keyDown(control, { key: 'Enter' });
+     91|     await waitFor(() => {
+     92|       editor.state.doc.firstChild!.forEach(node => expect(node.marks.f…
+       |                                                                                                                                ^
+     93|     });
+     94|     expect(onChange).toHaveBeenCalledTimes(1);
+ ❯ Fragment.forEach ../../node_modules/.pnpm/prosemirror-model@1.25.12/node_modules/prosemirror-model/dist/index.js:260:13
+ ❯ Node.forEach ../../node_modules/.pnpm/prosemirror-model@1.25.12/node_modules/prosemirror-model/dist/index.js:1212:31
+ ❯ src/components/OfficeStudio/StudioWord.basic-format.test.tsx:92:36
+ ❯ runWithExpensiveErrorDiagnosticsDisabled ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/7]⎯
+
+ FAIL  src/components/OfficeStudio/StudioWord.basic-format.test.tsx > Word basic character acceptance > clears a later run highlight when the first run has font attributes but no highlight
+Error: expect(element).not.toHaveAttribute("aria-disabled", "true") // element.getAttribute("aria-disabled") === "true"
+
+Expected the element not to have attribute:
+  aria-disabled="true"
+Received:
+  aria-disabled="true"
+ ❯ src/components/OfficeStudio/StudioWord.basic-format.test.tsx:109:23
+    107|     fireEvent.click(screen.getByRole('button', { name: '文字高亮', exa…
+    108|     const clear = await screen.findByRole('menuitem', { name: '无颜色'…
+    109|     expect(clear).not.toHaveAttribute('aria-disabled', 'true');
+       |                       ^
+    110|     fireEvent.click(clear);
+    111|     await waitFor(() => editor.state.doc.firstChild!.forEach(node => e…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/7]⎯
+
+ Test Files  1 failed (1)
+      Tests  7 failed | 3 passed (10)
+   Start at  03:58:27
+   Duration  9.13s (transform 584ms, setup 127ms, collect 872ms, tests 7.66s, environment 283ms, prepare 48ms)
+
+undefined
+/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run src/components/OfficeStudio/StudioWord.basic-format.test.tsx --reporter=dot

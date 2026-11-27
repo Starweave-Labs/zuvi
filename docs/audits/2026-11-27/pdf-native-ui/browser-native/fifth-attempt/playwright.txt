@@ -1,0 +1,138 @@
+[WebServer] (node:65364) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:65377) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 8 tests using 1 worker
+
+[WebServer] [BABEL] Note: The code generator has deoptimised the styling of /var/folders/9n/_523pt1s3gqg0f165zsdbldc0000gn/T/zuvi-office-e2e-vite-5275-65358/deps/react-dom_client.js?v=14021742 as it exceeds the max of 500KB.
+  ✘  1 [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:307:1 › P012 creates and formats CJK FreeText with transactional history, IME drafts, native AP and two reopens (23.8s)
+  ✓  2 [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:362:1 › P014 saves four text markers from actual original-text selections with exact native quads, alpha, removal and undo (14.4s)
+  ✘  3 [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:420:1 › P016 creates native shapes, arrow, polyline and ink through real pointers and edits fill, dash, ends and vertices (33.4s)
+  ✓  4 [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:472:1 › P012/P016 moving and resizing show ghosts, cancel without history and accept one undoable pointer transaction (14.1s)
+  ✘  5 [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:510:1 › P015 reads native notes, writes authored IRT replies and resolve/reopen state, and deletes replies/parents transactionally (21.6s)
+  ✓  6 [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:555:1 › legacy four-kind persisted documents migrate through the actual entry once and undo restores the original pair (8.8s)
+  ✓  7 [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:577:1 › nonempty persisted native recipe renders current copied AP/text/paint/thumbnail order without accepting or double-transforming the source (7.2s)
+  ✘  8 [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:612:1 › native read-only/locked commands and cancelling a pending CJK font preparation preserve source and history (25.2s)
+
+
+  1) [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:307:1 › P012 creates and formats CJK FreeText with transactional history, IME drafts, native AP and two reopens 
+
+    TimeoutError: locator.click: Timeout 20000ms exceeded.
+    Call log:
+      - waiting for getByRole('option', { name: '文字', exact: true })
+
+
+      143 |   if (!(await select.count())) await page.getByRole('button', { name: '新增批注', exact: true }).click();
+      144 |   await select.click();
+    > 145 |   await page.getByRole('option', { name: labels[tool], exact: true }).click();
+          |                                                                       ^
+      146 | }
+      147 | async function point(page: Page, x: number, y: number) {
+      148 |   const paper = page.locator('.zuvi-studio-pdf-paper');
+        at choose (/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-native-annotations.spec.ts:145:71)
+        at create (/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-native-annotations.spec.ts:155:3)
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-native-annotations.spec.ts:309:43
+
+    Error Context: ../../../../../../tmp/zuvi-pdf-native-ui-fifth-results/office-studio-pdf-native-a-51c6a-s-native-AP-and-two-reopens-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../tmp/zuvi-pdf-native-ui-fifth-results/office-studio-pdf-native-a-51c6a-s-native-AP-and-two-reopens-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../../../tmp/zuvi-pdf-native-ui-fifth-results/office-studio-pdf-native-a-51c6a-s-native-AP-and-two-reopens-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:420:1 › P016 creates native shapes, arrow, polyline and ink through real pointers and edits fill, dash, ends and vertices 
+
+    TimeoutError: locator.click: Timeout 20000ms exceeded.
+    Call log:
+      - waiting for getByRole('option', { name: '实心箭头', exact: true })
+
+
+      176 | async function selectValue(page: Page, scope: Locator, label: string, option: string) {
+      177 |   await scope.getByRole('button', { name: new RegExp('^' + label) }).click();
+    > 178 |   await page.getByRole('option', { name: option, exact: true }).click();
+          |                                                                 ^
+      179 | }
+      180 | async function color(page: Page, scope: Locator, label: string, value: string) {
+      181 |   await scope.getByRole('button', { name: label, exact: true }).click();
+        at selectValue (/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-native-annotations.spec.ts:178:65)
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-native-annotations.spec.ts:443:5
+
+    Error Context: ../../../../../../tmp/zuvi-pdf-native-ui-fifth-results/office-studio-pdf-native-a-62820-fill-dash-ends-and-vertices-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../tmp/zuvi-pdf-native-ui-fifth-results/office-studio-pdf-native-a-62820-fill-dash-ends-and-vertices-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../../../tmp/zuvi-pdf-native-ui-fifth-results/office-studio-pdf-native-a-62820-fill-dash-ends-and-vertices-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:510:1 › P015 reads native notes, writes authored IRT replies and resolve/reopen state, and deletes replies/parents transactionally 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText(/回复（2） · 已解决/)
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText(/回复（2） · 已解决/) with timeout 5000ms
+      - waiting for getByText(/回复（2） · 已解决/)
+
+
+      522 |   await page.getByLabel('PDF 回复内容', { exact: true }).fill('第二条原生回复'); await page.getByRole('button', { name: '回复', exact: true }).click(); await waitReady(page);
+      523 |   await page.getByRole('button', { name: '解决讨论', exact: true }).click(); await waitReady(page);
+    > 524 |   await expect(page.getByText(/回复（2） · 已解决/)).toBeVisible();
+          |                                               ^
+      525 |   const resolved = await exported(page, 'p015-resolved.pdf');
+      526 |   const resolvedInfo = await inspect(resolved);
+      527 |   expect(resolvedInfo.annotations.some(item => item.replyTo === id && item.state === 'Completed' && item.stateModel === 'Review')).toBe(true);
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-native-annotations.spec.ts:524:47
+
+    Error Context: ../../../../../../tmp/zuvi-pdf-native-ui-fifth-results/office-studio-pdf-native-a-92e5d-ies-parents-transactionally-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../tmp/zuvi-pdf-native-ui-fifth-results/office-studio-pdf-native-a-92e5d-ies-parents-transactionally-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../../../tmp/zuvi-pdf-native-ui-fifth-results/office-studio-pdf-native-a-92e5d-ies-parents-transactionally-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:612:1 › native read-only/locked commands and cancelling a pending CJK font preparation preserve source and history 
+
+    TimeoutError: locator.click: Timeout 20000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: '放在当前页中央', exact: true })
+
+
+      646 |   await page.route('**/office-pdf-assets/NotoSansSC.ttf', async route => { requested = true; await hold; await route.continue(); });
+      647 |   await page.getByLabel('PDF 新增文字', { exact: true }).fill('准备时取消中文批注');
+    > 648 |   await page.getByRole('button', { name: '放在当前页中央', exact: true }).click();
+          |                                                                    ^
+      649 |   await expect.poll(() => requested).toBe(true);
+      650 |   await expect(page.getByLabel('PDF 新增文字', { exact: true })).toBeDisabled();
+      651 |   await expect(page.getByRole('button', { name: '放在当前页中央', exact: true })).toBeDisabled();
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-native-annotations.spec.ts:648:68
+
+    Error Context: ../../../../../../tmp/zuvi-pdf-native-ui-fifth-results/office-studio-pdf-native-a-88b14-preserve-source-and-history-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../tmp/zuvi-pdf-native-ui-fifth-results/office-studio-pdf-native-a-88b14-preserve-source-and-history-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../../../tmp/zuvi-pdf-native-ui-fifth-results/office-studio-pdf-native-a-88b14-preserve-source-and-history-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:307:1 › P012 creates and formats CJK FreeText with transactional history, IME drafts, native AP and two reopens 
+    [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:420:1 › P016 creates native shapes, arrow, polyline and ink through real pointers and edits fill, dash, ends and vertices 
+    [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:510:1 › P015 reads native notes, writes authored IRT replies and resolve/reopen state, and deletes replies/parents transactionally 
+    [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:612:1 › native read-only/locked commands and cancelling a pending CJK font preparation preserve source and history 
+  4 passed (2.5m)

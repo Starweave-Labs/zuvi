@@ -1,0 +1,53 @@
+
+> @zuvi/blocks@1.1.0 test /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/blocks
+> vitest run
+
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/blocks
+
+ ✓ tests/permission.test.tsx (5 tests) 1358ms
+   ✓ permission block > renders the permission tree and the member table 454ms
+   ✓ permission block > reports checked keys when a tree node is checked 332ms
+   ✓ permission block > toggles a member switch and passes the member back 459ms
+ ✓ tests/kanban.test.tsx (5 tests) 1371ms
+   ✓ kanban block > activates a card on click and fires callbacks; toggles off on second click 345ms
+   ✓ kanban block > activates focused cards with Enter and Space 558ms
+ ✓ tests/profile-edit.test.tsx (6 tests) 1599ms
+   ✓ profile-edit block > renders the grid form with labeled fields, tenure range and avatar upload 717ms
+   ✓ profile-edit block > rejects invalid avatar type and files larger than the advertised 2MB limit 316ms
+ ✓ tests/timeline-feed.test.tsx (8 tests) 1627ms
+   ✓ timeline-feed block > fires onLoadMore from the load-more button and hides it when hasMore=false 547ms
+ ✓ tests/settings.test.tsx (5 tests) 1694ms
+   ✓ settings block > renders anchor navigation and the basic form section by default 801ms
+   ✓ settings block > switches sections and edits a field 431ms
+   ✓ settings block > toggles switches and fires save with the current values 322ms
+ ✓ tests/search-result.test.tsx (4 tests) 1934ms
+   ✓ search-result block > renders search input, type filters and result list 668ms
+   ✓ search-result block > filters results by keyword and switches result type 565ms
+   ✓ search-result block > shows Empty state and resets filters from its action 362ms
+   ✓ search-result block > fires onSearch on Enter or button click and onResultClick on item click 339ms
+ ✓ tests/wizard.test.tsx (4 tests) 1975ms
+   ✓ wizard block > renders the three steps and the first step form 492ms
+   ✓ wizard block > blocks going next with empty required fields and shows errors 517ms
+   ✓ wizard block > walks through all three steps and finishes with aggregated values 835ms
+ ✓ tests/order-list.test.tsx (4 tests) 2137ms
+   ✓ order-list block > renders the order table with status tags and pagination 675ms
+   ✓ order-list block > filters orders by status through the Select and reports the change 587ms
+   ✓ order-list block > cancels an order via Popconfirm 719ms
+ ✓ tests/table-page.test.tsx (6 tests) 2534ms
+   ✓ table-page block > submits the typed keyword and reports the chosen filter field and value 1484ms
+   ✓ table-page block > selects individual rows, exposes the mixed state, and selects or clears all rows 415ms
+ ✓ tests/blocks.test.tsx (5 tests) 3414ms
+   ✓ business block forms > validates a login before delivering the public values 1627ms
+   ✓ business block forms > keeps form-page labels and dates attached to their own instance 352ms
+   ✓ business block forms > validates required project fields, blocks loading submits, and preserves public values 1325ms
+ ✓ tests/list-detail.test.tsx (4 tests) 140ms
+ ✓ tests/error-pages.test.tsx (4 tests) 181ms
+ ✓ tests/data-screen.test.tsx (4 tests) 287ms
+ ✓ tests/user-center.test.tsx (4 tests) 611ms
+   ✓ user-center block > switches between security and preferences tabs 333ms
+
+ Test Files  14 passed (14)
+      Tests  68 passed (68)
+   Start at  05:29:03
+   Duration  15.17s (transform 5.12s, setup 9.25s, collect 61.69s, tests 20.86s, environment 31.39s, prepare 4.25s)

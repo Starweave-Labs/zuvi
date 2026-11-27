@@ -1,0 +1,2676 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ❯ src/components/OfficeStudio/StudioSheet.duplicates.test.tsx (5 tests | 1 failed) 1417ms
+   × duplicate removal through actual spreadsheet controls > compares selected columns, retains the header, reports counts and restores one history step 502ms
+     → Unable to find an accessible element with the role "button" and name "撤销表格修改"
+
+Here are the accessible roles:
+
+  tablist:
+
+  Name "表格工具栏":
+  [36m<div[39m
+    [33maria-label[39m=[32m"表格工具栏"[39m
+    [33maria-orientation[39m=[32m"horizontal"[39m
+    [33mclass[39m=[32m"zuvi-tabs-list"[39m
+    [33mdata-part[39m=[32m"list"[39m
+    [33mrole[39m=[32m"tablist"[39m
+  [36m/>[39m
+
+  Name "工作表":
+  [36m<div[39m
+    [33maria-label[39m=[32m"工作表"[39m
+    [33maria-orientation[39m=[32m"horizontal"[39m
+    [33mclass[39m=[32m"zuvi-tabs-list"[39m
+    [33mdata-part[39m=[32m"list"[39m
+    [33mrole[39m=[32m"tablist"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  tab:
+
+  Name "开始":
+  [36m<button[39m
+    [33maria-controls[39m=[32m"_r_1_-panel-home"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-tab"[39m
+    [33mdata-part[39m=[32m"trigger"[39m
+    [33mid[39m=[32m"_r_1_-tab-home"[39m
+    [33mrole[39m=[32m"tab"[39m
+    [33mtabindex[39m=[32m"-1"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "插入":
+  [36m<button[39m
+    [33maria-controls[39m=[32m"_r_1_-panel-insert"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-tab"[39m
+    [33mdata-part[39m=[32m"trigger"[39m
+    [33mid[39m=[32m"_r_1_-tab-insert"[39m
+    [33mrole[39m=[32m"tab"[39m
+    [33mtabindex[39m=[32m"-1"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "布局":
+  [36m<button[39m
+    [33maria-controls[39m=[32m"_r_1_-panel-layout"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-tab"[39m
+    [33mdata-part[39m=[32m"trigger"[39m
+    [33mid[39m=[32m"_r_1_-tab-layout"[39m
+    [33mrole[39m=[32m"tab"[39m
+    [33mtabindex[39m=[32m"-1"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "公式":
+  [36m<button[39m
+    [33maria-controls[39m=[32m"_r_1_-panel-formulas"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-tab"[39m
+    [33mdata-part[39m=[32m"trigger"[39m
+    [33mid[39m=[32m"_r_1_-tab-formulas"[39m
+    [33mrole[39m=[32m"tab"[39m
+    [33mtabindex[39m=[32m"-1"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "数据":
+  [36m<button[39m
+    [33maria-controls[39m=[32m"_r_1_-panel-data"[39m
+    [33maria-selected[39m=[32m"true"[39m
+    [33mclass[39m=[32m"zuvi-tab"[39m
+    [33mdata-part[39m=[32m"trigger"[39m
+    [33mid[39m=[32m"_r_1_-tab-data"[39m
+    [33mrole[39m=[32m"tab"[39m
+    [33mtabindex[39m=[32m"0"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "视图":
+  [36m<button[39m
+    [33maria-controls[39m=[32m"_r_1_-panel-view"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-tab"[39m
+    [33mdata-part[39m=[32m"trigger"[39m
+    [33mid[39m=[32m"_r_1_-tab-view"[39m
+    [33mrole[39m=[32m"tab"[39m
+    [33mtabindex[39m=[32m"-1"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "Data":
+  [36m<button[39m
+    [33maria-controls[39m=[32m"_r_0_-grid"[39m
+    [33maria-selected[39m=[32m"true"[39m
+    [33mclass[39m=[32m"zuvi-tab"[39m
+    [33mdata-part[39m=[32m"trigger"[39m
+    [33mid[39m=[32m"_r_c_-tab-s"[39m
+    [33mrole[39m=[32m"tab"[39m
+    [33mtabindex[39m=[32m"0"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "Other":
+  [36m<button[39m
+    [33maria-controls[39m=[32m"_r_0_-grid"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-tab"[39m
+    [33mdata-part[39m=[32m"trigger"[39m
+    [33mid[39m=[32m"_r_c_-tab-other"[39m
+    [33mrole[39m=[32m"tab"[39m
+    [33mtabindex[39m=[32m"-1"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  tabpanel:
+
+  Name "数据":
+  [36m<div[39m
+    [33maria-labelledby[39m=[32m"_r_1_-tab-data"[39m
+    [33mclass[39m=[32m"zuvi-tabs-panel"[39m
+    [33mdata-part[39m=[32m"panel"[39m
+    [33mid[39m=[32m"_r_1_-panel-data"[39m
+    [33mrole[39m=[32m"tabpanel"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  button:
+
+  Name "数据验证":
+  [36m<button[39m
+    [33mclass[39m=[32m"zuvi-button"[39m
+    [33mdata-part[39m=[32m"root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mdata-variant[39m=[32m"outline"[39m
+  [36m/>[39m
+
+  Name "删除重复项":
+  [36m<button[39m
+    [33mclass[39m=[32m"zuvi-button"[39m
+    [33mdata-part[39m=[32m"root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mdata-variant[39m=[32m"outline"[39m
+  [36m/>[39m
+
+  Name "升序排序":
+  [36m<button[39m
+    [33mclass[39m=[32m"zuvi-button"[39m
+    [33mdata-part[39m=[32m"root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mdata-variant[39m=[32m"outline"[39m
+  [36m/>[39m
+
+  Name "降序排序":
+  [36m<button[39m
+    [33mclass[39m=[32m"zuvi-button"[39m
+    [33mdata-part[39m=[32m"root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mdata-variant[39m=[32m"outline"[39m
+  [36m/>[39m
+
+  Name "多关键字排序":
+  [36m<button[39m
+    [33mclass[39m=[32m"zuvi-button"[39m
+    [33mdata-part[39m=[32m"root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mdata-variant[39m=[32m"outline"[39m
+  [36m/>[39m
+
+  Name "筛选列 A":
+  [36m<button[39m
+    [33maria-controls[39m=[32m"_r_d_-listbox"[39m
+    [33maria-expanded[39m=[32m"false"[39m
+    [33maria-haspopup[39m=[32m"listbox"[39m
+    [33maria-label[39m=[32m"筛选列"[39m
+    [33maria-labelledby[39m=[32m"_r_d_-trigger-label _r_d_-trigger-value"[39m
+    [33mclass[39m=[32m"zuvi-select-trigger"[39m
+    [33mdata-part[39m=[32m"trigger"[39m
+    [33mid[39m=[32m"_r_d_-trigger"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "筛选条件 包含":
+  [36m<button[39m
+    [33maria-controls[39m=[32m"_r_e_-listbox"[39m
+    [33maria-expanded[39m=[32m"false"[39m
+    [33maria-haspopup[39m=[32m"listbox"[39m
+    [33maria-label[39m=[32m"筛选条件"[39m
+    [33maria-labelledby[39m=[32m"_r_e_-trigger-label _r_e_-trigger-value"[39m
+    [33mclass[39m=[32m"zuvi-select-trigger"[39m
+    [33mdata-part[39m=[32m"trigger"[39m
+    [33mid[39m=[32m"_r_e_-trigger"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "应用筛选":
+  [36m<button[39m
+    [33mclass[39m=[32m"zuvi-button"[39m
+    [33mdata-part[39m=[32m"root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mdata-variant[39m=[32m"primary"[39m
+  [36m/>[39m
+
+  Name "清除筛选":
+  [36m<button[39m
+    [33mclass[39m=[32m"zuvi-button"[39m
+    [33mdata-part[39m=[32m"root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mdata-variant[39m=[32m"ghost"[39m
+    [33mdisabled[39m=[32m""[39m
+  [36m/>[39m
+
+  Name "填充柄":
+  [36m<button[39m
+    [33maria-label[39m=[32m"填充柄"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-fill-handle"[39m
+    [33mstyle[39m=[32m"left: 260px; top: 116px;"[39m
+    [33mtitle[39m=[32m"拖动填充：数字/日期自动递增，文本复制"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "新增工作表":
+  [36m<button[39m
+    [33maria-label[39m=[32m"新增工作表"[39m
+    [33mclass[39m=[32m"zuvi-button"[39m
+    [33mdata-part[39m=[32m"root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mdata-variant[39m=[32m"ghost"[39m
+    [33mtitle[39m=[32m"新增工作表"[39m
+  [36m/>[39m
+
+  Name "删除工作表":
+  [36m<button[39m
+    [33maria-label[39m=[32m"删除工作表"[39m
+    [33mclass[39m=[32m"zuvi-button"[39m
+    [33mdata-part[39m=[32m"root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mdata-variant[39m=[32m"ghost"[39m
+    [33mtitle[39m=[32m"删除工作表"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  textbox:
+
+  Name "筛选区域":
+  [36m<input[39m
+    [33maria-label[39m=[32m"筛选区域"[39m
+    [33mclass[39m=[32m"zuvi-input-field"[39m
+    [33mdata-part[39m=[32m"input"[39m
+    [33mplaceholder[39m=[32m"例如 A3:D6"[39m
+    [33mvalue[39m=[32m""[39m
+  [36m/>[39m
+
+  Name "筛选值":
+  [36m<input[39m
+    [33maria-label[39m=[32m"筛选值"[39m
+    [33mclass[39m=[32m"zuvi-input-field"[39m
+    [33mdata-part[39m=[32m"input"[39m
+    [33mplaceholder[39m=[32m"留空清除此列条件"[39m
+    [33mvalue[39m=[32m""[39m
+  [36m/>[39m
+
+  Name "单元格地址":
+  [36m<input[39m
+    [33maria-label[39m=[32m"单元格地址"[39m
+    [33mclass[39m=[32m"zuvi-input-field"[39m
+    [33mdata-part[39m=[32m"input"[39m
+    [33mvalue[39m=[32m"B4"[39m
+  [36m/>[39m
+
+  Name "表格公式栏":
+  [36m<input[39m
+    [33maria-label[39m=[32m"表格公式栏"[39m
+    [33mclass[39m=[32m"zuvi-input-field"[39m
+    [33mdata-part[39m=[32m"input"[39m
+    [33mplaceholder[39m=[32m"输入内容或公式"[39m
+    [33mvalue[39m=[32m""[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  grid:
+
+  Name "Data 单元格网格":
+  [36m<div[39m
+    [33maria-activedescendant[39m=[32m"_r_0_-B4"[39m
+    [33maria-colcount[39m=[32m"5"[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"Data 单元格网格"[39m
+    [33maria-readonly[39m=[32m"false"[39m
+    [33maria-rowcount[39m=[32m"9"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-grid"[39m
+    [33mid[39m=[32m"_r_0_-grid"[39m
+    [33mrole[39m=[32m"grid"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  row:
+
+  Name "行号 A A 列宽 B B 列宽 C C 列宽 D D 列宽":
+  [36m<div[39m
+    [33maria-rowindex[39m=[32m"1"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-columnheaders"[39m
+    [33mrole[39m=[32m"row"[39m
+    [33mstyle[39m=[32m"width: 488px;"[39m
+  [36m/>[39m
+
+  Name "1 1 行高 A1 B1 C1 D1":
+  [36m<div[39m
+    [33maria-rowindex[39m=[32m"2"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row"[39m
+    [33mrole[39m=[32m"row"[39m
+    [33mstyle[39m=[32m"top: 24px; width: 488px; height: 24px;"[39m
+  [36m/>[39m
+
+  Name "2 2 行高 A2 B2 C2 D2":
+  [36m<div[39m
+    [33maria-rowindex[39m=[32m"3"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row"[39m
+    [33mrole[39m=[32m"row"[39m
+    [33mstyle[39m=[32m"top: 48px; width: 488px; height: 24px;"[39m
+  [36m/>[39m
+
+  Name "3 3 行高 A3 B3 C3 D3":
+  [36m<div[39m
+    [33maria-rowindex[39m=[32m"4"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row"[39m
+    [33mrole[39m=[32m"row"[39m
+    [33mstyle[39m=[32m"top: 72px; width: 488px; height: 24px;"[39m
+  [36m/>[39m
+
+  Name "4 4 行高 A4 B4 C4 D4":
+  [36m<div[39m
+    [33maria-rowindex[39m=[32m"5"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row"[39m
+    [33mrole[39m=[32m"row"[39m
+    [33mstyle[39m=[32m"top: 96px; width: 488px; height: 24px;"[39m
+  [36m/>[39m
+
+  Name "5 5 行高 A5 B5 C5 D5":
+  [36m<div[39m
+    [33maria-rowindex[39m=[32m"6"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row"[39m
+    [33mrole[39m=[32m"row"[39m
+    [33mstyle[39m=[32m"top: 120px; width: 488px; height: 24px;"[39m
+  [36m/>[39m
+
+  Name "6 6 行高 A6 B6 C6 D6":
+  [36m<div[39m
+    [33maria-rowindex[39m=[32m"7"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row"[39m
+    [33mrole[39m=[32m"row"[39m
+    [33mstyle[39m=[32m"top: 144px; width: 488px; height: 24px;"[39m
+  [36m/>[39m
+
+  Name "7 7 行高 A7 B7 C7 D7":
+  [36m<div[39m
+    [33maria-rowindex[39m=[32m"8"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row"[39m
+    [33mrole[39m=[32m"row"[39m
+    [33mstyle[39m=[32m"top: 168px; width: 488px; height: 24px;"[39m
+  [36m/>[39m
+
+  Name "8 8 行高 A8 B8 C8 D8":
+  [36m<div[39m
+    [33maria-rowindex[39m=[32m"9"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row"[39m
+    [33mrole[39m=[32m"row"[39m
+    [33mstyle[39m=[32m"top: 192px; width: 488px; height: 24px;"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  columnheader:
+
+  Name "行号":
+  [36m<div[39m
+    [33maria-label[39m=[32m"行号"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-corner"[39m
+    [33mrole[39m=[32m"columnheader"[39m
+  [36m/>[39m
+
+  Name "A A 列宽":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"2"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-columnheader"[39m
+    [33mdata-selected[39m=[32m"true"[39m
+    [33mrole[39m=[32m"columnheader"[39m
+    [33mstyle[39m=[32m"left: 40px; width: 112px;"[39m
+  [36m/>[39m
+
+  Name "B B 列宽":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"3"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-columnheader"[39m
+    [33mdata-selected[39m=[32m"true"[39m
+    [33mrole[39m=[32m"columnheader"[39m
+    [33mstyle[39m=[32m"left: 152px; width: 112px;"[39m
+  [36m/>[39m
+
+  Name "C C 列宽":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"4"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-columnheader"[39m
+    [33mrole[39m=[32m"columnheader"[39m
+    [33mstyle[39m=[32m"left: 264px; width: 112px;"[39m
+  [36m/>[39m
+
+  Name "D D 列宽":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"5"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-columnheader"[39m
+    [33mrole[39m=[32m"columnheader"[39m
+    [33mstyle[39m=[32m"left: 376px; width: 112px;"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  separator:
+
+  Name "A 列宽":
+  [36m<span[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"A 列宽"[39m
+    [33maria-orientation[39m=[32m"vertical"[39m
+    [33maria-valuemax[39m=[32m"255"[39m
+    [33maria-valuemin[39m=[32m"1"[39m
+    [33maria-valuenow[39m=[32m"15.29"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-column-resize"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  Name "B 列宽":
+  [36m<span[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"B 列宽"[39m
+    [33maria-orientation[39m=[32m"vertical"[39m
+    [33maria-valuemax[39m=[32m"255"[39m
+    [33maria-valuemin[39m=[32m"1"[39m
+    [33maria-valuenow[39m=[32m"15.29"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-column-resize"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  Name "C 列宽":
+  [36m<span[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"C 列宽"[39m
+    [33maria-orientation[39m=[32m"vertical"[39m
+    [33maria-valuemax[39m=[32m"255"[39m
+    [33maria-valuemin[39m=[32m"1"[39m
+    [33maria-valuenow[39m=[32m"15.29"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-column-resize"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  Name "D 列宽":
+  [36m<span[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"D 列宽"[39m
+    [33maria-orientation[39m=[32m"vertical"[39m
+    [33maria-valuemax[39m=[32m"255"[39m
+    [33maria-valuemin[39m=[32m"1"[39m
+    [33maria-valuenow[39m=[32m"15.29"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-column-resize"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  Name "1 行高":
+  [36m<span[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"1 行高"[39m
+    [33maria-orientation[39m=[32m"horizontal"[39m
+    [33maria-valuemax[39m=[32m"409.5"[39m
+    [33maria-valuemin[39m=[32m"0.75"[39m
+    [33maria-valuenow[39m=[32m"18"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row-resize"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  Name "2 行高":
+  [36m<span[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"2 行高"[39m
+    [33maria-orientation[39m=[32m"horizontal"[39m
+    [33maria-valuemax[39m=[32m"409.5"[39m
+    [33maria-valuemin[39m=[32m"0.75"[39m
+    [33maria-valuenow[39m=[32m"18"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row-resize"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  Name "3 行高":
+  [36m<span[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"3 行高"[39m
+    [33maria-orientation[39m=[32m"horizontal"[39m
+    [33maria-valuemax[39m=[32m"409.5"[39m
+    [33maria-valuemin[39m=[32m"0.75"[39m
+    [33maria-valuenow[39m=[32m"18"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row-resize"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  Name "4 行高":
+  [36m<span[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"4 行高"[39m
+    [33maria-orientation[39m=[32m"horizontal"[39m
+    [33maria-valuemax[39m=[32m"409.5"[39m
+    [33maria-valuemin[39m=[32m"0.75"[39m
+    [33maria-valuenow[39m=[32m"18"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row-resize"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  Name "5 行高":
+  [36m<span[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"5 行高"[39m
+    [33maria-orientation[39m=[32m"horizontal"[39m
+    [33maria-valuemax[39m=[32m"409.5"[39m
+    [33maria-valuemin[39m=[32m"0.75"[39m
+    [33maria-valuenow[39m=[32m"18"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row-resize"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  Name "6 行高":
+  [36m<span[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"6 行高"[39m
+    [33maria-orientation[39m=[32m"horizontal"[39m
+    [33maria-valuemax[39m=[32m"409.5"[39m
+    [33maria-valuemin[39m=[32m"0.75"[39m
+    [33maria-valuenow[39m=[32m"18"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row-resize"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  Name "7 行高":
+  [36m<span[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"7 行高"[39m
+    [33maria-orientation[39m=[32m"horizontal"[39m
+    [33maria-valuemax[39m=[32m"409.5"[39m
+    [33maria-valuemin[39m=[32m"0.75"[39m
+    [33maria-valuenow[39m=[32m"18"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row-resize"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  Name "8 行高":
+  [36m<span[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"8 行高"[39m
+    [33maria-orientation[39m=[32m"horizontal"[39m
+    [33maria-valuemax[39m=[32m"409.5"[39m
+    [33maria-valuemin[39m=[32m"0.75"[39m
+    [33maria-valuenow[39m=[32m"18"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row-resize"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  rowheader:
+
+  Name "1 1 行高":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"1"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-rowheader"[39m
+    [33mdata-selected[39m=[32m"true"[39m
+    [33mrole[39m=[32m"rowheader"[39m
+    [33mstyle[39m=[32m"height: 24px;"[39m
+  [36m/>[39m
+
+  Name "2 2 行高":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"1"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-rowheader"[39m
+    [33mdata-selected[39m=[32m"true"[39m
+    [33mrole[39m=[32m"rowheader"[39m
+    [33mstyle[39m=[32m"height: 24px;"[39m
+  [36m/>[39m
+
+  Name "3 3 行高":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"1"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-rowheader"[39m
+    [33mdata-selected[39m=[32m"true"[39m
+    [33mrole[39m=[32m"rowheader"[39m
+    [33mstyle[39m=[32m"height: 24px;"[39m
+  [36m/>[39m
+
+  Name "4 4 行高":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"1"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-rowheader"[39m
+    [33mdata-selected[39m=[32m"true"[39m
+    [33mrole[39m=[32m"rowheader"[39m
+    [33mstyle[39m=[32m"height: 24px;"[39m
+  [36m/>[39m
+
+  Name "5 5 行高":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"1"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-rowheader"[39m
+    [33mrole[39m=[32m"rowheader"[39m
+    [33mstyle[39m=[32m"height: 24px;"[39m
+  [36m/>[39m
+
+  Name "6 6 行高":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"1"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-rowheader"[39m
+    [33mrole[39m=[32m"rowheader"[39m
+    [33mstyle[39m=[32m"height: 24px;"[39m
+  [36m/>[39m
+
+  Name "7 7 行高":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"1"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-rowheader"[39m
+    [33mrole[39m=[32m"rowheader"[39m
+    [33mstyle[39m=[32m"height: 24px;"[39m
+  [36m/>[39m
+
+  Name "8 8 行高":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"1"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-rowheader"[39m
+    [33mrole[39m=[32m"rowheader"[39m
+    [33mstyle[39m=[32m"height: 24px;"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  gridcell:
+
+  Name "A1":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"2"[39m
+    [33maria-label[39m=[32m"A1"[39m
+    [33maria-selected[39m=[32m"true"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mdata-selected[39m=[32m"true"[39m
+    [33mid[39m=[32m"_r_0_-A1"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 40px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+    [33mtitle[39m=[32m"Key"[39m
+  [36m/>[39m
+
+  Name "B1":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"3"[39m
+    [33maria-label[39m=[32m"B1"[39m
+    [33maria-selected[39m=[32m"true"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mdata-selected[39m=[32m"true"[39m
+    [33mid[39m=[32m"_r_0_-B1"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 152px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+    [33mtitle[39m=[32m"Amount"[39m
+  [36m/>[39m
+
+  Name "C1":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"4"[39m
+    [33maria-label[39m=[32m"C1"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-C1"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 264px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "D1":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"5"[39m
+    [33maria-label[39m=[32m"D1"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-D1"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 376px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "A2":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"2"[39m
+    [33maria-label[39m=[32m"A2"[39m
+    [33maria-selected[39m=[32m"true"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mdata-selected[39m=[32m"true"[39m
+    [33mid[39m=[32m"_r_0_-A2"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 40px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+    [33mtitle[39m=[32m"Red"[39m
+  [36m/>[39m
+
+  Name "B2":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"3"[39m
+    [33maria-label[39m=[32m"B2"[39m
+    [33maria-selected[39m=[32m"true"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mdata-selected[39m=[32m"true"[39m
+    [33mid[39m=[32m"_r_0_-B2"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 152px; width: 112px; height: 24px; font-weight: 700; align-items: flex-end; text-align: right;"[39m
+    [33mtitle[39m=[32m"10"[39m
+  [36m/>[39m
+
+  Name "C2":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"4"[39m
+    [33maria-label[39m=[32m"C2"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-C2"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 264px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "D2":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"5"[39m
+    [33maria-label[39m=[32m"D2"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-D2"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 376px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "A3":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"2"[39m
+    [33maria-label[39m=[32m"A3"[39m
+    [33maria-selected[39m=[32m"true"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mdata-selected[39m=[32m"true"[39m
+    [33mid[39m=[32m"_r_0_-A3"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 40px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+    [33mtitle[39m=[32m"Blue"[39m
+  [36m/>[39m
+
+  Name "B3":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"3"[39m
+    [33maria-label[39m=[32m"B3"[39m
+    [33maria-selected[39m=[32m"true"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mdata-selected[39m=[32m"true"[39m
+    [33mid[39m=[32m"_r_0_-B3"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 152px; width: 112px; height: 24px; align-items: flex-end; text-align: right; font-style: italic;"[39m
+    [33mtitle[39m=[32m"30"[39m
+  [36m/>[39m
+
+  Name "C3":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"4"[39m
+    [33maria-label[39m=[32m"C3"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-C3"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 264px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "D3":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"5"[39m
+    [33maria-label[39m=[32m"D3"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-D3"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 376px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "A4":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"2"[39m
+    [33maria-label[39m=[32m"A4"[39m
+    [33maria-selected[39m=[32m"true"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mdata-selected[39m=[32m"true"[39m
+    [33mid[39m=[32m"_r_0_-A4"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 40px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+    [33mtitle[39m=[32m""[39m
+  [36m/>[39m
+
+  Name "B4":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"3"[39m
+    [33maria-label[39m=[32m"B4"[39m
+    [33maria-selected[39m=[32m"true"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mdata-active[39m=[32m"true"[39m
+    [33mdata-selected[39m=[32m"true"[39m
+    [33mid[39m=[32m"_r_0_-B4"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 152px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+    [33mtitle[39m=[32m""[39m
+  [36m/>[39m
+
+  Name "C4":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"4"[39m
+    [33maria-label[39m=[32m"C4"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-C4"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 264px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "D4":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"5"[39m
+    [33maria-label[39m=[32m"D4"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-D4"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 376px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+    [33mtitle[39m=[32m"Outside"[39m
+  [36m/>[39m
+
+  Name "A5":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"2"[39m
+    [33maria-label[39m=[32m"A5"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-A5"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 40px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "B5":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"3"[39m
+    [33maria-label[39m=[32m"B5"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-B5"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 152px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "C5":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"4"[39m
+    [33maria-label[39m=[32m"C5"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-C5"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 264px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "D5":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"5"[39m
+    [33maria-label[39m=[32m"D5"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-D5"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 376px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "A6":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"2"[39m
+    [33maria-label[39m=[32m"A6"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-A6"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 40px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "B6":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"3"[39m
+    [33maria-label[39m=[32m"B6"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-B6"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 152px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "C6":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"4"[39m
+    [33maria-label[39m=[32m"C6"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-C6"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 264px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "D6":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"5"[39m
+    [33maria-label[39m=[32m"D6"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-D6"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 376px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "A7":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"2"[39m
+    [33maria-label[39m=[32m"A7"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-A7"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 40px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "B7":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"3"[39m
+    [33maria-label[39m=[32m"B7"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-B7"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 152px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "C7":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"4"[39m
+    [33maria-label[39m=[32m"C7"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-C7"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 264px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "D7":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"5"[39m
+    [33maria-label[39m=[32m"D7"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-D7"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 376px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "A8":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"2"[39m
+    [33maria-label[39m=[32m"A8"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-A8"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 40px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "B8":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"3"[39m
+    [33maria-label[39m=[32m"B8"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-B8"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 152px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "C8":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"4"[39m
+    [33maria-label[39m=[32m"C8"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-C8"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 264px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "D8":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"5"[39m
+    [33maria-label[39m=[32m"D8"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-D8"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 376px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  status:
+
+  Name "已删除 1 条重复记录，保留 2 条记录（不含标题）。可一次撤销恢复。":
+  [36m<span[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-notice"[39m
+    [33mid[39m=[32m"_r_0_-notice"[39m
+    [33mrole[39m=[32m"status"[39m
+    [33mtitle[39m=[32m"已删除 1 条重复记录，保留 2 条记录（不含标题）。可一次撤销恢复。"[39m
+  [36m/>[39m
+
+  --------------------------------------------------listbox:
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"zuvi-select-listbox"[39m
+    [33mdata-open[39m=[32m"false"[39m
+    [33mdata-part[39m=[32m"listbox"[39m
+    [33mid[39m=[32m"_r_d_-listbox"[39m
+    [33mrole[39m=[32m"listbox"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  option:
+
+  Name "A":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"true"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_d_-option-0"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  Name "B":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_d_-option-1"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  Name "C":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_d_-option-2"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  Name "D":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_d_-option-3"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  --------------------------------------------------listbox:
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"zuvi-select-listbox"[39m
+    [33mdata-open[39m=[32m"false"[39m
+    [33mdata-part[39m=[32m"listbox"[39m
+    [33mid[39m=[32m"_r_e_-listbox"[39m
+    [33mrole[39m=[32m"listbox"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  option:
+
+  Name "包含":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"true"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_e_-option-0"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  Name "等于":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_e_-option-1"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  Name "大于":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_e_-option-2"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  Name "小于":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_e_-option-3"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  Name "字体颜色":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_e_-option-4"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  Name "填充颜色":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_e_-option-5"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body[39m
+  [33mstyle[39m=[32m""[39m
+[36m>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"zuvi-studio-sheet"[39m
+      [33mdata-gridlines[39m=[32m"true"[39m
+      [33mdata-headers[39m=[32m"true"[39m
+      [33mdata-sheet-zoom[39m=[32m"100"[39m
+      [33mstyle[39m=[32m"--zuvi-studio-sheet-scale: 1; --zuvi-studio-sheet-header-height: 24px; --zuvi-studio-sheet-row-header-width: 40px;"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"zuvi-tabs zuvi-studio-sheet-ribbon zuvi-studio-ribbon"[39m
+        [33mdata-orientation[39m=[32m"horizontal"[39m
+        [33mdata-part[39m=[32m"root"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"zuvi-studio-ribbon-tabbar"[39m
+          [33mdata-part[39m=[32m"ribbon-tabs"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33maria-label[39m=[32m"表格工具栏"[39m
+            [33maria-orientation[39m=[32m"horizontal"[39m
+            [33mclass[39m=[32m"zuvi-tabs-list"[39m
+            [33mdata-part[39m=[32m"list"[39m
+            [33mrole[39m=[32m"tablist"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33maria-controls[39m=[32m"_r_1_-panel-home"[39m
+              [33maria-selected[39m=[32m"false"[39m
+              [33mclass[39m=[32m"zuvi-tab"[39m
+              [33mdata-part[39m=[32m"trigger"[39m
+              [33mid[39m=[32m"_r_1_-tab-home"[39m
+              [33mrole[39m=[32m"tab"[39m
+              [33mtabindex[39m=[32m"-1"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m开始[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-controls[39m=[32m"_r_1_-panel-insert"[39m
+              [33maria-selected[39m=[32m"false"[39m
+              [33mclass[39m=[32m"zuvi-tab"[39m
+              [33mdata-part[39m=[32m"trigger"[39m
+              [33mid[39m=[32m"_r_1_-tab-insert"[39m
+              [33mrole[39m=[32m"tab"[39m
+              [33mtabindex[39m=[32m"-1"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m插入[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-controls[39m=[32m"_r_1_-panel-layout"[39m
+              [33maria-selected[39m=[32m"false"[39m
+              [33mclass[39m=[32m"zuvi-tab"[39m
+              [33mdata-part[39m=[32m"trigger"[39m
+              [33mid[39m=[32m"_r_1_-tab-layout"[39m
+              [33mrole[39m=[32m"tab"[39m
+              [33mtabindex[39m=[32m"-1"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m布局[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-controls[39m=[32m"_r_1_-panel-formulas"[39m
+              [33maria-selected[39m=[32m"false"[39m
+              [33mclass[39m=[32m"zuvi-tab"[39m
+              [33mdata-part[39m=[32m"trigger"[39m
+              [33mid[39m=[32m"_r_1_-tab-formulas"[39m
+              [33mrole[39m=[32m"tab"[39m
+              [33mtabindex[39m=[32m"-1"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m公式[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-controls[39m=[32m"_r_1_-panel-data"[39m
+              [33maria-selected[39m=[32m"true"[39m
+              [33mclass[39m=[32m"zuvi-tab"[39m
+              [33mdata-part[39m=[32m"trigger"[39m
+              [33mid[39m=[32m"_r_1_-tab-data"[39m
+              [33mrole[39m=[32m"tab"[39m
+              [33mtabindex[39m=[32m"0"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m数据[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-controls[39m=[32m"_r_1_-panel-view"[39m
+              [33maria-selected[39m=[32m"false"[39m
+              [33mclass[39m=[32m"zuvi-tab"[39m
+              [33mdata-part[39m=[32m"trigger"[39m
+              [33mid[39m=[32m"_r_1_-tab-view"[39m
+              [33mrole[39m=[32m"tab"[39m
+              [33mtabindex[39m=[32m"-1"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m视图[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33maria-labelledby[39m=[32m"_r_1_-tab-data"[39m
+          [33mclass[39m=[32m"zuvi-tabs-panel"[39m
+          [33mdata-part[39m=[32m"panel"[39m
+          [33mid[39m=[32m"_r_1_-panel-data"[39m
+          [33mrole[39m=[32m"tabpanel"[39m
+          [33mtabindex[39m=[32m"0"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"zuvi-studio-sheet-tools zuvi-studio-sheet-data-tools"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"zuvi-studio-sheet-toolgroup"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"zuvi-button"[39m
+                [33mdata-part[39m=[32m"root"[39m
+                [33mdata-size[39m=[32m"sm"[39m
+                [33mdata-variant[39m=[32m"outline"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"zuvi-button-label"[39m
+                  [33mdata-part[39m=[32m"label"[39m
+                [36m>[39m
+                  [0m数据验证[0m
+                [36m</span>[39m
+              [36m</button>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"zuvi-button"[39m
+                [33mdata-part[39m=[32m"root"[39m
+                [33mdata-size[39m=[32m"sm"[39m
+                [33mdata-variant[39m=[32m"outline"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"zuvi-button-label"[39m
+                  [33mdata-part[39m=[32m"label"[39m
+                [36m>[39m
+                  [0m删除重复项[0m
+                [36m</span>[39m
+              [36m</button>[39m
+              [36m<span[39m
+                [33mtitle[39m=[32m"0 条规则"[39m
+              [36m>[39m
+                [0m数据工具[0m
+              [36m</span>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"zuvi-studio-sheet-toolgroup"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"zuvi-studio-sheet-toolrow"[39m
+              [36m>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"zuvi-button"[39m
+                  [33mdata-part[39m=[32m"root"[39m
+                  [33mdata-size[39m=[32m"sm"[39m
+                  [33mdata-variant[39m=[32m"outline"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"zuvi-button-label"[39m
+                 ...
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/OfficeStudio/StudioSheet.duplicates.test.tsx > duplicate removal through actual spreadsheet controls > compares selected columns, retains the header, reports counts and restores one history step
+TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "撤销表格修改"
+
+Here are the accessible roles:
+
+  tablist:
+
+  Name "表格工具栏":
+  [36m<div[39m
+    [33maria-label[39m=[32m"表格工具栏"[39m
+    [33maria-orientation[39m=[32m"horizontal"[39m
+    [33mclass[39m=[32m"zuvi-tabs-list"[39m
+    [33mdata-part[39m=[32m"list"[39m
+    [33mrole[39m=[32m"tablist"[39m
+  [36m/>[39m
+
+  Name "工作表":
+  [36m<div[39m
+    [33maria-label[39m=[32m"工作表"[39m
+    [33maria-orientation[39m=[32m"horizontal"[39m
+    [33mclass[39m=[32m"zuvi-tabs-list"[39m
+    [33mdata-part[39m=[32m"list"[39m
+    [33mrole[39m=[32m"tablist"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  tab:
+
+  Name "开始":
+  [36m<button[39m
+    [33maria-controls[39m=[32m"_r_1_-panel-home"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-tab"[39m
+    [33mdata-part[39m=[32m"trigger"[39m
+    [33mid[39m=[32m"_r_1_-tab-home"[39m
+    [33mrole[39m=[32m"tab"[39m
+    [33mtabindex[39m=[32m"-1"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "插入":
+  [36m<button[39m
+    [33maria-controls[39m=[32m"_r_1_-panel-insert"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-tab"[39m
+    [33mdata-part[39m=[32m"trigger"[39m
+    [33mid[39m=[32m"_r_1_-tab-insert"[39m
+    [33mrole[39m=[32m"tab"[39m
+    [33mtabindex[39m=[32m"-1"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "布局":
+  [36m<button[39m
+    [33maria-controls[39m=[32m"_r_1_-panel-layout"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-tab"[39m
+    [33mdata-part[39m=[32m"trigger"[39m
+    [33mid[39m=[32m"_r_1_-tab-layout"[39m
+    [33mrole[39m=[32m"tab"[39m
+    [33mtabindex[39m=[32m"-1"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "公式":
+  [36m<button[39m
+    [33maria-controls[39m=[32m"_r_1_-panel-formulas"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-tab"[39m
+    [33mdata-part[39m=[32m"trigger"[39m
+    [33mid[39m=[32m"_r_1_-tab-formulas"[39m
+    [33mrole[39m=[32m"tab"[39m
+    [33mtabindex[39m=[32m"-1"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "数据":
+  [36m<button[39m
+    [33maria-controls[39m=[32m"_r_1_-panel-data"[39m
+    [33maria-selected[39m=[32m"true"[39m
+    [33mclass[39m=[32m"zuvi-tab"[39m
+    [33mdata-part[39m=[32m"trigger"[39m
+    [33mid[39m=[32m"_r_1_-tab-data"[39m
+    [33mrole[39m=[32m"tab"[39m
+    [33mtabindex[39m=[32m"0"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "视图":
+  [36m<button[39m
+    [33maria-controls[39m=[32m"_r_1_-panel-view"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-tab"[39m
+    [33mdata-part[39m=[32m"trigger"[39m
+    [33mid[39m=[32m"_r_1_-tab-view"[39m
+    [33mrole[39m=[32m"tab"[39m
+    [33mtabindex[39m=[32m"-1"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "Data":
+  [36m<button[39m
+    [33maria-controls[39m=[32m"_r_0_-grid"[39m
+    [33maria-selected[39m=[32m"true"[39m
+    [33mclass[39m=[32m"zuvi-tab"[39m
+    [33mdata-part[39m=[32m"trigger"[39m
+    [33mid[39m=[32m"_r_c_-tab-s"[39m
+    [33mrole[39m=[32m"tab"[39m
+    [33mtabindex[39m=[32m"0"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "Other":
+  [36m<button[39m
+    [33maria-controls[39m=[32m"_r_0_-grid"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-tab"[39m
+    [33mdata-part[39m=[32m"trigger"[39m
+    [33mid[39m=[32m"_r_c_-tab-other"[39m
+    [33mrole[39m=[32m"tab"[39m
+    [33mtabindex[39m=[32m"-1"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  tabpanel:
+
+  Name "数据":
+  [36m<div[39m
+    [33maria-labelledby[39m=[32m"_r_1_-tab-data"[39m
+    [33mclass[39m=[32m"zuvi-tabs-panel"[39m
+    [33mdata-part[39m=[32m"panel"[39m
+    [33mid[39m=[32m"_r_1_-panel-data"[39m
+    [33mrole[39m=[32m"tabpanel"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  button:
+
+  Name "数据验证":
+  [36m<button[39m
+    [33mclass[39m=[32m"zuvi-button"[39m
+    [33mdata-part[39m=[32m"root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mdata-variant[39m=[32m"outline"[39m
+  [36m/>[39m
+
+  Name "删除重复项":
+  [36m<button[39m
+    [33mclass[39m=[32m"zuvi-button"[39m
+    [33mdata-part[39m=[32m"root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mdata-variant[39m=[32m"outline"[39m
+  [36m/>[39m
+
+  Name "升序排序":
+  [36m<button[39m
+    [33mclass[39m=[32m"zuvi-button"[39m
+    [33mdata-part[39m=[32m"root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mdata-variant[39m=[32m"outline"[39m
+  [36m/>[39m
+
+  Name "降序排序":
+  [36m<button[39m
+    [33mclass[39m=[32m"zuvi-button"[39m
+    [33mdata-part[39m=[32m"root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mdata-variant[39m=[32m"outline"[39m
+  [36m/>[39m
+
+  Name "多关键字排序":
+  [36m<button[39m
+    [33mclass[39m=[32m"zuvi-button"[39m
+    [33mdata-part[39m=[32m"root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mdata-variant[39m=[32m"outline"[39m
+  [36m/>[39m
+
+  Name "筛选列 A":
+  [36m<button[39m
+    [33maria-controls[39m=[32m"_r_d_-listbox"[39m
+    [33maria-expanded[39m=[32m"false"[39m
+    [33maria-haspopup[39m=[32m"listbox"[39m
+    [33maria-label[39m=[32m"筛选列"[39m
+    [33maria-labelledby[39m=[32m"_r_d_-trigger-label _r_d_-trigger-value"[39m
+    [33mclass[39m=[32m"zuvi-select-trigger"[39m
+    [33mdata-part[39m=[32m"trigger"[39m
+    [33mid[39m=[32m"_r_d_-trigger"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "筛选条件 包含":
+  [36m<button[39m
+    [33maria-controls[39m=[32m"_r_e_-listbox"[39m
+    [33maria-expanded[39m=[32m"false"[39m
+    [33maria-haspopup[39m=[32m"listbox"[39m
+    [33maria-label[39m=[32m"筛选条件"[39m
+    [33maria-labelledby[39m=[32m"_r_e_-trigger-label _r_e_-trigger-value"[39m
+    [33mclass[39m=[32m"zuvi-select-trigger"[39m
+    [33mdata-part[39m=[32m"trigger"[39m
+    [33mid[39m=[32m"_r_e_-trigger"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "应用筛选":
+  [36m<button[39m
+    [33mclass[39m=[32m"zuvi-button"[39m
+    [33mdata-part[39m=[32m"root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mdata-variant[39m=[32m"primary"[39m
+  [36m/>[39m
+
+  Name "清除筛选":
+  [36m<button[39m
+    [33mclass[39m=[32m"zuvi-button"[39m
+    [33mdata-part[39m=[32m"root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mdata-variant[39m=[32m"ghost"[39m
+    [33mdisabled[39m=[32m""[39m
+  [36m/>[39m
+
+  Name "填充柄":
+  [36m<button[39m
+    [33maria-label[39m=[32m"填充柄"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-fill-handle"[39m
+    [33mstyle[39m=[32m"left: 260px; top: 116px;"[39m
+    [33mtitle[39m=[32m"拖动填充：数字/日期自动递增，文本复制"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "新增工作表":
+  [36m<button[39m
+    [33maria-label[39m=[32m"新增工作表"[39m
+    [33mclass[39m=[32m"zuvi-button"[39m
+    [33mdata-part[39m=[32m"root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mdata-variant[39m=[32m"ghost"[39m
+    [33mtitle[39m=[32m"新增工作表"[39m
+  [36m/>[39m
+
+  Name "删除工作表":
+  [36m<button[39m
+    [33maria-label[39m=[32m"删除工作表"[39m
+    [33mclass[39m=[32m"zuvi-button"[39m
+    [33mdata-part[39m=[32m"root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mdata-variant[39m=[32m"ghost"[39m
+    [33mtitle[39m=[32m"删除工作表"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  textbox:
+
+  Name "筛选区域":
+  [36m<input[39m
+    [33maria-label[39m=[32m"筛选区域"[39m
+    [33mclass[39m=[32m"zuvi-input-field"[39m
+    [33mdata-part[39m=[32m"input"[39m
+    [33mplaceholder[39m=[32m"例如 A3:D6"[39m
+    [33mvalue[39m=[32m""[39m
+  [36m/>[39m
+
+  Name "筛选值":
+  [36m<input[39m
+    [33maria-label[39m=[32m"筛选值"[39m
+    [33mclass[39m=[32m"zuvi-input-field"[39m
+    [33mdata-part[39m=[32m"input"[39m
+    [33mplaceholder[39m=[32m"留空清除此列条件"[39m
+    [33mvalue[39m=[32m""[39m
+  [36m/>[39m
+
+  Name "单元格地址":
+  [36m<input[39m
+    [33maria-label[39m=[32m"单元格地址"[39m
+    [33mclass[39m=[32m"zuvi-input-field"[39m
+    [33mdata-part[39m=[32m"input"[39m
+    [33mvalue[39m=[32m"B4"[39m
+  [36m/>[39m
+
+  Name "表格公式栏":
+  [36m<input[39m
+    [33maria-label[39m=[32m"表格公式栏"[39m
+    [33mclass[39m=[32m"zuvi-input-field"[39m
+    [33mdata-part[39m=[32m"input"[39m
+    [33mplaceholder[39m=[32m"输入内容或公式"[39m
+    [33mvalue[39m=[32m""[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  grid:
+
+  Name "Data 单元格网格":
+  [36m<div[39m
+    [33maria-activedescendant[39m=[32m"_r_0_-B4"[39m
+    [33maria-colcount[39m=[32m"5"[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"Data 单元格网格"[39m
+    [33maria-readonly[39m=[32m"false"[39m
+    [33maria-rowcount[39m=[32m"9"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-grid"[39m
+    [33mid[39m=[32m"_r_0_-grid"[39m
+    [33mrole[39m=[32m"grid"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  row:
+
+  Name "行号 A A 列宽 B B 列宽 C C 列宽 D D 列宽":
+  [36m<div[39m
+    [33maria-rowindex[39m=[32m"1"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-columnheaders"[39m
+    [33mrole[39m=[32m"row"[39m
+    [33mstyle[39m=[32m"width: 488px;"[39m
+  [36m/>[39m
+
+  Name "1 1 行高 A1 B1 C1 D1":
+  [36m<div[39m
+    [33maria-rowindex[39m=[32m"2"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row"[39m
+    [33mrole[39m=[32m"row"[39m
+    [33mstyle[39m=[32m"top: 24px; width: 488px; height: 24px;"[39m
+  [36m/>[39m
+
+  Name "2 2 行高 A2 B2 C2 D2":
+  [36m<div[39m
+    [33maria-rowindex[39m=[32m"3"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row"[39m
+    [33mrole[39m=[32m"row"[39m
+    [33mstyle[39m=[32m"top: 48px; width: 488px; height: 24px;"[39m
+  [36m/>[39m
+
+  Name "3 3 行高 A3 B3 C3 D3":
+  [36m<div[39m
+    [33maria-rowindex[39m=[32m"4"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row"[39m
+    [33mrole[39m=[32m"row"[39m
+    [33mstyle[39m=[32m"top: 72px; width: 488px; height: 24px;"[39m
+  [36m/>[39m
+
+  Name "4 4 行高 A4 B4 C4 D4":
+  [36m<div[39m
+    [33maria-rowindex[39m=[32m"5"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row"[39m
+    [33mrole[39m=[32m"row"[39m
+    [33mstyle[39m=[32m"top: 96px; width: 488px; height: 24px;"[39m
+  [36m/>[39m
+
+  Name "5 5 行高 A5 B5 C5 D5":
+  [36m<div[39m
+    [33maria-rowindex[39m=[32m"6"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row"[39m
+    [33mrole[39m=[32m"row"[39m
+    [33mstyle[39m=[32m"top: 120px; width: 488px; height: 24px;"[39m
+  [36m/>[39m
+
+  Name "6 6 行高 A6 B6 C6 D6":
+  [36m<div[39m
+    [33maria-rowindex[39m=[32m"7"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row"[39m
+    [33mrole[39m=[32m"row"[39m
+    [33mstyle[39m=[32m"top: 144px; width: 488px; height: 24px;"[39m
+  [36m/>[39m
+
+  Name "7 7 行高 A7 B7 C7 D7":
+  [36m<div[39m
+    [33maria-rowindex[39m=[32m"8"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row"[39m
+    [33mrole[39m=[32m"row"[39m
+    [33mstyle[39m=[32m"top: 168px; width: 488px; height: 24px;"[39m
+  [36m/>[39m
+
+  Name "8 8 行高 A8 B8 C8 D8":
+  [36m<div[39m
+    [33maria-rowindex[39m=[32m"9"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row"[39m
+    [33mrole[39m=[32m"row"[39m
+    [33mstyle[39m=[32m"top: 192px; width: 488px; height: 24px;"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  columnheader:
+
+  Name "行号":
+  [36m<div[39m
+    [33maria-label[39m=[32m"行号"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-corner"[39m
+    [33mrole[39m=[32m"columnheader"[39m
+  [36m/>[39m
+
+  Name "A A 列宽":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"2"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-columnheader"[39m
+    [33mdata-selected[39m=[32m"true"[39m
+    [33mrole[39m=[32m"columnheader"[39m
+    [33mstyle[39m=[32m"left: 40px; width: 112px;"[39m
+  [36m/>[39m
+
+  Name "B B 列宽":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"3"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-columnheader"[39m
+    [33mdata-selected[39m=[32m"true"[39m
+    [33mrole[39m=[32m"columnheader"[39m
+    [33mstyle[39m=[32m"left: 152px; width: 112px;"[39m
+  [36m/>[39m
+
+  Name "C C 列宽":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"4"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-columnheader"[39m
+    [33mrole[39m=[32m"columnheader"[39m
+    [33mstyle[39m=[32m"left: 264px; width: 112px;"[39m
+  [36m/>[39m
+
+  Name "D D 列宽":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"5"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-columnheader"[39m
+    [33mrole[39m=[32m"columnheader"[39m
+    [33mstyle[39m=[32m"left: 376px; width: 112px;"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  separator:
+
+  Name "A 列宽":
+  [36m<span[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"A 列宽"[39m
+    [33maria-orientation[39m=[32m"vertical"[39m
+    [33maria-valuemax[39m=[32m"255"[39m
+    [33maria-valuemin[39m=[32m"1"[39m
+    [33maria-valuenow[39m=[32m"15.29"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-column-resize"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  Name "B 列宽":
+  [36m<span[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"B 列宽"[39m
+    [33maria-orientation[39m=[32m"vertical"[39m
+    [33maria-valuemax[39m=[32m"255"[39m
+    [33maria-valuemin[39m=[32m"1"[39m
+    [33maria-valuenow[39m=[32m"15.29"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-column-resize"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  Name "C 列宽":
+  [36m<span[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"C 列宽"[39m
+    [33maria-orientation[39m=[32m"vertical"[39m
+    [33maria-valuemax[39m=[32m"255"[39m
+    [33maria-valuemin[39m=[32m"1"[39m
+    [33maria-valuenow[39m=[32m"15.29"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-column-resize"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  Name "D 列宽":
+  [36m<span[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"D 列宽"[39m
+    [33maria-orientation[39m=[32m"vertical"[39m
+    [33maria-valuemax[39m=[32m"255"[39m
+    [33maria-valuemin[39m=[32m"1"[39m
+    [33maria-valuenow[39m=[32m"15.29"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-column-resize"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  Name "1 行高":
+  [36m<span[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"1 行高"[39m
+    [33maria-orientation[39m=[32m"horizontal"[39m
+    [33maria-valuemax[39m=[32m"409.5"[39m
+    [33maria-valuemin[39m=[32m"0.75"[39m
+    [33maria-valuenow[39m=[32m"18"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row-resize"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  Name "2 行高":
+  [36m<span[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"2 行高"[39m
+    [33maria-orientation[39m=[32m"horizontal"[39m
+    [33maria-valuemax[39m=[32m"409.5"[39m
+    [33maria-valuemin[39m=[32m"0.75"[39m
+    [33maria-valuenow[39m=[32m"18"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row-resize"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  Name "3 行高":
+  [36m<span[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"3 行高"[39m
+    [33maria-orientation[39m=[32m"horizontal"[39m
+    [33maria-valuemax[39m=[32m"409.5"[39m
+    [33maria-valuemin[39m=[32m"0.75"[39m
+    [33maria-valuenow[39m=[32m"18"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row-resize"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  Name "4 行高":
+  [36m<span[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"4 行高"[39m
+    [33maria-orientation[39m=[32m"horizontal"[39m
+    [33maria-valuemax[39m=[32m"409.5"[39m
+    [33maria-valuemin[39m=[32m"0.75"[39m
+    [33maria-valuenow[39m=[32m"18"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row-resize"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  Name "5 行高":
+  [36m<span[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"5 行高"[39m
+    [33maria-orientation[39m=[32m"horizontal"[39m
+    [33maria-valuemax[39m=[32m"409.5"[39m
+    [33maria-valuemin[39m=[32m"0.75"[39m
+    [33maria-valuenow[39m=[32m"18"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row-resize"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  Name "6 行高":
+  [36m<span[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"6 行高"[39m
+    [33maria-orientation[39m=[32m"horizontal"[39m
+    [33maria-valuemax[39m=[32m"409.5"[39m
+    [33maria-valuemin[39m=[32m"0.75"[39m
+    [33maria-valuenow[39m=[32m"18"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row-resize"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  Name "7 行高":
+  [36m<span[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"7 行高"[39m
+    [33maria-orientation[39m=[32m"horizontal"[39m
+    [33maria-valuemax[39m=[32m"409.5"[39m
+    [33maria-valuemin[39m=[32m"0.75"[39m
+    [33maria-valuenow[39m=[32m"18"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row-resize"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  Name "8 行高":
+  [36m<span[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"8 行高"[39m
+    [33maria-orientation[39m=[32m"horizontal"[39m
+    [33maria-valuemax[39m=[32m"409.5"[39m
+    [33maria-valuemin[39m=[32m"0.75"[39m
+    [33maria-valuenow[39m=[32m"18"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-row-resize"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  rowheader:
+
+  Name "1 1 行高":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"1"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-rowheader"[39m
+    [33mdata-selected[39m=[32m"true"[39m
+    [33mrole[39m=[32m"rowheader"[39m
+    [33mstyle[39m=[32m"height: 24px;"[39m
+  [36m/>[39m
+
+  Name "2 2 行高":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"1"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-rowheader"[39m
+    [33mdata-selected[39m=[32m"true"[39m
+    [33mrole[39m=[32m"rowheader"[39m
+    [33mstyle[39m=[32m"height: 24px;"[39m
+  [36m/>[39m
+
+  Name "3 3 行高":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"1"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-rowheader"[39m
+    [33mdata-selected[39m=[32m"true"[39m
+    [33mrole[39m=[32m"rowheader"[39m
+    [33mstyle[39m=[32m"height: 24px;"[39m
+  [36m/>[39m
+
+  Name "4 4 行高":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"1"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-rowheader"[39m
+    [33mdata-selected[39m=[32m"true"[39m
+    [33mrole[39m=[32m"rowheader"[39m
+    [33mstyle[39m=[32m"height: 24px;"[39m
+  [36m/>[39m
+
+  Name "5 5 行高":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"1"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-rowheader"[39m
+    [33mrole[39m=[32m"rowheader"[39m
+    [33mstyle[39m=[32m"height: 24px;"[39m
+  [36m/>[39m
+
+  Name "6 6 行高":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"1"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-rowheader"[39m
+    [33mrole[39m=[32m"rowheader"[39m
+    [33mstyle[39m=[32m"height: 24px;"[39m
+  [36m/>[39m
+
+  Name "7 7 行高":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"1"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-rowheader"[39m
+    [33mrole[39m=[32m"rowheader"[39m
+    [33mstyle[39m=[32m"height: 24px;"[39m
+  [36m/>[39m
+
+  Name "8 8 行高":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"1"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-rowheader"[39m
+    [33mrole[39m=[32m"rowheader"[39m
+    [33mstyle[39m=[32m"height: 24px;"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  gridcell:
+
+  Name "A1":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"2"[39m
+    [33maria-label[39m=[32m"A1"[39m
+    [33maria-selected[39m=[32m"true"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mdata-selected[39m=[32m"true"[39m
+    [33mid[39m=[32m"_r_0_-A1"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 40px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+    [33mtitle[39m=[32m"Key"[39m
+  [36m/>[39m
+
+  Name "B1":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"3"[39m
+    [33maria-label[39m=[32m"B1"[39m
+    [33maria-selected[39m=[32m"true"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mdata-selected[39m=[32m"true"[39m
+    [33mid[39m=[32m"_r_0_-B1"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 152px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+    [33mtitle[39m=[32m"Amount"[39m
+  [36m/>[39m
+
+  Name "C1":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"4"[39m
+    [33maria-label[39m=[32m"C1"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-C1"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 264px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "D1":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"5"[39m
+    [33maria-label[39m=[32m"D1"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-D1"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 376px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "A2":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"2"[39m
+    [33maria-label[39m=[32m"A2"[39m
+    [33maria-selected[39m=[32m"true"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mdata-selected[39m=[32m"true"[39m
+    [33mid[39m=[32m"_r_0_-A2"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 40px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+    [33mtitle[39m=[32m"Red"[39m
+  [36m/>[39m
+
+  Name "B2":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"3"[39m
+    [33maria-label[39m=[32m"B2"[39m
+    [33maria-selected[39m=[32m"true"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mdata-selected[39m=[32m"true"[39m
+    [33mid[39m=[32m"_r_0_-B2"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 152px; width: 112px; height: 24px; font-weight: 700; align-items: flex-end; text-align: right;"[39m
+    [33mtitle[39m=[32m"10"[39m
+  [36m/>[39m
+
+  Name "C2":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"4"[39m
+    [33maria-label[39m=[32m"C2"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-C2"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 264px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "D2":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"5"[39m
+    [33maria-label[39m=[32m"D2"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-D2"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 376px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "A3":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"2"[39m
+    [33maria-label[39m=[32m"A3"[39m
+    [33maria-selected[39m=[32m"true"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mdata-selected[39m=[32m"true"[39m
+    [33mid[39m=[32m"_r_0_-A3"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 40px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+    [33mtitle[39m=[32m"Blue"[39m
+  [36m/>[39m
+
+  Name "B3":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"3"[39m
+    [33maria-label[39m=[32m"B3"[39m
+    [33maria-selected[39m=[32m"true"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mdata-selected[39m=[32m"true"[39m
+    [33mid[39m=[32m"_r_0_-B3"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 152px; width: 112px; height: 24px; align-items: flex-end; text-align: right; font-style: italic;"[39m
+    [33mtitle[39m=[32m"30"[39m
+  [36m/>[39m
+
+  Name "C3":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"4"[39m
+    [33maria-label[39m=[32m"C3"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-C3"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 264px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "D3":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"5"[39m
+    [33maria-label[39m=[32m"D3"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-D3"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 376px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "A4":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"2"[39m
+    [33maria-label[39m=[32m"A4"[39m
+    [33maria-selected[39m=[32m"true"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mdata-selected[39m=[32m"true"[39m
+    [33mid[39m=[32m"_r_0_-A4"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 40px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+    [33mtitle[39m=[32m""[39m
+  [36m/>[39m
+
+  Name "B4":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"3"[39m
+    [33maria-label[39m=[32m"B4"[39m
+    [33maria-selected[39m=[32m"true"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mdata-active[39m=[32m"true"[39m
+    [33mdata-selected[39m=[32m"true"[39m
+    [33mid[39m=[32m"_r_0_-B4"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 152px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+    [33mtitle[39m=[32m""[39m
+  [36m/>[39m
+
+  Name "C4":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"4"[39m
+    [33maria-label[39m=[32m"C4"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-C4"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 264px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "D4":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"5"[39m
+    [33maria-label[39m=[32m"D4"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-D4"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 376px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+    [33mtitle[39m=[32m"Outside"[39m
+  [36m/>[39m
+
+  Name "A5":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"2"[39m
+    [33maria-label[39m=[32m"A5"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-A5"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 40px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "B5":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"3"[39m
+    [33maria-label[39m=[32m"B5"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-B5"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 152px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "C5":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"4"[39m
+    [33maria-label[39m=[32m"C5"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-C5"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 264px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "D5":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"5"[39m
+    [33maria-label[39m=[32m"D5"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-D5"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 376px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "A6":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"2"[39m
+    [33maria-label[39m=[32m"A6"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-A6"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 40px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "B6":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"3"[39m
+    [33maria-label[39m=[32m"B6"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-B6"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 152px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "C6":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"4"[39m
+    [33maria-label[39m=[32m"C6"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-C6"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 264px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "D6":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"5"[39m
+    [33maria-label[39m=[32m"D6"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-D6"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 376px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "A7":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"2"[39m
+    [33maria-label[39m=[32m"A7"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-A7"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 40px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "B7":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"3"[39m
+    [33maria-label[39m=[32m"B7"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-B7"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 152px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "C7":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"4"[39m
+    [33maria-label[39m=[32m"C7"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-C7"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 264px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "D7":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"5"[39m
+    [33maria-label[39m=[32m"D7"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-D7"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 376px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "A8":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"2"[39m
+    [33maria-label[39m=[32m"A8"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-A8"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 40px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "B8":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"3"[39m
+    [33maria-label[39m=[32m"B8"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-B8"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 152px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "C8":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"4"[39m
+    [33maria-label[39m=[32m"C8"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-C8"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 264px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  Name "D8":
+  [36m<div[39m
+    [33maria-colindex[39m=[32m"5"[39m
+    [33maria-label[39m=[32m"D8"[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-cell"[39m
+    [33mid[39m=[32m"_r_0_-D8"[39m
+    [33mrole[39m=[32m"gridcell"[39m
+    [33mstyle[39m=[32m"left: 376px; width: 112px; height: 24px; align-items: flex-end; text-align: left;"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  status:
+
+  Name "已删除 1 条重复记录，保留 2 条记录（不含标题）。可一次撤销恢复。":
+  [36m<span[39m
+    [33mclass[39m=[32m"zuvi-studio-sheet-notice"[39m
+    [33mid[39m=[32m"_r_0_-notice"[39m
+    [33mrole[39m=[32m"status"[39m
+    [33mtitle[39m=[32m"已删除 1 条重复记录，保留 2 条记录（不含标题）。可一次撤销恢复。"[39m
+  [36m/>[39m
+
+  --------------------------------------------------listbox:
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"zuvi-select-listbox"[39m
+    [33mdata-open[39m=[32m"false"[39m
+    [33mdata-part[39m=[32m"listbox"[39m
+    [33mid[39m=[32m"_r_d_-listbox"[39m
+    [33mrole[39m=[32m"listbox"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  option:
+
+  Name "A":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"true"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_d_-option-0"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  Name "B":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_d_-option-1"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  Name "C":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_d_-option-2"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  Name "D":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_d_-option-3"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  --------------------------------------------------listbox:
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"zuvi-select-listbox"[39m
+    [33mdata-open[39m=[32m"false"[39m
+    [33mdata-part[39m=[32m"listbox"[39m
+    [33mid[39m=[32m"_r_e_-listbox"[39m
+    [33mrole[39m=[32m"listbox"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  option:
+
+  Name "包含":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"true"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_e_-option-0"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  Name "等于":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_e_-option-1"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  Name "大于":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_e_-option-2"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  Name "小于":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_e_-option-3"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  Name "字体颜色":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_e_-option-4"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  Name "填充颜色":
+  [36m<div[39m
+    [33maria-selected[39m=[32m"false"[39m
+    [33mclass[39m=[32m"zuvi-select-option"[39m
+    [33mdata-part[39m=[32m"option"[39m
+    [33mid[39m=[32m"_r_e_-option-5"[39m
+    [33mrole[39m=[32m"option"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body[39m
+  [33mstyle[39m=[32m""[39m
+[36m>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"zuvi-studio-sheet"[39m
+      [33mdata-gridlines[39m=[32m"true"[39m
+      [33mdata-headers[39m=[32m"true"[39m
+      [33mdata-sheet-zoom[39m=[32m"100"[39m
+      [33mstyle[39m=[32m"--zuvi-studio-sheet-scale: 1; --zuvi-studio-sheet-header-height: 24px; --zuvi-studio-sheet-row-header-width: 40px;"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"zuvi-tabs zuvi-studio-sheet-ribbon zuvi-studio-ribbon"[39m
+        [33mdata-orientation[39m=[32m"horizontal"[39m
+        [33mdata-part[39m=[32m"root"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"zuvi-studio-ribbon-tabbar"[39m
+          [33mdata-part[39m=[32m"ribbon-tabs"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33maria-label[39m=[32m"表格工具栏"[39m
+            [33maria-orientation[39m=[32m"horizontal"[39m
+            [33mclass[39m=[32m"zuvi-tabs-list"[39m
+            [33mdata-part[39m=[32m"list"[39m
+            [33mrole[39m=[32m"tablist"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33maria-controls[39m=[32m"_r_1_-panel-home"[39m
+              [33maria-selected[39m=[32m"false"[39m
+              [33mclass[39m=[32m"zuvi-tab"[39m
+              [33mdata-part[39m=[32m"trigger"[39m
+              [33mid[39m=[32m"_r_1_-tab-home"[39m
+              [33mrole[39m=[32m"tab"[39m
+              [33mtabindex[39m=[32m"-1"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m开始[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-controls[39m=[32m"_r_1_-panel-insert"[39m
+              [33maria-selected[39m=[32m"false"[39m
+              [33mclass[39m=[32m"zuvi-tab"[39m
+              [33mdata-part[39m=[32m"trigger"[39m
+              [33mid[39m=[32m"_r_1_-tab-insert"[39m
+              [33mrole[39m=[32m"tab"[39m
+              [33mtabindex[39m=[32m"-1"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m插入[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-controls[39m=[32m"_r_1_-panel-layout"[39m
+              [33maria-selected[39m=[32m"false"[39m
+              [33mclass[39m=[32m"zuvi-tab"[39m
+              [33mdata-part[39m=[32m"trigger"[39m
+              [33mid[39m=[32m"_r_1_-tab-layout"[39m
+              [33mrole[39m=[32m"tab"[39m
+              [33mtabindex[39m=[32m"-1"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m布局[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-controls[39m=[32m"_r_1_-panel-formulas"[39m
+              [33maria-selected[39m=[32m"false"[39m
+              [33mclass[39m=[32m"zuvi-tab"[39m
+              [33mdata-part[39m=[32m"trigger"[39m
+              [33mid[39m=[32m"_r_1_-tab-formulas"[39m
+              [33mrole[39m=[32m"tab"[39m
+              [33mtabindex[39m=[32m"-1"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m公式[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-controls[39m=[32m"_r_1_-panel-data"[39m
+              [33maria-selected[39m=[32m"true"[39m
+              [33mclass[39m=[32m"zuvi-tab"[39m
+              [33mdata-part[39m=[32m"trigger"[39m
+              [33mid[39m=[32m"_r_1_-tab-data"[39m
+              [33mrole[39m=[32m"tab"[39m
+              [33mtabindex[39m=[32m"0"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m数据[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-controls[39m=[32m"_r_1_-panel-view"[39m
+              [33maria-selected[39m=[32m"false"[39m
+              [33mclass[39m=[32m"zuvi-tab"[39m
+              [33mdata-part[39m=[32m"trigger"[39m
+              [33mid[39m=[32m"_r_1_-tab-view"[39m
+              [33mrole[39m=[32m"tab"[39m
+              [33mtabindex[39m=[32m"-1"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m视图[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33maria-labelledby[39m=[32m"_r_1_-tab-data"[39m
+          [33mclass[39m=[32m"zuvi-tabs-panel"[39m
+          [33mdata-part[39m=[32m"panel"[39m
+          [33mid[39m=[32m"_r_1_-panel-data"[39m
+          [33mrole[39m=[32m"tabpanel"[39m
+          [33mtabindex[39m=[32m"0"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"zuvi-studio-sheet-tools zuvi-studio-sheet-data-tools"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"zuvi-studio-sheet-toolgroup"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"zuvi-button"[39m
+                [33mdata-part[39m=[32m"root"[39m
+                [33mdata-size[39m=[32m"sm"[39m
+                [33mdata-variant[39m=[32m"outline"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"zuvi-button-label"[39m
+                  [33mdata-part[39m=[32m"label"[39m
+                [36m>[39m
+                  [0m数据验证[0m
+                [36m</span>[39m
+              [36m</button>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"zuvi-button"[39m
+                [33mdata-part[39m=[32m"root"[39m
+                [33mdata-size[39m=[32m"sm"[39m
+                [33mdata-variant[39m=[32m"outline"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"zuvi-button-label"[39m
+                  [33mdata-part[39m=[32m"label"[39m
+                [36m>[39m
+                  [0m删除重复项[0m
+                [36m</span>[39m
+              [36m</button>[39m
+              [36m<span[39m
+                [33mtitle[39m=[32m"0 条规则"[39m
+              [36m>[39m
+                [0m数据工具[0m
+              [36m</span>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"zuvi-studio-sheet-toolgroup"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"zuvi-studio-sheet-toolrow"[39m
+              [36m>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"zuvi-button"[39m
+                  [33mdata-part[39m=[32m"root"[39m
+                  [33mdata-size[39m=[32m"sm"[39m
+                  [33mdata-variant[39m=[32m"outline"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"zuvi-button-label"[39m
+                 ...
+ ❯ Object.getElementError ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ click src/components/OfficeStudio/StudioSheet.duplicates.test.tsx:74:56
+     72|   };
+     73| }
+     74| const click = (name: string) => fireEvent.click(screen.getByRole('butt…
+       |                                                        ^
+     75| function select(range = 'A1:B4') {
+     76|   const address = screen.getByRole('textbox', { name: '单元格地址' });
+ ❯ src/components/OfficeStudio/StudioSheet.duplicates.test.tsx:102:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  18:52:27
+   Duration  2.99s (transform 664ms, setup 126ms, collect 938ms, tests 1.42s, environment 349ms, prepare 38ms)
+
+undefined
+/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run src/components/OfficeStudio/StudioSheet.duplicates.test.tsx --minWorkers=1 --maxWorkers=1

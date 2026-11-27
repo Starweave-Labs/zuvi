@@ -1,0 +1,105 @@
+import { expect, test, type Page, type Locator } from '@playwright/test';
+import { readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import path from 'node:path';
+import JSZip from '../docs/node_modules/jszip/lib/index.js';
+import type { StudioRichNode } from '../packages/ui/src/components/OfficeStudio/studio-types';
+
+const audit = path.resolve('docs/audits/2026-11-27/word-character-guards');
+async function snapshot(node: Locator) {
+  return node.evaluate(element => (element as HTMLElement & { editor: { getJSON(): StudioRichNode } }).editor.getJSON());
+}
+async function select(node: Locator) {
+  await node.evaluate(element => {
+    (element.closest('[contenteditable="true"]') as HTMLElement).focus();
+    const range = document.createRange(); range.selectNodeContents(element);
+    const selection = window.getSelection()!; selection.removeAllRanges(); selection.addRange(range);
+    document.dispatchEvent(new Event('selectionchange'));
+  });
+}
+async function compose(node: Locator, start: boolean) {
+  await node.evaluate((element, begin) => element.dispatchEvent(new CompositionEvent(begin ? 'compositionstart' : 'compositionend', { bubbles: true })), start);
+}
+async function imported(page: Page, bytes: Buffer, name: string) {
+  await page.getByLabel('导入文档文件', { exact: true }).setInputFiles({ name, mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', buffer: bytes });
+  await expect(page.getByRole('textbox', { name: 'Word 文档正文', exact: true })).toContainText('Word character guard sample');
+}
+async function exported(page: Page, name: string) {
+  const pending = page.waitForEvent('download'); await page.getByRole('button', { name: '导出文件', exact: true }).click();
+  const bytes = await readFile((await (await pending).path())!); await writeFile(path.join(audit, name), bytes); return bytes;
+}
+
+test('guards character operations during IME, steps a shared empty header and saves all five Unicode case modes through two real DOCX reopens', async ({ page }) => {
+  test.setTimeout(180000);
+  const sourceBytes = await readFile(path.join(audit, 'source.docx')), errors: string[] = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.goto('/#/components/office-studio'); await imported(page, sourceBytes, 'Character guards.docx');
+  const body = page.getByRole('textbox', { name: 'Word 文档正文', exact: true });
+  const source = body.locator('p').filter({ hasText: /^SOURCE$/ }), target = body.locator('p').filter({ hasText: /^target$/ });
+  await select(source); const original = await snapshot(body);
+  await compose(body, true); await page.getByRole('button', { name: '清除格式', exact: true }).click();
+  expect(await snapshot(body)).toEqual(original); await compose(body, false);
+  await page.getByRole('button', { name: '清除格式', exact: true }).click(); await expect(source.locator('strong')).toHaveCount(0);
+  await page.getByRole('button', { name: '撤销', exact: true }).click(); expect(await snapshot(body)).toEqual(original);
+  await page.getByRole('button', { name: '格式刷', exact: true }).click(); await compose(body, true); await select(target);
+  expect(await snapshot(body)).toEqual(original); await compose(body, false);
+  await select(source); await select(target); await expect(target.locator('strong')).toHaveText('target');
+  await expect(target).toHaveCSS('text-align', 'right');
+  await page.getByRole('button', { name: '字符间距与位置', exact: true }).click();
+  const dialog = page.getByRole('dialog', { name: '字符间距与位置', exact: true });
+  await dialog.getByRole('button', { name: /^字符间距 / }).click(); await page.getByRole('option', { name: '加宽', exact: true }).click();
+  const amount = dialog.getByLabel('字符间距量（pt）', { exact: true });
+  const beforeMetrics = await snapshot(body); await compose(amount, true); await amount.fill('0.3');
+  await expect(dialog.getByRole('button', { name: '应用字符格式', exact: true })).toBeDisabled(); expect(await snapshot(body)).toEqual(beforeMetrics);
+  await compose(amount, false); await dialog.getByRole('button', { name: '字符位置 标准', exact: true }).click(); await page.getByRole('option', { name: '降低', exact: true }).click();
+  await dialog.getByLabel('字符位置量（pt）', { exact: true }).fill('1.5'); await dialog.getByRole('button', { name: '应用字符格式', exact: true }).click();
+  await expect(target.locator('span')).toHaveAttribute('data-word-letterspacing', '0.3pt');
+  await expect(target.locator('span')).toHaveAttribute('data-word-baselineshift', '-1.5pt');
+  await page.getByLabel('页眉区域', { exact: true }).dblclick();
+  const header = page.getByRole('textbox', { name: 'Word 页眉', exact: true }); await expect(header).toHaveAttribute('contenteditable', 'true');
+  await header.click(); await page.getByRole('tab', { name: '开始', exact: true }).click();
+  await expect(page.getByRole('combobox', { name: '字号', exact: true })).toHaveValue('14');
+  await page.getByRole('button', { name: '增大字号', exact: true }).click();
+  await expect(page.getByRole('combobox', { name: '字号', exact: true })).toHaveValue('16');
+  await header.pressSequentially('H'); await expect(header.locator('span')).toHaveCSS('font-size', '21.3333px');
+  await body.click(); await page.getByRole('tab', { name: '开始', exact: true }).click();
+  const modes = [
+    { prefix: /^lower /i, mode: '全部小写', text: 'lower ος' },
+    { prefix: /^title /i, mode: '每个单词首字母大写', text: 'Title Ος' },
+    { prefix: /^sentence\./i, mode: '句首字母大写', text: 'Sentence. Ος' },
+    { prefix: /^toggle /i, mode: '切换大小写', text: 'toggle ος' },
+    { prefix: /^upper /i, mode: '全部大写', text: 'UPPER ΟΣ' },
+  ];
+  for (const item of modes) {
+    const paragraph = body.locator('p').filter({ hasText: item.prefix }); await select(paragraph);
+    await page.getByRole('button', { name: '变更大小写', exact: true }).click(); await page.getByRole('menuitem', { name: item.mode, exact: true }).click();
+    await expect(paragraph).toHaveText(item.text); await expect(paragraph.locator('a')).toHaveCount(1);
+  }
+  const length = body.locator('p').filter({ hasText: /^length /i }); await select(length);
+  await page.getByRole('button', { name: '变更大小写', exact: true }).click(); await page.getByRole('menuitem', { name: '全部小写', exact: true }).click();
+  await expect(length).toHaveText('length i\u0307σος ß');
+  const expected = await snapshot(body), rounds = [];
+  for (let round = 1; round <= 2; round++) {
+    const bytes = await exported(page, `roundtrip-${round}.docx`), zip = await JSZip.loadAsync(bytes);
+    const xml = await zip.file('word/document.xml')!.async('string');
+    const texts = await page.evaluate(source => Array.from(new DOMParser().parseFromString(source, 'application/xml').getElementsByTagNameNS('http://schemas.openxmlformats.org/wordprocessingml/2006/main', 't')).map(node => node.textContent).join(''), xml);
+    for (const item of modes) expect(texts).toContain(item.text); expect(texts).toContain('length i\u0307σος ß');
+    expect(xml).toContain('w:spacing w:val="6"'); expect(xml).toContain('w:position w:val="-3"');
+    const relationships = await zip.file('word/_rels/document.xml.rels')!.async('string');
+    for (const label of ['lower', 'title', 'sentence', 'toggle', 'upper']) expect(relationships).toContain(`https://example.com/${label}`);
+    await imported(page, bytes, `Reopened-${round}.docx`); await expect(body).toContainText('length i\u0307σος ß');
+    await expect(page.getByRole('textbox', { name: 'Word 页眉', exact: true })).toContainText('H');
+    await expect(target.locator('span')).toHaveAttribute('data-word-letterspacing', '0.3pt');
+    rounds.push({ round, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex'), texts });
+  }
+  await page.screenshot({ path: path.join(audit, 'results-light.png'), fullPage: true, animations: 'disabled' });
+  await page.getByRole('button', { name: '切换暗色', exact: true }).click(); await page.screenshot({ path: path.join(audit, 'results-dark.png'), fullPage: true, animations: 'disabled' });
+  await page.setViewportSize({ width: 320, height: 720 });
+  await select(target); await page.getByRole('button', { name: '字符间距与位置', exact: true }).click();
+  await expect(page.getByRole('dialog').getByRole('button', { name: '应用字符格式', exact: true })).toBeInViewport();
+  await page.screenshot({ path: path.join(audit, 'metrics-dark-320.png'), fullPage: true, animations: 'disabled' });
+  await page.getByRole('dialog').getByRole('button', { name: '取消', exact: true }).click();
+  await page.getByRole('switch', { name: '只读预览', exact: true }).click();
+  for (const name of ['增大字号', '减小字号', '变更大小写', '格式刷', '清除格式', '字符间距与位置']) await expect(page.getByRole('button', { name, exact: true })).toBeDisabled();
+  expect(errors).toEqual([]); await writeFile(path.join(audit, 'browser-roundtrips.json'), JSON.stringify({ expected, rounds, errors }, null, 2) + '\n');
+});

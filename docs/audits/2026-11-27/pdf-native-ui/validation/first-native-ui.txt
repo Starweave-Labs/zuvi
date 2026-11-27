@@ -1,0 +1,361 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ × src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > forwards the native editor through OfficeStudio and accepts one immutable source/model pair with transactional history 493ms
+   → input is a void element tag and must neither have `children` nor use `dangerouslySetInnerHTML`.
+ × src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > keeps unchanged native device colors out of a contents-only property patch, and cancels or applies an unchanged draft without history
+   → input is a void element tag and must neither have `children` nor use `dangerouslySetInnerHTML`.
+ × src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > rejects invalid numeric drafts and IME submission while preserving the property draft for correction
+   → input is a void element tag and must neither have `children` nor use `dangerouslySetInnerHTML`.
+ × src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > keeps creation and reply inputs enabled throughout IME while refusing acceptance until composition ends
+   → expect(element).toBeEnabled()
+
+Received element is not enabled:
+  <textarea
+  aria-label="PDF 新增文字"
+  class="zuvi-input-field"
+  data-part="textarea"
+  disabled=""
+  maxlength="10000"
+  rows="4"
+/>
+ × src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > does not submit stale native snapshots when a property draft was opened before an external model replacement
+   → input is a void element tag and must neither have `children` nor use `dangerouslySetInnerHTML`.
+ × src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > discards an eventual prepared native result when readOnly becomes active
+   → input is a void element tag and must neither have `children` nor use `dangerouslySetInnerHTML`.
+ × src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > discards an eventual prepared native result when disabled becomes active
+   → input is a void element tag and must neither have `children` nor use `dangerouslySetInnerHTML`.
+ × src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > discards an eventual prepared native result after the current document is replaced
+   → input is a void element tag and must neither have `children` nor use `dangerouslySetInnerHTML`.
+ × src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > discards an eventual prepared native result after the current source is replaced
+   → input is a void element tag and must neither have `children` nor use `dangerouslySetInnerHTML`.
+ × src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > discards an eventual prepared native result after the current editor is replaced
+   → input is a void element tag and must neither have `children` nor use `dangerouslySetInnerHTML`.
+ × src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > aborts a pending property apply on cancel and ignores its eventual source without adding history
+   → input is a void element tag and must neither have `children` nor use `dangerouslySetInnerHTML`.
+ × src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > retains both the current pair and undo/redo entries when the controlled host rejects application or restoration
+   → input is a void element tag and must neither have `children` nor use `dangerouslySetInnerHTML`.
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > does not offer native source mutation without a complete host contract: {"provider":false}
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > does not offer native source mutation without a complete host contract: {"callback":false}
+ × src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > permits read-only selection and properties while disabling move, deletion, contents, replies and history
+   → input is a void element tag and must neither have `children` nor use `dangerouslySetInnerHTML`.
+ × src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > keeps signed-source commands disabled and refuses editing while signature inspection is pending
+   → expect(element).toBeDisabled()
+
+Received element is not disabled:
+  <input
+  aria-label="PDF 页面表单 name"
+  class="zuvi-input-field zuvi-studio-pdf-widget-value"
+  data-part="input"
+  maxlength="10000"
+  value="Original"
+/>
+ × src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > submits keyboard movement and deletion once, ignores IME shortcuts, and restores each accepted pair independently
+   → expected "spy" to not be called at all, but actually been called 1 times
+
+Received: 
+
+  1st spy call:
+
+    Array [
+      Object {
+        "command": Object {
+          "command": Object {
+            "id": "native-text",
+            "now": "2026-11-26T22:00:13.495Z",
+            "patch": Object {
+              "kind": "freeText",
+              "rect": Array [
+                41,
+                300,
+                241,
+                350,
+              ],
+            },
+            "type": "update",
+          },
+          "type": "mark",
+        },
+        "next": undefined,
+        "now": "2026-11-26T22:00:13.495Z",
+        "signal": AbortSignal {},
+        "snapshot": Object {
+          "document": Object {
+            "fields": Array [
+              Object {
+                "name": "name",
+                "readOnly": false,
+                "type": "text",
+                "value": "Original",
+                "widgets": Array [
+                  Object {
+                    "height": 24,
+                    "page": 0,
+                    "width": 160,
+                    "x": 20,
+                    "y": 20,
+                  },
+                ],
+              },
+            ],
+            "id": "source",
+            "kind": "pdf",
+            "marks": Array [],
+            "name": "Source.pdf",
+            "nativeAnnotations": Object {
+              "bindings": Array [
+                Object {
+                  "nativePageId": "page-0",
+                  "sourcePage": 0,
+                  "uiPageId": "first",
+                },
+                Object {
+                  "nativePageId": "page-1",
+                  "sourcePage": 1,
+                  "uiPageId": "second",
+                },
+              ],
+              "commands": Array [],
+              "sourceHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "version": 1,
+            },
+            "pageCount": 2,
+            "pages": Array [
+              Object {
+                "id": "first",
+                "sourcePage": 0,
+              },
+              Object {
+                "id": "second",
+                "sourcePage": 1,
+              },
+            ],
+            "rotations": Object {},
+            "sourcePageCount": 2,
+            "version": 1,
+          },
+          "source": Blob {},
+        },
+      },
+    ]
+
+
+Number of calls: 1
+
+ × src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > refuses model-only mutations of native projections when no annotation provider is installed
+   → expect(element).toBeDisabled()
+
+Received element is not disabled:
+  <textarea
+  aria-label="PDF 选中标注文字"
+  class="zuvi-input-field"
+  data-part="textarea"
+  maxlength="1000"
+  rows="4"
+/>
+ × src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > uses native capability flags for properties even when the overall source is editable
+   → input is a void element tag and must neither have `children` nor use `dangerouslySetInnerHTML`.
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 17 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > forwards the native editor through OfficeStudio and accepts one immutable source/model pair with transactional history
+ FAIL  src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > keeps unchanged native device colors out of a contents-only property patch, and cancels or applies an unchanged draft without history
+ FAIL  src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > rejects invalid numeric drafts and IME submission while preserving the property draft for correction
+ FAIL  src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > does not submit stale native snapshots when a property draft was opened before an external model replacement
+ FAIL  src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > discards an eventual prepared native result when readOnly becomes active
+ FAIL  src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > discards an eventual prepared native result when disabled becomes active
+ FAIL  src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > discards an eventual prepared native result after the current document is replaced
+ FAIL  src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > discards an eventual prepared native result after the current source is replaced
+ FAIL  src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > discards an eventual prepared native result after the current editor is replaced
+ FAIL  src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > aborts a pending property apply on cancel and ignores its eventual source without adding history
+ FAIL  src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > retains both the current pair and undo/redo entries when the controlled host rejects application or restoration
+ FAIL  src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > permits read-only selection and properties while disabling move, deletion, contents, replies and history
+ FAIL  src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > uses native capability flags for properties even when the overall source is editable
+Error: input is a void element tag and must neither have `children` nor use `dangerouslySetInnerHTML`.
+ ❯ setInitialProperties ../../node_modules/.pnpm/react-dom@19.3.1_react@19.3.1/node_modules/react-dom/cjs/react-dom-client.development.js:22259:29
+ ❯ completeWork ../../node_modules/.pnpm/react-dom@19.3.1_react@19.3.1/node_modules/react-dom/cjs/react-dom-client.development.js:13124:18
+ ❯ runWithFiberInDEV ../../node_modules/.pnpm/react-dom@19.3.1_react@19.3.1/node_modules/react-dom/cjs/react-dom-client.development.js:1048:13
+ ❯ completeUnitOfWork ../../node_modules/.pnpm/react-dom@19.3.1_react@19.3.1/node_modules/react-dom/cjs/react-dom-client.development.js:19320:19
+ ❯ performUnitOfWork ../../node_modules/.pnpm/react-dom@19.3.1_react@19.3.1/node_modules/react-dom/cjs/react-dom-client.development.js:19193:11
+ ❯ workLoopSync ../../node_modules/.pnpm/react-dom@19.3.1_react@19.3.1/node_modules/react-dom/cjs/react-dom-client.development.js:19004:41
+ ❯ renderRootSync ../../node_modules/.pnpm/react-dom@19.3.1_react@19.3.1/node_modules/react-dom/cjs/react-dom-client.development.js:18985:11
+ ❯ performWorkOnRoot ../../node_modules/.pnpm/react-dom@19.3.1_react@19.3.1/node_modules/react-dom/cjs/react-dom-client.development.js:18094:35
+ ❯ performWorkOnRootViaSchedulerTask ../../node_modules/.pnpm/react-dom@19.3.1_react@19.3.1/node_modules/react-dom/cjs/react-dom-client.development.js:20665:7
+ ❯ flushActQueue ../../node_modules/.pnpm/react@19.3.1/node_modules/react/cjs/react.development.js:664:34
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/17]⎯
+
+ FAIL  src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > keeps creation and reply inputs enabled throughout IME while refusing acceptance until composition ends
+Error: expect(element).toBeEnabled()
+
+Received element is not enabled:
+  <textarea
+  aria-label="PDF 新增文字"
+  class="zuvi-input-field"
+  data-part="textarea"
+  disabled=""
+  maxlength="10000"
+  rows="4"
+/>
+ ❯ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx:160:75
+    158|   const f = host(); await ready(); fireEvent.click(screen.getByRole('b…
+    159|   const input = screen.getByLabelText('PDF 新增文字'); fireEvent.compo…
+    160|   fireEvent.change(input, { target: { value: '正在输入中文' } }); expe…
+       |                                                                           ^
+    161|   fireEvent.click(screen.getByRole('button', { name: '放在当前页中央' …
+    162|   fireEvent.compositionEnd(input); fireEvent.click(screen.getByRole('b…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/17]⎯
+
+ FAIL  src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > keeps signed-source commands disabled and refuses editing while signature inspection is pending
+Error: expect(element).toBeDisabled()
+
+Received element is not disabled:
+  <input
+  aria-label="PDF 页面表单 name"
+  class="zuvi-input-field zuvi-studio-pdf-widget-value"
+  data-part="input"
+  maxlength="10000"
+  value="Original"
+/>
+ ❯ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx:238:50
+    236|   const task = deferred<StudioPdfAnnotationInspection>(), f = host({ i…
+    237|   await waitFor(() => expect(f.renderer.load).toHaveBeenCalled());
+    238|   expect(screen.getByLabelText('PDF 页面表单 name')).toBeDisabled();
+       |                                                  ^
+    239|   await act(async () => task.resolve(f.inspection(f.first))); await re…
+    240|   expect(screen.getByRole('button', { name: '文字', exact: true })).to…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/17]⎯
+
+ FAIL  src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > submits keyboard movement and deletion once, ignores IME shortcuts, and restores each accepted pair independently
+AssertionError: expected "spy" to not be called at all, but actually been called 1 times
+
+Received: 
+
+  1st spy call:
+
+    Array [
+      Object {
+        "command": Object {
+          "command": Object {
+            "id": "native-text",
+            "now": "2026-11-26T22:00:13.495Z",
+            "patch": Object {
+              "kind": "freeText",
+              "rect": Array [
+                41,
+                300,
+                241,
+                350,
+              ],
+            },
+            "type": "update",
+          },
+          "type": "mark",
+        },
+        "next": undefined,
+        "now": "2026-11-26T22:00:13.495Z",
+        "signal": AbortSignal {},
+        "snapshot": Object {
+          "document": Object {
+            "fields": Array [
+              Object {
+                "name": "name",
+                "readOnly": false,
+                "type": "text",
+                "value": "Original",
+                "widgets": Array [
+                  Object {
+                    "height": 24,
+                    "page": 0,
+                    "width": 160,
+                    "x": 20,
+                    "y": 20,
+                  },
+                ],
+              },
+            ],
+            "id": "source",
+            "kind": "pdf",
+            "marks": Array [],
+            "name": "Source.pdf",
+            "nativeAnnotations": Object {
+              "bindings": Array [
+                Object {
+                  "nativePageId": "page-0",
+                  "sourcePage": 0,
+                  "uiPageId": "first",
+                },
+                Object {
+                  "nativePageId": "page-1",
+                  "sourcePage": 1,
+                  "uiPageId": "second",
+                },
+              ],
+              "commands": Array [],
+              "sourceHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "version": 1,
+            },
+            "pageCount": 2,
+            "pages": Array [
+              Object {
+                "id": "first",
+                "sourcePage": 0,
+              },
+              Object {
+                "id": "second",
+                "sourcePage": 1,
+              },
+            ],
+            "rotations": Object {},
+            "sourcePageCount": 2,
+            "version": 1,
+          },
+          "source": Blob {},
+        },
+      },
+    ]
+
+
+Number of calls: 1
+
+ ❯ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx:246:30
+    244| it('submits keyboard movement and deletion once, ignores IME shortcuts…
+    245|   const f = host(); await ready(); fireEvent.click(hit()); fireEvent.k…
+    246|   expect(f.editor.apply).not.toHaveBeenCalled(); fireEvent.keyDown(hit…
+       |                              ^
+    247|   await waitFor(() => expect(f.sourceChange).toHaveBeenCalledTimes(1))…
+    248|   const moved = f.snapshot(); const firstCommand = vi.mocked(f.editor.…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/17]⎯
+
+ FAIL  src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx > refuses model-only mutations of native projections when no annotation provider is installed
+Error: expect(element).toBeDisabled()
+
+Received element is not disabled:
+  <textarea
+  aria-label="PDF 选中标注文字"
+  class="zuvi-input-field"
+  data-part="textarea"
+  maxlength="1000"
+  rows="4"
+/>
+ ❯ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx:259:47
+    257|   const f = host({ provider: false, model: first }); await ready();
+    258|   fireEvent.click(within(screen.getByLabelText('PDF 标注列表')).getByR…
+    259|   expect(screen.getByLabelText('PDF 选中标注文字')).toBeDisabled(); ex…
+       |                                               ^
+    260|   fireEvent.change(screen.getByLabelText('PDF 选中标注文字'), { target…
+    261|   fireEvent.click(screen.getByRole('button', { name: '删除选中标注' })…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/17]⎯
+
+ Test Files  1 failed (1)
+      Tests  17 failed | 2 passed (19)
+   Start at  06:00:10
+   Duration  3.02s (transform 490ms, setup 162ms, collect 678ms, tests 1.57s, environment 329ms, prepare 63ms)
+
+undefined
+/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx --reporter=verbose

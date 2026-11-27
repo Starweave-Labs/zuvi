@@ -1,0 +1,1 @@
+Native DOCX inspection passed: source, two actual browser exports and recovered export, inherited and direct run properties, links and Chinese text

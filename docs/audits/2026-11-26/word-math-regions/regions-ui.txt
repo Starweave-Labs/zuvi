@@ -1,0 +1,32 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ❯ src/components/OfficeStudio/StudioWord.test.tsx (108 tests | 2 failed | 106 skipped) 899ms
+   × edits a math group independently in the actual header region with undo and redo 491ms
+     → Array.prototype.forEach called on null or undefined
+   × edits a math group independently in the actual footer region with undo and redo 407ms
+     → Array.prototype.forEach called on null or undefined
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/OfficeStudio/StudioWord.test.tsx > edits a math group independently in the actual header region with undo and redo
+ FAIL  src/components/OfficeStudio/StudioWord.test.tsx > edits a math group independently in the actual footer region with undo and redo
+TypeError: Array.prototype.forEach called on null or undefined
+ ❯ exports.getDeclarationForElement ../../node_modules/.pnpm/jsdom@25.0.1/node_modules/jsdom/lib/jsdom/living/helpers/style-rules.js:162:11
+ ❯ window.getComputedStyle ../../node_modules/.pnpm/jsdom@25.0.1/node_modules/jsdom/lib/jsdom/browser/Window.js:901:32
+ ❯ isInaccessible ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/role-helpers.js:67:14
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/role-helpers.js:169:31
+ ❯ getRoles ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/role-helpers.js:168:32
+ ❯ prettyRoles ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/role-helpers.js:191:17
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/queries/role.js:228:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 106 skipped (108)
+   Start at  13:38:52
+   Duration  3.22s (transform 908ms, setup 166ms, collect 1.40s, tests 899ms, environment 445ms, prepare 60ms)
+
+undefined
+/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run src/components/OfficeStudio/StudioWord.test.tsx -t math group independently --reporter=dot

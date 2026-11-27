@@ -1,0 +1,643 @@
+TAP version 13
+# Subtest: IndexedDB restores the real document JSON and Blob only after its commit, and rejects stale revisions
+ok 1 - IndexedDB restores the real document JSON and Blob only after its commit, and rejects stale revisions
+  ---
+  duration_ms: 9.110041
+  ...
+# Subtest: concurrent IndexedDB writers cannot silently replace the same document revision
+ok 2 - concurrent IndexedDB writers cannot silently replace the same document revision
+  ---
+  duration_ms: 2.054083
+  ...
+# Subtest: IndexedDB preserves every supported conditional-format and validation shape across saves and database reopen
+ok 3 - IndexedDB preserves every supported conditional-format and validation shape across saves and database reopen
+  ---
+  duration_ms: 15.244333
+  ...
+# Subtest: IndexedDB history restores all Excel rules as a new workbook while keeping the latest rules and original bytes
+ok 4 - IndexedDB history restores all Excel rules as a new workbook while keeping the latest rules and original bytes
+  ---
+  duration_ms: 13.216042
+  ...
+# Subtest: unsupported persisted Excel rules reject atomically without replacing the current model or writing history
+ok 5 - unsupported persisted Excel rules reject atomically without replacing the current model or writing history
+  ---
+  duration_ms: 6.691083
+  ...
+# Subtest: save completion retains new input and the next save uses the committed revision
+ok 6 - save completion retains new input and the next save uses the committed revision
+  ---
+  duration_ms: 1.449166
+  ...
+# Subtest: switching waits for existing persistence and saves the next snapshot before replacing the canvas
+ok 7 - switching waits for existing persistence and saves the next snapshot before replacing the canvas
+  ---
+  duration_ms: 0.771958
+  ...
+# Subtest: storage failure keeps editing data and source exportable; retry persists the newest content
+ok 8 - storage failure keeps editing data and source exportable; retry persists the newest content
+  ---
+  duration_ms: 0.948209
+  ...
+# Subtest: explicit save copy resolves a cross-tab conflict without overwriting the other document
+ok 9 - explicit save copy resolves a cross-tab conflict without overwriting the other document
+  ---
+  duration_ms: 0.827875
+  ...
+# Subtest: saved files restore their latest active document and remain independent from the old officeDrafts database
+ok 10 - saved files restore their latest active document and remain independent from the old officeDrafts database
+  ---
+  duration_ms: 0.56925
+  ...
+# Subtest: failed restoration rejects initialization and a new start can recover the existing files
+ok 11 - failed restoration rejects initialization and a new start can recover the existing files
+  ---
+  duration_ms: 0.362209
+  ...
+# Subtest: input entered while the next document loads stays dirty in the current canvas
+ok 12 - input entered while the next document loads stays dirty in the current canvas
+  ---
+  duration_ms: 0.899375
+  ...
+# Subtest: input entered during the active preference transaction cancels the switch and restores the preference
+ok 13 - input entered during the active preference transaction cancels the switch and restores the preference
+  ---
+  duration_ms: 0.763875
+  ...
+# Subtest: concurrent file replacements reject without changing either canvas and release their lock afterward
+ok 14 - concurrent file replacements reject without changing either canvas and release their lock afterward
+  ---
+  duration_ms: 2.985167
+  ...
+# Subtest: an imported document remains exportable after its first commit fails and a retry leaves the old file intact
+ok 15 - an imported document remains exportable after its first commit fails and a retry leaves the old file intact
+  ---
+  duration_ms: 0.734875
+  ...
+# Subtest: history retains the twenty most recent committed models with their original bytes and ignores stale writers
+ok 16 - history retains the twenty most recent committed models with their original bytes and ignores stale writers
+  ---
+  duration_ms: 30.479916
+  ...
+# Subtest: version restoration creates a separate document while keeping the latest saved file and source intact
+ok 17 - version restoration creates a separate document while keeping the latest saved file and source intact
+  ---
+  duration_ms: 2.1465
+  ...
+# Subtest: new input while loading a historical version cancels restoration without replacing the current canvas
+ok 18 - new input while loading a historical version cancels restoration without replacing the current canvas
+  ---
+  duration_ms: 0.421
+  ...
+# Subtest: upgrading the original database preserves existing files and starts an empty history
+ok 19 - upgrading the original database preserves existing files and starts an empty history
+  ---
+  duration_ms: 1.494417
+  ...
+# Subtest: a synchronously denied database open can be retried after permission changes
+ok 20 - a synchronously denied database open can be retried after permission changes
+  ---
+  duration_ms: 0.576958
+  ...
+# Subtest: a data clone failure aborts both history and current-file writes
+ok 21 - a data clone failure aborts both history and current-file writes
+  ---
+  duration_ms: 1.164375
+  ...
+# Subtest: the conflict-copy action respects the same document limit as new files and history restoration
+ok 22 - the conflict-copy action respects the same document limit as new files and history restoration
+  ---
+  duration_ms: 7.953958
+  ...
+# Subtest: workspace preparation visits only the active, selected, and newly added files before publishing them
+ok 23 - workspace preparation visits only the active, selected, and newly added files before publishing them
+  ---
+  duration_ms: 0.889208
+  ...
+# Subtest: new input during selected-file preparation cancels replacement and preserves its source and preference
+ok 24 - new input during selected-file preparation cancels replacement and preserves its source and preference
+  ---
+  duration_ms: 0.607916
+  ...
+# Subtest: new input during import preparation cancels the import before committing or replacing the old draft
+ok 25 - new input during import preparation cancels the import before committing or replacing the old draft
+  ---
+  duration_ms: 0.558875
+  ...
+# Subtest: failed initial preparation retains stored files and the active preference, then retries the same file
+ok 26 - failed initial preparation retains stored files and the active preference, then retries the same file
+  ---
+  duration_ms: 0.350833
+  ...
+# Subtest: preparation failures during selection, import, preview and restoration keep the old active file recoverable
+ok 27 - preparation failures during selection, import, preview and restoration keep the old active file recoverable
+  ---
+  duration_ms: 2.741292
+  ...
+# Subtest: prepared document id or kind mismatches reject selection, import and history without publishing invalid data
+ok 28 - prepared document id or kind mismatches reject selection, import and history without publishing invalid data
+  ---
+  duration_ms: 0.787
+  ...
+# Subtest: IndexedDB history preview and restoration publish prepared links while preserving original versions and bytes
+not ok 29 - IndexedDB history preview and restoration publish prepared links while preserving original versions and bytes
+  ---
+  duration_ms: 14.173375
+  location: '/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/tests/studio-workspace.test.mjs:928:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected ... Lines skipped
+    
+      {
+        activeSheetId: 'xlsx-sheet-1',
+    +   defaultFont: {
+    +     bold: false,
+    +     family: 'Calibri',
+    +     italic: false,
+    +     sizePt: 11
+    +   },
+    +   id: 'office-rules',
+    +   kind: 'excel',
+    +   name: 'current-with-cleared-links.xlsx',
+    +   sheets: [
+    +     {
+    +       cells: {
+    +         A1: {
+    +           input: 'State'
+    +         },
+    +         C2: {
+    +           input: '2'
+    +         }
+    +       },
+    +       columnCount: 8,
+    +       conditionalFormats: [
+    +         {
+    +           formulae: [
+    +             '1',
+    +             '100'
+    ...
+    -   id: 'office-rules',
+    -   kind: 'excel',
+    -   name: 'rules.xlsx',
+    -   sheets: [
+    -     {
+    -       cells: {
+    -         A1: {
+    -           input: 'State'
+    -         },
+    -         C2: {
+    -           input: '2'
+    -         }
+    -       },
+    -       columnCount: 8,
+    -       conditionalFormats: [
+    -         {
+    -           formulae: [
+    -             '1',
+    -             '100'
+    -           ],
+    -           id: 'cell',
+    -           operator: 'between',
+    -           priority: 1,
+    -           range: 'C2:C10',
+    -           stopIfTrue: true,
+    ...
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    version: 1
+    id: 'office-rules'
+    name: 'rules.xlsx'
+    kind: 'excel'
+    activeSheetId: 'xlsx-sheet-1'
+    sheets:
+      0:
+        id: 'xlsx-sheet-1'
+        name: 'Sheet1'
+        rowCount: 10
+        columnCount: 8
+        cells:
+          A1:
+            input: 'State'
+          C2:
+            input: '2'
+        conditionalFormats:
+          0:
+            id: 'cell'
+            range: 'C2:C10'
+            priority: 1
+            type: 'cellIs'
+            operator: 'between'
+            formulae:
+              0: '1'
+              1: '100'
+            style:
+              bold: true
+              color: '#112233'
+              background: '#e0f2fe'
+              numberFormat: '0.00'
+            stopIfTrue: true
+          1:
+            id: 'formula'
+            range: 'C2:C10'
+            priority: 2
+            type: 'expression'
+            formula: '=C2>0'
+            style: <Circular>
+          2:
+            id: 'text'
+            range: 'A2:A10'
+            priority: 3
+            type: 'containsText'
+            text: 'done'
+            style: <Circular>
+          3:
+            id: 'duplicate'
+            range: 'A2:A10'
+            priority: 4
+            type: 'duplicateValues'
+            style: <Circular>
+          4:
+            id: 'unique'
+            range: 'A2:A10'
+            priority: 5
+            type: 'uniqueValues'
+            style: <Circular>
+          5:
+            id: 'top'
+            range: 'C2:C10'
+            priority: 6
+            type: 'top10'
+            rank: 3
+            style: <Circular>
+          6:
+            id: 'bottom'
+            range: 'C2:C10'
+            priority: 7
+            type: 'top10'
+            rank: 20
+            percent: true
+            bottom: true
+            style: <Circular>
+          7:
+            id: 'average'
+            range: 'C2:C10'
+            priority: 8
+            type: 'aboveAverage'
+            aboveAverage: false
+            style: <Circular>
+          8:
+            id: 'two-colors'
+            range: 'C2:C10'
+            priority: 9
+            type: 'colorScale'
+            colors:
+              0: '#ef4444'
+              1: '#22c55e'
+          9:
+            id: 'three-colors'
+            range: 'C2:C10'
+            priority: 10
+            type: 'colorScale'
+            colors:
+              0: '#ef4444'
+              1: '#ffffff'
+              2: '#22c55e'
+        dataValidations:
+          0:
+            id: 'literal'
+            range: 'A2:A10'
+            type: 'list'
+            values:
+              0: 'done'
+              1: 'pending'
+            allowBlank: true
+            showInputMessage: true
+            inputTitle: 'State'
+            inputMessage: 'Choose a state'
+            showErrorMessage: true
+            errorStyle: 'stop'
+            errorTitle: 'Invalid state'
+            errorMessage: 'Choose an available state'
+          1:
+            id: 'source'
+            range: 'B2:B10'
+            type: 'list'
+            source: 'Choices!$A$1:$A$3'
+            allowBlank: true
+          2:
+            id: 'whole'
+            range: 'C2:C10'
+            type: 'whole'
+            operator: 'between'
+            formula1: '1'
+            formula2: '100'
+            allowBlank: true
+          3:
+            id: 'decimal'
+            range: 'D2:D10'
+            type: 'decimal'
+            operator: 'greaterThanOrEqual'
+            formula1: '0'
+            errorStyle: 'warning'
+            allowBlank: true
+          4:
+            id: 'date'
+            range: 'E2:E10'
+            type: 'date'
+            operator: 'between'
+            formula1: '45000'
+            formula2: '46000'
+            allowBlank: true
+          5:
+            id: 'time'
+            range: 'F2:F10'
+            type: 'time'
+            operator: 'between'
+            formula1: '0'
+            formula2: '0.99999999'
+            allowBlank: true
+          6:
+            id: 'length'
+            range: 'G2:G10'
+            type: 'textLength'
+            operator: 'lessThanOrEqual'
+            formula1: '20'
+            errorStyle: 'information'
+            allowBlank: true
+          7:
+            id: 'custom'
+            range: 'H2:H10'
+            type: 'custom'
+            formula: '=LEN(H2)<=20'
+            allowBlank: true
+      1:
+        id: 'xlsx-sheet-2'
+        name: 'Choices'
+        rowCount: 3
+        columnCount: 1
+        cells:
+          A1:
+            input: 'one'
+          A2:
+            input: 'two'
+          A3:
+            input: 'three'
+  actual:
+    version: 1
+    id: 'office-rules'
+    name: 'current-with-cleared-links.xlsx'
+    kind: 'excel'
+    activeSheetId: 'xlsx-sheet-1'
+    sheets:
+      0:
+        id: 'xlsx-sheet-1'
+        name: 'Sheet1'
+        rowCount: 10
+        columnCount: 8
+        cells:
+          A1:
+            input: 'State'
+          C2:
+            input: '2'
+        conditionalFormats:
+          0:
+            id: 'cell'
+            range: 'C2:C10'
+            priority: 1
+            type: 'cellIs'
+            operator: 'between'
+            formulae:
+              0: '1'
+              1: '100'
+            style:
+              bold: true
+              color: '#112233'
+              background: '#e0f2fe'
+              numberFormat: '0.00'
+            stopIfTrue: true
+          1:
+            id: 'formula'
+            range: 'C2:C10'
+            priority: 2
+            type: 'expression'
+            formula: '=C2>0'
+            style: <Circular>
+          2:
+            id: 'text'
+            range: 'A2:A10'
+            priority: 3
+            type: 'containsText'
+            text: 'done'
+            style: <Circular>
+          3:
+            id: 'duplicate'
+            range: 'A2:A10'
+            priority: 4
+            type: 'duplicateValues'
+            style: <Circular>
+          4:
+            id: 'unique'
+            range: 'A2:A10'
+            priority: 5
+            type: 'uniqueValues'
+            style: <Circular>
+          5:
+            id: 'top'
+            range: 'C2:C10'
+            priority: 6
+            type: 'top10'
+            rank: 3
+            style: <Circular>
+          6:
+            id: 'bottom'
+            range: 'C2:C10'
+            priority: 7
+            type: 'top10'
+            rank: 20
+            percent: true
+            bottom: true
+            style: <Circular>
+          7:
+            id: 'average'
+            range: 'C2:C10'
+            priority: 8
+            type: 'aboveAverage'
+            aboveAverage: false
+            style: <Circular>
+          8:
+            id: 'two-colors'
+            range: 'C2:C10'
+            priority: 9
+            type: 'colorScale'
+            colors:
+              0: '#ef4444'
+              1: '#22c55e'
+          9:
+            id: 'three-colors'
+            range: 'C2:C10'
+            priority: 10
+            type: 'colorScale'
+            colors:
+              0: '#ef4444'
+              1: '#ffffff'
+              2: '#22c55e'
+        dataValidations:
+          0:
+            id: 'literal'
+            range: 'A2:A10'
+            type: 'list'
+            values:
+              0: 'done'
+              1: 'pending'
+            allowBlank: true
+            showInputMessage: true
+            inputTitle: 'State'
+            inputMessage: 'Choose a state'
+            showErrorMessage: true
+            errorStyle: 'stop'
+            errorTitle: 'Invalid state'
+            errorMessage: 'Choose an available state'
+          1:
+            id: 'source'
+            range: 'B2:B10'
+            type: 'list'
+            source: 'Choices!$A$1:$A$3'
+            allowBlank: true
+          2:
+            id: 'whole'
+            range: 'C2:C10'
+            type: 'whole'
+            operator: 'between'
+            formula1: '1'
+            formula2: '100'
+            allowBlank: true
+          3:
+            id: 'decimal'
+            range: 'D2:D10'
+            type: 'decimal'
+            operator: 'greaterThanOrEqual'
+            formula1: '0'
+            errorStyle: 'warning'
+            allowBlank: true
+          4:
+            id: 'date'
+            range: 'E2:E10'
+            type: 'date'
+            operator: 'between'
+            formula1: '45000'
+            formula2: '46000'
+            allowBlank: true
+          5:
+            id: 'time'
+            range: 'F2:F10'
+            type: 'time'
+            operator: 'between'
+            formula1: '0'
+            formula2: '0.99999999'
+            allowBlank: true
+          6:
+            id: 'length'
+            range: 'G2:G10'
+            type: 'textLength'
+            operator: 'lessThanOrEqual'
+            formula1: '20'
+            errorStyle: 'information'
+            allowBlank: true
+          7:
+            id: 'custom'
+            range: 'H2:H10'
+            type: 'custom'
+            formula: '=LEN(H2)<=20'
+            allowBlank: true
+        hyperlinks:
+        defaultRowHeight: 18
+        rowHeights:
+        rowHeightModes:
+        hiddenRows:
+      1:
+        id: 'xlsx-sheet-2'
+        name: 'Choices'
+        rowCount: 3
+        columnCount: 1
+        cells:
+          A1:
+            input: 'one'
+          A2:
+            input: 'two'
+          A3:
+            input: 'three'
+        hyperlinks:
+        defaultRowHeight: 18
+        rowHeights:
+        rowHeightModes:
+        hiddenRows:
+    defaultFont:
+      family: 'Calibri'
+      sizePt: 11
+      bold: false
+      italic: false
+  operator: 'deepStrictEqual'
+  stack: |-
+    file:///Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/tests/studio-workspace.test.mjs:966:12
+    async StudioWorkspace.prepare (evalmachine.<anonymous>:55:26)
+    async evalmachine.<anonymous>:90:39
+    async TestContext.<anonymous> (file:///Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/tests/studio-workspace.test.mjs:978:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: new input while preparing a historical workbook cancels restoration and retains cleared links in the current draft
+ok 30 - new input while preparing a historical workbook cancels restoration and retains cleared links in the current draft
+  ---
+  duration_ms: 4.758958
+  ...
+# Subtest: a delayed history preview rejects after another file opens and cannot replace its active canvas or source
+ok 31 - a delayed history preview rejects after another file opens and cannot replace its active canvas or source
+  ---
+  duration_ms: 0.496125
+  ...
+# Subtest: file preparation keeps non-Excel documents and explicit native empty arrays by reference without loading a parser
+ok 32 - file preparation keeps non-Excel documents and explicit native empty arrays by reference without loading a parser
+  ---
+  duration_ms: 6.817583
+  ...
+# Subtest: file preparation hydrates a missing workbook default font, row mode or native view even when links and point heights are explicit
+ok 33 - file preparation hydrates a missing workbook default font, row mode or native view even when links and point heights are explicit
+  ---
+  duration_ms: 6.681333
+  ...
+# Subtest: file preparation marks missing links empty for CSV and source-free workbooks while preserving known sheets and the old model
+ok 34 - file preparation marks missing links empty for CSV and source-free workbooks while preserving known sheets and the old model
+  ---
+  duration_ms: 8.625542
+  ...
+# Subtest: file preparation dispatches source hydration by XLSX sheet identity and rejects known incompatible MIME types before decoding
+ok 35 - file preparation dispatches source hydration by XLSX sheet identity and rejects known incompatible MIME types before decoding
+  ---
+  duration_ms: 8.011291
+  ...
+# Subtest: a native source edit emits one complete snapshot and survives a save of the previous source in flight
+ok 36 - a native source edit emits one complete snapshot and survives a save of the previous source in flight
+  ---
+  duration_ms: 0.458
+  ...
+# Subtest: rejects old source/document pairs and invalid native replacements without publishing an intermediate edit
+ok 37 - rejects old source/document pairs and invalid native replacements without publishing an intermediate edit
+  ---
+  duration_ms: 0.237208
+  ...
+# Subtest: IndexedDB refresh and version preview restore their paired native source rather than the newest file bytes
+ok 38 - IndexedDB refresh and version preview restore their paired native source rather than the newest file bytes
+  ---
+  duration_ms: 4.031
+  ...
+1..38
+# tests 38
+# suites 0
+# pass 37
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 504.245791

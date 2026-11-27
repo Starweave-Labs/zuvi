@@ -1,0 +1,1 @@
+Native inspection passed: 3 DOCX files, two repeated reopens, 9 body paragraphs, five links, 14→16 header, signed half-points and canonical native glyph coordinates.

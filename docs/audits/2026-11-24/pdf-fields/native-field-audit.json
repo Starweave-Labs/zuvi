@@ -1,0 +1,136 @@
+{
+  "reader": "pypdf",
+  "fields": [
+    "reference",
+    "customer",
+    "date",
+    "accept",
+    "level",
+    "status",
+    "tags",
+    "photo"
+  ],
+  "widgets": [
+    {
+      "name": "reference",
+      "rect": [
+        239.5,
+        504.5,
+        360.5,
+        529.5
+      ],
+      "value": "LOCKED",
+      "appearanceState": "None",
+      "hasAppearance": true
+    },
+    {
+      "name": "customer",
+      "rect": [
+        50,
+        460,
+        210,
+        488
+      ],
+      "value": "Bob",
+      "appearanceState": "None",
+      "hasAppearance": true
+    },
+    {
+      "name": "customer",
+      "rect": [
+        12,
+        420,
+        172,
+        446
+      ],
+      "value": "Bob",
+      "appearanceState": "None",
+      "hasAppearance": true
+    },
+    {
+      "name": "date",
+      "rect": [
+        40,
+        380,
+        200,
+        408
+      ],
+      "value": "2026-11-24",
+      "appearanceState": "None",
+      "hasAppearance": true
+    },
+    {
+      "name": "accept",
+      "rect": [
+        40,
+        340,
+        62,
+        362
+      ],
+      "value": "/Approved",
+      "appearanceState": "/Approved",
+      "hasAppearance": true
+    },
+    {
+      "name": "level",
+      "rect": [
+        40,
+        300,
+        62,
+        322
+      ],
+      "value": "/1",
+      "appearanceState": "/Off",
+      "hasAppearance": true
+    },
+    {
+      "name": "level",
+      "rect": [
+        80,
+        300,
+        102,
+        322
+      ],
+      "value": "/1",
+      "appearanceState": "/1",
+      "hasAppearance": true
+    },
+    {
+      "name": "status",
+      "rect": [
+        40,
+        255,
+        200,
+        283
+      ],
+      "value": "approved",
+      "appearanceState": "None",
+      "hasAppearance": true
+    },
+    {
+      "name": "tags",
+      "rect": [
+        40,
+        150,
+        200,
+        230
+      ],
+      "value": "['blue', 'green']",
+      "appearanceState": "None",
+      "hasAppearance": true
+    },
+    {
+      "name": "photo",
+      "rect": [
+        40,
+        60,
+        200,
+        120
+      ],
+      "value": "None",
+      "appearanceState": "None",
+      "hasAppearance": true
+    }
+  ],
+  "originalTextPreserved": true
+}

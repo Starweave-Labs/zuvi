@@ -1,0 +1,57 @@
+{
+  "pageEquivalence": [
+    {
+      "page": "page-1.png",
+      "beforeSHA256": "3d0d5ccdf1dc9515b25a43715f0904c949577be741257cb8c0b45629d90da32d",
+      "canonicalSHA256": "8cf96fcff21fba0a5371da8100c9e4025e34442c16fdc4843741f49cf2193688",
+      "changedPixelsBBox": [
+        135,
+        330,
+        1279,
+        806
+      ]
+    }
+  ],
+  "pdfCoordinates": [
+    {
+      "form": "unit-form",
+      "pages": 1,
+      "targetWords": [
+        {
+          "text": "target",
+          "x0": 487.25,
+          "x1": 538.658,
+          "top": 136.84876377952799,
+          "doctop": 136.84876377952799,
+          "bottom": 154.84876377952799,
+          "upright": true,
+          "height": 18.0,
+          "width": 51.408000000000015,
+          "direction": "ltr",
+          "fontname": "DAAAAA+LiberationSans-Bold",
+          "size": 18.0
+        }
+      ]
+    },
+    {
+      "form": "integer-half-points",
+      "pages": 1,
+      "targetWords": [
+        {
+          "text": "target",
+          "x0": 487.25,
+          "x1": 538.658,
+          "top": 137.89876377952805,
+          "doctop": 137.89876377952805,
+          "bottom": 155.89876377952805,
+          "upright": true,
+          "height": 18.0,
+          "width": 51.408000000000015,
+          "direction": "ltr",
+          "fontname": "DAAAAA+LiberationSans-Bold",
+          "size": 18.0
+        }
+      ]
+    }
+  ]
+}

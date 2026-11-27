@@ -1,0 +1,57 @@
+✖ signed half-point positions on native text, images and fields survive two saves in body, header and footer (31.706666ms)
+✖ signed half-point paragraph style positions and explicit zero overrides retain native identity through two saves (23.99475ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 690.000917
+
+✖ failing tests:
+
+test at docs/tests/office-studio-word.test.mjs:488:1
+✖ signed half-point positions on native text, images and fields survive two saves in body, header and footer (31.706666ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  +   '1.5pt',
+  +   '-1.5pt',
+  +   '0.5pt',
+  +   '0.5pt',
+  +   '0.5pt',
+  +   '0.5pt'
+  -   '3',
+  -   '-3',
+  -   '1'
+    ]
+  
+      at TestContext.<anonymous> (file:///Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/tests/office-studio-word.test.mjs:509:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ '1.5pt', '-1.5pt', '0.5pt', '0.5pt', '0.5pt', '0.5pt' ],
+    expected: [ '3', '-3', '1' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at docs/tests/office-studio-word.test.mjs:521:1
+✖ signed half-point paragraph style positions and explicit zero overrides retain native identity through two saves (23.99475ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  '1.5pt' !== '3'
+  
+      at TestContext.<anonymous> (file:///Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/tests/office-studio-word.test.mjs:536:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '1.5pt',
+    expected: '3',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

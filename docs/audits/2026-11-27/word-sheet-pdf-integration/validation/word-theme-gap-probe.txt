@@ -1,0 +1,62 @@
+[
+  {
+    "name": "theme-reference",
+    "status": "accepted-input-with-identity-loss",
+    "rounds": [
+      {
+        "pass": 1,
+        "retainsColorReference": false,
+        "retainsFontReference": false,
+        "retainsAutoColor": false,
+        "retainsAlpha": false
+      },
+      {
+        "pass": 2,
+        "retainsColorReference": false,
+        "retainsFontReference": false,
+        "retainsAutoColor": false,
+        "retainsAlpha": false
+      }
+    ]
+  },
+  {
+    "name": "automatic-color",
+    "status": "accepted-input-with-identity-loss",
+    "rounds": [
+      {
+        "pass": 1,
+        "retainsColorReference": false,
+        "retainsFontReference": false,
+        "retainsAutoColor": false,
+        "retainsAlpha": false
+      },
+      {
+        "pass": 2,
+        "retainsColorReference": false,
+        "retainsFontReference": false,
+        "retainsAutoColor": false,
+        "retainsAlpha": false
+      }
+    ]
+  },
+  {
+    "name": "alpha-color",
+    "status": "accepted-input-with-identity-loss",
+    "rounds": [
+      {
+        "pass": 1,
+        "retainsColorReference": false,
+        "retainsFontReference": false,
+        "retainsAutoColor": false,
+        "retainsAlpha": false
+      },
+      {
+        "pass": 2,
+        "retainsColorReference": false,
+        "retainsFontReference": false,
+        "retainsAutoColor": false,
+        "retainsAlpha": false
+      }
+    ]
+  }
+]

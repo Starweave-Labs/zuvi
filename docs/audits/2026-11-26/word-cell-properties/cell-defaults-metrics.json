@@ -1,0 +1,23 @@
+{
+  "initial": {
+    "width": 600,
+    "gap": 8,
+    "top0": "0px",
+    "top1": "8px",
+    "left1": "6px",
+    "right0": "11px"
+  },
+  "changed": {
+    "width": 624,
+    "gap": 16,
+    "top0": "0px",
+    "top1": "16px",
+    "left1": "13.3333px",
+    "right0": "11px"
+  },
+  "printed": {
+    "width": 624,
+    "gap": 16,
+    "top": "16px"
+  }
+}

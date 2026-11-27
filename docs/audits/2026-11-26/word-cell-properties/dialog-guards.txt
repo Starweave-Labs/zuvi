@@ -1,0 +1,9 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/StudioWordCellDialog.test.tsx (3 tests) 207ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  15:31:40
+   Duration  1.45s (transform 261ms, setup 134ms, collect 460ms, tests 207ms, environment 371ms, prepare 59ms)

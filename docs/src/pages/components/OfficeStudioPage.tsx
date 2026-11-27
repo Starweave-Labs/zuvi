@@ -12,6 +12,8 @@ import {
   type OfficeStudioHandle,
   type OfficeStudioKind,
   type StudioPdfRenderer,
+  type StudioPdfComposer,
+  type StudioPdfAnnotationEditor,
 } from '@zuvi/react';
 import ApiTable from '../../components/ApiTable';
 import Demo from '../../components/Demo';
@@ -37,6 +39,17 @@ const studioPdfRenderer: StudioPdfRenderer = {
     (await import('../collaboration/office-studio/studio-pdf-adapter')).studioPdfRenderer.load(
       source
     ),
+};
+const studioPdfComposer: StudioPdfComposer = {
+  inspect: async (source, options) =>
+    (await import('../collaboration/office-studio/studio-pdf-composition')).studioPdfComposer.inspect(source, options),
+  compose: async (request) =>
+    (await import('../collaboration/office-studio/studio-pdf-composition')).studioPdfComposer.compose(request),
+};
+const studioPdfAnnotations: StudioPdfAnnotationEditor = {
+  inspect: async (snapshot, options) => (await import('../collaboration/office-studio/studio-pdf-annotation-editor')).studioPdfAnnotationEditor.inspect(snapshot, options),
+  apply: async request => (await import('../collaboration/office-studio/studio-pdf-annotation-editor')).studioPdfAnnotationEditor.apply(request),
+  preview: async (snapshot, options) => (await import('../collaboration/office-studio/studio-pdf-annotation-editor')).studioPdfAnnotationEditor.preview(snapshot, options),
 };
 let initializing: Promise<void> | undefined;
 function initializeWorkspace(): Promise<void> {
@@ -326,6 +339,9 @@ export default function OfficeStudioPage(): React.ReactNode {
               value={active.document}
               source={active.source}
               pdfRenderer={studioPdfRenderer}
+              pdfComposer={studioPdfComposer}
+              pdfAnnotations={studioPdfAnnotations}
+              onPdfSourceChange={(change) => workspace.editPdfSnapshot(change)}
               height={780}
               disabled={blocked}
               readOnly={readOnly}
@@ -387,6 +403,7 @@ export default function OfficeStudioPage(): React.ReactNode {
                 value={preview.document}
                 source={preview.source}
                 pdfRenderer={studioPdfRenderer}
+                pdfAnnotations={studioPdfAnnotations}
                 height={480}
                 readOnly
                 disabled={blocked}

@@ -1,4 +1,5 @@
 import { isOfficeStudioDocument } from './studio-model';
+import { studioArrayRange } from './studio-sheet-arrays';
 import {
   STUDIO_SHEET_LIMITS,
   studioCellAddress,
@@ -480,6 +481,14 @@ function transformMetadata(sheet: StudioSheet, edit: StudioSheetStructureEdit): 
     }
     next.rowHeights = heights;
   }
+  if (sheet.rowHeightModes && edit.axis === 'row') {
+    const modes: NonNullable<StudioSheet['rowHeightModes']> = {};
+    for (const [row, mode] of Object.entries(sheet.rowHeightModes)) {
+      const moved = studioTransformSheetIndex(Number(row), edit);
+      if (moved !== undefined) modes[String(moved)] = mode;
+    }
+    next.rowHeightModes = modes;
+  }
   if (sheet.hiddenRows && edit.axis === 'row') {
     const hidden = sheet.hiddenRows.flatMap((row) => {
       const moved = studioTransformSheetIndex(row, edit);
@@ -583,6 +592,18 @@ export function studioChangeSheetStructure(
   if (!isOfficeStudioDocument(document)) throw new Error('工作簿模型无效，无法调整行列结构。');
   const original = document.sheets.find((sheet) => sheet.id === sheetId);
   if (!original) throw new Error('工作表不存在。');
+  for (const cell of Object.values(original.cells)) {
+    if (cell.array?.type !== 'fixed') continue;
+    const range = studioArrayRange(cell.array.range)!;
+    const first = edit.axis === 'row' ? range.firstRow : range.firstCol;
+    const last = edit.axis === 'row' ? range.lastRow : range.lastCol;
+    if (
+      edit.type === 'insert'
+        ? edit.index > first && edit.index <= last
+        : edit.index <= last && edit.index + edit.count - 1 >= first
+    )
+      throw new Error('不能拆分固定数组，请先整体删除数组公式。');
+  }
   if ((original.structureEdits?.length ?? 0) >= STRUCTURE_LOG_LIMIT)
     throw new Error('每张工作表最多记录 500 次结构变更，请导出并重新导入后继续。');
   const dimension = edit.axis === 'row' ? original.rowCount : original.columnCount;
@@ -609,7 +630,13 @@ export function studioChangeSheetStructure(
         edit.axis === 'row' ? moved : position.row,
         edit.axis === 'column' ? moved : position.col
       )
-    ] = cell;
+    ] =
+      cell.array?.type === 'fixed'
+        ? {
+            ...cell,
+            array: { type: 'fixed', range: studioTransformSheetRange(cell.array.range, edit)! },
+          }
+        : cell;
   }
   const changed = transformMetadata(
     {
@@ -618,6 +645,13 @@ export function studioChangeSheetStructure(
       rowCount: edit.axis === 'row' ? nextDimension : original.rowCount,
       columnCount: edit.axis === 'column' ? nextDimension : original.columnCount,
       structureEdits: [...(original.structureEdits ?? []), { ...edit }],
+      ...(original.protectedRanges
+        ? {
+            protectedRanges: original.protectedRanges
+              .map((range) => studioTransformSheetRange(range, edit))
+              .filter((range): range is string => !!range),
+          }
+        : {}),
     },
     edit
   );

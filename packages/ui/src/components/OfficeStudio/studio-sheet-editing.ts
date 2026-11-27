@@ -1,9 +1,15 @@
-import type { StudioCell, StudioExcelDocument, StudioSheet } from './studio-types';
+import type {
+  StudioCell,
+  StudioExcelDocument,
+  StudioExcelDefaultFont,
+  StudioSheet,
+} from './studio-types';
 import {
   studioCalculate,
   studioDisplayCell,
   studioColumnLabel,
   studioParseAddress,
+  studioParseRange,
   studioPatchCells,
   studioMergedRange,
   studioSelectionAddresses,
@@ -12,6 +18,13 @@ import {
 } from './studio-sheet-model';
 import { studioCellValidation } from './studio-sheet-rules';
 import { studioBorderSides } from './studio-cell-style';
+import { studioValidateNumberFormat } from './studio-number-format';
+import {
+  sheetTextFormatUpdatePlan,
+  sheetDefaultTextFormat,
+  type SheetTextFormatPatch,
+  type SheetTextInteractionField,
+} from './studio-sheet-text-properties';
 
 export interface StudioSheetSearchOptions {
   query: string;
@@ -329,21 +342,86 @@ export function studioApplyBorders(
   return studioPatchCells(document, sheetId, updates);
 }
 
-export function studioDefaultCellFormat(): Omit<StudioCell, 'input'> {
+export function studioDefaultCellFormat(
+  defaultFont?: StudioExcelDefaultFont
+): Omit<StudioCell, 'input'> {
   return {
-    bold: false,
-    italic: false,
+    ...sheetDefaultTextFormat(defaultFont),
     underline: false,
-    fontFamily: 'Calibri',
-    fontSize: 11,
-    wrap: false,
     color: '#000000',
     background: 'none',
     numberFormat: 'General',
-    align: 'general',
-    verticalAlign: 'bottom',
     borders: {},
   };
+}
+
+/** Alignment/display edits retain values, formulas, arrays and source links. */
+export function studioSetCellTextFormat(
+  document: StudioExcelDocument,
+  sheetId: string,
+  selection: SheetSelection,
+  patch: SheetTextFormatPatch,
+  lastChanged?: SheetTextInteractionField
+) {
+  const sheet = document.sheets.find((item) => item.id === sheetId);
+  if (!sheet) throw new Error('工作表不存在。');
+  const expanded = studioFormattingSelection(sheet, selection);
+  const targets = studioSelectionAddresses(expanded);
+  const protectedRanges = (sheet.protectedRanges ?? []).map(studioParseRange);
+  const bounds = studioSelectionBounds(expanded);
+  if (
+    protectedRanges.some(
+      (range) =>
+        range &&
+        range.firstRow <= bounds.lastRow &&
+        range.lastRow >= bounds.firstRow &&
+        range.firstCol <= bounds.lastCol &&
+        range.lastCol >= bounds.firstCol
+    )
+  )
+    throw new Error('选区包含受保护区域，整次格式应用已取消。');
+  const updates = sheetTextFormatUpdatePlan(targets, sheet.cells, patch, {
+    lastChanged,
+    defaultFont: document.defaultFont,
+  });
+  return studioPatchCells(document, sheetId, updates, {
+    preserveInput: true,
+    deferValidation: true,
+  });
+}
+
+/** Number formats keep exact stored input and array definitions; a whole selection is one edit. */
+export function studioSetNumberFormat(
+  document: StudioExcelDocument,
+  sheetId: string,
+  selection: SheetSelection,
+  code: string
+) {
+  studioValidateNumberFormat(code);
+  const sheet = document.sheets.find((item) => item.id === sheetId);
+  if (!sheet) throw new Error('工作表不存在。');
+  const expanded = studioFormattingSelection(sheet, selection);
+  const bounds = studioSelectionBounds(expanded);
+  if (
+    sheet.protectedRanges?.some((input) => {
+      const range = studioParseRange(input);
+      return (
+        range &&
+        range.firstRow <= bounds.lastRow &&
+        range.lastRow >= bounds.firstRow &&
+        range.firstCol <= bounds.lastCol &&
+        range.lastCol >= bounds.firstCol
+      );
+    })
+  )
+    throw new Error('选区包含受保护区域，整次格式应用已取消。');
+  const updates = Object.fromEntries(
+    studioSelectionAddresses(expanded).map((address) => [address, { numberFormat: code }])
+  );
+  return studioPatchCells(document, sheetId, updates, {
+    preserveInput: true,
+    deferValidation: true,
+  });
 }
 
 export function studioColumnCharacterWidth(pixels: number) {

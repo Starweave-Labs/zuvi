@@ -1,0 +1,26 @@
+[WebServer] (node:34234) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:34261) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium] › e2e/office-studio-word-conversion.spec.ts:13:1 › text and table conversion preserves native rich content with cancellation, history and repeated DOCX reopening (30.2s)
+
+
+  1) [chromium] › e2e/office-studio-word-conversion.spec.ts:13:1 › text and table conversion preserves native rich content with cancellation, history and repeated DOCX reopening
+
+    Test timeout of 30000ms exceeded.
+
+    Error Context: test-results/office-studio-word-convers-2bd79-and-repeated-DOCX-reopening-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/office-studio-word-convers-2bd79-and-repeated-DOCX-reopening-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/office-studio-word-convers-2bd79-and-repeated-DOCX-reopening-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/office-studio-word-conversion.spec.ts:13:1 › text and table conversion preserves native rich content with cancellation, history and repeated DOCX reopening

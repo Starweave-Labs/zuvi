@@ -1,0 +1,10 @@
+{
+  "verifiedBaselineFiles": 3485,
+  "baselineBytes": 634240868,
+  "ignoredGzipFiles": 95,
+  "missingLiveIgnoredFilesVerifiedFromArchive": [],
+  "runLabel": "position-rows-focused",
+  "archivedChangedFiles": 9,
+  "archivedAddedFiles": 0,
+  "missingFilesRestored": 0
+}

@@ -108,11 +108,8 @@ test('DataGrid passes axe in light and dark and stays usable at 320px', async ({
     await page.goto('/#/components/data-grid');
     await expect(page.locator('.zuvi-datagrid').first()).toHaveAttribute('data-status', 'ready');
     const themeName = theme === 'dark' ? '切换浅色' : '切换暗色';
-    if (!(await page.getByRole('button', { name: themeName, exact: true }).isVisible())) {
-      await page
-        .getByRole('button', { name: theme === 'dark' ? '切换暗色' : '切换浅色', exact: true })
-        .click();
-    }
+    // Theme follows the emulated system setting asynchronously; wait for it to settle.
+    await expect(page.getByRole('button', { name: themeName, exact: true })).toBeVisible();
     await page.addScriptTag({ content: axe });
     const violations = await page.evaluate(async () => {
       const engine = (

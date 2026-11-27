@@ -1,0 +1,191 @@
+{
+  "status": "reproduced",
+  "results": [
+    {
+      "kind": "square",
+      "initial": {
+        "file": "square-initial.pdf",
+        "sha256": "e27000ec4b3b60838e3b4c65ed7d97c8b2058501327606fa1b7cf97b1393acaf",
+        "C": [
+          1,
+          0,
+          0
+        ],
+        "IC": "absent",
+        "color": [
+          1,
+          0,
+          0
+        ],
+        "fill": null,
+        "opacity": 1,
+        "stroke": {
+          "width": 2,
+          "style": "S",
+          "lineCap": 0,
+          "lineJoin": 0,
+          "miterLimit": 2
+        },
+        "AP": "q\n/GS gs\n1 0 0 RG\n2 w\n0 J\n0 j\n2 M\n1 1 158 58 re\nS\nQ"
+      },
+      "cleared": {
+        "file": "square-cleared.pdf",
+        "sha256": "36ab7b7a1bcb9015bc6daf591900477473d7842d92c14fed9b3ad12442348934",
+        "C": "absent",
+        "IC": "absent",
+        "color": null,
+        "fill": null,
+        "opacity": 1,
+        "stroke": {
+          "width": 2,
+          "style": "S",
+          "lineCap": 0,
+          "lineJoin": 0,
+          "miterLimit": 2
+        },
+        "AP": "q\n/GS gs\n2 w\n0 J\n0 j\n2 M\n1 1 158 58 re\nn\nQ"
+      },
+      "repainted": {
+        "file": "square-repainted.pdf",
+        "sha256": "877212a08beeb5a82eac10c13ebb504567a7065a2ecf83fa8145a4cf40901d9c",
+        "C": "absent",
+        "IC": "absent",
+        "color": null,
+        "fill": null,
+        "opacity": 0.5,
+        "stroke": {
+          "width": 2,
+          "style": "S",
+          "lineCap": 0,
+          "lineJoin": 0,
+          "miterLimit": 2
+        },
+        "AP": "q\n/GS gs\n0 0 0 RG\n2 w\n0 J\n0 j\n2 M\n1 1 158 58 re\nS\nQ"
+      }
+    },
+    {
+      "kind": "highlight",
+      "initial": {
+        "file": "highlight-initial.pdf",
+        "sha256": "8f09fd8facf2d4bb1894026284671ada52ba8ddae5a995722cda8f11755524da",
+        "C": [
+          1,
+          0,
+          0
+        ],
+        "IC": "absent",
+        "color": [
+          1,
+          0,
+          0
+        ],
+        "fill": null,
+        "opacity": 0.3,
+        "stroke": {
+          "width": 1,
+          "style": "S",
+          "lineCap": 0,
+          "lineJoin": 0,
+          "miterLimit": 2
+        },
+        "AP": "q\n/GS gs\n1 0 0 RG\n1 w\n0 J\n0 j\n2 M\n1 0 0 rg\n0 22 m\n190 22 l\n190 0 l\n0 0 l\nh\nf\nQ"
+      },
+      "cleared": {
+        "file": "highlight-cleared.pdf",
+        "sha256": "1fcb549d1a16e91492230f7378877281c79b7ad5067560d84759caecbd015753",
+        "C": "absent",
+        "IC": "absent",
+        "color": null,
+        "fill": null,
+        "opacity": 0.3,
+        "stroke": {
+          "width": 1,
+          "style": "S",
+          "lineCap": 0,
+          "lineJoin": 0,
+          "miterLimit": 2
+        },
+        "AP": "q\n/GS gs\n1 w\n0 J\n0 j\n2 M\nQ"
+      },
+      "repainted": {
+        "file": "highlight-repainted.pdf",
+        "sha256": "304d12325e8d0f3cf5f86216b595fb39a577ef55a8c159d0eb41e91fe3b26321",
+        "C": "absent",
+        "IC": "absent",
+        "color": null,
+        "fill": null,
+        "opacity": 0.5,
+        "stroke": {
+          "width": 1,
+          "style": "S",
+          "lineCap": 0,
+          "lineJoin": 0,
+          "miterLimit": 2
+        },
+        "AP": "q\n/GS gs\n1 1 0 RG\n1 w\n0 J\n0 j\n2 M\n1 1 0 rg\n0 22 m\n190 22 l\n190 0 l\n0 0 l\nh\nf\nQ"
+      }
+    },
+    {
+      "kind": "freeText",
+      "initial": {
+        "file": "freeText-initial.pdf",
+        "sha256": "5e37bb96c26dc04f05008a6dafb2c20d25b4367f5604b6916afd8d65e9e72313",
+        "C": "absent",
+        "IC": [
+          0,
+          0.8,
+          0.2
+        ],
+        "color": null,
+        "fill": [
+          0,
+          0.8,
+          0.2
+        ],
+        "opacity": 1,
+        "stroke": {
+          "width": 1,
+          "style": "S",
+          "lineCap": 0,
+          "lineJoin": 0,
+          "miterLimit": 10
+        },
+        "AP": "q\n/GS gs\n0 0.8 0.2 RG\n1 w\n0.5 0.5 219 59 re\nS\n3 3 214 54 re\nW\nn\nBT\n/FT 14 Tf\n0.1 0.2 0.3 rg\n1 0 0 1 3 46.948 Tm\n<436C65617220677265656E20626F72646572> Tj\nET\nQ"
+      },
+      "cleared": {
+        "file": "freeText-cleared.pdf",
+        "sha256": "2ef29a2d5b45ec3017272faace903e6e56e5e21f6cc8d70579fd2f36d0d3cd21",
+        "C": "absent",
+        "IC": "absent",
+        "color": null,
+        "fill": null,
+        "opacity": 1,
+        "stroke": {
+          "width": 1,
+          "style": "S",
+          "lineCap": 0,
+          "lineJoin": 0,
+          "miterLimit": 10
+        },
+        "AP": "q\n/GS gs\n3 3 214 54 re\nW\nn\nBT\n/FT 14 Tf\n0.1 0.2 0.3 rg\n1 0 0 1 3 46.948 Tm\n<436C65617220677265656E20626F72646572> Tj\nET\nQ"
+      },
+      "repainted": {
+        "file": "freeText-repainted.pdf",
+        "sha256": "222c03d7eb2fef24593f44987089eb026e8b8130ec35d1c9ed668e69e3ee769e",
+        "C": "absent",
+        "IC": "absent",
+        "color": null,
+        "fill": null,
+        "opacity": 1,
+        "stroke": {
+          "width": 2,
+          "style": "S",
+          "lineCap": 0,
+          "lineJoin": 0,
+          "miterLimit": 10
+        },
+        "AP": "q\n/GS gs\n0 G\n2 w\n1 1 218 58 re\nS\n4 4 212 52 re\nW\nn\nBT\n/FT 14 Tf\n0.1 0.2 0.3 rg\n1 0 0 1 4 45.948 Tm\n<436C65617220677265656E20626F72646572> Tj\nET\nQ"
+      }
+    }
+  ]
+}

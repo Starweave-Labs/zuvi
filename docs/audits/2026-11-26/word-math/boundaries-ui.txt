@@ -1,0 +1,34 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ❯ src/components/OfficeStudio/StudioWord.test.tsx (105 tests | 1 failed | 98 skipped) 3597ms
+   ✓ inserts a structured fraction through the actual math dialog and undoes it atomically 888ms
+   ✓ blocks an open math draft after permissions or external content change 503ms
+   ✓ edits an existing math structure through the dialog with separate undo and redo 577ms
+   ✓ keeps composition drafts out of the document through the actual math entry 330ms
+   ✓ disables actual math insertion and stale drafts with {"readOnly":true} 367ms
+   × restores a rejected controlled math edit and saves the original semantic model 701ms
+     → Array.prototype.forEach called on null or undefined
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/OfficeStudio/StudioWord.test.tsx > restores a rejected controlled math edit and saves the original semantic model
+TypeError: Array.prototype.forEach called on null or undefined
+ ❯ exports.getDeclarationForElement ../../node_modules/.pnpm/jsdom@25.0.1/node_modules/jsdom/lib/jsdom/living/helpers/style-rules.js:162:11
+ ❯ window.getComputedStyle ../../node_modules/.pnpm/jsdom@25.0.1/node_modules/jsdom/lib/jsdom/browser/Window.js:901:32
+ ❯ isInaccessible ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/role-helpers.js:67:14
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/role-helpers.js:169:31
+ ❯ getRoles ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/role-helpers.js:168:32
+ ❯ prettyRoles ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/role-helpers.js:191:17
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/queries/role.js:228:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 passed | 98 skipped (105)
+   Start at  12:49:11
+   Duration  6.10s (transform 1.05s, setup 172ms, collect 1.57s, tests 3.60s, environment 444ms, prepare 85ms)
+
+undefined
+/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run src/components/OfficeStudio/StudioWord.test.tsx -t math|structured fraction --reporter=dot

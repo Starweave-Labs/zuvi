@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "phase": "verified-pre-316-e2e-snapshot",
+  "verifiedAt": "2026-11-27T00:28:13.772558+00:00",
+  "cue": "root-frozen-pre-316-e2e-2026-11-27",
+  "snapshotPath": "/private/tmp/zuvi-office-integration-audits-before-full-e2e-20261127",
+  "snapshotAlias": "/tmp/zuvi-office-integration-audits-before-full-e2e-20261127",
+  "baselineManifest": {
+    "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/evidence-preservation/baseline-manifest.json",
+    "bytes": 1034350,
+    "sha256": "2d7a91b50c98614d3be0b91c3e8f2266cd1ab6c6cde161940c12f0a9ea850b8c"
+  },
+  "ignoredEvidenceManifest": {
+    "path": "docs/audits/2026-11-27/word-sheet-pdf-integration/evidence-preservation/ignored-evidence-manifest.json",
+    "bytes": 45811,
+    "sha256": "4a5d3c6f9344179e49d1b9c2b8043ec0e3d320f004faf9b15c281bcd181d14a4"
+  },
+  "preservedObjects": 3485,
+  "preservedRegularFiles": 3449,
+  "preservedSymlinkObjects": 36,
+  "preservedObjectBytes": 634240868,
+  "runtimeCacheObjects": 51,
+  "ignoredOriginalFiles": 95,
+  "ignoredOriginalBytes": 449302,
+  "ignoredCompressedBytes": 121171,
+  "excludedPrefixes": [
+    "2026-11-27/word-sheet-pdf-integration/evidence-preservation",
+    "2026-11-27/word-sheet-pdf-integration/regenerated-history",
+    "2026-11-27/word-sheet-pdf-integration/validation"
+  ],
+  "includedLegacyPdfRegressionObjects": 21,
+  "verification": "All baseline live/backup bytes, accepted manifest bytes, ignored gzip bytes and decompressed originals verified; no symlink targets followed.",
+  "restorePerformed": false
+}

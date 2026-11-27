@@ -1,0 +1,40 @@
+[WebServer] (node:36272) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:36288) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium] › e2e/office-studio-word-conversion.spec.ts:13:1 › text and table conversion preserves native rich content with cancellation, history and repeated DOCX reopening (30.3s)
+
+
+  1) [chromium] › e2e/office-studio-word-conversion.spec.ts:13:1 › text and table conversion preserves native rich content with cancellation, history and repeated DOCX reopening
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByLabel('只读预览', { exact: true })
+
+
+      146 |     await expect(body).toContainText('Keep outside');
+      147 |   }
+    > 148 |   await page.getByLabel('只读预览', { exact: true }).click();
+          |                                                  ^
+      149 |   await page.getByRole('tab', { name: '插入', exact: true }).click();
+      150 |   await expect(page.getByRole('button', { name: '文本转表格', exact: true })).toBeDisabled();
+      151 |   await writeFile(
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-conversion.spec.ts:148:50
+
+    Error Context: test-results/office-studio-word-convers-2bd79-and-repeated-DOCX-reopening-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/office-studio-word-convers-2bd79-and-repeated-DOCX-reopening-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/office-studio-word-convers-2bd79-and-repeated-DOCX-reopening-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/office-studio-word-conversion.spec.ts:13:1 › text and table conversion preserves native rich content with cancellation, history and repeated DOCX reopening

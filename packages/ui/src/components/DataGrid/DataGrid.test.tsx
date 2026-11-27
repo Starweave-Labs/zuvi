@@ -259,7 +259,7 @@ describe('DataGrid', () => {
       />
     );
     await ready(container);
-    expect(warn).toHaveBeenCalledWith(expect.stringContaining('仅前两列'));
+    await waitFor(() => expect(warn).toHaveBeenCalledWith(expect.stringContaining('仅前两列')));
     expect(container.querySelectorAll('[role="columnheader"][data-sticky]')).toHaveLength(2);
     warn.mockRestore();
   });
@@ -317,7 +317,7 @@ describe('DataGrid', () => {
       <DataGrid columns={columns} rows={broken} height={400} rowHeight={40} overscan={0} />
     );
     await ready(container);
-    expect(warn).toHaveBeenCalledWith(expect.stringContaining('DataGrid:'));
+    await waitFor(() => expect(warn).toHaveBeenCalledWith(expect.stringContaining('DataGrid:')));
     expect(container.querySelectorAll('[role="row"][aria-rowindex]')).toHaveLength(5);
     expect(rowCheckbox(container, 4)).toBeNull();
     expect(rowCheckbox(container, 5)).toBeNull();

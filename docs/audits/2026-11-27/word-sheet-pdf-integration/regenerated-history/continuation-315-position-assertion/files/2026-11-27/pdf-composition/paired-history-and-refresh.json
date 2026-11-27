@@ -1,0 +1,1413 @@
+{
+  "before": {
+    "id": "fc8c37da-bd4a-4919-8aa3-301134a3326f",
+    "revision": 4,
+    "document": {
+      "version": 1,
+      "id": "fc8c37da-bd4a-4919-8aa3-301134a3326f",
+      "name": "Primary.pdf",
+      "kind": "pdf",
+      "pageCount": 3,
+      "sourcePageCount": 3,
+      "pages": [
+        {
+          "id": "a040e7eb-e424-4f1a-95eb-9d610df1490f",
+          "sourcePage": 0,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 300,
+            "top": 400
+          }
+        },
+        {
+          "id": "64a5481e-5a62-4435-888a-864ba19a77e7",
+          "sourcePage": 1,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 310,
+            "top": 410
+          }
+        },
+        {
+          "id": "4fa7454f-3c37-4b6e-8f28-c8c21803b315",
+          "sourcePage": 2,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 300,
+            "top": 400
+          }
+        }
+      ],
+      "marks": [
+        {
+          "id": "ca1abc10-3eab-4b06-9cdd-02f1eda79741",
+          "nativeId": "ca1abc10-3eab-4b06-9cdd-02f1eda79741",
+          "page": 0,
+          "type": "rectangle",
+          "x": 210,
+          "y": 50,
+          "width": 50,
+          "height": 20,
+          "text": "",
+          "size": 12,
+          "color": "#253044",
+          "lineWidth": 2
+        },
+        {
+          "id": "annotation-copy:2a9304afa71ee7701cf158e96e2aad0f",
+          "nativeId": "annotation-copy:2a9304afa71ee7701cf158e96e2aad0f",
+          "page": 2,
+          "type": "rectangle",
+          "x": 210,
+          "y": 50,
+          "width": 50,
+          "height": 20,
+          "text": "",
+          "size": 12,
+          "color": "#253044",
+          "lineWidth": 2
+        }
+      ],
+      "rotations": {},
+      "fields": [
+        {
+          "name": "Text",
+          "readOnly": false,
+          "type": "text",
+          "value": "合并前的中文",
+          "multiline": false,
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 294.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            },
+            {
+              "page": 2,
+              "x": 19.5,
+              "y": 294.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Date",
+          "readOnly": false,
+          "design": {
+            "kind": "date",
+            "dateFormat": "YYYY-MM-DD",
+            "fontSize": 12,
+            "sourceName": "Date",
+            "required": false
+          },
+          "type": "text",
+          "value": "2026-11-26",
+          "multiline": false,
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 247.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            },
+            {
+              "page": 2,
+              "x": 19.5,
+              "y": 247.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Image",
+          "readOnly": false,
+          "design": {
+            "kind": "image",
+            "fontSize": 12,
+            "sourceName": "Image",
+            "required": false
+          },
+          "type": "image",
+          "value": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAwCAIAAAAJh2qgAAABGklEQVR4nO2YIQ7CQBBFPz81OMItegGCBRwejSAEy1GwKByOI9RzAxJOwQkIglAENZSZ3YHPU03FtC9vkmbbGS/2yMGhu8vyXEIMQgxCDEIMQgxCDEKMIvHzqvXxcVnWNy/b068JV0/PBnqrMpl5kVe10dxVm3FsX4N/U+GqlWqC1Axo65qaEINh8zpFZmRbD2dCDAbPax6ZEIMQg/H32XarCTEIMQp8D8vR/PMhhBiEGIQYtBo02Qzhyew8MJlDiEGIQcNZfltttc/4F44Y2TAvPArbOtva4r/SsSKb54Xf4eHu3PqQ7KGa4jvcLrWfLRIcD99K7aqa9Dxcp240T+CZ7QdAbd6fXpEDQgxCDEIMQgxCDOZ+gdTcAGbPRSYezDUhAAAAAElFTkSuQmCC",
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19,
+              "y": 189,
+              "width": 66,
+              "height": 41,
+              "rotation": 0
+            },
+            {
+              "page": 2,
+              "x": 19,
+              "y": 189,
+              "width": 66,
+              "height": 41,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Checked",
+          "readOnly": false,
+          "type": "checkbox",
+          "value": true,
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 144.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0
+            },
+            {
+              "page": 2,
+              "x": 19.5,
+              "y": 144.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Choice",
+          "readOnly": false,
+          "type": "choice",
+          "value": "A",
+          "options": [
+            "A",
+            "B"
+          ],
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "A"
+            },
+            {
+              "page": 0,
+              "x": 89.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "B"
+            },
+            {
+              "page": 2,
+              "x": 19.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "A"
+            },
+            {
+              "page": 2,
+              "x": 89.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "B"
+            }
+          ]
+        },
+        {
+          "name": "Drop",
+          "readOnly": false,
+          "type": "choice",
+          "value": "Two",
+          "options": [
+            "One",
+            "Two"
+          ],
+          "widgets": [
+            {
+              "page": 1,
+              "x": 19.5,
+              "y": 274.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "List",
+          "type": "opaque",
+          "value": "",
+          "readOnly": true,
+          "nativeType": "Ch",
+          "passiveReason": "原生列表框",
+          "nativeValueHash": "bce6bf742cc55837414710dc47df094857e6f20d56a291b540d6a327640f646a",
+          "widgets": [
+            {
+              "page": 1,
+              "x": 19.5,
+              "y": 174.5,
+              "width": 151,
+              "height": 76,
+              "rotation": 0,
+              "flags": 4
+            }
+          ]
+        },
+        {
+          "name": "Vendor",
+          "type": "opaque",
+          "value": "",
+          "readOnly": true,
+          "nativeType": "VendorPassive",
+          "passiveReason": "未知原生字段",
+          "nativeValueHash": "475aa41ce70b9fc9e22c534d12351f8df37b44bb6d188b6fb701e839a9ba381d",
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 29.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0,
+              "flags": 4
+            },
+            {
+              "page": 2,
+              "x": 19.5,
+              "y": 29.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0,
+              "flags": 4
+            }
+          ]
+        }
+      ],
+      "nativeAnnotations": {
+        "version": 1,
+        "sourceHash": "7a7e555b8c058ca59cafda60ece705d454ef04e796b27c70845fa2daa50b9abb",
+        "bindings": [
+          {
+            "sourcePage": 0,
+            "nativePageId": "a040e7eb-e424-4f1a-95eb-9d610df1490f",
+            "uiPageId": "a040e7eb-e424-4f1a-95eb-9d610df1490f"
+          },
+          {
+            "sourcePage": 1,
+            "nativePageId": "64a5481e-5a62-4435-888a-864ba19a77e7",
+            "uiPageId": "64a5481e-5a62-4435-888a-864ba19a77e7"
+          },
+          {
+            "sourcePage": 2,
+            "nativePageId": "4fa7454f-3c37-4b6e-8f28-c8c21803b315",
+            "uiPageId": "4fa7454f-3c37-4b6e-8f28-c8c21803b315"
+          }
+        ],
+        "commands": []
+      }
+    },
+    "sourceHash": "7a7e555b8c058ca59cafda60ece705d454ef04e796b27c70845fa2daa50b9abb",
+    "sourceSize": 1699812
+  },
+  "combined": {
+    "id": "fc8c37da-bd4a-4919-8aa3-301134a3326f",
+    "revision": 5,
+    "document": {
+      "version": 1,
+      "id": "fc8c37da-bd4a-4919-8aa3-301134a3326f",
+      "name": "Primary.pdf",
+      "kind": "pdf",
+      "pageCount": 5,
+      "sourcePageCount": 5,
+      "pages": [
+        {
+          "id": "a040e7eb-e424-4f1a-95eb-9d610df1490f",
+          "sourcePage": 0,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 300,
+            "top": 400
+          }
+        },
+        {
+          "id": "f1c1d0a0-aaa3-4940-93d1-9444642003b4",
+          "sourcePage": 1,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 310,
+            "top": 410
+          }
+        },
+        {
+          "id": "44cdac9a-0ff7-4778-86a2-7a4d383bb5d5",
+          "sourcePage": 2,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 300,
+            "top": 400
+          }
+        },
+        {
+          "id": "64a5481e-5a62-4435-888a-864ba19a77e7",
+          "sourcePage": 3,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 310,
+            "top": 410
+          }
+        },
+        {
+          "id": "4fa7454f-3c37-4b6e-8f28-c8c21803b315",
+          "sourcePage": 4,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 300,
+            "top": 400
+          }
+        }
+      ],
+      "marks": [
+        {
+          "id": "ca1abc10-3eab-4b06-9cdd-02f1eda79741",
+          "nativeId": "ca1abc10-3eab-4b06-9cdd-02f1eda79741",
+          "page": 0,
+          "type": "rectangle",
+          "x": 210,
+          "y": 50,
+          "width": 50,
+          "height": 20,
+          "text": "",
+          "size": 12,
+          "color": "#253044",
+          "lineWidth": 2
+        },
+        {
+          "id": "annotation-copy:2a9304afa71ee7701cf158e96e2aad0f",
+          "nativeId": "annotation-copy:2a9304afa71ee7701cf158e96e2aad0f",
+          "page": 4,
+          "type": "rectangle",
+          "x": 210,
+          "y": 50,
+          "width": 50,
+          "height": 20,
+          "text": "",
+          "size": 12,
+          "color": "#253044",
+          "lineWidth": 2
+        }
+      ],
+      "rotations": {},
+      "fields": [
+        {
+          "name": "Text",
+          "readOnly": false,
+          "type": "text",
+          "value": "合并前的中文",
+          "multiline": false,
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 294.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            },
+            {
+              "page": 4,
+              "x": 19.5,
+              "y": 294.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Date",
+          "readOnly": false,
+          "design": {
+            "kind": "date",
+            "dateFormat": "YYYY-MM-DD",
+            "fontSize": 12,
+            "sourceName": "Date",
+            "required": false
+          },
+          "type": "text",
+          "value": "2026-11-26",
+          "multiline": false,
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 247.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            },
+            {
+              "page": 4,
+              "x": 19.5,
+              "y": 247.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Image",
+          "readOnly": false,
+          "design": {
+            "kind": "image",
+            "fontSize": 12,
+            "sourceName": "Image",
+            "required": false
+          },
+          "type": "image",
+          "value": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAwCAIAAAAJh2qgAAABGklEQVR4nO2YIQ7CQBBFPz81OMItegGCBRwejSAEy1GwKByOI9RzAxJOwQkIglAENZSZ3YHPU03FtC9vkmbbGS/2yMGhu8vyXEIMQgxCDEIMQgxCDEKMIvHzqvXxcVnWNy/b068JV0/PBnqrMpl5kVe10dxVm3FsX4N/U+GqlWqC1Axo65qaEINh8zpFZmRbD2dCDAbPax6ZEIMQg/H32XarCTEIMQp8D8vR/PMhhBiEGIQYtBo02Qzhyew8MJlDiEGIQcNZfltttc/4F44Y2TAvPArbOtva4r/SsSKb54Xf4eHu3PqQ7KGa4jvcLrWfLRIcD99K7aqa9Dxcp240T+CZ7QdAbd6fXpEDQgxCDEIMQgxCDOZ+gdTcAGbPRSYezDUhAAAAAElFTkSuQmCC",
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19,
+              "y": 189,
+              "width": 66,
+              "height": 41,
+              "rotation": 0
+            },
+            {
+              "page": 4,
+              "x": 19,
+              "y": 189,
+              "width": 66,
+              "height": 41,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Checked",
+          "readOnly": false,
+          "type": "checkbox",
+          "value": true,
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 144.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0
+            },
+            {
+              "page": 4,
+              "x": 19.5,
+              "y": 144.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Choice",
+          "readOnly": false,
+          "type": "choice",
+          "value": "A",
+          "options": [
+            "A",
+            "B"
+          ],
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "A"
+            },
+            {
+              "page": 0,
+              "x": 89.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "B"
+            },
+            {
+              "page": 4,
+              "x": 19.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "A"
+            },
+            {
+              "page": 4,
+              "x": 89.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "B"
+            }
+          ]
+        },
+        {
+          "name": "Drop",
+          "readOnly": false,
+          "type": "choice",
+          "value": "Two",
+          "options": [
+            "One",
+            "Two"
+          ],
+          "widgets": [
+            {
+              "page": 3,
+              "x": 19.5,
+              "y": 274.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "List",
+          "type": "opaque",
+          "value": "",
+          "readOnly": true,
+          "nativeType": "Ch",
+          "passiveReason": "原生列表框",
+          "nativeValueHash": "bce6bf742cc55837414710dc47df094857e6f20d56a291b540d6a327640f646a",
+          "widgets": [
+            {
+              "page": 3,
+              "x": 19.5,
+              "y": 174.5,
+              "width": 151,
+              "height": 76,
+              "rotation": 0,
+              "flags": 4
+            }
+          ]
+        },
+        {
+          "name": "Vendor",
+          "type": "opaque",
+          "value": "",
+          "readOnly": true,
+          "nativeType": "VendorPassive",
+          "passiveReason": "未知原生字段",
+          "nativeValueHash": "475aa41ce70b9fc9e22c534d12351f8df37b44bb6d188b6fb701e839a9ba381d",
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 29.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0,
+              "flags": 4
+            },
+            {
+              "page": 4,
+              "x": 19.5,
+              "y": 29.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0,
+              "flags": 4
+            }
+          ]
+        },
+        {
+          "name": "Text__2",
+          "readOnly": false,
+          "type": "text",
+          "value": "Incoming",
+          "multiline": false,
+          "widgets": [
+            {
+              "page": 2,
+              "x": 19.5,
+              "y": 279.5,
+              "width": 131,
+              "height": 31,
+              "rotation": 0
+            }
+          ]
+        }
+      ],
+      "nativeAnnotations": {
+        "version": 1,
+        "sourceHash": "bcc3c5a1037fdb58a6b9b68cf1a582990335fa54876e32fdeac9b617f1f313de",
+        "bindings": [
+          {
+            "sourcePage": 0,
+            "nativePageId": "a040e7eb-e424-4f1a-95eb-9d610df1490f",
+            "uiPageId": "a040e7eb-e424-4f1a-95eb-9d610df1490f"
+          },
+          {
+            "sourcePage": 1,
+            "nativePageId": "f1c1d0a0-aaa3-4940-93d1-9444642003b4",
+            "uiPageId": "f1c1d0a0-aaa3-4940-93d1-9444642003b4"
+          },
+          {
+            "sourcePage": 2,
+            "nativePageId": "44cdac9a-0ff7-4778-86a2-7a4d383bb5d5",
+            "uiPageId": "44cdac9a-0ff7-4778-86a2-7a4d383bb5d5"
+          },
+          {
+            "sourcePage": 3,
+            "nativePageId": "64a5481e-5a62-4435-888a-864ba19a77e7",
+            "uiPageId": "64a5481e-5a62-4435-888a-864ba19a77e7"
+          },
+          {
+            "sourcePage": 4,
+            "nativePageId": "4fa7454f-3c37-4b6e-8f28-c8c21803b315",
+            "uiPageId": "4fa7454f-3c37-4b6e-8f28-c8c21803b315"
+          }
+        ],
+        "commands": []
+      }
+    },
+    "sourceHash": "bcc3c5a1037fdb58a6b9b68cf1a582990335fa54876e32fdeac9b617f1f313de",
+    "sourceSize": 1700053
+  },
+  "undone": {
+    "id": "fc8c37da-bd4a-4919-8aa3-301134a3326f",
+    "revision": 7,
+    "document": {
+      "version": 1,
+      "id": "fc8c37da-bd4a-4919-8aa3-301134a3326f",
+      "name": "Primary.pdf",
+      "kind": "pdf",
+      "pageCount": 3,
+      "sourcePageCount": 3,
+      "pages": [
+        {
+          "id": "a040e7eb-e424-4f1a-95eb-9d610df1490f",
+          "sourcePage": 0,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 300,
+            "top": 400
+          }
+        },
+        {
+          "id": "64a5481e-5a62-4435-888a-864ba19a77e7",
+          "sourcePage": 1,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 310,
+            "top": 410
+          }
+        },
+        {
+          "id": "4fa7454f-3c37-4b6e-8f28-c8c21803b315",
+          "sourcePage": 2,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 300,
+            "top": 400
+          }
+        }
+      ],
+      "marks": [
+        {
+          "id": "ca1abc10-3eab-4b06-9cdd-02f1eda79741",
+          "nativeId": "ca1abc10-3eab-4b06-9cdd-02f1eda79741",
+          "page": 0,
+          "type": "rectangle",
+          "x": 210,
+          "y": 50,
+          "width": 50,
+          "height": 20,
+          "text": "",
+          "size": 12,
+          "color": "#253044",
+          "lineWidth": 2
+        },
+        {
+          "id": "annotation-copy:2a9304afa71ee7701cf158e96e2aad0f",
+          "nativeId": "annotation-copy:2a9304afa71ee7701cf158e96e2aad0f",
+          "page": 2,
+          "type": "rectangle",
+          "x": 210,
+          "y": 50,
+          "width": 50,
+          "height": 20,
+          "text": "",
+          "size": 12,
+          "color": "#253044",
+          "lineWidth": 2
+        }
+      ],
+      "rotations": {},
+      "fields": [
+        {
+          "name": "Text",
+          "readOnly": false,
+          "type": "text",
+          "value": "合并前的中文",
+          "multiline": false,
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 294.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            },
+            {
+              "page": 2,
+              "x": 19.5,
+              "y": 294.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Date",
+          "readOnly": false,
+          "design": {
+            "kind": "date",
+            "dateFormat": "YYYY-MM-DD",
+            "fontSize": 12,
+            "sourceName": "Date",
+            "required": false
+          },
+          "type": "text",
+          "value": "2026-11-26",
+          "multiline": false,
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 247.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            },
+            {
+              "page": 2,
+              "x": 19.5,
+              "y": 247.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Image",
+          "readOnly": false,
+          "design": {
+            "kind": "image",
+            "fontSize": 12,
+            "sourceName": "Image",
+            "required": false
+          },
+          "type": "image",
+          "value": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAwCAIAAAAJh2qgAAABGklEQVR4nO2YIQ7CQBBFPz81OMItegGCBRwejSAEy1GwKByOI9RzAxJOwQkIglAENZSZ3YHPU03FtC9vkmbbGS/2yMGhu8vyXEIMQgxCDEIMQgxCDEKMIvHzqvXxcVnWNy/b068JV0/PBnqrMpl5kVe10dxVm3FsX4N/U+GqlWqC1Axo65qaEINh8zpFZmRbD2dCDAbPax6ZEIMQg/H32XarCTEIMQp8D8vR/PMhhBiEGIQYtBo02Qzhyew8MJlDiEGIQcNZfltttc/4F44Y2TAvPArbOtva4r/SsSKb54Xf4eHu3PqQ7KGa4jvcLrWfLRIcD99K7aqa9Dxcp240T+CZ7QdAbd6fXpEDQgxCDEIMQgxCDOZ+gdTcAGbPRSYezDUhAAAAAElFTkSuQmCC",
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19,
+              "y": 189,
+              "width": 66,
+              "height": 41,
+              "rotation": 0
+            },
+            {
+              "page": 2,
+              "x": 19,
+              "y": 189,
+              "width": 66,
+              "height": 41,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Checked",
+          "readOnly": false,
+          "type": "checkbox",
+          "value": true,
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 144.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0
+            },
+            {
+              "page": 2,
+              "x": 19.5,
+              "y": 144.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Choice",
+          "readOnly": false,
+          "type": "choice",
+          "value": "A",
+          "options": [
+            "A",
+            "B"
+          ],
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "A"
+            },
+            {
+              "page": 0,
+              "x": 89.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "B"
+            },
+            {
+              "page": 2,
+              "x": 19.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "A"
+            },
+            {
+              "page": 2,
+              "x": 89.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "B"
+            }
+          ]
+        },
+        {
+          "name": "Drop",
+          "readOnly": false,
+          "type": "choice",
+          "value": "Two",
+          "options": [
+            "One",
+            "Two"
+          ],
+          "widgets": [
+            {
+              "page": 1,
+              "x": 19.5,
+              "y": 274.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "List",
+          "type": "opaque",
+          "value": "",
+          "readOnly": true,
+          "nativeType": "Ch",
+          "passiveReason": "原生列表框",
+          "nativeValueHash": "bce6bf742cc55837414710dc47df094857e6f20d56a291b540d6a327640f646a",
+          "widgets": [
+            {
+              "page": 1,
+              "x": 19.5,
+              "y": 174.5,
+              "width": 151,
+              "height": 76,
+              "rotation": 0,
+              "flags": 4
+            }
+          ]
+        },
+        {
+          "name": "Vendor",
+          "type": "opaque",
+          "value": "",
+          "readOnly": true,
+          "nativeType": "VendorPassive",
+          "passiveReason": "未知原生字段",
+          "nativeValueHash": "475aa41ce70b9fc9e22c534d12351f8df37b44bb6d188b6fb701e839a9ba381d",
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 29.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0,
+              "flags": 4
+            },
+            {
+              "page": 2,
+              "x": 19.5,
+              "y": 29.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0,
+              "flags": 4
+            }
+          ]
+        }
+      ],
+      "nativeAnnotations": {
+        "version": 1,
+        "sourceHash": "7a7e555b8c058ca59cafda60ece705d454ef04e796b27c70845fa2daa50b9abb",
+        "bindings": [
+          {
+            "sourcePage": 0,
+            "nativePageId": "a040e7eb-e424-4f1a-95eb-9d610df1490f",
+            "uiPageId": "a040e7eb-e424-4f1a-95eb-9d610df1490f"
+          },
+          {
+            "sourcePage": 1,
+            "nativePageId": "64a5481e-5a62-4435-888a-864ba19a77e7",
+            "uiPageId": "64a5481e-5a62-4435-888a-864ba19a77e7"
+          },
+          {
+            "sourcePage": 2,
+            "nativePageId": "4fa7454f-3c37-4b6e-8f28-c8c21803b315",
+            "uiPageId": "4fa7454f-3c37-4b6e-8f28-c8c21803b315"
+          }
+        ],
+        "commands": []
+      }
+    },
+    "sourceHash": "7a7e555b8c058ca59cafda60ece705d454ef04e796b27c70845fa2daa50b9abb",
+    "sourceSize": 1699812
+  },
+  "fresh": {
+    "id": "fc8c37da-bd4a-4919-8aa3-301134a3326f",
+    "revision": 8,
+    "document": {
+      "version": 1,
+      "id": "fc8c37da-bd4a-4919-8aa3-301134a3326f",
+      "name": "Primary.pdf",
+      "kind": "pdf",
+      "pageCount": 5,
+      "sourcePageCount": 5,
+      "pages": [
+        {
+          "id": "a040e7eb-e424-4f1a-95eb-9d610df1490f",
+          "sourcePage": 0,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 300,
+            "top": 400
+          }
+        },
+        {
+          "id": "f1c1d0a0-aaa3-4940-93d1-9444642003b4",
+          "sourcePage": 1,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 310,
+            "top": 410
+          }
+        },
+        {
+          "id": "44cdac9a-0ff7-4778-86a2-7a4d383bb5d5",
+          "sourcePage": 2,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 300,
+            "top": 400
+          }
+        },
+        {
+          "id": "64a5481e-5a62-4435-888a-864ba19a77e7",
+          "sourcePage": 3,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 310,
+            "top": 410
+          }
+        },
+        {
+          "id": "4fa7454f-3c37-4b6e-8f28-c8c21803b315",
+          "sourcePage": 4,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 300,
+            "top": 400
+          }
+        }
+      ],
+      "marks": [
+        {
+          "id": "ca1abc10-3eab-4b06-9cdd-02f1eda79741",
+          "nativeId": "ca1abc10-3eab-4b06-9cdd-02f1eda79741",
+          "page": 0,
+          "type": "rectangle",
+          "x": 210,
+          "y": 50,
+          "width": 50,
+          "height": 20,
+          "text": "",
+          "size": 12,
+          "color": "#253044",
+          "lineWidth": 2
+        },
+        {
+          "id": "annotation-copy:2a9304afa71ee7701cf158e96e2aad0f",
+          "nativeId": "annotation-copy:2a9304afa71ee7701cf158e96e2aad0f",
+          "page": 4,
+          "type": "rectangle",
+          "x": 210,
+          "y": 50,
+          "width": 50,
+          "height": 20,
+          "text": "",
+          "size": 12,
+          "color": "#253044",
+          "lineWidth": 2
+        }
+      ],
+      "rotations": {},
+      "fields": [
+        {
+          "name": "Text",
+          "readOnly": false,
+          "type": "text",
+          "value": "合并前的中文",
+          "multiline": false,
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 294.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            },
+            {
+              "page": 4,
+              "x": 19.5,
+              "y": 294.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Date",
+          "readOnly": false,
+          "design": {
+            "kind": "date",
+            "dateFormat": "YYYY-MM-DD",
+            "fontSize": 12,
+            "sourceName": "Date",
+            "required": false
+          },
+          "type": "text",
+          "value": "2026-11-26",
+          "multiline": false,
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 247.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            },
+            {
+              "page": 4,
+              "x": 19.5,
+              "y": 247.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Image",
+          "readOnly": false,
+          "design": {
+            "kind": "image",
+            "fontSize": 12,
+            "sourceName": "Image",
+            "required": false
+          },
+          "type": "image",
+          "value": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAwCAIAAAAJh2qgAAABGklEQVR4nO2YIQ7CQBBFPz81OMItegGCBRwejSAEy1GwKByOI9RzAxJOwQkIglAENZSZ3YHPU03FtC9vkmbbGS/2yMGhu8vyXEIMQgxCDEIMQgxCDEKMIvHzqvXxcVnWNy/b068JV0/PBnqrMpl5kVe10dxVm3FsX4N/U+GqlWqC1Axo65qaEINh8zpFZmRbD2dCDAbPax6ZEIMQg/H32XarCTEIMQp8D8vR/PMhhBiEGIQYtBo02Qzhyew8MJlDiEGIQcNZfltttc/4F44Y2TAvPArbOtva4r/SsSKb54Xf4eHu3PqQ7KGa4jvcLrWfLRIcD99K7aqa9Dxcp240T+CZ7QdAbd6fXpEDQgxCDEIMQgxCDOZ+gdTcAGbPRSYezDUhAAAAAElFTkSuQmCC",
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19,
+              "y": 189,
+              "width": 66,
+              "height": 41,
+              "rotation": 0
+            },
+            {
+              "page": 4,
+              "x": 19,
+              "y": 189,
+              "width": 66,
+              "height": 41,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Checked",
+          "readOnly": false,
+          "type": "checkbox",
+          "value": true,
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 144.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0
+            },
+            {
+              "page": 4,
+              "x": 19.5,
+              "y": 144.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Choice",
+          "readOnly": false,
+          "type": "choice",
+          "value": "A",
+          "options": [
+            "A",
+            "B"
+          ],
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "A"
+            },
+            {
+              "page": 0,
+              "x": 89.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "B"
+            },
+            {
+              "page": 4,
+              "x": 19.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "A"
+            },
+            {
+              "page": 4,
+              "x": 89.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "B"
+            }
+          ]
+        },
+        {
+          "name": "Drop",
+          "readOnly": false,
+          "type": "choice",
+          "value": "Two",
+          "options": [
+            "One",
+            "Two"
+          ],
+          "widgets": [
+            {
+              "page": 3,
+              "x": 19.5,
+              "y": 274.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "List",
+          "type": "opaque",
+          "value": "",
+          "readOnly": true,
+          "nativeType": "Ch",
+          "passiveReason": "原生列表框",
+          "nativeValueHash": "bce6bf742cc55837414710dc47df094857e6f20d56a291b540d6a327640f646a",
+          "widgets": [
+            {
+              "page": 3,
+              "x": 19.5,
+              "y": 174.5,
+              "width": 151,
+              "height": 76,
+              "rotation": 0,
+              "flags": 4
+            }
+          ]
+        },
+        {
+          "name": "Vendor",
+          "type": "opaque",
+          "value": "",
+          "readOnly": true,
+          "nativeType": "VendorPassive",
+          "passiveReason": "未知原生字段",
+          "nativeValueHash": "475aa41ce70b9fc9e22c534d12351f8df37b44bb6d188b6fb701e839a9ba381d",
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 29.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0,
+              "flags": 4
+            },
+            {
+              "page": 4,
+              "x": 19.5,
+              "y": 29.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0,
+              "flags": 4
+            }
+          ]
+        },
+        {
+          "name": "Text__2",
+          "readOnly": false,
+          "type": "text",
+          "value": "Incoming",
+          "multiline": false,
+          "widgets": [
+            {
+              "page": 2,
+              "x": 19.5,
+              "y": 279.5,
+              "width": 131,
+              "height": 31,
+              "rotation": 0
+            }
+          ]
+        }
+      ],
+      "nativeAnnotations": {
+        "version": 1,
+        "sourceHash": "bcc3c5a1037fdb58a6b9b68cf1a582990335fa54876e32fdeac9b617f1f313de",
+        "bindings": [
+          {
+            "sourcePage": 0,
+            "nativePageId": "a040e7eb-e424-4f1a-95eb-9d610df1490f",
+            "uiPageId": "a040e7eb-e424-4f1a-95eb-9d610df1490f"
+          },
+          {
+            "sourcePage": 1,
+            "nativePageId": "f1c1d0a0-aaa3-4940-93d1-9444642003b4",
+            "uiPageId": "f1c1d0a0-aaa3-4940-93d1-9444642003b4"
+          },
+          {
+            "sourcePage": 2,
+            "nativePageId": "44cdac9a-0ff7-4778-86a2-7a4d383bb5d5",
+            "uiPageId": "44cdac9a-0ff7-4778-86a2-7a4d383bb5d5"
+          },
+          {
+            "sourcePage": 3,
+            "nativePageId": "64a5481e-5a62-4435-888a-864ba19a77e7",
+            "uiPageId": "64a5481e-5a62-4435-888a-864ba19a77e7"
+          },
+          {
+            "sourcePage": 4,
+            "nativePageId": "4fa7454f-3c37-4b6e-8f28-c8c21803b315",
+            "uiPageId": "4fa7454f-3c37-4b6e-8f28-c8c21803b315"
+          }
+        ],
+        "commands": []
+      }
+    },
+    "sourceHash": "bcc3c5a1037fdb58a6b9b68cf1a582990335fa54876e32fdeac9b617f1f313de",
+    "sourceSize": 1700053
+  },
+  "errors": []
+}

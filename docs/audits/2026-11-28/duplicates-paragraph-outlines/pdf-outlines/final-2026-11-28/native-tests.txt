@@ -1,0 +1,55 @@
+TAP version 13
+# Subtest: reads a serializable native hierarchy and atomically edits, reorders, inserts and removes through two PDF saves
+ok 1 - reads a serializable native hierarchy and atomically edits, reorders, inserts and removes through two PDF saves
+  ---
+  duration_ms: 22.331334
+  ...
+# Subtest: resolves named and legacy destinations with all view kinds while retaining unchanged native destination identities
+ok 2 - resolves named and legacy destinations with all view kinds while retaining unchanged native destination identities
+  ---
+  duration_ms: 9.2765
+  ...
+# Subtest: retains unknown item/root attributes and passive external actions until their target is explicitly replaced
+ok 3 - retains unknown item/root attributes and passive external actions until their target is explicitly replaced
+  ---
+  duration_ms: 3.936667
+  ...
+# Subtest: preserves GoTo Next/private keys when its target changes and follows stable IDs after native page reorder
+ok 4 - preserves GoTo Next/private keys when its target changes and follows stable IDs after native page reorder
+  ---
+  duration_ms: 2.279041
+  ...
+# Subtest: rejects invalid pure edits, duplicate identities and descendant moves without changing the input tree
+ok 5 - rejects invalid pure edits, duplicate identities and descendant moves without changing the input tree
+  ---
+  duration_ms: 0.964375
+  ...
+# Subtest: rejects stale native identities, malformed targets and forged passive data before any loaded PDF mutation
+ok 6 - rejects stale native identities, malformed targets and forged passive data before any loaded PDF mutation
+  ---
+  duration_ms: 2.659084
+  ...
+# Subtest: malformed native targets, cycles, canonical links and chained local targets reject the complete read without edits
+ok 7 - malformed native targets, cycles, canonical links and chained local targets reject the complete read without edits
+  ---
+  duration_ms: 7.129625
+  ...
+# Subtest: empty and direct-root directories preserve private metadata until explicitly removed
+ok 8 - empty and direct-root directories preserve private metadata until explicitly removed
+  ---
+  duration_ms: 0.275291
+  ...
+# Subtest: removing the final child normalizes meaningless leaf expansion and keeps original empty native titles until explicitly edited
+ok 9 - removing the final child normalizes meaningless leaf expansion and keeps original empty native titles until explicitly edited
+  ---
+  duration_ms: 1.112583
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 259.447458

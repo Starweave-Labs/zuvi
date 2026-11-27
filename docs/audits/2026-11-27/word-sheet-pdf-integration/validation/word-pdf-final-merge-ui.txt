@@ -1,0 +1,67 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/studio-model.test.ts (25 tests) 27ms
+ ✓ src/components/OfficeStudio/StudioWord.basic-format.test.tsx (16 tests) 4362ms
+   ✓ Word basic character acceptance > presents a mixed 粗体 selection and changes the whole range in one undo event 537ms
+   ✓ Word basic character acceptance > presents a mixed 斜体 selection and changes the whole range in one undo event 308ms
+   ✓ Word basic character acceptance > presents a mixed 删除线 selection and changes the whole range in one undo event 336ms
+   ✓ Word basic character acceptance > switches superscript and subscript exclusively, cancels to baseline and restores each transaction 695ms
+   ✓ Word basic character acceptance > highlights subsequent caret input, clears the stored highlight and keeps the following typing in a separate history event 597ms
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx (30 tests) 5989ms
+   ✓ forwards the native editor through OfficeStudio and accepts one immutable source/model pair with transactional history 959ms
+   ✓ keeps unchanged native device colors out of a contents-only property patch, and cancels or applies an unchanged draft without history 421ms
+   ✓ retains both the current pair and undo/redo entries when the controlled host rejects application or restoration 564ms
+   ✓ submits keyboard movement and deletion once, ignores IME shortcuts, and restores each accepted pair independently 327ms
+ ✓ src/components/OfficeStudio/studio-word-character-layout.test.ts (8 tests) 127ms
+ ✓ src/components/OfficeStudio/StudioPdf.test.tsx (37 tests) 6934ms
+   ✓ StudioPdf document editing > creates repeated text widgets, validates duplicate names and edits or deletes fields with undo 622ms
+   ✓ StudioPdf document editing > controls ZUVI radio groups independently, mirrors sidebar edits and history, and carries checkbox values between pages 333ms
+   ✓ StudioPdf document editing > blocks readonly field changes and every document modification in readOnly/disabled modes while retaining readOnly page navigation 303ms
+   ✓ StudioPdf drawing and search > moves all signature points together, treats an entire drag as one undo action, and never commits a cancelled stroke 402ms
+   ✓ PDF page source and renderer scope > closes an old page draft when the same model switches source sessions and keeps document history 330ms
+ ✓ src/components/OfficeStudio/StudioPdfNativeLayer.test.tsx (9 tests) 149ms
+ ✓ src/components/OfficeStudio/StudioPdf.composition.test.tsx (14 tests) 2367ms
+   ✓ atomically changes the native source, isolates the following field edit and undoes or redoes the complete pair 794ms
+ ✓ src/components/OfficeStudio/StudioPdfTextLayer.test.tsx (6 tests) 84ms
+ ✓ src/components/OfficeStudio/studio-pdf-native-model.test.ts (11 tests) 9ms
+ ✓ src/components/OfficeStudio/StudioWord.character-guards.test.tsx (11 tests) 2027ms
+   ✓ W009 clear format should not change the document while the body is composing 326ms
+   ✓ W010 apply should keep a valid numeric IME draft outside the document until composition ends 351ms
+ ✓ src/components/OfficeStudio/StudioFontControl.test.tsx (6 tests) 399ms
+ ✓ src/components/OfficeStudio/StudioWord.test.tsx (140 tests) 29332ms
+   ✓ Word paragraph dialog and ruler > edits inherited tab stops through ZUVI controls with precision checks, cancellation and one history step 816ms
+   ✓ Word paragraph dialog and ruler > applies mixed paragraph values in one history step and keeps untouched values separate 543ms
+   ✓ Word paragraph dialog and ruler > retains invalid dialog drafts and disables an open dialog after permission changes 452ms
+   ✓ Word paragraph dialog and ruler > keeps mixed pagination flags unchanged until edited, commits once, and blocks an open dialog after permission changes 701ms
+   ✓ Word paragraph dialog and ruler > edits a named header style using shared definitions and restores its direct indent in one undo 308ms
+   ✓ Word character metrics dialog > preserves mixed fonts and links, previews point measurements and applies one undoable operation 318ms
+   ✓ Word character metrics dialog > blocks an invalid font draft before opening and preserves an unchanged metrics dialog without history 337ms
+   ✓ Word character metrics dialog > applies metrics in the header editor while preserving the body 410ms
+   ✓ StudioWord Office ribbon actions > shows nonprinting characters in the body, table, header and footer without changing data, selection or document history 416ms
+   ✓ StudioWord Office ribbon actions > applies font family and size to the selected range and restores them with undo and redo 474ms
+   ✓ StudioWord Office ribbon actions > toggles rulers, navigates headings and changes zoom in read-only mode without document edits 430ms
+   ✓ StudioWord Office ribbon actions > ignores late clipboard cut after a new-id document replacement 304ms
+   ✓ StudioWord named paragraph styles > creates, applies, modifies and deletes a named style with real undo and redo 493ms
+   ✓ StudioWord named paragraph styles > updates body and header bindings while preserving direct formatting in another paragraph 393ms
+   ✓ StudioWord structured editing > restores rejected controlled edits so the canvas and saved model agree 396ms
+   ✓ StudioWord structured editing > changes picture wrapping, position and anchor flags and restores them with undo 611ms
+   ✓ Word text and table conversion entry > converts through the actual ribbon with a preview and independent undo/redo transactions 348ms
+   ✓ converts complete selected rows through the ribbon and preserves surrounding tables 307ms
+   ✓ inserts a table formula through ZUVI dialog, keeps cancelled drafts and refreshes in a separate undo transaction 385ms
+   ✓ applies image crop through the toolbar, cancels drafts and restores crop with undo and redo 468ms
+   ✓ inserts a structured fraction through the actual math dialog and undoes it atomically 356ms
+   ✓ edits a math group independently in the actual footer region with undo and redo 359ms
+   ✓ StudioWord cell table defaults and spacing > edits only the dirty right table default and leaves cell overrides separate from inherited values 305ms
+   ✓ StudioWord cell table defaults and spacing > edits only the dirty bottom table default and leaves cell overrides separate from inherited values 385ms
+   ✓ StudioWord cell table defaults and spacing > keeps restoring defaults in the draft until apply, cancels without writes, and removes only the selected cell direct margins 402ms
+   ✓ StudioWord cell table defaults and spacing > commits defaults, spacing, direct margins and the nine-grid choice as one transaction while preserving cell identity, marks and untouched cells 341ms
+   ✓ StudioWord cell table defaults and spacing > sets whole-table spacing while clearing row overrides and restores both layers in one undo 319ms
+   ✓ StudioWord cell properties > commits a cell selection once, preserves untouched cells and marks, and restores the whole transaction with undo and redo 305ms
+ ✓ src/components/OfficeStudio/studio-pdf-pages.test.ts (5 tests) 7ms
+
+ Test Files  13 passed (13)
+      Tests  318 passed (318)
+   Start at  07:48:07
+   Duration  32.12s (transform 1.67s, setup 1.77s, collect 5.29s, tests 51.82s, environment 4.01s, prepare 589ms)
+

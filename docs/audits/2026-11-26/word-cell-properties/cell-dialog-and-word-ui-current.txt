@@ -1,0 +1,29 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/StudioWordCellDialog.test.tsx (5 tests) 253ms
+ ✓ src/components/OfficeStudio/StudioWord.test.tsx (140 tests) 26294ms
+   ✓ Word paragraph dialog and ruler > edits inherited tab stops through ZUVI controls with precision checks, cancellation and one history step 491ms
+   ✓ Word paragraph dialog and ruler > keeps mixed pagination flags unchanged until edited, commits once, and blocks an open dialog after permission changes 483ms
+   ✓ Word character metrics dialog > retains invalid drafts, disables an open dialog on permission changes and cancels without writing 309ms
+   ✓ StudioWord Office ribbon actions > applies font family and size to the selected range and restores them with undo and redo 391ms
+   ✓ StudioWord named paragraph styles > creates, applies, modifies and deletes a named style with real undo and redo 564ms
+   ✓ StudioWord structured editing > restores rejected controlled edits so the canvas and saved model agree 449ms
+   ✓ StudioWord structured editing > changes picture wrapping, position and anchor flags and restores them with undo 555ms
+   ✓ Word text and table conversion entry > converts through the actual ribbon with a preview and independent undo/redo transactions 388ms
+   ✓ inserts a table formula through ZUVI dialog, keeps cancelled drafts and refreshes in a separate undo transaction 470ms
+   ✓ applies image crop through the toolbar, cancels drafts and restores crop with undo and redo 518ms
+   ✓ inserts a structured fraction through the actual math dialog and undoes it atomically 388ms
+   ✓ edits an existing math structure through the dialog with separate undo and redo 328ms
+   ✓ edits a math group independently in the actual header region with undo and redo 408ms
+   ✓ StudioWord cell table defaults and spacing > edits only the dirty top table default and leaves cell overrides separate from inherited values 421ms
+   ✓ StudioWord cell table defaults and spacing > edits only the dirty left table default and leaves cell overrides separate from inherited values 417ms
+   ✓ StudioWord cell table defaults and spacing > keeps restoring defaults in the draft until apply, cancels without writes, and removes only the selected cell direct margins 356ms
+   ✓ StudioWord cell table defaults and spacing > rejects the whole draft after invalid 表格默认left内边距=2001, including other valid proposed edits 332ms
+   ✓ StudioWord cell table defaults and spacing > clears only an emptied default side and an emptied spacing attribute without materializing inherited cell margins 440ms
+   ✓ StudioWord cell properties > edits actual header table cells with independent undo and redo 374ms
+
+ Test Files  2 passed (2)
+      Tests  145 passed (145)
+   Start at  19:02:00
+   Duration  28.30s (transform 926ms, setup 265ms, collect 2.02s, tests 26.55s, environment 691ms, prepare 150ms)

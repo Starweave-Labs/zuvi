@@ -1,0 +1,146 @@
+{
+  "initial": {
+    "width": 600,
+    "columns": [
+      300,
+      300
+    ],
+    "boxes": [
+      [
+        {
+          "left": 8,
+          "top": 8,
+          "right": 296,
+          "bottom": 103.65625,
+          "width": 288,
+          "height": 95.65625
+        },
+        {
+          "left": 304,
+          "top": 8,
+          "right": 592,
+          "bottom": 103.65625,
+          "width": 288,
+          "height": 95.65625
+        }
+      ],
+      [
+        {
+          "left": 16,
+          "top": 115.65625,
+          "right": 292,
+          "bottom": 203.3125,
+          "width": 276,
+          "height": 87.65625
+        },
+        {
+          "left": 308,
+          "top": 115.65625,
+          "right": 584,
+          "bottom": 203.3125,
+          "width": 276,
+          "height": 87.65625
+        }
+      ],
+      [
+        {
+          "left": 0,
+          "top": 211.3125,
+          "right": 300,
+          "bottom": 314.96875,
+          "width": 300,
+          "height": 103.65625
+        },
+        {
+          "left": 300,
+          "top": 211.3125,
+          "right": 600,
+          "bottom": 314.96875,
+          "width": 300,
+          "height": 103.65625
+        }
+      ]
+    ]
+  },
+  "printed": {
+    "width": 600,
+    "columns": [
+      300,
+      300
+    ],
+    "boxes": [
+      [
+        {
+          "left": 8,
+          "top": 8,
+          "right": 296,
+          "bottom": 103.65625,
+          "width": 288,
+          "height": 95.65625
+        },
+        {
+          "left": 304,
+          "top": 8,
+          "right": 592,
+          "bottom": 103.65625,
+          "width": 288,
+          "height": 95.65625
+        }
+      ],
+      [
+        {
+          "left": 16,
+          "top": 115.65625,
+          "right": 292,
+          "bottom": 203.3125,
+          "width": 276,
+          "height": 87.65625
+        },
+        {
+          "left": 308,
+          "top": 115.65625,
+          "right": 584,
+          "bottom": 203.3125,
+          "width": 276,
+          "height": 87.65625
+        }
+      ],
+      [
+        {
+          "left": 0,
+          "top": 211.3125,
+          "right": 300,
+          "bottom": 314.96875,
+          "width": 300,
+          "height": 103.65625
+        },
+        {
+          "left": 300,
+          "top": 211.3125,
+          "right": 600,
+          "bottom": 314.96875,
+          "width": 300,
+          "height": 103.65625
+        }
+      ]
+    ]
+  },
+  "textPositions": [
+    {
+      "actual": 7.65625,
+      "expected": 7.66667
+    },
+    {
+      "actual": 7.65625,
+      "expected": 7.66667
+    },
+    {
+      "actual": 7.65625,
+      "expected": 7.66667
+    }
+  ],
+  "printedText": {
+    "actual": 7.65625,
+    "expected": 7.66667
+  }
+}

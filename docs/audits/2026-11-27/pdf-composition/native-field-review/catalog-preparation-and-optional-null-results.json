@@ -1,0 +1,234 @@
+[
+  {
+    "label": "virtual move then extraction preserves PageLabels and PrintPageRange from the same original page",
+    "result": {
+      "expected": {
+        "labels": [
+          {
+            "page": 0,
+            "prefix": "B",
+            "first": 1
+          },
+          {
+            "page": 1,
+            "prefix": "A",
+            "first": 1
+          }
+        ],
+        "print": [
+          1,
+          1
+        ]
+      },
+      "prepared": {
+        "labels": [
+          {
+            "page": 0,
+            "prefix": "B",
+            "first": 1
+          },
+          {
+            "page": 1,
+            "prefix": "A",
+            "first": 1
+          }
+        ],
+        "print": [
+          1,
+          1
+        ]
+      },
+      "adapter": {
+        "labels": [
+          {
+            "page": 0,
+            "prefix": "B",
+            "first": 1
+          },
+          {
+            "page": 1,
+            "prefix": "A",
+            "first": 1
+          }
+        ],
+        "print": [
+          1,
+          1
+        ]
+      }
+    }
+  },
+  {
+    "label": "direct null XFA",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "direct null SigFlags",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "direct null field Lock",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "direct null field SV",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "direct null field A",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "direct null field AA",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "direct null widget A",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "direct null widget AA",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "direct null OpenAction",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "direct null action Next",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "direct null ResetForm Fields",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "indirect null XFA",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "indirect null SigFlags",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "indirect null field Lock",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "indirect null field SV",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "indirect null field A",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "indirect null field AA",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "indirect null widget A",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "indirect null widget AA",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "indirect null OpenAction",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "indirect null action Next",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "indirect null ResetForm Fields",
+    "result": {
+      "imported": 1,
+      "composed": 1
+    }
+  },
+  {
+    "label": "XYZ destination null array entries remain actual null coordinates after two compose saves",
+    "result": [
+      [
+        "3 0 R",
+        "/XYZ",
+        "null",
+        "null",
+        "null"
+      ],
+      [
+        "4 0 R",
+        "/XYZ",
+        "null",
+        "null",
+        "null"
+      ]
+    ]
+  }
+]

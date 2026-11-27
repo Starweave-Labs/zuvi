@@ -1,0 +1,8 @@
+React ESM entry: 2 static modules, 424168 bytes, 124131 gzip bytes (budget < 124928)
+Async ChartView-BpAhf8BB.js: 1 additional modules, 56904 bytes, 17757 gzip bytes
+Async GlobeScene-Bub3koJI.js: 2 additional modules, 105471 bytes, 39681 gzip bytes
+Async DataGridView-B2yi-7Y4.js: 1 additional modules, 16927 bytes, 5780 gzip bytes
+Async StudioWord-Buvj5W_m.js: 3 additional modules, 324097 bytes, 93806 gzip bytes
+Async StudioSheet-DtZGxBC4.js: 2 additional modules, 254193 bytes, 79988 gzip bytes
+Async StudioPdf-BcID4U53.js: 3 additional modules, 123160 bytes, 37751 gzip bytes
+Async globe-renderer-C47OlC6f.js: 3 additional modules, 662661 bytes, 174747 gzip bytes

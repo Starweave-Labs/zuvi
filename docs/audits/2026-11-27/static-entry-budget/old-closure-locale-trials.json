@@ -1,0 +1,74 @@
+[
+  {
+    "label": "accessibility",
+    "sections": [
+      "accessibility"
+    ],
+    "bytes": 422068,
+    "gzip": 122751,
+    "closureGzip": 124503,
+    "savedGzip": 465
+  },
+  {
+    "label": "globe",
+    "sections": [
+      "globe"
+    ],
+    "bytes": 422979,
+    "gzip": 122810,
+    "closureGzip": 124562,
+    "savedGzip": 406
+  },
+  {
+    "label": "accessibility_globe",
+    "sections": [
+      "accessibility",
+      "globe"
+    ],
+    "bytes": 420080,
+    "gzip": 122366,
+    "closureGzip": 124118,
+    "savedGzip": 850
+  },
+  {
+    "label": "large_sections",
+    "sections": [
+      "accessibility",
+      "globe",
+      "form",
+      "commandPalette",
+      "combobox",
+      "sideNav"
+    ],
+    "bytes": 418860,
+    "gzip": 121981,
+    "closureGzip": 123733,
+    "savedGzip": 1235
+  },
+  {
+    "label": "string_sections",
+    "sections": [
+      "accessibility",
+      "form",
+      "result",
+      "select",
+      "sideNav",
+      "splitter",
+      "commandPalette",
+      "globe",
+      "combobox",
+      "input",
+      "pagination",
+      "transfer",
+      "timePicker",
+      "popconfirm",
+      "tour",
+      "upload",
+      "dateRange"
+    ],
+    "bytes": 417915,
+    "gzip": 121530,
+    "closureGzip": 123282,
+    "savedGzip": 1686
+  }
+]

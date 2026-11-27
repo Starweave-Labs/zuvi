@@ -1,0 +1,10 @@
+[WebServer] (node:82519) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:82535) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › e2e/office-studio-word-math.spec.ts:6:1 › edits native display equations and preserves scripts, fractions, matrices and formatting through repeated DOCX saves (6.9s)
+
+  1 passed (9.1s)

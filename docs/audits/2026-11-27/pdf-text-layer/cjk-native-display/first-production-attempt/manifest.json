@@ -1,0 +1,22 @@
+[
+  {
+    "path": "last-frame.jpeg",
+    "sha256": "d61921244d3e32d1dc77505a01dc4b413e54a17f249d8ae48c20f057d46d3167"
+  },
+  {
+    "path": "spec.ts.txt",
+    "sha256": "a7c1bb2d98666f783d2d1356cd49ca29c40d2925fb1a1b59b41ff085aa87ebb2"
+  },
+  {
+    "path": "trace.zip",
+    "sha256": "ad9a902cfd575398616e08abc288bd9e6863efdcaab7c9f74061a2bc8c56ff7f"
+  },
+  {
+    "path": "playwright.txt",
+    "sha256": "e2096358761a2cb149d8324288c81e50d7e92ad932858097c57ff536052a4494"
+  },
+  {
+    "path": "error-context.md",
+    "sha256": "a5535695995805a146868ad9166228568a8b03de8dd7dd7582a7b9ccabf15927"
+  }
+]

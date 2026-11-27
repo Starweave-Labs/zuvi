@@ -1,0 +1,35 @@
+TAP version 13
+# Subtest: native duplicate removal compacts selected records, resets overwritten source formatting and retains formulas over two reopens
+ok 1 - native duplicate removal compacts selected records, resets overwritten source formatting and retains formulas over two reopens
+  ---
+  duration_ms: 218.698666
+  ...
+# Subtest: native hyperlinks follow retained records and clear deleted tails without changing adjacent links
+ok 2 - native hyperlinks follow retained records and clear deleted tails without changing adjacent links
+  ---
+  duration_ms: 103.849667
+  ...
+# Subtest: native typed comparison distinguishes numeric, text, boolean, true blank and explicit empty text through two reopens
+ok 3 - native typed comparison distinguishes numeric, text, boolean, true blank and explicit empty text through two reopens
+  ---
+  duration_ms: 79.8515
+  ...
+# Subtest: explicit empty input with text valueType stays native text when moved and reopens as an empty text key
+ok 4 - explicit empty input with text valueType stays native text when moved and reopens as an empty text key
+  ---
+  duration_ms: 92.814667
+  ...
+# Subtest: native sources and original model remain unchanged when duplicate removal refuses unsafe regions
+ok 5 - native sources and original model remain unchanged when duplicate removal refuses unsafe regions
+  ---
+  duration_ms: 14.014459
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1541.052167

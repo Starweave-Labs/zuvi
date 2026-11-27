@@ -16,12 +16,7 @@ import type {
 afterEach(cleanup);
 
 vi.mock('./StudioWord', () => ({
-  StudioWord: ({
-    document,
-    onChange,
-    disabled,
-    readOnly,
-  }: StudioEditorProps<StudioWordDocument>) => (
+  default: ({ document, onChange, disabled, readOnly }: StudioEditorProps<StudioWordDocument>) => (
     <textarea
       aria-label="正文画布"
       disabled={disabled}
@@ -65,6 +60,8 @@ function openedMenu(trigger: HTMLElement) {
 
 describe('OfficeStudio', () => {
   it('rejects saving, exporting, printing and replacing a spreadsheet with an invalid pending input', async () => {
+    // Prepare the lazy editor before this draft-validation test starts querying cells.
+    await import('./StudioSheet');
     const user = userEvent.setup();
     const ref = React.createRef<OfficeStudioHandle>();
     const document = createOfficeStudioDocument('excel') as StudioExcelDocument;

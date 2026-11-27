@@ -1,0 +1,1 @@
+All three generated model JSON values match HEAD exactly, including IDs, cell order, formulas, formatting and document contents.

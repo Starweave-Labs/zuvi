@@ -1,0 +1,40 @@
+[WebServer] (node:15603) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:15619) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+  ✘  1 [chromium] › e2e/office-studio-word-math-layout.spec.ts:6:1 › keeps tall equation atoms and following text positions together at an actual page boundary (5.3s)
+  ✓  2 [chromium] › e2e/office-studio-word-math-regions.spec.ts:6:1 › edits independent header and footer equation groups and reopens both regions twice (5.2s)
+
+
+  1) [chromium] › e2e/office-studio-word-math-layout.spec.ts:6:1 › keeps tall equation atoms and following text positions together at an actual page boundary
+
+    TypeError: Promise.withResolvers is not a function
+
+      75 |   await preview.close();
+      76 |   const pdfjs = await import('../docs/node_modules/pdfjs-dist/legacy/build/pdf.mjs');
+    > 77 |   const task = pdfjs.getDocument({ data: new Uint8Array(await readFile(printFile)), useSystemFonts: true });
+         |                      ^
+      78 |   const pdf = await task.promise;
+      79 |   const texts: string[] = [];
+      80 |   for (let n = 1; n <= pdf.numPages; n++) {
+        at PDFDocumentLoadingTask.<instance_members_initializer> (/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/node_modules/.pnpm/pdfjs-dist@6.5.438/node_modules/pdfjs-dist/legacy/build/webpack:/pdf.js/src/display/api.js:510:25)
+        at PDFDocumentLoadingTask (/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/node_modules/.pnpm/pdfjs-dist@6.5.438/node_modules/pdfjs-dist/legacy/build/webpack:/pdf.js/src/display/api.js:504:1)
+        at Module.getDocument (/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/node_modules/.pnpm/pdfjs-dist@6.5.438/node_modules/pdfjs-dist/legacy/build/webpack:/pdf.js/src/display/api.js:229:16)
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-math-layout.spec.ts:77:22
+
+    Error Context: test-results/office-studio-word-math-la-88ef1--at-an-actual-page-boundary-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/office-studio-word-math-la-88ef1--at-an-actual-page-boundary-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/office-studio-word-math-la-88ef1--at-an-actual-page-boundary-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/office-studio-word-math-layout.spec.ts:6:1 › keeps tall equation atoms and following text positions together at an actual page boundary
+  1 passed (13.2s)

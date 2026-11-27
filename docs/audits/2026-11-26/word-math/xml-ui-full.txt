@@ -1,0 +1,59 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/studio-word-math.test.ts (6 tests) 17ms
+ ✓ src/components/OfficeStudio/studio-word-math-extension.test.ts (5 tests) 219ms
+ ✓ src/components/OfficeStudio/StudioWordMathDialog.test.tsx (5 tests) 1021ms
+   ✓ edits nested fractions and matrices with a live structural preview and cancels without saving 528ms
+ ✓ src/components/OfficeStudio/StudioWord.test.tsx (101 tests) 34165ms
+   ✓ Word paragraph dialog and ruler > edits inherited tab stops through ZUVI controls with precision checks, cancellation and one history step 901ms
+   ✓ Word paragraph dialog and ruler > applies mixed paragraph values in one history step and keeps untouched values separate 742ms
+   ✓ Word paragraph dialog and ruler > retains invalid dialog drafts and disables an open dialog after permission changes 504ms
+   ✓ Word paragraph dialog and ruler > keeps mixed pagination flags unchanged until edited, commits once, and blocks an open dialog after permission changes 903ms
+   ✓ Word paragraph dialog and ruler > edits a named header style using shared definitions and restores its direct indent in one undo 568ms
+   ✓ Word character metrics dialog > preserves mixed fonts and links, previews point measurements and applies one undoable operation 506ms
+   ✓ Word character metrics dialog > retains invalid drafts, disables an open dialog on permission changes and cancels without writing 590ms
+   ✓ Word character metrics dialog > blocks an invalid font draft before opening and preserves an unchanged metrics dialog without history 407ms
+   ✓ Word character metrics dialog > applies metrics in the header editor while preserving the body 459ms
+   ✓ StudioWord Office ribbon actions > shows nonprinting characters in the body, table, header and footer without changing data, selection or document history 559ms
+   ✓ StudioWord Office ribbon actions > applies font family and size to the selected range and restores them with undo and redo 518ms
+   ✓ StudioWord Office ribbon actions > applies genuine no-spacing and heading styles through the gallery without replacing text 478ms
+   ✓ StudioWord Office ribbon actions > toggles rulers, navigates headings and changes zoom in read-only mode without document edits 352ms
+   ✓ StudioWord Office ribbon actions > copies plain text, cuts only after a successful write and restores the selected text with undo 440ms
+   ✓ StudioWord Office ribbon actions > keeps the document when clipboard cut fails and offers the native shortcut 348ms
+   ✓ StudioWord Office ribbon actions > ignores late clipboard paste after a new-id document replacement 320ms
+   ✓ StudioWord Office ribbon actions > ignores late clipboard cut after a same-id document replacement 401ms
+   ✓ StudioWord Office ribbon actions > ignores late clipboard cut after a new-id document replacement 303ms
+   ✓ StudioWord named paragraph styles > creates, applies, modifies and deletes a named style with real undo and redo 961ms
+   ✓ StudioWord named paragraph styles > updates body and header bindings while preserving direct formatting in another paragraph 555ms
+   ✓ StudioWord structured editing > inserts a real table and changes its row count through the ribbon 351ms
+   ✓ StudioWord structured editing > restores rejected controlled edits so the canvas and saved model agree 539ms
+   ✓ StudioWord structured editing > previews a direct image resize and commits it as one undoable change 312ms
+   ✓ StudioWord structured editing > changes picture wrapping, position and anchor flags and restores them with undo 940ms
+   ✓ StudioWord structured editing > moves a floating picture with a preview, cancels it without a write and commits a complete gesture once 327ms
+   ✓ StudioWord structured editing > edits and formats a header independently and adds or removes a footer page field 487ms
+   ✓ StudioWord structured editing > finds across styled runs and replaces plain text in one undoable transaction 350ms
+   ✓ StudioWord structured editing > filters matches by character format criteria 477ms
+   ✓ StudioWord structured editing > cycles search matches from the first result with Enter and replaces only the selected result 321ms
+   ✓ StudioWord structured editing > disables incomplete bulk results and rejects replacement growth without changing content 726ms
+   ✓ StudioWord 第一轮编辑能力 > copies exact character and paragraph formats with continuous painting and does not toggle existing marks off 475ms
+   ✓ StudioWord 第一轮编辑能力 > converts 每个单词首字母大写 across marks while preserving a link and undo 363ms
+   ✓ StudioWord 第一轮编辑能力 > 文字高亮：选色写入 backgroundColor，无颜色清除 385ms
+   ✓ StudioWord 第一轮编辑能力 > 格式刷：armed 后 Esc 解除，不改动文档 317ms
+   ✓ Word text and table conversion entry > converts through the actual ribbon with a preview and independent undo/redo transactions 568ms
+   ✓ Word text and table conversion entry > cancels without writes and rejects a stale conversion after an external document replacement 410ms
+   ✓ restores a rejected controlled conversion without changing the saved native model 372ms
+   ✓ converts complete selected rows through the ribbon and preserves surrounding tables 340ms
+   ✓ inserts a table formula through ZUVI dialog, keeps cancelled drafts and refreshes in a separate undo transaction 644ms
+   ✓ applies image crop through the toolbar, cancels drafts and restores crop with undo and redo 1011ms
+   ✓ blocks an open crop draft when permissions or external content change 398ms
+   ✓ keeps the selected original image and history when a replacement file is invalid or cancelled 359ms
+   ✓ discards a delayed replacement after readonly or document changes 350ms
+   ✓ inserts a structured fraction through the actual math dialog and undoes it atomically 637ms
+   ✓ blocks an open math draft after permissions or external content change 440ms
+   ✓ edits an existing math structure through the dialog with separate undo and redo 580ms
+
+ Test Files  4 passed (4)
+      Tests  117 passed (117)
+   Start at  12:45:39
+   Duration  37.19s (transform 1.52s, setup 1.20s, collect 3.24s, tests 35.42s, environment 2.17s, prepare 332ms)

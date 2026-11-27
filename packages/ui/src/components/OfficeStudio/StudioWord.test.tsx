@@ -1,15 +1,60 @@
+import { CellSelection } from '@tiptap/pm/tables';
+import { undoDepth } from '@tiptap/pm/history';
+import type { Editor } from '@tiptap/react';
 import { createRef, StrictMode, useLayoutEffect, useState } from 'react';
 import { renderToString } from 'react-dom/server';
 import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 import { StudioWord } from './StudioWord';
+import { wordNextFontSize } from './studio-word-tools';
 import { OfficeStudio } from './OfficeStudio';
 import type {
   OfficeStudioHandle,
   StudioEditorProps,
   StudioRichNode,
   StudioWordDocument,
+  StudioWordParagraphStyle,
 } from './studio-types';
+
+const namedStyleDocument = (autoUpdate = false): StudioWordDocument => ({
+  version: 1,
+  id: 'named-style-test',
+  name: '样式.docx',
+  kind: 'word',
+  page: { size: 'A4', orientation: 'portrait', margin: 20 },
+  content: {
+    type: 'doc',
+    attrs: {
+      paragraphStyles: [
+        {
+          id: 'review',
+          name: '评审正文',
+          run: { fontSize: 14, bold: true },
+          paragraph: { lineHeight: 1.5 },
+          next: 'paragraph',
+          autoUpdate,
+        },
+      ],
+    },
+    content: ['第一段', '第二段'].map((text) => ({
+      type: 'paragraph',
+      attrs: { paragraphStyle: 'review', paragraphStyleMaterialized: true, lineHeight: 1.5 },
+      content: [
+        {
+          type: 'text',
+          text,
+          marks: [
+            { type: 'bold' },
+            {
+              type: 'textStyle',
+              attrs: { fontFamily: 'Noto Sans SC', fontSize: '14pt', color: '#1f2937' },
+            },
+          ],
+        },
+      ],
+    })),
+  },
+});
 
 const documentModel = (text = '项目评审内容'): StudioWordDocument => ({
   version: 1,
@@ -38,6 +83,415 @@ function selectNodeContents(textbox: HTMLElement, node: Node) {
 }
 
 const restore: (() => void)[] = [];
+
+describe('Word paragraph dialog and ruler', () => {
+  it('edits inherited tab stops through ZUVI controls with precision checks, cancellation and one history step', async () => {
+    const model = namedStyleDocument();
+    model.defaultTabStop = 30;
+    (model.content.attrs!.paragraphStyles as StudioWordParagraphStyle[])[0].tabStops = [
+      { position: 180, alignment: 'right', leader: 'dot' },
+    ];
+    const { textbox, onChange } = await mount({ document: model });
+    selectNodeContents(textbox, textbox.querySelector('p')!);
+    fireEvent.click(screen.getByRole('button', { name: '制表位' }));
+    expect(screen.getByText(/当前默认每 30pt/)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: /^180pt/ }));
+    fireEvent.change(screen.getByLabelText('制表位位置（pt）'), { target: { value: '144.03' } });
+    expect(screen.getByRole('button', { name: '应用制表位' })).toBeDisabled();
+    fireEvent.click(screen.getByRole('button', { name: '取消' }));
+    expect(onChange).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: '制表位' }));
+    fireEvent.click(screen.getByRole('button', { name: /^180pt/ }));
+    fireEvent.change(screen.getByLabelText('制表位位置（pt）'), { target: { value: '144.05' } });
+    fireEvent.click(screen.getByRole('button', { name: '应用制表位' }));
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange.mock.lastCall?.[0].content.content[0].attrs.tabStops).toEqual(
+      [
+        { position: 180, alignment: 'clear' },
+        { position: 144.05, alignment: 'right', leader: 'dot' },
+      ].sort((a, b) => a.position - b.position)
+    );
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    expect(onChange.mock.lastCall?.[0].content.content[0].attrs.tabStops).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    expect(onChange.mock.lastCall?.[0].content.content[0].attrs.tabStops).toHaveLength(2);
+  });
+  beforeAll(() =>
+    vi.stubGlobal(
+      'PointerEvent',
+      class extends MouseEvent {
+        pointerId: number;
+        constructor(type: string, init: MouseEventInit & { pointerId?: number } = {}) {
+          super(type, init);
+          this.pointerId = init.pointerId ?? 7;
+        }
+      }
+    )
+  );
+  afterAll(() => vi.unstubAllGlobals());
+  function paragraphSetup() {
+    const initial = documentModel();
+    initial.content.content = [
+      {
+        type: 'paragraph',
+        attrs: { indentLeft: 8, indentFirstLine: 4, lineHeight: 1.5, spaceAfter: 6 },
+        content: [{ type: 'text', text: 'Alpha' }],
+      },
+      {
+        type: 'paragraph',
+        attrs: {
+          indentLeft: 16,
+          indentFirstLine: -4,
+          lineHeight: 18,
+          lineHeightRule: 'exact',
+          spaceAfter: 9,
+        },
+        content: [{ type: 'text', text: 'Beta' }],
+      },
+    ];
+    let current = initial;
+    const changed = vi.fn();
+    function Harness(props: { readOnly: boolean; disabled: boolean }) {
+      const [doc, setDoc] = useState(initial);
+      return (
+        <StudioWord
+          {...props}
+          document={doc}
+          onChange={(next) => {
+            current = next;
+            changed(next);
+            setDoc(next);
+          }}
+        />
+      );
+    }
+    const view = render(<Harness readOnly={false} disabled={false} />);
+    return {
+      changed,
+      current: () => current,
+      permissions: (props: { readOnly: boolean; disabled: boolean }) =>
+        view.rerender(<Harness {...props} />),
+    };
+  }
+  const chooseParagraph = (label: string, value: string) => {
+    const trigger = within(screen.getByRole('dialog')).getByRole('button', {
+      name: new RegExp(`^${label}`),
+    });
+    fireEvent.click(trigger);
+    const list = document.getElementById(trigger.getAttribute('aria-controls')!)!;
+    fireEvent.click(within(list).getByRole('option', { name: value }));
+  };
+  it('applies mixed paragraph values in one history step and keeps untouched values separate', async () => {
+    const f = paragraphSetup();
+    const body = await screen.findByRole('textbox', { name: 'Word 文档正文' });
+    selectNodeContents(body, body);
+    fireEvent.click(screen.getByRole('button', { name: '段落设置' }));
+    fireEvent.change(screen.getByLabelText('左缩进（pt）'), { target: { value: '30' } });
+    fireEvent.change(screen.getByLabelText('右缩进（pt）'), { target: { value: '10' } });
+    chooseParagraph('特殊缩进', '悬挂');
+    fireEvent.change(screen.getByLabelText('特殊缩进量（pt）'), { target: { value: '12' } });
+    chooseParagraph('行距类型', '固定值');
+    fireEvent.change(screen.getByLabelText('行距量'), { target: { value: '24' } });
+    fireEvent.click(screen.getByRole('button', { name: '应用段落设置' }));
+    expect(f.changed).toHaveBeenCalledTimes(1);
+    for (const p of f.current().content.content!)
+      expect(p.attrs).toMatchObject({
+        indentLeft: 30,
+        indentRight: 10,
+        indentFirstLine: -12,
+        lineHeight: 24,
+        lineHeightRule: 'exact',
+      });
+    expect(f.current().content.content!.map((p) => p.attrs?.spaceAfter)).toEqual([6, 9]);
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    expect(f.current().content.content![0].attrs?.indentLeft).toBe(8);
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    expect(f.current().content.content![0].attrs?.indentLeft).toBe(30);
+  });
+  it('retains invalid dialog drafts and disables an open dialog after permission changes', async () => {
+    const f = paragraphSetup();
+    const body = await screen.findByRole('textbox', { name: 'Word 文档正文' });
+    selectNodeContents(body, body.firstChild!);
+    fireEvent.click(screen.getByRole('button', { name: '段落设置' }));
+    const input = screen.getByLabelText('左缩进（pt）');
+    fireEvent.change(input, { target: { value: '1x' } });
+    expect(screen.getByRole('alert')).toBeVisible();
+    expect(screen.getByRole('button', { name: '应用段落设置' })).toBeDisabled();
+    f.permissions({ readOnly: true, disabled: false });
+    expect(input).toHaveValue('1x');
+    expect(input).toBeDisabled();
+    fireEvent.click(screen.getByRole('button', { name: '取消' }));
+    expect(f.changed).not.toHaveBeenCalled();
+    expect(screen.getByRole('button', { name: '段落设置' })).toBeDisabled();
+  });
+  it('keeps mixed pagination flags unchanged until edited, commits once, and blocks an open dialog after permission changes', async () => {
+    const f = paragraphSetup();
+    const body = await screen.findByRole('textbox', { name: 'Word 文档正文' });
+    selectNodeContents(body, body);
+    fireEvent.click(screen.getByRole('button', { name: '段落设置' }));
+    chooseParagraph('段内不分页', '开启');
+    chooseParagraph('与下段同页', '开启');
+    chooseParagraph('孤行控制', '关闭');
+    f.permissions({ readOnly: true, disabled: false });
+    expect(screen.getByRole('button', { name: '应用段落设置' })).toBeDisabled();
+    expect(f.changed).not.toHaveBeenCalled();
+    f.permissions({ readOnly: false, disabled: false });
+    fireEvent.click(screen.getByRole('button', { name: '应用段落设置' }));
+    expect(f.changed).toHaveBeenCalledOnce();
+    for (const paragraph of f.current().content.content!)
+      expect(paragraph.attrs).toMatchObject({
+        keepLines: true,
+        keepNext: true,
+        widowControl: false,
+      });
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    expect(f.current().content.content![0].attrs?.keepLines).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    expect(f.current().content.content![0].attrs?.keepLines).toBe(true);
+    selectNodeContents(body, body.firstChild!);
+    fireEvent.click(screen.getByRole('button', { name: '段落设置' }));
+    chooseParagraph('段内不分页', '关闭');
+    fireEvent.click(screen.getByRole('button', { name: '取消' }));
+    expect(f.current().content.content![0].attrs?.keepLines).toBe(true);
+  });
+  it('lets readonly readers toggle measured pagination without writing data while disabled readers cannot',async()=>{
+    const model=documentModel(),onChange=vi.fn();const view=render(<StudioWord document={model} onChange={onChange} readOnly disabled={false}/>);
+    await screen.findByRole('textbox',{name:'Word 文档正文'});fireEvent.click(screen.getByRole('tab',{name:'视图'}));const toggle=screen.getByRole('checkbox',{name:'分页布局'});fireEvent.click(toggle);
+    expect(toggle).toBeChecked();expect(onChange).not.toHaveBeenCalled();view.rerender(<StudioWord document={model} onChange={onChange} disabled readOnly={false}/>);expect(toggle).toBeDisabled();expect(onChange).not.toHaveBeenCalled();
+  });
+  it('edits a named header style using shared definitions and restores its direct indent in one undo', async () => {
+    const model = namedStyleDocument();
+    model.header = {
+      type: 'doc',
+      content: [
+        {
+          type: 'paragraph',
+          attrs: { paragraphStyle: 'review' },
+          content: [{ type: 'text', text: 'Named header' }],
+        },
+      ],
+    };
+    const { onChange } = await mount({ document: model });
+    const header = await screen.findByRole('textbox', { name: 'Word 页眉' });
+    fireEvent.doubleClick(screen.getByLabelText('页眉区域'));
+    await waitFor(() => expect(header).toHaveAttribute('contenteditable', 'true'));
+    selectNodeContents(header, header.querySelector('p')!);
+    fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+    fireEvent.click(screen.getByRole('button', { name: '段落设置' }));
+    fireEvent.change(screen.getByLabelText('左缩进（pt）'), { target: { value: '24' } });
+    fireEvent.click(screen.getByRole('button', { name: '应用段落设置' }));
+    expect(header.querySelector('p')).toHaveStyle({ marginLeft: '24pt', lineHeight: '1.5' });
+    expect(onChange.mock.lastCall?.[0].header.content[0].attrs.paragraphStyleDirectAttrs).toContain(
+      'indentLeft'
+    );
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    expect(header.querySelector('p')).toHaveStyle({ marginLeft: '0pt' });
+  });
+  it('supports keyboard ruler steps without changing first-line offsets', async () => {
+    const f = paragraphSetup();
+    const body = await screen.findByRole('textbox', { name: 'Word 文档正文' });
+    selectNodeContents(body, body.firstChild!);
+    const left = await screen.findByRole('slider', { name: '左缩进标尺' });
+    fireEvent.keyDown(left, { key: 'ArrowRight', shiftKey: true });
+    expect(f.current().content.content![0].attrs).toMatchObject({
+      indentLeft: 18,
+      indentFirstLine: 4,
+    });
+    expect(f.changed).toHaveBeenCalledTimes(1);
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    expect(f.current().content.content![0].attrs?.indentLeft).toBe(8);
+    f.permissions({ readOnly: false, disabled: true });
+    expect(left).toBeDisabled();
+  });
+  it('previews ruler drag, restores cancellation and commits pointer release as one operation', async () => {
+    const f = paragraphSetup();
+    const body = await screen.findByRole('textbox', { name: 'Word 文档正文' });
+    selectNodeContents(body, body.firstChild!);
+    const left = await screen.findByRole('slider', { name: '左缩进标尺' });
+    const ruler = left.closest('[data-part="word-ruler"]')!;
+    vi.spyOn(ruler, 'getBoundingClientRect').mockReturnValue({
+      left: 100,
+      top: 0,
+      width: 794,
+      height: 26,
+      right: 894,
+      bottom: 26,
+      x: 100,
+      y: 0,
+      toJSON: () => ({}),
+    });
+    const origin = parseFloat(left.style.left) - (8 * 4) / 3;
+    fireEvent.pointerDown(left, {
+      button: 0,
+      pointerId: 7,
+      clientX: 100 + parseFloat(left.style.left),
+    });
+    fireEvent.pointerMove(window, { pointerId: 7, clientX: 100 + origin + (30 * 4) / 3 });
+    expect((body.firstChild as HTMLElement).style.marginLeft).toBe('30pt');
+    expect(f.changed).not.toHaveBeenCalled();
+    fireEvent.keyDown(window, { key: 'Escape' });
+    expect((body.firstChild as HTMLElement).style.marginLeft).toBe('8pt');
+    expect(f.changed).not.toHaveBeenCalled();
+    fireEvent.pointerDown(left, {
+      button: 0,
+      pointerId: 7,
+      clientX: 100 + parseFloat(left.style.left),
+    });
+    fireEvent.pointerMove(window, { pointerId: 7, clientX: 100 + origin + (30 * 4) / 3 });
+    fireEvent.pointerUp(window, { pointerId: 7 });
+    expect(f.current().content.content![0].attrs?.indentLeft).toBe(30);
+    expect(f.changed).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('Word character metrics dialog', () => {
+  function metricsSetup(initial = documentModel()) {
+    let current = initial;
+    const changed = vi.fn();
+    function Harness(props: { readOnly: boolean; disabled: boolean }) {
+      const [doc, setDoc] = useState(initial);
+      return (
+        <StudioWord
+          document={doc}
+          {...props}
+          onChange={(next) => {
+            current = next;
+            changed(next);
+            setDoc(next);
+          }}
+        />
+      );
+    }
+    const view = render(<Harness readOnly={false} disabled={false} />);
+    return {
+      current: () => current,
+      changed,
+      permissions: (props: { readOnly: boolean; disabled: boolean }) =>
+        view.rerender(<Harness {...props} />),
+    };
+  }
+  const choose = (label: string, mode: string) => {
+    const dialog = screen.getByRole('dialog');
+    fireEvent.click(within(dialog).getByRole('button', { name: new RegExp(`^${label}`) }));
+    fireEvent.click(screen.getByRole('option', { name: mode }));
+  };
+  const layoutAttrs = (doc: StudioWordDocument) =>
+    doc.content.content![0].content!.map(
+      (n) => n.marks?.find((m) => m.type === 'textStyle')?.attrs
+    );
+  it('preserves mixed fonts and links, previews point measurements and applies one undoable operation', async () => {
+    const doc = documentModel();
+    doc.content.content![0].content = [
+      {
+        type: 'text',
+        text: 'A',
+        marks: [
+          { type: 'bold' },
+          {
+            type: 'textStyle',
+            attrs: { fontSize: '14pt', letterSpacing: '1pt', baselineShift: '2pt' },
+          },
+        ],
+      },
+      {
+        type: 'text',
+        text: 'B',
+        marks: [
+          { type: 'link', attrs: { href: 'https://example.com' } },
+          {
+            type: 'textStyle',
+            attrs: { fontSize: '30pt', letterSpacing: '-0.1pt', baselineShift: '0pt' },
+          },
+        ],
+      },
+    ];
+    const f = metricsSetup(doc);
+    const body = await screen.findByRole('textbox', { name: 'Word 文档正文' });
+    selectNodeContents(body, body.querySelector('p')!);
+    fireEvent.click(screen.getByRole('button', { name: '字符间距与位置' }));
+    expect(within(screen.getByRole('dialog')).getAllByText('混合（保持原值）')).toHaveLength(2);
+    choose('字符间距', '加宽');
+    fireEvent.change(screen.getByLabelText('字符间距量（pt）'), { target: { value: '1.2' } });
+    choose('字符位置', '降低');
+    fireEvent.change(screen.getByLabelText('字符位置量（pt）'), { target: { value: '2.5' } });
+    expect(screen.getByText('预览：间距 1.2pt，位置 -2.5pt')).toBeVisible();
+    fireEvent.click(screen.getByRole('button', { name: '应用字符格式' }));
+    expect(f.changed).toHaveBeenCalledTimes(1);
+    expect(layoutAttrs(f.current())).toEqual([
+      expect.objectContaining({
+        fontSize: '14pt',
+        letterSpacing: '1.2pt',
+        baselineShift: '-2.5pt',
+      }),
+      expect.objectContaining({
+        fontSize: '30pt',
+        letterSpacing: '1.2pt',
+        baselineShift: '-2.5pt',
+      }),
+    ]);
+    expect(body.querySelector('a')).toHaveAttribute('href', 'https://example.com');
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    expect(layoutAttrs(f.current())[0]?.letterSpacing).toBe('1pt');
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    expect(layoutAttrs(f.current())[0]?.letterSpacing).toBe('1.2pt');
+  });
+  it('retains invalid drafts, disables an open dialog on permission changes and cancels without writing', async () => {
+    const f = metricsSetup();
+    const body = await screen.findByRole('textbox', { name: 'Word 文档正文' });
+    selectNodeContents(body, body.firstChild!);
+    fireEvent.click(screen.getByRole('button', { name: '字符间距与位置' }));
+    choose('字符位置', '提升');
+    const input = screen.getByLabelText('字符位置量（pt）');
+    fireEvent.change(input, { target: { value: '1.25' } });
+    expect(screen.getByRole('alert')).toHaveTextContent('0.5pt');
+    expect(screen.getByRole('button', { name: '应用字符格式' })).toBeDisabled();
+    f.permissions({ readOnly: true, disabled: false });
+    expect(input).toHaveValue('1.25');
+    expect(input).toBeDisabled();
+    fireEvent.click(screen.getByRole('button', { name: '取消' }));
+    expect(f.changed).not.toHaveBeenCalled();
+    expect(screen.getByRole('button', { name: '字符间距与位置' })).toBeDisabled();
+    f.permissions({ readOnly: false, disabled: true });
+    expect(screen.getByRole('button', { name: '字符间距与位置' })).toBeDisabled();
+  });
+  it('blocks an invalid font draft before opening and preserves an unchanged metrics dialog without history', async () => {
+    const f = metricsSetup();
+    const body = await screen.findByRole('textbox', { name: 'Word 文档正文' });
+    selectNodeContents(body, body.firstChild!);
+    const size = screen.getByRole('combobox', { name: '字号' });
+    act(() => size.focus());
+    fireEvent.change(size, { target: { value: '9999' } });
+    fireEvent.click(screen.getByRole('button', { name: '字符间距与位置' }));
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    fireEvent.keyDown(size, { key: 'Escape' });
+    fireEvent.click(screen.getByRole('button', { name: '字符间距与位置' }));
+    fireEvent.click(screen.getByRole('button', { name: '应用字符格式' }));
+    expect(f.changed).not.toHaveBeenCalled();
+  });
+  it('applies metrics in the header editor while preserving the body', async () => {
+    const doc = documentModel();
+    doc.header = {
+      type: 'doc',
+      content: [{ type: 'paragraph', content: [{ type: 'text', text: 'Header' }] }],
+    };
+    const f = metricsSetup(doc);
+    await screen.findByRole('textbox', { name: 'Word 文档正文' });
+    fireEvent.doubleClick(screen.getByLabelText('页眉区域'));
+    const header = await screen.findByRole('textbox', { name: 'Word 页眉' });
+    await waitFor(() => expect(header).toHaveAttribute('contenteditable', 'true'));
+    selectNodeContents(header, header.firstChild!);
+    fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+    fireEvent.click(screen.getByRole('button', { name: '字符间距与位置' }));
+    choose('字符间距', '紧缩');
+    fireEvent.change(screen.getByLabelText('字符间距量（pt）'), { target: { value: '0.2' } });
+    fireEvent.click(screen.getByRole('button', { name: '应用字符格式' }));
+    expect(
+      f.current().header!.content![0].content![0].marks?.find((m) => m.type === 'textStyle')?.attrs
+        ?.letterSpacing
+    ).toBe('-0.2pt');
+    expect(f.current().content.content![0].content![0].text).toBe('项目评审内容');
+  });
+});
 let restoreClipboard: (() => void) | undefined;
 
 function mockClipboard(api: Partial<Pick<Clipboard, 'readText' | 'writeText'>>) {
@@ -74,6 +528,94 @@ afterEach(() => {
 });
 
 describe('StudioWord Office ribbon actions', () => {
+  it('shows nonprinting characters in the body, table, header and footer without changing data, selection or document history', async () => {
+    const doc = documentModel('A  \tB');
+    doc.header = {
+      type: 'doc',
+      content: [{ type: 'paragraph', content: [{ type: 'text', text: 'Header text' }] }],
+    };
+    doc.footer = {
+      type: 'doc',
+      content: [{ type: 'paragraph', content: [{ type: 'text', text: 'Footer\ttext' }] }],
+    };
+    doc.content.content!.push({
+      type: 'table',
+      content: [
+        {
+          type: 'tableRow',
+          content: [
+            {
+              type: 'tableCell',
+              content: [{ type: 'paragraph', content: [{ type: 'text', text: 'Table text' }] }],
+            },
+          ],
+        },
+      ],
+    });
+    const { textbox, onChange } = await mount({ document: doc });
+    const paragraph = textbox.querySelector('p')!;
+    selectNodeContents(textbox, paragraph);
+    const text = textbox.textContent;
+    const undoDisabled = screen.getByRole('button', { name: '撤销' }).hasAttribute('disabled');
+    const toggle = screen.getByRole('button', { name: '显示非打印字符' });
+    fireEvent.mouseDown(toggle);
+    fireEvent.click(toggle);
+    await waitFor(() =>
+      expect(textbox.querySelectorAll('[data-word-nonprinting="paragraph"]')).toHaveLength(2)
+    );
+    expect(textbox.querySelector('[data-word-nonprinting="tab"]')).not.toBeNull();
+    expect(
+      screen
+        .getByRole('textbox', { name: 'Word 页眉' })
+        .querySelector('[data-word-nonprinting="space"]')
+    ).not.toBeNull();
+    expect(
+      screen
+        .getByRole('textbox', { name: 'Word 页脚' })
+        .querySelector('[data-word-nonprinting="tab"]')
+    ).not.toBeNull();
+    expect(textbox.textContent).toBe(text);
+    expect(window.getSelection()?.toString()).toBe('A  \tB');
+    expect(onChange).not.toHaveBeenCalled();
+    expect(screen.getByRole('button', { name: '撤销' }).hasAttribute('disabled')).toBe(
+      undoDisabled
+    );
+    fireEvent.click(screen.getByRole('button', { name: '粗体' }));
+    await waitFor(() => expect(textbox.querySelector('strong')).not.toBeNull());
+    fireEvent.click(toggle);
+    expect(textbox.querySelector('[data-word-nonprinting]')).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(textbox.querySelector('strong')).toBeNull());
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    await waitFor(() => expect(textbox.querySelector('strong')).not.toBeNull());
+    fireEvent.click(screen.getByRole('tab', { name: '视图' }));
+    fireEvent.click(screen.getByRole('checkbox', { name: '非打印字符' }));
+    await waitFor(() => expect(textbox.querySelector('[data-word-nonprinting]')).not.toBeNull());
+  });
+
+  it('allows nonprinting view changes in read-only mode, blocks disabled and IME shortcuts, and ignores editable control drafts', async () => {
+    const { textbox, rerender, onChange, document: doc } = await mount({ readOnly: true });
+    const toggle = screen.getByRole('button', { name: '显示非打印字符' });
+    expect(toggle).not.toBeDisabled();
+    fireEvent.keyDown(textbox, { key: '*', ctrlKey: true, shiftKey: true, isComposing: true });
+    expect(toggle).toHaveAttribute('aria-pressed', 'false');
+    fireEvent.keyDown(textbox, { key: '8', ctrlKey: true, shiftKey: true });
+    await waitFor(() => expect(toggle).toHaveAttribute('aria-pressed', 'true'));
+    fireEvent.keyDown(textbox, { key: '8', metaKey: true });
+    await waitFor(() => expect(toggle).toHaveAttribute('aria-pressed', 'false'));
+    fireEvent.keyDown(screen.getByRole('combobox', { name: '字体' }), {
+      key: '8',
+      ctrlKey: true,
+      shiftKey: true,
+    });
+    expect(toggle).toHaveAttribute('aria-pressed', 'false');
+    rerender(<WordHost document={doc} onChange={onChange} disabled={true} readOnly={false} />);
+    expect(toggle).toBeDisabled();
+    fireEvent.keyDown(textbox, { key: '8', ctrlKey: true, shiftKey: true });
+    expect(toggle).toHaveAttribute('aria-pressed', 'false');
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
   it('applies font family and size to the selected range and restores them with undo and redo', async () => {
     const { textbox, onChange } = await mount();
     selectNodeContents(textbox, textbox.querySelector('p')!);
@@ -353,6 +895,189 @@ async function mount(
   return { ...view, textbox, onChange, document };
 }
 
+describe('StudioWord named paragraph styles', () => {
+  it('creates, applies, modifies and deletes a named style with real undo and redo', async () => {
+    const { textbox, onChange } = await mount();
+    selectNodeContents(textbox, textbox.querySelector('p')!);
+    fireEvent.click(screen.getByRole('button', { name: '新建段落样式' }));
+    const dialog = await screen.findByRole('dialog');
+    fireEvent.change(within(dialog).getByLabelText('样式名称'), { target: { value: '复核格式' } });
+    fireEvent.change(within(dialog).getByLabelText('样式字号'), { target: { value: '14' } });
+    fireEvent.change(within(dialog).getByLabelText('样式文字颜色'), {
+      target: { value: '#185adb' },
+    });
+    fireEvent.click(within(dialog).getByRole('button', { name: '保存样式' }));
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+    const id = onChange.mock.lastCall?.[0].content.attrs.paragraphStyles[0].id;
+    expect(id).toMatch(/^style-/);
+    fireEvent.click(screen.getByRole('button', { name: /^段落样式/ }));
+    fireEvent.click(await screen.findByRole('option', { name: '复核格式' }));
+    await waitFor(() => expect(textbox.querySelector('p')).toHaveAttribute('data-word-style', id));
+    expect(textbox.querySelector('span')).toHaveStyle({ fontSize: '14pt', color: '#185adb' });
+    expect(textbox).toHaveTextContent('项目评审内容');
+    fireEvent.click(screen.getByRole('button', { name: '修改段落样式' }));
+    fireEvent.change(await screen.findByLabelText('样式字号'), { target: { value: '20' } });
+    fireEvent.click(screen.getByRole('button', { name: '保存样式' }));
+    await waitFor(() => expect(textbox.querySelector('span')).toHaveStyle({ fontSize: '20pt' }));
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(textbox.querySelector('span')).toHaveStyle({ fontSize: '14pt' }));
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    await waitFor(() => expect(textbox.querySelector('span')).toHaveStyle({ fontSize: '20pt' }));
+    fireEvent.click(screen.getByRole('button', { name: '修改段落样式' }));
+    fireEvent.click(await screen.findByRole('button', { name: '删除样式' }));
+    await waitFor(() =>
+      expect(textbox.querySelector('p')).toHaveAttribute('data-word-style', 'paragraph')
+    );
+    expect(onChange.mock.lastCall?.[0].content.attrs.paragraphStyles).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(textbox.querySelector('p')).toHaveAttribute('data-word-style', id));
+    expect(textbox.querySelector('span')).toHaveStyle({ fontSize: '20pt' });
+  });
+
+  it('updates body and header bindings while preserving direct formatting in another paragraph', async () => {
+    const model = namedStyleDocument();
+    model.header = {
+      type: 'doc',
+      content: [JSON.parse(JSON.stringify(model.content.content![0]))],
+    };
+    model.content.content![1].content![0].marks = [
+      {
+        type: 'textStyle',
+        attrs: { fontFamily: 'Noto Sans SC', fontSize: '18pt', color: '#1f2937' },
+      },
+    ];
+    const { textbox } = await mount({ document: model });
+    const header = await screen.findByRole('textbox', { name: 'Word 页眉' });
+    selectNodeContents(textbox, textbox.querySelector('p')!);
+    fireEvent.click(screen.getByRole('button', { name: '修改段落样式' }));
+    fireEvent.change(await screen.findByLabelText('样式字号'), { target: { value: '20' } });
+    fireEvent.click(screen.getByRole('button', { name: '保存样式' }));
+    await waitFor(() =>
+      expect(textbox.querySelectorAll('p')[0].querySelector('span')).toHaveStyle({
+        fontSize: '20pt',
+      })
+    );
+    expect(textbox.querySelectorAll('p')[1].querySelector('span')).toHaveStyle({
+      fontSize: '18pt',
+    });
+    expect(textbox.querySelectorAll('p')[1].querySelector('strong')).toBeNull();
+    expect(header.querySelector('span')).toHaveStyle({ fontSize: '20pt' });
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(header.querySelector('span')).toHaveStyle({ fontSize: '14pt' }));
+    expect(textbox.querySelectorAll('p')[1].querySelector('span')).toHaveStyle({
+      fontSize: '18pt',
+    });
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    await waitFor(() => expect(header.querySelector('span')).toHaveStyle({ fontSize: '20pt' }));
+  });
+
+  it('uses the configured next paragraph style on Enter without deleting the preceding text', async () => {
+    const model = namedStyleDocument();
+    model.content.content = model.content.content!.slice(0, 1);
+    const { textbox, onChange } = await mount({ document: model });
+    selectNodeContents(textbox, textbox.querySelector('p')!);
+    act(() => {
+      window.getSelection()!.collapseToEnd();
+      document.dispatchEvent(new Event('selectionchange'));
+    });
+    fireEvent.keyDown(textbox, { key: 'Enter', code: 'Enter' });
+    await waitFor(() => expect(textbox.querySelectorAll('p')).toHaveLength(2));
+    expect(textbox.querySelectorAll('p')[0]).toHaveTextContent('第一段');
+    expect(textbox.querySelectorAll('p')[1]).toHaveAttribute('data-word-style', 'paragraph');
+    expect(onChange.mock.lastCall?.[0].content.content.at(-1).attrs.paragraphStyle).toBe(
+      'paragraph'
+    );
+  });
+
+  it('automatically updates the definition and linked paragraphs in the same undoable formatting action', async () => {
+    const { textbox, onChange } = await mount({ document: namedStyleDocument(true) });
+    selectNodeContents(textbox, textbox.querySelector('p')!);
+    fireEvent.focus(screen.getByRole('combobox', { name: '字号' }));
+    fireEvent.keyDown(screen.getByRole('combobox', { name: '字号' }), { key: 'ArrowDown' });
+    fireEvent.click(await screen.findByRole('option', { name: '20' }));
+    await waitFor(() =>
+      expect(textbox.querySelectorAll('p')[1].querySelector('span')).toHaveStyle({
+        fontSize: '20pt',
+      })
+    );
+    expect(onChange.mock.lastCall?.[0].content.attrs.paragraphStyles[0].run.fontSize).toBe(20);
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() =>
+      expect(textbox.querySelectorAll('p')[1].querySelector('span')).toHaveStyle({
+        fontSize: '14pt',
+      })
+    );
+    expect(textbox.querySelectorAll('p')[0].querySelector('span')).toHaveStyle({
+      fontSize: '14pt',
+    });
+    expect(onChange.mock.lastCall?.[0].content.attrs.paragraphStyles[0].run.fontSize).toBe(14);
+  });
+
+  it('keeps heading styles inside list items and creates the next item once with its configured style', async () => {
+    const model = namedStyleDocument();
+    model.content.attrs!.paragraphStyles = [
+      { id: 'review', name: '评审正文', basedOn: 'heading-2', next: 'paragraph' },
+    ];
+    model.content.content = [
+      {
+        type: 'orderedList',
+        attrs: { start: 1 },
+        content: [
+          {
+            type: 'listItem',
+            content: [
+              {
+                type: 'heading',
+                attrs: { level: 2, paragraphStyle: 'review' },
+                content: [{ type: 'text', text: '列表标题' }],
+              },
+            ],
+          },
+        ],
+      },
+    ];
+    const { textbox, onChange } = await mount({ document: model });
+    expect(textbox.querySelector('li h2')).toHaveTextContent('列表标题');
+    selectNodeContents(textbox, textbox.querySelector('h2')!);
+    act(() => {
+      window.getSelection()!.collapseToEnd();
+      document.dispatchEvent(new Event('selectionchange'));
+    });
+    fireEvent.keyDown(textbox, { key: 'Enter', code: 'Enter' });
+    await waitFor(() => expect(textbox.querySelectorAll('li')).toHaveLength(2));
+    expect(textbox.querySelectorAll('li')[1].querySelector('p')).toHaveAttribute(
+      'data-word-style',
+      'paragraph'
+    );
+    expect(onChange.mock.lastCall?.[0].content.content[0].content).toHaveLength(2);
+  });
+
+  it('preserves a composing paragraph until IME has completed before using the next style', async () => {
+    const model = namedStyleDocument();
+    model.content.content = model.content.content!.slice(0, 1);
+    const { textbox } = await mount({ document: model });
+    selectNodeContents(textbox, textbox.querySelector('p')!);
+    act(() => {
+      window.getSelection()!.collapseToEnd();
+      document.dispatchEvent(new Event('selectionchange'));
+    });
+    fireEvent.compositionStart(textbox);
+    fireEvent.keyDown(textbox, { key: 'Enter', code: 'Enter', isComposing: true, keyCode: 229 });
+    expect(textbox.querySelectorAll('p')).toHaveLength(1);
+    fireEvent.compositionEnd(textbox);
+  });
+
+  it.each([{ readOnly: true }, { disabled: true }])(
+    'disables named style mutations in %j',
+    async (options) => {
+      const { onChange } = await mount({ ...options, document: namedStyleDocument() });
+      expect(screen.getByRole('button', { name: '新建段落样式' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: '修改段落样式' })).toBeDisabled();
+      expect(onChange).not.toHaveBeenCalled();
+    }
+  );
+});
+
 describe('StudioWord structured editing', () => {
   it('nests ordered list items via Tab and the list indent tools', async () => {
     const listDocument: StudioWordDocument = {
@@ -423,7 +1148,9 @@ describe('StudioWord structured editing', () => {
       expectZuviButtons();
     }
     fireEvent.click(within(tabs).getByRole('tab', { name: '开始' }));
-    expect(container.querySelector('[data-part="word-stage"]')).toHaveClass('zuvi-studio-word-stage');
+    expect(container.querySelector('[data-part="word-stage"]')).toHaveClass(
+      'zuvi-studio-word-stage'
+    );
     expect(container.querySelector('[data-part="word-paper"]')).toHaveStyle({
       width: `${(210 * 96) / 25.4}px`,
     });
@@ -744,6 +1471,132 @@ describe('StudioWord structured editing', () => {
     });
   });
 
+  it('changes picture wrapping, position and anchor flags and restores them with undo', async () => {
+    const model = documentModel();
+    model.content.content![0].content!.unshift({
+      type: 'image',
+      attrs: { src: `data:image/png;base64,${PNG}`, width: 320, height: 160, alt: '浮动示意图' },
+    });
+    const { textbox, onChange } = await mount({ document: model });
+    fireEvent.click(textbox.querySelector('img[data-word-image]')!);
+    fireEvent.click(await screen.findByRole('button', { name: /^图片文字环绕/ }));
+    fireEvent.click(await screen.findByRole('option', { name: '四周环绕' }));
+    await waitFor(() =>
+      expect(textbox.querySelector('[data-word-image-node]')).toHaveAttribute('data-wrap', 'square')
+    );
+    expect(textbox.querySelector('[data-word-image-node]')).toHaveStyle({ float: 'right' });
+    fireEvent.click(screen.getByRole('button', { name: '图片位置与环绕' }));
+    await screen.findByRole('dialog', { name: '图片位置与环绕' });
+    fireEvent.change(screen.getByRole('spinbutton', { name: '图片垂直偏移' }), {
+      target: { value: '24' },
+    });
+    fireEvent.keyDown(screen.getByRole('spinbutton', { name: '图片垂直偏移' }), { key: 'Enter' });
+    await waitFor(() =>
+      expect(
+        onChange.mock.lastCall?.[0].content.content[0].content[0].attrs.layout.vertical.offset
+      ).toBe(24)
+    );
+    fireEvent.click(screen.getByRole('checkbox', { name: '锁定锚点' }));
+    await waitFor(() =>
+      expect(textbox.querySelector('[data-word-image-node]')).toHaveAttribute('draggable', 'false')
+    );
+    fireEvent.click(screen.getByRole('checkbox', { name: '随文字移动' }));
+    expect(
+      onChange.mock.lastCall?.[0].content.content[0].content[0].attrs.layout.vertical.relative
+    ).toBe('page');
+    fireEvent.click(screen.getByRole('button', { name: '完成' }));
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+    fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() =>
+      expect(
+        onChange.mock.lastCall?.[0].content.content[0].content[0].attrs.layout.vertical.relative
+      ).toBe('paragraph')
+    );
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    await waitFor(() =>
+      expect(
+        onChange.mock.lastCall?.[0].content.content[0].content[0].attrs.layout.vertical.relative
+      ).toBe('page')
+    );
+  });
+
+  it('moves a floating picture with a preview, cancels it without a write and commits a complete gesture once', async () => {
+    const model = documentModel();
+    model.content.content![0].content!.unshift({
+      type: 'image',
+      attrs: {
+        src: `data:image/png;base64,${PNG}`,
+        width: 320,
+        height: 160,
+        alt: '浮动示意图',
+        layout: {
+          wrap: 'front',
+          horizontal: { relative: 'column', offset: 10 },
+          vertical: { relative: 'paragraph', offset: 15 },
+          zIndex: 1,
+        },
+      },
+    });
+    const { textbox, onChange } = await mount({ document: model });
+    fireEvent.click(textbox.querySelector('img[data-word-image]')!);
+    const imageNode = textbox.querySelector<HTMLElement>('[data-word-image-node]')!;
+    const mover = imageNode.querySelector<HTMLElement>('[data-word-image-move]')!;
+    await waitFor(() => expect(mover).toHaveAttribute('tabindex', '0'));
+    const pointer = (target: Element | Window, type: string, clientX: number, clientY: number) => {
+      const event = new MouseEvent(type, { bubbles: true, button: 0, clientX, clientY });
+      Object.defineProperty(event, 'pointerId', { value: 20 });
+      fireEvent(target, event);
+    };
+    pointer(mover, 'pointerdown', 100, 100);
+    pointer(window, 'pointermove', 120, 130);
+    expect(imageNode).toHaveStyle({ left: '30px', top: '45px' });
+    expect(onChange).not.toHaveBeenCalled();
+    fireEvent.keyDown(window, { key: 'Escape' });
+    expect(imageNode).toHaveStyle({ left: '10px', top: '15px' });
+    expect(onChange).not.toHaveBeenCalled();
+    pointer(mover, 'pointerdown', 100, 100);
+    pointer(window, 'pointermove', 150, 120);
+    pointer(window, 'pointerup', 150, 120);
+    await waitFor(() => expect(onChange).toHaveBeenCalledTimes(1));
+    expect(onChange.mock.lastCall?.[0].content.content[0].content[0].attrs.layout).toMatchObject({
+      horizontal: { offset: 60 },
+      vertical: { offset: 35 },
+    });
+    fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(imageNode).toHaveStyle({ left: '10px', top: '15px' }));
+    fireEvent.keyDown(mover, { key: 'ArrowRight', shiftKey: true });
+    await waitFor(() => expect(imageNode).toHaveStyle({ left: '20px', top: '15px' }));
+  });
+
+  it.each([{ readOnly: true }, { disabled: true }])(
+    'keeps floating image controls locked in %j',
+    async (options) => {
+      const model = documentModel();
+      model.content.content![0].content!.unshift({
+        type: 'image',
+        attrs: {
+          src: `data:image/png;base64,${PNG}`,
+          width: 320,
+          height: 160,
+          alt: '浮动示意图',
+          layout: {
+            wrap: 'front',
+            horizontal: { relative: 'page', offset: 5 },
+            vertical: { relative: 'page', offset: 5 },
+          },
+        },
+      });
+      const { textbox, onChange } = await mount({ ...options, document: model });
+      fireEvent.click(textbox.querySelector('img[data-word-image]')!);
+      expect(await screen.findByRole('button', { name: /^图片文字环绕/ })).toBeDisabled();
+      expect(screen.getByRole('button', { name: '图片位置与环绕' })).toBeDisabled();
+      fireEvent.keyDown(textbox.querySelector('[data-word-image-move]')!, { key: 'ArrowRight' });
+      expect(onChange).not.toHaveBeenCalled();
+    }
+  );
+
   it('pastes a local JPEG and retains its real pixel dimensions', async () => {
     const { textbox, onChange } = await mount();
     const file = new File(
@@ -1046,7 +1899,7 @@ describe('StudioWord typed font details', () => {
     await waitFor(() => expect(textbox.querySelector('span')).toHaveStyle({ fontSize: '17.5pt' }));
     expect(textbox).toHaveTextContent('项目评审内容');
     fireEvent.focus(size);
-    fireEvent.change(size, { target: { value: '301' } });
+    fireEvent.change(size, { target: { value: '410' } });
     fireEvent.keyDown(size, { key: 'Enter' });
     expect(size).toHaveAttribute('aria-invalid', 'true');
     fireEvent.keyDown(size, { key: 'Escape' });
@@ -1072,15 +1925,306 @@ const twoParagraphDoc = (): StudioWordDocument => ({
 });
 
 describe('StudioWord 第一轮编辑能力', () => {
-  it('字号步进：12pt 增大 → 12.5pt，减小回到 12pt', async () => {
+  it('uses the common size ladder for decimal, small and large sizes and clamps at 1 and 409pt', () => {
+    const cases = [
+      [1, false, 1],
+      [1, true, 2],
+      [7.5, true, 8],
+      [8, false, 7],
+      [12, true, 14],
+      [17.5, true, 18],
+      [17.5, false, 16],
+      [72, true, 80],
+      [73, false, 72],
+      [80, true, 90],
+      [408, true, 409],
+      [409, true, 409],
+      [409, false, 400],
+    ] as const;
+    for (const [current, increase, expected] of cases)
+      expect(wordNextFontSize(current, increase)).toBe(expected);
+  });
+
+  it.each([{ readOnly: true }, { disabled: true }])(
+    'disables font step and case actions in %j',
+    async (permissions) => {
+      await mount(permissions);
+      for (const name of ['增大字号', '减小字号', '变更大小写'])
+        expect(screen.getByRole('button', { name })).toBeDisabled();
+    }
+  );
+
+  it('keeps paragraph boundaries and reversed Unicode selections after case conversion', async () => {
+    const model = twoParagraphDoc();
+    model.content.content = [
+      { type: 'paragraph', content: [{ type: 'text', text: 'straße.' }] },
+      { type: 'paragraph', content: [{ type: 'text', text: 'next WORD' }] },
+    ];
+    const view = await mount({ document: model });
+    const box = view.textbox;
+    act(() => {
+      box.focus();
+      const p = box.querySelectorAll('p');
+      const s = window.getSelection()!;
+      s.setBaseAndExtent(p[1].firstChild!, 9, p[0].firstChild!, 0);
+      document.dispatchEvent(new Event('selectionchange'));
+    });
+    fireEvent.click(screen.getByRole('button', { name: '变更大小写' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: '全部大写' }));
+    await waitFor(() => expect(box.querySelectorAll('p')[0]).toHaveTextContent('STRASSE.'));
+    expect(box.querySelectorAll('p')[1]).toHaveTextContent('NEXT WORD');
+    await waitFor(() => expect(window.getSelection()?.toString()).toContain('STRASSE.'));
+    expect(window.getSelection()?.isCollapsed).toBe(false);
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    expect(box.querySelectorAll('p')[0]).toHaveTextContent('straße.');
+  });
+
+  it('clears direct formatting while preserving headings, list structure, links and one-step undo/redo', async () => {
+    const model = twoParagraphDoc();
+    model.content.content = [
+      {
+        type: 'heading',
+        attrs: { level: 2, textAlign: 'right', indentLeft: 18 },
+        content: [
+          {
+            type: 'text',
+            text: 'Linked title',
+            marks: [{ type: 'bold' }, { type: 'link', attrs: { href: 'https://example.com' } }],
+          },
+        ],
+      },
+      {
+        type: 'bulletList',
+        content: [
+          {
+            type: 'listItem',
+            content: [
+              {
+                type: 'paragraph',
+                content: [{ type: 'text', text: 'Keep list', marks: [{ type: 'italic' }] }],
+              },
+            ],
+          },
+        ],
+      },
+    ];
+    const view = await mount({ document: model });
+    const box = view.textbox;
+    selectNodeContents(box, box.querySelector('h2')!);
+    fireEvent.click(screen.getByRole('button', { name: '清除格式' }));
+    expect(box.querySelector('h2')).toBeInTheDocument();
+    expect(box.querySelector('h2 a')).toHaveAttribute('href', 'https://example.com');
+    expect(box.querySelector('h2 strong')).toBeNull();
+    expect(box.querySelector('ul li')).toHaveTextContent('Keep list');
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    expect(box.querySelector('h2 strong')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    expect(box.querySelector('h2 strong')).toBeNull();
+  });
+
+  it('copies exact character and paragraph formats with continuous painting and does not toggle existing marks off', async () => {
+    const model = twoParagraphDoc();
+    model.content.content = [
+      {
+        type: 'paragraph',
+        attrs: { textAlign: 'right', indentLeft: 18 },
+        content: [
+          {
+            type: 'text',
+            text: 'Source',
+            marks: [
+              { type: 'bold' },
+              { type: 'textStyle', attrs: { fontSize: '18pt', color: '#0055aa' } },
+            ],
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        content: [{ type: 'text', text: 'Target one', marks: [{ type: 'bold' }] }],
+      },
+      {
+        type: 'paragraph',
+        content: [
+          {
+            type: 'text',
+            text: 'Target two',
+            marks: [{ type: 'italic' }, { type: 'link', attrs: { href: 'https://example.com' } }],
+          },
+        ],
+      },
+    ];
+    const view = await mount({ document: model });
+    const box = view.textbox;
+    selectNodeContents(box, box.querySelectorAll('p')[0]);
+    fireEvent.doubleClick(screen.getByRole('button', { name: '格式刷' }));
+    selectNodeContents(box, box.querySelectorAll('p')[1]);
+    await waitFor(() =>
+      expect(box.querySelectorAll('p')[1].querySelector('strong')).toBeInTheDocument()
+    );
+    expect(box.querySelectorAll('p')[1]).toHaveStyle({ textAlign: 'right', marginLeft: '18pt' });
+    expect(box.querySelectorAll('p')[1].querySelector('span')).toHaveStyle({
+      fontSize: '18pt',
+      color: '#0055aa',
+    });
+    expect(screen.getByRole('button', { name: '格式刷' })).toHaveAttribute('aria-pressed', 'true');
+    selectNodeContents(box, box.querySelectorAll('p')[2]);
+    await waitFor(() =>
+      expect(box.querySelectorAll('p')[2].querySelector('strong')).toBeInTheDocument()
+    );
+    expect(box.querySelectorAll('p')[2].querySelector('em')).toBeNull();
+    expect(box.querySelectorAll('p')[2].querySelector('a')).toHaveAttribute(
+      'href',
+      'https://example.com'
+    );
+    fireEvent.keyDown(box, { key: 'Escape', isComposing: true });
+    expect(screen.getByRole('button', { name: '格式刷' })).toHaveAttribute('aria-pressed', 'true');
+    fireEvent.keyDown(box, { key: 'Escape' });
+    expect(screen.getByRole('button', { name: '格式刷' })).not.toHaveAttribute('aria-pressed');
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    expect(box.querySelectorAll('p')[2].querySelector('em')).toBeInTheDocument();
+    expect(box.querySelectorAll('p')[1].querySelector('strong')).toBeInTheDocument();
+  });
+
+  it('字号阶梯：12pt 增大到 14pt，减小回到 12pt', async () => {
     const view = await mount();
     const textbox = view.textbox;
     selectNodeContents(textbox, textbox.querySelector('p')!);
     fireEvent.click(screen.getByRole('button', { name: '增大字号' }));
-    expect(textbox.querySelector('p span')).toHaveStyle({ fontSize: '12.5pt' });
+    expect(textbox.querySelector('p span')).toHaveStyle({ fontSize: '14pt' });
     fireEvent.click(screen.getByRole('button', { name: '减小字号' }));
     expect(textbox.querySelector('p span')).toHaveStyle({ fontSize: '12pt' });
     view.unmount();
+  });
+
+  it('steps mixed sizes independently, keeps links/colors and restores the entire selection in one undo', async () => {
+    const model = documentModel();
+    model.content.content![0].content = [
+      {
+        type: 'text',
+        text: 'Small ',
+        marks: [
+          { type: 'textStyle', attrs: { fontSize: '12pt', color: '#0055aa' } },
+          { type: 'bold' },
+        ],
+      },
+      {
+        type: 'text',
+        text: 'Large',
+        marks: [
+          { type: 'textStyle', attrs: { fontSize: '17.5pt' } },
+          { type: 'link', attrs: { href: 'https://example.com' } },
+        ],
+      },
+    ];
+    const view = await mount({ document: model });
+    const box = view.textbox;
+    selectNodeContents(box, box.querySelector('p')!);
+    fireEvent.click(screen.getByRole('button', { name: '增大字号' }));
+    const nodes = view.onChange.mock.lastCall?.[0].content.content[0].content;
+    expect(
+      nodes[0].marks.find((mark: { type: string }) => mark.type === 'textStyle').attrs.fontSize
+    ).toBe('14pt');
+    expect(
+      nodes[1].marks.find((mark: { type: string }) => mark.type === 'textStyle').attrs.fontSize
+    ).toBe('18pt');
+    expect(box.querySelector('a')).toHaveAttribute('href', 'https://example.com');
+    expect(window.getSelection()?.toString()).toBe('Small Large');
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    expect(box.querySelector('span')).toHaveStyle({ fontSize: '12pt' });
+    expect(box.querySelector('a span')).toHaveStyle({ fontSize: '17.5pt' });
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    expect(box.querySelector('a span')).toHaveStyle({ fontSize: '18pt' });
+  });
+
+  it.each([
+    ['句首字母大写', 'Hello world. Next sentence!'],
+    ['每个单词首字母大写', 'Hello World. Next Sentence!'],
+  ])('converts %s across marks while preserving a link and undo', async (label, result) => {
+    const model = documentModel();
+    model.content.content![0].content = [
+      { type: 'text', text: 'hE', marks: [{ type: 'bold' }] },
+      {
+        type: 'text',
+        text: 'LLO wORLD. nEXT sENTENCE!',
+        marks: [{ type: 'link', attrs: { href: 'https://example.com' } }],
+      },
+    ];
+    const view = await mount({ document: model });
+    const box = view.textbox;
+    selectNodeContents(box, box.querySelector('p')!);
+    fireEvent.click(screen.getByRole('button', { name: '变更大小写' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: label }));
+    expect(box.textContent).toBe(result);
+    expect(box.querySelector('a')).toHaveAttribute('href', 'https://example.com');
+    expect(box.querySelector('strong')).toHaveTextContent('He');
+    await waitFor(() => expect(window.getSelection()?.toString()).toBe(result));
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    expect(box.textContent).toBe('hELLO wORLD. nEXT sENTENCE!');
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    expect(box.textContent).toBe(result);
+  });
+
+  it('preserves expanded Unicode selection and link marks when uppercase changes the text length', async () => {
+    const model = documentModel();
+    model.content.content![0].content = [
+      {
+        type: 'text',
+        text: 'straße ﬁ',
+        marks: [{ type: 'link', attrs: { href: 'https://example.com' } }, { type: 'italic' }],
+      },
+    ];
+    const view = await mount({ document: model });
+    const box = view.textbox;
+    selectNodeContents(box, box.querySelector('p')!);
+    fireEvent.click(screen.getByRole('button', { name: '变更大小写' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: '全部大写' }));
+    expect(box.textContent).toBe('STRASSE FI');
+    await waitFor(() => expect(window.getSelection()?.toString()).toBe('STRASSE FI'));
+    expect(box.querySelector('a')).toHaveTextContent('STRASSE FI');
+    expect(box.querySelector('em')).toHaveTextContent('STRASSE FI');
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    expect(box.textContent).toBe('straße ﬁ');
+  });
+
+  it('changes the caret word while preserving its mapped caret and applies a font step only to new input', async () => {
+    const view = await mount({ document: documentModel('straße tail') });
+    const box = view.textbox;
+    act(() => {
+      box.focus();
+      const range = document.createRange();
+      range.setStart(box.querySelector('p')!.firstChild!, 5);
+      range.collapse(true);
+      const selection = window.getSelection()!;
+      selection.removeAllRanges();
+      selection.addRange(range);
+      document.dispatchEvent(new Event('selectionchange'));
+    });
+    fireEvent.click(screen.getByRole('button', { name: '变更大小写' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: '全部大写' }));
+    expect(box.textContent).toBe('STRASSE tail');
+    await waitFor(() => expect(window.getSelection()?.anchorOffset).toBe(6));
+    expect(window.getSelection()?.isCollapsed).toBe(true);
+    fireEvent.click(screen.getByRole('button', { name: '增大字号' }));
+    expect(box.textContent).toBe('STRASSE tail');
+    expect(box.querySelector('[style*=font-size]')).toBeNull();
+    const user = (await import('@testing-library/user-event')).default.setup();
+    await user.keyboard('X');
+    await waitFor(() => expect(box.textContent).toBe('STRASSXE tail'));
+    expect(box.querySelector('span')).toHaveStyle({ fontSize: '14pt' });
+  });
+
+  it('respects min/max font bounds and skips immutable or composing actions', async () => {
+    const model = documentModel('Limit');
+    model.content.content![0].content![0].marks = [
+      { type: 'textStyle', attrs: { fontSize: '409pt' } },
+    ];
+    const view = await mount({ document: model });
+    selectNodeContents(view.textbox, view.textbox.querySelector('p')!);
+    fireEvent.click(screen.getByRole('button', { name: '增大字号' }));
+    expect(view.onChange).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: '减小字号' }));
+    expect(view.textbox.querySelector('span')).toHaveStyle({ fontSize: '400pt' });
   });
 
   it('文字高亮：选色写入 backgroundColor，无颜色清除', async () => {
@@ -1158,5 +2302,1083 @@ describe('StudioWord 第一轮编辑能力', () => {
     expect(screen.getByRole('button', { name: '格式刷' })).not.toHaveAttribute('aria-pressed');
     expect(view.onChange.mock.lastCall?.[0]).toBe(afterBold);
     view.unmount();
+  });
+});
+
+describe('Word text and table conversion entry', () => {
+  it('converts through the actual ribbon with a preview and independent undo/redo transactions', async () => {
+    const model = documentModel('A\tB');
+    model.content.content![0].content![0].marks = [{ type: 'bold' }];
+    const { textbox, onChange } = await mount({ document: model });
+    selectNodeContents(textbox, textbox.querySelector('p')!);
+    fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+    fireEvent.click(screen.getByRole('button', { name: '文本转表格' }));
+    expect(screen.getByText('1 行，2 列')).toBeInTheDocument();
+    expect(onChange).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: '转换' }));
+    await waitFor(() => expect(textbox.querySelectorAll('td')).toHaveLength(2));
+    expect(textbox.querySelector('td strong')).toHaveTextContent('A');
+    expect(onChange).toHaveBeenCalledTimes(1);
+    fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(textbox.querySelector('table')).toBeNull());
+    expect(textbox.textContent).toContain('A\tB');
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    await waitFor(() => expect(textbox.querySelectorAll('td')).toHaveLength(2));
+    selectNodeContents(textbox, textbox.querySelector('td p')!);
+    fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+    fireEvent.click(screen.getByRole('button', { name: '表格转文本' }));
+    fireEvent.click(screen.getByRole('button', { name: '转换' }));
+    await waitFor(() => expect(textbox.querySelector('table')).toBeNull());
+    expect(textbox.querySelector('strong')).toHaveTextContent('A');
+    fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(textbox.querySelectorAll('td')).toHaveLength(2));
+  });
+  it('cancels without writes and rejects a stale conversion after an external document replacement', async () => {
+    const { textbox, onChange, rerender } = await mount({ document: documentModel('A\tB') });
+    selectNodeContents(textbox, textbox.querySelector('p')!);
+    fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+    fireEvent.click(screen.getByRole('button', { name: '文本转表格' }));
+    fireEvent.click(screen.getByRole('button', { name: '取消' }));
+    expect(onChange).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: '文本转表格' }));
+    rerender(<WordHost document={documentModel('replacement')} onChange={onChange} disabled={false} readOnly={false} />);
+    await waitFor(() => expect(textbox).toHaveTextContent('replacement'));
+    fireEvent.click(screen.getByRole('button', { name: '转换' }));
+    expect(screen.getByRole('alert')).toHaveTextContent('已变化');
+    expect(textbox.querySelector('table')).toBeNull();
+    expect(onChange).not.toHaveBeenCalled();
+    rerender(<WordHost document={documentModel('replacement')} onChange={onChange} disabled={false} readOnly />);
+    expect(screen.getByRole('button', { name: '转换' })).toBeDisabled();
+  });
+});
+
+it('restores a rejected controlled conversion without changing the saved native model', async () => {
+  const value = documentModel('A\tB');
+  const ref = createRef<OfficeStudioHandle>();
+  const onChange = vi.fn(), onSave = vi.fn();
+  render(<OfficeStudio ref={ref} value={value} onChange={onChange} onSave={onSave} />);
+  const body = await screen.findByRole('textbox', { name: 'Word 文档正文' });
+  selectNodeContents(body, body.querySelector('p')!);
+  fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+  fireEvent.click(screen.getByRole('button', { name: '文本转表格' }));
+  fireEvent.click(screen.getByRole('button', { name: '转换' }));
+  await waitFor(() => expect(onChange).toHaveBeenCalledTimes(1));
+  expect(onChange.mock.lastCall?.[0].content.content[0].type).toBe('table');
+  await waitFor(() => expect(body.querySelector('table')).toBeNull());
+  expect(body).toHaveTextContent('A B', { normalizeWhitespace: true });
+  expect(ref.current?.getDocument()).toBe(value);
+  await act(async () => ref.current?.save());
+  expect(onSave).toHaveBeenCalledWith(value);
+});
+
+
+it('converts complete selected rows through the ribbon and preserves surrounding tables', async () => {
+  const model = documentModel();
+  model.content.content = [{ type: 'table', content: ['Before', 'Selected', 'After'].map((text) => ({ type: 'tableRow', content: [text, 'Value'].map((value) => ({ type: 'tableCell', content: [{ type: 'paragraph', content: [{ type: 'text', text: value }] }] })) })) }, { type: 'paragraph', content: [{ type: 'text', text: 'Outside' }] }];
+  const { textbox, onChange } = await mount({ document: model });
+  const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+  const cells: number[] = [];
+  editor.state.doc.descendants((node, position) => { if (node.type.name === 'tableCell') cells.push(position); });
+  act(() => editor.view.dispatch(editor.state.tr.setSelection(CellSelection.create(editor.state.doc, cells[2], cells[3]))));
+  fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+  fireEvent.click(screen.getByRole('button', { name: '表格转文本' }));
+  expect(screen.getByText('转换所选 1 行，保留前后表格和字符格式。')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: '取消' }));
+  expect(onChange).not.toHaveBeenCalled();
+  fireEvent.click(screen.getByRole('button', { name: '表格转文本' }));
+  fireEvent.click(screen.getByRole('button', { name: '转换' }));
+  await waitFor(() => expect(textbox.querySelectorAll('table')).toHaveLength(2));
+  expect(textbox.querySelectorAll('table')[0]).toHaveTextContent('Before');
+  expect(textbox.querySelectorAll('table')[1]).toHaveTextContent('After');
+  expect(textbox).toHaveTextContent('Outside');
+  expect(onChange).toHaveBeenCalledTimes(1);
+  fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+  fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await waitFor(() => expect(textbox.querySelectorAll('table')).toHaveLength(1));
+  expect(textbox.querySelectorAll('tr')).toHaveLength(3);
+  fireEvent.click(screen.getByRole('button', { name: '重做' }));
+  await waitFor(() => expect(textbox.querySelectorAll('table')).toHaveLength(2));
+});
+
+it('inserts a table formula through ZUVI dialog, keeps cancelled drafts and refreshes in a separate undo transaction', async () => {
+  const model = documentModel();
+  model.content.content = [{ type: 'table', content: [{ type: 'tableRow', content: ['2', ''].map((text) => ({ type: 'tableCell', content: [{ type: 'paragraph', content: text ? [{ type: 'text', text }] : [] }] })) }] }];
+  const { textbox, onChange } = await mount({ document: model });
+  const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+  const cells: number[] = [];
+  editor.state.doc.descendants((node, pos) => { if (node.type.name === 'tableCell') cells.push(pos); });
+  act(() => editor.commands.setTextSelection(cells[1] + 2));
+  fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+  fireEvent.click(screen.getByRole('button', { name: '表格公式' }));
+  fireEvent.change(screen.getByRole('textbox', { name: '表格公式表达式' }), { target: { value: '=A1*4' } });
+  fireEvent.click(screen.getByRole('button', { name: '取消' }));
+  expect(onChange).not.toHaveBeenCalled();
+  fireEvent.click(screen.getByRole('button', { name: '表格公式' }));
+  const input = screen.getByRole('textbox', { name: '表格公式表达式' });
+  fireEvent.change(input, { target: { value: '=A1*4' } });
+  fireEvent.compositionStart(input);
+  expect(screen.getByRole('button', { name: '保存公式' })).toBeDisabled();
+  fireEvent.compositionEnd(input);
+  fireEvent.click(screen.getByRole('button', { name: '保存公式' }));
+  await waitFor(() => expect(textbox.querySelector('[data-word-table-formula]')).toHaveTextContent('8'));
+  act(() => editor.commands.insertContentAt({ from: cells[0] + 2, to: cells[0] + 3 }, '3'));
+  fireEvent.click(screen.getByRole('button', { name: '刷新公式' }));
+  await waitFor(() => expect(textbox.querySelector('[data-word-table-formula]')).toHaveTextContent('12'));
+  fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+  fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await waitFor(() => expect(textbox.querySelector('[data-word-table-formula]')).toHaveTextContent('8'));
+  fireEvent.click(screen.getByRole('button', { name: '重做' }));
+  await waitFor(() => expect(textbox.querySelector('[data-word-table-formula]')).toHaveTextContent('12'));
+});
+
+it('keeps invalid formula drafts and blocks open dialogs after permissions or external content change', async () => {
+  const model = documentModel();
+  model.content.content = [{ type: 'table', content: [{ type: 'tableRow', content: ['2', ''].map((text) => ({ type: 'tableCell', content: [{ type: 'paragraph', content: text ? [{ type: 'text', text }] : [] }] })) }] }];
+  const { textbox, onChange, rerender } = await mount({ document: model });
+  const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+  const cells: number[] = [];
+  editor.state.doc.descendants((node, pos) => { if (node.type.name === 'tableCell') cells.push(pos); });
+  act(() => editor.commands.setTextSelection(cells[1] + 2));
+  fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+  fireEvent.click(screen.getByRole('button', { name: '表格公式' }));
+  const input = screen.getByRole('textbox', { name: '表格公式表达式' });
+  fireEvent.change(input, { target: { value: '=B1' } });
+  fireEvent.click(screen.getByRole('button', { name: '保存公式' }));
+  expect(screen.getByRole('alert')).toHaveTextContent('循环引用');
+  expect(input).toHaveValue('=B1');
+  expect(onChange).not.toHaveBeenCalled();
+  rerender(<WordHost document={model} onChange={onChange} disabled={false} readOnly />);
+  expect(input).toBeDisabled();
+  expect(screen.getByRole('button', { name: '保存公式' })).toBeDisabled();
+  rerender(<WordHost document={documentModel('replacement')} onChange={onChange} disabled={false} readOnly={false} />);
+  await waitFor(() => expect(textbox).toHaveTextContent('replacement'));
+  fireEvent.change(input, { target: { value: '=1' } });
+  fireEvent.click(screen.getByRole('button', { name: '保存公式' }));
+  expect(screen.getByRole('alert')).toHaveTextContent('已变化');
+  expect(onChange).not.toHaveBeenCalled();
+});
+
+it('restores a rejected controlled formula insertion and saves the original document', async () => {
+  const value = documentModel();
+  value.content.content = [{ type: 'table', content: [{ type: 'tableRow', content: ['2', ''].map((text) => ({ type: 'tableCell', content: [{ type: 'paragraph', content: text ? [{ type: 'text', text }] : [] }] })) }] }];
+  const ref = createRef<OfficeStudioHandle>();
+  const onChange = vi.fn(), onSave = vi.fn();
+  render(<OfficeStudio ref={ref} value={value} onChange={onChange} onSave={onSave} />);
+  const body = await screen.findByRole('textbox', { name: 'Word 文档正文' });
+  const editor = (body as HTMLElement & { editor: Editor }).editor;
+  const cells: number[] = [];
+  editor.state.doc.descendants((node, pos) => { if (node.type.name === 'tableCell') cells.push(pos); });
+  act(() => editor.commands.setTextSelection(cells[1] + 2));
+  fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+  fireEvent.click(screen.getByRole('button', { name: '表格公式' }));
+  fireEvent.change(screen.getByRole('textbox', { name: '表格公式表达式' }), { target: { value: '=A1*4' } });
+  fireEvent.click(screen.getByRole('button', { name: '保存公式' }));
+  await waitFor(() => expect(onChange).toHaveBeenCalledTimes(1));
+  await waitFor(() => expect(body.querySelector('[data-word-table-formula]')).toBeNull());
+  expect(ref.current?.getDocument()).toBe(value);
+  await act(async () => ref.current?.save());
+  expect(onSave).toHaveBeenCalledWith(value);
+});
+
+it('applies image crop through the toolbar, cancels drafts and restores crop with undo and redo', async () => {
+  const model = documentModel();
+  model.content.content![0].content!.unshift({ type: 'image', attrs: { src: `data:image/png;base64,${PNG}`, width: 320, height: 160, alt: '裁剪示意图' } });
+  const { textbox, onChange } = await mount({ document: model });
+  fireEvent.click(textbox.querySelector('img[data-word-image]')!);
+  fireEvent.click(screen.getByRole('button', { name: '裁剪图片' }));
+  fireEvent.change(screen.getByRole('spinbutton', { name: '左边裁剪百分比' }), { target: { value: '25' } });
+  fireEvent.click(screen.getByRole('button', { name: '取消' }));
+  expect(onChange).not.toHaveBeenCalled();
+  fireEvent.click(screen.getByRole('button', { name: '裁剪图片' }));
+  expect(screen.getByRole('spinbutton', { name: '左边裁剪百分比' })).toHaveValue(0);
+  fireEvent.change(screen.getByRole('spinbutton', { name: '左边裁剪百分比' }), { target: { value: '25' } });
+  fireEvent.click(screen.getByRole('button', { name: '应用裁剪' }));
+  await waitFor(() => expect(textbox.querySelector('[data-word-image-crop-frame]')).toHaveStyle({ overflow: 'hidden' }));
+  expect(onChange.mock.lastCall?.[0].content.content[0].content[0].attrs).toMatchObject({ crop: { left: 25, top: 0, right: 0, bottom: 0 }, width: 320, height: 160, src: `data:image/png;base64,${PNG}` });
+  fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+  fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await waitFor(() => expect(textbox.querySelector('[data-word-image-crop-frame]')).not.toHaveStyle({ overflow: 'hidden' }));
+  fireEvent.click(screen.getByRole('button', { name: '重做' }));
+  await waitFor(() => expect(textbox.querySelector('[data-word-image-crop-frame]')).toHaveStyle({ overflow: 'hidden' }));
+  fireEvent.click(textbox.querySelector('img[data-word-image]')!);
+  fireEvent.click(screen.getByRole('button', { name: '裁剪图片' }));
+  fireEvent.click(screen.getByRole('button', { name: '重置裁剪' }));
+  fireEvent.click(screen.getByRole('button', { name: '应用裁剪' }));
+  await waitFor(() => expect(textbox.querySelector('[data-word-image-crop-frame]')).not.toHaveStyle({ overflow: 'hidden' }));
+  fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+  fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await waitFor(() => expect(textbox.querySelector('img[data-word-image]')).toHaveAttribute('data-word-image-crop', expect.stringContaining('25')));
+  fireEvent.click(screen.getByRole('button', { name: '重做' }));
+  await waitFor(() => expect(textbox.querySelector('img[data-word-image]')).not.toHaveAttribute('data-word-image-crop'));
+
+});
+
+it('blocks an open crop draft when permissions or external content change', async () => {
+  const model = documentModel();
+  model.content.content![0].content!.unshift({ type: 'image', attrs: { src: `data:image/png;base64,${PNG}`, width: 320, height: 160 } });
+  const { textbox, onChange, rerender } = await mount({ document: model });
+  fireEvent.click(textbox.querySelector('img[data-word-image]')!);
+  fireEvent.click(screen.getByRole('button', { name: '裁剪图片' }));
+  fireEvent.change(screen.getByRole('spinbutton', { name: '左边裁剪百分比' }), { target: { value: '25' } });
+  rerender(<WordHost document={model} onChange={onChange} disabled={false} readOnly />);
+  expect(screen.getByRole('button', { name: '应用裁剪' })).toBeDisabled();
+  expect(onChange).not.toHaveBeenCalled();
+  rerender(<WordHost document={documentModel('replacement')} onChange={onChange} disabled={false} readOnly={false} />);
+  if (screen.queryByRole('button', { name: '应用裁剪' })) {
+    fireEvent.click(screen.getByRole('button', { name: '应用裁剪' }));
+    expect(await screen.findByRole('alert')).toHaveTextContent('文档已变化');
+  }
+  expect(onChange).not.toHaveBeenCalled();
+  expect(textbox.querySelector('img[data-word-image]')).toBeNull();
+});
+
+it('restores a rejected controlled crop and saves the original image', async () => {
+  const value = documentModel();
+  value.content.content![0].content!.unshift({ type: 'image', attrs: { src: `data:image/png;base64,${PNG}`, width: 320, height: 160 } });
+  const ref = createRef<OfficeStudioHandle>();
+  const onChange = vi.fn(), onSave = vi.fn();
+  render(<OfficeStudio ref={ref} value={value} onChange={onChange} onSave={onSave} />);
+  const body = await screen.findByRole('textbox', { name: 'Word 文档正文' });
+  fireEvent.click(body.querySelector('img[data-word-image]')!);
+  fireEvent.click(screen.getByRole('button', { name: '裁剪图片' }));
+  fireEvent.change(screen.getByRole('spinbutton', { name: '左边裁剪百分比' }), { target: { value: '25' } });
+  fireEvent.click(screen.getByRole('button', { name: '应用裁剪' }));
+  await waitFor(() => expect(onChange).toHaveBeenCalledTimes(1));
+  await waitFor(() => expect(body.querySelector('img[data-word-image]')).not.toHaveAttribute('data-word-image-crop'));
+  expect(ref.current?.getDocument()).toBe(value);
+  await act(async () => ref.current?.save());
+  expect(onSave).toHaveBeenCalledWith(value);
+});
+
+it('replaces a selected picture through the actual file input and restores its original crop with undo', async () => {
+  const model = documentModel();
+  model.content.content![0].content!.unshift({ type: 'image', attrs: { src: `data:image/png;base64,${PNG}`, width: 320, height: 160, alt: '保留说明', crop: { left: 25, top: 0, right: 0, bottom: 0 } } });
+  const { textbox, onChange } = await mount({ document: model });
+  fireEvent.click(textbox.querySelector('img[data-word-image]')!);
+  fireEvent.click(screen.getByRole('button', { name: '替换图片' }));
+  const input = screen.getByLabelText('选择替换 Word 图片');
+  fireEvent.change(input, { target: { files: [new File([Uint8Array.from(atob(JPEG), char => char.charCodeAt(0))], '替换.jpg', { type: 'image/jpeg' })] } });
+  await waitFor(() => expect(textbox.querySelector('img[data-word-image]')).toHaveAttribute('src', `data:image/jpeg;base64,${JPEG}`));
+  expect(onChange.mock.lastCall?.[0].content.content[0].content[0].attrs).toMatchObject({ width: 320, height: 160, alt: '保留说明', crop: null });
+  expect(textbox.querySelectorAll('img[data-word-image]')).toHaveLength(1);
+  fireEvent.click(screen.getByRole('tab', { name: '开始' })); fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await waitFor(() => expect(textbox.querySelector('img[data-word-image]')).toHaveAttribute('src', `data:image/png;base64,${PNG}`));
+  expect(textbox.querySelector('img[data-word-image]')).toHaveAttribute('data-word-image-crop', expect.stringContaining('25'));
+  fireEvent.click(screen.getByRole('button', { name: '重做' }));
+  await waitFor(() => expect(textbox.querySelector('img[data-word-image]')).toHaveAttribute('src', `data:image/jpeg;base64,${JPEG}`));
+});
+it('keeps the selected original image and history when a replacement file is invalid or cancelled', async () => {
+  const model = documentModel();
+  model.content.content![0].content!.unshift({ type: 'image', attrs: { src: `data:image/png;base64,${PNG}`, width: 320, height: 160 } });
+  const { textbox, onChange } = await mount({ document: model });
+  fireEvent.click(textbox.querySelector('img[data-word-image]')!);
+  fireEvent.click(screen.getByRole('button', { name: '替换图片' }));
+  fireEvent.change(screen.getByLabelText('选择替换 Word 图片'), { target: { files: [new File(['<svg/>'], 'invalid.png', { type: 'image/png' })] } });
+  await screen.findByText('请选择有效的 PNG 或 JPEG 图片。');
+  expect(onChange).not.toHaveBeenCalled();
+  expect(textbox.querySelector('img[data-word-image]')).toHaveAttribute('src', `data:image/png;base64,${PNG}`);
+  fireEvent.click(screen.getByRole('button', { name: '替换图片' }));
+  fireEvent.change(screen.getByLabelText('选择替换 Word 图片'), { target: { files: [] } });
+  expect(onChange).not.toHaveBeenCalled();
+  fireEvent.click(screen.getByRole('button', { name: '替换图片' }));
+  fireEvent(screen.getByLabelText('选择替换 Word 图片'), new Event('cancel'));
+  fireEvent.change(screen.getByLabelText('选择替换 Word 图片'), { target: { files: [new File([Uint8Array.from(atob(JPEG), char => char.charCodeAt(0))], 'late.jpg', { type: 'image/jpeg' })] } });
+  await act(async () => { await Promise.resolve(); });
+  expect(onChange).not.toHaveBeenCalled();
+  expect(textbox.querySelector('img[data-word-image]')).toHaveAttribute('src', `data:image/png;base64,${PNG}`);
+
+});
+
+it('discards a delayed replacement after readonly or document changes', async () => {
+  const model = documentModel();
+  model.content.content![0].content!.unshift({ type: 'image', attrs: { src: `data:image/png;base64,${PNG}`, width: 320, height: 160 } });
+  const { textbox, onChange, rerender } = await mount({ document: model });
+  let reader: FileReader | null = null;
+  const captureReader = (value: FileReader) => { reader = value; };
+  const read = vi.spyOn(FileReader.prototype, 'readAsArrayBuffer').mockImplementation(function (this: FileReader) { captureReader(this); });
+  try {
+    fireEvent.click(textbox.querySelector('img[data-word-image]')!);
+    fireEvent.click(screen.getByRole('button', { name: '替换图片' }));
+    fireEvent.change(screen.getByLabelText('选择替换 Word 图片'), { target: { files: [new File(['delayed'], 'delayed.jpg')] } });
+    expect(reader).not.toBeNull();
+    rerender(<WordHost document={model} onChange={onChange} disabled={false} readOnly />);
+    const bytes = Uint8Array.from(atob(JPEG), char => char.charCodeAt(0));
+    await act(async () => {
+      Object.defineProperty(reader!, 'result', { value: bytes.buffer });
+      reader!.onload?.call(reader!, new ProgressEvent('load') as ProgressEvent<FileReader>);
+    });
+    expect(onChange).not.toHaveBeenCalled();
+    expect(textbox.querySelector('img[data-word-image]')).toHaveAttribute('src', `data:image/png;base64,${PNG}`);
+    expect(screen.getByRole('button', { name: '替换图片' })).toBeDisabled();
+    rerender(<WordHost document={model} onChange={onChange} disabled={false} readOnly={false} />);
+    fireEvent.click(textbox.querySelector('img[data-word-image]')!);
+    fireEvent.click(screen.getByRole('button', { name: '替换图片' }));
+    fireEvent.change(screen.getByLabelText('选择替换 Word 图片'), { target: { files: [new File(['delayed'], 'delayed.jpg')] } });
+    const next = documentModel('外部替换文档');
+    rerender(<WordHost document={next} onChange={onChange} disabled={false} readOnly={false} />);
+    await act(async () => {
+      Object.defineProperty(reader!, 'result', { value: bytes.buffer, configurable: true });
+      reader!.onload?.call(reader!, new ProgressEvent('load') as ProgressEvent<FileReader>);
+    });
+    expect(onChange).not.toHaveBeenCalled(); expect(textbox.querySelector('img[data-word-image]')).toBeNull();
+    expect(textbox).toHaveTextContent('外部替换文档');
+  } finally { read.mockRestore(); }
+});
+
+it('restores a rejected controlled image replacement and saves the original source', async () => {
+  const value = documentModel();
+  value.content.content![0].content!.unshift({ type: 'image', attrs: { src: `data:image/png;base64,${PNG}`, width: 320, height: 160, crop: { left: 25, top: 0, right: 0, bottom: 0 } } });
+  const ref = createRef<OfficeStudioHandle>();
+  const onChange = vi.fn(), onSave = vi.fn();
+  render(<OfficeStudio ref={ref} value={value} onChange={onChange} onSave={onSave} />);
+  const body = await screen.findByRole('textbox', { name: 'Word 文档正文' });
+  fireEvent.click(body.querySelector('img[data-word-image]')!);
+  fireEvent.click(screen.getByRole('button', { name: '替换图片' }));
+  fireEvent.change(screen.getByLabelText('选择替换 Word 图片'), { target: { files: [new File([Uint8Array.from(atob(JPEG), char => char.charCodeAt(0))], 'new.jpg', { type: 'image/jpeg' })] } });
+  await waitFor(() => expect(onChange).toHaveBeenCalledTimes(1));
+  await waitFor(() => expect(body.querySelector('img[data-word-image]')).toHaveAttribute('src', `data:image/png;base64,${PNG}`));
+  expect(body.querySelector('img[data-word-image]')).toHaveAttribute('data-word-image-crop', expect.stringContaining('25'));
+  expect(ref.current?.getDocument()).toBe(value);
+  await act(async () => ref.current?.save()); expect(onSave).toHaveBeenCalledWith(value);
+});
+
+it('inserts a structured fraction through the actual math dialog and undoes it atomically', async () => {
+  const { textbox, onChange } = await mount();
+  const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+  act(() => editor.commands.setTextSelection(1));
+  fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+  fireEvent.click(screen.getByRole('button', { name: '数学公式' }));
+  fireEvent.click(screen.getByRole('button', { name: '公式改为分式' }));
+  fireEvent.change(screen.getByRole('textbox', { name: '公式 分子文字' }), { target: { value: 'x+1' } });
+  fireEvent.click(screen.getByRole('button', { name: '取消' })); expect(onChange).not.toHaveBeenCalled();
+  fireEvent.click(screen.getByRole('button', { name: '数学公式' }));
+  fireEvent.click(screen.getByRole('button', { name: '公式改为分式' }));
+  fireEvent.change(screen.getByRole('textbox', { name: '公式 分子文字' }), { target: { value: 'x+1' } });
+  fireEvent.click(screen.getByRole('button', { name: '保存数学公式' }));
+  await waitFor(() => expect(textbox.querySelector('math mfrac')).not.toBeNull());
+  expect(onChange.mock.lastCall?.[0].content.content[0].content[0].attrs.equation.numerator.text).toBe('x+1');
+  fireEvent.click(screen.getByRole('tab', { name: '开始' })); fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await waitFor(() => expect(textbox.querySelector('[data-word-math]')).toBeNull());
+  fireEvent.click(screen.getByRole('button', { name: '重做' }));
+  await waitFor(() => expect(textbox.querySelector('math mfrac')).not.toBeNull());
+});
+
+it('blocks an open math draft after permissions or external content change', async () => {
+  const value = documentModel();
+  const { textbox, onChange, rerender } = await mount({ document: value });
+  const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+  act(() => editor.commands.setTextSelection(1));
+  fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+  fireEvent.click(screen.getByRole('button', { name: '数学公式' }));
+  fireEvent.click(screen.getByRole('button', { name: '公式改为矩阵' }));
+  rerender(<WordHost document={value} onChange={onChange} disabled={false} readOnly />);
+  expect(screen.getByRole('button', { name: '保存数学公式' })).toBeDisabled();
+  rerender(<WordHost document={documentModel('外部新内容')} onChange={onChange} disabled={false} readOnly={false} />);
+  fireEvent.click(screen.getByRole('button', { name: '保存数学公式' }));
+  expect(await screen.findByRole('alert')).toHaveTextContent('文档已变化');
+  expect(onChange).not.toHaveBeenCalled(); expect(textbox.querySelector('[data-word-math]')).toBeNull();
+});
+
+it('edits an existing math structure through the dialog with separate undo and redo', async () => {
+  const { textbox, onChange } = await mount();
+  const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+  act(() => editor.commands.setTextSelection(1));
+  fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+  fireEvent.click(screen.getByRole('button', { name: '数学公式' }));
+  fireEvent.click(screen.getByRole('button', { name: '保存数学公式' }));
+  await waitFor(() => expect(textbox.querySelector('math mtext')).toHaveTextContent('x'));
+  fireEvent.click(screen.getByRole('button', { name: '数学公式' }));
+  expect(screen.getByRole('textbox', { name: '公式文字' })).toHaveValue('x');
+  fireEvent.change(screen.getByRole('textbox', { name: '公式文字' }), { target: { value: 'y+2' } });
+  fireEvent.click(screen.getByRole('button', { name: '保存数学公式' }));
+  await waitFor(() => expect(textbox.querySelector('math mtext')).toHaveTextContent('y+2'));
+  expect(textbox.querySelectorAll('[data-word-math]')).toHaveLength(1);
+  expect(onChange).toHaveBeenCalledTimes(2);
+  fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+  fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await waitFor(() => expect(textbox.querySelector('math mtext')).toHaveTextContent('x'));
+  fireEvent.click(screen.getByRole('button', { name: '重做' }));
+  await waitFor(() => expect(textbox.querySelector('math mtext')).toHaveTextContent('y+2'));
+});
+
+it('keeps composition drafts out of the document through the actual math entry', async () => {
+  const { textbox, onChange } = await mount();
+  const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+  act(() => editor.commands.setTextSelection(1));
+  fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+  fireEvent.click(screen.getByRole('button', { name: '数学公式' }));
+  const input = screen.getByRole('textbox', { name: '公式文字' });
+  fireEvent.compositionStart(input);
+  fireEvent.change(input, { target: { value: '变量甲' } });
+  expect(screen.getByRole('button', { name: '保存数学公式' })).toBeDisabled();
+  fireEvent.click(screen.getByRole('button', { name: '保存数学公式' }));
+  expect(onChange).not.toHaveBeenCalled();
+  fireEvent.compositionEnd(input);
+  Object.defineProperty(editor.view, 'composing', { configurable: true, value: true });
+  fireEvent.click(screen.getByRole('button', { name: '保存数学公式' }));
+  expect(await screen.findByRole('alert')).toHaveTextContent('输入法');
+  expect(onChange).not.toHaveBeenCalled();
+  Object.defineProperty(editor.view, 'composing', { configurable: true, value: false });
+  fireEvent.click(screen.getByRole('button', { name: '保存数学公式' }));
+  await waitFor(() => expect(textbox.querySelector('math mtext')).toHaveTextContent('变量甲'));
+  expect(onChange).toHaveBeenCalledTimes(1);
+});
+
+it.each([{ readOnly: true }, { disabled: true }])('disables actual math insertion and stale drafts with %j', async permissions => {
+  const value = documentModel();
+  const { textbox, onChange, rerender } = await mount({ document: value });
+  const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+  act(() => editor.commands.setTextSelection(1));
+  fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+  fireEvent.click(screen.getByRole('button', { name: '数学公式' }));
+  rerender(<WordHost document={value} onChange={onChange} disabled={false} readOnly={false} {...permissions} />);
+  expect(screen.getByRole('button', { name: '保存数学公式' })).toBeDisabled();
+  expect(screen.getByRole('textbox', { name: '公式文字' })).toBeDisabled();
+  fireEvent.click(screen.getByRole('button', { name: '取消' }));
+  expect(screen.getByRole('button', { name: '数学公式' })).toBeDisabled();
+  expect(onChange).not.toHaveBeenCalled();
+  expect(textbox.querySelector('[data-word-math]')).toBeNull();
+});
+
+it('restores a rejected controlled math edit and saves the original semantic model', async () => {
+  const value = documentModel();
+  const equation = { kind: 'fraction', numerator: { kind: 'text', text: 'x', format: { bold: true } }, denominator: { kind: 'text', text: '2' } };
+  value.content.content![0].content = [{ type: 'mathEquation', attrs: { equation } }];
+  const onChange = vi.fn(), onSave = vi.fn(), ref = createRef<OfficeStudioHandle>();
+  render(<OfficeStudio ref={ref} value={value} onChange={onChange} onSave={onSave} />);
+  const body = await screen.findByRole('textbox', { name: 'Word 文档正文' });
+  const editor = (body as HTMLElement & { editor: Editor }).editor;
+  act(() => editor.commands.setNodeSelection(1));
+  fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+  fireEvent.click(screen.getByRole('button', { name: '数学公式' }));
+  fireEvent.change(screen.getByRole('textbox', { name: '公式 分子文字' }), { target: { value: 'rejected' } });
+  fireEvent.click(screen.getByRole('button', { name: '保存数学公式' }));
+  await waitFor(() => expect(onChange).toHaveBeenCalledTimes(1));
+  await waitFor(() => expect(body.querySelector('mfrac mtext')).toHaveTextContent('x'));
+  expect(JSON.parse(body.querySelector('[data-word-math]')!.getAttribute('data-word-math')!)).toEqual(equation);
+  expect(ref.current?.getDocument()).toBe(value);
+  await act(async () => ref.current?.save());
+  expect(onSave).toHaveBeenCalledWith(value);
+});
+
+it('edits a second equation group member through the actual dialog and undoes the group atomically', async () => {
+  const value = documentModel();
+  const equation = { kind: 'display', align: 'centerGroup', body: { kind: 'text', text: 'x' }, following: [{ kind: 'text', text: 'y' }] };
+  value.content.content![0].content = [{ type: 'mathEquation', attrs: { equation } }];
+  const { textbox, onChange } = await mount({ document: value });
+  const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+  act(() => editor.commands.setNodeSelection(1));
+  fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+  fireEvent.click(screen.getByRole('button', { name: '数学公式' }));
+  fireEvent.change(screen.getByRole('textbox', { name: '公式 组内第2公式文字' }), { target: { value: 'y+1' } });
+  fireEvent.click(screen.getByRole('button', { name: '增加组内公式' }));
+  fireEvent.click(screen.getByRole('button', { name: '保存数学公式' }));
+  await waitFor(() => expect(onChange).toHaveBeenCalledTimes(1));
+  expect(JSON.parse(textbox.querySelector('[data-word-math]')!.getAttribute('data-word-math')!).following).toHaveLength(2);
+  fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+  fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await waitFor(() => expect(JSON.parse(textbox.querySelector('[data-word-math]')!.getAttribute('data-word-math')!)).toEqual(equation));
+  fireEvent.click(screen.getByRole('button', { name: '重做' }));
+  await waitFor(() => expect(textbox.querySelectorAll('math mtext')[1]).toHaveTextContent('y+1'));
+});
+
+it.each(['header', 'footer'] as const)('edits a math group independently in the actual %s region with undo and redo', async region => {
+  const value = documentModel();
+  const equation = { kind: 'display', align: 'centerGroup', body: { kind: 'text', text: 'x' }, following: [{ kind: 'text', text: 'y' }] };
+  value[region] = { type: 'doc', content: [{ type: 'paragraph', content: [{ type: 'mathEquation', attrs: { equation } }] }] };
+  const { textbox, onChange } = await mount({ document: value });
+  fireEvent.doubleClick(screen.getByLabelText(region === 'header' ? '页眉区域' : '页脚区域'));
+  const box = await screen.findByRole('textbox', { name: region === 'header' ? 'Word 页眉' : 'Word 页脚' });
+  await waitFor(() => expect(box).toHaveAttribute('contenteditable', 'true'));
+  const regionEditor = (box as HTMLElement & { editor: Editor }).editor;
+  act(() => { box.focus(); regionEditor.commands.setNodeSelection(1); });
+  fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+  fireEvent.click(screen.getByRole('button', { name: '数学公式' }));
+  fireEvent.change(screen.getByRole('textbox', { name: '公式 组内第2公式文字' }), { target: { value: region + '+1' } });
+  fireEvent.click(screen.getByRole('button', { name: '保存数学公式' }));
+  await waitFor(() => expect(box.querySelectorAll('math mtext')[1]).toHaveTextContent(region + '+1'));
+  expect(textbox).toHaveTextContent('项目评审内容');
+  expect(onChange.mock.lastCall?.[0][region].content[0].content[0].attrs.equation.following[0].text).toBe(region + '+1');
+  fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+  fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await waitFor(() => expect(box.querySelectorAll('math mtext')[1]).toHaveTextContent('y'));
+  fireEvent.click(screen.getByRole('button', { name: '重做' }));
+  await waitFor(() => expect(box.querySelectorAll('math mtext')[1]).toHaveTextContent(region + '+1'));
+});
+
+it('creates and removes bookmarks through the actual dialog with atomic history and duplicate validation', async () => {
+  const { textbox } = await mount();
+  const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+  act(() => editor.commands.setTextSelection({ from: 2, to: 5 }));
+  fireEvent.click(screen.getByRole('tab', { name: '引用' }));
+  fireEvent.click(screen.getByRole('button', { name: '书签' }));
+  fireEvent.change(screen.getByLabelText('书签名称'), { target: { value: 'Here' } });
+  fireEvent.click(screen.getByRole('button', { name: '添加书签' }));
+  await waitFor(() => expect(textbox.querySelectorAll('[data-word-bookmark]')).toHaveLength(2));
+  fireEvent.change(screen.getByLabelText('书签名称'), { target: { value: 'Here' } });
+  fireEvent.click(screen.getByRole('button', { name: '添加书签' }));
+  expect(screen.getByRole('alert')).toHaveTextContent('同名');
+  fireEvent.click(screen.getByRole('button', { name: '删除书签 Here' }));
+  await waitFor(() => expect(textbox.querySelectorAll('[data-word-bookmark]')).toHaveLength(0));
+  fireEvent.click(screen.getByRole('button', { name: '关闭' }));
+  fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+  fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await waitFor(() => expect(textbox.querySelectorAll('[data-word-bookmark]')).toHaveLength(2));
+  fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await waitFor(() => expect(textbox.querySelectorAll('[data-word-bookmark]')).toHaveLength(0));
+});
+
+it('applies an internal bookmark link through the actual link dialog and preserves it through undo', async () => {
+  const model = documentModel('Target and link');
+  model.content.content![0].content!.unshift({ type: 'wordBookmark', attrs: { id: '9', name: 'Here', end: false } });
+  model.content.content![0].content!.push({ type: 'wordBookmark', attrs: { id: '9', name: 'Here', end: true } });
+  const { textbox } = await mount({ document: model });
+  const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+  act(() => editor.commands.setTextSelection({ from: 13, to: 17 }));
+  fireEvent.click(screen.getByRole('tab', { name: '引用' }));
+  fireEvent.click(screen.getByRole('button', { name: '链接' }));
+  fireEvent.change(screen.getByLabelText('链接地址'), { target: { value: '#Here' } });
+  fireEvent.click(screen.getByRole('button', { name: '应用链接' }));
+  await waitFor(() => expect(textbox.querySelector('a')).toHaveAttribute('href', '#Here'));
+  fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+  fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await waitFor(() => expect(textbox.querySelector('a')).toBeNull());
+  fireEvent.click(screen.getByRole('button', { name: '重做' }));
+  await waitFor(() => expect(textbox.querySelector('a')).toHaveAttribute('href', '#Here'));
+});
+
+it('keeps bookmark browsing available in readonly and disables mutation', async () => {
+  const model = documentModel('Target');
+  model.content.content![0].content!.unshift({ type: 'wordBookmark', attrs: { id: '1', name: 'Here', end: false } });
+  model.content.content![0].content!.push({ type: 'wordBookmark', attrs: { id: '1', name: 'Here', end: true } });
+  const { textbox, onChange } = await mount({ document: model, readOnly: true });
+  fireEvent.click(screen.getByRole('tab', { name: '引用' }));
+  fireEvent.click(screen.getByRole('button', { name: '书签' }));
+  fireEvent.change(screen.getByLabelText('书签名称'), { target: { value: 'Other' } });
+  expect(screen.getByRole('button', { name: '添加书签' })).toBeDisabled();
+  expect(screen.getByRole('button', { name: '删除书签 Here' })).toBeDisabled();
+  fireEvent.click(screen.getByRole('button', { name: '跳转书签 Here' }));
+  const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+  expect(editor.state.selection.from).toBe(2);
+  expect(editor.state.selection.to).toBe(8);
+  expect(onChange).not.toHaveBeenCalled();
+});
+
+it('edits existing link display text and address in one transaction while retaining bold formatting', async () => {
+  const model = documentModel('Old');
+  model.content.content![0].content![0].marks = [{ type: 'bold' }, { type: 'link', attrs: { href: 'https://example.com' } }];
+  const { textbox } = await mount({ document: model });
+  const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+  act(() => editor.commands.setTextSelection(2));
+  fireEvent.click(screen.getByRole('tab', { name: '引用' }));
+  fireEvent.click(screen.getByRole('button', { name: '链接' }));
+  expect(screen.getByLabelText('链接显示文字')).toHaveValue('Old');
+  fireEvent.change(screen.getByLabelText('链接显示文字'), { target: { value: 'New label' } });
+  fireEvent.change(screen.getByLabelText('链接地址'), { target: { value: 'https://example.org' } });
+  fireEvent.click(screen.getByRole('button', { name: '应用链接' }));
+  await waitFor(() => expect(textbox.querySelector('a')).toHaveTextContent('New label'));
+  expect(textbox.querySelector('strong')).toHaveTextContent('New label');
+  expect(textbox.querySelector('a')).toHaveAttribute('href', 'https://example.org');
+  fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+  fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await waitFor(() => expect(textbox.querySelector('a')).toHaveTextContent('Old'));
+  expect(textbox.querySelector('a')).toHaveAttribute('href', 'https://example.com');
+});
+
+it('retains mixed character marks and complete Unicode when replacing a link label', async () => {
+  const model = documentModel();
+  model.content.content![0].content = [
+    { type: 'text', text: 'AB', marks: [{ type: 'bold' }, { type: 'link', attrs: { href: 'https://example.com' } }] },
+    { type: 'text', text: 'CD', marks: [{ type: 'italic' }, { type: 'link', attrs: { href: 'https://example.com' } }] },
+  ];
+  const { textbox } = await mount({ document: model });
+  const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+  act(() => editor.commands.setTextSelection(2));
+  fireEvent.click(screen.getByRole('tab', { name: '引用' }));
+  fireEvent.click(screen.getByRole('button', { name: '链接' }));
+  fireEvent.change(screen.getByLabelText('链接显示文字'), { target: { value: 'XY🧮Z' } });
+  fireEvent.click(screen.getByRole('button', { name: '应用链接' }));
+  await waitFor(() => expect(textbox.querySelector('a')).toHaveTextContent('XY🧮Z'));
+  expect(textbox.querySelector('strong')).toHaveTextContent('XY');
+  expect(textbox.querySelector('em')).toHaveTextContent('🧮Z');
+});
+
+it('opens an internal link across regions in readonly without editing document data', async () => {
+  const model = documentModel('Go');
+  model.content.content![0].content![0].marks = [{ type: 'link', attrs: { href: '#HeaderTarget' } }];
+  model.header = { type: 'doc', content: [{ type: 'paragraph', content: [
+    { type: 'wordBookmark', attrs: { id: '3', name: 'HeaderTarget', end: false } },
+    { type: 'text', text: 'Header' },
+    { type: 'wordBookmark', attrs: { id: '3', name: 'HeaderTarget', end: true } },
+  ] }] };
+  const { textbox, onChange } = await mount({ document: model, readOnly: true });
+  const header = await screen.findByRole('textbox', { name: 'Word 页眉' });
+  fireEvent.click(textbox.querySelector('a')!);
+  await waitFor(() => expect((header as HTMLElement & { editor: Editor }).editor.state.selection.from).toBe(2));
+  expect((header as HTMLElement & { editor: Editor }).editor.state.selection.to).toBe(8);
+  expect(onChange).not.toHaveBeenCalled();
+});
+
+it('disables the bookmark management entry when the Word component is disabled', async () => {
+  await mount({ disabled: true });
+  fireEvent.click(screen.getByRole('tab', { name: '引用' }));
+  expect(screen.getByRole('button', { name: '书签' })).toBeDisabled();
+});
+
+it('rejects an internal link draft after the bookmark target region changes', async () => {
+  const model = documentModel('Link');
+  model.header = { type: 'doc', content: [{ type: 'paragraph', content: [
+    { type: 'wordBookmark', attrs: { id: '3', name: 'Here', end: false } },
+    { type: 'text', text: 'Header' },
+    { type: 'wordBookmark', attrs: { id: '3', name: 'Here', end: true } },
+  ] }] };
+  const { textbox } = await mount({ document: model });
+  const header = await screen.findByRole('textbox', { name: 'Word 页眉' });
+  const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+  const regionEditor = (header as HTMLElement & { editor: Editor }).editor;
+  act(() => editor.commands.setTextSelection({ from: 1, to: 5 }));
+  fireEvent.click(screen.getByRole('tab', { name: '引用' }));
+  fireEvent.click(screen.getByRole('button', { name: '链接' }));
+  fireEvent.change(screen.getByLabelText('链接地址'), { target: { value: '#Here' } });
+  const original = editor.getJSON();
+  act(() => { regionEditor.view.dispatch(regionEditor.state.tr.insertText('Changed', 2)); });
+  fireEvent.click(screen.getByRole('button', { name: '应用链接' }));
+  expect(screen.getByRole('alert')).toHaveTextContent('文档已变化');
+  expect(editor.getJSON()).toEqual(original);
+});
+
+it('applies cell alignment and independent margins through the actual ZUVI dialog and undoes atomically', async () => {
+  const model = documentModel();
+  model.content.content = [{ type: 'table', content: [{ type: 'tableRow', content: [{ type: 'tableCell', content: [{ type: 'paragraph', content: [{ type: 'text', text: 'Cell' }] }] }] }] }];
+  const { textbox } = await mount({ document: model });
+  const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+  let cellPos = 0; editor.state.doc.descendants((node, pos) => { if (node.type.name === 'tableCell') cellPos = pos; });
+  act(() => editor.commands.setTextSelection(cellPos + 2));
+  fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+  fireEvent.click(screen.getByRole('button', { name: '单元格对齐与边距' }));
+  fireEvent.click(screen.getByRole('button', { name: '下右对齐' }));
+  fireEvent.change(screen.getByLabelText('单元格left内边距'), { target: { value: '5.25' } });
+  fireEvent.change(screen.getByLabelText('单元格top内边距'), { target: { value: '0' } });
+  fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+  await waitFor(() => expect(editor.state.doc.nodeAt(cellPos)!.attrs.verticalAlign).toBe('bottom'));
+  expect(editor.state.doc.nodeAt(cellPos)!.attrs.cellMargins).toEqual({ top: 0, left: 5.25 });
+  expect(editor.state.doc.nodeAt(cellPos)!.firstChild!.attrs.textAlign).toBe('right');
+  fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+  fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+  await waitFor(() => expect(editor.state.doc.nodeAt(cellPos)!.attrs.verticalAlign).toBeNull());
+});
+
+function cellPropertiesDocument(): StudioWordDocument {
+  const model = documentModel();
+  model.content = { type: 'doc', content: [{ type: 'table', content: [
+    ['Selected A', 'Selected B'], ['Untouched A', 'Untouched B'],
+  ].map((labels) => ({ type: 'tableRow', content: labels.map((text, index) => ({
+    type: 'tableCell',
+    attrs: { verticalAlign: 'center', cellMargins: { left: index + 3, top: 1, bottom: 2 } },
+    content: [{ type: 'paragraph', attrs: { textAlign: 'left' }, content: [{ type: 'text', text, marks: [{ type: 'bold' }] }] }],
+  })) })) }] };
+  return model;
+}
+function cellPropertiesPositions(editor: Editor) {
+  const cells: number[] = [];
+  editor.state.doc.descendants((node, position) => { if (node.type.name === 'tableCell') cells.push(position); });
+  return cells;
+}
+function openCellProperties(editor: Editor, position: number) {
+  act(() => editor.commands.setTextSelection(position + 2));
+  fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+  fireEvent.click(screen.getByRole('button', { name: '单元格对齐与边距' }));
+}
+function cellTableDefaultsDocument(): StudioWordDocument {
+  const model = cellPropertiesDocument(), table = model.content.content![0];
+  table.attrs = { defaultCellMargins: { top: 5, right: 7, bottom: 8, left: 6 }, cellSpacing: 3 };
+  for (const row of table.content!) row.content!.forEach((cell, index) => {
+    cell.attrs = { ...cell.attrs, colwidth: [index === 0 ? 120 : 150] };
+  });
+  const first = table.content![0].content![0], second = table.content![0].content![1];
+  first.attrs = { ...first.attrs, cellMargins: { top: 0 }, backgroundColor: '#ffeedd' };
+  first.content![0].content![0].marks!.push({ type: 'link', attrs: { href: 'https://example.com/cell' } });
+  second.attrs = { ...second.attrs, cellMargins: null };
+  return model;
+}
+describe('StudioWord cell table defaults and spacing', () => {
+  it.each(['top', 'right', 'bottom', 'left'] as const)('edits only the dirty %s table default and leaves cell overrides separate from inherited values', async side => {
+    const { textbox, onChange } = await mount({ document: cellTableDefaultsDocument() });
+    const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+    const cells = cellPropertiesPositions(editor), before = editor.getJSON();
+    const defaults = { top: 5, right: 7, bottom: 8, left: 6 };
+    const changed = { top: 9.5, right: 10.5, bottom: 11.5, left: 12.5 };
+    openCellProperties(editor, cells[0]);
+    for (const [key, value] of Object.entries(defaults))
+      expect(screen.getByLabelText(`表格默认${key}内边距`)).toHaveValue(String(value));
+    expect(screen.getByLabelText('单元格top内边距')).toHaveValue('0');
+    expect(screen.getByLabelText('单元格left内边距')).toHaveValue('');
+    expect(screen.getByLabelText('单元格left内边距')).toHaveAttribute('placeholder', '继承 6');
+    fireEvent.change(screen.getByLabelText(`表格默认${side}内边距`), { target: { value: String(changed[side]) } });
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    await waitFor(() => expect(onChange).toHaveBeenCalledOnce());
+    const expected = { ...defaults, [side]: changed[side] }, after = editor.getJSON();
+    expect(after.content![0].attrs!.defaultCellMargins).toEqual(expected);
+    expect(after.content![0].attrs!.cellSpacing).toBe(3);
+    expect(after.content![0].content).toEqual(before.content![0].content);
+    expect(editor.state.doc.nodeAt(cells[0])!.attrs.cellMargins).toEqual({ top: 0 });
+    expect(editor.state.doc.nodeAt(cells[1])!.attrs.cellMargins).toBeNull();
+    openCellProperties(editor, cells[0]);
+    expect(screen.getByLabelText('单元格top内边距')).toHaveValue('0');
+    expect(screen.getByLabelText('单元格left内边距')).toHaveValue('');
+    expect(screen.getByLabelText('单元格left内边距')).toHaveAttribute('placeholder', `继承 ${expected.left}`);
+    const depth = undoDepth(editor.state);
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    expect(onChange).toHaveBeenCalledOnce(); expect(editor.getJSON()).toEqual(after);
+    expect(undoDepth(editor.state)).toBe(depth);
+    openCellProperties(editor, cells[1]);
+    expect(screen.getByLabelText('单元格top内边距')).toHaveValue('');
+    expect(screen.getByLabelText('单元格top内边距')).toHaveAttribute('placeholder', `继承 ${expected.top}`);
+    fireEvent.click(screen.getByRole('button', { name: '取消' }));
+    expect(onChange).toHaveBeenCalledOnce();
+  });
+  it('keeps restoring defaults in the draft until apply, cancels without writes, and removes only the selected cell direct margins', async () => {
+    const { textbox, onChange } = await mount({ document: cellTableDefaultsDocument() });
+    const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+    const cells = cellPropertiesPositions(editor), before = editor.getJSON(), depth = undoDepth(editor.state);
+    openCellProperties(editor, cells[0]);
+    fireEvent.click(screen.getByRole('button', { name: '恢复表格默认边距' }));
+    expect(screen.getByRole('button', { name: '恢复表格默认边距' })).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByLabelText('单元格top内边距')).toBeDisabled();
+    expect(editor.getJSON()).toEqual(before); expect(undoDepth(editor.state)).toBe(depth);
+    expect(onChange).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: '取消' }));
+    expect(editor.getJSON()).toEqual(before); expect(onChange).not.toHaveBeenCalled();
+    openCellProperties(editor, cells[0]);
+    fireEvent.click(screen.getByRole('button', { name: '恢复表格默认边距' }));
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    await waitFor(() => expect(onChange).toHaveBeenCalledOnce());
+    const after = editor.getJSON();
+    expect(editor.state.doc.nodeAt(cells[0])!.attrs.cellMargins).toBeNull();
+    expect(after.content![0].attrs).toEqual(before.content![0].attrs);
+    for (const position of cells.slice(1)) {
+      const beforeCell = editor.schema.nodeFromJSON(before).nodeAt(position)!;
+      expect(editor.state.doc.nodeAt(position)!.toJSON()).toEqual(beforeCell.toJSON());
+    }
+    expect(undoDepth(editor.state)).toBe(depth + 1);
+    openCellProperties(editor, cells[0]);
+    expect(screen.getByLabelText('单元格top内边距')).toHaveValue('');
+    expect(screen.getByLabelText('单元格top内边距')).toHaveAttribute('placeholder', '继承 5');
+    fireEvent.click(screen.getByRole('button', { name: '取消' }));
+    fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(editor.getJSON()).toEqual(before));
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    await waitFor(() => expect(editor.getJSON()).toEqual(after));
+  });
+  it('commits defaults, spacing, direct margins and the nine-grid choice as one transaction while preserving cell identity, marks and untouched cells', async () => {
+    const { textbox, onChange } = await mount({ document: cellTableDefaultsDocument() });
+    const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+    const cells = cellPropertiesPositions(editor), before = editor.getJSON(), depth = undoDepth(editor.state);
+    const beforeCells: StudioRichNode[] = cells.map(position => {
+      const cell = editor.state.doc.nodeAt(position)!;
+      expect(cell.type.name).toBe('tableCell');
+      return cell.toJSON() as StudioRichNode;
+    });
+    act(() => editor.view.dispatch(editor.state.tr.setSelection(CellSelection.create(editor.state.doc, cells[0], cells[1]))));
+    fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+    fireEvent.click(screen.getByRole('button', { name: '单元格对齐与边距' }));
+    fireEvent.change(screen.getByLabelText('表格默认left内边距'), { target: { value: '11' } });
+    fireEvent.change(screen.getByLabelText('表格默认top内边距'), { target: { value: '9' } });
+    fireEvent.change(screen.getByLabelText('单元格间距'), { target: { value: '4.5' } });
+    fireEvent.change(screen.getByLabelText('单元格left内边距'), { target: { value: '2.25' } });
+    fireEvent.click(screen.getByRole('button', { name: '下右对齐' }));
+    expect(editor.getJSON()).toEqual(before); expect(onChange).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    await waitFor(() => expect(onChange).toHaveBeenCalledOnce());
+    const after = editor.getJSON();
+    expect(after.content![0].attrs).toMatchObject({ defaultCellMargins: { top: 9, right: 7, bottom: 8, left: 11 }, cellSpacing: 4.5 });
+    for (const [index, position] of cells.entries()) {
+      const expected = structuredClone(beforeCells[index]);
+      if (index < 2) {
+        const margins = expected.attrs!.cellMargins as Record<string, number> | null;
+        expected.attrs = { ...expected.attrs, verticalAlign: 'bottom', cellMargins: { ...margins, left: 2.25 } };
+        expected.content![0].attrs = { ...expected.content![0].attrs, textAlign: 'right' };
+      }
+      expect(editor.state.doc.nodeAt(position)!.toJSON()).toEqual(expected);
+    }
+    expect(undoDepth(editor.state)).toBe(depth + 1);
+    fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(editor.getJSON()).toEqual(before));
+    expect(undoDepth(editor.state)).toBe(depth);
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    await waitFor(() => expect(editor.getJSON()).toEqual(after));
+    expect(undoDepth(editor.state)).toBe(depth + 1); expect(onChange).toHaveBeenCalledTimes(3);
+  });
+  it.each([
+    ['单元格间距', '1.01'],
+    ['表格默认left内边距', '2001'],
+    ['单元格left内边距', '1.01'],
+  ])('rejects the whole draft after invalid %s=%s, including other valid proposed edits', async (label, invalid) => {
+    const { textbox, onChange } = await mount({ document: cellTableDefaultsDocument() });
+    const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+    openCellProperties(editor, cellPropertiesPositions(editor)[0]);
+    const before = editor.getJSON(), selection = editor.state.selection, depth = undoDepth(editor.state);
+    fireEvent.change(screen.getByLabelText('表格默认top内边距'), { target: { value: '10' } });
+    fireEvent.change(screen.getByLabelText('单元格bottom内边距'), { target: { value: '4' } });
+    fireEvent.click(screen.getByRole('button', { name: '下右对齐' }));
+    const input = screen.getByLabelText(label);
+    fireEvent.change(input, { target: { value: invalid } });
+    fireEvent.compositionStart(input);
+    expect(screen.getByRole('button', { name: '应用单元格属性' })).toBeDisabled();
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    expect(editor.getJSON()).toEqual(before); expect(onChange).not.toHaveBeenCalled();
+    fireEvent.compositionEnd(input);
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    expect(screen.getByRole('alert')).toBeVisible(); expect(input).toHaveValue(invalid);
+    expect(editor.getJSON()).toEqual(before); expect(undoDepth(editor.state)).toBe(depth);
+    expect(editor.state.selection.eq(selection)).toBe(true); expect(onChange).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: '取消' }));
+    expect(editor.getJSON()).toEqual(before);
+  });
+  it('sets whole-table spacing while clearing row overrides and restores both layers in one undo', async () => {
+    const model = cellTableDefaultsDocument();
+    model.content.content![0].content![0].attrs = { cellSpacing: 1, rowHeight: 48, rowHeightRule: 'exact', allowSplit: false };
+    model.content.content![0].content![1].attrs = { cellSpacing: 7, rowHeight: 36, rowHeightRule: 'atLeast', allowSplit: true };
+    const { textbox, onChange } = await mount({ document: model });
+    const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+    const before = editor.getJSON() as StudioRichNode, depth = undoDepth(editor.state);
+    expect(before.content![0].content!.map(row => row.attrs!.cellSpacing)).toEqual([1, 7]);
+    openCellProperties(editor, cellPropertiesPositions(editor)[0]);
+    expect(screen.getByLabelText('单元格间距')).toHaveValue('3');
+    fireEvent.change(screen.getByLabelText('单元格间距'), { target: { value: '4.2' } });
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    await waitFor(() => expect(onChange).toHaveBeenCalledOnce());
+    const after = editor.getJSON() as StudioRichNode;
+    expect(after.content![0].attrs!.cellSpacing).toBe(4.2);
+    for (const [index, row] of after.content![0].content!.entries()) {
+      expect(row.attrs).toEqual({ ...before.content![0].content![index].attrs, cellSpacing: null });
+      expect(row.content).toEqual(before.content![0].content![index].content);
+    }
+    expect(undoDepth(editor.state)).toBe(depth + 1);
+    fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(editor.getJSON()).toEqual(before));
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    await waitFor(() => expect(editor.getJSON()).toEqual(after));
+  });
+  it('clears only an emptied default side and an emptied spacing attribute without materializing inherited cell margins', async () => {
+    const { textbox, onChange } = await mount({ document: cellTableDefaultsDocument() });
+    const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+    const before = editor.getJSON(), depth = undoDepth(editor.state);
+    openCellProperties(editor, cellPropertiesPositions(editor)[0]);
+    fireEvent.change(screen.getByLabelText('表格默认left内边距'), { target: { value: '' } });
+    fireEvent.change(screen.getByLabelText('单元格间距'), { target: { value: '' } });
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    await waitFor(() => expect(onChange).toHaveBeenCalledOnce());
+    const after = editor.getJSON();
+    expect(after.content![0].attrs!.defaultCellMargins).toEqual({ top: 5, right: 7, bottom: 8 });
+    expect(after.content![0].attrs!.cellSpacing).toBeNull();
+    expect(after.content![0].content).toEqual(before.content![0].content);
+    expect(undoDepth(editor.state)).toBe(depth + 1);
+    openCellProperties(editor, cellPropertiesPositions(editor)[0]);
+    expect(screen.getByLabelText('表格默认left内边距')).toHaveValue('');
+    expect(screen.getByLabelText('单元格间距')).toHaveValue('');
+    fireEvent.click(screen.getByRole('button', { name: '取消' }));
+    expect(onChange).toHaveBeenCalledOnce();
+    fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(editor.getJSON()).toEqual(before));
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    await waitFor(() => expect(editor.getJSON()).toEqual(after));
+  });
+});
+describe('StudioWord cell properties', () => {
+  it('leaves an unchanged cell draft without model writes or an extra history event', async () => {
+    const { textbox, onChange } = await mount({ document: cellPropertiesDocument() });
+    const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+    openCellProperties(editor, cellPropertiesPositions(editor)[0]);
+    const before = editor.getJSON(), initialHistoryDepth = undoDepth(editor.state);
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    expect(screen.queryByRole('dialog', { name: '单元格对齐与边距' })).toBeNull();
+    expect(editor.getJSON()).toEqual(before); expect(onChange).not.toHaveBeenCalled();
+    expect(undoDepth(editor.state)).toBe(initialHistoryDepth);
+  });
+  it('keeps a formatting command and immediate following cell typing in separate undo events', async () => {
+    const { textbox } = await mount({ document: cellPropertiesDocument() });
+    const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+    const position = cellPropertiesPositions(editor)[0], before = editor.getJSON();
+    const initialHistoryDepth = undoDepth(editor.state);
+    openCellProperties(editor, position);
+    fireEvent.click(screen.getByRole('button', { name: '下右对齐' }));
+    let formatted = before;
+    const clock = vi.spyOn(Date, 'now').mockReturnValue(Date.now());
+    try {
+      fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+      formatted = editor.getJSON();
+      expect(undoDepth(editor.state)).toBe(initialHistoryDepth + 1);
+      act(() => {
+        editor.commands.setTextSelection(position + 2);
+        editor.commands.insertContent('Typed ');
+      });
+      expect(editor.state.doc.nodeAt(position)!.textContent).toContain('Typed Selected A');
+      expect(undoDepth(editor.state)).toBe(initialHistoryDepth + 2);
+    } finally { clock.mockRestore(); }
+    fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(editor.getJSON()).toEqual(formatted));
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(editor.getJSON()).toEqual(before));
+  });
+  it('commits a cell selection once, preserves untouched cells and marks, and restores the whole transaction with undo and redo', async () => {
+    const { textbox, onChange } = await mount({ document: cellPropertiesDocument() });
+    const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+    const cells = cellPropertiesPositions(editor), before = editor.getJSON();
+    const initialHistoryDepth = undoDepth(editor.state);
+    act(() => editor.view.dispatch(editor.state.tr.setSelection(CellSelection.create(editor.state.doc, cells[0], cells[1]))));
+    fireEvent.click(screen.getByRole('tab', { name: '插入' }));
+    fireEvent.click(screen.getByRole('button', { name: '单元格对齐与边距' }));
+    expect(screen.getByLabelText('单元格left内边距')).toHaveValue('');
+    fireEvent.change(screen.getByLabelText('单元格top内边距'), { target: { value: '0' } });
+    fireEvent.click(screen.getByRole('button', { name: '下右对齐' }));
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    await waitFor(() => expect(onChange).toHaveBeenCalledOnce());
+    const after = editor.getJSON();
+    expect(undoDepth(editor.state)).toBe(initialHistoryDepth + 1);
+    for (const [index, position] of cells.entries()) {
+      const cell = editor.state.doc.nodeAt(position)!;
+      expect(cell.attrs.cellMargins).toEqual({ left: index % 2 + 3, top: index < 2 ? 0 : 1, bottom: 2 });
+      expect(cell.attrs.verticalAlign).toBe(index < 2 ? 'bottom' : 'center');
+      expect(cell.firstChild!.attrs.textAlign).toBe(index < 2 ? 'right' : 'left');
+      expect(cell.firstChild!.firstChild!.marks.map(mark => mark.type.name)).toContain('bold');
+    }
+    expect(textbox).toHaveTextContent('Untouched B');
+    fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(editor.getJSON()).toEqual(before));
+    expect(onChange).toHaveBeenCalledTimes(2);
+    expect(undoDepth(editor.state)).toBe(initialHistoryDepth);
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    await waitFor(() => expect(editor.getJSON()).toEqual(after));
+    expect(undoDepth(editor.state)).toBe(initialHistoryDepth + 1);
+    expect(onChange).toHaveBeenCalledTimes(3);
+  });
+  it('preserves the original model and selection through IME, invalid precision and cancelling an actual draft', async () => {
+    const { textbox, onChange } = await mount({ document: cellPropertiesDocument() });
+    const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+    const position = cellPropertiesPositions(editor)[0];
+    openCellProperties(editor, position);
+    const before = editor.getJSON(), selection = editor.state.selection;
+    const input = screen.getByLabelText('单元格left内边距');
+    fireEvent.change(input, { target: { value: '7.25' } });
+    fireEvent.click(screen.getByRole('button', { name: '下右对齐' }));
+    fireEvent.compositionStart(input);
+    expect(screen.getByRole('button', { name: '应用单元格属性' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: '上左对齐' })).toBeDisabled();
+    expect(screen.getByLabelText('表格默认left内边距')).toBeDisabled();
+    expect(screen.getByLabelText('单元格间距')).toBeDisabled();
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    expect(editor.getJSON()).toEqual(before); expect(onChange).not.toHaveBeenCalled();
+    fireEvent.compositionEnd(input);
+    fireEvent.change(input, { target: { value: '1.01' } });
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    expect(screen.getByRole('alert')).toHaveTextContent('精度');
+    expect(editor.getJSON()).toEqual(before); expect(onChange).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: '取消' }));
+    expect(screen.queryByRole('dialog', { name: '单元格对齐与边距' })).toBeNull();
+    expect(editor.state.selection.eq(selection)).toBe(true);
+    expect(editor.getJSON()).toEqual(before); expect(onChange).not.toHaveBeenCalled();
+  });
+  it.each([{ readOnly: true }, { disabled: true }])('disables the actual cell draft and entry after permissions change to %j', async permissions => {
+    const model = cellPropertiesDocument();
+    const { textbox, onChange, rerender } = await mount({ document: model });
+    const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+    openCellProperties(editor, cellPropertiesPositions(editor)[0]);
+    const before = editor.getJSON(), input = screen.getByLabelText('单元格left内边距');
+    fireEvent.change(input, { target: { value: '9' } });
+    rerender(<WordHost document={model} onChange={onChange} disabled={false} readOnly={false} {...permissions} />);
+    expect(input).toHaveValue('9'); expect(input).toBeDisabled();
+    for (const side of ['top', 'right', 'bottom', 'left'])
+      expect(screen.getByLabelText(`表格默认${side}内边距`)).toBeDisabled();
+    expect(screen.getByLabelText('单元格间距')).toBeDisabled();
+    expect(screen.getByRole('button', { name: '恢复表格默认边距' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: '应用单元格属性' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: '下右对齐' })).toBeDisabled();
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    expect(editor.getJSON()).toEqual(before); expect(onChange).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: '取消' }));
+    expect(screen.getByRole('button', { name: '单元格对齐与边距' })).toBeDisabled();
+  });
+  it.each(['same-id', 'new-id'])('invalidates an actual cell draft after a %s external document replacement', async identity => {
+    const { textbox, onChange, rerender } = await mount({ document: cellPropertiesDocument() });
+    const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+    openCellProperties(editor, cellPropertiesPositions(editor)[0]);
+    fireEvent.change(screen.getByLabelText('单元格left内边距'), { target: { value: '8' } });
+    const replacement = documentModel('replacement');
+    if (identity === 'new-id') replacement.id = 'replacement-cell-document';
+    rerender(<WordHost document={replacement} onChange={onChange} disabled={false} readOnly={false} />);
+    await waitFor(() => expect(screen.getByRole('textbox', { name: 'Word 文档正文', hidden: true })).toHaveTextContent('replacement'));
+    const apply = screen.queryByRole('button', { name: '应用单元格属性' });
+    if (apply) { expect(apply).toBeDisabled(); fireEvent.click(apply); }
+    expect(onChange).not.toHaveBeenCalled();
+    expect(screen.getByRole('textbox', { name: 'Word 文档正文', hidden: true }).querySelector('table')).toBeNull();
+  });
+  it('invalidates the target body draft when the active editor switches to the header', async () => {
+    const model = cellPropertiesDocument(); model.header = emptyRegion();
+    const { textbox, onChange } = await mount({ document: model });
+    const editor = (textbox as HTMLElement & { editor: Editor }).editor;
+    const header = await screen.findByRole('textbox', { name: 'Word 页眉' });
+    const headerRegion = screen.getByLabelText('页眉区域');
+    openCellProperties(editor, cellPropertiesPositions(editor)[0]);
+    const before = editor.getJSON();
+    fireEvent.change(screen.getByLabelText('单元格left内边距'), { target: { value: '8' } });
+    fireEvent.doubleClick(headerRegion);
+    await waitFor(() => expect(header).toHaveAttribute('contenteditable', 'true'));
+    expect(screen.getByRole('button', { name: '应用单元格属性' })).toBeDisabled();
+    expect(screen.getByLabelText('单元格left内边距')).toBeDisabled();
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    expect(editor.getJSON()).toEqual(before); expect(onChange).not.toHaveBeenCalled();
+  });
+  it.each(['header', 'footer'] as const)('edits actual %s table cells with independent undo and redo', async region => {
+    const model = cellPropertiesDocument(); model[region] = structuredClone(model.content);
+    const { textbox, onChange } = await mount({ document: model });
+    const bodyEditor = (textbox as HTMLElement & { editor: Editor }).editor;
+    const bodyBefore = bodyEditor.getJSON();
+    const box = await screen.findByRole('textbox', { name: region === 'header' ? 'Word 页眉' : 'Word 页脚' });
+    fireEvent.doubleClick(screen.getByLabelText(region === 'header' ? '页眉区域' : '页脚区域'));
+    await waitFor(() => expect(box).toHaveAttribute('contenteditable', 'true'));
+    const editor = (box as HTMLElement & { editor: Editor }).editor;
+    const position = cellPropertiesPositions(editor)[0], before = editor.getJSON();
+    openCellProperties(editor, position);
+    fireEvent.click(screen.getByRole('button', { name: '下右对齐' }));
+    fireEvent.change(screen.getByLabelText('单元格left内边距'), { target: { value: '9' } });
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    await waitFor(() => expect(onChange).toHaveBeenCalledOnce());
+    const after = editor.getJSON();
+    expect(editor.state.doc.nodeAt(position)!.attrs).toMatchObject({ verticalAlign: 'bottom', cellMargins: { left: 9, top: 1, bottom: 2 } });
+    expect(bodyEditor.getJSON()).toEqual(bodyBefore);
+    fireEvent.click(screen.getByRole('tab', { name: '开始' }));
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }));
+    await waitFor(() => expect(editor.getJSON()).toEqual(before));
+    expect(bodyEditor.getJSON()).toEqual(bodyBefore);
+    fireEvent.click(screen.getByRole('button', { name: '重做' }));
+    await waitFor(() => expect(editor.getJSON()).toEqual(after));
+    expect(bodyEditor.getJSON()).toEqual(bodyBefore);
+  });
+  it('restores a rejected controlled cell edit and saves the original model', async () => {
+    const value = cellPropertiesDocument();
+    const ref = createRef<OfficeStudioHandle>(), onChange = vi.fn(), onSave = vi.fn();
+    render(<OfficeStudio ref={ref} value={value} onChange={onChange} onSave={onSave} />);
+    const body = await screen.findByRole('textbox', { name: 'Word 文档正文' });
+    const editor = (body as HTMLElement & { editor: Editor }).editor;
+    const position = cellPropertiesPositions(editor)[0], before = editor.getJSON();
+    openCellProperties(editor, position);
+    fireEvent.click(screen.getByRole('button', { name: '下右对齐' }));
+    fireEvent.change(screen.getByLabelText('单元格left内边距'), { target: { value: '9' } });
+    fireEvent.click(screen.getByRole('button', { name: '应用单元格属性' }));
+    await waitFor(() => expect(onChange).toHaveBeenCalledOnce());
+    expect(onChange.mock.lastCall?.[0].content.content[0].content[0].content[0].attrs).toMatchObject({ verticalAlign: 'bottom', cellMargins: { left: 9 } });
+    await waitFor(() => expect(editor.getJSON()).toEqual(before));
+    expect(ref.current?.getDocument()).toBe(value);
+    await act(async () => ref.current?.save());
+    expect(onSave).toHaveBeenCalledWith(value); expect(onChange).toHaveBeenCalledOnce();
   });
 });

@@ -1,0 +1,1632 @@
+{
+  "baseline": "077e307da018a6a9a96b4d07d70bf8e44a803c84",
+  "branch": "codex/finish-office-studio",
+  "source": [
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-excel-codec.ts",
+      "bytes": 162891,
+      "sha256": "92231aab069c5a724211b5859230cd9fe1618389f7fda5ae7a00c9f3c8d644f5"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-adapter.ts",
+      "bytes": 32169,
+      "sha256": "bc563267722b06474af8ae717d6b7767031403a0f6507cf4d4a4d9d56232b5b1"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
+      "bytes": 40023,
+      "sha256": "9137fb6a7bc2871c00cded59cd0f1db1eeb0a48eccd938a1ae0f42652c781c2c"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-compose.ts",
+      "bytes": 39885,
+      "sha256": "8b1cfc139d0cfae8ab2acf71802c9f46f1e3d8a0f1e5ab529ddb06cbf3642f98"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-composition.ts",
+      "bytes": 9863,
+      "sha256": "cf4f4fe166ed1cab38516882532bb0c4649c9afb7329ee821fc5cb39b868573c"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-prepare.ts",
+      "bytes": 1989,
+      "sha256": "231c63890b237d9a52d10efa26ebdf0663aa5a899c009c92f27733b9978bd438"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-word-codec.ts",
+      "bytes": 115098,
+      "sha256": "5021af586ff212f145258ff4403cba23f44c4733e9b765583551d9ecefcd811a"
+    },
+    {
+      "path": "docs/src/pages/components/OfficeStudioPage.tsx",
+      "bytes": 21388,
+      "sha256": "73f65510bf9430d0e1d4208d59886fadf2234eb9fc7dec811fc1e5c0a144f29a"
+    },
+    {
+      "path": "docs/tests/office-studio-word.test.mjs",
+      "bytes": 113774,
+      "sha256": "9819dc01697aa00321181b761b168618c6dede41fd2a7ecb0c4aa892f5f98ec4"
+    },
+    {
+      "path": "docs/tests/studio-pdf-adapter.test.mjs",
+      "bytes": 17202,
+      "sha256": "e63c4fb897551f2dcdc9fdeae16c51c98ac3d4de6341ea444b6562b7922dbc38"
+    },
+    {
+      "path": "docs/tests/studio-pdf-codec.test.mjs",
+      "bytes": 63480,
+      "sha256": "6058795aeeee556f43d8ebd52703b29814b85fe0cc54edfb7d91bee17eeed9b9"
+    },
+    {
+      "path": "docs/tests/studio-workspace.test.mjs",
+      "bytes": 56644,
+      "sha256": "cd96b0c67ccc2d74c420c08ede32224737d7c46b70c45a9b427149a6882dea18"
+    },
+    {
+      "path": "docs/vite.config.ts",
+      "bytes": 2864,
+      "sha256": "c85d2d0d94b508b3d197f49d3825b10654c52e653a342a2500ed99f367c81698"
+    },
+    {
+      "path": "e2e/office-studio-pdf-composition.spec.ts",
+      "bytes": 19752,
+      "sha256": "ed4fb2557dbdcc00cd86658f25d967356a39e20bd6479d73e7fa8cd45ffb2a4c"
+    },
+    {
+      "path": "e2e/office-studio-word-metrics.spec.ts",
+      "bytes": 17466,
+      "sha256": "0e14034516ac9c522bd2e8a976c20238f4fced36b8072e6b6ac57ce9fb08a66e"
+    },
+    {
+      "path": "e2e/playwright.config.ts",
+      "bytes": 1263,
+      "sha256": "d2a81222a37a6cfe181bba09c7e5773ef3361783e4a75b7456b5d9f8f16531a7"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/OfficeStudio.tsx",
+      "bytes": 19002,
+      "sha256": "f2b4b4b4045188f3e0e9332a2ed0d7edbe8584fbe9be4c0607deff6bd6d04254"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioPdf.css",
+      "bytes": 21084,
+      "sha256": "87b0631d624dc34aa2a3360d237347afc6fe9e68dd594ea6cea0c6d165cb73c9"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioPdf.tsx",
+      "bytes": 136879,
+      "sha256": "cb1d0e618b026f275cfcba2c5277c8f881aa6d3b66302798f4856f639e7ac930"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioSheet.css",
+      "bytes": 21639,
+      "sha256": "a19e1f3778b48a82cab278bd2831bdba1abdc5737252b5d16d97ae14ba8cbff3"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioSheet.tsx",
+      "bytes": 183544,
+      "sha256": "0e0b528a2d554cb47adac7f5f68af6b0c09d5e11021442a57c0b9aceb2f0b3ea"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioSheetText.tsx",
+      "bytes": 2458,
+      "sha256": "17906f433fad100a303270737ff744aeec535d4329a1011323b8b5dcfc95c6b0"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+      "bytes": 141725,
+      "sha256": "ef3515d49ca280402ebd4c1de7fc30df00e430c77e00f7aee5aadda821f239ba"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWordCharacterDialog.tsx",
+      "bytes": 5745,
+      "sha256": "005b4d090ead60f3a554d2addfc6bc378bf15db28ac180549a028979e8c681d0"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/index.ts",
+      "bytes": 2443,
+      "sha256": "39a7899f5500cbd70f60eb4c75cb048e4d00b32d58f69ebdecdfc579fe55acd1"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-model.ts",
+      "bytes": 41051,
+      "sha256": "0dc9711e027e5325a4d44f1169c2d5f9da5243491011ec14adbb7c57b5453f17"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-pdf-pages.ts",
+      "bytes": 8717,
+      "sha256": "3901a2b0d2010ecf8e28cb479998e6376a42b8eaa616969a519f8aabdc663877"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-types.ts",
+      "bytes": 20457,
+      "sha256": "87239bce035971b2aba94ef7485f54b956da88b0643956972f1287d53a09e038"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-character-layout.ts",
+      "bytes": 4814,
+      "sha256": "3c2ab9e54989fa343a32af43d5c69ca032a530f089731f477d6e80359f2ab201"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
+      "bytes": 47129,
+      "sha256": "5a6e307706fc601be2b58676322a4f1a038ea74f4ec4fe8d3a5b5f0cdf3c1e2a"
+    },
+    {
+      "path": "packages/ui/src/config/locale.ts",
+      "bytes": 77602,
+      "sha256": "0a9996874c06dae278f0f81fc53d72a5bea9c874d8bfd0c72c388fef62104c13"
+    },
+    {
+      "path": "registry/registry.json",
+      "bytes": 191102,
+      "sha256": "fff415aa75627d76adbf3c2d80edfa94567085cacbfc677a713ba64dd41699bf"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-annotation-editor.ts",
+      "bytes": 8819,
+      "sha256": "aeb76192cdca765f0e6aa95d0a351b74d17c9a19315228b4ebf75bb1c9fc8d0a"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native-document.ts",
+      "bytes": 13725,
+      "sha256": "35f296cf420d91d3427eafd6114a829927be9531d5a7605378cd77ec1dd2d91d"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native-fonts.ts",
+      "bytes": 2937,
+      "sha256": "b3d43f177b9d930df0749c521e5f09f8f204a30d837fc9f05bb6af54d1b97caa"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/api.ts",
+      "bytes": 9698,
+      "sha256": "25eb9723988b44e4ac29ed97253aa465385193c57309b68742b0c62fd38ff205"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/appearance-parser.ts",
+      "bytes": 11447,
+      "sha256": "bddce063ae3bc5cd76eeeaab0afbea63729470840d6956aa2266dbd52739ac2c"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/appearance.ts",
+      "bytes": 12631,
+      "sha256": "eeaf0761cf1f7b51f73ed2afe71172a859021d7bfe5f4cdf69f3b76cef205334"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/colors.ts",
+      "bytes": 3565,
+      "sha256": "61fdf7c1a6e0064249de488ed55aadd3c560cf2e4bbd39ec055c07090aae11f0"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/constants.ts",
+      "bytes": 1153,
+      "sha256": "cbcdec0f4494e86959fc7e7e8a63ad437bfa20e305338a2c44678f8aa468d2fb"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/export.ts",
+      "bytes": 9981,
+      "sha256": "690a2775d0b6ad164e487b8f90b09b730870c0fe27026b9efe2d8c0c4749c70e"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/font-reader.ts",
+      "bytes": 5326,
+      "sha256": "78925a224189d63182f66ca1feccfbaa8e53546202ce1ca87628a2664d5756b7"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/fonts.ts",
+      "bytes": 5648,
+      "sha256": "1657c54574227f2e51c5e44d9023a1619292fed0bbec24ff2dd74190587faeb1"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/geometry.ts",
+      "bytes": 4075,
+      "sha256": "6404a8d473b0f8dfe7e33d55b7947dcc0d463e223a29d014b8ffdbdfda3668fd"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/host-fonts.ts",
+      "bytes": 2112,
+      "sha256": "458a229094bdfc3297c215495155a387aff38004c185189cb4548d853416a732"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/index.ts",
+      "bytes": 236,
+      "sha256": "3f00b56997d63bf5add1c03ee52c6bc05897a540fde4f0400c998ae0f7253a23"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/mapping.ts",
+      "bytes": 15438,
+      "sha256": "0281e1d06ab42bbb06e8c8a8916c9587549e98ed6cdae2727f175fbfa5a39233"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/model-edit.ts",
+      "bytes": 15241,
+      "sha256": "f465f3ac1f5d5ee779e4cca9a96843687f53eeb166e11847ffae0fc58fb66a72"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/objects.ts",
+      "bytes": 9787,
+      "sha256": "837230f3b4aecd71b3c8ee4ea87825ce050f8e8a390a908853cd7af1f9c3c2ed"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/parser-types.ts",
+      "bytes": 561,
+      "sha256": "cdd4768ea124a71fd477da0ef748321bb8cb4f4c285dea6cbc73a8195f21f26f"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/public-model.ts",
+      "bytes": 16486,
+      "sha256": "89eb01e11b6228461d8638d3fb280b581cca7639162f7da438629ee55828c414"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/public-types.ts",
+      "bytes": 108,
+      "sha256": "3251160ae2c78b16e88d874b8c358b823233fff83408224bd6c2aeabedede5c1"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/read.ts",
+      "bytes": 17805,
+      "sha256": "bb27bbee0ce68b7fac7305c572e77359ef7f4cb8b621440ba5a74b9f24ce7733"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/runtime.ts",
+      "bytes": 853,
+      "sha256": "df9ddee50100c18eb8b44f4e8b032c324d3814fe417f6edd0a5a1e952dd5b580"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/types.ts",
+      "bytes": 5802,
+      "sha256": "4d87fadf76ad780561e8f8f3a1ceb145525ea74b96181f450547cc467f4e341b"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/workspace-composition.ts",
+      "bytes": 2593,
+      "sha256": "643490ea1c17b9ad244d7e76966a94f73bcf6e29557f98ca9f3f53a7dcaf205b"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/workspace-identities.ts",
+      "bytes": 3590,
+      "sha256": "a41a4b8c6bb8e7fdc5df3939ba894a5ce0b7a4f6af3c9f36ecdf07e70919cee5"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/workspace-model.ts",
+      "bytes": 9916,
+      "sha256": "74bee0b9726d6095d8d686e6a696e50e9180c488cf3174c307b7881aa359308b"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/workspace-types.ts",
+      "bytes": 118,
+      "sha256": "e2e3216cc1b7cf237aefb4594406afbd82c9fe32dfc49dbda29c75cadf4aca8c"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/workspace.ts",
+      "bytes": 8509,
+      "sha256": "3997e649a57bc2bd2cdeb65893c5e46954c5bcdfcc713c252093a8e574395c12"
+    },
+    {
+      "path": "docs/src/pages/collaboration/office-studio/studio-pdf-native/write.ts",
+      "bytes": 5783,
+      "sha256": "eda49c509f2b201df0add8bfb2e836f19a9b3956ed44873842751079c6d00f17"
+    },
+    {
+      "path": "docs/src/studio-pdf-layer-sdk.d.ts",
+      "bytes": 128,
+      "sha256": "fa12beb2e613823e18db9b7629b4b9eaf564d0782907c414b4b5ea2fe9e21c2c"
+    },
+    {
+      "path": "docs/tests/fixtures/studio-pdf-native/native-font-source.pdf",
+      "bytes": 2197588,
+      "sha256": "9123d0521afdf7c6fb4f0fe83c5f410afed917896fc585710461b56c66f782e6"
+    },
+    {
+      "path": "docs/tests/fixtures/studio-pdf-native/native-geometry-source.pdf",
+      "bytes": 14320,
+      "sha256": "2aecc672c91b0bf1e8f651ca4e85d23699eb454143822bc083f30201e61ead0d"
+    },
+    {
+      "path": "docs/tests/fixtures/studio-pdf-native/native-marks-encrypted.pdf",
+      "bytes": 34842,
+      "sha256": "58d3e2c0b822abc30005ca27cd3e59145e16e23f0792fd690fed30dba96a2689"
+    },
+    {
+      "path": "docs/tests/fixtures/studio-pdf-native/native-marks-signed-marker.pdf",
+      "bytes": 33432,
+      "sha256": "cf2fecda6beb9308946e4bbea617db42decf5da7727a0014416dd487daf19970"
+    },
+    {
+      "path": "docs/tests/fixtures/studio-pdf-native/native-marks-source.pdf",
+      "bytes": 33193,
+      "sha256": "6590f33d4a5719bcb60adf2ca2ab684c0cfe3eb83d2c04e178aec121c3d915c3"
+    },
+    {
+      "path": "docs/tests/fixtures/studio-pdf-native/native-marks-xfa.pdf",
+      "bytes": 33243,
+      "sha256": "b43128d52f7e02e5e98e865deb614327edd48d3433655bc5ed0d1f12e887b25d"
+    },
+    {
+      "path": "docs/tests/studio-pdf-compose-annotations.test.mjs",
+      "bytes": 6467,
+      "sha256": "faa6f1b56d1b4b051ca00901d9cbb65320cf334b49078beaa7513d3f90433991"
+    },
+    {
+      "path": "docs/tests/studio-pdf-native-clock.test.mjs",
+      "bytes": 5436,
+      "sha256": "c586746b765f2e7fadf45acd53b987f351a250bdb833b2472507647258510938"
+    },
+    {
+      "path": "docs/tests/studio-pdf-native-color-fixtures.mjs",
+      "bytes": 11668,
+      "sha256": "1b550da6f632f7ad5588800e2c59a946a19372244f331044ea08087bcd5f5f94"
+    },
+    {
+      "path": "docs/tests/studio-pdf-native-colors.test.mjs",
+      "bytes": 20596,
+      "sha256": "d2bf97fe26806cf43583920d7f90c3a7f20178b5c5a9144415faa8893e4da86c"
+    },
+    {
+      "path": "docs/tests/studio-pdf-native-editor.test.mjs",
+      "bytes": 23135,
+      "sha256": "f1e6a0ba554d5b8795c8712a9c7886a486d7a138b9f5547389aa2e04745bd747"
+    },
+    {
+      "path": "docs/tests/studio-pdf-native-evidence.mjs",
+      "bytes": 7739,
+      "sha256": "ab45a884d3c8e3646c6549d3a93120d18f1fde22990f6d2333e207c7d45466af"
+    },
+    {
+      "path": "docs/tests/studio-pdf-native-fonts.test.mjs",
+      "bytes": 2645,
+      "sha256": "464f399fd400040c4949accbff4063a8dab828cbcc16e954d8e81cdf5223f215"
+    },
+    {
+      "path": "docs/tests/studio-pdf-native-geometry.test.mjs",
+      "bytes": 6330,
+      "sha256": "f1293126fc307cbdf925b278a2d1f4fa4944df666c371779cc0beb9fb75d86d4"
+    },
+    {
+      "path": "docs/tests/studio-pdf-native-guards.test.mjs",
+      "bytes": 16190,
+      "sha256": "2fc98ad82897a0b7eaa5477437aeeee50642bdc4a71e2a21331cdb198ff2c8e1"
+    },
+    {
+      "path": "docs/tests/studio-pdf-native-none.test.mjs",
+      "bytes": 9432,
+      "sha256": "2a7a230d5e7cfc96c35a5691efa77cff21c03a2a4baa38e1482d330727d2946d"
+    },
+    {
+      "path": "docs/tests/studio-pdf-native-null.test.mjs",
+      "bytes": 4733,
+      "sha256": "a6f35295bbf8a013fd9c8179e2645d092fb78578815fffee58a5b3b33adb5418"
+    },
+    {
+      "path": "docs/tests/studio-pdf-native-pages.test.mjs",
+      "bytes": 9160,
+      "sha256": "beb7006a5ea122abe03ff08444226998c40c23e8c7524bcf3e86f3dd0e830b82"
+    },
+    {
+      "path": "docs/tests/studio-pdf-native-runtime.mjs",
+      "bytes": 2246,
+      "sha256": "991b3be4012be76d42a35407116e2d30d5b877204fe61eda382140bcc6169d11"
+    },
+    {
+      "path": "docs/tests/studio-pdf-native-type0.test.mjs",
+      "bytes": 5324,
+      "sha256": "702bbd0d80d2e0818d577d7eb3ce2e987b805806e967c1d2e44b09797aa71ada"
+    },
+    {
+      "path": "docs/tests/studio-pdf-native.test.mjs",
+      "bytes": 16695,
+      "sha256": "ed9776a46d4ec8ae6f77f59db54a18dfbf4d6d75f2a57f0f7c65d64df6ea341c"
+    },
+    {
+      "path": "docs/tests/studio-pdf-text-layer.test.mjs",
+      "bytes": 7047,
+      "sha256": "abca6dd30b90664b9bd94585a460261974a574893e9f5732754252d1c43f5fd3"
+    },
+    {
+      "path": "docs/tests/studio-sheet-view.test.mjs",
+      "bytes": 20604,
+      "sha256": "7bfaf8dbee0605e43ffd6159051d47146b3c66ef068508c7b1f16cf55802bc80"
+    },
+    {
+      "path": "e2e/office-studio-pdf-cjk-display.spec.ts",
+      "bytes": 9972,
+      "sha256": "15ea8ec865a10130fadc2d69c74ac634603883c6bb4a673074fd3bc58911bf85"
+    },
+    {
+      "path": "e2e/office-studio-pdf-native-annotations.spec.ts",
+      "bytes": 54707,
+      "sha256": "38b2ffeeccb77a48658ead2197dacd4219b4d5b4d1e45944451b65c74f8ab11e"
+    },
+    {
+      "path": "e2e/office-studio-pdf-text-layer.spec.ts",
+      "bytes": 34629,
+      "sha256": "580f1a02b578c1f2a8eae202683441467e7bf6f66243fe4369e3d2f17acbdf92"
+    },
+    {
+      "path": "e2e/office-studio-sheet-view.spec.ts",
+      "bytes": 24941,
+      "sha256": "836da2b35da6e4bc2fcf4b49c088d6cf83dfb224981686248bec6087d5df4c41"
+    },
+    {
+      "path": "e2e/office-studio-word-basic-format.spec.ts",
+      "bytes": 18211,
+      "sha256": "9561a0fb3b1d6d888b99e6ec2605c74f4e60bc3e53f762a3504a50f4c644c262"
+    },
+    {
+      "path": "e2e/office-studio-word-character-guards.spec.ts",
+      "bytes": 10756,
+      "sha256": "a1eedd1dc7796d7fa8de03f2a0b242c51042d03e84ea710a9b238e677a937b61"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx",
+      "bytes": 36141,
+      "sha256": "0d55eaaf186e2fb067c1fa711d8ec04544bfae33c4899f651b63398da4605578"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioPdfAnnotationDialog.tsx",
+      "bytes": 16944,
+      "sha256": "32253ff7622be5cfaca2af6d935aeef6e676f3941b841a04538142471274cbf2"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioPdfAnnotationPaintLayer.tsx",
+      "bytes": 2754,
+      "sha256": "1e1d5ccba4cdf1b0e8b523374d45d3c3b825565f62c7271f14950fb36bedeaa4"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioPdfNativeInspector.tsx",
+      "bytes": 12977,
+      "sha256": "ef0bb5ef627b9c81fb2113926f970cc667c40bf6ec9e6d1c853f1639ea20f7b0"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioPdfNativeLayer.test.tsx",
+      "bytes": 8345,
+      "sha256": "3fcffb386d9e5769fe71bd9baac280efafb688f80afed7ef743a969e11a77b50"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioPdfNativeLayer.tsx",
+      "bytes": 14599,
+      "sha256": "1ca8e24b7696fcf5a0d67e583f51e55c7e0e0ca8b4597be81539f4c3cc76c4c1"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioPdfTextLayer.css",
+      "bytes": 4258,
+      "sha256": "bfaeed7a0677685d1add59f72d40707dd2b4fdb0e379a7d6b4bfb935ff0fa192"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioPdfTextLayer.test.tsx",
+      "bytes": 7465,
+      "sha256": "f24b6a5d15e250b62f6b8e9e0834dda75db41af0ffb41b773bbe6635e15fae7b"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioPdfTextLayer.tsx",
+      "bytes": 3400,
+      "sha256": "a88594cfd6a58a4c98adcb04b79216f56167924a9baef7c6d5fdc72ad2d51c91"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioSheetView.test.tsx",
+      "bytes": 18232,
+      "sha256": "c3caebb75f2ce29eeb0700cca207ae2cdcc21c267e4554f4b957af53d0316150"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioSheetViewControls.tsx",
+      "bytes": 5768,
+      "sha256": "ce2c340ee92a6feaf8dda8ddbd3eff0cd5467c408e16c55274cf5aa14c52a274"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWord.basic-format.test.tsx",
+      "bytes": 15294,
+      "sha256": "c1d26c4d9f15539be9e89415969856f10d66b3644a37ca05c5c2bda58b3329bc"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWord.character-guards.test.tsx",
+      "bytes": 10535,
+      "sha256": "9e59aa1ad86928ad60b48133e7c0afb2666758c0273a55c4ed70fac9c5d53b8e"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-pdf-annotation-types.ts",
+      "bytes": 9053,
+      "sha256": "445422b9ecc8d19cb865a65dbeeb916e18aaadf6155c7cfee3c18b2f6758bc32"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-pdf-annotation-workspace-types.ts",
+      "bytes": 1921,
+      "sha256": "908f55e6e309703aabbddbe8975fb16ad4e60c2b4f24d70219e94979ca058f9c"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-pdf-annotations.ts",
+      "bytes": 1756,
+      "sha256": "c04515b67eb9fc4517f1dd20048a06946fd09256943cd10e1f85b9ec4b97e445"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-pdf-native-model.test.ts",
+      "bytes": 6350,
+      "sha256": "66d7519782a9bbb3f91c3860076443f7da241d14900d7acbfac7caa572494174"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-pdf-native-ui.ts",
+      "bytes": 7008,
+      "sha256": "9ea9924468a835b5aeb1df3c97feee51c0fbe8b497df74ac367e379cfa6744e2"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-pdf-source-id.ts",
+      "bytes": 3079,
+      "sha256": "59756cdd86c52a53147c2343cf33fd6be2d6de173aef0736539aefea1ecd03ef"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-sheet-view.test.ts",
+      "bytes": 7424,
+      "sha256": "489e3c8938bb7ca7426f2d9d6ceaba9b9963f27edb2b63382cb1b34fe3463ba7"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-sheet-view.ts",
+      "bytes": 8386,
+      "sha256": "99acd1c9517cc6e3fbdf751d8d9d09b3d9dde7d3639b4aa7e2c03d421d3d7192"
+    },
+    {
+      "path": "e2e/office-studio-word-rows.spec.ts",
+      "bytes": 68139,
+      "sha256": "524f62fb38426e3f7af9063a547ee4ba3e72b6934c28db73520525010b8e43e6"
+    }
+  ],
+  "uiDist": [
+    {
+      "path": "packages/ui/dist/ChartView-DPXuPMks.js",
+      "bytes": 56904,
+      "sha256": "4c5413d7613d1419747cc412529abe229c66d2fb55d4684de887ea083066e9c9"
+    },
+    {
+      "path": "packages/ui/dist/ChartView-DYMjevDt.cjs",
+      "bytes": 55882,
+      "sha256": "63df52836a587b4fc3af1bdc48f841e7b646a30f0db1f8c8ad7c3ec432466498"
+    },
+    {
+      "path": "packages/ui/dist/DataGridView-4UGbOD03.cjs",
+      "bytes": 17226,
+      "sha256": "bc1a4eb21113257a02e816e0547b7e49e70f4a12dc9e6e055c9d4e57d5fd90ce"
+    },
+    {
+      "path": "packages/ui/dist/DataGridView-DKZ11UWY.js",
+      "bytes": 16927,
+      "sha256": "f57c480abd73bccfe6ac47438f3b5a82dbcc82340691e18f07ec96a91cad741b"
+    },
+    {
+      "path": "packages/ui/dist/GlobeScene-BNllWa6J.cjs",
+      "bytes": 104632,
+      "sha256": "85ea84d9ad924d0d74379f20a98b7bd2a7d9479ac52f799497f6a62592db67ec"
+    },
+    {
+      "path": "packages/ui/dist/GlobeScene-BQMI0Rm7.js",
+      "bytes": 104978,
+      "sha256": "c22b861b8e32eb21e13561c91b9e104497ab74ff60eab20f99cb8c20e20302ce"
+    },
+    {
+      "path": "packages/ui/dist/StudioFontControl-Cgv4ukzS.js",
+      "bytes": 3946,
+      "sha256": "1d86786917f49cf72f9907ac9bb6696d58d403c54bfbd9fe456ed3748e06c20e"
+    },
+    {
+      "path": "packages/ui/dist/StudioFontControl-DpdkxHDC.cjs",
+      "bytes": 4366,
+      "sha256": "8d802ed7b63e3f4f4e10ce4f5afbbc66bed89446120537b7f5ff1fad1b2f2323"
+    },
+    {
+      "path": "packages/ui/dist/StudioPdf-CVMBFjdu.cjs",
+      "bytes": 120968,
+      "sha256": "3b05fce1f5d7365b63fcdba8df8702602dc177cf73a715e0b452212bb290d683"
+    },
+    {
+      "path": "packages/ui/dist/StudioPdf-tInwhU6n.js",
+      "bytes": 122491,
+      "sha256": "e3e7996577ae78db03056196b5ac3e0001fbbc623b33e68900c2c7003b1a713e"
+    },
+    {
+      "path": "packages/ui/dist/StudioSheet-BN-CHZZG.cjs",
+      "bytes": 247955,
+      "sha256": "2586d4969311e168489b09ee70b80c52c9d154bacaaf5f0c24b30f0d8c96377e"
+    },
+    {
+      "path": "packages/ui/dist/StudioSheet-BwdEm5rb.js",
+      "bytes": 250247,
+      "sha256": "97c0431708c9da36b5c6652b170804b085e71b35566bb2a4533aa8c9bd9bcca0"
+    },
+    {
+      "path": "packages/ui/dist/StudioWord-BkxU2F45.js",
+      "bytes": 320422,
+      "sha256": "fcb8d44d09813fd4c52d004a0f0c5b9547875d164b50160f542760ca7867e821"
+    },
+    {
+      "path": "packages/ui/dist/StudioWord-D9BsZsQY.cjs",
+      "bytes": 317813,
+      "sha256": "162be56b999555883b354e747ee11917b83a693ca7219676629243734a019bc5"
+    },
+    {
+      "path": "packages/ui/dist/Type-BAWzuoc1.js",
+      "bytes": 294,
+      "sha256": "8dfe609d08636a9a8c001b3a5d528d892bdf58770d15e6e71c02a3e58af532f0"
+    },
+    {
+      "path": "packages/ui/dist/Type-BR6L15w_.cjs",
+      "bytes": 314,
+      "sha256": "975c916e617946177ce78c0743264df617944697d11350daa2da009b62e08c63"
+    },
+    {
+      "path": "packages/ui/dist/ZoomOut-BO_pPSBQ.cjs",
+      "bytes": 555,
+      "sha256": "3f3f495bc780e65b81e49cdbe43a229070c578f96b057bee3440596b02b18eda"
+    },
+    {
+      "path": "packages/ui/dist/ZoomOut-DuIJjMUf.js",
+      "bytes": 493,
+      "sha256": "c67c24a21c86afd00bb027ec23bd2815ec6b30bed14b72d997e0cd9ef9fa2e21"
+    },
+    {
+      "path": "packages/ui/dist/browser/LICENSE.txt",
+      "bytes": 65713,
+      "sha256": "d4f020a49f7ae4dea2e3970c007a86ba35a474cbcd2fbabc34002bad3f232da6"
+    },
+    {
+      "path": "packages/ui/dist/browser/zuvi.css",
+      "bytes": 433875,
+      "sha256": "fe241c726e93c452dc9e57c86e22e8ece16a1b46196f6c4b0e13385dda1023f6"
+    },
+    {
+      "path": "packages/ui/dist/browser/zuvi.global.js",
+      "bytes": 2818846,
+      "sha256": "f098d7f86e4c229611820c3a06c9bac2a6977b9f16478cfb25ce6de412962220"
+    },
+    {
+      "path": "packages/ui/dist/globe-renderer-BMqQ-d50.cjs",
+      "bytes": 549960,
+      "sha256": "87100a2cc0eb0d11fc788c48233b944ed5bb86baf1266ca182485070d411714d"
+    },
+    {
+      "path": "packages/ui/dist/globe-renderer-CQa3_y_X.js",
+      "bytes": 557190,
+      "sha256": "e9159dd0fb7bbbcb12ad220f46bbc777c329c5ec50cd1ef17e72b954bad2c801"
+    },
+    {
+      "path": "packages/ui/dist/index-Cy7mlBQr.cjs",
+      "bytes": 416222,
+      "sha256": "2b5d993c8b871e2f2aaa8ec82e84107eaebfbd14bb0eaaf172b13f49be582262"
+    },
+    {
+      "path": "packages/ui/dist/index-DZkXyWUa.js",
+      "bytes": 420254,
+      "sha256": "49bcdcb6e4f9b9ec9808e10d640428e0f7aac7896840cb7bef4b3fb696693fd9"
+    },
+    {
+      "path": "packages/ui/dist/index.cjs",
+      "bytes": 5075,
+      "sha256": "48df08ba91cdf794ef59f972e4c13ecfd6a02fe99127153d27d7f41147143776"
+    },
+    {
+      "path": "packages/ui/dist/index.d.ts",
+      "bytes": 170906,
+      "sha256": "ec2447c707d7aa14b9969ba7c485afa3e620e957e0e54cdba0b0e78355df2026"
+    },
+    {
+      "path": "packages/ui/dist/index.js",
+      "bytes": 3914,
+      "sha256": "f4b3e4846254798076cdb040ee879e3b700aeb1cd1cf4177faa1004658ab7bc0"
+    },
+    {
+      "path": "packages/ui/dist/style.css",
+      "bytes": 433875,
+      "sha256": "fe241c726e93c452dc9e57c86e22e8ece16a1b46196f6c4b0e13385dda1023f6"
+    }
+  ],
+  "docsJs": [
+    {
+      "path": "docs/dist/assets/AdminShellPrototype-iRWwChaq.js",
+      "bytes": 14946,
+      "sha256": "84583ad10b38aa147805326ec420a61334e39ff0b1f4c8254815ee50cff19c2a"
+    },
+    {
+      "path": "docs/dist/assets/AffixPage-C5M1mlFZ.js",
+      "bytes": 3251,
+      "sha256": "6d7290654e47fa908c1277c6dfeeb2baed5121f55ce29d080e725800b6b2432e"
+    },
+    {
+      "path": "docs/dist/assets/AlertPage-Btc1grjo.js",
+      "bytes": 4518,
+      "sha256": "c3fbcbb0b67d32b954b46ab1e0c0bcfaec1829574a3039786d1e9acfb2beecc4"
+    },
+    {
+      "path": "docs/dist/assets/AnchorPage-DpjLyLAN.js",
+      "bytes": 7753,
+      "sha256": "b2162e58f434776d7f82461a59957701fc7a7e9215d6e4105b66ca29f8a0a1fc"
+    },
+    {
+      "path": "docs/dist/assets/ApiTable-Q9kyjYoz.js",
+      "bytes": 851,
+      "sha256": "f961bc6b8fb6ccf8056aad23463c2ece04eefe223b17302922ac1a024cd2a614"
+    },
+    {
+      "path": "docs/dist/assets/AppPage-MauyEYuc.js",
+      "bytes": 3853,
+      "sha256": "aa9d485c52588478b177f2fc2c50d5e8790b2258b66c44a89f92244bd7e2a6fb"
+    },
+    {
+      "path": "docs/dist/assets/Archive-mlvEP_zN.js",
+      "bytes": 314,
+      "sha256": "b121177d8ffd675c768e7780e111e4475ea01a6f1cc80060af28ffcae0c29309"
+    },
+    {
+      "path": "docs/dist/assets/ArrowLeft-DcPwkwuG.js",
+      "bytes": 231,
+      "sha256": "5a1ba53ec042fd2bc1b5769162131cdb73c7353f153c904545f7f2a0d1b9750c"
+    },
+    {
+      "path": "docs/dist/assets/ArrowRight-CKbLMkQ5.js",
+      "bytes": 230,
+      "sha256": "d215c3d7ee807b75675e8b58b507cc9970b5261baaed4792a608ff0c46216569"
+    },
+    {
+      "path": "docs/dist/assets/AvatarPage-Bd6dIiQP.js",
+      "bytes": 4878,
+      "sha256": "aa987f1244c770a560f737b712352df20f48894bf6439cb6825b543f88aedd43"
+    },
+    {
+      "path": "docs/dist/assets/BackTopPage-DWd6vBp4.js",
+      "bytes": 4015,
+      "sha256": "79055614ef91488d0b50fc715f773b043546a987788d92092b8f46854d86beb3"
+    },
+    {
+      "path": "docs/dist/assets/BadgePage-CaqiGzKz.js",
+      "bytes": 4611,
+      "sha256": "d76434b9965f0c3ece06f824d745a1c922cbe8724f818f469a228ebfb3957a97"
+    },
+    {
+      "path": "docs/dist/assets/BlocksPage-Bb-gu9wT.js",
+      "bytes": 103748,
+      "sha256": "70e123a1260f3b95f91a2c9a10ccb69aeda09e21f79e6544ade5f84351e060b1"
+    },
+    {
+      "path": "docs/dist/assets/BreadcrumbPage-CEPwwD_9.js",
+      "bytes": 3856,
+      "sha256": "278c0627d03e6b852363a0f8b0f8f26fff6b37fa20338c0424910e2c14443ce2"
+    },
+    {
+      "path": "docs/dist/assets/BuilderPage-C_TaW9yL.js",
+      "bytes": 811144,
+      "sha256": "8af19d9db05977cde34933973306c981f081a5d88e62ea723f833676b5d8eb1a"
+    },
+    {
+      "path": "docs/dist/assets/Building-B0fkxvjs.js",
+      "bytes": 531,
+      "sha256": "b89ffb915d86b3b3fffff0a5935b16794afd72aef343f77a5098f671c3912bcf"
+    },
+    {
+      "path": "docs/dist/assets/ButtonPage-pC6Bjx4O.js",
+      "bytes": 5139,
+      "sha256": "de1308aae72ef929513de65f64b6473c415590ef1207cf47e0b793f3b9acdb4d"
+    },
+    {
+      "path": "docs/dist/assets/CalendarPage-BsTmEmdV.js",
+      "bytes": 4174,
+      "sha256": "cf14a0689ca3ee35615e3db7729bf2be01aa4fc4a0240cd73167914c8aee89ea"
+    },
+    {
+      "path": "docs/dist/assets/CardPage-B8ypjv67.js",
+      "bytes": 3976,
+      "sha256": "8bb4025d711359ec180d94d74ce28fab687b15f78edaccfebab8f7b70f86a79c"
+    },
+    {
+      "path": "docs/dist/assets/CascaderPage-B4p0OPv_.js",
+      "bytes": 4720,
+      "sha256": "2a821d8add846eab7781671ecee023a3cac569eb77a30073e65ef4fde34036d4"
+    },
+    {
+      "path": "docs/dist/assets/ChartInteractionsPage-zaNdav6o.js",
+      "bytes": 11810,
+      "sha256": "41ec0345241ee4938dfcfe7f22c61ab979c7335586eede6e2961a7868b709688"
+    },
+    {
+      "path": "docs/dist/assets/ChartPage-D0Bf6wTf.js",
+      "bytes": 22618,
+      "sha256": "0b61df50d58ec5abf10725e3b122e92f668a88af08666b770896fb3a7fde21e3"
+    },
+    {
+      "path": "docs/dist/assets/ChartPlaygroundPage-C0-tV28e.js",
+      "bytes": 19236,
+      "sha256": "00d828482d5bde2b23d360e458de51267a2f905dc23f9d8e03c43e26ea49b1ac"
+    },
+    {
+      "path": "docs/dist/assets/ChartSection-CllzudEg.js",
+      "bytes": 13297,
+      "sha256": "734c2f899ad8b5fc1e60128e973b5b73d0daab60628164cbcd59da4e59a7551d"
+    },
+    {
+      "path": "docs/dist/assets/ChartView-DPXuPMks-CXQhQzed.js",
+      "bytes": 55884,
+      "sha256": "00a5ac2ebe3064a2a24e984344c0d0b28e66110ad16865ffbf1dff5d60928a1a"
+    },
+    {
+      "path": "docs/dist/assets/ChartsGalleryPage-C9qspicq.js",
+      "bytes": 8590,
+      "sha256": "486c12d333764ab984b90afce8396093e400907321201ab522cc6a714cdb6121"
+    },
+    {
+      "path": "docs/dist/assets/Check-Cy3crH5N.js",
+      "bytes": 330,
+      "sha256": "a56b0688d5b024ada217cb0c68aa75ce8098e2f9d2117a31de6dc02f729ee508"
+    },
+    {
+      "path": "docs/dist/assets/CheckboxPage-C5KyDjV3.js",
+      "bytes": 3546,
+      "sha256": "f7a53178821cf3ede59f32454bc538298e250e4da52d6d3c42138c0d9aa5a73d"
+    },
+    {
+      "path": "docs/dist/assets/Clipboard-GHCsf77q.js",
+      "bytes": 316,
+      "sha256": "de488a2e21223db589542ab9b0d2b1d7469ed3cc8c0d998682c4ab233c3d5f96"
+    },
+    {
+      "path": "docs/dist/assets/CodeBlock-DNoX-SdC.js",
+      "bytes": 1999,
+      "sha256": "a6503c4fa3f3fc766e2707355053230653d8f358f47fc3473d086b8c09ae18e9"
+    },
+    {
+      "path": "docs/dist/assets/CollaborationPage-CZDg2ZuT.js",
+      "bytes": 35161,
+      "sha256": "71adbc32cec953edec3a9c7256cdae573b6ca3a7a825c9b79b0d1a869379a339"
+    },
+    {
+      "path": "docs/dist/assets/CollapsePage-BP_LH7GU.js",
+      "bytes": 4222,
+      "sha256": "342c27be34abf651120a7fc99053991b7b7dc618211c85cd82edb154753a7578"
+    },
+    {
+      "path": "docs/dist/assets/ColorPickerPage-DmPSO0Z0.js",
+      "bytes": 5370,
+      "sha256": "15af90afe30f61b8858d2b41dd9beef36657e63e812e72add6822890fa264d04"
+    },
+    {
+      "path": "docs/dist/assets/ComboboxPage-CUxDJ7v3.js",
+      "bytes": 18311,
+      "sha256": "dc4d5813fb31abad5f083bae9eb35837eb2b3a058c24df41164cd3ab68e78ae9"
+    },
+    {
+      "path": "docs/dist/assets/CommandPalettePage-CVl1qKV_.js",
+      "bytes": 4320,
+      "sha256": "1bef04fad516a596da753d7b125e6c326548dba66207ce28ae1e6b6acb71de3f"
+    },
+    {
+      "path": "docs/dist/assets/ConfigPage-BPWXKyiM.js",
+      "bytes": 6725,
+      "sha256": "1618a2d90609a361e35848bfacb264a78ef9b24650340c9b38f91922a65648a8"
+    },
+    {
+      "path": "docs/dist/assets/Copy-q55ElUqb.js",
+      "bytes": 301,
+      "sha256": "7e0dbc1b2f26c963d24f7b37e1ba0c24bfb8281044c2e050bbfd7ebc4269203e"
+    },
+    {
+      "path": "docs/dist/assets/CustomizeOutlet-DoFDKGI2.js",
+      "bytes": 1052,
+      "sha256": "59c259820b013004a46f4d8dbcac8f69b0c607d8cb700208f250bf852d1683a9"
+    },
+    {
+      "path": "docs/dist/assets/DataGridPage-Ce7KHx_0.js",
+      "bytes": 8006,
+      "sha256": "716480f11813393b7c6498dc928e060a625f240866d41e8bb78c7543702d2a14"
+    },
+    {
+      "path": "docs/dist/assets/DataGridPrototype-B2DW5JiM.js",
+      "bytes": 7582,
+      "sha256": "4cddf88b4731104fb1119f960ac46c9dd2ac936efa50c12a0b9bbbb1c0d2bb89"
+    },
+    {
+      "path": "docs/dist/assets/DataGridView-DKZ11UWY-hgcpl9tw.js",
+      "bytes": 16544,
+      "sha256": "c92d6d773e0dc45f6f6bbb0d5552eda76279506c83971419dbd8f36be754d47d"
+    },
+    {
+      "path": "docs/dist/assets/DatePickerPage-BNghHlCr.js",
+      "bytes": 4932,
+      "sha256": "ce19fa4a562753e7801f53854f27b83fb0b8e3b6ba1fe554d013f35146854520"
+    },
+    {
+      "path": "docs/dist/assets/DateRangePickerPage-B9gtWgG_.js",
+      "bytes": 8070,
+      "sha256": "994ce30eef45c9a033c58394550c5c21e77f103150e792f2031567c5fdea04f7"
+    },
+    {
+      "path": "docs/dist/assets/DateTimePickerPrototype-DGAu78lq.js",
+      "bytes": 3253,
+      "sha256": "ba2522443f430457a6fd7f41e8785fbfed72d6f923d2df6c7cf7b99a3e1041cc"
+    },
+    {
+      "path": "docs/dist/assets/Demo-BQ0cgbIs.js",
+      "bytes": 994,
+      "sha256": "a812066bac755ff0755f93e646693594d52e8df25d2bf2863c0515d6c861023a"
+    },
+    {
+      "path": "docs/dist/assets/DescriptionsPage-DRiUlo0P.js",
+      "bytes": 4792,
+      "sha256": "d88c4c2857badfe85f12622fb35d30d5d90d0595a80423b3b79f435a4186bf16"
+    },
+    {
+      "path": "docs/dist/assets/DesignAssetsPage-D0EfXYGm.js",
+      "bytes": 21940,
+      "sha256": "acd7fdd061ba2d255573c12c051ca4d67ae24ec51dc9fe52f87df046da7a629f"
+    },
+    {
+      "path": "docs/dist/assets/DividerPage-B9RI3QkB.js",
+      "bytes": 2985,
+      "sha256": "fc8d7fc9eebcb161cb11b2974c90120b0a0605878fedc19bcc5987d11c76c4b4"
+    },
+    {
+      "path": "docs/dist/assets/DocsNavigationDrawer-Dcy8KL8Q.js",
+      "bytes": 736,
+      "sha256": "55b79646dcd3d5ac747a64c9c5f57aa8d0ca2563f16151ed24f7c35110a316a9"
+    },
+    {
+      "path": "docs/dist/assets/Download-9FVNexmR.js",
+      "bytes": 292,
+      "sha256": "29b9e55b88c1981b1e358b458e3727e2f2ffb55a7eb849046e7724bb5850d77f"
+    },
+    {
+      "path": "docs/dist/assets/DrawerPage-Dk-7I6sV.js",
+      "bytes": 7068,
+      "sha256": "9b637d3211a2faad10ba2543df9f11bf4b3eb4fe572a8c4a636e15ed58c9fbf9"
+    },
+    {
+      "path": "docs/dist/assets/DropdownMenuPage-BvkBjJlE.js",
+      "bytes": 7834,
+      "sha256": "8082a57d1ddc1b5e11afecf0cca909cbb4c7627f6a166f05c5f53db9f21394aa"
+    },
+    {
+      "path": "docs/dist/assets/Editor-LJSLIQQP-CDBzQ3rR.js",
+      "bytes": 3053,
+      "sha256": "f04e83f85d428f7c00425fbbb2156f8dc8b9642358c6f198d569c435393b7c68"
+    },
+    {
+      "path": "docs/dist/assets/EmptyPage-Bq43dqfM.js",
+      "bytes": 2970,
+      "sha256": "4df34637ab2418b1d9a2c954a9d8514a33b8227f3486fe1353d812605059f211"
+    },
+    {
+      "path": "docs/dist/assets/FileText-CnPjvhB1.js",
+      "bytes": 376,
+      "sha256": "c857c80120611c2088f867dd377e57f2b2e0abe923b2679d1227a6f30ddbe416"
+    },
+    {
+      "path": "docs/dist/assets/FloatButtonPage-BA_R9dI6.js",
+      "bytes": 4715,
+      "sha256": "0f62b9b007fa881d665e9a6e356c9ebda4b0589449ca5b9eebb0bb76bc75dd96"
+    },
+    {
+      "path": "docs/dist/assets/Folder-BSCZXBtx.js",
+      "bytes": 303,
+      "sha256": "5a91853443e4620465cb7cc6ff6cb090cda5fcca65af75ec99b5dede29fa9c5a"
+    },
+    {
+      "path": "docs/dist/assets/FormPage-hR7eoHRD.js",
+      "bytes": 5887,
+      "sha256": "18e5284b06c554026c349a88c59ca77be771ff8e2a6c6e0faadc6466ae789d80"
+    },
+    {
+      "path": "docs/dist/assets/GlobePage-Bd7ctBSb.js",
+      "bytes": 42411,
+      "sha256": "d38d7656c05cf4266adeeffb5cd8da54cad7a928b166d5ccfcc4072513e44ffb"
+    },
+    {
+      "path": "docs/dist/assets/GlobeScene-BQMI0Rm7-Bf4aarVB.js",
+      "bytes": 104501,
+      "sha256": "8dee3ddd19b00c87baa8ee20e307268bbacb0a52143f59d8f0c3053d07622ddb"
+    },
+    {
+      "path": "docs/dist/assets/Home-DouQl6K2.js",
+      "bytes": 268,
+      "sha256": "19a08e92dbc76b82e3455cb484acc99df2f25615581ec337d4e21fa056f7fdd0"
+    },
+    {
+      "path": "docs/dist/assets/IconGalleryPage-ZgIkHaSh.js",
+      "bytes": 32386,
+      "sha256": "e7660b00a3f7736eed6abd5df7c5e0e43f5119c5b04819b0429c4c25ad9ac47c"
+    },
+    {
+      "path": "docs/dist/assets/ImagePage-Dhq5wbQh.js",
+      "bytes": 3017,
+      "sha256": "cb8852b190686b3a048424b7667902e319a1741ac67b0ccad540ac9c417900eb"
+    },
+    {
+      "path": "docs/dist/assets/InputNumberPage-B5kqSekF.js",
+      "bytes": 5417,
+      "sha256": "363d5ad6fad93b6441047aa44c1a89c9d0abd1434654bbbb82bdcf39cb36db00"
+    },
+    {
+      "path": "docs/dist/assets/InputPage--gUrei0O.js",
+      "bytes": 6362,
+      "sha256": "e1ab9f65b68fcae3275f143de71ea896c22beab82d3f2b2375d9f0414a0f3101"
+    },
+    {
+      "path": "docs/dist/assets/LabPage-COMMRaAd.js",
+      "bytes": 37364,
+      "sha256": "ecbc60e3dc8cdb91773bf9731d78f994f0d0ef85e5bee90eedf504bbb67c0889"
+    },
+    {
+      "path": "docs/dist/assets/LayoutPage-Qc2nkvYG.js",
+      "bytes": 10517,
+      "sha256": "325222d458d2f95e33a118186fc52f9f250a7ed2ef894cd8476e4e92e065895e"
+    },
+    {
+      "path": "docs/dist/assets/ListPage-CD0UV44H.js",
+      "bytes": 3866,
+      "sha256": "9eada0684d89243b04039bfee4a17ebbb404e38e2e301d79cac4ba41f3c6ede5"
+    },
+    {
+      "path": "docs/dist/assets/Lock-BFkpyep6.js",
+      "bytes": 544,
+      "sha256": "6cfd8e9da8206d5a550472644624ddcf403125921c60d4231eecbd8413f966fd"
+    },
+    {
+      "path": "docs/dist/assets/MapPin-B3nlZnCN.js",
+      "bytes": 480,
+      "sha256": "a574524bf80fa1222eddd6245dc992959515ddf11469798df2b1eea7122b10ab"
+    },
+    {
+      "path": "docs/dist/assets/MentionsPage-BuGRhYr5.js",
+      "bytes": 3941,
+      "sha256": "55dbfe88ced84b33ec2c59602c33a311312e86407aca89fcfaa6b86217468d27"
+    },
+    {
+      "path": "docs/dist/assets/Menu-OTZN7gdy.js",
+      "bytes": 253,
+      "sha256": "7273d56e8317ed6b0abf240e90513eb50b0027234c5dc014459f929da6194f7b"
+    },
+    {
+      "path": "docs/dist/assets/MessagePage-CkCZkWDC.js",
+      "bytes": 5471,
+      "sha256": "cac6b22bd66faeb906954f56dbd13369f92339b0fa00338a7182f37e17fd7ad7"
+    },
+    {
+      "path": "docs/dist/assets/ModalPage-CoJfSzER.js",
+      "bytes": 7022,
+      "sha256": "0f5c8367bbf9ce0df759ce5333428142bfd4ca912e8c4ee1247c045ac1fa6ee3"
+    },
+    {
+      "path": "docs/dist/assets/NotificationPage-BVb3-F4T.js",
+      "bytes": 5174,
+      "sha256": "7ffd1ba6e8e8f4ddaf3e76245b0d5e084f8792442a2826966b17a1e35ba02e67"
+    },
+    {
+      "path": "docs/dist/assets/OfficeEditorPage-BYfP5L5N.js",
+      "bytes": 16039,
+      "sha256": "1deec73202b3c3b299df240293c837731454bb8bb64c7e4cb960d1e9af77ac31"
+    },
+    {
+      "path": "docs/dist/assets/OfficeStudioPage-DmAqBcKy.js",
+      "bytes": 30308,
+      "sha256": "b70455382b3f8c9998c4e1aef59e38739830d87c89c4c31564aa465ab3ea69da"
+    },
+    {
+      "path": "docs/dist/assets/OfficeWorkbench-kyDM4zkz.js",
+      "bytes": 6554,
+      "sha256": "38a85399c30a1041fa491898abe30a8ff35e387e21d32cec3e50cf5f522e6d31"
+    },
+    {
+      "path": "docs/dist/assets/Overview-h3fJcAm3.js",
+      "bytes": 10111,
+      "sha256": "e7a35681e8f4f9060d0ccffbcd14e8bbae5e5442985eeb15138fa2c3c70e92d3"
+    },
+    {
+      "path": "docs/dist/assets/PaginationPage-DSh4C2D8.js",
+      "bytes": 5110,
+      "sha256": "41ba426274aafa45ff4303da191fae56a495a27f5e4d379cb3a19cd0526ca55a"
+    },
+    {
+      "path": "docs/dist/assets/Plus-DlfVc2bp.js",
+      "bytes": 355,
+      "sha256": "5b3fa7885970539fa15c20f8497b6b8a492f4931c188ddcb4d4f0f9f9ee59d3a"
+    },
+    {
+      "path": "docs/dist/assets/PopconfirmPage-XkDElG9k.js",
+      "bytes": 4071,
+      "sha256": "02f7a136940d87930867cdba35250391400fdcbf9a36a5252b118623a974f2b5"
+    },
+    {
+      "path": "docs/dist/assets/PopoverPage-DuAAW39X.js",
+      "bytes": 6051,
+      "sha256": "64c9036dda72346bc3e3bdad694972defaf81932c7ebe73fbe23aadcbf7d5187"
+    },
+    {
+      "path": "docs/dist/assets/ProgressPage-CarTRDjf.js",
+      "bytes": 4440,
+      "sha256": "df5132ba11e942efd5e48f64bdf79dc14b55fa033ea5d64e351055eb609806ce"
+    },
+    {
+      "path": "docs/dist/assets/QRCodePage-7O8YZZQj.js",
+      "bytes": 3649,
+      "sha256": "7e05a728e71673f79b3acf28aa8e9acdf41d445c2c5958816651998e0dfcb9a2"
+    },
+    {
+      "path": "docs/dist/assets/RadioPage-C4nxM-oT.js",
+      "bytes": 5076,
+      "sha256": "492dd277ce4aaf12d46f66575f25262014372ebface83ae86f1d9096260a1774"
+    },
+    {
+      "path": "docs/dist/assets/RatePage-cFjSJCXy.js",
+      "bytes": 2859,
+      "sha256": "d8a5108990247ba92d2cd980f5abdccc2ce1418db18a8220d3e87a2f062ca7a4"
+    },
+    {
+      "path": "docs/dist/assets/RefreshCw-D3VBiZt_.js",
+      "bytes": 372,
+      "sha256": "8fae7495693959d35cb5392249311dd3ae1cd88a12a49a5b19c685b20bf226e2"
+    },
+    {
+      "path": "docs/dist/assets/Render-H3USS5FU-DhYbw7sS.js",
+      "bytes": 2485,
+      "sha256": "4cd75a4298a2434cca4cc663e819199b4d384f29f8244e6d1021fe1d3ae1a535"
+    },
+    {
+      "path": "docs/dist/assets/ResultPage-CY3YE6Gm.js",
+      "bytes": 3043,
+      "sha256": "85d71f8b5b1468e455207f6b4ad67c392345205bc0e74ad4dec00ed2f81d1890"
+    },
+    {
+      "path": "docs/dist/assets/RotateCcw-4K5dVADF.js",
+      "bytes": 795,
+      "sha256": "67141977ec365332ae7c068b5d1ca8fdc918fda28eb9419904476a136abc5f7a"
+    },
+    {
+      "path": "docs/dist/assets/Save-gQaPG-sn.js",
+      "bytes": 314,
+      "sha256": "142c392cbedaf8c71b95e0e181c94385c8e604b6f926cc662aad1fa7676cd145"
+    },
+    {
+      "path": "docs/dist/assets/SegmentedPage-CY6c0mM4.js",
+      "bytes": 3988,
+      "sha256": "ffd64deff45f4f2e275a79089cf0907c665632666cd312168ba9680253d096bd"
+    },
+    {
+      "path": "docs/dist/assets/SelectPage-DvkWqib_.js",
+      "bytes": 6744,
+      "sha256": "0105c1d69e627dc6f6b59de9971fcace5350ee5294f6fa4c016ba7f57cd2fdaa"
+    },
+    {
+      "path": "docs/dist/assets/Send-BZmZ6NMn.js",
+      "bytes": 649,
+      "sha256": "40b7af96ae9b797714e3337e4c47b5e646eb9c89200c6f61280e97a2727598f3"
+    },
+    {
+      "path": "docs/dist/assets/Settings-BokFieMR.js",
+      "bytes": 1138,
+      "sha256": "be3bb007c130e474df08d278b05b20ed1daa413f26fcca443cb5a72f57ec6096"
+    },
+    {
+      "path": "docs/dist/assets/Shield-CNDwAwnw.js",
+      "bytes": 228,
+      "sha256": "6f57710a08ed5759689a25f514ac8fad7a033dc5dfe22ff7e9fdb73439ce1498"
+    },
+    {
+      "path": "docs/dist/assets/SideNavPage-DQJmufwL.js",
+      "bytes": 6305,
+      "sha256": "94877e15f045508ecc2fa6f4577ffaba44547c2e2b6640313735033bc113791c"
+    },
+    {
+      "path": "docs/dist/assets/SkeletonPage-DDTCc2aM.js",
+      "bytes": 3757,
+      "sha256": "8cf82c9ba2133e860b0d4efdcf1801ecb3ed17a2b06ca7c301b7664c365007bc"
+    },
+    {
+      "path": "docs/dist/assets/SliderPage-B6StxDzk.js",
+      "bytes": 3580,
+      "sha256": "7952982c7a70004582ccfd49801f8bbfee25f19059d71d6dd0407245248e1015"
+    },
+    {
+      "path": "docs/dist/assets/Smartphone-CmFGgq-J.js",
+      "bytes": 752,
+      "sha256": "4ecd38e196231cb0a21ff93e262914e32b6d9153e4ae172f74d5eef0efaea064"
+    },
+    {
+      "path": "docs/dist/assets/SpinPage-9DSRqQH6.js",
+      "bytes": 2838,
+      "sha256": "ceb9966f03bcf0a7079b6cf23485bb0e8ec1d27b6a4d2582f45d1e7b77341874"
+    },
+    {
+      "path": "docs/dist/assets/SplitterPage-705nSa0B.js",
+      "bytes": 6833,
+      "sha256": "e2e07c1868a5701670bd160d96f9a7dd50af8e96039e48efca1a0c5b85b0af81"
+    },
+    {
+      "path": "docs/dist/assets/SplitterPrototype-D0uzUciI.js",
+      "bytes": 8123,
+      "sha256": "dd29fc3f0fce8c09ee6f1ead2ddeab07aedad104f26ad904cf354978dd767c0f"
+    },
+    {
+      "path": "docs/dist/assets/StatisticPage-CD8SEGJJ.js",
+      "bytes": 4895,
+      "sha256": "7a073fe64d9472e4f73697a003edb07b77f4490d0f9cb884ab47c56c4289c443"
+    },
+    {
+      "path": "docs/dist/assets/StepsPage-BHTcaVcL.js",
+      "bytes": 5704,
+      "sha256": "4eab10f7469f26abfea1002f5ce7d1e0319edce67a707866b8562b46a450d93b"
+    },
+    {
+      "path": "docs/dist/assets/StudioFontControl-Cgv4ukzS-Cb9irc5d.js",
+      "bytes": 3890,
+      "sha256": "af32c87294b27f56da1b2aff983ea0a70a7b285b53023615a048fa75ff382d1b"
+    },
+    {
+      "path": "docs/dist/assets/StudioPdf-tInwhU6n-BpYbc3hS.js",
+      "bytes": 118843,
+      "sha256": "e4013c2f66a1893e016f8e659a3e39520911a660bda43bea6d7e1ebeaf59804b"
+    },
+    {
+      "path": "docs/dist/assets/StudioSheet-BwdEm5rb-Cw9hdZXg.js",
+      "bytes": 245763,
+      "sha256": "ce1ec0a8578452f84c3e2395c23009faef322877e4c42909b669c0eb3e846266"
+    },
+    {
+      "path": "docs/dist/assets/StudioWord-BkxU2F45-CWA2gP02.js",
+      "bytes": 535129,
+      "sha256": "9d3f2e7dbae4faf252bee1d53cd892e22fcb4ba8a781cba53046b55c4993a0f6"
+    },
+    {
+      "path": "docs/dist/assets/SvgIcon-B3lj2cO1.js",
+      "bytes": 416,
+      "sha256": "633e59618ef277c24673a13a4f2b4a3c110ab1805fbf2578a69c38a02e6761b0"
+    },
+    {
+      "path": "docs/dist/assets/SwitchPage-Do-HF3S1.js",
+      "bytes": 3254,
+      "sha256": "d6f98e0706b53afab80e23054c83bb491d5203fff8757b6ac46888babf074c92"
+    },
+    {
+      "path": "docs/dist/assets/TablePage-DzWpqR8h.js",
+      "bytes": 8238,
+      "sha256": "fd6304573d2b9b9089083b3a27a4431c3fdd4f0cacfa1905cfc4f5492a8989a2"
+    },
+    {
+      "path": "docs/dist/assets/TabsPage-DUcvSUbp.js",
+      "bytes": 6424,
+      "sha256": "36abb869117ff1a7e45eaaee2f87ab5a4ac76166ac1496fa337a55dc76370462"
+    },
+    {
+      "path": "docs/dist/assets/TagPage-DJE8n6St.js",
+      "bytes": 4231,
+      "sha256": "99e6e9d7bdbbcd76b6263230f838bb9c7130376c6d5ce4886b2fe87101fb1a8b"
+    },
+    {
+      "path": "docs/dist/assets/ThemePlayground-XFw48Tm9.js",
+      "bytes": 8464,
+      "sha256": "6a9a224267625faba0940051ba5b09ad49dbdb74c9bfca60f32dcf188dc68712"
+    },
+    {
+      "path": "docs/dist/assets/TimePickerPage-Coqp-958.js",
+      "bytes": 3699,
+      "sha256": "e3f09427befb52e485a9b7b7ddda9c0bd7d833db351ac417bc625c4d1a604579"
+    },
+    {
+      "path": "docs/dist/assets/TimelinePage-D4rsPZzF.js",
+      "bytes": 4370,
+      "sha256": "e90632679fc458f7baeb8a9a2d02b0624ac467e9f2c8e27ad89f1379aaaea413"
+    },
+    {
+      "path": "docs/dist/assets/TokensPage-BPHTqLgi.js",
+      "bytes": 10395,
+      "sha256": "6047ae5761f2f3fbcc6683562c02714f4a31717f42708af2e9f444b8819b9b52"
+    },
+    {
+      "path": "docs/dist/assets/TooltipPage-BReujLEb.js",
+      "bytes": 4457,
+      "sha256": "49b92a77ce17220819f3fd5c42644c0fbdfd7f8c9b2e2d63182837ce14d141a8"
+    },
+    {
+      "path": "docs/dist/assets/TourPage-CWm-HPg-.js",
+      "bytes": 6414,
+      "sha256": "467cd6958cf80db855a15216f9e57636dbffc418853c63054c967b6d2504931f"
+    },
+    {
+      "path": "docs/dist/assets/TransferPage-K7SJeba7.js",
+      "bytes": 4053,
+      "sha256": "b83f22813cd2afd57c8f059f12f07b1ff1b0455acdfe7143951f7dc448be0ffc"
+    },
+    {
+      "path": "docs/dist/assets/TranslateDemo-B3XcTzMi.js",
+      "bytes": 23438,
+      "sha256": "7eddd96aa6f3aab3cf1cb52e6efcea5d9a310840f1ef76414fbf907796514693"
+    },
+    {
+      "path": "docs/dist/assets/Trash-C6ch5THl.js",
+      "bytes": 599,
+      "sha256": "ef4a207cd0f085e35343ff655404751fbabb900d48f810dc4e1a71586846cdb1"
+    },
+    {
+      "path": "docs/dist/assets/TreePage-Di3HAFBx.js",
+      "bytes": 6126,
+      "sha256": "6d1d7cdf98fcd7fb4abbfdf15788dd43bb1e02257697f13367a964b9dbdaa534"
+    },
+    {
+      "path": "docs/dist/assets/TreeSelectPage-L8a8zGYE.js",
+      "bytes": 4791,
+      "sha256": "6c57ecf0687006a46cb0587d4fd14d18183ad89c4cba32047a02ec457e8b7bca"
+    },
+    {
+      "path": "docs/dist/assets/Type-BAWzuoc1-D1yZPg8f.js",
+      "bytes": 265,
+      "sha256": "aff9701579728c40875daa89542ad826413a5a27ef786eda8c09595819dc0e2c"
+    },
+    {
+      "path": "docs/dist/assets/TypographyPage-BxiT8Kci.js",
+      "bytes": 8342,
+      "sha256": "5768541c936a9b7a7520a42f205ac60ae7a5ffcaaabdeb2a34a5222b73045b7f"
+    },
+    {
+      "path": "docs/dist/assets/Unlock-Bv3Ta_q-.js",
+      "bytes": 2527,
+      "sha256": "942511457a648479c6af824477f827c084e6f4f3ebe6afdc8ff959366a3245f6"
+    },
+    {
+      "path": "docs/dist/assets/UploadPage-Bupncnmm.js",
+      "bytes": 7704,
+      "sha256": "208853c832d0c076828a5c930568e748f1e0144572345fea2535a851c234c2b5"
+    },
+    {
+      "path": "docs/dist/assets/User-BT-y_CS-.js",
+      "bytes": 710,
+      "sha256": "82a7bc186c37db6a4521076e35f76ad19eec0468943ad04519ac32fc26d25aaa"
+    },
+    {
+      "path": "docs/dist/assets/Users-s8iMAqao.js",
+      "bytes": 360,
+      "sha256": "a842ae4c49b1abc9153e8e6657b380871cb6c511b0fd464b8b15d806a58165d8"
+    },
+    {
+      "path": "docs/dist/assets/VirtualTablePage-BbBlRmkZ.js",
+      "bytes": 4621,
+      "sha256": "f9a93379642741bada9341d806b2227c033c02d8b7fb164c52814bb6f1493fa5"
+    },
+    {
+      "path": "docs/dist/assets/WatermarkPage-WXzr6n9x.js",
+      "bytes": 3404,
+      "sha256": "762bf88d7440b215e3f9bc859f1a4b539deccc4c61091c5bf3a6b98a7d4613ce"
+    },
+    {
+      "path": "docs/dist/assets/Zap-cjx6Lj64.js",
+      "bytes": 1070,
+      "sha256": "6684a4c8a475312b1287d9895583dabd11d7aad6f4d7f7180139a779d3bbb4f4"
+    },
+    {
+      "path": "docs/dist/assets/ZoomOut-DuIJjMUf-BdI4j0or.js",
+      "bytes": 482,
+      "sha256": "726ff20faf663494ef3759e659b8bcb8fe4f06bc22e32a49fc811446051fed2b"
+    },
+    {
+      "path": "docs/dist/assets/_commonjs-dynamic-modules-TDtrdbi3.js",
+      "bytes": 239,
+      "sha256": "590ab8057bc032c3e14f9f1a76aaeffd01da609413fb12888819ca0433c1fae9"
+    },
+    {
+      "path": "docs/dist/assets/builder-export-CANSNYDv.js",
+      "bytes": 1970785,
+      "sha256": "a28db1d00d375818cdcdf30afa76e3ce0849e8f33c17b0b34d457cff0f594c52"
+    },
+    {
+      "path": "docs/dist/assets/chunk-ZOLLDKZQ-BiQzwrMN.js",
+      "bytes": 53587,
+      "sha256": "2ced257802d7baaf3e697f2ae49863b9224efdb72c843cba4e133c971565864d"
+    },
+    {
+      "path": "docs/dist/assets/demo-cover-C-BBeuhe.js",
+      "bytes": 1017,
+      "sha256": "00a291daf6bfc96b4e74a0f976443b3c27b526658f0df4e7683e8f8baed026e4"
+    },
+    {
+      "path": "docs/dist/assets/excel-document-1tTAkkto.js",
+      "bytes": 4246,
+      "sha256": "0931413fa8f64bc06dd0a1750a8abb0942cdbce9de0ce7fb33406d25e7c95122"
+    },
+    {
+      "path": "docs/dist/assets/exceljs.min-2mEIvCBt.js",
+      "bytes": 940045,
+      "sha256": "511a785c8b8fc25bd0458d41e54e85533be0bf319e2900bc68945dda6bf1c0c8"
+    },
+    {
+      "path": "docs/dist/assets/fontkit.es-BsBd8zl6.js",
+      "bytes": 716779,
+      "sha256": "4d253b67cb185b64a7d14b8886a5bc68bff8aabeec3244b4a1376d1195efadb5"
+    },
+    {
+      "path": "docs/dist/assets/full-H4FZ3HN3-D94ZarQy.js",
+      "bytes": 2897,
+      "sha256": "681c64bee49f6a4fbfa5206453aef021e61d8e00800c605e3a92112ec4dd9465"
+    },
+    {
+      "path": "docs/dist/assets/globe-renderer-CQa3_y_X-nI4LS85x.js",
+      "bytes": 546525,
+      "sha256": "9bf04f39872a90e9623245aafe2e9794b7a5341255d23e80baa2f293290c2300"
+    },
+    {
+      "path": "docs/dist/assets/index-0HeBU4A9.js",
+      "bytes": 214065,
+      "sha256": "f758be8d0ed51203db4ee45433783cf67a087524f39c3100d1a0a809f0d601e5"
+    },
+    {
+      "path": "docs/dist/assets/index-7y1eerVo.js",
+      "bytes": 10222,
+      "sha256": "d7b91887374801c82130a913a692a4d5ce139c12c17c54dc57f32061d01bce0f"
+    },
+    {
+      "path": "docs/dist/assets/index-B-cU686Z.js",
+      "bytes": 35958,
+      "sha256": "d41b1ae76e21d45b052da0d55e01071c6711f968724c0c89638399ffc778dd2a"
+    },
+    {
+      "path": "docs/dist/assets/index-BjGIap5A.js",
+      "bytes": 90933,
+      "sha256": "62428fafe04a6ca4963fe2d376aad62f6e77c87f8f9a970af5bcfe980f1de678"
+    },
+    {
+      "path": "docs/dist/assets/index-LdrfTBKm.js",
+      "bytes": 436976,
+      "sha256": "a8dc19c2332c81f4c084e9306adf9a3331a7a1eed5cbad62b6d63bfc246e6d4d"
+    },
+    {
+      "path": "docs/dist/assets/index-zqb44sqn.js",
+      "bytes": 293635,
+      "sha256": "69ac8686f529ea3995b2bf288d144b3eb82ae0ab1d8b7386fd2521bd52af8aa3"
+    },
+    {
+      "path": "docs/dist/assets/jszip.min-Brw6r3GM.js",
+      "bytes": 97537,
+      "sha256": "3bbd0c466bf680a15e7a80491ba331707d0ec8143e68aff5038022ae640743b8"
+    },
+    {
+      "path": "docs/dist/assets/linkify-CS2uDZp4.js",
+      "bytes": 18504,
+      "sha256": "b150709f034c9488398bc779e60f70477750929ce7ec08bf6c3a5e5445aa8a75"
+    },
+    {
+      "path": "docs/dist/assets/loaded-P5HN7RJY-Cm1OQb3K.js",
+      "bytes": 1449,
+      "sha256": "0a6d5391c9b3736f8131dd9b1d89d884fac66a4a09ea0eee5f4f2f3555b59e74"
+    },
+    {
+      "path": "docs/dist/assets/loaded-PFIA543C-CQpLMsqU.js",
+      "bytes": 1412,
+      "sha256": "05764ef009fb14cc1858f6820f0bccdf64394b90388f9f6c994c357e3b7511a2"
+    },
+    {
+      "path": "docs/dist/assets/loaded-WFQRY2XL-wP5xlsmy.js",
+      "bytes": 1474,
+      "sha256": "1a8ed4a6394c1788ecbe95b882e50fa81ce8c4d1f2c2d6f714c0ffc8e2aafa10"
+    },
+    {
+      "path": "docs/dist/assets/office-client-BKrrWmIS.js",
+      "bytes": 28396,
+      "sha256": "5c06b5a9ba1793d06e2497042caecb0b3023e1d7b14b4bf87ce87193c8417cd1"
+    },
+    {
+      "path": "docs/dist/assets/pdf-document-POkE3T0t.js",
+      "bytes": 2269,
+      "sha256": "91e359c7db414607b001fc1a07fbc86cab62bca5121f6b29e99eae949212eb35"
+    },
+    {
+      "path": "docs/dist/assets/pdf_viewer-C4rTNLRV.js",
+      "bytes": 187449,
+      "sha256": "e3b82f1395e63424b18634d327c51a5febe28f4da6a1cddefe1552767ba7fb69"
+    },
+    {
+      "path": "docs/dist/assets/puck-dnd-CqQInQHi.js",
+      "bytes": 117261,
+      "sha256": "d6ef463d07cd88bde6cf28b87cfd26c31b7bb504859a6944e0ac1406428268aa"
+    },
+    {
+      "path": "docs/dist/assets/puck-virtual-CUPjD_wp.js",
+      "bytes": 33637,
+      "sha256": "a2264cf46a018aa264ec176faa5aa20f16b2ca2dc120fbcfcf3525f09adbc24b"
+    },
+    {
+      "path": "docs/dist/assets/react-runtime-D3dkmCoo.js",
+      "bytes": 430392,
+      "sha256": "7a8f630d2e0a3209b66d305926b8fac24c7a565c66647c211ef4f586be9eaf8f"
+    },
+    {
+      "path": "docs/dist/assets/samples-BF7FbQDQ.js",
+      "bytes": 6229,
+      "sha256": "d2ab0fa04a56cfde9101f7744f23a9709398bb9a9c6f487219514251a3baa436"
+    },
+    {
+      "path": "docs/dist/assets/studio-excel-codec-CXejaqez.js",
+      "bytes": 106313,
+      "sha256": "6a5da7dad25e299cf579122293f76a870b23154b385e5442c2d7e22728e68d04"
+    },
+    {
+      "path": "docs/dist/assets/studio-pdf-adapter-CxLkvvTI.js",
+      "bytes": 524045,
+      "sha256": "2cbbb24dd17d1b564caba4cc7c92d73b134080a07f40e8de2fd9cbbf4c967faf"
+    },
+    {
+      "path": "docs/dist/assets/studio-pdf-annotation-editor-BifogecT.js",
+      "bytes": 3663,
+      "sha256": "fe7d0b72d420e4069c72167adf021e76d552767993545de7981e40d41a9b69a4"
+    },
+    {
+      "path": "docs/dist/assets/studio-pdf-codec-CGZxY5aV.js",
+      "bytes": 138437,
+      "sha256": "4a9afb3dfffec616242187e101289af51d810461bdf091ef6c43e93ede532980"
+    },
+    {
+      "path": "docs/dist/assets/studio-pdf-composition-DR_z64r6.js",
+      "bytes": 82884,
+      "sha256": "1e0637feb9851766c64fff6387f8d21085966061cb86ce577e3fce03b2897fc1"
+    },
+    {
+      "path": "docs/dist/assets/studio-print-CfCGeebL.js",
+      "bytes": 39109,
+      "sha256": "a6ac93b313cd61ead1eecf7e001aec2c715f7e08a693346d8172086230ed94ff"
+    },
+    {
+      "path": "docs/dist/assets/studio-sheet-text-display-DKeBXUOe.js",
+      "bytes": 64987,
+      "sha256": "f381dcdc01337bd919b020906174c76fd03e9cd44e315483d0e57b7df0a3991a"
+    },
+    {
+      "path": "docs/dist/assets/studio-word-codec-CmTP35kp.js",
+      "bytes": 278604,
+      "sha256": "bc15c120e8868c520e2dba0d1b910b0a83db824a449fba03bd65a9a0962f1fd5"
+    },
+    {
+      "path": "docs/dist/assets/studio-word-image-contract-CFYni0Eo.js",
+      "bytes": 1891,
+      "sha256": "67fbaa6c25b05c6512a9c1104e9ddb229f88490e0866567c067f60b784b0d73b"
+    },
+    {
+      "path": "docs/dist/assets/studio-word-styles-Bma_WBf6.js",
+      "bytes": 42494,
+      "sha256": "e35aa202a7bd154b7f1e5fc8801dfb3be2216aade551783c5bc9099d68b6059c"
+    },
+    {
+      "path": "docs/dist/assets/usePageTitle-CVOLu18R.js",
+      "bytes": 138,
+      "sha256": "d1de834b53b71d50a3a931756b1571a1cb26694744bc657148ab955f469f39bd"
+    },
+    {
+      "path": "docs/dist/assets/with-selector-Bp4VchTO.js",
+      "bytes": 9710,
+      "sha256": "6784a1cb0c6c33f84c95e8d0413bf0e2634285511e180f014a5dcd42aaf710aa"
+    },
+    {
+      "path": "docs/dist/assets/word-document-C16TDMVb.js",
+      "bytes": 2945,
+      "sha256": "f36f54bea1ee3a294e89978a3acc4c9f160216b52c04483bd4f5ec598e72d4aa"
+    },
+    {
+      "path": "docs/dist/assets/zuvi-components-iV4AMmN-.js",
+      "bytes": 414104,
+      "sha256": "a32bb7429d72bb821808d82f885a4ceeb13431f8f1c214168c3d321c989223c4"
+    },
+    {
+      "path": "docs/dist/cdn/v0.2.0/zui.global.js",
+      "bytes": 534117,
+      "sha256": "f30d1234d3e0ec04864df5ed6f09c6991e3bba53542eb4acff901d9a8a8fc356"
+    },
+    {
+      "path": "docs/dist/office-pdf-assets/wasm/jbig2_nowasm_fallback.js",
+      "bytes": 132439,
+      "sha256": "70150223396487e1ccfef7eac61fc780074ad7fcc9e843b702a8a3bc23107494"
+    },
+    {
+      "path": "docs/dist/office-pdf-assets/wasm/openjpeg_nowasm_fallback.js",
+      "bytes": 338458,
+      "sha256": "2855f1590e7fd7abbbf204cd13a5c09d30c92fe2c9313fb72b64aa763fe8b4f3"
+    },
+    {
+      "path": "docs/dist/office-pdf-assets/wasm/quickjs-eval.js",
+      "bytes": 6232,
+      "sha256": "fe7930418e869791ce892567dbd0bc4698152b7e550b5cefa553992c56ddc325"
+    }
+  ],
+  "derivedFrom": "source-freeze.json",
+  "productionSourceUnchangedFromContinuation315": true,
+  "testDelta": {
+    "path": "e2e/office-studio-word-rows.spec.ts",
+    "oldSource": "position-rows-before-assertion-fix.spec.ts.txt",
+    "change": "Exact native w:position assertion 12pt -> 24 signed half-points; all geometry, history, text, reopening and print assertions retained."
+  }
+}

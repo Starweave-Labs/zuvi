@@ -225,6 +225,7 @@ export function BuilderCanvasTools({
   }, [id, historyReady]);
   useEffect(() => {
     const attached = new Set<Document>();
+    const frames = new Set<HTMLIFrameElement>();
     const handler = (event: MouseEvent) => {
       if (
         latest.current.api.appState.ui.previewMode === 'interactive' ||
@@ -237,6 +238,11 @@ export function BuilderCanvasTools({
       }
     };
     const attach = () => {
+      const frame = rootRef.current?.querySelector<HTMLIFrameElement>('#preview-frame');
+      if (frame && !frames.has(frame)) {
+        frame.addEventListener('load', attach);
+        frames.add(frame);
+      }
       const doc = frameDocument();
       if (doc && !attached.has(doc)) {
         doc.addEventListener('dblclick', handler, true);
@@ -244,9 +250,11 @@ export function BuilderCanvasTools({
       }
     };
     attach();
-    const timer = setInterval(attach, 400);
+    const observer = new MutationObserver(attach);
+    if (rootRef.current) observer.observe(rootRef.current, { childList: true, subtree: true });
     return () => {
-      clearInterval(timer);
+      observer.disconnect();
+      frames.forEach((frame) => frame.removeEventListener('load', attach));
       attached.forEach((doc) => doc.removeEventListener('dblclick', handler, true));
       stopEditing.current?.(true);
       dragCleanup.current?.();

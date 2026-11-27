@@ -1,0 +1,44 @@
+[WebServer] (node:57788) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:57800) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+[WebServer] [BABEL] Note: The code generator has deoptimised the styling of /var/folders/9n/_523pt1s3gqg0f165zsdbldc0000gn/T/zuvi-office-e2e-vite-5295-57782/deps/react-dom_client.js?v=543052df as it exceeds the max of 500KB.
+  ✓  1 [chromium] › e2e/office-studio-sheet-duplicates.spec.ts:80:1 › duplicate records keep typed blanks, first rows, styles, links and outside data through history and two native reopens (9.7s)
+  ✘  2 [chromium] › e2e/office-studio-word-paragraph-acceptance.spec.ts:71:1 › original paragraph requirements retain four alignments, indent and line units, tab stops and every border edge over real DOCX reopens (1.5m)
+
+
+  1) [chromium] › e2e/office-studio-word-paragraph-acceptance.spec.ts:71:1 › original paragraph requirements retain four alignments, indent and line units, tab stops and every border edge over real DOCX reopens 
+
+    Test timeout of 90000ms exceeded.
+
+    Error: locator.click: Test timeout of 90000ms exceeded.
+    Call log:
+      - waiting for getByRole('option', { name: '倍数', exact: true })
+
+
+      29 | async function choose(page: Page, dialog: Locator, label: string, value: string) {
+      30 |   await dialog.getByRole('button', { name: new RegExp(`^${label}`) }).click();
+    > 31 |   await page.getByRole('option', { name: value, exact: true }).click();
+         |                                                                ^
+      32 | }
+      33 | async function native(page: Page, bytes: Buffer) {
+      34 |   const zip = await JSZip.loadAsync(bytes);
+        at choose (/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-paragraph-acceptance.spec.ts:31:64)
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-paragraph-acceptance.spec.ts:225:5
+
+    Error Context: .release/office-continuation/duplicates/validation/focused-second-output/office-studio-word-paragra-a4dc1-edge-over-real-DOCX-reopens-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    .release/office-continuation/duplicates/validation/focused-second-output/office-studio-word-paragra-a4dc1-edge-over-real-DOCX-reopens-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace .release/office-continuation/duplicates/validation/focused-second-output/office-studio-word-paragra-a4dc1-edge-over-real-DOCX-reopens-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/office-studio-word-paragraph-acceptance.spec.ts:71:1 › original paragraph requirements retain four alignments, indent and line units, tab stops and every border edge over real DOCX reopens 
+  1 passed (1.7m)

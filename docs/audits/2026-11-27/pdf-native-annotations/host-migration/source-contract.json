@@ -1,0 +1,163 @@
+{
+  "status": "passed",
+  "typescript": "5.9.3",
+  "modules": 31,
+  "findings": [],
+  "sources": [
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native/api.ts",
+      "bytes": 9698,
+      "sha256": "25eb9723988b44e4ac29ed97253aa465385193c57309b68742b0c62fd38ff205"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native/appearance-parser.ts",
+      "bytes": 11447,
+      "sha256": "bddce063ae3bc5cd76eeeaab0afbea63729470840d6956aa2266dbd52739ac2c"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native/appearance.ts",
+      "bytes": 12631,
+      "sha256": "eeaf0761cf1f7b51f73ed2afe71172a859021d7bfe5f4cdf69f3b76cef205334"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native/colors.ts",
+      "bytes": 3565,
+      "sha256": "61fdf7c1a6e0064249de488ed55aadd3c560cf2e4bbd39ec055c07090aae11f0"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native/constants.ts",
+      "bytes": 1153,
+      "sha256": "cbcdec0f4494e86959fc7e7e8a63ad437bfa20e305338a2c44678f8aa468d2fb"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native/export.ts",
+      "bytes": 9981,
+      "sha256": "690a2775d0b6ad164e487b8f90b09b730870c0fe27026b9efe2d8c0c4749c70e"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native/font-reader.ts",
+      "bytes": 5326,
+      "sha256": "78925a224189d63182f66ca1feccfbaa8e53546202ce1ca87628a2664d5756b7"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native/fonts.ts",
+      "bytes": 5648,
+      "sha256": "1657c54574227f2e51c5e44d9023a1619292fed0bbec24ff2dd74190587faeb1"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native/geometry.ts",
+      "bytes": 4075,
+      "sha256": "6404a8d473b0f8dfe7e33d55b7947dcc0d463e223a29d014b8ffdbdfda3668fd"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native/host-fonts.ts",
+      "bytes": 2112,
+      "sha256": "458a229094bdfc3297c215495155a387aff38004c185189cb4548d853416a732"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native/index.ts",
+      "bytes": 236,
+      "sha256": "3f00b56997d63bf5add1c03ee52c6bc05897a540fde4f0400c998ae0f7253a23"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native/mapping.ts",
+      "bytes": 15438,
+      "sha256": "0281e1d06ab42bbb06e8c8a8916c9587549e98ed6cdae2727f175fbfa5a39233"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native/model-edit.ts",
+      "bytes": 15241,
+      "sha256": "f465f3ac1f5d5ee779e4cca9a96843687f53eeb166e11847ffae0fc58fb66a72"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native/objects.ts",
+      "bytes": 9787,
+      "sha256": "837230f3b4aecd71b3c8ee4ea87825ce050f8e8a390a908853cd7af1f9c3c2ed"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native/parser-types.ts",
+      "bytes": 561,
+      "sha256": "cdd4768ea124a71fd477da0ef748321bb8cb4f4c285dea6cbc73a8195f21f26f"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native/public-model.ts",
+      "bytes": 16486,
+      "sha256": "89eb01e11b6228461d8638d3fb280b581cca7639162f7da438629ee55828c414"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native/public-types.ts",
+      "bytes": 108,
+      "sha256": "3251160ae2c78b16e88d874b8c358b823233fff83408224bd6c2aeabedede5c1"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native/read.ts",
+      "bytes": 17805,
+      "sha256": "bb27bbee0ce68b7fac7305c572e77359ef7f4cb8b621440ba5a74b9f24ce7733"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native/runtime.ts",
+      "bytes": 853,
+      "sha256": "df9ddee50100c18eb8b44f4e8b032c324d3814fe417f6edd0a5a1e952dd5b580"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native/types.ts",
+      "bytes": 5802,
+      "sha256": "4d87fadf76ad780561e8f8f3a1ceb145525ea74b96181f450547cc467f4e341b"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native/workspace-composition.ts",
+      "bytes": 2593,
+      "sha256": "643490ea1c17b9ad244d7e76966a94f73bcf6e29557f98ca9f3f53a7dcaf205b"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native/workspace-identities.ts",
+      "bytes": 3590,
+      "sha256": "a41a4b8c6bb8e7fdc5df3939ba894a5ce0b7a4f6af3c9f36ecdf07e70919cee5"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native/workspace-model.ts",
+      "bytes": 9916,
+      "sha256": "74bee0b9726d6095d8d686e6a696e50e9180c488cf3174c307b7881aa359308b"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native/workspace-types.ts",
+      "bytes": 118,
+      "sha256": "e2e3216cc1b7cf237aefb4594406afbd82c9fe32dfc49dbda29c75cadf4aca8c"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native/workspace.ts",
+      "bytes": 8509,
+      "sha256": "3997e649a57bc2bd2cdeb65893c5e46954c5bcdfcc713c252093a8e574395c12"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native/write.ts",
+      "bytes": 5783,
+      "sha256": "eda49c509f2b201df0add8bfb2e836f19a9b3956ed44873842751079c6d00f17"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native-document.ts",
+      "bytes": 13725,
+      "sha256": "35f296cf420d91d3427eafd6114a829927be9531d5a7605378cd77ec1dd2d91d"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-native-fonts.ts",
+      "bytes": 2937,
+      "sha256": "b3d43f177b9d930df0749c521e5f09f8f204a30d837fc9f05bb6af54d1b97caa"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-annotation-editor.ts",
+      "bytes": 8819,
+      "sha256": "aeb76192cdca765f0e6aa95d0a351b74d17c9a19315228b4ebf75bb1c9fc8d0a"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-codec.ts",
+      "bytes": 40023,
+      "sha256": "9137fb6a7bc2871c00cded59cd0f1db1eeb0a48eccd938a1ae0f42652c781c2c"
+    },
+    {
+      "path": "/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/collaboration/office-studio/studio-pdf-composition.ts",
+      "bytes": 9863,
+      "sha256": "cf4f4fe166ed1cab38516882532bb0c4649c9afb7329ee821fc5cb39b868573c"
+    }
+  ]
+}

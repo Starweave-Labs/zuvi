@@ -1,0 +1,3 @@
+rendered actual PDF.js native-twelve-types 1
+rendered actual PDF.js copy-edited 1
+rendered actual PDF.js merged-round-2 1

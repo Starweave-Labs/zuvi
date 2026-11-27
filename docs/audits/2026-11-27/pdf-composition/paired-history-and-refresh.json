@@ -1,0 +1,1299 @@
+{
+  "before": {
+    "id": "4099fb8e-c771-4112-9f1e-b797cd6da0d6",
+    "revision": 2,
+    "document": {
+      "version": 1,
+      "id": "4099fb8e-c771-4112-9f1e-b797cd6da0d6",
+      "name": "Primary.pdf",
+      "kind": "pdf",
+      "pageCount": 3,
+      "sourcePageCount": 2,
+      "pages": [
+        {
+          "id": "2354b45d-9941-413c-a86f-c4747913936b",
+          "sourcePage": 0,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 300,
+            "top": 400
+          }
+        },
+        {
+          "id": "d5fb0c95-f7fb-4b97-b180-eed4fc5f3750",
+          "sourcePage": 1,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 310,
+            "top": 410
+          }
+        },
+        {
+          "id": "dbdf903c-c8f3-418f-9150-d2e03c78d9ef",
+          "sourcePage": 0,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 300,
+            "top": 400
+          },
+          "copyGroup": "0e58a9df-da30-4cab-b927-739ac2c60f16"
+        }
+      ],
+      "marks": [
+        {
+          "id": "8f84c0cb-b09e-4144-8a4b-981db0cf7df5",
+          "page": 0,
+          "type": "rectangle",
+          "x": 210,
+          "y": 50,
+          "text": "",
+          "size": 16,
+          "color": "#253044",
+          "lineWidth": 2,
+          "width": 50,
+          "height": 20
+        },
+        {
+          "id": "496669a9-73e3-451c-a110-dfc0c59360bf",
+          "page": 2,
+          "type": "rectangle",
+          "x": 210,
+          "y": 50,
+          "text": "",
+          "size": 16,
+          "color": "#253044",
+          "lineWidth": 2,
+          "width": 50,
+          "height": 20
+        }
+      ],
+      "rotations": {},
+      "fields": [
+        {
+          "name": "Text",
+          "readOnly": false,
+          "type": "text",
+          "value": "合并前的中文",
+          "multiline": false,
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 294.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            },
+            {
+              "page": 2,
+              "x": 19.5,
+              "y": 294.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Date",
+          "readOnly": false,
+          "design": {
+            "kind": "date",
+            "dateFormat": "YYYY-MM-DD",
+            "fontSize": 12,
+            "sourceName": "Date",
+            "required": false
+          },
+          "type": "text",
+          "value": "2026-11-26",
+          "multiline": false,
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 247.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            },
+            {
+              "page": 2,
+              "x": 19.5,
+              "y": 247.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Image",
+          "readOnly": false,
+          "design": {
+            "kind": "image",
+            "fontSize": 12,
+            "sourceName": "Image",
+            "required": false
+          },
+          "type": "image",
+          "value": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAwCAIAAAAJh2qgAAABGklEQVR4nO2YIQ7CQBBFPz81OMItegGCBRwejSAEy1GwKByOI9RzAxJOwQkIglAENZSZ3YHPU03FtC9vkmbbGS/2yMGhu8vyXEIMQgxCDEIMQgxCDEKMIvHzqvXxcVnWNy/b068JV0/PBnqrMpl5kVe10dxVm3FsX4N/U+GqlWqC1Axo65qaEINh8zpFZmRbD2dCDAbPax6ZEIMQg/H32XarCTEIMQp8D8vR/PMhhBiEGIQYtBo02Qzhyew8MJlDiEGIQcNZfltttc/4F44Y2TAvPArbOtva4r/SsSKb54Xf4eHu3PqQ7KGa4jvcLrWfLRIcD99K7aqa9Dxcp240T+CZ7QdAbd6fXpEDQgxCDEIMQgxCDOZ+gdTcAGbPRSYezDUhAAAAAElFTkSuQmCC",
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19,
+              "y": 189,
+              "width": 66,
+              "height": 41,
+              "rotation": 0
+            },
+            {
+              "page": 2,
+              "x": 19,
+              "y": 189,
+              "width": 66,
+              "height": 41,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Checked",
+          "readOnly": false,
+          "type": "checkbox",
+          "value": true,
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 144.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0
+            },
+            {
+              "page": 2,
+              "x": 19.5,
+              "y": 144.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Choice",
+          "readOnly": false,
+          "type": "choice",
+          "value": "A",
+          "options": [
+            "A",
+            "B"
+          ],
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "A"
+            },
+            {
+              "page": 2,
+              "x": 19.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "A"
+            },
+            {
+              "page": 0,
+              "x": 89.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "B"
+            },
+            {
+              "page": 2,
+              "x": 89.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "B"
+            }
+          ]
+        },
+        {
+          "name": "Drop",
+          "readOnly": false,
+          "type": "choice",
+          "value": "Two",
+          "options": [
+            "One",
+            "Two"
+          ],
+          "widgets": [
+            {
+              "page": 1,
+              "x": 19.5,
+              "y": 274.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "List",
+          "type": "opaque",
+          "value": "",
+          "readOnly": true,
+          "nativeType": "Ch",
+          "passiveReason": "原生列表框",
+          "nativeValueHash": "bce6bf742cc55837414710dc47df094857e6f20d56a291b540d6a327640f646a",
+          "widgets": [
+            {
+              "page": 1,
+              "x": 19.5,
+              "y": 174.5,
+              "width": 151,
+              "height": 76,
+              "rotation": 0,
+              "flags": 4
+            }
+          ]
+        },
+        {
+          "name": "Vendor",
+          "type": "opaque",
+          "value": "",
+          "readOnly": true,
+          "nativeType": "VendorPassive",
+          "passiveReason": "未知原生字段",
+          "nativeValueHash": "475aa41ce70b9fc9e22c534d12351f8df37b44bb6d188b6fb701e839a9ba381d",
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 29.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0,
+              "flags": 4
+            },
+            {
+              "page": 2,
+              "x": 19.5,
+              "y": 29.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0,
+              "flags": 4
+            }
+          ]
+        }
+      ]
+    },
+    "sourceHash": "ad05fb8acced772b57e7ddf0a7f4278987ffb003af30b5bdb19f898b614458d9",
+    "sourceSize": 16756
+  },
+  "combined": {
+    "id": "4099fb8e-c771-4112-9f1e-b797cd6da0d6",
+    "revision": 3,
+    "document": {
+      "version": 1,
+      "id": "4099fb8e-c771-4112-9f1e-b797cd6da0d6",
+      "name": "Primary.pdf",
+      "kind": "pdf",
+      "pageCount": 5,
+      "sourcePageCount": 5,
+      "pages": [
+        {
+          "id": "2354b45d-9941-413c-a86f-c4747913936b",
+          "sourcePage": 0,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 300,
+            "top": 400
+          }
+        },
+        {
+          "id": "5378d8a4-7f60-4f53-8d48-42f0d92da407",
+          "sourcePage": 1,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 310,
+            "top": 410
+          }
+        },
+        {
+          "id": "538781c9-9138-43a1-8e0c-9b29c60e8ff7",
+          "sourcePage": 2,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 300,
+            "top": 400
+          }
+        },
+        {
+          "id": "d5fb0c95-f7fb-4b97-b180-eed4fc5f3750",
+          "sourcePage": 3,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 310,
+            "top": 410
+          }
+        },
+        {
+          "id": "dbdf903c-c8f3-418f-9150-d2e03c78d9ef",
+          "sourcePage": 4,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 300,
+            "top": 400
+          }
+        }
+      ],
+      "marks": [
+        {
+          "id": "8f84c0cb-b09e-4144-8a4b-981db0cf7df5",
+          "page": 0,
+          "type": "rectangle",
+          "x": 210,
+          "y": 50,
+          "text": "",
+          "size": 16,
+          "color": "#253044",
+          "lineWidth": 2,
+          "width": 50,
+          "height": 20
+        },
+        {
+          "id": "496669a9-73e3-451c-a110-dfc0c59360bf",
+          "page": 4,
+          "type": "rectangle",
+          "x": 210,
+          "y": 50,
+          "text": "",
+          "size": 16,
+          "color": "#253044",
+          "lineWidth": 2,
+          "width": 50,
+          "height": 20
+        }
+      ],
+      "rotations": {},
+      "fields": [
+        {
+          "name": "Text",
+          "readOnly": false,
+          "type": "text",
+          "value": "合并前的中文",
+          "multiline": false,
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 294.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            },
+            {
+              "page": 4,
+              "x": 19.5,
+              "y": 294.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Date",
+          "readOnly": false,
+          "design": {
+            "kind": "date",
+            "dateFormat": "YYYY-MM-DD",
+            "fontSize": 12,
+            "sourceName": "Date",
+            "required": false
+          },
+          "type": "text",
+          "value": "2026-11-26",
+          "multiline": false,
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 247.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            },
+            {
+              "page": 4,
+              "x": 19.5,
+              "y": 247.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Image",
+          "readOnly": false,
+          "design": {
+            "kind": "image",
+            "fontSize": 12,
+            "sourceName": "Image",
+            "required": false
+          },
+          "type": "image",
+          "value": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAwCAIAAAAJh2qgAAABGklEQVR4nO2YIQ7CQBBFPz81OMItegGCBRwejSAEy1GwKByOI9RzAxJOwQkIglAENZSZ3YHPU03FtC9vkmbbGS/2yMGhu8vyXEIMQgxCDEIMQgxCDEKMIvHzqvXxcVnWNy/b068JV0/PBnqrMpl5kVe10dxVm3FsX4N/U+GqlWqC1Axo65qaEINh8zpFZmRbD2dCDAbPax6ZEIMQg/H32XarCTEIMQp8D8vR/PMhhBiEGIQYtBo02Qzhyew8MJlDiEGIQcNZfltttc/4F44Y2TAvPArbOtva4r/SsSKb54Xf4eHu3PqQ7KGa4jvcLrWfLRIcD99K7aqa9Dxcp240T+CZ7QdAbd6fXpEDQgxCDEIMQgxCDOZ+gdTcAGbPRSYezDUhAAAAAElFTkSuQmCC",
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19,
+              "y": 189,
+              "width": 66,
+              "height": 41,
+              "rotation": 0
+            },
+            {
+              "page": 4,
+              "x": 19,
+              "y": 189,
+              "width": 66,
+              "height": 41,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Checked",
+          "readOnly": false,
+          "type": "checkbox",
+          "value": true,
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 144.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0
+            },
+            {
+              "page": 4,
+              "x": 19.5,
+              "y": 144.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Choice",
+          "readOnly": false,
+          "type": "choice",
+          "value": "A",
+          "options": [
+            "A",
+            "B"
+          ],
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "A"
+            },
+            {
+              "page": 0,
+              "x": 89.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "B"
+            },
+            {
+              "page": 4,
+              "x": 19.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "A"
+            },
+            {
+              "page": 4,
+              "x": 89.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "B"
+            }
+          ]
+        },
+        {
+          "name": "Drop",
+          "readOnly": false,
+          "type": "choice",
+          "value": "Two",
+          "options": [
+            "One",
+            "Two"
+          ],
+          "widgets": [
+            {
+              "page": 3,
+              "x": 19.5,
+              "y": 274.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "List",
+          "type": "opaque",
+          "value": "",
+          "readOnly": true,
+          "nativeType": "Ch",
+          "passiveReason": "原生列表框",
+          "nativeValueHash": "bce6bf742cc55837414710dc47df094857e6f20d56a291b540d6a327640f646a",
+          "widgets": [
+            {
+              "page": 3,
+              "x": 19.5,
+              "y": 174.5,
+              "width": 151,
+              "height": 76,
+              "rotation": 0,
+              "flags": 4
+            }
+          ]
+        },
+        {
+          "name": "Vendor",
+          "type": "opaque",
+          "value": "",
+          "readOnly": true,
+          "nativeType": "VendorPassive",
+          "passiveReason": "未知原生字段",
+          "nativeValueHash": "475aa41ce70b9fc9e22c534d12351f8df37b44bb6d188b6fb701e839a9ba381d",
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 29.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0,
+              "flags": 4
+            },
+            {
+              "page": 4,
+              "x": 19.5,
+              "y": 29.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0,
+              "flags": 4
+            }
+          ]
+        },
+        {
+          "name": "Text__2",
+          "readOnly": false,
+          "type": "text",
+          "value": "Incoming",
+          "multiline": false,
+          "widgets": [
+            {
+              "page": 2,
+              "x": 19.5,
+              "y": 279.5,
+              "width": 131,
+              "height": 31,
+              "rotation": 0
+            }
+          ]
+        }
+      ]
+    },
+    "sourceHash": "210693819a33428e16f9a7dc5d09a1d6986bdb845830ebcbe6dfbc6855e3001a",
+    "sourceSize": 1690726
+  },
+  "undone": {
+    "id": "4099fb8e-c771-4112-9f1e-b797cd6da0d6",
+    "revision": 5,
+    "document": {
+      "version": 1,
+      "id": "4099fb8e-c771-4112-9f1e-b797cd6da0d6",
+      "name": "Primary.pdf",
+      "kind": "pdf",
+      "pageCount": 3,
+      "sourcePageCount": 2,
+      "pages": [
+        {
+          "id": "2354b45d-9941-413c-a86f-c4747913936b",
+          "sourcePage": 0,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 300,
+            "top": 400
+          }
+        },
+        {
+          "id": "d5fb0c95-f7fb-4b97-b180-eed4fc5f3750",
+          "sourcePage": 1,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 310,
+            "top": 410
+          }
+        },
+        {
+          "id": "dbdf903c-c8f3-418f-9150-d2e03c78d9ef",
+          "sourcePage": 0,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 300,
+            "top": 400
+          },
+          "copyGroup": "0e58a9df-da30-4cab-b927-739ac2c60f16"
+        }
+      ],
+      "marks": [
+        {
+          "id": "8f84c0cb-b09e-4144-8a4b-981db0cf7df5",
+          "page": 0,
+          "type": "rectangle",
+          "x": 210,
+          "y": 50,
+          "text": "",
+          "size": 16,
+          "color": "#253044",
+          "lineWidth": 2,
+          "width": 50,
+          "height": 20
+        },
+        {
+          "id": "496669a9-73e3-451c-a110-dfc0c59360bf",
+          "page": 2,
+          "type": "rectangle",
+          "x": 210,
+          "y": 50,
+          "text": "",
+          "size": 16,
+          "color": "#253044",
+          "lineWidth": 2,
+          "width": 50,
+          "height": 20
+        }
+      ],
+      "rotations": {},
+      "fields": [
+        {
+          "name": "Text",
+          "readOnly": false,
+          "type": "text",
+          "value": "合并前的中文",
+          "multiline": false,
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 294.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            },
+            {
+              "page": 2,
+              "x": 19.5,
+              "y": 294.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Date",
+          "readOnly": false,
+          "design": {
+            "kind": "date",
+            "dateFormat": "YYYY-MM-DD",
+            "fontSize": 12,
+            "sourceName": "Date",
+            "required": false
+          },
+          "type": "text",
+          "value": "2026-11-26",
+          "multiline": false,
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 247.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            },
+            {
+              "page": 2,
+              "x": 19.5,
+              "y": 247.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Image",
+          "readOnly": false,
+          "design": {
+            "kind": "image",
+            "fontSize": 12,
+            "sourceName": "Image",
+            "required": false
+          },
+          "type": "image",
+          "value": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAwCAIAAAAJh2qgAAABGklEQVR4nO2YIQ7CQBBFPz81OMItegGCBRwejSAEy1GwKByOI9RzAxJOwQkIglAENZSZ3YHPU03FtC9vkmbbGS/2yMGhu8vyXEIMQgxCDEIMQgxCDEKMIvHzqvXxcVnWNy/b068JV0/PBnqrMpl5kVe10dxVm3FsX4N/U+GqlWqC1Axo65qaEINh8zpFZmRbD2dCDAbPax6ZEIMQg/H32XarCTEIMQp8D8vR/PMhhBiEGIQYtBo02Qzhyew8MJlDiEGIQcNZfltttc/4F44Y2TAvPArbOtva4r/SsSKb54Xf4eHu3PqQ7KGa4jvcLrWfLRIcD99K7aqa9Dxcp240T+CZ7QdAbd6fXpEDQgxCDEIMQgxCDOZ+gdTcAGbPRSYezDUhAAAAAElFTkSuQmCC",
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19,
+              "y": 189,
+              "width": 66,
+              "height": 41,
+              "rotation": 0
+            },
+            {
+              "page": 2,
+              "x": 19,
+              "y": 189,
+              "width": 66,
+              "height": 41,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Checked",
+          "readOnly": false,
+          "type": "checkbox",
+          "value": true,
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 144.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0
+            },
+            {
+              "page": 2,
+              "x": 19.5,
+              "y": 144.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Choice",
+          "readOnly": false,
+          "type": "choice",
+          "value": "A",
+          "options": [
+            "A",
+            "B"
+          ],
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "A"
+            },
+            {
+              "page": 2,
+              "x": 19.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "A"
+            },
+            {
+              "page": 0,
+              "x": 89.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "B"
+            },
+            {
+              "page": 2,
+              "x": 89.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "B"
+            }
+          ]
+        },
+        {
+          "name": "Drop",
+          "readOnly": false,
+          "type": "choice",
+          "value": "Two",
+          "options": [
+            "One",
+            "Two"
+          ],
+          "widgets": [
+            {
+              "page": 1,
+              "x": 19.5,
+              "y": 274.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "List",
+          "type": "opaque",
+          "value": "",
+          "readOnly": true,
+          "nativeType": "Ch",
+          "passiveReason": "原生列表框",
+          "nativeValueHash": "bce6bf742cc55837414710dc47df094857e6f20d56a291b540d6a327640f646a",
+          "widgets": [
+            {
+              "page": 1,
+              "x": 19.5,
+              "y": 174.5,
+              "width": 151,
+              "height": 76,
+              "rotation": 0,
+              "flags": 4
+            }
+          ]
+        },
+        {
+          "name": "Vendor",
+          "type": "opaque",
+          "value": "",
+          "readOnly": true,
+          "nativeType": "VendorPassive",
+          "passiveReason": "未知原生字段",
+          "nativeValueHash": "475aa41ce70b9fc9e22c534d12351f8df37b44bb6d188b6fb701e839a9ba381d",
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 29.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0,
+              "flags": 4
+            },
+            {
+              "page": 2,
+              "x": 19.5,
+              "y": 29.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0,
+              "flags": 4
+            }
+          ]
+        }
+      ]
+    },
+    "sourceHash": "ad05fb8acced772b57e7ddf0a7f4278987ffb003af30b5bdb19f898b614458d9",
+    "sourceSize": 16756
+  },
+  "fresh": {
+    "id": "4099fb8e-c771-4112-9f1e-b797cd6da0d6",
+    "revision": 6,
+    "document": {
+      "version": 1,
+      "id": "4099fb8e-c771-4112-9f1e-b797cd6da0d6",
+      "name": "Primary.pdf",
+      "kind": "pdf",
+      "pageCount": 5,
+      "sourcePageCount": 5,
+      "pages": [
+        {
+          "id": "2354b45d-9941-413c-a86f-c4747913936b",
+          "sourcePage": 0,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 300,
+            "top": 400
+          }
+        },
+        {
+          "id": "5378d8a4-7f60-4f53-8d48-42f0d92da407",
+          "sourcePage": 1,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 310,
+            "top": 410
+          }
+        },
+        {
+          "id": "538781c9-9138-43a1-8e0c-9b29c60e8ff7",
+          "sourcePage": 2,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 300,
+            "top": 400
+          }
+        },
+        {
+          "id": "d5fb0c95-f7fb-4b97-b180-eed4fc5f3750",
+          "sourcePage": 3,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 310,
+            "top": 410
+          }
+        },
+        {
+          "id": "dbdf903c-c8f3-418f-9150-d2e03c78d9ef",
+          "sourcePage": 4,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 300,
+            "top": 400
+          }
+        }
+      ],
+      "marks": [
+        {
+          "id": "8f84c0cb-b09e-4144-8a4b-981db0cf7df5",
+          "page": 0,
+          "type": "rectangle",
+          "x": 210,
+          "y": 50,
+          "text": "",
+          "size": 16,
+          "color": "#253044",
+          "lineWidth": 2,
+          "width": 50,
+          "height": 20
+        },
+        {
+          "id": "496669a9-73e3-451c-a110-dfc0c59360bf",
+          "page": 4,
+          "type": "rectangle",
+          "x": 210,
+          "y": 50,
+          "text": "",
+          "size": 16,
+          "color": "#253044",
+          "lineWidth": 2,
+          "width": 50,
+          "height": 20
+        }
+      ],
+      "rotations": {},
+      "fields": [
+        {
+          "name": "Text",
+          "readOnly": false,
+          "type": "text",
+          "value": "合并前的中文",
+          "multiline": false,
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 294.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            },
+            {
+              "page": 4,
+              "x": 19.5,
+              "y": 294.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Date",
+          "readOnly": false,
+          "design": {
+            "kind": "date",
+            "dateFormat": "YYYY-MM-DD",
+            "fontSize": 12,
+            "sourceName": "Date",
+            "required": false
+          },
+          "type": "text",
+          "value": "2026-11-26",
+          "multiline": false,
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 247.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            },
+            {
+              "page": 4,
+              "x": 19.5,
+              "y": 247.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Image",
+          "readOnly": false,
+          "design": {
+            "kind": "image",
+            "fontSize": 12,
+            "sourceName": "Image",
+            "required": false
+          },
+          "type": "image",
+          "value": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAwCAIAAAAJh2qgAAABGklEQVR4nO2YIQ7CQBBFPz81OMItegGCBRwejSAEy1GwKByOI9RzAxJOwQkIglAENZSZ3YHPU03FtC9vkmbbGS/2yMGhu8vyXEIMQgxCDEIMQgxCDEKMIvHzqvXxcVnWNy/b068JV0/PBnqrMpl5kVe10dxVm3FsX4N/U+GqlWqC1Axo65qaEINh8zpFZmRbD2dCDAbPax6ZEIMQg/H32XarCTEIMQp8D8vR/PMhhBiEGIQYtBo02Qzhyew8MJlDiEGIQcNZfltttc/4F44Y2TAvPArbOtva4r/SsSKb54Xf4eHu3PqQ7KGa4jvcLrWfLRIcD99K7aqa9Dxcp240T+CZ7QdAbd6fXpEDQgxCDEIMQgxCDOZ+gdTcAGbPRSYezDUhAAAAAElFTkSuQmCC",
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19,
+              "y": 189,
+              "width": 66,
+              "height": 41,
+              "rotation": 0
+            },
+            {
+              "page": 4,
+              "x": 19,
+              "y": 189,
+              "width": 66,
+              "height": 41,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Checked",
+          "readOnly": false,
+          "type": "checkbox",
+          "value": true,
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 144.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0
+            },
+            {
+              "page": 4,
+              "x": 19.5,
+              "y": 144.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "Choice",
+          "readOnly": false,
+          "type": "choice",
+          "value": "A",
+          "options": [
+            "A",
+            "B"
+          ],
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "A"
+            },
+            {
+              "page": 0,
+              "x": 89.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "B"
+            },
+            {
+              "page": 4,
+              "x": 19.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "A"
+            },
+            {
+              "page": 4,
+              "x": 89.5,
+              "y": 94.5,
+              "width": 21,
+              "height": 21,
+              "rotation": 0,
+              "option": "B"
+            }
+          ]
+        },
+        {
+          "name": "Drop",
+          "readOnly": false,
+          "type": "choice",
+          "value": "Two",
+          "options": [
+            "One",
+            "Two"
+          ],
+          "widgets": [
+            {
+              "page": 3,
+              "x": 19.5,
+              "y": 274.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "name": "List",
+          "type": "opaque",
+          "value": "",
+          "readOnly": true,
+          "nativeType": "Ch",
+          "passiveReason": "原生列表框",
+          "nativeValueHash": "bce6bf742cc55837414710dc47df094857e6f20d56a291b540d6a327640f646a",
+          "widgets": [
+            {
+              "page": 3,
+              "x": 19.5,
+              "y": 174.5,
+              "width": 151,
+              "height": 76,
+              "rotation": 0,
+              "flags": 4
+            }
+          ]
+        },
+        {
+          "name": "Vendor",
+          "type": "opaque",
+          "value": "",
+          "readOnly": true,
+          "nativeType": "VendorPassive",
+          "passiveReason": "未知原生字段",
+          "nativeValueHash": "475aa41ce70b9fc9e22c534d12351f8df37b44bb6d188b6fb701e839a9ba381d",
+          "widgets": [
+            {
+              "page": 0,
+              "x": 19.5,
+              "y": 29.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0,
+              "flags": 4
+            },
+            {
+              "page": 4,
+              "x": 19.5,
+              "y": 29.5,
+              "width": 151,
+              "height": 28,
+              "rotation": 0,
+              "flags": 4
+            }
+          ]
+        },
+        {
+          "name": "Text__2",
+          "readOnly": false,
+          "type": "text",
+          "value": "Incoming",
+          "multiline": false,
+          "widgets": [
+            {
+              "page": 2,
+              "x": 19.5,
+              "y": 279.5,
+              "width": 131,
+              "height": 31,
+              "rotation": 0
+            }
+          ]
+        }
+      ]
+    },
+    "sourceHash": "210693819a33428e16f9a7dc5d09a1d6986bdb845830ebcbe6dfbc6855e3001a",
+    "sourceSize": 1690726
+  },
+  "errors": []
+}

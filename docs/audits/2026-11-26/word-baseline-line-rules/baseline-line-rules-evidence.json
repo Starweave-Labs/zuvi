@@ -1,0 +1,158 @@
+[
+  [
+    {
+      "baseGlyphTop": 15.007816571130796,
+      "glyphHeight": 17.008858780614904,
+      "fontSize": 16,
+      "height": 32.0166753517457,
+      "glyphTop": -1.000521104742053,
+      "position": "static",
+      "top": "auto",
+      "align": "16px"
+    },
+    {
+      "baseGlyphTop": -1.000521104742053,
+      "glyphHeight": 17.008858780614904,
+      "fontSize": 16,
+      "height": 16.00833767587285,
+      "glyphTop": -17.008858780614904,
+      "position": "relative",
+      "top": "-16px",
+      "align": "top"
+    },
+    {
+      "baseGlyphTop": 0,
+      "glyphHeight": 17.008858780614904,
+      "fontSize": 16,
+      "height": 17.008858780614904,
+      "glyphTop": 0,
+      "position": "static",
+      "top": "auto",
+      "align": "baseline"
+    },
+    {
+      "baseGlyphTop": 0,
+      "glyphHeight": 17.008858780614904,
+      "fontSize": 16,
+      "height": 33.01719645648775,
+      "glyphTop": 16.00833767587285,
+      "position": "static",
+      "top": "auto",
+      "align": "-16px"
+    },
+    {
+      "baseGlyphTop": 17.008858780614904,
+      "glyphHeight": 17.008858780614904,
+      "fontSize": 16,
+      "height": 35.22146951537259,
+      "glyphTop": 1.000521104742053,
+      "position": "static",
+      "top": "auto",
+      "align": "16px"
+    }
+  ],
+  [
+    {
+      "baseGlyphTop": 15.007816571130796,
+      "glyphHeight": 17.008858780614904,
+      "fontSize": 16,
+      "height": 32.0166753517457,
+      "glyphTop": -1.000521104742053,
+      "position": "static",
+      "top": "auto",
+      "align": "16px"
+    },
+    {
+      "baseGlyphTop": -1.000521104742053,
+      "glyphHeight": 17.008858780614904,
+      "fontSize": 16,
+      "height": 16.00833767587285,
+      "glyphTop": -17.008858780614904,
+      "position": "relative",
+      "top": "-16px",
+      "align": "top"
+    },
+    {
+      "baseGlyphTop": 0,
+      "glyphHeight": 17.008858780614904,
+      "fontSize": 16,
+      "height": 17.008858780614904,
+      "glyphTop": 0,
+      "position": "static",
+      "top": "auto",
+      "align": "baseline"
+    },
+    {
+      "baseGlyphTop": 0,
+      "glyphHeight": 17.008858780614904,
+      "fontSize": 16,
+      "height": 33.01719645648775,
+      "glyphTop": 16.00833767587285,
+      "position": "static",
+      "top": "auto",
+      "align": "-16px"
+    },
+    {
+      "baseGlyphTop": 17.008858780614904,
+      "glyphHeight": 17.008858780614904,
+      "fontSize": 16,
+      "height": 35.22146951537259,
+      "glyphTop": 1.000521104742053,
+      "position": "static",
+      "top": "auto",
+      "align": "16px"
+    }
+  ],
+  [
+    {
+      "baseGlyphTop": 15.007816571130796,
+      "glyphHeight": 17.008858780614904,
+      "fontSize": 16,
+      "height": 32.0166753517457,
+      "glyphTop": -1.000521104742053,
+      "position": "static",
+      "top": "auto",
+      "align": "16px"
+    },
+    {
+      "baseGlyphTop": -1.000521104742053,
+      "glyphHeight": 17.008858780614904,
+      "fontSize": 16,
+      "height": 16.00833767587285,
+      "glyphTop": -17.008858780614904,
+      "position": "relative",
+      "top": "-16px",
+      "align": "top"
+    },
+    {
+      "baseGlyphTop": 0,
+      "glyphHeight": 17.008858780614904,
+      "fontSize": 16,
+      "height": 17.008858780614904,
+      "glyphTop": 0,
+      "position": "static",
+      "top": "auto",
+      "align": "baseline"
+    },
+    {
+      "baseGlyphTop": 0,
+      "glyphHeight": 17.008858780614904,
+      "fontSize": 16,
+      "height": 33.01719645648775,
+      "glyphTop": 16.00833767587285,
+      "position": "static",
+      "top": "auto",
+      "align": "-16px"
+    },
+    {
+      "baseGlyphTop": 17.008858780614904,
+      "glyphHeight": 17.008858780614904,
+      "fontSize": 16,
+      "height": 35.22146951537259,
+      "glyphTop": 1.000521104742053,
+      "position": "static",
+      "top": "auto",
+      "align": "16px"
+    }
+  ]
+]

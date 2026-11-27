@@ -1,0 +1,13 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/studio-word-table-fragments.test.ts (8 tests) 4ms
+ ✓ src/components/OfficeStudio/studio-word-pagination.test.ts (10 tests) 9ms
+ ✓ src/components/OfficeStudio/studio-word-table-mixed-layout.test.ts (11 tests) 164ms
+ ✓ src/components/OfficeStudio/studio-word-cell-measure.test.ts (13 tests) 63ms
+ ✓ src/components/OfficeStudio/studio-word-pagination-extension.test.ts (2 tests) 206ms
+
+ Test Files  5 passed (5)
+      Tests  44 passed (44)
+   Start at  22:14:39
+   Duration  1.48s (transform 463ms, setup 1.03s, collect 854ms, tests 446ms, environment 2.32s, prepare 336ms)

@@ -1,0 +1,2 @@
+已生成 registry/registry.json（92 个组件）
+registry.json 已是最新（92 个组件）

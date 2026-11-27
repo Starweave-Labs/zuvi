@@ -1,0 +1,37 @@
+{
+  "date": "2026-11-25",
+  "scope": [
+    "W008",
+    "W009"
+  ],
+  "wordUI": 60,
+  "docxCodec": 28,
+  "fullUI": 2267,
+  "docSiteTests": {
+    "passed": 277,
+    "skipped": 1,
+    "note": "original Chart integration skip"
+  },
+  "allE2E": 228,
+  "typecheck": "passed",
+  "lint": "passed",
+  "registry": "passed",
+  "consumerSourceFiles": 329,
+  "distribution": "passed",
+  "uiBrowserDocsBuild": "passed",
+  "esmEntryGzipBytes": 124902,
+  "esmEntryBudgetBytes": 124928,
+  "browserChecks": [
+    "real DOCX import/edit/export/reopen twice",
+    "idempotent character and paragraph formatting",
+    "continuous paint and Escape",
+    "clear preserves heading outline, links and lists",
+    "undo/redo",
+    "readonly",
+    "light/dark/320px"
+  ],
+  "remaining": [
+    "full original W008/W009 acceptance matrix",
+    "whole 159-item implementation gaps remain recorded"
+  ]
+}

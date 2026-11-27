@@ -1,0 +1,118 @@
+[
+  {
+    "label": "horizontal-hidden-master",
+    "merge": "A1:C1",
+    "hiddenRows": [],
+    "hiddenColumns": [
+      "A"
+    ],
+    "fontSize": 24,
+    "uiBox": {
+      "width": 200,
+      "height": 24
+    },
+    "uiFont": "24",
+    "uiTransform": "matrix(1,0,0,1,5,-13.799999999999997)",
+    "printClip": "left:0px;top:0px;width:200px;height:24px",
+    "printTransform": "matrix(1,0,0,1,5,-13.799999999999997)",
+    "visibleRows": [
+      "18pt"
+    ],
+    "requiredHeightPt": 28.349999999999998,
+    "visibleSpanPt": 18,
+    "overconstrained": true
+  },
+  {
+    "label": "one-visible-row",
+    "merge": "A1:C2",
+    "hiddenRows": [
+      1
+    ],
+    "hiddenColumns": [],
+    "fontSize": 24,
+    "uiBox": {
+      "width": 300,
+      "height": 24
+    },
+    "uiFont": "24",
+    "uiTransform": "matrix(1,0,0,1,5,-13.799999999999997)",
+    "printClip": "left:0px;top:0px;width:300px;height:24px",
+    "printTransform": "matrix(1,0,0,1,5,-13.799999999999997)",
+    "visibleRows": [
+      "18pt"
+    ],
+    "requiredHeightPt": 28.349999999999998,
+    "visibleSpanPt": 18,
+    "overconstrained": true
+  },
+  {
+    "label": "one-visible-row-and-column",
+    "merge": "A1:C2",
+    "hiddenRows": [
+      1
+    ],
+    "hiddenColumns": [
+      "A"
+    ],
+    "fontSize": 24,
+    "uiBox": {
+      "width": 200,
+      "height": 24
+    },
+    "uiFont": "24",
+    "uiTransform": "matrix(1,0,0,1,5,-13.799999999999997)",
+    "printClip": "left:0px;top:0px;width:200px;height:24px",
+    "printTransform": "matrix(1,0,0,1,5,-13.799999999999997)",
+    "visibleRows": [
+      "18pt"
+    ],
+    "requiredHeightPt": 28.349999999999998,
+    "visibleSpanPt": 18,
+    "overconstrained": true
+  },
+  {
+    "label": "horizontal-control",
+    "merge": "A1:C1",
+    "hiddenRows": [],
+    "hiddenColumns": [],
+    "fontSize": 24,
+    "uiBox": {
+      "width": 300,
+      "height": 38
+    },
+    "uiFont": "24",
+    "uiTransform": "matrix(1,0,0,1,5,0.20000000000000284)",
+    "printClip": "left:0px;top:0px;width:300px;height:38px",
+    "printTransform": "matrix(1,0,0,1,5,0.20000000000000284)",
+    "visibleRows": [
+      "28.5pt"
+    ],
+    "requiredHeightPt": 28.349999999999998,
+    "visibleSpanPt": 28.5,
+    "overconstrained": false
+  },
+  {
+    "label": "multi-visible-vertical-boundary",
+    "merge": "A1:C3",
+    "hiddenRows": [
+      1
+    ],
+    "hiddenColumns": [],
+    "fontSize": 48,
+    "uiBox": {
+      "width": 300,
+      "height": 48
+    },
+    "uiFont": "48",
+    "uiTransform": "matrix(1,0,0,1,5,-26.599999999999994)",
+    "printClip": "left:0px;top:0px;width:300px;height:48px",
+    "printTransform": "matrix(1,0,0,1,5,-26.599999999999994)",
+    "visibleRows": [
+      "18pt",
+      "18pt"
+    ],
+    "requiredHeightPt": 55.949999999999996,
+    "visibleSpanPt": 36,
+    "overconstrained": true
+  }
+]

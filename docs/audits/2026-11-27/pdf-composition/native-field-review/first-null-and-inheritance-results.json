@@ -1,0 +1,131 @@
+[
+  {
+    "label": "direct null V: text extract",
+    "result": {
+      "modelValue": "",
+      "native": "absent",
+      "fieldCount": 1
+    }
+  },
+  {
+    "label": "direct null DV: text extract",
+    "result": {
+      "modelValue": "B",
+      "native": "absent",
+      "fieldCount": 1
+    }
+  },
+  {
+    "label": "direct null Ff: text extract",
+    "result": {
+      "modelValue": "B",
+      "native": "absent",
+      "fieldCount": 1
+    }
+  },
+  {
+    "label": "direct null Q: text extract",
+    "result": {
+      "modelValue": "B",
+      "native": "absent",
+      "fieldCount": 1
+    }
+  },
+  {
+    "label": "direct null MaxLen: text extract",
+    "result": {
+      "modelValue": "B",
+      "native": "absent",
+      "fieldCount": 1
+    }
+  },
+  {
+    "label": "indirect null V: text extract",
+    "result": {
+      "modelValue": "",
+      "native": {
+        "raw": "null",
+        "resolved": "null"
+      },
+      "fieldCount": 1
+    }
+  },
+  {
+    "label": "indirect null DV: text extract",
+    "result": {
+      "modelValue": "B",
+      "native": {
+        "raw": "null",
+        "resolved": "null"
+      },
+      "fieldCount": 1
+    }
+  },
+  {
+    "label": "indirect null Ff: text extract",
+    "error": "Null.pdf：此文件的字段、资源或链接无法完整保留。（FIELD_FLAGS，/AcroForm/Fields[0]/Ff）"
+  },
+  {
+    "label": "indirect null Q: text extract",
+    "error": "Null.pdf：此文件的字段、资源或链接无法完整保留。（FIELD_ALIGNMENT，/AcroForm/Fields[0]/Q）"
+  },
+  {
+    "label": "indirect null MaxLen: text extract",
+    "error": "Null.pdf：此文件的字段、资源或链接无法完整保留。（FIELD_MAX_LENGTH，/AcroForm/Fields[0]/MaxLen）"
+  },
+  {
+    "label": "direct null V: dropdown same-value link",
+    "result": {
+      "modelValue": "",
+      "count": 1,
+      "widgets": 2
+    }
+  },
+  {
+    "label": "indirect null V: dropdown same-value link",
+    "error": "AbsentChoice.pdf：同名字段的类型、属性或填写值不兼容，请改用自动改名，或先统一字段值。（LINK_VALUE，/AcroForm/Fields[0]）"
+  },
+  {
+    "label": "direct null V: inherited password hash",
+    "result": {
+      "before": "31c3ce95905577137b4a6e9ee045c7ce960a54ee130b01d82dcf0feafffd4d27",
+      "after": "842529fbd3fd7958c4932e9f9ce2d08e56d47321235877b27b3e1154a2b4bc0b",
+      "equal": false,
+      "acceptsChangedSource": "PDF 只读原生字段的身份、值或控件结构不能修改。"
+    }
+  },
+  {
+    "label": "indirect null V: inherited password hash",
+    "result": {
+      "before": "79c94804982481c39dfcf30c4e748e4d5d1c4e4a5d9c4c43cd29cbef5a693fed",
+      "after": "79c94804982481c39dfcf30c4e748e4d5d1c4e4a5d9c4c43cd29cbef5a693fed",
+      "equal": true,
+      "acceptsChangedSource": true
+    }
+  },
+  {
+    "label": "indirect V/DV strings: two real compose + save rounds preserve identity",
+    "result": [
+      {
+        "V": {
+          "raw": "(B)",
+          "resolved": "(B)"
+        },
+        "DV": {
+          "raw": "(A)",
+          "resolved": "(A)"
+        }
+      },
+      {
+        "V": {
+          "raw": "(B)",
+          "resolved": "(B)"
+        },
+        "DV": {
+          "raw": "(A)",
+          "resolved": "(A)"
+        }
+      }
+    ]
+  }
+]

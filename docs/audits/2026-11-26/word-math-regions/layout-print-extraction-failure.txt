@@ -1,0 +1,40 @@
+[WebServer] (node:16307) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:16327) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+  ✘  1 [chromium] › e2e/office-studio-word-math-layout.spec.ts:6:1 › keeps tall equation atoms and following text positions together at an actual page boundary (5.5s)
+  ✓  2 [chromium] › e2e/office-studio-word-math-regions.spec.ts:6:1 › edits independent header and footer equation groups and reopens both regions twice (5.3s)
+
+
+  1) [chromium] › e2e/office-studio-word-math-layout.spec.ts:6:1 › keeps tall equation atoms and following text positions together at an actual page boundary
+
+    Error: expect(received).toContain(expected) // indexOf
+
+    Expected substring: "Math filler 36"
+    Received string:    "Math   fi ller 0 Math   fi ller 1 Math   fi ller 2 Math   fi ller 3 Math   fi ller 4 Math   fi ller 5 Math   fi ller 6 Math   fi ller 7 Math   fi ller 8 Math   fi ller 9 Math   fi ller 10 Math   fi ller 11 Math   fi ller 12 Math   fi ller 13 Math   fi ller 14 Math   fi ller 15 Math   fi ller 16 Math   fi ller 17 Math   fi ller 18 Math   fi ller 19 Math   fi ller 20 Math   fi ller 21 Math   fi ller 22 Math   fi ller 23 Math   fi ller 24 Math   fi ller 25 Math   fi ller 26 Math   fi ller 27 Math   fi ller 28 Math   fi ller 29 Math   fi ller 30 Math   fi ller 31 Math   fi ller 32 Math   fi ller 33 Math   fi ller 34 Math   fi ller 35 Math   fi ller 36"
+
+       97 |   }
+       98 |   await task.destroy();
+    >  99 |   expect(texts[0]).toContain('Math filler 36');
+          |                    ^
+      100 |   expect(texts[0]).not.toContain('before');
+      101 |   expect(texts[1]).toContain('before');
+      102 |   expect(texts[1]).toContain('after');
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-word-math-layout.spec.ts:99:20
+
+    Error Context: test-results/office-studio-word-math-la-88ef1--at-an-actual-page-boundary-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/office-studio-word-math-la-88ef1--at-an-actual-page-boundary-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/office-studio-word-math-la-88ef1--at-an-actual-page-boundary-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/office-studio-word-math-layout.spec.ts:6:1 › keeps tall equation atoms and following text positions together at an actual page boundary
+  1 passed (13.3s)

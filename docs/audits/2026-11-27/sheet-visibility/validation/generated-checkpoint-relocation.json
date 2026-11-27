@@ -1,0 +1,9 @@
+{
+  "generatedBy": "e2e/office-studio-pdf-composition.spec.ts:93",
+  "originalPath": "docs/audits/2026-11-27/pdf-composition/before-composition-checkpoint.pdf",
+  "archivePath": "docs/audits/2026-11-27/sheet-visibility/validation/initial/before-composition-checkpoint.pdf",
+  "identity": {
+    "bytes": 1699812,
+    "sha256": "cd2be3bee6ec449d8dfec91edbdef2ac1b855ff22288eb663d2b5e1a0ddf2aed"
+  }
+}

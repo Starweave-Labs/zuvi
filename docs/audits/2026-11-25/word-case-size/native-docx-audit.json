@@ -1,0 +1,126 @@
+[
+  {
+    "file": "case-size-roundtrip-1.docx",
+    "paragraphs": [
+      {
+        "text": "Small Large",
+        "runs": [
+          {
+            "text": "Small ",
+            "halfPointSize": "28"
+          },
+          {
+            "text": "Large",
+            "halfPointSize": "36"
+          }
+        ],
+        "hyperlink": true
+      },
+      {
+        "text": "Hello World. Next Sentence!",
+        "runs": [
+          {
+            "text": "He",
+            "halfPointSize": null
+          },
+          {
+            "text": "llo World. Next Sentence!",
+            "halfPointSize": null
+          }
+        ],
+        "hyperlink": true
+      },
+      {
+        "text": "STRASSE FI",
+        "runs": [
+          {
+            "text": "STRASSE FI",
+            "halfPointSize": null
+          }
+        ],
+        "hyperlink": true
+      },
+      {
+        "text": "CAXRET word",
+        "runs": [
+          {
+            "text": "CA",
+            "halfPointSize": null
+          },
+          {
+            "text": "X",
+            "halfPointSize": "28"
+          },
+          {
+            "text": "RET word",
+            "halfPointSize": null
+          }
+        ],
+        "hyperlink": false
+      }
+    ],
+    "nativeLinksPreserved": true
+  },
+  {
+    "file": "case-size-roundtrip-2.docx",
+    "paragraphs": [
+      {
+        "text": "Small Large",
+        "runs": [
+          {
+            "text": "Small ",
+            "halfPointSize": "28"
+          },
+          {
+            "text": "Large",
+            "halfPointSize": "36"
+          }
+        ],
+        "hyperlink": true
+      },
+      {
+        "text": "Hello World. Next Sentence!",
+        "runs": [
+          {
+            "text": "He",
+            "halfPointSize": "24"
+          },
+          {
+            "text": "llo World. Next Sentence!",
+            "halfPointSize": "24"
+          }
+        ],
+        "hyperlink": true
+      },
+      {
+        "text": "STRASSE FI",
+        "runs": [
+          {
+            "text": "STRASSE FI",
+            "halfPointSize": "24"
+          }
+        ],
+        "hyperlink": true
+      },
+      {
+        "text": "CAXRET word",
+        "runs": [
+          {
+            "text": "CA",
+            "halfPointSize": "24"
+          },
+          {
+            "text": "X",
+            "halfPointSize": "28"
+          },
+          {
+            "text": "RET word",
+            "halfPointSize": "24"
+          }
+        ],
+        "hyperlink": false
+      }
+    ],
+    "nativeLinksPreserved": true
+  }
+]

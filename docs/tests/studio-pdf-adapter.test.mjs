@@ -59,7 +59,10 @@ function fixture(options = {}) {
       options.noDestinationContext ? null : { drawImage: (image) => draws.push(image) },
   };
   const page = {
+    view: [40, 20, 340, 420],
     rotate: options.pageRotation ?? 90,
+    userUnit: options.userUnit ?? 1,
+    getAnnotations: () => Promise.resolve(options.annotations ?? []),
     getViewport: ({ scale, rotation }) => {
       viewports.push({ scale, rotation });
       return {
@@ -118,6 +121,10 @@ function fixture(options = {}) {
     require: (name) =>
       name === 'pdfjs-dist'
         ? api
+        : name.includes('pdf_viewer.mjs')
+          ? { SimpleLinkService: class {} }
+        : name.endsWith('.svg?url')
+          ? `/test-assets/${name.split('/').at(-1).slice(0, -4)}`
         : name.includes('pdf.worker')
           ? '/local-worker.mjs'
           : require(name),
@@ -138,8 +145,7 @@ function fixture(options = {}) {
 }
 const source = () => new Blob(['%PDF-test'], { type: 'application/pdf' });
 const next = async () => {
-  await Promise.resolve();
-  await Promise.resolve();
+  for (let index = 0; index < 8; index++) await Promise.resolve();
 };
 
 test('loads local worker/assets and maps original plus additional rotation with CSS-pixel coordinates at device resolution', async () => {
@@ -459,6 +465,8 @@ test('searches actual PDF.js extracted page text from a real generated PDF', asy
           }
         : name.includes('pdf.worker')
           ? new URL(require.resolve('pdfjs-dist/build/pdf.worker.min.mjs'), 'file:').href
+          : name.endsWith('.svg?url')
+            ? `/test-assets/${name.split('/').at(-1).slice(0, -4)}`
           : require(name),
   });
   const session = await exports.studioPdfRenderer.load(actualSource);
@@ -473,4 +481,20 @@ test('searches actual PDF.js extracted page text from a real generated PDF', asy
   assert.ok(results[0].rect.width > 20 && results[0].rect.height > 10);
   assert.ok(results[1].rect.y < 300 && results[1].rect.y + results[1].rect.height > 300);
   await session.destroy();
+});
+
+test('reads visible page bounds without painting or applying page rotation', async () => {
+  const f = fixture();
+  const session = await f.studioPdfRenderer.load(source());
+  assert.deepEqual(JSON.parse(JSON.stringify(await session.getPageBounds(1))), {
+    left: 40,
+    bottom: 20,
+    right: 340,
+    top: 420,
+  });
+  assert.deepEqual(f.getPages, [2]);
+  assert.equal(f.renders.length, 0);
+  await assert.rejects(() => session.getPageBounds(-1), /页码/);
+  await session.destroy();
+  await assert.rejects(() => session.getPageBounds(0), /关闭/);
 });

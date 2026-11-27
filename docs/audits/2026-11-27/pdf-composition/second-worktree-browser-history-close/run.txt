@@ -1,0 +1,44 @@
+[WebServer] (node:4224) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:4237) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+  ✘  1 [chromium] › e2e/office-studio-pdf-composition.spec.ts:47:1 › merges native pages and fields with editable marks, paired history, persistence, old-version export and two PDF reopens (12.2s)
+  ✓  2 [chromium] › e2e/office-studio-pdf-composition.spec.ts:94:1 › extracts radio pages with an explicit value policy, native V/DV checks, undo and repeated reopens (6.5s)
+  ✓  3 [chromium] › e2e/office-studio-pdf-composition.spec.ts:110:1 › keeps rejected field conflicts unchanged and verifies the actual merge and extraction dialogs in light, dark and 320px (4.5s)
+
+
+  1) [chromium] › e2e/office-studio-pdf-composition.spec.ts:47:1 › merges native pages and fields with editable marks, paired history, persistence, old-version export and two PDF reopens
+
+    Error: locator.click: Error: strict mode violation: getByRole('button', { name: '页面缩略图', exact: true }) resolved to 2 elements:
+        1) <button data-size="sm" data-part="root" class="zuvi-button" aria-pressed="false" data-variant="ghost">…</button> aka locator('[id="_r_a_"]').getByRole('button', { name: '页面缩略图' })
+        2) <button data-size="sm" data-part="root" class="zuvi-button" aria-pressed="false" data-variant="ghost">…</button> aka locator('[id="_r_i_"]').getByRole('button', { name: '页面缩略图' })
+
+    Call log:
+      - waiting for getByRole('button', { name: '页面缩略图', exact: true })
+
+
+      81 |   const historical = await PDFDocument.load(await exported(page, 'before-composition-history.pdf', history)); expect(historical.getPageCount()).toBe(3); expect(historical.getForm().getTextField('Text').getText()).toBe('合并前的中文'); expect(historical.getForm().getFields().some((field) => field.getName() === 'Text__2')).toBe(false);
+      82 |   await history.locator('[data-part=footer]').getByRole('button', { name: '关闭', exact: true }).click();
+    > 83 |   await page.getByRole('button', { name: '页面缩略图', exact: true }).click(); await expect(page.getByRole('button', { name: /PDF 第 \d+ 页缩略图/ })).toHaveCount(5);
+         |                                                                  ^
+      84 |   await page.screenshot({ path: path.join(audit, 'combined-light.png'), fullPage: true, animations: 'disabled' });
+      85 |   for (let round = 1; round <= 2; round++) {
+      86 |     const bytes = await exported(page, `combined-round-${round}.pdf`), native = await PDFDocument.load(bytes); expect(native.getPageCount()).toBe(5); expect(native.getForm().getTextField('Text').getText()).toBe('合并前的中文'); expect(native.getForm().getTextField('Text__2').getText()).toBe('Incoming'); expect(native.getForm().getTextField('Text').acroField.getWidgets()).toHaveLength(2);
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-composition.spec.ts:83:66
+
+    Error Context: test-results/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/office-studio-pdf-composition.spec.ts:47:1 › merges native pages and fields with editable marks, paired history, persistence, old-version export and two PDF reopens
+  2 passed (27.3s)

@@ -1,0 +1,11 @@
+[WebServer] (node:60543) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:60556) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+  ✓  1 [chromium] › e2e/office-studio-word-basic-format.spec.ts:103:1 › applies mixed and caret character formats, restores transactions and reopens two actual native DOCX exports (7.0s)
+  ✓  2 [chromium] › e2e/office-studio-word-basic-format.spec.ts:231:1 › keeps invalid and composing drafts unchanged, cancels them and verifies light dark 320px and readonly controls (2.9s)
+
+  2 passed (11.9s)

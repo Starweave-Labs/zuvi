@@ -1,0 +1,263 @@
+{
+  "hash": "d140a29b836d3ce801f8ddc9ac0c7ad37c3e5dd7c465b72361bfd096ca10e528",
+  "initial": {
+    "revision": 1,
+    "sourceHash": "d140a29b836d3ce801f8ddc9ac0c7ad37c3e5dd7c465b72361bfd096ca10e528",
+    "document": {
+      "version": 1,
+      "id": "ec138b95-00e2-48c1-b84e-60f65536e483",
+      "name": "Selectable-source.pdf",
+      "kind": "pdf",
+      "pageCount": 2,
+      "sourcePageCount": 2,
+      "pages": [
+        {
+          "id": "17ef1072-3163-471e-9d75-18ea43010e86",
+          "sourcePage": 0,
+          "bounds": {
+            "left": 40,
+            "bottom": 30,
+            "right": 440,
+            "top": 530
+          }
+        },
+        {
+          "id": "9cf5708c-e1f8-491e-8ed5-0df4535b7b3d",
+          "sourcePage": 1,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 320,
+            "top": 420
+          }
+        }
+      ],
+      "marks": [
+        {
+          "id": "red-no-rotate",
+          "nativeId": "red-no-rotate",
+          "page": 0,
+          "type": "rectangle",
+          "x": 220,
+          "y": 180,
+          "width": 60,
+          "height": 40,
+          "text": "red-no-rotate",
+          "size": 12,
+          "color": "#253044",
+          "lineWidth": 1
+        },
+        {
+          "id": "green-no-zoom",
+          "nativeId": "green-no-zoom",
+          "page": 0,
+          "type": "rectangle",
+          "x": 100,
+          "y": 100,
+          "width": 60,
+          "height": 40,
+          "text": "green-no-zoom",
+          "size": 12,
+          "color": "#253044",
+          "lineWidth": 1
+        },
+        {
+          "id": "blue-no-zoom-rotate",
+          "nativeId": "blue-no-zoom-rotate",
+          "page": 0,
+          "type": "rectangle",
+          "x": 320,
+          "y": 280,
+          "width": 60,
+          "height": 40,
+          "text": "blue-no-zoom-rotate",
+          "size": 12,
+          "color": "#253044",
+          "lineWidth": 1
+        },
+        {
+          "id": "single-alpha",
+          "nativeId": "single-alpha",
+          "page": 0,
+          "type": "highlight",
+          "x": 80,
+          "y": 250,
+          "width": 120,
+          "height": 20,
+          "text": "",
+          "size": 12,
+          "color": "#ffff00",
+          "lineWidth": 1
+        }
+      ],
+      "rotations": {},
+      "fields": [
+        {
+          "name": "source-field",
+          "readOnly": false,
+          "type": "text",
+          "value": "Field value",
+          "multiline": false,
+          "widgets": [
+            {
+              "page": 0,
+              "x": 249.5,
+              "y": 69.5,
+              "width": 131,
+              "height": 26,
+              "rotation": 0
+            }
+          ]
+        }
+      ],
+      "nativeAnnotations": {
+        "version": 1,
+        "sourceHash": "d140a29b836d3ce801f8ddc9ac0c7ad37c3e5dd7c465b72361bfd096ca10e528",
+        "bindings": [
+          {
+            "sourcePage": 0,
+            "nativePageId": "page:5cdee01479097e5f9a210eb59d3a6a42",
+            "uiPageId": "17ef1072-3163-471e-9d75-18ea43010e86"
+          },
+          {
+            "sourcePage": 1,
+            "nativePageId": "page:8e54af927e6704a7e85ebc69f4c58bb5",
+            "uiPageId": "9cf5708c-e1f8-491e-8ed5-0df4535b7b3d"
+          }
+        ],
+        "commands": []
+      }
+    }
+  },
+  "final": {
+    "revision": 1,
+    "sourceHash": "d140a29b836d3ce801f8ddc9ac0c7ad37c3e5dd7c465b72361bfd096ca10e528",
+    "document": {
+      "version": 1,
+      "id": "ec138b95-00e2-48c1-b84e-60f65536e483",
+      "name": "Selectable-source.pdf",
+      "kind": "pdf",
+      "pageCount": 2,
+      "sourcePageCount": 2,
+      "pages": [
+        {
+          "id": "17ef1072-3163-471e-9d75-18ea43010e86",
+          "sourcePage": 0,
+          "bounds": {
+            "left": 40,
+            "bottom": 30,
+            "right": 440,
+            "top": 530
+          }
+        },
+        {
+          "id": "9cf5708c-e1f8-491e-8ed5-0df4535b7b3d",
+          "sourcePage": 1,
+          "bounds": {
+            "left": 0,
+            "bottom": 0,
+            "right": 320,
+            "top": 420
+          }
+        }
+      ],
+      "marks": [
+        {
+          "id": "red-no-rotate",
+          "nativeId": "red-no-rotate",
+          "page": 0,
+          "type": "rectangle",
+          "x": 220,
+          "y": 180,
+          "width": 60,
+          "height": 40,
+          "text": "red-no-rotate",
+          "size": 12,
+          "color": "#253044",
+          "lineWidth": 1
+        },
+        {
+          "id": "green-no-zoom",
+          "nativeId": "green-no-zoom",
+          "page": 0,
+          "type": "rectangle",
+          "x": 100,
+          "y": 100,
+          "width": 60,
+          "height": 40,
+          "text": "green-no-zoom",
+          "size": 12,
+          "color": "#253044",
+          "lineWidth": 1
+        },
+        {
+          "id": "blue-no-zoom-rotate",
+          "nativeId": "blue-no-zoom-rotate",
+          "page": 0,
+          "type": "rectangle",
+          "x": 320,
+          "y": 280,
+          "width": 60,
+          "height": 40,
+          "text": "blue-no-zoom-rotate",
+          "size": 12,
+          "color": "#253044",
+          "lineWidth": 1
+        },
+        {
+          "id": "single-alpha",
+          "nativeId": "single-alpha",
+          "page": 0,
+          "type": "highlight",
+          "x": 80,
+          "y": 250,
+          "width": 120,
+          "height": 20,
+          "text": "",
+          "size": 12,
+          "color": "#ffff00",
+          "lineWidth": 1
+        }
+      ],
+      "rotations": {},
+      "fields": [
+        {
+          "name": "source-field",
+          "readOnly": false,
+          "type": "text",
+          "value": "Field value",
+          "multiline": false,
+          "widgets": [
+            {
+              "page": 0,
+              "x": 249.5,
+              "y": 69.5,
+              "width": 131,
+              "height": 26,
+              "rotation": 0
+            }
+          ]
+        }
+      ],
+      "nativeAnnotations": {
+        "version": 1,
+        "sourceHash": "d140a29b836d3ce801f8ddc9ac0c7ad37c3e5dd7c465b72361bfd096ca10e528",
+        "bindings": [
+          {
+            "sourcePage": 0,
+            "nativePageId": "page:5cdee01479097e5f9a210eb59d3a6a42",
+            "uiPageId": "17ef1072-3163-471e-9d75-18ea43010e86"
+          },
+          {
+            "sourcePage": 1,
+            "nativePageId": "page:8e54af927e6704a7e85ebc69f4c58bb5",
+            "uiPageId": "9cf5708c-e1f8-491e-8ed5-0df4535b7b3d"
+          }
+        ],
+        "commands": []
+      }
+    }
+  },
+  "copy": "SELECTABLE ORIGINAL\nAngled source text\nSecond source line",
+  "errors": []
+}

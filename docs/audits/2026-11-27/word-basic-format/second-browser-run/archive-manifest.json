@@ -1,0 +1,103 @@
+{
+  "reason": "Second browser run: actual UI operations and first native export passed; hex fill case assertion failed. Original template Title blue border and missing CJK font fallback retained for subsequent fixture/render QA correction; no product runtime change.",
+  "files": [
+    {
+      "path": "office-studio-word-basic-format.spec.ts.txt",
+      "bytes": 17655,
+      "sha256": "e5af721f4c2891ca28202d93d1a5311c1453929c444d72cf1999d6f4fc04ab50"
+    },
+    {
+      "path": "source.docx",
+      "bytes": 37023,
+      "sha256": "20bca06d49172dc1f554d25b121fd288a143ce9c3b6c996fc9c6b9e5b334bc39"
+    },
+    {
+      "path": "build-provenance.json",
+      "bytes": 1817,
+      "sha256": "73a4f9bee19773365eab6014d298a030c5ebec06316e42fdc7e6be09029094eb"
+    },
+    {
+      "path": "roundtrip-1.docx",
+      "bytes": 47809,
+      "sha256": "65cf610bbad2b136a0a67476027bc2d578bf5496f46fda6c2afa9f5c97ad6aa4"
+    },
+    {
+      "path": "controls-light.png",
+      "bytes": 117116,
+      "sha256": "fc8b0b30c0997624414828be4eff9372c36de8f2618c1f65bd383ace887f1569"
+    },
+    {
+      "path": "controls-dark.png",
+      "bytes": 117451,
+      "sha256": "9c14963be49a8104b9d2c4825a95aabca4e34e516a700f58892f7aa5d008ac22"
+    },
+    {
+      "path": "highlight-dark-320.png",
+      "bytes": 49834,
+      "sha256": "2de5ef1478237aca73df3f338432cecc2c9384feb746aa640a31fc61cebbab1a"
+    },
+    {
+      "path": "font-light-320.png",
+      "bytes": 41256,
+      "sha256": "ffe1663090d8d0d5057baa4b6a5e801b0fe63d19aa337a000fdc57595b58b0a3"
+    },
+    {
+      "path": "drafts-permissions-geometry.json",
+      "bytes": 44170,
+      "sha256": "365a89ad108ab8571c3e397bc9f091f1cb696d2e90a2aa4f2dbda1a5517ad49c"
+    },
+    {
+      "path": "run.txt.raw.gz",
+      "bytes": 996,
+      "sha256": "8c1e6746d51417ca0f77b8a296fd6efc3026d9173d125b7e638ba542f11a0a86",
+      "uncompressed": {
+        "bytes": 3247,
+        "sha256": "48ba39aab8b67fbe2348d96ae39c06d673529eb7ad6c08a968f223083b7f2f23"
+      }
+    },
+    {
+      "path": "run.txt",
+      "bytes": 3245,
+      "sha256": "86b7b3c9d8030bc4557863557657a39e4373196a6290c2053a9894af428bada6"
+    },
+    {
+      "path": "run.json",
+      "bytes": 11943,
+      "sha256": "97ce1b55c5dcdc6cd1a13a12013724f37445c3af13cf62483bf0aef160761517"
+    },
+    {
+      "path": "playwright/.last-run.json",
+      "bytes": 96,
+      "sha256": "fe12c5e16c7de484a40efa11e8706cf93f601f00f5d58e2b1c69669e892ed139"
+    },
+    {
+      "path": "playwright/office-studio-word-basic-f-d2d38--actual-native-DOCX-exports-chromium/trace.zip",
+      "bytes": 10502498,
+      "sha256": "556f5a06c1319e0775e863a9ac2a79c9a7c4a4feaa9ace1c9a379cd1895ca0f1"
+    },
+    {
+      "path": "playwright/office-studio-word-basic-f-d2d38--actual-native-DOCX-exports-chromium/error-context.md.raw.gz",
+      "bytes": 11193,
+      "sha256": "a6244a8369d00469056aa86ec486765e2c0c3dee523b3803c39a4661ba5ee679",
+      "uncompressed": {
+        "bytes": 53309,
+        "sha256": "ad426359655555fce464d2961eda026c63b28dd360484b87c6c608fda4bf72b3"
+      }
+    },
+    {
+      "path": "playwright/office-studio-word-basic-f-d2d38--actual-native-DOCX-exports-chromium/error-context.md",
+      "bytes": 53308,
+      "sha256": "abc8b60faf22508b87364489a7f621e2ee5fd284ef20145e796126e7503bb268"
+    },
+    {
+      "path": "source-render-before-font-review/page-1.png",
+      "bytes": 49973,
+      "sha256": "83b27b3b5db1fd19c34765756b94dc8b03096b845840b88ae3b78c8cc8592439"
+    },
+    {
+      "path": "source-render-before-font-review/source.pdf",
+      "bytes": 38036,
+      "sha256": "8a9a970127509714f5336863559cb43bc221581f16d07ef5cc479d481d648e67"
+    }
+  ]
+}

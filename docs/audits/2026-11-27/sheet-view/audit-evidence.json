@@ -1,0 +1,98 @@
+{
+  "item": "X064",
+  "acceptance": "25-400 author zoom, grid/headings visibility and native file view attributes",
+  "status": "specialist scope verified; parent whole-repository integration remains",
+  "distribution": [
+    {
+      "file": "StudioSheet-DtZGxBC4.js",
+      "sha256": "4dab9e6c80ed90daf81c187df2d688ce6c2a364f485c1c9d5d369e6276d29f6c",
+      "bytes": 250247
+    }
+  ],
+  "specSha256": "836da2b35da6e4bc2fcf4b49c088d6cf83dfb224981686248bec6087d5df4c41",
+  "browserStats": {
+    "startTime": "2026-11-26T22:38:04.066Z",
+    "duration": 67850.723,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "counts": {
+    "focusedUi": 31,
+    "nativeXlsx": 64,
+    "workspace": 38,
+    "browser": 3,
+    "independentNativeReopens": 2,
+    "printPages": 4,
+    "printUris": 1
+  },
+  "bundle": {
+    "staticGzip": 124131,
+    "budget": 124928,
+    "exitCode": 0
+  },
+  "coverage": [
+    {
+      "criterion": "model and ZUVI editing entry",
+      "status": "passed",
+      "evidence": ["focused/ui-tests.log", "browser-final/runner/results.json"]
+    },
+    {
+      "criterion": "read-only local preview and disabled commands",
+      "status": "passed",
+      "evidence": [
+        "focused/ui-tests.log",
+        "browser-preview-evidence.json",
+        "view-readonly-preview.xlsx"
+      ]
+    },
+    {
+      "criterion": "one transaction undo and redo",
+      "status": "passed",
+      "evidence": ["focused/ui-tests.log", "browser-final/runner/results.json"]
+    },
+    {
+      "criterion": "native import edit export reopen twice",
+      "status": "passed",
+      "evidence": [
+        "view-source.xlsx",
+        "view-roundtrip-1.xlsx",
+        "view-roundtrip-2.xlsx",
+        "browser-roundtrip-evidence.json",
+        "independent-native-evidence.json",
+        "focused/native-tests.log"
+      ]
+    },
+    {
+      "criterion": "light dark 1280 and 320px, frozen hidden merged grid and readable editor",
+      "status": "passed",
+      "evidence": [
+        "browser-visual-print-evidence.json",
+        "view-light-1280.png",
+        "view-dark-1280.png",
+        "view-light-320.png",
+        "view-dark-320.png",
+        "view-editor-320.png"
+      ]
+    },
+    {
+      "criterion": "document scale print independent of screen view",
+      "status": "passed",
+      "evidence": [
+        "view-print-100.html",
+        "view-print-400.html",
+        "view-print.pdf",
+        "independent-print-evidence.json",
+        "print-render/contact.png"
+      ]
+    }
+  ],
+  "limitations": [
+    "Native 10-24 zoom is retained; authoring is 25-400.",
+    "Primary split panes remain unsupported under the existing X063 contract.",
+    "Secondary window, RTL and page-layout metadata are preserved; this does not add multi-window or RTL/page-layout rendering controls.",
+    "Native printOptions/pageSetup are preserved independently; this is not complete X065 print authoring.",
+    "No ledger update or commit was made by this specialist."
+  ]
+}

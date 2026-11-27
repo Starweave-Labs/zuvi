@@ -1,0 +1,104 @@
+
+Running 3 tests using 1 worker
+
+  ✘  1 [chromium] › e2e/office-studio-pdf-composition.spec.ts:47:1 › merges native pages and fields with editable marks, paired history, persistence, old-version export and two PDF reopens (6.7s)
+  ✘  2 [chromium] › e2e/office-studio-pdf-composition.spec.ts:94:1 › extracts radio pages with an explicit value policy, native V/DV checks, undo and repeated reopens (2.0m)
+  ✘  3 [chromium] › e2e/office-studio-pdf-composition.spec.ts:110:1 › keeps rejected field conflicts unchanged and verifies the actual merge and extraction dialogs in light, dark and 320px (2.0m)
+
+
+  1) [chromium] › e2e/office-studio-pdf-composition.spec.ts:47:1 › merges native pages and fields with editable marks, paired history, persistence, old-version export and two PDF reopens
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator: getByRole('region', { name: 'PDF 页面编辑区', exact: true }).first()
+    Expected: "false"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveAttribute" getByRole('region', { name: 'PDF 页面编辑区', exact: true }).first() with timeout 5000ms
+      - waiting for getByRole('region', { name: 'PDF 页面编辑区', exact: true }).first()
+
+
+       9 | const hash = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');
+      10 | async function ready(page: Page) {
+    > 11 |   await expect(page.getByRole('region', { name: 'PDF 页面编辑区', exact: true }).first()).toHaveAttribute('aria-busy', 'false');
+         |                                                                                      ^
+      12 | }
+      13 | async function snapshot(page: Page) {
+      14 |   return page.evaluate(async () => {
+        at ready (/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-composition.spec.ts:11:86)
+        at imported (/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-composition.spec.ts:34:140)
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-composition.spec.ts:55:51
+
+    Error Context: test-results/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › e2e/office-studio-pdf-composition.spec.ts:94:1 › extracts radio pages with an explicit value policy, native V/DV checks, undo and repeated reopens
+
+    Test timeout of 120000ms exceeded.
+
+    Error: locator.click: Test timeout of 120000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: '提取 PDF 页面', exact: true })
+
+
+       97 |   radio.addOptionToPage('A', fixture.pages[0], { x: 40, y: 120, width: 20, height: 20 }); radio.addOptionToPage('B', fixture.pages[1], { x: 40, y: 120, width: 20, height: 20 }); radio.select('B'); radio.acroField.dict.set(PDFName.of('DV'), radio.acroField.getWidgets()[0].getOnValue()!);
+       98 |   const bytes = await fixture.bytes(); await writeFile(path.join(audit, 'radio-source.pdf'), bytes); await page.goto('/#/components/office-studio'); await imported(page, bytes, 'Radio.pdf'); const before = await snapshot(page);
+    >  99 |   await page.getByRole('button', { name: '提取 PDF 页面', exact: true }).click(); const dialog = page.getByRole('dialog', { name: '提取 PDF 页面', exact: true }); await dialog.getByLabel('提取 PDF 页码').fill('1'); await dialog.getByRole('button', { name: '应用 PDF 提取', exact: true }).click(); await expect(dialog.getByRole('alert')).toContainText('单选值'); expect((await snapshot(page)).sourceHash).toBe(before.sourceHash);
+          |                                                                      ^
+      100 |   const clearing = dialog.getByRole('checkbox', { name: '清除在所选页面中已无控件的单选值', exact: true }); await dialog.locator('label.zuvi-checkbox').filter({ has: clearing }).click(); await expect(clearing).toBeChecked(); await dialog.getByRole('button', { name: '应用 PDF 提取', exact: true }).click(); await expect(dialog).not.toBeVisible(); await ready(page); await save(page);
+      101 |   const extracted = await snapshot(page); expect(extracted.document.pageCount).toBe(1); expect(extracted.document.fields[0].value).toBe('');
+      102 |   let native = await PDFDocument.load(await exported(page, 'radio-cleared.pdf')), field = native.getForm().getRadioGroup('Choice'); expect(field.getSelected()).toBeUndefined(); expect(field.acroField.dict.lookup(PDFName.of('DV')).toString()).toBe(field.acroField.getWidgets()[0].getOnValue()!.toString());
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-composition.spec.ts:99:70
+
+    Error Context: test-results/office-studio-pdf-composit-0d74b-s-undo-and-repeated-reopens-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/office-studio-pdf-composit-0d74b-s-undo-and-repeated-reopens-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/office-studio-pdf-composit-0d74b-s-undo-and-repeated-reopens-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › e2e/office-studio-pdf-composition.spec.ts:110:1 › keeps rejected field conflicts unchanged and verifies the actual merge and extraction dialogs in light, dark and 320px
+
+    Test timeout of 120000ms exceeded.
+
+    Error: locator.click: Test timeout of 120000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: '合并 PDF 文件', exact: true })
+
+
+      39 | }
+      40 | async function merge(page: Page, bytes: Uint8Array, name: string) {
+    > 41 |   await page.getByRole('button', { name: '合并 PDF 文件', exact: true }).click();
+         |                                                                      ^
+      42 |   const dialog = page.getByRole('dialog', { name: '合并 PDF 文件', exact: true });
+      43 |   await dialog.getByLabel('选择合并 PDF 文件', { exact: true }).setInputFiles({ name, mimeType: 'application/pdf', buffer: Buffer.from(bytes) });
+      44 |   await expect(dialog.getByLabel('加入 PDF 页码', { exact: true })).toHaveValue('1-2'); return dialog;
+        at merge (/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-composition.spec.ts:41:70)
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-composition.spec.ts:114:22
+
+    Error Context: test-results/office-studio-pdf-composit-7c290-ogs-in-light-dark-and-320px-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/office-studio-pdf-composit-7c290-ogs-in-light-dark-and-320px-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/office-studio-pdf-composit-7c290-ogs-in-light-dark-and-320px-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    [chromium] › e2e/office-studio-pdf-composition.spec.ts:47:1 › merges native pages and fields with editable marks, paired history, persistence, old-version export and two PDF reopens
+    [chromium] › e2e/office-studio-pdf-composition.spec.ts:94:1 › extracts radio pages with an explicit value policy, native V/DV checks, undo and repeated reopens
+    [chromium] › e2e/office-studio-pdf-composition.spec.ts:110:1 › keeps rejected field conflicts unchanged and verifies the actual merge and extraction dialogs in light, dark and 320px

@@ -1,0 +1,73 @@
+[WebServer] (node:381) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:396) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+  ✘  1 [chromium] › e2e/office-studio-pdf-composition.spec.ts:47:1 › merges native pages and fields with editable marks, paired history, persistence, old-version export and two PDF reopens (12.4s)
+  ✘  2 [chromium] › e2e/office-studio-pdf-composition.spec.ts:94:1 › extracts radio pages with an explicit value policy, native V/DV checks, undo and repeated reopens (2.0m)
+  ✓  3 [chromium] › e2e/office-studio-pdf-composition.spec.ts:110:1 › keeps rejected field conflicts unchanged and verifies the actual merge and extraction dialogs in light, dark and 320px (4.6s)
+
+
+  1) [chromium] › e2e/office-studio-pdf-composition.spec.ts:47:1 › merges native pages and fields with editable marks, paired history, persistence, old-version export and two PDF reopens
+
+    Error: locator.click: Error: strict mode violation: getByRole('dialog', { name: '文档历史版本', exact: true }).getByRole('button', { name: '关闭', exact: true }) resolved to 2 elements:
+        1) <button type="button" aria-label="关闭" data-part="close" class="zuvi-modal-close">…</button> aka getByLabel('关闭')
+        2) <button type="button" data-size="md" data-part="root" class="zuvi-button" data-variant="outline">…</button> aka locator('button').filter({ hasText: '关闭' })
+
+    Call log:
+      - waiting for getByRole('dialog', { name: '文档历史版本', exact: true }).getByRole('button', { name: '关闭', exact: true })
+
+
+      80 |   await history.getByRole('button', { name: new RegExp(`^版本 ${before.revision} ·`) }).click(); await expect(history.getByLabel('PDF 页面表单 Text', { exact: true }).first()).toHaveValue('合并前的中文');
+      81 |   const historical = await PDFDocument.load(await exported(page, 'before-composition-history.pdf', history)); expect(historical.getPageCount()).toBe(3); expect(historical.getForm().getTextField('Text').getText()).toBe('合并前的中文'); expect(historical.getForm().getFields().some((field) => field.getName() === 'Text__2')).toBe(false);
+    > 82 |   await history.getByRole('button', { name: '关闭', exact: true }).click();
+         |                                                                  ^
+      83 |   await page.getByRole('button', { name: '页面缩略图', exact: true }).click(); await expect(page.getByRole('button', { name: /PDF 第 \d+ 页缩略图/ })).toHaveCount(5);
+      84 |   await page.screenshot({ path: path.join(audit, 'combined-light.png'), fullPage: true, animations: 'disabled' });
+      85 |   for (let round = 1; round <= 2; round++) {
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-composition.spec.ts:82:66
+
+    Error Context: test-results/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › e2e/office-studio-pdf-composition.spec.ts:94:1 › extracts radio pages with an explicit value policy, native V/DV checks, undo and repeated reopens
+
+    Test timeout of 120000ms exceeded.
+
+    Error: locator.click: Test timeout of 120000ms exceeded.
+    Call log:
+      - waiting for getByRole('dialog', { name: '提取 PDF 页面', exact: true }).locator('label.zuvi-checkbox').filter({ has: getByRole('dialog', { name: '提取 PDF 页面', exact: true }).getByRole('checkbox', { name: '清除在所选页面中已无控件的单选值', exact: true }) })
+
+
+       98 |   const bytes = await fixture.bytes(); await writeFile(path.join(audit, 'radio-source.pdf'), bytes); await page.goto('/#/components/office-studio'); await imported(page, bytes, 'Radio.pdf'); const before = await snapshot(page);
+       99 |   await page.getByRole('button', { name: '提取 PDF 页面', exact: true }).click(); const dialog = page.getByRole('dialog', { name: '提取 PDF 页面', exact: true }); await dialog.getByLabel('提取 PDF 页码').fill('1'); await dialog.getByRole('button', { name: '应用 PDF 提取', exact: true }).click(); await expect(dialog.getByRole('alert')).toContainText('单选值'); expect((await snapshot(page)).sourceHash).toBe(before.sourceHash);
+    > 100 |   const clearing = dialog.getByRole('checkbox', { name: '清除在所选页面中已无控件的单选值', exact: true }); await dialog.locator('label.zuvi-checkbox').filter({ has: clearing }).click(); await expect(clearing).toBeChecked(); await dialog.getByRole('button', { name: '应用 PDF 提取', exact: true }).click(); await expect(dialog).not.toBeVisible(); await ready(page); await save(page);
+          |                                                                                                                                                                   ^
+      101 |   const extracted = await snapshot(page); expect(extracted.document.pageCount).toBe(1); expect(extracted.document.fields[0].value).toBe('');
+      102 |   let native = await PDFDocument.load(await exported(page, 'radio-cleared.pdf')), field = native.getForm().getRadioGroup('Choice'); expect(field.getSelected()).toBeUndefined(); expect(field.acroField.dict.lookup(PDFName.of('DV')).toString()).toBe(field.acroField.getWidgets()[0].getOnValue()!.toString());
+      103 |   await page.getByRole('button', { name: '撤销', exact: true }).click(); await ready(page); await save(page); expect((await snapshot(page)).sourceHash).toBe(before.sourceHash); expect((await snapshot(page)).document.pageCount).toBe(2);
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-composition.spec.ts:100:163
+
+    Error Context: test-results/office-studio-pdf-composit-0d74b-s-undo-and-repeated-reopens-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/office-studio-pdf-composit-0d74b-s-undo-and-repeated-reopens-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/office-studio-pdf-composit-0d74b-s-undo-and-repeated-reopens-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › e2e/office-studio-pdf-composition.spec.ts:47:1 › merges native pages and fields with editable marks, paired history, persistence, old-version export and two PDF reopens
+    [chromium] › e2e/office-studio-pdf-composition.spec.ts:94:1 › extracts radio pages with an explicit value policy, native V/DV checks, undo and repeated reopens
+  1 passed (2.4m)

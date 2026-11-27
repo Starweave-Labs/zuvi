@@ -1,0 +1,9 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/studio-word-cell-measure.test.ts (11 tests) 52ms
+
+ Test Files  1 passed (1)
+      Tests  11 passed (11)
+   Start at  14:21:46
+   Duration  858ms (transform 97ms, setup 101ms, collect 130ms, tests 52ms, environment 309ms, prepare 45ms)

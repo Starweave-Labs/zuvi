@@ -1,0 +1,51 @@
+
+> @zuvi/react@1.1.0 build /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+> vite build
+
+vite v6.4.5 building for production...
+transforming...
+✓ 535 modules transformed.
+rendering chunks...
+
+[vite:dts] Start generate declaration files...
+[96msrc/components/OfficeStudio/StudioPdf.native-annotations.test.tsx[0m:[93m229[0m:[93m18[0m - [91merror[0m[90m TS7006: [0mParameter '_page' implicitly has an 'any' type.
+
+[7m229[0m         ? async (_page, container) => {
+[7m   [0m [91m                 ~~~~~[0m
+[96msrc/components/OfficeStudio/StudioPdf.native-annotations.test.tsx[0m:[93m229[0m:[93m25[0m - [91merror[0m[90m TS7006: [0mParameter 'container' implicitly has an 'any' type.
+
+[7m229[0m         ? async (_page, container) => {
+[7m   [0m [91m                        ~~~~~~~~~[0m
+
+computing gzip size...
+dist/style.css                      433.68 kB │ gzip:  56.14 kB
+dist/Type-Bd2OypNU.js                 0.29 kB │ gzip:   0.24 kB │ map:     1.28 kB
+dist/ZoomOut-BYIhLMhx.js              0.49 kB │ gzip:   0.28 kB │ map:     2.86 kB
+dist/index.js                         3.91 kB │ gzip:   1.75 kB │ map:     0.09 kB
+dist/StudioFontControl-MM0WIZqW.js    3.95 kB │ gzip:   1.90 kB │ map:    28.28 kB
+dist/DataGridView-B2yi-7Y4.js        16.93 kB │ gzip:   5.78 kB │ map:   134.34 kB
+dist/ChartView-BpAhf8BB.js           56.90 kB │ gzip:  17.76 kB │ map:   438.29 kB
+dist/GlobeScene-Bub3koJI.js         104.98 kB │ gzip:  39.40 kB │ map:   614.44 kB
+dist/StudioPdf-BcID4U53.js          122.37 kB │ gzip:  37.23 kB │ map:   813.98 kB
+dist/StudioSheet-DtZGxBC4.js        250.25 kB │ gzip:  78.09 kB │ map: 1,759.52 kB
+dist/StudioWord-Buvj5W_m.js         319.86 kB │ gzip:  91.67 kB │ map: 2,266.31 kB
+dist/index-B9w_GZc4.js              420.25 kB │ gzip: 122.38 kB │ map: 3,016.54 kB
+dist/globe-renderer-C47OlC6f.js     557.19 kB │ gzip: 135.07 kB │ map: 5,389.14 kB
+[vite:dts] Start rollup declaration files...
+Analysis will use the bundled TypeScript version 6.0.3
+[vite:dts] Declaration files built in 8817ms.
+
+dist/style.css                       433.68 kB │ gzip:  56.14 kB
+dist/Type-BqyaJC9N.cjs                 0.31 kB │ gzip:   0.25 kB │ map:     0.85 kB
+dist/ZoomOut-Cwn5RFEu.cjs              0.56 kB │ gzip:   0.29 kB │ map:     1.76 kB
+dist/StudioFontControl-Rd4hBUVT.cjs    4.37 kB │ gzip:   2.08 kB │ map:    14.87 kB
+dist/index.cjs                         5.08 kB │ gzip:   1.40 kB │ map:     0.09 kB
+dist/DataGridView-C5z-hPA1.cjs        17.23 kB │ gzip:   6.14 kB │ map:    69.59 kB
+dist/ChartView-SN1-bxLG.cjs           55.88 kB │ gzip:  18.60 kB │ map:   223.71 kB
+dist/GlobeScene-B5nm2brP.cjs         104.63 kB │ gzip:  40.82 kB │ map:   279.84 kB
+dist/StudioPdf-D6e9d6Nr.cjs          120.85 kB │ gzip:  38.16 kB │ map:   414.57 kB
+dist/StudioSheet-CqRb02S2.cjs        247.96 kB │ gzip:  80.83 kB │ map:   909.19 kB
+dist/StudioWord-CklsFcv6.cjs         317.25 kB │ gzip:  94.90 kB │ map: 1,083.06 kB
+dist/index-CYB333ZS.cjs              416.22 kB │ gzip: 129.54 kB │ map: 1,562.57 kB
+dist/globe-renderer-BCHyG_W8.cjs     549.96 kB │ gzip: 138.62 kB │ map: 2,919.05 kB
+✓ built in 17.80s

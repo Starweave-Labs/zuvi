@@ -1,0 +1,20 @@
+[WebServer] (node:7517) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:7542) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 10 tests using 1 worker
+
+[WebServer] [BABEL] Note: The code generator has deoptimised the styling of /var/folders/9n/_523pt1s3gqg0f165zsdbldc0000gn/T/zuvi-office-e2e-vite-5275-7485/deps/react-dom_client.js?v=12bde063 as it exceeds the max of 500KB.
+  ✓   1 [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:313:1 › P012 creates and formats CJK FreeText with transactional history, IME drafts, native AP and two reopens (23.7s)
+  ✓   2 [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:368:1 › P014 saves four text markers from actual original-text selections with exact native quads, alpha, removal and undo (21.5s)
+  ✓   3 [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:426:1 › P016 creates native shapes, arrow, polyline and ink through real pointers and edits fill, dash, ends and vertices (25.4s)
+  ✓   4 [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:481:1 › P012/P016 moving and resizing show ghosts, cancel without history and accept one undoable pointer transaction (16.3s)
+  ✓   5 [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:519:1 › P015 reads native notes, writes authored IRT replies and resolve/reopen state, and deletes replies/parents transactionally (25.4s)
+  ✓   6 [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:580:1 › legacy four-kind persisted documents migrate through the actual entry once and undo restores the original pair (8.3s)
+  ✓   7 [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:602:1 › nonempty persisted native recipe renders current copied AP/text/paint/thumbnail order without accepting or double-transforming the source (7.1s)
+  ✓   8 [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:637:1 › native read-only/locked commands and cancelling a pending CJK font preparation preserve source and history (4.9s)
+  ✓   9 [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:684:1 › all native families retain readable light/dark panes and 320px marker, discussion, line-end and polygon property layouts (3.8s)
+  ✓  10 [chromium] › e2e/office-studio-pdf-native-annotations.spec.ts:715:1 › explicit native none colors and border colors survive two PDF reopens and later opacity or line-width edits (21.3s)
+
+  10 passed (2.7m)

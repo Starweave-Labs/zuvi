@@ -1,0 +1,79 @@
+{
+  "document": {
+    "version": 1,
+    "id": "c7f308b7-7915-41d9-95d2-25a30c51f89a",
+    "name": "Font-cancellation.pdf",
+    "kind": "pdf",
+    "pageCount": 2,
+    "sourcePageCount": 2,
+    "pages": [
+      {
+        "id": "eed92773-8143-4215-bd63-9abd7fa40c2a",
+        "sourcePage": 0,
+        "bounds": {
+          "left": 0,
+          "bottom": 0,
+          "right": 500,
+          "top": 700
+        }
+      },
+      {
+        "id": "2501d35c-d2c1-467a-ac56-730720778781",
+        "sourcePage": 1,
+        "bounds": {
+          "left": 0,
+          "bottom": 0,
+          "right": 500,
+          "top": 700
+        }
+      }
+    ],
+    "marks": [],
+    "rotations": {},
+    "fields": [
+      {
+        "name": "reviewer",
+        "readOnly": false,
+        "type": "text",
+        "value": "Initial",
+        "multiline": false,
+        "widgets": [
+          {
+            "page": 0,
+            "x": 29.5,
+            "y": 29.5,
+            "width": 261,
+            "height": 31,
+            "rotation": 0
+          },
+          {
+            "page": 1,
+            "x": 29.5,
+            "y": 29.5,
+            "width": 261,
+            "height": 31,
+            "rotation": 0
+          }
+        ]
+      },
+      {
+        "name": "confirmed",
+        "readOnly": false,
+        "type": "checkbox",
+        "value": false,
+        "widgets": [
+          {
+            "page": 1,
+            "x": 319.5,
+            "y": 29.5,
+            "width": 21,
+            "height": 21,
+            "rotation": 0
+          }
+        ]
+      }
+    ]
+  },
+  "revision": 1,
+  "sourceHash": "78eb0a7b35b23c633d9e1f07b6beb58a572448254c408fe671ff12ac794bee4e"
+}

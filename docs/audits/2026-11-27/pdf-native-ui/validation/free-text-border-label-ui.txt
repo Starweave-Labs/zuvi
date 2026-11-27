@@ -1,0 +1,11 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/StudioPdf.native-annotations.test.tsx (30 tests) 3679ms
+   ✓ forwards the native editor through OfficeStudio and accepts one immutable source/model pair with transactional history 695ms
+
+ Test Files  1 passed (1)
+      Tests  30 passed (30)
+   Start at  07:42:55
+   Duration  4.98s (transform 463ms, setup 98ms, collect 697ms, tests 3.68s, environment 289ms, prepare 38ms)
+

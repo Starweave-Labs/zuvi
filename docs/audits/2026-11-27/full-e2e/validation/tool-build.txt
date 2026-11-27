@@ -1,0 +1,5 @@
+Scope: 2 of 9 workspace projects
+packages/cli build$ tsc -p tsconfig.json && node ../../registry/scripts/bundle.mjs cli
+packages/mcp build$ tsc -p tsconfig.json && node ../../registry/scripts/bundle.mjs mcp
+packages/mcp build: Done
+packages/cli build: Done

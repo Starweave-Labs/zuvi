@@ -1,0 +1,517 @@
+Scope: 8 of 9 workspace projects
+packages/cli build$ tsc -p tsconfig.json && node ../../registry/scripts/bundle.mjs cli
+packages/i18n build$ tsc -p tsconfig.json
+packages/icons build$ tsc -p tsconfig.json
+packages/mcp build$ tsc -p tsconfig.json && node ../../registry/scripts/bundle.mjs mcp
+packages/mcp build: Done
+packages/tokens build$ tsc -p tsconfig.json
+packages/i18n build: Done
+packages/cli build: Done
+packages/tokens build: Done
+packages/icons build: Done
+packages/ui build$ vite build
+packages/ui build: vite v6.4.5 building for production...
+packages/ui build: transforming...
+packages/ui build: ✓ 535 modules transformed.
+packages/ui build: rendering chunks...
+packages/ui build: [vite:dts] Start generate declaration files...
+packages/ui build: computing gzip size...
+packages/ui build: [96msrc/components/OfficeStudio/StudioSheet.visibility.test.tsx[0m:[93m57[0m:[93m8[0m - [91merror[0m[90m TS2322: [0mType '{ onChange: (next: StudioExcelDocument) => void; readOnly?: boolean | undefined; disabled?: boolean | undefined; document: StudioExcelDocument; }' is not assignable to type 'StudioEditorProps<StudioExcelDocument>'.
+packages/ui build:   Types of property 'disabled' are incompatible.
+packages/ui build:     Type 'boolean | undefined' is not assignable to type 'boolean'.
+packages/ui build:       Type 'undefined' is not assignable to type 'boolean'.
+packages/ui build: [7m57[0m       <StudioSheet
+packages/ui build: [7m  [0m [91m       ~~~~~~~~~~~[0m
+packages/ui build: [96msrc/components/OfficeStudio/StudioSheet.visibility.test.tsx[0m:[93m82[0m:[93m54[0m - [91merror[0m[90m TS2769: [0mNo overload matches this call.
+packages/ui build:   Overload 1 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement', gave the following error.
+packages/ui build:     Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+packages/ui build:   Overload 2 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement', gave the following error.
+packages/ui build:     Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+packages/ui build: [7m82[0m   fireEvent.click(screen.getByRole('button', { name, exact: true }));
+packages/ui build: [7m  [0m [91m                                                     ~~~~~[0m
+packages/ui build: [96msrc/components/OfficeStudio/StudioSheet.visibility.test.tsx[0m:[93m84[0m:[93m81[0m - [91merror[0m[90m TS2769: [0mNo overload matches this call.
+packages/ui build:   Overload 1 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement', gave the following error.
+packages/ui build:     Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+packages/ui build:   Overload 2 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement', gave the following error.
+packages/ui build:     Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+packages/ui build: [7m84[0m const cell = (address: string) => screen.getByRole('gridcell', { name: address, exact: true });
+packages/ui build: [7m  [0m [91m                                                                                ~~~~~[0m
+packages/ui build: [96msrc/components/OfficeStudio/StudioSheet.visibility.test.tsx[0m:[93m157[0m:[93m57[0m - [91merror[0m[90m TS2769: [0mNo overload matches this call.
+packages/ui build:   Overload 1 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement | null', gave the following error.
+packages/ui build:     Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+packages/ui build:   Overload 2 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement | null', gave the following error.
+packages/ui build:     Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+packages/ui build: [7m157[0m     expect(screen.queryByRole('gridcell', { name: 'B1', exact: true })).toBeNull();
+packages/ui build: [7m   [0m [91m                                                        ~~~~~[0m
+packages/ui build: [96msrc/components/OfficeStudio/StudioSheet.visibility.test.tsx[0m:[93m185[0m:[93m57[0m - [91merror[0m[90m TS2769: [0mNo overload matches this call.
+packages/ui build:   Overload 1 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement | null', gave the following error.
+packages/ui build:     Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+packages/ui build:   Overload 2 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement | null', gave the following error.
+packages/ui build:     Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+packages/ui build: [7m185[0m     expect(screen.queryByRole('gridcell', { name: 'A2', exact: true })).toBeNull();
+packages/ui build: [7m   [0m [91m                                                        ~~~~~[0m
+packages/ui build: [96msrc/components/OfficeStudio/StudioSheet.visibility.test.tsx[0m:[93m195[0m:[93m57[0m - [91merror[0m[90m TS2769: [0mNo overload matches this call.
+packages/ui build:   Overload 1 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement | null', gave the following error.
+packages/ui build:     Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+packages/ui build:   Overload 2 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement | null', gave the following error.
+packages/ui build:     Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+packages/ui build: [7m195[0m     expect(screen.queryByRole('gridcell', { name: 'A2', exact: true })).toBeNull();
+packages/ui build: [7m   [0m [91m                                                        ~~~~~[0m
+packages/ui build: [96msrc/components/OfficeStudio/StudioSheet.visibility.test.tsx[0m:[93m275[0m:[93m51[0m - [91merror[0m[90m TS2769: [0mNo overload matches this call.
+packages/ui build:   Overload 1 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement', gave the following error.
+packages/ui build:     Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+packages/ui build:   Overload 2 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement', gave the following error.
+packages/ui build:     Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+packages/ui build: [7m275[0m         expect(screen.getByRole('button', { name, exact: true })).toBeDisabled();
+packages/ui build: [7m   [0m [91m                                                  ~~~~~[0m
+packages/ui build: [96msrc/components/OfficeStudio/StudioSheet.visibility.test.tsx[0m:[93m282[0m:[93m54[0m - [91merror[0m[90m TS2769: [0mNo overload matches this call.
+packages/ui build:   Overload 1 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement', gave the following error.
+packages/ui build:     Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+packages/ui build:   Overload 2 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement', gave the following error.
+packages/ui build:     Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+packages/ui build: [7m282[0m     expect(screen.getByRole('button', { name: '隐藏列', exact: true })).toBeDisabled();
+packages/ui build: [7m   [0m [91m                                                     ~~~~~[0m
+packages/ui build: dist/style.css                      433.88 kB │ gzip:  56.17 kB
+packages/ui build: dist/Type-Bc0O5m_Q.js                 0.29 kB │ gzip:   0.24 kB │ map:     1.28 kB
+packages/ui build: dist/ZoomOut-DYOORq3b.js              0.49 kB │ gzip:   0.28 kB │ map:     2.86 kB
+packages/ui build: dist/index.js                         3.91 kB │ gzip:   1.75 kB │ map:     0.09 kB
+packages/ui build: dist/StudioFontControl-Du9k6vF2.js    3.95 kB │ gzip:   1.89 kB │ map:    28.28 kB
+packages/ui build: dist/DataGridView-Ck8xGpcp.js        16.93 kB │ gzip:   5.78 kB │ map:   134.34 kB
+packages/ui build: dist/ChartView-BneyqL1v.js           56.90 kB │ gzip:  17.76 kB │ map:   438.29 kB
+packages/ui build: dist/GlobeScene-B1Ceynpd.js         104.98 kB │ gzip:  39.40 kB │ map:   614.44 kB
+packages/ui build: dist/StudioPdf-yxvGhyW2.js          122.49 kB │ gzip:  37.26 kB │ map:   814.56 kB
+packages/ui build: dist/StudioSheet-DEb8Kp8c.js        253.00 kB │ gzip:  78.75 kB │ map: 1,773.33 kB
+packages/ui build: dist/StudioWord-Bmx1n9ij.js         320.42 kB │ gzip:  91.83 kB │ map: 2,268.38 kB
+packages/ui build: dist/index-LfdMCNwB.js              420.25 kB │ gzip: 122.38 kB │ map: 3,016.54 kB
+packages/ui build: dist/globe-renderer-Dylxt0_e.js     557.19 kB │ gzip: 135.07 kB │ map: 5,389.14 kB
+packages/ui build: [vite:dts] Start rollup declaration files...
+packages/ui build: Analysis will use the bundled TypeScript version 6.0.3
+packages/ui build: [vite:dts] Declaration files built in 23718ms.
+packages/ui build: dist/style.css                       433.88 kB │ gzip:  56.17 kB
+packages/ui build: dist/Type-CIzdHAHn.cjs                 0.31 kB │ gzip:   0.25 kB │ map:     0.85 kB
+packages/ui build: dist/ZoomOut-D66ONLWX.cjs              0.56 kB │ gzip:   0.29 kB │ map:     1.76 kB
+packages/ui build: dist/StudioFontControl-z-4AInQl.cjs    4.37 kB │ gzip:   2.08 kB │ map:    14.87 kB
+packages/ui build: dist/index.cjs                         5.08 kB │ gzip:   1.40 kB │ map:     0.09 kB
+packages/ui build: dist/DataGridView-ce6NZDnE.cjs        17.23 kB │ gzip:   6.14 kB │ map:    69.59 kB
+packages/ui build: dist/ChartView-B32SbEDm.cjs           55.88 kB │ gzip:  18.60 kB │ map:   223.71 kB
+packages/ui build: dist/GlobeScene-8RWDgADB.cjs         104.63 kB │ gzip:  40.82 kB │ map:   279.84 kB
+packages/ui build: dist/StudioPdf-rwXxUtD7.cjs          120.97 kB │ gzip:  38.19 kB │ map:   414.84 kB
+packages/ui build: dist/StudioSheet-hD6lhWe4.cjs        250.63 kB │ gzip:  81.43 kB │ map:   918.59 kB
+packages/ui build: dist/StudioWord-BNOk4gg8.cjs         317.81 kB │ gzip:  95.10 kB │ map: 1,084.94 kB
+packages/ui build: dist/index-BM5113dE.cjs              416.22 kB │ gzip: 129.54 kB │ map: 1,562.57 kB
+packages/ui build: dist/globe-renderer-DAIdG9c5.cjs     549.96 kB │ gzip: 138.63 kB │ map: 2,919.05 kB
+packages/ui build: ✓ built in 46.89s
+packages/ui build: Done
+packages/blocks build$ tsc -p tsconfig.json
+packages/blocks build: Done
+docs build$ vite build
+docs build: vite v6.4.5 building for production...
+docs build: transforming...
+docs build: ✓ 972 modules transformed.
+docs build: rendering chunks...
+docs build: [plugin vite:reporter] 
+docs build: (!) /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/builder/builder-data-sources.ts is dynamically imported by /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/builder/BuilderSourcesPanel.tsx but also statically imported by /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/builder/BuilderSourcesPanel.tsx, /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/builder/builder-model.ts, /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/builder/builder-scene-runtime.tsx, /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/src/pages/builder/builder-scene-templates.ts, dynamic import will not move module into another chunk.
+docs build: computing gzip size...
+docs build: dist/office-pdf-assets/cmaps/CNS2-V.bcmap                                0.09 kB
+docs build: dist/office-pdf-assets/cmaps/Roman.bcmap                                 0.10 kB
+docs build: dist/office-pdf-assets/cmaps/Katakana.bcmap                              0.10 kB
+docs build: dist/office-pdf-assets/cmaps/ETenms-B5-H.bcmap                           0.10 kB
+docs build: dist/office-pdf-assets/cmaps/UniJIS-UCS2-HW-H.bcmap                      0.12 kB
+docs build: dist/office-pdf-assets/cmaps/Hiragana.bcmap                              0.12 kB
+docs build: dist/office-pdf-assets/cmaps/Hankaku.bcmap                               0.13 kB
+docs build: dist/office-pdf-assets/cmaps/B5-V.bcmap                                  0.14 kB
+docs build: dist/office-pdf-assets/cmaps/CNS1-V.bcmap                                0.14 kB
+docs build: dist/office-pdf-assets/cmaps/B5pc-V.bcmap                                0.14 kB
+docs build: dist/office-pdf-assets/cmaps/HKdla-B5-V.bcmap                            0.15 kB
+docs build: dist/office-pdf-assets/cmaps/HKdlb-B5-V.bcmap                            0.15 kB
+docs build: dist/office-pdf-assets/cmaps/HKgccs-B5-V.bcmap                           0.15 kB
+docs build: dist/office-pdf-assets/cmaps/HKm314-B5-V.bcmap                           0.15 kB
+docs build: dist/office-pdf-assets/cmaps/HKm471-B5-V.bcmap                           0.15 kB
+docs build: dist/office-pdf-assets/cmaps/UniCNS-UCS2-V.bcmap                         0.16 kB
+docs build: dist/office-pdf-assets/cmaps/UniCNS-UTF16-V.bcmap                        0.16 kB
+docs build: dist/office-pdf-assets/cmaps/UniCNS-UTF8-V.bcmap                         0.16 kB
+docs build: dist/office-pdf-assets/cmaps/ETHK-B5-V.bcmap                             0.16 kB
+docs build: dist/office-pdf-assets/cmaps/ETen-B5-V.bcmap                             0.16 kB
+docs build: dist/office-pdf-assets/cmaps/HKscs-B5-V.bcmap                            0.16 kB
+docs build: dist/office-pdf-assets/cmaps/KSC-V.bcmap                                 0.16 kB
+docs build: dist/office-pdf-assets/cmaps/UniCNS-UTF32-V.bcmap                        0.16 kB
+docs build: dist/office-pdf-assets/cmaps/KSC-EUC-V.bcmap                             0.16 kB
+docs build: dist/office-pdf-assets/cmaps/UniKS-UTF16-V.bcmap                         0.16 kB
+docs build: dist/office-pdf-assets/cmaps/KSC-Johab-V.bcmap                           0.17 kB
+docs build: dist/office-pdf-assets/cmaps/KSCms-UHC-V.bcmap                           0.17 kB
+docs build: dist/office-pdf-assets/cmaps/KSCpc-EUC-V.bcmap                           0.17 kB
+docs build: dist/office-pdf-assets/cmaps/V.bcmap                                     0.17 kB
+docs build: dist/office-pdf-assets/cmaps/UniKS-UTF32-V.bcmap                         0.17 kB
+docs build: dist/office-pdf-assets/cmaps/78-V.bcmap                                  0.17 kB
+docs build: dist/office-pdf-assets/cmaps/KSCms-UHC-HW-V.bcmap                        0.17 kB
+docs build: dist/office-pdf-assets/cmaps/UniKS-UTF8-V.bcmap                          0.17 kB
+docs build: dist/office-pdf-assets/cmaps/EUC-V.bcmap                                 0.17 kB
+docs build: dist/office-pdf-assets/cmaps/RKSJ-V.bcmap                                0.17 kB
+docs build: dist/office-pdf-assets/cmaps/ETenms-B5-V.bcmap                           0.17 kB
+docs build: dist/office-pdf-assets/cmaps/78-EUC-V.bcmap                              0.17 kB
+docs build: dist/office-pdf-assets/cmaps/78-RKSJ-V.bcmap                             0.17 kB
+docs build: dist/office-pdf-assets/cmaps/GB-V.bcmap                                  0.18 kB
+docs build: dist/office-pdf-assets/cmaps/GBT-V.bcmap                                 0.18 kB
+docs build: dist/office-pdf-assets/cmaps/UniGB-UTF16-V.bcmap                         0.18 kB
+docs build: dist/office-pdf-assets/cmaps/UniKS-UCS2-V.bcmap                          0.18 kB
+docs build: dist/office-pdf-assets/cmaps/GB-EUC-V.bcmap                              0.18 kB
+docs build: dist/office-pdf-assets/cmaps/WP-Symbol.bcmap                             0.18 kB
+docs build: dist/office-pdf-assets/cmaps/GBK-EUC-V.bcmap                             0.18 kB
+docs build: dist/office-pdf-assets/cmaps/GBT-EUC-V.bcmap                             0.18 kB
+docs build: dist/office-pdf-assets/cmaps/GBKp-EUC-V.bcmap                            0.18 kB
+docs build: dist/office-pdf-assets/cmaps/GBpc-EUC-V.bcmap                            0.18 kB
+docs build: dist/office-pdf-assets/cmaps/UniGB-UTF8-V.bcmap                          0.18 kB
+docs build: dist/office-pdf-assets/cmaps/GBTpc-EUC-V.bcmap                           0.18 kB
+docs build: dist/office-pdf-assets/cmaps/UniGB-UTF32-V.bcmap                         0.18 kB
+docs build: dist/office-pdf-assets/cmaps/UniGB-UCS2-V.bcmap                          0.19 kB
+docs build: dist/office-pdf-assets/cmaps/Ext-V.bcmap                                 0.22 kB
+docs build: dist/office-pdf-assets/cmaps/Adobe-GB1-0.bcmap                           0.22 kB
+docs build: dist/office-pdf-assets/cmaps/Ext-RKSJ-V.bcmap                            0.22 kB
+docs build: dist/office-pdf-assets/cmaps/GBK2K-V.bcmap                               0.22 kB
+docs build: dist/office-pdf-assets/cmaps/Adobe-Japan1-0.bcmap                        0.23 kB
+docs build: dist/office-pdf-assets/cmaps/Adobe-Japan1-1.bcmap                        0.23 kB
+docs build: dist/office-pdf-assets/cmaps/Adobe-Japan1-2.bcmap                        0.23 kB
+docs build: dist/office-pdf-assets/cmaps/Adobe-Korea1-0.bcmap                        0.24 kB
+docs build: dist/office-pdf-assets/cmaps/Adobe-Japan1-3.bcmap                        0.24 kB
+docs build: dist/office-pdf-assets/cmaps/Adobe-GB1-1.bcmap                           0.25 kB
+docs build: dist/office-pdf-assets/cmaps/NWP-V.bcmap                                 0.25 kB
+docs build: dist/office-pdf-assets/cmaps/90pv-RKSJ-V.bcmap                           0.26 kB
+docs build: dist/office-pdf-assets/cmaps/Add-V.bcmap                                 0.28 kB
+docs build: dist/office-pdf-assets/cmaps/Add-RKSJ-V.bcmap                            0.29 kB
+docs build: dist/office-pdf-assets/cmaps/78ms-RKSJ-V.bcmap                           0.29 kB
+docs build: dist/office-pdf-assets/cmaps/90ms-RKSJ-V.bcmap                           0.29 kB
+docs build: dist/office-pdf-assets/cmaps/90msp-RKSJ-V.bcmap                          0.29 kB
+docs build: dist/office-pdf-assets/cmaps/Adobe-CNS1-0.bcmap                          0.32 kB
+docs build: dist/office-pdf-assets/cmaps/Adobe-Japan1-4.bcmap                        0.34 kB
+docs build: dist/office-pdf-assets/cmaps/Adobe-CNS1-1.bcmap                          0.37 kB
+docs build: dist/office-pdf-assets/cmaps/Adobe-CNS1-2.bcmap                          0.38 kB
+docs build: dist/office-pdf-assets/cmaps/Adobe-Korea1-1.bcmap                        0.39 kB
+docs build: dist/office-pdf-assets/cmaps/Adobe-Korea1-2.bcmap                        0.39 kB
+docs build: dist/office-pdf-assets/cmaps/Adobe-CNS1-3.bcmap                          0.40 kB
+docs build: dist/office-pdf-assets/cmaps/Adobe-CNS1-4.bcmap                          0.41 kB
+docs build: dist/office-pdf-assets/cmaps/Adobe-CNS1-5.bcmap                          0.41 kB
+docs build: dist/office-pdf-assets/cmaps/Adobe-CNS1-6.bcmap                          0.41 kB
+docs build: dist/office-pdf-assets/cmaps/Adobe-Japan1-5.bcmap                        0.43 kB
+docs build: dist/office-pdf-assets/cmaps/Adobe-GB1-2.bcmap                           0.47 kB
+docs build: dist/office-pdf-assets/cmaps/Adobe-GB1-3.bcmap                           0.47 kB
+docs build: dist/office-pdf-assets/cmaps/Adobe-Japan1-6.bcmap                        0.49 kB
+docs build: dist/office-pdf-assets/cmaps/CNS2-H.bcmap                                0.50 kB
+docs build: dist/office-pdf-assets/cmaps/GB-H.bcmap                                  0.53 kB
+docs build: dist/office-pdf-assets/cmaps/RKSJ-H.bcmap                                0.53 kB
+docs build: dist/office-pdf-assets/cmaps/GB-EUC-H.bcmap                              0.55 kB
+docs build: dist/office-pdf-assets/cmaps/H.bcmap                                     0.55 kB
+docs build: dist/office-pdf-assets/wasm/LICENSE_PDFJS_JBIG2                          0.56 kB
+docs build: dist/office-pdf-assets/cmaps/GBpc-EUC-H.bcmap                            0.56 kB
+docs build: dist/office-pdf-assets/cmaps/EUC-H.bcmap                                 0.58 kB
+docs build: dist/office-pdf-assets/cmaps/Adobe-GB1-4.bcmap                           0.60 kB
+docs build: dist/office-pdf-assets/cmaps/Adobe-GB1-5.bcmap                           0.63 kB
+docs build: dist/office-pdf-assets/cmaps/UniJIS-UTF16-V.bcmap                        0.64 kB
+docs build: dist/office-pdf-assets/cmaps/UniJIS2004-UTF16-V.bcmap                    0.65 kB
+docs build: dist/office-pdf-assets/cmaps/UniJIS-UCS2-V.bcmap                         0.66 kB
+docs build: dist/office-pdf-assets/cmaps/UniJIS-UTF32-V.bcmap                        0.68 kB
+docs build: dist/office-pdf-assets/cmaps/UniJIS-UTF8-V.bcmap                         0.68 kB
+docs build: dist/office-pdf-assets/cmaps/UniJIS-UCS2-HW-V.bcmap                      0.68 kB
+docs build: dist/office-pdf-assets/cmaps/UniJIS2004-UTF32-V.bcmap                    0.68 kB
+docs build: dist/office-pdf-assets/cmaps/UniJIS2004-UTF8-V.bcmap                     0.68 kB
+docs build: dist/office-pdf-assets/cmaps/UniJISX0213-UTF32-V.bcmap                   0.68 kB
+docs build: dist/office-pdf-assets/cmaps/UniJISX02132004-UTF32-V.bcmap               0.69 kB
+docs build: dist/office-pdf-assets/cmaps/UniJISPro-UCS2-V.bcmap                      0.69 kB
+docs build: dist/index.html                                                          0.70 kB │ gzip:   0.45 kB
+docs build: dist/office-pdf-assets/cmaps/UniJISPro-UCS2-HW-V.bcmap                   0.71 kB
+docs build: dist/office-pdf-assets/cmaps/CNS1-H.bcmap                                0.71 kB
+docs build: dist/office-pdf-assets/cmaps/90msp-RKSJ-H.bcmap                          0.72 kB
+docs build: dist/office-pdf-assets/cmaps/90ms-RKSJ-H.bcmap                           0.72 kB
+docs build: dist/office-pdf-assets/cmaps/UniJISPro-UTF8-V.bcmap                      0.73 kB
+docs build: dist/office-pdf-assets/cmaps/83pv-RKSJ-H.bcmap                           0.91 kB
+docs build: dist/office-pdf-assets/cmaps/90pv-RKSJ-H.bcmap                           0.98 kB
+docs build: dist/office-pdf-assets/wasm/LICENSE_PDFJS_QCMS                           1.04 kB
+docs build: dist/office-pdf-assets/wasm/LICENSE_PDFJS_QUICKJS                        1.08 kB
+docs build: dist/office-pdf-assets/cmaps/B5-H.bcmap                                  1.09 kB
+docs build: dist/office-pdf-assets/cmaps/B5pc-H.bcmap                                1.10 kB
+docs build: dist/office-pdf-assets/wasm/LICENSE_QCMS                                 1.12 kB
+docs build: dist/office-pdf-assets/cmaps/ETen-B5-H.bcmap                             1.13 kB
+docs build: dist/office-pdf-assets/wasm/LICENSE_QUICKJS                              1.13 kB
+docs build: dist/office-pdf-assets/wasm/LICENSE_PDFJS_OPENJPEG                       1.29 kB
+docs build: dist/office-pdf-assets/standard_fonts/LICENSE_FOXIT                      1.55 kB
+docs build: dist/office-pdf-assets/cmaps/HKm314-B5-H.bcmap                           1.77 kB
+docs build: dist/office-pdf-assets/cmaps/CNS-EUC-H.bcmap                             1.78 kB
+docs build: dist/office-pdf-assets/cmaps/KSC-H.bcmap                                 1.83 kB
+docs build: dist/office-pdf-assets/cmaps/KSC-EUC-H.bcmap                             1.85 kB
+docs build: dist/office-pdf-assets/cmaps/CNS-EUC-V.bcmap                             1.92 kB
+docs build: dist/office-pdf-assets/cmaps/KSCpc-EUC-H.bcmap                           2.02 kB
+docs build: dist/office-pdf-assets/cmaps/LICENSE                                     2.08 kB
+docs build: dist/office-pdf-assets/wasm/LICENSE_OPENJPEG                             2.11 kB
+docs build: dist/office-pdf-assets/cmaps/HKm471-B5-H.bcmap                           2.17 kB
+docs build: dist/office-pdf-assets/cmaps/HKgccs-B5-H.bcmap                           2.29 kB
+docs build: dist/office-pdf-assets/cmaps/78-H.bcmap                                  2.38 kB
+docs build: dist/office-pdf-assets/cmaps/78-RKSJ-H.bcmap                             2.40 kB
+docs build: dist/office-pdf-assets/cmaps/78-EUC-H.bcmap                              2.40 kB
+docs build: dist/office-pdf-assets/cmaps/Add-RKSJ-H.bcmap                            2.41 kB
+docs build: dist/office-pdf-assets/cmaps/HKdlb-B5-H.bcmap                            2.41 kB
+docs build: dist/office-pdf-assets/cmaps/Add-H.bcmap                                 2.42 kB
+docs build: dist/office-pdf-assets/cmaps/Ext-H.bcmap                                 2.54 kB
+docs build: dist/office-pdf-assets/cmaps/Ext-RKSJ-H.bcmap                            2.54 kB
+docs build: dist/office-pdf-assets/cmaps/78ms-RKSJ-H.bcmap                           2.65 kB
+docs build: dist/office-pdf-assets/cmaps/HKdla-B5-H.bcmap                            2.65 kB
+docs build: dist/office-pdf-assets/cmaps/NWP-H.bcmap                                 2.77 kB
+docs build: dist/office-pdf-assets/cmaps/KSCms-UHC-H.bcmap                           2.79 kB
+docs build: dist/office-pdf-assets/cmaps/KSCms-UHC-HW-H.bcmap                        2.79 kB
+docs build: dist/office-pdf-assets/NotoSansSC-OFL.txt                                4.31 kB │ gzip:   1.93 kB
+docs build: dist/office-pdf-assets/cmaps/ETHK-B5-H.bcmap                             4.43 kB
+docs build: dist/office-pdf-assets/cmaps/HKscs-B5-H.bcmap                            4.44 kB
+docs build: dist/office-pdf-assets/wasm/quickjs-eval.js                              6.23 kB
+docs build: dist/office-pdf-assets/cmaps/GBT-H.bcmap                                 7.27 kB
+docs build: dist/office-pdf-assets/cmaps/GBT-EUC-H.bcmap                             7.29 kB
+docs build: dist/office-pdf-assets/cmaps/GBTpc-EUC-H.bcmap                           7.30 kB
+docs build: dist/office-pdf-assets/wasm/LICENSE_JBIG2                               12.86 kB
+docs build: dist/office-pdf-assets/cmaps/GBKp-EUC-H.bcmap                           14.69 kB
+docs build: dist/office-pdf-assets/cmaps/GBK-EUC-H.bcmap                            14.69 kB
+docs build: dist/office-pdf-assets/standard_fonts/FoxitSymbol.pfb                   16.73 kB
+docs build: dist/office-pdf-assets/cmaps/KSC-Johab-H.bcmap                          16.79 kB
+docs build: dist/office-pdf-assets/standard_fonts/FoxitFixed.pfb                    17.60 kB
+docs build: dist/office-pdf-assets/standard_fonts/FoxitFixedBold.pfb                18.06 kB
+docs build: dist/office-pdf-assets/standard_fonts/FoxitFixedItalic.pfb              18.75 kB
+docs build: dist/office-pdf-assets/standard_fonts/FoxitFixedBoldItalic.pfb          19.15 kB
+docs build: dist/office-pdf-assets/standard_fonts/FoxitSerifBold.pfb                19.40 kB
+docs build: dist/office-pdf-assets/standard_fonts/FoxitSerif.pfb                    19.47 kB
+docs build: dist/office-pdf-assets/cmaps/GBK2K-H.bcmap                              19.66 kB
+docs build: dist/office-pdf-assets/standard_fonts/FoxitSerifBoldItalic.pfb          20.73 kB
+docs build: dist/office-pdf-assets/standard_fonts/FoxitSerifItalic.pfb              21.23 kB
+docs build: dist/office-pdf-assets/standard_fonts/LICENSE_LIBERATION                22.15 kB
+docs build: dist/office-pdf-assets/cmaps/Adobe-Korea1-UCS2.bcmap                    23.29 kB
+docs build: dist/office-pdf-assets/cmaps/UniJIS-UCS2-H.bcmap                        25.44 kB
+docs build: dist/office-pdf-assets/cmaps/UniKS-UCS2-H.bcmap                         25.78 kB
+docs build: dist/office-pdf-assets/cmaps/UniKS-UTF16-H.bcmap                        26.33 kB
+docs build: dist/office-pdf-assets/cmaps/UniKS-UTF32-H.bcmap                        26.45 kB
+docs build: dist/office-pdf-assets/cmaps/UniKS-UTF8-H.bcmap                         27.79 kB
+docs build: dist/office-pdf-assets/standard_fonts/FoxitDingbats.pfb                 29.51 kB
+docs build: dist/office-pdf-assets/cmaps/Adobe-GB1-UCS2.bcmap                       33.97 kB
+docs build: dist/office-pdf-assets/cmaps/UniJIS-UTF16-H.bcmap                       39.44 kB
+docs build: dist/office-pdf-assets/cmaps/UniJIS2004-UTF16-H.bcmap                   39.53 kB
+docs build: dist/office-pdf-assets/cmaps/UniJISX0213-UTF32-H.bcmap                  40.52 kB
+docs build: dist/office-pdf-assets/cmaps/UniJIS-UTF32-H.bcmap                       40.54 kB
+docs build: dist/office-pdf-assets/cmaps/UniJISX02132004-UTF32-H.bcmap              40.61 kB
+docs build: dist/office-pdf-assets/cmaps/UniJIS2004-UTF32-H.bcmap                   40.63 kB
+docs build: dist/office-pdf-assets/cmaps/Adobe-Japan1-UCS2.bcmap                    40.95 kB
+docs build: dist/office-pdf-assets/cmaps/Adobe-CNS1-UCS2.bcmap                      41.19 kB
+docs build: dist/office-pdf-assets/cmaps/UniJIS-UTF8-H.bcmap                        41.70 kB
+docs build: dist/office-pdf-assets/cmaps/UniJIS2004-UTF8-H.bcmap                    41.78 kB
+docs build: dist/office-pdf-assets/cmaps/UniGB-UCS2-H.bcmap                         43.37 kB
+docs build: dist/office-pdf-assets/cmaps/UniGB-UTF16-H.bcmap                        44.09 kB
+docs build: dist/office-pdf-assets/cmaps/UniGB-UTF32-H.bcmap                        45.74 kB
+docs build: dist/office-pdf-assets/cmaps/UniGB-UTF8-H.bcmap                         46.84 kB
+docs build: dist/office-pdf-assets/cmaps/UniCNS-UCS2-H.bcmap                        48.28 kB
+docs build: dist/office-pdf-assets/cmaps/UniCNS-UTF16-H.bcmap                       50.42 kB
+docs build: dist/office-pdf-assets/cmaps/UniCNS-UTF32-H.bcmap                       52.68 kB
+docs build: dist/office-pdf-assets/cmaps/UniCNS-UTF8-H.bcmap                        53.63 kB
+docs build: dist/office-pdf-assets/wasm/qcms_bg.wasm                                96.59 kB │ gzip:  35.85 kB
+docs build: dist/office-pdf-assets/wasm/jbig2.wasm                                 103.67 kB │ gzip:  41.22 kB
+docs build: dist/office-pdf-assets/wasm/jbig2_nowasm_fallback.js                   132.44 kB
+docs build: dist/office-pdf-assets/standard_fonts/LiberationSans-BoldItalic.ttf    135.12 kB
+docs build: dist/office-pdf-assets/standard_fonts/LiberationSans-Bold.ttf          137.05 kB
+docs build: dist/office-pdf-assets/standard_fonts/LiberationSans-Regular.ttf       139.51 kB
+docs build: dist/office-pdf-assets/standard_fonts/LiberationSans-Italic.ttf        162.04 kB
+docs build: dist/office-pdf-assets/wasm/openjpeg.wasm                              220.82 kB │ gzip:  71.22 kB
+docs build: dist/office-pdf-assets/wasm/openjpeg_nowasm_fallback.js                338.46 kB
+docs build: dist/office-pdf-assets/wasm/quickjs-eval.wasm                          469.11 kB │ gzip: 218.89 kB
+docs build: dist/assets/pdf.worker.min-CIqJB0yW.mjs                              1,271.92 kB
+docs build: dist/office-pdf-assets/NotoSansSC.ttf                                2,522.50 kB
+docs build: dist/assets/OfficeEditorPage-CybkLCUy.css                                1.39 kB │ gzip:   0.40 kB
+docs build: dist/assets/IconGalleryPage-DKpUSCQM.css                                 1.91 kB │ gzip:   0.70 kB
+docs build: dist/assets/OfficeStudioPage-WZgkgkJk.css                                2.86 kB │ gzip:   0.80 kB
+docs build: dist/assets/DataGridPrototype-D99xUbCa.css                               3.54 kB │ gzip:   0.95 kB
+docs build: dist/assets/ChartPage-D6YUDZ3U.css                                       4.42 kB │ gzip:   1.05 kB
+docs build: dist/assets/ThemePlayground-ExGdShLS.css                                 5.84 kB │ gzip:   0.99 kB
+docs build: dist/assets/AdminShellPrototype-B_9zYA76.css                             7.02 kB │ gzip:   1.68 kB
+docs build: dist/assets/SplitterPrototype-5NKd4amH.css                               8.05 kB │ gzip:   1.75 kB
+docs build: dist/assets/GlobePage-Be6Po3MH.css                                       8.35 kB │ gzip:   1.57 kB
+docs build: dist/assets/BlocksPage-qTC6jY85.css                                     11.12 kB │ gzip:   2.24 kB
+docs build: dist/assets/OfficeWorkbench-IQILFgil.css                                14.12 kB │ gzip:   2.76 kB
+docs build: dist/assets/ChartSection-B-vb3q2u.css                                   26.12 kB │ gzip:   4.54 kB
+docs build: dist/assets/LabPage-CSwLKzdW.css                                        26.72 kB │ gzip:   5.23 kB
+docs build: dist/assets/CollaborationPage-DhSZFQiX.css                              30.51 kB │ gzip:   4.92 kB
+docs build: dist/assets/BuilderPage-DDKiZg3o.css                                   178.25 kB │ gzip:  28.11 kB
+docs build: dist/assets/index-n2G7Bv1I.css                                         471.45 kB │ gzip:  62.50 kB
+docs build: dist/assets/usePageTitle-CVOLu18R.js                                     0.14 kB │ gzip:   0.15 kB
+docs build: dist/assets/Shield-CNDwAwnw.js                                           0.23 kB │ gzip:   0.20 kB
+docs build: dist/assets/ArrowRight-CKbLMkQ5.js                                       0.23 kB │ gzip:   0.20 kB
+docs build: dist/assets/ArrowLeft-DcPwkwuG.js                                        0.23 kB │ gzip:   0.20 kB
+docs build: dist/assets/_commonjs-dynamic-modules-TDtrdbi3.js                        0.24 kB │ gzip:   0.19 kB
+docs build: dist/assets/Menu-OTZN7gdy.js                                             0.25 kB │ gzip:   0.19 kB
+docs build: dist/assets/Type-Bc0O5m_Q-AiKcQYGg.js                                    0.27 kB │ gzip:   0.21 kB
+docs build: dist/assets/Home-DouQl6K2.js                                             0.27 kB │ gzip:   0.22 kB
+docs build: dist/assets/Download-9FVNexmR.js                                         0.29 kB │ gzip:   0.23 kB
+docs build: dist/assets/Copy-q55ElUqb.js                                             0.30 kB │ gzip:   0.24 kB
+docs build: dist/assets/Folder-BSCZXBtx.js                                           0.30 kB │ gzip:   0.23 kB
+docs build: dist/assets/Archive-mlvEP_zN.js                                          0.31 kB │ gzip:   0.24 kB
+docs build: dist/assets/Save-gQaPG-sn.js                                             0.31 kB │ gzip:   0.23 kB
+docs build: dist/assets/Clipboard-GHCsf77q.js                                        0.32 kB │ gzip:   0.25 kB
+docs build: dist/assets/Check-Cy3crH5N.js                                            0.33 kB │ gzip:   0.23 kB
+docs build: dist/assets/Plus-DlfVc2bp.js                                             0.36 kB │ gzip:   0.22 kB
+docs build: dist/assets/Users-s8iMAqao.js                                            0.36 kB │ gzip:   0.26 kB
+docs build: dist/assets/RefreshCw-D3VBiZt_.js                                        0.37 kB │ gzip:   0.25 kB
+docs build: dist/assets/FileText-CnPjvhB1.js                                         0.38 kB │ gzip:   0.24 kB
+docs build: dist/assets/SvgIcon-B3lj2cO1.js                                          0.42 kB │ gzip:   0.31 kB
+docs build: dist/assets/MapPin-B3nlZnCN.js                                           0.48 kB │ gzip:   0.28 kB
+docs build: dist/assets/ZoomOut-DYOORq3b-Bm2FCZY1.js                                 0.48 kB │ gzip:   0.24 kB
+docs build: dist/assets/Building-B0fkxvjs.js                                         0.53 kB │ gzip:   0.26 kB
+docs build: dist/assets/Lock-BFkpyep6.js                                             0.54 kB │ gzip:   0.31 kB
+docs build: dist/assets/Trash-C6ch5THl.js                                            0.60 kB │ gzip:   0.33 kB
+docs build: dist/assets/Send-BZmZ6NMn.js                                             0.65 kB │ gzip:   0.34 kB
+docs build: dist/assets/User-BT-y_CS-.js                                             0.71 kB │ gzip:   0.35 kB
+docs build: dist/assets/DocsNavigationDrawer-DnGoUn1g.js                             0.74 kB │ gzip:   0.42 kB
+docs build: dist/assets/Smartphone-CmFGgq-J.js                                       0.75 kB │ gzip:   0.34 kB
+docs build: dist/assets/RotateCcw-4K5dVADF.js                                        0.80 kB │ gzip:   0.35 kB
+docs build: dist/assets/ApiTable-Q9kyjYoz.js                                         0.85 kB │ gzip:   0.43 kB
+docs build: dist/assets/Demo-BQ0cgbIs.js                                             0.99 kB │ gzip:   0.52 kB
+docs build: dist/assets/demo-cover-C-BBeuhe.js                                       1.02 kB │ gzip:   0.49 kB
+docs build: dist/assets/CustomizeOutlet-DoFDKGI2.js                                  1.05 kB │ gzip:   0.54 kB
+docs build: dist/assets/Zap-cjx6Lj64.js                                              1.07 kB │ gzip:   0.47 kB
+docs build: dist/assets/Settings-BokFieMR.js                                         1.14 kB │ gzip:   0.43 kB
+docs build: dist/assets/loaded-PFIA543C-Bi7-1QYZ.js                                  1.41 kB │ gzip:   0.76 kB
+docs build: dist/assets/loaded-P5HN7RJY-DT5c5aH1.js                                  1.45 kB │ gzip:   0.81 kB
+docs build: dist/assets/loaded-WFQRY2XL-wD9iIh8i.js                                  1.47 kB │ gzip:   0.78 kB
+docs build: dist/assets/studio-word-image-contract-CFYni0Eo.js                       1.89 kB │ gzip:   0.82 kB
+docs build: dist/assets/CodeBlock-DNoX-SdC.js                                        2.00 kB │ gzip:   1.16 kB
+docs build: dist/assets/pdf-document-POkE3T0t.js                                     2.27 kB │ gzip:   1.24 kB
+docs build: dist/assets/Render-H3USS5FU-Cs0Sr2oV.js                                  2.49 kB │ gzip:   1.17 kB
+docs build: dist/assets/Unlock-Bv3Ta_q-.js                                           2.53 kB │ gzip:   0.71 kB
+docs build: dist/assets/SpinPage-BsOdzEmT.js                                         2.84 kB │ gzip:   1.39 kB
+docs build: dist/assets/RatePage-AKyJ0PUt.js                                         2.86 kB │ gzip:   1.29 kB
+docs build: dist/assets/full-H4FZ3HN3-CEf9gV_B.js                                    2.90 kB │ gzip:   1.21 kB
+docs build: dist/assets/word-document-C16TDMVb.js                                    2.95 kB │ gzip:   1.58 kB
+docs build: dist/assets/EmptyPage-5C3JeCXL.js                                        2.97 kB │ gzip:   1.42 kB
+docs build: dist/assets/DividerPage-B7WlGmWU.js                                      2.99 kB │ gzip:   1.28 kB
+docs build: dist/assets/ImagePage-DSxkyFHa.js                                        3.02 kB │ gzip:   1.31 kB
+docs build: dist/assets/ResultPage-Cx2gQo3y.js                                       3.04 kB │ gzip:   1.40 kB
+docs build: dist/assets/Editor-LJSLIQQP-BnPaiQ7b.js                                  3.05 kB │ gzip:   1.51 kB
+docs build: dist/assets/AffixPage-BnNjITra.js                                        3.25 kB │ gzip:   1.51 kB
+docs build: dist/assets/DateTimePickerPrototype-4l5uUksd.js                          3.25 kB │ gzip:   1.74 kB
+docs build: dist/assets/SwitchPage-CTvC-1g1.js                                       3.25 kB │ gzip:   1.51 kB
+docs build: dist/assets/WatermarkPage-B2zRsdBr.js                                    3.40 kB │ gzip:   1.57 kB
+docs build: dist/assets/CheckboxPage-OzqA6YWa.js                                     3.55 kB │ gzip:   1.56 kB
+docs build: dist/assets/SliderPage-BKhiQ_bV.js                                       3.58 kB │ gzip:   1.56 kB
+docs build: dist/assets/QRCodePage-DVArSMg_.js                                       3.65 kB │ gzip:   1.77 kB
+docs build: dist/assets/studio-pdf-annotation-editor-BifogecT.js                     3.66 kB │ gzip:   1.45 kB
+docs build: dist/assets/TimePickerPage-DB6iteiW.js                                   3.70 kB │ gzip:   1.58 kB
+docs build: dist/assets/SkeletonPage-T4WGoi_E.js                                     3.76 kB │ gzip:   1.60 kB
+docs build: dist/assets/AppPage-BDQtBN9o.js                                          3.85 kB │ gzip:   1.59 kB
+docs build: dist/assets/BreadcrumbPage-B8sQ1pLr.js                                   3.86 kB │ gzip:   1.43 kB
+docs build: dist/assets/ListPage-D9g96L7b.js                                         3.87 kB │ gzip:   1.71 kB
+docs build: dist/assets/StudioFontControl-Du9k6vF2-Dg-pc_HJ.js                       3.89 kB │ gzip:   1.87 kB
+docs build: dist/assets/MentionsPage-_Q4xh3Is.js                                     3.94 kB │ gzip:   1.69 kB
+docs build: dist/assets/CardPage-CTXmus_c.js                                         3.98 kB │ gzip:   1.75 kB
+docs build: dist/assets/SegmentedPage-bcK0Rw7e.js                                    3.99 kB │ gzip:   1.60 kB
+docs build: dist/assets/BackTopPage-DABslsPm.js                                      4.02 kB │ gzip:   1.60 kB
+docs build: dist/assets/TransferPage-R5_K2hvx.js                                     4.05 kB │ gzip:   1.79 kB
+docs build: dist/assets/PopconfirmPage-BKOhpYaj.js                                   4.07 kB │ gzip:   1.57 kB
+docs build: dist/assets/CalendarPage-CV3dekN7.js                                     4.17 kB │ gzip:   1.79 kB
+docs build: dist/assets/CollapsePage-DKd-Z0Wt.js                                     4.22 kB │ gzip:   1.84 kB
+docs build: dist/assets/TagPage-Cr9ytLQY.js                                          4.23 kB │ gzip:   1.83 kB
+docs build: dist/assets/excel-document-1tTAkkto.js                                   4.25 kB │ gzip:   2.31 kB
+docs build: dist/assets/CommandPalettePage-D0I0-jQ_.js                               4.32 kB │ gzip:   2.07 kB
+docs build: dist/assets/TimelinePage-DoEDQ-v4.js                                     4.37 kB │ gzip:   1.85 kB
+docs build: dist/assets/ProgressPage-BH5FLHDK.js                                     4.44 kB │ gzip:   1.78 kB
+docs build: dist/assets/TooltipPage-D3kY3r42.js                                      4.46 kB │ gzip:   1.68 kB
+docs build: dist/assets/AlertPage-B66MfVIH.js                                        4.52 kB │ gzip:   1.95 kB
+docs build: dist/assets/BadgePage-BQVt7luZ.js                                        4.61 kB │ gzip:   1.79 kB
+docs build: dist/assets/VirtualTablePage-BJbQamR2.js                                 4.62 kB │ gzip:   2.18 kB
+docs build: dist/assets/FloatButtonPage-CY0KQJ-Q.js                                  4.72 kB │ gzip:   1.76 kB
+docs build: dist/assets/CascaderPage-C_MoW5ju.js                                     4.72 kB │ gzip:   1.91 kB
+docs build: dist/assets/TreeSelectPage-C1kpPTT4.js                                   4.79 kB │ gzip:   2.08 kB
+docs build: dist/assets/DescriptionsPage-BbwDzUbQ.js                                 4.79 kB │ gzip:   1.82 kB
+docs build: dist/assets/AvatarPage-PvMWWo6D.js                                       4.88 kB │ gzip:   2.14 kB
+docs build: dist/assets/StatisticPage-BnVOdpFR.js                                    4.90 kB │ gzip:   2.10 kB
+docs build: dist/assets/DatePickerPage-7y6KPcsw.js                                   4.93 kB │ gzip:   1.84 kB
+docs build: dist/assets/RadioPage-BSSzNeJ1.js                                        5.08 kB │ gzip:   1.81 kB
+docs build: dist/assets/PaginationPage-DJoKUe9k.js                                   5.11 kB │ gzip:   1.91 kB
+docs build: dist/assets/ButtonPage-PPyrFTZx.js                                       5.14 kB │ gzip:   1.96 kB
+docs build: dist/assets/NotificationPage-rxRQTjfd.js                                 5.17 kB │ gzip:   2.01 kB
+docs build: dist/assets/ColorPickerPage-CLPRgw2j.js                                  5.37 kB │ gzip:   2.16 kB
+docs build: dist/assets/InputNumberPage-lM1kxz1H.js                                  5.42 kB │ gzip:   2.17 kB
+docs build: dist/assets/MessagePage-DbrlxKQz.js                                      5.47 kB │ gzip:   2.22 kB
+docs build: dist/assets/StepsPage-DlgnWRno.js                                        5.70 kB │ gzip:   2.27 kB
+docs build: dist/assets/FormPage-HH5aEniZ.js                                         5.89 kB │ gzip:   2.29 kB
+docs build: dist/assets/PopoverPage-z_GwfsvM.js                                      6.05 kB │ gzip:   2.02 kB
+docs build: dist/assets/TreePage-BwzAcQJp.js                                         6.13 kB │ gzip:   2.46 kB
+docs build: dist/assets/samples-D2WDtsXq.js                                          6.23 kB │ gzip:   2.30 kB
+docs build: dist/assets/SideNavPage-DXRFJFFx.js                                      6.31 kB │ gzip:   2.83 kB
+docs build: dist/assets/InputPage-Bm_XCaHw.js                                        6.36 kB │ gzip:   2.47 kB
+docs build: dist/assets/TourPage-CENAO9rz.js                                         6.41 kB │ gzip:   2.29 kB
+docs build: dist/assets/TabsPage-Hxgxw1_I.js                                         6.42 kB │ gzip:   2.44 kB
+docs build: dist/assets/OfficeWorkbench-DO_R2tKK.js                                  6.55 kB │ gzip:   2.72 kB
+docs build: dist/assets/ConfigPage-DhFk8sOk.js                                       6.73 kB │ gzip:   2.62 kB
+docs build: dist/assets/SelectPage-DS2u70bi.js                                       6.74 kB │ gzip:   2.38 kB
+docs build: dist/assets/SplitterPage-CEKjJqjJ.js                                     6.83 kB │ gzip:   2.92 kB
+docs build: dist/assets/ModalPage-CCEuWko3.js                                        7.02 kB │ gzip:   2.47 kB
+docs build: dist/assets/DrawerPage-CQYHf-SU.js                                       7.07 kB │ gzip:   2.35 kB
+docs build: dist/assets/DataGridPrototype-B2DW5JiM.js                                7.58 kB │ gzip:   3.08 kB
+docs build: dist/assets/UploadPage-QRVBImLj.js                                       7.70 kB │ gzip:   2.92 kB
+docs build: dist/assets/AnchorPage-DdkjmIVr.js                                       7.75 kB │ gzip:   2.87 kB
+docs build: dist/assets/DropdownMenuPage-dK6jjHIw.js                                 7.83 kB │ gzip:   2.52 kB
+docs build: dist/assets/DataGridPage-cRwqWri-.js                                     8.01 kB │ gzip:   3.73 kB
+docs build: dist/assets/DateRangePickerPage-C3EZcjPZ.js                              8.07 kB │ gzip:   2.83 kB
+docs build: dist/assets/SplitterPrototype-ClPWORxU.js                                8.12 kB │ gzip:   2.77 kB
+docs build: dist/assets/TablePage-tFleBvsC.js                                        8.24 kB │ gzip:   3.03 kB
+docs build: dist/assets/TypographyPage-DfXqQWwZ.js                                   8.34 kB │ gzip:   2.83 kB
+docs build: dist/assets/ThemePlayground-D1vOtBtv.js                                  8.46 kB │ gzip:   3.19 kB
+docs build: dist/assets/ChartsGalleryPage-f4UacOYb.js                                8.59 kB │ gzip:   3.21 kB
+docs build: dist/assets/with-selector-Bp4VchTO.js                                    9.71 kB │ gzip:   3.52 kB
+docs build: dist/assets/Overview-BxSV1W20.js                                        10.11 kB │ gzip:   3.77 kB
+docs build: dist/assets/index-7y1eerVo.js                                           10.22 kB │ gzip:   3.37 kB
+docs build: dist/assets/TokensPage-BPHTqLgi.js                                      10.40 kB │ gzip:   3.25 kB
+docs build: dist/assets/LayoutPage-BIwGDlV8.js                                      10.52 kB │ gzip:   3.16 kB
+docs build: dist/assets/ChartInteractionsPage-CsGhHruo.js                           11.81 kB │ gzip:   4.61 kB
+docs build: dist/assets/ChartSection-Dmj5f9Tf.js                                    13.30 kB │ gzip:   5.54 kB
+docs build: dist/assets/AdminShellPrototype-B62qEOQs.js                             14.95 kB │ gzip:   5.43 kB
+docs build: dist/assets/OfficeEditorPage-C2GI6cki.js                                16.04 kB │ gzip:   6.84 kB
+docs build: dist/assets/DataGridView-Ck8xGpcp-CEPb9ZuJ.js                           16.54 kB │ gzip:   5.89 kB
+docs build: dist/assets/ComboboxPage-BqkXykZv.js                                    18.31 kB │ gzip:   6.34 kB
+docs build: dist/assets/linkify-CS2uDZp4.js                                         18.50 kB │ gzip:  10.33 kB
+docs build: dist/assets/ChartPlaygroundPage-BLhTLRgd.js                             19.24 kB │ gzip:   7.42 kB
+docs build: dist/assets/DesignAssetsPage-PBWBweNK.js                                21.94 kB │ gzip:   6.87 kB
+docs build: dist/assets/ChartPage-6uj59XBY.js                                       22.62 kB │ gzip:   8.85 kB
+docs build: dist/assets/TranslateDemo-ODnjV8wn.js                                   23.44 kB │ gzip:   9.16 kB
+docs build: dist/assets/office-client-SCcPK-yd.js                                   28.40 kB │ gzip:  10.76 kB
+docs build: dist/assets/OfficeStudioPage-C2Vz0CYr.js                                30.31 kB │ gzip:  10.40 kB
+docs build: dist/assets/IconGalleryPage-DV7eo1mp.js                                 32.39 kB │ gzip:   9.72 kB
+docs build: dist/assets/puck-virtual-CUPjD_wp.js                                    33.64 kB │ gzip:   9.95 kB
+docs build: dist/assets/CollaborationPage-BvYJyh2r.js                               35.16 kB │ gzip:  11.22 kB
+docs build: dist/assets/index-C4hRtZY6.js                                           35.96 kB │ gzip:  11.10 kB
+docs build: dist/assets/LabPage-B_-jMFJG.js                                         37.36 kB │ gzip:  12.50 kB
+docs build: dist/assets/studio-print-D47iv8U4.js                                    39.11 kB │ gzip:  13.45 kB
+docs build: dist/assets/GlobePage-D5FGH4fk.js                                       42.41 kB │ gzip:  15.95 kB
+docs build: dist/assets/studio-word-styles-Bma_WBf6.js                              42.49 kB │ gzip:  14.45 kB
+docs build: dist/assets/chunk-ZOLLDKZQ-B1lkbY-7.js                                  53.59 kB │ gzip:  15.76 kB
+docs build: dist/assets/ChartView-BneyqL1v-CInAKUGO.js                              55.88 kB │ gzip:  18.94 kB
+docs build: dist/assets/studio-sheet-text-display-DKeBXUOe.js                       64.99 kB │ gzip:  24.32 kB
+docs build: dist/assets/studio-pdf-composition-DR_z64r6.js                          82.88 kB │ gzip:  27.57 kB
+docs build: dist/assets/index-BjGIap5A.js                                           90.93 kB │ gzip:  28.99 kB
+docs build: dist/assets/jszip.min-Brw6r3GM.js                                       97.54 kB │ gzip:  30.29 kB
+docs build: dist/assets/BlocksPage-DF_p7r9b.js                                     103.75 kB │ gzip:  28.31 kB
+docs build: dist/assets/GlobeScene-B1Ceynpd-Dgfo4i0k.js                            104.50 kB │ gzip:  40.27 kB
+docs build: dist/assets/studio-excel-codec-BSidh2Gh.js                             106.99 kB │ gzip:  36.37 kB
+docs build: dist/assets/puck-dnd-CqQInQHi.js                                       117.26 kB │ gzip:  38.38 kB
+docs build: dist/assets/StudioPdf-yxvGhyW2-yPCpfctB.js                             118.84 kB │ gzip:  38.29 kB
+docs build: dist/assets/studio-pdf-codec-CGZxY5aV.js                               138.44 kB │ gzip:  45.60 kB
+docs build: dist/assets/pdf_viewer-C4rTNLRV.js                                     187.45 kB │ gzip:  57.35 kB
+docs build: dist/assets/index-0HeBU4A9.js                                          214.07 kB │ gzip:  66.31 kB
+docs build: dist/assets/StudioSheet-DEb8Kp8c-COqCyk4U.js                           248.42 kB │ gzip:  82.81 kB
+docs build: dist/assets/studio-word-codec-CmTP35kp.js                              278.60 kB │ gzip:  85.66 kB
+docs build: dist/assets/index-zqb44sqn.js                                          293.64 kB │ gzip:  86.55 kB
+docs build: dist/assets/zuvi-components-Ck9Iy1yd.js                                414.10 kB │ gzip: 130.69 kB
+docs build: dist/assets/react-runtime-D3dkmCoo.js                                  430.39 kB │ gzip: 132.85 kB
+docs build: dist/assets/index-LdrfTBKm.js                                          436.98 kB │ gzip: 180.87 kB
+docs build: dist/assets/studio-pdf-adapter-wEVhYZ4N.js                             524.05 kB │ gzip: 159.07 kB
+docs build: (!) Some chunks are larger than 500 kB after minification. Consider:
+docs build: - Using dynamic import() to code-split the application
+docs build: - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+docs build: - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+docs build: dist/assets/StudioWord-Bmx1n9ij-5vPHAYgX.js                            535.13 kB │ gzip: 163.11 kB
+docs build: dist/assets/globe-renderer-Dylxt0_e-DMxxnvCI.js                        546.53 kB │ gzip: 137.66 kB
+docs build: dist/assets/fontkit.es-BsBd8zl6.js                                     716.78 kB │ gzip: 329.75 kB
+docs build: dist/assets/BuilderPage-BeM3xUyG.js                                    811.14 kB │ gzip: 242.37 kB
+docs build: dist/assets/exceljs.min-2mEIvCBt.js                                    940.05 kB │ gzip: 271.25 kB
+docs build: dist/assets/builder-export-CbXZQe-u.js                               1,970.79 kB │ gzip: 495.45 kB
+docs build: ✓ built in 21.96s
+docs build: Done

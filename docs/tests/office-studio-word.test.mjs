@@ -14,6 +14,69 @@ const JSZip = require('jszip');
 const ts = require('typescript');
 const xml = new JSDOM().window;
 const exports = {};
+const styleExports = {};
+const fontExports = {};
+const metricExports = {};
+const paragraphExports = {};
+const tabExports = {};
+const numberExports = {};
+const numberCodecExports = {};
+const surfaceExports = {};
+const surfaceCodecExports = {};
+const imageExports = {};
+const imageContractExports = {};
+const rowExports = {};
+const tableExports = {};
+const mathExports = {};
+const mathCodecExports = {};
+for (const [file, target] of [
+  ['studio-word-math.ts', mathExports],
+  ['studio-font-input.ts', fontExports],
+  ['studio-word-metrics.ts', metricExports],
+  ['studio-word-table-rows.ts', rowExports],
+  ['studio-word-table-properties.ts', tableExports],
+  ['studio-word-paragraph-format.ts', paragraphExports],
+  ['studio-word-tabs.ts', tabExports],
+  ['studio-word-surface.ts', surfaceExports],
+  ['studio-word-numbering.ts', numberExports],
+  ['studio-word-styles.ts', styleExports],
+  ['studio-word-image-contract.ts', imageContractExports],
+  ['studio-word-images.ts', imageExports],
+  ['studio-word-image-crop.ts', imageExports],
+  ['studio-word-image-preview.ts', imageExports],
+]) {
+  runInNewContext(
+    ts.transpileModule(
+      readFileSync(
+        new URL(`../../packages/ui/src/components/OfficeStudio/${file}`, import.meta.url),
+        'utf8'
+      ),
+      {
+        compilerOptions: {
+          module: ts.ModuleKind.CommonJS,
+          target: ts.ScriptTarget.ES2022,
+          esModuleInterop: true,
+        },
+      }
+    ).outputText,
+    {
+      exports: target,
+      require: (id) =>
+        id === './studio-word-image-contract' ? imageContractExports : id === './studio-word-surface'?surfaceExports:id === './studio-word-tabs' ? tabExports : id === './studio-word-paragraph-format'
+          ? paragraphExports
+          : id === './studio-word-metrics'
+            ? metricExports
+            : id === './studio-font-input'
+              ? fontExports
+              : uiRequire(id),
+    }
+  );
+}
+runInNewContext(ts.transpileModule(readFileSync(new URL('../src/pages/collaboration/office-studio/studio-word-math-codec.ts',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,esModuleInterop:true}}).outputText,{exports:mathCodecExports,require:(id)=>id.endsWith('/studio-word-math')?mathExports:require(id)});
+runInNewContext(ts.transpileModule(readFileSync(new URL('../src/pages/collaboration/office-studio/studio-word-numbering-codec.ts',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,esModuleInterop:true}}).outputText,{
+  exports:numberCodecExports, require:(id)=>id.endsWith('/studio-word-numbering')?numberExports:id.endsWith('/studio-word-tabs')?tabExports:require(id), DOMParser:xml.DOMParser, XMLSerializer:xml.XMLSerializer,
+});
+runInNewContext(ts.transpileModule(readFileSync(new URL('../src/pages/collaboration/office-studio/studio-word-surface-codec.ts',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,esModuleInterop:true}}).outputText,{exports:surfaceCodecExports,require:(id)=>id.endsWith('/studio-word-surface')?surfaceExports:require(id)});
 runInNewContext(
   ts.transpileModule(
     readFileSync(
@@ -30,7 +93,16 @@ runInNewContext(
   ).outputText,
   {
     exports,
-    require,
+    require: (id) =>
+      id.endsWith('/studio-word-table-properties') ? tableExports : id === './studio-word-math-codec' ? mathCodecExports : id.endsWith('/studio-word-image-crop')?imageExports:id.endsWith('/studio-word-table-rows')?rowExports:id.endsWith('/studio-word-surface')?surfaceExports:id==='./studio-word-surface-codec'?surfaceCodecExports:id.endsWith('/studio-word-numbering') ? numberExports : id === './studio-word-numbering-codec' ? numberCodecExports : id.endsWith('/studio-word-tabs') ? tabExports : id.endsWith('/studio-word-paragraph-format')
+        ? paragraphExports
+        : id.endsWith('/studio-word-metrics')
+          ? metricExports
+          : id.endsWith('/studio-word-styles')
+            ? styleExports
+            : id.endsWith('/studio-word-images')
+              ? imageExports
+              : require(id),
     Blob,
     crypto: webcrypto,
     DOMParser: xml.DOMParser,
@@ -41,6 +113,490 @@ runInNewContext(
 );
 const { importStudioWord, exportStudioWord } = exports;
 const W = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';
+test('native table row heights and explicit cantSplit flags survive edits and two DOCX cycles', async () => {
+  let document = await importStudioWord(await fixture('<w:tbl><w:tr><w:trPr><w:trHeight w:val="480" w:hRule="exact"/><w:cantSplit/></w:trPr><w:tc><w:p><w:r><w:t>Fixed row</w:t></w:r></w:p></w:tc></w:tr><w:tr><w:trPr><w:trHeight w:val="0" w:hRule="auto"/><w:cantSplit w:val="0"/></w:trPr><w:tc><w:p><w:r><w:t>Automatic row</w:t></w:r></w:p></w:tc></w:tr></w:tbl>'), 'Rows.docx');
+  assert.equal(document.content.content[0].content[0].attrs.rowHeight, 24);
+  assert.equal(document.content.content[0].content[0].attrs.allowSplit, false);
+  assert.equal(document.content.content[0].content[1].attrs.allowSplit, true);
+  document.content.content[0].content[0].attrs.rowHeight = 36;
+  for (let pass = 0; pass < 2; pass++) {
+    const file = await exportStudioWord(document);
+    const zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const native = await zip.file('word/document.xml').async('string');
+    assert.match(native, /w:trHeight[^>]*w:val="720"/);
+    document = await importStudioWord(file, 'Reopened-rows.docx');
+    const rows = document.content.content[0].content;
+    assert.equal(rows[0].attrs.rowHeight, 36);
+    assert.equal(rows[0].attrs.rowHeightRule, 'exact');
+    assert.equal(rows[0].attrs.allowSplit, false);
+    assert.equal(rows[1].attrs.rowHeight, 0);
+    assert.equal(rows[1].attrs.rowHeightRule, 'auto');
+    assert.equal(rows[1].attrs.allowSplit, true);
+  }
+});
+
+test('native widow control, keep-next and keep-lines retain inherited values and explicit false over repeated DOCX saves',async()=>{
+  let document=await importStudioWord(await fixture('<w:p><w:pPr><w:pStyle w:val="Keep"/><w:keepNext w:val="0"/><w:widowControl w:val="0"/></w:pPr><w:r><w:t>Direct false</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="Keep"/></w:pPr><w:r><w:t>Inherited</w:t></w:r></w:p>',{
+    'word/styles.xml':`<w:styles xmlns:w="${W}"><w:style w:type="paragraph" w:styleId="Keep"><w:name w:val="Keep"/><w:pPr><w:keepNext/><w:keepLines/><w:widowControl/></w:pPr></w:style></w:styles>`,
+  }),'Keep.docx');
+  assert.equal(document.content.attrs.paragraphStyles[0].paragraph.keepNext,true);
+  assert.equal(document.content.content[0].attrs.keepNext,false);assert.equal(document.content.content[0].attrs.keepLines,true);assert.equal(document.content.content[1].attrs.keepNext,true);
+  for(let pass=0;pass<2;pass++){
+    const file=await exportStudioWord(document),zip=await JSZip.loadAsync(await file.arrayBuffer()),xml=parse(await zip.file('word/document.xml').async('string'));
+    assert.equal(xml.getElementsByTagNameNS(W,'keepNext')[0].getAttributeNS(W,'val'),'false');
+    document=await importStudioWord(file,'Reopened.docx');assert.equal(document.content.content[0].attrs.keepNext,false);assert.equal(document.content.content[1].attrs.keepLines,true);
+  }
+});
+
+test('native paragraph borders, distance, shadow/frame and patterned shading survive direct edits and two DOCX cycles',async()=>{
+  const source=await fixture('<w:p><w:pPr><w:pBdr><w:top w:val="double" w:sz="8" w:space="3" w:color="112233" w:shadow="1" w:frame="0"/><w:left w:val="dotted" w:sz="4" w:color="auto"/></w:pBdr><w:shd w:val="pct25" w:fill="FFEECC" w:color="123456"/></w:pPr><w:r><w:rPr><w:b/></w:rPr><w:t>Surface</w:t></w:r></w:p>');
+  let document=await importStudioWord(source,'Surface.docx');
+  assert.equal(document.content.content[0].attrs.paragraphSurface.borders.top.size,1);
+  assert.equal(document.content.content[0].attrs.paragraphSurface.shading.pattern,'pct25');
+  document.content.content[0].attrs.paragraphSurface.borders.right={style:'dashed',size:1.5,space:4,color:'#aabbcc'};
+  for(let pass=0;pass<2;pass++){
+    const saved=await exportStudioWord(document),zip=await JSZip.loadAsync(await saved.arrayBuffer()),native=parse(await zip.file('word/document.xml').async('string'));
+    const top=native.getElementsByTagNameNS(W,'top')[0];assert.equal(top.getAttributeNS(W,'shadow'),'1');assert.equal(top.getAttributeNS(W,'frame'),'0');assert.equal(top.getAttributeNS(W,'space'),'3');
+    assert.equal(native.getElementsByTagNameNS(W,'shd')[0].getAttributeNS(W,'val'),'pct25');
+    document=await importStudioWord(saved,'Reopened.docx');
+    assert.equal(document.content.content[0].attrs.paragraphSurface.borders.right.size,1.5);assert.equal(document.content.content[0].attrs.paragraphSurface.borders.top.shadow,true);
+    assert.equal(find(document.content,'text')[0].text,'Surface');assert.ok(find(document.content,'text')[0].marks.some((mark)=>mark.type==='bold'));
+  }
+});
+test('surface styles preserve independent inherited edges and explicit nil overrides across repeated native saves',async()=>{
+  const source=await fixture('<w:p><w:pPr><w:pStyle w:val="Panel"/><w:pBdr><w:top w:val="nil"/></w:pBdr></w:pPr><w:r><w:t>Panel</w:t></w:r></w:p>',{
+    'word/styles.xml':`<w:styles xmlns:w="${W}"><w:style w:type="paragraph" w:styleId="Panel"><w:name w:val="Panel"/><w:pPr><w:pBdr><w:top w:val="single" w:sz="8"/><w:left w:val="double" w:sz="12"/></w:pBdr><w:shd w:val="clear" w:fill="CCEEFF"/></w:pPr></w:style></w:styles>`,
+  });
+  let document=await importStudioWord(source,'Panel.docx');
+  const definition=document.content.attrs.paragraphStyles[0];assert.equal(definition.surface.borders.left.style,'double');
+  assert.deepEqual(JSON.parse(JSON.stringify(document.content.content[0].attrs.paragraphSurface)),{borders:{top:{style:'nil'}}});
+  for(let pass=0;pass<2;pass++){
+    const saved=await exportStudioWord(document);document=await importStudioWord(saved,'Reopened.docx');
+    assert.equal(document.content.attrs.paragraphStyles[0].surface.borders.left.style,'double');assert.equal(document.content.content[0].attrs.paragraphSurface.borders.top.style,'nil');
+  }
+});
+
+test('full native numbering templates, interrupted sequences and independent starts survive edits and repeated DOCX reopenings',async()=>{
+  const numbered=(level,id,label)=>`<w:p><w:pPr><w:numPr><w:ilvl w:val="${level}"/><w:numId w:val="${id}"/></w:numPr></w:pPr><w:r><w:t>${label}</w:t></w:r></w:p>`;
+  let document=await importStudioWord(await fixture(numbered(0,4,'Chapter')+numbered(1,4,'Child')+'<w:p><w:r><w:t>Gap</w:t></w:r></w:p>'+numbered(1,4,'Next child')+numbered(0,7,'Restart'),{
+    'word/numbering.xml':`<w:numbering xmlns:w="${W}"><w:abstractNum w:abstractNumId="1"><w:lvl w:ilvl="0"><w:start w:val="3"/><w:numFmt w:val="upperRoman"/><w:lvlText w:val="%1."/></w:lvl><w:lvl w:ilvl="1"><w:start w:val="1"/><w:numFmt w:val="lowerLetter"/><w:lvlText w:val="%1.%2."/></w:lvl></w:abstractNum><w:num w:numId="4"><w:abstractNumId w:val="1"/></w:num><w:num w:numId="7"><w:abstractNumId w:val="1"/><w:lvlOverride w:ilvl="0"><w:startOverride w:val="9"/></w:lvlOverride></w:num></w:numbering>`,
+  }),'Numbered.docx');
+  const labels=()=>Array.from(numberExports.wordNumberingLabels(document.content,numberExports.wordNumberingCatalog(document.content.attrs.numberingDefinitions,document.content.attrs.numberingInstances)),(entry)=>entry.text);
+  assert.deepEqual(labels(),['III.','III.a.','III.b.','IX.']);
+  document.content.attrs.numberingDefinitions[0].levels[0].format='decimal';
+  document.content.attrs.numberingDefinitions[0].levels[1].text='%1.%2)';
+  for(let pass=0;pass<2;pass++){
+    const saved=await exportStudioWord(document);document=await importStudioWord(saved,'Reopened.docx');
+    assert.deepEqual(labels(),['3.','3.a)','3.b)','9.']);
+    assert.equal(document.content.attrs.numberingInstances.find((entry)=>entry.id==='native-instance-7').startOverrides['0'],9);
+    assert.equal(find(document.content,'text').map((node)=>node.text).join(''),'ChapterChildGapNext childRestart');
+  }
+});
+
+test('native period and comma decimal symbols persist independently of text grouping separators', async () => {
+  for (const [symbol,text] of [['.','1,234.50'],[',','1.234,50']]) {
+    let document=await importStudioWord(await fixture(`<w:p><w:pPr><w:tabs><w:tab w:val="decimal" w:pos="3600"/></w:tabs></w:pPr><w:r><w:t>Group</w:t><w:tab/><w:t>${text}</w:t></w:r></w:p>`,{
+      'word/settings.xml':`<w:settings xmlns:w="${W}"><w:decimalSymbol w:val="${symbol}"/></w:settings>`,
+    }),'Symbol.docx');
+    for(let pass=0;pass<2;pass++){
+      assert.equal(document.decimalSymbol,symbol);
+      const file=await exportStudioWord(document),zip=await JSZip.loadAsync(await file.arrayBuffer());
+      const settings=parse(await zip.file('word/settings.xml').async('string'));
+      assert.equal(settings.getElementsByTagNameNS(W,'decimalSymbol')[0].getAttributeNS(W,'val'),symbol);
+      document=await importStudioWord(file,'Reopened.docx');
+      assert.equal(find(document.content,'text').map((node)=>node.text).join(''),`Group\t${text}`);
+    }
+  }
+});
+
+test('native tab stops, leaders, inherited clear directives and the default interval survive edits and repeated DOCX saves', async () => {
+  const source = await fixture('<w:p><w:pPr><w:pStyle w:val="Tabs"/><w:tabs><w:tab w:val="clear" w:pos="720"/><w:tab w:val="decimal" w:pos="2880" w:leader="dot"/></w:tabs></w:pPr><w:r><w:rPr><w:b/></w:rPr><w:t>Label</w:t><w:tab/><w:t>12.34</w:t></w:r></w:p><w:p><w:pPr><w:tabs><w:tab w:val="left" w:pos="720"/><w:tab w:val="center" w:pos="1440" w:leader="hyphen"/><w:tab w:val="right" w:pos="2160" w:leader="underscore"/></w:tabs></w:pPr><w:r><w:t>A</w:t><w:tab/><w:t>B</w:t><w:tab/><w:t>C</w:t></w:r></w:p>', {
+    'word/styles.xml': `<w:styles xmlns:w="${W}"><w:style w:type="paragraph" w:styleId="Tabs"><w:name w:val="Tabs"/><w:pPr><w:tabs><w:tab w:val="left" w:pos="720"/><w:tab w:val="right" w:pos="2160" w:leader="dot"/></w:tabs></w:pPr></w:style></w:styles>`,
+    'word/settings.xml': `<w:settings xmlns:w="${W}"><w:defaultTabStop w:val="600"/></w:settings>`,
+  });
+  let document = await importStudioWord(source, 'Tabs.docx');
+  assert.equal(document.defaultTabStop, 30);
+  assert.equal(document.content.content[0].attrs.tabStops[0].alignment, 'clear');
+  assert.equal(document.content.attrs.paragraphStyles[0].tabStops[1].alignment, 'right');
+  document.content.content[0].attrs.tabStops[1] = { position: 170.25, alignment: 'decimal', leader: 'dot' };
+  for (let pass = 0; pass < 2; pass++) {
+    const file = await exportStudioWord(document), zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const native = parse(await zip.file('word/document.xml').async('string'));
+    const tab = [...native.getElementsByTagNameNS(W, 'tab')].find((item) => item.getAttributeNS(W, 'val') === 'decimal');
+    assert.equal(tab.getAttributeNS(W, 'pos'), '3405');
+    assert.equal(tab.getAttributeNS(W, 'leader'), 'dot');
+    assert.ok([...native.getElementsByTagNameNS(W, 'tab')].some((item) => item.getAttributeNS(W, 'val') === 'clear'));
+    assert.equal(parse(await zip.file('word/settings.xml').async('string')).getElementsByTagNameNS(W, 'defaultTabStop')[0].getAttributeNS(W,'val'),'600');
+    document = await importStudioWord(file, 'Reopened.docx');
+    assert.equal(document.defaultTabStop, 30);
+    assert.deepEqual(JSON.parse(JSON.stringify(document.content.content[0].attrs.tabStops)), [{ position: 36, alignment: 'clear' }, { position: 170.25, alignment: 'decimal', leader: 'dot' }]);
+    assert.equal(find(document.content,'text').map((node) => node.text).join(''), 'Label\t12.34A\tB\tC');
+    assert.ok(find(document.content,'text')[0].marks.some((mark) => mark.type === 'bold'));
+  }
+});
+
+test('unsupported, duplicate and malformed native tab definitions reject the whole document', async () => {
+  for (const tabs of [
+    '<w:tab w:val="bar" w:pos="720"/>', '<w:tab w:val="left" w:pos="-1"/>',
+    '<w:tab w:val="left" w:pos="720" w:leader="heavy"/>',
+    '<w:tab w:val="left" w:pos="720"/><w:tab w:val="right" w:pos="720"/>',
+  ]) await assert.rejects(importStudioWord(await fixture(`<w:p><w:pPr><w:tabs>${tabs}</w:tabs></w:pPr><w:r><w:t>Original</w:t></w:r></w:p>`),'Invalid.docx'));
+  await assert.rejects(importStudioWord(await fixture('<w:p><w:r><w:t>Original</w:t></w:r></w:p>',{
+    'word/settings.xml':`<w:settings xmlns:w="${W}"><w:defaultTabStop w:val="600.5"/></w:settings>`,
+  }),'Invalid.docx'));
+});
+
+test('paragraph indentation and three native line-spacing rules preserve point values and text over repeated DOCX saves', async () => {
+  const source = await fixture(
+    '<w:p><w:pPr><w:jc w:val="both"/><w:ind w:left="240" w:right="120" w:hanging="180"/><w:spacing w:before="120" w:after="180" w:line="440" w:lineRule="exact"/></w:pPr><w:r><w:rPr><w:b/><w:sz w:val="28"/></w:rPr><w:t>Exact</w:t></w:r></w:p><w:p><w:pPr><w:ind w:start="480" w:end="240" w:firstLine="180"/><w:spacing w:line="600" w:lineRule="atLeast"/></w:pPr><w:r><w:t>Minimum</w:t></w:r></w:p><w:p><w:pPr><w:spacing w:line="360" w:lineRule="auto"/></w:pPr><w:r><w:t>Multiple</w:t></w:r></w:p>'
+  );
+  let document = await importStudioWord(source, 'Paragraph.docx');
+  assert.equal(document.content.content[0].attrs.lineHeight, 22);
+  assert.equal(document.content.content[0].attrs.indentFirstLine, -9);
+  assert.equal(document.content.content[1].attrs.lineHeight, 30);
+  assert.equal(document.content.content[1].attrs.indentLeft, 24);
+  assert.equal(document.content.content[1].attrs.indentRight, 12);
+  assert.equal(document.content.content[2].attrs.lineHeight, 1.5);
+  document.content.content[0].attrs = {
+    ...document.content.content[0].attrs,
+    indentLeft: 18,
+    indentFirstLine: -12,
+    lineHeight: 24,
+  };
+  for (let pass = 0; pass < 2; pass++) {
+    const file = await exportStudioWord(document);
+    const zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const xml = parse(await zip.file('word/document.xml').async('string'));
+    const spacing = [...xml.getElementsByTagNameNS(W, 'spacing')].filter(
+      (e) => e.parentElement.localName === 'pPr'
+    );
+    assert.equal(spacing[0].getAttributeNS(W, 'line'), '480');
+    assert.equal(spacing[0].getAttributeNS(W, 'lineRule'), 'exact');
+    assert.equal(spacing[1].getAttributeNS(W, 'lineRule'), 'atLeast');
+    assert.equal(spacing[2].getAttributeNS(W, 'line'), '360');
+    assert.equal(spacing[2].getAttributeNS(W, 'lineRule'), 'auto');
+    const ind = xml.getElementsByTagNameNS(W, 'ind')[0];
+    assert.equal(ind.getAttributeNS(W, 'left'), '360');
+    assert.equal(ind.getAttributeNS(W, 'hanging'), '240');
+    document = await importStudioWord(file, 'Reopened.docx');
+    assert.equal(document.content.content[0].attrs.lineHeight, 24);
+    assert.equal(document.content.content[0].attrs.indentFirstLine, -12);
+    assert.equal(find(document.content, 'text')[0].text, 'Exact');
+    assert.ok(find(document.content, 'text')[0].marks.some((mark) => mark.type === 'bold'));
+  }
+});
+
+test('partial native line properties preserve style raw-unit inheritance and direct paragraph zero overrides', async () => {
+  const source = await fixture(
+    '<w:p><w:pPr><w:pStyle w:val="Base"/><w:ind w:firstLine="0"/><w:spacing w:before="0"/></w:pPr><w:r><w:t>Direct zero</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="OwnRule"/></w:pPr><w:r><w:t>Rule</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="OwnValue"/></w:pPr><w:r><w:t>Value</w:t></w:r></w:p>',
+    {
+      'word/styles.xml': `<w:styles xmlns:w="${W}"><w:style w:type="paragraph" w:styleId="Base"><w:name w:val="Base"/><w:pPr><w:spacing w:line="480" w:lineRule="auto" w:before="120"/><w:ind w:firstLine="240"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="OwnRule"><w:name w:val="Own rule"/><w:basedOn w:val="Base"/><w:pPr><w:spacing w:lineRule="exact"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="OwnValue"><w:name w:val="Own value"/><w:basedOn w:val="Base"/><w:pPr><w:spacing w:line="360"/></w:pPr></w:style></w:styles>`,
+    }
+  );
+  let document = await importStudioWord(source, 'Inheritance.docx');
+  const old = document.content.attrs.paragraphStyles;
+  const changed = old.map((style) =>
+    style.name === 'Base'
+      ? {
+          ...style,
+          paragraph: {
+            ...style.paragraph,
+            lineHeightRule: 'exact',
+            lineHeight: 18,
+            lineHeightBasis: 'points',
+            indentFirstLine: 24,
+            spaceBefore: 12,
+          },
+        }
+      : style
+  );
+  document.content = styleExports.reconcileStudioWordStyles(document.content, old, changed);
+  document.content.attrs.paragraphStyles = changed;
+  assert.deepEqual(
+    Array.from(document.content.content, (p) => p.attrs.lineHeight),
+    [18, 18, 18]
+  );
+  assert.equal(document.content.content[0].attrs.indentFirstLine, 0);
+  assert.equal(document.content.content[0].attrs.spaceBefore, 0);
+  for (let pass = 0; pass < 2; pass++) {
+    const file = await exportStudioWord(document);
+    const zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const xml = parse(await zip.file('word/styles.xml').async('string'));
+    const value = [...xml.getElementsByTagNameNS(W, 'style')].find(
+      (e) => e.getElementsByTagNameNS(W, 'name')[0]?.getAttributeNS(W, 'val') === 'Own value'
+    );
+    const spacing = value.getElementsByTagNameNS(W, 'spacing')[0];
+    assert.equal(spacing.getAttributeNS(W, 'line'), '360');
+    assert.equal(spacing.getAttributeNS(W, 'lineRule'), null);
+    document = await importStudioWord(file, 'Reopened.docx');
+    assert.deepEqual(
+      Array.from(document.content.content, (p) => p.attrs.lineHeight),
+      [18, 18, 18]
+    );
+    assert.equal(document.content.content[0].attrs.indentFirstLine, 0);
+    assert.equal(document.content.content[0].attrs.spaceBefore, 0);
+  }
+});
+
+test('signed native run spacing and position preserve fonts, scripts, header/footer and repeated DOCX edits', async () => {
+  const source = await fixture(
+    '<w:p><w:r><w:rPr><w:b/><w:sz w:val="28"/><w:spacing w:val="24"/><w:position w:val="4"/><w:vertAlign w:val="superscript"/></w:rPr><w:t>A</w:t></w:r><w:r><w:rPr><w:i/><w:sz w:val="60"/><w:spacing w:val="-10"/><w:position w:val="-5"/></w:rPr><w:t>B</w:t></w:r></w:p>'
+  );
+  let document = await importStudioWord(source, 'metrics.docx');
+  const style = (node) => node.marks?.find((mark) => mark.type === 'textStyle')?.attrs;
+  const runs = () => find(document.content, 'text');
+  assert.equal(style(runs()[0]).letterSpacing, '1.2pt');
+  assert.equal(style(runs()[0]).baselineShift, '2pt');
+  assert.equal(style(runs()[1]).letterSpacing, '-0.5pt');
+  assert.equal(style(runs()[1]).baselineShift, '-2.5pt');
+  document.content.content[0].content[0].text = 'edited A';
+  document.header = {
+    type: 'doc',
+    content: [
+      {
+        type: 'paragraph',
+        content: [
+          text('Header', [
+            { type: 'textStyle', attrs: { letterSpacing: '0.3pt', baselineShift: '1.5pt' } },
+          ]),
+        ],
+      },
+    ],
+  };
+  document.footer = {
+    type: 'doc',
+    content: [
+      {
+        type: 'paragraph',
+        content: [
+          text('Footer', [
+            { type: 'textStyle', attrs: { letterSpacing: '0pt', baselineShift: '-1.5pt' } },
+          ]),
+        ],
+      },
+    ],
+  };
+  for (let pass = 0; pass < 2; pass++) {
+    const saved = await exportStudioWord(document);
+    const zip = await JSZip.loadAsync(await saved.arrayBuffer());
+    const native = parse(await zip.file('word/document.xml').async('string'));
+    assert.equal(
+      [...native.getElementsByTagNameNS(W, 'spacing')]
+        .find((p) => p.parentElement.localName === 'rPr')
+        .getAttributeNS(W, 'val'),
+      '24'
+    );
+    assert.equal(native.getElementsByTagNameNS(W, 'position')[0].getAttributeNS(W, 'val'), '4');
+    document = await importStudioWord(saved, 'Reopened.docx');
+    assert.equal(runs()[0].text, 'edited A');
+    assert.equal(style(runs()[0]).fontSize, '14pt');
+    assert.ok(runs()[0].marks.some((mark) => mark.type === 'superscript'));
+    assert.equal(style(runs()[1]).fontSize, '30pt');
+    assert.equal(style(runs()[0]).letterSpacing, '1.2pt');
+    assert.equal(style(runs()[1]).baselineShift, '-2.5pt');
+    assert.equal(style(find(document.header, 'text')[0]).baselineShift, '1.5pt');
+    assert.equal(style(find(document.footer, 'text')[0]).baselineShift, '-1.5pt');
+  }
+});
+
+test('style inheritance and explicit zero spacing/position overrides survive native DOCX serialization', async () => {
+  const source = await fixture(
+    '<w:p><w:pPr><w:pStyle w:val="wide"/></w:pPr><w:r><w:t>inherit</w:t></w:r><w:r><w:rPr><w:spacing w:val="0"/><w:position w:val="0"/></w:rPr><w:t>direct zero</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="reset"/></w:pPr><w:r><w:t>child zero</w:t></w:r></w:p>',
+    {
+      'word/styles.xml': `<w:styles xmlns:w="${W}"><w:style w:type="paragraph" w:styleId="wide"><w:name w:val="Wide"/><w:rPr><w:spacing w:val="40"/><w:position w:val="6"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="reset"><w:name w:val="Reset"/><w:basedOn w:val="wide"/><w:rPr><w:spacing w:val="0"/><w:position w:val="0"/></w:rPr></w:style></w:styles>`,
+    }
+  );
+  let document = await importStudioWord(source, 'Inherited.docx');
+  for (let pass = 0; pass < 2; pass++) {
+    const saved = await exportStudioWord(document);
+    const zip = await JSZip.loadAsync(await saved.arrayBuffer());
+    const native = parse(await zip.file('word/document.xml').async('string'));
+    assert.ok(
+      [...native.getElementsByTagNameNS(W, 'spacing')].some(
+        (p) => p.getAttributeNS(W, 'val') === '0'
+      )
+    );
+    const styles = parse(await zip.file('word/styles.xml').async('string'));
+    const zero = [...styles.getElementsByTagNameNS(W, 'style')].find(
+      (s) => s.getElementsByTagNameNS(W, 'name')[0]?.getAttributeNS(W, 'val') === 'Reset'
+    );
+    assert.equal(
+      [...zero.getElementsByTagNameNS(W, 'spacing')]
+        .find((p) => p.parentElement.localName === 'rPr')
+        .getAttributeNS(W, 'val'),
+      '0'
+    );
+    document = await importStudioWord(saved, 'Inherited.docx');
+    const runs = find(document.content, 'text');
+    const attrs = runs.map((n) => n.marks.find((m) => m.type === 'textStyle').attrs);
+    assert.deepEqual(
+      attrs.map((a) => [a.letterSpacing, a.baselineShift]),
+      [
+        ['2pt', '3pt'],
+        ['0pt', '0pt'],
+        ['0pt', '0pt'],
+      ]
+    );
+  }
+});
+
+test('explicit zero run metrics also cancel inherited values on images and page fields', async () => {
+  const source = model([
+    {
+      type: 'paragraph',
+      attrs: { paragraphStyle: 'wide', paragraphStyleMaterialized: true },
+      content: [
+        {
+          type: 'image',
+          attrs: {
+            src: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Y3nRmwAAAAASUVORK5CYII=',
+            width: 10,
+            height: 10,
+            alt: 'zero',
+          },
+          marks: [{ type: 'textStyle', attrs: { letterSpacing: '0pt', baselineShift: '0pt' } }],
+        },
+        {
+          type: 'pageNumber',
+          attrs: { kind: 'current' },
+          marks: [{ type: 'textStyle', attrs: { letterSpacing: '0pt', baselineShift: '0pt' } }],
+        },
+      ],
+    },
+  ]);
+  source.content.attrs = {
+    paragraphStyles: [{ id: 'wide', name: 'Wide', run: { letterSpacing: 2, baselineShift: 3 } }],
+  };
+  const file = await exportStudioWord(source);
+  const zip = await JSZip.loadAsync(await file.arrayBuffer());
+  const native = parse(await zip.file('word/document.xml').async('string'));
+  const resets = [...native.getElementsByTagNameNS(W, 'spacing')].filter(
+    (p) => p.parentElement.localName === 'rPr' && p.getAttributeNS(W, 'val') === '0'
+  );
+  assert.equal(resets.length, 2);
+  const reopened = await importStudioWord(file, 'Reset.docx');
+  for (const node of [
+    ...find(reopened.content, 'image'),
+    ...find(reopened.content, 'pageNumber'),
+  ]) {
+    const attrs = node.marks.find((mark) => mark.type === 'textStyle').attrs;
+    assert.equal(attrs.letterSpacing, '0pt', node.type);
+    assert.equal(attrs.baselineShift, '0pt', node.type);
+  }
+});
+
+test('signed half-point positions on native text, images and fields survive two saves in body, header and footer', async () => {
+  const formatted = (node, baselineShift, letterSpacing = '0.3pt') => ({
+    ...node,
+    marks: [{ type: 'textStyle', attrs: { baselineShift, letterSpacing } }],
+  });
+  let current = model([p(
+    formatted(text('raised'), '1.5pt'),
+    formatted(image({ width: 10, height: 10, alt: 'lowered' }), '-1.5pt'),
+    formatted({ type: 'pageNumber', attrs: { kind: 'current' } }, '0.5pt')
+  )]);
+  current.header = { type: 'doc', content: [p(formatted(text('header'), '500pt', '-0.05pt'))] };
+  current.footer = { type: 'doc', content: [p(formatted(text('footer'), '-500pt', '0pt'))] };
+  for (let round = 0; round < 2; round++) {
+    const saved = await exportStudioWord(current);
+    const zip = await JSZip.loadAsync(await saved.arrayBuffer());
+    for (const [part, expected] of [
+      ['word/document.xml', ['3', '-3', '1', '1', '1', '1']],
+      ['word/header1.xml', ['1000']],
+      ['word/footer1.xml', ['-1000']],
+    ]) {
+      const native = parse(await zip.file(part).async('string'));
+      assert.deepEqual([...native.getElementsByTagNameNS(W, 'position')].map(node => node.getAttributeNS(W, 'val')), expected);
+    }
+    current = await importStudioWord(saved, 'Reopened.docx');
+    const style = node => node.marks.find(mark => mark.type === 'textStyle').attrs;
+    assert.equal(style(find(current.content, 'text')[0]).baselineShift, '1.5pt');
+    assert.equal(style(find(current.content, 'image')[0]).baselineShift, '-1.5pt');
+    assert.equal(style(find(current.content, 'pageNumber')[0]).baselineShift, '0.5pt');
+    assert.equal(style(find(current.header, 'text')[0]).baselineShift, '500pt');
+    assert.equal(style(find(current.footer, 'text')[0]).baselineShift, '-500pt');
+  }
+});
+
+test('signed half-point paragraph style positions and explicit zero overrides retain native identity through two saves', async () => {
+  let current = await importStudioWord(await fixture(
+    '<w:p><w:pPr><w:pStyle w:val="Raised"/></w:pPr><w:r><w:t>inherit</w:t></w:r><w:r><w:rPr><w:position w:val="0"/></w:rPr><w:t>zero</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="Reset"/></w:pPr><w:r><w:t>reset style</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="Lowered"/></w:pPr><w:r><w:t>lowered style</w:t></w:r></w:p>',
+    { 'word/styles.xml': `<w:styles xmlns:w="${W}"><w:style w:type="paragraph" w:styleId="Raised"><w:name w:val="Raised"/><w:rPr><w:position w:val="3"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Lowered"><w:name w:val="Lowered"/><w:rPr><w:position w:val="-3"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Reset"><w:name w:val="Reset"/><w:basedOn w:val="Raised"/><w:rPr><w:position w:val="0"/></w:rPr></w:style></w:styles>` }
+  ), 'Native positions.docx');
+  current.content.content[0].content.push(
+    { ...image({ width: 10, height: 10, alt: 'zero' }), marks: [{ type: 'textStyle', attrs: { baselineShift: '0pt' } }] },
+    { type: 'pageNumber', attrs: { kind: 'current' }, marks: [{ type: 'textStyle', attrs: { baselineShift: '0pt' } }] }
+  );
+  for (let round = 0; round < 2; round++) {
+    const saved = await exportStudioWord(current);
+    const zip = await JSZip.loadAsync(await saved.arrayBuffer());
+    const styles = parse(await zip.file('word/styles.xml').async('string'));
+    for (const [label, expected] of [['Raised', '3'], ['Lowered', '-3'], ['Reset', '0']]) {
+      const style = [...styles.getElementsByTagNameNS(W, 'style')].find(node => node.getElementsByTagNameNS(W, 'name')[0]?.getAttributeNS(W, 'val') === label);
+      assert.equal(style.getElementsByTagNameNS(W, 'position')[0].getAttributeNS(W, 'val'), expected);
+      assert.equal([...style.children].filter(node => node.localName === 'rPr').length, 1);
+    }
+    const native = parse(await zip.file('word/document.xml').async('string'));
+    assert.deepEqual([...native.getElementsByTagNameNS(W, 'position')].map(node => node.getAttributeNS(W, 'val')), ['0', '0', '0', '0', '0', '0']);
+    current = await importStudioWord(saved, 'Reopened.docx');
+    const style = node => node.marks.find(mark => mark.type === 'textStyle').attrs;
+    assert.equal(style(find(current.content, 'text')[0]).baselineShift, '1.5pt');
+    assert.equal(style(find(current.content, 'text')[1]).baselineShift, '0pt');
+    assert.equal(style(find(current.content, 'text')[3]).baselineShift, '-1.5pt');
+    assert.equal(style(find(current.content, 'image')[0]).baselineShift, '0pt');
+    assert.equal(style(find(current.content, 'pageNumber')[0]).baselineShift, '0pt');
+  }
+});
+
+test('invalid character metrics are refused without changing the original model', async () => {
+  await assert.rejects(
+    importStudioWord(
+      await fixture('<w:p><w:r><w:rPr><w:spacing w:val="1.5"/></w:rPr><w:t>A</w:t></w:r></w:p>'),
+      'Invalid.docx'
+    ),
+    /字符间距/
+  );
+  const doc = model([
+    {
+      type: 'paragraph',
+      content: [text('safe', [{ type: 'textStyle', attrs: { letterSpacing: '0.01pt' } }])],
+    },
+  ]);
+  const before = JSON.stringify(doc);
+  await assert.rejects(exportStudioWord(doc), /字符间距/);
+  assert.equal(JSON.stringify(doc), before);
+});
+
+test('native tabs, repeated spaces, nonbreaking spaces and line breaks retain their original characters and formatting across DOCX edits and repeated saves', async () => {
+  const source = await fixture(
+    '<w:p><w:r><w:rPr><w:b/></w:rPr><w:t xml:space="preserve">  😀 A </w:t><w:tab/><w:tab/><w:t xml:space="preserve"> B\u00a0Z  </w:t><w:br/><w:t>Next line</w:t></w:r></w:p><w:p/>'
+  );
+  let document = await importStudioWord(source, 'nonprinting.docx');
+  const text = (node) =>
+    node.type === 'hardBreak'
+      ? '\n'
+      : node.type === 'text'
+        ? node.text
+        : (node.content || []).map(text).join('');
+  assert.equal(text(document.content), '  😀 A \t\t B\u00a0Z  \nNext line');
+  document.content.content[0].content[0].text = '  😀 A edited ';
+  for (let pass = 0; pass < 2; pass++) {
+    const saved = await exportStudioWord(document);
+    const zip = await JSZip.loadAsync(await saved.arrayBuffer());
+    const sourceXml = await zip.file('word/document.xml').async('string');
+    const native = parse(sourceXml);
+    assert.equal(native.getElementsByTagNameNS(W, 'tab').length, 2);
+    assert.equal(native.getElementsByTagNameNS(W, 'br').length, 1);
+    assert.ok(!sourceXml.includes('data-word-nonprinting') && !sourceXml.includes('¶'));
+    document = await importStudioWord(saved, document.name);
+    assert.equal(text(document.content), '  😀 A edited \t\t B\u00a0Z  \nNext line');
+    assert.equal(document.content.content.length, 2);
+    for (const run of find(document.content, 'text').filter(
+      (node) => node.text.includes('😀') || node.text.includes('\t')
+    ))
+      assert.ok(run.marks.some((mark) => mark.type === 'bold'));
+  }
+});
 const PNG =
   'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Y3nRmwAAAAASUVORK5CYII=';
 const JPEG =
@@ -78,6 +634,220 @@ const find = (node, type) => [
 const findText = (node, value) => find(node, 'text').find((item) => item.text === value);
 const attrs = (node, mark) => node.marks?.find((item) => item.type === mark)?.attrs;
 const parse = (value) => new xml.DOMParser().parseFromString(value, 'application/xml');
+
+test('named paragraph styles preserve inheritance, native links, automatic update and direct overrides over repeated saves', async () => {
+  let current = model([
+    {
+      type: 'paragraph',
+      attrs: { paragraphStyle: 'summary', paragraphStyleMaterialized: true, lineHeight: 1.5 },
+      content: [
+        text('继承格式', [
+          { type: 'bold' },
+          { type: 'italic' },
+          {
+            type: 'textStyle',
+            attrs: { fontFamily: 'Noto Sans SC', fontSize: '14pt', color: '#185adb' },
+          },
+        ]),
+        text('单独取消粗体', [
+          { type: 'italic' },
+          {
+            type: 'textStyle',
+            attrs: { fontFamily: 'Noto Sans SC', fontSize: '14pt', color: '#185adb' },
+          },
+        ]),
+      ],
+    },
+  ]);
+  current.content.attrs = {
+    paragraphStyles: [
+      {
+        id: 'review',
+        name: '评审正文',
+        run: { fontSize: 14, bold: true, color: '#185adb', backgroundColor: '#ffff00' },
+        paragraph: { lineHeight: 1.5 },
+        autoUpdate: true,
+      },
+      {
+        id: 'summary',
+        name: '评审摘要',
+        basedOn: 'review',
+        next: 'review',
+        run: { italic: true, backgroundColor: null },
+      },
+      { id: 'unused', name: '尚未应用', basedOn: 'summary', run: { underline: true } },
+    ],
+  };
+  for (let round = 0; round < 3; round++) {
+    const blob = await exportStudioWord(current);
+    const zip = await JSZip.loadAsync(await blob.arrayBuffer());
+    const nativeStyles = parse(await zip.file('word/styles.xml').async('string'));
+    const nativeSummary = [...nativeStyles.getElementsByTagNameNS(W, 'style')].find(
+      (style) => style.getAttributeNS(W, 'styleId') === 'ZuviStyle_summary'
+    );
+    assert.equal(
+      nativeSummary.getElementsByTagNameNS(W, 'basedOn')[0].getAttributeNS(W, 'val'),
+      'ZuviStyle_review'
+    );
+    assert.equal(
+      nativeSummary.getElementsByTagNameNS(W, 'next')[0].getAttributeNS(W, 'val'),
+      'ZuviStyle_review'
+    );
+    assert.equal(nativeStyles.getElementsByTagNameNS(W, 'autoRedefine').length, 1);
+    const native = parse(await zip.file('word/document.xml').async('string'));
+    assert.equal(
+      native.getElementsByTagNameNS(W, 'pStyle')[0].getAttributeNS(W, 'val'),
+      'ZuviStyle_summary'
+    );
+    current = await importStudioWord(blob, current.name);
+    const definitions = current.content.attrs.paragraphStyles;
+    assert.deepEqual(
+      JSON.parse(JSON.stringify(definitions.map((style) => [style.id, style.name]))),
+      [
+        ['review', '评审正文'],
+        ['summary', '评审摘要'],
+        ['unused', '尚未应用'],
+      ]
+    );
+    assert.equal(definitions[0].autoUpdate, true);
+    assert.equal(definitions[1].basedOn, 'review');
+    assert.equal(definitions[1].run.backgroundColor, null);
+    assert.equal(find(current.content, 'paragraph')[0].attrs.paragraphStyle, 'summary');
+    assert.ok(findText(current.content, '继承格式').marks.some((mark) => mark.type === 'bold'));
+    assert.ok(
+      !findText(current.content, '单独取消粗体').marks.some((mark) => mark.type === 'bold')
+    );
+    assert.equal(attrs(findText(current.content, '继承格式'), 'textStyle').fontSize, '14pt');
+    assert.equal(
+      attrs(findText(current.content, '继承格式'), 'textStyle').backgroundColor,
+      undefined
+    );
+  }
+});
+
+test('native custom styles remain editable definitions with parent and next-style links', async () => {
+  const blob = await fixture(
+    '<w:p><w:pPr><w:pStyle w:val="ReviewChild"/></w:pPr><w:r><w:t>导入内容</w:t></w:r></w:p>',
+    {
+      'word/styles.xml': `<w:styles xmlns:w="${W}">
+      <w:style w:type="paragraph" w:styleId="Normal"><w:name w:val="Normal"/><w:rPr><w:rFonts w:ascii="Calibri"/><w:sz w:val="22"/></w:rPr><w:pPr><w:spacing w:after="0"/></w:pPr></w:style>
+      <w:style w:type="paragraph" w:styleId="ReviewBase"><w:name w:val="Review Base"/><w:basedOn w:val="Normal"/><w:rPr><w:i/><w:sz w:val="28"/></w:rPr><w:pPr><w:spacing w:line="360"/></w:pPr></w:style>
+      <w:style w:type="paragraph" w:styleId="ReviewChild"><w:name w:val="Review Child"/><w:basedOn w:val="ReviewBase"/><w:next w:val="ReviewBase"/><w:rPr><w:b w:val="0"/></w:rPr></w:style>
+    </w:styles>`,
+    }
+  );
+  const imported = await importStudioWord(blob, '原生样式.docx');
+  const definitions = imported.content.attrs.paragraphStyles;
+  const parent = definitions.find((style) => style.name === 'Review Base');
+  const child = definitions.find((style) => style.name === 'Review Child');
+  assert.equal(child.basedOn, parent.id);
+  assert.equal(child.next, parent.id);
+  const resolved = styleExports.resolveStudioWordParagraphStyle(definitions, child.id);
+  assert.equal(resolved.run.fontFamily, 'Calibri');
+  assert.equal(resolved.run.fontSize, 14);
+  assert.equal(resolved.run.italic, true);
+  assert.equal(resolved.run.bold, false);
+  assert.equal(resolved.paragraph.lineHeight, 1.5);
+  assert.equal(resolved.paragraph.spaceAfter, 0);
+  const reopened = await importStudioWord(await exportStudioWord(imported), imported.name);
+  assert.equal(
+    reopened.content.attrs.paragraphStyles.find((style) => style.name === 'Review Child').basedOn,
+    parent.id
+  );
+  assert.equal(flatten(reopened.content), '导入内容');
+});
+
+test('a named body style can explicitly remove an inherited heading outline level', async () => {
+  const source = model([
+    { type: 'paragraph', attrs: { paragraphStyle: 'plain' }, content: [text('正文提示')] },
+  ]);
+  source.content.attrs = {
+    paragraphStyles: [{ id: 'plain', name: '普通提示', basedOn: 'heading-1', headingLevel: 0 }],
+  };
+  const restored = await importStudioWord(await exportStudioWord(source), source.name);
+  assert.equal(restored.content.content[0].type, 'paragraph');
+  assert.equal(restored.content.attrs.paragraphStyles[0].headingLevel, 0);
+  assert.equal(attrs(findText(restored.content, '正文提示'), 'textStyle').fontSize, '24pt');
+  assert.ok(findText(restored.content, '正文提示').marks.some((mark) => mark.type === 'bold'));
+});
+
+test('invalid style graphs cannot be exported or partially change the source document', async () => {
+  const source = model([p(text('保留正文'))]);
+  source.content.attrs = {
+    paragraphStyles: [
+      { id: 'a', name: '甲', basedOn: 'b' },
+      { id: 'b', name: '乙', basedOn: 'a' },
+    ],
+  };
+  const before = JSON.stringify(source);
+  await assert.rejects(exportStudioWord(source), /循环/);
+  assert.equal(JSON.stringify(source), before);
+});
+
+test('derived styles retain inherited heading levels instead of freezing the parent level on import', async () => {
+  const source = model([
+    { type: 'paragraph', attrs: { paragraphStyle: 'child' }, content: [text('继承标题')] },
+  ]);
+  source.content.attrs = {
+    paragraphStyles: [
+      { id: 'parent', name: '基础标题', basedOn: 'heading-2' },
+      { id: 'child', name: '继承标题', basedOn: 'parent' },
+    ],
+  };
+  const restored = await importStudioWord(await exportStudioWord(source), source.name);
+  const definitions = restored.content.attrs.paragraphStyles;
+  assert.equal(definitions.find((style) => style.id === 'child').headingLevel, undefined);
+  assert.equal(styleExports.resolveStudioWordParagraphStyle(definitions, 'child').headingLevel, 2);
+  const changed = definitions.map((style) =>
+    style.id === 'parent' ? { ...style, headingLevel: 0 } : style
+  );
+  assert.equal(styleExports.resolveStudioWordParagraphStyle(changed, 'child').headingLevel, 0);
+});
+
+test('paragraph-level outline overrides survive saving without changing the linked style definition', async () => {
+  const blob = await fixture(
+    '<w:p><w:pPr><w:pStyle w:val="CustomHead"/><w:outlineLvl w:val="9"/></w:pPr><w:r><w:t>正文中的标题格式</w:t></w:r></w:p>',
+    {
+      'word/styles.xml': `<w:styles xmlns:w="${W}"><w:style w:type="paragraph" w:styleId="Heading1"><w:name w:val="heading 1"/><w:pPr><w:outlineLvl w:val="0"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="CustomHead"><w:name w:val="Custom Head"/><w:basedOn w:val="Heading1"/></w:style></w:styles>`,
+    }
+  );
+  const imported = await importStudioWord(blob, '大纲覆盖.docx');
+  assert.equal(imported.content.content[0].type, 'paragraph');
+  assert.equal(
+    styleExports.resolveStudioWordParagraphStyle(
+      imported.content.attrs.paragraphStyles,
+      imported.content.content[0].attrs.paragraphStyle
+    ).headingLevel,
+    1
+  );
+  const restored = await importStudioWord(await exportStudioWord(imported), imported.name);
+  assert.equal(restored.content.content[0].type, 'paragraph');
+  assert.equal(
+    styleExports.resolveStudioWordParagraphStyle(
+      restored.content.attrs.paragraphStyles,
+      restored.content.content[0].attrs.paragraphStyle
+    ).headingLevel,
+    1
+  );
+});
+
+test('named styles inside a quote retain the existing quote border and structure after saving', async () => {
+  const blob = await fixture(
+    '<w:p><w:pPr><w:pStyle w:val="DerivedQuote"/></w:pPr><w:r><w:t>保留引用样式</w:t></w:r></w:p>',
+    {
+      'word/styles.xml': `<w:styles xmlns:w="${W}"><w:style w:type="paragraph" w:styleId="ZuviQuote"><w:name w:val="ZUVI Quote"/><w:basedOn w:val="Normal"/><w:pPr><w:ind w:left="360"/><w:pBdr><w:left w:val="single" w:sz="18" w:color="1F2937"/></w:pBdr></w:pPr></w:style><w:style w:type="paragraph" w:styleId="DerivedQuote"><w:name w:val="Derived Quote"/><w:basedOn w:val="ZuviQuote"/></w:style></w:styles>`,
+    }
+  );
+  const imported = await importStudioWord(blob, '引用样式.docx');
+  assert.equal(find(imported.content, 'blockquote').length, 1);
+  const saved = await exportStudioWord(imported);
+  const zip = await JSZip.loadAsync(await saved.arrayBuffer());
+  const native = parse(await zip.file('word/document.xml').async('string'));
+  assert.equal(native.getElementsByTagNameNS(W, 'pBdr').length, 1);
+  const restored = await importStudioWord(saved, imported.name);
+  assert.equal(find(restored.content, 'blockquote').length, 1);
+  assert.equal(flatten(restored.content), '保留引用样式');
+});
 
 async function fixture(body, parts = {}) {
   const zip = new JSZip();
@@ -370,17 +1140,10 @@ test('DOCX export fails explicitly for unsupported nodes, marks and inline layou
     exportStudioWord(model([p(text('行距', [{ type: 'textStyle', attrs: { lineHeight: '3' } }]))])),
     /lineHeight/
   );
-  await assert.rejects(
-    exportStudioWord(
-      model([
-        {
-          type: 'orderedList',
-          content: [{ type: 'listItem', content: [p(text('首段')), p(text('第二段'))] }],
-        },
-      ])
-    ),
-    /Shift\+Enter/
-  );
+  const continued = await exportStudioWord(model([{type:'orderedList',content:[{type:'listItem',content:[p(text('首段')),p(text('第二段'))]}]}]));
+  const native = parse(await(await JSZip.loadAsync(await continued.arrayBuffer())).file('word/document.xml').async('string'));
+  assert.equal(native.getElementsByTagNameNS(W,'numPr').length,1);
+  assert.equal(native.getElementsByTagNameNS(W,'t')[1].textContent,'第二段');
 });
 
 test('DOCX embeds raster images and retains body, default header/footer, fields and distances over repeated exports', async () => {
@@ -546,6 +1309,126 @@ test('DOCX embeds JPEG bytes unchanged and retains configured header/footer dist
   assert.equal(restored.page.footerDistance, 6);
 });
 
+test('floating images preserve wrapping, position, anchor flags, distances and custom contours across native DOCX saves', async () => {
+  const layouts = [
+    {
+      ...imageExports.wordDefaultImageLayout('square'),
+      horizontal: { relative: 'margin', align: 'right' },
+      vertical: { relative: 'paragraph', offset: 12.5 },
+      lockAnchor: true,
+      allowOverlap: false,
+    },
+    {
+      ...imageExports.wordDefaultImageLayout('tight'),
+      polygon: [
+        [0, 0],
+        [0, 21600],
+        [10000, 21600],
+        [21600, 10000],
+        [21600, 0],
+        [0, 0],
+      ],
+      wrapSide: 'left',
+    },
+    {
+      ...imageExports.wordDefaultImageLayout('through'),
+      horizontal: { relative: 'column', offset: -12.5 },
+      wrapSide: 'largest',
+    },
+    {
+      ...imageExports.wordDefaultImageLayout('topBottom'),
+      horizontal: { relative: 'page', align: 'center' },
+      vertical: { relative: 'page', align: 'bottom' },
+      layoutInCell: false,
+    },
+    {
+      ...imageExports.wordDefaultImageLayout('front'),
+      horizontal: { relative: 'character', offset: 25 },
+      vertical: { relative: 'line', offset: -5 },
+      zIndex: 0,
+    },
+    {
+      ...imageExports.wordDefaultImageLayout('behind'),
+      horizontal: { relative: 'page', offset: 100 },
+      vertical: { relative: 'page', offset: 80 },
+      zIndex: 72,
+    },
+  ];
+  let current = model(layouts.map((layout) => p(image({ layout }), text('保留锚点后的正文'))));
+  current.header = { type: 'doc', content: [p(image({ layout: layouts[1] }))] };
+  current.footer = { type: 'doc', content: [p(image({ layout: layouts[4] }))] };
+  for (let pass = 0; pass < 3; pass++) {
+    const saved = await exportStudioWord(current);
+    const zip = await JSZip.loadAsync(await saved.arrayBuffer());
+    const native = parse(await zip.file('word/document.xml').async('string'));
+    assert.equal(native.getElementsByTagName('wp:anchor').length, 6);
+    assert.equal(native.getElementsByTagName('wp:inline').length, 0);
+    const anchors = native.getElementsByTagName('wp:anchor');
+    assert.equal(anchors[0].getAttribute('locked'), '1');
+    assert.equal(anchors[0].getAttribute('allowOverlap'), '0');
+    assert.equal(anchors[4].getAttribute('relativeHeight'), '0');
+    assert.equal(anchors[5].getAttribute('behindDoc'), '1');
+    current = await importStudioWord(saved, current.name);
+    const restored = find(current.content, 'image');
+    for (let index = 0; index < layouts.length; index++) {
+      const actual = restored[index].attrs.layout;
+      const expected = layouts[index];
+      assert.equal(actual.wrap, expected.wrap);
+      for (const axis of ['horizontal', 'vertical']) {
+        assert.equal(actual[axis].relative, expected[axis].relative);
+        assert.equal(actual[axis].align, expected[axis].align);
+        if (expected[axis].offset !== undefined)
+          assert.ok(
+            Math.abs(actual[axis].offset - expected[axis].offset) <= 1 / 9525,
+            'Native EMU rounding stays below one EMU.'
+          );
+      }
+      assert.deepEqual(
+        JSON.parse(JSON.stringify(actual.distance)),
+        JSON.parse(JSON.stringify(expected.distance))
+      );
+      assert.equal(actual.lockAnchor, expected.lockAnchor);
+      assert.equal(actual.allowOverlap, expected.allowOverlap);
+      assert.equal(actual.layoutInCell, expected.layoutInCell);
+      assert.equal(actual.zIndex, expected.zIndex);
+      if (expected.polygon)
+        assert.deepEqual(JSON.parse(JSON.stringify(actual.polygon)), expected.polygon);
+    }
+    assert.deepEqual(
+      JSON.parse(JSON.stringify(find(current.header, 'image')[0].attrs.layout.polygon)),
+      layouts[1].polygon
+    );
+    assert.equal(find(current.footer, 'image')[0].attrs.layout.zIndex, 0);
+    assert.match(flatten(current.content), /保留锚点后的正文/);
+  }
+});
+
+test('invalid floating images are rejected before changing the source model', async () => {
+  for (const patch of [
+    { horizontal: { relative: 'unknown', offset: 0 } },
+    { vertical: { relative: 'page', offset: Infinity } },
+    { zIndex: -1 },
+    { wrap: 'unsupported' },
+    { distance: { left: -5 } },
+    {
+      wrap: 'tight',
+      polygon: [
+        [0, 0],
+        [0, 21600],
+        [21600, 0],
+        [500, 500],
+      ],
+    },
+  ]) {
+    const source = model([
+      p(image({ layout: { ...imageExports.wordDefaultImageLayout(), ...patch } })),
+    ]);
+    const before = JSON.stringify(source);
+    await assert.rejects(exportStudioWord(source), /图片|环绕/);
+    assert.equal(JSON.stringify(source), before);
+  }
+});
+
 test('DOCX refuses image layout that cannot be preserved and external image links', async () => {
   const exported = await exportStudioWord(model([p(image())]));
   const variants = [
@@ -655,5 +1538,473 @@ test('typed Word font names and 1pt to 300pt half-point sizes survive repeated D
       assert.equal(attrs(marked, 'textStyle').fontFamily, font);
       assert.equal(attrs(marked, 'textStyle').fontSize, `${size}pt`);
     }
+  }
+});
+
+test('a cleared heading keeps its level and hyperlink without reintroducing default heading bold on reopen', async () => {
+  let document = model([
+    {
+      type: 'heading',
+      attrs: { level: 2, paragraphStyle: 'paragraph', paragraphStyleMaterialized: true },
+      content: [
+        text('Cleared heading', [{ type: 'link', attrs: { href: 'https://example.com/linked' } }]),
+      ],
+    },
+  ]);
+  for (let pass = 0; pass < 2; pass++) {
+    const source = await exportStudioWord(document);
+    document = await importStudioWord(source, 'Cleared.docx');
+    const heading = document.content.content[0];
+    assert.equal(heading.type, 'heading');
+    assert.equal(heading.attrs.level, 2);
+    assert.equal(
+      heading.content[0].marks.some((mark) => mark.type === 'bold'),
+      false
+    );
+    assert.equal(
+      heading.content[0].marks.find((mark) => mark.type === 'link').attrs.href,
+      'https://example.com/linked'
+    );
+  }
+});
+
+
+test('table paragraph absent spacing exports zero while explicit spacing survives repeated saves', async () => {
+  let document = await importStudioWord(await fixture('<w:tbl><w:tr><w:tc><w:p><w:r><w:t>No spacing</w:t></w:r></w:p><w:p><w:pPr><w:spacing w:before="120" w:after="240"/></w:pPr><w:r><w:t>Explicit spacing</w:t></w:r></w:p></w:tc></w:tr></w:tbl>'), 'Spacing.docx');
+  for (let pass = 0; pass < 2; pass++) {
+    const file = await exportStudioWord(document);
+    const zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const native = parse(await zip.file('word/document.xml').async('string'));
+    const paragraphs = native.getElementsByTagNameNS(W, 'tc')[0].getElementsByTagNameNS(W, 'p');
+    const zero = paragraphs[0].getElementsByTagNameNS(W, 'spacing')[0];
+    assert.equal(zero.getAttributeNS(W, 'before'), '0');
+    assert.equal(zero.getAttributeNS(W, 'after'), '0');
+    const explicit = paragraphs[1].getElementsByTagNameNS(W, 'spacing')[0];
+    assert.equal(explicit.getAttributeNS(W, 'before'), '120');
+    assert.equal(explicit.getAttributeNS(W, 'after'), '240');
+    document = await importStudioWord(file, 'Spacing-reopened.docx');
+  }
+});
+
+test('native simple and complex table formula fields preserve instructions, cached edits and run formatting twice', async () => {
+  const body = '<w:tbl><w:tr><w:tc><w:p><w:r><w:t>2</w:t></w:r></w:p></w:tc><w:tc><w:p><w:fldSimple w:instr="=SUM(LEFT)"><w:r><w:rPr><w:b/><w:color w:val="0055AA"/></w:rPr><w:t>2</w:t></w:r></w:fldSimple></w:p></w:tc><w:tc><w:p><w:r><w:fldChar w:fldCharType="begin"/></w:r><w:r><w:instrText xml:space="preserve"> =B1*3 </w:instrText></w:r><w:r><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:rPr><w:i/></w:rPr><w:t>6</w:t></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r></w:p></w:tc></w:tr></w:tbl>';
+  let document = await importStudioWord(await fixture(body), 'Formulas.docx');
+  const fields = () => document.content.content[0].content[0].content.slice(1).map((cell) => cell.content[0].content[0]);
+  assert.equal(fields()[0].type, 'tableFormula');
+  assert.equal(fields()[1].attrs.formula, '=B1*3');
+  assert.equal(fields()[0].marks.some((mark) => mark.type === 'bold'), true);
+  assert.equal(fields()[1].marks.some((mark) => mark.type === 'italic'), true);
+  fields()[0].attrs.formula = '=A1*4'; fields()[0].attrs.result = '8';
+  fields()[1].attrs.result = '24';
+  for (let pass = 0; pass < 2; pass++) {
+    const file = await exportStudioWord(document);
+    const zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const native = await zip.file('word/document.xml').async('string');
+    assert.match(native, /w:fldSimple w:instr="=A1\*4"/);
+    document = await importStudioWord(file, `Formulas-${pass}.docx`);
+    assert.equal(fields()[0].attrs.formula, '=A1*4');
+    assert.equal(fields()[0].attrs.result, '8');
+    assert.equal(fields()[1].attrs.result, '24');
+    assert.equal(fields()[0].marks.some((mark) => mark.type === 'bold'), true);
+    assert.equal(fields()[1].marks.some((mark) => mark.type === 'italic'), true);
+  }
+});
+
+test('native vertical merges and nested formula instructions remain scoped and intact across two DOCX cycles', async () => {
+  const formula = (expression, cached) => `<w:p><w:fldSimple w:instr="${expression}"><w:r><w:t>${cached}</w:t></w:r></w:fldSimple></w:p>`;
+  const number = (text) => `<w:p><w:r><w:t>${text}</w:t></w:r></w:p>`;
+  const nested = `<w:tbl><w:tr><w:tc>${number('4')}</w:tc><w:tc>${formula('=A1*2', '8')}</w:tc></w:tr></w:tbl>`;
+  const body = `<w:tbl><w:tr><w:tc><w:tcPr><w:vMerge w:val="restart"/></w:tcPr>${number('3')}</w:tc><w:tc>${formula('=SUM(LEFT)', '3')}${nested}${number('Outer tail')}</w:tc></w:tr><w:tr><w:tc><w:tcPr><w:vMerge/></w:tcPr><w:p/></w:tc><w:tc>${formula('=SUM(ABOVE)', '3')}</w:tc></w:tr></w:tbl>`;
+  let document = await importStudioWord(await fixture(body), 'Merged-nested.docx');
+  const fields = () => {
+    const result = [];
+    const visit = (node) => { if (node.type === 'tableFormula') result.push([node.attrs.formula, node.attrs.result]); for (const child of node.content || []) visit(child); };
+    visit(document.content); return result;
+  };
+  for (let pass = 0; pass < 2; pass++) {
+    assert.equal(document.content.content[0].content[0].content[0].attrs.rowspan, 2);
+    assert.deepEqual(fields(), [['=SUM(LEFT)', '3'], ['=A1*2', '8'], ['=SUM(ABOVE)', '3']]);
+    document = await importStudioWord(await exportStudioWord(document), `Merged-nested-${pass}.docx`);
+  }
+  assert.deepEqual(fields(), [['=SUM(LEFT)', '3'], ['=A1*2', '8'], ['=SUM(ABOVE)', '3']]);
+});
+
+test('native numeric-picture formula switches and formatted caches survive repeated DOCX saving', async () => {
+  let document = await importStudioWord(await fixture('<w:tbl><w:tr><w:tc><w:p><w:r><w:t>1234.5</w:t></w:r></w:p></w:tc><w:tc><w:p><w:fldSimple w:instr="=A1*2 \\# &quot;#,##0.00&quot;"><w:r><w:t>2,469.00</w:t></w:r></w:fldSimple></w:p></w:tc></w:tr></w:tbl>'), 'Numeric-picture.docx');
+  for (let pass = 0; pass < 2; pass++) {
+    const field = document.content.content[0].content[0].content[1].content[0].content[0];
+    assert.equal(field.attrs.formula, '=A1*2 \\# "#,##0.00"');
+    assert.equal(field.attrs.result, '2,469.00');
+    document = await importStudioWord(await exportStudioWord(document), `Numeric-picture-${pass}.docx`);
+  }
+});
+
+test('native image crop preserves embedded source bytes, frame dimensions and edited edges across repeated DOCX saves', async () => {
+  const original = model([p(image())]);
+  const source = await exportStudioWord(original);
+  const sourceZip = await JSZip.loadAsync(await source.arrayBuffer());
+  const xmlPart = await sourceZip.file('word/document.xml').async('string');
+  sourceZip.file('word/document.xml', xmlPart.replace(/<a:srcRect[^>]*\/>/, '<a:srcRect l="25000" t="10000" r="15000" b="5000"/>'));
+  let current = await importStudioWord(new Blob([await sourceZip.generateAsync({ type: 'uint8array' })]), 'Cropped.docx');
+  let picture = find(current.content, 'image')[0];
+  assert.deepEqual(JSON.parse(JSON.stringify(picture.attrs.crop)), { left: 25, top: 10, right: 15, bottom: 5 });
+  assert.equal(picture.attrs.src, original.content.content[0].content[0].attrs.src);
+  picture.attrs.crop.left = 30;
+  for (let pass = 0; pass < 2; pass++) {
+    const file = await exportStudioWord(current);
+    const zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const native = await zip.file('word/document.xml').async('string');
+    assert.match(native, /a:srcRect[^>]*l="30000"/);
+    current = await importStudioWord(file, `Crop-${pass}.docx`);
+    picture = find(current.content, 'image')[0];
+    assert.equal(picture.attrs.crop.left, 30);
+    assert.equal(picture.attrs.width, 300);
+    assert.equal(picture.attrs.height, 150);
+    assert.equal(picture.attrs.src, original.content.content[0].content[0].attrs.src);
+  }
+  picture.attrs.crop = null;
+  current = await importStudioWord(await exportStudioWord(current), 'Reset.docx');
+  assert.equal(find(current.content, 'image')[0].attrs.crop, undefined);
+});
+
+test('replacing cropped PNG with JPEG preserves display frame, description and native drawing position through two saves', async () => {
+  const original = model([p(image({ crop: { left: 25, top: 0, right: 25, bottom: 0 }, alt: '保留图片说明' }))]);
+  let current = await importStudioWord(await exportStudioWord(original), 'Original-crop.docx');
+  let picture = find(current.content, 'image')[0];
+  picture.attrs = { ...picture.attrs, src: `data:image/jpeg;base64,${JPEG}`, crop: null };
+  for (let pass = 0; pass < 2; pass++) {
+    const file = await exportStudioWord(current);
+    const zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const media = Object.keys(zip.files).filter(name => name.startsWith('word/media/') && !zip.files[name].dir);
+    assert.equal(media.length, 1);
+    assert.equal(Buffer.from(await zip.file(media[0]).async('uint8array')).toString('base64'), JPEG);
+    const native = await zip.file('word/document.xml').async('string');
+    assert.doesNotMatch(native, /a:srcRect[^>]*l="25000"/);
+    current = await importStudioWord(file, `Replaced-${pass}.docx`);
+    picture = find(current.content, 'image')[0];
+    assert.equal(picture.attrs.src, `data:image/jpeg;base64,${JPEG}`);
+    assert.equal(picture.attrs.width, 300); assert.equal(picture.attrs.height, 150);
+    assert.equal(picture.attrs.alt, '保留图片说明'); assert.equal(picture.attrs.crop, undefined);
+  }
+});
+
+test('replacing a floating picture retains page anchor, offsets, layering and visible crop frame across native saves', async () => {
+  const layout = { ...imageExports.wordDefaultImageLayout('front'), horizontal: { relative: 'page', offset: 40 }, vertical: { relative: 'page', offset: 35 }, lockAnchor: true, zIndex: 3 };
+  let current = await importStudioWord(await exportStudioWord(model([p(image({ layout, crop: { left: 25, right: 25 } }))])), 'Floating-original.docx');
+  const before = JSON.parse(JSON.stringify(find(current.content, 'image')[0].attrs.layout));
+  find(current.content, 'image')[0].attrs.src = `data:image/jpeg;base64,${JPEG}`;
+  find(current.content, 'image')[0].attrs.crop = null;
+  for (let pass = 0; pass < 2; pass++) {
+    current = await importStudioWord(await exportStudioWord(current), `Floating-replaced-${pass}.docx`);
+    const picture = find(current.content, 'image')[0];
+    assert.deepEqual(JSON.parse(JSON.stringify(picture.attrs.layout)), before);
+    assert.equal(picture.attrs.src, `data:image/jpeg;base64,${JPEG}`);
+    assert.equal(picture.attrs.width, 300); assert.equal(picture.attrs.height, 150);
+  }
+});
+
+
+test('native OMML fractions, scripts, roots and matrices retain editable structures through repeated DOCX saves', async () => {
+  const t = text => ({ kind: 'text', text });
+  const equation = { kind: 'row', children: [{ kind: 'fraction', numerator: { kind: 'script', base: t('x'), sub: t('i'), sup: t('2') }, denominator: { kind: 'radical', body: t('y'), degree: t('3') } }, { kind: 'delimiter', left: '[', right: ']', body: { kind: 'matrix', rows: [[t('1'), t('2')], [t('3'), t('4')]] } }] };
+  let current = model([p({ type: 'mathEquation', attrs: { equation } })]);
+  for (let pass = 0; pass < 2; pass++) {
+    const file = await exportStudioWord(current);
+    const zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const native = await zip.file('word/document.xml').async('string');
+    assert.match(native, /<m:oMath/); assert.match(native, /<m:sSubSup/); assert.match(native, /<m:mr/);
+    current = await importStudioWord(file, `Equation-${pass}.docx`);
+    assert.deepEqual(JSON.parse(JSON.stringify(find(current.content, 'mathEquation')[0].attrs.equation)), equation);
+  }
+});
+
+test('unsupported OMML attributes and hidden degree content fail instead of silently losing data', async () => {
+  const M = 'http://schemas.openxmlformats.org/officeDocument/2006/math';
+  for (const source of [
+    `<m:oMath xmlns:m="${M}"><m:r m:custom="lost"><m:t>x</m:t></m:r></m:oMath>`,
+    `<m:oMath xmlns:m="${M}"><m:r><m:rPr><m:sty m:val="bad"/></m:rPr><m:t>x</m:t></m:r></m:oMath>`,
+    `<m:oMathPara xmlns:m="${M}"><m:oMathParaPr><m:jc m:val="bad"/></m:oMathParaPr><m:oMath><m:r><m:t>x</m:t></m:r></m:oMath></m:oMathPara>`,
+    `<m:oMath xmlns:m="${M}" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><m:r><w:rPr><w:rFonts w:ascii="Arial" w:eastAsia="SimSun"/></w:rPr><m:t>x</m:t></m:r></m:oMath>`,
+    `<m:oMath xmlns:m="${M}" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><m:r><w:rPr><w:color w:val="auto"/></w:rPr><m:t>x</m:t></m:r></m:oMath>`,
+    `<m:oMath xmlns:m="${M}" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><m:r><w:rPr><w:sz w:val="1"/></w:rPr><m:t>x</m:t></m:r></m:oMath>`,
+    `<m:oMath xmlns:m="${M}" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><m:r><w:rPr>lost<w:b/></w:rPr><m:t>x</m:t></m:r></m:oMath>`,
+    `<m:oMath xmlns:m="${M}" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><m:r><w:rPr><w:b/><w:b w:val="0"/></w:rPr><m:t>x</m:t></m:r></m:oMath>`,
+    `<m:oMath xmlns:m="${M}" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><m:r><w:rPr><w:u w:val="double"/></w:rPr><m:t>x</m:t></m:r></m:oMath>`,
+    `<m:oMath xmlns:m="${M}">lost<m:r><m:t>x</m:t></m:r></m:oMath>`,
+    `<m:oMath xmlns:m="${M}"><m:r><m:rPr/><m:rPr/><m:t>x</m:t></m:r></m:oMath>`,
+    `<m:oMath xmlns:m="${M}"><m:rad><m:deg/><m:deg/><m:e><m:r><m:t>x</m:t></m:r></m:e></m:rad></m:oMath>`,
+    `<m:oMath xmlns:m="${M}"><m:d><m:dPr><m:begChr m:val="("/><m:begChr m:val="["/></m:dPr><m:e><m:r><m:t>x</m:t></m:r></m:e></m:d></m:oMath>`,
+    `<m:oMath xmlns:m="${M}"><m:d><m:dPr><begChr xmlns="urn:other" m:val="("/></m:dPr><m:e><m:r><m:t>x</m:t></m:r></m:e></m:d></m:oMath>`,
+    `<m:oMath xmlns:m="${M}"><m:rad><m:radPr><m:degHide m:val="1"/></m:radPr><m:deg><m:r><m:t>3</m:t></m:r></m:deg><m:e><m:r><m:t>x</m:t></m:r></m:e></m:rad></m:oMath>`,
+  ]) {
+    assert.throws(() => mathCodecExports.readWordMath(parse(source).documentElement));
+  }
+});
+
+test('local equation run formatting and surrounding bold marks survive two native DOCX saves', async () => {
+  const equation = { kind: 'fraction', numerator: { kind: 'text', text: 'x', format: { bold: false, italic: true, underline: true } }, denominator: { kind: 'text', text: '2', format: { strike: true } } };
+  let current = model([p({ type: 'mathEquation', attrs: { equation }, marks: [{ type: 'bold' }] })]);
+  const expected = { kind: 'fraction', numerator: { ...equation.numerator }, denominator: { ...equation.denominator, format: { bold: true, strike: true } } };
+  for (let pass = 0; pass < 2; pass++) {
+    const file = await exportStudioWord(current);
+    const zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const source = await zip.file('word/document.xml').async('string');
+    assert.match(source, /<w:b w:val="0"/);
+    assert.match(source, /<w:u w:val="single"/);
+    current = await importStudioWord(file, `Formatted-equation-${pass}.docx`);
+    assert.deepEqual(JSON.parse(JSON.stringify(find(current.content, 'mathEquation')[0].attrs.equation)), expected);
+  }
+});
+
+test('separate mathematical and Word run property namespaces retain legitimate local formatting', () => {
+  const source = '<m:oMath xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><m:r><m:rPr/><w:rPr><w:b/><w:i w:val="0"/></w:rPr><m:t>x</m:t></m:r></m:oMath>';
+  assert.deepEqual(JSON.parse(JSON.stringify(mathCodecExports.readWordMath(parse(source).documentElement))), { kind: 'text', text: 'x', format: { bold: true, italic: false } });
+});
+
+test('equation typography retains local overrides and surrounding textStyle through repeated DOCX saves', async () => {
+  const inherited = { fontFamily: 'Cambria Math', fontSize: '16px', color: '#123', backgroundColor: '#eeeeff', letterSpacing: -0.05, baselineShift: 1.5 };
+  const local = { fontFamily: 'Arial', fontSize: '14.5pt', color: '#aa2244', backgroundColor: '#ddffee', letterSpacing: '0.1pt', baselineShift: '-2pt', script: 'subscript' };
+  const equation = { kind: 'fraction', numerator: { kind: 'text', text: 'x', format: local }, denominator: { kind: 'text', text: 'y' } };
+  let current = model([p({ type: 'mathEquation', attrs: { equation }, marks: [{ type: 'textStyle', attrs: inherited }, { type: 'superscript' }] })]);
+  const expected = { ...equation, denominator: { ...equation.denominator, format: { ...inherited, fontSize: '12pt', color: '#112233', letterSpacing: '-0.05pt', baselineShift: '1.5pt', script: 'superscript' } } };
+  for (let pass = 0; pass < 2; pass++) {
+    const file = await exportStudioWord(current);
+    const zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const source = await zip.file('word/document.xml').async('string');
+    assert.match(source, /<w:sz w:val="29"/); assert.match(source, /<w:spacing w:val="-1"/); assert.match(source, /<w:position w:val="-4"/);
+    current = await importStudioWord(file, `Typography-equation-${pass}.docx`);
+    assert.deepEqual(JSON.parse(JSON.stringify(find(current.content, 'mathEquation')[0].attrs.equation)), expected);
+  }
+});
+
+test('native display OMML and mathematical styles import, edit and reopen twice with alignment intact', async () => {
+  const M = 'http://schemas.openxmlformats.org/officeDocument/2006/math';
+  for (const align of ['left', 'center', 'right', 'centerGroup']) {
+    const native = await fixture(`<w:p><m:oMathPara xmlns:m="${M}"><m:oMathParaPr><m:jc m:val="${align}"/></m:oMathParaPr><m:oMath><m:f><m:num><m:r><m:rPr><m:sty m:val="bi"/></m:rPr><m:t>x</m:t></m:r></m:num><m:den><m:r><m:rPr><m:sty m:val="p"/></m:rPr><m:t>2</m:t></m:r></m:den></m:f></m:oMath></m:oMathPara></w:p>`);
+    let current = await importStudioWord(native, 'Native-display.docx');
+    const equation = find(current.content, 'mathEquation')[0].attrs.equation;
+    assert.equal(equation.kind, 'display'); assert.equal(equation.align, align);
+    assert.deepEqual(JSON.parse(JSON.stringify(equation.body.numerator.format)), { bold: true, italic: true });
+    equation.body.numerator.text = 'x+1';
+    const expected = JSON.parse(JSON.stringify(equation));
+    for (let pass = 0; pass < 2; pass++) {
+      const file = await exportStudioWord(current);
+      const zip = await JSZip.loadAsync(await file.arrayBuffer());
+      const source = await zip.file('word/document.xml').async('string');
+      assert.match(source, /<m:oMathPara/); assert.match(source, /<m:sty m:val="bi"/);
+      current = await importStudioWord(file, `Display-${pass}.docx`);
+      assert.deepEqual(JSON.parse(JSON.stringify(find(current.content, 'mathEquation')[0].attrs.equation)), expected);
+    }
+  }
+});
+
+test('equation Unicode and carriage returns survive native XML whitespace normalization', async () => {
+  const equation = { kind: 'text', text: '😀\r\n\t𝑥' };
+  let current = model([p({ type: 'mathEquation', attrs: { equation } })]);
+  for (let pass = 0; pass < 2; pass++) {
+    current = await importStudioWord(await exportStudioWord(current), 'Unicode-math.docx');
+    assert.equal(find(current.content, 'mathEquation')[0].attrs.equation.text, equation.text);
+  }
+});
+
+test('native multi-equation paragraph groups retain independent editable trees across two saves', async () => {
+  const M = 'http://schemas.openxmlformats.org/officeDocument/2006/math';
+  const source = await fixture(`<w:p><m:oMathPara xmlns:m="${M}"><m:oMathParaPr><m:jc m:val="centerGroup"/></m:oMathParaPr><m:oMath><m:r><m:t>x</m:t></m:r></m:oMath><m:oMath><m:f><m:num><m:r><m:t>a</m:t></m:r></m:num><m:den><m:r><m:t>b</m:t></m:r></m:den></m:f></m:oMath></m:oMathPara></w:p>`);
+  let current = await importStudioWord(source, 'Equation-group.docx');
+  const equation = find(current.content, 'mathEquation')[0].attrs.equation;
+  assert.equal(equation.following.length, 1);
+  equation.following[0].numerator.text = 'a+1';
+  const expected = JSON.parse(JSON.stringify(equation));
+  for (let pass = 0; pass < 2; pass++) {
+    const file = await exportStudioWord(current);
+    const zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const native = await zip.file('word/document.xml').async('string');
+    assert.equal((native.match(/<m:oMath\s/g) || []).length, 2);
+    current = await importStudioWord(file, 'Equation-group-reopen.docx');
+    assert.deepEqual(JSON.parse(JSON.stringify(find(current.content, 'mathEquation')[0].attrs.equation)), expected);
+  }
+});
+
+test('native equations retain independent region and table trees with Unicode through repeated saves', async () => {
+  const math = (label) => ({ type: 'mathEquation', attrs: { equation: { kind: 'display', align: 'centerGroup', body: { kind: 'fraction', numerator: { kind: 'text', text: label + '\r𝑥', format: { color: '#aa2244' } }, denominator: { kind: 'text', text: '2' } }, following: [{ kind: 'text', text: label + '=1' }] } } });
+  let current = model([p(text('正文前'), math('正文'), text('正文后')), { type: 'table', content: [{ type: 'tableRow', content: [{ type: 'tableCell', attrs: { colspan: 1, rowspan: 1, colwidth: [180] }, content: [p(math('表格'))] }] }] }]);
+  current.header = { type: 'doc', content: [p(text('页眉前'), math('页眉'))] };
+  current.footer = { type: 'doc', content: [p(math('页脚'), { type: 'pageNumber', attrs: { kind: 'current' } })] };
+  const expected = ['content', 'header', 'footer'].map(region => JSON.parse(JSON.stringify(find(current[region], 'mathEquation').map(node => node.attrs.equation))));
+  for (let pass = 0; pass < 2; pass++) {
+    const file = await exportStudioWord(current);
+    const zip = await JSZip.loadAsync(await file.arrayBuffer());
+    for (const part of ['word/document.xml', 'word/header1.xml', 'word/footer1.xml']) {
+      const xml = await zip.file(part).async('string');
+      assert.match(xml, /&#13;/);
+      assert.match(xml, /<m:oMathPara/);
+    }
+    current = await importStudioWord(file, 'Region-equations.docx');
+    for (const [index, region] of ['content', 'header', 'footer'].entries())
+      assert.deepEqual(JSON.parse(JSON.stringify(find(current[region], 'mathEquation').map(node => node.attrs.equation))), expected[index]);
+    assert.equal(find(current.footer, 'pageNumber').length, 1);
+    assert.equal(find(current.content, 'table').length, 1);
+  }
+});
+
+test('native cross-paragraph bookmarks retain identity and edited text through two DOCX saves', async () => {
+  let document = await importStudioWord(await fixture('<w:p><w:bookmarkStart w:id="42" w:name="范围_1"/><w:r><w:t>first</w:t></w:r></w:p><w:p><w:r><w:t>second</w:t></w:r><w:bookmarkEnd w:id="42"/></w:p>'), 'Bookmarks.docx');
+  document.content.content[0].content[1].text = 'edited';
+  for (let round = 0; round < 2; round++) {
+    const file = await exportStudioWord(document);
+    const zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const xml = parse(await zip.file('word/document.xml').async('string'));
+    assert.equal(xml.getElementsByTagNameNS(W, 'bookmarkStart')[0].getAttributeNS(W, 'name'), '范围_1');
+    assert.equal(xml.getElementsByTagNameNS(W, 'bookmarkEnd')[0].getAttributeNS(W, 'id'), '42');
+    document = await importStudioWord(file, 'Reopened.docx');
+    assert.equal(document.content.content[0].content[0].attrs.name, '范围_1');
+    assert.equal(document.content.content[1].content[1].attrs.name, '范围_1');
+    assert.equal(document.content.content[0].content[1].text, 'edited');
+  }
+});
+test('native malformed or duplicate bookmarks fail rather than silently losing ranges', async () => {
+  for (const body of [
+    '<w:p><w:bookmarkStart w:id="1" w:name="Here"/></w:p>',
+    '<w:p><w:bookmarkEnd w:id="1"/></w:p>',
+    '<w:p><w:bookmarkStart w:id="1" w:name="Here"/><w:bookmarkEnd w:id="1"/><w:bookmarkStart w:id="2" w:name="Here"/><w:bookmarkEnd w:id="2"/></w:p>',
+    '<w:p><w:bookmarkStart w:id="1" w:name="1bad"/><w:bookmarkEnd w:id="1"/></w:p>',
+  ]) await assert.rejects(importStudioWord(await fixture(body), 'Bad.docx'), /书签/);
+});
+
+test('native internal bookmark hyperlinks retain display formatting and anchor across two saves', async () => {
+  let document = await importStudioWord(await fixture('<w:p><w:bookmarkStart w:id="7" w:name="Here"/><w:r><w:t>target</w:t></w:r><w:bookmarkEnd w:id="7"/></w:p><w:p><w:hyperlink w:anchor="Here"><w:r><w:rPr><w:b/></w:rPr><w:t>Go here</w:t></w:r></w:hyperlink></w:p>'), 'Internal.docx');
+  for (let round = 0; round < 2; round++) {
+    const link = document.content.content[1].content[0];
+    assert.equal(link.text, 'Go here'); assert.ok(link.marks.some(mark => mark.type === 'bold'));
+    assert.equal(link.marks.find(mark => mark.type === 'link').attrs.href, '#Here');
+    const file = await exportStudioWord(document), zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const xml = parse(await zip.file('word/document.xml').async('string'));
+    assert.equal(xml.getElementsByTagNameNS(W, 'hyperlink')[0].getAttributeNS(W, 'anchor'), 'Here');
+    document = await importStudioWord(file, 'Reopened.docx');
+  }
+});
+
+test('native cell vertical alignment and independent margins survive editing and two DOCX cycles', async () => {
+  let document = await importStudioWord(await fixture('<w:tbl><w:tr><w:tc><w:tcPr><w:vAlign w:val="center"/><w:tcMar><w:top w:w="0" w:type="dxa"/><w:left w:w="105" w:type="dxa"/><w:bottom w:w="200" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:t>Cell</w:t></w:r></w:p></w:tc></w:tr></w:tbl>'), 'Cell.docx');
+  let cell = document.content.content[0].content[0].content[0];
+  assert.equal(cell.attrs.verticalAlign, 'center');
+  assert.deepEqual(JSON.parse(JSON.stringify(cell.attrs.cellMargins)), { top: 0, left: 5.25, bottom: 10 });
+  cell.attrs.verticalAlign = 'bottom'; cell.attrs.cellMargins.right = 4.5;
+  for (let round = 0; round < 2; round++) {
+    const file = await exportStudioWord(document), zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const xml = parse(await zip.file('word/document.xml').async('string'));
+    assert.equal(xml.getElementsByTagNameNS(W, 'vAlign')[0].getAttributeNS(W, 'val'), 'bottom');
+    assert.equal(xml.getElementsByTagNameNS(W, 'tcMar')[0].getElementsByTagNameNS(W, 'right')[0].getAttributeNS(W, 'w'), '90');
+    document = await importStudioWord(file, 'Reopened.docx'); cell = document.content.content[0].content[0].content[0];
+    assert.equal(cell.attrs.verticalAlign, 'bottom');
+    assert.deepEqual(JSON.parse(JSON.stringify(cell.attrs.cellMargins)), { top: 0, left: 5.25, bottom: 10, right: 4.5 });
+  }
+});
+
+test('cell margins with unrepresentable native precision fail without mutating the source model', async () => {
+  const document = await importStudioWord(await fixture('<w:tbl><w:tr><w:tc><w:p><w:r><w:t>Cell</w:t></w:r></w:p></w:tc></w:tr></w:tbl>'), 'Cell.docx');
+  document.content.content[0].content[0].content[0].attrs.cellMargins = { left: 1.01 };
+  const before = JSON.stringify(document);
+  await assert.rejects(exportStudioWord(document), /精度/);
+  assert.equal(JSON.stringify(document), before);
+});
+
+test('table default margins and explicit zero cell overrides retain independent identities on reopening', async () => {
+  let document = await importStudioWord(await fixture('<w:tbl><w:tblPr><w:tblCellMar><w:top w:w="100" w:type="dxa"/><w:left w:w="120" w:type="dxa"/></w:tblCellMar></w:tblPr><w:tr><w:tc><w:tcPr><w:tcMar><w:top w:w="0" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:t>Cell</w:t></w:r></w:p></w:tc></w:tr></w:tbl>'), 'Defaults.docx');
+  for (let round = 0; round < 3; round++) {
+    assert.deepEqual(JSON.parse(JSON.stringify(document.content.content[0].attrs.defaultCellMargins)), { top: 5, left: 6 });
+    assert.deepEqual(JSON.parse(JSON.stringify(document.content.content[0].content[0].content[0].attrs.cellMargins)), { top: 0 });
+    if (round < 2) document = await importStudioWord(await exportStudioWord(document), 'Reopened.docx');
+  }
+});
+
+test('native table defaults, direct zero overrides and spacing keep their identity and grid after two saves', async () => {
+  let document = await importStudioWord(await fixture('<w:tbl><w:tblPr><w:tblCellSpacing w:w="60" w:type="dxa"/><w:tblCellMar><w:top w:w="120" w:type="dxa"/><w:bottom w:w="120" w:type="dxa"/><w:left w:w="90" w:type="dxa"/><w:right w:w="90" w:type="dxa"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w="4500"/><w:gridCol w:w="4500"/></w:tblGrid><w:tr><w:tc><w:tcPr><w:tcMar><w:top w:w="0" w:type="dxa"/><w:right w:w="165" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:t>A</w:t></w:r></w:p></w:tc><w:tc><w:p><w:r><w:t>B</w:t></w:r></w:p></w:tc></w:tr></w:tbl>'), 'Spacing.docx');
+  let table = document.content.content[0];
+  assert.equal(table.attrs.cellSpacing, 6);
+  assert.deepEqual(Array.from(table.content[0].content[0].attrs.colwidth), [288]);
+  table.attrs.defaultCellMargins.top = 12;
+  table.attrs.defaultCellMargins.left = 10;
+  table.attrs.cellSpacing = 12;
+  for (let round = 0; round < 2; round++) {
+    const file = await exportStudioWord(document);
+    const archive = await JSZip.loadAsync(await file.arrayBuffer());
+    const native = parse(await archive.file('word/document.xml').async('string'));
+    assert.deepEqual(Array.from(native.getElementsByTagNameNS(W, 'gridCol'), col => Number(col.getAttributeNS(W, 'w'))), [4680, 4680]);
+    assert.equal(native.getElementsByTagNameNS(W, 'tblW')[0].getAttributeNS(W, 'w'), '9360');
+    assert.equal(native.getElementsByTagNameNS(W, 'tblCellSpacing')[0].getAttributeNS(W, 'w'), '120');
+    assert.equal(native.getElementsByTagNameNS(W, 'tcMar').length, 1);
+    assert.equal(native.getElementsByTagNameNS(W, 'tcMar')[0].getElementsByTagNameNS(W, 'top')[0].getAttributeNS(W, 'w'), '0');
+    document = await importStudioWord(file, 'Reopened.docx'); table = document.content.content[0];
+    assert.equal(table.attrs.cellSpacing, 12);
+    assert.deepEqual(JSON.parse(JSON.stringify(table.attrs.defaultCellMargins)), { top: 12, bottom: 6, left: 10, right: 4.5 });
+    assert.deepEqual(JSON.parse(JSON.stringify(table.content[0].content[0].attrs.cellMargins)), { top: 0, right: 8.25 });
+    assert.equal(table.content[0].content[1].attrs.cellMargins, undefined);
+    assert.deepEqual(Array.from(table.content[0].content[1].attrs.colwidth), [288]);
+  }
+});
+
+test('row spacing overrides including nil and exceptions remain independent of table defaults', async () => {
+  let document = await importStudioWord(await fixture('<w:tbl><w:tblPr><w:tblCellSpacing w:w="40" w:type="dxa"/></w:tblPr><w:tblGrid><w:gridCol w:w="4500"/></w:tblGrid><w:tr><w:trPr><w:tblCellSpacing w:w="80" w:type="dxa"/></w:trPr><w:tc><w:p><w:r><w:t>Override</w:t></w:r></w:p></w:tc></w:tr><w:tr><w:tblPrEx><w:tblCellSpacing w:type="nil"/></w:tblPrEx><w:tc><w:p><w:r><w:t>Zero</w:t></w:r></w:p></w:tc></w:tr></w:tbl>'), 'Rows.docx');
+  for (let round = 0; round < 3; round++) {
+    const table = document.content.content[0];
+    assert.equal(table.attrs.cellSpacing, 4);
+    assert.equal(table.content[0].attrs.cellSpacing, 8);
+    assert.equal(table.content[1].attrs.cellSpacing, 0);
+    if (round < 2) document = await importStudioWord(await exportStudioWord(document), 'Reopened.docx');
+  }
+});
+
+test('nested table defaults and direct cell margins remain local through repeated native reopening', async () => {
+  let document = await importStudioWord(await fixture('<w:tbl><w:tblPr><w:tblCellMar><w:top w:w="200" w:type="dxa"/><w:left w:w="240" w:type="dxa"/></w:tblCellMar></w:tblPr><w:tr><w:tc><w:tcPr><w:tcMar><w:right w:w="60" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:t>Outer</w:t></w:r></w:p><w:tbl><w:tblPr><w:tblCellMar><w:top w:w="0" w:type="dxa"/><w:left w:w="40" w:type="dxa"/></w:tblCellMar><w:tblCellSpacing w:type="nil"/></w:tblPr><w:tr><w:tc><w:p><w:r><w:t>Inner</w:t></w:r></w:p></w:tc></w:tr></w:tbl><w:p/></w:tc></w:tr></w:tbl>'), 'Nested.docx');
+  for (let round = 0; round < 3; round++) {
+    const outer = document.content.content[0], cell = outer.content[0].content[0], inner = cell.content.find(node => node.type === 'table');
+    assert.deepEqual(JSON.parse(JSON.stringify(outer.attrs.defaultCellMargins)), { top: 10, left: 12 });
+    assert.deepEqual(JSON.parse(JSON.stringify(cell.attrs.cellMargins)), { right: 3 });
+    assert.deepEqual(JSON.parse(JSON.stringify(inner.attrs.defaultCellMargins)), { top: 0, left: 2 });
+    assert.equal(inner.attrs.cellSpacing, 0); assert.equal(inner.content[0].content[0].attrs.cellMargins, undefined);
+    if (round < 2) document = await importStudioWord(await exportStudioWord(document), 'Reopened.docx');
+  }
+});
+
+test('invalid table spacing or default precision rejects the whole save without changing the model', async () => {
+  const document = await importStudioWord(await fixture('<w:tbl><w:tr><w:tc><w:p><w:r><w:t>Cell</w:t></w:r></w:p></w:tc></w:tr></w:tbl>'), 'Source.docx');
+  for (const properties of [{ cellSpacing: -1 }, { cellSpacing: 1.01 }, { defaultCellMargins: { left: 1.01 } }]) {
+    document.content.content[0].attrs = properties;
+    const before = JSON.stringify(document);
+    await assert.rejects(exportStudioWord(document), /间距|边距/);
+    assert.equal(JSON.stringify(document), before);
+  }
+});
+
+test('rejects row spacing wider than its native grid before creating a broken editable table', async () => {
+  const source = await fixture('<w:tbl><w:tblGrid><w:gridCol w:w="1500"/></w:tblGrid><w:tr><w:trPr><w:tblCellSpacing w:w="1000" w:type="dxa"/></w:trPr><w:tc><w:p><w:r><w:t>Too wide</w:t></w:r></w:p></w:tc></w:tr></w:tbl>');
+  const original = Buffer.from(await source.arrayBuffer());
+  await assert.rejects(importStudioWord(source, 'Unsupported spacing.docx'), /间距超过/);
+  assert.deepEqual(Buffer.from(await source.arrayBuffer()), original);
+});
+
+test('keeps an edited column when its sibling columns remain automatic and resolves the native grid once', async () => {
+  let document = await importStudioWord(await fixture('<w:tbl><w:tr><w:tc><w:p><w:r><w:t>Edited</w:t></w:r></w:p></w:tc><w:tc><w:p><w:r><w:t>Automatic</w:t></w:r></w:p></w:tc></w:tr></w:tbl>'), 'Partial columns.docx');
+  document.content.content[0].content[0].content[0].attrs.colwidth = [150];
+  document.content.content[0].attrs.cellSpacing = 6;
+  for (let pass = 0; pass < 2; pass++) {
+    const file = await exportStudioWord(document), zip = await JSZip.loadAsync(await file.arrayBuffer());
+    const native = parse(await zip.file('word/document.xml').async('string'));
+    assert.equal(native.getElementsByTagNameNS(W, 'gridCol')[0].getAttributeNS(W, 'w'), '2430');
+    document = await importStudioWord(file, 'Reopened.docx');
+    assert.deepEqual(Array.from(document.content.content[0].content[0].content[0].attrs.colwidth), [150]);
+    assert.equal(document.content.content[0].attrs.cellSpacing, 6);
+  }
+});
+
+test('resolves the unknown zero slot of a merged resized cell without losing its edited column', async () => {
+  let document = await importStudioWord(await fixture('<w:tbl><w:tr><w:tc><w:tcPr><w:gridSpan w:val="2"/></w:tcPr><w:p><w:r><w:t>Merged</w:t></w:r></w:p></w:tc></w:tr></w:tbl>'), 'Unknown merged.docx');
+  document.content.content[0].content[0].content[0].attrs.colwidth = [0, 150];
+  for (let pass = 0; pass < 2; pass++) {
+    document = await importStudioWord(await exportStudioWord(document), 'Reopened.docx');
+    assert.equal(document.content.content[0].content[0].content[0].attrs.colspan, 2);
+    assert.equal(document.content.content[0].content[0].content[0].attrs.colwidth[1], 150);
+    assert.ok(document.content.content[0].content[0].content[0].attrs.colwidth[0] > 0);
   }
 });

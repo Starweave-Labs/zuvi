@@ -1,0 +1,8 @@
+[render_docx] $ /Users/meaili/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override/soffice -env:UserInstallation=file:///private/tmp/soffice_profile__pxjjj7b --invisible --headless --norestore --convert-to pdf --outdir /private/tmp/soffice_convert_pp8lfzot /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-26/word-cell-properties/mapping/merged-round-2.docx
+convert /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-26/word-cell-properties/mapping/merged-round-2.docx as a Writer document -> /private/tmp/soffice_convert_pp8lfzot/merged-round-2.pdf using filter : writer_pdf_Export
+
+Fontconfig warning: no <cachedir> elements found. Check configuration.
+Fontconfig warning: adding <cachedir>/@.__________________________________________________OOO/var/cache/fontconfig</cachedir>
+Fontconfig warning: adding <cachedir prefix="xdg">fontconfig</cachedir>
+
+Pages rendered to /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/audits/2026-11-26/word-cell-properties/native-render/merged

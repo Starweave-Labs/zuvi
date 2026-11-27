@@ -1,0 +1,871 @@
+{
+  "scope": "Current actual ZUVI browser source and two native DOCX downloads after W010 repair",
+  "source": {
+    "path": "source.docx",
+    "bytes": 37606,
+    "sha256": "a6633ea9cd6941c436bbcdd7dfd717f4eaedde552d421553c797d2e3d75ba5ef",
+    "rows": [
+      {
+        "text": "Word character guard sample",
+        "runs": [
+          {
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "size": 18.0,
+            "color": "000000",
+            "letterSpacing": 0.25,
+            "baselineShift": 0,
+            "family": "Arial",
+            "text": "Word character guard sample"
+          }
+        ],
+        "styleSize": 18.0
+      },
+      {
+        "text": "SOURCE",
+        "runs": [
+          {
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "size": 18.0,
+            "color": "0055AA",
+            "letterSpacing": 0,
+            "baselineShift": 0,
+            "family": "Arial",
+            "text": "SOURCE"
+          }
+        ],
+        "styleSize": 12.0
+      },
+      {
+        "text": "target",
+        "runs": [
+          {
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strike": false,
+            "size": 12.0,
+            "color": "000000",
+            "letterSpacing": 0,
+            "baselineShift": 0,
+            "family": "Arial",
+            "text": "target"
+          }
+        ],
+        "styleSize": 12.0
+      },
+      {
+        "text": "LOWER ΟΣ",
+        "runs": [
+          {
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "size": 12.0,
+            "color": "000000",
+            "letterSpacing": 0,
+            "baselineShift": 0,
+            "family": "Arial",
+            "text": "LOWER Ο"
+          },
+          {
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strike": false,
+            "size": 16.0,
+            "color": "000000",
+            "letterSpacing": 0,
+            "baselineShift": 0,
+            "family": "Arial",
+            "text": "Σ"
+          }
+        ],
+        "styleSize": 12.0
+      },
+      {
+        "text": "tITLE ΟΣ",
+        "runs": [
+          {
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "size": 12.0,
+            "color": "000000",
+            "letterSpacing": 0,
+            "baselineShift": 0,
+            "family": "Arial",
+            "text": "tITLE Ο"
+          },
+          {
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strike": false,
+            "size": 16.0,
+            "color": "000000",
+            "letterSpacing": 0,
+            "baselineShift": 0,
+            "family": "Arial",
+            "text": "Σ"
+          }
+        ],
+        "styleSize": 12.0
+      },
+      {
+        "text": "sENTENCE. ΟΣ",
+        "runs": [
+          {
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "size": 12.0,
+            "color": "000000",
+            "letterSpacing": 0,
+            "baselineShift": 0,
+            "family": "Arial",
+            "text": "sENTENCE. Ο"
+          },
+          {
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strike": false,
+            "size": 16.0,
+            "color": "000000",
+            "letterSpacing": 0,
+            "baselineShift": 0,
+            "family": "Arial",
+            "text": "Σ"
+          }
+        ],
+        "styleSize": 12.0
+      },
+      {
+        "text": "TOGGLE ΟΣ",
+        "runs": [
+          {
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "size": 12.0,
+            "color": "000000",
+            "letterSpacing": 0,
+            "baselineShift": 0,
+            "family": "Arial",
+            "text": "TOGGLE Ο"
+          },
+          {
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strike": false,
+            "size": 16.0,
+            "color": "000000",
+            "letterSpacing": 0,
+            "baselineShift": 0,
+            "family": "Arial",
+            "text": "Σ"
+          }
+        ],
+        "styleSize": 12.0
+      },
+      {
+        "text": "upper ος",
+        "runs": [
+          {
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "size": 12.0,
+            "color": "000000",
+            "letterSpacing": 0,
+            "baselineShift": 0,
+            "family": "Arial",
+            "text": "upper ο"
+          },
+          {
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strike": false,
+            "size": 16.0,
+            "color": "000000",
+            "letterSpacing": 0,
+            "baselineShift": 0,
+            "family": "Arial",
+            "text": "ς"
+          }
+        ],
+        "styleSize": 12.0
+      },
+      {
+        "text": "Length İΣΟΣ ß",
+        "runs": [
+          {
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strike": false,
+            "size": 12.0,
+            "color": "000000",
+            "letterSpacing": 0,
+            "baselineShift": 0,
+            "family": "Arial",
+            "text": "Length İΣΟΣ ß"
+          }
+        ],
+        "styleSize": 12.0
+      }
+    ],
+    "header": [
+      {
+        "text": "",
+        "runs": [],
+        "styleSize": 14.0
+      }
+    ],
+    "links": [
+      {
+        "text": "Σ",
+        "target": "https://example.com/lower"
+      },
+      {
+        "text": "Σ",
+        "target": "https://example.com/title"
+      },
+      {
+        "text": "Σ",
+        "target": "https://example.com/sentence"
+      },
+      {
+        "text": "Σ",
+        "target": "https://example.com/toggle"
+      },
+      {
+        "text": "ς",
+        "target": "https://example.com/upper"
+      }
+    ]
+  },
+  "rounds": [
+    {
+      "path": "roundtrip-1.docx",
+      "bytes": 51877,
+      "sha256": "497f864cee53fd0ae84fcaa6c762b613063bc8d41657519b6472ac065ae332ce",
+      "rows": [
+        {
+          "text": "Word character guard sample",
+          "runs": [
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 18.0,
+              "color": "000000",
+              "letterSpacing": 0.25,
+              "baselineShift": 0,
+              "family": "Arial",
+              "text": "Word character guard sample"
+            }
+          ],
+          "styleSize": 18.0
+        },
+        {
+          "text": "SOURCE",
+          "runs": [
+            {
+              "bold": true,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 18.0,
+              "color": "0055AA",
+              "letterSpacing": 0,
+              "baselineShift": 0,
+              "family": "Arial",
+              "text": "SOURCE"
+            }
+          ],
+          "styleSize": 12.0
+        },
+        {
+          "text": "target",
+          "runs": [
+            {
+              "bold": true,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 18.0,
+              "color": "0055AA",
+              "letterSpacing": 0.3,
+              "baselineShift": -1.5,
+              "family": "Arial",
+              "text": "target"
+            }
+          ],
+          "styleSize": 12.0
+        },
+        {
+          "text": "lower ος",
+          "runs": [
+            {
+              "bold": true,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 14.0,
+              "color": "000000",
+              "letterSpacing": 0,
+              "baselineShift": 0,
+              "family": "Arial",
+              "text": "lower ο"
+            },
+            {
+              "bold": false,
+              "italic": true,
+              "underline": false,
+              "strike": false,
+              "size": 18.0,
+              "color": "000000",
+              "letterSpacing": 0,
+              "baselineShift": 0,
+              "family": "Arial",
+              "text": "ς"
+            }
+          ],
+          "styleSize": 12.0
+        },
+        {
+          "text": "Title Ος",
+          "runs": [
+            {
+              "bold": true,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "letterSpacing": 0,
+              "baselineShift": 0,
+              "family": "Arial",
+              "text": "Title Ο"
+            },
+            {
+              "bold": false,
+              "italic": true,
+              "underline": false,
+              "strike": false,
+              "size": 16.0,
+              "color": "000000",
+              "letterSpacing": 0,
+              "baselineShift": 0,
+              "family": "Arial",
+              "text": "ς"
+            }
+          ],
+          "styleSize": 12.0
+        },
+        {
+          "text": "Sentence. Ος",
+          "runs": [
+            {
+              "bold": true,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "letterSpacing": 0,
+              "baselineShift": 0,
+              "family": "Arial",
+              "text": "Sentence. Ο"
+            },
+            {
+              "bold": false,
+              "italic": true,
+              "underline": false,
+              "strike": false,
+              "size": 16.0,
+              "color": "000000",
+              "letterSpacing": 0,
+              "baselineShift": 0,
+              "family": "Arial",
+              "text": "ς"
+            }
+          ],
+          "styleSize": 12.0
+        },
+        {
+          "text": "toggle ος",
+          "runs": [
+            {
+              "bold": true,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "letterSpacing": 0,
+              "baselineShift": 0,
+              "family": "Arial",
+              "text": "toggle ο"
+            },
+            {
+              "bold": false,
+              "italic": true,
+              "underline": false,
+              "strike": false,
+              "size": 16.0,
+              "color": "000000",
+              "letterSpacing": 0,
+              "baselineShift": 0,
+              "family": "Arial",
+              "text": "ς"
+            }
+          ],
+          "styleSize": 12.0
+        },
+        {
+          "text": "UPPER ΟΣ",
+          "runs": [
+            {
+              "bold": true,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "letterSpacing": 0,
+              "baselineShift": 0,
+              "family": "Arial",
+              "text": "UPPER Ο"
+            },
+            {
+              "bold": false,
+              "italic": true,
+              "underline": false,
+              "strike": false,
+              "size": 16.0,
+              "color": "000000",
+              "letterSpacing": 0,
+              "baselineShift": 0,
+              "family": "Arial",
+              "text": "Σ"
+            }
+          ],
+          "styleSize": 12.0
+        },
+        {
+          "text": "length i̇σος ß",
+          "runs": [
+            {
+              "bold": true,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "letterSpacing": 0,
+              "baselineShift": 0,
+              "family": "Arial",
+              "text": "length i̇σος ß"
+            }
+          ],
+          "styleSize": 12.0
+        }
+      ],
+      "header": [
+        {
+          "text": "H",
+          "runs": [
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 16.0,
+              "color": "1F2937",
+              "letterSpacing": 0,
+              "baselineShift": 0,
+              "family": "Noto Sans SC",
+              "text": "H"
+            }
+          ],
+          "styleSize": 14.0
+        }
+      ],
+      "links": [
+        {
+          "text": "ς",
+          "target": "https://example.com/lower"
+        },
+        {
+          "text": "ς",
+          "target": "https://example.com/title"
+        },
+        {
+          "text": "ς",
+          "target": "https://example.com/sentence"
+        },
+        {
+          "text": "ς",
+          "target": "https://example.com/toggle"
+        },
+        {
+          "text": "Σ",
+          "target": "https://example.com/upper"
+        }
+      ]
+    },
+    {
+      "path": "roundtrip-2.docx",
+      "bytes": 51871,
+      "sha256": "4cb05303bedd9488c21ab29ddede5835b8c9b43c3c948c6598c900133f04dae9",
+      "rows": [
+        {
+          "text": "Word character guard sample",
+          "runs": [
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 18.0,
+              "color": "000000",
+              "letterSpacing": 0.25,
+              "baselineShift": 0,
+              "family": "Arial",
+              "text": "Word character guard sample"
+            }
+          ],
+          "styleSize": 18.0
+        },
+        {
+          "text": "SOURCE",
+          "runs": [
+            {
+              "bold": true,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 18.0,
+              "color": "0055AA",
+              "letterSpacing": 0,
+              "baselineShift": 0,
+              "family": "Arial",
+              "text": "SOURCE"
+            }
+          ],
+          "styleSize": 12.0
+        },
+        {
+          "text": "target",
+          "runs": [
+            {
+              "bold": true,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 18.0,
+              "color": "0055AA",
+              "letterSpacing": 0.3,
+              "baselineShift": -1.5,
+              "family": "Arial",
+              "text": "target"
+            }
+          ],
+          "styleSize": 12.0
+        },
+        {
+          "text": "lower ος",
+          "runs": [
+            {
+              "bold": true,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 14.0,
+              "color": "000000",
+              "letterSpacing": 0,
+              "baselineShift": 0,
+              "family": "Arial",
+              "text": "lower ο"
+            },
+            {
+              "bold": false,
+              "italic": true,
+              "underline": false,
+              "strike": false,
+              "size": 18.0,
+              "color": "000000",
+              "letterSpacing": 0,
+              "baselineShift": 0,
+              "family": "Arial",
+              "text": "ς"
+            }
+          ],
+          "styleSize": 12.0
+        },
+        {
+          "text": "Title Ος",
+          "runs": [
+            {
+              "bold": true,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "letterSpacing": 0,
+              "baselineShift": 0,
+              "family": "Arial",
+              "text": "Title Ο"
+            },
+            {
+              "bold": false,
+              "italic": true,
+              "underline": false,
+              "strike": false,
+              "size": 16.0,
+              "color": "000000",
+              "letterSpacing": 0,
+              "baselineShift": 0,
+              "family": "Arial",
+              "text": "ς"
+            }
+          ],
+          "styleSize": 12.0
+        },
+        {
+          "text": "Sentence. Ος",
+          "runs": [
+            {
+              "bold": true,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "letterSpacing": 0,
+              "baselineShift": 0,
+              "family": "Arial",
+              "text": "Sentence. Ο"
+            },
+            {
+              "bold": false,
+              "italic": true,
+              "underline": false,
+              "strike": false,
+              "size": 16.0,
+              "color": "000000",
+              "letterSpacing": 0,
+              "baselineShift": 0,
+              "family": "Arial",
+              "text": "ς"
+            }
+          ],
+          "styleSize": 12.0
+        },
+        {
+          "text": "toggle ος",
+          "runs": [
+            {
+              "bold": true,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "letterSpacing": 0,
+              "baselineShift": 0,
+              "family": "Arial",
+              "text": "toggle ο"
+            },
+            {
+              "bold": false,
+              "italic": true,
+              "underline": false,
+              "strike": false,
+              "size": 16.0,
+              "color": "000000",
+              "letterSpacing": 0,
+              "baselineShift": 0,
+              "family": "Arial",
+              "text": "ς"
+            }
+          ],
+          "styleSize": 12.0
+        },
+        {
+          "text": "UPPER ΟΣ",
+          "runs": [
+            {
+              "bold": true,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "letterSpacing": 0,
+              "baselineShift": 0,
+              "family": "Arial",
+              "text": "UPPER Ο"
+            },
+            {
+              "bold": false,
+              "italic": true,
+              "underline": false,
+              "strike": false,
+              "size": 16.0,
+              "color": "000000",
+              "letterSpacing": 0,
+              "baselineShift": 0,
+              "family": "Arial",
+              "text": "Σ"
+            }
+          ],
+          "styleSize": 12.0
+        },
+        {
+          "text": "length i̇σος ß",
+          "runs": [
+            {
+              "bold": true,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 12.0,
+              "color": "000000",
+              "letterSpacing": 0,
+              "baselineShift": 0,
+              "family": "Arial",
+              "text": "length i̇σος ß"
+            }
+          ],
+          "styleSize": 12.0
+        }
+      ],
+      "header": [
+        {
+          "text": "H",
+          "runs": [
+            {
+              "bold": false,
+              "italic": false,
+              "underline": false,
+              "strike": false,
+              "size": 16.0,
+              "color": "1F2937",
+              "letterSpacing": 0,
+              "baselineShift": 0,
+              "family": "Noto Sans SC",
+              "text": "H"
+            }
+          ],
+          "styleSize": 14.0
+        }
+      ],
+      "links": [
+        {
+          "text": "ς",
+          "target": "https://example.com/lower"
+        },
+        {
+          "text": "ς",
+          "target": "https://example.com/title"
+        },
+        {
+          "text": "ς",
+          "target": "https://example.com/sentence"
+        },
+        {
+          "text": "ς",
+          "target": "https://example.com/toggle"
+        },
+        {
+          "text": "Σ",
+          "target": "https://example.com/upper"
+        }
+      ]
+    }
+  ],
+  "rendered": [
+    {
+      "document": "source.docx",
+      "pages": 1,
+      "text": "Word character guard sample\nSOURCE\ntarget\nΣ\nLOWER Ο\nΣ\ntITLE Ο\nΣ\nsENTENCE. Ο\nΣ\nTOGGLE Ο\nς\nupper ο\nLength İΣΟΣ ß",
+      "targetWords": [
+        {
+          "text": "target",
+          "x0": 56.8,
+          "x1": 87.43599999999999,
+          "top": 131.3827637795281,
+          "doctop": 131.3827637795281,
+          "bottom": 143.3827637795281,
+          "upright": true,
+          "height": 12.0,
+          "width": 30.635999999999996,
+          "direction": "ltr",
+          "fontname": "DAAAAA+LiberationSans-Italic",
+          "size": 12.0
+        }
+      ]
+    },
+    {
+      "document": "roundtrip-1.docx",
+      "pages": 1,
+      "text": "H\nWord character guard sample\nSOURCE\ntarget\nς\nlower ο\nς\nTitle Ο\nς\nSentence. Ο\nς\ntoggle ο\nΣ\nUPPER Ο\nlength i(cid:20)σος ß",
+      "targetWords": [
+        {
+          "text": "target",
+          "x0": 487.25,
+          "x1": 538.658,
+          "top": 137.89876377952805,
+          "doctop": 137.89876377952805,
+          "bottom": 155.89876377952805,
+          "upright": true,
+          "height": 18.0,
+          "width": 51.408000000000015,
+          "direction": "ltr",
+          "fontname": "DAAAAA+LiberationSans-Bold",
+          "size": 18.0
+        }
+      ]
+    },
+    {
+      "document": "roundtrip-2.docx",
+      "pages": 1,
+      "text": "H\nWord character guard sample\nSOURCE\ntarget\nς\nlower ο\nς\nTitle Ο\nς\nSentence. Ο\nς\ntoggle ο\nΣ\nUPPER Ο\nlength i(cid:20)σος ß",
+      "targetWords": [
+        {
+          "text": "target",
+          "x0": 487.25,
+          "x1": 538.658,
+          "top": 137.89876377952805,
+          "doctop": 137.89876377952805,
+          "bottom": 155.89876377952805,
+          "upright": true,
+          "height": 18.0,
+          "width": 51.408000000000015,
+          "direction": "ltr",
+          "fontname": "DAAAAA+LiberationSans-Bold",
+          "size": 18.0
+        }
+      ]
+    }
+  ],
+  "checks": "Mixed ladder, five Unicode modes, source marks and links, shared header 14→16, signed integer position, twips spacing, two saves and native glyph-coordinate equivalence passed."
+}

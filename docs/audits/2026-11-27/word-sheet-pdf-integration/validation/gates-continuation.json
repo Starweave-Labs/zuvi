@@ -1,0 +1,69 @@
+{
+  "status": "passed",
+  "recordedAt": "2026-11-27T04:10:39.681739+00:00",
+  "sourceFreeze": "source-freeze-final.json",
+  "checks": [
+    {
+      "name": "types",
+      "command": "pnpm typecheck",
+      "exitCode": 0,
+      "log": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/types-continuation.txt",
+      "bytes": 788,
+      "sha256": "dd78ff5a350c97f5d28420b71492a27cd5eaf65f5ba61d703bf7b8eeb2c80066"
+    },
+    {
+      "name": "lint",
+      "command": "pnpm lint",
+      "exitCode": 0,
+      "log": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/lint-continuation.txt",
+      "bytes": 120,
+      "sha256": "779d6485622c43ec841eade19561bcc5489be9ff1c7a61d3cfc3647717f79aac"
+    },
+    {
+      "name": "registry",
+      "command": "node registry/scripts/generate.mjs --check",
+      "exitCode": 0,
+      "log": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/registry-continuation.txt",
+      "bytes": 45,
+      "sha256": "3a06a875aa8006514b75c0075e31c01d5c9ec733646dbb11cc8849dcde4fbafe"
+    },
+    {
+      "name": "consumer",
+      "command": "node scripts/check-consumer.mjs",
+      "exitCode": 0,
+      "log": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/consumer-continuation.txt",
+      "bytes": 209,
+      "sha256": "4b51df9715792eae36b3af5c1efa70fac7ef4e270c8f3e15f23247abe44e28ed"
+    },
+    {
+      "name": "distribution",
+      "command": "node scripts/check-distribution.mjs",
+      "exitCode": 0,
+      "log": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/distribution-continuation.txt",
+      "bytes": 507,
+      "sha256": "69b73c4954372c402eee362601a6967f9202de6963bc32822ecdb7ac9b808084"
+    },
+    {
+      "name": "bundle-size",
+      "command": "node scripts/check-bundle-size.mjs",
+      "exitCode": 0,
+      "log": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/bundle-size-continuation.txt",
+      "bytes": 669,
+      "sha256": "93ea853ecbc482bf3f6a92e3b15e30ae7da51364733876b568eff4c2e2fceeda"
+    },
+    {
+      "name": "locale",
+      "command": "node docs/audits/2026-11-27/static-entry-budget/verify-locale-equivalence.mjs",
+      "exitCode": 0,
+      "log": "docs/audits/2026-11-27/word-sheet-pdf-integration/validation/locale-continuation.txt",
+      "bytes": 328,
+      "sha256": "1687c15e79ad3f873554662888a32a1af818d9c1d87117e3e4c63b7412fcf91f"
+    }
+  ],
+  "priorSameSourceUnitResults": {
+    "ui": 2890,
+    "docs": 662,
+    "otherPackages": 144
+  },
+  "buildIdentity": "All 29 UI dist and 181 docs JS entries remain byte-identical to the completed fresh builds recorded by source-freeze.json."
+}

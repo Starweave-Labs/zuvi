@@ -1,0 +1,43 @@
+{
+  "reason": "One failed locator in closing history dialog; 2 passed in independent worktree service on port 5267. Originals kept byte-for-byte.",
+  "files": [
+    {
+      "originalPath": "/tmp/zuvi-pdf-composition-e2e-worktree-second.txt",
+      "archivedPath": "second-worktree-browser-history-close/run.txt.raw.gz",
+      "bytes": 1437,
+      "sha256": "cf983ca693de61418309384279c381780ef23e997fb1727ada3ca3ad38b0f810",
+      "uncompressedOriginal": {
+        "bytes": 4404,
+        "sha256": "cc41c5fd29d1fbe581302f8952bab16d07cea662bb39da06d22bca94a800fa73"
+      },
+      "normalizedView": {
+        "path": "second-worktree-browser-history-close/run.txt",
+        "bytes": 4402,
+        "sha256": "2698c636d5f7d987330694b4451308a558d54178c6bc07690be0aa9c20f23729",
+        "change": "Trailing spaces/tabs only; original bytes are preserved in the raw gzip archive."
+      }
+    },
+    {
+      "originalPath": "test-results/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/error-context.md",
+      "archivedPath": "second-worktree-browser-history-close/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/error-context.md.raw.gz",
+      "bytes": 12432,
+      "sha256": "d95b84784e2d018f9b84d59332443248b8e0b62544903a793e73f60dcca3451f",
+      "uncompressedOriginal": {
+        "bytes": 53857,
+        "sha256": "61143c6ba9cd8c8bf4f93449e75ee0bf1704e173baf6ec8c9f554083c2489f83"
+      },
+      "normalizedView": {
+        "path": "second-worktree-browser-history-close/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/error-context.md",
+        "bytes": 53852,
+        "sha256": "9ef1b99db8ef671e80f666a74f170971de90fac24b2f258ac1a569db5a2497f0",
+        "change": "Trailing spaces/tabs only; original bytes are preserved in the raw gzip archive."
+      }
+    },
+    {
+      "originalPath": "test-results/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/trace.zip",
+      "archivedPath": "second-worktree-browser-history-close/office-studio-pdf-composit-067b1--export-and-two-PDF-reopens-chromium/trace.zip",
+      "bytes": 16260119,
+      "sha256": "c9f8362fd8095886ba82e19b4ab068c86a794810be509e85423a0648aa078f11"
+    }
+  ]
+}

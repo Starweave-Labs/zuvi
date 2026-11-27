@@ -1,0 +1,1 @@
+pypdf fields, unchanged page streams and original APs verified; Poppler source/round1/round2 pixels verified

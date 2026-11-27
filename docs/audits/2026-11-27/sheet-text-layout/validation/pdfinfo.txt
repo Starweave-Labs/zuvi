@@ -1,0 +1,19 @@
+Title:           Text-reopened-2.xlsx
+Creator:         Chromium
+Producer:        Skia/PDF m158
+CreationDate:    Fri Nov 27 03:20:20 2026 CST
+ModDate:         Fri Nov 27 03:20:20 2026 CST
+Custom Metadata: no
+Metadata Stream: no
+Tagged:          no
+UserProperties:  no
+Suspects:        no
+Form:            none
+JavaScript:      no
+Pages:           5
+Encrypted:       no
+Page size:       841.92 x 594.96 pts (A4)
+Page rot:        0
+File size:       142172 bytes
+Optimized:       no
+PDF version:     1.4

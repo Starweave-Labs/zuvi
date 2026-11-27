@@ -1,0 +1,45 @@
+{
+  "status": "actual App before CSS and same App with diagnostic SDK accessibility CSS, production fontFace unchanged",
+  "files": [
+    {
+      "path": "actual-canvas-0.png",
+      "sha256": "5d21d1ec719fed78b0cc4c5540514a7530e61195a8beb6b17a312a3f0336cb21"
+    },
+    {
+      "path": "actual-source.pdf",
+      "sha256": "a5ad733bac3ef609eae1c43447562f06b40f3f320df9b61276f363a118e3cab9"
+    },
+    {
+      "path": "actual-with-sdk-accessibility-css-cjk-crop.png",
+      "sha256": "319880caedf2f1d3421e987c0bffd42124105086700d1229d5d68db2d49b0293"
+    },
+    {
+      "path": "trace.zip",
+      "sha256": "443ee393bd15cda4b8da18074660ed1255e35c045c42ceb9b7af0706524f4240"
+    },
+    {
+      "path": "before-dom-and-paints.json",
+      "sha256": "fa1a6ddb54c2234540fec725540afce8589f2bf8d5141c2fc26f6275dacace4c"
+    },
+    {
+      "path": "actual-before-cjk-crop.png",
+      "sha256": "8c2ab1b1fb670eccf82a899c714867b3959671303fbf8a2e87a3796c5463fe8c"
+    },
+    {
+      "path": "playwright.txt",
+      "sha256": "f9f4b001961f6da0f96c623c39225c52f7c4a5a1cc8b2f4c44ca4ac402999f50"
+    },
+    {
+      "path": "actual-with-sdk-accessibility-css.png",
+      "sha256": "1235b0545ead9079f13a8c28e3e707aac6020282185dbc9a39bfe069b560e699"
+    },
+    {
+      "path": "diagnosis.json",
+      "sha256": "558e2d01b1bea752e0858aa33b7e2ecef3d7ba3bd188164074f6285067c13a9c"
+    },
+    {
+      "path": "actual-before.png",
+      "sha256": "dfc584edf974c7e16b54a0e6a33fe59bc019f2df1ecefb8a410438e9f75ad6f7"
+    }
+  ]
+}

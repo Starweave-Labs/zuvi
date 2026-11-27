@@ -1,0 +1,80 @@
+[
+  {
+    "name": "ChartView-C61LQUXS.js",
+    "bytes": 56904,
+    "sha256": "2f78f9c54414bc1904338183b1cba04af6d93c27f811b876836f731c6a62ab16",
+    "storedPath": "actual-dist/ChartView-C61LQUXS.js.txt"
+  },
+  {
+    "name": "DataGridView-BQP2AbTR.js",
+    "bytes": 16927,
+    "sha256": "c196ec2de66c9a2908061fee8b2d89618afc9ec4773fca590ef814f6b107f7b2",
+    "storedPath": "actual-dist/DataGridView-BQP2AbTR.js.txt"
+  },
+  {
+    "name": "GlobeScene-CFi325zq.js",
+    "bytes": 104978,
+    "sha256": "8b72d619e1701e3e095270c7d0c2c4e2c05044d8f3e217186a12e3619c747873",
+    "storedPath": "actual-dist/GlobeScene-CFi325zq.js.txt"
+  },
+  {
+    "name": "StudioFontControl-DRQ1CEuC.js",
+    "bytes": 3946,
+    "sha256": "1068ac294dff7dd1e976c7daaeeb1bc2a806b2fd6917b987307eae62b93a366e",
+    "storedPath": "actual-dist/StudioFontControl-DRQ1CEuC.js.txt"
+  },
+  {
+    "name": "StudioPdf-DQwi1Ic5.js",
+    "bytes": 121794,
+    "sha256": "c864a29db8fe11e4cdf4f4c28212f278d5166e2b968d37e32d7817c778d8ded0",
+    "storedPath": "actual-dist/StudioPdf-DQwi1Ic5.js.txt"
+  },
+  {
+    "name": "StudioSheet-DpPg3hCp.js",
+    "bytes": 250247,
+    "sha256": "29a5cf04c5c375ec07e55918a8802f99dd08a90d21b232f1bb8749aa072d71e0",
+    "storedPath": "actual-dist/StudioSheet-DpPg3hCp.js.txt"
+  },
+  {
+    "name": "StudioWord-DR6KlwkD.js",
+    "bytes": 319857,
+    "sha256": "c54e76764a62806b4c42c41b09c0cc5ccd253f4220a20967f41174489996a979",
+    "storedPath": "actual-dist/StudioWord-DR6KlwkD.js.txt"
+  },
+  {
+    "name": "Type-BeBmUqvf.js",
+    "bytes": 294,
+    "sha256": "2d2699e16a107091f36faf7bd153c1bfc3d206138fad2fbba64223a5e4567ed7",
+    "storedPath": "actual-dist/Type-BeBmUqvf.js.txt"
+  },
+  {
+    "name": "ZoomOut-CratYfQt.js",
+    "bytes": 493,
+    "sha256": "60de2637d0f871326abed2690c673cddda28a7c7e997facc14ee62a00147199e",
+    "storedPath": "actual-dist/ZoomOut-CratYfQt.js.txt"
+  },
+  {
+    "name": "globe-renderer-Dqw1c-Ps.js",
+    "bytes": 557190,
+    "sha256": "0b5f1f064be259f0ea5cf5d2870afb3b563413c9125480e69eb1d5e16b205a4c",
+    "storedPath": "actual-dist/globe-renderer-Dqw1c-Ps.js.txt"
+  },
+  {
+    "name": "index-Dfwfv4f2.js",
+    "bytes": 420254,
+    "sha256": "7e8a48cde00b592cfa8ae5c5cdf48d8e16feef5979ec2ec8ad569e94839fce15",
+    "storedPath": "actual-dist/index-Dfwfv4f2.js.txt"
+  },
+  {
+    "name": "index.js",
+    "bytes": 3914,
+    "sha256": "4bd39e0f62b3345a462c58bbecee22d7497e152f80d6814725e8a2544c9e6aca",
+    "storedPath": "actual-dist/index.js.txt"
+  },
+  {
+    "name": "style.css",
+    "bytes": 433422,
+    "sha256": "02a6897094e09902a74a6d2126c65c539a0a081355ea8e8f362ab9102fb321ca",
+    "storedPath": "actual-dist/style.css"
+  }
+]

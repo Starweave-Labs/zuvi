@@ -1,0 +1,15 @@
+{
+  "initial": {
+    "height": 97,
+    "justify": "flow-start",
+    "top": "0px",
+    "bottom": "0px",
+    "textTop": 3
+  },
+  "printed": {
+    "height": 97,
+    "top": "0px",
+    "bottom": "0px",
+    "justify": "flow-start"
+  }
+}

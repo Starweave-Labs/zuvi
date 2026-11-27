@@ -1,0 +1,3 @@
+Listing tests:
+  [chromium] › office-studio-word-paragraph-acceptance.spec.ts:71:1 › original paragraph requirements retain four alignments, indent and line units, tab stops and every border edge over real DOCX reopens
+Total: 1 test in 1 file

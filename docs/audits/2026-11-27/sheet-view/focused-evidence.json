@@ -1,0 +1,42 @@
+{
+  "item": "X064",
+  "scope": "focused source tests and native package round trips; browser acceptance is pending a coordinated fresh distribution build",
+  "checks": [
+    {
+      "file": "focused/ui-tests.log",
+      "command": "pnpm --filter @zuvi/react exec vitest run src/components/OfficeStudio/studio-sheet-view.test.ts src/components/OfficeStudio/StudioSheetView.test.tsx src/components/OfficeStudio/StudioSheetText.test.tsx --reporter=dot",
+      "exitCode": 0,
+      "testsPassed": 31,
+      "sha256": "d6d7198401710208dea67ea850da3d07013924058354a240e8796d49c56cbbf3"
+    },
+    {
+      "file": "focused/native-tests.log",
+      "command": "node --test docs/tests/studio-sheet-view.test.mjs docs/tests/studio-excel.test.mjs",
+      "exitCode": 0,
+      "testsPassed": 64,
+      "sha256": "8fba53fdabc1967dbdf167d362bb04dafaf1aa029bb63fce0caae100353344ae"
+    },
+    {
+      "file": "focused/lint.log",
+      "command": "pnpm exec eslint packages/ui/src/components/OfficeStudio/StudioSheet.tsx packages/ui/src/components/OfficeStudio/StudioSheetText.tsx packages/ui/src/components/OfficeStudio/StudioSheetViewControls.tsx packages/ui/src/components/OfficeStudio/studio-sheet-view.ts packages/ui/src/components/OfficeStudio/studio-sheet-view.test.ts packages/ui/src/components/OfficeStudio/StudioSheetView.test.tsx docs/src/pages/collaboration/office-studio/studio-excel-codec.ts docs/src/pages/collaboration/office-studio/studio-prepare.ts docs/tests/studio-sheet-view.test.mjs e2e/office-studio-sheet-view.spec.ts",
+      "exitCode": 0,
+      "testsPassed": null,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "focused/ui-types.log",
+      "command": "pnpm --filter @zuvi/react typecheck",
+      "exitCode": 0,
+      "testsPassed": null,
+      "sha256": "68ec6d80c2b25b081d386c6e6a0dc0ed1f04d85de012b574555495bfb768041b",
+      "stage": "Current source, including the Map-based preview, after concurrent PDF type fixes."
+    }
+  ],
+  "priorUiTypes": {
+    "file": "focused/ui-types-current-pdf-wip.log",
+    "exitCode": 2,
+    "x064Diagnostics": 0,
+    "pendingDiagnostics": "Concurrent PDF WIP: unused pdfNativeBounds and unsupported Modal.Root; parent notified.",
+    "sha256": "e19f0c0e690a3f07b6a197940ccf1140b4f4b3c3b6267ddd933ea71471385803"
+  }
+}

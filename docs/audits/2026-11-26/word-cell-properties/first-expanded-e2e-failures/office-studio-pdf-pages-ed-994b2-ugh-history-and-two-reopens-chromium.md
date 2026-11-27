@@ -1,0 +1,591 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: office-studio-pdf-pages.spec.ts >> edits native PDF page dimensions, copies and removes pages, and preserves fields through history and two reopens
+- Location: e2e/office-studio-pdf-pages.spec.ts:20:1
+
+# Error details
+
+```
+Test timeout of 90000ms exceeded.
+```
+
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - link "Z ZUVI v1.1.0" [ref=e6] [cursor=pointer]:
+          - /url: "#/"
+          - generic [ref=e7]: Z
+          - generic [ref=e8]: ZUVI
+          - generic [ref=e9]: v1.1.0
+        - generic [ref=e10]: 开发文档 / OfficeStudio 独立文档工作台
+      - generic [ref=e11]:
+        - button "打开文档命令面板" [ref=e12] [cursor=pointer]:
+          - generic [ref=e16]: 搜索页面或命令
+          - generic [ref=e17]: ⌘ / Ctrl K
+        - button "切换暗色" [ref=e18] [cursor=pointer]
+        - link "GitHub" [ref=e19] [cursor=pointer]:
+          - /url: https://github.com/Starweave-Labs/zuvi
+      - status
+    - generic [ref=e20]:
+      - generic [ref=e21]:
+        - generic [ref=e22]: 文档
+        - generic [ref=e23]: 组件、规范与实践
+      - search "搜索文档导航" [ref=e24]:
+        - searchbox "按名称过滤导航项" [ref=e25]
+      - navigation "文档导航" [ref=e26]:
+        - generic [ref=e27]:
+          - group "开始" [ref=e28]:
+            - list [ref=e30]:
+              - listitem [ref=e31]:
+                - link "概览" [ref=e32] [cursor=pointer]:
+                  - /url: "#/"
+              - listitem [ref=e34]:
+                - link "设计令牌" [ref=e35] [cursor=pointer]:
+                  - /url: "#/tokens"
+              - listitem [ref=e37]:
+                - link "主题调参" [ref=e38] [cursor=pointer]:
+                  - /url: "#/theme"
+              - listitem [ref=e40]:
+                - link "国际化与翻译" [ref=e41] [cursor=pointer]:
+                  - /url: "#/i18n"
+              - listitem [ref=e43]:
+                - link "设计资源" [ref=e44] [cursor=pointer]:
+                  - /url: "#/design"
+              - listitem [ref=e46]:
+                - link "图标库" [ref=e47] [cursor=pointer]:
+                  - /url: "#/icons"
+              - listitem [ref=e49]:
+                - link "页面搭建器" [ref=e50] [cursor=pointer]:
+                  - /url: "#/builder"
+              - listitem [ref=e52]:
+                - link "业务区块" [ref=e53] [cursor=pointer]:
+                  - /url: "#/blocks"
+              - listitem [ref=e55]:
+                - link "内容协作实验室" [ref=e56] [cursor=pointer]:
+                  - /url: "#/collaboration"
+              - listitem [ref=e58]:
+                - link "组件创意工坊" [ref=e59] [cursor=pointer]:
+                  - /url: "#/lab"
+          - group "基础组件" [ref=e61]:
+            - list [ref=e63]:
+              - listitem [ref=e64]:
+                - link "Button 按钮" [ref=e65] [cursor=pointer]:
+                  - /url: "#/components/button"
+              - listitem [ref=e67]:
+                - link "Typography 排版" [ref=e68] [cursor=pointer]:
+                  - /url: "#/components/typography"
+          - group "布局" [ref=e70]:
+            - list [ref=e72]:
+              - listitem [ref=e73]:
+                - link "Splitter 可调分栏" [ref=e74] [cursor=pointer]:
+                  - /url: "#/components/splitter"
+              - listitem [ref=e76]:
+                - link "Divider 分割线" [ref=e77] [cursor=pointer]:
+                  - /url: "#/components/divider"
+              - listitem [ref=e79]:
+                - link "Layout 布局" [ref=e80] [cursor=pointer]:
+                  - /url: "#/components/layout"
+          - group "导航" [ref=e82]:
+            - list [ref=e84]:
+              - listitem [ref=e85]:
+                - link "CommandPalette 命令面板" [ref=e86] [cursor=pointer]:
+                  - /url: "#/components/command-palette"
+              - listitem [ref=e88]:
+                - link "SideNav 侧边导航" [ref=e89] [cursor=pointer]:
+                  - /url: "#/components/side-nav"
+              - listitem [ref=e91]:
+                - link "Tabs 标签页" [ref=e92] [cursor=pointer]:
+                  - /url: "#/components/tabs"
+              - listitem [ref=e94]:
+                - link "DropdownMenu 下拉菜单" [ref=e95] [cursor=pointer]:
+                  - /url: "#/components/dropdown-menu"
+              - listitem [ref=e97]:
+                - link "Pagination 分页" [ref=e98] [cursor=pointer]:
+                  - /url: "#/components/pagination"
+              - listitem [ref=e100]:
+                - link "Breadcrumb 面包屑" [ref=e101] [cursor=pointer]:
+                  - /url: "#/components/breadcrumb"
+              - listitem [ref=e103]:
+                - link "Affix 固钉" [ref=e104] [cursor=pointer]:
+                  - /url: "#/components/affix"
+              - listitem [ref=e106]:
+                - link "BackTop 返回顶部" [ref=e107] [cursor=pointer]:
+                  - /url: "#/components/back-top"
+              - listitem [ref=e109]:
+                - link "FloatButton 悬浮按钮" [ref=e110] [cursor=pointer]:
+                  - /url: "#/components/float-button"
+              - listitem [ref=e112]:
+                - link "Steps 步骤条" [ref=e113] [cursor=pointer]:
+                  - /url: "#/components/steps"
+              - listitem [ref=e115]:
+                - link "Anchor 锚点" [ref=e116] [cursor=pointer]:
+                  - /url: "#/components/anchor"
+          - group "数据录入" [ref=e118]:
+            - list [ref=e120]:
+              - listitem [ref=e121]:
+                - link "Input 输入框" [ref=e122] [cursor=pointer]:
+                  - /url: "#/components/input"
+              - listitem [ref=e124]:
+                - link "Checkbox 复选框" [ref=e125] [cursor=pointer]:
+                  - /url: "#/components/checkbox"
+              - listitem [ref=e127]:
+                - link "Radio 单选框" [ref=e128] [cursor=pointer]:
+                  - /url: "#/components/radio"
+              - listitem [ref=e130]:
+                - link "Switch 开关" [ref=e131] [cursor=pointer]:
+                  - /url: "#/components/switch"
+              - listitem [ref=e133]:
+                - link "Select 选择器" [ref=e134] [cursor=pointer]:
+                  - /url: "#/components/select"
+              - listitem [ref=e136]:
+                - link "Combobox 自动完成" [ref=e137] [cursor=pointer]:
+                  - /url: "#/components/combobox"
+              - listitem [ref=e139]:
+                - link "OfficeEditor 文档编辑器" [ref=e140] [cursor=pointer]:
+                  - /url: "#/components/office-editor"
+              - listitem [ref=e142]:
+                - link "OfficeStudio 独立文档工作台" [ref=e143] [cursor=pointer]:
+                  - /url: "#/components/office-studio"
+              - listitem [ref=e145]:
+                - link "Form 表单" [ref=e146] [cursor=pointer]:
+                  - /url: "#/components/form"
+              - listitem [ref=e148]:
+                - link "Slider 滑块" [ref=e149] [cursor=pointer]:
+                  - /url: "#/components/slider"
+              - listitem [ref=e151]:
+                - link "Rate 评分" [ref=e152] [cursor=pointer]:
+                  - /url: "#/components/rate"
+              - listitem [ref=e154]:
+                - link "InputNumber 数字输入" [ref=e155] [cursor=pointer]:
+                  - /url: "#/components/input-number"
+              - listitem [ref=e157]:
+                - link "ColorPicker 取色器" [ref=e158] [cursor=pointer]:
+                  - /url: "#/components/color-picker"
+              - listitem [ref=e160]:
+                - link "DatePicker 日期选择" [ref=e161] [cursor=pointer]:
+                  - /url: "#/components/date-picker"
+              - listitem [ref=e163]:
+                - link "TreeSelect 树选择" [ref=e164] [cursor=pointer]:
+                  - /url: "#/components/tree-select"
+              - listitem [ref=e166]:
+                - link "Transfer 穿梭框" [ref=e167] [cursor=pointer]:
+                  - /url: "#/components/transfer"
+              - listitem [ref=e169]:
+                - link "Cascader 级联选择" [ref=e170] [cursor=pointer]:
+                  - /url: "#/components/cascader"
+              - listitem [ref=e172]:
+                - link "TimePicker 时间选择" [ref=e173] [cursor=pointer]:
+                  - /url: "#/components/time-picker"
+              - listitem [ref=e175]:
+                - link "Mentions 提及" [ref=e176] [cursor=pointer]:
+                  - /url: "#/components/mentions"
+              - listitem [ref=e178]:
+                - link "Segmented 分段控制器" [ref=e179] [cursor=pointer]:
+                  - /url: "#/components/segmented"
+              - listitem [ref=e181]:
+                - link "Upload 上传" [ref=e182] [cursor=pointer]:
+                  - /url: "#/components/upload"
+              - listitem [ref=e184]:
+                - link "DateRangePicker 日期范围" [ref=e185] [cursor=pointer]:
+                  - /url: "#/components/date-range-picker"
+          - group "数据展示" [ref=e187]:
+            - list [ref=e189]:
+              - listitem [ref=e190]:
+                - link "Table 表格" [ref=e191] [cursor=pointer]:
+                  - /url: "#/components/table"
+              - listitem [ref=e193]:
+                - link "Chart 数据图表" [ref=e194] [cursor=pointer]:
+                  - /url: "#/components/chart"
+              - listitem [ref=e196]:
+                - link "Globe 3D 地球" [ref=e197] [cursor=pointer]:
+                  - /url: "#/components/globe"
+              - listitem [ref=e199]:
+                - link "Badge 徽标" [ref=e200] [cursor=pointer]:
+                  - /url: "#/components/badge"
+              - listitem [ref=e202]:
+                - link "Tag 标签" [ref=e203] [cursor=pointer]:
+                  - /url: "#/components/tag"
+              - listitem [ref=e205]:
+                - link "Avatar 头像" [ref=e206] [cursor=pointer]:
+                  - /url: "#/components/avatar"
+              - listitem [ref=e208]:
+                - link "Card 卡片" [ref=e209] [cursor=pointer]:
+                  - /url: "#/components/card"
+              - listitem [ref=e211]:
+                - link "Empty 空状态" [ref=e212] [cursor=pointer]:
+                  - /url: "#/components/empty"
+              - listitem [ref=e214]:
+                - link "Calendar 日历" [ref=e215] [cursor=pointer]:
+                  - /url: "#/components/calendar"
+              - listitem [ref=e217]:
+                - link "Descriptions 描述列表" [ref=e218] [cursor=pointer]:
+                  - /url: "#/components/descriptions"
+              - listitem [ref=e220]:
+                - link "Statistic 统计数值" [ref=e221] [cursor=pointer]:
+                  - /url: "#/components/statistic"
+              - listitem [ref=e223]:
+                - link "Timeline 时间轴" [ref=e224] [cursor=pointer]:
+                  - /url: "#/components/timeline"
+              - listitem [ref=e226]:
+                - link "VirtualTable 虚拟滚动表格" [ref=e227] [cursor=pointer]:
+                  - /url: "#/components/virtual-table"
+              - listitem [ref=e229]:
+                - link "DataGrid 数据网格" [ref=e230] [cursor=pointer]:
+                  - /url: "#/components/data-grid"
+              - listitem [ref=e232]:
+                - link "Tree 树形控件" [ref=e233] [cursor=pointer]:
+                  - /url: "#/components/tree"
+              - listitem [ref=e235]:
+                - link "Collapse 折叠面板" [ref=e236] [cursor=pointer]:
+                  - /url: "#/components/collapse"
+              - listitem [ref=e238]:
+                - link "List 列表" [ref=e239] [cursor=pointer]:
+                  - /url: "#/components/list"
+              - listitem [ref=e241]:
+                - link "Image 图片" [ref=e242] [cursor=pointer]:
+                  - /url: "#/components/image"
+              - listitem [ref=e244]:
+                - link "QRCode 二维码" [ref=e245] [cursor=pointer]:
+                  - /url: "#/components/qrcode"
+              - listitem [ref=e247]:
+                - link "Watermark 水印" [ref=e248] [cursor=pointer]:
+                  - /url: "#/components/watermark"
+          - group "数据可视化" [ref=e250]:
+            - list [ref=e252]:
+              - listitem [ref=e253]:
+                - link "图表画廊" [ref=e254] [cursor=pointer]:
+                  - /url: "#/charts"
+              - listitem [ref=e256]:
+                - link "交互与联动" [ref=e257] [cursor=pointer]:
+                  - /url: "#/charts/interactions"
+              - listitem [ref=e259]:
+                - link "可视化实验室" [ref=e260] [cursor=pointer]:
+                  - /url: "#/charts/playground"
+          - group "反馈" [ref=e262]:
+            - list [ref=e264]:
+              - listitem [ref=e265]:
+                - link "Modal 对话框" [ref=e266] [cursor=pointer]:
+                  - /url: "#/components/modal"
+              - listitem [ref=e268]:
+                - link "Message 全局提示" [ref=e269] [cursor=pointer]:
+                  - /url: "#/components/message"
+              - listitem [ref=e271]:
+                - link "Tooltip 文字提示" [ref=e272] [cursor=pointer]:
+                  - /url: "#/components/tooltip"
+              - listitem [ref=e274]:
+                - link "Popover 气泡卡片" [ref=e275] [cursor=pointer]:
+                  - /url: "#/components/popover"
+              - listitem [ref=e277]:
+                - link "Alert 警告提示" [ref=e278] [cursor=pointer]:
+                  - /url: "#/components/alert"
+              - listitem [ref=e280]:
+                - link "Skeleton 骨架屏" [ref=e281] [cursor=pointer]:
+                  - /url: "#/components/skeleton"
+              - listitem [ref=e283]:
+                - link "Drawer 抽屉" [ref=e284] [cursor=pointer]:
+                  - /url: "#/components/drawer"
+              - listitem [ref=e286]:
+                - link "Spin 加载中" [ref=e287] [cursor=pointer]:
+                  - /url: "#/components/spin"
+              - listitem [ref=e289]:
+                - link "Progress 进度条" [ref=e290] [cursor=pointer]:
+                  - /url: "#/components/progress"
+              - listitem [ref=e292]:
+                - link "Notification 通知提醒框" [ref=e293] [cursor=pointer]:
+                  - /url: "#/components/notification"
+              - listitem [ref=e295]:
+                - link "Popconfirm 气泡确认" [ref=e296] [cursor=pointer]:
+                  - /url: "#/components/popconfirm"
+              - listitem [ref=e298]:
+                - link "Tour 漫游引导" [ref=e299] [cursor=pointer]:
+                  - /url: "#/components/tour"
+              - listitem [ref=e301]:
+                - link "Result 结果" [ref=e302] [cursor=pointer]:
+                  - /url: "#/components/result"
+          - group "全局配置" [ref=e304]:
+            - list [ref=e306]:
+              - listitem [ref=e307]:
+                - link "ConfigProvider 全局配置" [ref=e308] [cursor=pointer]:
+                  - /url: "#/components/config"
+              - listitem [ref=e310]:
+                - link "App 容器" [ref=e311] [cursor=pointer]:
+                  - /url: "#/components/app"
+      - generic [ref=e313]: React 19 · CSS 变量驱动
+    - main [ref=e314]:
+      - generic [ref=e315]:
+        - heading "OfficeStudio 独立文档工作台" [level=1] [ref=e316]
+        - paragraph [ref=e317]: 使用 ZUVI 的工具栏、菜单和表单，在页面内直接编辑文档。Word、Excel、PDF 共用文件操作与保存状态，编辑内容保存在当前浏览器，也可以导出为实际文件。
+        - generic [ref=e318]:
+          - generic [ref=e319]: ZUVI 界面
+          - generic [ref=e321]: 页面内编辑
+          - generic [ref=e323]: 本地恢复
+          - generic [ref=e325]: DOCX / XLSX / PDF
+        - region "从预览，到完成一份文档" [ref=e327]:
+          - generic [ref=e328]:
+            - heading "从预览，到完成一份文档" [level=3] [ref=e329]
+            - paragraph [ref=e330]: 选择一种文档开始。修改会自动保存到当前浏览器；导出后可在 Word、Excel 或 PDF 阅读器中继续使用。
+          - generic [ref=e332]:
+            - group "选择示例文档" [ref=e333]:
+              - button "Word 文档排版 · 图片与页眉页脚" [ref=e334] [cursor=pointer]:
+                - generic [ref=e335]:
+                  - generic [aria-hidden] [ref=e336]: W
+                  - generic [ref=e337]:
+                    - strong [ref=e338]: Word
+                    - generic [ref=e339]: 文档排版 · 图片与页眉页脚
+              - button "Excel 行列编辑 · 公式与图表" [ref=e340] [cursor=pointer]:
+                - generic [ref=e341]:
+                  - generic [aria-hidden] [ref=e342]: E
+                  - generic [ref=e343]:
+                    - strong [ref=e344]: Excel
+                    - generic [ref=e345]: 行列编辑 · 公式与图表
+              - button "PDF 全文查找 · 批注与手写" [pressed] [ref=e346] [cursor=pointer]:
+                - generic [ref=e347]:
+                  - generic [aria-hidden] [ref=e348]: P
+                  - generic [ref=e349]:
+                    - strong [ref=e350]: PDF
+                    - generic [ref=e351]: 全文查找 · 批注与手写
+            - generic [ref=e352]:
+              - generic [ref=e353]: 本地文档
+              - generic [ref=e354]:
+                - generic [ref=e355]: 打开本地文档
+                - button "打开本地文档 Pages.pdf" [ref=e356] [cursor=pointer]:
+                  - generic [ref=e357]: Pages.pdf
+              - button "历史版本" [ref=e358] [cursor=pointer]
+              - switch "只读预览" [ref=e360] [cursor=pointer]
+            - region "PDF 文档编辑器" [ref=e364]:
+              - generic [ref=e365]:
+                - generic [ref=e366]:
+                  - generic [ref=e371]: PDF
+                  - generic "可编辑 · ⌘ / Ctrl S 保存" [ref=e372]:
+                    - status "已保存" [ref=e373]
+                - textbox "文档名称" [ref=e378]: Pages.pdf
+                - generic [ref=e379]:
+                  - button "新建" [ref=e381] [cursor=pointer]
+                  - button "导入" [ref=e384] [cursor=pointer]
+                  - button "导出文件" [ref=e389] [cursor=pointer]
+                  - button "打印" [ref=e395] [cursor=pointer]
+                  - button "保存" [ref=e402] [cursor=pointer]
+                  - button "全屏编辑" [ref=e409] [cursor=pointer]
+              - generic [ref=e417]:
+                - generic [ref=e418]:
+                  - generic [ref=e419]:
+                    - button "文件" [ref=e422] [cursor=pointer]
+                    - tablist "PDF 功能区选项卡" [ref=e423]:
+                      - tab "开始" [selected] [ref=e424] [cursor=pointer]
+                      - tab "批注" [ref=e425] [cursor=pointer]
+                  - group "PDF 编辑工具栏" [ref=e426]:
+                    - group "编辑" [ref=e427]:
+                      - generic [ref=e428]:
+                        - generic [ref=e429]:
+                          - button "撤销" [ref=e430] [cursor=pointer]
+                          - button "重做" [disabled] [ref=e432]
+                        - button "选择" [pressed] [ref=e434] [cursor=pointer]
+                      - generic [aria-hidden] [ref=e439]: 编辑
+                    - tabpanel "开始" [ref=e440]:
+                      - group "插入" [ref=e441]:
+                        - generic [ref=e442]:
+                          - button "文字" [ref=e443] [cursor=pointer]
+                          - button "矩形" [ref=e448] [cursor=pointer]
+                          - button "新建表单字段" [ref=e456] [cursor=pointer]
+                        - generic [aria-hidden] [ref=e458]: 插入
+                      - group "页面" [ref=e459]:
+                        - generic [ref=e460]:
+                          - button "插入空白页" [ref=e461] [cursor=pointer]
+                          - button "删除所选页" [ref=e463] [cursor=pointer]
+                          - button "移动所选页" [ref=e465] [cursor=pointer]
+                          - button "复制所选页" [ref=e467] [cursor=pointer]
+                          - button "旋转所选页" [ref=e469] [cursor=pointer]
+                          - button "页面尺寸" [ref=e471] [cursor=pointer]
+                          - button "旋转当前页" [ref=e473] [cursor=pointer]
+                          - button "页面" [pressed] [ref=e479] [cursor=pointer]
+                        - generic [aria-hidden] [ref=e485]: 页面
+                      - group "查看" [ref=e486]:
+                        - generic [ref=e487]:
+                          - button "查找" [ref=e488] [cursor=pointer]
+                          - button "PDF 批注与表单侧栏" [pressed] [ref=e494] [cursor=pointer]:
+                            - generic [ref=e499]: 侧栏
+                        - generic [aria-hidden] [ref=e500]: 查看
+                - generic [ref=e501]:
+                  - navigation "PDF 侧边导航" [ref=e502]:
+                    - button "PDF 文本查找侧栏" [ref=e503] [cursor=pointer]
+                    - button "PDF 批注侧栏" [ref=e508] [cursor=pointer]
+                    - button "PDF 页面缩略图侧栏" [pressed] [ref=e512] [cursor=pointer]
+                    - button "PDF 表单侧栏" [ref=e517] [cursor=pointer]
+                  - region "PDF 页面编辑区" [ref=e522]:
+                    - generic [ref=e523]:
+                      - img "PDF 第 2 页原文" [ref=e524]
+                      - img "PDF 页面标注" [ref=e525]
+                    - generic [ref=e526]: 第 2 页 · 100%
+                  - complementary "PDF 批注与表单" [ref=e527]:
+                    - group "PDF 侧栏内容" [ref=e528]:
+                      - button "批注 0" [ref=e529] [cursor=pointer]
+                      - button "表单 1" [ref=e531] [cursor=pointer]
+                      - button "文本查找" [ref=e533] [cursor=pointer]
+                      - button "页面缩略图" [pressed] [ref=e535] [cursor=pointer]
+                    - generic "PDF 页面缩略导航" [ref=e537]:
+                      - generic [ref=e538]:
+                        - checkbox "选择 PDF 第 1 页" [ref=e540] [cursor=pointer]
+                        - button "PDF 第 1 页缩略图" [ref=e542] [cursor=pointer]:
+                          - generic [ref=e543]: 第 1 页
+                      - generic [ref=e547]:
+                        - checkbox "选择 PDF 第 2 页" [checked] [ref=e549] [cursor=pointer]
+                        - button "PDF 第 2 页缩略图" [pressed] [ref=e551] [cursor=pointer]:
+                          - generic [ref=e552]: 第 2 页
+                      - generic [ref=e556]:
+                        - checkbox "选择 PDF 第 3 页" [ref=e558] [cursor=pointer]
+                        - button "PDF 第 3 页缩略图" [ref=e560] [cursor=pointer]:
+                          - generic [ref=e561]: 第 3 页
+                - group "PDF 状态栏" [ref=e565]:
+                  - group "PDF 页面导航" [ref=e566]:
+                    - button "PDF 上一页" [ref=e567] [cursor=pointer]
+                    - generic [ref=e571]:
+                      - spinbutton "PDF 跳转页" [ref=e572]: "2"
+                      - generic [ref=e573]:
+                        - button "增加" [ref=e574] [cursor=pointer]:
+                          - generic [aria-hidden] [ref=e575]: +
+                        - button "减少" [ref=e576] [cursor=pointer]:
+                          - generic [aria-hidden] [ref=e577]: −
+                    - generic [ref=e578]: / 3
+                    - button "PDF 下一页" [ref=e579] [cursor=pointer]
+                  - generic "选择工具。PDF 原有正文保持原版式；可编辑新增批注和原文件的可填写表单。" [ref=e583]: 选择工具
+                  - group "PDF 视图缩放" [ref=e584]:
+                    - button "PDF 缩小视图" [ref=e585] [cursor=pointer]
+                    - generic [ref=e590]:
+                      - generic [ref=e591]: PDF 缩放
+                      - button "PDF 缩放 100%" [ref=e592] [cursor=pointer]:
+                        - generic [ref=e593]: 100%
+                    - button "PDF 放大视图" [ref=e594] [cursor=pointer]
+            - paragraph [ref=e599]: 文件保存在当前浏览器的本地文档空间。需要长期留存时，请导出文件。
+          - group [ref=e600]:
+            - generic "示例代码" [ref=e601] [cursor=pointer]:
+              - generic [aria-hidden] [ref=e602]: </>
+              - text: 示例代码
+              - generic [aria-hidden] [ref=e603]: 展开 / 收起
+        - heading "编辑能力" [level=2] [ref=e604]
+        - table [ref=e606]:
+          - rowgroup [ref=e607]:
+            - row [ref=e608]:
+              - columnheader "文档" [ref=e609]
+              - columnheader "支持的操作" [ref=e610]
+              - columnheader "当前范围" [ref=e611]
+          - rowgroup [ref=e612]:
+            - row [ref=e613]:
+              - cell "Word" [ref=e614]
+              - cell "字体与小数字号输入、正文排版、列表、表格、图片、页眉页脚、页码、查找替换、页面设置、撤销重做；导入与导出 DOCX" [ref=e615]
+              - cell "支持内嵌图片与单节文档。修订、目录、浮动对象等复杂结构会提示暂不支持。" [ref=e616]
+            - row [ref=e617]:
+              - cell "Excel" [ref=e618]
+              - cell "单元格与矩形选区、字体与小数字号输入、手动与自动行高/列宽、查找替换、边框与垂直对齐、清除格式、公式和跨表引用、格式、复制粘贴、工作表增删、行列插入删除、合并、冻结、排序、筛选、柱状图与折线图；导入与导出 XLSX" [ref=e619]
+              - cell "10,000 行、256 列、32 张表、100,000 个已使用单元格。透视、宏、数组公式及复杂图表暂不支持。" [ref=e620]
+            - row [ref=e621]:
+              - cell "PDF" [ref=e622]
+              - cell "分页与缩略图、缩放、旋转、全文查找、文字与高亮、矩形和手写批注、已有表单、撤销重做；导出 PDF" [ref=e623]
+              - cell "批注和表单编辑。任意原始文字修改、原文重排及扫描件 OCR 暂不支持。" [ref=e624]
+        - heading "组件接入" [level=2] [ref=e625]
+        - paragraph [ref=e626]: UI 组件使用 Tiptap / ProseMirror 和公式计算库；文件适配使用 docx、ExcelJS、pdf-lib 与 PDF.js。本页无需文档服务器。宿主可以替换保存与导入导出回调，接入自己的文件系统。
+        - paragraph [ref=e627]:
+          - text: PDF 的 worker、字体与渲染由
+          - code [ref=e628]: pdfRenderer
+          - text: 提供。本页的适配代码位于
+          - code [ref=e629]: docs/src/pages/collaboration/office-studio/
+          - text: 。组件自 v0.4.0 起随
+          - code [ref=e630]: "@zuvi/react"
+          - text: 和 Registry 发布。
+        - region "组件属性表，可横向滚动" [ref=e631]:
+          - table [ref=e632]:
+            - rowgroup [ref=e633]:
+              - row [ref=e634]:
+                - columnheader "属性名" [ref=e635]
+                - columnheader "类型" [ref=e636]
+                - columnheader "默认值" [ref=e637]
+                - columnheader "说明" [ref=e638]
+            - rowgroup [ref=e639]:
+              - row [ref=e640]:
+                - cell "value / defaultValue" [ref=e641]
+                - cell [ref=e642]:
+                  - code [ref=e643]: OfficeStudioDocument
+                - cell [ref=e644]:
+                  - code [ref=e645]: —
+                - cell "受控文档或非受控初始文档；支持 Word、Excel、PDF 三种模型。" [ref=e646]
+              - row [ref=e647]:
+                - cell "onChange" [ref=e648]
+                - cell [ref=e649]:
+                  - code [ref=e650]: (document) => void
+                - cell [ref=e651]:
+                  - code [ref=e652]: —
+                - cell "内容或文件名称变化。" [ref=e653]
+              - row [ref=e654]:
+                - cell "source / pdfRenderer" [ref=e655]
+                - cell [ref=e656]:
+                  - code [ref=e657]: Blob / StudioPdfRenderer
+                - cell [ref=e658]:
+                  - code [ref=e659]: —
+                - cell "原始文件及 PDF 渲染适配；worker 资源由宿主管理。" [ref=e660]
+              - row [ref=e661]:
+                - cell "onSave / onExport / onPrint" [ref=e662]
+                - cell [ref=e663]:
+                  - code [ref=e664]: (document) => void | Promise<void>
+                - cell [ref=e665]:
+                  - code [ref=e666]: —
+                - cell "宿主处理保存、导出或打印；返回后更新状态，失败可重试。" [ref=e667]
+              - row [ref=e668]:
+                - cell "onImport / onCreate" [ref=e669]
+                - cell [ref=e670]:
+                  - code [ref=e671]: (file | kind) => void | Promise<void>
+                - cell [ref=e672]:
+                  - code [ref=e673]: —
+                - cell "宿主解析文件或创建模型，并更新受控值。" [ref=e674]
+              - row [ref=e675]:
+                - cell "readOnly / disabled" [ref=e676]
+                - cell [ref=e677]:
+                  - code [ref=e678]: boolean
+                - cell [ref=e679]:
+                  - code [ref=e680]: "false"
+                - cell "只读预览或禁用编辑与文件操作。" [ref=e681]
+              - row [ref=e682]:
+                - cell "saveState" [ref=e683]
+                - cell [ref=e684]:
+                  - code [ref=e685]: "'saved' | 'saving' | 'unsaved' | 'error'"
+                - cell [ref=e686]:
+                  - code [ref=e687]: —
+                - cell "宿主自动保存状态。" [ref=e688]
+              - row [ref=e689]:
+                - cell "height" [ref=e690]
+                - cell [ref=e691]:
+                  - code [ref=e692]: number | string
+                - cell [ref=e693]:
+                  - code [ref=e694]: "760"
+                - cell "编辑器高度；100% 需要父容器设置确定高度。" [ref=e695]
+              - row [ref=e696]:
+                - cell "fullscreen / onFullscreenChange" [ref=e697]
+                - cell [ref=e698]:
+                  - code [ref=e699]: boolean / (value) => void
+                - cell [ref=e700]:
+                  - code [ref=e701]: —
+                - cell "全屏布局，切换时编辑内容保持挂载。" [ref=e702]
+              - row [ref=e703]:
+                - cell "ref" [ref=e704]
+                - cell [ref=e705]:
+                  - code [ref=e706]: OfficeStudioHandle
+                - cell [ref=e707]:
+                  - code [ref=e708]: —
+                - cell "getDocument()、save()、export()、print()、setFullscreen()。" [ref=e709]
+              - row [ref=e710]:
+                - cell "classNames" [ref=e711]
+                - cell [ref=e712]:
+                  - code [ref=e713]: "{ root?; header?; title?; actions?; stage?; status?; error? }"
+                - cell [ref=e714]:
+                  - code [ref=e715]: —
+                - cell "追加语义结构类名，配合 data-part 与 CSS 变量定制。" [ref=e716]
+  - text: ✓ ✓
+```

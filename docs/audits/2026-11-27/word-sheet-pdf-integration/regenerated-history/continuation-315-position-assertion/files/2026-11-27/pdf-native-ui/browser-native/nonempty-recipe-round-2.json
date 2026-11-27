@@ -1,0 +1,228 @@
+{
+  "sha256": "2c0e96051e598bebd22918bfe653633c460750e9e91dd943b94a5ee5e4e67980",
+  "pages": 3,
+  "contents": [
+    {
+      "page": 0,
+      "sha256": "61712ea49d4cb5647ae6897ca030212abccd06b173a0cbd6ec660948f291f3b0",
+      "decodedSha256": "c00ffa3e1e77f6555d54c9b1fe3fbe0be25657fa86a4d7cb2f9377282702ce08"
+    },
+    {
+      "page": 1,
+      "sha256": "39499225e0a03b412a3b72654467bc454e3d59212da89ea3ed0803f5de91b538",
+      "decodedSha256": "a27ea56756d4ce7307ad9d878027785ec9d27b634dd3080418897479bf5dc6fe"
+    },
+    {
+      "page": 2,
+      "sha256": "39499225e0a03b412a3b72654467bc454e3d59212da89ea3ed0803f5de91b538",
+      "decodedSha256": "a27ea56756d4ce7307ad9d878027785ec9d27b634dd3080418897479bf5dc6fe"
+    }
+  ],
+  "annotations": [
+    {
+      "id": "annotation:2cc250fcf5fea6e0aab56fe4725e2a56",
+      "subtype": "Widget",
+      "contents": "",
+      "rect": [
+        29.5,
+        29.5,
+        290.5,
+        60.5
+      ],
+      "page": 0,
+      "author": "",
+      "created": "",
+      "modified": "",
+      "color": [],
+      "fill": [],
+      "quads": [],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 1,
+      "border": {
+        "width": 1,
+        "style": ""
+      },
+      "appearanceSha256": "d37ceeb3a13d896c345744b25894c32cf92f5c6c4941545993b5d05aef53b028",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "annotation:73948d967ff4ebb85cab2c066eb855cc",
+      "subtype": "Widget",
+      "contents": "",
+      "rect": [
+        319.5,
+        29.5,
+        340.5,
+        50.5
+      ],
+      "page": 0,
+      "author": "",
+      "created": "",
+      "modified": "",
+      "color": [],
+      "fill": [],
+      "quads": [],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 1,
+      "border": {
+        "width": 1,
+        "style": ""
+      },
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "annotation-copy:08f807932379db93920ef4f4408f3fda",
+      "subtype": "Widget",
+      "contents": "",
+      "rect": [
+        29.5,
+        29.5,
+        290.5,
+        60.5
+      ],
+      "page": 1,
+      "author": "",
+      "created": "",
+      "modified": "",
+      "color": [],
+      "fill": [],
+      "quads": [],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 1,
+      "border": {
+        "width": 1,
+        "style": ""
+      },
+      "appearanceSha256": "d37ceeb3a13d896c345744b25894c32cf92f5c6c4941545993b5d05aef53b028",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "annotation-copy:5e23a1843eb175e22fada57b34a1328a",
+      "subtype": "FreeText",
+      "contents": "复制记录有独立中文",
+      "rect": [
+        45,
+        430,
+        330,
+        480
+      ],
+      "page": 1,
+      "author": "",
+      "created": "D:20261127035704Z",
+      "modified": "D:20261127035704Z",
+      "color": [],
+      "fill": [
+        0,
+        0,
+        0
+      ],
+      "quads": [],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 1,
+      "border": {
+        "width": 0,
+        "style": "S"
+      },
+      "appearanceSha256": "d828356a555186daf08a8abe7ed1c6b3cec7f2a6794c2b35bf8d43d377521a8c",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "annotation:ad6da678a4977f0b2f957f536ca5fd67",
+      "subtype": "Widget",
+      "contents": "",
+      "rect": [
+        29.5,
+        29.5,
+        290.5,
+        60.5
+      ],
+      "page": 2,
+      "author": "",
+      "created": "",
+      "modified": "",
+      "color": [],
+      "fill": [],
+      "quads": [],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 1,
+      "border": {
+        "width": 1,
+        "style": ""
+      },
+      "appearanceSha256": "d37ceeb3a13d896c345744b25894c32cf92f5c6c4941545993b5d05aef53b028",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    },
+    {
+      "id": "recipe-ui-main",
+      "subtype": "FreeText",
+      "contents": "未保存记录原生中文",
+      "rect": [
+        45,
+        430,
+        330,
+        480
+      ],
+      "page": 2,
+      "author": "",
+      "created": "D:20261127035704Z",
+      "modified": "D:20261127035704Z",
+      "color": [],
+      "fill": [
+        0,
+        0,
+        0
+      ],
+      "quads": [],
+      "line": [],
+      "vertices": [],
+      "lineEnds": [],
+      "ink": [],
+      "opacity": 1,
+      "border": {
+        "width": 0,
+        "style": "S"
+      },
+      "appearanceSha256": "0b15f0a805dd471723bffb221c66b54f1d3c297948cf9a8b8fa0e90bb80cabb4",
+      "replyType": "",
+      "state": "",
+      "stateModel": ""
+    }
+  ],
+  "fields": [
+    {
+      "name": "reviewer",
+      "readOnly": false,
+      "widgets": 3
+    },
+    {
+      "name": "confirmed",
+      "readOnly": false,
+      "widgets": 1
+    }
+  ]
+}

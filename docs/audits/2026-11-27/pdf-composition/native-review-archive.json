@@ -1,0 +1,365 @@
+{
+  "reason": "Independent diagnostics retain original failures and post-fix verification, and catalog fixture PDFs/rendering, without changing their bytes.",
+  "files": [
+    {
+      "originalPath": "/tmp/zuvi-pdf-page-catalog-native/output/pdf/catalog-complex-extracted.pdf",
+      "path": "native-page-catalog/output/pdf/catalog-complex-extracted.pdf",
+      "bytes": 2757,
+      "sha256": "f2741d9bba1a81e2cf2cbac05b878a4c5e7d6f96d1a79c07229e205be3d00515"
+    },
+    {
+      "originalPath": "/tmp/zuvi-pdf-page-catalog-native/output/pdf/catalog-complex-original.pdf",
+      "path": "native-page-catalog/output/pdf/catalog-complex-original.pdf",
+      "bytes": 5727,
+      "sha256": "62b0357f6afa0562e694fedb8d5498fb5a24b7ca8d62304b1b123386d402f796"
+    },
+    {
+      "originalPath": "/tmp/zuvi-pdf-page-catalog-native/output/pdf/catalog-complex-prepared.pdf",
+      "path": "native-page-catalog/output/pdf/catalog-complex-prepared.pdf",
+      "bytes": 4744,
+      "sha256": "0f3b7a020085a1b3fe6332ff4d32d1b6c667b1217f09b95e836942ba3376a923"
+    },
+    {
+      "originalPath": "/tmp/zuvi-pdf-page-catalog-native/output/pdf/independent-page-catalog-verification.json",
+      "path": "native-page-catalog/output/pdf/independent-page-catalog-verification.json",
+      "bytes": 1705,
+      "sha256": "bf3d873c2f38af8cfc971f3c73e290a349ff27b17c2db2bc80b4856c9d39f735"
+    },
+    {
+      "originalPath": "/tmp/zuvi-pdf-page-catalog-native/render/catalog-extracted-contact.png",
+      "path": "native-page-catalog/render/catalog-extracted-contact.png",
+      "bytes": 22705,
+      "sha256": "0dcb42ebe063cf0541064d1243aa47b40b8510df9b543cb8c643d795ef25b3b4"
+    },
+    {
+      "originalPath": "/tmp/zuvi-pdf-page-catalog-native/render/extracted-1.png",
+      "path": "native-page-catalog/render/extracted-1.png",
+      "bytes": 4777,
+      "sha256": "62c5186489cf37333c22bdc0ba8d196196da188e5617e1c3096fc347a9e82184"
+    },
+    {
+      "originalPath": "/tmp/zuvi-pdf-page-catalog-native/render/extracted-2.png",
+      "path": "native-page-catalog/render/extracted-2.png",
+      "bytes": 1455,
+      "sha256": "9bd92aaf5b6411a852b2c22af534b5b538dd154d7f936e2b7e621235a29c925a"
+    },
+    {
+      "originalPath": "/tmp/zuvi-pdf-page-catalog-native/render/extracted-3.png",
+      "path": "native-page-catalog/render/extracted-3.png",
+      "bytes": 5951,
+      "sha256": "2899500f06b61d8c736614e70d2a3482b481025b0514f1cf8209eb593810e9cc"
+    },
+    {
+      "originalPath": "/tmp/zuvi-pdf-page-catalog-native/render/extracted-4.png",
+      "path": "native-page-catalog/render/extracted-4.png",
+      "bytes": 5024,
+      "sha256": "68b619ce42f4537d0f26086aa18e76a7d75fd90c5040e9f3bb3909de530c7da6"
+    },
+    {
+      "originalPath": "/tmp/zuvi-pdf-page-catalog-native/verify_page_catalog.py",
+      "path": "native-page-catalog/verify_page_catalog.py",
+      "bytes": 3528,
+      "sha256": "b47cae976ac4f6f937aa629fa708a355db074d9a12454b631cf50fd6dbfce0cc"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/catalog-original.pdf",
+      "path": "native-field-review/catalog-original.pdf",
+      "bytes": 3051,
+      "sha256": "396c36136286d2639bf199f26351382fdef0f2294ea512afbd9b2f0680cd3b81"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/catalog-preparation-and-optional-null-results.json",
+      "path": "native-field-review/catalog-preparation-and-optional-null-results.json",
+      "bytes": 3841,
+      "sha256": "051f81adb38613f5ffe262d1342f7b018e9833f736a50571da756c610060362a"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/catalog-preparation-and-optional-null.mjs",
+      "path": "native-field-review/catalog-preparation-and-optional-null.mjs.txt",
+      "bytes": 6333,
+      "sha256": "ea04c4308e65ca53770d652a8062a22f22b106be1e41af968b20369da4473471"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/catalog-virtual-move-adapter.pdf",
+      "path": "native-field-review/catalog-virtual-move-adapter.pdf",
+      "bytes": 2725,
+      "sha256": "5ff2e3fbe684bb7869f5e5742c7c39c1bef4440b34a90bdb37860495cc08c2a2"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/catalog-virtual-move-prepared.pdf",
+      "path": "native-field-review/catalog-virtual-move-prepared.pdf",
+      "bytes": 2024,
+      "sha256": "a9a4eb2b118f894334fba0bbf8ac7425a4213812081b85534eb2116ffd5f88e8"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/combined-kids-direct.pdf",
+      "path": "native-field-review/combined-kids-direct.pdf",
+      "bytes": 3461,
+      "sha256": "a07898e02b7a69dfbbdd4ca9e5cd743466fad44637c9280b6dd7e4cf6e74c698"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/combined-kids-indirect.pdf",
+      "path": "native-field-review/combined-kids-indirect.pdf",
+      "bytes": 3505,
+      "sha256": "9d84b5af25daf225b48610c7694622fcba88fa3cfc85396439536c35005c520b"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/combined-root-parent-direct.pdf",
+      "path": "native-field-review/combined-root-parent-direct.pdf",
+      "bytes": 3463,
+      "sha256": "2e24d5faa54dffeb7e4003dea53c9cdb6f5e23c9483338a576222407621227a8"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/combined-root-parent-indirect.pdf",
+      "path": "native-field-review/combined-root-parent-indirect.pdf",
+      "bytes": 3507,
+      "sha256": "f4875098ceac06342be64adef73550a9e51e50f6aa258fb63d43dde4f25e3563"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/direct-null-DV.pdf",
+      "path": "native-field-review/direct-null-DV.pdf",
+      "bytes": 2231,
+      "sha256": "7b01422a6ed2731bf1473137b799ac53af28bf23be3cbc0b4d2fb311f6ad9450"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/direct-null-Ff.pdf",
+      "path": "native-field-review/direct-null-Ff.pdf",
+      "bytes": 2225,
+      "sha256": "8471a477f46f2a9d2f74b51100e9ac97ad576a4001fd56bcc393ef3bf1d7dbeb"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/direct-null-MaxLen.pdf",
+      "path": "native-field-review/direct-null-MaxLen.pdf",
+      "bytes": 2235,
+      "sha256": "5e30861704774085c8b74f52ca57bcf586e93d2d9df64b352522d6bcb3d1a7db"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/direct-null-Q.pdf",
+      "path": "native-field-review/direct-null-Q.pdf",
+      "bytes": 2230,
+      "sha256": "9f15a39dc8f4048d521d5557fcfecf2bd8f10c9e3ec46d76e1b64ff983439f67"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/direct-null-V.pdf",
+      "path": "native-field-review/direct-null-V.pdf",
+      "bytes": 2216,
+      "sha256": "53b71bf6ae9f0d939bfa370369c89db3d58011df246fda306d803402cf281d8d"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/direct-null-inherited-password.pdf",
+      "path": "native-field-review/direct-null-inherited-password.pdf",
+      "bytes": 2345,
+      "sha256": "0ae6eadfe96c4f48f45295be859a674da9907325b9444d3d1a87c725f064f65b"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/first-catalog-preparation-and-optional-null-results.json",
+      "path": "native-field-review/first-catalog-preparation-and-optional-null-results.json",
+      "bytes": 5700,
+      "sha256": "13e5ebee01e92cebae8d9c6d904295ae964ab1fafd756324815a641e7746d9d5"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/first-null-and-inheritance-results.json",
+      "path": "native-field-review/first-null-and-inheritance-results.json",
+      "bytes": 3251,
+      "sha256": "dcabb272d4b0930fd79d06e054437a30191c998df981af9b9780bcd8c79d819d"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/first-null-presence-and-wrappers-results.json",
+      "path": "native-field-review/first-null-presence-and-wrappers-results.json",
+      "bytes": 13605,
+      "sha256": "305c5051d7c2ec4f116ba2361dd521be80dc473839bbcb5254fb6b5a80a78a47"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/fixed-inheritance-verification.json",
+      "path": "native-field-review/fixed-inheritance-verification.json",
+      "bytes": 1703,
+      "sha256": "8fbc2b18b33b335cae223e938fd2b85d3a98e29595b2b4d4e216dfc34ad6db81"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/fixed-inherited-password-ff-indirect-two-saves.pdf",
+      "path": "native-field-review/fixed-inherited-password-ff-indirect-two-saves.pdf",
+      "bytes": 3226,
+      "sha256": "e9a649cdc29de224bc3c95191eb425b2511b951169db3d84b0f80cde30205d12"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/fixed-inherited-radio-ff-indirect-two-saves.pdf",
+      "path": "native-field-review/fixed-inherited-radio-ff-indirect-two-saves.pdf",
+      "bytes": 7527,
+      "sha256": "d89f4b4fc35829d68f9573cb2459fa4be58b275a9bf73a592307d0b81958883f"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/fixed-inherited-text-ft-indirect-two-saves.pdf",
+      "path": "native-field-review/fixed-inherited-text-ft-indirect-two-saves.pdf",
+      "bytes": 3223,
+      "sha256": "52544d6c98f5ce465d01d7e161ab1058540f08b8aa2efae60e92329d81973369"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/fixed-inherited-text-v-indirect-two-saves.pdf",
+      "path": "native-field-review/fixed-inherited-text-v-indirect-two-saves.pdf",
+      "bytes": 3223,
+      "sha256": "52544d6c98f5ce465d01d7e161ab1058540f08b8aa2efae60e92329d81973369"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/indirect-null-DV.pdf",
+      "path": "native-field-review/indirect-null-DV.pdf",
+      "bytes": 2275,
+      "sha256": "492128398941b8438e3d28bc18296b2eebdff2f80b5191c0d6b765b8f9352337"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/indirect-null-Ff.pdf",
+      "path": "native-field-review/indirect-null-Ff.pdf",
+      "bytes": 2269,
+      "sha256": "4c270db686b17bf746389467f4d9d4949b2ae9bf070a68ced9a502557ab13132"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/indirect-null-MaxLen.pdf",
+      "path": "native-field-review/indirect-null-MaxLen.pdf",
+      "bytes": 2279,
+      "sha256": "6989014289539da59727dc612ebf5edce251decec4881fb994cb19c1b19332a0"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/indirect-null-Q.pdf",
+      "path": "native-field-review/indirect-null-Q.pdf",
+      "bytes": 2274,
+      "sha256": "9f73b90962960df757419de05dcbbc71aae7d7de8f7c9d952be59482429e5bfd"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/indirect-null-V.pdf",
+      "path": "native-field-review/indirect-null-V.pdf",
+      "bytes": 2260,
+      "sha256": "081ddfd06140600fc7748e1ce9005f551d019fab4d936e83c31c499d12bcd4d4"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/indirect-null-inherited-password.pdf",
+      "path": "native-field-review/indirect-null-inherited-password.pdf",
+      "bytes": 2389,
+      "sha256": "741e857bdaa3653f032e2855e5b1263c07f36262decf3d05ed37c9b785897a05"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/inherited-password-ff-direct.pdf",
+      "path": "native-field-review/inherited-password-ff-direct.pdf",
+      "bytes": 3616,
+      "sha256": "967d7fe7b2b8548514f2ca09da0e4e1659c4703b8e8b37fc20d8835bf5f037a0"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/inherited-password-ff-indirect.pdf",
+      "path": "native-field-review/inherited-password-ff-indirect.pdf",
+      "bytes": 3660,
+      "sha256": "0d9bda53ac5c4de7f777a7c2472250b817975ca31b2fdb6878c813d3965b4c0f"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/inherited-radio-ff-direct.pdf",
+      "path": "native-field-review/inherited-radio-ff-direct.pdf",
+      "bytes": 8383,
+      "sha256": "196e0f7ae0278d82e7e09517f1f2fcc947183cf21dede0e480d32007230875c9"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/inherited-radio-ff-indirect.pdf",
+      "path": "native-field-review/inherited-radio-ff-indirect.pdf",
+      "bytes": 8427,
+      "sha256": "8657a0078becb290b77733b133feefaea4ded7eae92229efecef13f1c0f7f6bb"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/inherited-text-ft-direct.pdf",
+      "path": "native-field-review/inherited-text-ft-direct.pdf",
+      "bytes": 3613,
+      "sha256": "9751ef990991636b86f1e2cb330f5357b7b8ed6e5186b53a3b11e6b29f63ff27"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/inherited-text-ft-indirect.pdf",
+      "path": "native-field-review/inherited-text-ft-indirect.pdf",
+      "bytes": 3657,
+      "sha256": "8414d1063063cbd4f5b3594add0aa6ab3830ec29659d680659c2bbccca8716cf"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/inherited-text-v-direct.pdf",
+      "path": "native-field-review/inherited-text-v-direct.pdf",
+      "bytes": 3612,
+      "sha256": "0a39e60bd9a03266b7e0c102f00423fab9ee6fad466d9473be04bfb1e882a809"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/inherited-text-v-indirect.pdf",
+      "path": "native-field-review/inherited-text-v-indirect.pdf",
+      "bytes": 3656,
+      "sha256": "29392b2a881d43e770c9e760c4064e7f335a5af6af167a98a48fdd55083655ef"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/null-and-inheritance-results.json",
+      "path": "native-field-review/null-and-inheritance-results.json",
+      "bytes": 3018,
+      "sha256": "7a388bac0c1ea9019d538527f9fab682fe417b65beef34c987e5e7da3314fef1"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/null-and-inheritance.mjs",
+      "path": "native-field-review/null-and-inheritance.mjs.txt",
+      "bytes": 7650,
+      "sha256": "49ea7d67eb84fcc9f5aee42f6bc956f4fc39b9d748d329dd8db2ed9abff7108e"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/null-presence-and-wrappers-results.json",
+      "path": "native-field-review/null-presence-and-wrappers-results.json",
+      "bytes": 18178,
+      "sha256": "f9a92fdc0afb40141a6256ab64d48dc1293ac9301f40c6e78077f330b7338406"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/null-presence-and-wrappers.mjs",
+      "path": "native-field-review/null-presence-and-wrappers.mjs.txt",
+      "bytes": 7143,
+      "sha256": "1c63398573c1a59051c131570bbabdfaccad4c297f9e36e1d21ee29de98a5006"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/root-parent-direct.pdf",
+      "path": "native-field-review/root-parent-direct.pdf",
+      "bytes": 3532,
+      "sha256": "9ecc780973115b8c5e5491c5a755fd593a4dc6a9c397937c48da735b991a88fe"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/root-parent-indirect.pdf",
+      "path": "native-field-review/root-parent-indirect.pdf",
+      "bytes": 3576,
+      "sha256": "6df4936ed3f865053e9d425fa638861df76209688abd533c43bbfb16529e095a"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/verify-fixed-inheritance.mjs",
+      "path": "native-field-review/verify-fixed-inheritance.mjs.txt",
+      "bytes": 3443,
+      "sha256": "5ca2ba77262a54100623051e4fb0830b24922ddc93b324b0df3bbe62e2441d1b"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/widget-ft-direct.pdf",
+      "path": "native-field-review/widget-ft-direct.pdf",
+      "bytes": 3528,
+      "sha256": "32b54acded81c90caf93846883b2f059ac7fecdc2cd48074310f4a846f02ec88"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/widget-ft-indirect.pdf",
+      "path": "native-field-review/widget-ft-indirect.pdf",
+      "bytes": 3572,
+      "sha256": "1a95198c2ab8f54296147a6d6ab679bfcd9ab18a314043473290582cc42022df"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/widget-p-direct.pdf",
+      "path": "native-field-review/widget-p-direct.pdf",
+      "bytes": 3518,
+      "sha256": "8d49798e6a3faba0a6475d61ddaaf606052c292f9e04a76c684838aa5eff5c7a"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/widget-p-indirect.pdf",
+      "path": "native-field-review/widget-p-indirect.pdf",
+      "bytes": 3562,
+      "sha256": "53ad20d351a53d7fe0296ed7d12d2c1338bb9cddde5d9e26e010c87e8f48b297"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/widget-t-direct.pdf",
+      "path": "native-field-review/widget-t-direct.pdf",
+      "bytes": 3527,
+      "sha256": "69b23181f72cb777ac7ae60b27bb828567829d238531946ca22efa23e2f14e11"
+    },
+    {
+      "originalPath": "/tmp/zuvi-p008-review-2026-11-27/widget-t-indirect.pdf",
+      "path": "native-field-review/widget-t-indirect.pdf",
+      "bytes": 3571,
+      "sha256": "24dc1e0bac301694e15549156d5068b5cfeb5ccf0451ef0b1d2485ac52747c07"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+
+> @zuvi/docs@0.2.1 typecheck /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs
+> tsc --noEmit
+

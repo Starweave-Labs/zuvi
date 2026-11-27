@@ -1,0 +1,54 @@
+import assert from 'node:assert/strict';
+import { readFile, writeFile } from 'node:fs/promises';
+import { Blob } from 'node:buffer';
+import { createRequire } from 'node:module';
+import { createHash } from 'node:crypto';
+import { pdfTestRuntime } from '/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/tests/studio-pdf-test-runtime.mjs';
+
+const folder = '/tmp/zuvi-p008-review-2026-11-27';
+const require = createRequire('/Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/docs/package.json');
+const { PDFDocument, PDFName, PDFRawStream } = require('pdf-lib');
+const r = pdfTestRuntime();
+const c = { ...r.load('../src/pages/collaboration/office-studio/studio-pdf-codec.ts'), ...r.load('../src/pages/collaboration/office-studio/studio-pdf-field-reader.ts') };
+const hash = bytes => createHash('sha256').update(bytes).digest('hex');
+function sharedState(pdf) {
+  const field = c.enumeratePdfFields(pdf).find(field => field.getName() === 'Root.Shared');
+  return {
+    ref: field.ref.toString(),
+    V: field.acroField.dict.lookup(PDFName.of('V')).toString(),
+    DV: field.acroField.dict.lookup(PDFName.of('DV')).toString(),
+    appearances: field.acroField.getWidgets().map(widget => {
+      const appearance = widget.dict.lookup(PDFName.of('AP')).lookup(PDFName.of('N'));
+      if (appearance instanceof PDFRawStream) return hash(appearance.contents);
+      return appearance.entries().map(([name, ref]) => [name.toString(), hash(pdf.context.lookup(ref).contents)]);
+    }),
+  };
+}
+const results = [];
+for (const [stem, expectedType, expectedValue] of [
+  ['inherited-text-ft-indirect', 'text', 'Parent-current'],
+  ['inherited-text-v-indirect', 'text', 'Parent-current'],
+  ['inherited-password-ff-indirect', 'opaque', ''],
+  ['inherited-radio-ff-indirect', 'choice', 'B'],
+]) {
+  const original = new Blob([await readFile(`${folder}/${stem}.pdf`)], { type: 'application/pdf' });
+  let source = original, document = await c.importStudioPdf(source, 'Input.pdf');
+  const before = sharedState(await PDFDocument.load(await source.arrayBuffer()));
+  assert.equal(await c.exportStudioPdf(document, source), source, 'Normalizing native wrappers must retain exact unedited Blob identity.');
+  for (let round = 1; round <= 2; round++) {
+    const shared = document.fields.find(field => field.name === 'Root.Shared');
+    assert.equal(shared.type, expectedType); assert.equal(shared.value, expectedValue);
+    if (expectedType === 'opaque') {
+      assert.equal(shared.readOnly, true); assert.ok(!JSON.stringify(document).includes('Parent-current'));
+    }
+    document.fields.find(field => field.name === 'Other').value = `Round-${round}`;
+    const next = await c.exportStudioPdf(document, source); assert.notEqual(next, source);
+    source = next; document = await c.importStudioPdf(source, 'Reopened.pdf');
+    const state = sharedState(await PDFDocument.load(await source.arrayBuffer()));
+    assert.deepEqual(state, before, 'Unedited native field ref, current/default and every AP payload remain identical.');
+  }
+  await writeFile(`${folder}/fixed-${stem}-two-saves.pdf`, new Uint8Array(await source.arrayBuffer()));
+  results.push({ case: stem, rounds: 2, type: expectedType, value: expectedValue, ...before });
+}
+await writeFile(`${folder}/fixed-inheritance-verification.json`, JSON.stringify(results, null, 2));
+console.log(JSON.stringify(results, null, 2));

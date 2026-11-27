@@ -1,0 +1,29 @@
+
+ RUN  v2.1.9 /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/packages/ui
+
+ ✓ src/components/OfficeStudio/StudioFontControl.test.tsx (6 tests) 400ms
+ ✓ src/components/OfficeStudio/StudioWord.basic-format.test.tsx (16 tests) 2807ms
+   ✓ Word basic character acceptance > presents a mixed 粗体 selection and changes the whole range in one undo event 345ms
+   ✓ Word basic character acceptance > highlights subsequent caret input, clears the stored highlight and keeps the following typing in a separate history event 349ms
+ ✓ src/components/OfficeStudio/StudioWord.test.tsx (140 tests) 25142ms
+   ✓ Word paragraph dialog and ruler > edits inherited tab stops through ZUVI controls with precision checks, cancellation and one history step 567ms
+   ✓ Word paragraph dialog and ruler > applies mixed paragraph values in one history step and keeps untouched values separate 317ms
+   ✓ Word paragraph dialog and ruler > keeps mixed pagination flags unchanged until edited, commits once, and blocks an open dialog after permission changes 503ms
+   ✓ Word character metrics dialog > preserves mixed fonts and links, previews point measurements and applies one undoable operation 343ms
+   ✓ StudioWord named paragraph styles > creates, applies, modifies and deletes a named style with real undo and redo 452ms
+   ✓ StudioWord structured editing > restores rejected controlled edits so the canvas and saved model agree 451ms
+   ✓ StudioWord structured editing > changes picture wrapping, position and anchor flags and restores them with undo 597ms
+   ✓ Word text and table conversion entry > converts through the actual ribbon with a preview and independent undo/redo transactions 321ms
+   ✓ inserts a table formula through ZUVI dialog, keeps cancelled drafts and refreshes in a separate undo transaction 394ms
+   ✓ applies image crop through the toolbar, cancels drafts and restores crop with undo and redo 552ms
+   ✓ edits a math group independently in the actual header region with undo and redo 334ms
+   ✓ StudioWord cell table defaults and spacing > edits only the dirty bottom table default and leaves cell overrides separate from inherited values 393ms
+   ✓ StudioWord cell table defaults and spacing > keeps restoring defaults in the draft until apply, cancels without writes, and removes only the selected cell direct margins 340ms
+   ✓ StudioWord cell table defaults and spacing > commits defaults, spacing, direct margins and the nine-grid choice as one transaction while preserving cell identity, marks and untouched cells 355ms
+   ✓ StudioWord cell table defaults and spacing > sets whole-table spacing while clearing row overrides and restores both layers in one undo 304ms
+   ✓ StudioWord cell table defaults and spacing > clears only an emptied default side and an emptied spacing attribute without materializing inherited cell margins 305ms
+
+ Test Files  3 passed (3)
+      Tests  162 passed (162)
+   Start at  04:09:17
+   Duration  26.61s (transform 778ms, setup 298ms, collect 2.17s, tests 28.35s, environment 860ms, prepare 120ms)

@@ -1,4 +1,5 @@
 import type * as React from 'react';
+import type { StudioPdfAnnotationEditor, StudioPdfNativeAnnotations } from './studio-pdf-annotations';
 
 export type OfficeStudioKind = 'word' | 'excel' | 'pdf';
 
@@ -10,10 +11,86 @@ export interface StudioRichNode {
   content?: StudioRichNode[];
 }
 
+export interface StudioWordImagePosition {
+  relative: string;
+  /** Pixel offsets are converted to native DOCX EMUs. Use either offset or align. */
+  offset?: number;
+  align?: string;
+}
+
+export interface StudioWordImageLayout {
+  wrap: 'square' | 'tight' | 'through' | 'topBottom' | 'front' | 'behind';
+  horizontal: StudioWordImagePosition;
+  vertical: StudioWordImagePosition;
+  wrapSide?: 'bothSides' | 'left' | 'right' | 'largest';
+  distance?: { top?: number; right?: number; bottom?: number; left?: number };
+  /** Native wrap paths use a 21600-unit coordinate space and do not crop the image. */
+  polygon?: [number, number][];
+  allowOverlap?: boolean;
+  lockAnchor?: boolean;
+  layoutInCell?: boolean;
+  zIndex?: number;
+}
+
 interface StudioDocumentBase {
   version: 1;
   id: string;
   name: string;
+}
+
+export interface StudioWordCharacterStyle {
+  fontFamily?: string;
+  /** Font size in points. */
+  fontSize?: number;
+  /** Signed points: spacing uses 0.05pt, baseline position uses 0.5pt. */
+  letterSpacing?: number;
+  baselineShift?: number;
+  bold?: boolean;
+  italic?: boolean;
+  underline?: boolean;
+  strike?: boolean;
+  color?: string;
+  /** null explicitly clears an inherited text background. */
+  backgroundColor?: string | null;
+}
+
+export type { StudioWordTabStop } from './studio-word-tabs';
+import type { StudioWordTabStop } from './studio-word-tabs';
+import type { StudioWordParagraphSurface } from './studio-word-surface';
+
+export interface StudioWordParagraphFormat {
+  textAlign?: 'left' | 'center' | 'right' | 'justify';
+  indentLeft?: number;
+  indentRight?: number;
+  indentFirstLine?: number;
+  spaceBefore?: number;
+  spaceAfter?: number;
+  lineHeight?: number;
+  /** auto is a multiplier; exact / atLeast are point distances. */
+  lineHeightRule?: 'auto' | 'exact' | 'atLeast';
+  /** For a style's own value with an inherited rule, retains native measurement units. */
+  lineHeightBasis?: 'auto' | 'points';
+  widowControl?: boolean;
+  keepNext?: boolean;
+  keepLines?: boolean;
+}
+
+/** Definitions live in content.attrs.paragraphStyles; paragraphs link via attrs.paragraphStyle. */
+export interface StudioWordParagraphStyle {
+  id: string;
+  name: string;
+  /** Another definition, or paragraph / no-spacing / heading-1 through heading-6. */
+  basedOn?: string;
+  /** The style applied when Enter creates the next paragraph. Missing retains this style. */
+  next?: string;
+  /** 0 is body text, 1–6 are outline heading levels. Missing inherits the base. */
+  headingLevel?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  autoUpdate?: boolean;
+  run?: StudioWordCharacterStyle;
+  paragraph?: StudioWordParagraphFormat;
+  /** Native paragraph tab deltas; clear removes an inherited position. */
+  tabStops?: StudioWordTabStop[];
+  surface?: StudioWordParagraphSurface;
 }
 
 export interface StudioWordDocument extends StudioDocumentBase {
@@ -23,6 +100,10 @@ export interface StudioWordDocument extends StudioDocumentBase {
   header?: StudioRichNode;
   footer?: StudioRichNode;
   pageNumbers?: boolean;
+  /** Default tab interval in points. DOCX defaults to 36pt when omitted. */
+  defaultTabStop?: number;
+  /** Native decimal separator used by decimal-aligned tab stops. */
+  decimalSymbol?: '.' | ',';
   page: {
     size: 'A4' | 'Letter';
     orientation: 'portrait' | 'landscape';
@@ -34,6 +115,10 @@ export interface StudioWordDocument extends StudioDocumentBase {
 
 export interface StudioCell {
   input: string;
+  /** Retains a stored constant's type when display formatting would change input inference. */
+  valueType?: 'number' | 'boolean' | 'text';
+  /** Only the anchor stores an array formula. Fixed arrays also store their A1 result range. */
+  array?: { type: 'fixed'; range: string } | { type: 'dynamic' };
   bold?: boolean;
   italic?: boolean;
   underline?: boolean;
@@ -42,11 +127,19 @@ export interface StudioCell {
   /** Excel font size in points, from 1 to 409 inclusive. */
   fontSize?: number;
   wrap?: boolean;
+  /** Fit drawing to the available width without changing the stored font size. */
+  shrinkToFit?: boolean;
   color?: string;
   background?: string;
   numberFormat?: string;
-  align?: 'left' | 'center' | 'right' | 'general';
-  verticalAlign?: 'top' | 'middle' | 'bottom';
+  align?:
+    | 'left' | 'center' | 'right' | 'general' | 'fill'
+    | 'justify' | 'distributed' | 'centerContinuous';
+  verticalAlign?: 'top' | 'middle' | 'bottom' | 'justify' | 'distributed';
+  /** Integer levels, 0–250; one level is three workbook-default-font spaces. */
+  indent?: number;
+  /** Native Excel orientation in degrees, -90–90; vertical keeps glyphs upright. */
+  textRotation?: number | 'vertical';
   /** Missing retains source borders; {} explicitly removes all borders. */
   borders?: Partial<
     Record<
@@ -187,7 +280,16 @@ export type StudioSheetDataValidation = StudioSheetDataValidationBase &
     | { type: 'custom'; formula: string }
   );
 
+export interface StudioSheetView {
+  /** Percent. Existing native files may retain 10–24%; authoring uses 25–400%. */
+  zoom: number;
+  showGridLines: boolean;
+  showRowColHeaders: boolean;
+}
+
 export interface StudioSheet {
+  /** Undefined retains a legacy source view; a present value edits the primary sheet view. */
+  view?: StudioSheetView;
   id: string;
   name: string;
   cells: Record<string, StudioCell>;
@@ -196,8 +298,13 @@ export interface StudioSheet {
   columnWidths?: Record<string, number>;
   /** Default row height in points; absent uses 18pt (24 CSS pixels). */
   defaultRowHeight?: number;
-  /** Positive point heights keyed by one-based rows; {} explicitly resets source heights. */
+  /** Point heights keyed by one-based rows; {} clears overrides. Auto caches refresh on export. */
   rowHeights?: Record<string, number>;
+  /**
+   * Native row-height identity. A defined map defaults unlisted rows to auto.
+   * Missing map keeps legacy stored rowHeights fixed; {} clears source modes.
+   */
+  rowHeightModes?: Record<string, 'auto' | 'fixed'>;
   /** Manual hides retain the last height; [] explicitly shows previously hidden source rows. */
   hiddenRows?: number[];
   /** Column labels hidden manually; [] explicitly shows all columns. Hidden columns keep widths. */
@@ -208,14 +315,26 @@ export interface StudioSheet {
   charts?: StudioSheetChart[];
   conditionalFormats?: StudioSheetConditionalFormat[];
   dataValidations?: StudioSheetDataValidation[];
+  /** Locally protected regions participate in editing and spill conflict checks. */
+  protectedRanges?: string[];
   /** Undefined retains legacy source metadata; [] explicitly removes all links. */
   hyperlinks?: StudioSheetHyperlink[];
   /** Replayed against the original XLSX to retain row, column and cell styling. */
   structureEdits?: StudioSheetStructureEdit[];
 }
 
+/** Resolved workbook font0, used by indentation and native character widths. */
+export interface StudioExcelDefaultFont {
+  family: string;
+  sizePt: number;
+  bold: boolean;
+  italic: boolean;
+}
+
 export interface StudioExcelDocument extends StudioDocumentBase {
   kind: 'excel';
+  /** Missing on legacy drafts; new and imported documents retain the real workbook default. */
+  defaultFont?: StudioExcelDefaultFont;
   sheets: StudioSheet[];
   activeSheetId: string;
 }
@@ -228,6 +347,8 @@ export interface StudioPdfMarkReply {
 
 export interface StudioPdfMark {
   id: string;
+  /** A compatibility projection of a native annotation; its body is drawn by the native renderer. */
+  nativeId?: string;
   page: number;
   type: 'text' | 'highlight' | 'rectangle' | 'ink';
   /** Coordinates in PDF points, from the page's bottom-left corner. */
@@ -245,13 +366,34 @@ export interface StudioPdfMark {
   replies?: StudioPdfMarkReply[];
 }
 
+export interface StudioPdfFieldDesign {
+  kind: 'text' | 'date' | 'image' | 'checkbox' | 'radio' | 'dropdown' | 'list';
+  /** Existing source field replaced by an explicit design edit. Missing denotes a new field. */
+  sourceName?: string;
+  required?: boolean;
+  tooltip?: string;
+  maxLength?: number;
+  multiSelect?: boolean;
+  optionLabels?: Record<string, string>;
+  exportValue?: string;
+  defaultValue?: string | boolean;
+  defaultSelections?: string[];
+  fontSize?: number;
+  textColor?: string;
+  background?: string;
+  borderColor?: string;
+  borderWidth?: number;
+}
+
 export interface StudioPdfField {
   name: string;
-  type: 'text' | 'checkbox' | 'choice';
+  type: 'text' | 'checkbox' | 'choice' | 'image' | 'opaque';
   value: string | boolean;
   options?: string[];
   readOnly: boolean;
   multiline?: boolean;
+  selectedValues?: string[];
+  design?: StudioPdfFieldDesign;
   widgets?: {
     page: number;
     x: number;
@@ -260,7 +402,30 @@ export interface StudioPdfField {
     height: number;
     rotation?: number;
     option?: string;
+    /** Canonical annotation flags, used for nonvisual source widgets. */
+    flags?: number;
   }[];
+  /** Nonvisual source widgets participate in page and field mapping without an HTML control. */
+  hiddenWidgets?: StudioPdfField['widgets'];
+  /** Passive native fields retain their source value and appearance and cannot be redesigned. */
+  nativeType?: string;
+  passiveReason?: string;
+  nativeValueHash?: string;
+}
+
+export interface StudioPdfPage {
+  /** Stable identity of this page instance, including copies of an original page. */
+  id: string;
+  /** Zero-based page in the immutable original file. Missing denotes a blank page. */
+  sourcePage?: number;
+  /** Pages copied together keep internal destinations within their own copied group. */
+  copyGroup?: string;
+  /** Captured current page instance used by a pending copy, before native source rebasing. */
+  originPageId?: string;
+  /** Visible original bounds, retained in absolute PDF coordinates. */
+  bounds?: { left: number; bottom: number; right: number; top: number };
+  /** Explicit canvas size; content coordinates remain unchanged. Required for blank pages. */
+  size?: { width: number; height: number };
 }
 
 export interface StudioPdfDocument extends StudioDocumentBase {
@@ -269,6 +434,14 @@ export interface StudioPdfDocument extends StudioDocumentBase {
   marks: StudioPdfMark[];
   rotations: Record<string, number>;
   fields: StudioPdfField[];
+  /** Source fields removed through a design action, independently of value-only edits. */
+  removedFields?: string[];
+  /** Legacy documents without pages use the original file's page order. */
+  pages?: StudioPdfPage[];
+  /** Original page count is independent of insertion, removal, and reordering. */
+  sourcePageCount?: number;
+  /** Serializable native operations bound to the immutable source; capabilities are host-derived. */
+  nativeAnnotations?: StudioPdfNativeAnnotations;
 }
 
 export type OfficeStudioDocument = StudioWordDocument | StudioExcelDocument | StudioPdfDocument;
@@ -280,14 +453,52 @@ export interface StudioPdfRenderResult {
   toViewportPoint(x: number, y: number): [number, number];
 }
 
+export interface StudioPdfTextSelection {
+  text: string;
+  /** Text-space corners in absolute PDF coordinates, in groups of eight. */
+  quadPoints: readonly number[];
+  rect: { x: number; y: number; width: number; height: number };
+}
+
+export interface StudioPdfTextLayerSession {
+  selection(): StudioPdfTextSelection | undefined;
+  destroy(): void;
+}
+
+export interface StudioPdfAnnotationLayerSession {
+  destroy(): void;
+}
+
 export interface StudioPdfSession {
   pageCount: number;
+  /** Supports virtual blank, copied, reordered, and resized page descriptors. */
+  supportsPageMapping?: boolean;
+  /** Visible crop box in absolute PDF points; avoids rendering pages just to place fields. */
+  getPageBounds?(
+    page: number,
+    descriptor?: StudioPdfPage
+  ): Promise<{ left: number; bottom: number; right: number; top: number }>;
   render(
     page: number,
     canvas: HTMLCanvasElement,
-    options: { scale: number; rotation: number; signal?: AbortSignal }
+    options: { scale: number; rotation: number; signal?: AbortSignal; page?: StudioPdfPage }
   ): Promise<StudioPdfRenderResult>;
   search?(query: string, options?: { signal?: AbortSignal }): Promise<StudioPdfSearchResult[]>;
+  renderTextLayer?(
+    page: number,
+    container: HTMLDivElement,
+    options: { scale: number; rotation: number; signal?: AbortSignal; page?: StudioPdfPage }
+  ): Promise<StudioPdfTextLayerSession>;
+  renderAnnotationLayer?(
+    page: number,
+    container: HTMLDivElement,
+    options: {
+      scale: number; rotation: number; signal?: AbortSignal; page?: StudioPdfPage;
+      canvas: HTMLCanvasElement;
+      annotations?: readonly { id: string; key?: string; flags?: number }[];
+      onSelect?(id: string): void;
+    }
+  ): Promise<StudioPdfAnnotationLayerSession>;
   destroy(): void | Promise<void>;
 }
 
@@ -302,6 +513,44 @@ export interface StudioPdfRenderer {
   load(source: Blob): Promise<StudioPdfSession>;
 }
 
+/** The editable model and its immutable native PDF always travel together. */
+export interface StudioPdfSnapshot {
+  document: StudioPdfDocument;
+  source: Blob;
+}
+
+export interface StudioPdfSourceChange {
+  previous: StudioPdfSnapshot;
+  next: StudioPdfSnapshot;
+}
+
+export interface StudioPdfComposeRequest {
+  snapshot: StudioPdfSnapshot;
+  mode: 'merge' | 'extract';
+  /** Zero-based current pages in the requested output order. */
+  pages: number[];
+  /** Zero-based boundary in the current document, including its end. */
+  insertAt?: number;
+  incoming?: { source: Blob; name: string; pages: number[] };
+  name?: string;
+  conflicts: {
+    strategy: 'rename' | 'link';
+    valuePolicy: 'reject' | 'first' | 'last';
+  };
+  orphanRadioValue: 'reject' | 'clear';
+  signal?: AbortSignal;
+}
+
+export interface StudioPdfComposeResult extends StudioPdfSnapshot {
+  warnings?: string[];
+}
+
+/** A host codec prepares a new source without changing the active editor or storage. */
+export interface StudioPdfComposer {
+  inspect(source: Blob, options?: { signal?: AbortSignal }): Promise<{ pageCount: number }>;
+  compose(request: StudioPdfComposeRequest): Promise<StudioPdfComposeResult>;
+}
+
 export interface StudioEditorProps<T extends OfficeStudioDocument> {
   document: T;
   onChange(document: T): void;
@@ -309,6 +558,10 @@ export interface StudioEditorProps<T extends OfficeStudioDocument> {
   readOnly: boolean;
   source?: Blob;
   pdfRenderer?: StudioPdfRenderer;
+  pdfComposer?: StudioPdfComposer;
+  pdfAnnotations?: StudioPdfAnnotationEditor;
+  /** Return true only after synchronously accepting the complete document/source pair. */
+  onPdfSourceChange?: (change: StudioPdfSourceChange) => boolean;
 }
 
 export interface OfficeStudioHandle {
@@ -329,6 +582,10 @@ export interface OfficeStudioProps extends Omit<
   onChange?: (document: OfficeStudioDocument) => void;
   source?: Blob;
   pdfRenderer?: StudioPdfRenderer;
+  pdfComposer?: StudioPdfComposer;
+  pdfAnnotations?: StudioPdfAnnotationEditor;
+  /** Requires a controlled value; atomically compare and replace both the model and source. */
+  onPdfSourceChange?: (change: StudioPdfSourceChange) => boolean;
   onSave?: (document: OfficeStudioDocument) => void | Promise<void>;
   onExport?: (document: OfficeStudioDocument) => void | Promise<void>;
   onPrint?: (document: OfficeStudioDocument) => void | Promise<void>;

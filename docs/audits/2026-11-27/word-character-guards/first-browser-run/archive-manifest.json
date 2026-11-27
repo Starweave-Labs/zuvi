@@ -1,0 +1,98 @@
+{
+  "head": "077e307da018a6a9a96b4d07d70bf8e44a803c84",
+  "reason": "First run exact original artifacts. Product source and dist frozen at root fresh build; failure is body.click retaining header mode. Only subsequent script is corrected.",
+  "sourceAndDist": [
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWord.tsx",
+      "bytes": 141725,
+      "sha256": "ef3515d49ca280402ebd4c1de7fc30df00e430c77e00f7aee5aadda821f239ba"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-tools.ts",
+      "bytes": 47129,
+      "sha256": "5a6e307706fc601be2b58676322a4f1a038ea74f4ec4fe8d3a5b5f0cdf3c1e2a"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWordCharacterDialog.tsx",
+      "bytes": 5745,
+      "sha256": "005b4d090ead60f3a554d2addfc6bc378bf15db28ac180549a028979e8c681d0"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/studio-word-character-layout.ts",
+      "bytes": 4814,
+      "sha256": "3c2ab9e54989fa343a32af43d5c69ca032a530f089731f477d6e80359f2ab201"
+    },
+    {
+      "path": "packages/ui/src/components/OfficeStudio/StudioWord.character-guards.test.tsx",
+      "bytes": 9237,
+      "sha256": "6b97fb4c4c8ab8e41249a5792fe4487d42be9cfbcdbb14d05c5c819975af26f1"
+    },
+    {
+      "path": "e2e/office-studio-word-character-guards.spec.ts",
+      "bytes": 9250,
+      "sha256": "ea65851aa4089b673501f01cab97fcf6b029005d74345d8800d3df59de2c5f87"
+    },
+    {
+      "path": "docs/audits/2026-11-27/word-character-guards/source.docx",
+      "bytes": 37606,
+      "sha256": "a6633ea9cd6941c436bbcdd7dfd717f4eaedde552d421553c797d2e3d75ba5ef"
+    },
+    {
+      "path": "packages/ui/dist/StudioWord-BkxU2F45.js",
+      "bytes": 320422,
+      "sha256": "fcb8d44d09813fd4c52d004a0f0c5b9547875d164b50160f542760ca7867e821"
+    }
+  ],
+  "entries": [
+    {
+      "path": "office-studio-word-character-guards.spec.ts.txt",
+      "bytes": 9250,
+      "sha256": "ea65851aa4089b673501f01cab97fcf6b029005d74345d8800d3df59de2c5f87"
+    },
+    {
+      "path": "playwright/.last-run.json",
+      "bytes": 96,
+      "sha256": "10b199652ed5f51135545ceea794edabd9c16a4504b51828a0ef53acce92dee0"
+    },
+    {
+      "path": "playwright/office-studio-word-charact-52599-rough-two-real-DOCX-reopens-chromium/error-context.md",
+      "bytes": 40685,
+      "sha256": "490b34fddf74db30d0c9ffaf6285c4a393dcb0d765270c0854ff3f31fba96e70"
+    },
+    {
+      "path": "playwright/office-studio-word-charact-52599-rough-two-real-DOCX-reopens-chromium/error-context.md.raw.gz",
+      "bytes": 8512,
+      "sha256": "15aff3ef8dec10cc99aa1d558c7ce44ddfc260362791fe8bd574072e622e157c"
+    },
+    {
+      "path": "playwright/office-studio-word-charact-52599-rough-two-real-DOCX-reopens-chromium/trace.zip",
+      "bytes": 6093821,
+      "sha256": "71d7c7a2f61216619ddab174fd60047c4aa007237c43bb7b5e4c98388ad29f9a"
+    },
+    {
+      "path": "run.json",
+      "bytes": 8269,
+      "sha256": "18cf52f272a19f2b4f148c00355c97eed64feb93d232a67a765ff300b08173c6"
+    },
+    {
+      "path": "run.txt",
+      "bytes": 3096,
+      "sha256": "b3ab9a2c186a31462de6d65d492d2d2f5007b21d814b8819a91c7f125150cbab"
+    },
+    {
+      "path": "run.txt.raw.gz",
+      "bytes": 880,
+      "sha256": "bc30efafa5982fd2b03fc13665b8697bf591ba7b94a2f990cbe84b8e3ec5d8a1"
+    },
+    {
+      "path": "source-before-browser.json",
+      "bytes": 1528,
+      "sha256": "90122e613c97e73235caed189de034f6da43b4286c930e6efd81012a85d9df2b"
+    },
+    {
+      "path": "source.docx",
+      "bytes": 37606,
+      "sha256": "a6633ea9cd6941c436bbcdd7dfd717f4eaedde552d421553c797d2e3d75ba5ef"
+    }
+  ]
+}

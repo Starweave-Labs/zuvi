@@ -1,0 +1,43 @@
+[WebServer] (node:24119) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:24132) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+  ✓  1 [chromium] › e2e/office-studio-pdf-text-layer.spec.ts:105:1 › uses real PDF.js text selections and one native appearance across crop, UserUnit, rotation and zoom (2.3s)
+  ✘  2 [chromium] › e2e/office-studio-pdf-text-layer.spec.ts:241:1 › selects and copies original PDF text in OfficeStudio, searches real pages and preserves source bytes in readonly mode (3.0m)
+  ✓  3 [chromium] › e2e/office-studio-pdf-text-layer.spec.ts:283:1 › uses real selected PDF glyph QuadPoints for four native text markups and survives history and two reopens (13.2s)
+
+
+  1) [chromium] › e2e/office-studio-pdf-text-layer.spec.ts:241:1 › selects and copies original PDF text in OfficeStudio, searches real pages and preserves source bytes in readonly mode 
+
+    Test timeout of 180000ms exceeded.
+
+    Error: locator.focus: Test timeout of 180000ms exceeded.
+    Call log:
+      - waiting for getByRole('document', { name: 'PDF 第 2 页原文选择复制', exact: true })
+
+
+      264 |   await page.getByRole('switch', { name: '只读预览', exact: true }).click();
+      265 |   const secondLayer = page.getByRole('document', { name: 'PDF 第 2 页原文选择复制', exact: true });
+    > 266 |   await secondLayer.focus(); await page.keyboard.press('Control+a');
+          |                     ^
+      267 |   await page.keyboard.press(process.platform === 'darwin' ? 'Meta+c' : 'Control+c');
+      268 |   await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe('Searchable second source page');
+      269 |   await expect(page.getByRole('button', { name: '新建表单字段', exact: true })).toBeDisabled();
+        at /Users/meaili/.codex/worktrees/finish-office-studio/6a665831-e304-4533-acf4-c350d6b31c59/e2e/office-studio-pdf-text-layer.spec.ts:266:21
+
+    Error Context: ../../../../../../tmp/zuvi-pdf-text-layer-app-e2e/office-studio-pdf-text-lay-71816-urce-bytes-in-readonly-mode-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../tmp/zuvi-pdf-text-layer-app-e2e/office-studio-pdf-text-lay-71816-urce-bytes-in-readonly-mode-chromium/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../../../tmp/zuvi-pdf-text-layer-app-e2e/office-studio-pdf-text-lay-71816-urce-bytes-in-readonly-mode-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/office-studio-pdf-text-layer.spec.ts:241:1 › selects and copies original PDF text in OfficeStudio, searches real pages and preserves source bytes in readonly mode 
+  2 passed (3.3m)

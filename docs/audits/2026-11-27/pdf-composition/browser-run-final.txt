@@ -1,0 +1,12 @@
+[WebServer] (node:49960) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:49973) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+  ✓  1 [chromium] › e2e/office-studio-pdf-composition.spec.ts:47:1 › merges native pages and fields with editable marks, paired history, persistence, old-version export and two PDF reopens (14.4s)
+  ✓  2 [chromium] › e2e/office-studio-pdf-composition.spec.ts:95:1 › extracts radio pages with an explicit value policy, native V/DV checks, undo and repeated reopens (6.9s)
+  ✓  3 [chromium] › e2e/office-studio-pdf-composition.spec.ts:111:1 › keeps rejected field conflicts unchanged and verifies the actual merge and extraction dialogs in light, dark and 320px (4.5s)
+
+  3 passed (28.3s)
