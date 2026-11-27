@@ -51,9 +51,9 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm exec playwright install --with-deps chromium
-      # e2e 的 vite dev 服务与 CDN 离线用例消费 UI 构建产物（docs dev 读取
-      # packages/ui/dist/style.css，data-grid CDN 用例读取 dist/browser）；
-      # `...` 闭包先构建 tokens/icons/i18n 等依赖，UI 构建需要解析它们的 dist 入口。
-      - run: pnpm --filter @zuvi/react... build
+      # e2e 的 vite dev 服务消费 UI 与 blocks 的 dist 入口（含 style.css 与依赖
+      # 预扫描），CDN 离线用例读取 dist/browser；与 ci job 一致做全量构建，
+      # 避免闭包遗漏再次出现在 vite dep-scan 阶段。
+      - run: pnpm -r build
       - run: pnpm --filter @zuvi/react build:browser
       - run: pnpm exec playwright test --config e2e/playwright.config.ts --shard=${{ matrix.shard }}/3 --workers=1
