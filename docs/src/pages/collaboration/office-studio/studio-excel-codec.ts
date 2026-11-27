@@ -491,6 +491,7 @@ interface NativeRowLayout {
   rowHeights: Record<string, number>;
   rowHeightModes: NonNullable<StudioSheet['rowHeightModes']>;
   hiddenRows: number[];
+  manualHiddenRows?: number[];
   visibleRows: number[];
   defaultHidden: boolean;
   lastRow: number;
@@ -498,6 +499,26 @@ interface NativeRowLayout {
 
 function nativeRowLayout(xml: XMLDocument): NativeRowLayout {
   const format = first(xml, S, 'sheetFormatPr');
+  const manualText = xml.documentElement.getAttributeNS(
+    'urn:zuvi:office-studio',
+    'manualHiddenRows'
+  );
+  const manualHiddenRows =
+    manualText === null || manualText === undefined
+      ? undefined
+      : manualText.trim()
+        ? manualText.trim().split(/\s+/).map(Number)
+        : [];
+  if (
+    manualHiddenRows?.some(
+      (row, index) =>
+        !Number.isInteger(row) ||
+        row < 1 ||
+        row > STUDIO_SHEET_LIMITS.rows ||
+        (index > 0 && row <= manualHiddenRows[index - 1])
+    )
+  )
+    throw new Error('工作表手动隐藏行记录无效。');
   const boolean = (node: Element | undefined, name: string) => {
     const value = node?.getAttribute(name);
     if (value === null || value === undefined) return false;
@@ -524,6 +545,7 @@ function nativeRowLayout(xml: XMLDocument): NativeRowLayout {
     rowHeights: {},
     rowHeightModes: {},
     hiddenRows: [],
+    ...(manualHiddenRows !== undefined ? { manualHiddenRows } : {}),
     visibleRows: [],
     defaultHidden: height === 0 || boolean(format, 'zeroHeight'),
     lastRow: 0,
@@ -2119,7 +2141,12 @@ function importedDocument(
     }
     // XLSX stores a single hidden flag for manual hides and filter results.
     // Exclude current filter results so clearing the filter restores those rows.
-    sheet.hiddenRows = [...hidden].filter((row) => !filtered.has(row)).sort((a, b) => a - b);
+    // Our ignorable attribute retains manual/filter overlap; require the native
+    // hidden flag too, so an external unhide does not resurrect stale metadata.
+    const manual = new Set(native?.manualHiddenRows ?? []);
+    sheet.hiddenRows = [...hidden]
+      .filter((row) => !filtered.has(row) || manual.has(row))
+      .sort((a, b) => a - b);
   }
   validateDocument(document);
   return document;
@@ -2304,10 +2331,15 @@ function hydrateRowLayoutFromMetadata(
       for (let row = 1; row <= sourceRows; row++) if (!visible.has(row)) sourceHidden.add(row);
     }
     const filtered = studioFilteredRows({ ...sheet, hiddenRows: [] }, calculation);
+    const manual = new Set(native.manualHiddenRows ?? []);
     const hidden = [...sourceHidden]
       .flatMap((index) => {
         const row = transformSourceIndex(index, 'row', edits);
-        return row !== undefined && row <= sheet.rowCount && !filtered.has(row) ? [row] : [];
+        return row !== undefined &&
+          row <= sheet.rowCount &&
+          (!filtered.has(row) || manual.has(index))
+          ? [row]
+          : [];
       })
       .sort((a, b) => a - b);
     changed = true;
@@ -3647,13 +3679,20 @@ async function writeAdvancedParts(
     const path = sheetPaths.get(sheet.name);
     if (!path) throw new Error('导出工作表关系无效。');
     let worksheet = await zip.file(path)!.async('string');
-    if (sheet.protectedRanges?.length) {
+    if (sheet.protectedRanges?.length || sheet.hiddenRows !== undefined) {
       worksheet = worksheet.replace(/<worksheet\b([^>]*)>/, (_match, attributes: string) => {
         const cleaned = attributes.replace(
-          /\s(?:xmlns:mc|xmlns:zuvi|mc:Ignorable|zuvi:protectedRanges)="[^"]*"/g,
+          /\s(?:xmlns:mc|xmlns:zuvi|mc:Ignorable|zuvi:protectedRanges|zuvi:manualHiddenRows)="[^"]*"/g,
           ''
         );
-        return `<worksheet${cleaned} xmlns:zuvi="urn:zuvi:office-studio" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="zuvi" zuvi:protectedRanges="${escapeXml(sheet.protectedRanges!.join(' '))}">`;
+        const protectedRanges = sheet.protectedRanges?.length
+          ? ` zuvi:protectedRanges="${escapeXml(sheet.protectedRanges.join(' '))}"`
+          : '';
+        const manualRows =
+          sheet.hiddenRows !== undefined
+            ? ` zuvi:manualHiddenRows="${[...new Set(sheet.hiddenRows)].sort((a, b) => a - b).join(' ')}"`
+            : '';
+        return `<worksheet${cleaned} xmlns:zuvi="urn:zuvi:office-studio" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="zuvi"${protectedRanges}${manualRows}>`;
       });
     }
     let dynamicMetadata = false;

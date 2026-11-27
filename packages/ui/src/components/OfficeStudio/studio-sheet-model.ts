@@ -250,8 +250,10 @@ export function studioClipboardOrigin(
     if (value.defaultFont !== undefined) {
       const defaults = sheetDefaultTextFormat(value.defaultFont);
       defaultFont = {
-        family: defaults.fontFamily, sizePt: defaults.fontSize,
-        bold: defaults.bold, italic: defaults.italic,
+        family: defaults.fontFamily,
+        sizePt: defaults.fontSize,
+        bold: defaults.bold,
+        italic: defaults.italic,
       };
     }
     if (
@@ -737,7 +739,10 @@ export function studioParseTsv(text: string): string[][] {
   return rows;
 }
 
-function clipboardCellFormat(cell: StudioCell, defaultFont?: StudioExcelDefaultFont): Omit<StudioCell, 'input'> {
+function clipboardCellFormat(
+  cell: StudioCell,
+  defaultFont?: StudioExcelDefaultFont
+): Omit<StudioCell, 'input'> {
   const { input: _input, valueType: _valueType, ...format } = cloneClipboardCell(cell);
   return {
     ...clipboardFormatDefaults,
@@ -1029,11 +1034,16 @@ export function studioPasteCells(
     mode
   );
   let hyperlinkCoverage = 0;
-  const capturedFont = rich && source?.defaultFont ? sheetDefaultTextFormat(source.defaultFont) : undefined;
-  const sourceFontDefaults = capturedFont ? {
-    fontFamily: capturedFont.fontFamily, fontSize: capturedFont.fontSize,
-    bold: capturedFont.bold, italic: capturedFont.italic,
-  } : {};
+  const capturedFont =
+    rich && source?.defaultFont ? sheetDefaultTextFormat(source.defaultFont) : undefined;
+  const sourceFontDefaults = capturedFont
+    ? {
+        fontFamily: capturedFont.fontFamily,
+        fontSize: capturedFont.fontSize,
+        bold: capturedFont.bold,
+        italic: capturedFont.italic,
+      }
+    : {};
   for (let row = 0; row < sourceRows; row++) {
     const columns = rich ? sourceColumns : parsedRows[row].length;
     for (let col = 0; col < columns; col++) {
@@ -1061,7 +1071,8 @@ export function studioPasteCells(
             ? { numberFormat: sourceCell.numberFormat ?? 'General' }
             : {}),
         };
-      } else if (mode === 'formats') updates[address] = clipboardCellFormat(sourceCell, source?.defaultFont);
+      } else if (mode === 'formats')
+        updates[address] = clipboardCellFormat(sourceCell, source?.defaultFont);
       else if (mode === 'formulas' || mode === 'formulas-number-format') {
         updates[address] = {
           input: translated,
@@ -1252,8 +1263,12 @@ export function studioCopySheetClipboard(
     version: 3,
     defaultFont: (() => {
       const defaults = sheetDefaultTextFormat(document.defaultFont);
-      return { family: defaults.fontFamily, sizePt: defaults.fontSize,
-        bold: defaults.bold, italic: defaults.italic };
+      return {
+        family: defaults.fontFamily,
+        sizePt: defaults.fontSize,
+        bold: defaults.bold,
+        italic: defaults.italic,
+      };
     })(),
     row: bounds.firstRow,
     col: bounds.firstCol,
@@ -2525,12 +2540,80 @@ export function studioSetColumnsHidden(
     for (const char of label) index = index * 26 + (char.charCodeAt(0) - 64);
     if (index < 1 || index > total) throw new Error(`列超出支持范围：${label}`);
   }
+  if (
+    next.length === (sheet.hiddenColumns ?? []).length &&
+    next.every((label, index) => label === sheet.hiddenColumns?.[index])
+  )
+    return document;
   return {
     ...document,
     sheets: document.sheets.map((item) =>
       item.id === sheetId ? { ...item, hiddenColumns: next } : item
     ),
   };
+}
+
+/** Change manual visibility without resetting cached heights or auto/fixed sizing. */
+export function studioSetRowsHidden(
+  document: StudioExcelDocument,
+  sheetId: string,
+  hidden: number[]
+): StudioExcelDocument {
+  const sheet = document.sheets.find((item) => item.id === sheetId);
+  if (!sheet) throw new Error('工作表不存在。');
+  const next = [...new Set(hidden)].sort((a, b) => a - b);
+  if (next.some((row) => !Number.isInteger(row) || row < 1 || row > sheet.rowCount))
+    throw new Error('隐藏行超出工作表范围。');
+  if (next.length >= sheet.rowCount) throw new Error('至少保留一个未手动隐藏的行。');
+  if (
+    next.length === (sheet.hiddenRows ?? []).length &&
+    next.every((row, index) => row === sheet.hiddenRows?.[index])
+  )
+    return document;
+  return {
+    ...document,
+    sheets: document.sheets.map((item) =>
+      item.id === sheetId ? { ...item, hiddenRows: next } : item
+    ),
+  };
+}
+
+/** Selected rows/columns are independent of filtering and never change cell data. */
+export function studioSetRangeHidden(
+  document: StudioExcelDocument,
+  sheetId: string,
+  range: StudioRange,
+  axis: 'rows' | 'columns',
+  hidden: boolean
+): StudioExcelDocument {
+  const sheet = document.sheets.find((item) => item.id === sheetId);
+  if (!sheet) throw new Error('工作表不存在。');
+  const first = axis === 'rows' ? range.firstRow : range.firstCol;
+  const last = axis === 'rows' ? range.lastRow : range.lastCol;
+  const limit = axis === 'rows' ? sheet.rowCount : sheet.columnCount;
+  if (
+    !Number.isInteger(first) ||
+    !Number.isInteger(last) ||
+    first < 1 ||
+    last < first ||
+    last > limit
+  )
+    throw new Error('隐藏或显示的选区范围无效。');
+  if (axis === 'rows') {
+    const next = new Set(sheet.hiddenRows ?? []);
+    for (let row = first; row <= last; row++) {
+      if (hidden) next.add(row);
+      else next.delete(row);
+    }
+    return studioSetRowsHidden(document, sheetId, [...next]);
+  }
+  const next = new Set(sheet.hiddenColumns ?? []);
+  for (let col = first; col <= last; col++) {
+    const label = studioColumnLabel(col);
+    if (hidden) next.add(label);
+    else next.delete(label);
+  }
+  return studioSetColumnsHidden(document, sheetId, [...next]);
 }
 
 /** Only A1 references are translated; formula strings and absolute components are preserved. */

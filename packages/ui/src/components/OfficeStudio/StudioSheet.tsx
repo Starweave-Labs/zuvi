@@ -89,6 +89,8 @@ import {
   studioSetFilter,
   studioSetFreeze,
   studioSetRowHeight,
+  studioSetRowsHidden,
+  studioSetRangeHidden,
   studioSortRange,
   studioSortRangeByKeys,
   type StudioSortKey,
@@ -324,6 +326,7 @@ export function StudioSheet({
   const cellInputRef = React.useRef<HTMLInputElement>(null);
   const formulaRef = React.useRef<HTMLInputElement>(null);
   const editingRef = React.useRef<CellEditing | null>(null);
+  const composingRef = React.useRef(false);
   const latestRef = React.useRef(document);
   const expectedRef = React.useRef(document);
   const lastIdRef = React.useRef(document.id);
@@ -415,6 +418,25 @@ export function StudioSheet({
     () => (sheet ? studioHiddenColumns(sheet) : new Set<string>()),
     [sheet]
   );
+  const shownColumns = React.useMemo(
+    () =>
+      Array.from({ length: columnCount }, (_, index) => index + 1).filter(
+        (col) => !hiddenColumns.has(studioColumnLabel(col))
+      ),
+    [columnCount, hiddenColumns]
+  );
+  const selectedRows = Array.from(
+    { length: bounds.lastRow - bounds.firstRow + 1 },
+    (_, index) => bounds.firstRow + index
+  );
+  const selectedColumns = Array.from({ length: bounds.lastCol - bounds.firstCol + 1 }, (_, index) =>
+    studioColumnLabel(bounds.firstCol + index)
+  );
+  const selectedManualRows = selectedRows.some((row) => sheet?.hiddenRows?.includes(row));
+  const selectedManualColumns = selectedColumns.some((col) => hiddenColumns.has(col));
+  const hidingAllRows =
+    new Set([...(sheet?.hiddenRows ?? []), ...selectedRows]).size >= (sheet?.rowCount ?? rowCount);
+  const hidingAllColumns = new Set([...hiddenColumns, ...selectedColumns]).size >= columnCount;
   const logicalOffsets = React.useMemo(() => {
     const values = [0];
     for (let col = 1; col <= columnCount; col++)
@@ -631,6 +653,7 @@ export function StudioSheet({
       setAddressDraft('A1');
       setEditing(null);
       editingRef.current = null;
+      composingRef.current = false;
       setRename(null);
       setChartPanel(false);
       setSelectedChart('');
@@ -690,16 +713,36 @@ export function StudioSheet({
   }, [sheet?.id, rowCount, columnCount, selection, ensureVisible]);
 
   React.useEffect(() => {
-    if (hiddenRows.has(selection.focus.row)) {
-      const nextRow = shownRows.find((row) => row >= selection.focus.row) ?? shownRows[0];
-      if (nextRow === undefined) return;
-      const position = {
-        row: nextRow,
-        col: selection.focus.col,
-      };
+    const merge = sheet && studioMergedRange(sheet, {
+      row: selection.focus.row,
+      col: selection.focus.col,
+    });
+    const visibleMerge =
+      merge &&
+      shownRows.some((row) => row >= merge.firstRow && row <= merge.lastRow) &&
+      shownColumns.some((col) => col >= merge.firstCol && col <= merge.lastCol);
+    if (visibleMerge) return;
+    const nextRow = hiddenRows.has(selection.focus.row)
+      ? (shownRows.find((row) => row >= selection.focus.row) ?? shownRows[shownRows.length - 1])
+      : selection.focus.row;
+    const nextCol = hiddenColumns.has(studioColumnLabel(selection.focus.col))
+      ? (shownColumns.find((col) => col >= selection.focus.col) ??
+        shownColumns[shownColumns.length - 1])
+      : selection.focus.col;
+    if (nextRow === undefined || nextCol === undefined) return;
+    if (nextRow !== selection.focus.row || nextCol !== selection.focus.col) {
+      const position = { row: nextRow, col: nextCol };
       setSelection({ anchor: position, focus: position });
     }
-  }, [hiddenRows, shownRows, selection.focus.row, selection.focus.col]);
+  }, [
+    hiddenRows,
+    hiddenColumns,
+    shownRows,
+    shownColumns,
+    sheet,
+    selection.focus.row,
+    selection.focus.col,
+  ]);
 
   React.useEffect(() => {
     if (blocked) {
@@ -859,25 +902,24 @@ export function StudioSheet({
 
   function moveSelection(rowDelta: number, colDelta: number, extend = false) {
     const merge = sheet && studioMergedRange(sheet, selection.focus);
-    const rowIndex =
-      rowIndexes.get(rowDelta > 0 && merge && !extend ? merge.lastRow : selection.focus.row) ?? 0;
+    const startRow =
+      merge && !extend ? (rowDelta > 0 ? merge.lastRow : merge.firstRow) : selection.focus.row;
+    const startCol =
+      merge && !extend ? (colDelta > 0 ? merge.lastCol : merge.firstCol) : selection.focus.col;
     const position = {
-      row: rowDelta
-        ? shownRows[Math.max(0, Math.min(shownRows.length - 1, rowIndex + rowDelta))]
-        : selection.focus.row,
-      col: Math.max(1, Math.min(columnCount, selection.focus.col + colDelta)),
+      row:
+        (rowDelta > 0
+          ? shownRows.find((row) => row > startRow)
+          : rowDelta < 0
+            ? shownRows.filter((row) => row < startRow).pop()
+            : undefined) ?? selection.focus.row,
+      col:
+        (colDelta > 0
+          ? shownColumns.find((col) => col > startCol)
+          : colDelta < 0
+            ? shownColumns.filter((col) => col < startCol).pop()
+            : undefined) ?? selection.focus.col,
     };
-    // 列步进跳过隐藏列（对齐行隐藏语义）
-    if (colDelta !== 0) {
-      const step = colDelta > 0 ? 1 : -1;
-      let cursor = position.col;
-      while (cursor >= 1 && cursor <= columnCount && hiddenColumns.has(studioColumnLabel(cursor)))
-        cursor += step;
-      if (cursor < 1 || cursor > columnCount) cursor = position.col;
-      position.col = cursor;
-    }
-    if (colDelta > 0 && merge && !extend)
-      position.col = Math.min(columnCount, merge.lastCol + colDelta);
     const destination = sheet && studioMergedRange(sheet, position);
     if (destination && !extend) {
       position.row = destination.firstRow;
@@ -894,6 +936,7 @@ export function StudioSheet({
   }
 
   function commitEditing(focusGrid = false) {
+    if (composingRef.current) return false;
     const current = editingRef.current;
     if (blocked || !current) return true;
     try {
@@ -1611,6 +1654,26 @@ export function StudioSheet({
     setNotice('已恢复所选行的默认行高并取消手动隐藏。');
   }
 
+  function setVisibility(axis: 'rows' | 'columns', hidden: boolean, all = false) {
+    if (blocked || !sheet || composingRef.current) return;
+    transform(
+      (current) =>
+        all
+          ? axis === 'rows'
+            ? studioSetRowsHidden(current, sheet.id, [])
+            : studioSetColumnsHidden(current, sheet.id, [])
+          : studioSetRangeHidden(current, sheet.id, bounds, axis, hidden),
+      all
+        ? axis === 'rows'
+          ? '已显示全部手动隐藏行；筛选保持不变。'
+          : '已显示全部隐藏列。'
+        : hidden
+          ? '已隐藏所选行列；可撤销。'
+          : '已显示选区内手动隐藏的行列；筛选保持不变。'
+    );
+    gridRef.current?.focus();
+  }
+
   function undo() {
     if (blocked || !pastRef.current.length) return;
     setEdit(null);
@@ -2105,8 +2168,13 @@ export function StudioSheet({
     if (event.key === 'Home' || event.key === 'End') {
       event.preventDefault();
       const position = {
-        row: command ? (event.key === 'Home' ? 1 : rowCount) : selection.focus.row,
-        col: event.key === 'Home' ? 1 : columnCount,
+        row: command
+          ? ((event.key === 'Home' ? shownRows[0] : shownRows[shownRows.length - 1]) ??
+            selection.focus.row)
+          : selection.focus.row,
+        col:
+          (event.key === 'Home' ? shownColumns[0] : shownColumns[shownColumns.length - 1]) ??
+          selection.focus.col,
       };
       setSelection({ anchor: event.shiftKey ? selection.anchor : position, focus: position });
       ensureVisible(position);
@@ -2375,6 +2443,12 @@ export function StudioSheet({
       data-studio-input-error={
         inputError || textDraftError || (!readOnly && viewDraftError) || undefined
       }
+      onCompositionStartCapture={() => {
+        composingRef.current = true;
+      }}
+      onCompositionEndCapture={() => {
+        composingRef.current = false;
+      }}
       onKeyDownCapture={(event) => {
         if (
           painterRef.current &&
@@ -2831,6 +2905,32 @@ export function StudioSheet({
                   恢复默认行高
                 </Button>
               </div>
+              <div className="zuvi-studio-sheet-toolrow">
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  disabled={blocked || hidingAllRows}
+                  onClick={() => setVisibility('rows', true)}
+                >
+                  隐藏行
+                </Button>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  disabled={blocked || !selectedManualRows}
+                  onClick={() => setVisibility('rows', false)}
+                >
+                  显示选区行
+                </Button>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  disabled={blocked || !sheet?.hiddenRows?.length}
+                  onClick={() => setVisibility('rows', false, true)}
+                >
+                  显示全部行
+                </Button>
+              </div>
               <span>行大小 · 磅</span>
             </div>
             <div className="zuvi-studio-sheet-toolgroup">
@@ -2855,40 +2955,24 @@ export function StudioSheet({
               <Button
                 size="sm"
                 variant="ghost"
-                disabled={
-                  blocked ||
-                  (bounds.firstCol === bounds.lastCol &&
-                    new Set([...(sheet?.hiddenColumns ?? []), studioColumnLabel(bounds.firstCol)])
-                      .size === columnCount)
-                }
-                onClick={() => {
-                  if (!sheet || !commitEditing()) return;
-                  transform(
-                    (current) =>
-                      studioSetColumnsHidden(
-                        current,
-                        sheet.id,
-                        (
-                          current.sheets.find((item) => item.id === sheet.id)?.hiddenColumns ?? []
-                        ).concat(studioColumnLabel(bounds.firstCol))
-                      ),
-                    `已隐藏列 ${studioColumnLabel(bounds.firstCol)}；可撤销。`
-                  );
-                }}
+                disabled={blocked || hidingAllColumns}
+                onClick={() => setVisibility('columns', true)}
               >
                 隐藏列
               </Button>
               <Button
                 size="sm"
                 variant="ghost"
+                disabled={blocked || !selectedManualColumns}
+                onClick={() => setVisibility('columns', false)}
+              >
+                显示选区列
+              </Button>
+              <Button
+                size="sm"
+                variant="ghost"
                 disabled={blocked || (sheet?.hiddenColumns ?? []).length === 0}
-                onClick={() => {
-                  if (!sheet || !commitEditing()) return;
-                  transform(
-                    (current) => studioSetColumnsHidden(current, sheet.id, []),
-                    '已显示全部隐藏列；可撤销。'
-                  );
-                }}
+                onClick={() => setVisibility('columns', false, true)}
               >
                 显示全部列
               </Button>
