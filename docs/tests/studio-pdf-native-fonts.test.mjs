@@ -27,7 +27,9 @@ test('new glyphs use the source full font even when a same-family provider suppl
   const bytes = await readFile(new URL('./fixtures/studio-pdf-native/native-font-source.pdf', import.meta.url));
   const model = await importNativeMarks(bytes), sourceFont = model.annotations.find((annotation) => annotation.id === 'native-cjk-freetext')._native.font.embeddedHash;
   const next = updateMark(model, 'native-cjk-freetext', { contents: '新的中文字符：重新编辑' });
-  const wrongProvider = await readFile('/Users/meaili/.cache/codex-runtimes/codex-primary-runtime/dependencies/native/poppler/poppler/fonts/DejaVuSans.ttf');
+  // 完整 TrueType 嵌入字体优先于同族 provider（fonts.ts 的 sourceFont 分支），provider 在此
+  // 流程中不会被解析；任何与嵌入字体不同的字节都能验证该优先级，无需依赖本机字体文件。
+  const wrongProvider = new Uint8Array(1024);
   assert.notEqual(sha256(wrongProvider), sourceFont);
   const reopened = await importNativeMarks(await exportNativeMarks(bytes, next, { fonts: new Map([['NotoSansSC', wrongProvider]]) }));
   assert.equal(reopened.annotations.find((annotation) => annotation.id === 'native-cjk-freetext')._native.font.embeddedHash, sourceFont);

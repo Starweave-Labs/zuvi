@@ -14,8 +14,6 @@ import { writeFile, mkdir } from 'node:fs/promises';
 import { Buffer } from 'node:buffer';
 import { hash, name, resolve } from './studio-pdf-compose-test-loader.mjs';
 import { loadSource } from './studio-pdf-compose-test-loader.mjs';
-export const NODE =
-  '/Users/meaili/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node';
 export const OUTPUT = '/tmp/zuvi-pdf-compose-migration-native/output/pdf';
 const PNG =
   'iVBORw0KGgoAAAANSUhEUgAAAFAAAAAwCAIAAAAJh2qgAAABGklEQVR4nO2YIQ7CQBBFPz81OMItegGCBRwejSAEy1GwKByOI9RzAxJOwQkIglAENZSZ3YHPU03FtC9vkmbbGS/2yMGhu8vyXEIMQgxCDEIMQgxCDEKMIvHzqvXxcVnWNy/b068JV0/PBnqrMpl5kVe10dxVm3FsX4N/U+GqlWqC1Axo65qaEINh8zpFZmRbD2dCDAbPax6ZEIMQg/H32XarCTEIMQp8D8vR/PMhhBiEGIQYtBo02Qzhyew8MJlDiEGIQcNZfltttc/4F44Y2TAvPArbOtva4r/SsSKb54Xf4eHu3PqQ7KGa4jvcLrWfLRIcD99K7aqa9Dxcp240T+CZ7QdAbd6fXpEDQgxCDEIMQgxCDOZ+gdTcAGbPRSYezDUhAAAAAElFTkSuQmCC';
