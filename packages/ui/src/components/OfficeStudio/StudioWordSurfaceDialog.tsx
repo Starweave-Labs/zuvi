@@ -96,6 +96,8 @@ export function StudioWordSurfaceDialog({
     [foreground, setForeground] = React.useState(common?.color ?? 'auto');
   const [dirty, setDirty] = React.useState<Record<string, boolean>>({});
   const [error, setError] = React.useState('');
+  const [composing, setComposing] = React.useState(false);
+  const composingRef = React.useRef(false);
   const change = (key: keyof BorderDraft, value: string | boolean) => {
     setDrafts((all) => ({ ...all, [side]: { ...all[side], [key]: value } }));
     setDirty((all) => ({ ...all, [`${side}.${key}`]: true }));
@@ -147,7 +149,18 @@ export function StudioWordSurfaceDialog({
         if (!open) onClose();
       }}
     >
-      <Modal.Content size="md" className="zuvi-studio-word-surface-dialog">
+      <Modal.Content
+        size="md"
+        className="zuvi-studio-word-surface-dialog"
+        onCompositionStartCapture={() => {
+          composingRef.current = true;
+          setComposing(true);
+        }}
+        onCompositionEndCapture={() => {
+          composingRef.current = false;
+          setComposing(false);
+        }}
+      >
         <Modal.Header>
           <Modal.Title>段落边框与底纹</Modal.Title>
           <Modal.Close />
@@ -325,9 +338,9 @@ export function StudioWordSurfaceDialog({
             取消
           </Button>
           <Button
-            disabled={blocked || !!issue}
+            disabled={blocked || composing || !!issue}
             onClick={() => {
-              if (blocked || issue) return;
+              if (blocked || composingRef.current || issue) return;
               try {
                 onSave(patch);
                 onClose();

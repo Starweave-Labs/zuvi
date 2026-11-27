@@ -119,6 +119,11 @@ import {
 import { studioHiddenColumns, studioSetColumnsHidden } from './studio-sheet-model';
 import { StudioSheetRuleDialog } from './StudioSheetRuleDialog';
 import { StudioSheetSortDialog, type StudioSortDialogState } from './StudioSheetSortDialog';
+import {
+  StudioSheetDuplicatesDialog,
+  type SheetDuplicatesDialogState,
+} from './StudioSheetDuplicatesDialog';
+import { studioRemoveSheetDuplicates } from './studio-sheet-duplicates';
 import { StudioRibbonTabs } from './StudioRibbon';
 import { StudioSheetHyperlinkDialog } from './StudioSheetHyperlinkDialog';
 import {
@@ -276,6 +281,9 @@ export function StudioSheet({
   const [pasteAvailable, setPasteAvailable] = React.useState(false);
   const [ruleDialog, setRuleDialog] = React.useState<SheetRuleDialogMode | null>(null);
   const [sortDialog, setSortDialog] = React.useState<StudioSortDialogState | null>(null);
+  const [duplicatesDialog, setDuplicatesDialog] = React.useState<SheetDuplicatesDialogState | null>(
+    null
+  );
   const [linkDialog, setLinkDialog] = React.useState<SheetHyperlinkDialogState | null>(null);
   const [numberDialog, setNumberDialog] = React.useState<SheetNumberFormatDialogState | null>(null);
   const [textDialog, setTextDialog] = React.useState<SheetTextDialogState | null>(null);
@@ -635,6 +643,7 @@ export function StudioSheet({
 
   React.useEffect(() => {
     if (document !== expectedRef.current) {
+      setDuplicatesDialog(null);
       setNumberDialog(null);
       setTextDialog(null);
       setTextDraftError('');
@@ -688,6 +697,7 @@ export function StudioSheet({
     setLinkDialog(null);
     setHeightDialog(null);
     setNumberDialog(null);
+    setDuplicatesDialog(null);
     setTextDialog(null);
     setTextDraftError('');
     setViewDraftError('');
@@ -713,10 +723,12 @@ export function StudioSheet({
   }, [sheet?.id, rowCount, columnCount, selection, ensureVisible]);
 
   React.useEffect(() => {
-    const merge = sheet && studioMergedRange(sheet, {
-      row: selection.focus.row,
-      col: selection.focus.col,
-    });
+    const merge =
+      sheet &&
+      studioMergedRange(sheet, {
+        row: selection.focus.row,
+        col: selection.focus.col,
+      });
     const visibleMerge =
       merge &&
       shownRows.some((row) => row >= merge.firstRow && row <= merge.lastRow) &&
@@ -2470,6 +2482,7 @@ export function StudioSheet({
           ['f', 'h'].includes(event.key.toLowerCase()) &&
           !heightDialog &&
           !textDialog &&
+          !duplicatesDialog &&
           !widthDialog &&
           !pasteDialog &&
           !ruleDialog &&
@@ -3211,6 +3224,41 @@ export function StudioSheet({
                 onClick={() => openRuleDialog('validation')}
               >
                 数据验证
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                disabled={blocked || bounds.firstRow === bounds.lastRow}
+                onClick={() => {
+                  if (blocked || composingRef.current || !commitEditing()) return;
+                  const current = latestRef.current;
+                  const currentSheet = current.sheets.find((item) => item.id === sheet.id);
+                  if (!currentSheet) return;
+                  const values = studioCalculate(current);
+                  setDuplicatesDialog({
+                    document: current,
+                    sheetId: sheet.id,
+                    sheetName: currentSheet.name,
+                    selection: { anchor: { ...selection.anchor }, focus: { ...selection.focus } },
+                    labels: Array.from(
+                      { length: bounds.lastCol - bounds.firstCol + 1 },
+                      (_, index) => {
+                        const firstAddress = studioCellAddress(
+                          bounds.firstRow,
+                          bounds.firstCol + index
+                        );
+                        const key = sheet.id + ':' + firstAddress;
+                        return studioDisplayCell(
+                          currentSheet.cells[firstAddress],
+                          values.values.get(key),
+                          values.errors.get(key)
+                        );
+                      }
+                    ),
+                  });
+                }}
+              >
+                删除重复项
               </Button>
               <span title={`${sheet.dataValidations?.length ?? 0} 条规则`}>数据工具</span>
             </div>
@@ -4655,6 +4703,42 @@ export function StudioSheet({
               (current) => studioSortRangeByKeys(current, sheet.id, selection, keys, header),
               `已按 ${keys.length} 个关键字排序${header ? '，首行保留为标题' : ''}。`,
               () => fillAddresses('down')
+            );
+          }}
+        />
+      )}
+      {duplicatesDialog && (
+        <StudioSheetDuplicatesDialog
+          state={duplicatesDialog}
+          blocked={!!blocked}
+          onClose={() => {
+            setDuplicatesDialog(null);
+            gridRef.current?.focus();
+          }}
+          onSave={(options) => {
+            if (blocked || composingRef.current || !commitEditing())
+              throw new Error('请先确认单元格输入。');
+            if (
+              latestRef.current !== duplicatesDialog.document ||
+              sheet.id !== duplicatesDialog.sheetId
+            )
+              throw new Error('工作簿已更新，请重新打开删除重复项。');
+            const result = studioRemoveSheetDuplicates(
+              latestRef.current,
+              duplicatesDialog.sheetId,
+              duplicatesDialog.selection,
+              options
+            );
+            replaceDocument(result.document);
+            setNotice(
+              '已删除 ' +
+                result.removedCount +
+                ' 条重复记录，保留 ' +
+                result.remainingCount +
+                ' 条记录' +
+                (options.header ? '（不含标题）' : '') +
+                '。' +
+                (result.removedCount ? '可一次撤销恢复。' : '')
             );
           }}
         />

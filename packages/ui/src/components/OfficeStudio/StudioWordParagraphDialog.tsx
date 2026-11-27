@@ -58,6 +58,8 @@ export function StudioWordParagraphDialog({
     )
   );
   const [saveError, setSaveError] = React.useState('');
+  const [composing, setComposing] = React.useState(false);
+  const composingRef = React.useRef(false);
   const change = (key: string, value: string) => {
     setDraft((current) => ({ ...current, [key]: value }));
     setDirty((current) => ({ ...current, [key]: true }));
@@ -108,7 +110,18 @@ export function StudioWordParagraphDialog({
         if (!open) onClose();
       }}
     >
-      <Modal.Content size="sm" className="zuvi-studio-word-paragraph-dialog">
+      <Modal.Content
+        size="sm"
+        className="zuvi-studio-word-paragraph-dialog"
+        onCompositionStartCapture={() => {
+          composingRef.current = true;
+          setComposing(true);
+        }}
+        onCompositionEndCapture={() => {
+          composingRef.current = false;
+          setComposing(false);
+        }}
+      >
         <Modal.Header>
           <Modal.Title>段落设置</Modal.Title>
           <Modal.Close />
@@ -279,9 +292,9 @@ export function StudioWordParagraphDialog({
             取消
           </Button>
           <Button
-            disabled={blocked || !!issue}
+            disabled={blocked || composing || !!issue}
             onClick={() => {
-              if (blocked || issue) return;
+              if (blocked || composingRef.current || issue) return;
               try {
                 onSave(patch);
                 onClose();

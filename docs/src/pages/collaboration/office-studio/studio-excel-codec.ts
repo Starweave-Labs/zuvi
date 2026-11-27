@@ -2421,7 +2421,7 @@ export async function hydrateStudioExcelHyperlinks(
 function exportedValue(cell: StudioCell): ExcelJS.CellValue {
   const input = cell.input;
   if (input.startsWith('=')) return { formula: input.slice(1) };
-  if (input === '') return null;
+  if (input === '') return cell.valueType === 'text' ? '' : null;
   if (cell.valueType !== 'text' && excelErrors.includes(input as (typeof excelErrors)[number]))
     return { error: input as ExcelJS.CellErrorValue['error'] };
   return studioInputValue(input, cell.numberFormat, cell.valueType);

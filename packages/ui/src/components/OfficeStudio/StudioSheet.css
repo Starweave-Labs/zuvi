@@ -681,6 +681,44 @@
   justify-content: flex-start;
 }
 
+.zuvi-studio-sheet-duplicates-dialog {
+  width: min(480px, calc(100vw - 32px));
+}
+
+.zuvi-studio-sheet-duplicates-dialog .zuvi-modal-body,
+.zuvi-studio-sheet-duplicates-dialog form,
+.zuvi-studio-sheet-duplicate-columns {
+  display: flex;
+  flex-direction: column;
+  gap: var(--zuvi-space-3);
+}
+
+.zuvi-studio-sheet-duplicates-dialog p {
+  margin: 0;
+  font-size: var(--zuvi-text-sm);
+  overflow-wrap: anywhere;
+}
+
+.zuvi-studio-sheet-duplicates-dialog fieldset {
+  min-width: 0;
+  margin: 0;
+  border: 1px solid var(--zuvi-color-border);
+  border-radius: var(--zuvi-radius-sm);
+  padding: var(--zuvi-space-3);
+}
+
+.zuvi-studio-sheet-duplicate-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--zuvi-space-2);
+  margin-bottom: var(--zuvi-space-2);
+}
+
+.zuvi-studio-sheet-duplicate-columns {
+  max-height: 240px;
+  overflow: auto;
+}
+
 .zuvi-studio-sheet-link-dialog .zuvi-modal-body {
   display: flex;
   flex-direction: column;
