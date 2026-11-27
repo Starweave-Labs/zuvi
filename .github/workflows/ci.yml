@@ -24,10 +24,35 @@ jobs:
       - run: pnpm lint
       # a11y: axe-core 扫描已包含在 packages/ui 测试套件（src/test/a11y.axe.test.tsx）
       - run: pnpm -r test
-      - run: pnpm test:e2e --workers=1
       - name: Validate published ESM and CommonJS entries
         run: node scripts/check-distribution.mjs
       - name: Compile installed sources and MCP examples
         run: node scripts/check-consumer.mjs
-      - name: Check complete entry bundle budget (JS gzip < 122 KiB)
+      - name: Check complete entry bundle budget (JS gzip < 124928 bytes)
         run: node scripts/check-bundle-size.mjs
+
+  # 完整浏览器回归按 shard 分摊到三个 runner：每个用例仍恰好执行一次（--workers=1、
+  # 无重试、无跳过）；单 runner 连续承载全部 321 个 OfficeStudio 重用例会因内存与
+  # 时长累积在套件深位出现浏览器崩溃/超时（2026-11-28 两轮 CI 观测），分片是环境
+  # 容量对策，不改变任何断言。
+  e2e:
+    needs: ci
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      # e2e 的 vite dev 服务与 CDN 离线用例消费 UI 构建产物（docs dev 读取
+      # packages/ui/dist/style.css，data-grid CDN 用例读取 dist/browser）。
+      - run: pnpm --filter @zuvi/react build
+      - run: pnpm --filter @zuvi/react build:browser
+      - run: pnpm exec playwright test --config e2e/playwright.config.ts --shard=${{ matrix.shard }}/3 --workers=1
