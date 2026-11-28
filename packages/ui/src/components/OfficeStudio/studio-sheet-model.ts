@@ -2142,6 +2142,154 @@ export function studioDeleteSheet(
   };
 }
 
+/** Excel copy-sheet naming: the first duplicate appends " (2)" and later ones keep counting. */
+function studioCopySheetName(document: StudioExcelDocument, sourceName: string): string {
+  const taken = new Set(document.sheets.map((sheet) => sheet.name.toLocaleLowerCase()));
+  for (let index = 2; ; index++) {
+    const suffix = ` (${index})`;
+    const candidate = sourceName.slice(0, 31 - suffix.length) + suffix;
+    if (!taken.has(candidate.toLocaleLowerCase())) return candidate;
+  }
+}
+
+/**
+ * The duplicate is inserted right after its source and becomes active. Unqualified formulas
+ * follow the copy automatically; qualified references quoting the source sheet are retargeted
+ * to the copy. Dynamic (INDIRECT string), 3D range and external workbook references cannot be
+ * translated with the existing tools and intentionally keep pointing at the original sheets.
+ */
+export function studioCopySheet(
+  document: StudioExcelDocument,
+  sheetId: string,
+  name?: string
+): StudioExcelDocument {
+  const index = document.sheets.findIndex((sheet) => sheet.id === sheetId);
+  if (index < 0) throw new Error('工作表不存在。');
+  if (document.sheets.length >= STUDIO_SHEET_LIMITS.sheets)
+    throw new Error('首版最多支持 32 张工作表。');
+  const source = document.sheets[index];
+  const newName =
+    name === undefined
+      ? studioCopySheetName(document, source.name)
+      : studioCopySheetTargetName(document, name);
+  const copy = JSON.parse(JSON.stringify(source)) as StudioSheet;
+  delete copy.structureEdits;
+  copy.id = studioSheetId();
+  copy.name = newName;
+  // A 3D range (Name1:Name2!) or external workbook reference ([Book]Sheet!) cannot be
+  // retargeted safely, so the whole formula keeps referencing the original sheets.
+  const copyFormula = (input: string): string => {
+    if (!input.startsWith('=')) return input;
+    const structure = input.replace(/"(?:[^"]|"")*"/g, '');
+    if (
+      /\[[^\]]*\]/.test(structure) ||
+      /:\s*(?:'(?:[^']|'')+'|[\p{L}\p{N}_][\p{L}\p{N}_.]*)\s*!/u.test(structure)
+    )
+      return input;
+    const referenceToken = /"(?:[^"]|"")*"|(?:'(?:[^']|'')+'|[\p{L}_][\p{L}\p{N}_.]*)!/gu;
+    const replacement = `'${newName.replace(/'/g, "''")}'!`;
+    return input.replace(referenceToken, (token) => {
+      if (token.startsWith('"')) return token;
+      const raw = token.slice(0, -1);
+      const referenced = raw.startsWith("'") ? raw.slice(1, -1).replace(/''/g, "'") : raw;
+      return referenced.toLocaleLowerCase() === source.name.toLocaleLowerCase()
+        ? replacement
+        : token;
+    });
+  };
+  const cells = { ...copy.cells };
+  for (const [address, cell] of Object.entries(cells)) {
+    if (!cell.input.startsWith('=')) continue;
+    const input = copyFormula(cell.input);
+    if (input !== cell.input) cells[address] = { ...cell, input };
+  }
+  copy.cells = cells;
+  const retargeted = studioMapSheetRuleFormulae(
+    studioRenameSheetHyperlinks(copy, source.name, newName),
+    copyFormula
+  );
+  const sheets = [...document.sheets];
+  sheets.splice(index + 1, 0, retargeted);
+  return { ...document, sheets, activeSheetId: retargeted.id };
+}
+
+/** Explicit copy names must satisfy the same rules as renames, including uniqueness. */
+function studioCopySheetTargetName(document: StudioExcelDocument, name: string): string {
+  if (
+    !name.trim() ||
+    name.length > 31 ||
+    /[\\/:*?[\]]/.test(name) ||
+    name.startsWith("'") ||
+    name.endsWith("'")
+  )
+    throw new Error('工作表名称需为 1–31 个字符，不能包含 \\ / : * ? [ ]，或以单引号开头、结尾。');
+  if (document.sheets.some((sheet) => sheet.name.toLocaleLowerCase() === name.toLocaleLowerCase()))
+    throw new Error('工作表名称已存在，请使用其他名称。');
+  return name;
+}
+
+function studioSheetId(): string {
+  return `sheet-${
+    globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`
+  }`;
+}
+
+/** Reordering keeps every sheet name, so cross-sheet references never need rewriting. */
+export function studioMoveSheet(
+  document: StudioExcelDocument,
+  sheetId: string,
+  toIndex: number
+): StudioExcelDocument {
+  const from = document.sheets.findIndex((sheet) => sheet.id === sheetId);
+  if (from < 0) throw new Error('工作表不存在。');
+  if (!Number.isInteger(toIndex) || toIndex < 0 || toIndex >= document.sheets.length)
+    throw new Error('目标位置无效。');
+  if (toIndex === from) return document;
+  const sheets = [...document.sheets];
+  const [moved] = sheets.splice(from, 1);
+  sheets.splice(toIndex, 0, moved);
+  return { ...document, sheets };
+}
+
+/**
+ * The active sheet must stay visible: hiding it moves the selection to the next visible
+ * sheet (wrapping to an earlier one), and hiding the last visible sheet is refused.
+ */
+export function studioSetSheetHidden(
+  document: StudioExcelDocument,
+  sheetId: string,
+  hidden: boolean
+): StudioExcelDocument {
+  if (typeof hidden !== 'boolean') throw new Error('工作表隐藏状态无效。');
+  const index = document.sheets.findIndex((sheet) => sheet.id === sheetId);
+  if (index < 0) throw new Error('工作表不存在。');
+  const sheet = document.sheets[index];
+  if (!!sheet.hidden === hidden) return document;
+  if (hidden && !document.sheets.some((item) => item.id !== sheetId && !item.hidden))
+    throw new Error('工作簿至少需要保留一张可见工作表。');
+  let activeSheetId = document.activeSheetId;
+  if (hidden && activeSheetId === sheetId) {
+    const next =
+      document.sheets.slice(index + 1).find((item) => !item.hidden) ??
+      [...document.sheets]
+        .slice(0, index)
+        .reverse()
+        .find((item) => !item.hidden);
+    activeSheetId = next!.id;
+  }
+  return {
+    ...document,
+    activeSheetId,
+    sheets: document.sheets.map((item) => {
+      if (item.id !== sheetId) return item;
+      const next = { ...item };
+      if (hidden) next.hidden = true;
+      else delete next.hidden;
+      return next;
+    }),
+  };
+}
+
 export interface StudioRange {
   firstRow: number;
   lastRow: number;

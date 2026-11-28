@@ -4499,3 +4499,63 @@ test('explicit text native error spellings stay strings while literal and formul
     }
   }
 });
+
+test('hidden worksheets import into the model, keep state over repeated saves and reopen on demand', async () => {
+  // codec 在 vm realm 中执行：浅拷贝回测试 realm 后再断言。
+  const spread = (doc) => ({ ...doc, sheets: doc.sheets.map((sheet) => ({ ...sheet })) });
+  const workbook = new ExcelJS.Workbook();
+  const visible = workbook.addWorksheet('Visible');
+  const hidden = workbook.addWorksheet('Secret');
+  hidden.state = 'hidden';
+  visible.getCell('A1').value = 7;
+  hidden.getCell('A1').value = 41;
+  hidden.getCell('B1').value = { formula: 'A1+1', result: 42 };
+  let source = await asBlob(workbook);
+  let document = spread(await codec.importStudioExcel(source, 'Hidden.xlsx'));
+  assert.equal(document.sheets.length, 2);
+  assert.equal(document.sheets[0].hidden, undefined);
+  assert.equal(document.sheets[1].hidden, true);
+  assert.equal(document.activeSheetId, document.sheets[0].id);
+  // 编辑：先恢复隐藏表，再隐藏原来的可见表；模型保证活动表始终可见。
+  document = model.studioSetSheetHidden(document, document.sheets[1].id, false);
+  document = model.studioSetSheetHidden(document, document.sheets[0].id, true);
+  assert.equal(document.sheets[0].hidden, true);
+  assert.equal(document.sheets[1].hidden, undefined);
+  assert.equal(document.activeSheetId, document.sheets[1].id);
+  for (let pass = 0; pass < 2; pass++) {
+    source = await codec.exportStudioExcel(document, source);
+    const native = await readWorkbook(source);
+    assert.equal(native.getWorksheet('Visible').state, 'hidden');
+    assert.equal(native.getWorksheet('Secret').state, 'visible');
+    assert.equal(native.getWorksheet('Secret').getCell('B1').formula, 'A1+1');
+    assert.equal(native.getWorksheet('Secret').getCell('B1').result, 42);
+    const zip = await JSZip.loadAsync(await source.arrayBuffer());
+    assert.match(await zip.file('xl/workbook.xml').async('string'), /state="hidden"/);
+    document = spread(await codec.importStudioExcel(source, document.name));
+    assert.equal(document.sheets.find((sheet) => sheet.name === 'Visible').hidden, true);
+    assert.equal(document.sheets.find((sheet) => sheet.name === 'Secret').hidden, undefined);
+    assert.equal(
+      document.activeSheetId,
+      document.sheets.find((sheet) => sheet.name === 'Secret').id
+    );
+  }
+  // veryHidden 工作表仍拒绝导入。
+  const very = new ExcelJS.Workbook();
+  very.addWorksheet('One');
+  const deep = very.addWorksheet('Deep');
+  deep.state = 'veryHidden';
+  await assert.rejects(codec.importStudioExcel(await asBlob(very), 'Very.xlsx'), /veryHidden/);
+  // 活动标签指向隐藏表时回落到第一张可见表。
+  const stale = new ExcelJS.Workbook();
+  stale.addWorksheet('Main');
+  const side = stale.addWorksheet('Side');
+  side.state = 'hidden';
+  stale.views = [{ activeTab: 1 }];
+  const activeDoc = await codec.importStudioExcel(await asBlob(stale), 'Active.xlsx');
+  assert.equal(activeDoc.sheets.find((sheet) => !sheet.hidden).name, 'Main');
+  assert.equal(activeDoc.activeSheetId, activeDoc.sheets[0].id);
+  // 全部工作表隐藏的工作簿拒绝导入。
+  const allHidden = new ExcelJS.Workbook();
+  allHidden.addWorksheet('Only').state = 'hidden';
+  await assert.rejects(codec.importStudioExcel(await asBlob(allHidden), 'All.xlsx'), /可见工作表/);
+});

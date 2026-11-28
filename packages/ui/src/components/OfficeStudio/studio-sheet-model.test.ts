@@ -16,6 +16,9 @@ import {
   studioPatchCells,
   studioRenameSheet,
   studioDeleteSheet,
+  studioCopySheet,
+  studioMoveSheet,
+  studioSetSheetHidden,
   studioMergeCells,
   studioSetFreeze,
   studioSetFilter,
@@ -933,9 +936,7 @@ describe('Office Studio advanced sheet operations', () => {
       columns: { A: { operator: 'fontColor', value: '#fff' } },
     });
     document.sheets[0].cells.A2 = { input: '开发', color: '#ffffff' };
-    expect([
-      ...studioFilteredRows(document.sheets[0], studioCalculate(document)),
-    ]).toEqual([3, 4]);
+    expect([...studioFilteredRows(document.sheets[0], studioCalculate(document))]).toEqual([3, 4]);
     // 颜色值非法时拒绝
     expect(() =>
       studioSetFilter(document, 'main', {
@@ -1008,9 +1009,7 @@ describe('Office Studio advanced sheet operations', () => {
     ).toThrow('筛选条件');
     // 合法值列表在清除后恢复全部行。
     document = studioSetFilter(document, 'main');
-    expect(
-      studioFilteredRows(document.sheets[0], studioCalculate(document)).size
-    ).toBe(0);
+    expect(studioFilteredRows(document.sheets[0], studioCalculate(document)).size).toBe(0);
   });
 
   it('sorts complete rows by calculated values, relocates relative formulas, and preserves absolute references and formula strings', () => {
@@ -1311,7 +1310,9 @@ describe('studioSortRangeByKeys 多关键字排序', () => {
 
   it('拒绝空键列表、选区外键与重复键列', () => {
     const document = sortFixture();
-    expect(() => studioSortRangeByKeys(document, 'main', selection, [])).toThrow('至少添加一个排序键');
+    expect(() => studioSortRangeByKeys(document, 'main', selection, [])).toThrow(
+      '至少添加一个排序键'
+    );
     expect(() =>
       studioSortRangeByKeys(document, 'main', selection, [{ column: 4, direction: 'asc' }])
     ).toThrow('位于选区内');
@@ -1330,5 +1331,209 @@ describe('studioSortRangeByKeys 多关键字排序', () => {
     ]);
     const single = studioSortRange(document, 'main', selection, 3, 'asc');
     expect(JSON.stringify(byKeys)).toBe(JSON.stringify(single));
+  });
+});
+
+describe('Office Studio sheet copy, move and visibility', () => {
+  function bookFixture(): StudioExcelDocument {
+    return {
+      version: 1,
+      id: 'book',
+      name: '台账.xlsx',
+      kind: 'excel',
+      activeSheetId: 'main',
+      sheets: [
+        {
+          id: 'main',
+          name: 'Sheet1',
+          rowCount: 200,
+          columnCount: 26,
+          columnWidths: { A: 120 },
+          rowHeights: { 2: 32 },
+          rowHeightModes: { 2: 'fixed' },
+          hiddenRows: [5],
+          hiddenColumns: ['C'],
+          merges: ['E1:F2'],
+          freeze: { rows: 1, columns: 1 },
+          filter: { range: 'A1:B4', columns: {} },
+          charts: [{ id: 'chart-1', type: 'bar', title: '图表', range: 'A1:B3' }],
+          conditionalFormats: [
+            {
+              id: 'cf-1',
+              range: 'A1:A9',
+              priority: 1,
+              type: 'expression',
+              formula: '=A1>5',
+              style: { background: '#ff0000' },
+            },
+          ],
+          dataValidations: [
+            { id: 'dv-1', range: 'B1:B9', type: 'list', source: '=Sheet1!$A$1:$A$4' },
+          ],
+          hyperlinks: [{ id: 'link-1', ref: 'D1', target: undefined, location: 'Sheet1!$A$1' }],
+          protectedRanges: ['G1:H2'],
+          structureEdits: [{ axis: 'row', type: 'insert', index: 1, count: 1 }],
+          cells: {
+            A1: { input: '10' },
+            B1: { input: '=A1*2' },
+            C1: { input: '=Sheet1!A1+1' },
+            D1: { input: "='报价 表'!A1" },
+            E1: { input: '=IF(A1>0,"Sheet1!A1",Sheet1!A1)' },
+            F1: { input: '=SUM(Sheet1:Sheet2!A1)' },
+            G1: { input: '=INDIRECT("Sheet1!A1")' },
+            H1: { input: "='[Book.xlsx]Sheet1'!A1" },
+            I1: { input: '=[Book.xlsx]Sheet1!A1' },
+            J1: { input: '=SUM(报价 表!A1:B2)' },
+          },
+        },
+        {
+          id: 'other',
+          name: '报价 表',
+          rowCount: 200,
+          columnCount: 26,
+          cells: { A1: { input: '=Sheet1!A1+1' } },
+        },
+        {
+          id: 'third',
+          name: 'Sheet1 (2)',
+          rowCount: 200,
+          columnCount: 26,
+          cells: {},
+        },
+      ],
+    };
+  }
+
+  it('copies the whole sheet after its source with a deduplicated name, fresh id and full undo of concerns', () => {
+    const document = bookFixture();
+    const copy = studioCopySheet(document, 'main');
+    const duplicate = copy.sheets[1];
+    expect(copy.sheets).toHaveLength(4);
+    expect(copy.sheets.map((sheet) => sheet.id)).toEqual(['main', duplicate.id, 'other', 'third']);
+    // "Sheet1 (2)" 已被占用，自动去重继续向后编号。
+    expect(duplicate.name).toBe('Sheet1 (3)');
+    expect(duplicate.id).not.toBe('main');
+    expect(duplicate.id).toMatch(/^sheet-/);
+    expect(copy.activeSheetId).toBe(duplicate.id);
+    expect(duplicate.cells.A1).toEqual({ input: '10' });
+    expect(duplicate.cells.A1).not.toBe(document.sheets[0].cells.A1);
+    expect(duplicate.columnWidths).toEqual({ A: 120 });
+    expect(duplicate.rowHeights).toEqual({ 2: 32 });
+    expect(duplicate.rowHeightModes).toEqual({ 2: 'fixed' });
+    expect(duplicate.hiddenRows).toEqual([5]);
+    expect(duplicate.hiddenColumns).toEqual(['C']);
+    expect(duplicate.merges).toEqual(['E1:F2']);
+    expect(duplicate.freeze).toEqual({ rows: 1, columns: 1 });
+    expect(duplicate.filter).toEqual({ range: 'A1:B4', columns: {} });
+    expect(duplicate.charts).toEqual([
+      { id: 'chart-1', type: 'bar', title: '图表', range: 'A1:B3' },
+    ]);
+    expect(duplicate.conditionalFormats).toEqual(document.sheets[0].conditionalFormats);
+    expect(duplicate.protectedRanges).toEqual(['G1:H2']);
+    // structureEdits 只对被拷贝源的原生工作表有意义，副本从模型单元格重建内容。
+    expect(duplicate.structureEdits).toBeUndefined();
+    expect(document.sheets).toHaveLength(3);
+    expect(document.activeSheetId).toBe('main');
+    expect(document.sheets[0].structureEdits).toHaveLength(1);
+  });
+
+  it('retargets formulas quoting the copied sheet, keeps other sheets intact and documents unsupported references', () => {
+    const document = bookFixture();
+    const copy = studioCopySheet(document, 'main');
+    const duplicate = copy.sheets[1];
+    expect(duplicate.cells.C1.input).toBe("='Sheet1 (3)'!A1+1");
+    expect(duplicate.cells.D1.input).toBe("='报价 表'!A1");
+    expect(duplicate.cells.E1.input).toBe('=IF(A1>0,"Sheet1!A1",\'Sheet1 (3)\'!A1)');
+    expect(duplicate.cells.J1.input).toBe('=SUM(报价 表!A1:B2)');
+    // 既有公式工具不翻译的范围：三维引用、INDIRECT 字符串与外部工作簿引用保持原样。
+    expect(duplicate.cells.F1.input).toBe('=SUM(Sheet1:Sheet2!A1)');
+    expect(duplicate.cells.G1.input).toBe('=INDIRECT("Sheet1!A1")');
+    expect(duplicate.cells.H1.input).toBe("='[Book.xlsx]Sheet1'!A1");
+    expect(duplicate.cells.I1.input).toBe('=[Book.xlsx]Sheet1!A1');
+    // 规则公式与超链接同样指向副本，其他工作表仍引用原始 Sheet1。
+    const [validation] = duplicate.dataValidations!;
+    expect(validation.type).toBe('list');
+    if (validation.type === 'list') expect(validation.source).toBe("='Sheet1 (3)'!$A$1:$A$4");
+    expect(duplicate.hyperlinks![0].location).toBe("'Sheet1 (3)'!$A$1");
+    expect(copy.sheets[0].cells.C1.input).toBe('=Sheet1!A1+1');
+    expect(copy.sheets[2].cells.A1.input).toBe('=Sheet1!A1+1');
+    const calculation = studioCalculate(copy);
+    const copyId = duplicate.id;
+    expect(calculation.values.get(`${copyId}:B1`)).toBe(20);
+    expect(calculation.values.get(`${copyId}:C1`)).toBe(11);
+    expect(calculation.values.get(`${copyId}:D1`)).toBe(11);
+    expect(calculation.values.get('other:A1')).toBe(11);
+  });
+
+  it('accepts an explicit copy name and rejects missing sheets, invalid or duplicate names and the sheet limit', () => {
+    const document = bookFixture();
+    expect(studioCopySheet(document, 'main', '副本').sheets[1].name).toBe('副本');
+    expect(() => studioCopySheet(document, 'missing')).toThrow('不存在');
+    expect(() => studioCopySheet(document, 'main', '报价 表')).toThrow('已存在');
+    expect(() => studioCopySheet(document, 'main', 'bad/name')).toThrow('工作表名称需为');
+    expect(() => studioCopySheet(document, 'main', '')).toThrow('工作表名称需为');
+    const long = {
+      ...document,
+      sheets: [
+        { ...document.sheets[0], name: 'A'.repeat(31), cells: {} },
+        ...document.sheets.slice(1),
+      ],
+    };
+    const copy = studioCopySheet(long, long.sheets[0].id);
+    expect(copy.sheets[1].name.length).toBeLessThanOrEqual(31);
+    expect(copy.sheets[1].name.endsWith(' (2)')).toBe(true);
+    const full = {
+      ...document,
+      sheets: Array.from({ length: 32 }, (_, index) => ({
+        id: `s${index}`,
+        name: `S${index}`,
+        rowCount: 1,
+        columnCount: 1,
+        cells: {},
+      })),
+    };
+    expect(() => studioCopySheet(full, 's0')).toThrow('32 张');
+  });
+
+  it('moves sheets in order without rewriting any formula and validates the target index', () => {
+    const document = bookFixture();
+    const moved = studioMoveSheet(document, 'main', 2);
+    expect(moved.sheets.map((sheet) => sheet.id)).toEqual(['other', 'third', 'main']);
+    expect(moved.activeSheetId).toBe('main');
+    expect(moved.sheets[0].cells.A1.input).toBe('=Sheet1!A1+1');
+    expect(moved.sheets[2].cells.C1.input).toBe('=Sheet1!A1+1');
+    expect(studioCalculate(moved).values.get('other:A1')).toBe(11);
+    expect(studioMoveSheet(document, 'main', 0)).toBe(document);
+    expect(() => studioMoveSheet(document, 'missing', 0)).toThrow('不存在');
+    expect(() => studioMoveSheet(document, 'main', -1)).toThrow('目标位置无效');
+    expect(() => studioMoveSheet(document, 'main', 3)).toThrow('目标位置无效');
+    expect(() => studioMoveSheet(document, 'main', 1.5)).toThrow('目标位置无效');
+  });
+
+  it('hides sheets while keeping one visible, moves the active selection to a visible neighbor and clears the flag on show', () => {
+    const document = bookFixture();
+    const hidden = studioSetSheetHidden(document, 'other', true);
+    expect(hidden.sheets[1].hidden).toBe(true);
+    expect(hidden.activeSheetId).toBe('main');
+    expect(document.sheets[1].hidden).toBeUndefined();
+    // 隐藏活动工作表时自动切换到下一张可见表；末尾无可见表时回绕到前一张。
+    const hideActive = studioSetSheetHidden(document, 'main', true);
+    expect(hideActive.sheets[0].hidden).toBe(true);
+    expect(hideActive.activeSheetId).toBe('other');
+    const wrap = studioSetSheetHidden({ ...document, activeSheetId: 'third' }, 'third', true);
+    expect(wrap.activeSheetId).toBe('other');
+    // 至少保留一张可见工作表。
+    const two = { ...document, sheets: [document.sheets[0], document.sheets[1]] };
+    const partial = studioSetSheetHidden(two, 'other', true);
+    expect(() => studioSetSheetHidden(partial, 'main', true)).toThrow('至少需要保留一张可见工作表');
+    expect(studioSetSheetHidden(document, 'main', false)).toBe(document);
+    expect(studioSetSheetHidden(hidden, 'other', true)).toBe(hidden);
+    const shown = studioSetSheetHidden(hidden, 'other', false);
+    expect(shown.sheets[1].hidden).toBeUndefined();
+    expect(shown.activeSheetId).toBe(document.activeSheetId);
+    expect(() => studioSetSheetHidden(document, 'missing', true)).toThrow('不存在');
+    expect(() => studioSetSheetHidden(document, 'other', 1 as unknown as boolean)).toThrow(
+      '隐藏状态无效'
+    );
   });
 });

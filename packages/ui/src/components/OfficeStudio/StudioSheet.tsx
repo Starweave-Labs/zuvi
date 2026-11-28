@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { flushSync } from 'react-dom';
-import { AlignCenter, AlignLeft, AlignRight, Plus, Trash } from '@zuvi/icons';
+import { AlignCenter, AlignLeft, AlignRight, Copy, Eye, EyeOff, Plus, Trash } from '@zuvi/icons';
 import { Button } from '../Button';
 import { Input } from '../Input';
 import { Select } from '../Select';
@@ -68,6 +68,7 @@ import {
   studioChartData,
   studioCellAddress,
   studioColumnLabel,
+  studioCopySheet,
   studioCopyTsv,
   studioCopySheetClipboard,
   studioClipboardOrigin,
@@ -88,6 +89,7 @@ import {
   studioRangeAddress,
   studioSetFilter,
   studioSetFreeze,
+  studioSetSheetHidden,
   studioSetRowHeight,
   studioSetRowsHidden,
   studioSetRangeHidden,
@@ -264,6 +266,7 @@ export function StudioSheet({
   const [notice, setNotice] = React.useState('双击或直接输入编辑，Shift + 方向键选择区域。');
   const [historyVersion, setHistoryVersion] = React.useState(0);
   const [rename, setRename] = React.useState<string | null>(null);
+  const [unhideDialog, setUnhideDialog] = React.useState(false);
   const [addressDraft, setAddressDraft] = React.useState('A1');
   const [viewport, setViewport] = React.useState({ top: 0, left: 0, width: 900, height: 420 });
   const [filterRange, setFilterRange] = React.useState('');
@@ -1783,6 +1786,45 @@ export function StudioSheet({
       setNotice('已删除工作表，可撤销恢复。');
     } catch (error) {
       setNotice(error instanceof Error ? error.message : '工作表删除失败。');
+    }
+  }
+
+  function copySheet() {
+    if (blocked || !sheet) return;
+    if (!commitEditing()) return;
+    try {
+      const next = studioCopySheet(latestRef.current, sheet.id);
+      replaceDocument(next);
+      switchSheet(next.activeSheetId);
+      setNotice(`已复制工作表为“${next.sheets.find((item) => item.id === next.activeSheetId)?.name ?? ''}”，可撤销恢复。`);
+    } catch (error) {
+      setNotice(error instanceof Error ? error.message : '工作表复制失败。');
+    }
+  }
+
+  function hideSheet() {
+    if (blocked || !sheet) return;
+    if (!commitEditing()) return;
+    try {
+      const next = studioSetSheetHidden(latestRef.current, sheet.id, true);
+      replaceDocument(next);
+      switchSheet(next.activeSheetId);
+      setNotice('已隐藏工作表，可通过“显示工作表”恢复。');
+    } catch (error) {
+      setNotice(error instanceof Error ? error.message : '工作表隐藏失败。');
+    }
+  }
+
+  function showSheet(id: string) {
+    if (blocked) return;
+    if (!commitEditing()) return;
+    try {
+      const next = studioSetSheetHidden(latestRef.current, id, false);
+      replaceDocument(next);
+      switchSheet(id);
+      setNotice('已显示工作表。');
+    } catch (error) {
+      setNotice(error instanceof Error ? error.message : '工作表显示失败。');
     }
   }
 
@@ -4372,19 +4414,21 @@ export function StudioSheet({
       <div className="zuvi-studio-sheet-bottom">
         <Tabs value={sheet.id} onValueChange={switchSheet} className="zuvi-studio-sheet-tabs">
           <Tabs.List aria-label="工作表">
-            {document.sheets.map((item) => (
-              <Tabs.Trigger
-                key={item.id}
-                value={item.id}
-                disabled={disabled}
-                aria-controls={`${gridId}-grid`}
-                onDoubleClick={() => {
-                  if (!blocked && item.id === sheet.id) setRename(item.name);
-                }}
-              >
-                {item.name}
-              </Tabs.Trigger>
-            ))}
+            {document.sheets
+              .filter((item) => !item.hidden)
+              .map((item) => (
+                <Tabs.Trigger
+                  key={item.id}
+                  value={item.id}
+                  disabled={disabled}
+                  aria-controls={`${gridId}-grid`}
+                  onDoubleClick={() => {
+                    if (!blocked && item.id === sheet.id) setRename(item.name);
+                  }}
+                >
+                  {item.name}
+                </Tabs.Trigger>
+              ))}
           </Tabs.List>
         </Tabs>
         <Button
@@ -4396,6 +4440,36 @@ export function StudioSheet({
           onClick={addSheet}
         >
           <Plus size={16} />
+        </Button>
+        <Button
+          size="sm"
+          variant="ghost"
+          aria-label="复制工作表"
+          title="复制工作表"
+          disabled={blocked}
+          onClick={copySheet}
+        >
+          <Copy size={16} />
+        </Button>
+        <Button
+          size="sm"
+          variant="ghost"
+          aria-label="隐藏工作表"
+          title="隐藏工作表"
+          disabled={blocked || !document.sheets.some((item) => item.id !== sheet.id && !item.hidden)}
+          onClick={hideSheet}
+        >
+          <EyeOff size={16} />
+        </Button>
+        <Button
+          size="sm"
+          variant="ghost"
+          aria-label="显示工作表"
+          title="显示工作表"
+          disabled={blocked || !document.sheets.some((item) => item.hidden)}
+          onClick={() => setUnhideDialog(true)}
+        >
+          <Eye size={16} />
         </Button>
         <Button
           size="sm"
@@ -4445,6 +4519,36 @@ export function StudioSheet({
             取消
           </Button>
         </div>
+      )}
+      {unhideDialog && !blocked && (
+        <Modal open onOpenChange={setUnhideDialog}>
+          <Modal.Content size="sm">
+            <Modal.Header>
+              <Modal.Title>显示工作表</Modal.Title>
+              <Modal.Close />
+            </Modal.Header>
+            <Modal.Body>
+              {document.sheets
+                .filter((item) => item.hidden)
+                .map((item) => (
+                  <div key={item.id} className="zuvi-studio-sheet-unhide-row">
+                    <span title={item.name}>{item.name}</span>
+                    <Button
+                      size="sm"
+                      aria-label={`显示 ${item.name}`}
+                      onClick={() => {
+                        setUnhideDialog(false);
+                        showSheet(item.id);
+                      }}
+                    >
+                      显示
+                    </Button>
+                  </div>
+                ))}
+              {!document.sheets.some((item) => item.hidden) && <p>没有隐藏的工作表。</p>}
+            </Modal.Body>
+          </Modal.Content>
+        </Modal>
       )}
       {arrayDialog && !blocked && (
         <Modal open onOpenChange={setArrayDialog}>

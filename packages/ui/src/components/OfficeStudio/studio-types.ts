@@ -299,6 +299,8 @@ export interface StudioSheet {
   cells: Record<string, StudioCell>;
   rowCount: number;
   columnCount: number;
+  /** True hides the sheet from the tab bar; the active sheet and at least one sheet stay visible. */
+  hidden?: boolean;
   columnWidths?: Record<string, number>;
   /** Default row height in points; absent uses 18pt (24 CSS pixels). */
   defaultRowHeight?: number;
