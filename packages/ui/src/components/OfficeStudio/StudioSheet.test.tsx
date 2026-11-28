@@ -1511,6 +1511,59 @@ describe('StudioSheet', () => {
     expect(state.current().sheets).toHaveLength(1);
   });
 
+  it('copies the active sheet, switches to the duplicate, hides it and restores it through the dialog', async () => {
+    const user = userEvent.setup();
+    const state = setup();
+    await user.click(screen.getByRole('button', { name: '复制工作表' }));
+    expect(state.current().sheets).toHaveLength(3);
+    expect(state.current().sheets[1].name).toBe('预算 (2)');
+    expect(state.current().activeSheetId).toBe(state.current().sheets[1].id);
+    expect(screen.getByRole('tab', { name: '预算 (2)' })).toHaveAttribute('aria-selected', 'true');
+    expect(state.current().sheets[1].cells.B1.input).toBe('=SUM(A1:A2)');
+    // 其他工作表仍引用原始“预算”，跨表引用不随复制改写。
+    expect(state.current().sheets[2].cells.A1.input).toBe("='预算'!B1");
+    expect(screen.getByRole('status')).toHaveTextContent('已复制工作表');
+    await user.click(screen.getByRole('button', { name: '撤销表格修改' }));
+    expect(state.current().sheets).toHaveLength(2);
+    expect(screen.queryByRole('tab', { name: '预算 (2)' })).toBeNull();
+    // 隐藏当前工作表后标签消失、数据保留，且活动表自动切换到可见表。
+    await user.click(screen.getByRole('button', { name: '隐藏工作表' }));
+    expect(screen.queryByRole('tab', { name: '预算' })).toBeNull();
+    expect(screen.getByRole('tab', { name: '汇总' })).toHaveAttribute('aria-selected', 'true');
+    expect(state.current().sheets).toHaveLength(2);
+    const hiddenSheet = state.current().sheets.find((item) => item.hidden)!;
+    expect(hiddenSheet.id).toBe('main');
+    expect(state.current().sheets[0].cells.B1.input).toBe('=SUM(A1:A2)');
+    // 通过“显示工作表”对话框恢复。
+    await user.click(screen.getByRole('button', { name: '显示工作表' }));
+    await user.click(screen.getByRole('button', { name: '显示 预算' }));
+    expect(state.current().sheets[0].hidden).toBeUndefined();
+    expect(state.current().activeSheetId).toBe('main');
+    expect(screen.getByRole('tab', { name: '预算' })).toHaveAttribute('aria-selected', 'true');
+    // 撤销“显示”回到隐藏态，撤销粒度与删除/复制一致。
+    await user.click(screen.getByRole('button', { name: '撤销表格修改' }));
+    expect(state.current().sheets[0].hidden).toBe(true);
+    expect(state.current().activeSheetId).toBe('other');
+    expect(screen.queryByRole('tab', { name: '预算' })).toBeNull();
+  });
+
+  it('disables sheet visibility actions when the last visible sheet would disappear and blocks copy in read-only mode', async () => {
+    const user = userEvent.setup();
+    const state = setup();
+    await user.click(screen.getByRole('tab', { name: '汇总' }));
+    await user.click(screen.getByRole('button', { name: '删除工作表' }));
+    expect(state.current().sheets).toHaveLength(1);
+    expect(screen.getByRole('button', { name: '隐藏工作表' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: '显示工作表' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: '复制工作表' })).toBeEnabled();
+    cleanup();
+    const readonly = setup({ readOnly: true });
+    expect(screen.getByRole('button', { name: '复制工作表' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: '隐藏工作表' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: '显示工作表' })).toBeDisabled();
+    expect(readonly.current().sheets[0].hidden).toBeUndefined();
+  });
+
   it('inserts and deletes selected rows and columns with pending input, dependent formulas and full undo snapshots', async () => {
     const user = userEvent.setup();
     const initial = documentFixture();

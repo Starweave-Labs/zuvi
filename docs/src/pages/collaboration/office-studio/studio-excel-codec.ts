@@ -1766,8 +1766,10 @@ async function checkSupportedWorkbook(source: Blob) {
   const workbookXml = await zip.file('xl/workbook.xml')!.async('string');
   if (/<workbookProtection\b/.test(workbookXml))
     throw new Error('受保护的工作簿暂不支持在线修改。');
-  if (/<sheet\b[^>]*\bstate="(?:hidden|veryHidden)"/.test(workbookXml))
-    throw new Error('含隐藏工作表的工作簿暂不支持在线修改。');
+  // Plain hidden sheets import into the model; veryHidden sheets cannot be unhidden
+  // through the normal UI, so they stay rejected.
+  if (/<sheet\b[^>]*\bstate="veryHidden"/.test(workbookXml))
+    throw new Error('工作簿包含 veryHidden 工作表，暂不支持在线修改。');
   if (/<definedName\b[^>]*\bname="(?!_xlnm\.)/.test(workbookXml))
     throw new Error(
       '此工作簿包含命名区域，首版尚不能完整计算与保存。请在 Excel 或 WPS 中打开原文件。'
@@ -2077,6 +2079,7 @@ function importedDocument(
     return {
       id: `xlsx-sheet-${sheet.id}`,
       name: sheet.name,
+      ...(sheet.state === 'hidden' ? { hidden: true } : {}),
       cells,
       rowCount: Math.max(
         200,
@@ -2134,6 +2137,12 @@ function importedDocument(
       target.columnCount = Math.max(target.columnCount, range.lastCol);
     }
   const selected = workbook.views?.[0]?.activeTab ?? 0;
+  // The active sheet must be visible; a stale activeTab on a hidden sheet falls back
+  // to the first visible sheet, and a workbook without any visible sheet is refused.
+  const selectedSheet =
+    sheets[selected] && !sheets[selected].hidden ? sheets[selected] : undefined;
+  const activeSheet = selectedSheet ?? sheets.find((sheet) => !sheet.hidden);
+  if (!activeSheet) throw new Error('工作簿至少需要一张可见工作表。');
   const defaultFont = metadata.values().next().value?.fontDefaults.value;
   const document: StudioExcelDocument = {
     version: 1,
@@ -2142,7 +2151,7 @@ function importedDocument(
     kind: 'excel',
     ...(defaultFont ? { defaultFont: { ...defaultFont } } : {}),
     sheets,
-    activeSheetId: sheets[selected]?.id ?? sheets[0].id,
+    activeSheetId: activeSheet.id,
   };
   const calculation = studioCalculate(document);
   for (const sheet of sheets) {
@@ -2811,6 +2820,8 @@ export async function exportStudioExcel(
   for (const sheet of document.sheets) {
     const target = matched.get(sheet.id) ?? workbook.addWorksheet(sheet.name);
     target.name = sheet.name;
+    // The model guarantees the active sheet stays visible; the source state must not leak.
+    target.state = sheet.hidden ? 'hidden' : 'visible';
     // ExcelJS aliases merged cells to the master. Unmerge before applying model changes.
     let originalMerges = [...(target.model.merges ?? [])];
     const mergedStyles = new Map<string, Partial<ExcelJS.Style>>();
