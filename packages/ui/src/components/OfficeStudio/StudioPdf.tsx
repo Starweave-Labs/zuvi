@@ -465,6 +465,22 @@ export default function StudioPdf({
   const [replyDraft, setReplyDraft] = useState('');
   const [inspector, setInspector] = useState(true);
   const [panel, setPanel] = useState<Panel>('marks');
+  // 临时诊断（localStorage.zuviStudioDebug=1 时输出）：重挂载与面板变化面包屑。
+  const debugRef = useRef(false);
+  useEffect(() => {
+    try {
+      debugRef.current = localStorage.getItem('zuviStudioDebug') === '1';
+    } catch {
+      debugRef.current = false;
+    }
+    if (debugRef.current) console.debug('[zuvi-pdf]', 'mounted');
+    return () => {
+      if (debugRef.current) console.debug('[zuvi-pdf]', 'unmounted');
+    };
+  }, []);
+  useEffect(() => {
+    if (debugRef.current) console.debug('[zuvi-pdf]', 'panel', panel);
+  }, [panel]);
   const [query, setQuery] = useState('');
   const [searchRequest, setSearchRequest] = useState({ text: '', version: 0 });
   const [searchResults, setSearchResults] = useState<StudioPdfSearchResult[]>([]);

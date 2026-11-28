@@ -46,6 +46,10 @@ test('edits native PDF page dimensions, copies and removes pages, and preserves 
   page,
 }) => {
   test.setTimeout(90000);
+  // 临时诊断：开启 StudioPdf 面包屑（console 进入 trace），复现后移除。
+  await page.addInitScript(() => {
+    localStorage.setItem('zuviStudioDebug', '1');
+  });
   await open(page);
   await page.getByRole('button', { name: '插入空白页', exact: true }).click();
   let dialog = page.getByRole('dialog', { name: '插入 PDF 空白页', exact: true });
