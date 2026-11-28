@@ -981,7 +981,7 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
       fieldNames.add(field.name);
       if (field.type === 'opaque') {
         if (field.readOnly !== true || field.value !== '' ||
-          [field.design, field.options, field.multiline, field.selectedValues].some((entry) => entry !== undefined) ||
+          [field.design, field.options, field.multiline, field.selectedValues, field.optionLabels, field.multiSelect].some((entry) => entry !== undefined) ||
           ![field.nativeType, field.passiveReason].every(nonempty) ||
           typeof field.nativeValueHash !== 'string' || !/^[a-f0-9]{64}$/.test(field.nativeValueHash)) return false;
       } else if ([field.nativeType, field.passiveReason, field.nativeValueHash].some((entry) => entry !== undefined)) return false;
@@ -991,6 +991,18 @@ export function isOfficeStudioDocument(value: unknown): value is OfficeStudioDoc
       )
         return false;
       if (!optionalBoolean(field.multiline)) return false;
+      if (!optionalBoolean(field.multiSelect)) return false;
+      if (
+        field.optionLabels !== undefined &&
+        (!record(field.optionLabels) ||
+          Object.entries(field.optionLabels).some(
+            ([key, label]) =>
+              typeof label !== 'string' ||
+              label.length > 1000 ||
+              !(field.options as string[] | undefined)?.includes(key)
+          ))
+      )
+        return false;
       if (
         field.design !== undefined &&
         (!record(field.design) ||

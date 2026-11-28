@@ -394,8 +394,12 @@ export interface StudioPdfField {
   type: 'text' | 'checkbox' | 'choice' | 'image' | 'opaque';
   value: string | boolean;
   options?: string[];
+  /** Native option display labels keyed by export value, for imported fields without a design. */
+  optionLabels?: Record<string, string>;
   readOnly: boolean;
   multiline?: boolean;
+  /** Native multiselect state, for imported list fields without a design. */
+  multiSelect?: boolean;
   selectedValues?: string[];
   design?: StudioPdfFieldDesign;
   widgets?: {

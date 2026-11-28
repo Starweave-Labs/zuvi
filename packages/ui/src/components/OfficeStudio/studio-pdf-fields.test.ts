@@ -61,4 +61,55 @@ describe('PDF field design validation', () => {
     expect(pdfSetDesignedField(removed, { ...field, name: 'original' }).fields).toHaveLength(1);
     expect(source.fields).toHaveLength(1);
   });
+
+  it('validates imported native choice fields with option labels and multiselect state', () => {
+    const nativeList: StudioPdfField = {
+      name: 'levels',
+      type: 'choice',
+      value: 'junior',
+      readOnly: false,
+      options: ['junior', 'senior'],
+      optionLabels: { junior: 'Junior level', senior: 'Senior level' },
+      selectedValues: ['junior'],
+      widgets: [{ page: 0, x: 10, y: 10, width: 100, height: 60 }],
+    };
+    expect(pdfFieldIssue(nativeList, 1)).toBeUndefined();
+    expect(
+      pdfFieldIssue({ ...nativeList, multiSelect: true, selectedValues: ['junior', 'senior'] }, 1)
+    ).toBeUndefined();
+    expect(pdfFieldIssue({ ...nativeList, multiSelect: true }, 1)).toBeUndefined();
+    // Secondary selections need an explicit multiselect state.
+    expect(pdfFieldIssue({ ...nativeList, selectedValues: ['junior', 'senior'] }, 1)).toContain(
+      '选中值'
+    );
+    // Labels must key into the candidate options.
+    expect(
+      pdfFieldIssue({ ...nativeList, optionLabels: { missing: 'Lost' } }, 1)
+    ).toContain('显示名称');
+    // Multiselect only applies to native lists, not dropdowns.
+    expect(
+      pdfFieldIssue({ ...nativeList, multiSelect: true, selectedValues: undefined, value: '' }, 1)
+    ).toContain('多选属性');
+    expect(
+      pdfFieldIssue({ ...nativeList, multiSelect: 'yes' as unknown as boolean }, 1)
+    ).toContain('多选属性');
+    // Opaque fields cannot carry the new imported choice state.
+    expect(
+      pdfFieldIssue(
+        {
+          ...nativeList,
+          type: 'opaque',
+          value: '',
+          readOnly: true,
+          options: undefined,
+          optionLabels: { junior: 'Junior level' },
+          selectedValues: undefined,
+          nativeType: 'Ch',
+          passiveReason: '原生下拉框选项格式损坏，无法安全填写',
+          nativeValueHash: 'a'.repeat(64),
+        },
+        1
+      )
+    ).toContain('只读原生字段身份无效');
+  });
 });

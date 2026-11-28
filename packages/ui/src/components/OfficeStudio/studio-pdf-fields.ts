@@ -48,9 +48,11 @@ export function pdfFieldKind(field: StudioPdfField): StudioPdfFieldDesign['kind'
         ? 'image'
         : field.type === 'text'
           ? 'text'
-          : pdfFieldWidgets(field).some((widget) => plain(widget) && widget.option !== undefined)
-            ? 'radio'
-            : 'dropdown')
+          : field.selectedValues !== undefined
+            ? 'list'
+            : pdfFieldWidgets(field).some((widget) => plain(widget) && widget.option !== undefined)
+              ? 'radio'
+              : 'dropdown')
   );
 }
 
@@ -65,6 +67,8 @@ export function pdfFieldDesign(field: StudioPdfField): StudioPdfFieldDesign {
       background: '#ffffff',
       borderColor: '#8898a3',
       borderWidth: 1,
+      ...(field.multiSelect ? { multiSelect: true } : {}),
+      ...(field.optionLabels ? { optionLabels: field.optionLabels } : {}),
     }
   );
 }
@@ -82,6 +86,7 @@ export function pdfFieldIssue(field: StudioPdfField, pageCount: number): string 
   if (field.type === 'opaque') {
     if (field.readOnly !== true || field.value !== '' || field.design !== undefined ||
       field.options !== undefined || field.multiline !== undefined || field.selectedValues !== undefined ||
+      field.optionLabels !== undefined || field.multiSelect !== undefined ||
       !text(field.nativeType, 256) || !field.nativeType || !text(field.passiveReason, 1000) || !field.passiveReason ||
       !/^[a-f0-9]{64}$/.test(field.nativeValueHash ?? '')) return 'PDF 只读原生字段身份无效。';
     for (const widget of pdfFieldWidgets(field)) {
@@ -177,6 +182,19 @@ export function pdfFieldIssue(field: StudioPdfField, pageCount: number): string 
     if (field.value && !field.options.includes(String(field.value)))
       return 'PDF 字段当前选项不在候选列表中。';
   }
+  if (
+    field.multiSelect !== undefined &&
+    (typeof field.multiSelect !== 'boolean' || (field.multiSelect && pdfFieldKind(field) !== 'list'))
+  )
+    return 'PDF 列表多选属性无效。';
+  if (
+    field.optionLabels !== undefined &&
+    (!plain(field.optionLabels) ||
+      Object.entries(field.optionLabels).some(
+        ([key, label]) => !field.options?.includes(key) || !text(label, 1000)
+      ))
+  )
+    return 'PDF 选项显示名称无效。';
   for (const values of [field.selectedValues, design?.defaultSelections])
     if (
       values !== undefined &&
@@ -184,7 +202,7 @@ export function pdfFieldIssue(field: StudioPdfField, pageCount: number): string 
         values.length > 1000 ||
         new Set(values).size !== values.length ||
         values.some((value) => !field.options?.includes(value)) ||
-        (!design?.multiSelect && values.length > 1))
+        (!design?.multiSelect && !field.multiSelect && values.length > 1))
     )
       return 'PDF 列表选中值无效。';
   if (design?.defaultValue !== undefined) {
