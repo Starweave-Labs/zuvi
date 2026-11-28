@@ -1780,6 +1780,56 @@ describe('StudioWord structured editing', () => {
     expect(await screen.findByText('0 处匹配')).toBeInTheDocument();
   });
 
+  it('narrows matches to whole words and replaces them from the find panel', async () => {
+    const model = documentModel();
+    model.content.content = [
+      { type: 'paragraph', content: [{ type: 'text', text: 'cat catalog cat' }] },
+    ];
+    const { textbox, onChange } = await mount({ document: model });
+    fireEvent.keyDown(textbox, { key: 'f', ctrlKey: true });
+    const query = await screen.findByRole('textbox', { name: '查找内容' });
+    fireEvent.change(query, { target: { value: 'cat' } });
+    expect(await screen.findByText('3 处匹配')).toBeInTheDocument();
+    // 勾选全字匹配："catalog" 内部的 cat 被排除
+    fireEvent.click(screen.getByRole('checkbox', { name: '全字匹配' }));
+    expect(await screen.findByText('2 处匹配')).toBeInTheDocument();
+    fireEvent.change(screen.getByRole('textbox', { name: '替换为' }), {
+      target: { value: 'dog' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: '全部替换' }));
+    await waitFor(() => expect(textbox.querySelector('p')).toHaveTextContent('dog catalog dog'));
+    expect(onChange).toHaveBeenCalledTimes(1);
+    // 取消勾选后恢复普通匹配："catalog" 内的 cat 重新计入
+    fireEvent.click(screen.getByRole('checkbox', { name: '全字匹配' }));
+    expect(await screen.findByText('1 处匹配')).toBeInTheDocument();
+    // 再次勾选后回到整词匹配：无独立 cat → 0
+    fireEvent.click(screen.getByRole('checkbox', { name: '全字匹配' }));
+    expect(await screen.findByText('0 处匹配')).toBeInTheDocument();
+  });
+
+  it('finds a pasted tab special character and replaces it from the find panel', async () => {
+    const model = documentModel();
+    model.content.content = [
+      { type: 'paragraph', content: [{ type: 'text', text: '名称\t值' }] },
+    ];
+    const { textbox, onChange } = await mount({ document: model });
+    fireEvent.keyDown(textbox, { key: 'f', ctrlKey: true });
+    const query = await screen.findByRole('textbox', { name: '查找内容' });
+    // 查找输入框支持粘贴含制表符（\t）的特殊字符内容
+    fireEvent.change(query, { target: { value: '\t' } });
+    expect(await screen.findByText('1 处匹配')).toBeInTheDocument();
+    expect(screen.getByLabelText('查找内容')).toHaveAttribute(
+      'title',
+      '支持粘贴制表符（Tab）作为特殊字符查找'
+    );
+    fireEvent.change(screen.getByRole('textbox', { name: '替换为' }), {
+      target: { value: '：' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: '全部替换' }));
+    await waitFor(() => expect(textbox.querySelector('p')).toHaveTextContent('名称：值'));
+    expect(onChange).toHaveBeenCalledTimes(1);
+  });
+
   it('inserts current and total page fields into the active footer and saves region distances', async () => {
     const { textbox, onChange } = await mount();
     fireEvent.click(screen.getByRole('tab', { name: '插入' }));

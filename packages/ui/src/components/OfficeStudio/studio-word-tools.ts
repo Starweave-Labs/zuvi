@@ -650,6 +650,18 @@ export interface WordFormatCriteria {
   strike?: boolean;
 }
 
+/**
+ * 整词匹配的"词字符"定义：与 JavaScript \w 等价（ASCII 字母/数字/下划线）。
+ * 非 ASCII 字符（含 CJK）不视作词字符，因此每个 CJK 字符自身就是独立词边界——
+ * 纯 CJK 查询串的整词匹配退化为普通匹配；英文按词匹配（"cats" 不含整词 "cat"）。
+ */
+const WORD_WORD_CHAR = /[A-Za-z0-9_]/;
+
+/** 整词匹配选项；后续特殊字符开关也在此扩展。 */
+export interface WordFindOptions {
+  wholeWord?: boolean;
+}
+
 /** 校验 [from, to) 内的每段文本都满足格式条件；区间无文本节点视为不满足。 */
 function rangeHasFormat(
   doc: Editor['state']['doc'],
@@ -678,15 +690,23 @@ function rangeHasFormat(
   return sawText && satisfied;
 }
 
-/** Textblock offsets include inline atoms, so matches span styled runs without losing positions. */
+/**
+ * Textblock offsets include inline atoms, so matches span styled runs without losing positions.
+ *
+ * 特殊字符约定：query 中的字面制表符（\t）按文本节点中的 tab 字符匹配——Word 编辑器中
+ * tab 以普通文本节点的 '\t' 存储（见 wordInsertTab 与 studio-word-tab-extension 的装饰扫描），
+ * 因此无需转义即可命中；跨段落的换行（\n）不在支持范围内（需跨 textblock 拼接文本）。
+ */
 export function wordFindMatches(
   editor: Editor,
   query: string,
   matchCase = false,
-  format?: WordFormatCriteria
+  format?: WordFormatCriteria,
+  options?: WordFindOptions
 ): WordMatch[] {
   if (!query || query.length > 5000) return [];
   const pattern = new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), matchCase ? 'g' : 'gi');
+  const wholeWord = options?.wholeWord === true;
   const matches: WordMatch[] = [];
   editor.state.doc.descendants((node, position) => {
     if (!node.isTextblock) return;
@@ -697,6 +717,13 @@ export function wordFindMatches(
       match && matches.length <= WORD_SEARCH_LIMIT;
       match = pattern.exec(text)
     ) {
+      // 整词匹配：匹配两侧不得紧邻 \w 词字符；文本起止、CJK 及其他非 ASCII 字符均为合法边界。
+      if (
+        wholeWord &&
+        ((match.index > 0 && WORD_WORD_CHAR.test(text[match.index - 1])) ||
+          WORD_WORD_CHAR.test(text[match.index + match[0].length] ?? ''))
+      )
+        continue;
       const from = position + 1 + match.index;
       const to = from + match[0].length;
       if (format && !rangeHasFormat(editor.state.doc, from, to, format)) continue;

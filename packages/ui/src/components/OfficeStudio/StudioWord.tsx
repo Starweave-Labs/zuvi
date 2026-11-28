@@ -460,6 +460,7 @@ export function StudioWord({
   const [searchQuery, setSearchQuery] = React.useState('');
   const [replacement, setReplacement] = React.useState('');
   const [matchCase, setMatchCase] = React.useState(false);
+  const [wholeWord, setWholeWord] = React.useState(false);
   const [formatCriteria, setFormatCriteria] = React.useState<WordFormatCriteria>({});
   const [styleDialog, setStyleDialog] = React.useState<StudioWordParagraphStyle | null>(null);
   const [characterDialog, setCharacterDialog] = React.useState<{
@@ -654,7 +655,10 @@ export function StudioWord({
   React.useEffect(() => {
     if (sidePanel === 'search') searchInputRef.current?.focus();
   }, [sidePanel]);
-  React.useEffect(() => setMatchIndex(-1), [editor, searchQuery, matchCase, formatCriteria]);
+  React.useEffect(
+    () => setMatchIndex(-1),
+    [editor, searchQuery, matchCase, wholeWord, formatCriteria]
+  );
 
   const selection = useEditorState({
     editor,
@@ -666,7 +670,7 @@ export function StudioWord({
       return {
         ...wordSelectionCharacterFormat(current, paragraphStyles),
         image: current.isActive('image') ? current.getAttributes('image') : null,
-        matches: wordFindMatches(current, searchQuery, matchCase, formatCriteria),
+        matches: wordFindMatches(current, searchQuery, matchCase, formatCriteria, { wholeWord }),
         bullet: current.isActive('bulletList') || numbered?.level.format === 'bullet',
         ordered: current.isActive('orderedList') || (!!numbered && numbered.level.format !== 'bullet'),
         numbering: numbered,
@@ -2759,6 +2763,7 @@ export function StudioWord({
                   size="sm"
                   value={searchQuery}
                   maxLength={5000}
+                  title="支持粘贴制表符（Tab）作为特殊字符查找"
                   onChange={(event) => setSearchQuery(event.target.value)}
                   onKeyDown={(event) => {
                     if (event.key === 'Enter') {
@@ -2768,6 +2773,7 @@ export function StudioWord({
                   }}
                 />
                 <Checkbox label="区分大小写" checked={matchCase} onChange={setMatchCase} />
+                <Checkbox label="全字匹配" checked={wholeWord} onChange={setWholeWord} />
                 <div
                   className="zuvi-studio-word-format-filter"
                   role="group"
