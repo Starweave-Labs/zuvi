@@ -8,6 +8,8 @@ const audit = path.resolve('docs/audits/2026-11-25/sheet-series');
 test('series stop drafts, per-track bounds and one-step history preserve native XLSX tails through repeated reopenings', async ({
   page,
 }) => {
+  // 多轮原生 XLSX 导入重开与校验，CI 负载下会贴住 30s 默认值：声明显式超时。
+  test.setTimeout(60000);
   await mkdir(audit, { recursive: true });
   const workbook = new ExcelJS.Workbook();
   const data = workbook.addWorksheet('Series');

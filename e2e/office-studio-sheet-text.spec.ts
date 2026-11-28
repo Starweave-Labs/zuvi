@@ -171,6 +171,8 @@ test('advanced text editing, native default font, automatic rows, print and two 
   page,
   context,
 }) => {
+  // 编辑、打印与两轮 XLSX 重开的整合用例，实测约 22s：声明显式超时避免 CI 贴线。
+  test.setTimeout(60000);
   test.setTimeout(150000);
   await mkdir(audit, { recursive: true });
   const { source, font0 } = await fixture();

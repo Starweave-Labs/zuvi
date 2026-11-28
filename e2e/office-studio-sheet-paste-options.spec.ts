@@ -7,6 +7,9 @@ const audit = path.resolve('docs/audits/2026-11-25/sheet-paste-options');
 test('skip blanks and arithmetic Paste Special preserve native data and formulas, cancel errors atomically and distinguish reopened empty text', async ({
   page,
 }) => {
+  // 90+ 交互、三次全页截图与四轮原生文件往返，实测约 29s：声明显式超时，
+  // 避免 CI 负载下贴住 30s 默认值造成间歇超时（断言与重试策略不变）。
+  test.setTimeout(90000);
   await mkdir(audit, { recursive: true });
   const workbook = new ExcelJS.Workbook();
   const data = workbook.addWorksheet('Paste');
