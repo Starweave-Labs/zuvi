@@ -346,6 +346,90 @@ describe('StudioPdf document editing', () => {
     }
   );
 
+  it('fills native option lists and labelled dropdowns by export value and keeps readonly guards', async () => {
+    const model = document();
+    model.fields = [
+      {
+        name: 'levels',
+        type: 'choice',
+        value: 'junior',
+        readOnly: false,
+        options: ['junior', 'senior'],
+        optionLabels: { junior: 'Junior level', senior: 'Senior level' },
+        selectedValues: ['junior'],
+        widgets: [{ page: 0, x: 60, y: 300, width: 140, height: 60 }],
+      },
+      {
+        name: 'tags',
+        type: 'choice',
+        value: 'a',
+        readOnly: false,
+        options: ['a', 'b', 'c'],
+        multiSelect: true,
+        selectedValues: ['a', 'c'],
+        widgets: [{ page: 0, x: 220, y: 300, width: 120, height: 60 }],
+      },
+      {
+        name: 'status',
+        type: 'choice',
+        value: 'draft',
+        readOnly: false,
+        options: ['draft', 'approved'],
+        optionLabels: { draft: 'Draft label', approved: 'Approved label' },
+        widgets: [{ page: 0, x: 60, y: 200, width: 160, height: 24 }],
+      },
+      {
+        name: 'locked',
+        type: 'choice',
+        value: 'draft',
+        readOnly: true,
+        options: ['draft', 'approved'],
+        optionLabels: { draft: 'Draft label', approved: 'Approved label' },
+        widgets: [{ page: 0, x: 60, y: 120, width: 160, height: 24 }],
+      },
+    ];
+    const f = host(model);
+    await ready();
+    // A native single-select list renders its display labels and fills by export value.
+    const list = screen.getByRole('group', { name: 'PDF 页面表单 levels' });
+    expect(within(list).getByRole('checkbox', { name: 'Junior level' })).toBeChecked();
+    fireEvent.click(within(list).getByRole('checkbox', { name: 'Senior level' }));
+    expect(f.document().fields.find((field) => field.name === 'levels')).toMatchObject({
+      value: 'senior',
+      selectedValues: ['senior'],
+    });
+    // A native multiselect list keeps every selection.
+    const tags = screen.getByRole('group', { name: 'PDF 页面表单 tags' });
+    expect(within(tags).getByRole('checkbox', { name: 'a' })).toBeChecked();
+    expect(within(tags).getByRole('checkbox', { name: 'c' })).toBeChecked();
+    fireEvent.click(within(tags).getByRole('checkbox', { name: 'b' }));
+    expect(f.document().fields.find((field) => field.name === 'tags')?.selectedValues).toEqual([
+      'a',
+      'c',
+      'b',
+    ]);
+    // A labelled dropdown shows display labels and stores the export value.
+    const statusTrigger = screen.getByRole('button', { name: /^PDF 页面表单 status/ });
+    fireEvent.click(statusTrigger);
+    const statusPopup = window.document.getElementById(
+      statusTrigger.getAttribute('aria-controls') ?? ''
+    )!;
+    fireEvent.click(within(statusPopup).getByRole('option', { name: 'Approved label' }));
+    expect(f.document().fields.find((field) => field.name === 'status')?.value).toBe('approved');
+    // Read-only native dropdowns stay disabled on the page and in the sidebar.
+    expect(screen.getByRole('button', { name: /^PDF 页面表单 locked/ })).toBeDisabled();
+    fireEvent.click(screen.getByRole('button', { name: '表单 4' }));
+    expect(screen.getByLabelText('PDF 表单 locked')).toBeDisabled();
+    const sidebarStatus = screen.getByLabelText('PDF 表单 status');
+    fireEvent.click(sidebarStatus);
+    const choices = window.document.getElementById(
+      sidebarStatus.getAttribute('aria-controls') ?? ''
+    )!;
+    fireEvent.click(within(choices).getByRole('option', { name: 'Draft label' }));
+    expect(f.document().fields.find((field) => field.name === 'status')?.value).toBe('draft');
+    expect(isOfficeStudioDocument(f.document())).toBe(true);
+  });
+
   it('creates a readonly multiline field with current/default text and restores its creation with redo', async () => {
     const f = host();
     await ready();

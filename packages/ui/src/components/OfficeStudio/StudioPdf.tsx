@@ -1696,7 +1696,7 @@ export default function StudioPdf({
               {(field.options || []).map((option) => (
                 <Checkbox
                   key={option}
-                  label={field.design?.optionLabels?.[option] ?? option}
+                  label={field.design?.optionLabels?.[option] ?? field.optionLabels?.[option] ?? option}
                   checked={(
                     field.selectedValues || (field.value ? [String(field.value)] : [])
                   ).includes(option)}
@@ -1704,7 +1704,7 @@ export default function StudioPdf({
                   onChange={(checked) =>
                     changeSelections(
                       field,
-                      field.design?.multiSelect
+                      field.design?.multiSelect || field.multiSelect
                         ? checked
                           ? [...(field.selectedValues || []), option]
                           : (field.selectedValues || []).filter((value) => value !== option)
@@ -1730,7 +1730,7 @@ export default function StudioPdf({
                 { value: '', label: '未选择' },
                 ...(field.options ?? []).map((option) => ({
                   value: option,
-                  label: field.design?.optionLabels?.[option] ?? option,
+                  label: field.design?.optionLabels?.[option] ?? field.optionLabels?.[option] ?? option,
                 })),
               ]}
               onChange={(value) => changeField(field.name, value)}
@@ -3198,7 +3198,7 @@ export default function StudioPdf({
                           {(field.options || []).map((option) => (
                             <Checkbox
                               key={option}
-                              label={field.design?.optionLabels?.[option] ?? option}
+                              label={field.design?.optionLabels?.[option] ?? field.optionLabels?.[option] ?? option}
                               disabled={!canModify || field.readOnly}
                               checked={(
                                 field.selectedValues || (field.value ? [String(field.value)] : [])
@@ -3206,7 +3206,7 @@ export default function StudioPdf({
                               onChange={(checked) =>
                                 changeSelections(
                                   field,
-                                  field.design?.multiSelect
+                                  field.design?.multiSelect || field.multiSelect
                                     ? checked
                                       ? [...(field.selectedValues || []), option]
                                       : (field.selectedValues || []).filter(
@@ -3241,7 +3241,10 @@ export default function StudioPdf({
                                 { value: '', label: '未选择' },
                                 ...(field.options ?? []).map((value) => ({
                                   value,
-                                  label: field.design?.optionLabels?.[value] ?? value,
+                                  label:
+                                    field.design?.optionLabels?.[value] ??
+                                    field.optionLabels?.[value] ??
+                                    value,
                                 })),
                               ]}
                               onChange={(value) => changeField(field.name, value)}

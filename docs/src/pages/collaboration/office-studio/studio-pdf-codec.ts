@@ -130,6 +130,19 @@ function readWidgets(pdf: PDFDocument, field: PDFField, hidden = false): NonNull
   });
 }
 
+/** Choice options are export/display pairs; malformed entries cannot be written back safely. */
+function readChoiceOptions(
+  field: PDFDropdown | PDFOptionList
+): { value: string; label: string }[] | undefined {
+  const pairs: { value: string; label: string }[] = [];
+  for (const option of field.acroField.getOptions()) {
+    if (!(option.value instanceof PDFString || option.value instanceof PDFHexString)) return;
+    if (!(option.display instanceof PDFString || option.display instanceof PDFHexString)) return;
+    pairs.push({ value: option.value.decodeText(), label: option.display.decodeText() });
+  }
+  return pairs;
+}
+
 function readFields(pdf: PDFDocument): StudioPdfField[] {
   const names = new Set<string>();
   return enumeratePdfFields(pdf)
@@ -158,35 +171,45 @@ function readFields(pdf: PDFDocument): StudioPdfField[] {
       } else if (field instanceof PDFDropdown) {
         if (field.isMultiselect() || field.isEditable() || field.getSelected().length > 1)
           return passivePdfField(pdf, field, '原生下拉框包含额外编辑功能');
-        if (
-          !design &&
-          field.acroField
-            .getOptions()
-            .some(
-              (option) =>
-                option.display && option.display.decodeText() !== option.value.decodeText()
-            )
-        )
-          return passivePdfField(pdf, field, '原生下拉框使用独立显示标签');
-        const options = design
-          ? field.acroField.getOptions().map((option) => option.value.decodeText())
-          : field.getOptions();
+        const pairs = readChoiceOptions(field);
+        if (!pairs) return passivePdfField(pdf, field, '原生下拉框选项格式损坏，无法安全填写');
+        if (!pairs.length) return passivePdfField(pdf, field, '原生下拉框没有可用选项，无法安全填写');
+        const options = pairs.map((pair) => pair.value);
+        if (new Set(options).size !== options.length)
+          return passivePdfField(pdf, field, '原生下拉框包含重复的导出选项，无法安全填写');
         if (field.getSelected().some((value) => !options.includes(value)))
           return passivePdfField(pdf, field, '原生下拉框包含列表外的值');
+        const optionLabels = Object.fromEntries(
+          pairs.filter((pair) => pair.label !== pair.value).map((pair) => [pair.value, pair.label])
+        );
         result = {
           ...base,
           type: 'choice',
           value: field.getSelected()[0] ?? '',
           options,
+          ...(design || !Object.keys(optionLabels).length ? {} : { optionLabels }),
         };
-      } else if (field instanceof PDFOptionList && design?.kind === 'list') {
+      } else if (field instanceof PDFOptionList && (!design || design.kind === 'list')) {
         const values = field.getSelected();
+        const pairs = readChoiceOptions(field);
+        if (!pairs) return passivePdfField(pdf, field, '原生列表框选项格式损坏，无法安全填写');
+        if (!pairs.length) return passivePdfField(pdf, field, '原生列表框没有可用选项，无法安全填写');
+        const options = pairs.map((pair) => pair.value);
+        if (new Set(options).size !== options.length)
+          return passivePdfField(pdf, field, '原生列表框包含重复的导出选项，无法安全填写');
+        if (values.some((value) => !options.includes(value)))
+          return passivePdfField(pdf, field, '原生列表框包含列表外的值');
+        const optionLabels = Object.fromEntries(
+          pairs.filter((pair) => pair.label !== pair.value).map((pair) => [pair.value, pair.label])
+        );
         result = {
           ...base,
           type: 'choice',
           value: values[0] || '',
           selectedValues: values,
-          options: field.acroField.getOptions().map((option) => option.value.decodeText()),
+          options,
+          ...(Object.keys(optionLabels).length ? { optionLabels } : {}),
+          ...(!design?.multiSelect && field.isMultiselect() ? { multiSelect: true } : {}),
         };
       } else if (field instanceof PDFButton && design?.kind === 'image') {
         const value = field.acroField.dict.lookup(IMAGE_KEY);
@@ -437,8 +460,20 @@ async function writeNativeValue(pdf: PDFDocument, field: StudioPdfField, native:
     if (native.needsAppearancesUpdate()) native.updateAppearances();
   } else if (native instanceof PDFDropdown || native instanceof PDFOptionList) {
     const selected = native instanceof PDFOptionList ? field.selectedValues || (field.value ? [String(field.value)] : []) : field.value ? [String(field.value)] : [];
-    native.acroField.setValues(selected.map((value) => PDFHexString.fromText(value)));
-    const label = (value: string) => field.design?.optionLabels?.[value] ?? value;
+    const values = selected.map((value) => PDFHexString.fromText(value));
+    // pdf-lib validates combo selections against the option display text, so the
+    // export values are written while the option array is value-only and the
+    // labelled Opt array is restored afterwards. /I is computed in the same pass.
+    const labelled = readChoiceOptions(native)?.some((pair) => pair.label !== pair.value);
+    if (labelled) {
+      const originalOptions = native.acroField.getOptions();
+      native.acroField.setOptions(originalOptions.map((option) => ({ value: option.value })));
+      native.acroField.setValues(values);
+      native.acroField.setOptions(originalOptions);
+    } else {
+      native.acroField.setValues(values);
+    }
+    const label = (value: string) => field.design?.optionLabels?.[value] ?? field.optionLabels?.[value] ?? value;
     if (font) native.updateAppearances(font, (original, widget, appearanceFont) => {
       if (original instanceof PDFDropdown) {
         const display = new Proxy(original, { get(target, key, receiver) { return key === 'getSelected' ? () => selected.map(label) : Reflect.get(target, key, receiver); } });
@@ -737,6 +772,8 @@ export async function exportStudioPdfFields(
       field.type !== original.type ||
       field.readOnly !== original.readOnly ||
       !sameOptions(field.options, original.options, pdf.getForm().getField(original.name) instanceof PDFRadioGroup) ||
+      JSON.stringify(field.optionLabels ?? null) !== JSON.stringify(original.optionLabels ?? null) ||
+      field.multiSelect !== original.multiSelect ||
       (field.multiline !== undefined && field.multiline !== original.multiline) ||
       (field.widgets !== undefined && !sameWidgets(field.widgets, original.widgets)) ||
       (field.hiddenWidgets !== undefined && !sameWidgets(field.hiddenWidgets, original.hiddenWidgets || [], 32)) ||
@@ -746,12 +783,15 @@ export async function exportStudioPdfFields(
       throw new Error('PDF 草稿的表单结构或字段值与原文件不匹配。');
     fieldNames.add(field.name);
     handledSources.add(field.name);
-    if (field.value !== original.value) {
+    // A list keeps its first selection in value; secondary selections change too.
+    const selectionsChanged =
+      JSON.stringify(field.selectedValues ?? null) !== JSON.stringify(original.selectedValues ?? null);
+    if (field.value !== original.value || selectionsChanged) {
       if (original.readOnly) throw new Error(`表单“${field.name}”为只读，不能修改。`);
       if (
         field.type === 'choice' &&
-        field.value !== '' &&
-        !original.options?.includes(String(field.value))
+        ((field.value !== '' && !original.options?.includes(String(field.value))) ||
+          (field.selectedValues ?? []).some((value) => !original.options?.includes(value)))
       )
         throw new Error(`表单“${field.name}”的选项无效。`);
       const native = pdf.getForm().getField(field.name);
@@ -785,7 +825,9 @@ export async function exportStudioPdfFields(
         const native = form.getField(field.name);
         if (native instanceof PDFTextField) return [String(field.value)];
         if (native instanceof PDFDropdown || native instanceof PDFOptionList)
-          return (field.options || []).map((value) => field.design?.optionLabels?.[value] ?? value);
+          return (field.options || []).map(
+            (value) => field.design?.optionLabels?.[value] ?? field.optionLabels?.[value] ?? value
+          );
         return [];
       }),
     ...designedFields.flatMap((field) => [

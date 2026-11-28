@@ -358,6 +358,127 @@ test('unchanged PDF exports return the exact source without reserialization or a
   assert.equal(c.requests.length, 0);
 });
 
+test('fills native option lists and labelled dropdowns by export values and keeps display labels across reopen rounds', async () => {
+  const c = codec();
+  const pdf = await PDFDocument.create();
+  const page = pdf.addPage([480, 640]);
+  const font = await pdf.embedFont(StandardFonts.Helvetica);
+  const form = pdf.getForm();
+  const levels = form.createOptionList('levels');
+  levels.acroField.setOptions([
+    { value: PDFString.of('junior'), display: PDFString.of('Junior level') },
+    { value: PDFString.of('senior'), display: PDFString.of('Senior level') },
+  ]);
+  levels.acroField.dict.set(PDFName.of('V'), PDFString.of('junior'));
+  levels.addToPage(page, { x: 60, y: 420, width: 150, height: 60, font });
+  const tags = form.createOptionList('tags');
+  tags.enableMultiselect();
+  tags.setOptions(['a', 'b', 'c']);
+  tags.select(['a', 'c']);
+  tags.addToPage(page, { x: 260, y: 420, width: 150, height: 60, font });
+  const status = form.createDropdown('status');
+  status.acroField.setOptions([
+    { value: PDFString.of('draft'), display: PDFString.of('Draft label') },
+    { value: PDFString.of('approved'), display: PDFString.of('Approved label') },
+  ]);
+  status.acroField.dict.set(PDFName.of('V'), PDFString.of('draft'));
+  status.addToPage(page, { x: 60, y: 320, width: 180, height: 24, font });
+  const source = await blob(pdf);
+
+  const imported = await c.importStudioPdf(source, 'Options.pdf');
+  const levelsField = imported.fields.find((field) => field.name === 'levels');
+  const tagsField = imported.fields.find((field) => field.name === 'tags');
+  const statusField = imported.fields.find((field) => field.name === 'status');
+  assert.deepEqual(
+    [levelsField, tagsField, statusField].map((field) => field.type),
+    ['choice', 'choice', 'choice']
+  );
+  assert.deepEqual(levelsField.options, ['junior', 'senior']);
+  assert.deepEqual(levelsField.optionLabels, {
+    junior: 'Junior level',
+    senior: 'Senior level',
+  });
+  assert.deepEqual(levelsField.selectedValues, ['junior']);
+  assert.equal(levelsField.value, 'junior');
+  assert.equal(tagsField.multiSelect, true);
+  assert.deepEqual(tagsField.selectedValues, ['a', 'c']);
+  assert.deepEqual(statusField.options, ['draft', 'approved']);
+  assert.deepEqual(statusField.optionLabels, {
+    draft: 'Draft label',
+    approved: 'Approved label',
+  });
+  assert.equal(statusField.value, 'draft');
+
+  const rounds = [
+    { levels: ['senior'], tags: ['a', 'b'], status: 'approved' },
+    { levels: ['junior'], tags: ['b', 'c'], status: 'draft' },
+    { levels: ['senior'], tags: ['a', 'c'], status: 'approved' },
+  ];
+  const fill = (document, target) => ({
+    ...document,
+    fields: document.fields.map((field) => {
+      if (field.name === 'levels')
+        return { ...field, value: target.levels[0], selectedValues: target.levels };
+      if (field.name === 'tags')
+        return { ...field, value: target.tags[0], selectedValues: target.tags };
+      if (field.name === 'status') return { ...field, value: target.status };
+      return field;
+    }),
+  });
+  let output = await c.exportStudioPdf(fill(imported, rounds[0]), source);
+  for (const [round, target] of rounds.entries()) {
+    const roundPdf = await PDFDocument.load(await output.arrayBuffer());
+    const roundForm = roundPdf.getForm();
+    assert.deepEqual(roundForm.getOptionList('levels').getSelected(), target.levels);
+    assert.deepEqual(roundForm.getOptionList('tags').getSelected(), target.tags);
+    assert.deepEqual(roundForm.getDropdown('status').getSelected(), [target.status]);
+    const rawStatus = roundForm.getDropdown('status').acroField.getOptions();
+    assert.deepEqual(rawStatus.map((option) => option.value.decodeText()), ['draft', 'approved']);
+    assert.deepEqual(
+      rawStatus.map((option) => option.display.decodeText()),
+      ['Draft label', 'Approved label'],
+      'The native Opt array keeps independent display labels.'
+    );
+    const statusCommands = Buffer.from(
+      decodePDFRawStream(
+        roundForm.getDropdown('status').acroField.getWidgets()[0].getAppearances().normal
+      ).decode()
+    ).toString();
+    assert.ok(
+      statusCommands.includes(
+        Buffer.from(target.status === 'draft' ? 'Draft label' : 'Approved label')
+          .toString('hex')
+          .toUpperCase()
+      ),
+      'The dropdown appearance renders the display label.'
+    );
+
+    const reopened = await c.importStudioPdf(output, `Options-reopened-${round}.pdf`);
+    const reopenedStatus = reopened.fields.find((field) => field.name === 'status');
+    assert.deepEqual(reopenedStatus.options, ['draft', 'approved']);
+    assert.deepEqual(reopenedStatus.optionLabels, {
+      draft: 'Draft label',
+      approved: 'Approved label',
+    });
+    assert.equal(reopenedStatus.value, target.status);
+    const reopenedTags = reopened.fields.find((field) => field.name === 'tags');
+    assert.equal(reopenedTags.multiSelect, true);
+    assert.deepEqual(reopenedTags.selectedValues, target.tags);
+    const reopenedLevels = reopened.fields.find((field) => field.name === 'levels');
+    assert.deepEqual(reopenedLevels.selectedValues, target.levels);
+    assert.deepEqual(reopenedLevels.optionLabels, {
+      junior: 'Junior level',
+      senior: 'Senior level',
+    });
+    assert.equal(await c.exportStudioPdf(reopened, output), output);
+    output = await c.exportStudioPdf(fill(reopened, rounds[(round + 1) % rounds.length]), output);
+  }
+  const finalPdf = await PDFDocument.load(await output.arrayBuffer());
+  assert.deepEqual(finalPdf.getForm().getOptionList('levels').getSelected(), ['senior']);
+  assert.deepEqual(finalPdf.getForm().getOptionList('tags').getSelected(), ['a', 'b']);
+  assert.deepEqual(finalPdf.getForm().getDropdown('status').getSelected(), ['approved']);
+});
+
 test('exports real text, transparent highlight, additional rotation and editable native forms while preserving every original page stream', async () => {
   const c = codec();
   const source = await original();
@@ -587,9 +708,10 @@ test('retains passive native fields without exposing editable values and still r
     (pdf) => {
       const field = pdf.getForm().getDropdown('status');
       field.acroField.setOptions([
-        { value: PDFString.of('draft-id'), display: PDFString.of('Draft') },
+        { value: PDFString.of('same'), display: PDFString.of('First') },
+        { value: PDFString.of('same'), display: PDFString.of('Second') },
       ]);
-      field.acroField.dict.set(PDFName.of('V'), PDFString.of('draft-id'));
+      field.acroField.dict.set(PDFName.of('V'), PDFString.of('same'));
     },
     (pdf) => {
       pdf.getForm().getTextField('name').setText('Single\nLine');
