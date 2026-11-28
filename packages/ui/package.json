@@ -1,6 +1,6 @@
 {
   "name": "@zuvi/react",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "ZUVI — 现代 React 组件库：令牌驱动、零运行时样式、无障碍优先",
   "type": "module",
   "sideEffects": [

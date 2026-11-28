@@ -1,5 +1,43 @@
 # @zuvi/react
 
+## 1.2.0
+
+### Minor Changes
+
+- 2ca8929: Add named paragraph styles to OfficeStudio Word, including inheritance, editing, next-paragraph styles, automatic updates, direct-format preservation and undo/redo. Style definitions and bindings survive native DOCX import/export and repeated saves. Align Word font controls with the supported 1–409pt file range.
+- 2717f3b: Add Word floating image wrapping, position and anchor controls, pointer and keyboard movement, preview cancellation and undo. Preserve native DOCX anchor coordinates, wrapping contours and z-order across repeated saves, including header/footer images. Keep detailed positioning in an accessible dialog and validate persisted layout before editing or exporting.
+- 075603f: OfficeStudio PDF 批注支持回复线程
+
+  - 批注模型新增可选 `replies`（`StudioPdfMarkReply[]`），随文档 JSON 持久化，宿主保存/导入导出无需适配。
+  - 选中标注后，检视器内出现回复区：查看/添加/删除回复，Enter 直接发送（IME 组合期间不拦截由调用方输入默认行为保证），每个标注上限 99 条。
+
+- ef00c22: OfficeStudio Excel 筛选支持按颜色
+
+  - 筛选条件新增「字体颜色 / 填充颜色」算子：值控件切换为取色器，按单元格 `color` / `background` 与 #hex 归一化后比较（3 位展开为 6 位、大小写不敏感）；无对应颜色的行不匹配。
+  - `studioSetFilter` 校验颜色算子必须携带合法 #hex 值；文本/数值算子行为不变。
+
+- 602b725: StudioSheet 筛选新增值列表算子：从筛选区域数据行选择要显示的值（含空白），支持原生 XLSX `<filters>` 多值与 `<blankFilter/>` 往返；列间仍为 AND 关系。
+- d60e73a: OfficeStudio Excel 新增多关键字排序
+
+  - 数据工具组新增「多关键字排序」对话框：层级式排序键列表（列 + 逐键升降序、上移/下移、增删层级），键列限定在当前选区内，首行标题可选。
+  - 模型层新增 `studioSortRangeByKeys`：首键定序、后键破平局；空单元格在每个键上恒沉底（与方向无关）；完全相等的行保持原始顺序（稳定排序）；相对引用公式随行置换重写、超链接随行迁移（沿用单键排序契约）。
+  - 单键 `studioSortRange` 保持原签名并委托多键实现，行为与错误消息不变。
+
+- a57d202: OfficeStudio Word 查找与替换支持按格式筛选
+
+  - 查找面板新增格式筛选（粗体/斜体/下划线/删除线）：只有完整落在满足格式区间内的匹配被保留，跨格式边界的匹配排除；区间无文本节点（如纯手写笔迹）视为不满足。
+  - 模型层 `wordFindMatches` 新增可选 `WordFormatCriteria` 参数；替换沿用作范围，全部替换/逐处替换均按筛选后的匹配执行。
+
+- a6c7c16: OfficeStudio Word 多级编号列表
+
+  - 画布中嵌套有序列表以层级编号显示（1.1.1），与 DOCX 导出的多级编号（%1.%2. 格式，最多 9 级）一致；无序列表不参与编号链。
+  - 段落组新增「列表下沉缩进 / 上提缩进」按钮（对应 Tab / Shift+Tab）：有前兄弟项时可下沉为下一级，顶层上提会把列表项还原为段落。
+  - DOCX 导入/导出的多级编号映射此前已支持，本期补齐编辑器内的显示与操作入口。
+
+### Patch Changes
+
+- ccfe0b4: Preserve Excel color filters in document validation and native XLSX files, including font/fill DXF references and repeated saves. Filter against displayed conditional formatting colors and retain cells with calculation errors when their colors match. Reset incompatible text values when switching to a color criterion.
+
 ## 1.1.0
 
 ### Minor Changes

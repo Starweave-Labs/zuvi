@@ -116,3 +116,9 @@ npm view @zuvi/react@0.2.0 version
 - [ ] 四项本地门禁（distribution / consumer / bundle-size / registry --check）在发布提交上全绿。
 - [ ] CI 全绿（e2e --workers=1），Pages 部署成功且 `cdn/v1.1.0/` 可访问。
 - [ ] GitHub Packages 七包 1.1.0 发布成功；npm 侧按第 3 节执行（NPM_TOKEN 配置后自动）。
+
+## 6. v1.2.0 发布记录（2026-11-28）
+
+- [ ] 四项本地门禁（distribution / consumer / bundle-size / registry --check）在发布提交上全绿。
+- [ ] CI 全绿（三 shard 浏览器回归），Pages 部署成功且 `cdn/v1.2.0/` 可访问。
+- [ ] GitHub Packages 七包 1.2.0 发布成功；npm 侧按第 3 节执行（NPM_TOKEN 配置后自动）。

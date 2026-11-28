@@ -4,7 +4,7 @@
   <p>76 个组件、16 个业务区块、OfficeStudio、页面搭建器，以及可供 CLI / MCP 消费的机器可读 Registry。</p>
 
   <p>
-    <a href="https://github.com/Starweave-Labs/zuvi/releases/tag/v1.1.0"><img alt="Release" src="https://img.shields.io/github/v/release/Starweave-Labs/zuvi?display_name=tag&sort=semver"></a>
+    <a href="https://github.com/Starweave-Labs/zuvi/releases/tag/v1.2.0"><img alt="Release" src="https://img.shields.io/github/v/release/Starweave-Labs/zuvi?display_name=tag&sort=semver"></a>
     <a href="https://github.com/Starweave-Labs/zuvi/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Starweave-Labs/zuvi/actions/workflows/ci.yml/badge.svg"></a>
     <a href="https://github.com/Starweave-Labs/zuvi/actions/workflows/pages.yml"><img alt="Pages" src="https://github.com/Starweave-Labs/zuvi/actions/workflows/pages.yml/badge.svg"></a>
     <a href="./LICENSE"><img alt="MIT License" src="https://img.shields.io/github/license/Starweave-Labs/zuvi"></a>
@@ -22,9 +22,9 @@
 
 [![ZUVI v1.0.0 组件库概览](./docs/assets/readme/overview.png)](https://starweave-labs.github.io/zuvi/)
 
-ZUVI 以设计令牌连接设计与代码。组件使用原生 CSS、CSS 变量和语义化定制出口，覆盖常规产品界面、页面级业务场景、文档编辑和可视化页面设计。文档站中的演示可直接操作，截图来自当前 `v1.1.0` 生产站。
+ZUVI 以设计令牌连接设计与代码。组件使用原生 CSS、CSS 变量和语义化定制出口，覆盖常规产品界面、页面级业务场景、文档编辑和可视化页面设计。文档站中的演示可直接操作，截图来自当前 `v1.2.0` 生产站。
 
-仓库已迁至 [Starweave-Labs/zuvi](https://github.com/Starweave-Labs/zuvi)，文档与 CDN 位于 <https://starweave-labs.github.io/zuvi/>。已发布的 v1.0.0 继续使用 `@yeyouyuan/zuvi-*` 安装名称和 `@zuvi/*` 导入路径；未来组织 scope 的包完成发布与真实安装验证后，再更新安装入口。本次迁移不发布 npmjs 包。v1.1.0 起 GitHub Packages 改以组织 scope `@starweave-labs/zuvi-*` 发布；组织 scope 的安装入口在真实消费者校验通过后再更新。
+仓库已迁至 [Starweave-Labs/zuvi](https://github.com/Starweave-Labs/zuvi)，文档与 CDN 位于 <https://starweave-labs.github.io/zuvi/>。已发布的 v1.0.0 继续使用 `@yeyouyuan/zuvi-*` 安装名称和 `@zuvi/*` 导入路径；未来组织 scope 的包完成发布与真实安装验证后，再更新安装入口。本次迁移不发布 npmjs 包。v1.2.0 起 GitHub Packages 改以组织 scope `@starweave-labs/zuvi-*` 发布；组织 scope 的安装入口在真实消费者校验通过后再更新。
 
 页面搭建器的工作区保存在网站来源对应的 localStorage，OfficeStudio 文档保存在对应的 IndexedDB。切换到新文档域名前，请从旧站导出作品，再到新站导入；仓库迁移不会删除旧站浏览器数据，也不会自动复制这些本地数据。
 
@@ -83,9 +83,9 @@ ZUVI 以设计令牌连接设计与代码。组件使用原生 CSS、CSS 变量�
 浏览器版已包含 React 和 React DOM，适合演示或没有构建步骤的页面。不要与页面中另一份 React 同时使用。
 
 ```html
-<link rel="stylesheet" href="https://starweave-labs.github.io/zuvi/cdn/v1.1.0/zuvi.css" />
+<link rel="stylesheet" href="https://starweave-labs.github.io/zuvi/cdn/v1.2.0/zuvi.css" />
 <div id="root"></div>
-<script src="https://starweave-labs.github.io/zuvi/cdn/v1.1.0/zuvi.global.js"></script>
+<script src="https://starweave-labs.github.io/zuvi/cdn/v1.2.0/zuvi.global.js"></script>
 <script>
   ZUVI.createRoot(document.getElementById('root')).render(
     ZUVI.React.createElement(ZUVI.Button, { variant: 'primary' }, '你好，ZUVI')
