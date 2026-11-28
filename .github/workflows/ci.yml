@@ -62,6 +62,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: e2e-traces-shard-${{ matrix.shard }}
-          path: e2e/test-results
+          path: test-results
           if-no-files-found: ignore
           retention-days: 14
