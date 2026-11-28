@@ -69,7 +69,10 @@ test('rebases virtual pages, native edits, links and resource conflicts while ke
     assert.equal(commands(reopenedNative, 5).split(text).length - 1, 1);
     const reopened = await c.importStudioPdf(exported, 'Reopened.pdf');
     assert.equal(reopened.fields.find((field) => field.name === 'Text__2').value, 'Incoming');
-    assert.equal(reopened.fields.find((field) => field.name === 'List').type, 'opaque');
+    // 原生选项列表自 P018 起导入为可填写的 choice（此前被动 opaque）；选中值跨轮保持。
+    const list = reopened.fields.find((field) => field.name === 'List');
+    assert.equal(list.type, 'choice');
+    assert.equal(JSON.stringify(list.selectedValues), JSON.stringify(['Alpha', 'Gamma']));
     if (round === 1) { reopened.fields.find((field) => field.name === 'Text').value = 'Round two'; exported = await c.exportStudioPdf(reopened, exported); }
   }
 });
